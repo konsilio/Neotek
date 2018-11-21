@@ -63,6 +63,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaMovimiento>().Get(x => x.IdPuntoVenta.Equals(idPv)
                                                          ).ToList();
         }
+      
+        public VentaMovimiento BuscarUltimoMovSaldo(int idPv, DateTime fecha)
+        {
+            return BuscarUltimosSaldoPorPuntoVenta(idPv, fecha).LastOrDefault();
+        }
+
+
+        public List<VentaMovimiento> BuscarUltimosSaldoPorPuntoVenta(int idPv, DateTime fecha)
+        {
+            return uow.Repository<VentaMovimiento>().Get(x => x.IdPuntoVenta.Equals(idPv)
+            && x.Year.Equals((short)fecha.Year) && x.Mes.Equals((byte)fecha.Month) && x.Dia.Equals((byte)fecha.Day)).ToList();
+        }
+
+        public VentaPuntoDeVenta BuscarUltimoMovimiento(int idPv, DateTime fecha)
+        {
+            return BuscarUltimosMovimientoEfectivoPorPuntoVenta(idPv, fecha).LastOrDefault();
+        }
+
+
+        public List<VentaPuntoDeVenta> BuscarUltimosMovimientoEfectivoPorPuntoVenta(int idPv, DateTime fecha)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdPuntoVenta.Equals(idPv)
+            && x.Year.Equals((short)fecha.Year) && x.Mes.Equals((byte)fecha.Month) && x.Dia.Equals((byte)fecha.Day)).ToList();
+        }
+
         public VentaCajaGeneral BuscarGralPorCve(string cve)
         {
             return uow.Repository<VentaCajaGeneral>().GetSingle(x => x.FolioOperacionDia.Equals(cve));

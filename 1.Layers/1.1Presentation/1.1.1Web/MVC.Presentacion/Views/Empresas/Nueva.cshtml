@@ -23,14 +23,18 @@
 </script>
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
-
+<style type="text/css">
+    .hid {
+        display:none;
+    }
+    </style>
 
 @using (Html.BeginForm((ViewBag.EsEdicion == null) ? "Crear" : "GuardaEdicionEmpresa", "Empresas", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
-               
+                @Html.HiddenFor(m => m.IdEmpresa)
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <h2>Gaseras</h2>
@@ -65,10 +69,10 @@
                                                     <label for="txtNomC">
                                                         Nombre Comercial:*
                                                     </label>
-                                                    @*<input id="NombreComercial" type="text" name="NombreComercial" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].NombreComercial)" />*@
-                                                    <input id="IdEmpresa" type="text" name="IdEmpresa" hidden="hidden" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].IdEmpresa)" />                                                    
-                                                    @Html.TextBoxFor(m => m.NombreComercial, new { @class = "form-control", @placeholder = "Nombre Comercial" })                                                  
-                                                     @Html.ValidationMessageFor(m => m.NombreComercial, "", new { @class = "alert-danger" })
+                                                    @Html.TextBoxFor(m => m.NombreComercial, new { @class = "form-control", @placeholder = "Nombre Comercial" })
+                                                    @*@Html.TextBoxFor(m => m.IdEmpresa, new { @class = "hid" })
+                                                    <input type="text" name="IdEmpresa" hidden="hidden"value="@((ViewBag.Empresa==null)?"":ViewBag.Empresa.IdEmpresa)" />*@
+                                                    @Html.ValidationMessageFor(m => m.NombreComercial, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
                                         </div>
@@ -138,13 +142,15 @@
                                 <div class="row clearfix">
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
-                                            Persona de contacto 1: <input id="txtPersona1" name="Persona1" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Persona1)" />
+                                            Persona de contacto 1:
+                                            @Html.TextBoxFor(m => m.Persona1, new { @class = "form-control", @placeholder = "Persona de contacto 1" })
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <div>
-                                                Teléfono 1: <input id="txtTel1" name="Telefono1" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Telefono1)" />
+                                                Teléfono 1:
+                                                @Html.TextBoxFor(m => m.Telefono1, new { @class = "form-control", @placeholder = "Teléfono 1" })
                                             </div>
                                         </div>
                                     </div>
@@ -152,7 +158,7 @@
                                         <div class="form-group">
                                             <div>
                                                 Celular 1:
-                                                <input id="txtCel1" type="text" name="Celular1" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Celular1)" />
+                                                @Html.TextBoxFor(m => m.Celular1, new { @class = "form-control", @placeholder = "Celular 1" })
                                             </div>
                                         </div>
                                     </div>
@@ -161,14 +167,14 @@
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             Persona de contacto 2:
-                                            <input id="txtPersona2" name="Persona2" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Persona2)" />
+                                            @Html.TextBoxFor(m => m.Persona2, new { @class = "form-control", @placeholder = "Persona de contacto 2" })
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <div>
                                                 Teléfono 2:
-                                                <input id="txtTel2" name="Telefono2" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Telefono2)" />
+                                                @Html.TextBoxFor(m => m.Telefono2, new { @class = "form-control", @placeholder = "Teléfono 2" })
                                             </div>
                                         </div>
                                     </div>
@@ -176,7 +182,7 @@
                                         <div class="form-group">
                                             <div>
                                                 Celular 2:
-                                                <input id="txtCel2" name="Celular2" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Celular2)" />
+                                                @Html.TextBoxFor(m => m.Celular2, new { @class = "form-control", @placeholder = "Celular 2" })
                                             </div>
                                         </div>
                                     </div>
@@ -185,14 +191,14 @@
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group ">
                                             Persona de contacto 3:
-                                            <input id="txtPersona3" name="Persona3" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Persona3)" />
+                                            @Html.TextBoxFor(m => m.Persona3, new { @class = "form-control", @placeholder = "Persona de contacto 3" })
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <div>
                                                 Teléfono 3:
-                                                <input id="txtTel3" name="Telefono3" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Telefono3)" />
+                                                @Html.TextBoxFor(m => m.Telefono3, new { @class = "form-control", @placeholder = "Teléfono 3" })
                                             </div>
                                         </div>
                                     </div>
@@ -200,7 +206,7 @@
                                         <div class="form-group">
                                             <div>
                                                 Celular 3:
-                                                <input id="txtCel3" type="text" name="Celular3" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Celular3)" />
+                                                @Html.TextBoxFor(m => m.Celular3, new { @class = "form-control", @placeholder = "Celular 3" })
                                             </div>
                                         </div>
                                     </div>
@@ -209,14 +215,14 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
                                             E-mail 1:
-                                            <input id="txtmail1" name="Email1" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Email1)" />
+                                            @Html.TextBoxFor(m => m.Email1, new { @class = "form-control", @placeholder = "E-mail 1" })
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
                                             <div>
                                                 Sitio web 1:
-                                                <input id="txtweb1" name="SitioWeb1" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].SitioWeb1)" />
+                                                @Html.TextBoxFor(m => m.SitioWeb1, new { @class = "form-control", @placeholder = "Sitio web 1" })
                                             </div>
                                         </div>
                                     </div>
@@ -225,14 +231,14 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
                                             E-mail 2:
-                                            <input id="txtmail2" name="Email2" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Email2)" />
+                                            @Html.TextBoxFor(m => m.Email2, new { @class = "form-control", @placeholder = "E-mail 2" })
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
                                             <div>
                                                 Sitio web 2:
-                                                <input id="txtweb2" name="SitioWeb2" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].SitioWeb2)" />
+                                                @Html.TextBoxFor(m => m.SitioWeb2, new { @class = "form-control", @placeholder = "Sitio web 2" })
                                             </div>
                                         </div>
                                     </div>
@@ -241,14 +247,14 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
                                             E-mail 3:
-                                            <input id="txtmail3" name="Email3" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Email3)" />
+                                            @Html.TextBoxFor(m => m.Email3, new { @class = "form-control", @placeholder = "E-mail 3" })
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
                                             <div>
                                                 Sitio web 3:
-                                                <input id="txtweb3" name="SitioWeb3" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].SitioWeb3)" />
+                                                @Html.TextBoxFor(m => m.SitioWeb3, new { @class = "form-control", @placeholder = "Sitio web 3" })
                                             </div>
                                         </div>
                                     </div>
@@ -271,9 +277,31 @@
                                                 País:*
                                             </label>
                                             <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
-                                                @foreach (var lst in ViewBag.ListaPaises)
+                                                @*@foreach (var lst in ViewBag.ListaPaises)
+                                                    {
+                                                        <option value="@lst.IdPais">@lst.Pais</option>
+                                                    }*@
+                                                @if (ViewBag.Empresa == null)
                                                 {
-                                                    <option value="@lst.IdPais">@lst.Pais</option>
+                                                    foreach (var lst in ViewBag.ListaPaises)
+                                                    {
+                                                        <option value="@lst.IdPais">@lst.Pais</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    foreach (var lst in ViewBag.ListaPaises)
+                                                    {
+
+                                                        if (ViewBag.Empresa.IdPais == lst.IdPais)
+                                                        {
+                                                            <option value="@lst.IdPais" selected>@lst.Pais</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@lst.IdPais">@lst.Pais</option>
+                                                        }
+                                                    }
                                                 }
                                             </select>
                                             @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
@@ -283,11 +311,34 @@
                                         <div class="form-group">
                                             <label for="ddlEdo">
                                                 Estado:*
-                                            </label><input type="text" name="EstadoProvincia" style="display:none" id="txtEdoP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].EstadoProvincia)" />
+                                            </label>
+                                            @Html.TextBoxFor(m => m.EstadoProvincia, new { @class = "form-control hid", @placeholder = "Estado" })
                                             <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                                @foreach (var lst in ViewBag.ListaEstados)
+                                                @*@foreach (var lst in ViewBag.ListaEstados)
+                                                    {
+                                                        <option value="@lst.IdEstadoRep">@lst.Estado</option>
+                                                    }*@
+                                                @if (ViewBag.Empresa == null)
                                                 {
-                                                    <option value="@lst.IdEstadoRep">@lst.Estado</option>
+                                                    foreach (var lst2 in ViewBag.ListaEstados)
+                                                    {
+                                                        <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    foreach (var lst2 in ViewBag.ListaEstados)
+                                                    {
+
+                                                        if (ViewBag.Empresa.IdEstadoRep == lst2.IdEstadoRep)
+                                                        {
+                                                            <option value="@lst2.IdEstadoRep" selected>@lst2.Estado</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
+                                                        }
+                                                    }
                                                 }
                                             </select>
                                             @Html.ValidationMessageFor(m => m.IdEstadoRep, "", new { @class = "alert-danger" })
@@ -297,8 +348,8 @@
                                         <div class="form-group">
                                             <label for="txtMun">
                                                 Municipio:*
-                                            </label>
-                                            <input type="text" name="Municipio" id="txtMun" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Municipio)" />
+                                            </label>                                        
+                                            @Html.TextBoxFor(m => m.Municipio, new { @class = "form-control", @placeholder = "Municipio" })
                                             @Html.ValidationMessageFor(m => m.Municipio, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -307,7 +358,7 @@
                                             <label for="txtCP">
                                                 C.P.:*
                                             </label>
-                                            <input type="text" name="CodigoPostal" id="txtCP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].CodigoPostal)" />
+                                            @Html.TextBoxFor(m => m.CodigoPostal, new { @class = "form-control", @placeholder = "Código Postal" })
                                             @Html.ValidationMessageFor(m => m.CodigoPostal, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -319,7 +370,7 @@
                                                 <label for="txtCol">
                                                     Colonia:*
                                                 </label>
-                                                <input type="text" name="Colonia" id="txtCol" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Colonia)" />
+                                                @Html.TextBoxFor(m => m.Colonia, new { @class = "form-control", @placeholder = "Colonia" })
                                                 @Html.ValidationMessageFor(m => m.Colonia, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
@@ -329,7 +380,7 @@
                                             <label for="txtCalle">
                                                 Calle:*
                                             </label>
-                                            <input type="text" name="Calle" id="txtCalle" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Calle)" />
+                                            @Html.TextBoxFor(m => m.Calle, new { @class = "form-control", @placeholder = "Calle" })
                                             @Html.ValidationMessageFor(m => m.Calle, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -341,7 +392,7 @@
                                                 <label for="txtNume">
                                                     Núm. Ext.:*
                                                 </label>
-                                                <input type="text" name="NumExt" id="txtNume" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].NumExt)" />
+                                                @Html.TextBoxFor(m => m.NumExt, new { @class = "form-control", @placeholder = " Núm. Ext." })
                                                 @Html.ValidationMessageFor(m => m.NumExt, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
@@ -351,7 +402,7 @@
                                             <label for="txtNumI">
                                                 Núm. Int.:
                                             </label>
-                                            <input type="text" name="NumInt" id="txtNumI" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].NumInt)" />
+                                            @Html.TextBoxFor(m => m.NumInt, new { @class = "form-control", @placeholder = " Núm. Int." })
                                         </div>
                                     </div>
                                 </div>
@@ -370,19 +421,22 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             Pequeño (180px X 180px)
-                                            <input type="file" name="UrlLogotipo180px" id="file" accept="image/gif, image/jpeg , image/jpg" class="form-control-file" />
+                                            @*<input type="file" name="UrlLogotipo180px" id="file" accept="image/gif, image/jpeg , image/jpg" class="form-control-file" />*@
+                                            @Html.TextBoxFor(m => m.UrlLogotipo180px, new { type = "file" })                                          
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             Mediano (500px X 500px)
-                                            <input id="txtMed" type="file" name="UrlLogotipo500px" accept="image/gif, image/jpeg , image/jpg" class="form-control-file" />
+                                            @*<input id="txtMed" type="file" name="UrlLogotipo500px" accept="image/gif, image/jpeg , image/jpg" class="form-control-file" />*@
+                                            @Html.TextBoxFor(m => m.UrlLogotipo500px, new { type = "file" })
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             Grande (1000px X 1000px)
-                                            <input id="txtGra" type="file" name="UrlLogotipo1000px" class="form-control-file" />
+                                            @*<input id="txtGra" type="file" name="UrlLogotipo1000px" class="form-control-file" />*@
+                                            @Html.TextBoxFor(m => m.UrlLogotipo1000px, new { type = "file" })
                                         </div>
                                     </div>
                                 </div>
@@ -411,7 +465,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             </div>
         </div>
     </section>

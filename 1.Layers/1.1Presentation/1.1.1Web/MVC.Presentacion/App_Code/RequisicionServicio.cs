@@ -104,7 +104,7 @@ namespace MVC.Presentacion.App_Code
             model.Aplicacion = string.Empty;
             return model;
         }
-        public static RequisicionDTO ActivarEditar(RequisicionDTO dto, int id, List<RequisicionProductoDTO> Prodcutos, string _tkn)
+        public static RequisicionDTO ActivarEditar(RequisicionDTO dto, RequisicionDTO prod2, int id, List<RequisicionProductoDTO> Prodcutos, string _tkn)
         {
             var newModel = dto;
             newModel.FechaRequerida = dto.FechaRequerida;
@@ -116,8 +116,26 @@ namespace MVC.Presentacion.App_Code
             newModel.Aplicacion = prod.Aplicacion;
             newModel.Unidad = prod.Unidad;
             newModel.Cantidad = prod.Cantidad;
+            newModel.MotivoRequisicion = prod2.MotivoRequisicion;
+            newModel.RequeridoEn = prod2.RequeridoEn;          
+            newModel.IdEmpresa = prod2.IdEmpresa;
             return newModel;
         }
+
+        //public static RequisicionDTO ActivarEditar(RequisicionDTO dto, RequisicionDTO prod2, int id, List<RequisicionProductoDTO> Prodcutos, string _tkn)
+        //{
+        //    var newModel = dto;
+        //    newModel.FechaRequerida = dto.FechaRequerida;
+        //    newModel.Productos = Prodcutos;
+        //    var prod = Prodcutos.SingleOrDefault(x => x.IdProducto.Equals(id));
+        //    newModel.IdProducto = prod.IdProducto;
+        //    newModel.IdTipoProducto = prod.IdTipoProducto;
+        //    newModel.IdCentroCosto = prod.IdCentroCosto;
+        //    newModel.Aplicacion = prod.Aplicacion;
+        //    newModel.Unidad = prod.Unidad;
+        //    newModel.Cantidad = prod.Cantidad;
+        //    return newModel;
+        //}
         //public static RequisicionDTO EditarProducto(RequisicionDTO dto, List<RequisicionProductoDTO> Prodcutos, string _tkn)
         //{
         //    foreach (var p in Prodcutos)
@@ -125,12 +143,15 @@ namespace MVC.Presentacion.App_Code
         //        p.
         //    }
         //}
-        public static RequisicionDTO ActivarBorrar(RequisicionDTO model, int id, List<RequisicionProductoDTO> Prodcutos, string _tkn)
+        public static RequisicionDTO ActivarBorrar(RequisicionDTO model, int id, List<RequisicionProductoDTO> Productos, RequisicionDTO ent, string _tkn)
         {
             var newModel = model;
             newModel.FechaRequerida = model.FechaRequerida;
-            newModel.Productos = Prodcutos.Where(x => !x.IdProducto.Equals(id)).ToList();
-            
+            newModel.Productos = Productos.Where(x => !x.IdProducto.Equals(id)).ToList();
+            newModel.IdEmpresa = ent.IdEmpresa;
+            newModel.FechaRequerida = ent.FechaRequerida;
+            newModel.RequeridoEn = ent.RequeridoEn;
+            newModel.MotivoRequisicion = ent.MotivoRequisicion;
             return newModel;
         }
         public static RequisicionProductoDTO CrearProductoNuevo(RequisicionDTO model, string _tkn)

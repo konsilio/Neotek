@@ -209,7 +209,7 @@
                                             <option value="0">Seleccione..</option>
                                             @foreach (var lst in ViewBag.Linea)
                                             {
-                                                <option value="@lst.IdProductoLinea">@lst.Linea</option>
+                                            <option value="@lst.IdProductoLinea">@lst.Linea</option>
                                             }
                                         </select>
                                     </div>
@@ -221,7 +221,7 @@
                                             <option value="0">Seleccione..</option>
                                             @foreach (var lst in ViewBag.Producto)
                                             {
-                                                <option value="@lst.IdProducto">@lst.Producto</option>
+                                            <option value="@lst.IdProducto">@lst.Producto</option>
                                             }
                                         </select>
                                     </div>
@@ -273,9 +273,9 @@
                                         <select id="IdTipoFecha" class="form-control selectpicker z-index show-tick">
                                             <option value="0">Seleccione</option>
                                             @*@foreach (var lst in ViewBag.ListaStatus)
-                                            {
-                                                <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
-                                            }*@                                           
+                                                {
+                                                    <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
+                                                }*@
                                             <option value="1">Fecha Programada</option>
                                             <option value="2">Fecha Registro</option>
                                             <option value="3">Fecha Vencimiento</option>
@@ -338,12 +338,15 @@
                                                                 <td>@item.FechaRegistro</td>
                                                                 <td>@item.FechaVencimiento</td>
                                                                 <td>@item.PrecioVentaEstatus</td>
-                                                                <td>
-                                                                    <a href="@Url.Action("EditarPrecioVentaOtro", "PrecioVentaOtro", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">edit</i>
-                                                                        <span>Editar precio venta</span>
-                                                                    </a>
-                                                                </td>
+                                                                @if (item.PrecioVentaEstatus == "Programado")
+                                                                {
+                                                                    <td>
+                                                                        <a href="@Url.Action("EditarPrecioVentaOtro", "PrecioVentaOtro", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                            <i class="material-icons">edit</i>
+                                                                            <span>Editar precio venta</span>
+                                                                        </a>
+                                                                    </td>
+                                                                }
                                                             </tr>
                                                         }
                                                     }
@@ -368,7 +371,7 @@
                                     </div>
                                 </div>
                             </div>
-                        }                   
+                        }
                     </div>
                 </div>
             </div>

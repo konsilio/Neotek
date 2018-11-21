@@ -60,6 +60,11 @@ namespace MVC.Presentacion.Controllers
                 model.Productos = (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"];
                 TempData["ListProductosRequisicion"] = model.Productos;
             }
+            if (TempData["ListProductos"] != null)
+            {
+                ViewBag.ProductoEdit = TempData["ListProductos"];
+            }
+
             if (model == null) model = RequisicionServicio.InitRequisicion(tkn);
             else if (model.IdEmpresa == 0) model = RequisicionServicio.InitRequisicion(tkn);
 
@@ -145,8 +150,21 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             if (TempData["ListProductosRequisicion"] != null)
                 model.Productos = (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"];
+            var newModel = new RequisicionDTO();
+            var fechaR = TempData["ListProducto"] != null ? ((RequisicionDTO)TempData["ListProducto"]).FechaRequerida : model.FechaRequerida;
+            model.FechaRequerida = fechaR;
+            if (TempData["IdEmpresa"] != null)
+            {
+                var id = (TempData["IdEmpresa"]);
+                newModel = RequisicionServicio.ActivarBorrar(model, (int)id, (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"], model, tkn);
+                newModel = RequisicionServicio.AgregarProducto(model, Session["StringToken"].ToString());
+            }
+            else
+            {
+                newModel = RequisicionServicio.AgregarProducto(model, Session["StringToken"].ToString());
+            }
+            TempData["ListProducto"] = model;
 
-            var newModel = RequisicionServicio.AgregarProducto(model, Session["StringToken"].ToString());
             TempData["ListProductosRequisicion"] = model.Productos;
 
             return RedirectToAction("Requisicion", newModel);
@@ -157,8 +175,12 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             if (id != null)
             {
-                var newModel = RequisicionServicio.ActivarEditar(model, id ?? 0, (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"], tkn);
+                var fechaR = ((RequisicionDTO)TempData["ListProducto"]).FechaRequerida;
+                model.FechaRequerida = fechaR;
+                var newModel = RequisicionServicio.ActivarEditar(model, (RequisicionDTO)TempData["ListProducto"], id ?? 0, (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"], tkn);
+                TempData["ListProductos"] = model.Productos.Where(x => x.IdProducto.Equals(id));
                 TempData["ListProductosRequisicion"] = newModel.Productos;
+                TempData["IdEmpresa"] = id.Value;
                 return RedirectToAction("Requisicion", newModel);
             }
             else
@@ -171,10 +193,16 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var newModel = RequisicionServicio.ActivarBorrar(model, id, (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"], tkn);
-                     
-            TempData["ListProductosRequisicion"] = newModel.Productos;
-            return RedirectToAction("Requisicion", model);
+            if (id != 0)
+            {
+                var newModel = RequisicionServicio.ActivarBorrar(model, id, (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"], (RequisicionDTO)TempData["ListProducto"], tkn);
+                TempData["ListProductosRequisicion"] = newModel.Productos;
+                return RedirectToAction("Requisicion", newModel);
+            }
+            else
+            {
+                return RedirectToAction("Requisicion", model);
+            }
         }
         public ActionResult CrearRequisicion(RequisicionDTO model)
         {
@@ -197,10 +225,10 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var Respuesta = RequisicionServicio.CancelarRequisicion(new RequisicionCancelaDTO { IdRequisicion = IdRequisicion ?? 0 , MotivoCancelacion = MotivoCancela }, tkn);
+            var Respuesta = RequisicionServicio.CancelarRequisicion(new RequisicionCancelaDTO { IdRequisicion = IdRequisicion ?? 0, MotivoCancelacion = MotivoCancela }, tkn);
 
             ViewData["RespuestaDTO"] = Respuesta;
-           return RedirectToAction("Requisiciones");           
+            return RedirectToAction("Requisiciones");
         }
         public ActionResult RequisicionChecarRevicion(RequisicionModel model, string cbRevision, bool checkResp = false)
         {
