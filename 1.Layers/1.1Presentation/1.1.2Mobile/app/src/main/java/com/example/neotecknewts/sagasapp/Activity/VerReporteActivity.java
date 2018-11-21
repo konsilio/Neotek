@@ -583,10 +583,8 @@ public class VerReporteActivity extends AppCompatActivity {
                         "[{Usuario-recibi}]\n________________________\n\n";
         HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
-                new SimpleDateFormat("dd/MM/yyyy");
-        HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(anticiposDTO.getFecha()));
-        StringReporte = StringReporte.replace("[{Fecha}]",fdate.format(anticiposDTO.getFecha()));
+        HtmlReporte = HtmlReporte.replace("[{Fecha}]",anticiposDTO.getFecha());
+        StringReporte = StringReporte.replace("[{Fecha}]",anticiposDTO.getFecha());
         HtmlReporte = HtmlReporte.replace("[{Hora}]",anticiposDTO.getHora());
         StringReporte = StringReporte.replace("[{Hora}]",anticiposDTO.getHora());
         HtmlReporte = HtmlReporte.replace("[{Estacion}]",anticiposDTO.getNombreEstacion());

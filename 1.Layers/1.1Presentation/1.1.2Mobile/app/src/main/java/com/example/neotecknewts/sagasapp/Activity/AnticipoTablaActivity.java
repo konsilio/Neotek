@@ -42,7 +42,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     TableRow TRAnticipoTablaActivityTituloAnticipo,TRAnticipoTablaActivityFormAnticipar;
     EditText ETAnticipoTablaActivityAnticipo;
 
-    float total;
+    double total;
     ArrayList<String[]> elementos;
     boolean EsAnticipo,EsCorte;
     AnticiposDTO anticiposDTO;
@@ -161,7 +161,10 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     builder.create().show();
                 }else{
                     anticiposDTO.setAnticipar(Double.parseDouble(cantidad));
-                    anticiposDTO.setFecha(new Date());
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
+                            "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                    Date fecha = new Date();
+                    anticiposDTO.setFecha(f.format(fecha));
                     anticiposDTO.setTotal(total);
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm",
                             Locale.getDefault());
@@ -261,25 +264,30 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     @Override
     public void onSuccessList(RespuestaEstacionesVentaDTO data) {
         NumberFormat format = NumberFormat.getCurrencyInstance();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate =
+                new SimpleDateFormat("dd/MM/yyyy hh:mm");
         datos = data;
         if(data!=null){
             if (EsAnticipo){
                 if(data.getAnticipos().size()>0){
+
                    for (int x=0;x<data.getAnticipos().size();x++){
                        elementos.add(new String[]{
                                data.getAnticipos().get(x).getTiket() /*"201809180785236"*/,
-                               data.getAnticipos().get(x).getFecha().toString()/*"18/09/2018"*/,
+                               data.getAnticipos().get(x).getFecha()/*"18/09/2018"*/,
                                format.format(data.getAnticipos().get(x).getTotal())
                        });
                        total += data.getAnticipos().get(x).getTotal();
                    }
+                   String valor = format.format(total);
+                   TVAnticipoTablaActivityTotal.setText(valor);
                 }
             }else{
                 if(data.getCortes().size()>0){
                     for (int x=0;x<data.getCortes().size();x++){
                         elementos.add(new String[]{
                                 data.getCortes().get(x).getTiket()/*"201809180785236"*/,
-                                data.getCortes().get(x).getFecha()==null?"":data.getCortes().get(x).getFecha().toString()/*"18/09/2018"*/,
+                                data.getCortes().get(x).getFecha()==null?"":fdate.format(data.getCortes().get(x).getFecha().toString())/*"18/09/2018"*/,
                                 format.format(data.getCortes().get(x).getTotal())/*format.format(i*100.00)*/
                         });
                         total += data.getCortes().get(x).getTotal();

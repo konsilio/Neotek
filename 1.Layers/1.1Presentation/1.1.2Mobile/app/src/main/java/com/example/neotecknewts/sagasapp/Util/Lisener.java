@@ -369,10 +369,9 @@ public class Lisener{
                                 )
                         );
                         anticiposDTO.setFecha(
-                                new Date(
+
                                 cursor.getString(
                                         cursor.getColumnIndex("Fecha")
-                                )
                                 )
                         );
                         anticiposDTO.setAnticipar(
