@@ -104,5 +104,20 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().PreciosVenta(idEmpresa);
         }
+
+        public static RespuestaDto InsertMobil(VentaCajaGeneral corteCajaGeneral)
+        {
+            return new PuntoVentaDataAccess().InesertarVentaGeneral(corteCajaGeneral);
+        }
+
+        public static List<VentaPuntoDeVenta> ObtenerVentasContado(int idPuntoVenta, DateTime fecha)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta, fecha, false);
+        }
+
+        public static List<VentaPuntoDeVenta> ObtenerVentasCredito(int idPuntoVenta, DateTime fecha)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta, fecha, true);
+        }
     }
 }

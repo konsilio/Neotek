@@ -199,7 +199,7 @@ namespace Application.MainModule.Flujos
 
             adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
             adapter.FolioVenta = venta.FolioVenta;
-            adapter.FolioOperacionDia = venta.FolioVenta;
+            //adapter.FolioOperacionDia = venta.FolioVenta;
             adapter.FechaRegistro = venta.Fecha;
             adapter.Dia = (byte) venta.Fecha.Day;
             adapter.Mes = (byte) venta.Fecha.Month;
@@ -447,7 +447,7 @@ namespace Application.MainModule.Flujos
             var anticipos = VentaServicio.ObtenerAnticipos(TokenServicio.ObtenerIdEmpresa());
             var estacion = AlmacenGasServicio.ObtenerAlmacen(dto.IdCAlmacenGas);
 
-            return VentaServicio.Anticipo(dto,TokenServicio.ObtenerIdEmpresa(),TokenServicio.ObtenerIdUsuario(),anticipos, estacion);
+            return VentaServicio.Anticipo(dto,TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), anticipos, estacion);
         }
 
         public RespuestaDto corte(CorteDto dto)
@@ -457,8 +457,19 @@ namespace Application.MainModule.Flujos
 
             var cortes = VentaServicio.ObtenerCortes(TokenServicio.ObtenerIdEmpresa());
             var estacion = AlmacenGasServicio.ObtenerAlmacen(dto.IdCAlmacenGas);
+            var puntoventa = estacion.PuntosVenta.Single(x => x.IdCAlmacenGas.Equals(estacion.IdCAlmacenGas));
+            var entrega = puntoventa.Empresa.Usuario.Single(x => x.EsAdministracionCentral);
+            var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoventa.IdPuntoVenta, dto.Fecha);
+            var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoventa.IdPuntoVenta, dto.Fecha);
 
-            return VentaServicio.Corte(dto,TokenServicio.ObtenerIdEmpresa(),TokenServicio.ObtenerIdUsuario(), cortes, estacion);
+            var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, estacion);
+            if (corte.Exito)
+            {
+                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), puntoventa, puntoventa.OperadorChofer, entrega, deContado,credito);
+                return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
+            }
+
+            return corte;
         }
 
         public DatosOtrosDto catalogoOtros()
