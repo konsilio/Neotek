@@ -398,6 +398,7 @@ public interface RestClient {
     Call<RespuestaEstacionesVentaDTO> getAnticipo_y_Corte(
             @Path(value = "estacion") int estacion,
             @Path(value = "esAnticipos") boolean esAnticipos,
+            @Path(value = "fecha") String fecha,
             @Header("Authorization") String token,
             @Header("Content-type") String contenType
     );
