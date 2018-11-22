@@ -29,7 +29,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new VentaCorteAnticipoEC()
             {
-                IdCAlmacenGas =  dto.IdCAlmacenGas,
                 IdEmpresa = idEmpresa,
                 TotalAnticipado = dto.Monto,
                 MontoRecortadoAnticipado = dto.Monto,
@@ -47,7 +46,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new VentaCorteAnticipoEC()
             {
-                IdCAlmacenGas = dto.IdCAlmacenGas,
                 IdEmpresa = idEmpresa,
                 TotalAnticipado = dto.Monto,
                 MontoRecortadoAnticipado = dto.Monto,
