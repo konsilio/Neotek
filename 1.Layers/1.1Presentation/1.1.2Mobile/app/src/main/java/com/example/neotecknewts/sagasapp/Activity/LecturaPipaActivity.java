@@ -19,6 +19,7 @@ import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
+import com.example.neotecknewts.sagasapp.Presenter.LecturaPipaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaPipaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
@@ -38,7 +39,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
     String []ListaMedidores,ListaPipas;
     List<MedidorDTO> MedidorDTOList;
     DatosTomaLecturaDto DatosTomaLecturaDto;
-    LecturaPipaPresenterImpl lecturaPipaPresenter;
+    LecturaPipaPresenter lecturaPipaPresenter;
     Session session;
     LecturaPipaDTO lecturaPipaDTO;
     Boolean EsLecturaInicialPipa,EsLecturaFinalPipa,EsFinal;
@@ -72,12 +73,12 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
         lecturaPipaDTO = new LecturaPipaDTO();
         lecturaPipaPresenter = new LecturaPipaPresenterImpl(this);
         session = new Session(LecturaPipaActivity.this);
-        ListaPipas = new String[]{"Seleccióne","Pipa 1","Pipa 2"};
+        /*ListaPipas = new String[]{"Seleccióne","Pipa 1","Pipa 2"};
         ListaMedidores = new String[]{"Seleccióne","Magnatel","Rotogate"};
         SLecturaPipaActivityListaTipoMedidor.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaMedidores));
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
-                R.layout.custom_spinner,ListaPipas));
+                R.layout.custom_spinner,ListaPipas));*/
         //lecturaPipaPresenter.getMedidores(session.getToken());
         lecturaPipaPresenter.getPipas(session.getToken(),EsFinal);
 

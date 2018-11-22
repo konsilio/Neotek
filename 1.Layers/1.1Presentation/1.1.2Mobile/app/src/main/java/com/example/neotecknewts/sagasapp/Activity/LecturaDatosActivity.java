@@ -89,10 +89,10 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
 
         ListaCarburacion = new String[]{"Seleccione","Tipo 1","Tipo 2"};
         ListaTipoMedidor = getResources().getStringArray(R.array.tipos_medidor);
-        SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
+        /*SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner, ListaCarburacion ));
         SLecturaDatosActivityTipoMedidor.setAdapter(new ArrayAdapter<>(this,
-                R.layout.custom_spinner, ListaTipoMedidor));
+                R.layout.custom_spinner, ListaTipoMedidor));*/
 
         /*lecturaDatosPresenter.getMedidores(session.getToken());*/
         lecturaDatosPresenter.getEstacionesCarburacion(session.getToken(),esFinalizar);

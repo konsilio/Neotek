@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 if(session!=null) {
-                    if (session.isLogin() && session.isExpired()) {
+                    if (session.isLogin() && !session.isExpired()) {
                         Intent intent = new Intent(SplashActivity.this, MenuActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

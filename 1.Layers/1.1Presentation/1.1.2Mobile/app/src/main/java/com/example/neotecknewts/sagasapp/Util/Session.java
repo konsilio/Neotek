@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by neotecknewts on 08/08/18.
@@ -148,8 +149,11 @@ public class Session {
 
     public boolean isExpired(){
         Date fecha_session = new Date(pref.getString(KEY_TIME_SESSION,Calendar.getInstance().getTime().toString()));
-        int dias=(int) ((new Date().getTime()-fecha_session.getTime())/86400000);
-        Log.w("Han pasado",dias+" Dias");
-        return dias<=0;
+        long dif =  new Date().getTime() - fecha_session.getTime() ;
+        Log.w("Fecha session",fecha_session.toString());
+        Log.w("Fecha actual",new Date().toString());
+        Log.w("Diferencia",String.valueOf(dif));
+        Log.w("Dias",String.valueOf(TimeUnit.DAYS.convert(dif,TimeUnit.MILLISECONDS)));
+        return TimeUnit.DAYS.convert(dif,TimeUnit.MILLISECONDS)>1;
     }
 }

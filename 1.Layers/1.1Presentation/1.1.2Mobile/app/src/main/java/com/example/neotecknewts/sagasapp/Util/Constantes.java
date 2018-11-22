@@ -50,7 +50,7 @@ public class Constantes {
     public static final String POST_CORTE = "mobile/corte-de-caja";
     public static final String GET_CATALOGOS_VENTA_GAS = "mobile/catalogos/venta-gas/{esLP}/{esCilindroConGas}/{esCilindro}";
     public static final String GET_CATALOGOS_VENTA_OTROS = "mobile/catalogos/otros";
-    public static final String GET_ORDEN_REFERENCIA = "mobile/ordenes/lista/ordenes/compra/{IdOrdenCompra}";
+    public static final String GET_ORDEN_REFERENCIA = "mobile/lista/ordenes/compra/{IdOrdenCompra}";
     public static final String GET_CILINDROS_VENTA = "mobile/catalogos/venta-gas/catalgocilindros";
     public static final String GET_CATALOGOS_ANTICIPOS_CORTE_LISTA = "mobile/catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}";
     public static final String GET_PRECIO_VENTA = "mobile/consulta/precioventa/vigente";

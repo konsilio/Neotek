@@ -405,7 +405,7 @@ public class VerReporteActivity extends AppCompatActivity {
     private void GenerarReporteCorteCaja() {
         HtmlReporte = "<body>" +
                 "<h3 style='text-align: center;'><u>Reporte-Corte de caja</u></h3>" +
-                "<table style='font-size:25px; width:100%; margin-left:5px;margin-rigth:5px;'>" +
+                "<table style='font-size:14px; width:100%; margin-left:5px;margin-rigth:5px;'>" +
                 "<tbody>" +
                 "<tr>" +
                 "<td>Clave Corte</td>" +
@@ -422,7 +422,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tbody>" +
                 "</table >" +
                 "<hr>" +
-                "<table style='font-size:25px; width:100%;margin-left:5px;margin-rigth:5px;'>" +
+                "<table style='font-size:14px; width:100%;margin-left:5px;margin-rigth:5px;'>" +
                 "<tbody>" +
                 "<tr>" +
                 "<td>Estación</td>"+
@@ -451,7 +451,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</table >"+
                 "<hr>"+
                 "<h3 style='text-align: center;'>P5000</h3>"+
-                "<table style='font-size:25px; width:100%;margin-left:5px;margin-rigth:5px;'>"+
+                "<table style='font-size:14px; width:100%;margin-left:5px;margin-rigth:5px;'>"+
                 "<tbody>"+
                 "<tr>" +
                 "<td>Inicial: </td>" +
@@ -474,20 +474,20 @@ public class VerReporteActivity extends AppCompatActivity {
 
                         "Clave Anticipo\t" +
                         "[{ClaveTraspaso}]\n" +
-                        "Fecha\t" +
+                        "Fecha \t" +
                         "[{Fecha}]\n" +
-                        "Hora\t" +
+                        "Hora \t" +
                         "[{Hora}]\n" +
                         "----------------------\n" +
-                        "Estación\t"+
+                        "Estacion \t"+
                         "[{Estacion}]\n" +
-                        "Fecha de venta\t"+
+                        "Fecha de venta \t"+
                         "[{Fecha-venta}]\n" +
-                        "Venta Total\t"+
+                        "Venta Total \t"+
                         "[{Venta-total}]\n" +
-                        "Anticipos\t"+
+                        "Anticipos \t"+
                         "[{Anticipos}]\n" +
-                        "Monto de corte\t"+
+                        "Monto de corte \t"+
                         "[{Monto-corte}]\n" +
                         "-----------------------\n"+
                         "\tP5000"+
@@ -497,7 +497,7 @@ public class VerReporteActivity extends AppCompatActivity {
                         "[{Final}]\n" +
                         "Litros vendidos: \t" +
                         "[{Litros-vendidos}]\n" +
-                        "Entregué\n"+
+                        "Entregue\n"+
                         "[{Entrego-nombre}]\n\n" +
                         "________________________\n"+
                         "Recibi:\n"+
@@ -508,27 +508,99 @@ public class VerReporteActivity extends AppCompatActivity {
                 corteDTO.getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",
                 corteDTO.getClaveOperacion());
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sfdate =
                 new SimpleDateFormat("dd/MM/yyyy");
-        HtmlReporte.replace("[{Fecha}]",format.format(corteDTO.getFecha()));
-        StringReporte = StringReporte.replace("[{Fecha}]",format.format(corteDTO.getFecha()));
+        try{
+            HtmlReporte= HtmlReporte.replace("[{Fecha}]",sfdate.format(new Date()));
+            StringReporte = StringReporte.replace("[{Fecha}]",sfdate.format(new Date()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        HtmlReporte = HtmlReporte.replace("[{Hora}]]",
+
+        HtmlReporte = HtmlReporte.replace("[{Hora}]",
                 corteDTO.getHora());
         StringReporte = StringReporte.replace("[{Hora}]",
                 corteDTO.getHora());
 
-        HtmlReporte = HtmlReporte.replace("[{Estacion}]]",
+        HtmlReporte = HtmlReporte.replace("[{Estacion}]",
                 corteDTO.getNombreEstacion());
         StringReporte = StringReporte.replace("[{Estacion}]",
                 corteDTO.getNombreEstacion());
+        try{
+            Date fechaVenta = fdate.parse(corteDTO.getFechaVenta());
+            HtmlReporte = HtmlReporte.replace("[{Fecha-venta}]",
+                    sfdate.format(fechaVenta)
+            );
+            StringReporte = StringReporte.replace("[{Fecha-venta}]",
+                    sfdate.format(fechaVenta)
+            );
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        NumberFormat dformat = new DecimalFormat("#.00");
+        HtmlReporte = HtmlReporte.replace("[{Venta-total}]",
+               "$"+dformat.format(corteDTO.getTotal())
+        );
+        StringReporte = StringReporte.replace("[{Venta-total}]",
+                "$"+dformat.format(corteDTO.getTotal())
+        );
+
+        HtmlReporte = HtmlReporte.replace("[{Anticipos}]",
+                "$"+dformat.format(corteDTO.getTotalAnticipos())
+        );
+        StringReporte = StringReporte.replace("[{Anticipos}]",
+                "$"+dformat.format(corteDTO.getTotalAnticipos())
+        );
+
+        HtmlReporte = HtmlReporte.replace("[{Monto-corte}]",
+                "$"+dformat.format(corteDTO.getMontoCorte())
+        );
+        StringReporte = StringReporte.replace("[{Monto-corte}]",
+                "$"+dformat.format(corteDTO.getMontoCorte())
+        );
+
+        StringReporte = StringReporte.replace("[{Inicial}]",
+                String.valueOf(corteDTO.getP5000Inicial())
+        );
+
+        HtmlReporte = HtmlReporte.replace("[{Inicial}]",
+                String.valueOf(corteDTO.getP5000Inicial())
+        );
+
+        StringReporte = StringReporte.replace("[{Final}]",
+                String.valueOf(corteDTO.getP5000Final())
+        );
+
+        HtmlReporte = HtmlReporte.replace("[{Final}]",
+                String.valueOf(corteDTO.getP5000Final())
+        );
+
+        StringReporte = StringReporte.replace("[{Litros-vendidos}]",
+                String.valueOf(corteDTO.getP5000Final())
+        );
+
+        HtmlReporte = HtmlReporte.replace("[{Litros-vendidos}]",
+                String.valueOf(corteDTO.getLitrosCorte() )
+        );
+
+        StringReporte = StringReporte.replace("[{Monto-corte}]",
+                String.valueOf(corteDTO.getLitrosCorte() )
+        );
 
         HtmlReporte = HtmlReporte.replace("[{Entrego-nombre}]]",
                 session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE));
         StringReporte = StringReporte.replace("[{Entrego-nombre}]",
                 session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE));
 
-
+        HtmlReporte = HtmlReporte.replace("[{Recibio}]]",
+                "");
+        StringReporte = StringReporte.replace("[{Recibio}]",
+                "");
     }
 
     private void GenerarReporteAnticipo() {
@@ -583,10 +655,8 @@ public class VerReporteActivity extends AppCompatActivity {
                         "[{Usuario-recibi}]\n________________________\n\n";
         HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
-                new SimpleDateFormat("dd/MM/yyyy");
-        HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(anticiposDTO.getFecha()));
-        StringReporte = StringReporte.replace("[{Fecha}]",fdate.format(anticiposDTO.getFecha()));
+        HtmlReporte = HtmlReporte.replace("[{Fecha}]",anticiposDTO.getFecha());
+        StringReporte = StringReporte.replace("[{Fecha}]",anticiposDTO.getFecha());
         HtmlReporte = HtmlReporte.replace("[{Hora}]",anticiposDTO.getHora());
         StringReporte = StringReporte.replace("[{Hora}]",anticiposDTO.getHora());
         HtmlReporte = HtmlReporte.replace("[{Estacion}]",anticiposDTO.getNombreEstacion());

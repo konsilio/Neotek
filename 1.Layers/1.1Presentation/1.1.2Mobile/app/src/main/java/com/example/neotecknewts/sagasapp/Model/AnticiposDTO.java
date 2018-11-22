@@ -24,7 +24,7 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
     private double Total;
 
     @SerializedName("Fecha")
-    private Date Fecha;
+    private String Fecha;
 
     @SerializedName("Hora")
     private String Hora;
@@ -37,6 +37,9 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
 
     @SerializedName("Tiket")
     private String Tiket;
+
+    @SerializedName("Recibe")
+    private String Recibe;
 
     public int getIdEstacion() {
         return IdEstacion;
@@ -70,11 +73,11 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
         this.Total = total;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return Fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.Fecha = fecha;
     }
 
@@ -116,5 +119,13 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
 
     public void setIdAnticipo(int idAnticipo) {
         IdAnticipo = idAnticipo;
+    }
+
+    public String getRecibe() {
+        return Recibe;
+    }
+
+    public void setRecibe(String recibe) {
+        Recibe = recibe;
     }
 }

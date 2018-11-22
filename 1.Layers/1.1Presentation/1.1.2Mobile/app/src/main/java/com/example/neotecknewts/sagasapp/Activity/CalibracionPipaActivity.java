@@ -193,7 +193,7 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                 EsTanquePipaFinalPruebas = true;
             }
         });
-        SCalibracionPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(
+       /* SCalibracionPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(
                 this,
                 R.layout.custom_spinner,
                 list_pipa_salida
@@ -202,7 +202,7 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                 this,
                 R.layout.custom_spinner,
                 list_tipo_medidor
-        ));
+        ));*/
         SCalibracionPipaActivityPruebas.setAdapter(new ArrayAdapter<>(
                 this,
                 R.layout.custom_spinner,
@@ -328,6 +328,7 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                         list_tipo_medidor
                 ));
             }
+
         }
     }
 

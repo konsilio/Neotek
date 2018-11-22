@@ -190,7 +190,7 @@ public class RegistrarPapeletaInteractorImpl implements RegistrarPapeletaInterac
                         Log.w("Orden de referencia ", "Success");
                         registrarPapeletaPresenter.onSuccessReferencia(data,esExpedidor);
                     }else{
-                        //registrarPapeletaPresenter.onError(data.getMensaje());
+                        registrarPapeletaPresenter.onError(data.getMensaje());
                     }
                 }
                 else {

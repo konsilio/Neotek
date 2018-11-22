@@ -67,7 +67,7 @@ public class CalibracionEstacionActivity extends AppCompatActivity
                 SCalibracionEstacionActivityListaMedidor);
         lista_estacion = new String[]{"Estación No. 1","Estacion No. 2"};
         lista_medidor = new String[]{"Magnatel","Rotogate"};
-        SCalibracionEstacionActivityListaEstaciones.setAdapter(new ArrayAdapter<>(
+        /*SCalibracionEstacionActivityListaEstaciones.setAdapter(new ArrayAdapter<>(
                 this,
                 R.layout.custom_spinner,
                 lista_estacion
@@ -76,7 +76,7 @@ public class CalibracionEstacionActivity extends AppCompatActivity
                 this,
                 R.layout.custom_spinner,
                 lista_medidor
-        ));
+        ));*/
         SCalibracionEstacionActivityListaEstaciones.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override

@@ -14,14 +14,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class RespuestaOrdenReferenciaDTO extends RespuestaDTO {
 
-    @SerializedName("Id")
-    private int Id;
+    /*@SerializedName("Id")
+    private int IdReferencia;
 
-    public int getId() {
-        return Id;
+    public int getIdReferencia() {
+        return this.IdReferencia;
     }
 
-    public void setId(int id) {
-        Id = id;
-    }
+    public void setIdReferencia(int Referencia) {
+        this.IdReferencia = Referencia;
+    }*/
 }

@@ -81,13 +81,13 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
         }
         lecturaCamionetaPresenter = new LecturaCamionetaPresenterImpl(this);
         BtnLecturaCamionetaActivityAceptar.setOnClickListener(v -> verificarForm());
-        list_camionetas = new String[]{"Seleccione","Camioneta Ford","Camioneta Chevy"};
+        /*list_camionetas = new String[]{"Seleccione","Camioneta Ford","Camioneta Chevy"};*/
         list_quien = new String[]{"Seleccione","Encargado de Puerta","Encargado del Andén"};
-        SLecturaCamionetaActivityListaCamioneta.setAdapter(new ArrayAdapter<>(this,
-                R.layout.custom_spinner,list_camionetas));
+        /*SLecturaCamionetaActivityListaCamioneta.setAdapter(new ArrayAdapter<>(this,
+                R.layout.custom_spinner,list_camionetas));*/
         SLecturaCamionetaActivityListaQuien.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_quien));
-        lecturaCamionetaPresenter.GetListCamionetas(session.getToken(),EsLecturaFinalCamioneta);
+
         SLecturaCamionetaActivityListaCamioneta.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
@@ -132,6 +132,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
                 lecturaCamionetaDTO.setEsEncargadoPuerta(true);
             }
         });
+        lecturaCamionetaPresenter.GetListCamionetas(session.getToken(),EsLecturaFinalCamioneta);
     }
     @Override
     public void verificarForm(){

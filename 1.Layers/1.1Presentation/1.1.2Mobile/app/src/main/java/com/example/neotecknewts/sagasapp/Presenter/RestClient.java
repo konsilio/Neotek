@@ -388,7 +388,7 @@ public interface RestClient {
      * @return Retorna un objeto {@link RespuestaOrdenReferenciaDTO} con el resultado de la solicitud
      * al api
      */
-    @POST(Constantes.GET_ORDEN_REFERENCIA)
+    @GET(Constantes.GET_ORDEN_REFERENCIA)
     Call<RespuestaOrdenReferenciaDTO> getReferenciaOrden(
             @Path(value = "IdOrdenCompra") int idOrdenCompra,
             @Header("Authorization") String token,

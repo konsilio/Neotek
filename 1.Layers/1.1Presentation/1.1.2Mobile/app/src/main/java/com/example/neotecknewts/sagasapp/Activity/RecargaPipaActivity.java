@@ -189,7 +189,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
             ValidateForm();
         });
 
-        SRecargaPipaActivityPipa.setAdapter(new ArrayAdapter<>(
+        /*SRecargaPipaActivityPipa.setAdapter(new ArrayAdapter<>(
                 this,
                 R.layout.custom_spinner,
                 lista_pipa
@@ -204,7 +204,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
                 this,
                 R.layout.custom_spinner,
                 lista_medidor
-        ));
+        ));*/
         if(EsRecargaPipaFinal){
             TVRecargaPipaActiviryTituloMedidor.setVisibility(View.VISIBLE);
             SRecargaPipaActivityMedidor.setVisibility(View.VISIBLE);

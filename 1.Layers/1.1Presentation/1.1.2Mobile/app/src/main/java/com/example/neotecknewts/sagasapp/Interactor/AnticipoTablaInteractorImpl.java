@@ -137,7 +137,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
                     .addConverterFactory(GsonConverterFactory.create(gsons))
                     .build();
             RestClient restClient = retrofits.create(RestClient.class);
-            corteDTO.setFecha(new Date());
+            corteDTO.setFecha(new Date().toString());
 
             Call<RespuestaCorteDto> call = restClient.
                     postCorte(corteDTO,token,"application/json");
