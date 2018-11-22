@@ -10,6 +10,8 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
+import java.util.Date;
+
 public class AnticipoTablaPresenterImpl implements AnticipoTablaPresenter {
     AnticipoTablaView view;
     AnticipoTablaInteractor interactor;
@@ -54,9 +56,9 @@ public class AnticipoTablaPresenterImpl implements AnticipoTablaPresenter {
     }
 
     @Override
-    public void getAnticipos(String token,int idEstacion,boolean esAnticipos) {
+    public void getAnticipos(String token,int idEstacion,boolean esAnticipos,String fecha) {
         view.onShowProgress(R.string.message_cargando);
-        interactor.getAnticipos(token,idEstacion,esAnticipos);
+        interactor.getAnticipos(token,idEstacion,esAnticipos,fecha);
     }
 
     @Override

@@ -1,8 +1,9 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -41,10 +43,12 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     TableLayout TLAnticipoTablaActivityTabla,TLAnticipoTablaActivityResultadosCorteDeCaja;
     TextView TVAnticipoTablaActivityTotal,TVAnticipoTablaActivityTitulo,TVAnticipoTablaActivityP5000,
             TVAnticipoTableActivityInicial,TVAnticipoTableActivityFinal,TVAnticipoTableActivityLitros,
-        TVAnticipoTableMontoDeCorte,TVAnticipoTableActivityAnticipos;
+        TVAnticipoTableMontoDeCorte,TVAnticipoTableActivityAnticipos,
+            TVAnticipoTablaActivityFecha;
     Spinner SPAnticipoTablaActivityFechaCorte;
     TableRow TRAnticipoTablaActivityTituloAnticipo,TRAnticipoTablaActivityFormAnticipar;
     EditText ETAnticipoTablaActivityAnticipo;
+    ImageButton IBAnticipotABLAactivityFecha;
 
     double total;
     ArrayList<String[]> elementos;
@@ -58,6 +62,17 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     Tabla tabla;
     RespuestaEstacionesVentaDTO datos;
     NumberFormat dformat;
+    public int mYear,mMonth,mDay;
+    public Date fecha;
+
+    public DatePickerDialog.OnDateSetListener onDateSetListener =
+            (view, year, month, dayOfMonth) -> {
+                mYear = year;
+                mMonth = month;
+                mDay = dayOfMonth;
+                setFecha();
+            };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,14 +84,27 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             anticiposDTO = (AnticiposDTO) bundle.getSerializable("anticiposDTO");
             corteDTO = (CorteDTO) bundle.getSerializable("corteDTO");
         }
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        session = new Session(AnticipoTablaActivity.this);
         dformat  = new DecimalFormat("#.00");
         BtnAnticipoTablaActivityRegresar = findViewById(R.id.BtnAnticipoTablaActivityRegresar);
         BtnAnticipoTablaActivityHacerAnticipo = findViewById(R.id.
                 BtnAnticipoTablaActivityHacerAnticipo);
         TVAnticipoTablaActivityTotal = findViewById(R.id.TVAnticipoTablaActivityTotal);
-        SPAnticipoTablaActivityFechaCorte = findViewById(R.id.SPAnticipoTablaActivityFechaCorte);
-        SPAnticipoTablaActivityFechaCorte.setVisibility((EsCorte)?View.VISIBLE:View.GONE);
+        //SPAnticipoTablaActivityFechaCorte = findViewById(R.id.SPAnticipoTablaActivityFechaCorte);
+        //SPAnticipoTablaActivityFechaCorte.setVisibility((EsCorte)?View.VISIBLE:View.GONE);
         TVAnticipoTablaActivityTitulo = findViewById(R.id.TVAnticipoTablaActivityTitulo);
+        TVAnticipoTablaActivityFecha = findViewById(R.id.TVAnticipoTablaActivityFecha);
+        IBAnticipotABLAactivityFecha = findViewById(R.id.IBAnticipotABLAactivityFecha);
+        IBAnticipotABLAactivityFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog(0);
+            }
+        });
         TVAnticipoTablaActivityP5000 = findViewById(R.id.TVAnticipoTablaActivityP5000);
         ETAnticipoTablaActivityAnticipo = findViewById(R.id.ETAnticipoTablaActivityAnticipo);
         if(EsCorte) {
@@ -112,21 +140,19 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         setTitle((EsCorte)?getString(R.string.corte_de_caja):
                 getString(R.string.Anticipo));
         BtnAnticipoTablaActivityRegresar.setOnClickListener(V->finish());
-        BtnAnticipoTablaActivityHacerAnticipo.setOnClickListener(V->{
-            VerificarCampos();
-        });
+        BtnAnticipoTablaActivityHacerAnticipo.setOnClickListener(V-> VerificarCampos());
         BtnAnticipoTablaActivityHacerAnticipo.setText((EsCorte)?getString(R.string.hacer_corte):
         getString(R.string.hacer_anticipo));
         TVAnticipoTablaActivityP5000.setVisibility((EsCorte)? View.VISIBLE:View.GONE);
         TLAnticipoTablaActivityTabla = findViewById(R.id.TLAnticipoTablaActivityTabla);
         presenter = new AnticipoTablaPresenterImpl(this);
         session = new Session(this);
-        presenter.getAnticipos(session.getToken()
-                ,EsAnticipo?anticiposDTO.getIdEstacion():corteDTO.getIdEstacion(),EsAnticipo);
+        /*presenter.getAnticipos(session.getToken()
+                ,EsAnticipo?anticiposDTO.getIdEstacion():corteDTO.getIdEstacion(),EsAnticipo);*/
         tabla = new Tabla(this, TLAnticipoTablaActivityTabla);
         tabla.Cabecera(R.array.header_tabla_anticipo);
         elementos = new ArrayList<>();
-        SPAnticipoTablaActivityFechaCorte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       /* SPAnticipoTablaActivityFechaCorte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i>=0 && EsCorte) {
@@ -156,15 +182,8 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 corteDTO.setFechaVenta(null);
             }
         });
-
+        */
         NumberFormat format = NumberFormat.getCurrencyInstance();
-       /* for(int i = 0; i < 15; i++)
-        {
-            elementos.add(new String[]{"201809180785236","18/09/2018",
-                    format.format(i*100.00)});
-            total += i*100;
-        }
-        tabla.agregarFila(elementos);*/
         session = new Session(this);
         sagasSql = new SAGASSql(this);
         TVAnticipoTablaActivityTotal.setText(format.format(total));
@@ -346,7 +365,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         TVAnticipoTablaActivityTotal.setText(valor);
                     }
                 }
-                if(data.getFechasCorte()!=null){
+                /*if(data.getFechasCorte()!=null){
                     if(data.getFechasCorte().size()>0){
                         String[] fechas = new String[data.getFechasCorte()
                                 .size()];
@@ -367,7 +386,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                                 fechas
                         ));
                     }
-                }
+                }*/
             }
             if(!elementos.isEmpty()) {
                 tabla.agregarFila(elementos);
@@ -405,5 +424,39 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             intent.putExtra("corteDTO",corteDTO);
             startActivity(intent);
         }
+    }
+
+    public void setFecha(){
+        if(fecha==null){
+            fecha = new Date();
+        }
+        TVAnticipoTablaActivityFecha.setText(
+                new StringBuilder()
+                        // Month is 0 based so add 1
+                        .append(mDay).append("/")
+                        .append(mMonth + 1).append("/")
+                        .append(mYear).append(" "));
+        fecha.setDate(mDay);
+        fecha.setMonth(mMonth);
+        fecha.setYear(mYear);
+        presenter.getAnticipos(
+                session.getToken(),
+                EsAnticipo? anticiposDTO.getIdEstacion():corteDTO.getIdEstacion(),
+                EsAnticipo,
+                String.valueOf(mYear)+"-"+String.valueOf(mMonth)+"-"+String.valueOf(mDay)
+        );
+
+    }
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case 0:
+                DatePickerDialog dialog = new DatePickerDialog(this,
+                        R.style.datepicker,
+                        onDateSetListener,
+                        mYear, mMonth, mDay);
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                return  dialog;
+        }
+        return null;
     }
 }
