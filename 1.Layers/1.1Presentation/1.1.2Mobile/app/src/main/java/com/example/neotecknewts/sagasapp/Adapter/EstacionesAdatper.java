@@ -76,10 +76,16 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
                     Log.w("Estación",this.getItem(position).getNombreCAlmacen());
                     Log.w("Id",this.getItem(position).getNombreCAlmacen());
                     anticiposDTO.setIdEstacion(getItem(position).getIdCAlmacenGas());
+                    anticiposDTO.setIdCAlmacen(getItem(position).getIdCAlmacenGas());
                     anticiposDTO.setNombreEstacion(getItem(position).getNombreCAlmacen());
                 }else if(EsCorte){
                     corteDTO.setIdEstacion(mObject.getIdCAlmacenGas());
                     corteDTO.setNombreEstacion(mObject.getNombreCAlmacen());
+                    corteDTO.setNombreEstacion(mObject.getNombreCAlmacen());
+                    corteDTO.setP5000Inicial(1000);
+                    corteDTO.setP5000Final(900);
+                    corteDTO.setLitrosCorte(corteDTO.getP5000Inicial()-corteDTO.getP5000Final());
+
                 }
                 intent.putExtra("EsAnticipo",EsAnticipo);
                 intent.putExtra("EsCorte",EsCorte);

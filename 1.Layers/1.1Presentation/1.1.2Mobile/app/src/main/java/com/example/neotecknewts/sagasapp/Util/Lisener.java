@@ -272,11 +272,9 @@ public class Lisener{
                                 )
                         );
                         corteDTO.setFecha(
-                                new Date(
-                                        cursor.getString(
+                                cursor.getString(
                                                 cursor.getColumnIndex("Fecha")
                                         )
-                                )
                         );
 
                         corteDTO.setIdEstacion(
