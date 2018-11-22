@@ -3,26 +3,68 @@ using System.Linq;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.DTOs.Mobile;
 using System;
+using Sagas.MainModule.ObjetosValor.Enum;
+using Application.MainModule.Servicios.Catalogos;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
     public class AnticiposCortesAdapter
     {
-        public static DatosAnticiposCorteDto ToDTO(List<EstacionCarburacion> estaciones)
+        public static DatosAnticiposCorteDto ToDTO(List<EstacionCarburacion> estaciones,List<UnidadAlmacenGas>unidades)
         {
             return new DatosAnticiposCorteDto()
             {
-                estaciones = estaciones.Select(x=>ToDTO(x)).ToList()
+                estaciones = estaciones.Select(x=>ToDTO(x,unidades)).ToList(), 
             };
         }
 
-        private static EstacionesDto ToDTO(EstacionCarburacion estacion)
+        private static EstacionesDto ToDTO(EstacionCarburacion estacion, List<UnidadAlmacenGas> unidades)
         {
+            var unidadEstacion = unidades.Single(x => x.IdEstacionCarburacion.Value.Equals(estacion.IdEstacionCarburacion));
+            var lecturaInicial = unidadEstacion.TomasLectura.Where(
+                x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
+                ).OrderBy(x=>x.FechaRegistro).Last();
             return new EstacionesDto()
             {
+                Medidor = TipoMedidorAdapter.ToDto(TipoMedidorGasServicio.Obtener(unidadEstacion.IdTipoMedidor.Value)),
+                IdTipoMedidor = unidadEstacion.IdTipoMedidor.Value,
                 IdAlmacenGas = (short)estacion.IdEstacionCarburacion,
-                NombreAlmacen = estacion.Nombre
+                NombreAlmacen = estacion.Nombre,
+                P5000Inicial = lecturaInicial.P5000.Value,
+                P5000Final =unidadEstacion.P5000Actual.Value,
+                AnticiposEstacion = ToDTO(unidadEstacion)
             };
+        }
+
+        public static AnticiposEstacionDTO ToDTO(UnidadAlmacenGas unidad)
+        {
+            var anticiposEstacion = PuntoVentaServicio.ObtenerAnticipos(unidad).FindAll(x=>x.DatosProcesados.Equals(false));
+            decimal suma = anticiposEstacion.Sum(x => x.TotalAnticipado);
+            return new AnticiposEstacionDTO()
+            {
+                IdCAlmacenGas = unidad.IdCAlmacenGas,
+                IdEstacion = unidad.IdEstacionCarburacion.Value,
+                Anticipos = ToDTO(anticiposEstacion),
+                Total = suma
+            };
+        }
+
+        public static List<AnticipoDto> ToDTO(List<VentaCorteAnticipoEC> anticiposEstacion)
+        {
+            List<AnticipoDto> anticipos = new List<AnticipoDto>();
+            foreach (var anticipoEstacion in anticiposEstacion)
+            {
+                anticipos.Add(new AnticipoDto()
+                {
+                    ClaveOperacion = anticipoEstacion.FolioOperacion,
+                    Fecha = anticipoEstacion.FechaRegistro,
+                    Monto = anticipoEstacion.TotalAnticipado,
+                    Total = anticipoEstacion.TotalVenta,
+                    IdCAlmacenGas = (short)anticipoEstacion.CAlmacenGas.IdEstacionCarburacion.Value,
+                    
+                });
+            }
+            return anticipos;
         }
 
         public static VentaCorteAnticipoEC FromDto(AnticipoDto dto, short idEmpresa, int idUsario, PuntoVenta puntoventa)
