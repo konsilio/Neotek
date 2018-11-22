@@ -347,11 +347,16 @@ namespace Application.MainModule.Flujos
             return list; 
         }
 
-        public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(int idEstacion, bool esAnticipos)
+        public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(int idEstacion, bool esAnticipos,DateTime fecha)
         {
             var almacen = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdEstacionCarburacion.Equals(idEstacion));
             var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
             var ventas = CajaGeneralServicio.ObtenerVentasPuntosVenta(puntosVenta.IdPuntoVenta).OrderBy(x=>x.FechaRegistro).ToList();
+            if (fecha!=null)
+            {
+                ventas = ventas.FindAll(x => x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Year.Equals(fecha.Year));
+            }
+           
             
             return AnticiposCortesAdapter.ToDTO(ventas, esAnticipos);
         }
@@ -435,7 +440,26 @@ namespace Application.MainModule.Flujos
         public DatosAnticiposCorteDto Estaciones()
         {
             var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
-            return AnticiposCortesAdapter.ToDTO(estaciones);
+            var unidades = UnidadesEstaciones(estaciones);
+
+            return AnticiposCortesAdapter.ToDTO(estaciones,unidades);
+        }
+
+        public List<UnidadAlmacenGas> UnidadesEstaciones(List<EstacionCarburacion> estaciones)
+        {
+            List<UnidadAlmacenGas> unidades = new List<UnidadAlmacenGas>();
+            var unidadesEstaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
+            foreach (var estacion in estaciones)
+            {
+
+                unidades.Add(
+                    unidadesEstaciones.Find(
+                        x => x.IdEstacionCarburacion.Value.Equals(estacion.IdEstacionCarburacion)
+                        && x.IdEstacionCarburacion!=null
+                    ));
+            }
+           
+            return unidades;
         }
 
         public RespuestaDto anticipo(AnticipoDto dto)

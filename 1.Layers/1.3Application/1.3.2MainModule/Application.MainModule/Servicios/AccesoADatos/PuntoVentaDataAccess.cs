@@ -134,6 +134,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        public List<VentaCorteAnticipoEC> Anticipos(UnidadAlmacenGas unidadEstacion)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get(
+                x => x.IdCAlmacenGas.Equals(unidadEstacion.IdCAlmacenGas)
+            ).ToList();
+        }
+
         public List<VentaPuntoDeVenta> BuscarVentasTipoPago(int idPuntoVenta, DateTime fecha, bool esCredito)
         {
             if(esCredito)

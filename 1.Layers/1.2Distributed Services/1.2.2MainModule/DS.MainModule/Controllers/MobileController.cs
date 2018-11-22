@@ -292,10 +292,10 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.corte(dto), Request);
         }
         //[AllowAnonymous]
-        [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}")]
-        public HttpResponseMessage GetVentasCortesAnticipos(int estacion, bool esAnticipos)
+        [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}/{fecha}")]
+        public HttpResponseMessage GetVentasCortesAnticipos(int estacion, bool esAnticipos,DateTime fecha)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos,fecha), Request);
         }
         [Route("consulta/precioventa/vigente")]
         public HttpResponseMessage GetPreciosVentaVigente()
