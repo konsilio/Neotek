@@ -82,7 +82,9 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
                     corteDTO.setIdEstacion(mObject.getIdCAlmacenGas());
                     corteDTO.setNombreEstacion(mObject.getNombreCAlmacen());
                     corteDTO.setNombreEstacion(mObject.getNombreCAlmacen());
+                    //corteDTO.setP5000Inicial(mObject.getP5000Inicial());
                     corteDTO.setP5000Inicial(1000);
+                    //corteDTO.setP5000Final(mObject.getP5000Final());
                     corteDTO.setP5000Final(900);
                     corteDTO.setLitrosCorte(corteDTO.getP5000Inicial()-corteDTO.getP5000Final());
 
