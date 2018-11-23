@@ -199,7 +199,7 @@ namespace Application.MainModule.Flujos
 
             adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
             adapter.FolioVenta = venta.FolioVenta;
-            adapter.FolioOperacionDia = venta.FolioVenta;
+            //adapter.FolioOperacionDia = venta.FolioVenta;
             adapter.FechaRegistro = venta.Fecha;
             adapter.Dia = (byte) venta.Fecha.Day;
             adapter.Mes = (byte) venta.Fecha.Month;
@@ -347,11 +347,16 @@ namespace Application.MainModule.Flujos
             return list; 
         }
 
-        public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(int idEstacion, bool esAnticipos)
+        public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(int idEstacion, bool esAnticipos,DateTime fecha)
         {
             var almacen = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdEstacionCarburacion.Equals(idEstacion));
             var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
             var ventas = CajaGeneralServicio.ObtenerVentasPuntosVenta(puntosVenta.IdPuntoVenta).OrderBy(x=>x.FechaRegistro).ToList();
+            if (fecha!=null)
+            {
+                ventas = ventas.FindAll(x => x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Year.Equals(fecha.Year));
+            }
+           
             
             return AnticiposCortesAdapter.ToDTO(ventas, esAnticipos);
         }
@@ -435,7 +440,26 @@ namespace Application.MainModule.Flujos
         public DatosAnticiposCorteDto Estaciones()
         {
             var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
-            return AnticiposCortesAdapter.ToDTO(estaciones);
+            var unidades = UnidadesEstaciones(estaciones);
+
+            return AnticiposCortesAdapter.ToDTO(estaciones,unidades);
+        }
+
+        public List<UnidadAlmacenGas> UnidadesEstaciones(List<EstacionCarburacion> estaciones)
+        {
+            List<UnidadAlmacenGas> unidades = new List<UnidadAlmacenGas>();
+            var unidadesEstaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
+            foreach (var estacion in estaciones)
+            {
+
+                unidades.Add(
+                    unidadesEstaciones.Find(
+                        x => x.IdEstacionCarburacion.Value.Equals(estacion.IdEstacionCarburacion)
+                        && x.IdEstacionCarburacion!=null
+                    ));
+            }
+           
+            return unidades;
         }
 
         public RespuestaDto anticipo(AnticipoDto dto)
@@ -447,7 +471,7 @@ namespace Application.MainModule.Flujos
             var anticipos = VentaServicio.ObtenerAnticipos(TokenServicio.ObtenerIdEmpresa());
             var estacion = AlmacenGasServicio.ObtenerAlmacen(dto.IdCAlmacenGas);
 
-            return VentaServicio.Anticipo(dto,TokenServicio.ObtenerIdEmpresa(),TokenServicio.ObtenerIdUsuario(),anticipos, estacion);
+            return VentaServicio.Anticipo(dto,TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), anticipos, estacion);
         }
 
         public RespuestaDto corte(CorteDto dto)
@@ -456,9 +480,26 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             var cortes = VentaServicio.ObtenerCortes(TokenServicio.ObtenerIdEmpresa());
-            var estacion = AlmacenGasServicio.ObtenerAlmacen(dto.IdCAlmacenGas);
+            var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
+            var estacion = estaciones.Find(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
+            var almacenes = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
+            var almacen = almacenes.Find(x =>x.IdEstacionCarburacion.Value.Equals(dto.IdCAlmacenGas));
+            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
+            var puntoventa = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+            var entrega = puntoventa.OperadorChofer.Usuario;
+            
+            var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoventa,almacen);
 
-            return VentaServicio.Corte(dto,TokenServicio.ObtenerIdEmpresa(),TokenServicio.ObtenerIdUsuario(), cortes, estacion);
+           /* if (corte.Exito)
+            {
+                var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoventa.IdPuntoVenta, dto.Fecha);
+                var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoventa.IdPuntoVenta, dto.Fecha);
+
+                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), puntoventa, puntoventa.OperadorChofer, entrega, deContado,credito);
+                return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
+            }*/
+
+            return corte;
         }
 
         public DatosOtrosDto catalogoOtros()
@@ -492,6 +533,10 @@ namespace Application.MainModule.Flujos
         {
             var cilindros = AlmacenGasServicio.ObtenerCilindros();
             return VentasEstacionesAdapter.ToDTOC(cilindros);          
+        }
+        public ClienteDTO BuscarClientePorRFC(string rfc)
+        {
+            return  ClienteAdapter.ToDTO(ClienteServicio.BuscarClientePorRFC(rfc));
         }
     }
 }

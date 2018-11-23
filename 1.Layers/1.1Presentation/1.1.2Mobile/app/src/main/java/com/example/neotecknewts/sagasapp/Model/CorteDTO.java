@@ -14,12 +14,12 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
     private String Tiket;
 
     @SerializedName("Fecha")
-    private Date Fecha;
+    private String Fecha;
 
     @SerializedName("Monto")
     private double Monto;
 
-    @SerializedName("IdEstacion")
+    @SerializedName("IdCAlmacenGas")
     private int IdEstacion;
 
     @SerializedName("NombreEstacion")
@@ -49,6 +49,15 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("Hora")
     private String Hora;
 
+    @SerializedName("FechaVenta")
+    private String FechaVenta;
+
+    @SerializedName("TotalAnticipos")
+    private double TotalAnticipos;
+
+    @SerializedName("Recibe")
+    private String Recibe;
+
     public int getId() {
         return IdCorte;
     }
@@ -65,11 +74,11 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
         Tiket = tiket;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return Fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         Fecha = fecha;
     }
 
@@ -159,5 +168,29 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
 
     public void setHora(String hora) {
         Hora = hora;
+    }
+
+    public String getFechaVenta() {
+        return FechaVenta;
+    }
+
+    public void setFechaVenta(String fechaVenta) {
+        FechaVenta = fechaVenta;
+    }
+
+    public double getTotalAnticipos() {
+        return TotalAnticipos;
+    }
+
+    public void setTotalAnticipos(double totalAnticipos) {
+        TotalAnticipos = totalAnticipos;
+    }
+
+    public String getRecibe() {
+        return Recibe;
+    }
+
+    public void setRecibe(String recibe) {
+        Recibe = recibe;
     }
 }

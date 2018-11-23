@@ -99,6 +99,7 @@
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
+    <Compile Include="DTOs\Mobile\AnticiposEstacionDTO.cs" />
     <Compile Include="DTOs\Mobile\AutoconsumoDTO.cs" />
     <Compile Include="DTOs\Mobile\CalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\CamionetaDto.cs" />

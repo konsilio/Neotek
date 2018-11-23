@@ -29,6 +29,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.PrecioVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
@@ -373,7 +374,7 @@ public interface RestClient {
     @POST(Constantes.POST_CORTE)
     Call<RespuestaCorteDto> postCorte(@Body CorteDTO corteDTO,
                                       @Header("Authorization") String token,
-                                      @Header("Content-type") String contenType);
+                                      @Header("Content-type") String contentType);
 
     /**
      * getReferenciaOrden
@@ -387,7 +388,7 @@ public interface RestClient {
      * @return Retorna un objeto {@link RespuestaOrdenReferenciaDTO} con el resultado de la solicitud
      * al api
      */
-    @POST(Constantes.GET_ORDEN_REFERENCIA)
+    @GET(Constantes.GET_ORDEN_REFERENCIA)
     Call<RespuestaOrdenReferenciaDTO> getReferenciaOrden(
             @Path(value = "IdOrdenCompra") int idOrdenCompra,
             @Header("Authorization") String token,
@@ -397,11 +398,25 @@ public interface RestClient {
     Call<RespuestaEstacionesVentaDTO> getAnticipo_y_Corte(
             @Path(value = "estacion") int estacion,
             @Path(value = "esAnticipos") boolean esAnticipos,
+            @Path(value = "fecha") String fecha,
             @Header("Authorization") String token,
             @Header("Content-type") String contenType
     );
     @GET(Constantes.GET_CILINDROS_VENTA)
     Call<List<ExistenciasDTO>> getListaExistencias(
+            @Header("Authorization") String token,
+            @Header("Content-type") String contenType
+    );
+
+    /**
+     * getPrecioVenta
+     * Permite extraer los valores de venta de gas
+     * @param token String que reprecenta el token de usuario
+     * @param contentType Reprecenta el tipo de contenid
+     * @return Un objeto de tipo {@link PrecioVentaDTO} con los valores de gas
+     */
+    @GET(Constantes.GET_PRECIO_VENTA)
+    Call<PrecioVentaDTO> getPrecioVenta(
             @Header("Authorization") String token,
             @Header("Content-type") String contenType
     );

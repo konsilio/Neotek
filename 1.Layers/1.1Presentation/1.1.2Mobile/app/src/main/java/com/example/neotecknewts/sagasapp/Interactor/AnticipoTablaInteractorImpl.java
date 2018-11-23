@@ -19,6 +19,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -89,7 +90,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
         Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/db/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gsons))
                 .build();
         RestClient restClientS = retrofits.create(RestClient.class);
@@ -137,7 +138,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
                     .addConverterFactory(GsonConverterFactory.create(gsons))
                     .build();
             RestClient restClient = retrofits.create(RestClient.class);
-            corteDTO.setFecha(new Date());
+            //corteDTO.setFecha(new Date().toString());
 
             Call<RespuestaCorteDto> call = restClient.
                     postCorte(corteDTO,token,"application/json");
@@ -173,7 +174,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
     }
 
     @Override
-    public void getAnticipos(String token,int estacion,boolean esAnticipos) {
+    public void getAnticipos(String token,int estacion,boolean esAnticipos,String fecha) {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
@@ -190,6 +191,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
         Call<RespuestaEstacionesVentaDTO> call = restClient.getAnticipo_y_Corte(
                 estacion,
                 esAnticipos,
+                fecha,
                 token,
                 "application/json"
         );

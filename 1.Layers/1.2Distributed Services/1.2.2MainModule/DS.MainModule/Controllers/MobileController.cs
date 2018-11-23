@@ -44,7 +44,7 @@ namespace DS.MainModule.Controllers
         [Route("lista/ordenes/compra")]
         public HttpResponseMessage GetListaOrdenesCompra(short IdEmpresa, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa,EsGas,EsActivoVenta,EsTransporteGas), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa, EsGas, EsActivoVenta, EsTransporteGas), Request);
         }
 
         [Route("lista/ordenes/compra/{IdOrdenCompra}")]
@@ -136,9 +136,9 @@ namespace DS.MainModule.Controllers
         /// <param name="EsCamioneta">Es una camioneta</param>
         /// <returns></returns>
         [Route("catalogos/almacenes/{esEstacion}/{esPipa}/{esCamioneta}/{esFinalizar}")]
-        public HttpResponseMessage GetDatosTomaLectura(bool esEstacion, bool esPipa,bool esCamioneta, bool esFinalizar = false)
+        public HttpResponseMessage GetDatosTomaLectura(bool esEstacion, bool esPipa, bool esCamioneta, bool esFinalizar = false)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.ConsultaDatosTomaLectura(esEstacion, esPipa, esCamioneta, esFinalizar),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.ConsultaDatosTomaLectura(esEstacion, esPipa, esCamioneta, esFinalizar), Request);
         }
         /// <summary>
         /// Permite realizar el registro de la recarga para la 
@@ -149,7 +149,7 @@ namespace DS.MainModule.Controllers
         [Route("recarga/camioneta")]
         public HttpResponseMessage PostRecargaCamioneta(RecargaDTO rdto)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.IniciarRecargaCamioneta(rdto),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.IniciarRecargaCamioneta(rdto), Request);
         }
         /// <summary>
         /// Permite realizar el registro de la recarga inicial de pipa y estación
@@ -191,7 +191,7 @@ namespace DS.MainModule.Controllers
         [Route("reportes/reporte-dia/{fecha}/{idCAlmacenGas}")]
         public HttpResponseMessage GetReporteDia(DateTime fecha, short idCAlmacenGas)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.ReporteDia(fecha, idCAlmacenGas),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.ReporteDia(fecha, idCAlmacenGas), Request);
         }
         /// <summary>
         /// No aplica
@@ -235,25 +235,25 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.Venta(venta), Request);
         }
         [Route("catalogos/recarga/{esEstacion}/{esPipa}/{esCamioneta}")]
-        public HttpResponseMessage GetListaRecargas(bool esEstacion,bool esPipa,bool esCamioneta)
+        public HttpResponseMessage GetListaRecargas(bool esEstacion, bool esPipa, bool esCamioneta)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoRecargas(esEstacion, esPipa, esCamioneta),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoRecargas(esEstacion, esPipa, esCamioneta), Request);
         }
 
         [Route("autoconsumo/{esFinal}")]
-        public HttpResponseMessage PostAutoconsumo(AutoconsumoDTO dto,bool esFinal = false)
+        public HttpResponseMessage PostAutoconsumo(AutoconsumoDTO dto, bool esFinal = false)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.Autoconsumo(dto,esFinal),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.Autoconsumo(dto, esFinal), Request);
         }
 
         [Route("catalogos/autoconsumo/{esEstacion}/{esInventario}/{esPipas}/{esFinal}")]
-        public HttpResponseMessage GetCatalogosAutoconsumo(bool esEstacion,bool esInventario,bool esPipas,bool esFinal = false)
+        public HttpResponseMessage GetCatalogosAutoconsumo(bool esEstacion, bool esInventario, bool esPipas, bool esFinal = false)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoAutoconsumo(esEstacion, esInventario, esPipas,esFinal),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoAutoconsumo(esEstacion, esInventario, esPipas, esFinal), Request);
         }
 
         [Route("catalogos/calibracion/{esEstacion}/{esPipa}")]
-        public HttpResponseMessage GetCatalogosCalibracion(bool esEstacion,bool esPipa)
+        public HttpResponseMessage GetCatalogosCalibracion(bool esEstacion, bool esPipa)
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoCalibracion(esEstacion, esPipa), Request);
         }
@@ -261,25 +261,25 @@ namespace DS.MainModule.Controllers
         [Route("calibracion/{esFinal}")]
         public HttpResponseMessage PostCalibracion(CalibracionDto dto, bool esFinal)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.Calibracion(dto,esFinal), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.Calibracion(dto, esFinal), Request);
         }
 
         [Route("catalogos/traspaso/{esPipa}")]
         public HttpResponseMessage GetCatalogoTraspaso(bool esPipa)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoTraspaso(esPipa),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoTraspaso(esPipa), Request);
         }
 
         [Route("traspaso/{esFinal}")]
-        public HttpResponseMessage PostTraspaso(TraspasoDto dto,bool esFinal)
+        public HttpResponseMessage PostTraspaso(TraspasoDto dto, bool esFinal)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.Traspaso(dto,esFinal),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.Traspaso(dto, esFinal), Request);
         }
         //Anticipos y corte
         [Route("catalogos/anticipo-y-corte/estaciones")]
         public HttpResponseMessage GetEstaciones()
         {
-            return RespuestaHttp.crearRespuesta(_mobile.Estaciones(),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.Estaciones(), Request);
         }
         [Route("anticipos")]
         public HttpResponseMessage PostAnticipo(AnticipoDto dto)
@@ -289,13 +289,13 @@ namespace DS.MainModule.Controllers
         [Route("corte-de-caja")]
         public HttpResponseMessage PostCorte(CorteDto dto)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.corte(dto),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.corte(dto), Request);
         }
         //[AllowAnonymous]
-        [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}")]
-        public HttpResponseMessage GetVentasCortesAnticipos(int estacion,bool esAnticipos)
+        [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}/{fecha}")]
+        public HttpResponseMessage GetVentasCortesAnticipos(int estacion, bool esAnticipos,DateTime fecha)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos,fecha), Request);
         }
         [Route("consulta/precioventa/vigente")]
         public HttpResponseMessage GetPreciosVentaVigente()
@@ -311,9 +311,9 @@ namespace DS.MainModule.Controllers
         /// <param name="esCilindro">Si es cilindro</param>
         /// <returns></returns>
         [Route("catalogos/venta-gas/{esLP}/{esCilindroConGas}/{esCilindro}")]
-        public HttpResponseMessage GetCatalogosGas(bool esLP,bool esCilindroConGas, bool esCilindro) 
+        public HttpResponseMessage GetCatalogosGas(bool esLP, bool esCilindroConGas, bool esCilindro)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogosGas(esLP,esCilindroConGas,esCilindro),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogosGas(esLP, esCilindroConGas, esCilindro), Request);
         }
         [Route("catalogos/venta-gas/otros")]
         public HttpResponseMessage GetOtros()
@@ -325,6 +325,10 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogosGas(), Request);
         }
-
+        [Route("buscar/cliente/{rfc}")]
+        public HttpResponseMessage GetClientePorRFC(string rfc)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK ,_mobile.BuscarClientePorRFC(rfc));
+        }
     }
 }

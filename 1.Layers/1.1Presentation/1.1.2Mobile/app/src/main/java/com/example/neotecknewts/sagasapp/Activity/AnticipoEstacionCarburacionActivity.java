@@ -72,7 +72,7 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
 
     @Override
     public void onShowProgress(int message_cargando) {
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this,R.style.AlertDialog);
         progressDialog.setTitle(R.string.project_id);
         progressDialog.setMessage(getString(message_cargando));
         progressDialog.setCancelable(false);

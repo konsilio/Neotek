@@ -108,6 +108,47 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                       && x.Activo).FirstOrDefault();
         }
 
+        public RespuestaDto InesertarVentaGeneral(VentaCajaGeneral corteCajaGeneral)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<VentaCajaGeneral>().Insert(corteCajaGeneral);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Mensaje = Exito.OK;
+                    _respuesta.Id = corteCajaGeneral.IdPuntoVenta;
+                }
+                catch(Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "No se ha registrado la venta en general");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+
+            }
+            return _respuesta;
+        }
+
+        public List<VentaCorteAnticipoEC> Anticipos(UnidadAlmacenGas unidadEstacion)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get(
+                x => x.IdCAlmacenGas.Equals(unidadEstacion.IdCAlmacenGas)
+            ).ToList();
+        }
+
+        public List<VentaPuntoDeVenta> BuscarVentasTipoPago(int idPuntoVenta, DateTime fecha, bool esCredito)
+        {
+            if(esCredito)
+                return uow.Repository<VentaPuntoDeVenta>().Get(x => x.PuntoVenta.Equals(idPuntoVenta) && x.FechaRegistro.Equals(fecha) && x.VentaACredito).ToList();
+            else
+                return uow.Repository<VentaPuntoDeVenta>().Get(x => x.PuntoVenta.Equals(idPuntoVenta) && x.FechaRegistro.Equals(fecha) && !x.VentaACredito).ToList();
+        }
+
         public RespuestaDto Eliminar(PuntoVenta cteL)
         {
             RespuestaDto _respuesta = new RespuestaDto();

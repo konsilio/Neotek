@@ -138,9 +138,9 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         //se completan los spinners con los adapters
         String[] ordenes = {"prueba", "prueba"};
         final String[] medidores = {"Magnatel", "Rotogate"};
-        spinnerOrdenCompraPorteador.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
-        spinnerOrdenCompraExpedidor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
-        spinnerMedidorTractor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
+        //spinnerOrdenCompraPorteador.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
+        //spinnerOrdenCompraExpedidor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
+        //spinnerMedidorTractor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
 
         //onclick para la fecha
 
@@ -199,7 +199,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
                     papeletaDTO.setIdOrdenCompraExpedidor(ordenCompraDTOExpedidor.getIdOrdenCompra());
                     papeletaDTO.setIdOrdenCompraExpedidor(ordenCompraDTOExpedidor.getIdProveedor());
                     editTextNombreExpedidor.setEnabled(false);
-                    if (position >= 0 && inicial_expedidor) {
+                    if (position >= 0 && ordenCompraDTOExpedidor!=null) {
                         presenter.getOrderReferencia(session.getToken(),
                                 ordenCompraDTOExpedidor.getIdOrdenCompra(),
                                 true
@@ -227,7 +227,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
                     papeletaDTO.setIdOrdenCompraPorteador(ordenCompraDTOPorteador.getIdOrdenCompra());
                     papeletaDTO.setIdOrdenCompraPorteador(ordenCompraDTOPorteador.getIdProveedor());
                     editTextNombrePorteador.setEnabled(false);
-                    if (position >= 0 && inicial_porteador) {
+                    if (position >= 0 && ordenCompraDTOPorteador!=null) {
                         presenter.getOrderReferencia(session.getToken(),
                                 ordenCompraDTOPorteador.getIdOrdenCompra(),
                                 false

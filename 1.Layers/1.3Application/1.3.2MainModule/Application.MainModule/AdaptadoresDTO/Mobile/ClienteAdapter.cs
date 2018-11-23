@@ -37,7 +37,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             List<ClienteDTO> list = new List<ClienteDTO>();
             foreach (var cliente in clientes)
             {
-                list.Add(FormDTO(cliente));
+                list.Add(ToDTO(cliente));
             }
             return new DatosClientesDto()
             {
@@ -45,7 +45,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        private static ClienteDTO FormDTO(Cliente cliente)
+        public static ClienteDTO ToDTO(Cliente cliente)
         {
 
             return new ClienteDTO()
@@ -62,6 +62,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 RFC = cliente.Rfc,
                 Credito = (cliente.limiteCreditoDias <= 0 && cliente.limiteCreditoMonto > 0) ? true : false
             };
-        }
+        }     
     }
 }
