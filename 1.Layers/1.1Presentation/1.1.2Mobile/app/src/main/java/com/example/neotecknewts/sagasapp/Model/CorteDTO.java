@@ -55,6 +55,9 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("TotalAnticipos")
     private double TotalAnticipos;
 
+    @SerializedName("Recibe")
+    private String Recibe;
+
     public int getId() {
         return IdCorte;
     }
@@ -181,5 +184,13 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
 
     public void setTotalAnticipos(double totalAnticipos) {
         TotalAnticipos = totalAnticipos;
+    }
+
+    public String getRecibe() {
+        return Recibe;
+    }
+
+    public void setRecibe(String recibe) {
+        Recibe = recibe;
     }
 }
