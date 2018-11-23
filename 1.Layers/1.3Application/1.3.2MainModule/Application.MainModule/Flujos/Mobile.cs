@@ -194,13 +194,13 @@ namespace Application.MainModule.Flujos
 
             var cliente = ClienteServicio.Obtener(venta.IdCliente);
             var ventas = CajaGeneralServicio.ObtenerVentas();
-            int orden = Orden(ventas);
+            int orden = Orden(ventas,venta.Fecha);
             var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta,orden, TokenServicio.ObtenerIdEmpresa());
 
             adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
             adapter.FolioVenta = venta.FolioVenta;
             //adapter.FolioOperacionDia = venta.FolioVenta;
-            adapter.FechaRegistro = venta.Fecha;
+            adapter.FechaRegistro = DateTime.Now;
             adapter.Dia = (byte) venta.Fecha.Day;
             adapter.Mes = (byte) venta.Fecha.Month;
             adapter.Year = (short) venta.Fecha.Year;
@@ -209,9 +209,8 @@ namespace Application.MainModule.Flujos
             adapter.RequiereFactura = venta.Factura;
             adapter.VentaACredito = venta.Credito;
             adapter.ClienteConCredito = venta.TieneCredito;
-            adapter.FechaAplicacion = venta.Fecha;
 
-            if (!venta.SinNumero || venta.IdCliente==0)
+            if (venta.SinNumero || venta.IdCliente==0)
             {
                 Cliente clienteGenerico = ClienteServicio.BuscarClientePorRFC("XAXX010101000");
                 adapter.IdCliente = clienteGenerico.IdCliente;
@@ -223,15 +222,26 @@ namespace Application.MainModule.Flujos
 
 
 
-        public int Orden(List<VentaPuntoDeVenta> ventas)
+        public int Orden(List<VentaPuntoDeVenta> ventas,DateTime fechaVenta)
         {
-            if (ventas != null)
-                if (ventas.Count == 0)
-                    return 1;
+            var busqueda = ventas.FindAll(x => x.FechaRegistro.Day.Equals(
+                fechaVenta.Day) && 
+                x.FechaRegistro.Month.Equals(fechaVenta.Month)
+                && x.FechaRegistro.Year.Equals(fechaVenta.Year)
+            );
+            if (busqueda != null)
+                if (busqueda.Count == 0)
+                    return 0;
                 else
-                    return ventas.Count + 1;
+                {
+                    if (busqueda.Last().Orden > 0)
+                        return busqueda.Last().Orden + 1;
+                    else
+                        return 1;
+                }
+                  
             else
-                return 1;
+                return 0;
         }
 
         public DatosRecargaDto CatalogoRecargas(bool esEstacion, bool esPipa, bool esCamioneta)
