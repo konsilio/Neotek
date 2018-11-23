@@ -52,18 +52,32 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.IdTipoOperacion = 1;
             adapter.PuntoVenta = PuntoVenta.UnidadesAlmacen.Numero;
             adapter.OperadorChofer = operador.Usuario.Nombre + " " + operador.Usuario.Apellido1 + " " + operador.Usuario.Apellido2;
-            var anticipo = GasServicio.Anticipo(adapter);
 
-            /*if (anticipo.Exito)
+            var anticipo = GasServicio.Anticipo(adapter);
+            //Insert en la tabla de VentaCajaGeneral
+            if (anticipo.Exito)
             {
                 var deContado = PuntoVentaServicio.ObtenerVentasContado(PuntoVenta.IdPuntoVenta, dto.Fecha);
                 var credito = PuntoVentaServicio.ObtenerVentasCredito(PuntoVenta.IdPuntoVenta, dto.Fecha);
-                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, idEmpresa, usuario, PuntoVenta, operador, entrega,deContado,credito);
+                var ventasCajasGral = PuntoVentaServicio.ObtenerVentasCajaGral();
+                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, idEmpresa, usuario, PuntoVenta, operador, entrega, deContado, credito);
+                
+                corteCajaGeneral.Orden = (short) orden(ventasCajasGral);
                 return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
             }
-                
-            */
+            //Fin del Insert en la tabla de VentaCajaGeneral
             return anticipo;
+        }
+
+        public static int orden(List<VentaCajaGeneral> ventasCajasGral)
+        {
+            if (ventasCajasGral != null)
+                if (ventasCajasGral.Count == 0)
+                    return 1;
+                else
+                    return  ventasCajasGral.Last(x => x.Orden > 0).Orden + 1;
+            else
+                return 1;
         }
 
         public static int orden(List<VentaCorteAnticipoEC> anticipos)

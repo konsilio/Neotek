@@ -500,19 +500,32 @@ namespace Application.MainModule.Flujos
             var entrega = puntoventa.OperadorChofer.Usuario;
             
             var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoventa,almacen);
-
-           /* if (corte.Exito)
+            //Insert en la tabla de VentaCajaGeneral
+            if (corte.Exito)
             {
                 var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoventa.IdPuntoVenta, dto.Fecha);
                 var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoventa.IdPuntoVenta, dto.Fecha);
+                var ventasCajasGral = PuntoVentaServicio.ObtenerVentasCajaGral();
 
-                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), puntoventa, puntoventa.OperadorChofer, entrega, deContado,credito);
+                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), puntoventa, puntoventa.OperadorChofer, entrega, deContado, credito);
+                corteCajaGeneral.Orden = (short) orden(ventasCajasGral);
                 return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
-            }*/
+            }
+            //Fin del Insert en la tabla de VentaCajaGeneral
 
             return corte;
         }
 
+        public static int orden(List<VentaCajaGeneral> ventasCajasGral)
+        {
+            if (ventasCajasGral != null)
+                if (ventasCajasGral.Count == 0)
+                    return 1;
+                else
+                    return ventasCajasGral.Last(x => x.Orden > 0).Orden + 1;
+            else
+                return 1;
+        }
         public DatosOtrosDto catalogoOtros()
         {
             var categoria = ProductoServicio.ObtenerCategorias();
