@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Mobile
 {
@@ -12,5 +9,6 @@ namespace Application.MainModule.DTOs.Mobile
         public List<AnticipoDto> anticipos { get; set; }
         public List<CorteDto> cortes { get; set; }
         public List<DateTime> fechasCorte { get; set; }
+        public decimal TotalAnticiposCorte { get; set; }
     }
 }

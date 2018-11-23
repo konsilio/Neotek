@@ -366,9 +366,10 @@ namespace Application.MainModule.Flujos
             {
                 ventas = ventas.FindAll(x => x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Year.Equals(fecha.Year));
             }
-           
             
-            return AnticiposCortesAdapter.ToDTO(ventas, esAnticipos);
+            var anticiposDia = PuntoVentaServicio.ObtenerAnticipos(almacen, fecha);
+            
+            return AnticiposCortesAdapter.ToDTO(ventas, anticiposDia, esAnticipos);
         }
 
         public RespuestaDto Calibracion(CalibracionDto dto, bool esFinal)

@@ -134,6 +134,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        public List<VentaCorteAnticipoEC> Anticipos(UnidadAlmacenGas unidadEstacion, DateTime fecha)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get(
+                x=>x.IdCAlmacenGas.Equals(unidadEstacion.IdCAlmacenGas)
+                && x.FechaRegistro.Day.Equals(fecha.Day) 
+                && x.FechaRegistro.Month.Equals(fecha.Month)
+                && x.FechaRegistro.Year.Equals(fecha.Year)
+           ).ToList();
+        }
+
         public List<VentaCorteAnticipoEC> Anticipos(UnidadAlmacenGas unidadEstacion)
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(

@@ -145,8 +145,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static DatosAnticiposCorteDto ToDTO(List<VentaPuntoDeVenta> ventas,bool esAnticipos = false)
+        public static DatosAnticiposCorteDto ToDTO(List<VentaPuntoDeVenta> ventas, List<VentaCorteAnticipoEC> anticipos, bool esAnticipos = false)
         {
+            
             if (esAnticipos)
                 return new DatosAnticiposCorteDto()
                 {
@@ -156,7 +157,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 return new DatosAnticiposCorteDto()
                 {
                     cortes = ToDTOCortes(ventas),
-                    fechasCorte = EstraerFechas(ventas)
+                    fechasCorte = EstraerFechas(ventas),
+                    TotalAnticiposCorte = anticipos.Where(x=>x.IdTipoOperacion.Equals(1)).Sum(x=>x.TotalAnticipado)
                 };
         }
 
