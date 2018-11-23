@@ -92,18 +92,14 @@ namespace Application.MainModule.Servicios.Ventas
         }
         public static decimal ObtenerSaldoActual(int puntoventa, short orden, int position, DateTime fecha)//Movimientos-Saldos
         {
-            //return new CajaGeneralDataAccess().Buscar(puntoventa).OrderByDescending(x => x.Orden).FirstOrDefault().Saldo;
             decimal value = 0;
             if (position > 1)
             {
-                // value = new CajaGeneralDataAccess().Buscar(puntoventa).Where(x => x.Orden == (orden - 1) && x.Year == (short)fecha.Year && x.Mes == (byte)fecha.Day && x.Dia == (byte)fecha.Day).FirstOrDefault().Saldo;
-                //value = new CajaGeneralDataAccess().Buscar(puntoventa).Where(x => x.Orden == (orden - 1)).FirstOrDefault().Saldo;
                 value = new CajaGeneralDataAccess().BuscarUltimoOrden(puntoventa, fecha).OrderByDescending(x => x.Orden).Where(x => x.Orden < orden).FirstOrDefault().Saldo;
 
             }
             else
             {
-                // value = new CajaGeneralDataAccess().Buscar(puntoventa).Where(y => y.Year == (short)fecha.Year && y.Mes == (byte)fecha.Month && y.Dia == (byte)fecha.Day).OrderBy(x => x.Orden).FirstOrDefault().Saldo;
                 value = 0;//new CajaGeneralDataAccess().Buscar(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().Saldo;
             }
 
