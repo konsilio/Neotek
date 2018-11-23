@@ -33,6 +33,9 @@ public class DatosEstacionesDTO implements Serializable {
     @SerializedName("TotalAnticipos")
     private double TotalAnticipos;
 
+    @SerializedName("AnticiposEstacion")
+    private AnticiposEstacionDTO anticiposEstacion;
+
     public int getIdCAlmacenGas() {
         return IdCAlmacenGas;
     }
@@ -79,5 +82,13 @@ public class DatosEstacionesDTO implements Serializable {
 
     public void setTotalAnticipos(double totalAnticipos) {
         TotalAnticipos = totalAnticipos;
+    }
+
+    public AnticiposEstacionDTO getAnticiposEstacion() {
+        return anticiposEstacion;
+    }
+
+    public void setAnticiposEstacion(AnticiposEstacionDTO anticiposEstacion) {
+        this.anticiposEstacion = anticiposEstacion;
     }
 }

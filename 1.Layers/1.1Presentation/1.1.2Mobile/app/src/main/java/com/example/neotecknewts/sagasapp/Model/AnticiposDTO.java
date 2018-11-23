@@ -17,7 +17,7 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
     @SerializedName("ClaveOperacion")
     private String ClaveOperacion;
 
-    @SerializedName("Anticipar")
+    @SerializedName("Monto")
     private double Anticipar;
 
     @SerializedName("Total")
