@@ -590,12 +590,12 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             lstFinal.Orden = (short)(CalcularPreciosVentaServicio.ObtenerConsecutivoOrden() + 1);//v.Orden,
             lstFinal.IdPuntoVenta = v.IdPuntoVenta;
             lstFinal.IdCliente = 0;//v.IdCliente,
-            lstFinal.IdOperadorChofer = v.IdOperadorChofer;
+            lstFinal.IdOperadorChofer = v.IdUsuarioRecibe;//v.IdOperadorChofer;
             lstFinal.FolioOperacionDia = v.FolioOperacionDia;
             lstFinal.FolioVenta = v.FolioOperacion;//v.FolioVenta,
             lstFinal.Egreso = v.TotalAnticipado;
             lstFinal.PuntoVenta = v.PuntoVenta;
-            lstFinal.OperadorChoferNombre = v.OperadorChofer;
+            lstFinal.OperadorChoferNombre = v.UsuarioRecibe;
             lstFinal.FechaRegistro = DateTime.Now;
             lstFinal.FechaAplicacion = v.FechaAplicacion;
             lstFinal.Descripcion = v.TipoOperacion;
@@ -769,6 +769,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 OperadorChofer = venta.OperadorChofer,
                 DatosProcesados = venta.DatosProcesados,
                 FechaRegistro = venta.FechaRegistro,
+                FechaAplicacion = venta.FechaAplicacion,
                 Subtotal = venta.Subtotal,
                 SubtotalDia = venta.SubtotalDia,
                 SubtotalMes = venta.SubtotalMes,

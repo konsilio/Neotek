@@ -15,9 +15,8 @@ namespace Application.MainModule.Flujos
     public class Ventas
     {
         public List<CajaGeneralDTO> CajaGeneral()
-        {
-          
-            var resp = PermisosServicio.PuedeConsultarCajaGeneral();
+        {            
+              var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
 
             if (TokenServicio.EsSuperUsuario())

@@ -49,9 +49,23 @@
                                     <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-round btn-primary float-left" />
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <br />
+                        </div><br />
+                        @if (ViewBag.MensajeError != null)
+                        {
+                            <div class="row clearfix">
+                                <div id="divMensajeError" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            <label>@ViewBag.MensajeError</label>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>         
                     <div class="card">
                         <div class="body">
                             <div class="col-lg-12 col-md-12 col-sm-12 blockquote blockquote-info btn-round">
@@ -312,21 +326,6 @@
                             </div>
                         </div>
                     </div>
-                    @if (ViewBag.MessageError != null)
-                {
-                        <div class="row clearfix">
-                            <div id="divMensajeError" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
-                                    </div>
-                                    <strong>
-                                        <label>@ViewBag.MessageError</label>
-                                    </strong>
-                                </div>
-                            </div>
-                        </div>
-                    }
                 </div>
             </div>
         </section>

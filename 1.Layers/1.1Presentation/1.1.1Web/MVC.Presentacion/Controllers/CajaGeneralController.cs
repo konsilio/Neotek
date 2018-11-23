@@ -76,14 +76,15 @@ namespace MVC.Presentacion.Controllers
             var Pagina = page ?? 1;
 
             ViewBag.CajaGeneralCamioneta = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia, _tkn).ToPagedList(Pagina, 10);
-            CajaGeneralCamionetaModel nMod = (CajaGeneralCamionetaModel)ViewBag.CajaGeneralCamioneta[0];
-            ViewBag.SalidaGas = VentasServicio.ListaVentasMovimientosGas(nMod, _tkn);//.ToPagedList(Pagina, 10);
-            ViewBag.SalidaGasCilindro = VentasServicio.ListaVentasMovimientosGasC(nMod, _tkn).GroupBy(x=> x.CantidadKg).Select(grp => grp.First());//.ToPagedList(Pagina, 10);
 
             if (ViewBag.CajaGeneralCamioneta.Count == 0)
             { TempData["RespuestaDTOError"] = "No existe la clave solicitada"; }
             else
             {
+                CajaGeneralCamionetaModel nMod = (CajaGeneralCamionetaModel)ViewBag.CajaGeneralCamioneta[0];
+                ViewBag.SalidaGas = VentasServicio.ListaVentasMovimientosGas(nMod, _tkn);//.ToPagedList(Pagina, 10);
+                ViewBag.SalidaGasCilindro = VentasServicio.ListaVentasMovimientosGasC(nMod, _tkn).GroupBy(x => x.CantidadKg).Select(grp => grp.First());//.ToPagedList(Pagina, 10);
+
                 TempData["RespuestaCajaGral"] = ViewBag.CajaGeneralCamioneta;
                 TempData["RespuestaSalidaGas"] = ViewBag.SalidaGas;
                 TempData["RespuestaSalidaGasCilindro"] = ViewBag.SalidaGasCilindro;

@@ -229,7 +229,7 @@
                                         Página @(ViewBag.CajaGeneral.PageCount < ViewBag.CajaGeneral.PageNumber ? 0 : ViewBag.CajaGeneral.PageNumber) de @ViewBag.CajaGeneral.PageCount
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        @Html.PagedListPager((IPagedList)ViewBag.CajaGeneral, page => Url.Action("CajaGeneral", new { page, @class = "btn btn-primary btn-simple" }))
+                                        @Html.PagedListPager((IPagedList)ViewBag.CajaGeneral, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
                                     </div>
                                 }
                             </div>

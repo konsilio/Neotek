@@ -1243,7 +1243,8 @@ namespace MVC.Presentacion.Agente
 
                 else
                 {
-                    _listaCajaGral = lus.OrderByDescending(x => x.Orden).ToList();
+                    _listaCajaGral = lus.OrderByDescending(x => x.FechaAplicacion).ToList();
+                    _listaCajaGral = _listaCajaGral.OrderByDescending(x => x.Orden).ToList();
                 }
             }
         }
