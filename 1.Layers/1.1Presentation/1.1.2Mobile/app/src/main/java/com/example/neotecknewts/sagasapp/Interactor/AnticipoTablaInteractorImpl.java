@@ -90,7 +90,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
         Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/db/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gsons))
                 .build();
         RestClient restClientS = retrofits.create(RestClient.class);
@@ -138,7 +138,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
                     .addConverterFactory(GsonConverterFactory.create(gsons))
                     .build();
             RestClient restClient = retrofits.create(RestClient.class);
-            corteDTO.setFecha(new Date().toString());
+            //corteDTO.setFecha(new Date().toString());
 
             Call<RespuestaCorteDto> call = restClient.
                     postCorte(corteDTO,token,"application/json");

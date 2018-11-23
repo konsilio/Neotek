@@ -374,7 +374,7 @@ public interface RestClient {
     @POST(Constantes.POST_CORTE)
     Call<RespuestaCorteDto> postCorte(@Body CorteDTO corteDTO,
                                       @Header("Authorization") String token,
-                                      @Header("Content-type") String contenType);
+                                      @Header("Content-type") String contentType);
 
     /**
      * getReferenciaOrden

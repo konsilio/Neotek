@@ -246,6 +246,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             corteDTO.setFechaVenta(f.format(new Date()));
             corteDTO.setClaveOperacion(clave_unica);
             corteDTO.setTiket(clave_unica);
+            corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
             presenter.Corte(corteDTO,sagasSql,session.getToken());
             //startIntent();
         }

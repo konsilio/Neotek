@@ -19,7 +19,7 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("Monto")
     private double Monto;
 
-    @SerializedName("IdEstacion")
+    @SerializedName("IdCAlmacenGas")
     private int IdEstacion;
 
     @SerializedName("NombreEstacion")
