@@ -25,6 +25,9 @@ public class RespuestaEstacionesVentaDTO extends RespuestaDTO implements Seriali
     @Expose
     private List<String> fechasCorte;
 
+    @SerializedName("TotalAnticiposCorte")
+    private double TotalAnticiposCorte;
+
     public  RespuestaEstacionesVentaDTO(){
         this.estaciones = new ArrayList<>();
         this.anticipos = new ArrayList<>();
@@ -61,5 +64,13 @@ public class RespuestaEstacionesVentaDTO extends RespuestaDTO implements Seriali
 
     public void setFechasCorte(List<String> fechasCorte) {
         this.fechasCorte = fechasCorte;
+    }
+
+    public double getTotalAnticiposCorte() {
+        return TotalAnticiposCorte;
+    }
+
+    public void setTotalAnticiposCorte(double totalAnticiposCorte) {
+        TotalAnticiposCorte = totalAnticiposCorte;
     }
 }

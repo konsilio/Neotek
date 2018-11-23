@@ -87,7 +87,7 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
                     corteDTO.setP5000Final(mObject.getP5000Final());
                     //corteDTO.setP5000Final(900);
                     corteDTO.setLitrosCorte(corteDTO.getP5000Inicial()-corteDTO.getP5000Final());
-                    corteDTO.setTotalAnticipos(mObject.getAnticiposEstacion().getTotal());
+                    //corteDTO.setTotalAnticipos(mObject.getAnticiposEstacion().getTotal());
 
                 }
                 intent.putExtra("EsAnticipo",EsAnticipo);
