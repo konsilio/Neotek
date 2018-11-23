@@ -769,6 +769,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 OperadorChofer = venta.OperadorChofer,
                 DatosProcesados = venta.DatosProcesados,
                 FechaRegistro = venta.FechaRegistro,
+                FechaAplicacion = venta.FechaAplicacion,
                 Subtotal = venta.Subtotal,
                 SubtotalDia = venta.SubtotalDia,
                 SubtotalMes = venta.SubtotalMes,

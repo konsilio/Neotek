@@ -90,6 +90,26 @@ namespace Application.MainModule.Servicios.Ventas
             return new CajaGeneralDataAccess().Buscar(puntoventa).OrderByDescending(x => x.Orden).FirstOrDefault().Saldo;
 
         }
+        public static decimal ObtenerSaldoActual(int puntoventa, short orden, int position, DateTime fecha)//Movimientos-Saldos
+        {
+            //return new CajaGeneralDataAccess().Buscar(puntoventa).OrderByDescending(x => x.Orden).FirstOrDefault().Saldo;
+            decimal value = 0;
+            if (position > 1)
+            {
+                // value = new CajaGeneralDataAccess().Buscar(puntoventa).Where(x => x.Orden == (orden - 1) && x.Year == (short)fecha.Year && x.Mes == (byte)fecha.Day && x.Dia == (byte)fecha.Day).FirstOrDefault().Saldo;
+                //value = new CajaGeneralDataAccess().Buscar(puntoventa).Where(x => x.Orden == (orden - 1)).FirstOrDefault().Saldo;
+                value = new CajaGeneralDataAccess().BuscarUltimoOrden(puntoventa, fecha).OrderByDescending(x => x.Orden).Where(x => x.Orden < orden).FirstOrDefault().Saldo;
+
+            }
+            else
+            {
+                // value = new CajaGeneralDataAccess().Buscar(puntoventa).Where(y => y.Year == (short)fecha.Year && y.Mes == (byte)fecha.Month && y.Dia == (byte)fecha.Day).OrderBy(x => x.Orden).FirstOrDefault().Saldo;
+                value = 0;//new CajaGeneralDataAccess().Buscar(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().Saldo;
+            }
+
+            return value;
+
+        }
         public static decimal ObtenerSaldoActual(int puntoventa, short orden, int position)//Movimientos
         {
             decimal value = 0;
@@ -113,22 +133,22 @@ namespace Application.MainModule.Servicios.Ventas
                 return 0;
         }
 
-        public static VentaPuntoDeVenta ObtenerUltimoSaldoEfectivo(int puntoventa, DateTime fecha)//VentaPuntoDeVenta-Efectivo
+        public static VentaPuntoDeVenta ObtenerUltimoSaldoEfectivo(short empresa, int puntoventa, string Tipo, DateTime fecha)//VentaPuntoDeVenta-Efectivo
         {
-               return new CajaGeneralDataAccess().BuscarUltimoMovimiento(puntoventa, fecha);          
+            return new CajaGeneralDataAccess().BuscarUltimoMovimiento(empresa, puntoventa, Tipo, fecha);
         }
 
-        public static decimal ObtenerSaldoActual(int puntoventa, string Tipo, DateTime fecha)//puntos de venta
+        public static decimal ObtenerSaldoActual(short empresa, int puntoventa, string Tipo, DateTime fecha)//puntos de venta
         {
             decimal value = 0;
-            VentaPuntoDeVenta _Obj = ObtenerUltimoSaldoEfectivo(puntoventa, fecha);
+            VentaPuntoDeVenta _Obj = ObtenerUltimoSaldoEfectivo(empresa, puntoventa, Tipo, fecha);
 
             if (Tipo == "TotalDia")
             {
                 if (_Obj != null)
-                    value = _Obj.TotalDia;               
+                    value = _Obj.TotalDia;
             }
-        
+
             if (Tipo == "TotalMes")
             {
                 if (_Obj != null)
@@ -220,7 +240,11 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 if (position > 1)
                 {
-                    value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().TotalDia;
+                    List<VentaPuntoDeVenta> pv = new CajaGeneralDataAccess().BuscarPorPV(puntoventa);
+                    //value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().TotalDia;
+                    VentaPuntoDeVenta v = pv.Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault();
+                    if (v != null)
+                        value = v.TotalDia;
                 }
                 else
                 {
@@ -288,7 +312,7 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 if (position > 1)
                 {
-                    value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().IvaDia;
+                    value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault() != null ? new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().IvaDia : 0;
                 }
                 else
                 {
@@ -300,7 +324,7 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 if (position > 1)
                 {
-                    value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().IvaMes;
+                    value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault()!= null? new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().IvaMes :0;
                 }
                 else
                 {
@@ -323,7 +347,7 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 if (position > 1)
                 {
-                    value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().SubtotalDia;
+                    value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault()!=null? new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().SubtotalDia :0;
                 }
                 else
                 {
@@ -359,7 +383,7 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 if (position > 1)
                 {
-                    value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().DescuentoDia;
+                    value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault()!= null? new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().DescuentoDia:0;
                 }
                 else
                 {
