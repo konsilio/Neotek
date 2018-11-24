@@ -68,7 +68,7 @@
                                     <b>Fecha de reporte:</b>
                                 </div>
                                 <div class="col-sm-3">
-                                    @Html.LabelFor(model => model.FechaAplicacion, (string)((@ViewBag.CajaGeneralEstacion == null) ? "" : @ViewBag.CajaGeneralEstacion[0].FechaAplicacion.ToString()), new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.FechaAplicacion, (string)((@ViewBag.CajaGeneralEstacion == null) ? "" : @ViewBag.CajaGeneralEstacion[0].FechaAplicacion.ToShortDateString()), new { @class = "form-control" })
                                 </div>
                             </div>
                             <br />
