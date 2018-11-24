@@ -509,6 +509,7 @@ namespace Application.MainModule.Flujos
 
                 var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), puntoventa, puntoventa.OperadorChofer, entrega, deContado, credito);
                 corteCajaGeneral.Orden = (short) orden(ventasCajasGral);
+                corteCajaGeneral.OtrasVentas = VentaServicio.CalculoOtrasVentas(deContado, credito);
                 return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
             }
             //Fin del Insert en la tabla de VentaCajaGeneral

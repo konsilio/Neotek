@@ -118,6 +118,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 descuentoCredito += credito.Descuento;
                 descuentoTotal += credito.Descuento;
             }
+            
+
             return new VentaCajaGeneral()
             {
                 IdCAlmacenGas = puntoVenta.UnidadesAlmacen.IdCAlmacenGas,
