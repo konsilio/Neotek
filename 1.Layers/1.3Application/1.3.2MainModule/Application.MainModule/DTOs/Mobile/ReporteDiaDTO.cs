@@ -30,6 +30,6 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal Carburacion { get; set; }
         public decimal KilosDeVenta { get; set; }
         public decimal OtrasVentasTotal { get; set; }
-
+        public bool EsCamioneta { get; set; }
     }
 }
