@@ -1,3 +1,11 @@
+/*
+ *  ReporteDto
+ *  Modelo DTO para almacenar los datos retornados por el servicio del reporte del día
+ *  @author Jorge Omar Tovar Martínez jorge.tovar@neoteck.com.mx
+ *  @company Neoteck
+ *  @date   29/10/2018 18:32
+ *  @update 26/11/2018 9:36
+ */
 package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
@@ -8,11 +16,18 @@ import java.util.Date;
 import java.util.List;
 
 public class ReporteDto extends RespuestaDTO implements Serializable {
-    @SerializedName("ClaveOperacion")
-    private String ClaveOperacion;
 
-    @SerializedName("Estacion")
+    @SerializedName("IdCAlmacenGas")
+    private int IdCAlmacenGas;
+
+    @SerializedName("NombreCAlmacen")
     private String Estacion;
+
+    @SerializedName("Medidor")
+    private MedidorDTO Medidor;
+
+    @SerializedName("ClaveReporte")
+    private String ClaveOperacion;
 
     @SerializedName("Fecha")
     private Date Fecha;
@@ -27,7 +42,10 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
     private double PorcentajeRegreso;
 
     @SerializedName("LecturaInicial")
-    private int LecturaInicial;
+    private LecturaDTO LecturaInicial;
+
+    @SerializedName("LecturaFinal")
+    private LecturaDTO LecturaFinal;
 
     @SerializedName("LitrosVenta")
     private int LitrosVenta;
@@ -35,7 +53,7 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
     @SerializedName("Precio")
     private double Precio;
 
-    @SerializedName("ImporteContado")
+    @SerializedName("Importe")
     private double ImporteContado;
 
     @SerializedName("ImporteCredito")
@@ -50,14 +68,14 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
     @SerializedName("Carburacion")
     private double Carburacion;
 
-    @SerializedName("KilosVenta")
+    @SerializedName("KilosDeVenta")
     private double KilosVenta;
 
-    @SerializedName("TOtrasVentas")
+    @SerializedName("OtrasVentasTotal")
     private double TOtrasVentas;
 
-    @SerializedName("IdCAlmacenGas")
-    private int IdCAlmacenGas;
+    @SerializedName("EsCamioneta")
+    private boolean EsCamioneta;
 
     public ReporteDto(){
         this.tanques = new ArrayList<>();
@@ -112,11 +130,11 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
         PorcentajeRegreso = porcentajeRegreso;
     }
 
-    public int getLecturaInicial() {
+    public LecturaDTO getLecturaInicial() {
         return LecturaInicial;
     }
 
-    public void setLecturaInicial(int lecturaInicial) {
+    public void setLecturaInicial(LecturaDTO lecturaInicial) {
         LecturaInicial = lecturaInicial;
     }
 
@@ -198,6 +216,30 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
 
     public void setIdCAlmacenGas(int idCAlmacenGas) {
         IdCAlmacenGas = idCAlmacenGas;
+    }
+
+    public MedidorDTO getMedidor() {
+        return Medidor;
+    }
+
+    public void setMedidor(MedidorDTO medidor) {
+        Medidor = medidor;
+    }
+
+    public LecturaDTO getLecturaFinal() {
+        return LecturaFinal;
+    }
+
+    public void setLecturaFinal(LecturaDTO lecturaFinal) {
+        LecturaFinal = lecturaFinal;
+    }
+
+    public boolean isEsCamioneta() {
+        return EsCamioneta;
+    }
+
+    public void setEsCamioneta(boolean esCamioneta) {
+        EsCamioneta = esCamioneta;
     }
 
     public class TanquesDto {
