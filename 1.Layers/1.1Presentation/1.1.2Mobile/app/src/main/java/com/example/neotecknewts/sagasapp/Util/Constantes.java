@@ -9,8 +9,9 @@ public class Constantes {
 
     //public static final String BASE_URL = "http://192.168.0.12:7010/ds/api/";
     //public static final String BASE_URL = "http://pruebaswebneoteck.ddns.net:7010/ds/api/";
+    //public static final String BASE_URL = "http://sagasapi.ddns.net:7012/ds/api/"; //QA
+    public static final String BASE_URL = "http://sagasapi.ddns.net:7011/api/";//DEV
     public static final int IdClienteGeneral = 0;
-    public static final String BASE_URL = "http://sagasapi.ddns.net:7011/api/";
     public static final String LOGIN_URL = "mobile/login";
     public static final String LISTA_EMPRESAS   = "catalogos/empresas/listaempresaslogin";
     public static final String LISTA_ORDENESCOMPRA_GAS = "mobile/lista/ordenes/compra";
