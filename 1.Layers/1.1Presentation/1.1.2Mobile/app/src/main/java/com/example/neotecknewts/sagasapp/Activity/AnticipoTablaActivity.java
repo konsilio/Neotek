@@ -357,6 +357,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     String valor = format.format(total);
                     TVAnticipoTablaActivityTotal.setText(valor);
                 }
+                corteDTO.setTotalAnticipos(data.getTotalAnticiposCorte());
                 double montoTotal = total-corteDTO.getTotalAnticipos();
                 String totalMonto = "$"+String.valueOf(dformat.format(montoTotal));
                 String totalAnticipo = "$("+String.valueOf(
