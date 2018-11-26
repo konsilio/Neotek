@@ -36,6 +36,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 FolioCorteCaja = pv.FolioCorteCaja,
                 TipoMovimiento = pv.TipoMovimiento,
                 Descripcion = pv.Descripcion,
+                Concepto = pv.Descripcion,
                 Ingreso = pv.Ingreso,
                 Egreso = pv.Egreso,
                 Saldo = pv.Saldo,
@@ -451,14 +452,16 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         }
         public static VentaPuntoVentaDTO ToDTOC(VentaPuntoDeVenta pv)
         {
-            var vt = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal;
+            VentaCajaGeneral ObtenerTotalVenta = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia);
+            var vt = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotal:0;
 
-            var vtc = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito;
-            var vtco = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalContado;
-            var ov = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).OtrasVentas;
+            var vtc = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotalCredito:0;
+            var vtco = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotalContado:0;
+            var ov = ObtenerTotalVenta != null ? ObtenerTotalVenta.OtrasVentas:0;
             var almacen = PuntoVentaServicio.Obtener(pv.IdPuntoVenta).IdCAlmacenGas;
-            var EsPipa = AlmacenGasServicio.ObtenerAlmacen(almacen);//(pv.FolioOperacionDia).OtrasVentas;
+            var EsPipa = AlmacenGasServicio.ObtenerAlmacen(almacen);
             var EsCamioneta = AlmacenGasServicio.ObtenerAlmacen(almacen);
+            var concepto = CajaGeneralServicio.ObtenerVentaMovimiento(pv.IdPuntoVenta, pv.Orden).Descripcion;
 
 
             VentaPuntoVentaDTO usDTO = new VentaPuntoVentaDTO()
@@ -495,6 +498,10 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 VentaTotalCredito = vtc,//CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito,
                 VentaTotalContado = vtco,//CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalContado,
                 OtrasVentas = ov,//CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).OtrasVentas,
+                IdCamioneta = EsCamioneta.IdCamioneta,
+                IdPipa = EsCamioneta.IdPipa,
+                Descripcion = "",
+                Concepto = concepto,
             };
             return usDTO;
         }
@@ -1040,7 +1047,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 PrecioLitro = PrecioLt,
                 totalCredito = entidad.VentaTotalCredito,
                 totalContado = entidad.VentaTotalContado,
-                FechaRegistro = fecha,
+                FechaRegistro = fecha,               
             };
             return usDTO;
 

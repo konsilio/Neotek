@@ -796,19 +796,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
 
         internal AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, byte tipoEvento, DateTime fecha)
-
         {
-
             return uow.Repository<AlmacenGasTomaLectura>().GetSingle(
-
                 x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
-
                 && x.IdTipoEvento.Equals(tipoEvento)
-
                 && x.FechaRegistro.ToShortDateString().Equals(fecha.ToShortDateString())
-
             );
-
         }
 
         public List<UnidadAlmacenGas> BuscarTodas(short idEmpresa)

@@ -18,7 +18,7 @@
 </div>
 <body>
     @using (Html.BeginForm("CrearRequisicion", "Requisicion", FormMethod.Post))
-    {      
+    {
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -144,7 +144,7 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <b>Producto:</b>
-                                                <select id="productos" name="IdProducto" class="form-control z-index show-tick" data-live-search="true">                                                    
+                                                <select id="productos" name="IdProducto" class="form-control z-index show-tick" data-live-search="true">
                                                     @if (ViewBag.ProductoEdit != null)
                                                     {
                                                         foreach (var lst in ViewBag.ProductoEdit)
@@ -209,8 +209,8 @@
                                                     {
                                                         foreach (var lst in ViewBag.ProductoEdit)
                                                         {
-                                                        @*@Html.LabelFor(model => model.Aplicacion, lst.Aplicacion, new { @class = "form-control" })*@
-                                                            <input type="text" value="@lst.Aplicacion" name="Aplicacion" readonly="readonly" class = "form-control"/>
+                                                            @*@Html.LabelFor(model => model.Aplicacion, lst.Aplicacion, new { @class = "form-control" })*@
+                                                            <input type="text" value="@lst.Aplicacion" name="Aplicacion" readonly="readonly" class="form-control" />
                                                         }
                                                     }
                                                     else
@@ -249,7 +249,6 @@
                                                     <tbody>
                                                         @foreach (var prodReq in Model.Productos)
                                                         {
-
                                                             <tr>
                                                                 <td>@prodReq.TipoProducto</td>
                                                                 <td>@prodReq.Producto</td>
@@ -281,7 +280,7 @@
                                     }
                                     <div class="row clearfix">
                                         <div class="col-lg-4 col-md-8 text-center">
-                                            <a href="@Url.Action(" Requisiciones", "Requisicion" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
+                                            <a href="@Url.Action("Requisiciones", "Requisicion" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
                                                 Regresar
                                             </a>
                                         </div>
