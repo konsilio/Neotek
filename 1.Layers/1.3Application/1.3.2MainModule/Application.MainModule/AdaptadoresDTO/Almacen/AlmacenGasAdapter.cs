@@ -355,7 +355,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 Activo = true,
                 FechaRegistro = fechaRegistro,
             };
-            }
+        }
         public static AlmacenGasMovimiento FromInit()
         {
             var fechaRegistro = DateTime.Now;
@@ -570,7 +570,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
         {
             var unidadAlm = FromInit("");
 
-            unidadAlm.IdEmpresa = emp.IdEmpresa;      
+            unidadAlm.IdEmpresa = emp.IdEmpresa;
             unidadAlm.IdAlmacenGas = almGas.IdAlmacenGas;
             unidadAlm.IdTipoAlmacen = TipoUnidadAlmacenGasEnum.Arranque;
 

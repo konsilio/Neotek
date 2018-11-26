@@ -21,7 +21,7 @@ namespace Application.MainModule.Servicios.Almacenes
             if (ulmMovDescarga.ElementAt(0) == null) return ObtenerRema(ulmMovDescarga.ElementAt(2), ulmMovDescarga.ElementAt(1));
 
             return ObtenerRema(ulmMovDescarga.ElementAt(2), ulmMovDescarga.ElementAt(1), ulmMovDescarga.ElementAt(0));
-        }
+        }    
 
         private static RemaDto ObtenerRema(AlmacenGasMovimiento ulMovAnio)
         {
