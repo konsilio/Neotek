@@ -458,7 +458,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 //Falta agregar los valores de la venta de gas
                 var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor,linicial,lfinal);
                 reporte.Fecha = DateTime.Now;
-                reporte.EsCamioneta = true;
+                reporte.EsCamioneta = false;
                 //reporte.ClaveReporte = "2018FG675DGD43";
                 reporte.ClaveReporte = FolioServicio.GeneraNumeroReferenciaReporte("R", almacen, reporte.Fecha, idCAlmacenGas);
                 var adapter = new ReporteAdapter().FormDto(reporte, operador,venta);
