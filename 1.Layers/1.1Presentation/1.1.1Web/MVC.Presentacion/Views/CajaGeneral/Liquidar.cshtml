@@ -282,7 +282,7 @@
                                             }
                                         </div><br />
                                         <div class="row clearfix">
-                                            <div class="col-sm-8" style="text-align:right">
+                                                                                    <div class="col-sm-8" style="text-align:right">
                                                 <b>Descuento:</b>
                                             </div>
                                             <div class="col-sm-4">
@@ -294,7 +294,7 @@
                                                 <b>Total:</b>
                                             </div>
                                             <div class="col-sm-4">
-                                                @Html.LabelFor(model => model.Total, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "" : @ViewBag.CajaGeneralCamioneta[0].Total.ToString()), new { @class = "form-control" })
+                                                @Html.LabelFor(model => model.VentaTotal, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "" : @ViewBag.CajaGeneralCamioneta[0].VentaTotal.ToString()), new { @class = "form-control" })
                                             </div>
                                         </div><br />
                                         <div class="row clearfix">

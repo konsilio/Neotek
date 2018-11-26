@@ -26,8 +26,7 @@ namespace Application.MainModule.Servicios.Ventas
             List<CajaGeneralDTO> lPventas = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().BuscarTodos());
             return lPventas;
         }
-        // FromEntity(VentaPuntoDeVentaDetalle pv, decimal totalCilindros, decimal P5000Inicial, decimal P5000Final, decimal PorcentajeInicial, decimal PorcentajeFinal)
-
+      
         public static List<VPuntoVentaDetalleDTO> ObtenerVentas(short empresa, short year, byte month, byte dia, short? orden)
         {
             List<VentaPuntoDeVentaDetalle> _lst = new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, year, month, dia, orden.Value).ToList();
@@ -487,7 +486,7 @@ namespace Application.MainModule.Servicios.Ventas
                 OperadorChoferNombre = v.OperadorChofer,
                 FechaRegistro = DateTime.Now,
                 FechaAplicacion = v.FechaAplicacion ?? DateTime.Now,
-                Descripcion = "venta",
+                Descripcion = "Venta",
                 IdCAlmacenGas = new PuntoVentaDataAccess().Buscar(v.IdPuntoVenta).IdCAlmacenGas,
             }).ToList();
 

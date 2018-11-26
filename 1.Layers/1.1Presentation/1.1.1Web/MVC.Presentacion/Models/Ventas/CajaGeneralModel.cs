@@ -23,6 +23,7 @@ namespace MVC.Presentacion.Models.Ventas
         public string FolioCorteCaja { get; set; }
         public string TipoMovimiento { get; set; }
         public string Descripcion { get; set; }
+        public string Concepto { get; set; }
         public decimal Ingreso { get; set; }
         public decimal Egreso { get; set; }
         public decimal Saldo { get; set; }
