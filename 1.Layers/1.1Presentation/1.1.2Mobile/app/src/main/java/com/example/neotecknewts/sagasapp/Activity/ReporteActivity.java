@@ -755,9 +755,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
                         "</theader>" +
                         "<tbody>" +
                         "<tr>" +
-                        "<td>[{Tanque-de}]</td>" +
-                        "<td>[{Normal}]</td>" +
-                        "<td>[{Venta}]</td>" +
+                        "[{Tanques}]" +
                         "</tr>" +
                         "</tbody>" +
                         "</table>" +
@@ -767,8 +765,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
                         "<table>" +
                         "<tbody>" +
                         "<tr>" +
-                        "<td>[{Tipo}]</td>" +
-                        "<td>[{Cantidad}]</td>" +
+                        "[{Otras-ventas}]" +
                         "</tr>" +
                         "</tbody>" +
                         "</table>" +
@@ -818,17 +815,17 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
                         reporteDTO.getTanques()) {
                     formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
                             "[{Tanques}]",
-                            tanqueDto.getTanques() +
-                                    "\t"+tanqueDto.getNormal() +
-                                    "\t"+tanqueDto.getVenta()+"\n"
+                            "<td>"+tanqueDto.getTanques() +"</td>"+
+                                    "<td>"+tanqueDto.getNormal() +"</td>"+
+                                    "<td>"+tanqueDto.getVenta()+"</td>"
                     );
                 }
                 for (ReporteDto.OtrasVentasDTO otraVentaDTO:
                         reporteDTO.getOtrasVentas()){
                     formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
                             "[{Otras-ventas}]",
-                            otraVentaDTO.getProducto() +
-                                    "\t"+otraVentaDTO.getCantidad() +"\n"
+                            "<td>"+otraVentaDTO.getProducto() +"</td>"+
+                                    "<td>"+otraVentaDTO.getCantidad() +"</td>"
 
                     );
                 }
