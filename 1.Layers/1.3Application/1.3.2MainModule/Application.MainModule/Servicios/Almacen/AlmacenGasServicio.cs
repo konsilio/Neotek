@@ -442,7 +442,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 var cilindros = new AlmacenGasDataAccess().BuscarTodosCilindros(TokenServicio.ObtenerIdEmpresa());
                 //Falta agregar los datos de la venta de tanques
                 var reporte = new ReporteAdapter().ToDto(almacen);
-
+                reporte.EsCamioneta = true;
                 reporte.Fecha = DateTime.Now;
                 //reporte.ClaveReporte = "2018FG675DGD43";
                 reporte.ClaveReporte = FolioServicio.GeneraNumeroReferenciaReporte("R", almacen, reporte.Fecha, idCAlmacenGas);
@@ -460,6 +460,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 //Falta agregar los valores de la venta de gas
                 var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor,linicial,lfinal);
                 reporte.Fecha = DateTime.Now;
+                reporte.EsCamioneta = true;
                 //reporte.ClaveReporte = "2018FG675DGD43";
                 reporte.ClaveReporte = FolioServicio.GeneraNumeroReferenciaReporte("R", almacen, reporte.Fecha, idCAlmacenGas);
                 var adapter = new ReporteAdapter().FormDto(reporte, operador,venta);
