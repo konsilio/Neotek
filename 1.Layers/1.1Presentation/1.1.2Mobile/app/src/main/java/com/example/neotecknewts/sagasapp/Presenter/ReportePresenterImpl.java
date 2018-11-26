@@ -38,7 +38,7 @@ public class ReportePresenterImpl implements ReportePresenter {
     }
 
     @Override
-    public void Reporte(int idUnidad, Date fecha,String token) {
+    public void Reporte(int idUnidad, String fecha,String token) {
         view.onShowProgress(R.string.generando_reporte);
         interactor.Reporte(idUnidad,fecha,token);
     }

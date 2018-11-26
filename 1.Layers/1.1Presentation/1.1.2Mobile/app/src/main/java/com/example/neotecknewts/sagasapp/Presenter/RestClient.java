@@ -364,9 +364,9 @@ public interface RestClient {
             @Header("Authorization") String token,
             @Header("Content-type") String contentType
     );
-    @POST(Constantes.GET_REPORTE)
+    @GET(Constantes.GET_REPORTE)
     Call<ReporteDto> getReporte(@Path(value = "idCAlmacenGas") int idCAlmacenGas,
-                                @Path(value = "fecha") Date fecha,
+                                @Path(value = "fecha") String fecha,
                                 @Header("Authorization") String token,
                                 @Header("Content-type") String contentType
     );
