@@ -434,19 +434,23 @@ namespace Application.MainModule.Servicios.Almacenes
         public static ReporteDiaDTO ReporteDia(DateTime fecha, short idCAlmacenGas)
         {
             var almacen = ObtenerAlmacen(idCAlmacenGas);
+           
             var reportes = new AlmacenGasDataAccess().ObtenerReportes();
             int orden = ordenReportes(reportes);
 
             if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
             {
-                var cilindros = new AlmacenGasDataAccess().BuscarTodosCilindros(TokenServicio.ObtenerIdEmpresa());
+                var reporte = CajaGeneralServicio.ObtenerRepCamionetas(idCAlmacenGas, fecha);
+                reporte[0].EsCamioneta = false;
+                return reporte[0];
+                /*var cilindros = new AlmacenGasDataAccess().BuscarTodosCilindros(TokenServicio.ObtenerIdEmpresa());
                 //Falta agregar los datos de la venta de tanques
                 var reporte = new ReporteAdapter().ToDto(almacen);
                 reporte.EsCamioneta = true;
                 reporte.Fecha = DateTime.Now;
                 //reporte.ClaveReporte = "2018FG675DGD43";
                 reporte.ClaveReporte = FolioServicio.GeneraNumeroReferenciaReporte("R", almacen, reporte.Fecha, idCAlmacenGas);
-                return reporte;
+                return reporte;*/
             }
             else
             {
@@ -477,7 +481,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 {
                     reporte.ClaveReporte = respuesta.Mensaje;
                 }
-                return reporte;
+                return reporte;*/
             }
         }
         public static int ordenReportes(List<ReporteDelDia> reportes)
