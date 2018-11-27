@@ -51,8 +51,8 @@ namespace Application.MainModule.Servicios.Ventas
             var puntoVenta = PuntoVentaServicio.Obtener(unidad).IdPuntoVenta;
 
             //Obtener Venta Detalle por PV, Fecha
-            List<VentaPuntoDeVenta> vm = new CajaGeneralDataAccess().BuscarPorPV(puntoVenta).ToList();//.Where(x => x.FechaAplicacion.Value.ToShortDateString().Equals(fecha.ToShortDateString())).ToList();
-            var FolioOperacion = vm.Where(x => x.FechaAplicacion.Value.ToShortDateString().Equals(fecha.ToShortDateString())).ToList().FirstOrDefault().FolioOperacionDia;
+            List<VentaPuntoDeVenta> vm = new CajaGeneralDataAccess().BuscarPorPuntoVenta(puntoVenta,fecha);//.Where(x => x.FechaAplicacion.Value.ToShortDateString().Equals(fecha.ToShortDateString())).ToList();
+            var FolioOperacion = vm.Where(x => x.FechaAplicacion.Value.ToShortDateString() == fecha.ToShortDateString()).ToList().FirstOrDefault().FolioOperacionDia;
 
             //Obtener Lt vendidos- AlmacenGasMovimiento
             var Ltvendidos = AlmacenGasServicio.ObtenerMovimientos(FolioOperacion, fecha).FirstOrDefault().SalidaLt;
@@ -60,7 +60,7 @@ namespace Application.MainModule.Servicios.Ventas
             //Obtener Preciokg
             List<VentaPuntoDeVentaDetalle> _lst = new CajaGeneralDataAccess().BuscarDetalleVenta(null, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day, null).ToList();
             List<VPuntoVentaDetalleDTO> lstDto = CajaGeneralAdapter.ToDTO(_lst);
-            var PrecioKg = _lst.FirstOrDefault().PrecioUnitarioKg;
+            var PrecioKg = _lst.FirstOrDefault().PrecioUnitarioKg??0;
 
             //Obtener importe contado - imp credito
             var importes = ObtenerCG(FolioOperacion);

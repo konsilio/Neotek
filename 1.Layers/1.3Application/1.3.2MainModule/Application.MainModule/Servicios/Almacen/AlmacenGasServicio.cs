@@ -481,7 +481,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 {
                     reporte.ClaveReporte = respuesta.Mensaje;
                 }
-                return reporte;*/
+                return reporte;
             }
         }
         public static int ordenReportes(List<ReporteDelDia> reportes)
