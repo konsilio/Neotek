@@ -33,6 +33,8 @@ namespace MVC.Presentacion.Controllers
             List<RolCompras> _lstCompra = CatalogoServicio.getListcompras(lstGral);
             List<RolRequsicion> _lstReq = CatalogoServicio.getListrequisicion(lstGral);
             List<RolMovilCompra> _lstMC = CatalogoServicio.getListmc(lstGral);
+            List<RolMovilVenta> _lstMV = CatalogoServicio.getListmv(lstGral);
+
             PartialViewModel rolCat = new PartialViewModel()
             {
                 //ListaRolesCat = lstGral,
@@ -40,6 +42,7 @@ namespace MVC.Presentacion.Controllers
                 ListaRolesCom = _lstCompra,
                 ListaRequsicion = _lstReq,
                 ListaMovilCompra = _lstMC,
+                ListaMovilVenta = _lstMV,
             };
 
             if (TempData["RespuestaDTO"] != null)
@@ -173,6 +176,27 @@ namespace MVC.Presentacion.Controllers
         }
 
         public ActionResult GuardarPerMovilCompra(RolDto objrol)
+        {
+            _tok = Session["StringToken"].ToString();
+
+            var respuesta = CatalogoServicio.ActualizaPermisosMovilCompra(objrol, _tok);
+
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
+                return RedirectToAction("Index");
+            }
+
+        }
+
+        public ActionResult GuardarPerMovilVenta(RolDto objrol)
         {
             _tok = Session["StringToken"].ToString();
 

@@ -92,6 +92,10 @@ namespace Application.MainModule.DTOs.Seguridad
         public bool AppTomaLecturaReporteDelDia { get; set; }
         public bool AppTraspasoEstacionCarb { get; set; }
         public bool AppTraspasoPipa { get; set; }
+        public bool AppDisposicionEfectivo { get; set; }
+        public bool AppCamionetaPuntoVenta { get; set; }
+        public bool AppEstacionCarbPuntoVenta { get; set; }
+        public bool AppPipaPuntoVenta { get; set; }
         public short IdEmpresa { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }

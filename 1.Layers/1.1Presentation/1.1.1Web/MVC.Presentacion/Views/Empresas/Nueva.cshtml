@@ -312,7 +312,7 @@
                                             <label for="ddlEdo">
                                                 Estado:*
                                             </label>
-                                            @Html.TextBoxFor(m => m.EstadoProvincia, new { @class = "form-control hid", @placeholder = "Estado" })
+                                            @Html.TextBoxFor(m => m.EstadoProvincia, new {@id = "txtEdoP", @class = "form-control hid", @placeholder = "Estado" })
                                             <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                 @*@foreach (var lst in ViewBag.ListaEstados)
                                                     {

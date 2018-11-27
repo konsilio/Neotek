@@ -13,6 +13,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public List<RolDto> ListaRoles { get; set; }
         public List<RolRequsicion> ListaRequsicion { get; set; }
         public List<RolMovilCompra> ListaMovilCompra { get; set; }
+        public List<RolMovilVenta> ListaMovilVenta { get; set; }
 
     }
 }
