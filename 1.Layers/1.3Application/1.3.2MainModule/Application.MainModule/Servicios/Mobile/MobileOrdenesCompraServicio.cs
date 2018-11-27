@@ -16,7 +16,7 @@ namespace Application.MainModule.Servicios.Mobile
         public static RespuestaOrdenesCompraDTO Consultar(short idEmpresa, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {
             var ordenCompraDataAccess = new OrdenCompraDataAccess();
-            var ordenes = OrdenesCompraAdapter.ToDTO(ordenCompraDataAccess.Buscar(idEmpresa, OrdenCompraEstatusEnum.Proceso_compra,EsGas,EsActivoVenta,EsTransporteGas)).OrderByDescending(x=>x.IdOrdenCompra).ToList();
+            var ordenes = OrdenesCompraAdapter.ToDTO(ordenCompraDataAccess.BuscarOrdenDescargas(idEmpresa, OrdenCompraEstatusEnum.Proceso_compra,EsGas,EsActivoVenta,EsTransporteGas)).OrderByDescending(x=>x.IdOrdenCompra).ToList();
             if(ordenes != null)
                 if(ordenes.Count > 0)
                     return new RespuestaOrdenesCompraDTO()
