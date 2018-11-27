@@ -36,7 +36,24 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                   && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)).ToList();
             //return uow.Repository<OrdenCompra>().GetAll().ToList();
         }
-
+        public List<OrdenCompra>BuscarOrdenDescargas(short idEmpresa, byte idOrdenComprEstatus, bool EsGas,bool EsActivoVenta,bool EsTransporteGas)
+        {
+            var datos = uow.Repository<OrdenCompra>().Get(x=> x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)).ToList();
+            if (EsGas)
+                datos = datos.FindAll(x => x.EsGas);
+            if (EsActivoVenta)
+                datos = datos.FindAll(x => x.EsActivoVenta);
+            if (EsTransporteGas)
+                datos = datos.FindAll(x => x.EsTransporteGas);
+            return datos;
+            /*return uow.Repository<OrdenCompra>().Get(x => x.Activo
+                                                                  && x.EsGas.Equals(EsGas)
+                                                                   x.EsActivoVenta.Equals(EsActivoVenta)
+                                                                  || x.EsTransporteGas.Equals(EsTransporteGas)
+                                                                  || x.IdEmpresa.Equals(idEmpresa)
+                                                                  && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)
+                                                                  ).ToList();*/
+        }
  
         public OrdenCompra Buscar(int idOrdenCompr)
         {

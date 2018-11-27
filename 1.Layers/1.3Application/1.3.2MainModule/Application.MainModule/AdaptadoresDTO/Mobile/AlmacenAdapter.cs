@@ -182,7 +182,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {                
                 CadenaBase64 = cadenaBase64,
                 Orden = numOrden,
-                IdImagenDe = 1
+                //IdImagenDe = 1
             };
 
             if (idAlmEntrGasDes > 0)
