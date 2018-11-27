@@ -313,6 +313,7 @@
     <Compile Include="Models\Catalogos\ProductoDTO.cs" />
     <Compile Include="Models\Catalogos\ProveedorDTO.cs" />
     <Compile Include="Models\Catalogos\PuntoVentaModel.cs" />
+    <Compile Include="Models\Catalogos\RolMovilVenta.cs" />
     <Compile Include="Models\Catalogos\TipoProveedorDTO.cs" />
     <Compile Include="Models\Catalogos\UnidadAlmacenGasDTO.cs" />
     <Compile Include="Models\Catalogos\RegimenFiscalModel.cs" />
@@ -11528,6 +11529,7 @@
     <Content Include="Views\Shared\Error404.cshtml" />
     <Content Include="Views\PuntoVenta\AsignarChofer.cshtml" />
     <Content Include="Views\Remanente\DashBoard.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RolMovilVenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

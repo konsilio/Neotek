@@ -5,12 +5,17 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Catalogos
 {
-    public class RolMovilCompra
+    public class RolMovilVenta
     {
         public short IdRol { get; set; }
         public string Rol1 { get; set; }
         public string NombreRol { get; set; }
         /********************************/
+
+        public bool AppDisposicionEfectivo { get; set; }
+        public bool AppCamionetaPuntoVenta { get; set; }
+        public bool AppEstacionCarbPuntoVenta { get; set; }
+        public bool AppPipaPuntoVenta { get; set; }
 
         public bool AppCompraVerOCompra { get; set; }
         public bool AppCompraEntraGas { get; set; }
@@ -32,10 +37,6 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool AppTomaLecturaReporteDelDia { get; set; }
         public bool AppTraspasoEstacionCarb { get; set; }
         public bool AppTraspasoPipa { get; set; }
-        public bool AppDisposicionEfectivo { get; set; }
-        public bool AppCamionetaPuntoVenta { get; set; }
-        public bool AppEstacionCarbPuntoVenta { get; set; }
-        public bool AppPipaPuntoVenta { get; set; }
 
         /***********************************/
         public short IdEmpresa { get; set; }

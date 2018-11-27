@@ -30,12 +30,12 @@
     //});
     $(function () {
         $('#exampleempresas').on('change', function () {
-         
+
             var id = $(this).val();
-           
+
             var url = '@Url.Action("Index", "Roles", new { idempresa = "__param__" })';
             window.location.href = url.replace('__param__', encodeURIComponent(id));
-           });
+        });
     });
 
 </script>
@@ -69,7 +69,7 @@
                         <div class="row clearfix">
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <b>Gasera</b>                                   
+                                    <b>Gasera</b>
                                     <div>
                                         @if (ViewBag.EsAdmin)
                                         {
@@ -98,7 +98,7 @@
                                         {
                                             @ViewBag.Empresas
                                         }
-                                    
+
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +173,7 @@
                                 <!--Requisicion tab content-->
                                 <div id="window_Requsicion" class="tab-pane">
                                     <ul class="nav nav-tabs" id="requisicion_tabs" role="tablist">
-                                        <li class="nav-item"><a class="nav-link" href="#SistemaRequsicion" data-toggle="tab">Sistema</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="#SistemaRequisicion" data-toggle="tab">Sistema</a></li>
                                         <li class="nav-item"><a class="nav-link" href="#MovilRequsicion" data-toggle="tab">App móvil</a></li>
                                     </ul>
                                 </div>
@@ -186,6 +186,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!--Grid Views content-->
                         <div class="row clearfix table-responsive">
                             <!--Catalogo tab content-->
                             <div class="tab-content">
@@ -274,9 +275,7 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="blockquote-info blockquote btn-round" id="divgvwCompra">
-                                        @*<div class="blockquote-info blockquote btn-round">*@
+                                    <div class="blockquote-info blockquote btn-round" id="divgvwCompra">                                
                                         <div class="table-responsive">
                                             <table class="table table-striped table-hover">
                                                 <thead>
@@ -309,8 +308,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="blockquote-info blockquote btn-round">
-                                        <div class="table-responsive" id="DivgvwMovilCompra">
+                                    <div class="blockquote-info blockquote btn-round" id="DivgvwMovilCompra">
+                                        <div class="table-responsive">
                                             <table id="tabSisCompra" class="table table-striped table-hover">
                                                 <thead>
                                                     <tr>
@@ -339,22 +338,80 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @Html.EditorFor(m => m.ListaMovilCompra)                                                   
+                                                    @Html.EditorFor(m => m.ListaMovilCompra)
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--ventas tab content-->
+                            <!--VENTAS tab content-->
                             <div class="tab-content">
-                                <div id="SistemaVentas" class="tab-pane">
+                                <div id="SistemaVentas" role="tabpanel" class="tab-pane">
                                     <i>Sistema Ventas sin datos para mostrar</i>
                                 </div>
-                                <div id="MovilVentas" class="tab-pane">
-                                    <i>Móvil Ventas sin datos para mostrar</i>
+                                <div id="MovilVentas" role="tabpanel" class="tab-pane">
+                                    <div class="row clearfix" id="btnMovilVenta">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="submit" id="btnGuardaPMVenta" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPerMovilVenta") formmethod="post" class="btn btn-raised btn-primary float-right btn-round" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="blockquote-info blockquote btn-round" id="DivgvwMovilVenta">
+                                        <div class="table-responsive">
+                                            <table id="tabSisVenta" class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Rol</th>
+                                                        <th>App Disposicion Efectivo</th>
+                                                        <th>App Camioneta Punto Venta</th>
+                                                        <th>App Estacion Carb Punto Venta</th>
+                                                        <th>App Pipa Punto Venta</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @Html.EditorFor(m => m.ListaMovilVenta)
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            @*<div class="tab-content">
+                                <div id="SistemaVentas" class="tab-pane" role="tabpanel">
+                                    <i>Sistema Ventas sin datos para mostrar</i>
+                                </div>                               
+                                <div id="MovilVentas" role="tabpanel" class="tab-pane">
+                                    <div class="row clearfix" id="btnMovilVenta">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="submit" id="btnGuardaPMVenta" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPerMovilVenta") formmethod="post" class="btn btn-raised btn-primary float-right btn-round" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="blockquote-info blockquote btn-round" id="MovilVentas">
+                                        <div class="table-responsive">
+                                            <table id="tabMovilVenta" class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Rol</th>
+                                                        <th>App Disposicion Efectivo</th>
+                                                        <th>App Camioneta Punto Venta</th>
+                                                        <th>App Estacion Carb Punto Venta</th>
+                                                        <th>App Pipa Punto Venta</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @Html.EditorFor(m => m.ListaMovilVenta)
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
                             <!--Inventario tab content-->
                             <div class="tab-content">
                                 <div id="SistemaInventario" class="tab-pane">
@@ -366,7 +423,7 @@
                             </div>
                             <!--Requisicion tab content-->
                             <div class="tab-content">
-                                <div id="SistemaRequsicion" role="tabpanel" class="tab-pane">
+                                <div id="SistemaRequisicion" role="tabpanel" class="tab-pane">
                                     <div class="row clearfix" id="btnRrequisicion">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -375,8 +432,8 @@
                                         </div>
                                     </div>
                                     <div class="blockquote-info blockquote btn-round" id="divReq">
-                                        <div class="table-responsive" id="gvwSistemaReq">
-                                            <table class="table table-striped table-hover" name="EmpresasGaseras">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th>Rol</th>
@@ -395,7 +452,7 @@
                                     </div>
                                 </div>
                                 <div id="MovilRequsicion" class="tab-pane">
-                                    <i>Móvil Requsición sin datos para mostrar</i>
+                                    <i>Móvil Requisición sin datos para mostrar</i>
                                 </div>
                             </div>
                             <!-- Tab panes -->

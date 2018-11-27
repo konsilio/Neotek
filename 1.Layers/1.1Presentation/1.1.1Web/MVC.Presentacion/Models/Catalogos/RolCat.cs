@@ -97,5 +97,9 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool AppTomaLecturaReporteDelDia { get; set; }
         public bool AppTraspasoEstacionCarb { get; set; }
         public bool AppTraspasoPipa { get; set; }
+        public bool AppDisposicionEfectivo { get; set; }
+        public bool AppCamionetaPuntoVenta { get; set; }
+        public bool AppEstacionCarbPuntoVenta { get; set; }
+        public bool AppPipaPuntoVenta { get; set; }
     }
 }

@@ -2,10 +2,31 @@
 @{
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
 }
+
+<style type="text/css">
+    .hid {
+        display: none;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $('select').on('change', function () {
+            if ($('#ddlPais').val() !== "1") {
+                $('#ddlEdo').parent().hide();
+                $('#txtEdoP').show();
+            }
+
+            if ($('#ddlPais').find('option:selected').val() == "1" || $('#ddlPais').find('option:selected').val() == "0") {
+                $('#ddlEdo').parent().show();
+                $('#txtEdoP').hide();
+            }
+        });
+    });
+</script>
 <section class="content home">
     <div class="container-fluid">
         @using (Html.BeginForm("CrearProveedor", "Producto", FormMethod.Post))
-        { 
+        {
             @Html.HiddenFor(m => m.IdProveedor)
             <div class="block-header">
                 <div class="row">
@@ -130,7 +151,7 @@
                             <div class="row clearfix">
                                 <div class="col-md-4">
                                     <b>País</b>
-                                    <select name="IdPais" class="form-control selectpicker show-tick" data-live-search="true">
+                                    <select name="IdPais" id="ddlPais" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.Paises)
                                         {
                                             if (Model != null && cc.IdPais == Model.IdTipoProveedor)
@@ -147,7 +168,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <b>Estado de la rep.</b>
-                                    <select name="IdEstadoRep" class="form-control selectpicker show-tick" data-live-search="true">
+                                    @Html.TextBoxFor(m => m.EstadoProvincia, new { @id = "txtEdoP", @class = "form-control hid", @placeholder = "Estado/Provincia" })
+                                    <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.Estados)
                                         {
                                             if (Model != null && cc.IdEstadoRep == Model.IdEstadoRep)
@@ -161,25 +183,25 @@
                                         }
                                     </select>
                                     @Html.ValidationMessageFor(m => m.IdEstadoRep, "", new { @class = "alert-danger" })
-                                </div>
-                                <!--Este debe aparecer si eligen un pais diferente a México y desaparecer la lista de estados de la rep.-->
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <b>Estado.</b>
-                                        @Html.TextBoxFor(m => m.EstadoProvincia, new { @class = "form-control", @placeholder = "Estado/Provincia" })
-                                    </div>
                                     @Html.ValidationMessageFor(m => m.EstadoProvincia, "", new { @class = "alert-danger" })
                                 </div>
+                                <!--Este debe aparecer si eligen un pais diferente a México y desaparecer la lista de estados de la rep.-->
+                                @*<div class="col-md-4">
+                                    <div class="form-group">
+                                    </div>
+                                   
+                                </div>*@
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <b>Municipio</b>
                                         @Html.TextBoxFor(m => m.Municipio, new { @class = "form-control", @placeholder = "Municipio" })
                                     </div>
                                     @Html.ValidationMessageFor(m => m.Municipio, "", new { @class = "alert-danger" })
                                 </div>
-                            </div>
+                            </div><br />
                             <div class="row clearfix">
                                 <div class="col-md-4">
-                                    <div class="form-group">
+                                    <div class="form-group">                                      
                                         @Html.TextBoxFor(m => m.CodigoPostal, new { @class = "form-control", @placeholder = "Código postal" })
                                     </div>
                                     @Html.ValidationMessageFor(m => m.CodigoPostal, "", new { @class = "alert-danger" })
@@ -404,11 +426,11 @@
                                         {
                                             if (Model != null && cc.IdTipoPersona == Model.IdTipoPersona)
                                             {
-                                        <option value="@cc.IdTipoPersona" selected>@cc.Descripcion</option>
+                                                <option value="@cc.IdTipoPersona" selected>@cc.Descripcion</option>
                                             }
                                             else
                                             {
-                                        <option value="@cc.IdTipoPersona">@cc.Descripcion</option>
+                                                <option value="@cc.IdTipoPersona">@cc.Descripcion</option>
                                             }
                                         }
                                     </select>
@@ -421,11 +443,11 @@
                                         {
                                             if (Model != null && cc.IdRegimenFiscal == Model.IdRegimenFiscal)
                                             {
-                                        <option value="@cc.IdRegimenFiscal" selected>@cc.Descripcion</option>
+                                                <option value="@cc.IdRegimenFiscal" selected>@cc.Descripcion</option>
                                             }
                                             else
                                             {
-                                        <option value="@cc.IdRegimenFiscal">@cc.Descripcion</option>
+                                                <option value="@cc.IdRegimenFiscal">@cc.Descripcion</option>
                                             }
                                         }
                                     </select>
@@ -453,21 +475,21 @@
                             <div class="row clearfix">
                                 @if (ViewBag.EsEdicion == null)
                                 {
-                                <button btn id="BtnCrear" formaction="CrearProveedor" class="btn btn-primary btn-round">
-                                    <i class="zmdi zmdi-plus"> </i> Crear
-                                </button>
+                                    <button btn id="BtnCrear" formaction="CrearProveedor" class="btn btn-primary btn-round">
+                                        <i class="zmdi zmdi-plus"> </i> Crear
+                                    </button>
                                 }
                                 else
                                 {
-                                <button btn id="btnUpDate" formaction="EditarProveedor" class="btn btn-primary btn-round">
-                                    <i class="zmdi zmdi-swap"> </i> Terminar Edición
-                                </button>
+                                    <button btn id="btnUpDate" formaction="EditarProveedor" class="btn btn-primary btn-round">
+                                        <i class="zmdi zmdi-swap"> </i> Terminar Edición
+                                    </button>
                                 }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            }
-        </div>
-    </section>
+        }
+    </div>
+</section>
