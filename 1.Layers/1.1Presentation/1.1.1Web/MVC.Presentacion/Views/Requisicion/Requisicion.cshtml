@@ -60,6 +60,7 @@
                                                 {
                                                     @ViewBag.Empresas
                                                 }
+                                                @Html.HiddenFor(m => m.IdEmpresa)
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -79,6 +80,7 @@
                                                 @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
                                             </div>
                                             @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
+                                            @Html.HiddenFor(m => m.FechaRequerida)
                                         </div>
                                         <div class="col-lg-3">
                                             <b>Solicitante:</b>
@@ -94,16 +96,33 @@
                                         <div class="col-lg-3">
                                             <b>Motivo de compra:</b>
                                             <div class="blockquote blockquote-info btn-round">
-                                                <textarea name="MotivoRequisicion" class="form-control  no-resize" @EnabledEsNueva placeholder="Motivo de la compra..." rows="4">@Model.MotivoRequisicion</textarea>
+                                                @if (ViewBag.EsNueva)
+                                                {
+                                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize", @placeholder = "Se requiere en...", @rows = "4" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize", @placeholder = "Se requiere en...", @disabled = "disabled", @rows = "4" })
+                                                }
                                             </div>
                                             @Html.ValidationMessageFor(m => m.MotivoRequisicion, "", new { @class = "alert-danger" })
+                                            @Html.HiddenFor(m => m.MotivoRequisicion)
                                         </div>
                                         <div class="col-lg-3 ">
                                             <b>Se requiere en:</b>
                                             <div class="blockquote blockquote-info btn-round">
-                                                <textarea name="RequeridoEn" class="form-control no-resize" @EnabledEsNueva placeholder="Se requiere en..." rows="4">@Model.RequeridoEn</textarea>
+                                                @if (ViewBag.EsNueva)
+                                                {  
+                                                    @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control no-resize", @placeholder = "Se requiere en...", @rows = "4" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control no-resize", @placeholder = "Se requiere en...", @disabled = "disabled", @rows = "4" })
+                                                }
+                                                @*<textarea name="RequeridoEn" class="form-control no-resize" @EnabledEsNueva placeholder="Se requiere en..." rows="4">@Model.RequeridoEn</textarea>*@
                                             </div>
                                             @Html.ValidationMessageFor(m => m.RequeridoEn, "", new { @class = "alert-danger" })
+                                            @Html.HiddenFor(m => m.RequeridoEn)
                                         </div>
                                     </div>
                                     @if (!string.IsNullOrEmpty(ViewBag.MensajeError))

@@ -1,4 +1,5 @@
-﻿using MVC.Presentacion.App_Code;
+﻿using DevExpress.Web.Mvc;
+using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Seguridad;
 using System.Linq;
@@ -400,6 +401,11 @@ namespace MVC.Presentacion.Controllers
                     Mensaje = Resp.MensajesError[0];
             }
             return Mensaje;
+        }
+
+        public ActionResult ComboBoxPartial()
+        {
+            return PartialView("_ComboBoxPartial");
         }
     }
 }

@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="demo-masked-input">
                                         <div class="row clearfix">
-                                            <div class="col-lg-3">
+                                            @*<div class="col-lg-3">
                                                 <label>Estatus</label>
                                                 <select id="estatus" class="form-control show-tick" data-live-search="true">
                                                     @foreach (var lst in Model.Estatus)
@@ -83,8 +83,8 @@
                                                         <option value="@lst.IdRequisicionEstatus">@lst.Estatus</option>
                                                     }
                                                 </select>
-                                            </div>
-                                            <div class="col-lg-2">
+                                            </div>*@
+                                            @*<div class="col-lg-2">
                                                 <label>Fecha de registro</label>
                                                 <div class="form-group">
                                                     <div>
@@ -97,22 +97,9 @@
                                                         @Html.ValidationMessageFor(model => model.FechaCreacionDe, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-2">
-                                                <label>&nbsp; </label>
-                                                <div class="form-group">
-                                                    <div>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                <i class="zmdi zmdi-calendar"></i>
-                                                            </span>
-                                                            @Html.TextBoxFor(model => model.FechaCreacionA, new { @class = "form-control date", @disabled = "disabled", @placeholder = "A:" })
-                                                        </div>
-                                                        @Html.ValidationMessageFor(model => model.FechaCreacionA, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-2">
+                                            </div>*@
+                                            
+                                            @*<div class="col-lg-2">
                                                 <label>Fecha de requisición</label>
                                                 <div class="form-group">
                                                     <div>
@@ -125,9 +112,9 @@
                                                         @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
-                                                @*<dtp:DateTimePicker ID="dtpFechaRequisicionDe" CssClass="dataTxt" />*@
-                                            </div>
-                                            <div class="col-lg-2">
+                                                
+                                            </div>*@
+                                            @*<div class="col-lg-2">
                                                 <label>&nbsp; </label>
                                                 <div class="form-group">
                                                     <div>
@@ -141,14 +128,14 @@
                                                         @Html.ValidationMessageFor(model => model.FechaRequeridaA, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
-                                                @*<dtp:DateTimePicker ID="dtpFechaRequisicionA" CssClass="dataTxt" />*@
-                                            </div>
-                                            <div class="col-lg-1">
+                                            
+                                            </div>*@
+                                            @*<div class="col-lg-1">
                                                 <button class="btn btn-primary btn-round btn-block text-center" disabled >
                                                     <i class="material-icons">search</i>
                                                     <span class="icon-name"></span>
                                                 </button>
-                                            </div>
+                                            </div>*@
                                         </div>
                                     </div>
                                     <div class="row clearfix blockquote blockquote-info btn-round">
