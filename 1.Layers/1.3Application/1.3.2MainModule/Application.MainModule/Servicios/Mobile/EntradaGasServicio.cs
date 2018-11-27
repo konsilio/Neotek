@@ -14,11 +14,11 @@ namespace Application.MainModule.Servicios.Mobile
 {
     public static class EntradaGasServicio
     {
-        public static RespuestaDto RegistrarPapeleta(AlmacenGasDescarga alm)
+        public static RespuestaDto RegistrarPapeleta(AlmacenGasDescarga alm, List<OrdenCompra> oc)
         {
             alm.FechaEntraGas = alm.FechaRegistro;
             alm.DatosProcesados = false;
-            return AlmacenGasServicio.InsertarDescargaGas(alm);
+            return AlmacenGasServicio.InsertarDescargaGas(alm, oc);
         }
 
         public static RespuestaDto Descargar(DescargaDto desDto, bool finDescarga = false)
