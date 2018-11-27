@@ -450,6 +450,8 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CameraPapeletaActivity.class);
         intent.putExtra("Papeleta",papeletaDTO);
+        intent.putExtra("EsPapeleta",true);
+        intent.putExtra("EsMedidor",false);
         startActivity(intent);
     }
 

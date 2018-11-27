@@ -49,6 +49,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
     PrecargaPapeletaDTO papeletaDTO;
     public String NombreFoto;
+    //public boolean EsPapeleta,EsMedidor;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,8 @@ public class CameraPapeletaActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras !=null){
+            //EsMedidor = extras.getBoolean("EsMedidor",false);
+            //EsPapeleta = extras.getBoolean("EsPapeleta",false);
             papeletaDTO = (PrecargaPapeletaDTO) extras.getSerializable("Papeleta");
         }
         layoutCameraButton = (LinearLayout) findViewById(R.id.layout_photo_button);
@@ -115,6 +118,12 @@ public class CameraPapeletaActivity extends AppCompatActivity {
         buttonFotoCorrecta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
+                   /* if(EsPapeleta) {
+                        papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()+"|1"));
+                        EsMedidor= true;
+                    }else if(EsMedidor){
+                        papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()+"|"+papeletaDTO.getIdTipoMedidorTractor()));
+                    }*/
                     papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 }catch(Exception e){
 
