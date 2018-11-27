@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -105,7 +106,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
                 MotivoRequisicion = dto.MotivoRequisicion,
                 RequeridoEn = dto.RequeridoEn,
                 IdRequisicionEstatus = dto.IdRequisicionEstatus,
-                FechaRequerida = dto.FechaRequerida,
+                FechaRequerida = Convert.ToDateTime(dto.FechaRequerida.ToShortDateString()),
                 FechaRegistro = dto.FechaRegistro,
                 Productos = RequisicionProductoAdapter.FromDTO(dto.Productos)
             };

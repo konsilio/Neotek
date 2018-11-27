@@ -101,7 +101,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static VentaCajaGeneral FromDTO(AnticipoDto dto, short idEmpresa, Usuario usuario, PuntoVenta puntoVenta,OperadorChofer operador, Usuario entrega,List<VentaPuntoDeVenta> deContado,List<VentaPuntoDeVenta> creditos)
+        public static VentaCajaGeneral FromDTO(AnticipoDto dto, short idEmpresa, Usuario usuario, PuntoVenta puntoVenta,OperadorChofer operador, 
+            Usuario entrega,List<VentaPuntoDeVenta> deContado,List<VentaPuntoDeVenta> creditos)
         {
             decimal deContadoTotal=0,creditoTotal=0;
             decimal descuentoContado = 0, descuentoCredito = 0,descuentoTotal = 0;
@@ -117,9 +118,11 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 descuentoCredito += credito.Descuento;
                 descuentoTotal += credito.Descuento;
             }
+            
+
             return new VentaCajaGeneral()
             {
-                IdCAlmacenGas = dto.IdCAlmacenGas,
+                IdCAlmacenGas = puntoVenta.UnidadesAlmacen.IdCAlmacenGas,
                 Year = (short)dto.Fecha.Year,
                 Mes = (byte)dto.Fecha.Month,
                 Dia = (byte)dto.Fecha.Day,
@@ -130,8 +133,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdUsuarioEntrega = entrega.IdUsuario,
                 FolioOperacionDia = dto.ClaveOperacion,
                 VentaTotal = dto.Total,
-                VentaTotalContado = deContadoTotal,//cambiar
-                VentaTotalCredito = creditoTotal,//cambiar
+                VentaTotalContado = deContadoTotal,
+                VentaTotalCredito = creditoTotal,
                 OtrasVentas = 0,//Cambiar
                 DescuentoOtrasVentas = 0,
                 DescuentoCredito = descuentoCredito,
@@ -145,8 +148,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static DatosAnticiposCorteDto ToDTO(List<VentaPuntoDeVenta> ventas,bool esAnticipos = false)
+        public static DatosAnticiposCorteDto ToDTO(List<VentaPuntoDeVenta> ventas, List<VentaCorteAnticipoEC> anticipos, bool esAnticipos = false)
         {
+            
             if (esAnticipos)
                 return new DatosAnticiposCorteDto()
                 {
@@ -156,7 +160,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 return new DatosAnticiposCorteDto()
                 {
                     cortes = ToDTOCortes(ventas),
-                    fechasCorte = EstraerFechas(ventas)
+                    fechasCorte = EstraerFechas(ventas),
+                    TotalAnticiposCorte = anticipos.Where(x=>x.IdTipoOperacion.Equals(1)).Sum(x=>x.TotalAnticipado)
                 };
         }
 
@@ -225,7 +230,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             }
             return new VentaCajaGeneral()
             {
-                IdCAlmacenGas = dto.IdCAlmacenGas,
+                IdCAlmacenGas = puntoVenta.UnidadesAlmacen.IdCAlmacenGas,
                 Year = (short)dto.Fecha.Year,
                 Mes = (byte)dto.Fecha.Month,
                 Dia = (byte)dto.Fecha.Day,
@@ -236,8 +241,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdUsuarioEntrega = entrega.IdUsuario,
                 FolioOperacionDia = dto.ClaveOperacion,
                 VentaTotal = dto.Total,
-                VentaTotalContado = creditoTotal,//cambiar
-                VentaTotalCredito = deContadoTotal,//cambiar
+                VentaTotalContado = creditoTotal,
+                VentaTotalCredito = deContadoTotal,
                 OtrasVentas = dto.Total,//Cambiar
                 DescuentoOtrasVentas = 0,
                 DescuentoCredito = descuentoCredito,

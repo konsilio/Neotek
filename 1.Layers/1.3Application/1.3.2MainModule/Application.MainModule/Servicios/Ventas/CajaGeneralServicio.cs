@@ -51,7 +51,8 @@ namespace Application.MainModule.Servicios.Ventas
             var puntoVenta = PuntoVentaServicio.Obtener(unidad).IdPuntoVenta;
 
             //Obtener Venta Detalle por PV, Fecha
-            var FolioOperacion = new CajaGeneralDataAccess().BuscarPorPV(puntoVenta).Where(x => x.FechaAplicacion.Equals(fecha)).FirstOrDefault().FolioOperacionDia;
+            List<VentaPuntoDeVenta> vm = new CajaGeneralDataAccess().BuscarPorPV(puntoVenta).ToList();//.Where(x => x.FechaAplicacion.Value.ToShortDateString().Equals(fecha.ToShortDateString())).ToList();
+            var FolioOperacion = vm.Where(x => x.FechaAplicacion.Value.ToShortDateString().Equals(fecha.ToShortDateString())).ToList().FirstOrDefault().FolioOperacionDia;
 
             //Obtener Lt vendidos- AlmacenGasMovimiento
             var Ltvendidos = AlmacenGasServicio.ObtenerMovimientos(FolioOperacion, fecha).FirstOrDefault().SalidaLt;

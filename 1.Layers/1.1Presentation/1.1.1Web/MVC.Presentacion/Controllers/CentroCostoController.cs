@@ -15,7 +15,7 @@ namespace MVC.Presentacion.Controllers
     public class CentroCostoController : MainController
     {
         string tkn = string.Empty;
-        public ActionResult CentroCosto(int? id, string mjs = null)
+        public ActionResult CentroCosto(byte? id, string mjs = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
@@ -48,10 +48,11 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("CentroCosto", model);
+                TempData["Model"] = model;
+                return RedirectToAction("CentroCosto");
             }
         }
-        public ActionResult ActivarEditar(int? id, CentroCostoModel model)
+        public ActionResult ActivarEditar(byte? id, CentroCostoModel model)
         {
             if (Session["StringToken"] != null)
             {

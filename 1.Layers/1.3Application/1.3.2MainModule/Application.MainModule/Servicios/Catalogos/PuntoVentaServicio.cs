@@ -90,6 +90,11 @@ namespace Application.MainModule.Servicios.Catalogos
             };
         }
 
+        public static List<VentaCajaGeneral> ObtenerVentasCajaGral()
+        {
+            return new PuntoVentaDataAccess().ObtenerVentasCajaGral();
+        }
+
         public static VentaPuntoDeVenta EvaluarFolio(string folioVenta)
         {
             return new PuntoVentaDataAccess().EvaluarFolio(folioVenta);
@@ -110,19 +115,24 @@ namespace Application.MainModule.Servicios.Catalogos
             return new PuntoVentaDataAccess().InesertarVentaGeneral(corteCajaGeneral);
         }
 
-        public static List<VentaPuntoDeVenta> ObtenerVentasContado(int idPuntoVenta, DateTime fecha)
+        public static List<VentaPuntoDeVenta> ObtenerVentasContado(int idPuntoVenta,DateTime fecha)
         {
-            return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta, fecha, false);
+            return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta,fecha);
         }
 
-        public static List<VentaPuntoDeVenta> ObtenerVentasCredito(int idPuntoVenta, DateTime fecha)
+        public static List<VentaPuntoDeVenta> ObtenerVentasCredito(int idPuntoVenta,DateTime fecha)
         {
-            return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta, fecha, true);
+            return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta,fecha,true);
         }
 
         public static List<VentaCorteAnticipoEC> ObtenerAnticipos(UnidadAlmacenGas unidadEstacion)
         {
             return new PuntoVentaDataAccess().Anticipos(unidadEstacion);
+        }
+
+        public static List<VentaCorteAnticipoEC> ObtenerAnticipos(UnidadAlmacenGas unidadEstacion, DateTime fecha)
+        {
+            return new PuntoVentaDataAccess().Anticipos(unidadEstacion, fecha);
         }
     }
 }

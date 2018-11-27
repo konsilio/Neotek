@@ -45,7 +45,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             TVAnticipoTableActivityInicial,TVAnticipoTableActivityFinal,TVAnticipoTableActivityLitros,
         TVAnticipoTableMontoDeCorte,TVAnticipoTableActivityAnticipos,
             TVAnticipoTablaActivityFecha;
-    Spinner SPAnticipoTablaActivityFechaCorte;
+    //Spinner SPAnticipoTablaActivityFechaCorte;
     TableRow TRAnticipoTablaActivityTituloAnticipo,TRAnticipoTablaActivityFormAnticipar;
     EditText ETAnticipoTablaActivityAnticipo;
     ImageButton IBAnticipotABLAactivityFecha;
@@ -115,13 +115,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             TVAnticipoTableActivityLitros = findViewById(R.id.TVAnticipoTableActivityLitros);
             String cadena = String.valueOf(corteDTO.getLitrosCorte())+"Lt.";
             TVAnticipoTableActivityLitros.setText(cadena);
-
-            String totalAnticipo = "$("+String.valueOf(
-                    dformat.format(corteDTO.getTotalAnticipos())
-            )+")";
-
             TVAnticipoTableActivityAnticipos = findViewById(R.id.TVAnticipoTableActivityAnticipos);
-            TVAnticipoTableActivityAnticipos.setText(totalAnticipo);
             TVAnticipoTableMontoDeCorte = findViewById(R.id.TVAnticipoTableMontoDeCorte);
 
         }
@@ -363,13 +357,20 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     String valor = format.format(total);
                     TVAnticipoTablaActivityTotal.setText(valor);
                 }
+                corteDTO.setTotalAnticipos(data.getTotalAnticiposCorte());
                 double montoTotal = total-corteDTO.getTotalAnticipos();
                 String totalMonto = "$"+String.valueOf(dformat.format(montoTotal));
+                String totalAnticipo = "$("+String.valueOf(
+                    dformat.format(corteDTO.getTotalAnticipos())
+                )+")";
+                TVAnticipoTableActivityAnticipos.setText(totalAnticipo);
+
                 TVAnticipoTableMontoDeCorte.setText(
                         totalMonto
                 );
+
                 corteDTO.setMontoCorte(montoTotal);
-                corteDTO.setMonto(montoTotal);
+                corteDTO.setMonto(corteDTO.getTotalAnticipos());
                 corteDTO.setTotal(total);
                 corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
 

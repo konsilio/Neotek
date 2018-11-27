@@ -96,6 +96,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.Activo);
         }
 
+        public List<VentaCajaGeneral> ObtenerVentasCajaGral()
+        {
+            return uow.Repository<VentaCajaGeneral>().GetAll().OrderBy(x => x.Orden).ToList();
+        }
+
         public List<PuntoVenta> BuscarPorOperadorChofer(int OperadorChofer)
         {
             return uow.Repository<PuntoVenta>().Get(x => x.IdOperadorChofer.Equals(OperadorChofer)
@@ -134,6 +139,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        public List<VentaCorteAnticipoEC> Anticipos(UnidadAlmacenGas unidadEstacion, DateTime fecha)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get(
+                x=>x.IdCAlmacenGas.Equals(unidadEstacion.IdCAlmacenGas)
+                && x.FechaRegistro.Day.Equals(fecha.Day) 
+                && x.FechaRegistro.Month.Equals(fecha.Month)
+                && x.FechaRegistro.Year.Equals(fecha.Year)
+           ).ToList();
+        }
+
         public List<VentaCorteAnticipoEC> Anticipos(UnidadAlmacenGas unidadEstacion)
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(
@@ -141,12 +156,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
             ).ToList();
         }
 
-        public List<VentaPuntoDeVenta> BuscarVentasTipoPago(int idPuntoVenta, DateTime fecha, bool esCredito)
+        public List<VentaPuntoDeVenta> BuscarVentasTipoPago(int idPuntoVenta,DateTime fecha,bool esCredito=false)
         {
-            if(esCredito)
-                return uow.Repository<VentaPuntoDeVenta>().Get(x => x.PuntoVenta.Equals(idPuntoVenta) && x.FechaRegistro.Equals(fecha) && x.VentaACredito).ToList();
-            else
-                return uow.Repository<VentaPuntoDeVenta>().Get(x => x.PuntoVenta.Equals(idPuntoVenta) && x.FechaRegistro.Equals(fecha) && !x.VentaACredito).ToList();
+                return uow.Repository<VentaPuntoDeVenta>().Get(
+                    x => x.IdPuntoVenta.Equals(idPuntoVenta)&&
+                    x.FechaRegistro.Day.Equals(fecha.Day) &&
+                    x.FechaRegistro.Month.Equals(fecha.Month) &&
+                    x.FechaRegistro.Year.Equals(fecha.Year) &&
+                    x.VentaACredito.Equals(esCredito)
+               ).ToList();
         }
 
         public RespuestaDto Eliminar(PuntoVenta cteL)
