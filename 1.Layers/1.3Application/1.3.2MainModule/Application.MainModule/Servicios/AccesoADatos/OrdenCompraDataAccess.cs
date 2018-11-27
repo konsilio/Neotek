@@ -41,8 +41,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
             var datos = uow.Repository<OrdenCompra>().Get(x=> x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)).ToList();
             if (EsGas)
                 datos = datos.FindAll(x => x.EsGas);
-            if (EsActivoVenta)
-                datos = datos.FindAll(x => x.EsActivoVenta);
+            //if (EsActivoVenta)
+            //    datos = datos.FindAll(x => x.EsActivoVenta);
             if (EsTransporteGas)
                 datos = datos.FindAll(x => x.EsTransporteGas);
             return datos;
