@@ -1464,7 +1464,7 @@ namespace MVC.Presentacion.App_Code
             if (!model.IdCAlmacenGas.Equals(0)) dto.IdCAlmacenGas = model.IdCAlmacenGas;
             return ModificarCentroCosto(dto, tkn);
         }
-        public static CentroCostoModel ActivarModificar(int idcc, CentroCostoModel model, string tkn)
+        public static CentroCostoModel ActivarModificar(byte idcc, CentroCostoModel model, string tkn)
         {
             if (model.CentrosCostos == null)
                 model = InitCentroCosto(tkn);

@@ -13,15 +13,11 @@ namespace Application.MainModule.Servicios.Almacenes
         public static RemaDto ObtenerRema(AlmacenGasDescarga descarga, short idAlmacenGas, short idEmpresa)
         {
             var ulmMovDescarga = AlmacenGasServicio.ObtenerUltimosMovimientosDeDescargas(descarga , idEmpresa);
-
             if (ulmMovDescarga.ElementAt(2) == null) return ObtenerRema();
-
             if (ulmMovDescarga.ElementAt(1) == null) return ObtenerRema(ulmMovDescarga.ElementAt(2));
-
             if (ulmMovDescarga.ElementAt(0) == null) return ObtenerRema(ulmMovDescarga.ElementAt(2), ulmMovDescarga.ElementAt(1));
-
             return ObtenerRema(ulmMovDescarga.ElementAt(2), ulmMovDescarga.ElementAt(1), ulmMovDescarga.ElementAt(0));
-        }
+        }    
 
         private static RemaDto ObtenerRema(AlmacenGasMovimiento ulMovAnio)
         {

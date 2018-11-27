@@ -1058,16 +1058,16 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             ReporteDiaDTO usDTO = new ReporteDiaDTO()
             {
-                IdCAlmacenGas = almacen.IdCamioneta.Value,
+                IdCAlmacenGas = almacen.IdCamioneta!=null? almacen.IdCamioneta.Value:0,
                 NombreCAlmacen = almacen.Numero,
-                ClaveReporte = entidad.FolioOperacionDia,
+                ClaveReporte = entidad!=null? entidad.FolioOperacionDia:"",
                 Fecha = pv.FechaRegistro,
                 Carburacion = 0,
                 KilosDeVenta = k,
-                Precio = pv.PrecioUnitarioKg.Value,
+                Precio = pv.PrecioUnitarioKg!=null? pv.PrecioUnitarioKg.Value:0,
                 OtrasVentasTotal = 0,
-                Importe = entidad.VentaTotalContado,
-                ImporteCredito = entidad.VentaTotalCredito,
+                Importe = entidad != null ? entidad.VentaTotalContado:0,
+                ImporteCredito = entidad != null ? entidad.VentaTotalCredito:0,
                 OtrasVentas = new List<OtrasVentasDto>(),
                 Tanques = tanques
 

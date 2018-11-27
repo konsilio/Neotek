@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Interactor;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.DatosReporteDTO;
@@ -12,6 +13,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -82,7 +84,7 @@ public class ReporteInteractorImpl implements ReporteInteractor {
     }
 
     @Override
-    public void Reporte(int idUnidad, Date fecha, String token) {
+    public void Reporte(int idUnidad, String fecha, String token) {
         String url  = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
