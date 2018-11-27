@@ -33,6 +33,8 @@ namespace MVC.Presentacion.Models.Ventas
         public string RFC { get; set; }
         public bool ClienteConCredito { get; set; }
         public string OperadorChofer { get; set; }
+        public string Descripcion { get; set; }
+        public string Concepto { get; set; }
         public bool DatosProcesados { get; set; }
         public System.DateTime FechaRegistro { get; set; }
 

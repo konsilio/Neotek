@@ -32,9 +32,8 @@ namespace DS.MainModule.Controllers
         [Route("buscar/listamovimientosgas")]
         public HttpResponseMessage PutListaMovimientosGas(CajaGeneralDTO Dto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGas(Dto.IdEmpresa,Dto.Year,Dto.Mes,Dto.Dia, Dto.Orden));
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGas(Dto.IdCAlmacenGas,Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, Dto.Orden));
         }
-
 
         [Route("buscar/listamovimientosgascilindros")]
         public HttpResponseMessage PutListaMovimientosGasC(VPuntoVentaDetalleDTO Dto)
