@@ -2084,8 +2084,9 @@ public class Lisener{
 
     //region Finalizar descarga
     private boolean FinalizarDescarga() {
-        boolean registrado = false;
-        if(ServicioDisponible()) {
+        boolean servicio = ServicioDisponible();
+        boolean registrado;
+        if(servicio) {
             Log.w("Iniciando", "Revisando finalizar descarga: " + new Date());
             Cursor cursor = finalizarDescargaSQL.GetFinalizarDescargas();
             FinalizarDescargaDTO lecturaDTO = null;
@@ -2097,27 +2098,27 @@ public class Lisener{
                             cursor.getColumnIndex("ClaveOperacion")));
                     lecturaDTO.setIdOrdenCompra(cursor.getInt(
                             cursor.getColumnIndex("IdOrdenCompra")));
-                    lecturaDTO.setClaveOperacion(cursor.getString(
-                            cursor.getColumnIndex("ClaveOperacion")));
+                    /*lecturaDTO.setClaveOperacion(cursor.getString(
+                            cursor.getColumnIndex("ClaveOperacion")));*/
                     lecturaDTO.setFechaDescarga(cursor.getString(
                             cursor.getColumnIndex("FechaDescarga")));
-                    lecturaDTO.setNombreTipoMedidorTractor(cursor.getString(
+                    /*lecturaDTO.setNombreTipoMedidorTractor(cursor.getString(
                             cursor.getColumnIndex("NombreTipoMedidorTractor")));
                     lecturaDTO.setNombreTipoMedidorAlmacen(cursor.getString(
-                            cursor.getColumnIndex("NombreTipoMedidorAlmacen")));
+                            cursor.getColumnIndex("NombreTipoMedidorAlmacen")));*/
                     lecturaDTO.setIdTipoMedidorTractor(cursor.getInt(
                             cursor.getColumnIndex("IdTipoMedidorTractor")));
                     lecturaDTO.setIdTipoMedidorAlmacen(cursor.getInt(
                             cursor.getColumnIndex("IdTipoMedidorAlmacen")));
-                    lecturaDTO.setCantidadFotosAlmacen(cursor.getInt(
-                            cursor.getColumnIndex("CantidadFotosAlmacen")));
-                    lecturaDTO.setCantidadFotosTractor(cursor.getInt(
-                            cursor.getColumnIndex("CantidadFotosTractor")));
+                    /*lecturaDTO.setCantidadFotosAlmacen(cursor.getInt(
+                            cursor.getColumnIndex("CantidadFotosAlmacen")));*/
+                    /*lecturaDTO.setCantidadFotosTractor(cursor.getInt(
+                            cursor.getColumnIndex("CantidadFotosTractor")));*/
                     boolean es_prestado = cursor.getInt(
                             cursor.getColumnIndex("TanquePrestado")) > 0;
                     lecturaDTO.setTanquePrestado(es_prestado);
                     lecturaDTO.setPorcentajeMedidorAlmacen(cursor.getDouble(
-                            cursor.getColumnIndex("PorcentajeMedidorAlmacen")));
+                            cursor.getColumnIndex("PorcentajeMedirorAlmacen")));
                     lecturaDTO.setPorcentajeMedidorTractor(cursor.getDouble(
                             cursor.getColumnIndex("PorcentajeMedidorTractor")));
                     lecturaDTO.setIdAlmacen(cursor.getInt(
@@ -2126,11 +2127,11 @@ public class Lisener{
                     Cursor cantidad = finalizarDescargaSQL.GetImagenesFinalizarDescargaByClaveOperacion(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
-                        String iuri = cantidad.getString(cursor.getColumnIndex("Url"));
+                        String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    cantidad.getString(cantidad.getColumnIndex("Imagen"))
                             );
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
@@ -2228,11 +2229,11 @@ public class Lisener{
                     Cursor cantidad = iniciarDescargaSQL.GetImagenesDescargaByClaveUnica(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
-                        String iuri = cantidad.getString(cursor.getColumnIndex("Url"));
+                        String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    cantidad.getString(cantidad.getColumnIndex("Imagen"))
                             );
                         } catch (URISyntaxException e) {
                             e.printStackTrace();

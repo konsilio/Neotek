@@ -154,7 +154,7 @@ public class TraspasoPipaActivity extends AppCompatActivity implements TraspasoP
                 traspasoDTO.setCantidadDeFotos(0);
             }
         });
-        lista_pipa_salida = new String[]{"Pipa 1","Pipa 2"};
+        /*lista_pipa_salida = new String[]{"Pipa 1","Pipa 2"};
         lista_pipa_entrada = new String[]{"Pipa 1","Pipa 2"};
 
         STraspasoPipaActivityPipaSalida.setAdapter(new ArrayAdapter<>(
@@ -166,7 +166,7 @@ public class TraspasoPipaActivity extends AppCompatActivity implements TraspasoP
                 this,
                 R.layout.custom_spinner,
                 lista_pipa_entrada
-        ));
+        ));*/
 
         presenter.GetList(session.getToken());
         BtnTraspasoPipaActivityGuardar.setOnClickListener(V->{

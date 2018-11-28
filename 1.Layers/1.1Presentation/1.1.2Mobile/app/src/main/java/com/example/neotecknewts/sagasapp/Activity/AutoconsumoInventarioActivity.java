@@ -49,7 +49,7 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
         }
         session = new Session(this);
         autoconsumoDTO = new AutoconsumoDTO();
-        list_unidad = new String[]{"Unidad 1","Unidad 2"};
+        //list_unidad = new String[]{"Unidad 1","Unidad 2"};
         presenter = new AutoconsumoInventarioPresenterImpl(this);
 
          TVAutoconsumoInventarioTitulo = findViewById(R.id.TVAutoconsumoInventarioTitulo);
@@ -59,11 +59,11 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
                  TVAutoconsumoInventarioActivityUnidadEntrada);
          SAutoconsumoInvetarioActivityInventario = findViewById(R.id.
                  SAutoconsumoInvetarioActivityInventario);
-         SAutoconsumoInvetarioActivityInventario.setAdapter(new ArrayAdapter<>(
+        /* SAutoconsumoInvetarioActivityInventario.setAdapter(new ArrayAdapter<>(
                  this,
                  R.layout.custom_spinner,
                  list_unidad
-         ));
+         ));*/
          presenter.getList(session.getToken(),EsAutoconsumoInventarioFinal);
          SAutoconsumoInvetarioActivityInventario.setOnItemSelectedListener(
                  new AdapterView.OnItemSelectedListener() {

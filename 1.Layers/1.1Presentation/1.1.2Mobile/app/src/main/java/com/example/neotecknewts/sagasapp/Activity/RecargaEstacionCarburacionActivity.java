@@ -134,7 +134,7 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
 
                             for (int y=0;y<dto.getMedidorDTOS().size();y++){
                                 if(dto.getMedidorDTOS().get(y).getIdTipoMedidor()==
-                                        dto.getPipasDTOS().get(y).getIdTipoMedidor()
+                                        dto.getPipasDTOS().get(x).getIdTipoMedidor()
                                         ){
                                     SRecargaEstacionCarburacionActivityListaMedidorPipa
                                             .setSelection(y);
@@ -204,8 +204,10 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
                                     dto.getEstacionesDTOS().get(x).getNombreAlmacen()
                             );
                             for (int y=0;y<dto.getMedidorDTOS().size();y++){
-                                if(dto.getMedidorDTOS().get(y).getIdTipoMedidor()==
-                                        dto.getEstacionesDTOS().get(y).getIdTipoMedidor()
+                                if(dto.getMedidorDTOS().get(y).getNombreTipoMedidor().equals(
+                                        dto.getEstacionesDTOS().get(x).getMedidor()
+                                                .getNombreTipoMedidor()
+                                )
                                         ){
                                     SRecargaEstacionCarburacionActivityListaMedidorPorcentualDestino
                                             .setSelection(y);
