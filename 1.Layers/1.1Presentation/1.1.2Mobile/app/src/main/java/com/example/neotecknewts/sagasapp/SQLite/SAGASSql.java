@@ -2212,7 +2212,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarCorte(String claveOperacion){
         return this.getWritableDatabase().delete(
                 TABLE_CORTES,
-                " WHERE ClaveOperacion = '"+claveOperacion+"'",
+                " ClaveOperacion = '"+claveOperacion+"'",
                 null
         );
     }
