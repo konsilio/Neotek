@@ -43,8 +43,8 @@ namespace MVC.Presentacion.Controllers
             //}
             //ViewBag.MessageError = TempData["RespuestaDTOError"];
             if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
-
-            return View();
+            var model = new PrecioVentaModel { IdEmpresa = (short)ViewBag.IdEmpresa };
+            return View(model);
         }
 
         [HttpPost]
@@ -64,7 +64,7 @@ namespace MVC.Presentacion.Controllers
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;
                 return RedirectToAction("Index");
             }
             
