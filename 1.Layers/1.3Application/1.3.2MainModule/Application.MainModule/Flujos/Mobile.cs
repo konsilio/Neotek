@@ -62,13 +62,13 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             /*Se genera lista de ordenes de compra para actualizar el estatus de estas */
-            List<OrdenCompra> ocs = new List<OrdenCompra>();
-            var ocp = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(papeletaDto.IdOrdenCompraPorteador));
+            //List<OrdenCompra> ocs = new List<OrdenCompra>();
+            //var ocp = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(papeletaDto.IdOrdenCompraPorteador));
             var oce = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(papeletaDto.IdOrdenCompraExpedidor));
-            ocp.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
-            oce.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
-            ocs.Add(ocp);
-            ocs.Add(oce);
+            //ocp.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Proceso_compra;
+            //oce.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            //ocs.Add(ocp);
+            //ocs.Add(oce);
 
             var papeleta = AlmacenAdapter.FromDto(papeletaDto);
             papeleta.IdRequisicion = oce.IdRequisicion;
@@ -77,7 +77,7 @@ namespace Application.MainModule.Flujos
             papeleta.IdAlmacenGas = almacen.IdAlmacenGas;
             papeleta.IdTipoMedidorAlmacen = almacen.IdTipoMedidor;
             /* Fin cambio: JSA*/
-            return EntradaGasServicio.RegistrarPapeleta(papeleta, ocs);
+            return EntradaGasServicio.RegistrarPapeleta(papeleta);
         }
 
         public RespuestaDto InicializarDescarga(DescargaDto desDto)
