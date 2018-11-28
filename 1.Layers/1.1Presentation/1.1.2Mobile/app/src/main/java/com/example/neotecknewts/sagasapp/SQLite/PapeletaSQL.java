@@ -261,7 +261,7 @@ public class PapeletaSQL extends SQLiteOpenHelper {
 
     public Integer EliminarImagenes(String ClaveOperacion){
         return  this.getWritableDatabase().delete(TABLE_IMAGES_PAPELETAS,
-                "CalveUnica = "+ClaveOperacion,null);
+                "CalveUnica = '"+ClaveOperacion+"'",null);
     }
     //endregion
 }

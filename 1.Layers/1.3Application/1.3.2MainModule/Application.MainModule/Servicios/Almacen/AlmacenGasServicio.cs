@@ -98,9 +98,9 @@ namespace Application.MainModule.Servicios.Almacenes
 
             return new AlmacenGasDataAccess().BuscarPorEmpresa(empresa.IdEmpresa);
         }
-        public static RespuestaDto InsertarDescargaGas(AlmacenGasDescarga alm, List<OrdenCompra> oc)
+        public static RespuestaDto InsertarDescargaGas(AlmacenGasDescarga alm)
         {
-            return new AlmacenGasDescargaDataAccess().Insertar(alm, oc);
+            return new AlmacenGasDescargaDataAccess().Insertar(alm);
         }
         public static RespuestaDto ActualizarDescargaGas(AlmacenGasDescarga alm, List<AlmacenGasDescargaFoto> fotos)
         {

@@ -21,7 +21,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             uow = new SagasDataUow();
         }
 
-        public RespuestaDto Insertar(AlmacenGasDescarga _AlmDes, List<OrdenCompra> ocs)
+        public RespuestaDto Insertar(AlmacenGasDescarga _AlmDes)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
@@ -29,8 +29,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     uow.Repository<AlmacenGasDescarga>().Insert(_AlmDes);
-                    foreach (var oc in ocs)                    
-                        uow.Repository<OrdenCompra>().Update(oc);                    
+                    //foreach (var oc in ocs)                    
+                    //    uow.Repository<OrdenCompra>().Update(oc);                    
                     uow.SaveChanges();
                     _respuesta.Id = _AlmDes.IdAlmacenEntradaGasDescarga;
                     _respuesta.EsInsercion = true;

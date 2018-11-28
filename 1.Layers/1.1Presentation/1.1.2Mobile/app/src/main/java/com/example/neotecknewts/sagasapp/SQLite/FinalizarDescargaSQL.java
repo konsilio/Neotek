@@ -227,7 +227,7 @@ public class FinalizarDescargaSQL extends SQLiteOpenHelper {
     public Cursor GetImagenesFinalizarDescargaByClaveOperacion(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_IMAGENES_FINALIZAR_DESCARGA+
-                " WHERE ClaveOperacion ='"+ClaveOperacion+"'",null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**

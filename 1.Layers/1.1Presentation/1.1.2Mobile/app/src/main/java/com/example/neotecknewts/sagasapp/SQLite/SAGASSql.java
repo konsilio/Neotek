@@ -1726,7 +1726,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      * @return
      */
     public Cursor GetRecargas(String tipo) {
-        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_RECARGAS_CILINDROS+
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_RECARGAS+
                 " WHERE EsTipo = '"+tipo+"'",null);
     }
     //endregion
@@ -2212,7 +2212,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarCorte(String claveOperacion){
         return this.getWritableDatabase().delete(
                 TABLE_CORTES,
-                " WHERE ClaveOperacion = '"+claveOperacion+"'",
+                " ClaveOperacion = '"+claveOperacion+"'",
                 null
         );
     }
