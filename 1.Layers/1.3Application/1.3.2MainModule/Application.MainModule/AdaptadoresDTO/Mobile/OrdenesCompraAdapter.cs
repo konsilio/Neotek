@@ -67,5 +67,48 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return listOrdenCompra.ToList().Select(x => ToDTO(x)).ToList();
         }
+    //    public static OrdenCompra FormEntity(OrdenCompra oc)
+    //    {
+    //        return new OrdenCompra()
+    //        {
+    //      IdOrdenCompra { get; set; }
+    //      IdEmpresa { get; set; }
+    //     byte IdOrdenCompraEstatus { get; set; }
+    //      IdRequisicion { get; set; }
+    //      IdProveedor { get; set; }
+    //     <> IdUsuarioGenerador { get; set; }
+    //     <> IdUsuarioAutorizador { get; set; }
+    //      IdCentroCosto { get; set; }
+    //      IdCuentaContable { get; set; }
+    //      NumOrdenCompra { get; set; }
+    //     bool EsActivoVenta { get; set; }
+    //     bool EsGas { get; set; }
+    //     bool EsTransporteGas { get; set; }
+    //     bool Activo { get; set; }
+    //     System.DateTime FechaRegistro { get; set; }
+    //     <System.DateTime> FechaAutorizacion { get; set; }
+    //     <System.DateTime> FechaComplemento { get; set; }
+    //     <> SubtotalSinIva { get; set; }
+    //     <> SubtotalSinIeps { get; set; }
+    //     <> Iva { get; set; }
+    //     <> Ieps { get; set; }
+    //     <> Total { get; set; }
+    //     <> MontBelvieuDlls { get; set; }
+    //     <> TarifaServicioPorGalonDlls { get; set; }
+    //     <> TipoDeCambioDOF { get; set; }
+    //     <> PrecioPorGalon { get; set; }
+    //     <> FactorGalonALitros { get; set; }
+    //     <> ImporteEnLitros { get; set; }
+    //     <> FactorCompraLitrosAKilos { get; set; }
+    //     <> PVPM { get; set; }
+    //      FolioFiscalUUID { get; set; }
+    //      FolioFactura { get; set; }
+    //     <System.DateTime> FechaResgistroFactura { get; set; }
+    //     <> FactorConvTransporte { get; set; }
+    //     <> PrecioTransporte { get; set; }
+    //     <> Casetas { get; set; }
+
+    //};
+    //    }
     }
 }

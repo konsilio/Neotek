@@ -12,6 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.Servicios.Ventas;
+using Application.MainModule.AdaptadoresDTO.Compras;
+using Application.MainModule.Servicios.Compras;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.Flujos
 {
@@ -58,7 +61,23 @@ namespace Application.MainModule.Flujos
             resp = EntradaGasServicio.EvaluarExistenciaRegistro(papeletaDto);
             if (resp.Exito) return resp;
 
-            return EntradaGasServicio.RegistrarPapeleta(AlmacenAdapter.FromDto(papeletaDto));
+            /*Se genera lista de ordenes de compra para actualizar el estatus de estas */
+            List<OrdenCompra> ocs = new List<OrdenCompra>();
+            var ocp = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(papeletaDto.IdOrdenCompraPorteador));
+            var oce = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(papeletaDto.IdOrdenCompraExpedidor));
+            ocp.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            oce.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            ocs.Add(ocp);
+            ocs.Add(oce);
+
+            var papeleta = AlmacenAdapter.FromDto(papeletaDto);
+            papeleta.IdRequisicion = oce.IdRequisicion;
+            var almacen = CentroCostoServicio.Obtener(oce.IdCentroCosto).UnidadAlmacenGas;
+            papeleta.IdCAlmacenGas = almacen.IdCAlmacenGas;
+            papeleta.IdAlmacenGas = almacen.IdAlmacenGas;
+            papeleta.IdTipoMedidorAlmacen = almacen.IdTipoMedidor;
+            /* Fin cambio: JSA*/
+            return EntradaGasServicio.RegistrarPapeleta(papeleta, ocs);
         }
 
         public RespuestaDto InicializarDescarga(DescargaDto desDto)
