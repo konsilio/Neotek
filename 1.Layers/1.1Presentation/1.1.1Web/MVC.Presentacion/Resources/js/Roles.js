@@ -92,7 +92,7 @@
         $('#SistemaCompra').css("display", "");
         $('#divgvwCompra').css("display", "");
         $('#DivgvwMovilCompra').css("display", "none");
-        $('#DivgvwMovilVenta').css("display", "none");
+        $('#DivgvwMovilVenta').css("display", "");
         $('#tabSisCompra').css("display", "");
         $('#tabSisVenta').css("display", "none");
         $('#SistemaCatalogo').css("display", "none");
@@ -108,7 +108,7 @@
         $('#MovilInventario').css("display", "none");
         $('#btnCatalogo').css("display", "none");
         $('#btnCompra').css("display", "");
-       // $('#gvwSistemaReq').css("display", "none");
+        //$('#gvwSistemaReq').css("display", "none");
         $('#divReq').css("display", "none");
         $('#MovilRequsicion').css("display", "none");
         $('#btnMovilCompra').css("display", "");
@@ -165,11 +165,11 @@
         $('#catalogos_tabs').css("display", "none");
         $('#MovilCatalogo').css("display", "none");
         $('#tabSisCompra').css("display", "none");
-       // $('#gvwSistemaReq').css("display", "none");
+        //$('#gvwSistemaReq').css("display", "none");
         $('#MovilRequsicion').css("display", "none");
         $('#divgvwCompra').css("display", "none");
         $('#DivgvwMovilCompra').css("display", "none");
-        $('#DivgvwMovilVenta').css("display", "none");
+        $('#DivgvwMovilVenta').css("display", "");
         $('#btnCatalogo').css("display", "none");
         $('#btnCompra').css("display", "none");
         $('#btnMovilCompra').css("display", "none");
