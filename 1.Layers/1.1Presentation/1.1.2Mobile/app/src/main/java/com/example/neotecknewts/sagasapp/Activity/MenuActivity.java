@@ -143,7 +143,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             alertDialog.setPositiveButton("Sincronizar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            progressSincronizar = new ProgressDialog(context,R.style.AlertDialog);
+                            progressSincronizar = new ProgressDialog(MenuActivity.this,R.style.AlertDialog);
                             progressSincronizar.setIndeterminate(true);
                             progressSincronizar.setMessage(getString( R.string.message_cargando));
                             progressSincronizar.setTitle(R.string.app_name);
@@ -167,6 +167,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                 /*for (String mensaje:semaforo.obtenerCantidadesRestantes()){
                     Log.w("Mensaje",mensaje);
                 }*/
+                enviarDatos();
                 Tooltip.make(this,
                         new Tooltip.Builder(101)
                                 .withStyleId(R.style.TooltipError)
@@ -187,6 +188,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                 //enviarDatos();
                 return true;
             case R.id.libres:
+                enviarDatos();
                 Tooltip.make(this,
                         new Tooltip.Builder(101)
                                 .withStyleId(R.style.TooltipGood)
