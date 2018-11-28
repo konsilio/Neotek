@@ -30,7 +30,7 @@
 
         $(document).ready(function () {
             $("#txtUtilidad").keyup(function () {
-                // debugger
+               debugger
 
                 var precio = $("#PrecioPMX").val();
 
@@ -42,10 +42,12 @@
 
 
                 /*****factorLitrosaKilos*****/
+                debugger
                 var url = "/PrecioVenta/GetConfiguracionEmpresa";
                 var id = $('#ddlEmpresas').find('option:selected').val();
+             
                 $.getJSON(url, { idEmpresa: id }, function (data) {
-                    var factor = data;
+                    var factor = precio - data;
                     $("#IdPrecioSalidaLt").val(factor)
                 });
 
@@ -197,10 +199,16 @@
                                         <div>
                                             @if (ViewBag.EsAdmin)
                                             {
-                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
                                                     @foreach (var lst in ViewBag.Empresas)
                                                     {
+                                                        if (ViewBag.IdEmpresa == lst.IdEmpresa)
+                                                        {
+                                                            <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
+                                                        }
+                                                        else {
                                                         <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                        }
                                                     }
                                                 </select>
                                             }

@@ -19,6 +19,7 @@ namespace MVC.Presentacion.Controllers
             string _tkn = Session["StringToken"].ToString();
 
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
             if (ViewBag.EsAdmin)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
@@ -127,7 +128,7 @@ namespace MVC.Presentacion.Controllers
         {
             string _tkn = Session["StringToken"].ToString();
             var list = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(idEmpresa)).FactorLitrosAKilos;
-
+            
             var JsonInfo = JsonConvert.SerializeObject(list);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
