@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
@@ -58,6 +59,8 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
 
     Semaforo semaforo;
     Point size;
+    Context context;
+    ProgressDialog progressSincronizar;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +82,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
 
         //se obtiene el menu del login, en caso de que se llegue del login se hace un llamado a web service
         Bundle extras = getIntent().getExtras();
-
 
         if (extras != null) {
             menu =  (ArrayList<MenuDTO>) extras.getSerializable("lista");
@@ -124,7 +126,35 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         Display display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
+        context =this;
+        enviarDatos();
+    }
 
+    private void enviarDatos() {
+        List<String> mensajes = semaforo.obtenerCantidadesRestantes();
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this,R.style.AlertDialog);
+        alertDialog.setTitle("Pendietes");
+        String men ="";
+        for (String mensaje:mensajes) {
+            men+=mensaje+"\n";
+        }
+        if(mensajes.size()>0) {
+            alertDialog.setMessage(men);
+            alertDialog.setPositiveButton("Sincronizar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            progressSincronizar = new ProgressDialog(MenuActivity.this,R.style.AlertDialog);
+                            progressSincronizar.setIndeterminate(true);
+                            progressSincronizar.setMessage(getString( R.string.message_cargando));
+                            progressSincronizar.setTitle(R.string.app_name);
+                            progressSincronizar.show();
+                            semaforo.sincronizar(session.getToken(),progressSincronizar);
+                            dialogInterface.dismiss();
+                        }
+                    }
+            );
+            alertDialog.create().show();
+        }
     }
 
     @Override
@@ -134,6 +164,10 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                 this.finish();
                 return true;
             case R.id.pendientes:
+                /*for (String mensaje:semaforo.obtenerCantidadesRestantes()){
+                    Log.w("Mensaje",mensaje);
+                }*/
+                enviarDatos();
                 Tooltip.make(this,
                         new Tooltip.Builder(101)
                                 .withStyleId(R.style.TooltipError)
@@ -151,8 +185,10 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                                 .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
                                 .build()
                 ).show();
+                //enviarDatos();
                 return true;
             case R.id.libres:
+                enviarDatos();
                 Tooltip.make(this,
                         new Tooltip.Builder(101)
                                 .withStyleId(R.style.TooltipGood)
@@ -215,7 +251,12 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
 
         MenuItem pendientes = menu.findItem(R.id.pendientes);
         MenuItem libres = menu.findItem(R.id.libres);
+        //semaforo.sincronizar(session.getToken(),progressDialog);
         if(semaforo.VerificarEstatus()) {
+           /* for (String mensaje:semaforo.obtenerCantidadesRestantes()){
+                Log.w("Mensaje",mensaje);
+            }*/
+            //enviarDatos();
             pendientes.setVisible(true);
             Tooltip.make(this,
                     new Tooltip.Builder(101)

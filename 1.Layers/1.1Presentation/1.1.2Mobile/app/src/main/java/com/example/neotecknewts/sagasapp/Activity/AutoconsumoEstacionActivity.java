@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Presenter.AutoconsumoEstacionPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.AutoconsumoEstacionPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
@@ -33,7 +34,7 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
     DatosAutoconsumoDTO dto_resp;
     Session session;
     String[] lista_estaciones,lista_pipa;
-    AutoconsumoEstacionPresenterImpl presenter;
+    AutoconsumoEstacionPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
                 SAutoconsumoEstacionActivityListaUnidades);
         BtnAutoconsumoActtivityGuardar = findViewById(R.id.BtnAutoconsumoActtivityGuardar);
 
-        lista_estaciones = new String[]{"Estacion 1","Estacion 2"};
+        /*lista_estaciones = new String[]{"Estacion 1","Estacion 2"};
         lista_pipa = new String[]{"Pipa 1","Pipa 2"};
 
 
@@ -80,7 +81,7 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
                 this,
                 R.layout.custom_spinner,
                 lista_pipa
-        ));
+        ));*/
 
         presenter.getList(session.getToken(),EsAutoconsumoEstacionFinal);
 

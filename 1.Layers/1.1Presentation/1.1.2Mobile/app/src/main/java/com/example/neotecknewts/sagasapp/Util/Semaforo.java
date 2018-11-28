@@ -9,8 +9,11 @@
  */
 package com.example.neotecknewts.sagasapp.Util;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
@@ -165,7 +168,37 @@ public class Semaforo {
             mensajes.add("Existen un total de "+
                     String.valueOf(sagasSql.GetVentas().getCount())
                     +" ventas pendientes");
+        for (String mensaje:
+             mensajes) {
+            Log.w("Mensaje",mensaje);
+        }
         return mensajes;
+    }
+
+    public void sincronizar(String token,ProgressDialog progressDialog){
+        Lisener lisener = new Lisener(papeletaSQL,token);
+        lisener.CrearRunable(Lisener.Papeleta);
+        lisener = new Lisener(iniciarDescargaSQL,token);
+        lisener.CrearRunable(Lisener.IniciarDescarga);
+        lisener = new Lisener(finalizarDescargaSQL,token);
+        lisener.CrearRunable(Lisener.FinalizarDescarga);
+        lisener = new Lisener(sagasSql,token);
+        lisener.CrearRunable(Lisener.LecturaInicial);
+        lisener.CrearRunable(Lisener.LecturaFinal);
+        lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
+        lisener.CrearRunable(Lisener.LecturaFinalAlmacen);
+        lisener.CrearRunable(Lisener.LecturaInicialCamioneta);
+        lisener.CrearRunable(Lisener.LecturaFinalCamioneta);
+        lisener.CrearRunable(Lisener.Autoconsumo);
+        lisener.CrearRunable(Lisener.Calibracion);
+        lisener.CrearRunable(Lisener.RecargaEstacion);
+        lisener.CrearRunable(Lisener.RecargaPipa);
+        lisener.CrearRunable(Lisener.RecargaCamioneta);
+        lisener.CrearRunable(Lisener.Traspaso);
+        lisener.CrearRunable(Lisener.Anticipo);
+        lisener.CrearRunable(Lisener.CorteDeCaja);
+        lisener.CrearRunable(Lisener.VENTA);
+        progressDialog.hide();
     }
     //endregion
 }

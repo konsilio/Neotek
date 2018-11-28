@@ -178,10 +178,10 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
              }
          });
 
-         lista_estacion_salida = new String[]{"Estación No.1","Estación No.2"};
+         /*lista_estacion_salida = new String[]{"Estación No.1","Estación No.2"};
          lista_medidor = new String[]{"Magnatel","Rotogate"};
-         lista_pipa_entrada = new String[]{"Pipa No, 1","Pipa No. 2"};
-         STraspasoEstacionActivityEstacionSalida.setAdapter(new ArrayAdapter<>(
+         lista_pipa_entrada = new String[]{"Pipa No, 1","Pipa No. 2"};*/
+         /*STraspasoEstacionActivityEstacionSalida.setAdapter(new ArrayAdapter<>(
                  this,
                  R.layout.custom_spinner,
                  lista_estacion_salida
@@ -195,7 +195,7 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
                  this,
                  R.layout.custom_spinner,
                  lista_estacion_salida
-         ));
+         ));*/
          presenter.GetList(session.getToken(),EsTraspasoEstacionFinal);
 
          BtnTraspasoEstacionActivityAceptar.setOnClickListener(v -> {

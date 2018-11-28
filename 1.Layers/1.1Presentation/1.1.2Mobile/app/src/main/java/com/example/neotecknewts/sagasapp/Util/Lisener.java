@@ -88,7 +88,7 @@ public class Lisener{
     private IniciarDescargaSQL iniciarDescargaSQL;
     private FinalizarDescargaSQL finalizarDescargaSQL;
     private boolean EstaDisponible;
-    private boolean _registrado;
+    boolean _registrado;
     //endregion
     //region Constructores
     public Lisener(SAGASSql sagasSql,String token){
@@ -326,6 +326,8 @@ public class Lisener{
                 }else {
                     _registrado = false;
                 }
+                Log.e("Corte"+corteDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -374,7 +376,7 @@ public class Lisener{
                         );
                         anticiposDTO.setAnticipar(
                                 cursor.getDouble(
-                                        cursor.getColumnIndex("Anticipar")
+                                        cursor.getColumnIndex("Anticipo")
                                 )
                         );
                         anticiposDTO.setIdEstacion(
@@ -424,6 +426,8 @@ public class Lisener{
                 }else {
                     _registrado = false;
                 }
+                Log.e("Anticipo"+anticiposDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -572,6 +576,8 @@ public class Lisener{
                     } else {
                         _registrado = false;
                     }
+                    Log.e("Traspaso "+dto.getClaveOperacion(),
+                            String.valueOf(response.isSuccessful()));
                 }
 
                 @Override
@@ -882,6 +888,8 @@ public class Lisener{
                 } else {
                     _registrado = false;
                 }
+                Log.e("Autoconsumo"+dto.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -997,6 +1005,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaPuntoVenta> call,
                                    Response<RespuestaPuntoVenta> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("Corte"+ventaDTO.getFolioVenta(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -1124,6 +1134,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaRecargaDTO> call,
                                    Response<RespuestaRecargaDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("Corte"+recargaDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -1229,6 +1241,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaRecargaDTO> call,
                                    Response<RespuestaRecargaDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("Corte"+recargaDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -1315,6 +1329,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("lectura"+lecturaDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -1400,6 +1416,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("lectura final"+lecturaDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -1494,6 +1512,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("lectura"+lecturaDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -1588,6 +1608,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("lectura"+lecturaDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -1702,6 +1724,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("lectura"+lecturaDTO.getClaveProceso(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -1810,6 +1834,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("Lectura final"+lecturaDTO.getClaveProceso(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -1924,6 +1950,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("lectura "+lecturaDTO.getClaveProceso(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -2039,6 +2067,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("lectura"+lecturaDTO.getClaveProceso(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -2054,8 +2084,9 @@ public class Lisener{
 
     //region Finalizar descarga
     private boolean FinalizarDescarga() {
-        boolean registrado = false;
-        if(ServicioDisponible()) {
+        boolean servicio = ServicioDisponible();
+        boolean registrado;
+        if(servicio) {
             Log.w("Iniciando", "Revisando finalizar descarga: " + new Date());
             Cursor cursor = finalizarDescargaSQL.GetFinalizarDescargas();
             FinalizarDescargaDTO lecturaDTO = null;
@@ -2067,27 +2098,27 @@ public class Lisener{
                             cursor.getColumnIndex("ClaveOperacion")));
                     lecturaDTO.setIdOrdenCompra(cursor.getInt(
                             cursor.getColumnIndex("IdOrdenCompra")));
-                    lecturaDTO.setClaveOperacion(cursor.getString(
-                            cursor.getColumnIndex("ClaveOperacion")));
+                    /*lecturaDTO.setClaveOperacion(cursor.getString(
+                            cursor.getColumnIndex("ClaveOperacion")));*/
                     lecturaDTO.setFechaDescarga(cursor.getString(
                             cursor.getColumnIndex("FechaDescarga")));
-                    lecturaDTO.setNombreTipoMedidorTractor(cursor.getString(
+                    /*lecturaDTO.setNombreTipoMedidorTractor(cursor.getString(
                             cursor.getColumnIndex("NombreTipoMedidorTractor")));
                     lecturaDTO.setNombreTipoMedidorAlmacen(cursor.getString(
-                            cursor.getColumnIndex("NombreTipoMedidorAlmacen")));
+                            cursor.getColumnIndex("NombreTipoMedidorAlmacen")));*/
                     lecturaDTO.setIdTipoMedidorTractor(cursor.getInt(
                             cursor.getColumnIndex("IdTipoMedidorTractor")));
                     lecturaDTO.setIdTipoMedidorAlmacen(cursor.getInt(
                             cursor.getColumnIndex("IdTipoMedidorAlmacen")));
-                    lecturaDTO.setCantidadFotosAlmacen(cursor.getInt(
-                            cursor.getColumnIndex("CantidadFotosAlmacen")));
-                    lecturaDTO.setCantidadFotosTractor(cursor.getInt(
-                            cursor.getColumnIndex("CantidadFotosTractor")));
+                    /*lecturaDTO.setCantidadFotosAlmacen(cursor.getInt(
+                            cursor.getColumnIndex("CantidadFotosAlmacen")));*/
+                    /*lecturaDTO.setCantidadFotosTractor(cursor.getInt(
+                            cursor.getColumnIndex("CantidadFotosTractor")));*/
                     boolean es_prestado = cursor.getInt(
                             cursor.getColumnIndex("TanquePrestado")) > 0;
                     lecturaDTO.setTanquePrestado(es_prestado);
                     lecturaDTO.setPorcentajeMedidorAlmacen(cursor.getDouble(
-                            cursor.getColumnIndex("PorcentajeMedidorAlmacen")));
+                            cursor.getColumnIndex("PorcentajeMedirorAlmacen")));
                     lecturaDTO.setPorcentajeMedidorTractor(cursor.getDouble(
                             cursor.getColumnIndex("PorcentajeMedidorTractor")));
                     lecturaDTO.setIdAlmacen(cursor.getInt(
@@ -2096,11 +2127,11 @@ public class Lisener{
                     Cursor cantidad = finalizarDescargaSQL.GetImagenesFinalizarDescargaByClaveOperacion(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
-                        String iuri = cantidad.getString(cursor.getColumnIndex("Url"));
+                        String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    cantidad.getString(cantidad.getColumnIndex("Imagen"))
                             );
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
@@ -2139,6 +2170,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaFinalizarDescargaDTO> call,
                                    Response<RespuestaFinalizarDescargaDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("FINALIZAR DESCARGA"+lecturaDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -2196,11 +2229,11 @@ public class Lisener{
                     Cursor cantidad = iniciarDescargaSQL.GetImagenesDescargaByClaveUnica(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
-                        String iuri = cantidad.getString(cursor.getColumnIndex("Url"));
+                        String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    cantidad.getString(cantidad.getColumnIndex("Imagen"))
                             );
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
@@ -2239,6 +2272,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
                                    Response<RespuestaIniciarDescargaDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("iniciar descarga"+lecturaDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -2310,18 +2345,18 @@ public class Lisener{
                     lecturaDTO.setCantidadFotosTractor(cursor.getInt(
                             cursor.getColumnIndex("CantidadFotosTractor")));
 
-                    Cursor cantidad = papeletaSQL.GetRecordByCalveUnica(lecturaDTO.getClaveOperacion());
+                    Cursor cantidad = papeletaSQL.GetRecordsByCalveUnica(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
-                        String iuri = cantidad.getString(cursor.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                        //String iuri = cantidad.getString(cantidad.getColumnIndex("Imagen"));
+                        //try {
+                            //lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    cantidad.getString(cantidad.getColumnIndex("Url"))
                             );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
+                        //} catch (URISyntaxException e) {
+                        //    e.printStackTrace();
+                        //}
                         cantidad.moveToNext();
                     }
 
@@ -2356,6 +2391,8 @@ public class Lisener{
             public void onResponse(Call<RespuestaPapeletaDTO> call,
                                    Response<RespuestaPapeletaDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("Papeletas"+lecturaDTO.getClaveOperacion(),
+                        String.valueOf(response.isSuccessful()));
             }
 
             @Override
