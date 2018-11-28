@@ -200,7 +200,7 @@ namespace MVC.Presentacion.Controllers
         {
             _tok = Session["StringToken"].ToString();
 
-            var respuesta = CatalogoServicio.ActualizaPermisosMovilCompra(objrol, _tok);
+            var respuesta = CatalogoServicio.ActualizaPermisosMovilVenta(objrol, _tok);
 
             if (respuesta.Exito)
             {

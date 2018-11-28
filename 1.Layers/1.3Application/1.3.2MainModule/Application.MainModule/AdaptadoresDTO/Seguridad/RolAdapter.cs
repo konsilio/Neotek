@@ -101,6 +101,10 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 AppTomaLecturaReporteDelDia = rol.AppTomaLecturaReporteDelDia,
                 AppTraspasoEstacionCarb = rol.AppTraspasoEstacionCarb,
                 AppTraspasoPipa = rol.AppTraspasoPipa,
+                AppDisposicionEfectivo = rol.AppDisposicionEfectivo,
+                AppCamionetaPuntoVenta = rol.AppCamionetaPuntoVenta,
+                AppEstacionCarbPuntoVenta = rol.AppEstacionCarbPuntoVenta,
+                AppPipaPuntoVenta = rol.AppPipaPuntoVenta,
             };
 
             return r;
@@ -205,6 +209,10 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 AppTomaLecturaReporteDelDia = rolDTO.AppTomaLecturaReporteDelDia,
                 AppTraspasoEstacionCarb = rolDTO.AppTraspasoEstacionCarb,
                 AppTraspasoPipa = rolDTO.AppTraspasoPipa,
+                AppDisposicionEfectivo = rolDTO.AppDisposicionEfectivo,
+                AppCamionetaPuntoVenta = rolDTO.AppCamionetaPuntoVenta,
+                AppEstacionCarbPuntoVenta = rolDTO.AppEstacionCarbPuntoVenta,
+                AppPipaPuntoVenta = rolDTO.AppPipaPuntoVenta,
             };
         }
 
@@ -298,6 +306,10 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 AppTomaLecturaReporteDelDia = rolDTO.AppTomaLecturaReporteDelDia,
                 AppTraspasoEstacionCarb = rolDTO.AppTraspasoEstacionCarb,
                 AppTraspasoPipa = rolDTO.AppTraspasoPipa,
+                AppDisposicionEfectivo = rolDTO.AppDisposicionEfectivo,
+                AppCamionetaPuntoVenta = rolDTO.AppCamionetaPuntoVenta,
+                AppEstacionCarbPuntoVenta = rolDTO.AppEstacionCarbPuntoVenta,
+                AppPipaPuntoVenta = rolDTO.AppPipaPuntoVenta,
             };
         }
         public static Rol FromDtoNomRol(RolDto rolDTO, Rol rol)
@@ -382,7 +394,10 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 AppTomaLecturaReporteDelDia = rol.AppTomaLecturaReporteDelDia,
                 AppTraspasoEstacionCarb = rol.AppTraspasoEstacionCarb,
                 AppTraspasoPipa = rol.AppTraspasoPipa,
-
+                AppDisposicionEfectivo = rol.AppDisposicionEfectivo,
+                AppCamionetaPuntoVenta = rol.AppCamionetaPuntoVenta,
+                AppEstacionCarbPuntoVenta = rol.AppEstacionCarbPuntoVenta,
+                AppPipaPuntoVenta = rol.AppPipaPuntoVenta,
             };
         }
 
