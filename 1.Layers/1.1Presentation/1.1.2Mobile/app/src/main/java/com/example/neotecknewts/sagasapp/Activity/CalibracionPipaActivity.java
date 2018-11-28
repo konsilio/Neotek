@@ -52,8 +52,8 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
         calibracionDTO = new CalibracionDTO();
         session = new Session(this);
         presenter = new CalibracionPipaPresenterImpl(this);
-        list_pipa_salida = new String[]{"Pipa No. 1","Pipa No. 2"};
-        list_tipo_medidor = new String[]{"Magnatel","Rotogate"};
+        //list_pipa_salida = new String[]{"Pipa No. 1","Pipa No. 2"};
+        //list_tipo_medidor = new String[]{"Magnatel","Rotogate"};
         list_destino_pruebas = new String[]{"Tanque de la pipa","Tanque portatil"};
 
         TVCalibracionPipaActivityTitulo = findViewById(R.id.TVCalibracionPipaActivityTitulo);
@@ -126,13 +126,17 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                                                 .getIdAlmacenGas()
                                 );
                             }
-                        }
-                        for (int x =0;x<datosCalibracionDTO.getMedidores().size();x++) {
-                            if (datosCalibracionDTO.getMedidores().get(x).getNombreTipoMedidor()
-                                    .equals(datosCalibracionDTO.getEstaciones().get(x).getMedidor()
-                                            .getNombreTipoMedidor()))
+                            if(datosCalibracionDTO.getMedidores()!=null) {
+                                for (int y = 0; y < datosCalibracionDTO.getMedidores().size(); y++) {
+                                    if ( datosCalibracionDTO.getEstaciones().get(x).getMedidor()
+                                            .getNombreTipoMedidor().equals(
+                                                    datosCalibracionDTO.getMedidores().get(y).
+                                                            getNombreTipoMedidor()
+                                            ))
 
-                                SCalibracionPipaActivityMedidor.setSelection(x);
+                                        SCalibracionPipaActivityMedidor.setSelection(y-1);
+                                }
+                            }
                         }
                     }
                 }
