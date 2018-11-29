@@ -45,6 +45,10 @@
                 debugger
                 var url = "/PrecioVenta/GetConfiguracionEmpresa";
                 var id = $('#ddlEmpresas').find('option:selected').val();
+                if (id == undefined)
+                {
+
+                    }
              
                 $.getJSON(url, { idEmpresa: id }, function (data) {
                     var factor = precio - data;
