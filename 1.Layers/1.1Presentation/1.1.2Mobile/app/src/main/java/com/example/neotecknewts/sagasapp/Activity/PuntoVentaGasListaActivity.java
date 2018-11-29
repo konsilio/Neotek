@@ -230,6 +230,12 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                     esGasLP,esCilindroGas,esCilindro);
             presenter.getPrecioVenta(session.getToken());*/
         }
+        SWFormularioVentaCamionetaYPipaCredito.setChecked(
+                ventaDTO.isCredito()
+        );
+        SWFormularioVentaCamionetaYPipaFactura.setChecked(
+                ventaDTO.isFactura()
+        );
         mostrarConsepto(ventaDTO.getConcepto());
     }
 
@@ -243,6 +249,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         conceptoDTO.setPUnitario(adapter.existencia.getPrecioUnitario());
         conceptoDTO.setDescuento(adapter.existencia.getDescuento());
         conceptoDTO.setSubtotal(Double.valueOf(adapter.Subtotal.getText().toString()));
+        conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
         ventaDTO.getConcepto().add(conceptoDTO);
         Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                 PuntoVentaPagarActivity.class);

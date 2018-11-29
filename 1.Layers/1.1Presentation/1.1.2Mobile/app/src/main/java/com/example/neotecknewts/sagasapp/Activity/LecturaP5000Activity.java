@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             ,TVLecturaP5000Registro;
     public NumberPicker NPLecturaP500CantidadLectura;
     public Button BtnLecturaP5000Guardar;
+    public EditText ETLecturaP5000CantidadNull;
 
     public Boolean EsLecturaInicial,EsLecturaFinal,EsLecturaFinalPipa,EsLecturaInicialPipa;
     public LecturaDTO lecturaDTO;
@@ -79,26 +81,55 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     false);
             EsCalibracionPipaFinal = b.getBoolean("EsCalibracionPipaFinal",
                     false);
-
+            ETLecturaP5000CantidadNull = findViewById(R.id.ETLecturaP5000CantidadNull);
+            NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
                 max_p5000 = lecturaDTO.getCantidadP5000();
                 p5000 = lecturaDTO.getCantidadP5000();
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 setTitle(R.string.toma_de_lectura);
             }else if(EsLecturaFinal){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
                 max_p5000 = lecturaDTO.getCantidadP5000();
                 p5000 = lecturaDTO.getCantidadP5000();
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 setTitle(R.string.toma_de_lectura);
             }else if (EsLecturaInicialPipa){
                 lecturaPipaDTO = (LecturaPipaDTO) b.getSerializable("lecturaPipaDTO");
                 max_p5000 = lecturaPipaDTO.getCantidadP5000();
                 p5000 = lecturaPipaDTO.getCantidadP5000();
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 setTitle(R.string.toma_de_lectura);
             }else if(EsLecturaFinalPipa){
                 lecturaPipaDTO = (LecturaPipaDTO) b.getSerializable("lecturaPipaDTO");
                 max_p5000 = lecturaPipaDTO.getCantidadP5000();
                 p5000 = lecturaPipaDTO.getCantidadP5000();
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 setTitle(R.string.toma_de_lectura);
             }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
                 recargaDTO = (RecargaDTO) b.getSerializable("recargaDTO");
@@ -166,6 +197,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
         TVLecturaP5000Tipo = findViewById(R.id.TVLecturaP5000Tipo);
         TVLecturaP5000Pregunta = findViewById(R.id.TVLecturaP5000Pregunta);
         TVLecturaP5000Registro = findViewById(R.id.TVLecturaP5000Registro);
+
         if(EsLecturaInicial) {
             TVLecturaP5000Titulo.setText(  R.string.toma_de_lectura_inicial );
             TVLecturaP5000Tipo.setText(getString(R.string.p500)+
@@ -310,12 +342,16 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     calibracionDTO.getNombreCAlmacenGas());
         }
 
-        NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
+
 
 
         BtnLecturaP5000Guardar = findViewById(R.id.BtnLecturaP5000Guardar);
         BtnLecturaP5000Guardar.setOnClickListener(this);
-
+        if(ETLecturaP5000CantidadNull.getVisibility()==View.VISIBLE &&
+                !ETLecturaP5000CantidadNull.getText().toString().isEmpty() &&
+        ETLecturaP5000CantidadNull.getText().toString().length()>0){
+            p5000 = Integer.parseInt(ETLecturaP5000CantidadNull.getText().toString());
+        }
         NPLecturaP500CantidadLectura.setValue(p5000);
         NPLecturaP500CantidadLectura.setMaxValue(max_p5000);
         NPLecturaP500CantidadLectura.setMinValue(0);
@@ -369,16 +405,24 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public void VerificaValor() {
         String mensaje = "";
         boolean error = false;
-        int CantidadP500 = NPLecturaP500CantidadLectura.getValue();
-        if (CantidadP500 ==0)
+        int CantidadP500=0;
+        if(!ETLecturaP5000CantidadNull.getText().toString().isEmpty()
+                && ETLecturaP5000CantidadNull.getText().toString().length()>0){
+             CantidadP500 = Integer.parseInt(ETLecturaP5000CantidadNull.getText().toString());
+        }else{
+            CantidadP500 = NPLecturaP500CantidadLectura.getValue();
+        }
+
+        if (CantidadP500 <0)
         {
             mensaje += "La lectura del P5000 es un valor requerido";
             error = true;
         }else{
-            if(CantidadP500<0) {
+            /*if(CantidadP500<0) {
                 mensaje += "La lectura del P5000 es un valor entero mayor a cero";
                 error = true;
-            }
+            }*/
+            error = false;
         }
 
         if(error){

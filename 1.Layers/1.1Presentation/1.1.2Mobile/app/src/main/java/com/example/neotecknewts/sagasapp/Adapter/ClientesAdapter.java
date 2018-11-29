@@ -51,8 +51,9 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 items.get(position).getTelefono_fijo()
         );
         ((ClientesHolder) holder).TvBuscarClienteActivityFactura.setText(
-                "Si"
+                items.get(position).isFactura()?" Si":" No"
         );
+
         ((ClientesHolder) holder).CVEstacionesCarburacionItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +68,10 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ventaDTO.setRFC(
                         items.get(position).getRFC()
                 );
+                ventaDTO.setRazonSocial(
+                        items.get(position).getRazonSocial()
+                );
+                ventaDTO.setSinNumero(false);
                 if(items.get(position).isCredito()) {
                     ventaDTO.setCredito(true);
                     ventaDTO.setTieneCredito(true);

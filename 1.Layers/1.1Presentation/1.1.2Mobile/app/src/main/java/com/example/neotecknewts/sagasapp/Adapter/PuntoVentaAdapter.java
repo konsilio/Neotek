@@ -15,6 +15,7 @@ import com.example.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecioVentaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -59,14 +60,20 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     if(esVentaGas) {
                         if(!editText.getText().toString().isEmpty()) {
-                            PrecioLitro.setText(String.valueOf(precioVentaDTO.getPrecioSalidaLt()));
-                            Descuento.setText(String.valueOf(0));
+                            PrecioLitro.setText(
+                                    new DecimalFormat("#.##").format(
+                                            precioVentaDTO.getPrecioSalidaLt()
+                                    )
+                                    );
+                            Descuento.setText(
+                                    String.valueOf(0)
+                                    );
                             double sub = precioVentaDTO.getPrecioSalidaLt() *
                                     Integer.parseInt(editText.getText().toString());
-                            Subtotal.setText(String.valueOf(sub));
+                            Subtotal.setText(new DecimalFormat("#.##").format(sub));
                             double iva = sub * 0.16;
-                            Iva.setText(String.valueOf(sub * 0.16));
-                            Total.setText(String.valueOf(sub + iva));
+                            Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
+                            Total.setText(new DecimalFormat("#.##").format(sub + iva));
                             cantidad = editText;
                             existencia = items.get(position);
                         }
@@ -77,14 +84,14 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     if(esVentaGas) {
                         if(!editText.getText().toString().isEmpty()) {
-                            PrecioLitro.setText(String.valueOf(precioVentaDTO.getPrecioSalidaLt()));
+                            PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                             Descuento.setText(String.valueOf(0));
                             double sub = precioVentaDTO.getPrecioSalidaLt() *
                                     Integer.parseInt(editText.getText().toString());
-                            Subtotal.setText(String.valueOf(sub));
+                            Subtotal.setText(new DecimalFormat("#.##").format(sub));
                             double iva = sub * 0.16;
-                            Iva.setText(String.valueOf(sub * 0.16));
-                            Total.setText(String.valueOf(sub + iva));
+                            Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
+                            Total.setText(new DecimalFormat("#.##").format(sub + iva));
                             cantidad = editText;
                             existencia = items.get(position);
                         }
@@ -95,14 +102,14 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void afterTextChanged(Editable editable) {
                     if(esVentaGas) {
                         if(!editText.getText().toString().isEmpty()) {
-                            PrecioLitro.setText(String.valueOf(precioVentaDTO.getPrecioSalidaLt()));
+                            PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                             Descuento.setText(String.valueOf(0));
                             double sub = precioVentaDTO.getPrecioSalidaLt() *
                                     Integer.parseInt(editText.getText().toString());
-                            Subtotal.setText(String.valueOf(sub));
+                            Subtotal.setText(new DecimalFormat("#.##").format(sub));
                             double iva = sub * 0.16;
-                            Iva.setText(String.valueOf(sub * 0.16));
-                            Total.setText(String.valueOf(sub + iva));
+                            Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
+                            Total.setText(new DecimalFormat("#.##").format(sub + iva));
                             cantidad = editText;
                             existencia = items.get(position);
                         }

@@ -290,8 +290,8 @@ public class VerReporteActivity extends AppCompatActivity {
                         "_________________________\n";
         if(!ventaDTO.isSinNumero()) {
             StringReporte += "\tCliente\n" +
-                    "Razon Social\t[{Razon-social}]\n" +
-                    "RFC\t[{RFC}]\n";
+                    "Razon Social \t[{Razon-social}]\n" +
+                    "RFC \t[{RFC}]\n";
         }
         StringReporte +="--------------------------------\n"+
                         "|Concepto|Cant.|P.Uni.|Desc|Subt|\n"+
@@ -330,10 +330,21 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(registro));
         StringReporte = StringReporte.replace("[{Hora}]",tdate.format(registro));
         HtmlReporte = HtmlReporte.replace("[{Hora}]",tdate.format(registro));
-        StringReporte = StringReporte.replace("[{Razon-social}]","");
-        HtmlReporte = HtmlReporte.replace("[{Razon-social}]","");
-        StringReporte = StringReporte.replace("[{RFC}]","");
-        HtmlReporte = HtmlReporte.replace("[{RFC}]","");
+        if(ventaDTO.getRazonSocial().isEmpty()||ventaDTO.getRazonSocial()!=null) {
+            StringReporte = StringReporte.replace("[{Razon-social}]", ventaDTO.getRazonSocial());
+            HtmlReporte = HtmlReporte.replace("[{Razon-social}]", ventaDTO.getRazonSocial());
+        }else {
+            if (ventaDTO.isSinNumero()){
+                StringReporte = StringReporte.replace("Razon social", "Cliente");
+                HtmlReporte = HtmlReporte.replace("Razon social", "Cliente");
+                StringReporte = StringReporte.replace("[{Razon-social}]", ventaDTO.getNombre());
+                HtmlReporte = HtmlReporte.replace("[{Razon-social}]", ventaDTO.getNombre());
+            }
+        }
+        if (!ventaDTO.isSinNumero()) {
+            StringReporte = StringReporte.replace("[{RFC}]", ventaDTO.getRFC());
+            HtmlReporte = HtmlReporte.replace("[{RFC}]", ventaDTO.getRFC());
+        }
 
         StringBuilder Conpecto = new StringBuilder();
         StringBuilder ConpectoHtml = new StringBuilder();
