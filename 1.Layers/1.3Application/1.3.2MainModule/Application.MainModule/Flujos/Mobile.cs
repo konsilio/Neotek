@@ -215,6 +215,13 @@ namespace Application.MainModule.Flujos
                 Cliente clienteGenerico = ClienteServicio.BuscarClientePorRFC("XAXX010101000");
                 adapter.IdCliente = clienteGenerico.IdCliente;
                 adapter.RFC = clienteGenerico.Rfc;
+                adapter.RazonSocial = clienteGenerico.RazonSocial;
+            }
+            else
+            {
+                adapter.IdCliente = venta.IdCliente;
+                adapter.RFC = cliente.Rfc;
+                adapter.RazonSocial =  cliente.RazonSocial;
             }
 
             return PuntoVentaServicio.InsertMobile(adapter);
