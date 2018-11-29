@@ -218,9 +218,32 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             var almDto = ToDto(alm);
             if (lect == null || lect.Cilindros == null)
-                almDto.Cilindros = ToDto(AlmacenGasServicio.AdaptarCilindro(0));            
+                almDto.Cilindros = ToDto(AlmacenGasServicio.AdaptarCilindro(0));
             else
-                almDto.Cilindros = ToDto(AlmacenGasServicio.AdaptarCilindro(lect.Cilindros.ToList()));
+            {
+                var cilindros = lect.Cilindros.ToList();
+                if(cilindros.Count>0)
+                    almDto.Cilindros = ToDto(AlmacenGasServicio.AdaptarCilindro(cilindros));
+                else
+                {
+                    var list = AlmacenGasServicio.ObtenerCilindros();
+                    List<AlmacenGasTomaLecturaCilindro> cilindrosLimpios = new List<AlmacenGasTomaLecturaCilindro>();
+                    int orden = 0;
+                    foreach (var item in list)
+                    {
+                        cilindrosLimpios.Add(new AlmacenGasTomaLecturaCilindro()
+                        {
+                            Cantidad = 0,
+                            IdCAlmacenGas = alm.IdCAlmacenGas,
+                            IdCilindro = item.IdCilindro,
+                            IdOrden = orden,
+                        });
+                        orden++;
+                    }
+                    almDto.Cilindros = ToDto(AlmacenGasServicio.AdaptarCilindro(cilindrosLimpios));
+                }
+            }
+                
 
             return almDto;
         }
