@@ -45,10 +45,9 @@
                 debugger
                 var url = "/PrecioVenta/GetConfiguracionEmpresa";
                 var id = $('#ddlEmpresas').find('option:selected').val();
-                if (id == undefined)
-                {
-
-                    }
+                if (id == undefined) {
+                    id = $('#lblIdEmpresa').text();
+                }
              
                 $.getJSON(url, { idEmpresa: id }, function (data) {
                     var factor = precio - data;
@@ -219,6 +218,8 @@
                                             else
                                             {
                                                 @ViewBag.Empresas
+                                                <label id="lblIdEmpresa" style="visibility:hidden">@ViewBag.IdEmpresa</label>
+                                                @Html.HiddenFor(m => m.IdEmpresa)
                                             }
                                         </div>
                                     </div>

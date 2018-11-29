@@ -24,5 +24,6 @@ namespace Application.MainModule.DTOs.Mobile
         public string RFC { get; set; }
         public string RazonSocial { get; set; }
         public bool Credito { get; set; }
+        public bool Factura { get; internal set; }
     }
 }
