@@ -167,6 +167,8 @@
                         android:contentDescription=""
                         android:textSize="24sp"
                         tools:ignore="Autofill,LabelFor"
+                        tools:targetApi="P"
+                        android:textColor="@color/colorTextLogin"
                         android:gravity="end" />
                 </TableRow>
 

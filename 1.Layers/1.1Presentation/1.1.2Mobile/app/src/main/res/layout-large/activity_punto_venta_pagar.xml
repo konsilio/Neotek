@@ -171,7 +171,8 @@
                 tools:ignore="LabelFor"
                 tools:layout_editor_absoluteX="456dp"
                 tools:layout_editor_absoluteY="623dp"
-                tools:targetApi="o" />
+                tools:targetApi="P"
+                android:textColor="@color/colorTextLogin" />
 
             <Button
                 android:id="@+id/BtnPuntoVentaPagarActivityOpciones"

@@ -26,6 +26,7 @@
         <item name="colorAccent">@color/primaryTextColor</item>
         <item name="actionBarStyle">@style/ActionBarStyle</item>
         <item name="colorControlHighlight">@color/colorBackgroundSistemaLogin</item>
+        <item name="android:textColorSecondary">@color/primaryTextColor</item>
     </style>
     <style name="SagasTheme.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="android:colorButtonNormal" >@color/colorBackgroundSistemaLogin</item>

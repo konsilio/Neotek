@@ -57,6 +57,8 @@ public class AutoconsumoPipaActivity extends AppCompatActivity implements  Autoc
         SAutoconsumoPipaActivityListaPipasSalida = findViewById(R.id.SAutoconsumoPipaActivityListaPipasSalida);
         BtnAutoconsumoPipaActivityGuardar = findViewById(R.id.BtnAutoconsumoPipaActivityGuardar);
 
+        presenter.getList(session,EsAutoconsumoPipaFinal);
+
         SAutoconsumoPipaActivityListaUnidadEntrada.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
@@ -110,7 +112,7 @@ public class AutoconsumoPipaActivity extends AppCompatActivity implements  Autoc
                     if(dto!=null && dto.getEstacionSalidaDTOList().size()>0) {
                         for (int x = 0; x < dto.getEstacionSalidaDTOList().size(); x++) {
                             if(parent.getItemAtPosition(position).toString().equals(
-                                    dto.getEstacionEntradaDTOList().get(x).getNombreAlmacen()
+                                    dto.getEstacionSalidaDTOList().get(x).getNombreAlmacen()
                             )) {
                                 autoconsumoDTO.setIdCAlmacenGasSalida(
                                         dto.getEstacionSalidaDTOList().get(x).getIdAlmacenGas()
@@ -118,6 +120,9 @@ public class AutoconsumoPipaActivity extends AppCompatActivity implements  Autoc
                                 autoconsumoDTO.setP5000Salida(
                                         dto.getEstacionSalidaDTOList().get(x)
                                                 .getCantidadP5000()
+                                );
+                                autoconsumoDTO.setNombreEstacion(
+                                        dto.getEstacionSalidaDTOList().get(x).getNombreAlmacen()
                                 );
                             }
                         }
@@ -136,7 +141,7 @@ public class AutoconsumoPipaActivity extends AppCompatActivity implements  Autoc
                 VerificarCampos();
             }
         });
-        presenter.getList(session,EsAutoconsumoPipaFinal);
+
     }
 
     @Override
