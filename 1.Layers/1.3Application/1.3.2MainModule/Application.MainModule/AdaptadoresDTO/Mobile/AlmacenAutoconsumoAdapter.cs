@@ -41,13 +41,57 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static DatosAutoconsumoDto ToDTO(List<UnidadAlmacenGas>almacenes,UnidadAlmacenGas predeterminado, List<UnidadAlmacenGas> pipas, List<UnidadAlmacenGas> camionetas, List<TipoMedidorUnidadAlmacenGas> medidores)
+        public static DatosAutoconsumoDto ToDTO(List<UnidadAlmacenGas>almacenes,UnidadAlmacenGas predeterminado, List<Pipa> pipas, List<Camioneta> camionetas, List<TipoMedidorUnidadAlmacenGas> medidores)
         {
             return new DatosAutoconsumoDto()
             {
-                EstacionEntrada = ToDTO(almacenes, medidores),
+                EstacionEntrada = ToDTO(pipas, medidores),
                 EstacionSalida = ToDTO(pipas,camionetas,medidores),
                 Predeterminada = ToDTO(predeterminado,medidores.Single(x=>x.IdTipoMedidor.Equals(predeterminado.IdTipoMedidor)))
+            };
+        }
+
+        public static List<EstacionesDto> ToDTO(List<Pipa> pipas, List<Camioneta> camionetas, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            List<EstacionesDto> list = new List<EstacionesDto>();
+            list.AddRange(ToDTO(pipas, medidores));
+            list.AddRange(ToDTO(camionetas, medidores));
+            return list;
+        }
+
+        public static List<EstacionesDto> ToDTO(List<Camioneta> camionetas, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return camionetas.Select(x => ToDTO(x, medidores)).ToList();
+        }
+
+        public static EstacionesDto ToDTO(Camioneta camioneta, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return new EstacionesDto()
+            {
+                CantidadP5000 = camioneta.UnidadAlmacenGas.First().P5000Actual,
+                IdTipoMedidor = camioneta.UnidadAlmacenGas.First().IdTipoMedidor,
+                IdAlmacenGas = camioneta.UnidadAlmacenGas.First().IdCAlmacenGas,
+                Medidor = TipoMedidorAdapter.ToDto(camioneta.UnidadAlmacenGas.First().Medidor),
+                NombreAlmacen = camioneta.Nombre,
+                PorcentajeMedidor = camioneta.UnidadAlmacenGas.First().PorcentajeActual
+            };
+        }
+
+        public static List<EstacionesDto> ToDTO(List<Pipa> pipas, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return pipas.Select(x => ToDTO(x, medidores)).ToList();
+        }
+
+        public static EstacionesDto ToDTO(Pipa pipa, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return new EstacionesDto()
+            {
+                 CantidadP5000=pipa.UnidadAlmacenGas.First().P5000Actual,
+                 IdTipoMedidor = pipa.UnidadAlmacenGas.First().IdTipoMedidor,
+                 IdAlmacenGas = pipa.UnidadAlmacenGas.First().IdCAlmacenGas,
+                 Medidor = TipoMedidorAdapter.ToDto(pipa.UnidadAlmacenGas.First().Medidor),
+                 NombreAlmacen = pipa.Nombre,
+                 PorcentajeMedidor = pipa.UnidadAlmacenGas.First().PorcentajeActual
             };
         }
 
@@ -113,20 +157,20 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return estacion;
         }
 
-        public static DatosAutoconsumoDto ToDTOInventarioGeneral(List<UnidadAlmacenGas> pipas, List<UnidadAlmacenGas> camionetas, List<TipoMedidorUnidadAlmacenGas> medidores)
+        public static DatosAutoconsumoDto ToDTOInventarioGeneral(List<UnidadAlmacenGas> pipas, List<UnidadAlmacenGas> camionetas, List<Pipa> lpipas,List<Camioneta> lcamionetas, List<TipoMedidorUnidadAlmacenGas> medidores)
         {
             return new DatosAutoconsumoDto()
             {
-                EstacionEntrada = ToDTO(pipas, camionetas, medidores)
+                EstacionEntrada = ToDTO(lpipas, lcamionetas, medidores)
             };
         }
 
-        public static DatosAutoconsumoDto ToDTOFinal(List<UnidadAlmacenGas> estacionesInicioEnInicial, List<UnidadAlmacenGas> estacionesFinEnInicial, List<TipoMedidorUnidadAlmacenGas> medidores)
+        public static DatosAutoconsumoDto ToDTOFinal(List<UnidadAlmacenGas> estacionesInicioEnInicial, List<EstacionCarburacion> estacionesFinEnInicial,List<Pipa> pipas,List<Camioneta> camionetas, List<TipoMedidorUnidadAlmacenGas> medidores)
         {
             return new DatosAutoconsumoDto()
             {
                EstacionEntrada = ToDTO(estacionesInicioEnInicial, medidores),
-               EstacionSalida = ToDTO(estacionesFinEnInicial,medidores)
+               EstacionSalida = ToDTO(pipas,camionetas,medidores)
             };
         }
 
@@ -135,6 +179,50 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new DatosAutoconsumoDto()
             {
                 EstacionEntrada = ToDTO(estacionesInicioEnInicial, medidores)
+            };
+        }
+
+        public static DatosAutoconsumoDto ToDTO(List<EstacionCarburacion> lestaciones, UnidadAlmacenGas predeterminado, List<Pipa> lpipas, List<Camioneta> lcamionetas, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return new DatosAutoconsumoDto()
+            {
+                EstacionEntrada = ToDTO(lestaciones, medidores),
+                EstacionSalida = ToDTO(lpipas, lcamionetas, medidores),
+                Predeterminada = ToDTO(predeterminado, medidores.Single(x => x.IdTipoMedidor.Equals(predeterminado.IdTipoMedidor)))
+            };
+        }
+
+        public static List<EstacionesDto> ToDTO(List<EstacionCarburacion> lestaciones, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return lestaciones.Select(x => ToDTO(x, medidores)).ToList();
+        }
+
+        public static EstacionesDto ToDTO(EstacionCarburacion estacion, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return new EstacionesDto()
+            {
+                CantidadP5000 = estacion.UnidadAlmacenGas.First().P5000Actual,
+                Medidor = TipoMedidorAdapter.ToDto(medidores.Single(x => x.IdTipoMedidor.Equals(estacion.UnidadAlmacenGas.First().IdTipoMedidor))),
+                IdTipoMedidor = estacion.UnidadAlmacenGas.First().IdTipoMedidor,
+                IdAlmacenGas = estacion.UnidadAlmacenGas.First().IdCAlmacenGas,
+                NombreAlmacen = estacion.Nombre,
+                PorcentajeMedidor = estacion.UnidadAlmacenGas.First().PorcentajeActual
+            };
+        }
+
+        public static DatosAutoconsumoDto ToDTOInventarioGeneral(List<UnidadAlmacenGas> estacionesInicioEnInicial, List<UnidadAlmacenGas> pipas, List<UnidadAlmacenGas> camionetas, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return new DatosAutoconsumoDto()
+            {
+                EstacionEntrada = ToDTO(pipas, camionetas, medidores)
+            };
+        }
+
+        public static DatosAutoconsumoDto ToDTOInventarioGeneral(List<UnidadAlmacenGas> pipas, List<UnidadAlmacenGas> camionetas, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return new DatosAutoconsumoDto()
+            {
+                EstacionEntrada = ToDTO(pipas, camionetas, medidores)
             };
         }
     }
