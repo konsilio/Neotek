@@ -53,7 +53,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<OrdenCompraPago>().GetAll().ToList();
         }
-        public RespuestaDto Actualizar(OrdenCompraPago ocp)
+        public RespuestaDto Actualizar(OrdenCompraPago ocp, OrdenCompra oc)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
@@ -61,6 +61,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     uow.Repository<OrdenCompraPago>().Update(ocp);
+                    uow.Repository<OrdenCompra>().Update(oc);
                     uow.SaveChanges();
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;

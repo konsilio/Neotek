@@ -233,7 +233,9 @@ namespace Application.MainModule.Flujos
             entity.FechaConfirmacion = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             entity = ImagenServicio.ObtenerImagen(entity, dto.NumOrdenCompra);
 
-            return OrdenCompraPagoServicio.Actualiza(entity);
+            var oc = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(entity.IdOrdenCompra));
+            oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
+            return OrdenCompraPagoServicio.Actualiza(entity, oc);
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
         {
