@@ -9,5 +9,7 @@ namespace Application.MainModule.DTOs.Mobile
     public class PipaDto :AlmacenDto
     {
         public MedidorDto Medidor { get; set; }
+        public decimal P5000Final { get; set; }
+        public AnticiposEstacionDTO AnticiposEstacion { get; set; }
     }
 }

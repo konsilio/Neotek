@@ -52,6 +52,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             return new OrdenCompraPago()
             {
                 IdOrdenCompra = oc.IdOrdenCompra,
+                Orden = oc.Orden,
                 IdBanco = oc.IdBanco,
                 IdFormaPago = oc.IdFormaPago,
                 CuentaBancaria = oc.CuentaBancaria,

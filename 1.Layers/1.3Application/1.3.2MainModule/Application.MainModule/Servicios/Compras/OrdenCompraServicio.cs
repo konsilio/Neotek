@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs;
+using Application.MainModule.Servicios.Catalogos;
 
 namespace Application.MainModule.Servicios.Compras
 {
@@ -325,6 +326,21 @@ namespace Application.MainModule.Servicios.Compras
                 Entity.Importe = prod.Importe;
             }
             return Entitys;
+        }
+        public static OrdenCompraPago GenerarPago(OrdenCompra oc, short orden)
+        {
+            var proveedor = ProveedorServicio.Obtener(oc.IdProveedor);
+            return new OrdenCompraPago()
+            {
+                IdOrdenCompra = oc.IdOrdenCompra,
+                Orden = orden,
+                IdBanco = proveedor.IdBanco,
+                CuentaBancaria = proveedor.Cuenta,
+                TotalImporte = oc.Total ?? 0,
+                MontoPagado = 0,
+                SaldoInsoluto = oc.Total ?? 0,
+                FechaRegistro = Convert.ToDateTime(DateTime.Now.ToShortDateString())
+            };
         }
     }
 }

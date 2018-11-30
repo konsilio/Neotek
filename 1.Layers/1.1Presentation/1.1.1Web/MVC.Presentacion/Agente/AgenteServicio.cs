@@ -2774,9 +2774,9 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutConfirmarPago"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
-        public void EnviarSolicitudPago(OrdenCompraPagoDTO dto, string token)
+        public void EnviarSolicitudPago(OrdenCompraDTO dto, string token)
         {
-            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            this.ApiRoute = ConfigurationManager.AppSettings["PutSolicitarPago"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
         public void EnviarSolicitudPagoExpedidor(OrdenCompraComplementoGasDTO dto, string token)

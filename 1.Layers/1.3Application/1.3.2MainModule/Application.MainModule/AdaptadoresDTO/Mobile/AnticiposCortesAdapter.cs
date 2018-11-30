@@ -10,11 +10,11 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
     public class AnticiposCortesAdapter
     {
-        public static DatosAnticiposCorteDto ToDTO(List<EstacionCarburacion> estaciones,List<UnidadAlmacenGas>unidades)
+        public static DatosAnticiposCorteDto ToDTO(List<EstacionCarburacion> estaciones, List<UnidadAlmacenGas> unidades)
         {
             return new DatosAnticiposCorteDto()
             {
-                estaciones = estaciones.Select(x=>ToDTO(x,unidades)).ToList(), 
+               // estaciones = estaciones.Select(x => ToDTO(x, unidades)).ToList(),
             };
         }
 
@@ -23,7 +23,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             var unidadEstacion = unidades.Single(x => x.IdEstacionCarburacion.Value.Equals(estacion.IdEstacionCarburacion));
             var lecturaInicial = unidadEstacion.TomasLectura.Where(
                 x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
-                ).OrderBy(x=>x.FechaRegistro).Last();
+                ).OrderBy(x => x.FechaRegistro).Last();
             return new EstacionesDto()
             {
                 Medidor = TipoMedidorAdapter.ToDto(TipoMedidorGasServicio.Obtener(unidadEstacion.IdTipoMedidor.Value)),
@@ -31,14 +31,64 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdAlmacenGas = (short)estacion.IdEstacionCarburacion,
                 NombreAlmacen = estacion.Nombre,
                 P5000Inicial = lecturaInicial.P5000.Value,
-                P5000Final =unidadEstacion.P5000Actual.Value,
+                P5000Final = unidadEstacion.P5000Actual.Value,
                 AnticiposEstacion = ToDTO(unidadEstacion)
             };
         }
-
+        public static EstacionesDto ToDTO(EstacionCarburacion estacion, UnidadAlmacenGas unidad)
+        {
+           
+            var lecturaInicial = unidad.TomasLectura.Where(
+                x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
+                ).OrderBy(x => x.FechaRegistro).Last();
+            return new EstacionesDto()
+            {
+                Medidor = TipoMedidorAdapter.ToDto(TipoMedidorGasServicio.Obtener(unidad.IdTipoMedidor.Value)),
+                IdTipoMedidor = unidad.IdTipoMedidor.Value,
+                IdAlmacenGas = (short)estacion.IdEstacionCarburacion,
+                NombreAlmacen = estacion.Nombre,
+                P5000Inicial = lecturaInicial.P5000.Value,
+                P5000Final = unidad.P5000Actual.Value,
+                AnticiposEstacion = ToDTO(unidad)
+            };
+        }
+        public static CamionetaDto ToDTO(Camioneta camioneta, UnidadAlmacenGas unidad)
+        {
+          
+            var lecturaInicial = unidad.TomasLectura.Where(
+                x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
+                ).OrderBy(x => x.FechaRegistro).Last();
+            return new CamionetaDto()
+            {
+                Medidor = TipoMedidorAdapter.ToDto(TipoMedidorGasServicio.Obtener(unidad.IdTipoMedidor.Value)),
+                IdTipoMedidor = unidad.IdTipoMedidor.Value,
+                IdAlmacenGas = (short)camioneta.IdCamioneta,
+                NombreAlmacen = camioneta.Nombre,
+                //P5000Inicial = lecturaInicial.P5000.Value,
+                //P5000Final = unidad.P5000Actual.Value,
+                //AnticiposEstacion = ToDTO(unidad)
+            };
+        }
+        public static PipaDto ToDTO(Pipa pipa, UnidadAlmacenGas unidad)
+        {
+           
+            var lecturaInicial = unidad.TomasLectura.Where(
+                x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
+                ).OrderBy(x => x.FechaRegistro).Last();
+            return new PipaDto()
+            {
+                Medidor = TipoMedidorAdapter.ToDto(TipoMedidorGasServicio.Obtener(unidad.IdTipoMedidor.Value)),
+                IdTipoMedidor = unidad.IdTipoMedidor.Value,
+                IdAlmacenGas = (short)pipa.IdPipa,
+                NombreAlmacen = pipa.Nombre,
+                CantidadP5000 = lecturaInicial.P5000.Value,
+                P5000Final = unidad.P5000Actual.Value,
+                AnticiposEstacion = ToDTO(unidad)
+            };
+        }
         public static AnticiposEstacionDTO ToDTO(UnidadAlmacenGas unidad)
         {
-            var anticiposEstacion = PuntoVentaServicio.ObtenerAnticipos(unidad).FindAll(x=>x.DatosProcesados.Equals(false));
+            var anticiposEstacion = PuntoVentaServicio.ObtenerAnticipos(unidad).FindAll(x => x.DatosProcesados.Equals(false));
             decimal suma = anticiposEstacion.Sum(x => x.TotalAnticipado);
             return new AnticiposEstacionDTO()
             {
@@ -61,7 +111,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     Monto = anticipoEstacion.TotalAnticipado,
                     Total = anticipoEstacion.TotalVenta,
                     IdCAlmacenGas = (short)anticipoEstacion.CAlmacenGas.IdEstacionCarburacion.Value,
-                    
+
                 });
             }
             return anticipos;
@@ -79,8 +129,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 TotalVenta = dto.Total,
                 IdUsuarioRecibe = idUsario,
                 IdOperadorChofer = puntoventa.IdOperadorChofer,
-                IdPuntoVenta= puntoventa.IdPuntoVenta  ,
-                UsuarioRecibe = dto.Recibe                            
+                IdPuntoVenta = puntoventa.IdPuntoVenta,
+                UsuarioRecibe = dto.Recibe
             };
         }
 
@@ -101,11 +151,11 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static VentaCajaGeneral FromDTO(AnticipoDto dto, short idEmpresa, Usuario usuario, PuntoVenta puntoVenta,OperadorChofer operador, 
-            Usuario entrega,List<VentaPuntoDeVenta> deContado,List<VentaPuntoDeVenta> creditos)
+        public static VentaCajaGeneral FromDTO(AnticipoDto dto, short idEmpresa, Usuario usuario, PuntoVenta puntoVenta, OperadorChofer operador,
+            Usuario entrega, List<VentaPuntoDeVenta> deContado, List<VentaPuntoDeVenta> creditos)
         {
-            decimal deContadoTotal=0,creditoTotal=0;
-            decimal descuentoContado = 0, descuentoCredito = 0,descuentoTotal = 0;
+            decimal deContadoTotal = 0, creditoTotal = 0;
+            decimal descuentoContado = 0, descuentoCredito = 0, descuentoTotal = 0;
             foreach (var contado in deContado)
             {
                 deContadoTotal += contado.Total;
@@ -118,7 +168,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 descuentoCredito += credito.Descuento;
                 descuentoTotal += credito.Descuento;
             }
-            
+
 
             return new VentaCajaGeneral()
             {
@@ -140,17 +190,17 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 DescuentoCredito = descuentoCredito,
                 DescuentoContado = descuentoContado,
                 DescuentoTotal = 0,
-                TodoCorrecto =false,
-                PuntoVenta  = puntoVenta.UnidadesAlmacen.Numero,
-                OperadorChofer =  operador.Usuario.Nombre+" "+operador.Usuario.Apellido1+" "+operador.Usuario.Apellido2,
-                UsuarioEntrega = entrega.Nombre +" "+ entrega.Apellido1+" "+entrega.Apellido2,
+                TodoCorrecto = false,
+                PuntoVenta = puntoVenta.UnidadesAlmacen.Numero,
+                OperadorChofer = operador.Usuario.Nombre + " " + operador.Usuario.Apellido1 + " " + operador.Usuario.Apellido2,
+                UsuarioEntrega = entrega.Nombre + " " + entrega.Apellido1 + " " + entrega.Apellido2,
                 UsuarioRecibe = usuario.Nombre + " " + usuario.Apellido1 + " " + usuario.Apellido2,
             };
         }
 
         public static DatosAnticiposCorteDto ToDTO(List<VentaPuntoDeVenta> ventas, List<VentaCorteAnticipoEC> anticipos, bool esAnticipos = false)
         {
-            
+
             if (esAnticipos)
                 return new DatosAnticiposCorteDto()
                 {
@@ -161,7 +211,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 {
                     cortes = ToDTOCortes(ventas),
                     fechasCorte = EstraerFechas(ventas),
-                    TotalAnticiposCorte = anticipos.Where(x=>x.IdTipoOperacion.Equals(1)).Sum(x=>x.TotalAnticipado)
+                    TotalAnticiposCorte = anticipos.Where(x => x.IdTipoOperacion.Equals(1)).Sum(x => x.TotalAnticipado)
                 };
         }
 
@@ -177,8 +227,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         public static List<CorteDto> ToDTOCortes(List<VentaPuntoDeVenta> ventas)
         {
-            
-            return ventas.Select(x=>ToDTO(x)).ToList();
+
+            return ventas.Select(x => ToDTO(x)).ToList();
         }
 
         public static CorteDto ToDTO(VentaPuntoDeVenta venta)
@@ -188,7 +238,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 ClaveOperacion = venta.FolioVenta,
                 Tiket = venta.FolioVenta,
                 Fecha = venta.FechaRegistro,
-                IdCorte = (short) venta.IdPuntoVenta,
+                IdCorte = (short)venta.IdPuntoVenta,
                 Monto = venta.Total,
                 Total = venta.Total
             };
@@ -196,7 +246,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         public static List<AnticipoDto> ToDTOAnticipo(List<VentaPuntoDeVenta> ventas)
         {
-            return ventas.Select(x=> ToDTOAn(x)).ToList();
+            return ventas.Select(x => ToDTOAn(x)).ToList();
         }
 
         public static AnticipoDto ToDTOAn(VentaPuntoDeVenta venta)
@@ -215,7 +265,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         public static VentaCajaGeneral FromDTO(CorteDto dto, short idEmpresa, Usuario usuario, PuntoVenta puntoVenta, OperadorChofer operador, Usuario entrega, List<VentaPuntoDeVenta> deContado, List<VentaPuntoDeVenta> creditos)
         {
             decimal deContadoTotal = 0, creditoTotal = 0;
-            decimal descuentoContado = 0, descuentoCredito = 0,descuentoTotal =0 ;
+            decimal descuentoContado = 0, descuentoCredito = 0, descuentoTotal = 0;
             foreach (var contado in deContado)
             {
                 deContadoTotal += contado.Total;

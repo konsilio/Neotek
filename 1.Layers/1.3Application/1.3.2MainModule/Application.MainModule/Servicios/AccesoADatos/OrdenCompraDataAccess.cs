@@ -100,6 +100,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     uow.Repository<OrdenCompra>().Update(oc);
+                    if (oc.OrdenCompraPago.Count != 0)
+                    {
+                        foreach (var p in oc.OrdenCompraPago)
+                        {
+                            uow.Repository<OrdenCompraPago>().Insert(p);
+                        }                        
+                    }
                     uow.SaveChanges();
                     _respuesta.Exito = true;
                     _respuesta.Mensaje = Exito.OK;
