@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Mobile
 {
-    public class CamionetaDto
+    public class CamionetaDto : AlmacenDto
     {
         public short IdCAlmacen { get; set; }
         public string Numero { get; set; }
@@ -14,6 +14,6 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal CantidadActualLt { get; set; }
         public decimal CantidadActualKg { get; set; }
         public MedidorDto Medidor { get; set; }
-        public List<CilindroDto> Cilindros { get; set; }
+        //public List<CilindroDto> Cilindros { get; set; }
     }
 }

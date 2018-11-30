@@ -1,3 +1,10 @@
+/**
+ * VentaDTO
+ * Permite registrar los datos de la venta
+ * @author Jorge Omar Tovar Martínez jorge.tovar@neoteck.com.mx
+ * @date 28/11/2018
+ * @update 28/11/2018
+ */
 package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
@@ -54,6 +61,19 @@ public class VentaDTO implements Serializable {
 
     @SerializedName("TieneCredito")
     private boolean TieneCredito;
+
+    @SerializedName("EsVentaGas")
+    private boolean EsVentaGas;
+
+    @SerializedName("RazonSocial")
+    private String RazonSocial;
+    //region Atributos de tipo reporte
+    private boolean EsSinNumero;
+
+    private boolean EsBusqueda;
+
+    private boolean EsRegistro;
+    //endregion
 
     public String getFecha() {
         return Fecha;
@@ -185,5 +205,45 @@ public class VentaDTO implements Serializable {
 
     public void setTieneCredito(boolean tieneCredito) {
         TieneCredito = tieneCredito;
+    }
+
+    public boolean isEsVentaGas() {
+        return EsVentaGas;
+    }
+
+    public void setEsVentaGas(boolean esVentaGas) {
+        EsVentaGas = esVentaGas;
+    }
+
+    public String getRazonSocial() {
+        return RazonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        RazonSocial = razonSocial;
+    }
+
+    public boolean isEsSinNumero() {
+        return EsSinNumero;
+    }
+
+    public void setEsSinNumero(boolean esSinNumero) {
+        EsSinNumero = esSinNumero;
+    }
+
+    public boolean isEsBusqueda() {
+        return EsBusqueda;
+    }
+
+    public void setEsBusqueda(boolean esBusqueda) {
+        EsBusqueda = esBusqueda;
+    }
+
+    public boolean isEsRegistro() {
+        return EsRegistro;
+    }
+
+    public void setEsRegistro(boolean esRegistro) {
+        EsRegistro = esRegistro;
     }
 }

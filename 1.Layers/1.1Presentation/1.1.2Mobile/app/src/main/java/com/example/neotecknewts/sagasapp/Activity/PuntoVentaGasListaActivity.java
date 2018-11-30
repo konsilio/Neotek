@@ -191,8 +191,14 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 View.VISIBLE);
         SWFormularioVentaCamionetaYPipaCredito = findViewById(R.id.
                 SWFormularioVentaCamionetaYPipaCredito);
+        SWFormularioVentaCamionetaYPipaCredito.setChecked(
+                ventaDTO.isCredito()
+        );
         SWFormularioVentaCamionetaYPipaFactura = findViewById(R.id.
                 SWFormularioVentaCamionetaYPipaFactura);
+        SWFormularioVentaCamionetaYPipaFactura.setChecked(
+                ventaDTO.isFactura()
+        );
         BtnFormularioVentaCamionetaYPipaCancelar = findViewById(R.id.
                 BtnFormularioVentaCamionetaYPipaCancelar);
         BtnFormularioVentaCamionetaYPipaPagar = findViewById(R.id.
@@ -230,6 +236,12 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                     esGasLP,esCilindroGas,esCilindro);
             presenter.getPrecioVenta(session.getToken());*/
         }
+        SWFormularioVentaCamionetaYPipaCredito.setChecked(
+                ventaDTO.isCredito()
+        );
+        SWFormularioVentaCamionetaYPipaFactura.setChecked(
+                ventaDTO.isFactura()
+        );
         mostrarConsepto(ventaDTO.getConcepto());
     }
 
@@ -243,6 +255,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         conceptoDTO.setPUnitario(adapter.existencia.getPrecioUnitario());
         conceptoDTO.setDescuento(adapter.existencia.getDescuento());
         conceptoDTO.setSubtotal(Double.valueOf(adapter.Subtotal.getText().toString()));
+        conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
         ventaDTO.getConcepto().add(conceptoDTO);
         Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                 PuntoVentaPagarActivity.class);

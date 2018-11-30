@@ -66,6 +66,47 @@
                 android:padding="20dp" />
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/TILRegistroClienteActivityRazonSocial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/ETRegistroClienteActivityRazonSocial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:hint="@string/razon_social"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    android:visibility="gone"
+                    tools:targetApi="o" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/TILRegistroClienteRfc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/ETRegistroClienteRfc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:hint="@string/rfc"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    android:maxLength="13"
+                    android:visibility="visible"
+                    tools:targetApi="o" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:id="@+id/TILRegistroClienteActivityNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -84,26 +125,6 @@
                     android:textSize="18sp"
                     tools:targetApi="o" />
 
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/TILRegistroClienteActivityRazonSocial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/ETRegistroClienteActivityRazonSocial"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:hint="@string/razon_social"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:singleLine="true"
-                    android:textSize="18sp"
-                    android:visibility="gone"
-                    tools:targetApi="o" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout

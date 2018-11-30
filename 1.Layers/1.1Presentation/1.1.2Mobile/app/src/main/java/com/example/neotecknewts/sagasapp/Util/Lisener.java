@@ -2,8 +2,6 @@ package com.example.neotecknewts.sagasapp.Util;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
-import android.net.Uri;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
@@ -512,13 +510,13 @@ public class Lisener{
                         imagenes.moveToFirst();
                         while (!imagenes.isAfterLast()){
                             traspasoDTO.getImagenes().add(
-                                    cursor.getString(
-                                            cursor.getColumnIndex("Imagen")
+                                    imagenes.getString(
+                                            imagenes.getColumnIndex("Imagen")
                                     )
                             );
                             traspasoDTO.getImagenesUri().add(
                                     new URI(
-                                            cursor.getString(
+                                            imagenes.getString(
                                                     cursor.getColumnIndex("Url")
                                             )
                                     )
@@ -1269,9 +1267,9 @@ public class Lisener{
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
                             cursor.getColumnIndex("ClaveOperacion")));
-                    boolean ban = cursor.getInt(
+                    /*boolean ban = cursor.getInt(
                             cursor.getColumnIndex("EsEncargadoPuerta")) == 1;
-                    lecturaDTO.setEsEncargadoPuerta(ban);
+                    lecturaDTO.setEsEncargadoPuerta(ban);*/
                     lecturaDTO.setIdCamioneta(cursor.getInt(cursor.getColumnIndex(
                             "IdCamioneta")));
                     lecturaDTO.setFechaAplicacion(cursor.getString(
@@ -1283,16 +1281,16 @@ public class Lisener{
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
                         CilindrosDTO row = new CilindrosDTO();
-                        row.setCantidad(cursor.getInt(cursor.getColumnIndex(
+                        row.setCantidad(cantidad.getInt(cantidad.getColumnIndex(
                                 "Cantidad")));
-                        row.setCilindroKg(cursor.getString(cursor.getColumnIndex(
+                        row.setCilindroKg(cantidad.getString(cantidad.getColumnIndex(
                                 "CilindroKg")));
-                        row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
+                        row.setIdCilindro(cantidad.getInt(cantidad.getColumnIndex(
                                 "IdCilindro")));
                         lecturaDTO.getCilindros().add(row);
-                        lecturaDTO.getIdCilindro().add(cursor.getInt(cursor.getColumnIndex(
+                        lecturaDTO.getIdCilindro().add(cantidad.getInt(cantidad.getColumnIndex(
                                 "IdCilindro")));
-                        lecturaDTO.getCilindroCantidad().add(cursor.getInt(cursor.getColumnIndex(
+                        lecturaDTO.getCilindroCantidad().add(cantidad.getInt(cantidad.getColumnIndex(
                                 "Cantidad")));
                         cantidad.moveToNext();
                     }
@@ -1469,11 +1467,12 @@ public class Lisener{
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    Imagen.getString(Imagen.getColumnIndex("Imagen"))
                             );
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
                         }
+                        Imagen.moveToNext();
                     }
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaFinalAlmacen(lecturaDTO);
@@ -1564,11 +1563,12 @@ public class Lisener{
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    Imagen.getString(Imagen.getColumnIndex("Imagen"))
                             );
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
                         }
+                        Imagen.moveToNext();
                     }
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaInicialAlmacen(lecturaDTO);
@@ -1674,15 +1674,16 @@ public class Lisener{
                             lecturaDTO.getClaveProceso());
                     Imagen.moveToFirst();
                     while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                        String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    Imagen.getString(Imagen.getColumnIndex("Imagen"))
                             );
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
                         }
+                        Imagen.moveToNext();
                     }
                     Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
                     registrado = RegistrarLecturaInicialPipa(lecturaDTO);
@@ -1792,6 +1793,7 @@ public class Lisener{
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
                         }
+                        Imagen.moveToNext();
                     }
                     Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
                     registrado = RegistrarLecturaFinalPipa(lecturaDTO);
@@ -1901,15 +1903,16 @@ public class Lisener{
                             lecturaDTO.getClaveProceso());
                     Imagen.moveToFirst();
                     while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                        String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    Imagen.getString(Imagen.getColumnIndex("Imagen"))
                             );
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
                         }
+                        Imagen.moveToNext();
                     }
                     Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
                     registrado = RegistrarLecturaFinal(lecturaDTO);
@@ -2017,15 +2020,16 @@ public class Lisener{
                             lecturaDTO.getClaveProceso());
                     Imagen.moveToFirst();
                     while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                        String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    Imagen.getString(Imagen.getColumnIndex("Imagen"))
                             );
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
                         }
+                        Imagen.moveToNext();
                     }
                     Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
                     registrado = RegistrarLecturaInicial(lecturaDTO);

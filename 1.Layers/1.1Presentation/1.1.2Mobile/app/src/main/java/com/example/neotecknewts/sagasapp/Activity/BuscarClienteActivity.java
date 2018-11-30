@@ -60,6 +60,12 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
         BtnBuscarClienteActivitySi.setOnClickListener(V->{
             Intent intent = new Intent(BuscarClienteActivity.this,
                     RegistroClienteActivity.class);
+            ventaDTO.setSinNumero(true);
+            ventaDTO.setRFC("");
+            ventaDTO.setRazonSocial("");
+            ventaDTO.setNombre("");
+            ventaDTO.setCredito(false);
+            ventaDTO.setFactura(false);
             intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
             intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
             intent.putExtra("EsVentaPipa", EsVentaPipa);

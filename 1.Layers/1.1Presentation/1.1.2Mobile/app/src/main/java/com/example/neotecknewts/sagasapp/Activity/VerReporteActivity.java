@@ -238,19 +238,64 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tr>"+
                 "</table>"+
                 "<hr>";
-        if(!ventaDTO.isSinNumero()) {
-            HtmlReporte += "<h3>Cliente</h3>" +
-                    "<table>" +
-                    "<tr>" +
-                    "<td>Razon Social</td>" +
-                    "<td>[{Razon-social}]</td>" +
-                    "</tr>" +
-                    "<tr>" +
-                    "<td>RFC</td>" +
-                    "<td>[{RFC}]</td>" +
-                    "</tr>" +
-                    "</table>";
+        //region Busqueda por cliente
+        if(ventaDTO.isEsBusqueda()) {
+            if(ventaDTO.getRazonSocial().trim().length()>0){
+                HtmlReporte += "<h3>Cliente</h3>" +
+                            "<table>" +
+                            "<tr>" +
+                            "<td>Razon social</td>" +
+                            "<td>[{Razon-social}]</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td>RFC</td>" +
+                            "<td>[{RFC}]</td>" +
+                            "</tr>" +
+                            "</table>";
+                }else {
+                HtmlReporte += "<h3>Cliente</h3>" +
+                        "<table>" +
+                        "<tr>" +
+                        "<td>Cliente</td>" +
+                        "<td>[{Cliente}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>RFC</td>" +
+                        "<td>[{RFC}]</td>" +
+                        "</tr>" +
+                        "</table>";
+            }
         }
+        //endregion
+        //region Registro
+        if(ventaDTO.isEsRegistro()){
+            if(ventaDTO.getRazonSocial().trim().length()<=0){
+                HtmlReporte += "<h3>Cliente</h3>" +
+                        "<table>" +
+                        "<tr>" +
+                        "<td>Razon social</td>" +
+                        "<td>[{Razon-social}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>RFC</td>" +
+                        "<td>[{RFC}]</td>" +
+                        "</tr>" +
+                        "</table>";
+            }else{
+                HtmlReporte += "<h3>Cliente</h3>" +
+                        "<table>" +
+                        "<tr>" +
+                        "<td>Cliente</td>" +
+                        "<td>[{Cliente}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>RFC</td>" +
+                        "<td>[{RFC}]</td>" +
+                        "</tr>" +
+                        "</table>";
+            }
+        }
+        //endregion
         HtmlReporte+="<table>" +
                 "<tr>" +
                 "<td>Concepto</td>"+
@@ -288,11 +333,32 @@ public class VerReporteActivity extends AppCompatActivity {
                         "Fecha\t[{Fecha}]\n"+
                         "Hora\t[{Hora}]\n"+
                         "_________________________\n";
-        if(!ventaDTO.isSinNumero()) {
-            StringReporte += "\tCliente\n" +
-                    "Razon Social\t[{Razon-social}]\n" +
-                    "RFC\t[{RFC}]\n";
+        //region Busqueda por cliente
+        if(ventaDTO.isEsBusqueda()) {
+            if(ventaDTO.getRazonSocial().trim().length()>0){
+                StringReporte += "\tCliente\n" +
+                        "Razon Social \t[{Razon-social}]\n" +
+                        "RFC \t[{RFC}]\n";
+            }else {
+                StringReporte += "\tCliente\n" +
+                        "Cliente \t[{Cliente}]\n" +
+                        "RFC \t[{RFC}]\n";
+            }
         }
+        //endregion
+        //region Registro
+        if(ventaDTO.isEsRegistro()){
+            if(ventaDTO.getRazonSocial().trim().length()<=0){
+                StringReporte += "\tCliente\n" +
+                        "Razon Social \t[{Razon-social}]\n" +
+                        "RFC \t[{RFC}]\n";
+            }else{
+                StringReporte += "\tCliente\n" +
+                        "Cliente \t[{Cliente}]\n" +
+                        "RFC \t[{RFC}]\n";
+            }
+        }
+        //endregion
         StringReporte +="--------------------------------\n"+
                         "|Concepto|Cant.|P.Uni.|Desc|Subt|\n"+
                         "--------------------------------\n"+
@@ -330,10 +396,21 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(registro));
         StringReporte = StringReporte.replace("[{Hora}]",tdate.format(registro));
         HtmlReporte = HtmlReporte.replace("[{Hora}]",tdate.format(registro));
-        StringReporte = StringReporte.replace("[{Razon-social}]","");
-        HtmlReporte = HtmlReporte.replace("[{Razon-social}]","");
-        StringReporte = StringReporte.replace("[{RFC}]","");
-        HtmlReporte = HtmlReporte.replace("[{RFC}]","");
+        if(ventaDTO.getRazonSocial().isEmpty()||ventaDTO.getRazonSocial()!=null) {
+            StringReporte = StringReporte.replace("[{Razon-social}]", ventaDTO.getRazonSocial());
+            HtmlReporte = HtmlReporte.replace("[{Razon-social}]", ventaDTO.getRazonSocial());
+        }else {
+            if (ventaDTO.isSinNumero()){
+                StringReporte = StringReporte.replace("Razon social", "Cliente");
+                HtmlReporte = HtmlReporte.replace("Razon social", "Cliente");
+                StringReporte = StringReporte.replace("[{Razon-social}]", ventaDTO.getNombre());
+                HtmlReporte = HtmlReporte.replace("[{Razon-social}]", ventaDTO.getNombre());
+            }
+        }
+        if (!ventaDTO.isSinNumero()) {
+            StringReporte = StringReporte.replace("[{RFC}]", ventaDTO.getRFC());
+            HtmlReporte = HtmlReporte.replace("[{RFC}]", ventaDTO.getRFC());
+        }
 
         StringBuilder Conpecto = new StringBuilder();
         StringBuilder ConpectoHtml = new StringBuilder();
@@ -354,7 +431,53 @@ public class VerReporteActivity extends AppCompatActivity {
         }
         StringReporte = StringReporte.replace("[{Concepto}]",Conpecto);
         HtmlReporte = HtmlReporte.replace("[{Concepto}]",ConpectoHtml);
-        if(!ventaDTO.isSinNumero()){
+        //region Busqueda por cliente
+        if(ventaDTO.isEsBusqueda()) {
+            if(ventaDTO.getRazonSocial().trim().length()>0){
+                StringReporte = StringReporte.replace("[{Razon-social}]",
+                        String.valueOf(ventaDTO.getRazonSocial()));
+                HtmlReporte = HtmlReporte.replace("[{Razon-social}]",
+                        String.valueOf(ventaDTO.getRazonSocial()));
+                StringReporte = StringReporte.replace("[{RFC}]",
+                        String.valueOf(ventaDTO.getIva()));
+                HtmlReporte = HtmlReporte.replace("[{RFC}]",
+                        String.valueOf(ventaDTO.getIva()));
+            }else {
+                StringReporte = StringReporte.replace("[{Cliente}]",
+                        String.valueOf(ventaDTO.getNombre()));
+                HtmlReporte = HtmlReporte.replace("[{Cliente}]",
+                        String.valueOf(ventaDTO.getNombre()));
+                StringReporte = StringReporte.replace("[{RFC}]",
+                        String.valueOf(ventaDTO.getIva()));
+                HtmlReporte = HtmlReporte.replace("[{RFC}]",
+                        String.valueOf(ventaDTO.getIva()));
+            }
+        }
+        //endregion
+        //region Registro
+        if(ventaDTO.isEsRegistro()){
+            if(ventaDTO.getRazonSocial().trim().length()<=0){
+                StringReporte = StringReporte.replace("[{Razon-social}]",
+                        String.valueOf(ventaDTO.getRazonSocial()));
+                HtmlReporte = HtmlReporte.replace("[{Razon-social}]",
+                        String.valueOf(ventaDTO.getRazonSocial()));
+                StringReporte = StringReporte.replace("[{RFC}]",
+                        String.valueOf(ventaDTO.getIva()));
+                HtmlReporte = HtmlReporte.replace("[{RFC}]",
+                        String.valueOf(ventaDTO.getIva()));
+            }else{
+                StringReporte = StringReporte.replace("[{Cliente}]",
+                        String.valueOf(ventaDTO.getNombre()));
+                HtmlReporte = HtmlReporte.replace("[{Cliente}]",
+                        String.valueOf(ventaDTO.getNombre()));
+                StringReporte = StringReporte.replace("[{RFC}]",
+                        String.valueOf(ventaDTO.getIva()));
+                HtmlReporte = HtmlReporte.replace("[{RFC}]",
+                        String.valueOf(ventaDTO.getIva()));
+            }
+        }
+        //endregion
+        if(!ventaDTO.isEsSinNumero()){
 
             StringReporte = StringReporte.replace("[{Razon-social}]",
                     String.valueOf(ventaDTO.getIva()));

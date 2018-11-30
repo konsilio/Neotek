@@ -46,6 +46,7 @@ namespace Utilities.MainModule
 
         public static Image GuardarImagen(string base64, string ruta)
         {
+            base64 = base64.Replace("data:image/png;base64,", "");
             return GuardarImagen(Convert.FromBase64String(base64.Trim()), ruta);
         }
         

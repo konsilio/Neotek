@@ -60,7 +60,9 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Ieps = oc.Ieps != null ? oc.Ieps.Value : 0,
                 Total = oc.Total != null ? oc.Total.Value : 0,
                 EsTransporteGas = oc.EsTransporteGas,
-                Productos = ProductosOCAdapter.ToDTOx(oc.Productos.ToList())
+                Productos = ProductosOCAdapter.ToDTOx(oc.Productos.ToList()),
+                FolioFiscalUUID = oc.FolioFiscalUUID,
+                FolioFactura = oc.FolioFactura
             };
             return ocDTO;
         }

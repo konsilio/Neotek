@@ -4,8 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class
-ConceptoDTO implements Serializable {
+public class ConceptoDTO implements Serializable {
     @SerializedName("IdTipoGas")
     private int IdTipoGas;
 
@@ -32,6 +31,9 @@ ConceptoDTO implements Serializable {
 
     @SerializedName("IdProducto")
     private int IdProducto;
+
+    @SerializedName("LitrosDespachados")
+    private double LitrosDespachados;
 
 
     public int getIdTipoGas() {
@@ -104,5 +106,13 @@ ConceptoDTO implements Serializable {
 
     public void setIdProducto(int idProducto) {
         IdProducto = idProducto;
+    }
+
+    public double getLitrosDespachados() {
+        return LitrosDespachados;
+    }
+
+    public void setLitrosDespachados(double litrosDespachados) {
+        LitrosDespachados = litrosDespachados;
     }
 }

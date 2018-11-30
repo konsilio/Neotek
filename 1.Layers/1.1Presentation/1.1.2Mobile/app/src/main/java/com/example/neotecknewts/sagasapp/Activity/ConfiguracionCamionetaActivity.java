@@ -47,8 +47,9 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
             lecturaCamionetaDTO = (LecturaCamionetaDTO) bundle.
                     getSerializable("lecturaCamionetaDTO");
 
-            if(EsLecturaFinalCamioneta || EsLecturaFinalCamioneta)
+            if(EsLecturaFinalCamioneta || EsLecturaInicialCamioneta) {
                 cilindrosDTOS = (ArrayList<CilindrosDTO>) bundle.getSerializable("cilindrosDTOS");
+            }
             if(EsRecargaCamioneta) {
                 recargaDTO = (RecargaDTO) bundle.getSerializable("recargaDTO");
                 cilindrosDTOS = (ArrayList<CilindrosDTO>) recargaDTO.getCilindros();

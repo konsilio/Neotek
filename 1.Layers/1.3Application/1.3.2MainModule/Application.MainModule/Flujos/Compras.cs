@@ -162,7 +162,24 @@ namespace Application.MainModule.Flujos
                 var entity = OrdenComprasAdapter.FromEntity(oc);
                 return OrdenCompraServicio.Actualizar(entity);
             }
-            return resPord;        
+            return resPord;
+        }
+        public RespuestaDto SolicitarPago(OrdenCompraDTO dto)
+        {
+            var ExistePago = BuscarPagos(dto.IdOrdenCompra);
+            short ordenPago = 0;
+            if (ExistePago.Count != 0) ordenPago = ExistePago.LastOrDefault().Orden++;
+
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.SolicitudPago;
+
+            var ocEntity = OrdenComprasAdapter.FromEntity(oc);
+            ocEntity.OrdenCompraPago.Add(OrdenCompraServicio.GenerarPago(oc, ordenPago));
+
+            var respActualiza = OrdenCompraServicio.Actualizar(ocEntity);
+            if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(oc);
+
+            return respActualiza;
         }
         public List<OrdenCompraDTO> ListaOrdenCompra(short IdEmpresa)
         {
@@ -211,8 +228,10 @@ namespace Application.MainModule.Flujos
             var Pago = OrdenCompraPagoServicio.Buscar(dto.IdOrdenCompra, dto.Orden);
 
             var entity = OrdenCompraPagoAdapter.FromEntity(Pago);
-            entity.PhysicalPathCapturaPantalla = entity.PhysicalPathCapturaPantalla;
-            entity = ImagenServicio.ObtenerImagen(entity);
+            entity.PhysicalPathCapturaPantalla = dto.PhysicalPathCapturaPantalla;
+            entity.UrlPathCapturaPantalla = dto.UrlPathCapturaPantalla;
+            entity.FechaConfirmacion = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            entity = ImagenServicio.ObtenerImagen(entity, dto.NumOrdenCompra);
 
             return OrdenCompraPagoServicio.Actualiza(entity);
         }
@@ -246,7 +265,7 @@ namespace Application.MainModule.Flujos
             var ocExperidro = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
             ocExperidro.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.SolicitudPago;
             var respActualiza = OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocExperidro));
-            if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(ocExperidro); 
+            if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(ocExperidro);
 
             return respActualiza;
         }
