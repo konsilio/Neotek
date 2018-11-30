@@ -112,9 +112,20 @@ namespace Application.MainModule.Servicios.Ventas
         }
 
         /*OBTENER  Lt y Kg vendidos del punto de venta por la cve del reporte tbl VentaPuntoDeVentaDetalle*/
-        public static List<AlmacenGasMovimientoDto> ObtenerPVDetalle(short empresa, short year, byte month, byte dia, short orden)
+        public static List<AlmacenGasMovimientoDto> ObtenerPVDetalle(short unidad, short empresa, short year, byte month, byte dia, short orden)
         {
             List<AlmacenGasMovimientoDto> ldetalles = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(empresa, year, month, dia, orden));
+            return ldetalles;
+        }
+        public static List<VentasPipaDto> ObtenerVentasPipas(short unidad, short empresa, short year, byte month, byte dia, short orden, DateTime fecha, string FolioOperacion)
+        {
+            List<VentasPipaDto> lst = new List<VentasPipaDto>();
+            AlmacenGasTomaLectura LecturasInicial = AlmacenGasServicio.BuscarLecturaPorFecha(unidad, TipoEventoEnum.Inicial, fecha);
+            AlmacenGasTomaLectura LecturasFinal = AlmacenGasServicio.BuscarLecturaPorFecha(unidad, TipoEventoEnum.Final, fecha);
+            //Obtener Lt vendidos- AlmacenGasMovimiento
+            var Ltvendidos = AlmacenGasServicio.ObtenerMovimientos(FolioOperacion, fecha).FirstOrDefault().SalidaLt;
+            var PrecioLt = PrecioVentaGasServicio.ObtenerPreciosVentaIdEmp(empresa).Where(x=> x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente) && x.Activo).FirstOrDefault();
+            List<VentasPipaDto> ldetalles = CajaGeneralAdapter.ToDTO(lst,LecturasInicial.P5000.Value, LecturasFinal.P5000.Value, Ltvendidos, PrecioLt);//AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(empresa, year, month, dia, orden));
             return ldetalles;
         }
 

@@ -31,7 +31,7 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
 
-            return CajaGeneralServicio.ObtenerPVDetalle(empresa, year, month, dia, orden.Value).ToList();
+            return CajaGeneralServicio.ObtenerPVDetalle(unidad, empresa, year, month, dia, orden.Value).ToList();
 
         }
 

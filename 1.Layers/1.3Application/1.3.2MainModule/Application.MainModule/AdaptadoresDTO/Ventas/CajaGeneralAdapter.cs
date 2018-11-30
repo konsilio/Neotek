@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.AccesoADatos;
@@ -268,7 +269,55 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             return luDTO;
         }
+        //var lecturaInicial = unidad.TomasLectura.Where(
+        //      x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
+        //      ).OrderBy(x => x.FechaRegistro).Last();
 
+        //var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacen);
+
+        public static VentasPipaDto ToDTO(VentasPipaDto pv)
+        {
+            AlmacenGasMovimientoDto usDTO = new AlmacenGasMovimientoDto()
+            {
+                IdEmpresa = pv.IdEmpresa,
+                Year = pv.Year,
+                Mes = pv.Mes,
+                Dia = pv.Dia,
+                Orden = pv.Orden,
+                IdTipoMovimiento = pv.IdTipoMovimiento,
+                IdTipoEvento = pv.IdTipoMovimiento,
+                IdOrdenVenta = pv.IdTipoMovimiento,
+                IdAlmacenGas = pv.IdTipoMovimiento,
+                IdCAlmacenGasPrincipal = pv.IdTipoMovimiento,
+                IdCAlmacenGasReferencia = pv.IdTipoMovimiento,
+                IdAlmacenEntradaGasDescarga = pv.IdTipoMovimiento,
+                IdAlmacenGasRecarga = pv.IdTipoMovimiento,
+                FolioOperacionDia = pv.FolioOperacionDia,
+                CAlmacenPrincipalNombre = pv.CAlmacenPrincipalNombre,
+                CAlmacenReferenciaNombre = pv.CAlmacenReferenciaNombre,
+                OperadorChoferNombre = pv.OperadorChoferNombre,
+                TipoEvento = pv.TipoEvento,
+                TipoMovimiento = pv.TipoMovimiento,
+                EntradaKg = pv.EntradaKg,
+                EntradaLt = pv.EntradaLt,
+                SalidaKg = pv.SalidaKg,
+                SalidaLt = pv.SalidaLt,
+                P5000Anterior = pv.P5000Anterior,
+                P5000Actual = pv.P5000Actual,
+                FechaAplicacion = pv.FechaAplicacion,
+                FechaRegistro = pv.FechaRegistro,
+                /********************/
+                VentaKg = pv.VentaKg,
+                VentaLt = pv.VentaLt,
+
+            };
+            return usDTO;
+        }
+        public static List<VentasPipaDto> ToDTO(List<VentasPipaDto> lu)
+        {
+            List<VentasPipaDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
+            return luDTO;
+        }
         public static AlmacenGasMovimientoDto ToDTO(AlmacenGasMovimiento pv)
         {
             AlmacenGasMovimientoDto usDTO = new AlmacenGasMovimientoDto()
@@ -296,152 +345,14 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 EntradaLt = pv.EntradaLt,
                 SalidaKg = pv.SalidaKg,
                 SalidaLt = pv.SalidaLt,
-                CantidadAnteriorKg = pv.CantidadAnteriorKg,
-                CantidadAnteriorLt = pv.CantidadAnteriorLt,
-                CantidadActualKg = pv.CantidadActualKg,
-                CantidadActualLt = pv.CantidadActualLt,
-                CantidadAcumuladaDiaKg = pv.CantidadAcumuladaDiaKg,
-                CantidadAcumuladaDiaLt = pv.CantidadAcumuladaDiaLt,
-                CantidadAcumuladaMesKg = pv.CantidadAcumuladaMesKg,
-                CantidadAcumuladaMesLt = pv.CantidadAcumuladaMesLt,
-                CantidadAcumuladaAnioKg = pv.CantidadAcumuladaAnioKg,
-                CantidadAcumuladaAnioLt = pv.CantidadAcumuladaAnioLt,
-                PorcentajeAnterior = pv.PorcentajeAnterior,
-                PorcentajeActual = pv.PorcentajeActual,
                 P5000Anterior = pv.P5000Anterior,
                 P5000Actual = pv.P5000Actual,
                 FechaAplicacion = pv.FechaAplicacion,
                 FechaRegistro = pv.FechaRegistro,
                 /********************/
-                CantidadAnteriorGeneralKg = pv.CantidadAnteriorGeneralKg,
-                CantidadAnteriorGeneralLt = pv.CantidadAnteriorGeneralLt,
-                CantidadActualGeneralKg = pv.CantidadActualGeneralKg,
-                CantidadActualGeneralLt = pv.CantidadActualGeneralLt,
-                PorcentajeAnteriorGeneral = pv.PorcentajeAnteriorGeneral,
-                PorcentajeActualGeneral = pv.PorcentajeActualGeneral,
-                CantidadAnteriorTotalKg = pv.CantidadAnteriorTotalKg,
-                CantidadAnteriorTotalLt = pv.CantidadAnteriorTotalLt,
-                CantidadActualTotalKg = pv.CantidadActualTotalKg,
-                CantidadActualTotalLt = pv.CantidadActualTotalLt,
-                PorcentajeAnteriorTotal = pv.PorcentajeAnteriorTotal,
-                PorcentajeActualTotal = pv.PorcentajeActualTotal,
-                AutoconsumoKg = pv.AutoconsumoKg,
-                AutoconsumoLt = pv.AutoconsumoLt,
-                AutoconsumoDiaKg = pv.AutoconsumoDiaKg,
-                AutoconsumoDiaLt = pv.AutoconsumoDiaLt,
-                AutoconsumoMesKg = pv.AutoconsumoMesKg,
-                AutoconsumoMesLt = pv.AutoconsumoMesLt,
-                AutoconsumoAnioKg = pv.AutoconsumoAnioKg,
-                AutoconsumoAnioLt = pv.AutoconsumoAnioLt,
-                AutoconsumoAcumDiaKg = pv.AutoconsumoAcumDiaKg,
-                AutoconsumoAcumDiaLt = pv.AutoconsumoAcumDiaLt,
-                AutoconsumoAcumMesKg = pv.AutoconsumoAcumMesKg,
-                AutoconsumoAcumMesLt = pv.AutoconsumoAcumMesLt,
-                AutoconsumoAcumAnioKg = pv.AutoconsumoAcumAnioKg,
-                AutoconsumoAcumAnioLt = pv.AutoconsumoAcumAnioLt,
-                CalibracionKg = pv.CalibracionKg,
-                CalibracionLt = pv.CalibracionLt,
-                CalibracionDiaKg = pv.CalibracionDiaKg,
-                CalibracionDiaLt = pv.CalibracionDiaLt,
-                CalibracionMesKg = pv.CalibracionMesKg,
-                CalibracionMesLt = pv.CalibracionMesLt,
-                CalibracionAnioKg = pv.CalibracionAnioKg,
-                CalibracionAnioLt = pv.CalibracionAnioLt,
-                CalibracionAcumDiaKg = pv.CalibracionAcumDiaKg,
-                CalibracionAcumDiaLt = pv.CalibracionAcumDiaLt,
-                CalibracionAcumMesKg = pv.CalibracionAcumMesKg,
-                CalibracionAcumMesLt = pv.CalibracionAcumMesLt,
-                CalibracionAcumAnioKg = pv.CalibracionAcumAnioKg,
-                CalibracionAcumAnioLt = pv.CalibracionAcumAnioLt,
-                DescargaKg = pv.DescargaKg,
-                DescargaLt = pv.DescargaLt,
-                DescargaDiaKg = pv.DescargaDiaKg,
-                DescargaDiaLt = pv.DescargaDiaLt,
-                DescargaMesKg = pv.DescargaMesKg,
-                DescargaMesLt = pv.DescargaMesLt,
-                DescargaAnioKg = pv.DescargaAnioKg,
-                DescargaAnioLt = pv.DescargaAnioLt,
-                DescargaAcumDiaKg = pv.DescargaAcumDiaKg,
-                DescargaAcumDiaLt = pv.DescargaAcumDiaLt,
-                DescargaAcumMesKg = pv.DescargaAcumMesKg,
-                DescargaAcumMesLt = pv.DescargaAcumMesLt,
-                DescargaAcumAnioKg = pv.DescargaAcumAnioKg,
-                DescargaAcumAnioLt = pv.DescargaAcumAnioLt,
-                CAlmEntradaDiaKg = pv.CAlmEntradaDiaKg,
-                CAlmEntradaDiaLt = pv.CAlmEntradaDiaLt,
-                CAlmSalidaDiaKg = pv.CAlmSalidaDiaKg,
-                CAlmSalidaDiaLt = pv.CAlmSalidaDiaLt,
-                CAlmEntradaMesKg = pv.CAlmEntradaMesKg,
-                CAlmEntradaMesLt = pv.CAlmEntradaMesLt,
-                CAlmSalidaMesKg = pv.CAlmSalidaMesKg,
-                CAlmSalidaMesLt = pv.CAlmSalidaMesLt,
-                CAlmEntradaAnioKg = pv.CAlmEntradaAnioKg,
-                CAlmEntradaAnioLt = pv.CAlmEntradaAnioLt,
-                CAlmSalidaAnioKg = pv.CAlmSalidaAnioKg,
-                CAlmSalidaAnioLt = pv.CAlmSalidaAnioLt,
-                RecargaKg = pv.RecargaKg,
-                RecargaLt = pv.RecargaLt,
-                RecargaDiaKg = pv.RecargaDiaKg,
-                RecargaDiaLt = pv.RecargaDiaLt,
-                RecargaMesKg = pv.RecargaMesKg,
-                RecargaMesLt = pv.RecargaMesLt,
-                RecargaAnioKg = pv.RecargaAnioKg,
-                RecargaAnioLt = pv.RecargaAnioLt,
-                RecargaAcumDiaKg = pv.RecargaAcumDiaKg,
-                RecargaAcumDiaLt = pv.RecargaAcumDiaLt,
-                RecargaAcumMesKg = pv.RecargaAcumMesKg,
-                RecargaAcumMesLt = pv.RecargaAcumMesLt,
-                RecargaAcumAnioKg = pv.RecargaAcumAnioKg,
-                RecargaAcumAnioLt = pv.RecargaAcumAnioLt,
-                RemaKg = pv.RemaKg,
-                RemaLt = pv.RemaLt,
-                RemaDiaKg = pv.RemaDiaKg,
-                RemaDiaLt = pv.RemaDiaLt,
-                RemaMesKg = pv.RemaMesKg,
-                RemaMesLt = pv.RemaMesLt,
-                RemaAnioKg = pv.RemaAnioKg,
-                RemaAnioLt = pv.RemaAnioLt,
-                RemaAcumDiaKg = pv.RemaAcumDiaKg,
-                RemaAcumDiaLt = pv.RemaAcumDiaLt,
-                RemaAcumMesKg = pv.RemaAcumMesKg,
-                RemaAcumMesLt = pv.RemaAcumMesLt,
-                RemaAcumAnioKg = pv.RemaAcumAnioKg,
-                RemaAcumAnioLt = pv.RemaAcumAnioLt,
-                TraspasoKg = pv.TraspasoKg,
-                TraspasoLt = pv.TraspasoLt,
-                TraspasoDiaKg = pv.TraspasoDiaKg,
-                TraspasoDiaLt = pv.TraspasoDiaLt,
-                TraspasoMesKg = pv.TraspasoMesKg,
-                TraspasoMesLt = pv.TraspasoMesLt,
-                TraspasoAnioKg = pv.TraspasoAnioKg,
-                TraspasoAnioLt = pv.TraspasoAnioLt,
-                TraspasoAcumDiaKg = pv.TraspasoAcumDiaKg,
                 VentaKg = pv.VentaKg,
                 VentaLt = pv.VentaLt,
-                VentaDiaKg = pv.VentaDiaKg,
-                VentaDiaLt = pv.VentaDiaLt,
-                VentaMesKg = pv.VentaMesKg,
-                VentaMesLt = pv.VentaMesLt,
-                VentaAnioKg = pv.VentaAnioKg,
-                VentaAnioLt = pv.VentaAnioLt,
-                VentaAcumDiaKg = pv.VentaAcumDiaKg,
-                VentaAcumDiaLt = pv.VentaAcumDiaLt,
-                VentaAcumMesKg = pv.VentaAcumMesKg,
-                VentaAcumMesLt = pv.VentaAcumMesLt,
-                VentaAcumAnioKg = pv.VentaAcumAnioKg,
-                VentaAcumAnioLt = pv.VentaAcumAnioLt,
-                VentaLecturasP5000Kg = pv.VentaLecturasP5000Kg,
-                VentaLecturasP5000Lt = pv.VentaLecturasP5000Lt,
-                VentaLecturasMagnatelKg = pv.VentaLecturasMagnatelKg,
-                VentaLecturasMagnatelLt = pv.VentaLecturasMagnatelLt,
-                VentaLecturasP5000MesKg = pv.VentaLecturasP5000MesKg,
-                VentaLecturasP5000MesLt = pv.VentaLecturasP5000MesLt,
-                VentaLecturasMagnatelMesKg = pv.VentaLecturasMagnatelMesKg,
-                VentaLecturasMagnatelMesLt = pv.VentaLecturasMagnatelMesLt,
-                VentaLecturasP5000AnioKg = pv.VentaLecturasP5000AnioKg,
-                VentaLecturasP5000AnioLt = pv.VentaLecturasP5000AnioLt,
-                VentaLecturasMagnatelAnioKg = pv.VentaLecturasMagnatelAnioKg,
-                VentaLecturasMagnatelAnioLt = pv.VentaLecturasMagnatelAnioLt,
+
             };
             return usDTO;
         }
@@ -453,11 +364,11 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         public static VentaPuntoVentaDTO ToDTOC(VentaPuntoDeVenta pv)
         {
             VentaCajaGeneral ObtenerTotalVenta = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia);
-            var vt = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotal:0;
+            var vt = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotal : 0;
 
-            var vtc = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotalCredito:0;
-            var vtco = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotalContado:0;
-            var ov = ObtenerTotalVenta != null ? ObtenerTotalVenta.OtrasVentas:0;
+            var vtc = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotalCredito : 0;
+            var vtco = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotalContado : 0;
+            var ov = ObtenerTotalVenta != null ? ObtenerTotalVenta.OtrasVentas : 0;
             var almacen = PuntoVentaServicio.Obtener(pv.IdPuntoVenta).IdCAlmacenGas;
             var EsPipa = AlmacenGasServicio.ObtenerAlmacen(almacen);
             var EsCamioneta = AlmacenGasServicio.ObtenerAlmacen(almacen);
@@ -1047,10 +958,30 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 PrecioLitro = PrecioLt,
                 totalCredito = entidad.VentaTotalCredito,
                 totalContado = entidad.VentaTotalContado,
-                FechaRegistro = fecha,               
+                FechaRegistro = fecha,
             };
             return usDTO;
 
+        }
+
+        public static VentasPipaDto ToDto(decimal P500Ini, decimal P500Fin, decimal LtVendidos, PrecioVentaDTO ent)
+        {
+            VentasPipaDto usDTO = new VentasPipaDto()
+            {
+                //Camioneta Reporte Pipa
+                Concepto = ent.Producto,
+                P5000Inicial = P500Ini,
+                P5000Final = P500Fin,
+                CantidadLt = LtVendidos,
+                Venta = (ent.PrecioSalidaLt.Value * LtVendidos),
+            };
+            return usDTO;
+        }
+
+        public static List<VentasPipaDto> ToDTO(List<VentasPipaDto> lu, decimal P500Ini, decimal P500Fin, decimal LtVendidos, PrecioVentaDTO ent)
+        {
+            List<VentasPipaDto> luDTO = lu.ToList().Select(x => ToDto(P500Ini, P500Fin, LtVendidos, ent)).ToList();
+            return luDTO;
         }
 
         public static ReporteDiaDTO ToDTOC(VPuntoVentaDetalleDTO pv, VentaCajaGeneral entidad, UnidadAlmacenGas almacen, List<TanquesDto> tanques, decimal k)
@@ -1058,16 +989,16 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             ReporteDiaDTO usDTO = new ReporteDiaDTO()
             {
-                IdCAlmacenGas = almacen.IdCamioneta!=null? almacen.IdCamioneta.Value:0,
+                IdCAlmacenGas = almacen.IdCamioneta != null ? almacen.IdCamioneta.Value : 0,
                 NombreCAlmacen = almacen.Numero,
-                ClaveReporte = entidad!=null? entidad.FolioOperacionDia:"",
+                ClaveReporte = entidad != null ? entidad.FolioOperacionDia : "",
                 Fecha = pv.FechaRegistro,
                 Carburacion = 0,
                 KilosDeVenta = k,
-                Precio = pv.PrecioUnitarioKg!=null? pv.PrecioUnitarioKg.Value:0,
+                Precio = pv.PrecioUnitarioKg != null ? pv.PrecioUnitarioKg.Value : 0,
                 OtrasVentasTotal = 0,
-                Importe = entidad != null ? entidad.VentaTotalContado:0,
-                ImporteCredito = entidad != null ? entidad.VentaTotalCredito:0,
+                Importe = entidad != null ? entidad.VentaTotalContado : 0,
+                ImporteCredito = entidad != null ? entidad.VentaTotalCredito : 0,
                 OtrasVentas = new List<OtrasVentasDto>(),
                 Tanques = tanques
 
