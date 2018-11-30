@@ -71,7 +71,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<FormaPago>().Get(x => x.Activo).ToList();
         }
-        public FormaPago Buscar(int idFormaPago)
+        public FormaPago Buscar(byte idFormaPago)
         {
             return uow.Repository<FormaPago>().GetSingle(x => x.IdFormaPago.Equals(idFormaPago)
                                                          && x.Activo);

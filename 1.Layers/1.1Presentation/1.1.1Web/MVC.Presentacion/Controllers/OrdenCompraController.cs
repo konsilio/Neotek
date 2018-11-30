@@ -128,6 +128,10 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var complemeto = OrdenCompraServicio.InitComplemento(id ?? 0, tkn);
+            if(complemeto.FolioFiscalUUID != null && complemeto.FolioFactura != null)
+            { ViewBag.enabled = true; }
+            else
+                ViewBag.enabled = false;
             ViewBag.Pagos = OrdenCompraServicio.SolicitarPagos(id ?? 0, tkn);
             ViewBag.IVAs = CatalogoServicio.ListaIVA();
             ViewBag.IEPs = CatalogoServicio.ListaIEPS();
@@ -154,8 +158,9 @@ namespace MVC.Presentacion.Controllers
             var respuesta = OrdenCompraServicio.RegistrarDatosFactura(model, tkn);
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = respuesta;
+                TempData["RespuestaDTO"] = respuesta;              
                 return RedirectToAction("OrdenCompraComplemento", new { id = model.IdOrdenCompra });
+               
             }
             else
             {
