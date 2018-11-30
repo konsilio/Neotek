@@ -99,6 +99,7 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
             conceptoDTO.setIdCategoria(idCategoria);
             conceptoDTO.setIdLinea(idLinea);
             conceptoDTO.setIdProducto(idProducto);
+            conceptoDTO.setLitrosDespachados(0);
 
 
             ventaDTO.getConcepto().add(conceptoDTO);

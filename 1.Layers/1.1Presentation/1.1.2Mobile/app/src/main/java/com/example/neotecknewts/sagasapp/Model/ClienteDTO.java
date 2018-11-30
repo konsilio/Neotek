@@ -1,3 +1,12 @@
+/**
+ * ClienteDTO
+ * Modelo dto de los datos del cliebre para el registro y listado de clientes del buscador
+ * @developer Jorge Omar Tovar Martínez jorge.tovar@neoteck.com.mx
+ * @company Neoteck
+ * @date 28/11/2018
+ * @update 28/11/2018
+ *
+ */
 package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
@@ -37,6 +46,17 @@ public class ClienteDTO extends RespuestaDTO implements Serializable {
 
     @SerializedName("Credito")
     private boolean Credito;
+
+    @SerializedName("Factura")
+    private boolean Factura;
+
+    public boolean isFactura() {
+        return Factura;
+    }
+
+    public void setFactura(boolean factura) {
+        Factura = factura;
+    }
 
     public int getIdCliente() {
         return IdCliente;

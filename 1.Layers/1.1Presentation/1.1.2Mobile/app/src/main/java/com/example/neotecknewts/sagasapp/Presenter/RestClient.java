@@ -412,7 +412,7 @@ public interface RestClient {
      * getPrecioVenta
      * Permite extraer los valores de venta de gas
      * @param token String que reprecenta el token de usuario
-     * @param contentType Reprecenta el tipo de contenid
+     * @param contenType Reprecenta el tipo de contenid
      * @return Un objeto de tipo {@link PrecioVentaDTO} con los valores de gas
      */
     @GET(Constantes.GET_PRECIO_VENTA)

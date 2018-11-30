@@ -152,7 +152,8 @@ public class Session {
     }
 
     public boolean isExpired(){
-        Date fecha_session = new Date(pref.getString(KEY_TIME_SESSION,Calendar.getInstance().getTime().toString()));
+        Date fecha_session = new Date(pref.getString(KEY_TIME_SESSION,
+                Calendar.getInstance().getTime().toString()));
         long dif =  new Date().getTime() - fecha_session.getTime() ;
         Log.w("Fecha session",fecha_session.toString());
         Log.w("Fecha actual",new Date().toString());

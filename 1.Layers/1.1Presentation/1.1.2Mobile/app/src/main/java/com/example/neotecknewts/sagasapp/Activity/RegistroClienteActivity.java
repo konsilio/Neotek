@@ -35,6 +35,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             ETRegistroClienteActivityApellidoMaterno,ETRegistroClienteActivityCelular,
             ETRegistroClienteActivityTelefonoFijo,ETRegistroClienteActivityRazonSocial;
     Button BtnRegistroClienteActivityRegistrarCliente,BtnRegistroClienteActivityRegresar;
+    EditText ETRegistroClienteRfc;
     boolean EsVentaCarburacion,EsVentaCamioneta,EsVentaPipa;
     ProgressDialog progressDialog;
     RegistroClientePresenter presenter;
@@ -74,6 +75,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
         BtnRegistroClienteActivityRegistrarCliente = findViewById(R.id.
                 BtnRegistroClienteActivityRegistrarCliente);
         BtnRegistroClienteActivityRegresar = findViewById(R.id.BtnRegistroClienteActivityRegresar);
+        ETRegistroClienteRfc = findViewById(R.id.ETRegistroClienteRfc);
 
         SRegistroClienteActivityTipoPersona.setAdapter(new ArrayAdapter<>(
                 this,
@@ -176,6 +178,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
         clienteDTO.setCelular(ETRegistroClienteActivityCelular.getText().toString());
         clienteDTO.setTelefono_fijo(ETRegistroClienteActivityTelefonoFijo.getText().toString());
         clienteDTO.setRazonSocial(ETRegistroClienteActivityRazonSocial.getText().toString());
+        clienteDTO.setRFC(ETRegistroClienteRfc.getText().toString());
         presenter.registrarCliente(clienteDTO,session.getToken());
     }
 
@@ -323,9 +326,12 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
     public void setIdCliente(RespuestaClienteDTO data) {
         clienteDTO.setIdCliente(data.getId());
         ventaDTO.setIdCliente(data.getId());
-        ventaDTO.setNombre(clienteDTO.getNombre());
+        ventaDTO.setNombre(clienteDTO.getNombre()+" "+clienteDTO.getApellido_uno()+
+                ""+clienteDTO.getApellido_dos());
         ventaDTO.setCredito(false);
+        ventaDTO.setRFC(clienteDTO.getRFC());
         ventaDTO.setSinNumero(false);
+        ventaDTO.setRazonSocial(clienteDTO.getRazonSocial());
         if(EsVentaCamioneta) {
             Intent intent = new Intent(RegistroClienteActivity.this,
                     VentaGasActivity.class);
