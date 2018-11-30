@@ -28,7 +28,7 @@ namespace MVC.Presentacion.App_Code
         public static List<RequisicionDTO> BuscarRequisicionesEntrega(short idEmpresa, string token)
         {
            return BuscarRequisiciones(idEmpresa, token)
-                .Where(x => x.RequisicionEstatus.Equals(RequisicionEstatusEnum.Autoriza_entrega)
+                .Where(x => x.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autoriza_entrega)
                     || x.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autorizacion_finalizada)).ToList();
         }
         public static List<RequisicionEstatusDTO> BuscarRequisicionEstatus(string token)

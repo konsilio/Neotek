@@ -11,7 +11,7 @@
         public static byte Cerrada = (byte)ReqEstatusEnum.Cerrada;
         public static byte Orden_de_compra_generada = (byte)ReqEstatusEnum.Orden_de_compra_generada;
         public static byte Solicitante_Notificado = (byte)ReqEstatusEnum.Solicitante_Notificado;
-        public static byte Autorizacion_finalizada = (byte)ReqEstatusEnum.Autoriza_entrega;
+        public static byte Autorizacion_finalizada = (byte)ReqEstatusEnum.Autorizacion_finalizada;
         public static byte Autoriza_compra = (byte)ReqEstatusEnum.Autoriza_compra;
         public static byte Autorizacion_parcial = (byte)ReqEstatusEnum.Autorizacion_parcial;
     }

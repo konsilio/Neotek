@@ -27,9 +27,9 @@ namespace Application.MainModule.Servicios.Compras
         {
             return new OrdenCompraPagoDataAccess().BuscarTodo();
         }       
-        public static RespuestaDto Actualiza(OrdenCompraPago pago)
+        public static RespuestaDto Actualiza(OrdenCompraPago pago, OrdenCompra oc )
         {
-            return new OrdenCompraPagoDataAccess().Actualizar(pago);
+            return new OrdenCompraPagoDataAccess().Actualizar(pago, oc);
         }       
     }
 }
