@@ -183,7 +183,6 @@
                                         @*<button btn id="BtnFactura" formaction="ActualizarDatosFactura" class="btn btn-primary btn-round">
                                                 Guardar
                                             </button>*@
-
                                         <input type="submit" value="Guardar" class="btn btn-raised btn-primary btn-round waves-effect" />
                                     </div>
                                 </div>
@@ -194,7 +193,8 @@
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
-                            <div class="header"><
+                            <div class="header">
+                                <
                                 <h2><strong>Resumen de pagos</strong></h2>
                             </div>
                             <div class="body">
@@ -203,40 +203,48 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <td><b>Fecha Entrada</b></td>
-                                                    <td><b>Fecha Pago</b></td>
-                                                    <td><b>$ Total</b></td>
-                                                    <td><b>$ Pagado</b></td>
-                                                    <td><b>$ Por Pagar</b></td>
-                                                    <td><b>Forma Pago</b></td>
+                                                    <th><b>Fecha Entrada</b></th>
+                                                    <th><b>Fecha Pago</b></th>
+                                                    <th><b>$ Total</b></th>
+                                                    <th><b>$ Pagado</b></th>
+                                                    <th><b>$ Por Pagar</b></th>
+                                                    <th><b>Forma Pago</b></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach (var p in ViewBag.Pagos)
                                                 {
-                                                @*<td>Fecha Entrada</b></td>
-                                                <td>Fecha Pago</b></td>
-                                                <td>$ Total</b></td>
-                                                <td>$ Pagado</b></td>
-                                                <td>$ Por Pagar</b></td>
-                                                <td>Forma Pago</b></td>*@
+                                                    <tr>
+                                                        <td><b>@p.FechaRegistro.ToShortDateString()</b></td>
+                                                        <td><b>@p.FechaConfirmacion.ToShortDateString()</b></td>
+                                                        <td><b>$@p.TotalImporte</b></td>
+                                                        <td><b>$@p.MontoPagado</b></td>
+                                                        <td><b>$@p.SaldoInsoluto</b></td>
+                                                        <td><b>@p.formaPago</b></td>
+                                                    </tr>
                                                 }
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div class="row clearfix">
-                                        <label>Pagar: </label>
-                                        @Html.TextBoxFor(m => m.MontoAPagar, new { @class = "form-control" })
+                                </div>
+                                <div class="row clearfix">
+                                    <label>Pagar: </label>
+                                    @Html.TextBoxFor(m => m.MontoAPagar, new { @class = "form-control" })
 
-
+                                    @if (ViewBag.enabled == false)
+                                    {
+                                        <input type="submit" value="Solicitar Pago" formaction="@Url.Action("SolicitarPago")" formmethod="post" class="btn btn-raised btn-primary btn-round waves-effect" disabled />
+                                    }
+                                    else
+                                    {
                                         <input type="submit" value="Solicitar Pago" formaction="@Url.Action("SolicitarPago")" formmethod="post" class="btn btn-raised btn-primary btn-round waves-effect" />
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         }
     </div>
 </section>
