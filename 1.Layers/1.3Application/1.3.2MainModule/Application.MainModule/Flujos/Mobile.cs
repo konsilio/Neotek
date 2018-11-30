@@ -310,82 +310,122 @@ namespace Application.MainModule.Flujos
         public DatosAutoconsumoDto CatalogoAutoconsumo(bool esEstacion, bool esInventario, bool esPipas, bool esFinal)
         {
             var medidores = TipoMedidorGasServicio.Obtener();
-            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-            var pipas = AlmacenGasServicio.ObtenerPipas(puntoVenta.IdEmpresa);
-            var camionetas = AlmacenGasServicio.ObtenerCamionetas(puntoVenta.IdEmpresa);
-            var almacenes = AlmacenGasServicio.ObtenerAlmacenes(puntoVenta.IdEmpresa);
-            var estaciones = AlmacenGasServicio.ObtenerEstaciones(puntoVenta.IdEmpresa);
-            var predeterminado = puntoVenta.UnidadesAlmacen;
+
             var autoconsumos = AlmacenGasServicio.ObtenerAutoConsumosNoProcesadas();
            
             List<Pipa> lpipas = new List<Pipa>();
             List<Camioneta> lcamionetas = new List<Camioneta>();
             List<EstacionCarburacion> lestaciones = new List<EstacionCarburacion>();
-            foreach (var unidadPipas in pipas)
-            {
-                lpipas.Add(
-                    unidadPipas.Pipa
-                    );
-            }
-            foreach (var unidadCamioneta in camionetas)
-            {
-                lcamionetas.Add(
-                    unidadCamioneta.Camioneta
-                    );
-            }
-            foreach (var unidadEstacion in estaciones)
-            {
-                lestaciones.Add(
-                    unidadEstacion.EstacionCarburacion
-                    );
-            }
+            
 
-            if (esEstacion)
+            if (esInventario)
             {
-
-                if (esFinal)
+                var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
+                var camionetas = AlmacenGasServicio.ObtenerCamionetas(TokenServicio.ObtenerIdEmpresa());
+                foreach (var unidadPipas in pipas)
                 {
-                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos);
-                    var estacionesFinEnInicial = estacionesFin(autoconsumos,false,true,true);
-                    if(estacionesInicioEnInicial.Count>0 || estacionesFinEnInicial.Count>0)
-                        return AlmacenAutoconsumoAdapter.ToDTOFinal(estacionesInicioEnInicial, lestaciones,lpipas,lcamionetas, medidores);
-                    else
-                        return AlmacenAutoconsumoAdapter.ToDTO(lestaciones, predeterminado, lpipas, lcamionetas, medidores);
+                    lpipas.Add(
+                        unidadPipas.Pipa
+                        );
                 }
-                else
-                    return AlmacenAutoconsumoAdapter.ToDTO(lestaciones, predeterminado, lpipas, lcamionetas, medidores);
-                
-            }else if (esInventario)
-            {
-                if (esFinal)
+                foreach (var unidadCamioneta in camionetas)
                 {
-                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos,false,true,true);
-                    if (estacionesInicioEnInicial.Count > 0)
-                        return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(estacionesInicioEnInicial,pipas,camionetas,medidores);
-                    else
-                        return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(pipas, camionetas, medidores);
+                    lcamionetas.Add(
+                        unidadCamioneta.Camioneta
+                        );
                 }
-                else
-                    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(pipas, camionetas, medidores);
-            }
-            else if (esPipas)
-            {
-
                 if (esFinal)
                 {
-                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos, false, true, true);
-                    var estacionesFinEnInicial = estacionesFin(autoconsumos, false, true, true);
-                    if(estacionesInicioEnInicial.Count>0 || estacionesFinEnInicial.Count>0)
-                        return AlmacenAutoconsumoAdapter.ToDTOFinal(estacionesInicioEnInicial, lestaciones,lpipas,lcamionetas, medidores);
-                    else
-                        return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, lpipas, lcamionetas, medidores);
+                    //var estacionesInicioEnInicial = estacionesInicio(autoconsumos,false,true,true);
+
+                    //if (estacionesInicioEnInicial.Count > 0)
+                    //    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(estacionesInicioEnInicial,lpipas,lcamionetas,medidores);
+                    //else
+                    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(lpipas, lcamionetas, medidores);
                 }
                 else
                 {
-                    return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, lpipas, lcamionetas, medidores);
+                    //var estacionesFinEnInicial = estacionesFin(autoconsumos, false, true, true);
+                    //if(estacionesFinEnInicial.Count>0)
+                    //    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(estacionesFinEnInicial, lpipas, lcamionetas, medidores);
+                    //else
+                    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(lpipas, lcamionetas, medidores);
                 }
-                    
+
+
             }
+            else
+            {
+                var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+                var pipas = AlmacenGasServicio.ObtenerPipas(puntoVenta.IdEmpresa);
+                var camionetas = AlmacenGasServicio.ObtenerCamionetas(puntoVenta.IdEmpresa);
+                var almacenes = AlmacenGasServicio.ObtenerAlmacenes(puntoVenta.IdEmpresa);
+                var estaciones = AlmacenGasServicio.ObtenerEstaciones(puntoVenta.IdEmpresa);
+                var predeterminado = puntoVenta.UnidadesAlmacen;
+                foreach (var unidadPipas in pipas)
+                {
+                    lpipas.Add(
+                        unidadPipas.Pipa
+                        );
+                }
+                foreach (var unidadCamioneta in camionetas)
+                {
+                    lcamionetas.Add(
+                        unidadCamioneta.Camioneta
+                        );
+                }
+                foreach (var unidadEstacion in estaciones)
+                {
+                    lestaciones.Add(
+                        unidadEstacion.EstacionCarburacion
+                        );
+                }
+                if (esEstacion)
+                {
+
+                    if (esFinal)
+                    {
+                        var estacionesInicioEnInicial = estacionesInicio(autoconsumos);
+                        if (estacionesInicioEnInicial.Count > 0)
+                            return AlmacenAutoconsumoAdapter.ToDTO(estacionesInicioEnInicial, lestaciones, lpipas, lcamionetas, medidores);
+                        else
+                            return AlmacenAutoconsumoAdapter.ToDTO(lestaciones, lpipas, lcamionetas, medidores);
+                    }
+                    else
+                    {
+                        var estacionesFinEnInicial = estacionesFin(autoconsumos);
+                        if (estacionesFinEnInicial.Count > 0)
+                            return AlmacenAutoconsumoAdapter.ToDTO(estacionesFinEnInicial, lestaciones, lpipas, lcamionetas, medidores);
+                        else
+                            return AlmacenAutoconsumoAdapter.ToDTO(lestaciones, lpipas, lcamionetas, medidores);
+                    }
+
+
+                }
+                else if (esPipas)
+                {
+
+                    if (esFinal)
+                    {
+                        var estacionesInicioEnInicial = estacionesInicio(autoconsumos, false, true, true);
+
+                        if (estacionesInicioEnInicial.Count > 0)
+                            return AlmacenAutoconsumoAdapter.ToDTOPipas(estacionesInicioEnInicial, lestaciones, lpipas, lcamionetas, medidores);
+                        else
+                            return AlmacenAutoconsumoAdapter.ToDTOPipas(lpipas, lcamionetas, medidores);
+                    }
+                    else
+                    {
+                        var estacionesFinEnInicial = estacionesFin(autoconsumos, false, true, true);
+                        if (estacionesFinEnInicial.Count > 0)
+                            return AlmacenAutoconsumoAdapter.ToDTOPipas(estacionesFinEnInicial, lestaciones, lpipas, lcamionetas, medidores);
+                        else
+                            return AlmacenAutoconsumoAdapter.ToDTOPipas(lpipas, lcamionetas, medidores);
+                    }
+
+                }
+            }
+
             return null;
         }
 
