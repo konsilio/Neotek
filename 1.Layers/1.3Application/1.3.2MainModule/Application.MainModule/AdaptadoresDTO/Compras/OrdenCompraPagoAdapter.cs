@@ -40,6 +40,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 CuentaBancaria = pago.CuentaBancaria,
                 FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString()).Date,
                 FechaConfirmacion = Convert.ToDateTime(pago.FechaConfirmacion.Value.ToShortDateString()).Date,
+                TotalImporte = pago.TotalImporte,
                 MontoPagado = pago.MontoPagado,
                 Orden = 1,
                 PhysicalPathCapturaPantalla = pago.PhysicalPathCapturaPantalla,

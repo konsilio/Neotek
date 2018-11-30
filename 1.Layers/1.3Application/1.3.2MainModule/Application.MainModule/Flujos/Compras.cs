@@ -228,12 +228,17 @@ namespace Application.MainModule.Flujos
             var Pago = OrdenCompraPagoServicio.Buscar(dto.IdOrdenCompra, dto.Orden);
 
             var entity = OrdenCompraPagoAdapter.FromEntity(Pago);
+            var oc = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(entity.IdOrdenCompra));
+
+      
             entity.PhysicalPathCapturaPantalla = dto.PhysicalPathCapturaPantalla;
             entity.UrlPathCapturaPantalla = dto.UrlPathCapturaPantalla;
             entity.FechaConfirmacion = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             entity = ImagenServicio.ObtenerImagen(entity, dto.NumOrdenCompra);
-
-            var oc = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(entity.IdOrdenCompra));
+            entity.MontoPagado = dto.MontoPagado;
+            entity.TotalImporte = oc.Total.Value;
+            entity.SaldoInsoluto = oc.Total.Value - dto.MontoPagado;
+            
             oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
             return OrdenCompraPagoServicio.Actualiza(entity, oc);
         }
