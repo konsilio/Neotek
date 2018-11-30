@@ -140,21 +140,49 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     max_p5000 = recargaDTO.getP5000Entrada();
                     p5000 = recargaDTO.getP5000Entrada();
                 }
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 setTitle(R.string.recarga);
             }else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
                 autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
                 max_p5000 = autoconsumoDTO.getP5000Salida();
                 p5000 = autoconsumoDTO.getP5000Salida();
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 setTitle(R.string.Autoconsumo);
             }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
                 autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
                 max_p5000 = autoconsumoDTO.getP5000Salida();
                 p5000 = autoconsumoDTO.getP5000Salida();
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 setTitle(R.string.Autoconsumo);
             }else if (EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
                 autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
                 max_p5000 = autoconsumoDTO.getP5000Salida();
                 p5000 = autoconsumoDTO.getP5000Salida();
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 setTitle(R.string.Autoconsumo);
             }else if (EsTraspasoEstacionInicial|| EsTraspasoEstacionFinal){
                 traspasoDTO = (TraspasoDTO) b.getSerializable("traspasoDTO");
@@ -164,6 +192,13 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 }else{
                     max_p5000 = traspasoDTO.getP5000Entrada();
                     p5000 = traspasoDTO.getP5000Entrada();
+                }
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
                 }
                 setTitle(R.string.Traspaso);
             }else if(EsTraspasoPipaInicial||EsTraspasoPipaFinal){
@@ -177,17 +212,38 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     max_p5000 = traspasoDTO.getP5000Entrada();
                     p5000 = traspasoDTO.getP5000Entrada();
                 }
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 setTitle(R.string.Traspaso);
             }else if(EsCalibracionEstacionInicial||EsCalibracionEstacionFinal){
                 calibracionDTO = (CalibracionDTO) b.getSerializable("calibracionDTO");
                 max_p5000 = calibracionDTO.getP5000();
                 p5000 = calibracionDTO.getP5000();
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 //min_p5000= 5000;
                 setTitle(R.string.Calibracion);
             }else if(EsCalibracionPipaInicial|| EsCalibracionPipaFinal){
                 calibracionDTO = (CalibracionDTO) b.getSerializable("calibracionDTO");
                 max_p5000 = calibracionDTO.getP5000();
                 p5000 = calibracionDTO.getP5000();
+                if(p5000<=0){
+                    ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.GONE);
+                }else{
+                    ETLecturaP5000CantidadNull.setVisibility(View.GONE);
+                    NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
+                }
                 //min_p5000= 5000;
                 setTitle(R.string.Calibracion);
             }

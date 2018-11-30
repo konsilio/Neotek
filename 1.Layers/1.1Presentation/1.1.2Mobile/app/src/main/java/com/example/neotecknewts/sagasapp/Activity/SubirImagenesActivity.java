@@ -676,6 +676,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         progressDialog.setMessage(getString(mensaje));
         progressDialog.setTitle(getString(R.string.app_name));
         progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
         progressDialog.show();
     }
 
@@ -710,6 +711,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finish();
             }
         });
+        builder.setCancelable(false);
         builder.create().show();
     }
 
@@ -735,6 +737,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finish();
             }
         });
+        builder.setCancelable(false);
         builder.create().show();
     }
 
@@ -757,6 +760,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finish();
             }
         });
+        builder.setCancelable(false);
         builder.create().show();
     }
 
@@ -776,6 +780,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finish();
             }
         });
+        builder.setCancelable(false);
         builder.create().show();
     }
 
@@ -795,6 +800,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finish();
             }
         });
+        builder.setCancelable(false);
         builder.create().show();
     }
 

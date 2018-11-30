@@ -191,8 +191,14 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 View.VISIBLE);
         SWFormularioVentaCamionetaYPipaCredito = findViewById(R.id.
                 SWFormularioVentaCamionetaYPipaCredito);
+        SWFormularioVentaCamionetaYPipaCredito.setChecked(
+                ventaDTO.isCredito()
+        );
         SWFormularioVentaCamionetaYPipaFactura = findViewById(R.id.
                 SWFormularioVentaCamionetaYPipaFactura);
+        SWFormularioVentaCamionetaYPipaFactura.setChecked(
+                ventaDTO.isFactura()
+        );
         BtnFormularioVentaCamionetaYPipaCancelar = findViewById(R.id.
                 BtnFormularioVentaCamionetaYPipaCancelar);
         BtnFormularioVentaCamionetaYPipaPagar = findViewById(R.id.

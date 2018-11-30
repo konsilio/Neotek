@@ -41,8 +41,11 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        String razon = items.get(position).getRazonSocial();
+        String nombre = items.get(position).getNombre()+" "+items.get(position).getApellido_uno()
+                +" "+items.get(position).getApellido_dos();
         ((ClientesHolder)holder).TVBuscarClienteActivityNombre.setText(
-                items.get(position).getNombre()
+                razon.trim().length()>0 ?razon:nombre
         );
         ((ClientesHolder)holder).TVBuscarClienteaCTIVITYrFC.setText(
                 items.get(position).getRFC()
@@ -51,7 +54,8 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 items.get(position).getTelefono_fijo()
         );
         ((ClientesHolder) holder).TvBuscarClienteActivityFactura.setText(
-                items.get(position).isFactura()?" Si":" No"
+                (items.get(position).isFactura()||items.get(position).getRazonSocial().trim().length()>0)
+                        ?" Si":" No"
         );
 
         ((ClientesHolder) holder).CVEstacionesCarburacionItem.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +82,11 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }else{
                     ventaDTO.setCredito(false);
                     ventaDTO.setTieneCredito(false);
+                }
+                if(items.get(position).isFactura()||items.get(position).getRazonSocial().trim().length()>0){
+                    ventaDTO.setFactura(true);
+                }else{
+                    ventaDTO.setFactura(false);
                 }
                 if(EsVentaCamioneta) {
                     Intent intent = new Intent(view.getContext(),

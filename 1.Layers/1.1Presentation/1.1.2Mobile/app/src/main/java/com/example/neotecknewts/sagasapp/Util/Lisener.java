@@ -1267,9 +1267,9 @@ public class Lisener{
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
                             cursor.getColumnIndex("ClaveOperacion")));
-                    boolean ban = cursor.getInt(
+                    /*boolean ban = cursor.getInt(
                             cursor.getColumnIndex("EsEncargadoPuerta")) == 1;
-                    lecturaDTO.setEsEncargadoPuerta(ban);
+                    lecturaDTO.setEsEncargadoPuerta(ban);*/
                     lecturaDTO.setIdCamioneta(cursor.getInt(cursor.getColumnIndex(
                             "IdCamioneta")));
                     lecturaDTO.setFechaAplicacion(cursor.getString(
@@ -1281,16 +1281,16 @@ public class Lisener{
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
                         CilindrosDTO row = new CilindrosDTO();
-                        row.setCantidad(cursor.getInt(cursor.getColumnIndex(
+                        row.setCantidad(cantidad.getInt(cantidad.getColumnIndex(
                                 "Cantidad")));
-                        row.setCilindroKg(cursor.getString(cursor.getColumnIndex(
+                        row.setCilindroKg(cantidad.getString(cantidad.getColumnIndex(
                                 "CilindroKg")));
-                        row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
+                        row.setIdCilindro(cantidad.getInt(cantidad.getColumnIndex(
                                 "IdCilindro")));
                         lecturaDTO.getCilindros().add(row);
-                        lecturaDTO.getIdCilindro().add(cursor.getInt(cursor.getColumnIndex(
+                        lecturaDTO.getIdCilindro().add(cantidad.getInt(cantidad.getColumnIndex(
                                 "IdCilindro")));
-                        lecturaDTO.getCilindroCantidad().add(cursor.getInt(cursor.getColumnIndex(
+                        lecturaDTO.getCilindroCantidad().add(cantidad.getInt(cantidad.getColumnIndex(
                                 "Cantidad")));
                         cantidad.moveToNext();
                     }
