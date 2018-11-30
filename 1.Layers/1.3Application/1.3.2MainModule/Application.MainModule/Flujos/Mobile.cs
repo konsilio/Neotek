@@ -314,6 +314,23 @@ namespace Application.MainModule.Flujos
             var almacenes = AlmacenGasServicio.ObtenerAlmacenes(puntoVenta.IdEmpresa);
             var predeterminado = puntoVenta.UnidadesAlmacen;
             var autoconsumos = AlmacenGasServicio.ObtenerAutoConsumosNoProcesadas();
+           
+            List<Pipa> lpipas = new List<Pipa>();
+            List<Camioneta> lcamionetas = new List<Camioneta>();
+            List<Almacen> lalmacen = new List<Almacen>();
+            foreach (var unidadPipas in pipas)
+            {
+                lpipas.Add(
+                    unidadPipas.Pipa
+                    );
+            }
+            foreach (var unidadCamioneta in camionetas)
+            {
+                lcamionetas.Add(
+                    unidadCamioneta.Camioneta
+                    );
+            }
+
             if (esEstacion)
             {
                 
@@ -324,7 +341,7 @@ namespace Application.MainModule.Flujos
                     return AlmacenAutoconsumoAdapter.ToDTOFinal(estacionesInicioEnInicial, estacionesFinEnInicial, medidores);
                 }
                 else
-                    return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, pipas, camionetas, medidores);
+                    return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, lpipas, lcamionetas, medidores);
                 
             }else if (esInventario)
             {
@@ -348,10 +365,13 @@ namespace Application.MainModule.Flujos
                     if(estacionesInicioEnInicial.Count>0 || estacionesFinEnInicial.Count>0)
                         return AlmacenAutoconsumoAdapter.ToDTOFinal(estacionesInicioEnInicial, estacionesFinEnInicial, medidores);
                     else
-                        return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, pipas, camionetas, medidores);
+                        return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, lpipas, lcamionetas, medidores);
                 }
                 else
-                    return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, pipas, camionetas, medidores);
+                {
+                    return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, lpipas, lcamionetas, medidores);
+                }
+                    
             }
             return null;
         }
