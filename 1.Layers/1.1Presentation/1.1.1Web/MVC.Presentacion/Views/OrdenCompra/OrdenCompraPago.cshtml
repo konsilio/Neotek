@@ -12,6 +12,7 @@
         {
             @Html.HiddenFor(m => m.UrlPathCapturaPantalla)
             @Html.HiddenFor(m => m.IdOrdenCompra)
+            @Html.HiddenFor(m => m.Orden)
             @Html.HiddenFor(m => m.NumOrdenCompra)
             @Html.HiddenFor(m => m.IdProveedor)
             @Html.HiddenFor(m => m.IdBanco)
@@ -93,7 +94,7 @@
                                         <label>Forma Pago</label>
                                     </div>
                                     <div class="row clearfix text-center">
-                                        <select name="IdFormaPago" class="form-control">
+                                        <select name="IdFormaPago" class="form-control" data-search-live="true">
                                             @foreach (var fp in ViewBag.FormasPago)
                                             {
                                                 <option value="@fp.IdFormaPago">@fp.Descripcion </option>

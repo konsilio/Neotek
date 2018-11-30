@@ -122,9 +122,9 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoPorteador(oc), Request);
         }
         [Route("solictud/pago/mercancia")]
-        public HttpResponseMessage PutSolicitarPago(ComplementoGasDTO oc)
+        public HttpResponseMessage PutSolicitarPago(OrdenCompraDTO oc)
         {
-            return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoPorteador(oc), Request);
+            return RespuestaHttp.crearRespuesta(_compras.SolicitarPago(oc), Request);
         }
         [Route("actualiza/productos/ordencompra")]
         public HttpResponseMessage PutAutorizarProductoOordenCompra(List<OrdenCompraProductoDTO> ocProds)

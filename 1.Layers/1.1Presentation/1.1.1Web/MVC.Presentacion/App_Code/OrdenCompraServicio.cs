@@ -122,6 +122,7 @@ namespace MVC.Presentacion.App_Code
             agente.AutorizarOrdenCompra(dto, tkn);
             return agente._RespuestaDTO;
         }
+      
         public static EntradaMercanciaModel EntradaMercancialModel(int idOC, string tkn)
         {
             AgenteServicio agente = new AgenteServicio();
@@ -133,6 +134,24 @@ namespace MVC.Presentacion.App_Code
             AgenteServicio agente = new AgenteServicio();
             agente.RegistrarEntrada(model, tkn);
             return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO RegistrarDatosFactura(OrdenCompraDTO dto, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.EnviarDatosFactura(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO SolicitarPago(OrdenCompraDTO dto, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.EnviarSolicitudPago(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static List<OrdenCompraPagoDTO> SolicitarPagos(int idoc, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.BuscarListaPagos(idoc, tkn);
+            return agente._listaOrdenCompraPago;
         }
         public static OrdenCompraDTO InitComplemento(int id, string tkn)
         {
@@ -147,6 +166,7 @@ namespace MVC.Presentacion.App_Code
         public static OrdenCompraPagoDTO InitOrdenCompraPago(int idOC, string tkn)
         {
             var oc = BuscarOrdenCompra(idOC, tkn);
+            var pagos = SolicitarPagos(idOC, tkn);
             var prov = CatalogoServicio.ListaProveedores(tkn).FirstOrDefault(x => x.IdProveedor.Equals(oc.IdProveedor));
             var banco = CatalogoServicio.ListaBanco(tkn).FirstOrDefault(b => b.IdBanco.Equals(prov.IdBanco));
             return new OrdenCompraPagoDTO()
@@ -159,7 +179,8 @@ namespace MVC.Presentacion.App_Code
                 Banco = banco.NombreCorto,
                 CuentaBancaria = prov.Cuenta,
                 Empresa = oc.Empresa,
-                MontoPagado = oc.Total.Value
+                MontoPagado = oc.Total.Value,
+                Orden = pagos.LastOrDefault().Orden,
             };
         }
         public static RespuestaDTO ConfirmarPago(OrdenCompraPagoDTO dto, string tkn)

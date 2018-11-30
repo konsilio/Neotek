@@ -92,6 +92,13 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         ventaDTO.setCredito(false);
         ventaDTO.setFactura(false);
         ventaDTO.setFecha(new Date().toString());
+        ventaDTO.setRFC("");
+        ventaDTO.setRazonSocial("");
+        ventaDTO.setNombre("");
+        ventaDTO.setSinNumero(true);
+        ventaDTO.setEsSinNumero(true);
+        ventaDTO.setEsRegistro(false);
+        ventaDTO.setEsBusqueda(false);
         if(EsVentaCamioneta) {
             Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                     VentaGasActivity.class);
@@ -123,6 +130,10 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
     @Override
     public void RegistrarCliente() {
         ventaDTO.setFecha(new Date().toString());
+        ventaDTO.setSinNumero(false);
+        ventaDTO.setEsSinNumero(false);
+        ventaDTO.setEsRegistro(true);
+        ventaDTO.setEsBusqueda(false);
         Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                 RegistroClienteActivity.class);
         intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
@@ -136,6 +147,10 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
     public void Buscar() {
         if(ETPuntoVentaSolicitarActivityBuscador.getText().length()>0) {
             ventaDTO.setFecha(new Date().toString());
+            ventaDTO.setSinNumero(false);
+            ventaDTO.setEsSinNumero(false);
+            ventaDTO.setEsRegistro(false);
+            ventaDTO.setEsBusqueda(true);
             Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                     BuscarClienteActivity.class);
             intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);

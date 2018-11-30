@@ -239,6 +239,7 @@
     <string name="calibracion_cilindros">Calibración cilindros</string>
     <string name="calibraci_n_cilindro">Calibración-Cilindro</string>
     <string name="registra_el_porcentajede_calibraci_n_configurada">Registra el porcentajede calibración configurada</string>
+    <string name="total_en_efectivo">Total en efectivo</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
     <string-array name="header_tabla_anticipo">
         <item># Tiket</item>

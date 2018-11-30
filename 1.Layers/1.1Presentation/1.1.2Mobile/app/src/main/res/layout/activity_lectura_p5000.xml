@@ -93,6 +93,15 @@
 
             </NumberPicker>
 
+            <EditText
+                android:id="@+id/ETLecturaP5000CantidadNull"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                tools:targetApi="o"
+                android:inputType="number"
+                android:visibility="gone" />
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="60dp"

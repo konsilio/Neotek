@@ -218,9 +218,31 @@ namespace Application.MainModule.Servicios.Almacenes
                         }
                         else
                         {
-                            return !final
-                                ? uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final))
-                                : uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
+                            var ultimalecturaInicial = uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final));
+                            
+                            if (!final)
+                            {
+                                if (ultimalecturaInicial != null)
+                                {
+                                    return ultimalecturaInicial;
+                                }else
+                                {
+                                    return uniAlm.TomasLectura.Last();
+                                }
+                            }else
+                            {
+                                
+                                var lecFinales = uniAlm.TomasLectura.ToList().Find(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
+                                if (lecFinales != null)
+                                {
+                                    var ultimalecturaFinal = uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
+                                    return ultimalecturaFinal;
+                                }
+                                else
+                                {
+                                    return uniAlm.TomasLectura.Last();
+                                }
+                            }
                         }
             return !final
                 ? BuscarUltimaLectura(uniAlm.IdCAlmacenGas, TipoEventoEnum.Final)

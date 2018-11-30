@@ -35,7 +35,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
     Button BtnPuntoVentaPagarActivityCancelar,BtnPuntoVentaPagarActivityConfirmar,
             BtnPuntoVentaPagarActivityOpciones;
     TextView TVPuntoVentaPagarActivitySubtotal,TVPuntoVentaPagarActivityIva,
-            TVPuntoVentaActivityPagarTotal;
+            TVPuntoVentaActivityPagarTotal,TVPuntoVentaPagarActivityEfectivo;
     Switch SPuntoVentaPagarActivityFactura,SPuntoVentaActivityCredito;
     EditText ETPuntoVentaPagarActivityEfectivo;
     Tabla tabla;
@@ -69,11 +69,21 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         TVPuntoVentaActivityPagarTotal = findViewById(R.id.TVPuntoVentaActivityPagarTotal);
         SPuntoVentaPagarActivityFactura = findViewById(R.id.SPuntoVentaPagarActivityFactura);
         SPuntoVentaActivityCredito = findViewById(R.id.SPuntoVentaActivityCredito);
+        TVPuntoVentaPagarActivityEfectivo = findViewById(R.id.TVPuntoVentaPagarActivityEfectivo);
+        SPuntoVentaActivityCredito.setChecked(
+                ventaDTO.isCredito()
+        );
+        SPuntoVentaPagarActivityFactura.setChecked(
+                ventaDTO.isFactura()
+        );
         SPuntoVentaActivityCredito.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked)
+            if(isChecked) {
+                TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
                 ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
-            else
+            }else {
+                TVPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
                 ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
+            }
         });
         ETPuntoVentaPagarActivityEfectivo = findViewById(R.id.ETPuntoVentaPagarActivityEfectivo);
 
@@ -98,6 +108,9 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
         }else{
             ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
+        }
+        if( EsVentaPipa ||EsVentaCarburacion){
+            BtnPuntoVentaPagarActivityOpciones.setVisibility(View.GONE);
         }
         BtnPuntoVentaPagarActivityConfirmar.setOnClickListener(v->{
             ventaDTO.setFactura(SPuntoVentaPagarActivityFactura.isChecked());
