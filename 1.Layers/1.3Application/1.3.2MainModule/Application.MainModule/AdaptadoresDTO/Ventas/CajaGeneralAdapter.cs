@@ -275,49 +275,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
         //var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacen);
 
-        public static VentasPipaDto ToDTO(VentasPipaDto pv)
-        {
-            AlmacenGasMovimientoDto usDTO = new AlmacenGasMovimientoDto()
-            {
-                IdEmpresa = pv.IdEmpresa,
-                Year = pv.Year,
-                Mes = pv.Mes,
-                Dia = pv.Dia,
-                Orden = pv.Orden,
-                IdTipoMovimiento = pv.IdTipoMovimiento,
-                IdTipoEvento = pv.IdTipoMovimiento,
-                IdOrdenVenta = pv.IdTipoMovimiento,
-                IdAlmacenGas = pv.IdTipoMovimiento,
-                IdCAlmacenGasPrincipal = pv.IdTipoMovimiento,
-                IdCAlmacenGasReferencia = pv.IdTipoMovimiento,
-                IdAlmacenEntradaGasDescarga = pv.IdTipoMovimiento,
-                IdAlmacenGasRecarga = pv.IdTipoMovimiento,
-                FolioOperacionDia = pv.FolioOperacionDia,
-                CAlmacenPrincipalNombre = pv.CAlmacenPrincipalNombre,
-                CAlmacenReferenciaNombre = pv.CAlmacenReferenciaNombre,
-                OperadorChoferNombre = pv.OperadorChoferNombre,
-                TipoEvento = pv.TipoEvento,
-                TipoMovimiento = pv.TipoMovimiento,
-                EntradaKg = pv.EntradaKg,
-                EntradaLt = pv.EntradaLt,
-                SalidaKg = pv.SalidaKg,
-                SalidaLt = pv.SalidaLt,
-                P5000Anterior = pv.P5000Anterior,
-                P5000Actual = pv.P5000Actual,
-                FechaAplicacion = pv.FechaAplicacion,
-                FechaRegistro = pv.FechaRegistro,
-                /********************/
-                VentaKg = pv.VentaKg,
-                VentaLt = pv.VentaLt,
-
-            };
-            return usDTO;
-        }
-        public static List<VentasPipaDto> ToDTO(List<VentasPipaDto> lu)
-        {
-            List<VentasPipaDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
-            return luDTO;
-        }
         public static AlmacenGasMovimientoDto ToDTO(AlmacenGasMovimiento pv)
         {
             AlmacenGasMovimientoDto usDTO = new AlmacenGasMovimientoDto()

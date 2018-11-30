@@ -35,6 +35,12 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGas(Dto.IdCAlmacenGas,Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, Dto.Orden));
         }
 
+        [Route("buscar/listamovimientosgaspipa")]
+        public HttpResponseMessage PutListaMovimientosGasPipa(CajaGeneralDTO Dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGas(Dto.IdCAlmacenGas, Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, Dto.Orden, Dto.FechaAplicacion,Dto.FolioOperacionDia));
+        }
+
         [Route("buscar/listamovimientosgascilindros")]
         public HttpResponseMessage PutListaMovimientosGasC(VPuntoVentaDetalleDTO Dto)
         {
