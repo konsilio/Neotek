@@ -249,8 +249,7 @@ namespace Application.MainModule.Flujos
         }
 
 
-
-        public int Orden(List<VentaPuntoDeVenta> ventas, DateTime fechaVenta)
+        public int Orden(List<VentaPuntoDeVenta> ventas,DateTime fechaVenta)
         {
             var busqueda = ventas.FindAll(x => x.FechaRegistro.Day.Equals(
                 fechaVenta.Day) &&
@@ -334,8 +333,11 @@ namespace Application.MainModule.Flujos
             {
                 if (esFinal)
                 {
-                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos, false, true, true);
-                    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(estacionesInicioEnInicial, medidores);
+                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos,false,true,true);
+                    if (estacionesInicioEnInicial.Count > 0)
+                        return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(estacionesInicioEnInicial, medidores);
+                    else
+                        return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(pipas, camionetas, medidores);
                 }
                 else
                     return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(pipas, camionetas, medidores);
@@ -347,7 +349,10 @@ namespace Application.MainModule.Flujos
                 {
                     var estacionesInicioEnInicial = estacionesInicio(autoconsumos, false, true, true);
                     var estacionesFinEnInicial = estacionesFin(autoconsumos, false, true, true);
-                    return AlmacenAutoconsumoAdapter.ToDTOFinal(estacionesInicioEnInicial, estacionesFinEnInicial, medidores);
+                    if(estacionesInicioEnInicial.Count>0 || estacionesFinEnInicial.Count>0)
+                        return AlmacenAutoconsumoAdapter.ToDTOFinal(estacionesInicioEnInicial, estacionesFinEnInicial, medidores);
+                    else
+                        return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, pipas, camionetas, medidores);
                 }
                 else
                     return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, pipas, camionetas, medidores);
