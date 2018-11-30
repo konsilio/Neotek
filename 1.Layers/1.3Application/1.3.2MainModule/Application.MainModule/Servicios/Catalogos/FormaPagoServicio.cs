@@ -20,5 +20,10 @@ namespace Application.MainModule.Servicios.Catalogos
             //else
             //    return new FormaPagoDataAccess().ListaProductos(empresa.IdEmpresa);
         }
+
+        public static FormaPago Obtener(byte idFormaPago)
+        {           
+            return new FormaPagoDataAccess().Buscar(idFormaPago);           
+        }
     }
 }

@@ -145,7 +145,10 @@ namespace MVC.Presentacion.Controllers
                         ModelState.AddModelError(error.Key, error.Value);
                     }
                 if (Resp.MensajesError != null)
-                    Mensaje = Resp.MensajesError[0];
+                    Mensaje = Resp.MensajesError[0]+" "+ Resp.MensajesError[1]!=null ? Resp.MensajesError[1]:"";
+
+                if (Mensaje == "")
+                    Mensaje = Resp.Mensaje;
             }
             return Mensaje;
         }

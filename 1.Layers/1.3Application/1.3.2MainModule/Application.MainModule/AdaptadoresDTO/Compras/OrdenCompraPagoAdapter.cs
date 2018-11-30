@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Compras;
+using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,10 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 IdOrdenCompra = pago.IdOrdenCompra,
                 IdBanco = pago.IdBanco,
                 IdFormaPago = pago.IdFormaPago ?? 0,
+                formaPago = FormaPagoServicio.Obtener(pago.IdFormaPago.Value).Descripcion,
                 CuentaBancaria = pago.CuentaBancaria,
-                FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
+                FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString()).Date,
+                FechaConfirmacion = Convert.ToDateTime(pago.FechaConfirmacion.Value.ToShortDateString()).Date,
                 MontoPagado = pago.MontoPagado,
                 Orden = 1,
                 PhysicalPathCapturaPantalla = pago.PhysicalPathCapturaPantalla,
