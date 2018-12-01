@@ -71,40 +71,42 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                   if(list_unidad!=null && datosAutoconsumoDTO!= null
                          && position>=0) {
-                    for (int x=0; x<datosAutoconsumoDTO.getEstacionEntradaDTOList().size();x++) {
+                    for (int x=0; x<datosAutoconsumoDTO.getEstacionSalidaDTOList().size();x++) {
                         if(parent.getItemAtPosition(position).toString().equals(
-                                datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
                                         .getNombreAlmacen()
                         )) {
 
                             autoconsumoDTO.setIdCAlmacenGasSalida(
-                                    datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                    datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
                                     .getIdAlmacenGas()
                             );
                             autoconsumoDTO.setIdCAlmacenGasEntrada(
-                                    datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                    datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
                                             .getIdAlmacenGas()
                             );
                             autoconsumoDTO.setP5000Salida(
-                                    datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                    datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
                                             .getCantidadP5000()
                             );
                             autoconsumoDTO.setPorcentajeMedidor(
-                                    datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                    datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
                                     .getPorcentajeMedidor()
                             );
                             autoconsumoDTO.setNombreEstacion(datosAutoconsumoDTO
-                                    .getEstacionEntradaDTOList().get(x)
+                                    .getEstacionSalidaDTOList().get(x)
                                     .getNombreAlmacen()
                             );
-                            autoconsumoDTO.setCantidadFotos(1
+                            autoconsumoDTO.setCantidadFotos(
+                                    datosAutoconsumoDTO.getEstacionSalidaDTOList()
+                                    .get(x).getMedidor().getCantidadFotografias()
                             );
                             autoconsumoDTO.setNombreTipoMedidor(datosAutoconsumoDTO
-                                    .getEstacionEntradaDTOList().get(x)
+                                    .getEstacionSalidaDTOList().get(x)
                                     .getMedidor().getNombreTipoMedidor()
                             );
                             autoconsumoDTO.setIdTipoMedidor(datosAutoconsumoDTO
-                                    .getEstacionEntradaDTOList().get(x)
+                                    .getEstacionSalidaDTOList().get(x)
                                     .getIdTipoMedidor()
                             );
                         }
@@ -150,10 +152,10 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
     @Override
     public void onSuccessLista(DatosAutoconsumoDTO data) {
         if(data!=null){
-            list_unidad = new String[data.getEstacionEntradaDTOList().size()];
+            list_unidad = new String[data.getEstacionSalidaDTOList().size()];
             datosAutoconsumoDTO = data;
-            for (int x=0;x<datosAutoconsumoDTO.getEstacionEntradaDTOList().size();x++){
-                list_unidad[x] = datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+            for (int x=0;x<datosAutoconsumoDTO.getEstacionSalidaDTOList().size();x++){
+                list_unidad[x] = datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
                         .getNombreAlmacen();
             }
             SAutoconsumoInvetarioActivityInventario.setAdapter(

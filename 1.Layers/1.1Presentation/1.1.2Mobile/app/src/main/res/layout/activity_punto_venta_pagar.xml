@@ -180,7 +180,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaActivityCredito"
                 app:layout_constraintVertical_bias="0.314"
                 tools:ignore="LabelFor"
-                tools:targetApi="o"
+                tools:targetApi="P"
+                android:textColor="@color/colorTextLogin"
                 android:layout_marginRight="8dp" />
 
             <Button
