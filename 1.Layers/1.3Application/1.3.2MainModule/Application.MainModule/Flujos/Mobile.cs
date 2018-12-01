@@ -279,7 +279,13 @@ namespace Application.MainModule.Flujos
                 var almacenesAlternos = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa(), true);
                 var camionetas = AlmacenGasServicio.ObtenerCamionetas(TokenServicio.ObtenerIdEmpresa());
                 var camionetasDTO = AlmacenRecargaAdapter.ToDTOCamionetas(camionetas, tipoMedidores);
-                return AlmacenRecargaAdapter.ToDTO(almacenesAlternos, camionetasDTO, tipoMedidores);
+                var Lcamionetas = new List<CamionetaDto>();
+                foreach (var item in camionetasDTO)
+                {
+                    item.NombreAlmacen= camionetas.Find(x => x.IdCamioneta.Value.Equals(x.IdCamioneta)).Camioneta.Nombre;
+                    Lcamionetas.Add(item);
+                }
+                return AlmacenRecargaAdapter.ToDTO(almacenesAlternos, Lcamionetas, tipoMedidores);
             }
             else if (esEstacion)
             {
