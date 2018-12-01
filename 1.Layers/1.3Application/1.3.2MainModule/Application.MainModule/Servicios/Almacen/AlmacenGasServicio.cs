@@ -510,6 +510,12 @@ namespace Application.MainModule.Servicios.Almacenes
                 return reporte;
             }
         }
+
+        public static List<Pipa>  ObtenerPipasEmpresa(short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().ObtenerPipas(idEmpresa);
+        }
+
         public static int ordenReportes(List<ReporteDelDia> reportes)
         {
             if (reportes != null)
@@ -2423,6 +2429,10 @@ namespace Application.MainModule.Servicios.Almacenes
         public static RespuestaDto InsertCorte(VentaCorteAnticipoEC corte)
         {
             return new PuntoVentaDataAccess().InsertarCorte(corte);
+        }
+        public static List<EstacionCarburacion> ObtenerEstacionesEmpresa(short idEmpresa)
+        {
+            return new AlmacenDataAccess().ObtenerEstaciones(idEmpresa);
         }
     }
 }

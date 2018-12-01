@@ -150,7 +150,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdAlmacenGas = estacion.IdCAlmacenGas,
                 CantidadP5000 = estacion.P5000Actual,
                 IdTipoMedidor = estacion.IdTipoMedidor,
-                NombreAlmacen = estacion.Numero,
+                NombreAlmacen = estacion.EstacionCarburacion.Nombre,
                 PorcentajeMedidor = estacion.PorcentajeActual,
                 Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x=>x.IdTipoMedidor.Equals(estacion.IdTipoMedidor)))
             };
@@ -164,7 +164,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 CantidadP5000 = pipa.P5000Actual,
                 IdAlmacenGas = pipa.IdCAlmacenGas,
                 Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x=>x.IdTipoMedidor.Equals(pipa.IdTipoMedidor))),
-                NombreAlmacen = pipa.Numero,
+                NombreAlmacen = pipa.Pipa.Nombre,
                 PorcentajeMedidor = pipa.PorcentajeActual
             };
         }

@@ -31,9 +31,18 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
 
-            return CajaGeneralServicio.ObtenerPVDetalle(empresa, year, month, dia, orden.Value).ToList();
+            return CajaGeneralServicio.ObtenerPVDetalle(unidad, empresa, year, month, dia, orden.Value).ToList();
 
         }
+        public List<VentasPipaDto> MovimientosGas(short unidad, short empresa, short year, byte month, byte dia, short? orden,DateTime fecha, string Folio)
+        {
+            var resp = PermisosServicio.PuedeConsultarCajaGeneral();
+            if (!resp.Exito) return null;
+
+            return CajaGeneralServicio.ObtenerVentasPipas(unidad, empresa, year, month, dia, orden.Value, fecha, Folio).ToList();
+
+        }
+        
 
         public List<VPuntoVentaDetalleDTO> MovimientosGasCilindro(short? empresa, short year, byte month, byte dia, short? orden)
         {

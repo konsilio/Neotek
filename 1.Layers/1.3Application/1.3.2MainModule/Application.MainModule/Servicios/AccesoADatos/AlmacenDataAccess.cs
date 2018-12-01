@@ -225,5 +225,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
+        public List<EstacionCarburacion> ObtenerEstaciones(short idEmpresa)
+        {
+            return uow.Repository<EstacionCarburacion>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
+        }
     }
 }

@@ -26,6 +26,8 @@
         android:maxLength="2"
         android:textAlignment="center"
         android:textSize="18sp"
+        tools:targetApi="P"
+        android:textColor="@color/colorTextLogin"
         tools:ignore="Autofill,LabelFor" />
 
 </LinearLayout>
