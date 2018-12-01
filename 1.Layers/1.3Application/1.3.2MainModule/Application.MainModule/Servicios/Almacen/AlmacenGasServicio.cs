@@ -383,6 +383,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDescargaDataAccess().BuscarOCompraExpedidor(idOCompra);
         }
+        public static AlmacenGasDescarga ObtenerDescargaPorIdrequisicion(int IdReq)
+        {
+            return new AlmacenGasDescargaDataAccess().BuscarAlmacenDescargaPorRequisicion(IdReq);
+        }
         public static AlmacenGasDescarga ObtenerDescargaPorClaveOperacion(string claveOperacion)
         {
             return new AlmacenGasDescargaDataAccess().BuscarClaveOperacion(claveOperacion);

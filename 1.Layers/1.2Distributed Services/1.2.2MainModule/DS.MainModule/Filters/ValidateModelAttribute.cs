@@ -32,7 +32,6 @@ namespace DS.MainModule.Filters
                 actionContext.Response = RespuestaHttp.crearRespuesta(respuesta, actionContext.Request);
             }
         }
-
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
             if (actionExecutedContext.ActionContext.ModelState.IsValid == false)
