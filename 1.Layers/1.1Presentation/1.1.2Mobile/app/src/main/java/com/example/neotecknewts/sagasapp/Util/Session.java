@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicIntegerArray;
 
 /**
  * Created by neotecknewts on 08/08/18.
@@ -152,13 +153,17 @@ public class Session {
     }
 
     public boolean isExpired(){
+        Calendar calendar = Calendar.getInstance();
         Date fecha_session = new Date(pref.getString(KEY_TIME_SESSION,
-                Calendar.getInstance().getTime().toString()));
+                calendar.getTime().toString()));
         long dif =  new Date().getTime() - fecha_session.getTime() ;
         Log.w("Fecha session",fecha_session.toString());
         Log.w("Fecha actual",new Date().toString());
         Log.w("Diferencia",String.valueOf(dif));
-        Log.w("Dias",String.valueOf(TimeUnit.DAYS.convert(dif,TimeUnit.MILLISECONDS)));
-        return TimeUnit.DAYS.convert(dif,TimeUnit.MILLISECONDS)>1;
+        long segundos = dif / 1000;
+        long minutos = segundos / 60;
+        long horas = minutos / 60;
+        long dias = horas / 24;
+        return dias>0;
     }
 }
