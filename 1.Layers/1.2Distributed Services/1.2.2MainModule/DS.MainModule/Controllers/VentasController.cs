@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Flujos;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -39,6 +40,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PutListaMovimientosGasPipa(CajaGeneralDTO Dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGas(Dto.IdCAlmacenGas, Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, Dto.Orden, Dto.FechaAplicacion,Dto.FolioOperacionDia));
+
+            //string iDate = "29/11/2018";
+            //DateTime oDate = Convert.ToDateTime(iDate);
+            //return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGas((short)5, (short)2, (short)2018, (byte)11, (byte)29, (byte)11, oDate, "118434D0DA2"));
+            
         }
 
         [Route("buscar/listamovimientosgascilindros")]
