@@ -1035,6 +1035,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
+        public List<Pipa> ObtenerPipas(short idEmpresa)
+        {
+            return uow.Repository<Pipa>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
+        }
     }
 }
 
