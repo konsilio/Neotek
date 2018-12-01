@@ -279,7 +279,13 @@ namespace Application.MainModule.Flujos
                 var almacenesAlternos = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa(), true);
                 var camionetas = AlmacenGasServicio.ObtenerCamionetas(TokenServicio.ObtenerIdEmpresa());
                 var camionetasDTO = AlmacenRecargaAdapter.ToDTOCamionetas(camionetas, tipoMedidores);
-                return AlmacenRecargaAdapter.ToDTO(almacenesAlternos, camionetasDTO, tipoMedidores);
+                var Lcamionetas = new List<CamionetaDto>();
+                foreach (var item in camionetasDTO)
+                {
+                    item.NombreAlmacen= camionetas.Find(x => x.IdCamioneta.Value.Equals(x.IdCamioneta)).Camioneta.Nombre;
+                    Lcamionetas.Add(item);
+                }
+                return AlmacenRecargaAdapter.ToDTO(almacenesAlternos, Lcamionetas, tipoMedidores);
             }
             else if (esEstacion)
             {
@@ -538,14 +544,29 @@ namespace Application.MainModule.Flujos
         public DatosTraspasoDto CatalogoTraspaso(bool esPipa)
         {
             var medidores = TipoMedidorGasServicio.Obtener();
-            var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
-            var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
             var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-            var predeterminada = puntoVenta.IdCAlmacenGas;
+            var predeterminada = puntoVenta.UnidadesAlmacen;
+            var lpipas = AlmacenGasServicio.ObtenerPipasEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var lestaciones = AlmacenGasServicio.ObtenerEstacionesEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
+            var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+
             if (esPipa)
-                return TraspasoAdapter.ToDTO(pipas, predeterminada, medidores);
+            {
+               
+                var pipa = puntoVenta.UnidadesAlmacen.Pipa;
+                
+                var filtradas = lpipas.FindAll(x => !x.IdPipa.Equals(pipa.IdPipa));
+                return TraspasoAdapter.ToDTOPipa(lpipas,filtradas,pipa,medidores, unidadAlmacen);
+            }
+
             else
-                return TraspasoAdapter.ToDTO(estaciones, pipas, predeterminada, medidores);
+            {
+                var estacion = puntoVenta.UnidadesAlmacen.EstacionCarburacion;
+
+                return TraspasoAdapter.ToDTOEstacion(lestaciones, lpipas, estacion, medidores,unidadAlmacen);
+            }
+                
         }
         public RespuestaDto Traspaso(TraspasoDto dto, bool esFinal)
         {

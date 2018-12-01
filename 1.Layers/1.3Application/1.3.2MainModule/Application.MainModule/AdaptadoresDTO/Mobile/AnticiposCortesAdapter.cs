@@ -82,7 +82,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdAlmacenGas = (short)pipa.IdPipa,
                 NombreAlmacen = pipa.Nombre,
                 CantidadP5000 = lecturaInicial.P5000.Value,
-                P5000Final = unidad.P5000Actual.Value,
+                P5000Final = (unidad.P5000Actual!=null)? unidad.P5000Actual.Value:0,
                 AnticiposEstacion = ToDTO(unidad)
             };
         }
@@ -92,8 +92,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             decimal suma = anticiposEstacion.Sum(x => x.TotalAnticipado);
             return new AnticiposEstacionDTO()
             {
-                IdCAlmacenGas = unidad.IdCAlmacenGas,
-                IdEstacion = unidad.IdEstacionCarburacion.Value,
+                IdCAlmacenGas = (unidad.IdCAlmacenGas!=null)? unidad.IdCAlmacenGas:0,
+                IdEstacion = (unidad.IdEstacionCarburacion!=null)? unidad.IdEstacionCarburacion.Value:0,
                 Anticipos = ToDTO(anticiposEstacion),
                 Total = suma
             };
