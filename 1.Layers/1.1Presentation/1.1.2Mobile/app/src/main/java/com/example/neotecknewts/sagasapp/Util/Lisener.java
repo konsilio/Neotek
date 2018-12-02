@@ -382,11 +382,11 @@ public class Lisener{
                                         cursor.getColumnIndex("IdEstacion")
                                 )
                         );
-                        /*anticiposDTO.setIdCAlmacen(
+                        anticiposDTO.setIdCAlmacen(
                                 cursor.getInt(
                                         cursor.getColumnIndex("IdCAlmacen")
                                 )
-                        );*/
+                        );
                         if(Registrar(anticiposDTO,token)){
                             sagasSql.EliminarAnticipo(anticiposDTO.getClaveOperacion());
                         }

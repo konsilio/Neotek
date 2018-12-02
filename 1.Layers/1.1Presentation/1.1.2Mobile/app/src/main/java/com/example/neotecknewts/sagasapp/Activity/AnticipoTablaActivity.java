@@ -441,7 +441,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         .append(mMonth + 1).append("/")
                         .append(mYear).append(" "));
         fecha.setDate(mDay);
-        fecha.setMonth(mMonth);
+        fecha.setMonth(mMonth+1);
         fecha.setYear(mYear);
         presenter.getAnticipos(
                 session.getToken(),
@@ -449,7 +449,10 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 EsAnticipo,
                 String.valueOf(mYear)+"-"+String.valueOf(mMonth+ 1)+"-"+String.valueOf(mDay)
         );
-
+        if(EsCorte)
+            corteDTO.setFechaCorte(fecha);
+        else
+            anticiposDTO.setFechaAnticipo(fecha);
     }
     protected Dialog onCreateDialog(int id) {
         switch (id) {
