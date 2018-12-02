@@ -504,7 +504,7 @@ namespace Application.MainModule.Flujos
                 ventas = ventas.FindAll(x => x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Year.Equals(fecha.Year));
             }
 
-            var anticiposDia = PuntoVentaServicio.ObtenerAnticipos(almacen, fecha);
+            var anticiposDia = PuntoVentaServicio.ObtenerAnticipos(puntoVenta.UnidadesAlmacen, fecha);
 
             return AnticiposCortesAdapter.ToDTO(ventas, anticiposDia,almacen, esAnticipos);
         }
@@ -700,17 +700,42 @@ namespace Application.MainModule.Flujos
             var almacen = almacenes.Find(x => x.IdEstacionCarburacion.Value.Equals(dto.IdCAlmacenGas));
             var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
             var puntoventa = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
-            var entrega = puntoventa.OperadorChofer.Usuario;
+            //var entrega = puntoventa.OperadorChofer.Usuario;
 
-            var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoventa, almacen);
+            var lpipas = AlmacenGasServicio.ObtenerPipasEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var lestaciones = AlmacenGasServicio.ObtenerEstacionesEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var lcamionetas = AlmacenGasServicio.ObtenerCamionetasEmpresa(TokenServicio.ObtenerIdEmpresa());
+
+            var pipa = lpipas.SingleOrDefault(x => x.IdPipa.Equals(dto.IdCAlmacenGas));
+            var camioneta = lcamionetas.SingleOrDefault(x => x.IdCamioneta.Equals(dto.IdCAlmacenGas));
+            var estacionCarb = lestaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
+            PuntoVenta puntoVenta = null;
+            UnidadAlmacenGas almacenPunto = null; 
+            if (pipa != null)
+            {
+                puntoVenta = pipa.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacenPunto = pipa.UnidadAlmacenGas.First();
+            }
+            else if(estacion!= null)
+            {
+                puntoVenta = estacion.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacenPunto = estacion.UnidadAlmacenGas.First();
+            }
+            else if(camioneta!= null)
+            {
+                puntoVenta = camioneta.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacenPunto = camioneta.UnidadAlmacenGas.First();
+            }
+            var entrega = puntoVenta.OperadorChofer.Usuario;
+            var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoVenta, almacenPunto);
             //Insert en la tabla de VentaCajaGeneral
             if (corte.Exito)
             {
-                var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoventa.IdPuntoVenta, dto.Fecha);
-                var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoventa.IdPuntoVenta, dto.Fecha);
+                var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoVenta.IdPuntoVenta, dto.Fecha);
+                var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoVenta.IdPuntoVenta, dto.Fecha);
                 var ventasCajasGral = PuntoVentaServicio.ObtenerVentasCajaGral();
 
-                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), puntoventa, puntoventa.OperadorChofer, entrega, deContado, credito);
+                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), puntoVenta, puntoVenta.OperadorChofer, entrega, deContado, credito);
                 corteCajaGeneral.Orden = (short)orden(ventasCajasGral);
                 corteCajaGeneral.OtrasVentas = VentaServicio.CalculoOtrasVentas(deContado, credito);
                 return PuntoVentaServicio.InsertMobil(corteCajaGeneral);

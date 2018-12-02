@@ -12,5 +12,6 @@ namespace Application.MainModule.DTOs.Mobile
         public short IdCAlmacenGas { get; set; }
         public decimal Total { get; set; }
         public string Recibe { get; set; }
+        public DateTime FechaAnticipo { get; set; }
     }
 }
