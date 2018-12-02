@@ -506,7 +506,7 @@ namespace Application.MainModule.Flujos
 
             var anticiposDia = PuntoVentaServicio.ObtenerAnticipos(almacen, fecha);
 
-            return AnticiposCortesAdapter.ToDTO(ventas, anticiposDia, esAnticipos);
+            return AnticiposCortesAdapter.ToDTO(ventas, anticiposDia,almacen, esAnticipos);
         }
 
         public RespuestaDto Calibracion(CalibracionDto dto, bool esFinal)
