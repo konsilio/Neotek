@@ -203,6 +203,7 @@ namespace Application.MainModule.Flujos
         public ComplementoGasDTO BuscarComplementoGas(int idOrdenCompra)
         {
             var _OrdeCompra = OrdenCompraServicio.Buscar(idOrdenCompra);
+
             var _ComplementoGas = OrdenCompraServicio.BuscarComplementoGas(_OrdeCompra);
             var requisicion = new RequisicionDataAccess().BuscarPorIdRequisicion(_OrdeCompra.IdRequisicion);
             foreach (var orden in requisicion.OrdenesCompra)
@@ -216,7 +217,6 @@ namespace Application.MainModule.Flujos
             _ComplementoGas = OrdenCompraServicio.CargarDatosRequisicion(_ComplementoGas, requisicion);
             var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(_OrdeCompra.IdOrdenCompra);
             _ComplementoGas.Fotos = ImagenServicio.BuscarImagenes(alamacen);
-
             return _ComplementoGas;
         }
         public List<OrdenCompraEstatusDTO> ListaEstatus()
