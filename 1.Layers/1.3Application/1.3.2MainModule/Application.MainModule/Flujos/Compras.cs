@@ -215,8 +215,9 @@ namespace Application.MainModule.Flujos
                 _ComplementoGas.Productos.AddRange(ProductosOCAdapter.ToDTO(orden.Productos.ToList()));
             }
             _ComplementoGas = OrdenCompraServicio.CargarDatosRequisicion(_ComplementoGas, requisicion);
-            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(_OrdeCompra.IdOrdenCompra);
-            _ComplementoGas.Fotos = ImagenServicio.BuscarImagenes(alamacen);
+            //var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(_OrdeCompra.IdOrdenCompra);
+            var descarga = AlmacenGasServicio.ObtenerDescargaPorIdrequisicion(_OrdeCompra.IdRequisicion);
+            _ComplementoGas.Fotos = ImagenServicio.BuscarImagenes(descarga);
             return _ComplementoGas;
         }
         public List<OrdenCompraEstatusDTO> ListaEstatus()
