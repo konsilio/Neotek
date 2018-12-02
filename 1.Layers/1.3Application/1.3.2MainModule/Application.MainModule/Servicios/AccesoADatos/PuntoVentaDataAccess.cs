@@ -143,9 +143,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(
                 x=>x.IdCAlmacenGas.Equals(unidadEstacion.IdCAlmacenGas)
-                && x.FechaRegistro.Day.Equals(fecha.Day) 
-                && x.FechaRegistro.Month.Equals(fecha.Month)
-                && x.FechaRegistro.Year.Equals(fecha.Year)
+                && x.FechaCorteAnticipo.Day.Equals(fecha.Day) 
+                && x.FechaCorteAnticipo.Month.Equals(fecha.Month)
+                && x.FechaCorteAnticipo.Year.Equals(fecha.Year)
            ).ToList();
         }
 

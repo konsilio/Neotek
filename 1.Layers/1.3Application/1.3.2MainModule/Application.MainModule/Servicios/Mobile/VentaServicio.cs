@@ -9,6 +9,7 @@ using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.Servicios.Almacenes;
+using Application.MainModule.Servicios.Seguridad;
 
 namespace Application.MainModule.Servicios.Mobile
 {
@@ -31,13 +32,32 @@ namespace Application.MainModule.Servicios.Mobile
             var estacionVenta = estaciones.Find(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
             var almacenGas = AlmacenGasServicio.ObtenerAlmacenes(idEmpresa);
             var almacen = almacenGas.Find(x => x.IdEstacionCarburacion.Equals(estacionVenta.IdEstacionCarburacion));
-            var PuntoVenta = puntos.Find(x =>x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+            var lpipas = AlmacenGasServicio.ObtenerPipasEmpresa(idEmpresa);
+            var lestaciones = AlmacenGasServicio.ObtenerEstacionesEmpresa(idEmpresa);
+            var lcamionetas = AlmacenGasServicio.ObtenerCamionetasEmpresa(idEmpresa);
+            var pipa = lpipas.Find(x => x.IdPipa.Equals(dto.IdCAlmacenGas));
+            var camioneta = lcamionetas.Find(x => x.IdCamioneta.Equals(dto.IdCAlmacenGas));
+            var _estacion = lestaciones.Find(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
+            PuntoVenta punto = null;
+            if (pipa != null)
+            {
+                punto = pipa.UnidadAlmacenGas.First().PuntosVenta.First();
+            }else if (camioneta != null)
+            {
+                punto = camioneta.UnidadAlmacenGas.First().PuntosVenta.First();
+            }else if (_estacion!=null)
+            {
+                punto = _estacion.UnidadAlmacenGas.First().PuntosVenta.First();
+            }
+
+            //var PuntoVenta = puntos.Find(x =>x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
             //var almacen = AlmacenGasServicio.Obtener(PuntoVenta.IdCAlmacenGas);
 
-            var adapter = AnticiposCortesAdapter.FromDto(dto, idEmpresa, usuario.IdUsuario, PuntoVenta);
+            var adapter = AnticiposCortesAdapter.FromDto(dto, idEmpresa, usuario.IdUsuario, punto);
 
-            var entrega = PuntoVenta.OperadorChofer.Usuario;
-            var operador = PuntoVenta.OperadorChofer;
+            
+            var entrega = usuario.Nombre+" "+usuario.Apellido1+""+usuario.Apellido2;
+            var operador = punto.OperadorChofer.Usuario.Nombre+" "+ punto.OperadorChofer.Usuario.Apellido1+ punto.OperadorChofer.Usuario.Apellido2;
             adapter.IdCAlmacenGas = almacen.IdCAlmacenGas;
             adapter.Orden = (short)idOrden;
             adapter.FechaAplicacion = dto.Fecha;
@@ -46,21 +66,21 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.Year = (short)dto.Fecha.Year;
             adapter.FechaRegistro = DateTime.Now;
             adapter.FechaAplicacion = dto.Fecha;
-            adapter.FechaCorteAnticipo = dto.Fecha;
+            adapter.FechaCorteAnticipo = dto.FechaAnticipo;
             adapter.DatosProcesados = false;
             adapter.TipoOperacion = "Anticipo";
             adapter.IdTipoOperacion = 1;
-            adapter.PuntoVenta = PuntoVenta.UnidadesAlmacen.Numero;
-            adapter.OperadorChofer = operador.Usuario.Nombre + " " + operador.Usuario.Apellido1 + " " + operador.Usuario.Apellido2;
+            adapter.PuntoVenta = punto.UnidadesAlmacen.Numero;
+            adapter.OperadorChofer = entrega;
 
             var anticipo = GasServicio.Anticipo(adapter);
             ////Insert en la tabla de VentaCajaGeneral
             if (anticipo.Exito)
             {
-                var deContado = PuntoVentaServicio.ObtenerVentasContado(PuntoVenta.IdPuntoVenta, dto.Fecha);
-                var credito = PuntoVentaServicio.ObtenerVentasCredito(PuntoVenta.IdPuntoVenta, dto.Fecha);
+                var deContado = PuntoVentaServicio.ObtenerVentasContado(punto.IdPuntoVenta, dto.Fecha);
+                var credito = PuntoVentaServicio.ObtenerVentasCredito(punto.IdPuntoVenta, dto.Fecha);
                 var ventasCajasGral = PuntoVentaServicio.ObtenerVentasCajaGral();
-                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, idEmpresa, usuario, PuntoVenta, operador, entrega, deContado, credito);
+                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, idEmpresa, usuario, punto, punto.OperadorChofer, usuario, deContado, credito);
 
                 corteCajaGeneral.Orden = (short)orden(ventasCajasGral);
                 corteCajaGeneral.OtrasVentas = CalculoOtrasVentas(deContado, credito);
@@ -150,7 +170,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.Mes = (byte)dto.Fecha.Month;
             adapter.Year = (short)dto.Fecha.Year;
             adapter.FechaRegistro = DateTime.Now;
-            adapter.FechaCorteAnticipo = dto.Fecha;
+            adapter.FechaCorteAnticipo = dto.FechaCorte;
             adapter.DatosProcesados = false;
             adapter.TipoOperacion = "Corte caja";
             adapter.IdTipoOperacion = 2;
