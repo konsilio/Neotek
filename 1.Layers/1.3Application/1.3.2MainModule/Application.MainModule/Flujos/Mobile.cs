@@ -470,9 +470,35 @@ namespace Application.MainModule.Flujos
 
         public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(int idEstacion, bool esAnticipos, DateTime fecha)
         {
-            var almacen = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdEstacionCarburacion.Equals(idEstacion));
-            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
-            var ventas = CajaGeneralServicio.ObtenerVentasPuntosVenta(puntosVenta.IdPuntoVenta).OrderBy(x => x.FechaRegistro).ToList();
+
+
+            var pipas = AlmacenGasServicio.ObtenerPipasEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var estaciones = AlmacenGasServicio.ObtenerEstacionesEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var camionetas = AlmacenGasServicio.ObtenerCamionetasEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var pipa = pipas.SingleOrDefault(x => x.IdPipa.Equals(idEstacion));
+            var estacion = estaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(idEstacion));
+            var camioneta = camionetas.SingleOrDefault(x => x.IdCamioneta.Equals(idEstacion));
+            PuntoVenta puntoVenta = null;
+            UnidadAlmacenGas almacen = null;
+            if (pipa != null)
+            {
+                puntoVenta = pipa.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacen = pipa.UnidadAlmacenGas.First();
+            }
+            else if (estacion != null)
+            {
+                puntoVenta = estacion.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacen = estacion.UnidadAlmacenGas.First();
+            }
+            else if (camioneta != null)
+            {
+                puntoVenta = camioneta.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacen = camioneta.UnidadAlmacenGas.First();
+            }
+            //var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+
+            //var puntosVenta = almacen.PuntosVenta.First();
+            var ventas = CajaGeneralServicio.ObtenerVentasPuntosVenta(puntoVenta.IdPuntoVenta).OrderBy(x => x.FechaRegistro).ToList();
             if (fecha != null)
             {
                 ventas = ventas.FindAll(x => x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Year.Equals(fecha.Year));
