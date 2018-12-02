@@ -461,6 +461,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
         }
 
+        public List<Camioneta> ObtenerCamionetasEmpresa(short idEmpresa)
+        {
+            return uow.Repository<Camioneta>().Get(
+                x=>x.IdEmpresa.Equals(idEmpresa) && x.Activo
+                ).ToList();
+        }
+
         public void Actualizar(AplicaTomaLecturaDto aplicaTomaLectura)
         {
             using (uow)
