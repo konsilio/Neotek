@@ -510,6 +510,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Fecha DATETAIME," +
                 "Total DOUBLE,"+
                 "Hora TEXT,"+
+                "IdCAlmacen INTEGER,"+
                 "Falta BOOLEAN DEFAULT 1"+
                 ")");
         //endregion
@@ -522,6 +523,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "IdEstacion INTEGER," +
                 "FechaCorte DATETAIME," +
                 "Hora TEXT,"+
+                "IdCAlmacen INTEGER,"+
                 "Falta BOOLEAN DEFAULT 1"+
                 ")");
         //endregion
@@ -2201,6 +2203,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("ClaveOperacion",corteDTO.getClaveOperacion());
         values.put("Fecha",corteDTO.getFecha().toString());
+        values.put("IdCAlmacen",corteDTO.getIdEstacion());
         values.put("IdEstacion",corteDTO.getIdEstacion());
         values.put("FechaCorte",corteDTO.getFecha().toString());
         values.put("Hora",corteDTO.getHora());
@@ -2223,6 +2226,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         values.put("ClaveOperacion",dto.getClaveOperacion());
         values.put("Anticipo",dto.getAnticipar());
         values.put("Hora",dto.getHora());
+        values.put("IdCAlmacen",dto.getIdCAlmacen());
         values.put("IdEstacion",dto.getIdEstacion());
         values.put("NombreEstacion",dto.getNombreEstacion());
         values.put("Total",dto.getTotal());
