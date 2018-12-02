@@ -429,6 +429,12 @@ namespace Application.MainModule.Servicios.Almacenes
 
             return new AlmacenGasDataAccess().BuscarImagenesAutoConsumo(AutoConsumo.IdEmpresa, AutoConsumo.Year, AutoConsumo.Mes, AutoConsumo.Dia, AutoConsumo.Orden);
         }
+
+        public static List<Camioneta> ObtenerCamionetasEmpresa(short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().ObtenerCamionetasEmpresa(idEmpresa);
+        }
+
         public static List<AlmacenGasCalibracionFoto> ObtenerImagenes(AlmacenGasCalibracion calibracion)
         {
             if (calibracion.Fotografias != null && calibracion.Fotografias.Count > 0)
