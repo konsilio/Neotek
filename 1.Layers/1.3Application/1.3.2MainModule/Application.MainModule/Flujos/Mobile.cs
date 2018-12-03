@@ -471,7 +471,7 @@ namespace Application.MainModule.Flujos
         public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(int idEstacion, bool esAnticipos, DateTime fecha)
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var unidadAlmacen = usuario.OperadoresChoferes.SingleOrDefault().PuntosVenta.SingleOrDefault().UnidadesAlmacen;
+            var unidadAlmacen = usuario.OperadoresChoferes.SingleOrDefault(x=>x.Activo).PuntosVenta.SingleOrDefault(x=>x.Activo).UnidadesAlmacen;
             Pipa pipa = null;
             EstacionCarburacion estacion = null;
             Camioneta camioneta = null;
@@ -680,7 +680,7 @@ namespace Application.MainModule.Flujos
             var unidadesEstaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
 
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var idCAlmacen = usuario.OperadoresChoferes.SingleOrDefault().PuntosVenta.SingleOrDefault().IdCAlmacenGas;
+            var idCAlmacen = usuario.OperadoresChoferes.SingleOrDefault(x=>x.Activo).PuntosVenta.SingleOrDefault(x=>x.Activo).IdCAlmacenGas;
             var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacen);
             //if (almacen.EsGeneral.Equals(false))
             //{
