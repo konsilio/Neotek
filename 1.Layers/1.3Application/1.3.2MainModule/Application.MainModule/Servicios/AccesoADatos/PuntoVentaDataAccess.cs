@@ -283,5 +283,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
         }
+
+        public List<VentaCorteAnticipoEC> ObtenerCortesAnticipos()
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get().ToList();
+        }
     }
 }
