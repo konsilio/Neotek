@@ -36,6 +36,11 @@ namespace Application.MainModule.Servicios.Mobile
         public static RespuestaDto Recarga(RecargaDTO rdto,bool esFinal = false)
         {
             var adapter = AlmacenRecargaAdapter.FromDTOEvento(rdto);
+            var almacen = AlmacenGasServicio.ObtenerAlmacen(rdto.IdCAlmacenGasEntrada);
+            if (esFinal)
+                if (almacen.IdPipa > 0)
+                    adapter.IdCAlmacenGasSalida = rdto.IdCAlmacenGasEntrada;
+
             adapter.IdTipoEvento =  esFinal? TipoEventoEnum.Final:TipoEventoEnum.Inicial;
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;

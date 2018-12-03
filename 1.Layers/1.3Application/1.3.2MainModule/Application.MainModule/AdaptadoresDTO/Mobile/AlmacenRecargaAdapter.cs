@@ -104,7 +104,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     CantidadActualKg = camioneta.CantidadActualKg,
                     CantidadActualLt = camioneta.CantidadActualLt,
                     IdCAlmacen = camioneta.IdCAlmacenGas,
-                    Numero = camioneta.Numero,
+                    Numero = camioneta.Camioneta.Nombre,
                     PorcentajeActual = camioneta.PorcentajeActual,
                     Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x => x.IdTipoMedidor.Equals(camioneta.IdTipoMedidor))),
                     Cilindros = ToDTO(camionetaCilindros)
