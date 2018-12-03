@@ -12,8 +12,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new DatosTraspasoDto()
             {
-                 pipas = lpipas.Select(x=>ToDTO(x,medidores,x.UnidadAlmacenGas.First())).ToList(),
-                 pipaEntrada = filtradas.Select(x=>ToDTO(x,medidores, x.UnidadAlmacenGas.First())).ToList(),
+                 pipas = lpipas.Select(x=>ToDTO(x,medidores,x.UnidadAlmacenGas.SingleOrDefault())).ToList(),
+                 pipaEntrada = filtradas.Select(x=>ToDTO(x,medidores, x.UnidadAlmacenGas.SingleOrDefault())).ToList(),
                  PipaPredeterminada = ToDTO(pipa,medidores,pipa.UnidadAlmacenGas.First())
             };
         }
