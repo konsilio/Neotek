@@ -481,15 +481,17 @@ namespace Application.MainModule.Flujos
                 estacion = unidadAlmacen.EstacionCarburacion;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen);
+
             }
-               
+
             if (unidadAlmacen.IdPipa > 0 && unidadAlmacen.IdPipa != null)
             {
                 pipa = unidadAlmacen.Pipa;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x=>x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen);
-                var ventas = puntoVenta.VentaPuntoDeVenta;
-               dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos); 
+                var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(Convert.ToByte(fecha.Day)) &&
+                    X.Mes.Equals(Convert.ToByte(fecha.Month)) && X.Year.Equals((short)fecha.Year)).ToList();
+                dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos); 
 
             }
                 
@@ -498,6 +500,9 @@ namespace Application.MainModule.Flujos
                 camioneta = unidadAlmacen.Camioneta;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen);
+                var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(fecha.Day) &&
+                    X.Mes.Equals(fecha.Month) && X.Year.Equals(fecha.Year)).ToList();
+                dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos);
             }
                 
             return dto;
