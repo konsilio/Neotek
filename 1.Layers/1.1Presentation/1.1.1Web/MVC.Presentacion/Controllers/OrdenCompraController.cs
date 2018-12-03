@@ -342,7 +342,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var id = (int)TempData["intIdOrdenCompra"];
-            updateValues.Update = updateValues.Update.Select(x => { x.IdOrdenCompra = id; return x; }).ToList();
+            //updateValues.Update = updateValues.Update.Select(x => { x.IdOrdenCompra = id; return x; }).ToList();
             TempData["RespuestaDTO"] = OrdenCompraServicio.ActualizaProductosOrdenCompra(updateValues.Update, tkn);
             return RedirectToAction("OrdenCompraComplementoGas", new { id = id });
         }

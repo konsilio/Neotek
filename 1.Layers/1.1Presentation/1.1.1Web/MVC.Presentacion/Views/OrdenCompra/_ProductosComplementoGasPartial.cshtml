@@ -27,6 +27,17 @@
 
         settings.Columns.Add(c =>
         {
+            c.FieldName = "IdOrdenCompra";
+            c.Caption = "Orden de compra";
+            c.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            c.ReadOnly = true;
+            //c.Index = -1;
+        });
+
+        settings.Columns.Add(c =>
+        {
             c.FieldName = "ProductoServicioTipo";
             c.Caption = "Tipo";
             c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
@@ -49,6 +60,7 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.Settings.ShowEditorInBatchEditMode = false;
             c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            //c.Visible = false;
             c.ReadOnly = true;
         });
         settings.Columns.Add(c =>
@@ -93,6 +105,18 @@
                 p.DataSource = ViewBag.CuentasContables;
             });
         });
+
+        //settings.CustomJSProperties = (sender, e) =>
+        //{
+        //    MVCxGridView gridView = (MVCxGridView)sender;
+        //    if (gridView.EditingRowVisibleIndex > -1)
+        //    {
+        //        e.Properties["cpMiddleName"] = gridView.GetRowValues(gridView.EditingRowVisibleIndex, "IdOrdenCompra");
+        //    }
+        //};
+
+        //settings.ClientSideEvents.BeginCallback = "function(s, e) { if(s.cpMiddleName) e.customArgs['IdOrdenCompra'] =  s.cpMiddleName; }";
+
         settings.CellEditorInitialize = (s, e) =>
         {
             ASPxEdit editor = (ASPxEdit)e.Editor;
