@@ -42,7 +42,7 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
     private String Recibe;
 
     @SerializedName("FechaAnticipo")
-    private Date FechaAnticipo;
+    private String FechaAnticipo;
 
     public int getIdEstacion() {
         return IdEstacion;
@@ -132,11 +132,11 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
         Recibe = recibe;
     }
 
-    public Date getFechaAnticipo() {
+    public String getFechaAnticipo() {
         return FechaAnticipo;
     }
 
-    public void setFechaAnticipo(Date fechaAnticipo) {
+    public void setFechaAnticipo(String fechaAnticipo) {
         FechaAnticipo = fechaAnticipo;
     }
 }
