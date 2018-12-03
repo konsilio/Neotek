@@ -65,5 +65,28 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdCAlmacenGas = IdCAlmacenGas
             };
         }
+
+        public static DatosCalibracionDto ToDTOEstaciones(List<UnidadAlmacenGas> estaciones, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return new DatosCalibracionDto()
+            {
+                estaciones = estaciones.Select(x => ToDTOEstacion(x, medidores)).ToList(),
+                medidores = TipoMedidorAdapter.ToDto(medidores)
+            }; throw new NotImplementedException();
+        }
+
+        public static EstacionesDto ToDTOEstacion(UnidadAlmacenGas unidadAlmacen, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return new EstacionesDto()
+            {
+                IdTipoMedidor = unidadAlmacen.IdTipoMedidor,
+                CantidadP5000 = unidadAlmacen.P5000Actual,
+                IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
+                Medidor = TipoMedidorAdapter.ToDto(medidores.Single(x => x.IdTipoMedidor.Equals(unidadAlmacen.IdTipoMedidor))),
+                NombreAlmacen = unidadAlmacen.EstacionCarburacion.Nombre,
+                PorcentajeMedidor = unidadAlmacen.PorcentajeActual,
+                NombrePipa = unidadAlmacen.EstacionCarburacion == null ? "" : unidadAlmacen.EstacionCarburacion.Nombre
+            };
+        }
     }
 }
