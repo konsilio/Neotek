@@ -134,5 +134,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().Anticipos(unidadEstacion, fecha);
         }
+
+        public static List<VentaCorteAnticipoEC> ObtenerCortesAnticipos()
+        {
+            return new PuntoVentaDataAccess().ObtenerCortesAnticipos();
+        }
     }
 }

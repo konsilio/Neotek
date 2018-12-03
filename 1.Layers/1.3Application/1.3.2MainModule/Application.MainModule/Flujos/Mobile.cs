@@ -713,12 +713,13 @@ namespace Application.MainModule.Flujos
 
             var anticipos = VentaServicio.ObtenerAnticipos(TokenServicio.ObtenerIdEmpresa());
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var puntoVenta = usuario.OperadoresChoferes.SingleOrDefault().PuntosVenta.SingleOrDefault();
+            var puntoVenta = usuario.OperadoresChoferes.SingleOrDefault(x=>x.Activo).PuntosVenta.SingleOrDefault(x=>x.Activo);
             var unidadAlmacen = puntoVenta.UnidadesAlmacen;
-            
+            var cortesYanticiposOrden = PuntoVentaServicio.ObtenerCortesAnticipos();
+
             var estacion = AlmacenGasServicio.ObtenerAlmacen(dto.IdCAlmacenGas);
 
-            return VentaServicio.Anticipo(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), anticipos, estacion);
+            return VentaServicio.Anticipo(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), anticipos, estacion, cortesYanticiposOrden);
         }
 
         public RespuestaDto corte(CorteDto dto)
@@ -742,6 +743,7 @@ namespace Application.MainModule.Flujos
             var pipa = lpipas.SingleOrDefault(x => x.IdPipa.Equals(dto.IdCAlmacenGas));
             var camioneta = lcamionetas.SingleOrDefault(x => x.IdCamioneta.Equals(dto.IdCAlmacenGas));
             var estacionCarb = lestaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
+            var cortesYanticiposOrden = PuntoVentaServicio.ObtenerCortesAnticipos();
             PuntoVenta puntoVenta = null;
             UnidadAlmacenGas almacenPunto = null; 
             if (pipa != null)
@@ -760,7 +762,7 @@ namespace Application.MainModule.Flujos
                 almacenPunto = camioneta.UnidadAlmacenGas.First();
             }
             var entrega = puntoVenta.OperadorChofer.Usuario;
-            var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoVenta, almacenPunto);
+            var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoVenta, almacenPunto, cortesYanticiposOrden);
             //Insert en la tabla de VentaCajaGeneral
             if (corte.Exito)
             {

@@ -23,9 +23,9 @@ namespace Application.MainModule.Servicios.Mobile
         {
             return GasServicio.EvaluarClaveOperacion(dto);
         }
-        public static RespuestaDto Anticipo(AnticipoDto dto,short idEmpresa,Usuario usuario, List<VentaCorteAnticipoEC> anticipos,UnidadAlmacenGas estacion)
+        public static RespuestaDto Anticipo(AnticipoDto dto,short idEmpresa,Usuario usuario, List<VentaCorteAnticipoEC> anticipos,UnidadAlmacenGas estacion,List<VentaCorteAnticipoEC> cortesYanticiposOrden)
         {
-            var idOrden = orden(anticipos);
+            var idOrden = orden(cortesYanticiposOrden);
             
             var puntos = PuntoVentaServicio.ObtenerIdEmp(idEmpresa);
             var estaciones = EstacionCarburacionServicio.ObtenerTodas(idEmpresa);
@@ -88,7 +88,7 @@ namespace Application.MainModule.Servicios.Mobile
             }
             ////Fin del Insert en la tabla de VentaCajaGeneral
             //return anticipo;
-            return null;
+            return anticipo;
         }
 
         public static decimal CalculoOtrasVentas(List<VentaPuntoDeVenta> deContado, List<VentaPuntoDeVenta> credito)
@@ -155,9 +155,9 @@ namespace Application.MainModule.Servicios.Mobile
         {
             return GasServicio.ObtenerCortes(idEmpresa);
         }
-        public static RespuestaDto Corte(CorteDto dto, short idEmpresa, int idUsuario,List<VentaCorteAnticipoEC> cortes,PuntoVenta puntoVenta,UnidadAlmacenGas almacen)
+        public static RespuestaDto Corte(CorteDto dto, short idEmpresa, int idUsuario,List<VentaCorteAnticipoEC> cortes,PuntoVenta puntoVenta,UnidadAlmacenGas almacen,List<VentaCorteAnticipoEC> cortesYanticiposOrden)
         {
-            var idOrden = orden(cortes);
+            var idOrden = orden(cortesYanticiposOrden);
             //var puntos = PuntoVentaServicio.ObtenerIdEmp(idEmpresa);
             //var PuntoVenta = puntos.Find(x => x.IdCAlmacenGas.Equals(dto.IdCAlmacenGas));
 
