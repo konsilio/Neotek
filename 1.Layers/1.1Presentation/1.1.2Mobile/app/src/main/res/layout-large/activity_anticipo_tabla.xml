@@ -172,6 +172,8 @@
                         android:inputType="numberDecimal"
                         android:textAlignment="textEnd"
                         android:textSize="30sp"
+                        tools:targetApi="P"
+                        android:textColor="@color/colorTextLogin"
                         tools:ignore="Autofill,LabelFor" />
                 </TableRow>
 

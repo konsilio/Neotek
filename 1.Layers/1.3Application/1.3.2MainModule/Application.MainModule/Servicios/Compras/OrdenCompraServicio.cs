@@ -176,7 +176,8 @@ namespace Application.MainModule.Servicios.Compras
         }
         public static ComplementoGasDTO BuscarComplementoGas(OrdenCompra oc)
         {
-            var descarga = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
+            //var descarga = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
+            var descarga = AlmacenGasServicio.ObtenerDescargaPorIdrequisicion(oc.IdRequisicion);
             return ComplementoGasAdapter.ToDTO(descarga);
         }
         public static List<OrdenCompraEstatus> ListaEstatus()

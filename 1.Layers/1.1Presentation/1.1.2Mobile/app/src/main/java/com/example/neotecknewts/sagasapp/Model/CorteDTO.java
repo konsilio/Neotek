@@ -58,6 +58,9 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("Recibe")
     private String Recibe;
 
+    @SerializedName("FechaCorte")
+    private String FechaCorte;
+
     public int getId() {
         return IdCorte;
     }
@@ -192,5 +195,13 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
 
     public void setRecibe(String recibe) {
         Recibe = recibe;
+    }
+
+    public String getFechaCorte() {
+        return FechaCorte;
+    }
+
+    public void setFechaCorte(String fechaCorte) {
+        FechaCorte = fechaCorte;
     }
 }

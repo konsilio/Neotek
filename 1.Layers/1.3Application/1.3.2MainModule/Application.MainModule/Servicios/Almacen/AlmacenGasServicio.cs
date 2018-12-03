@@ -383,6 +383,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDescargaDataAccess().BuscarOCompraExpedidor(idOCompra);
         }
+        public static AlmacenGasDescarga ObtenerDescargaPorIdrequisicion(int IdReq)
+        {
+            return new AlmacenGasDescargaDataAccess().BuscarAlmacenDescargaPorRequisicion(IdReq);
+        }
         public static AlmacenGasDescarga ObtenerDescargaPorClaveOperacion(string claveOperacion)
         {
             return new AlmacenGasDescargaDataAccess().BuscarClaveOperacion(claveOperacion);
@@ -403,7 +407,8 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static List<AlmacenGasDescargaFoto> ObtenerImagenes(AlmacenGasDescarga descarga)
         {
-            if (descarga.Fotos != null && descarga.Fotos.Count > 0)
+            if (descarga.Fotos != null)
+                if(descarga.Fotos.Count > 0)
                 return descarga.Fotos.ToList();
 
             return new AlmacenGasDescargaDataAccess().BuscarImagenes(descarga.IdAlmacenEntradaGasDescarga);
@@ -429,6 +434,12 @@ namespace Application.MainModule.Servicios.Almacenes
 
             return new AlmacenGasDataAccess().BuscarImagenesAutoConsumo(AutoConsumo.IdEmpresa, AutoConsumo.Year, AutoConsumo.Mes, AutoConsumo.Dia, AutoConsumo.Orden);
         }
+
+        public static List<Camioneta> ObtenerCamionetasEmpresa(short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().ObtenerCamionetasEmpresa(idEmpresa);
+        }
+
         public static List<AlmacenGasCalibracionFoto> ObtenerImagenes(AlmacenGasCalibracion calibracion)
         {
             if (calibracion.Fotografias != null && calibracion.Fotografias.Count > 0)
@@ -506,6 +517,12 @@ namespace Application.MainModule.Servicios.Almacenes
                 return reporte;
             }
         }
+
+        public static List<Pipa>  ObtenerPipasEmpresa(short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().ObtenerPipas(idEmpresa);
+        }
+
         public static int ordenReportes(List<ReporteDelDia> reportes)
         {
             if (reportes != null)
@@ -2419,6 +2436,10 @@ namespace Application.MainModule.Servicios.Almacenes
         public static RespuestaDto InsertCorte(VentaCorteAnticipoEC corte)
         {
             return new PuntoVentaDataAccess().InsertarCorte(corte);
+        }
+        public static List<EstacionCarburacion> ObtenerEstacionesEmpresa(short idEmpresa)
+        {
+            return new AlmacenDataAccess().ObtenerEstaciones(idEmpresa);
         }
     }
 }

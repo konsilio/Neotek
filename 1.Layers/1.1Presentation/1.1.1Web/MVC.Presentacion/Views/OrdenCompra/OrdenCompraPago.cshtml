@@ -119,6 +119,7 @@
                                         </div>
                                         <div class="col-md-6 text-right">
                                             $ <strong>@Html.LabelFor(m => m.MontoPagado, Model.MontoPagado.ToString("N2", new System.Globalization.CultureInfo("en-US")))</strong>
+                                            @Html.HiddenFor(m => m.MontoPagado)
                                         </div>
                                     </div>
                                     <div class="row clearfix">

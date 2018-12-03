@@ -203,6 +203,7 @@ namespace Application.MainModule.Flujos
         public ComplementoGasDTO BuscarComplementoGas(int idOrdenCompra)
         {
             var _OrdeCompra = OrdenCompraServicio.Buscar(idOrdenCompra);
+
             var _ComplementoGas = OrdenCompraServicio.BuscarComplementoGas(_OrdeCompra);
             var requisicion = new RequisicionDataAccess().BuscarPorIdRequisicion(_OrdeCompra.IdRequisicion);
             foreach (var orden in requisicion.OrdenesCompra)
@@ -214,9 +215,9 @@ namespace Application.MainModule.Flujos
                 _ComplementoGas.Productos.AddRange(ProductosOCAdapter.ToDTO(orden.Productos.ToList()));
             }
             _ComplementoGas = OrdenCompraServicio.CargarDatosRequisicion(_ComplementoGas, requisicion);
-            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(_OrdeCompra.IdOrdenCompra);
-            _ComplementoGas.Fotos = ImagenServicio.BuscarImagenes(alamacen);
-
+            //var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(_OrdeCompra.IdOrdenCompra);
+            var descarga = AlmacenGasServicio.ObtenerDescargaPorIdrequisicion(_OrdeCompra.IdRequisicion);
+            _ComplementoGas.Fotos = ImagenServicio.BuscarImagenes(descarga);
             return _ComplementoGas;
         }
         public List<OrdenCompraEstatusDTO> ListaEstatus()
@@ -228,12 +229,19 @@ namespace Application.MainModule.Flujos
             var Pago = OrdenCompraPagoServicio.Buscar(dto.IdOrdenCompra, dto.Orden);
 
             var entity = OrdenCompraPagoAdapter.FromEntity(Pago);
+            var oc = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(entity.IdOrdenCompra));
+
+      
             entity.PhysicalPathCapturaPantalla = dto.PhysicalPathCapturaPantalla;
             entity.UrlPathCapturaPantalla = dto.UrlPathCapturaPantalla;
             entity.FechaConfirmacion = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             entity = ImagenServicio.ObtenerImagen(entity, dto.NumOrdenCompra);
-
-            return OrdenCompraPagoServicio.Actualiza(entity);
+            entity.MontoPagado = dto.MontoPagado;
+            entity.TotalImporte = oc.Total.Value;
+            entity.SaldoInsoluto = oc.Total.Value - dto.MontoPagado;
+            
+            oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
+            return OrdenCompraPagoServicio.Actualiza(entity, oc);
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
         {

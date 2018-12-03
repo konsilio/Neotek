@@ -28,7 +28,7 @@ namespace DS.MainModule
         public void EjecutaServicios(object source, ElapsedEventArgs e)
         {
             //QUITAR ESTA LINEA EN PRODUCCION/////////////
-            myTimer.Stop();
+           myTimer.Stop();
             //QUITAR ESTA LINEA EN PRODUCCION/////////////
             ActualizarSistemaServicio.Actualizar();
         }

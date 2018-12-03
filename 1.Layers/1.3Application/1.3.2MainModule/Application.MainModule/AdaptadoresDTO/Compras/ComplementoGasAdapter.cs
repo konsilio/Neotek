@@ -29,12 +29,12 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 PorcentajeMedidor = descarga.PorcenMagnatelOcular.Value,
                 //Descarga
                 FechaEntraGas = descarga.FechaPapeleta.Value,
-                PorcenMagnatelOcularTractorINI = descarga.PorcenMagnatelOcularTractorINI.Value,
-                PorcenMagnatelOcularTractorFIN = descarga.PorcenMagnatelOcularTractorFIN.Value,
-                PorcenMagnatelOcularAlmacenINI = descarga.PorcenMagnatelOcularAlmacenINI.Value,
-                PorcenMagnatelOcularAlmacenFIN = descarga.PorcenMagnatelOcularAlmacenFIN.Value,
-                TanquePrestado = descarga.TanquePrestado.Value,
-                KilosPapeleta = descarga.MasaKg.Value,
+                PorcenMagnatelOcularTractorINI = descarga.PorcenMagnatelOcularTractorINI ?? 0,
+                PorcenMagnatelOcularTractorFIN = descarga.PorcenMagnatelOcularTractorFIN??0,
+                PorcenMagnatelOcularAlmacenINI = descarga.PorcenMagnatelOcularAlmacenINI??0,
+                PorcenMagnatelOcularAlmacenFIN = descarga.PorcenMagnatelOcularAlmacenFIN??0,
+                TanquePrestado = descarga.TanquePrestado??false,
+                KilosPapeleta = descarga.MasaKg??0,
                 Productos = new List<ProductoOCDTO>()
             };
         }

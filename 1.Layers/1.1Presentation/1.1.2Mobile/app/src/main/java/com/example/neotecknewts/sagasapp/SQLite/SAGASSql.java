@@ -510,6 +510,8 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Fecha DATETAIME," +
                 "Total DOUBLE,"+
                 "Hora TEXT,"+
+                "IdCAlmacen INTEGER,"+
+                "FechaAnticipo TEXT,"+
                 "Falta BOOLEAN DEFAULT 1"+
                 ")");
         //endregion
@@ -520,8 +522,9 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "ClaveOperacion TEXT,"+
                 "Fecha DATE,"+
                 "IdEstacion INTEGER," +
-                "FechaCorte DATETAIME," +
+                "FechaCorte TEXT," +
                 "Hora TEXT,"+
+                "IdCAlmacen INTEGER,"+
                 "Falta BOOLEAN DEFAULT 1"+
                 ")");
         //endregion
@@ -2200,10 +2203,12 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Long InserCorte(CorteDTO corteDTO) {
         ContentValues values = new ContentValues();
         values.put("ClaveOperacion",corteDTO.getClaveOperacion());
-        values.put("Fecha",corteDTO.getFecha().toString());
+        values.put("Fecha",corteDTO.getFecha());
+        values.put("IdCAlmacen",corteDTO.getIdEstacion());
         values.put("IdEstacion",corteDTO.getIdEstacion());
-        values.put("FechaCorte",corteDTO.getFecha().toString());
+        values.put("FechaCorte",corteDTO.getFecha());
         values.put("Hora",corteDTO.getHora());
+        values.put("FechaVenta",corteDTO.getFechaVenta());
         return this.getWritableDatabase().insert(
                 TABLE_CORTES,
                 null,
@@ -2223,10 +2228,12 @@ public class SAGASSql extends SQLiteOpenHelper {
         values.put("ClaveOperacion",dto.getClaveOperacion());
         values.put("Anticipo",dto.getAnticipar());
         values.put("Hora",dto.getHora());
+        values.put("IdCAlmacen",dto.getIdCAlmacen());
         values.put("IdEstacion",dto.getIdEstacion());
         values.put("NombreEstacion",dto.getNombreEstacion());
         values.put("Total",dto.getTotal());
-        values.put("Fecha",dto.getFecha().toString());
+        values.put("Fecha",dto.getFecha());
+        values.put("FechaAnticipo",dto.getFechaAnticipo());
 
         return this.getWritableDatabase().insert(
           TABLE_ANTICIPOS,

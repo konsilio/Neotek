@@ -159,6 +159,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.IdOrdenCompraExpedidor.Equals(idOCompra));
         }
+        public AlmacenGasDescarga BuscarAlmacenDescargaPorRequisicion(int idReq)
+        {
+            return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.IdRequisicion.Equals(idReq));
+        }
         public AlmacenGasDescarga BuscarClaveOperacion(string claveOperacion)
         {
             return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));

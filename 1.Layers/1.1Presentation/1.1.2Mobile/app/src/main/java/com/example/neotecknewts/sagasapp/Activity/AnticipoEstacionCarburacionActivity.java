@@ -112,7 +112,34 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
     public void onSuccess(RespuestaEstacionesVentaDTO data) {
 
         if(data!=null){
-            list = data.getEstaciones();
+            list = new ArrayList<>();
+            if(data.getEstaciones()!=null) {
+                list.add(
+                        data.getEstaciones()
+                );
+            }
+            if(data.getCamionetaDTO()!=null) {
+                DatosEstacionesDTO dto =new DatosEstacionesDTO();
+                dto.setIdCAlmacenGas(data.getCamionetaDTO().getIdCAlmacen());
+                dto.setNombreCAlmacen(data.getCamionetaDTO().getNumero());
+                dto.setP5000Inicial(data.getCamionetaDTO().getCantidadP5000());
+                dto.setP5000Final(data.getCamionetaDTO().getP5000Final());
+                dto.setAnticiposEstacion(data.getCamionetaDTO().getAnticiposEstacionDTO());
+                list.add(
+                    dto
+                );
+            }
+            if(data.getPipaDTO()!=null){
+                DatosEstacionesDTO dto = new DatosEstacionesDTO();
+                dto.setIdCAlmacenGas(data.getPipaDTO().getIdAlmacenGas());
+                dto.setNombreCAlmacen(data.getPipaDTO().getNombreAlmacen());
+                dto.setP5000Inicial(data.getPipaDTO().getCantidadP5000());
+                dto.setP5000Final(data.getPipaDTO().getP5000Final());
+                dto.setAnticiposEstacion(data.getPipaDTO().getAnticiposEstacionDTO());
+                list.add(
+                        dto
+                );
+            }
             DatosEstacionesDTO header = new DatosEstacionesDTO();
             header.setNombreCAlmacen(getString(R.string.selecciona_la_estacion_de_carburacion));
             list.add(0,header);

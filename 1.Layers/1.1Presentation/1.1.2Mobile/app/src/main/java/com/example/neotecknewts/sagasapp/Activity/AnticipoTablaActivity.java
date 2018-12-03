@@ -64,6 +64,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     NumberFormat dformat;
     public int mYear,mMonth,mDay;
     public Date fecha;
+    public boolean hasFecha;
 
     public DatePickerDialog.OnDateSetListener onDateSetListener =
             (view, year, month, dayOfMonth) -> {
@@ -84,6 +85,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             anticiposDTO = (AnticiposDTO) bundle.getSerializable("anticiposDTO");
             corteDTO = (CorteDTO) bundle.getSerializable("corteDTO");
         }
+        hasFecha = false;
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
@@ -185,64 +187,75 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
 
     @Override
     public void VerificarCampos() {
-        if(EsAnticipo){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
-            if(ETAnticipoTablaActivityAnticipo.getText().toString().equals("")){
+        if(hasFecha) {
+            if (EsAnticipo) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
+                if (ETAnticipoTablaActivityAnticipo.getText().toString().equals("")) {
 
-                builder.setTitle(R.string.error_titulo);
-                builder.setMessage("El total del anticipo es un valor requerido");
-                builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
-                    dialog.dismiss();
-                    ETAnticipoTablaActivityAnticipo.setFocusable(true);
-                }));
-                builder.create().show();
-            }else{
-                String cantidad = ETAnticipoTablaActivityAnticipo.getText().toString();
-                if(Double.parseDouble(cantidad)<=0){
                     builder.setTitle(R.string.error_titulo);
-                    builder.setMessage("El total del anticipo es un positivo requerido");
-                    builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
+                    builder.setMessage("El total del anticipo es un valor requerido");
+                    builder.setPositiveButton(R.string.message_acept, ((dialog, which) -> {
                         dialog.dismiss();
                         ETAnticipoTablaActivityAnticipo.setFocusable(true);
                     }));
                     builder.create().show();
-                }else{
-                    anticiposDTO.setAnticipar(Double.parseDouble(cantidad));
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
-                            "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                    Date fecha = new Date();
-                    anticiposDTO.setFecha(f.format(fecha));
-                    anticiposDTO.setTotal(total);
-                    SimpleDateFormat format = new SimpleDateFormat("HH:mm",
-                            Locale.getDefault());
-                    String hour = format.format(new Date());
-                    anticiposDTO.setHora(hour);
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
-                            new SimpleDateFormat("ddMMyyyyhhmmssS");
-                    String clave_unica = "ANT"+s.format(new Date());
-                    anticiposDTO.setClaveOperacion(clave_unica);
-                    anticiposDTO.setTiket(clave_unica);
-                    anticiposDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
-                    presenter.Anticipo(anticiposDTO,sagasSql,session.getToken());
+                } else {
+                    String cantidad = ETAnticipoTablaActivityAnticipo.getText().toString();
+                    if (Double.parseDouble(cantidad) <= 0) {
+                        builder.setTitle(R.string.error_titulo);
+                        builder.setMessage("El total del anticipo es un positivo requerido");
+                        builder.setPositiveButton(R.string.message_acept, ((dialog, which) -> {
+                            dialog.dismiss();
+                            ETAnticipoTablaActivityAnticipo.setFocusable(true);
+                        }));
+                        builder.create().show();
+                    } else {
+                        anticiposDTO.setAnticipar(Double.parseDouble(cantidad));
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
+                                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                        Date fecha = new Date();
+                        anticiposDTO.setFecha(f.format(fecha));
+                        anticiposDTO.setTotal(total);
+                        SimpleDateFormat format = new SimpleDateFormat("HH:mm",
+                                Locale.getDefault());
+                        String hour = format.format(new Date());
+                        anticiposDTO.setHora(hour);
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                                new SimpleDateFormat("ddMMyyyyhhmmssS");
+                        String clave_unica = "ANT" + s.format(new Date());
+                        anticiposDTO.setClaveOperacion(clave_unica);
+                        anticiposDTO.setTiket(clave_unica);
+                        anticiposDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
+                        presenter.Anticipo(anticiposDTO, sagasSql, session.getToken());
+                    }
                 }
+            } else {
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                        new SimpleDateFormat("ddMMyyyyhhmmssS");
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm",
+                        Locale.getDefault());
+                String hour = format.format(new Date());
+                corteDTO.setHora(hour);
+                String clave_unica = "CC" + s.format(new Date());
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
+                        "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                corteDTO.setFecha(f.format(new Date()));
+                corteDTO.setFechaVenta(f.format(new Date()));
+                corteDTO.setClaveOperacion(clave_unica);
+                corteDTO.setTiket(clave_unica);
+                corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
+                presenter.Corte(corteDTO, sagasSql, session.getToken());
+                //startIntent();
             }
         }else{
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
-                    new SimpleDateFormat("ddMMyyyyhhmmssS");
-            SimpleDateFormat format = new SimpleDateFormat("HH:mm",
-                    Locale.getDefault());
-            String hour = format.format(new Date());
-            corteDTO.setHora(hour);
-            String clave_unica = "CC"+s.format(new Date());
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
-                    "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-            corteDTO.setFecha(f.format(new Date()));
-            corteDTO.setFechaVenta(f.format(new Date()));
-            corteDTO.setClaveOperacion(clave_unica);
-            corteDTO.setTiket(clave_unica);
-            corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
-            presenter.Corte(corteDTO,sagasSql,session.getToken());
-            //startIntent();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+            builder.setCancelable(false);
+            builder.setTitle(R.string.mensjae_error_campos);
+            builder.setMessage(EsCorte?"Es necesario que especifiques la fecha de corte a realizar":
+            "Es necesario que especifiques la fecha de anticipo a realizar");
+            builder.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
+                    dialogInterface.dismiss());
+            builder.create().show();
         }
     }
 
@@ -441,7 +454,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         .append(mMonth + 1).append("/")
                         .append(mYear).append(" "));
         fecha.setDate(mDay);
-        fecha.setMonth(mMonth);
+        fecha.setMonth(mMonth+1);
         fecha.setYear(mYear);
         presenter.getAnticipos(
                 session.getToken(),
@@ -449,7 +462,23 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 EsAnticipo,
                 String.valueOf(mYear)+"-"+String.valueOf(mMonth+ 1)+"-"+String.valueOf(mDay)
         );
-
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        String fecha_str = String.valueOf(mDay)+"-"+String.valueOf(mMonth+ 1)+"-"+
+                String.valueOf(mYear);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date d = dateFormat.parse(fecha_str);
+            if(EsCorte)
+                corteDTO.setFechaCorte(fdate.format(
+                        d
+                ));
+            else
+                anticiposDTO.setFechaAnticipo(fdate.format(d));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        hasFecha=true;
     }
     protected Dialog onCreateDialog(int id) {
         switch (id) {

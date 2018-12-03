@@ -279,7 +279,13 @@ namespace Application.MainModule.Flujos
                 var almacenesAlternos = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa(), true);
                 var camionetas = AlmacenGasServicio.ObtenerCamionetas(TokenServicio.ObtenerIdEmpresa());
                 var camionetasDTO = AlmacenRecargaAdapter.ToDTOCamionetas(camionetas, tipoMedidores);
-                return AlmacenRecargaAdapter.ToDTO(almacenesAlternos, camionetasDTO, tipoMedidores);
+                var Lcamionetas = new List<CamionetaDto>();
+                foreach (var item in camionetasDTO)
+                {
+                    item.NombreAlmacen= camionetas.Find(x => x.IdCamioneta.Value.Equals(x.IdCamioneta)).Camioneta.Nombre;
+                    Lcamionetas.Add(item);
+                }
+                return AlmacenRecargaAdapter.ToDTO(almacenesAlternos, Lcamionetas, tipoMedidores);
             }
             else if (esEstacion)
             {
@@ -310,53 +316,122 @@ namespace Application.MainModule.Flujos
         public DatosAutoconsumoDto CatalogoAutoconsumo(bool esEstacion, bool esInventario, bool esPipas, bool esFinal)
         {
             var medidores = TipoMedidorGasServicio.Obtener();
-            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-            var pipas = AlmacenGasServicio.ObtenerPipas(puntoVenta.IdEmpresa);
-            var camionetas = AlmacenGasServicio.ObtenerCamionetas(puntoVenta.IdEmpresa);
-            var almacenes = AlmacenGasServicio.ObtenerAlmacenes(puntoVenta.IdEmpresa);
-            var predeterminado = puntoVenta.UnidadesAlmacen;
+
             var autoconsumos = AlmacenGasServicio.ObtenerAutoConsumosNoProcesadas();
-            if (esEstacion)
-            {
+           
+            List<Pipa> lpipas = new List<Pipa>();
+            List<Camioneta> lcamionetas = new List<Camioneta>();
+            List<EstacionCarburacion> lestaciones = new List<EstacionCarburacion>();
+            
 
+            if (esInventario)
+            {
+                var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
+                var camionetas = AlmacenGasServicio.ObtenerCamionetas(TokenServicio.ObtenerIdEmpresa());
+                foreach (var unidadPipas in pipas)
+                {
+                    lpipas.Add(
+                        unidadPipas.Pipa
+                        );
+                }
+                foreach (var unidadCamioneta in camionetas)
+                {
+                    lcamionetas.Add(
+                        unidadCamioneta.Camioneta
+                        );
+                }
                 if (esFinal)
                 {
-                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos);
-                    var estacionesFinEnInicial = estacionesFin(autoconsumos, false, true, true);
-                    return AlmacenAutoconsumoAdapter.ToDTOFinal(estacionesInicioEnInicial, estacionesFinEnInicial, medidores);
+                    //var estacionesInicioEnInicial = estacionesInicio(autoconsumos,false,true,true);
+
+                    //if (estacionesInicioEnInicial.Count > 0)
+                    //    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(estacionesInicioEnInicial,lpipas,lcamionetas,medidores);
+                    //else
+                    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(lpipas, lcamionetas, medidores);
                 }
                 else
-                    return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, pipas, camionetas, medidores);
+                {
+                    //var estacionesFinEnInicial = estacionesFin(autoconsumos, false, true, true);
+                    //if(estacionesFinEnInicial.Count>0)
+                    //    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(estacionesFinEnInicial, lpipas, lcamionetas, medidores);
+                    //else
+                    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(lpipas, lcamionetas, medidores);
+                }
+
 
             }
-            else if (esInventario)
+            else
             {
-                if (esFinal)
+                var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+                var pipas = AlmacenGasServicio.ObtenerPipas(puntoVenta.IdEmpresa);
+                var camionetas = AlmacenGasServicio.ObtenerCamionetas(puntoVenta.IdEmpresa);
+                var almacenes = AlmacenGasServicio.ObtenerAlmacenes(puntoVenta.IdEmpresa);
+                var estaciones = AlmacenGasServicio.ObtenerEstaciones(puntoVenta.IdEmpresa);
+                var predeterminado = puntoVenta.UnidadesAlmacen;
+                foreach (var unidadPipas in pipas)
                 {
-                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos,false,true,true);
-                    if (estacionesInicioEnInicial.Count > 0)
-                        return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(estacionesInicioEnInicial, medidores);
+                    lpipas.Add(
+                        unidadPipas.Pipa
+                        );
+                }
+                foreach (var unidadCamioneta in camionetas)
+                {
+                    lcamionetas.Add(
+                        unidadCamioneta.Camioneta
+                        );
+                }
+                foreach (var unidadEstacion in estaciones)
+                {
+                    lestaciones.Add(
+                        unidadEstacion.EstacionCarburacion
+                        );
+                }
+                if (esEstacion)
+                {
+
+                    if (esFinal)
+                    {
+                        var estacionesInicioEnInicial = estacionesInicio(autoconsumos);
+                        if (estacionesInicioEnInicial.Count > 0)
+                            return AlmacenAutoconsumoAdapter.ToDTO(estacionesInicioEnInicial, lestaciones, lpipas, lcamionetas, medidores);
+                        else
+                            return AlmacenAutoconsumoAdapter.ToDTO(lestaciones, lpipas, lcamionetas, medidores);
+                    }
                     else
-                        return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(pipas, camionetas, medidores);
-                }
-                else
-                    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(pipas, camionetas, medidores);
-            }
-            else if (esPipas)
-            {
+                    {
+                        var estacionesFinEnInicial = estacionesFin(autoconsumos);
+                        if (estacionesFinEnInicial.Count > 0)
+                            return AlmacenAutoconsumoAdapter.ToDTO(estacionesFinEnInicial, lestaciones, lpipas, lcamionetas, medidores);
+                        else
+                            return AlmacenAutoconsumoAdapter.ToDTO(lestaciones, lpipas, lcamionetas, medidores);
+                    }
 
-                if (esFinal)
-                {
-                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos, false, true, true);
-                    var estacionesFinEnInicial = estacionesFin(autoconsumos, false, true, true);
-                    if(estacionesInicioEnInicial.Count>0 || estacionesFinEnInicial.Count>0)
-                        return AlmacenAutoconsumoAdapter.ToDTOFinal(estacionesInicioEnInicial, estacionesFinEnInicial, medidores);
-                    else
-                        return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, pipas, camionetas, medidores);
+
                 }
-                else
-                    return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, pipas, camionetas, medidores);
+                else if (esPipas)
+                {
+
+                    if (esFinal)
+                    {
+                        var estacionesInicioEnInicial = estacionesInicio(autoconsumos, false, true, true);
+
+                        if (estacionesInicioEnInicial.Count > 0)
+                            return AlmacenAutoconsumoAdapter.ToDTOPipas(estacionesInicioEnInicial, lestaciones, lpipas, lcamionetas, medidores);
+                        else
+                            return AlmacenAutoconsumoAdapter.ToDTOPipas(lpipas, lcamionetas, medidores);
+                    }
+                    else
+                    {
+                        var estacionesFinEnInicial = estacionesFin(autoconsumos, false, true, true);
+                        if (estacionesFinEnInicial.Count > 0)
+                            return AlmacenAutoconsumoAdapter.ToDTOPipas(estacionesFinEnInicial, lestaciones, lpipas, lcamionetas, medidores);
+                        else
+                            return AlmacenAutoconsumoAdapter.ToDTOPipas(lpipas, lcamionetas, medidores);
+                    }
+
+                }
             }
+
             return null;
         }
 
@@ -395,17 +470,77 @@ namespace Application.MainModule.Flujos
 
         public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(int idEstacion, bool esAnticipos, DateTime fecha)
         {
-            var almacen = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdEstacionCarburacion.Equals(idEstacion));
-            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
-            var ventas = CajaGeneralServicio.ObtenerVentasPuntosVenta(puntosVenta.IdPuntoVenta).OrderBy(x => x.FechaRegistro).ToList();
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var unidadAlmacen = usuario.OperadoresChoferes.SingleOrDefault(x=>x.Activo).PuntosVenta.SingleOrDefault(x=>x.Activo).UnidadesAlmacen;
+            Pipa pipa = null;
+            EstacionCarburacion estacion = null;
+            Camioneta camioneta = null;
+            DatosAnticiposCorteDto dto = new DatosAnticiposCorteDto();
+            if (unidadAlmacen.IdEstacionCarburacion > 0 && unidadAlmacen.IdEstacionCarburacion != null)
+            {
+                estacion = unidadAlmacen.EstacionCarburacion;
+                var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
+                var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen);
+
+            }
+
+            if (unidadAlmacen.IdPipa > 0 && unidadAlmacen.IdPipa != null)
+            {
+                pipa = unidadAlmacen.Pipa;
+                var puntoVenta = unidadAlmacen.PuntosVenta.First(x=>x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
+                var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen);
+                var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(Convert.ToByte(fecha.Day)) &&
+                    X.Mes.Equals(Convert.ToByte(fecha.Month)) && X.Year.Equals((short)fecha.Year)).ToList();
+                dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos); 
+
+            }
+                
+            if (unidadAlmacen.IdCamioneta > 0 && unidadAlmacen.IdCamioneta != null)
+            {
+                camioneta = unidadAlmacen.Camioneta;
+                var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
+                var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen);
+                var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(fecha.Day) &&
+                    X.Mes.Equals(fecha.Month) && X.Year.Equals(fecha.Year)).ToList();
+                dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos);
+            }
+                
+            return dto;
+           /* var pipas = AlmacenGasServicio.ObtenerPipasEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var estaciones = AlmacenGasServicio.ObtenerEstacionesEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var camionetas = AlmacenGasServicio.ObtenerCamionetasEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var pipa = pipas.SingleOrDefault(x => x.IdPipa.Equals(idEstacion));
+            var estacion = estaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(idEstacion));
+            var camioneta = camionetas.SingleOrDefault(x => x.IdCamioneta.Equals(idEstacion));
+            PuntoVenta puntoVenta = null;
+            UnidadAlmacenGas almacen = null;
+            if (pipa != null)
+            {
+                puntoVenta = pipa.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacen = pipa.UnidadAlmacenGas.First();
+            }
+            else if (estacion != null)
+            {
+                puntoVenta = estacion.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacen = estacion.UnidadAlmacenGas.First();
+            }
+            else if (camioneta != null)
+            {
+                puntoVenta = camioneta.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacen = camioneta.UnidadAlmacenGas.First();
+            }
+            //var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+
+            //var puntosVenta = almacen.PuntosVenta.First();
+            var ventas = CajaGeneralServicio.ObtenerVentasPuntosVenta(puntoVenta.IdPuntoVenta).OrderBy(x => x.FechaRegistro).ToList();
             if (fecha != null)
             {
                 ventas = ventas.FindAll(x => x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Year.Equals(fecha.Year));
             }
 
-            var anticiposDia = PuntoVentaServicio.ObtenerAnticipos(almacen, fecha);
+            var anticiposDia = PuntoVentaServicio.ObtenerAnticipos(puntoVenta.UnidadesAlmacen, fecha);
 
-            return AnticiposCortesAdapter.ToDTO(ventas, anticiposDia, esAnticipos);
+            return AnticiposCortesAdapter.ToDTO(ventas, anticiposDia,almacen, esAnticipos);*/
         }
 
         public RespuestaDto Calibracion(CalibracionDto dto, bool esFinal)
@@ -469,14 +604,29 @@ namespace Application.MainModule.Flujos
         public DatosTraspasoDto CatalogoTraspaso(bool esPipa)
         {
             var medidores = TipoMedidorGasServicio.Obtener();
-            var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
-            var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
             var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-            var predeterminada = puntoVenta.IdCAlmacenGas;
+            var predeterminada = puntoVenta.UnidadesAlmacen;
+            var lpipas = AlmacenGasServicio.ObtenerPipasEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var lestaciones = AlmacenGasServicio.ObtenerEstacionesEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
+            var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+
             if (esPipa)
-                return TraspasoAdapter.ToDTO(pipas, predeterminada, medidores);
+            {
+               
+                var pipa = puntoVenta.UnidadesAlmacen.Pipa;
+                
+                var filtradas = lpipas.FindAll(x => !x.IdPipa.Equals(pipa.IdPipa));
+                return TraspasoAdapter.ToDTOPipa(lpipas,filtradas,pipa,medidores, unidadAlmacen);
+            }
+
             else
-                return TraspasoAdapter.ToDTO(estaciones, pipas, predeterminada, medidores);
+            {
+                var estacion = puntoVenta.UnidadesAlmacen.EstacionCarburacion;
+
+                return TraspasoAdapter.ToDTOEstacion(lestaciones, lpipas, estacion, medidores,unidadAlmacen);
+            }
+                
         }
         public RespuestaDto Traspaso(TraspasoDto dto, bool esFinal)
         {
@@ -535,7 +685,7 @@ namespace Application.MainModule.Flujos
             var unidadesEstaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
 
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var idCAlmacen = usuario.OperadoresChoferes.SingleOrDefault().PuntosVenta.SingleOrDefault().IdCAlmacenGas;
+            var idCAlmacen = usuario.OperadoresChoferes.SingleOrDefault(x=>x.Activo).PuntosVenta.SingleOrDefault(x=>x.Activo).IdCAlmacenGas;
             var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacen);
             //if (almacen.EsGeneral.Equals(false))
             //{
@@ -567,9 +717,14 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             var anticipos = VentaServicio.ObtenerAnticipos(TokenServicio.ObtenerIdEmpresa());
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var puntoVenta = usuario.OperadoresChoferes.SingleOrDefault(x=>x.Activo).PuntosVenta.SingleOrDefault(x=>x.Activo);
+            var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+            var cortesYanticiposOrden = PuntoVentaServicio.ObtenerCortesAnticipos();
+
             var estacion = AlmacenGasServicio.ObtenerAlmacen(dto.IdCAlmacenGas);
 
-            return VentaServicio.Anticipo(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), anticipos, estacion);
+            return VentaServicio.Anticipo(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), anticipos, estacion, cortesYanticiposOrden);
         }
 
         public RespuestaDto corte(CorteDto dto)
@@ -584,17 +739,43 @@ namespace Application.MainModule.Flujos
             var almacen = almacenes.Find(x => x.IdEstacionCarburacion.Value.Equals(dto.IdCAlmacenGas));
             var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
             var puntoventa = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
-            var entrega = puntoventa.OperadorChofer.Usuario;
+            //var entrega = puntoventa.OperadorChofer.Usuario;
 
-            var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoventa, almacen);
+            var lpipas = AlmacenGasServicio.ObtenerPipasEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var lestaciones = AlmacenGasServicio.ObtenerEstacionesEmpresa(TokenServicio.ObtenerIdEmpresa());
+            var lcamionetas = AlmacenGasServicio.ObtenerCamionetasEmpresa(TokenServicio.ObtenerIdEmpresa());
+
+            var pipa = lpipas.SingleOrDefault(x => x.IdPipa.Equals(dto.IdCAlmacenGas));
+            var camioneta = lcamionetas.SingleOrDefault(x => x.IdCamioneta.Equals(dto.IdCAlmacenGas));
+            var estacionCarb = lestaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
+            var cortesYanticiposOrden = PuntoVentaServicio.ObtenerCortesAnticipos();
+            PuntoVenta puntoVenta = null;
+            UnidadAlmacenGas almacenPunto = null; 
+            if (pipa != null)
+            {
+                puntoVenta = pipa.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacenPunto = pipa.UnidadAlmacenGas.First();
+            }
+            else if(estacion!= null)
+            {
+                puntoVenta = estacion.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacenPunto = estacion.UnidadAlmacenGas.First();
+            }
+            else if(camioneta!= null)
+            {
+                puntoVenta = camioneta.UnidadAlmacenGas.First().PuntosVenta.First();
+                almacenPunto = camioneta.UnidadAlmacenGas.First();
+            }
+            var entrega = puntoVenta.OperadorChofer.Usuario;
+            var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoVenta, almacenPunto, cortesYanticiposOrden);
             //Insert en la tabla de VentaCajaGeneral
             if (corte.Exito)
             {
-                var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoventa.IdPuntoVenta, dto.Fecha);
-                var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoventa.IdPuntoVenta, dto.Fecha);
+                var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoVenta.IdPuntoVenta, dto.Fecha);
+                var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoVenta.IdPuntoVenta, dto.Fecha);
                 var ventasCajasGral = PuntoVentaServicio.ObtenerVentasCajaGral();
 
-                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), puntoventa, puntoventa.OperadorChofer, entrega, deContado, credito);
+                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), puntoVenta, puntoVenta.OperadorChofer, entrega, deContado, credito);
                 corteCajaGeneral.Orden = (short)orden(ventasCajasGral);
                 corteCajaGeneral.OtrasVentas = VentaServicio.CalculoOtrasVentas(deContado, credito);
                 return PuntoVentaServicio.InsertMobil(corteCajaGeneral);

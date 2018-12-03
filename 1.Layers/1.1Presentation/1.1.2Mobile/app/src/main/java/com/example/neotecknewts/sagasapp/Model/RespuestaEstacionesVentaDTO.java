@@ -11,7 +11,13 @@ public class RespuestaEstacionesVentaDTO extends RespuestaDTO implements Seriali
 
     @SerializedName("estaciones")
     @Expose
-    private List<DatosEstacionesDTO> estaciones;
+    private DatosEstacionesDTO estaciones;
+
+    @SerializedName("pipa")
+    private PipaDTO pipaDTO;
+
+    @SerializedName("camioneta")
+    private CamionetaDTO camionetaDTO;
 
     @SerializedName("anticipos")
     @Expose
@@ -29,16 +35,16 @@ public class RespuestaEstacionesVentaDTO extends RespuestaDTO implements Seriali
     private double TotalAnticiposCorte;
 
     public  RespuestaEstacionesVentaDTO(){
-        this.estaciones = new ArrayList<>();
+        //this.estaciones = new ArrayList<>();
         this.anticipos = new ArrayList<>();
         this.cortes = new ArrayList<>();
     }
 
-    public List<DatosEstacionesDTO> getEstaciones() {
+    public DatosEstacionesDTO getEstaciones() {
         return estaciones;
     }
 
-    public void setEstaciones(List<DatosEstacionesDTO> estaciones) {
+    public void setEstaciones(DatosEstacionesDTO estaciones) {
         this.estaciones = estaciones;
     }
 
@@ -73,4 +79,21 @@ public class RespuestaEstacionesVentaDTO extends RespuestaDTO implements Seriali
     public void setTotalAnticiposCorte(double totalAnticiposCorte) {
         TotalAnticiposCorte = totalAnticiposCorte;
     }
+
+    public PipaDTO getPipaDTO() {
+        return pipaDTO;
+    }
+
+    public void setPipaDTO(PipaDTO pipaDTO) {
+        this.pipaDTO = pipaDTO;
+    }
+
+    public CamionetaDTO getCamionetaDTO() {
+        return camionetaDTO;
+    }
+
+    public void setCamionetaDTO(CamionetaDTO camionetaDTO) {
+        this.camionetaDTO = camionetaDTO;
+    }
+
 }

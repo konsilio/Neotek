@@ -461,6 +461,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
         }
 
+        public List<Camioneta> ObtenerCamionetasEmpresa(short idEmpresa)
+        {
+            return uow.Repository<Camioneta>().Get(
+                x=>x.IdEmpresa.Equals(idEmpresa) && x.Activo
+                ).ToList();
+        }
+
         public void Actualizar(AplicaTomaLecturaDto aplicaTomaLectura)
         {
             using (uow)
@@ -1034,6 +1041,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 _respuesta.MensajesError = CatchInnerException.Obtener(ex);
             }
             return _respuesta;
+        }
+
+        public List<Pipa> ObtenerPipas(short idEmpresa)
+        {
+            return uow.Repository<Pipa>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
         }
     }
 }

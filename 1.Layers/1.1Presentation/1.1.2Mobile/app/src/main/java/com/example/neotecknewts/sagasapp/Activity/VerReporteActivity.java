@@ -768,7 +768,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "Hora\t" +
                 "[{Hora}]\n" +
                 "-----------------------------\n" +
-                "Estación\t"+
+                "Estacion\t"+
                 "[{Estacion}]\n" +
                 "Monto anticipado: \t" +
                 "[{Monto-anticipo}]\n\n"+
@@ -789,10 +789,14 @@ public class VerReporteActivity extends AppCompatActivity {
                 anticiposDTO.getAnticipar()));
         StringReporte = StringReporte.replace("[{Monto-anticipo}]","$"+String.valueOf(
                 anticiposDTO.getAnticipar()));
-        HtmlReporte = HtmlReporte.replace("[{Entrego-nombre}]]",
+        HtmlReporte = HtmlReporte.replace("[{Usuario-recibi}]]",
                 session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE));
-        StringReporte = StringReporte.replace("[{Entrego-nombre}]",
+        StringReporte = StringReporte.replace("[{Usuario-recibi}]",
                 session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE));
+        HtmlReporte = HtmlReporte.replace("[{Usuario-entrego}]]",
+                session.getAttribute(Session.KEY_NOMBRE)==null?"":anticiposDTO.getRecibe());
+        StringReporte = StringReporte.replace("[{Usuario-entrego}]",
+                session.getAttribute(Session.KEY_NOMBRE)==null?"":anticiposDTO.getRecibe());
     }
 
     private void GenerarReporteTraspasoPipa(TraspasoDTO traspasoDTO) {
