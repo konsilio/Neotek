@@ -22,14 +22,20 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         public static EstacionesDto ToDTO(UnidadAlmacenGas unidadAlmacen, List<TipoMedidorUnidadAlmacenGas> medidores)
         {
+            //string NomPipa = string.Empty;
+            //if (unidadAlmacen.Pipa == null)
+            //    NomPipa = "";
+            //else
+            //    NomPipa = unidadAlmacen.Pipa.Nombre;
             return new EstacionesDto()
             {
                 IdTipoMedidor = unidadAlmacen.IdTipoMedidor,
                 CantidadP5000 = unidadAlmacen.P5000Actual,
                 IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
-                Medidor = TipoMedidorAdapter.ToDto(medidores.Single(x=>x.IdTipoMedidor.Equals(unidadAlmacen.IdTipoMedidor))),
+                Medidor = TipoMedidorAdapter.ToDto(medidores.Single(x => x.IdTipoMedidor.Equals(unidadAlmacen.IdTipoMedidor))),
                 NombreAlmacen = unidadAlmacen.Numero,
-                PorcentajeMedidor = unidadAlmacen.PorcentajeActual
+                PorcentajeMedidor = unidadAlmacen.PorcentajeActual,
+                NombrePipa = unidadAlmacen.Pipa == null ? "" :  unidadAlmacen.Pipa.Nombre 
             };
         }
 
