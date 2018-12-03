@@ -555,16 +555,23 @@ namespace Application.MainModule.Flujos
         public DatosCalibracionDto CatalogoCalibracion(bool esEstacion, bool esPipa)
         {
             var medidores = TipoMedidorGasServicio.Obtener();
-            if (esEstacion)
+            if (esEstacion && esPipa)
             {
-                var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
-                return CalibracionAdapter.ToDTO(estaciones, medidores);
-            }
-            else if (esPipa)
+                return null;
+            }else
             {
-                var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
-                return CalibracionAdapter.ToDTO(pipas, medidores);
+                if (esEstacion)
+                {
+                    var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
+                    return CalibracionAdapter.ToDTOEstaciones(estaciones, medidores);
+                }
+                else if (esPipa)
+                {
+                    var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
+                    return CalibracionAdapter.ToDTO(pipas, medidores);
+                }
             }
+            
             return null;
         }
 
