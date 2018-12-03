@@ -221,7 +221,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             List<DateTime> list = new List<DateTime>();
             foreach (var venta in ventas)
             {
-                if (!list.Contains(venta.FechaRegistro)) list.Add(venta.FechaRegistro);
+                if (!list.Contains(venta.FechaAplicacion.Value)) list.Add(venta.FechaAplicacion.Value);
             }
             return list;
         }
@@ -239,7 +239,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 ClaveOperacion = venta.FolioVenta,
                 Tiket = venta.FolioVenta,
-                Fecha = venta.FechaRegistro,
+                Fecha = DateTime.Parse(venta.Year+"-"+venta.Mes+"-"+venta.Dia),
                 IdCorte = (short)venta.IdPuntoVenta,
                 IdCAlmacenGas = almacen.IdCAlmacenGas,
                 Monto = venta.Total,
@@ -259,13 +259,14 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new AnticipoDto()
             {
                 Tiket = venta.FolioVenta,
-                Fecha = venta.FechaAplicacion.Value,
+                Fecha =  DateTime.Parse(venta.Year+"-"+venta.Mes+"-"+venta.Dia),
                 IdAnticipo = (short)venta.IdPuntoVenta,
                 Recibe = recibe.Nombre + " " + recibe.Apellido1 + " " + recibe.Apellido2,
                 Total = venta.Total,
                 Monto = venta.Total,
                 IdCAlmacenGas = almacen.IdCAlmacenGas,
                 ClaveOperacion = venta.FolioVenta,
+                FechaAnticipo = DateTime.Parse(venta.Year + "-" + venta.Mes + "-" + venta.Dia)
             };
         }
 
@@ -313,21 +314,21 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static DatosAnticiposCorteDto ToDTOPipa(ICollection<VentaPuntoDeVenta> ventas, List<VentaCorteAnticipoEC> anticipos, UnidadAlmacenGas unidadAlmacen, bool esAnticipos)
+        public static DatosAnticiposCorteDto ToDTOPipa(List<VentaPuntoDeVenta> ventas, List<VentaCorteAnticipoEC> anticipos, UnidadAlmacenGas unidadAlmacen, bool esAnticipos)
         {
             
             if (esAnticipos)
                 return new DatosAnticiposCorteDto()
                 {
-                    anticipos = ToDTOAnticipo(ventas.ToList(), unidadAlmacen),
-                    fechasCorte = EstraerFechas(ventas.ToList()),
-                    TotalAnticiposCorte = anticipos.Sum(x => x.TotalAnticipado)
+                    anticipos = ToDTOAnticipo(ventas, unidadAlmacen),
+                    fechasCorte = EstraerFechas(ventas),
+                    TotalAnticiposCorte = ventas.Sum(x => x.Total)
                 };
             else
                 return new DatosAnticiposCorteDto()
                 {
-                    cortes = ToDTOCortes(ventas.ToList(), unidadAlmacen),
-                    fechasCorte = EstraerFechas(ventas.ToList()),
+                    cortes = ToDTOCortes(ventas, unidadAlmacen),
+                    fechasCorte = EstraerFechas(ventas),
                     TotalAnticiposCorte = anticipos.Sum(x => x.TotalAnticipado)
                 };
         }
