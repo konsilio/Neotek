@@ -407,7 +407,8 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static List<AlmacenGasDescargaFoto> ObtenerImagenes(AlmacenGasDescarga descarga)
         {
-            if (descarga.Fotos != null && descarga.Fotos.Count > 0)
+            if (descarga.Fotos != null)
+                if(descarga.Fotos.Count > 0)
                 return descarga.Fotos.ToList();
 
             return new AlmacenGasDescargaDataAccess().BuscarImagenes(descarga.IdAlmacenEntradaGasDescarga);

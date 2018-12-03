@@ -164,17 +164,18 @@ namespace Application.MainModule.Servicios
             foreach (var foto in fotosAlacenGasDescarga)
             {
                 ImagenDTO i = new ImagenDTO();
-                var t = FilterFunciones.ObtenerFields(foto.UrlImagen, '/').Count;
-                i.Nombre = foto.UrlImagen.Split('/')[t - 1];
-
-                var nomPartes = FilterFunciones.ObtenerFields(i.Nombre, '_');
-
-                i.UrlImg = foto.UrlImagen;
-                i.Oden = short.Parse(nomPartes.ElementAt(2));
-                i.Tipo = nomPartes.ElementAt(3);
-                i.Momento = nomPartes.ElementAt(4);
-                i.Lectura = string.Concat(nomPartes.ElementAt(5).Split('.')[0].Replace('-', '.'), " %");
-                li.Add(i);
+                if (!string.IsNullOrEmpty( foto.UrlImagen ))
+                {
+                    var t = FilterFunciones.ObtenerFields(foto.UrlImagen, '/').Count;
+                    i.Nombre = foto.UrlImagen.Split('/')[t - 1];
+                    var nomPartes = FilterFunciones.ObtenerFields(i.Nombre, '_');
+                    i.UrlImg = foto.UrlImagen;
+                    i.Oden = short.Parse(nomPartes.ElementAt(2));
+                    i.Tipo = nomPartes.ElementAt(3);
+                    i.Momento = nomPartes.ElementAt(4);
+                    i.Lectura = string.Concat(nomPartes.ElementAt(5).Split('.')[0].Replace('-', '.'), " %");
+                    li.Add(i);
+                }             
             }
             return li;
         }
