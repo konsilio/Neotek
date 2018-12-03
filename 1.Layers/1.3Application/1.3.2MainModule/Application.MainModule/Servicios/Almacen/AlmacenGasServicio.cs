@@ -83,6 +83,12 @@ namespace Application.MainModule.Servicios.Almacenes
             resp = new AlmacenGasDataAccess().Insertar(unidad);
             return ObtenerUnidadAlamcenGas((short)resp.Id);
         }
+
+        public static List<AlmacenGasRecarga> ObtenerRecargaInicial(short IdCAlmacenGasEntrada)
+        {
+            return new AlmacenGasDataAccess().ObtenerRecargaInicial(IdCAlmacenGasEntrada);
+        }
+
         public static RespuestaDto InsertarAutoconsumo(AlmacenGasAutoConsumo adapter)
         {
             return new AlmacenGasDataAccess().Insertar(adapter);
