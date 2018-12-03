@@ -285,6 +285,21 @@ public class Lisener{
                                         cursor.getColumnIndex("Hora")
                                 )
                         );
+                        corteDTO.setFechaCorte(
+                                cursor.getString(
+                                        cursor.getColumnIndex("FechaCorte")
+                                )
+                        );
+                        corteDTO.setFecha(
+                                cursor.getString(
+                                        cursor.getColumnIndex("Fecha")
+                                )
+                        );
+                        corteDTO.setFechaVenta(
+                                cursor.getString(
+                                        cursor.getColumnIndex("FechaVenta")
+                                )
+                        );
                         //values.put("FechaCorte",corteDTO.getFecha().toString());
                         if(Registrar(corteDTO,token)){
                             sagasSql.EliminarCorte(corteDTO.getClaveOperacion());
@@ -385,6 +400,11 @@ public class Lisener{
                         anticiposDTO.setIdCAlmacen(
                                 cursor.getInt(
                                         cursor.getColumnIndex("IdCAlmacen")
+                                )
+                        );
+                        anticiposDTO.setFechaAnticipo(
+                                cursor.getString(
+                                        cursor.getColumnIndex("FechaAnticipo")
                                 )
                         );
                         if(Registrar(anticiposDTO,token)){
