@@ -185,10 +185,11 @@ public class Lisener{
             boolean registrado;
             Log.w("Iniciando", "Revisando recarga estación: " + new Date());
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
-            RecargaDTO recargaDTO = null;
+            RecargaDTO recargaDTO;
             if(cursor.moveToFirst()){
                 while (!cursor.isAfterLast()){
                     /* Coloco los valores de la base de datos en el DTO */
+                    recargaDTO = new RecargaDTO();
                     recargaDTO.setClaveOperacion(cursor.getString(
                             cursor.getColumnIndex("ClaveOperacion")));
                     recargaDTO.setIdCAlmacenGasSalida(cursor.getInt(
@@ -228,7 +229,7 @@ public class Lisener{
 
                             recargaDTO.getImagenesUri().add(
                                     new URI(imagenes.getString(
-                                            imagenes.getColumnIndex("url")
+                                            imagenes.getColumnIndex("Url")
                                     ))
                             );
                         } catch (URISyntaxException e) {
@@ -1054,9 +1055,10 @@ public class Lisener{
             boolean registrado;
             Log.w("Iniciando", "Revisando recarga estación: " + new Date());
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
-            RecargaDTO recargaDTO = null;
+            RecargaDTO recargaDTO;
             if(cursor.moveToFirst()){
                 while (!cursor.isAfterLast()){
+                    recargaDTO = new RecargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     recargaDTO.setClaveOperacion(cursor.getString(
                             cursor.getColumnIndex("ClaveOperacion")));
@@ -1097,7 +1099,7 @@ public class Lisener{
 
                             recargaDTO.getImagenesUri().add(
                                     new URI(imagenes.getString(
-                                            imagenes.getColumnIndex("url")
+                                            imagenes.getColumnIndex("Url")
                                     ))
                             );
                         } catch (URISyntaxException e) {
@@ -1152,7 +1154,7 @@ public class Lisener{
             public void onResponse(Call<RespuestaRecargaDTO> call,
                                    Response<RespuestaRecargaDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
-                Log.e("Corte"+recargaDTO.getClaveOperacion(),
+                Log.e("Recarga "+recargaDTO.getClaveOperacion(),
                         String.valueOf(response.isSuccessful()));
             }
 
