@@ -15,7 +15,8 @@ namespace Application.MainModule.Flujos
     public class Ventas
     {
         public List<CajaGeneralDTO> CajaGeneral()
-        {            
+        {
+          //  CajaGeneralServicio.ProcesarMovimientoVentas();
               var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
 
