@@ -98,7 +98,15 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             List<CamionetaDto> camionetasDTO = new List<CamionetaDto>();
             foreach (var camioneta in camionetas)
             {
-                var camionetaCilindros = Servicios.Almacenes.AlmacenGasServicio.ObtenerCilindros(camioneta);
+                //var camionetaCilindros = Servicios.Almacenes.AlmacenGasServicio.ObtenerCilindros(camioneta);
+                var camionetaCilindros = camioneta.Camioneta.Cilindros.ToList();
+                if(camionetaCilindros== null || camionetaCilindros.Count==0)
+                {
+                    var cilindros = Servicios.Almacenes.AlmacenGasServicio.ObtenerCilindros();
+                    List<CamionetaCilindro> list = new List<CamionetaCilindro>();
+                    
+                    camionetaCilindros =  cilindros.Select(x=>ToDTO(x,camioneta)).ToList();
+                }
                 camionetasDTO.Add(new CamionetaDto()
                 {
                     CantidadActualKg = camioneta.CantidadActualKg,
@@ -111,6 +119,20 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 });
             }
             return camionetasDTO;
+        }
+
+        public static CamionetaCilindro ToDTO(UnidadAlmacenGasCilindro cilindro, UnidadAlmacenGas camioneta)
+        {
+            return new CamionetaCilindro()
+            {
+                 IdCamioneta = camioneta.IdCamioneta.Value,
+                 Cantidad = 0,
+                 IdCilindro = cilindro.IdCilindro,
+                 IdEmpresa = cilindro.IdEmpresa,
+                 Empresa = cilindro.Empresa,
+                 Camioneta = camioneta.Camioneta,
+                 UnidadAlmacenGasCilindro= cilindro
+            };
         }
 
         public static List<CilindroDto> ToDTO(List<CamionetaCilindro> camionetaCilindros)
