@@ -39,7 +39,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new DatosTraspasoDto()
             {
                 pipas = lpipas.Select(x=>ToDTO(x,medidores,x.UnidadAlmacenGas.First())).ToList(),
-                estaciones = estaciones.Select(x=>ToDTO(x,x.UnidadAlmacenGas.First(),medidores)).Where(x=>x.IdAlmacenGas.Equals(estacion.IdEstacionCarburacion)).ToList(),
+                estaciones = estaciones.Select(x=>ToDTO(x,x.UnidadAlmacenGas.First(),medidores)).ToList(),
                 medidores = TipoMedidorAdapter.ToDto(medidores),
                 EstacionPredeterminada = ToDTO(estacion,estacion.UnidadAlmacenGas.First(),medidores)
             };
