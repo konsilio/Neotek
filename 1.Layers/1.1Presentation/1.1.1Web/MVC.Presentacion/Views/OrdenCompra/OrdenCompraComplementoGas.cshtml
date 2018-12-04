@@ -1,5 +1,5 @@
-﻿
-@model  MVC.Presentacion.Models.OrdenCompra.OrdenCompraComplementoGasDTO
+﻿@model  MVC.Presentacion.Models.OrdenCompra.OrdenCompraComplementoGasDTO
+
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
@@ -31,8 +31,8 @@
         @using (Html.BeginForm())
         {
             @Html.HiddenFor(m => m.FactorLitrosAKilos)
-            @*@Html.HiddenFor(m => m.OrdenCompraExpedidor)
-                @Html.HiddenFor(m => m.OrdenCompraPorteador)*@
+            @*@Html.HiddenFor(m => m.Fe)*@
+               @* @Html.HiddenFor(m => m.OrdenCompraPorteador)*@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-md-12">
@@ -40,7 +40,7 @@
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item">Compras</li>
-                            <li class="breadcrumb-item">Ordern de Compra</li>
+                            <li class="breadcrumb-item">Orden de Compra</li>
                             <li class="breadcrumb-item">Complemento para Gas</li>
                         </ul>
                     </div>
@@ -121,22 +121,22 @@
                                 @*@Html.Action("ProductosComplementoGasPartial")*@
                                 @Html.Partial("_ProductosComplementoGasPartial", Model.Productos)
                                 @*<table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <td><b>Tipo</b></td>
-                                                <td><b>Producto</b></td>
-                                                <td><b>Cantidad</b></td>
-                                                <td><b>Unidad</b></td>
-                                                <td><b>Aplicación</b></td>
-                                                <td><b>Centro de costo</b></td>
-                                                <td><b>Proveedor</b></td>
-                                                <td><b>Cuenta Contable</b></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @Html.EditorFor(m => m.Productos)
-                                        </tbody>
-                                   </table>*@
+                                    <thead>
+                                    <tr>
+                                    <td><b>Tipo</b></td>
+                                    <td><b>Producto</b></td>
+                                    <td><b>Cantidad</b></td>
+                                    <td><b>Unidad</b></td>
+                                    <td><b>Aplicación</b></td>
+                                    <td><b>Centro de costo</b></td>
+                                    <td><b>Proveedor</b></td>
+                                    <td><b>Cuenta Contable</b></td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @Html.EditorFor(m => m.Productos)
+                                    </tbody>
+                                    </table>*@
                             </div>
                         </div>
                     </div>
@@ -170,7 +170,9 @@
                                                             <span class="input-group-addon">
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
-                                                            @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control datetimepicker" })                                                           
+                                                            @*@Html.TextBoxFor(m => m.Fecha, new { @class = "form-control datetimepicker" })*@
+                                                            <input type="text" name="Fecha" value="@ViewBag.Complemeto.Fecha" class="form-control datetimepicker" />
+                                                            @*@Html.HiddenFor(m => m.Fecha)*@
                                                         </div>
                                                         @Html.ValidationMessageFor(m => m.Fecha, "", new { @class = "alert-danger" })
                                                     </div>
@@ -182,7 +184,9 @@
                                                             <span class="input-group-addon">
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
-                                                            @Html.TextBoxFor(m => m.FechaEmbarque, new { @class = "form-control datetimepicker" })                                                           
+                                                            @*@Html.TextBoxFor(m => m.FechaEmbarque, new { @class = "form-control datetimepicker" })
+                                                            @Html.HiddenFor(m => m.FechaEmbarque)*@
+                                                            <input type="text" name="FechaEmbarque" value="@ViewBag.Complemeto.FechaEmbarque" class="form-control datetimepicker" />
                                                         </div>
                                                         @Html.ValidationMessageFor(m => m.FechaEmbarque, "", new { @class = "alert-danger" })
                                                     </div>
@@ -190,7 +194,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Número embarque</label>
-                                                        @Html.TextBoxFor(m => m.NumeroEmbarque, new { @class = "form-control" })                                                       
+                                                        @Html.TextBoxFor(m => m.NumeroEmbarque, new { @class = "form-control" })
                                                     </div>
                                                     @Html.ValidationMessageFor(m => m.NumeroEmbarque, "", new { @class = "alert-danger" })
                                                 </div>
@@ -199,14 +203,14 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Valor Carga</label>
-                                                        @Html.TextBoxFor(m => m.ValorCarga, new { @class = "form-control" })                                                       
+                                                        @Html.TextBoxFor(m => m.ValorCarga, new { @class = "form-control" })
                                                     </div>
                                                     @Html.ValidationMessageFor(m => m.ValorCarga, "", new { @class = "alert-danger" })
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Sello</label>
-                                                        @Html.TextBoxFor(m => m.Sello, new { @class = "form-control" })                                                       
+                                                        @Html.TextBoxFor(m => m.Sello, new { @class = "form-control" })
                                                     </div>
                                                     @Html.ValidationMessageFor(m => m.Sello, "", new { @class = "alert-danger" })
                                                 </div>
@@ -305,8 +309,9 @@
                                                             <span class="input-group-addon">
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
-                                                            @Html.TextBoxFor(m => m.FechaEntraGas, new { @class = "form-control datetimepicker" })
-                                                            
+                                                            @*@Html.TextBoxFor(m => m.FechaEntraGas, new { @class = "form-control datetimepicker" })
+                                                            @Html.HiddenFor(m => m.FechaEntraGas)*@
+                                                            <input type="text" name="FechaEntraGas" value="@ViewBag.Complemeto.FechaEntraGas" class="form-control datetimepicker" />
                                                         </div>
                                                         @Html.ValidationMessageFor(m => m.FechaEntraGas, "", new { @class = "alert-danger" })
                                                     </div>
@@ -333,10 +338,10 @@
                                                     </div>
                                                 </div>
                                                 @*<div class="col-md-3 content-center">
-                                                        <div class="checkbox">
-                                                            <input id="chBoxAlmacenPrestado" type="checkbox">
-                                                            <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
-                                                        </div>
+                                                    <div class="checkbox">
+                                                    <input id="chBoxAlmacenPrestado" type="checkbox">
+                                                    <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
+                                                    </div>
                                                     </div>*@
                                             </div>
                                             <div class="row clearfix">
@@ -396,7 +401,8 @@
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-md-2">
-                                                <input type="submit" ID="btnGuardarDatosPapeleta" class="btn btn-raised btn-primary btn-round" value="Confirmar datos" />
+                                                <input type="submit" formaction=@Url.Action("GuardarDatosPapeleta") class="btn btn-raised btn-primary btn-round" value="Confirmar Datos" />
+
                                             </div>
                                         </div>
                                     </div>
@@ -791,6 +797,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

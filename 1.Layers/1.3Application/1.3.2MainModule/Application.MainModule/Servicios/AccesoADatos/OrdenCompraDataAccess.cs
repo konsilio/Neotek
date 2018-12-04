@@ -122,6 +122,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
+        public RespuestaDto Actualizar(AlmacenGasDescarga oc)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<AlmacenGasDescarga>().Update(oc);                  
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.MensajesError = new List<string>();
+                    _respuesta.Exito = false;
+                    _respuesta.MensajesError.Add(string.Concat(Error.C0003, " | ", ex.Message));
+                    if (ex.InnerException != null)
+                        _respuesta.MensajesError.Add(ex.InnerException.Message);
+                }
+            }
+            return _respuesta;
+        }
         public List<OrdenCompraEstatus> Estatus()
         {
             return uow.Repository<OrdenCompraEstatus>().Get(x => x.Activo).ToList();

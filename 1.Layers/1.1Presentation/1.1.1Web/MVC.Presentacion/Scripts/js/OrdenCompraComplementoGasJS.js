@@ -11,9 +11,18 @@
         $("#btnGuardarDatosPorteador").click(function () {
             $("form").attr("action", "/OrdenCompra/GuardarDatosPorteador");
         });
-        $("#btnGuardarDatosPapeleta").click(function () {
-            $("form").attr("action", "/OrdenCompra/GuardarDatosPapeleta");
-        });
+        //$("#btnGuardarDatosPapeleta").click(function () {
+        //    debugger
+        //    $("form").attr("action", "/OrdenCompra/GuardarDatosPapeleta");
+        //});
+        //var rowindex = 0;
+        //$('#ProductosComplementoGas_DXMainTable tbody tr').each(function () {
+        //   // debugger
+        //  //  rowindex++;
+        //    var hiderow = $(this).find("td").eq(1);//get value of column entidad
+        //    hiderow.hide();          
+        //   // $('#table tbody tr:eq(' + rowindex + ')').find("td").eq(1).hide();
+        //});
     });
 
 //kilos finales
