@@ -222,7 +222,7 @@ namespace MVC.Presentacion.App_Code
         public static RespuestaDTO ConfirmarDatosPapeleta(OrdenCompraComplementoGasDTO dto, string tkn)
         {
             AgenteServicio agente = new AgenteServicio();
-            agente.GuardarDatosPorteador(dto, tkn);
+            agente.ConfirmarDatosPapeleta(dto, tkn);
             return agente._RespuestaDTO;
         }
     }

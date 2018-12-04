@@ -277,6 +277,15 @@ namespace Application.MainModule.Flujos
 
             return respActualiza;
         }
+        public RespuestaDto GuardarDatosPapeleta(ComplementoGasDTO dto)
+        {
+            var ExistePago = BuscarPagos(dto.OrdenCompraPorteador.IdOrdenCompra);
+            if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistentePorteador();
+
+            var ocPapeleta = OrdenCompraServicio.CargarDatosPapeleta(dto);
+
+            return OrdenCompraServicio.Actualizar(ComplementoGasAdapter.FromEntity(ocPapeleta));
+        }
         public RespuestaDto GuardarDatosPorteador(ComplementoGasDTO dto)
         {
             var ExistePago = BuscarPagos(dto.OrdenCompraPorteador.IdOrdenCompra);

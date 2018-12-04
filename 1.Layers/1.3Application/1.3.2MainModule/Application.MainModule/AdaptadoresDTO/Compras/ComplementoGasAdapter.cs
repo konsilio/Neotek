@@ -38,6 +38,37 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Productos = new List<ProductoOCDTO>()
             };
         }
+        public static ComplementoGasDTO ToPapeleta(ComplementoGasDTO descarga)
+        {
+            return new ComplementoGasDTO()
+            {
+                //Papeleta
+                Fecha = descarga.Fecha,            
+                FechaEmbarque = descarga.FechaEmbarque,
+                NumeroEmbarque = descarga.NumeroEmbarque,
+                ValorCarga = descarga.ValorCarga,
+                Sello = descarga.Sello,
+                NombreResponsable = descarga.NombreResponsable,
+                PorcentajeTanque = descarga.PorcentajeTanque,
+                //Tractor
+                PlacasTractor = descarga.PlacasTractor,
+                NombreOperador = descarga.NombreOperador,
+                PresionTanque = descarga.PresionTanque,
+                NumeroTanque = descarga.NumeroTanque,
+                CapacidadTanque = descarga.CapacidadTanque,
+                PorcentajeMedidor = descarga.PorcentajeMedidor,
+                //Descarga
+                FechaEntraGas = descarga.FechaEntraGas,
+                PorcenMagnatelOcularTractorINI = descarga.PorcenMagnatelOcularTractorINI,
+                PorcenMagnatelOcularTractorFIN = descarga.PorcenMagnatelOcularTractorFIN,
+                PorcenMagnatelOcularAlmacenINI = descarga.PorcenMagnatelOcularAlmacenINI,
+                PorcenMagnatelOcularAlmacenFIN = descarga.PorcenMagnatelOcularAlmacenFIN,
+               //Kilos
+                KilosPapeleta = descarga.KilosPapeleta,
+                KilosDescargados = descarga.KilosDescargados,
+                KilosDiferencia = descarga.KilosDiferencia,             
+            };
+        }
         public static ComplementoGasDTO ToRequisicion(ComplementoGasDTO dto, Sagas.MainModule.Entidades.Requisicion requ)
         {
             dto.IdRequisicion = requ.IdRequisicion;
@@ -51,5 +82,37 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             dto.FactorLitrosAKilos = requ.Empresa.FactorLitrosAKilos;
             return dto;
         }
+        public static AlmacenGasDescarga FromEntity(ComplementoGasDTO descarga)
+        {
+            return new AlmacenGasDescarga
+            {
+                FechaPapeleta = descarga.Fecha,
+                FechaEmbarque = descarga.FechaEmbarque,
+                NumeroEmbarque = descarga.NumeroEmbarque,
+                ValorCarga = descarga.ValorCarga,
+                Sello = descarga.Sello,
+                NombreResponsable = descarga.NombreResponsable,
+                PorcenMagnatelPapeleta = descarga.PorcentajeTanque,
+                //Tractor
+                PlacasTractor = descarga.PlacasTractor,
+                NombreOperador = descarga.NombreOperador,
+                PresionTanque = descarga.PresionTanque,
+                NumTanquePG = descarga.NumeroTanque,
+                CapacidadTanqueLt = descarga.CapacidadTanque,
+                PorcenMagnatelOcular = descarga.PorcentajeMedidor,
+                //Descarga
+                FechaEntraGas = descarga.FechaEntraGas,
+                PorcenMagnatelOcularTractorINI = descarga.PorcenMagnatelOcularTractorINI,
+                PorcenMagnatelOcularTractorFIN = descarga.PorcenMagnatelOcularTractorFIN,
+                PorcenMagnatelOcularAlmacenINI = descarga.PorcenMagnatelOcularAlmacenINI,
+                PorcenMagnatelOcularAlmacenFIN = descarga.PorcenMagnatelOcularAlmacenFIN,
+                TanquePrestado = descarga.TanquePrestado,
+                ////Kilos
+                //KilosPapeleta = descarga.KilosPapeleta,
+                //KilosDescargados = descarga.KilosDescargados,
+                //KilosDiferencia = descarga.KilosDiferencia,
+            };
+        }
     }
+
 }

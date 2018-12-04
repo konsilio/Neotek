@@ -121,6 +121,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoPorteador(oc), Request);
         }
+        [Route("guardar/datos/papeleta")]
+        public HttpResponseMessage PutGuardarDatosPapeleta(ComplementoGasDTO oc)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.GuardarDatosPapeleta(oc), Request);
+        }
         [Route("solictud/pago/mercancia")]
         public HttpResponseMessage PutSolicitarPago(OrdenCompraDTO oc)
         {

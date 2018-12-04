@@ -115,6 +115,10 @@ namespace Application.MainModule.Servicios.Compras
         {
             return new OrdenCompraDataAccess().Actualizar(oc);
         }
+        public static RespuestaDto Actualizar(AlmacenGasDescarga oc)
+        {
+            return new OrdenCompraDataAccess().Actualizar(oc);
+        }
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "La Orden de Compra");
@@ -257,6 +261,11 @@ namespace Application.MainModule.Servicios.Compras
         public static ComplementoGasDTO CargarDatosRequisicion(ComplementoGasDTO dto, Sagas.MainModule.Entidades.Requisicion req)
         {
             return ComplementoGasAdapter.ToRequisicion(dto, req);
+        }
+
+        public static ComplementoGasDTO CargarDatosPapeleta(ComplementoGasDTO dto)
+        {
+            return ComplementoGasAdapter.ToPapeleta(dto);
         }
         public static OrdenCompra CompletarDatosExpedidor(ComplementoGasDTO dto, OrdenCompra oc)
         {

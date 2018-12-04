@@ -1,5 +1,11 @@
 @model  List<MVC.Presentacion.Models.OrdenCompra.OrdenCompraProductoDTO>
 @{
+    @*<style>
+        /* to hide unwanted column*/
+        table td:nth-child(1) {
+            display: none;
+        }
+    </style>*@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "ProductosComplementoGas";
@@ -24,6 +30,7 @@
         settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
         settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
         settings.Styles.Table.CssClass = "table";
+        //settings.Columns["Producto"].Width = 1;
 
         settings.Columns.Add(c =>
         {
@@ -33,6 +40,7 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
+
         settings.Columns.Add(c =>
         {
             c.FieldName = "Producto";
@@ -41,6 +49,7 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
+
         settings.Columns.Add(c =>
         {
             c.FieldName = "CantidadAComprar";
