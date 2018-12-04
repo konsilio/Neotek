@@ -41,9 +41,9 @@ namespace Application.MainModule.Servicios.Mobile
             var traspasos = AlmacenGasServicio.ObtenerTraspasosNoProcesadas();
             if (traspasos != null)
                 if (traspasos.Count == 0)
-                    return traspasos.FindLast(x => x.Orden>0).Orden+1;
-                else
                     return 1;
+                else
+                    return traspasos.FindLast(x => x.Orden > 0).Orden + 1;
             else
                 return 1;
         }
