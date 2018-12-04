@@ -90,6 +90,9 @@ public class PrecargaPapeletaDTO implements Serializable {
     @SerializedName("ClaveOperacion")
     private String ClaveOperacion;
 
+    @SerializedName("CapacidadTanqueKg")
+    private Double CapacidadTanqueKg;
+
     public PrecargaPapeletaDTO(){
         Imagenes = new ArrayList<>();
         ImagenesURI = new ArrayList<>();
@@ -292,5 +295,13 @@ public class PrecargaPapeletaDTO implements Serializable {
 
     public void setClaveOperacion(String Clave) {
         ClaveOperacion = Clave;
+    }
+
+    public Double getCapacidadTanqueKg() {
+        return CapacidadTanqueKg;
+    }
+
+    public void setCapacidadTanqueKg(Double capacidadTanqueKg) {
+        CapacidadTanqueKg = capacidadTanqueKg;
     }
 }

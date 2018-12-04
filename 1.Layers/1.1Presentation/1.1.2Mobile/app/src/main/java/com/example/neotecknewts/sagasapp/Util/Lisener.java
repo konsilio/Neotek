@@ -471,15 +471,16 @@ public class Lisener{
                     traspasoDTO = new TraspasoDTO();
                     try {
                         traspasoDTO.setFecha(
-                                format.parse(
-                                    cursor.getString(
+
+                                /*format.parse(
+                                    (*/ cursor.getString(
                                             cursor.getColumnIndex("Fecha")
-                                    )
-                                )
+                                    )/*)
+                                )*/
                         );
                         traspasoDTO.setCantidadDeFotos(
                                 cursor.getInt(
-                                        cursor.getColumnIndex("CantidadDeFotos")
+                                        cursor.getColumnIndex("CantidadFotos")
                                 )
                         );
                         traspasoDTO.setClaveOperacion(
@@ -535,18 +536,16 @@ public class Lisener{
                                             imagenes.getColumnIndex("Imagen")
                                     )
                             );
-                            traspasoDTO.getImagenesUri().add(
+                            /*traspasoDTO.getImagenesUri().add(
                                     new URI(
                                             imagenes.getString(
                                                     cursor.getColumnIndex("Url")
                                             )
                                     )
-                            );
+                            );*/
                             imagenes.moveToNext();
                         }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    } catch (URISyntaxException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     boolean esFinal = cursor.getInt(cursor.getColumnIndex("EsFinal")) > 0;
