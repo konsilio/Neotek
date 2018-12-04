@@ -1,4 +1,5 @@
-﻿using Application.MainModule.AdaptadoresDTO.Compras;
+﻿//using Application.MainModule.AdaptadoresDTO.Almacenes;
+using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
@@ -7,6 +8,7 @@ using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
+using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.Requisiciones;
@@ -295,12 +297,20 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaDto GuardarDatosPapeleta(ComplementoGasDTO dto)
         {
-            var ExistePago = BuscarPagos(dto.OrdenCompraPorteador.IdOrdenCompra);
-            if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistentePorteador();
+            var oce = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra));
 
-            var ocPapeleta = OrdenCompraServicio.CargarDatosPapeleta(dto);
+            var papeleta = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(dto.OrdenCompraExpedidor.IdOrdenCompra);
 
-            return OrdenCompraServicio.Actualizar(ComplementoGasAdapter.FromEntity(ocPapeleta));
+            //var papeleta = AlmacenAdapter.FromDto(papeletaDto);
+            papeleta.IdRequisicion = oce.IdRequisicion;
+            var almacen = CentroCostoServicio.Obtener(oce.IdCentroCosto).UnidadAlmacenGas;
+            papeleta.IdCAlmacenGas = almacen.IdCAlmacenGas;
+            papeleta.IdAlmacenGas = almacen.IdAlmacenGas;
+            papeleta.IdTipoMedidorAlmacen = almacen.IdTipoMedidor;
+
+            var ocPapeleta =  AlmacenAdapter.FromEntity(papeleta);
+
+            return OrdenCompraServicio.Actualizar(ocPapeleta);
         }
         public RespuestaDto GuardarDatosPorteador(ComplementoGasDTO dto)
         {

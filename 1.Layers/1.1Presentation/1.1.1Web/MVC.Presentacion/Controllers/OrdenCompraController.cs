@@ -263,11 +263,15 @@ namespace MVC.Presentacion.Controllers
             //model.OrdenCompraPorteador.FechaAutorizacion = DateTime.Now;
             var respuesta = OrdenCompraServicio.ConfirmarDatosPapeleta(model, tkn);
             if (respuesta.Exito)
-                return RedirectToAction("Ordenes");
+            {
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("OrdenCompraComplemento", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
+            }
+               
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("OrdenCompraPago", new { id = model.OrdenCompraExpedidor.IdOrdenCompra });
+                return RedirectToAction("OrdenCompraPago", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
             }
         
         }

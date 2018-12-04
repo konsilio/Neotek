@@ -93,6 +93,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Sello = descarga.Sello,
                 NombreResponsable = descarga.NombreResponsable,
                 PorcenMagnatelPapeleta = descarga.PorcentajeTanque,
+                ClaveOperacion = descarga.ClaveOperacion,
                 //Tractor
                 PlacasTractor = descarga.PlacasTractor,
                 NombreOperador = descarga.NombreOperador,
@@ -109,6 +110,41 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 TanquePrestado = descarga.TanquePrestado,
                 ////Kilos
                 MasaKg = descarga.KilosPapeleta,
+                //kilosdescargados = descarga.kilosdescargados,
+                //kilosdiferencia = descarga.kilosdiferencia,
+            };
+        }
+        public static AlmacenGasDescarga FromEntity(AlmacenGasDescarga descarga)
+        {
+            return new AlmacenGasDescarga
+            {
+                IdAlmacenEntradaGasDescarga = descarga.IdAlmacenEntradaGasDescarga,
+                FechaRegistro = descarga.FechaRegistro,
+                FechaPapeleta = descarga.FechaPapeleta,
+                FechaEmbarque = descarga.FechaEmbarque,
+                NumeroEmbarque = descarga.NumeroEmbarque,
+                ValorCarga = descarga.ValorCarga,
+                Sello = descarga.Sello,
+                NombreResponsable = descarga.NombreResponsable,
+                PorcenMagnatelPapeleta = descarga.PorcenMagnatelPapeleta,
+                ClaveOperacion = descarga.ClaveOperacion,
+                //Tractor
+                PlacasTractor = descarga.PlacasTractor,
+                NombreOperador = descarga.NombreOperador,
+                PresionTanque = descarga.PresionTanque,
+                NumTanquePG = descarga.NumTanquePG,
+                CapacidadTanqueLt = descarga.CapacidadTanqueLt,
+                PorcenMagnatelOcular = descarga.PorcenMagnatelOcular,
+                //Descarga
+                FechaEntraGas = descarga.FechaEntraGas,
+                PorcenMagnatelOcularTractorINI = descarga.PorcenMagnatelOcularTractorINI,
+                PorcenMagnatelOcularTractorFIN = descarga.PorcenMagnatelOcularTractorFIN,
+                PorcenMagnatelOcularAlmacenINI = descarga.PorcenMagnatelOcularAlmacenINI,
+                PorcenMagnatelOcularAlmacenFIN = descarga.PorcenMagnatelOcularAlmacenFIN,
+                TanquePrestado = descarga.TanquePrestado,
+                ////Kilos
+                MasaKg = descarga.MasaKg,
+                //Fotos = descarga.Fotos
                 //kilosdescargados = descarga.kilosdescargados,
                 //kilosdiferencia = descarga.kilosdiferencia,
             };
