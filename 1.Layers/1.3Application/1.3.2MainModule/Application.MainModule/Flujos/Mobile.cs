@@ -471,7 +471,7 @@ namespace Application.MainModule.Flujos
         public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(int idEstacion, bool esAnticipos, DateTime fecha)
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var unidadAlmacen = usuario.OperadoresChoferes.SingleOrDefault(x=>x.Activo).PuntosVenta.SingleOrDefault(x=>x.Activo).UnidadesAlmacen;
+            var unidadAlmacen = PuntoVentaServicio.ObtenerPorUsuarioAplicacion().UnidadesAlmacen;
             Pipa pipa = null;
             EstacionCarburacion estacion = null;
             Camioneta camioneta = null;
@@ -480,15 +480,19 @@ namespace Application.MainModule.Flujos
             {
                 estacion = unidadAlmacen.EstacionCarburacion;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
-                var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen);
-
+                var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen).FindAll(x=>x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year)).ToList();
+                var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(Convert.ToByte(fecha.Day)) &&
+                   X.Mes.Equals(Convert.ToByte(fecha.Month)) && X.Year.Equals((short)fecha.Year)).ToList();
+                dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos);
             }
 
             if (unidadAlmacen.IdPipa > 0 && unidadAlmacen.IdPipa != null)
             {
                 pipa = unidadAlmacen.Pipa;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x=>x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
-                var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen);
+                var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen).FindAll(x => x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year)).ToList();
                 var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(Convert.ToByte(fecha.Day)) &&
                     X.Mes.Equals(Convert.ToByte(fecha.Month)) && X.Year.Equals((short)fecha.Year)).ToList();
                 dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos); 
@@ -499,7 +503,8 @@ namespace Application.MainModule.Flujos
             {
                 camioneta = unidadAlmacen.Camioneta;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
-                var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen);
+                var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen).FindAll(x => x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year)).ToList();
                 var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(fecha.Day) &&
                     X.Mes.Equals(fecha.Month) && X.Year.Equals(fecha.Year)).ToList();
                 dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos);
