@@ -22,14 +22,20 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         public static EstacionesDto ToDTO(UnidadAlmacenGas unidadAlmacen, List<TipoMedidorUnidadAlmacenGas> medidores)
         {
+            //string NomPipa = string.Empty;
+            //if (unidadAlmacen.Pipa == null)
+            //    NomPipa = "";
+            //else
+            //    NomPipa = unidadAlmacen.Pipa.Nombre;
             return new EstacionesDto()
             {
                 IdTipoMedidor = unidadAlmacen.IdTipoMedidor,
                 CantidadP5000 = unidadAlmacen.P5000Actual,
                 IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
-                Medidor = TipoMedidorAdapter.ToDto(medidores.Single(x=>x.IdTipoMedidor.Equals(unidadAlmacen.IdTipoMedidor))),
+                Medidor = TipoMedidorAdapter.ToDto(medidores.Single(x => x.IdTipoMedidor.Equals(unidadAlmacen.IdTipoMedidor))),
                 NombreAlmacen = unidadAlmacen.Numero,
-                PorcentajeMedidor = unidadAlmacen.PorcentajeActual
+                PorcentajeMedidor = unidadAlmacen.PorcentajeActual,
+                NombrePipa = unidadAlmacen.Pipa == null ? "" :  unidadAlmacen.Pipa.Nombre 
             };
         }
 
@@ -57,6 +63,29 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdOrden = IdOrden,
                 IdOrdenFoto =  (short) IdOrdenFoto,
                 IdCAlmacenGas = IdCAlmacenGas
+            };
+        }
+
+        public static DatosCalibracionDto ToDTOEstaciones(List<UnidadAlmacenGas> estaciones, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return new DatosCalibracionDto()
+            {
+                estaciones = estaciones.Select(x => ToDTOEstacion(x, medidores)).ToList(),
+                medidores = TipoMedidorAdapter.ToDto(medidores)
+            }; throw new NotImplementedException();
+        }
+
+        public static EstacionesDto ToDTOEstacion(UnidadAlmacenGas unidadAlmacen, List<TipoMedidorUnidadAlmacenGas> medidores)
+        {
+            return new EstacionesDto()
+            {
+                IdTipoMedidor = unidadAlmacen.IdTipoMedidor,
+                CantidadP5000 = unidadAlmacen.P5000Actual,
+                IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
+                Medidor = TipoMedidorAdapter.ToDto(medidores.Single(x => x.IdTipoMedidor.Equals(unidadAlmacen.IdTipoMedidor))),
+                NombreAlmacen = unidadAlmacen.EstacionCarburacion.Nombre,
+                PorcentajeMedidor = unidadAlmacen.PorcentajeActual,
+                NombrePipa = unidadAlmacen.EstacionCarburacion == null ? "" : unidadAlmacen.EstacionCarburacion.Nombre
             };
         }
     }

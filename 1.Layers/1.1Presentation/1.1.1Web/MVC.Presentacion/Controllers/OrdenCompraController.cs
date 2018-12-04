@@ -259,18 +259,21 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+            //model.OrdenCompraExpedidor.FechaAutorizacion = DateTime.Now;
+            //model.OrdenCompraPorteador.FechaAutorizacion = DateTime.Now;
             var respuesta = OrdenCompraServicio.ConfirmarDatosPapeleta(model, tkn);
             if (respuesta.Exito)
             {
-                var js = JsonConvert.SerializeObject(respuesta);
-                return Json(js, JsonRequestBehavior.AllowGet);
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("OrdenCompraComplemento", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
             }
+               
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
-                RedirectToAction("OrdenCompraComplementoGas", model.IdOrdenCompraPorteador);
-                return new JsonResult();
+                return RedirectToAction("OrdenCompraPago", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
             }
+        
         }
         public ActionResult OrdenCompraPago(int id)
         {
@@ -356,12 +359,12 @@ namespace MVC.Presentacion.Controllers
             return PartialView("ProductosOCPartial");
         }
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductosComplementoGasPartialUpdate(MVCxGridViewBatchUpdateValues<OrdenCompraProductoDTO, int> updateValues)
+        public ActionResult ProductosComplementoGasPartialUpdate(MVCxGridViewBatchUpdateValues<OrdenCompraProductoDTO, int> updateValues, [ModelBinder(typeof(DevExpressEditorsBinder))] OrdenCompraProductoDTO ocpDTO)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var id = (int)TempData["intIdOrdenCompra"];
-            updateValues.Update = updateValues.Update.Select(x => { x.IdOrdenCompra = id; return x; }).ToList();
+            //updateValues.Update = updateValues.Update.Select(x => { x.IdOrdenCompra = id; return x; }).ToList();
             TempData["RespuestaDTO"] = OrdenCompraServicio.ActualizaProductosOrdenCompra(updateValues.Update, tkn);
             return RedirectToAction("OrdenCompraComplementoGas", new { id = id });
         }

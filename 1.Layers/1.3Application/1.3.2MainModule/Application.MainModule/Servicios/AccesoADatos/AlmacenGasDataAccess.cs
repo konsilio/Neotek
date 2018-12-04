@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -117,6 +118,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
             return _respuesta;
+        }
+
+        public List<AlmacenGasRecarga> ObtenerRecargaInicial(short IdCAlmacenGasEntrada)
+        {
+            return uow.Repository<AlmacenGasRecarga>().Get(
+                x => x.IdCAlmacenGasEntrada.Equals(IdCAlmacenGasEntrada)
+                ).ToList();
         }
 
         public AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, int idOrden)

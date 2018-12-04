@@ -4,7 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CorteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("IdCorte")
@@ -60,6 +62,13 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
 
     @SerializedName("FechaCorte")
     private String FechaCorte;
+
+    @SerializedName("Conceptos")
+    private List<VentasCorteDTO> Conceptos;
+
+    public CorteDTO(){
+        this.Conceptos = new ArrayList<>();
+    }
 
     public int getId() {
         return IdCorte;
@@ -203,5 +212,13 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
 
     public void setFechaCorte(String fechaCorte) {
         FechaCorte = fechaCorte;
+    }
+
+    public List<VentasCorteDTO> getConceptos() {
+        return Conceptos;
+    }
+
+    public void setConceptos(List<VentasCorteDTO> conceptos) {
+        Conceptos = conceptos;
     }
 }

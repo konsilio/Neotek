@@ -87,13 +87,13 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                             !datosCalibracionDTO.getEstaciones().isEmpty()) {
                         for (int x=0;x<datosCalibracionDTO.getEstaciones().size();x++) {
                             if(parent.getItemAtPosition(position).toString().equals(
-                                    datosCalibracionDTO.getEstaciones().get(x).getNombreAlmacen()
+                                    datosCalibracionDTO.getEstaciones().get(x).getNombrePipa()
                             )) {
                                 calibracionDTO.setIdCAlmacenGas(
                                         datosCalibracionDTO.getEstaciones().get(x).getIdAlmacenGas()
                                 );
                                 calibracionDTO.setNombreCAlmacenGas(
-                                        datosCalibracionDTO.getEstaciones().get(x).getNombreAlmacen()
+                                        datosCalibracionDTO.getEstaciones().get(x).getNombrePipa()
                                 );
                                 calibracionDTO.setIdTipoMedidor(
                                         datosCalibracionDTO.getEstaciones().get(x).getIdTipoMedidor()
@@ -312,7 +312,7 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                     && !dto.getEstaciones().isEmpty() && dto.getEstaciones()!=null){
                 list_pipa_salida = new String[dto.getEstaciones().size()];
                 for (int x=0;x<dto.getEstaciones().size();x++){
-                    list_pipa_salida[x] = dto.getEstaciones().get(x).getNombreAlmacen();
+                    list_pipa_salida[x] = dto.getEstaciones().get(x).getNombrePipa();
                 }
                 SCalibracionPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(
                         this,

@@ -18,17 +18,42 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-        public RespuestaDto Actualizar(List<OrdenCompraProducto> prods)
+        public RespuestaDto Actualizar(List<OrdenCompraProducto> prods, OrdenCompra oc)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    foreach (var p in prods)
-                    {
-                        uow.Repository<OrdenCompraProducto>().Update(p);
-                    }
+                    uow.Repository<OrdenCompra>().Update(oc);
+                    foreach (var p in prods)                    
+                        uow.Repository<OrdenCompraProducto>().Update(p);                    
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.MensajesError = new List<string>();
+                    _respuesta.Exito = false;
+                    _respuesta.MensajesError.Add(string.Concat(Error.OC0001, " | ", ex.Message));
+                    if (ex.InnerException != null)
+                        _respuesta.MensajesError.Add(ex.InnerException.Message);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Actualizar(List<OrdenCompraProducto> prods, List<OrdenCompra> ocs)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    foreach (var oc in ocs)
+                        uow.Repository<OrdenCompra>().Update(oc);
+                    foreach (var p in prods)                    
+                        uow.Repository<OrdenCompraProducto>().Update(p);                    
                     uow.SaveChanges();
                     _respuesta.Exito = true;
                     _respuesta.Mensaje = Exito.OK;
