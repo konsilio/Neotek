@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.VentasCorteDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
@@ -210,42 +211,91 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         }));
                         builder.create().show();
                     } else {
-                        anticiposDTO.setAnticipar(Double.parseDouble(cantidad));
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
-                                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                        Date fecha = new Date();
-                        anticiposDTO.setFecha(f.format(fecha));
-                        anticiposDTO.setTotal(total);
-                        SimpleDateFormat format = new SimpleDateFormat("HH:mm",
-                                Locale.getDefault());
-                        String hour = format.format(new Date());
-                        anticiposDTO.setHora(hour);
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
-                                new SimpleDateFormat("ddMMyyyyhhmmssS");
-                        String clave_unica = "ANT" + s.format(new Date());
-                        anticiposDTO.setClaveOperacion(clave_unica);
-                        anticiposDTO.setTiket(clave_unica);
-                        anticiposDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
-                        presenter.Anticipo(anticiposDTO, sagasSql, session.getToken());
+                        if(Double.parseDouble(cantidad)<total) {
+                            if(datos.getCortes().size()>0) {
+                                anticiposDTO.setAnticipar(Double.parseDouble(cantidad));
+                                @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
+                                        "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                                Date fecha = new Date();
+                                anticiposDTO.setFecha(f.format(fecha));
+                                anticiposDTO.setTotal(total);
+                                SimpleDateFormat format = new SimpleDateFormat("HH:mm",
+                                        Locale.getDefault());
+                                String hour = format.format(new Date());
+                                anticiposDTO.setHora(hour);
+                                @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                                        new SimpleDateFormat("ddMMyyyyhhmmssS");
+                                String clave_unica = "ANT" + s.format(new Date());
+                                anticiposDTO.setClaveOperacion(clave_unica);
+                                anticiposDTO.setTiket(clave_unica);
+                                anticiposDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
+                                //Agrego las ventas correspondientes al corte
+                        /*for (CorteDTO corte : datos.getCortes()){
+                            VentasCorteDTO ventasCorteDTO = new VentasCorteDTO();
+                            ventasCorteDTO.setClaveCorte(clave_unica);
+                            ventasCorteDTO.setClaveVenta(corte.getTiket());
+                            corte.getConceptos().add(ventasCorteDTO);
+                        }*/
+                                //Agrego las ventas correspondientes al corte
+                                presenter.Anticipo(anticiposDTO, sagasSql, session.getToken());
+                            }else{
+                                AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
+                                builderMonto.setCancelable(false);
+                                builderMonto.setTitle(R.string.mensjae_error_campos);
+                                builderMonto.setMessage("La fecha ingresada no tiene ventas para" +
+                                        " realizar el anticipo");
+                                builderMonto.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
+                                        dialogInterface.dismiss());
+                                builderMonto.create().show();
+                            }
+                        }else{
+                            AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
+                            builderMonto.setCancelable(false);
+                            builderMonto.setTitle(R.string.mensjae_error_campos);
+                            builderMonto.setMessage("El monto ingresado debe de ser el igual al " +
+                                    " monto total de las ventas no puede ser menor");
+                            builderMonto.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
+                                    dialogInterface.dismiss());
+                            builderMonto.create().show();
+                        }
                     }
                 }
             } else {
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
-                        new SimpleDateFormat("ddMMyyyyhhmmssS");
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm",
-                        Locale.getDefault());
-                String hour = format.format(new Date());
-                corteDTO.setHora(hour);
-                String clave_unica = "CC" + s.format(new Date());
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
-                        "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                corteDTO.setFecha(f.format(new Date()));
-                corteDTO.setFechaVenta(f.format(new Date()));
-                corteDTO.setClaveOperacion(clave_unica);
-                corteDTO.setTiket(clave_unica);
-                corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
-                presenter.Corte(corteDTO, sagasSql, session.getToken());
-                //startIntent();
+                if(datos.getAnticipos().size()>0) {
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                            new SimpleDateFormat("ddMMyyyyhhmmssS");
+                    SimpleDateFormat format = new SimpleDateFormat("HH:mm",
+                            Locale.getDefault());
+                    String hour = format.format(new Date());
+                    corteDTO.setHora(hour);
+                    String clave_unica = "CC" + s.format(new Date());
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
+                            "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                    corteDTO.setFecha(f.format(new Date()));
+                    corteDTO.setFechaVenta(f.format(new Date()));
+                    corteDTO.setClaveOperacion(clave_unica);
+                    corteDTO.setTiket(clave_unica);
+                    corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
+                    //Agrego las ventas correspondientes al corte
+                    for (CorteDTO itemCorte : datos.getCortes()) {
+                        VentasCorteDTO ventasCorteDTO = new VentasCorteDTO();
+                        ventasCorteDTO.setClaveCorte(clave_unica);
+                        ventasCorteDTO.setClaveVenta(itemCorte.getTiket());
+                        corteDTO.getConceptos().add(ventasCorteDTO);
+                    }
+                    //Agrego las ventas correspondientes al corte
+                    presenter.Corte(corteDTO, sagasSql, session.getToken());
+                    //startIntent();
+                }else{
+                    AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
+                    builderMonto.setCancelable(false);
+                    builderMonto.setTitle(R.string.mensjae_error_campos);
+                    builderMonto.setMessage("No se puede hacer un corte de esta fecha, no " +
+                            "hay datos actualmente");
+                    builderMonto.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
+                            dialogInterface.dismiss());
+                    builderMonto.create().show();
+                }
             }
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
@@ -329,7 +379,10 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 new SimpleDateFormat("dd/MM/yyyy");
         datos = data;
         if(data!=null){
+            TLAnticipoTablaActivityTabla.removeAllViews();
+            elementos = new ArrayList<>();
             if (EsAnticipo){
+                total=0;
                 if(data.getAnticipos().size()>0){
 
                    for (int x=0;x<data.getAnticipos().size();x++){
@@ -352,6 +405,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 }
             }else{
                 if(data.getCortes().size()>0){
+                    total =0 ;
                     for (int x=0;x<data.getCortes().size();x++){
                         try {
                             Date fecha = fdate.parse(
