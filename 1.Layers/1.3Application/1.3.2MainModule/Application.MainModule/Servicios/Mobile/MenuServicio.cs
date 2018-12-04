@@ -145,9 +145,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Calibración camioneta cilindro
                     if (rol.AppCalibracionCamionetaCilindro && !_AppCalibracionCamionetaCilindro)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionCamionetaCilindro"]));
-                        //lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionCamionetaCilindroInicial"]));
-                        //lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionCamionetaCilindroFinal"]));
+                        //lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionCamionetaCilindro"]));
                         _AppCalibracionCamionetaCilindro = true;
                     }
                     //Recarga - Gas Estación Carb.

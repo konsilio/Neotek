@@ -2,6 +2,7 @@
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Requisiciones;
 using Sagas.MainModule.Entidades;
 using System;
@@ -38,9 +39,11 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
         }
         public static ProductoOCDTO ToDTO(OrdenCompraProducto _prod)
         {
+            var oc = OrdenCompraServicio.Buscar(_prod.IdOrdenCompra);
             return new ProductoOCDTO()
             {
                 IdProducto = _prod.IdProducto,
+                IdOrdenCompra = _prod.IdOrdenCompra,
                 Producto = _prod.Producto,
                 ProductoServicioTipo = _prod.ProductoServicioTipo,
                 CantidadAComprar = _prod.Cantidad,
@@ -48,9 +51,11 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Aplicacion = _prod.Descripcion,
                 CentroCosto = _prod.CentroCosto.Descripcion,
                 IdCentroCosto = _prod.CentroCosto.IdCentroCosto,
+                IdCuentaContable = oc.IdCentroCosto,
                 EsActivoVenta = _prod.EsActivoVenta,
                 EsGas = _prod.EsGas,
-                EsTransporteGas = _prod.CProducto.EsTransporteGas
+                EsTransporteGas = _prod.CProducto.EsTransporteGas, 
+                CuentaContable = CuentaContableServicio.ObtenerCuentaContable(oc.IdCuentaContable).Descripcion
             };
         }
         public static List<ProductoOCDTO> ToDTO(List<RequisicionProducto> _prods)

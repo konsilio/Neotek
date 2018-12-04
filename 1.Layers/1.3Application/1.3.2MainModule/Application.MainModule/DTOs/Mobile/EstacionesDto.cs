@@ -16,5 +16,8 @@ namespace Application.MainModule.DTOs.Mobile
 
         public decimal P5000Inicial { get; set; }
 
+        public string NombrePipa { get; set; }
+
+        
     }
 }

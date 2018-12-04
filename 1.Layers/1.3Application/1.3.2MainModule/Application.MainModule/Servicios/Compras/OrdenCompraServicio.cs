@@ -319,9 +319,13 @@ namespace Application.MainModule.Servicios.Compras
         {
             return new OrdenCompraProductoDataAccess().Buscar(idOrdeCompra);
         }
-        public static RespuestaDto ActualzarProductos(List<OrdenCompraProducto> productos)
+        public static RespuestaDto ActualzarProductos(List<OrdenCompraProducto> productos, OrdenCompra oc)
         {
-            return new OrdenCompraProductoDataAccess().Actualizar(productos);
+            return new OrdenCompraProductoDataAccess().Actualizar(productos, oc);
+        }
+        public static RespuestaDto ActualzarProductos(List<OrdenCompraProducto> productos, List<OrdenCompra> ocs)
+        {
+            return new OrdenCompraProductoDataAccess().Actualizar(productos, ocs);
         }
         public static List<OrdenCompraProducto> AplicarCambiosOrdenCompraProducto(List<OrdenCompraProducto> Prods, List<OrdenCompraProducto> Entitys)
         {

@@ -62,6 +62,10 @@ public class PorcentajeCalibracionActivity extends AppCompatActivity implements 
         NPCalibracionPorcentajeActivityEntero.setValue(parte_entera);
         NPCalibracionPorcentajeActivityDecimal.setMaxValue(decimal);
         NPCalibracionPorcentajeActivityDecimal.setValue(decimal);
+        NPCalibracionPorcentajeActivityEntero.setMaxValue(100);
+        NPCalibracionPorcentajeActivityEntero.setMinValue(0);
+        NPCalibracionPorcentajeActivityDecimal.setMaxValue(9);
+        NPCalibracionPorcentajeActivityDecimal.setMinValue(0);
         //presenter.getPorcentaje(session.getToken());
     }
 

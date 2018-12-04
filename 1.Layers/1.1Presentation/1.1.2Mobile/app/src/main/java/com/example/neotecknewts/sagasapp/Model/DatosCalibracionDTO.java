@@ -7,10 +7,10 @@ import java.util.List;
 
 public class DatosCalibracionDTO extends RespuestaDTO implements Serializable {
     @SerializedName("estaciones")
-    public List<EstacionDTO> estaciones;
+    private List<EstacionDTO> estaciones;
 
     @SerializedName("medidores")
-    public List<MedidorDTO> medidores;
+    private List<MedidorDTO> medidores;
 
     public List<EstacionDTO> getEstaciones() {
         return estaciones;
@@ -46,6 +46,9 @@ public class DatosCalibracionDTO extends RespuestaDTO implements Serializable {
 
         @SerializedName("Medidor")
         private MedidorDTO medidor;
+
+        @SerializedName("NombrePipa")
+        private String NombrePipa;
 
         public int getIdAlmacenGas() {
             return IdAlmacenGas;
@@ -93,6 +96,14 @@ public class DatosCalibracionDTO extends RespuestaDTO implements Serializable {
 
         public void setMedidor(MedidorDTO medidor) {
             this.medidor = medidor;
+        }
+
+        public String getNombrePipa() {
+            return NombrePipa;
+        }
+
+        public void setNombrePipa(String nombrePipa) {
+            NombrePipa = nombrePipa;
         }
     }
 }

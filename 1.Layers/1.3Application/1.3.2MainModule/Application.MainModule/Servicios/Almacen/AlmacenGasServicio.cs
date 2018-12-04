@@ -83,6 +83,12 @@ namespace Application.MainModule.Servicios.Almacenes
             resp = new AlmacenGasDataAccess().Insertar(unidad);
             return ObtenerUnidadAlamcenGas((short)resp.Id);
         }
+
+        public static List<AlmacenGasRecarga> ObtenerRecargaInicial(short IdCAlmacenGasEntrada)
+        {
+            return new AlmacenGasDataAccess().ObtenerRecargaInicial(IdCAlmacenGasEntrada);
+        }
+
         public static RespuestaDto InsertarAutoconsumo(AlmacenGasAutoConsumo adapter)
         {
             return new AlmacenGasDataAccess().Insertar(adapter);
@@ -2304,9 +2310,6 @@ namespace Application.MainModule.Servicios.Almacenes
             apLectDto.unidadAlmacenGas.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdePorcentaje(apLectDto.unidadAlmacenGas.CapacidadTanqueLt.Value, apLectDto.unidadAlmacenGas.PorcentajeActual);
             apLectDto.unidadAlmacenGas.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(apLectDto.unidadAlmacenGas.CantidadActualLt, apLectDto.Empresa.FactorLitrosAKilos);
             apLectDto.TomaLecturaLectura.DatosProcesados = true;
-
-
-
             return apLectDto;
         }
         public static AplicaTomaLecturaDto AplicarTomaLecturaEstacion(AplicaTomaLecturaDto apLectDto)
