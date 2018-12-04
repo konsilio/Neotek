@@ -7,10 +7,10 @@ import java.util.List;
 
 public class DatosCalibracionDTO extends RespuestaDTO implements Serializable {
     @SerializedName("estaciones")
-    public List<EstacionDTO> estaciones;
+    private List<EstacionDTO> estaciones;
 
     @SerializedName("medidores")
-    public List<MedidorDTO> medidores;
+    private List<MedidorDTO> medidores;
 
     public List<EstacionDTO> getEstaciones() {
         return estaciones;
