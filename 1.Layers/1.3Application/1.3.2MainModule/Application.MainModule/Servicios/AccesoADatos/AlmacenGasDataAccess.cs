@@ -596,6 +596,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                 && x.Mes.Equals(mes)
                                                                 && x.Dia.Equals(dia)).ToList();
         }
+
+        public List<AlmacenGasTraspaso> Traspasos(short idCAlmacenGas)
+        {
+            return uow.Repository<AlmacenGasTraspaso>().Get(x => x.IdCAlmacenGasSalida.Equals(idCAlmacenGas)).ToList();
+        }
+
         public List<AlmacenGasMovimiento> BuscarUltimosMovimientosPorUnidadAlamcenGasConTipoEvento(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, byte idTipoMovimiento, short year, byte mes)
         {
             return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
