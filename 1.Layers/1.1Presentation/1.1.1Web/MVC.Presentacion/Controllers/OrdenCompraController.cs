@@ -259,18 +259,17 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+            //model.OrdenCompraExpedidor.FechaAutorizacion = DateTime.Now;
+            //model.OrdenCompraPorteador.FechaAutorizacion = DateTime.Now;
             var respuesta = OrdenCompraServicio.ConfirmarDatosPapeleta(model, tkn);
             if (respuesta.Exito)
-            {
-                var js = JsonConvert.SerializeObject(respuesta);
-                return Json(js, JsonRequestBehavior.AllowGet);
-            }
+                return RedirectToAction("Ordenes");
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
-                RedirectToAction("OrdenCompraComplementoGas", model.IdOrdenCompraPorteador);
-                return new JsonResult();
+                return RedirectToAction("OrdenCompraPago", new { id = model.OrdenCompraExpedidor.IdOrdenCompra });
             }
+        
         }
         public ActionResult OrdenCompraPago(int id)
         {

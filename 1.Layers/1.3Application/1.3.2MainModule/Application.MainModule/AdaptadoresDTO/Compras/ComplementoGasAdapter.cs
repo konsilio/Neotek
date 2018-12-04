@@ -30,11 +30,11 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 //Descarga
                 FechaEntraGas = descarga.FechaPapeleta.Value,
                 PorcenMagnatelOcularTractorINI = descarga.PorcenMagnatelOcularTractorINI ?? 0,
-                PorcenMagnatelOcularTractorFIN = descarga.PorcenMagnatelOcularTractorFIN??0,
-                PorcenMagnatelOcularAlmacenINI = descarga.PorcenMagnatelOcularAlmacenINI??0,
-                PorcenMagnatelOcularAlmacenFIN = descarga.PorcenMagnatelOcularAlmacenFIN??0,
-                TanquePrestado = descarga.TanquePrestado??false,
-                KilosPapeleta = descarga.MasaKg??0,
+                PorcenMagnatelOcularTractorFIN = descarga.PorcenMagnatelOcularTractorFIN ?? 0,
+                PorcenMagnatelOcularAlmacenINI = descarga.PorcenMagnatelOcularAlmacenINI ?? 0,
+                PorcenMagnatelOcularAlmacenFIN = descarga.PorcenMagnatelOcularAlmacenFIN ?? 0,
+                TanquePrestado = descarga.TanquePrestado ?? false,
+                KilosPapeleta = descarga.MasaKg ?? 0,
                 Productos = new List<ProductoOCDTO>()
             };
         }
@@ -43,7 +43,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             return new ComplementoGasDTO()
             {
                 //Papeleta
-                Fecha = descarga.Fecha,            
+                Fecha = descarga.Fecha,
                 FechaEmbarque = descarga.FechaEmbarque,
                 NumeroEmbarque = descarga.NumeroEmbarque,
                 ValorCarga = descarga.ValorCarga,
@@ -63,10 +63,10 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 PorcenMagnatelOcularTractorFIN = descarga.PorcenMagnatelOcularTractorFIN,
                 PorcenMagnatelOcularAlmacenINI = descarga.PorcenMagnatelOcularAlmacenINI,
                 PorcenMagnatelOcularAlmacenFIN = descarga.PorcenMagnatelOcularAlmacenFIN,
-               //Kilos
+                //Kilos
                 KilosPapeleta = descarga.KilosPapeleta,
                 KilosDescargados = descarga.KilosDescargados,
-                KilosDiferencia = descarga.KilosDiferencia,             
+                KilosDiferencia = descarga.KilosDiferencia,
             };
         }
         public static ComplementoGasDTO ToRequisicion(ComplementoGasDTO dto, Sagas.MainModule.Entidades.Requisicion requ)
@@ -108,9 +108,9 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 PorcenMagnatelOcularAlmacenFIN = descarga.PorcenMagnatelOcularAlmacenFIN,
                 TanquePrestado = descarga.TanquePrestado,
                 ////Kilos
-                //KilosPapeleta = descarga.KilosPapeleta,
-                //KilosDescargados = descarga.KilosDescargados,
-                //KilosDiferencia = descarga.KilosDiferencia,
+                MasaKg = descarga.KilosPapeleta,
+                //kilosdescargados = descarga.kilosdescargados,
+                //kilosdiferencia = descarga.kilosdiferencia,
             };
         }
     }

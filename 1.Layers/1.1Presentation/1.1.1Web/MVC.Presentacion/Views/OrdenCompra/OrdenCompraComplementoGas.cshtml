@@ -31,14 +31,18 @@
         @using (Html.BeginForm())
         {
             @Html.HiddenFor(m => m.FactorLitrosAKilos)
+            @Html.HiddenFor(m => m.OrdenCompraExpedidor.IdOrdenCompra)
+            @Html.HiddenFor(m => m.OrdenCompraExpedidor.FechaAutorizacion)
+            @Html.HiddenFor(m => m.OrdenCompraPorteador.IdOrdenCompra)
+            @Html.HiddenFor(m => m.OrdenCompraPorteador.FechaAutorizacion)
             @*@Html.HiddenFor(m => m.Fe)*@
-               @* @Html.HiddenFor(m => m.OrdenCompraPorteador)*@
+            @* @Html.HiddenFor(m => m.OrdenCompraPorteador)*@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <h2>Compras</h2>
                         <ul class="breadcrumb padding-0">
-                            <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home" )><i class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item">Compras</li>
                             <li class="breadcrumb-item">Orden de Compra</li>
                             <li class="breadcrumb-item">Complemento para Gas</li>
@@ -117,8 +121,8 @@
                             </div>
                         }
                         <div class="row clearfix blockquote blockquote-info btn-round">
-                            <div class="table-responsive">                              
-                                @Html.Partial("_ProductosComplementoGasPartial", Model.Productos)                             
+                            <div class="table-responsive">
+                                @Html.Partial("_ProductosComplementoGasPartial", Model.Productos)
                             </div>
                         </div>
                     </div>
@@ -167,7 +171,7 @@
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
                                                             @*@Html.TextBoxFor(m => m.FechaEmbarque, new { @class = "form-control datetimepicker" })
-                                                            @Html.HiddenFor(m => m.FechaEmbarque)*@
+                                                                @Html.HiddenFor(m => m.FechaEmbarque)*@
                                                             <input type="text" name="FechaEmbarque" value="@ViewBag.Complemeto.FechaEmbarque" class="form-control datetimepicker" />
                                                         </div>
                                                         @Html.ValidationMessageFor(m => m.FechaEmbarque, "", new { @class = "alert-danger" })
@@ -292,7 +296,7 @@
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
                                                             @*@Html.TextBoxFor(m => m.FechaEntraGas, new { @class = "form-control datetimepicker" })
-                                                            @Html.HiddenFor(m => m.FechaEntraGas)*@
+                                                                @Html.HiddenFor(m => m.FechaEntraGas)*@
                                                             <input type="text" name="FechaEntraGas" value="@ViewBag.Complemeto.FechaEntraGas" class="form-control datetimepicker" />
                                                         </div>
                                                         @Html.ValidationMessageFor(m => m.FechaEntraGas, "", new { @class = "alert-danger" })
@@ -320,10 +324,10 @@
                                                     </div>
                                                 </div>
                                                 @*<div class="col-md-3 content-center">
-                                                    <div class="checkbox">
-                                                    <input id="chBoxAlmacenPrestado" type="checkbox">
-                                                    <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
-                                                    </div>
+                                                        <div class="checkbox">
+                                                            <input id="chBoxAlmacenPrestado" type="checkbox">
+                                                            <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
+                                                        </div>
                                                     </div>*@
                                             </div>
                                             <div class="row clearfix">
