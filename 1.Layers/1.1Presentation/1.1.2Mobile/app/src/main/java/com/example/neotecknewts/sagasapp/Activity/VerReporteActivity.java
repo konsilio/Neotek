@@ -34,12 +34,14 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
@@ -112,16 +114,18 @@ public class VerReporteActivity extends AppCompatActivity {
             }
             if(EsTraspasoEstacionInicial ||EsTraspasoEstacionFinal){
                 traspasoDTO = (TraspasoDTO) bundle.getSerializable("traspasoDTO");
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                @SuppressLint("SimpleDateFormat") DateFormat s =
                         new SimpleDateFormat("ddMMyyyyhhmmssS");
                 String clave_unica = "TE";
                 clave_unica += (EsTraspasoEstacionFinal)? "F":"I";
                 clave_unica += s.format(new Date());
                 traspasoDTO.setClaveOperacion(clave_unica);
-                traspasoDTO.setFecha((Date) Calendar.getInstance().getTime());
+
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
-                        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                traspasoDTO.setFechaAplicacion(sf.format(new Date()));
+                        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss",Locale.getDefault());
+                Date fecha = new Date();
+                traspasoDTO.setFechaAplicacion(sf.format(fecha));
+                traspasoDTO.setFecha(sf.format(fecha));
                 GenerarReporteTraspaso(traspasoDTO);
             }
             if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
@@ -132,10 +136,12 @@ public class VerReporteActivity extends AppCompatActivity {
                 clave_unica += (EsTraspasoPipaFinal)? "F":"I";
                 clave_unica += s.format(new Date());
                 traspasoDTO.setClaveOperacion(clave_unica);
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
-                        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                traspasoDTO.setFecha((Date) Calendar.getInstance().getTime());
-                traspasoDTO.setFechaAplicacion(Calendar.getInstance().getTime().toString());
+                @SuppressLint("SimpleDateFormat") DateFormat sf =
+                        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss",Locale.getDefault());
+                Date fecha = new Date();
+
+                traspasoDTO.setFecha(sf.format(fecha));
+                traspasoDTO.setFechaAplicacion(sf.format(fecha));
                 GenerarReporteTraspasoPipa(traspasoDTO);
             }
             if(EsAnticipo){
@@ -848,22 +854,22 @@ public class VerReporteActivity extends AppCompatActivity {
 
         StringReporte = "\n Rep-Traspaso - [{Pipa}] \n" +
                 "\n Clave Traspaso" +
-                "\t [{ClaveTraspaso}]" +
+                "\n [{ClaveTraspaso}]" +
                 "\n Fecha " +
                 "\t [{Fecha}]" +
                 "\n Hora" +
                 "\t [{Hora}]\n" +
                 "------------------------------------" +
                 "\n Lectura P5000 " +
-                "\n  "+
+                "\n"+
                 "\t Inicial: " +
-                "\t Final" +
-                "\n[{PipaNombre}]"+
-                "\t[{P5000Inicial}]" +
-                "\t[{P5000Final}]" +
-                "\n[{PipaNombre2}]"+
-                "\t[{P5000Inicial2}]" +
-                "\t[{P5000Final2}]" +
+                "\t Final " +
+                "\n[{PipaNombre}] | "+
+                "\t[{P5000Inicial}] | " +
+                "\t[{P5000Final}] | " +
+                "\n[{PipaNombre2}] | "+
+                "\t[{P5000Inicial2}] | " +
+                "\t[{P5000Final2}] | " +
                 "\n------------------------------------" +
                 "\nLitros traspasados: \t" +
                 "[{LitrosTraspasados}]\n"+
@@ -871,7 +877,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "[{NombrePipaTraspaso}](Traspase)--------\n"+
                 "[{NombreUsuarioTraspaso}]\n"+
                 "[{NombrePipaRecibi}](Recibi)\n"+
-                "[{NombreUsuarioRecivi}]------------------\n";
+                "[{NombreUsuarioRecibi}]------------------\n";
         HtmlReporte = HtmlReporte.replace("[{Pipa}]",
                 traspasoDTO.getNombreEstacionTraspaso());
         StringReporte = StringReporte.replace("[{Estacion}]",
@@ -884,18 +890,20 @@ public class VerReporteActivity extends AppCompatActivity {
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
                 new SimpleDateFormat("dd/MM/yyyy");
-        HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(traspasoDTO.
-                getFecha()));
-        StringReporte = StringReporte.replace("[{Fecha}]",fdate.format(traspasoDTO.
-                getFecha()));
+        HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(new Date()));
+        StringReporte = StringReporte.replace("[{Fecha}]",fdate.format(new Date()));
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fhour=
                 new SimpleDateFormat("hh:mm:ss a");
         HtmlReporte = HtmlReporte.replace("[{Hora}]",fhour.format(
-                traspasoDTO.getFecha().getTime()
+                new Date()
         ));
         StringReporte = StringReporte.replace("[{Hora}]",fhour.format(
-                traspasoDTO.getFecha().getTime()
+                new Date()
         ));
+        HtmlReporte = HtmlReporte.replace("[{Pipa}]",
+                traspasoDTO.getNombreEstacionTraspaso());
+        StringReporte = StringReporte.replace("[{Pipa}]",
+                traspasoDTO.getNombreEstacionTraspaso());
 
         HtmlReporte = HtmlReporte.replace("[{PipaNombre}]",
                 traspasoDTO.getNombreEstacionTraspaso());
@@ -947,18 +955,18 @@ public class VerReporteActivity extends AppCompatActivity {
                 traspasoDTO.getNombreEstacionTraspaso());
 
         HtmlReporte = HtmlReporte.replace("[{NombreUsuarioTraspaso}]",
-                "");
+                session.getAttribute(Session.KEY_NOMBRE));
         StringReporte = StringReporte.replace("[{NombreUsuarioTraspaso}]",
-                "");
+                session.getAttribute(Session.KEY_NOMBRE));
 
         HtmlReporte = HtmlReporte.replace("[{NombrePipaRecibi}]",
-                "");
+                traspasoDTO.getNombreEstacionEntrada());
         StringReporte = StringReporte.replace("[{NombrePipaRecibi}]",
-                "");
+                traspasoDTO.getNombreEstacionEntrada());
 
         HtmlReporte = HtmlReporte.replace("[{NombreUsuarioRecivi}]",
                 /*session.getAttribute(Session.KEY_NOMBRE)*/"");
-        StringReporte = StringReporte.replace("[{NombreUsuarioRecivi}]",
+        StringReporte = StringReporte.replace("[{NombreUsuarioRecibi}]",
                 /*session.getAttribute(Session.KEY_NOMBRE)*/"");
 
     }
@@ -1170,7 +1178,7 @@ public class VerReporteActivity extends AppCompatActivity {
 
         StringReporte = "\n Rep-Traspaso - [{Estacion}] \n" +
                 "\n Clave Traspaso" +
-                "[{ClaveTraspaso}]" +
+                "\n[{ClaveTraspaso}]\n" +
                 "\n Fecha " +
                 "\t [{Fecha}]" +
                 "\n Hora" +
@@ -1179,28 +1187,28 @@ public class VerReporteActivity extends AppCompatActivity {
                 "\n Porcentaje Estacion (%) " +
                 "\n Inicial: " +
                 "\t Final" +
-                "\n[{PorcentajeInicial}]" +
-                "\t[{PorcentajeFinal}]" +
+                "\n| [{PorcentajeInicial}]" +
+                "\t | [{PorcentajeFinal}] |" +
                 "\n--------------------------------" +
                 "\n Lectura P5000" +
-                "\n\t" +
+                "\n\t  " +
                 "Inicial:\t" +
                 "Final\n" +
 
-                "[{NombreEstacion}] \t" +
-                "[{LecturaIncialEstacion}] \t" +
-                "[{LecturaFinalEstacion}] \n" +
+                "[{NombreEstacion}] |\t" +
+                "[{LecturaIncialEstacion}] |\t" +
+                "[{LecturaFinalEstacion}] |\n" +
 
-                "[{NombrePipa}] \t" +
-                "[{LecturaInicialPipa}] \t" +
-                "[{LecturaFinalPipa}] \n" +
+                "[{NombrePipa}] |\t" +
+                "[{LecturaInicialPipa}] |\t" +
+                "[{LecturaFinalPipa}] |\n" +
                 "Litros traspasados: \t" +
                 "[{LitrosTraspasados}]\n"+
                 "\t\tFirma\n"+
                 "[{NombrePipaTraspaso}](Traspase)\n________________________________\n"+
                 "[{NombreUsuarioTraspaso}]\n"+
                 "[{NombrePipaRecibi}](Recibí)\n"+
-                "[{NombreUsuarioRecivi}]\n________________________________\n";
+                "[{NombreUsuarioRecibi}]\n________________________________\n";
 
         StringReporte = StringReporte.replace("[{Estacion}]",
                 traspasoDTO.getNombreEstacionTraspaso());
@@ -1214,14 +1222,12 @@ public class VerReporteActivity extends AppCompatActivity {
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
                 new SimpleDateFormat("dd/MM/yyyy");
-        StringReporte = StringReporte.replace("[{Fecha}]",fdate.format(traspasoDTO
-                .getFecha()));
-        HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(traspasoDTO
-                .getFecha()));
+        StringReporte = StringReporte.replace("[{Fecha}]",fdate.format(new Date()));
+        HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(new Date()));
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fhour=
                 new SimpleDateFormat("hh:mm:ss a");
-        StringReporte = StringReporte.replace("[{Hora}]",fhour.format(traspasoDTO.getFecha().getTime()));
-        HtmlReporte = HtmlReporte.replace("[{Hora}]",fhour.format(traspasoDTO.getFecha().getTime()));
+        StringReporte = StringReporte.replace("[{Hora}]",fhour.format(new Date()));
+        HtmlReporte = HtmlReporte.replace("[{Hora}]",fhour.format(new Date()));
 
         StringReporte = StringReporte.replace("[{PorcentajeInicial}]",
                 String.valueOf(traspasoDTO.getPorcentajeInicial())+" %");
@@ -1269,17 +1275,25 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{LitrosTraspasados}]",
                 String.valueOf(traspasados));
 
-        StringReporte = StringReporte.replace("[{NombrePipaTraspaso}]","");
-        HtmlReporte = HtmlReporte.replace("[{NombrePipaTraspaso}]","");
+        StringReporte = StringReporte.replace("[{NombrePipaTraspaso}]",
+        traspasoDTO.getNombreEstacionTraspaso());
+        HtmlReporte = HtmlReporte.replace("[{NombrePipaTraspaso}]",
+                traspasoDTO.getNombreEstacionTraspaso());
 
-        StringReporte = StringReporte.replace("[{NombreUsuarioTraspaso}]","");
-        HtmlReporte = HtmlReporte.replace("[{NombreUsuarioTraspaso}]","");
+        StringReporte = StringReporte.replace("[{NombreUsuarioTraspaso}]",
+                session.getAttribute(Session.KEY_NOMBRE));
+        HtmlReporte = HtmlReporte.replace("[{NombreUsuarioTraspaso}]",
+                session.getAttribute(Session.KEY_NOMBRE));
 
-        StringReporte = StringReporte.replace("[{NombrePipaRecibi}]","");
-        HtmlReporte = HtmlReporte.replace("[{NombrePipaRecibi}]","");
+        StringReporte = StringReporte.replace("[{NombrePipaRecibi}]",
+                traspasoDTO.getNombreEstacionEntrada());
+        HtmlReporte = HtmlReporte.replace("[{NombrePipaRecibi}]",
+                traspasoDTO.getNombreEstacionEntrada());
 
-        StringReporte = StringReporte.replace("[{NombreUsuarioRecivi}]","");
-        HtmlReporte = HtmlReporte.replace("[{NombreUsuarioRecivi}]","");
+        StringReporte = StringReporte.replace("[{NombreUsuarioRecivi}]",
+                "");
+        HtmlReporte = HtmlReporte.replace("[{NombreUsuarioRecibi}]",
+                "");
     }
 
     void listDevices(){

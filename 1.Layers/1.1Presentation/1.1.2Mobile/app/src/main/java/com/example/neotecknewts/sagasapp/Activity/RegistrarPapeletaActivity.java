@@ -395,6 +395,8 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         //sf.format(fechaEmbarque);
 
         papeletaDTO.setCapacidadTanque(Double.parseDouble(editTextCapTanque.getText().toString()));
+        //Falta capacidad tanque el kg
+        papeletaDTO.setCapacidadTanqueKg(Double.parseDouble("0"));
         papeletaDTO.setFecha(formato_fecha);
         papeletaDTO.setFechaEmbarque(formato_fecha_embarque);
         papeletaDTO.setIdOrdenCompraExpedidor(ordenCompraDTOExpedidor.getIdOrdenCompra());

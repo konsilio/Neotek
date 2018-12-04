@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -146,7 +147,8 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
 
     private void openCameraIntent() {
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Picture"+new Date().toString());
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
