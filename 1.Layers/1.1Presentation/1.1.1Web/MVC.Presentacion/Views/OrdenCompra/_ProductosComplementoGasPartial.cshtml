@@ -38,9 +38,11 @@
             c.Caption = "Orden de compra";
             c.Width = System.Web.UI.WebControls.Unit.Pixel(0);
             c.Settings.AllowSort = DefaultBoolean.False;
+            c.Settings.ShowEditorInBatchEditMode = false;
             c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             c.ReadOnly = true;
-            //c.Index = -1;
+            //c.Visible = false;
+
         });
 
         settings.Columns.Add(c =>
@@ -120,18 +122,18 @@
         //    MVCxGridView gridView = (MVCxGridView)sender;
         //    if (gridView.EditingRowVisibleIndex > -1)
         //    {
-        //        e.Properties["cpMiddleName"] = gridView.GetRowValues(gridView.EditingRowVisibleIndex, "IdOrdenCompra");
+        //        e.Properties["cpIdOrdenCompra"] = gridView.GetRowValues(gridView.EditingRowVisibleIndex, "IdOrdenCompra");
         //    }
         //};
 
-        //settings.ClientSideEvents.BeginCallback = "function(s, e) { if(s.cpMiddleName) e.customArgs['IdOrdenCompra'] =  s.cpMiddleName; }";
+        //settings.ClientSideEvents.BeginCallback = "function(s, e) { if(s.cpIdOrdenCompra) e.customArgs['IdOrdenCompra'] =  s.cpIdOrdenCompra; }";
 
-        settings.CellEditorInitialize = (s, e) =>
-        {
-            ASPxEdit editor = (ASPxEdit)e.Editor;
-            editor.ValidationSettings.Display = Display.None;
-        };
-        settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
+        //settings.CellEditorInitialize = (s, e) =>
+        //{
+        //    ASPxEdit editor = (ASPxEdit)e.Editor;
+        //    editor.ValidationSettings.Display = Display.None;
+        //};
+        //settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
     });
 }
 @grid.Bind(Model).GetHtml()

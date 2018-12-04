@@ -356,7 +356,7 @@ namespace MVC.Presentacion.Controllers
             return PartialView("ProductosOCPartial");
         }
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductosComplementoGasPartialUpdate(MVCxGridViewBatchUpdateValues<OrdenCompraProductoDTO, int> updateValues)
+        public ActionResult ProductosComplementoGasPartialUpdate(MVCxGridViewBatchUpdateValues<OrdenCompraProductoDTO, int> updateValues, [ModelBinder(typeof(DevExpressEditorsBinder))] OrdenCompraProductoDTO ocpDTO)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();

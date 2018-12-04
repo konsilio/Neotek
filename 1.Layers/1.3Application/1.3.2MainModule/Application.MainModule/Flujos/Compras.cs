@@ -150,7 +150,7 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaDto ActulizarOrdenCompraProducto(List<OrdenCompraProductoDTO> listDTO)
         {
-            if (listDTO.FirstOrDefault().IdOrdenCompra == (listDTO.Sum(x => x.IdOrdenCompra) / listDTO.Count))
+            if (listDTO.FirstOrDefault().IdOrdenCompra == Convert.ToDecimal((decimal)listDTO.Sum(x => x.IdOrdenCompra) / (decimal)listDTO.Count))
             {
                 var OC = BuscarOrdenCompra(listDTO.FirstOrDefault().IdOrdenCompra);
                 var prodsEntity = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(OC.IdOrdenCompra));

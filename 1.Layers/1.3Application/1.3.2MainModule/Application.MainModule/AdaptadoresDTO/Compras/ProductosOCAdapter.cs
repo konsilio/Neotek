@@ -51,7 +51,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Aplicacion = _prod.Descripcion,
                 CentroCosto = _prod.CentroCosto.Descripcion,
                 IdCentroCosto = _prod.CentroCosto.IdCentroCosto,
-                IdCuentaContable = oc.IdCentroCosto,
+                IdCuentaContable = oc.IdCuentaContable,
                 EsActivoVenta = _prod.EsActivoVenta,
                 EsGas = _prod.EsGas,
                 EsTransporteGas = _prod.CProducto.EsTransporteGas, 
