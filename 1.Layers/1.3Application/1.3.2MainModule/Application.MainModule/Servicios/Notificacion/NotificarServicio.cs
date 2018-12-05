@@ -189,7 +189,7 @@ namespace Application.MainModule.Servicios.Notificacion
         }
         private static void Enviar(CorreoDto dto)
         {
-            if (string.IsNullOrEmpty(dto.De) && dto.ParaLista.Count > 0)
+            if (!string.IsNullOrEmpty(dto.De) && dto.ParaLista.Count > 0)
             {
                 EnviarCorreosServicio.Enviar(dto);
             }
