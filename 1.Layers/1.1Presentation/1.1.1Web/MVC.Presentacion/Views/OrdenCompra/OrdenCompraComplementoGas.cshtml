@@ -527,7 +527,7 @@
                                                             <select name="OrdenCompraExpedidor.Iva" id="IVAExpedidor" class="form-control" data-live-search="true" onchange="javascript: CalcularImporteExpedidor()">
                                                                 @foreach (var item in ViewBag.IVAs)
                                                                 {
-                                                                <option value="@item.Value">@item.Text</option>
+                                                                    <option value="@item.Value">@item.Text</option>
                                                                 }
                                                             </select>
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.Iva, "", new { @class = "alert-danger" })
@@ -612,7 +612,16 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            @Html.TextBoxFor(m => m.OrdenCompraPorteador.FactorConvTransporte, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+                                                            @if (ViewBag.Complemeto.OrdenCompraPorteador.FactorConvTransporte != null)
+                                                            {
+                                                                @*<input type="text" name="FactorConvTransporte" class="form-control" value="@((ViewBag.Complemeto==null)?"":ViewBag.Complemeto.OrdenCompraPorteador.FactorConvTransporte)" />*@
+                                                                @Html.TextBoxFor(m => m.OrdenCompraPorteador.FactorConvTransporte, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(m => m.OrdenCompraPorteador.FactorConvTransporte, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+                                                            }
+                                                            @Html.HiddenFor(m => m.OrdenCompraPorteador.FactorConvTransporte)
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.FactorConvTransporte, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
@@ -623,8 +632,17 @@
                                                     </div>
                                                     <div class="col-md-4 text-right">
                                                         <div class="form-group">
-                                                            $ @Html.LabelFor(m => m.OrdenCompraPorteador.PrecioTransporte, new { id = "PrecioTransporte" })
-
+                                                            $
+                                                            @if (ViewBag.Complemeto.OrdenCompraPorteador.PrecioTransporte != null)
+                                                            {
+                                                                @*<label name="PrecioTransporte" class="form-control" value="@((ViewBag.Complemeto==null)?"":ViewBag.Complemeto.OrdenCompraPorteador.PrecioTransporte)" />*@
+                                                                @Html.LabelFor(m => m.OrdenCompraPorteador.PrecioTransporte, new { id = "PrecioTransporte" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.LabelFor(m => m.OrdenCompraPorteador.PrecioTransporte, new { id = "PrecioTransporte" })
+                                                            }
+                                                            @Html.HiddenFor(m => m.OrdenCompraPorteador.PrecioTransporte)
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.PrecioTransporte, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
@@ -638,7 +656,16 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            @Html.TextBoxFor(m => m.OrdenCompraPorteador.Casetas, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+                                                            @if (ViewBag.Complemeto.OrdenCompraPorteador.Casetas != null)
+                                                            {
+                                                                @*<label name="Casetas" class="form-control" value="@((ViewBag.Complemeto==null)?"":ViewBag.Complemeto.OrdenCompraPorteador.Casetas)" />*@
+                                                                @Html.TextBoxFor(m => m.OrdenCompraPorteador.Casetas, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(m => m.OrdenCompraPorteador.Casetas, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+                                                            }
+                                                            @Html.HiddenFor(m => m.OrdenCompraPorteador.Casetas)
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.Casetas, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
@@ -653,6 +680,8 @@
                                                     <div class="col-md-4 text-right">
                                                         <div class="form-group">
                                                             $ @Html.LabelFor(m => m.OrdenCompraPorteador.SubtotalSinIva, new { id = "SubTotoalPorteador" })
+                                                         
+                                                            @Html.HiddenFor(m => m.OrdenCompraPorteador.SubtotalSinIva)
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.SubtotalSinIva, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
@@ -669,13 +698,13 @@
                                                             <select name="Iva" id="IVAPorteador" class="form-control" data-live-search="true" onchange="javascript: CalcularImportePortador()">
                                                                 @foreach (var item in ViewBag.IVAs)
                                                                 {
-                                                                    if (ViewBag.Complemeto.OrdenCompraPorteador.Iva == item.Value+".0000")
+                                                                    if (ViewBag.Complemeto.OrdenCompraPorteador.Iva.ToString() == item.Value)
                                                                     {
                                                                         <option value="@item.Value" selected>@item.Text</option>
                                                                     }
                                                                     else
                                                                     {
-                                                                    <option value="@item.Value">@item.Text</option>
+                                                                        <option value="@item.Value">@item.Text</option>
                                                                     }
                                                                 }
                                                             </select>
@@ -690,7 +719,17 @@
                                                         <label for="btnSolicitarPaogPorteador">IMPORTE A PAGAR</label>
                                                     </div>
                                                     <div class="col-md-4 form-control-label text-right">
-                                                        $ @Html.LabelFor(m => m.OrdenCompraPorteador.Total, new { id = "ImportePorteador" })
+                                                        
+                                                        @if (ViewBag.Complemeto.OrdenCompraPorteador.Total != null)
+                                                        {
+                                                            @*<label name="Total" class="form-control" value="@((ViewBag.Complemeto==null)?"":ViewBag.Complemeto.OrdenCompraPorteador.Total)" />*@
+                                                            @Html.LabelFor(m => m.OrdenCompraPorteador.Total, new { id = "ImportePorteador" })
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.LabelFor(m => m.OrdenCompraPorteador.Total, new { id = "ImportePorteador" })
+                                                        }
+                                                        @Html.HiddenFor(m => m.OrdenCompraPorteador.Total)
                                                         @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.Total, "", new { @class = "alert-danger" })
                                                     </div>
                                                     <div class="col-md-3 form-control-label">
@@ -729,7 +768,15 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="submit" ID="btnSolicitarPaogPorteador" class="btn btn-raised btn-primary btn-round" disabled formaction="SolisitarPagoPorteador" value="Solicitar Pago" />
+                                                            @if (ViewBag.enabled == false)
+                                                            {
+                                                                <input type="submit" ID="btnSolicitarPagoPorteador" class="btn btn-raised btn-primary btn-round" disabled formaction=@Url.Action("SolicitarPagoPorteador") value="Solicitar Pago" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="submit" class="btn btn-raised btn-primary btn-round" formaction=@Url.Action("SolicitarPagoPorteador") value="Solicitar Pago" />
+                                                            }
+
                                                         </div>
                                                     </div>
                                                 </div>
