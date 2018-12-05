@@ -264,19 +264,13 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("OrdenCompraComplemento", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
             }
-<<<<<<< HEAD
-=======
 
->>>>>>> CJAL-CajaGeneral
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("OrdenCompraPago", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
             }
-<<<<<<< HEAD
-=======
 
->>>>>>> CJAL-CajaGeneral
         }
         public ActionResult OrdenCompraPago(int id)
         {
