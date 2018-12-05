@@ -272,8 +272,9 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     //Agrego las ventas correspondientes al corte
                     for (CorteDTO itemCorte : datos.getCortes()) {
                         VentasCorteDTO ventasCorteDTO = new VentasCorteDTO();
-                        ventasCorteDTO.setClaveCorte(clave_unica);
-                        ventasCorteDTO.setClaveVenta(itemCorte.getTiket());
+                        ventasCorteDTO.setCorte(clave_unica);
+                        ventasCorteDTO.setTiketVenta(itemCorte.getTiket());
+                        ventasCorteDTO.setIdVenta(itemCorte.getId());
                         corteDTO.getConceptos().add(ventasCorteDTO);
                     }
                     //Agrego las ventas correspondientes al corte
