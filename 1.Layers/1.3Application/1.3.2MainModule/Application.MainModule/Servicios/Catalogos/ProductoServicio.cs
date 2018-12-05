@@ -224,7 +224,6 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
-
         public static List<Producto> ObtenerProductoActivoVenta(short idEmpresa,bool esGas = false)
         {
             var empresa = EmpresaServicio.Obtener(idEmpresa);

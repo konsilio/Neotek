@@ -11,6 +11,7 @@
         $("#btnGuardarDatosPorteador").click(function () {
             $("form").attr("action", "/OrdenCompra/GuardarDatosPorteador");
         });
+        $("#iva").hide();
         //$("#btnGuardarDatosPapeleta").click(function () {
         //    debugger
         //    $("form").attr("action", "/OrdenCompra/GuardarDatosPapeleta");
@@ -105,6 +106,7 @@
     };
 
     var CalcularImportePortador = function () {
+        debugger
         var FactorConv = $("#OrdenCompraPorteador_FactorConvTransporte").val();
         var kilogramosPapeleta = $("#KilosPapeleta").val();
         var Casetas = $("#OrdenCompraPorteador_Casetas").val();
@@ -113,7 +115,7 @@
         var PrecioTransporte = ObtenerPrecioTransporte(FactorConv, kilogramosPapeleta);
         var Subtotal = ObtenerSubtotalTransporte(PrecioTransporte, Casetas);
         var ImportePagar = ObtenerImporteTransporte(Subtotal, Iva);
-
+        $("#iva").val(Iva);      
         $("#PrecioTransporte")[0].textContent = Number.isNaN(PrecioTransporte) ? "0" : redondeo(PrecioTransporte, 5);
         $("#SubTotoalPorteador")[0].textContent = Number.isNaN(Subtotal) ? "0" : redondeo(Subtotal, 5);
         $("#ImportePorteador")[0].textContent = new Intl.NumberFormat("es-MX").format(Number.isNaN(ImportePagar) ? "0" : redondeo(ImportePagar, 2));
