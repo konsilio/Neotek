@@ -48,8 +48,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdTipoMedidor = unidad.IdTipoMedidor.Value,
                 IdAlmacenGas = (short)estacion.IdEstacionCarburacion,
                 NombreAlmacen = estacion.Nombre,
-                P5000Inicial = lecturaInicial.P5000.Value!=null?lecturaInicial.P5000.Value:0,
-                P5000Final = unidad.P5000Actual.Value!=null?unidad.P5000Actual.Value:0,
+                P5000Inicial = lecturaInicial.P5000!=null?lecturaInicial.P5000.Value:0,
+                P5000Final = unidad.P5000Actual!=null?unidad.P5000Actual.Value:0,
                 AnticiposEstacion = ToDTO(unidad)
             };
         }
