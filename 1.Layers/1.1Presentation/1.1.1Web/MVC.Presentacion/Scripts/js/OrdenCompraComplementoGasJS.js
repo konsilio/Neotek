@@ -19,7 +19,6 @@
         //    }
         //});
     });
-<<<<<<< HEAD
 //kilos finales
     var ObtenerLitrosDesdeKilos = function (kilogramos, factor) {
         return kilogramos / factor;
@@ -144,7 +143,7 @@
     function OnBeginGridCallback(s, e) {
         e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
     }
-=======
+
     $("#iva").hide();
     //$("#btnGuardarDatosPapeleta").click(function () {
     //    debugger
@@ -287,4 +286,4 @@ function OnBatchEditEndEditing(s, e) {
 function OnBeginGridCallback(s, e) {
     e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
 }
->>>>>>> CJAL-CajaGeneral
+
