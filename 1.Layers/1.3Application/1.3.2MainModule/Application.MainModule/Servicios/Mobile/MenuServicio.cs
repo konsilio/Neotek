@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -185,7 +186,15 @@ namespace Application.MainModule.Servicios.Mobile
                     //Diposición de efectivo
                     if(rol.AppDisposicionEfectivo && !_AppDisposicionEfectivo)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionAnticipoEstacionCarb"]));
+                        var operador = PuntoVentaServicio.ObtenerOperador(idUsuario);
+                        var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
+                        var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+
+                        if (unidadAlmacen.IdPipa != null)
+                        {
+                            lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionAnticipoEstacionCarb"]));
+                        }
+                        
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
                         _AppDisposicionEfectivo = true;
                     }
