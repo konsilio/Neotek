@@ -193,18 +193,15 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.ReporteDia(fecha, idCAlmacenGas), Request);
         }
-        /// <summary>
-        /// No aplica
-        /// </summary>
-        /// <param name="esAnticipo"></param>
-        /// <param name="esCorteCaja"></param>
-        /// <returns></returns>
-        /*[Route("catalogos/anticipos/{esAnticipo}/{esCorteCaja}")]
-        public HttpResponseMessage GetEstacionesDeposito(bool esAnticipo,bool esCorteCaja)
-        {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoEstaciones(esAnticipo, esCorteCaja),Request);
-        }*/
 
+        #region Clientes punto venta mobile
+        /// <summary>
+        /// GetTipoPersona
+        /// Permite mostrar un listado de los tipos de persona para el registro de 
+        /// clientes, esta tendra ligada la razon social respectiva para el tipo de 
+        /// persona
+        /// </summary>
+        /// <returns>Dto con la lista de tipos de persona y razones sociales</returns>
         [Route("catalogos/tipo-persona")]
         public HttpResponseMessage GetTipoPersona()
         {
@@ -223,7 +220,9 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.registrarCliente(cliente), Request);
         }
+        #endregion
 
+        #region Punto de venta
         [Route("cliente/lista-clientes/{criterio}")]
         public HttpResponseMessage GetListaClientes(String criterio)
         {
@@ -234,12 +233,15 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.Venta(venta), Request);
         }
+        #endregion
+
         [Route("catalogos/recarga/{esEstacion}/{esPipa}/{esCamioneta}")]
         public HttpResponseMessage GetListaRecargas(bool esEstacion, bool esPipa, bool esCamioneta)
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoRecargas(esEstacion, esPipa, esCamioneta), Request);
         }
 
+        #region Autoconsumos
         [Route("autoconsumo/{esFinal}")]
         public HttpResponseMessage PostAutoconsumo(AutoconsumoDTO dto, bool esFinal = false)
         {
@@ -251,7 +253,9 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoAutoconsumo(esEstacion, esInventario, esPipas, esFinal), Request);
         }
+        #endregion
 
+        #region Calibracion de gas
         [Route("catalogos/calibracion/{esEstacion}/{esPipa}")]
         public HttpResponseMessage GetCatalogosCalibracion(bool esEstacion, bool esPipa)
         {
@@ -263,6 +267,7 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.Calibracion(dto, esFinal), Request);
         }
+        #endregion
 
         [Route("catalogos/traspaso/{esPipa}")]
         public HttpResponseMessage GetCatalogoTraspaso(bool esPipa)

@@ -492,7 +492,7 @@ namespace Application.MainModule.Flujos
                 pipa = unidadAlmacen.Pipa;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x=>x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen).FindAll(x => x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
-                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year)).ToList();
+                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year) && x.IdTipoOperacion.Equals(1)).ToList();
                 var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(Convert.ToByte(fecha.Day)) &&
                     X.Mes.Equals(Convert.ToByte(fecha.Month)) && X.Year.Equals((short)fecha.Year)).ToList();
                 dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos); 
