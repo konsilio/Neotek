@@ -78,12 +78,12 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 ).OrderBy(x => x.FechaRegistro).Last();
             return new PipaDto()
             {
-                Medidor = TipoMedidorAdapter.ToDto(TipoMedidorGasServicio.Obtener(unidad.IdTipoMedidor.Value)),
-                IdTipoMedidor = unidad.IdTipoMedidor.Value,
+                Medidor = TipoMedidorAdapter.ToDto(TipoMedidorGasServicio.Obtener(unidad.IdTipoMedidor ?? 0)),
+                IdTipoMedidor = unidad.IdTipoMedidor ?? 0,
                 IdAlmacenGas = (short)pipa.IdPipa,
                 NombreAlmacen = pipa.Nombre,
-                CantidadP5000 = lecturaInicial.P5000!=null? lecturaInicial.P5000:0,
-                P5000Final = (unidad.P5000Actual != null) ? unidad.P5000Actual.Value : 0,
+                CantidadP5000 = lecturaInicial.P5000 ?? 0,
+                P5000Final = unidad.P5000Actual ?? 0,
                 AnticiposEstacion = ToDTO(unidad)
             };
         }

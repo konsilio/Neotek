@@ -9,6 +9,6 @@ namespace Application.MainModule.DTOs.Compras
     [Serializable]
     public class OrdenCompraCrearDTO : OrdenCompraDTO
     {
-       // public List<OrdenCompraProductoCrearDTO> Productos { get; set; }
+       public List<OrdenCompraProductoCrearDTO> Productos { get; set; }
     }
 }
