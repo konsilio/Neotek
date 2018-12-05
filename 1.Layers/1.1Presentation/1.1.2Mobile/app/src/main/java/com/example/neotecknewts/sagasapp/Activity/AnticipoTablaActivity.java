@@ -221,7 +221,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                                     dialogInterface.dismiss());
                             builderMonto.create().show();
                         }else{
-                            if(datos.getCortes().size()>0) {
+                            if(datos.getAnticipos().size()>0) {
                                 anticiposDTO.setAnticipar(Double.parseDouble(cantidad));
                                 @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
                                         "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -254,7 +254,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     }
                 }
             } else {
-                if(datos.getAnticipos().size()>0) {
+                if(datos.getCortes().size()>0) {
                     @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                             new SimpleDateFormat("ddMMyyyyhhmmssS");
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm",
