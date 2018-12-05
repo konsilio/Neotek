@@ -210,6 +210,7 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
         int pos_predeterminda = 0;
         if(datosTraspasoDTO!=null){
             if(datosTraspasoDTO.getEstaciones().size()>0){
+                lista_estacion_salida = new String[datosTraspasoDTO.getEstaciones().size()];
                 for (int x=0;x<datosTraspasoDTO.getEstaciones().size();x++){
                     lista_estacion_salida[x] = datosTraspasoDTO.getEstaciones()
                             .get(x).getNombreAlmacen();
@@ -230,6 +231,7 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
             }
 
             if(datosTraspasoDTO.getMedidores().size()>0){
+                lista_medidor = new String[datosTraspasoDTO.getMedidores().size()];
                 for (int x=0;x<datosTraspasoDTO.getMedidores().size();x++){
                     lista_medidor[x] = datosTraspasoDTO.getMedidores().get(x)
                             .getNombreTipoMedidor();
@@ -251,6 +253,7 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
                 }
             }
             if(datosTraspasoDTO.getPipas().size()>0){
+                lista_pipa_entrada = new String[datosTraspasoDTO.getPipas().size()];
                 for (int x=0;x<datosTraspasoDTO.getPipas().size();x++){
                     lista_pipa_entrada[x]= datosTraspasoDTO.getPipas().get(x).getNombreAlmacen();
                 }

@@ -65,9 +65,9 @@ public class CalibracionEstacionActivity extends AppCompatActivity
                 SCalibracionEstacionActivityListaEstaciones);
         SCalibracionEstacionActivityListaMedidor = findViewById(R.id.
                 SCalibracionEstacionActivityListaMedidor);
-        lista_estacion = new String[]{"Estación No. 1","Estacion No. 2"};
+        /*lista_estacion = new String[]{"Estación No. 1","Estacion No. 2"};
         lista_medidor = new String[]{"Magnatel","Rotogate"};
-        /*SCalibracionEstacionActivityListaEstaciones.setAdapter(new ArrayAdapter<>(
+        SCalibracionEstacionActivityListaEstaciones.setAdapter(new ArrayAdapter<>(
                 this,
                 R.layout.custom_spinner,
                 lista_estacion
@@ -185,6 +185,7 @@ public class CalibracionEstacionActivity extends AppCompatActivity
                     R.layout.custom_spinner,
                     lista_medidor
             ));
+            lista_estacion = new String[dto.getEstaciones().size()];
             for (int x = 0; x<dto.getEstaciones().size();x++) {
                 lista_estacion[x]= dto.getEstaciones()
                     .get(x).getNombreAlmacen();

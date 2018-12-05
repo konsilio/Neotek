@@ -33,7 +33,7 @@ public class Sincronizacion {
         progressDialog.setCancelable(false);
         progressDialog.show();
         //region Sincronizar papeletas
-        Papeleta papeleta = new Papeleta(context,activity,new PapeletaSQL(context));
+        Papeleta papeleta = new Papeleta(context,new PapeletaSQL(context),this);
         boolean EnvioPapeleta = papeleta.SincronizarPapeletas();
         mensajes.addAll(papeleta.mensajes);
         //endregion
@@ -59,5 +59,8 @@ public class Sincronizacion {
         this.dialog.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
                 dialogInterface.dismiss());
         this.dialog.create().show();
+    }
+    public boolean servicioDisponible() {
+        return false;
     }
 }
