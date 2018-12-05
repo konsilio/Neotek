@@ -305,12 +305,10 @@ namespace Application.MainModule.Servicios.Compras
             return oc;
         }
         public static OrdenCompra CompletarDatosPorteador(ComplementoGasDTO dto, OrdenCompra oc)
-        {
-            var productoComplemento = dto.Productos.SingleOrDefault(x => x.EsTransporteGas);          
-
-            oc.IdCentroCosto = productoComplemento.IdCentroCosto;
-            oc.IdCuentaContable = productoComplemento.IdCuentaContable;
-            oc.IdProveedor = productoComplemento.IdProveedor;
+        {           
+            oc.IdCentroCosto = oc.IdCentroCosto;
+            oc.IdCuentaContable = oc.IdCuentaContable;
+            oc.IdProveedor = oc.IdProveedor;
             oc.FactorConvTransporte = dto.OrdenCompraPorteador.FactorConvTransporte;
             oc.PrecioTransporte = dto.OrdenCompraPorteador.PrecioTransporte;
             oc.Casetas = dto.OrdenCompraPorteador.Casetas;

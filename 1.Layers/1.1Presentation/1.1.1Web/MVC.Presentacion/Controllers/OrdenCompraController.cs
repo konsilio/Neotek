@@ -306,6 +306,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             ViewBag.CentrosCosto = CatalogoServicio.BuscarCentrosCosto(tkn);
             ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
+         //   complemeto.OrdenCompraPorteador.Iva = (complemeto.OrdenCompraPorteador.Iva.Value.ToString().Remove(3, 5);//ToString().Replace(".0000", String.Empty);
             ViewBag.Complemeto = complemeto;
             TempData["intIdOrdenCompra"] = id ?? 0; ;
             if (TempData["RespuestaDTO"] != null)

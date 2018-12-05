@@ -317,7 +317,15 @@ namespace Application.MainModule.Flujos
             var ExistePago = BuscarPagos(dto.OrdenCompraPorteador.IdOrdenCompra);
             if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistentePorteador();
 
-            var ocPorteador = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
+            var ocPorteador = OrdenCompraServicio.Buscar(dto.OrdenCompraPorteador.IdOrdenCompra);
+            var PT = dto.OrdenCompraPorteador.FactorConvTransporte * dto.KilosPapeleta;
+            var ST = PT + dto.OrdenCompraPorteador.Casetas;
+            var iva = (dto.OrdenCompraPorteador.Iva / 100);
+            var t = (ST * iva) + ST;
+            dto.OrdenCompraPorteador.PrecioTransporte = PT;
+            dto.OrdenCompraPorteador.SubtotalSinIva = ST;
+            dto.OrdenCompraPorteador.Total = t;
+           
             ocPorteador = OrdenCompraServicio.CompletarDatosPorteador(dto, ocPorteador);
 
             return OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocPorteador));

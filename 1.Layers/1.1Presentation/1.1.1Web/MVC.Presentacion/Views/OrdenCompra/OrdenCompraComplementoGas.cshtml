@@ -19,7 +19,6 @@
     }
 </script>
 <script src="~/Scripts/js/OrdenCompraComplementoGasJS.js"></script>
-
 <div class="page-loader-wrapper">
     <div class="loader">
         <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
@@ -528,7 +527,7 @@
                                                             <select name="OrdenCompraExpedidor.Iva" id="IVAExpedidor" class="form-control" data-live-search="true" onchange="javascript: CalcularImporteExpedidor()">
                                                                 @foreach (var item in ViewBag.IVAs)
                                                                 {
-                                                                    <option value="@item.Value">@item.Text</option>
+                                                                <option value="@item.Value">@item.Text</option>
                                                                 }
                                                             </select>
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.Iva, "", new { @class = "alert-danger" })
@@ -625,6 +624,7 @@
                                                     <div class="col-md-4 text-right">
                                                         <div class="form-group">
                                                             $ @Html.LabelFor(m => m.OrdenCompraPorteador.PrecioTransporte, new { id = "PrecioTransporte" })
+
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.PrecioTransporte, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
@@ -666,12 +666,20 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <select name="IVAPorteador" id="IVAPorteador" class="form-control" data-live-search="true" onchange="javascript: CalcularImportePortador()">
+                                                            <select name="Iva" id="IVAPorteador" class="form-control" data-live-search="true" onchange="javascript: CalcularImportePortador()">
                                                                 @foreach (var item in ViewBag.IVAs)
                                                                 {
+                                                                    if (ViewBag.Complemeto.OrdenCompraPorteador.Iva == item.Value+".0000")
+                                                                    {
+                                                                        <option value="@item.Value" selected>@item.Text</option>
+                                                                    }
+                                                                    else
+                                                                    {
                                                                     <option value="@item.Value">@item.Text</option>
+                                                                    }
                                                                 }
                                                             </select>
+                                                            @Html.TextBoxFor(m => m.OrdenCompraPorteador.Iva, new { @class = "form-control", @id = "iva" })
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.Iva, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
