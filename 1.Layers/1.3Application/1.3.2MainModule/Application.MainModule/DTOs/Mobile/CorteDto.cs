@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Application.MainModule.DTOs.Mobile.Cortes;
+using System;
+using System.Collections.Generic;
+
 
 namespace Application.MainModule.DTOs.Mobile
 {
@@ -13,5 +16,6 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal Total { get; set; }
         public string Recibe { get; set; }
         public DateTime FechaCorte { get; set; }
+        public List<VentasCorteDTO> Conceptos { get; set; }
     }
 }

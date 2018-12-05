@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs.Mobile.Cortes;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -138,6 +139,16 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<VentaCorteAnticipoEC> ObtenerCortesAnticipos()
         {
             return new PuntoVentaDataAccess().ObtenerCortesAnticipos();
+        }
+
+        public static object ActualizarVentasCorte(VentaPuntoDeVenta item)
+        {
+            return new PuntoVentaDataAccess().ActualizarVentas(item);
+        }
+
+        public static VentaPuntoDeVenta Obtener(string tiketVenta)
+        {
+            return new PuntoVentaDataAccess().ObtenerVenta(tiketVenta);
         }
     }
 }
