@@ -800,9 +800,17 @@ namespace Application.MainModule.Flujos
             }
             var entrega = puntoVenta.OperadorChofer.Usuario;
             var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoVenta, almacenPunto, cortesYanticiposOrden);
-            //Insert en la tabla de VentaCajaGeneral
+            #region Insert en la tabla de VentaCajaGeneral
             if (corte.Exito)
             {
+                #region Update a la tabla de ventas con el corte 
+                foreach (var item in dto.Conceptos)
+                {
+                    var venta = PuntoVentaServicio.Obtener(item.TiketVenta);
+                    var adapter = VentasEstacionesAdapter.ToDTO(item, venta);
+                    var conceptos = PuntoVentaServicio.ActualizarVentasCorte(adapter);
+                }
+                #endregion
                 var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoVenta.IdPuntoVenta, dto.Fecha);
                 var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoVenta.IdPuntoVenta, dto.Fecha);
                 var ventasCajasGral = PuntoVentaServicio.ObtenerVentasCajaGral();
@@ -812,7 +820,7 @@ namespace Application.MainModule.Flujos
                 corteCajaGeneral.OtrasVentas = VentaServicio.CalculoOtrasVentas(deContado, credito);
                 return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
             }
-            //Fin del Insert en la tabla de VentaCajaGeneral
+            #endregion
 
             return corte;
         }

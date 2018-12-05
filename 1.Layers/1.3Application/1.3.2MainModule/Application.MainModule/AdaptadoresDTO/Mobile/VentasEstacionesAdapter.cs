@@ -8,6 +8,7 @@ using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.DTOs.Mobile.Cortes;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
@@ -167,6 +168,54 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             }
             return list;
         }
-
+        /// <summary>
+        /// VentaPuntoDeVenta
+        /// Permite transformar los datos de la venta a actualizar para la sección de 
+        /// cortes de estación, se enviara de parametros un objeto de tipo VentasCorteDTO
+        /// con las ventas incluidas dentro del corte y VentaPuntoDeVenta que se la venta
+        /// registrada
+        /// Developer: Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+        /// Date: 4/12/2018
+        /// Update: 4/12/2018
+        /// Company: Neoteck
+        /// </summary>
+        /// <param name="item">Ventas incluidas en el corte</param>
+        /// <param name="venta">Venta a actualizar</param>
+        /// <returns></returns>
+        public static VentaPuntoDeVenta ToDTO(VentasCorteDTO item, VentaPuntoDeVenta venta)
+        {
+            return new VentaPuntoDeVenta()
+            {
+                IdEmpresa = venta.IdEmpresa,
+                Year = venta.Year,
+                Mes = venta.Mes,
+                Dia = venta.Dia,
+                Orden = venta.Orden,
+                IdPuntoVenta = venta.IdPuntoVenta,
+                IdCliente =venta.IdCliente,
+                IdOperadorChofer= venta.IdOperadorChofer,
+                IdTipoVenta = venta.IdTipoVenta,//No se de que es no tiene relación
+                IdFactura = venta.IdFactura,
+                FolioOperacionDia = item.Corte,
+                FolioVenta = venta.FolioVenta,
+                RequiereFactura= venta.RequiereFactura,
+                VentaACredito = venta.VentaACredito,
+                Subtotal = venta.Subtotal,
+                Descuento =venta.Descuento,
+                Iva =venta.Iva,
+                Total = venta.Total,
+                PorcentajeIva = venta.PorcentajeIva,
+                EfectivoRecibido = venta.EfectivoRecibido,
+                CambioRegresado= venta.CambioRegresado,
+                PuntoVenta = venta.PuntoVenta,
+                RazonSocial =venta.RazonSocial,
+                RFC =venta.RFC,
+                ClienteConCredito = venta.ClienteConCredito,
+                OperadorChofer =venta.OperadorChofer,
+                DatosProcesados = venta.DatosProcesados,
+                FechaAplicacion = venta.FechaAplicacion,
+                FechaRegistro = venta.FechaRegistro
+            };
+        }
     }
 }
