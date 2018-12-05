@@ -82,7 +82,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdTipoMedidor = unidad.IdTipoMedidor.Value,
                 IdAlmacenGas = (short)pipa.IdPipa,
                 NombreAlmacen = pipa.Nombre,
-                CantidadP5000 = lecturaInicial.P5000.Value,
+                CantidadP5000 = lecturaInicial.P5000!=null? lecturaInicial.P5000:0,
                 P5000Final = (unidad.P5000Actual != null) ? unidad.P5000Actual.Value : 0,
                 AnticiposEstacion = ToDTO(unidad)
             };
