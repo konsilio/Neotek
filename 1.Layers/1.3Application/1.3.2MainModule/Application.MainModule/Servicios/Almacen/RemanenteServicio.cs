@@ -18,7 +18,6 @@ namespace Application.MainModule.Servicios.Almacenes
             if (ulmMovDescarga.ElementAt(0) == null) return ObtenerRema(ulmMovDescarga.ElementAt(2), ulmMovDescarga.ElementAt(1));
             return ObtenerRema(ulmMovDescarga.ElementAt(2), ulmMovDescarga.ElementAt(1), ulmMovDescarga.ElementAt(0));
         }    
-
         private static RemaDto ObtenerRema(AlmacenGasMovimiento ulMovAnio)
         {
             return new RemaDto
@@ -33,7 +32,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 RemaAcumAnioLt = ulMovAnio.RemaAcumAnioLt,
             };
         }
-
         private static RemaDto ObtenerRema(AlmacenGasMovimiento ulMovAnio, AlmacenGasMovimiento ulMovMes)
         {
             return new RemaDto
@@ -48,7 +46,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 RemaAcumAnioLt = ulMovMes.RemaAcumAnioLt,
             };
         }
-
         private static RemaDto ObtenerRema(AlmacenGasMovimiento ulMovAnio, AlmacenGasMovimiento ulMovMes, AlmacenGasMovimiento ulMovDia)
         {
             return new RemaDto
@@ -63,7 +60,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 RemaAcumAnioLt = ulMovDia.RemaAcumAnioLt,
             };
         }
-
         private static RemaDto ObtenerRema()
         {
             return new RemaDto

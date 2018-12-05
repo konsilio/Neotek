@@ -91,7 +91,7 @@ namespace Application.MainModule.Servicios.Seguridad
                     Exito = true,                   
                 };
             }
-            return new RespuestaDto();
+            //return new RespuestaDto();
         }
 
         public static RespuestaDto Actualizar(Rol rol)

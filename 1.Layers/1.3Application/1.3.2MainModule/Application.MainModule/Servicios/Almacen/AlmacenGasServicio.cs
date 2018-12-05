@@ -842,7 +842,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 descargasGas.ForEach(x => aplicaciones.Add(AplicarDescarga(x)));
                 //new AlmacenGasDescargaDataAccess().Actualizar(aplicaciones);
             }
-
             return aplicaciones;
         }
         public static AplicaDescargaDto AplicarDescarga(AlmacenGasDescarga descarga)

@@ -669,7 +669,7 @@
                                                             <select name="Iva" id="IVAPorteador" class="form-control" data-live-search="true" onchange="javascript: CalcularImportePortador()">
                                                                 @foreach (var item in ViewBag.IVAs)
                                                                 {
-                                                                    if (ViewBag.Complemeto.OrdenCompraPorteador.Iva == item.Value+".0000")
+                                                                    if (ViewBag.Complemeto.OrdenCompraPorteador.Iva.ToString() == item.Value)
                                                                     {
                                                                         <option value="@item.Value" selected>@item.Text</option>
                                                                     }

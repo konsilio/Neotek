@@ -15,7 +15,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new DatosAnticiposCorteDto()
             {
-               // estaciones = estaciones.Select(x => ToDTO(x, unidades)).ToList(),
+                // estaciones = estaciones.Select(x => ToDTO(x, unidades)).ToList(),
             };
         }
 
@@ -38,7 +38,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         }
         public static EstacionesDto ToDTO(EstacionCarburacion estacion, UnidadAlmacenGas unidad)
         {
-           
+
             var lecturaInicial = unidad.TomasLectura.Where(
                 x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
                 ).OrderBy(x => x.FechaRegistro).Last();
@@ -48,14 +48,14 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdTipoMedidor = unidad.IdTipoMedidor.Value,
                 IdAlmacenGas = (short)estacion.IdEstacionCarburacion,
                 NombreAlmacen = estacion.Nombre,
-                P5000Inicial = lecturaInicial.P5000.Value!=null?lecturaInicial.P5000.Value:0,
-                P5000Final = unidad.P5000Actual.Value!=null?unidad.P5000Actual.Value:0,
+                P5000Inicial = lecturaInicial.P5000 != null ? lecturaInicial.P5000.Value : 0,
+                P5000Final = unidad.P5000Actual != null ? unidad.P5000Actual.Value : 0,
                 AnticiposEstacion = ToDTO(unidad)
             };
         }
         public static CamionetaDto ToDTO(Camioneta camioneta, UnidadAlmacenGas unidad)
         {
-          
+
             var lecturaInicial = unidad.TomasLectura.Where(
                 x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
                 ).OrderBy(x => x.FechaRegistro).Last();
@@ -72,7 +72,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         }
         public static PipaDto ToDTO(Pipa pipa, UnidadAlmacenGas unidad)
         {
-           
+
             var lecturaInicial = unidad.TomasLectura.Where(
                 x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
                 ).OrderBy(x => x.FechaRegistro).Last();
@@ -83,7 +83,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdAlmacenGas = (short)pipa.IdPipa,
                 NombreAlmacen = pipa.Nombre,
                 CantidadP5000 = lecturaInicial.P5000.Value,
-                P5000Final = (unidad.P5000Actual!=null)? unidad.P5000Actual.Value:0,
+                P5000Final = (unidad.P5000Actual != null) ? unidad.P5000Actual.Value : 0,
                 AnticiposEstacion = ToDTO(unidad)
             };
         }
@@ -93,8 +93,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             decimal suma = anticiposEstacion.Sum(x => x.TotalAnticipado);
             return new AnticiposEstacionDTO()
             {
-                IdCAlmacenGas = (unidad.IdCAlmacenGas!=null)? unidad.IdCAlmacenGas:0,
-                IdEstacion = (unidad.IdEstacionCarburacion!=null)? unidad.IdEstacionCarburacion.Value:0,
+                //IdCAlmacenGas = (unidad.IdCAlmacenGas != null) ? unidad.IdCAlmacenGas : 0,
+                IdCAlmacenGas = unidad.IdCAlmacenGas,
+                IdEstacion = unidad.IdEstacionCarburacion != null ? unidad.IdEstacionCarburacion.Value : 0,
                 Anticipos = /*ToDTO(anticiposEstacion)*/null,
                 Total = suma
             };
@@ -111,7 +112,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     Fecha = anticipoEstacion.FechaRegistro,
                     Monto = anticipoEstacion.TotalAnticipado,
                     Total = anticipoEstacion.TotalVenta,
-                    IdCAlmacenGas = (anticipoEstacion.CAlmacenGas.IdEstacionCarburacion.Value!=null)? (short)anticipoEstacion.CAlmacenGas.IdEstacionCarburacion.Value: (short)0,
+                    IdCAlmacenGas = (anticipoEstacion.CAlmacenGas.IdEstacionCarburacion != null) ? (short)anticipoEstacion.CAlmacenGas.IdEstacionCarburacion.Value : (short)0,
 
                 });
             }
@@ -205,12 +206,12 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             if (esAnticipos)
                 return new DatosAnticiposCorteDto()
                 {
-                    anticipos = ToDTOAnticipo(ventas,almacen)
+                    anticipos = ToDTOAnticipo(ventas, almacen)
                 };
             else
                 return new DatosAnticiposCorteDto()
                 {
-                    cortes = ToDTOCortes(ventas,almacen),
+                    cortes = ToDTOCortes(ventas, almacen),
                     fechasCorte = EstraerFechas(ventas),
                     TotalAnticiposCorte = anticipos.Sum(x => x.TotalAnticipado)
                 };
@@ -226,40 +227,40 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return list;
         }
 
-        public static List<CorteDto> ToDTOCortes(List<VentaPuntoDeVenta> ventas,UnidadAlmacenGas almacen)
+        public static List<CorteDto> ToDTOCortes(List<VentaPuntoDeVenta> ventas, UnidadAlmacenGas almacen)
         {
 
-            return ventas.Select(x => ToDTO(x,almacen)).ToList();
+            return ventas.Select(x => ToDTO(x, almacen)).ToList();
         }
 
-        public static CorteDto ToDTO(VentaPuntoDeVenta venta,UnidadAlmacenGas almacen)
+        public static CorteDto ToDTO(VentaPuntoDeVenta venta, UnidadAlmacenGas almacen)
         {
             var recibe = TokenServicio.ObtenerUsuarioAplicacion();
             return new CorteDto()
             {
                 ClaveOperacion = venta.FolioVenta,
                 Tiket = venta.FolioVenta,
-                Fecha = DateTime.Parse(venta.Year+"-"+venta.Mes+"-"+venta.Dia),
+                Fecha = DateTime.Parse(venta.Year + "-" + venta.Mes + "-" + venta.Dia),
                 IdCorte = (short)venta.IdPuntoVenta,
                 IdCAlmacenGas = almacen.IdCAlmacenGas,
                 Monto = venta.Total,
                 Total = venta.Total,
-                Recibe = recibe.Nombre+" "+ recibe.Apellido1+" "+ recibe.Apellido2
+                Recibe = recibe.Nombre + " " + recibe.Apellido1 + " " + recibe.Apellido2
             };
         }
 
-        public static List<AnticipoDto> ToDTOAnticipo(List<VentaPuntoDeVenta> ventas,UnidadAlmacenGas almacen)
+        public static List<AnticipoDto> ToDTOAnticipo(List<VentaPuntoDeVenta> ventas, UnidadAlmacenGas almacen)
         {
-            return ventas.Select(x => ToDTOAn(x,almacen)).ToList();
+            return ventas.Select(x => ToDTOAn(x, almacen)).ToList();
         }
 
-        public static AnticipoDto ToDTOAn(VentaPuntoDeVenta venta,UnidadAlmacenGas almacen)
+        public static AnticipoDto ToDTOAn(VentaPuntoDeVenta venta, UnidadAlmacenGas almacen)
         {
             var recibe = TokenServicio.ObtenerUsuarioAplicacion();
             return new AnticipoDto()
             {
                 Tiket = venta.FolioVenta,
-                Fecha =  DateTime.Parse(venta.Year+"-"+venta.Mes+"-"+venta.Dia),
+                Fecha = DateTime.Parse(venta.Year + "-" + venta.Mes + "-" + venta.Dia),
                 IdAnticipo = (short)venta.IdPuntoVenta,
                 Recibe = recibe.Nombre + " " + recibe.Apellido1 + " " + recibe.Apellido2,
                 Total = venta.Total,
@@ -316,7 +317,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         public static DatosAnticiposCorteDto ToDTOPipa(List<VentaPuntoDeVenta> ventas, List<VentaCorteAnticipoEC> anticipos, UnidadAlmacenGas unidadAlmacen, bool esAnticipos)
         {
-            
+
             if (esAnticipos)
                 return new DatosAnticiposCorteDto()
                 {
