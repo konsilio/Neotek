@@ -238,21 +238,20 @@ namespace MVC.Presentacion.Controllers
             }
         }
         [HttpPost]
-        public JsonResult GuardarDatosPorteador(OrdenCompraComplementoGasDTO model = null)
+        public ActionResult GuardarDatosPorteador(OrdenCompraComplementoGasDTO model = null)
         {
             if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = OrdenCompraServicio.SolicitarPagoPorteador(model, tkn);
+            var respuesta = OrdenCompraServicio.ConfirmarDatosPorteador(model, tkn);
             if (respuesta.Exito)
             {
-                var js = JsonConvert.SerializeObject(respuesta);
-                return Json(js, JsonRequestBehavior.AllowGet);
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("OrdenCompraComplementoGas", model.IdOrdenCompraPorteador);
             }
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
-                RedirectToAction("OrdenCompraComplementoGas", model.IdOrdenCompraPorteador);
-                return new JsonResult();
+                return RedirectToAction("OrdenCompraComplementoGas", model.IdOrdenCompraPorteador);               
             }
         }
         public ActionResult GuardarDatosPapeleta(OrdenCompraComplementoGasDTO model = null)
@@ -265,11 +264,19 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("OrdenCompraComplemento", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> CJAL-CajaGeneral
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("OrdenCompraPago", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> CJAL-CajaGeneral
         }
         public ActionResult OrdenCompraPago(int id)
         {
@@ -306,9 +313,13 @@ namespace MVC.Presentacion.Controllers
             ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             ViewBag.CentrosCosto = CatalogoServicio.BuscarCentrosCosto(tkn);
             ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
-         //   complemeto.OrdenCompraPorteador.Iva = (complemeto.OrdenCompraPorteador.Iva.Value.ToString().Remove(3, 5);//ToString().Replace(".0000", String.Empty);
+            complemeto.OrdenCompraPorteador.Iva = Convert.ToDecimal(complemeto.OrdenCompraPorteador.Iva.Value.ToString().Replace(".0000", ""));//ToString().Replace(".0000", String.Empty);
             ViewBag.Complemeto = complemeto;
-            TempData["intIdOrdenCompra"] = id ?? 0; ;
+            TempData["intIdOrdenCompra"] = id ?? 0;
+            if (complemeto.OrdenCompraPorteador.Total != 0 && complemeto.OrdenCompraPorteador.Casetas != 0)
+            { ViewBag.enabled = true; }
+            else
+                ViewBag.enabled = false;
             if (TempData["RespuestaDTO"] != null)
             {
                 var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
