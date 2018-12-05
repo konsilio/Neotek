@@ -281,8 +281,8 @@ namespace Application.MainModule.Flujos
 
             var ocExperidro = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
             ocExperidro = OrdenCompraServicio.CompletarDatosExpedidor(dto, ocExperidro);
-
-            return OrdenCompraServicio.Actualizar(ocExperidro);
+            var Entity = OrdenComprasAdapter.FromEntity(ocExperidro);
+            return OrdenCompraServicio.Actualizar(Entity);
         }
         public RespuestaDto SolicitarPagoExipedidor(ComplementoGasDTO dto)
         {
