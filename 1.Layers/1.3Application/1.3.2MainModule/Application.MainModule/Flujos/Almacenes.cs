@@ -163,5 +163,9 @@ namespace Application.MainModule.Flujos
         {
             return AlmacenGasServicio.AplicarDescargas();
         }
+        public List<AplicaDescargaDto> ConsultarRemanente()
+        {
+            return AlmacenGasServicio.AplicarDescargas();
+        }
     }
 }

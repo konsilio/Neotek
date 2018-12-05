@@ -25,7 +25,6 @@
         //   // $('#table tbody tr:eq(' + rowindex + ')').find("td").eq(1).hide();
         //});
     });
-
 //kilos finales
     var ObtenerLitrosDesdeKilos = function (kilogramos, factor) {
         return kilogramos / factor;
@@ -41,7 +40,6 @@
             return cantidadMenor - cantidadMayor;
         return (cantidadMayor - cantidadMenor);
     };
-
     //Expedidor
     var ObtenerPrecioXGalon = function (RPMMNTPG, TSG, TC) {
         return (parseFloat(RPMMNTPG) + parseFloat(TSG)) * TC;
@@ -58,7 +56,6 @@
     var ObtenerImportePagar = function (kilogramosPapeleta, PVIva) {
         return kilogramosPapeleta * PVIva;
     };
-
     //Porteador
     var ObtenerPrecioTransporte = function (Factor, KilosPapeleta) {
         return (Factor * KilosPapeleta)
@@ -69,7 +66,6 @@
     var ObtenerImporteTransporte = function (Subtotal, Iva) {
         return (Subtotal * (Iva / 100)) + parseFloat(Subtotal);
     };
-
 
     var CalcularKilosFinales = function () {
         var Factor = $("#FactorLitrosAKilos").val();

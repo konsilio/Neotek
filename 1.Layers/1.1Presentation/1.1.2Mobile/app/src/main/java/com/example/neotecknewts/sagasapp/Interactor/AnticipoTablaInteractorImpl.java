@@ -246,8 +246,11 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
     private void registra_local(CorteDTO corteDTO,SAGASSql sagasSql,String token){
         if(sagasSql.GetCorte(corteDTO.getClaveOperacion()).getCount()==0){
             sagasSql.InserCorte(corteDTO);
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.CorteDeCaja);
+            if(sagasSql.GetVentasCorte(corteDTO.getClaveOperacion()).getCount()==0) {
+                sagasSql.InsertVentasCorte(corteDTO);
+                Lisener lisener = new Lisener(sagasSql, token);
+                lisener.CrearRunable(Lisener.CorteDeCaja);
+            }
         }
     }
 }
