@@ -1,3 +1,12 @@
+/*
+ * VentasCorteDTO
+ * Permite almacenar todos las ventas que se les este realizando el corte de
+ * caja para su actualización en el servicio y asignar el código de corte a la venta
+ * @author Jorge Omar Tovar Martínez jorge.tovar@neoteck.com.mx
+ * @company Neoteck
+ * @Date 05/12/2018
+ * @Update 05/12/2018
+ */
 package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
