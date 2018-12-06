@@ -318,20 +318,25 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         public static DatosAnticiposCorteDto ToDTOPipa(List<VentaPuntoDeVenta> ventas, List<VentaCorteAnticipoEC> anticipos, UnidadAlmacenGas unidadAlmacen, bool esAnticipos)
         {
 
-            if (esAnticipos)
+            if (esAnticipos) { 
+                decimal cantidadVentas = ventas.Count>0? ventas.Sum(x => x.Total):0;
+
                 return new DatosAnticiposCorteDto()
                 {
                     anticipos = ToDTOAnticipo(ventas, unidadAlmacen),
                     fechasCorte = EstraerFechas(ventas),
-                    TotalAnticiposCorte = ventas.Sum(x => x.Total)
+                    TotalAnticiposCorte = cantidadVentas
                 };
-            else
+            }else {
+                decimal cantidadAnticipos = ventas.Count > 0 ? anticipos.Sum(x => x.TotalAnticipado):0;
                 return new DatosAnticiposCorteDto()
                 {
+                   
                     cortes = ToDTOCortes(ventas, unidadAlmacen),
                     fechasCorte = EstraerFechas(ventas),
-                    TotalAnticiposCorte = anticipos.Sum(x => x.TotalAnticipado)
+                    TotalAnticiposCorte = cantidadAnticipos
                 };
+            }
         }
     }
 }
