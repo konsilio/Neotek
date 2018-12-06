@@ -255,30 +255,40 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 }
             } else {
                 if(datos.getCortes().size()>0) {
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
-                            new SimpleDateFormat("ddMMyyyyhhmmssS");
-                    SimpleDateFormat format = new SimpleDateFormat("HH:mm",
-                            Locale.getDefault());
-                    String hour = format.format(new Date());
-                    corteDTO.setHora(hour);
-                    String clave_unica = "CC" + s.format(new Date());
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
-                            "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                    corteDTO.setFecha(f.format(new Date()));
-                    corteDTO.setFechaVenta(f.format(new Date()));
-                    corteDTO.setClaveOperacion(clave_unica);
-                    corteDTO.setTiket(clave_unica);
-                    corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
-                    //Agrego las ventas correspondientes al corte
-                    for (CorteDTO itemCorte : datos.getCortes()) {
-                        VentasCorteDTO ventasCorteDTO = new VentasCorteDTO();
-                        ventasCorteDTO.setCorte(clave_unica);
-                        ventasCorteDTO.setTiketVenta(itemCorte.getTiket());
-                        ventasCorteDTO.setIdVenta(itemCorte.getId());
-                        corteDTO.getConceptos().add(ventasCorteDTO);
+                    if(total==0) {
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                                new SimpleDateFormat("ddMMyyyyhhmmssS");
+                        SimpleDateFormat format = new SimpleDateFormat("HH:mm",
+                                Locale.getDefault());
+                        String hour = format.format(new Date());
+                        corteDTO.setHora(hour);
+                        String clave_unica = "CC" + s.format(new Date());
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
+                                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                        corteDTO.setFecha(f.format(new Date()));
+                        corteDTO.setFechaVenta(f.format(new Date()));
+                        corteDTO.setClaveOperacion(clave_unica);
+                        corteDTO.setTiket(clave_unica);
+                        corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
+                        //Agrego las ventas correspondientes al corte
+                        for (CorteDTO itemCorte : datos.getCortes()) {
+                            VentasCorteDTO ventasCorteDTO = new VentasCorteDTO();
+                            ventasCorteDTO.setCorte(clave_unica);
+                            ventasCorteDTO.setTiketVenta(itemCorte.getTiket());
+                            ventasCorteDTO.setIdVenta(itemCorte.getId());
+                            corteDTO.getConceptos().add(ventasCorteDTO);
+                        }
+                        //Agrego las ventas correspondientes al corte
+                        presenter.Corte(corteDTO, sagasSql, session.getToken());
+                    }else{
+                        AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
+                        builderMonto.setCancelable(false);
+                        builderMonto.setTitle(R.string.mensjae_error_campos);
+                        builderMonto.setMessage("No se puede hacer un corte ya que faltan anticipos");
+                        builderMonto.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
+                                dialogInterface.dismiss());
+                        builderMonto.create().show();
                     }
-                    //Agrego las ventas correspondientes al corte
-                    presenter.Corte(corteDTO, sagasSql, session.getToken());
                     //startIntent();
                 }else{
                     AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
