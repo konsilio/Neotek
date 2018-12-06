@@ -1,25 +1,14 @@
 package com.example.neotecknewts.sagasapp.Util;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.util.Log;
 
-import com.example.neotecknewts.sagasapp.Model.MenuDTO;
-
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicIntegerArray;
 
 /**
  * Created by neotecknewts on 08/08/18.
@@ -156,14 +145,20 @@ public class Session {
         Calendar calendar = Calendar.getInstance();
         Date fecha_session = new Date(pref.getString(KEY_TIME_SESSION,
                 calendar.getTime().toString()));
-        long dif =  new Date().getTime() - fecha_session.getTime() ;
-        Log.w("Fecha session",fecha_session.toString());
-        Log.w("Fecha actual",new Date().toString());
-        Log.w("Diferencia",String.valueOf(dif));
-        long segundos = dif / 1000;
-        long minutos = segundos / 60;
-        long horas = minutos / 60;
-        long dias = horas / 24;
-        return dias>0;
+        boolean ban= true;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String current = format.format(new Date());
+
+
+        try {
+
+            Date currentDate = format.parse(current);
+            String session = format.format(fecha_session);
+            fecha_session = format.parse(session);
+            ban = currentDate.after(fecha_session);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return ban;
     }
 }

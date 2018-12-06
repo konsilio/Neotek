@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -538,7 +539,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
 //metodo que abre la camara
     private void openCameraIntent() {
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, new Date().toString()+"M");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");

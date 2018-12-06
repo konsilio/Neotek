@@ -8,44 +8,84 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
     public class TraspasoAdapter
     {
-        public static DatosTraspasoDto ToDTOPipa(List<Pipa> lpipas, List<Pipa> filtradas, Pipa pipa, List<TipoMedidorUnidadAlmacenGas> medidores,UnidadAlmacenGas unidadAlmacen)
+        public static DatosTraspasoDto ToDTOPipa(List<Pipa> lpipas, List<Pipa> filtradas, Pipa pipa, List<TipoMedidorUnidadAlmacenGas> medidores, UnidadAlmacenGas unidadAlmacen, AlmacenGasTraspaso ultimoTraspasoPipa, List<AlmacenGasTraspaso> traspasosEntrada)
         {
+
             return new DatosTraspasoDto()
             {
-                 pipas = lpipas.Select(x=>ToDTO(x,medidores,x.UnidadAlmacenGas.SingleOrDefault())).ToList(),
-                 pipaEntrada = filtradas.Select(x=>ToDTO(x,medidores, x.UnidadAlmacenGas.SingleOrDefault())).ToList(),
-                 PipaPredeterminada = ToDTO(pipa,medidores,pipa.UnidadAlmacenGas.First())
+                pipas = lpipas.Select(x => ToDTO(x, medidores, x.UnidadAlmacenGas.SingleOrDefault(), ultimoTraspasoPipa)).ToList(),
+                pipaEntrada = filtradas.Select(x => ToDTO(x, medidores, x.UnidadAlmacenGas.First(), traspasosEntrada)).ToList(),
+                PipaPredeterminada = ToDTO(pipa, medidores, pipa.UnidadAlmacenGas.First(), ultimoTraspasoPipa)
             };
         }
 
-        public static PipaDto ToDTO(Pipa pipa, List<TipoMedidorUnidadAlmacenGas> medidores,UnidadAlmacenGas unidadAlmacen)
+        public static PipaDto ToDTO(Pipa pipa, List<TipoMedidorUnidadAlmacenGas> medidores, UnidadAlmacenGas unidadAlmacenGas, List<AlmacenGasTraspaso> traspasosEntrada)
         {
-            //var unidadAlmacen = unidadesAlmacenes.First(x=>x.IdPipa.Equals(pipa.IdPipa));
+            var ultimoTraspaso = traspasosEntrada.Find(x => x.IdCAlmacenGasEntrada.Equals(unidadAlmacenGas.IdCAlmacenGas));
+            decimal p5000 = 0, porcentajeMedidor = 0;
+            if (ultimoTraspaso != null)
+            {
+                p5000 = ultimoTraspaso.P5000Salida;
+                porcentajeMedidor = ultimoTraspaso.PorcentajeSalida.Value;
+            }
+            else
+            {
+                p5000 = unidadAlmacenGas.P5000Actual != null ? unidadAlmacenGas.P5000Actual.Value : 0;
+                //porcentajeMedidor = unidadAlmacenGas.PorcentajeActual != null ? unidadAlmacenGas.PorcentajeActual : 0;
+                porcentajeMedidor = unidadAlmacenGas.PorcentajeActual;
+            }
+
             return new PipaDto()
             {
-                CantidadP5000 = unidadAlmacen.P5000Actual,
+                CantidadP5000 = p5000,
+                IdAlmacenGas = unidadAlmacenGas.IdCAlmacenGas,
+                IdTipoMedidor = unidadAlmacenGas.IdTipoMedidor,
+                Medidor = TipoMedidorAdapter.ToDto(medidores.Single(x => x.IdTipoMedidor.Equals(unidadAlmacenGas.IdTipoMedidor))),
+                NombreAlmacen = pipa.Nombre,
+                PorcentajeMedidor = porcentajeMedidor
+            };
+        }
+
+        public static PipaDto ToDTO(Pipa pipa, List<TipoMedidorUnidadAlmacenGas> medidores, UnidadAlmacenGas unidadAlmacen, AlmacenGasTraspaso ultimoTraspaso)
+        {
+            decimal p5000 = 0;
+            decimal porcentajeMedidor = 0;
+            if (ultimoTraspaso != null)
+            {
+                p5000 = ultimoTraspaso.P5000Salida;
+                porcentajeMedidor = ultimoTraspaso.PorcentajeSalida.Value;
+            }
+            else
+            {
+                p5000 = unidadAlmacen.P5000Actual.Value;
+                porcentajeMedidor = unidadAlmacen.PorcentajeActual;
+            }
+
+            return new PipaDto()
+            {
+                CantidadP5000 = p5000,
                 IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
                 IdTipoMedidor = unidadAlmacen.IdTipoMedidor,
                 Medidor = TipoMedidorAdapter.ToDto(medidores.Single(x => x.IdTipoMedidor.Equals(unidadAlmacen.IdTipoMedidor))),
                 NombreAlmacen = pipa.Nombre,
-                PorcentajeMedidor =unidadAlmacen.PorcentajeActual
+                PorcentajeMedidor = porcentajeMedidor
             };
         }
 
-        public static DatosTraspasoDto ToDTOEstacion(List<EstacionCarburacion> lestaciones, List<Pipa> lpipas, EstacionCarburacion estacion, List<TipoMedidorUnidadAlmacenGas> medidores, UnidadAlmacenGas unidadAlmacen)
+        public static DatosTraspasoDto ToDTOEstacion(List<EstacionCarburacion> lestaciones, List<Pipa> lpipas, EstacionCarburacion estacion, List<TipoMedidorUnidadAlmacenGas> medidores, UnidadAlmacenGas unidadAlmacen, AlmacenGasTraspaso traspaso, List<AlmacenGasTraspaso> traspasosEntrada)
         {
             List<EstacionCarburacion> estaciones = new List<EstacionCarburacion>();
             estaciones.Add(estacion);
             return new DatosTraspasoDto()
             {
-                pipas = lpipas.Select(x=>ToDTO(x,medidores,x.UnidadAlmacenGas.First())).ToList(),
-                estaciones = estaciones.Select(x=>ToDTO(x,x.UnidadAlmacenGas.First(),medidores)).ToList(),
+                pipas = lpipas.Select(x => ToDTO(x, medidores, x.UnidadAlmacenGas.First(), traspasosEntrada)).ToList(),
+                estaciones = estaciones.Select(x => ToDTO(x, x.UnidadAlmacenGas.First(), medidores)).ToList(),
                 medidores = TipoMedidorAdapter.ToDto(medidores),
-                EstacionPredeterminada = ToDTO(estacion,estacion.UnidadAlmacenGas.First(),medidores)
+                EstacionPredeterminada = ToDTO(estacion, estacion.UnidadAlmacenGas.First(), medidores)
             };
         }
 
-        public static EstacionesDto ToDTO(EstacionCarburacion estacion, UnidadAlmacenGas unidadAlmacenGas,List<TipoMedidorUnidadAlmacenGas>medidores)
+        public static EstacionesDto ToDTO(EstacionCarburacion estacion, UnidadAlmacenGas unidadAlmacenGas, List<TipoMedidorUnidadAlmacenGas> medidores)
         {
             return new EstacionesDto()
             {

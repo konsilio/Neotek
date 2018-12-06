@@ -222,7 +222,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = OrdenCompraServicio.SolicitarPagoExpedidor(model, tkn);
+            var respuesta = OrdenCompraServicio.ConfirmarDatosExpedidor(model, tkn);
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta;
@@ -255,8 +255,6 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            //model.OrdenCompraExpedidor.FechaAutorizacion = DateTime.Now;
-            //model.OrdenCompraPorteador.FechaAutorizacion = DateTime.Now;
             var respuesta = OrdenCompraServicio.ConfirmarDatosPapeleta(model, tkn);
             if (respuesta.Exito)
             {

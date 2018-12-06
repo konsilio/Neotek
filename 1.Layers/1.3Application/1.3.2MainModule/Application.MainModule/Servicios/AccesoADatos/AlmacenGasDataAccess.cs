@@ -291,16 +291,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
                     if (aplicaRecarga.RecargaLecturaInicialFotos != null && aplicaRecarga.RecargaLecturaInicialFotos.Count > 0)
                         aplicaRecarga.RecargaLecturaInicialFotos.ToList().ForEach(x =>
-                            uow.Repository<AlmacenGasRecargaFoto>().Update(x)
-                        );
+                            uow.Repository<AlmacenGasRecargaFoto>().Update(x));
 
                     if (aplicaRecarga.RecargaLecturaFinalSinNavProp != null)
                         uow.Repository<AlmacenGasRecarga>().Update(aplicaRecarga.RecargaLecturaFinalSinNavProp);
 
                     if (aplicaRecarga.RecargaLecturaFinalFotos != null && aplicaRecarga.RecargaLecturaFinalFotos.Count > 0)
                         aplicaRecarga.RecargaLecturaFinalFotos.ToList().ForEach(x =>
-                            uow.Repository<AlmacenGasRecargaFoto>().Update(x)
-                        );
+                            uow.Repository<AlmacenGasRecargaFoto>().Update(x));
 
                     if (aplicaRecarga.MovimientoEntrada != null)
                         uow.Repository<AlmacenGasMovimiento>().Insert(aplicaRecarga.MovimientoEntrada);
@@ -316,7 +314,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     //_respuesta.ModeloValido = true;
                     //_respuesta.Mensaje = Exito.OK;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //_respuesta.Exito = false;
                     //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
@@ -367,7 +365,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     //_respuesta.ModeloValido = true;
                     //_respuesta.Mensaje = Exito.OK;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //_respuesta.Exito = false;
                     //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
@@ -415,7 +413,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     //_respuesta.ModeloValido = true;
                     //_respuesta.Mensaje = Exito.OK;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //_respuesta.Exito = false;
                     //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
@@ -460,7 +458,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     //_respuesta.ModeloValido = true;
                     //_respuesta.Mensaje = Exito.OK;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //_respuesta.Exito = false;
                     //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
@@ -472,7 +470,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<Camioneta> ObtenerCamionetasEmpresa(short idEmpresa)
         {
             return uow.Repository<Camioneta>().Get(
-                x=>x.IdEmpresa.Equals(idEmpresa) && x.Activo
+                x => x.IdEmpresa.Equals(idEmpresa) && x.Activo
                 ).ToList();
         }
 
@@ -515,7 +513,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     //_respuesta.ModeloValido = true;
                     //_respuesta.Mensaje = Exito.OK;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //_respuesta.Exito = false;
                     //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
@@ -596,6 +594,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                 && x.Mes.Equals(mes)
                                                                 && x.Dia.Equals(dia)).ToList();
         }
+
+        public List<AlmacenGasTraspaso> Traspasos(short idCAlmacenGas)
+        {
+            return uow.Repository<AlmacenGasTraspaso>().Get(x => x.IdCAlmacenGasSalida.Equals(idCAlmacenGas)).ToList();
+        }
+
         public List<AlmacenGasMovimiento> BuscarUltimosMovimientosPorUnidadAlamcenGasConTipoEvento(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, byte idTipoMovimiento, short year, byte mes)
         {
             return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)

@@ -288,5 +288,36 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get().ToList();
         }
+
+        public object ActualizarVentas(VentaPuntoDeVenta item)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<VentaPuntoDeVenta>().Update(item);
+                    //uow.Repository<AlmacenGas>().Update(_alm);
+
+                    uow.SaveChanges();
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Id = item.IdPuntoVenta;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "registrar la venta.");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public VentaPuntoDeVenta ObtenerVenta(string tiketVenta)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().GetSingle(x => x.FolioVenta.Equals(tiketVenta));
+        }
     }
 }

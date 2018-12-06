@@ -269,21 +269,36 @@ namespace Application.MainModule.Servicios.Compras
         }
         public static OrdenCompra CompletarDatosExpedidor(ComplementoGasDTO dto, OrdenCompra oc)
         {
-            var productoComplemento = dto.Productos.SingleOrDefault(x => x.EsGas);       
+            //var productoComplemento = oc.Productos.SingleOrDefault(x => x.EsGas);       
 
-            oc.IdCentroCosto = productoComplemento.IdCentroCosto;
-            oc.IdCuentaContable = productoComplemento.IdCuentaContable;
-            oc.IdProveedor = productoComplemento.IdProveedor;
+            oc.IdCentroCosto = oc.IdCentroCosto;
+            oc.IdCuentaContable = oc.IdCuentaContable;
+            oc.IdProveedor = oc.IdProveedor;
+
+            var RPMMNTPG = dto.OrdenCompraExpedidor.MontBelvieuDlls;
+            var TSG = dto.OrdenCompraExpedidor.TarifaServicioPorGalonDlls;
+            var TC = dto.OrdenCompraExpedidor.TipoDeCambioDOF;
+            var FactorCGalLtr = dto.OrdenCompraExpedidor.FactorGalonALitros;
+            var FactorCaKg = dto.OrdenCompraExpedidor.FactorCompraLitrosAKilos;
+            var kilogramosPapeleta = dto.KilosPapeleta;
+            var Iva = dto.OrdenCompraExpedidor.Iva;
+
+            var PrecioXGalon = CalcularOrdenCompraServicio.ComplementoPrecioPorGalon(RPMMNTPG ?? 0, TSG ?? 0, TC ?? 0);
+            var ImporteLitros = CalcularOrdenCompraServicio.ComplementoImporteEnLitros(PrecioXGalon, FactorCGalLtr ?? 0);
+            var PVPM = CalcularOrdenCompraServicio.ComplementoPVPMKg(ImporteLitros, FactorCaKg ?? 0);
+            var PVIva = decimal.Round(CalcularOrdenCompraServicio.ComplementoPVIVA(PVPM, Iva ?? 0), 5);
+            var ImportePagar = CalcularOrdenCompraServicio.ComplementoImporte(kilogramosPapeleta, PVIva); 
+
             oc.MontBelvieuDlls = dto.OrdenCompraExpedidor.MontBelvieuDlls;
             oc.TarifaServicioPorGalonDlls = dto.OrdenCompraExpedidor.TarifaServicioPorGalonDlls;
             oc.TipoDeCambioDOF = dto.OrdenCompraExpedidor.TipoDeCambioDOF;
-            oc.PrecioPorGalon = dto.OrdenCompraExpedidor.PrecioPorGalon;
+            oc.PrecioPorGalon = PrecioXGalon;
             oc.FactorGalonALitros = dto.OrdenCompraExpedidor.FactorGalonALitros;
-            oc.ImporteEnLitros = dto.OrdenCompraExpedidor.ImporteEnLitros;
+            oc.ImporteEnLitros = ImporteLitros;
             oc.FactorCompraLitrosAKilos = dto.OrdenCompraExpedidor.FactorCompraLitrosAKilos;
-            oc.PVPM = dto.OrdenCompraExpedidor.PVPM;
+            oc.PVPM = PVPM;
             oc.Iva = dto.OrdenCompraExpedidor.Iva;
-            oc.Total = dto.OrdenCompraExpedidor.Total;
+            oc.Total = ImportePagar;
             oc.FolioFactura = dto.OrdenCompraExpedidor.FolioFactura;
             oc.FolioFiscalUUID = dto.OrdenCompraExpedidor.FolioFiscalUUID;
 

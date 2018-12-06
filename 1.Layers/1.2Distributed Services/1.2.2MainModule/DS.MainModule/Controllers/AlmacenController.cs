@@ -63,5 +63,10 @@ namespace DS.MainModule.Controllers
         { 
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.AplicarDescargas());
         }
+        [Route("aplicar/almacen/descarga")]
+        public HttpResponseMessage GetRemanente()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.AplicarDescargas());
+        }
     }
 }

@@ -589,6 +589,12 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(unidad.IdAlmacenGas.Value, unidad.IdCAlmacenGas, unidad.IdEmpresa, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
         }
+
+        public static List<AlmacenGasTraspaso>  Traspasos(short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().Traspasos(idCAlmacenGas);
+        }
+
         public static List<AlmacenGasMovimiento> ObtenerUltimosMovimientosDeDescargas(AlmacenGasDescarga descarga, short idEmpresa)
         {
             var ulMovDia = new AlmacenGasDataAccess().BuscarUltimoMovimientoConTipoEvento(idEmpresa, TipoEventoEnum.Descarga, (short)descarga.FechaFinDescarga.Value.Year, (byte)descarga.FechaFinDescarga.Value.Month, (byte)descarga.FechaFinDescarga.Value.Day);
@@ -836,7 +842,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 descargasGas.ForEach(x => aplicaciones.Add(AplicarDescarga(x)));
                 //new AlmacenGasDescargaDataAccess().Actualizar(aplicaciones);
             }
-
             return aplicaciones;
         }
         public static AplicaDescargaDto AplicarDescarga(AlmacenGasDescarga descarga)

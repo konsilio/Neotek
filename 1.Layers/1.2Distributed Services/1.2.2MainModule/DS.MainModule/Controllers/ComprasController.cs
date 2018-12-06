@@ -96,6 +96,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_compras.ActualizarOrdenCompraFactura(oc), Request);
         }
+        [Route("actualiza/ordencompra/datosexpedidor")]
+        public HttpResponseMessage PutDatosOrdenCompraExpedidor(ComplementoGasDTO oc)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.GuardarDatosExipedidor(oc), Request);
+        }
         [Route("guardar/confirmacionpago")]
         public HttpResponseMessage PutConfirmarPago(OrdenCompraPagoDTO oc)
         {

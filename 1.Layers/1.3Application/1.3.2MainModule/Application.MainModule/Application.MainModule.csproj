@@ -107,6 +107,7 @@
     <Compile Include="DTOs\Mobile\CamionetaDto.cs" />
     <Compile Include="DTOs\Mobile\CategoriaDto.cs" />
     <Compile Include="DTOs\Mobile\CorteDto.cs" />
+    <Compile Include="DTOs\Mobile\Cortes\VentasCorteDTO.cs" />
     <Compile Include="DTOs\Mobile\DatosAnticiposCorteDto.cs" />
     <Compile Include="DTOs\Mobile\DatosAutoconsumoDto.cs" />
     <Compile Include="DTOs\Mobile\DatosCalibracionDto.cs" />

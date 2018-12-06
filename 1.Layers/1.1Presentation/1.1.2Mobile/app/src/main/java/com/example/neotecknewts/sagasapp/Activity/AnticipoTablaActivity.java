@@ -211,8 +211,17 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         }));
                         builder.create().show();
                     } else {
-                        if(Double.parseDouble(cantidad)<total) {
-                            if(datos.getCortes().size()>0) {
+                        if(Double.parseDouble(cantidad)<total || Double.parseDouble(cantidad)>total) {
+                            AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
+                            builderMonto.setCancelable(false);
+                            builderMonto.setTitle(R.string.mensjae_error_campos);
+                            builderMonto.setMessage("El monto ingresado debe de ser el igual al " +
+                                    " monto total de las ventas no pude ser mayor o menor a este");
+                            builderMonto.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
+                                    dialogInterface.dismiss());
+                            builderMonto.create().show();
+                        }else{
+                            if(datos.getAnticipos().size()>0) {
                                 anticiposDTO.setAnticipar(Double.parseDouble(cantidad));
                                 @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
                                         "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -230,13 +239,6 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                                 anticiposDTO.setTiket(clave_unica);
                                 anticiposDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
                                 //Agrego las ventas correspondientes al corte
-                        /*for (CorteDTO corte : datos.getCortes()){
-                            VentasCorteDTO ventasCorteDTO = new VentasCorteDTO();
-                            ventasCorteDTO.setClaveCorte(clave_unica);
-                            ventasCorteDTO.setClaveVenta(corte.getTiket());
-                            corte.getConceptos().add(ventasCorteDTO);
-                        }*/
-                                //Agrego las ventas correspondientes al corte
                                 presenter.Anticipo(anticiposDTO, sagasSql, session.getToken());
                             }else{
                                 AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
@@ -248,20 +250,11 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                                         dialogInterface.dismiss());
                                 builderMonto.create().show();
                             }
-                        }else{
-                            AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
-                            builderMonto.setCancelable(false);
-                            builderMonto.setTitle(R.string.mensjae_error_campos);
-                            builderMonto.setMessage("El monto ingresado debe de ser el igual al " +
-                                    " monto total de las ventas no puede ser menor");
-                            builderMonto.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
-                                    dialogInterface.dismiss());
-                            builderMonto.create().show();
                         }
                     }
                 }
             } else {
-                if(datos.getAnticipos().size()>0) {
+                if(datos.getCortes().size()>0) {
                     @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                             new SimpleDateFormat("ddMMyyyyhhmmssS");
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm",
@@ -279,8 +272,9 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     //Agrego las ventas correspondientes al corte
                     for (CorteDTO itemCorte : datos.getCortes()) {
                         VentasCorteDTO ventasCorteDTO = new VentasCorteDTO();
-                        ventasCorteDTO.setClaveCorte(clave_unica);
-                        ventasCorteDTO.setClaveVenta(itemCorte.getTiket());
+                        ventasCorteDTO.setCorte(clave_unica);
+                        ventasCorteDTO.setTiketVenta(itemCorte.getTiket());
+                        ventasCorteDTO.setIdVenta(itemCorte.getId());
                         corteDTO.getConceptos().add(ventasCorteDTO);
                     }
                     //Agrego las ventas correspondientes al corte

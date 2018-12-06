@@ -2796,7 +2796,7 @@ namespace MVC.Presentacion.Agente
         }
         public void GuardarDatosExpedidor(OrdenCompraComplementoGasDTO dto, string token)
         {
-            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            this.ApiRoute = ConfigurationManager.AppSettings["PutDatosOrdenCompraExpedidor"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
         public void ConfirmarDatosPapeleta(OrdenCompraComplementoGasDTO dto, string token)

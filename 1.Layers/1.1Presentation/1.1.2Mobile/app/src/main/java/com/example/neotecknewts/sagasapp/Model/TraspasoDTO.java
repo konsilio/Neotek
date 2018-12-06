@@ -51,7 +51,7 @@ public class TraspasoDTO implements Serializable{
     private int CantidadDeFotos;
 
     @SerializedName("FechaRegistro")
-    private Date Fecha;
+    private String Fecha;
 
     @SerializedName("FechaAplicacion")
     private String FechaAplicacion;
@@ -165,11 +165,11 @@ public class TraspasoDTO implements Serializable{
         CantidadDeFotos = cantidadDeFotos;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return Fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         Fecha = fecha;
     }
 

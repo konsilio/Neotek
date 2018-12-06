@@ -629,14 +629,34 @@ namespace Application.MainModule.Flujos
                 var pipa = puntoVenta.UnidadesAlmacen.Pipa;
                 
                 var filtradas = lpipas.FindAll(x => !x.IdPipa.Equals(pipa.IdPipa));
-                return TraspasoAdapter.ToDTOPipa(lpipas,filtradas,pipa,medidores, unidadAlmacen);
+                var traspaso = AlmacenGasServicio.Traspasos(puntoVenta.UnidadesAlmacen.IdCAlmacenGas).OrderByDescending(x=>x.Orden).FirstOrDefault();
+                List<AlmacenGasTraspaso> traspasosEntrada = new List<AlmacenGasTraspaso>();
+                foreach (var filtrado in filtradas)
+                {
+                    var ultimo = AlmacenGasServicio.Traspasos(filtrado.UnidadAlmacenGas.SingleOrDefault().IdCAlmacenGas).OrderByDescending(x=>x.Orden).First();
+                    traspasosEntrada.Add(ultimo);
+                }
+                return TraspasoAdapter.ToDTOPipa(lpipas,filtradas,pipa,medidores, unidadAlmacen,traspaso, traspasosEntrada);
             }
 
             else
             {
                 var estacion = puntoVenta.UnidadesAlmacen.EstacionCarburacion;
+                var traspaso = AlmacenGasServicio.Traspasos(puntoVenta.UnidadesAlmacen.IdCAlmacenGas).OrderByDescending(x => x.Orden > 0).FirstOrDefault();
+                List<AlmacenGasTraspaso> traspasosEntrada = new List<AlmacenGasTraspaso>();
 
-                return TraspasoAdapter.ToDTOEstacion(lestaciones, lpipas, estacion, medidores,unidadAlmacen);
+                foreach (var filtrado in lpipas)
+                {
+                    var ultimo = AlmacenGasServicio.Traspasos(filtrado.UnidadAlmacenGas.SingleOrDefault().IdCAlmacenGas).OrderByDescending(x => x.Orden > 0).FirstOrDefault();
+                    traspasosEntrada.Add(ultimo);
+                }
+                List<AlmacenGasTraspaso> traspasoEstacion = new List<AlmacenGasTraspaso>();
+                foreach (var estacionCarburacion in estaciones)
+                {
+                    var ultimo = AlmacenGasServicio.Traspasos(estacionCarburacion.IdAlmacenGas.Value).OrderByDescending(x => x.Orden > 0).FirstOrDefault();
+                    traspasoEstacion.Add(ultimo);
+                }
+                return TraspasoAdapter.ToDTOEstacion(lestaciones, lpipas, estacion, medidores,unidadAlmacen, traspaso, traspasosEntrada);
             }
                 
         }
@@ -780,9 +800,17 @@ namespace Application.MainModule.Flujos
             }
             var entrega = puntoVenta.OperadorChofer.Usuario;
             var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoVenta, almacenPunto, cortesYanticiposOrden);
-            //Insert en la tabla de VentaCajaGeneral
+            #region Insert en la tabla de VentaCajaGeneral
             if (corte.Exito)
             {
+                #region Update a la tabla de ventas con el corte 
+                foreach (var item in dto.Conceptos)
+                {
+                    var venta = PuntoVentaServicio.Obtener(item.TiketVenta);
+                    var adapter = VentasEstacionesAdapter.ToDTO(item, venta);
+                    var conceptos = PuntoVentaServicio.ActualizarVentasCorte(adapter);
+                }
+                #endregion
                 var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoVenta.IdPuntoVenta, dto.Fecha);
                 var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoVenta.IdPuntoVenta, dto.Fecha);
                 var ventasCajasGral = PuntoVentaServicio.ObtenerVentasCajaGral();
@@ -792,7 +820,7 @@ namespace Application.MainModule.Flujos
                 corteCajaGeneral.OtrasVentas = VentaServicio.CalculoOtrasVentas(deContado, credito);
                 return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
             }
-            //Fin del Insert en la tabla de VentaCajaGeneral
+            #endregion
 
             return corte;
         }

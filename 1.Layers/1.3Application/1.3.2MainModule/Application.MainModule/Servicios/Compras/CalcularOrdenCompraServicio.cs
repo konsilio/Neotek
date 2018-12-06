@@ -26,7 +26,14 @@ namespace Application.MainModule.Servicios.Compras
         {
             return importeEnLitros / factorCompraLitrosAKilos;
         }
-
+        public static decimal ComplementoPVIVA(decimal PVPM, decimal IVA)
+        {
+            return (PVPM * (IVA / 100) + PVPM);
+        }
+        public static decimal ComplementoImporte(decimal KilogramosPapeleta, decimal PVIva)
+        {
+            return KilogramosPapeleta * PVIva;
+        }
         public static decimal Subtotal(decimal precio, decimal cantidad)
         {
             return precio * cantidad;
@@ -35,7 +42,7 @@ namespace Application.MainModule.Servicios.Compras
         public static decimal Subtotal(List<decimal> montosASumar)
         {
             return montosASumar.Sum();
-        }        
+        }
 
         public static decimal Iva(decimal subtotal, decimal porcentIva)
         {
@@ -50,7 +57,7 @@ namespace Application.MainModule.Servicios.Compras
         public static decimal Total(decimal subtotal, decimal iva, decimal ieps)
         {
             decimal SubtotalConIva = subtotal * iva;
-            decimal SubtotalConIeps = subtotal * ieps;           
+            decimal SubtotalConIeps = subtotal * ieps;
 
             return subtotal + SubtotalConIva + SubtotalConIeps;
         }

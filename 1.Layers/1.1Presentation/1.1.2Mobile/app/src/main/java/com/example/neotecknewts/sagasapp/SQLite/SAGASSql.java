@@ -1,6 +1,5 @@
 package com.example.neotecknewts.sagasapp.SQLite;
 
-import android.animation.ValueAnimator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -19,8 +18,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
-
-import java.util.DoubleSummaryStatistics;
+import com.example.neotecknewts.sagasapp.Model.VentasCorteDTO;
 
 /**
  * Clase SAGASSql para el manejo de base de datos local
@@ -72,6 +70,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_TRASPASOS_IMAGENES = "traspasos_imagenes";
     private static final String TABLE_ANTICIPOS = "anticipos";
     private static final String TABLE_CORTES ="cortes";
+    private static final String TABLE_CORTES_VENTAS ="cortes_ventas";
 
     public static final String TIPO_RECARGA_CAMIONETA = "C";
     public static final String TIPO_RECARGA_ESTACION_CARBURACION =  "EC";
@@ -528,6 +527,15 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Falta BOOLEAN DEFAULT 1"+
                 ")");
         //endregion
+
+        //region Tabla de ventas de corte
+        db.execSQL("CREATE TABLE "+TABLE_CORTES_VENTAS+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Corte TEXT," +
+                "TiketVenta TEXT," +
+                "IdVenta INTEGER" +
+                ")");
+        //enregion
     }
 
     /**
@@ -581,6 +589,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_TRASPASOS_IMAGENES);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_ANTICIPOS);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_CORTES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_CORTES_VENTAS);
         onCreate(db);
     }
     //endregion
@@ -2273,5 +2282,55 @@ public class SAGASSql extends SQLiteOpenHelper {
     }
 
 
+    //endregion
+
+    //region Metodos para las ventas del corte
+
+    /**
+     * InsertVentasCorte
+     * Inserta los registros de las ventas del corte, retornara un array con
+     * los id que ha sido registrados en local
+     * @param dto Objeto {@link CorteDTO} del que se extrae la lista {@link VentasCorteDTO}
+     *            con los datos a registrar
+     * @return Array de tipo {@link Long} con los id de los registros
+     */
+    public Long[] InsertVentasCorte(CorteDTO dto){
+        Long[] inserts = new Long[dto.getConceptos().size()];
+        for (VentasCorteDTO ventasCorteDTO:
+             dto.getConceptos()) {
+            ContentValues values = new ContentValues();
+            values.put("Corte",ventasCorteDTO.getCorte());
+            values.put("TiketVenta",ventasCorteDTO.getTiketVenta());
+            values.put("IdVenta",ventasCorteDTO.getIdVenta());
+            this.getWritableDatabase().insert(TABLE_CORTES_VENTAS,null,values);
+        }
+
+        return inserts;
+    }
+
+    /**
+     * GetVentasCorte
+     * Permite extraer las ventas ligadas al corte
+     * @param corte String con la clave del corte
+     * @return Objeto tipo {@link Cursor} con los datos de las ventas del corte
+     */
+    public Cursor GetVentasCorte(String corte){
+        return this.getReadableDatabase().rawQuery(
+                "SELECT * FROM "+TABLE_CORTES_VENTAS+" WHERE Corte = '"+corte+"'",
+                null
+        );
+    }
+
+    /**
+     * EliminarVentasCorte
+     * Permite hacer la eliminación de los registros de la base de datos de las ventas
+     * del corte , retorna un valor tipo {@link Integer} con el numero de registros eliminados
+     * @param corte String con la clave del corte
+     * @return Integer que reprecenta el número de registros eliminados
+     */
+    public Integer EliminarVentasCorte(String corte){
+        return this.getWritableDatabase().delete(TABLE_CORTES_VENTAS,
+                "Corte = '"+corte+"'",null);
+    }
     //endregion
 }

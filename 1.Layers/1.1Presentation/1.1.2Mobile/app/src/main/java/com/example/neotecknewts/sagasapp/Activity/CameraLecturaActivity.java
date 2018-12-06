@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -529,7 +530,8 @@ public class CameraLecturaActivity extends AppCompatActivity {
     }
 
     private void openCameraIntent() {
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, (NombreImagen!=null)? NombreImagen:new Date().toString());
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");

@@ -30,6 +30,7 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
+import com.example.neotecknewts.sagasapp.Model.VentasCorteDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
@@ -301,9 +302,32 @@ public class Lisener{
                                         cursor.getColumnIndex("FechaVenta")
                                 )
                         );
+                        Cursor ventasCorte = sagasSql.GetVentasCorte(corteDTO.getClaveOperacion());
+                        ventasCorte.moveToFirst();
+                        while (!ventasCorte.isAfterLast()){
+                            VentasCorteDTO ventaCorteDTO = new VentasCorteDTO();
+                            ventaCorteDTO.setIdVenta(
+                                    ventasCorte.getInt(
+                                            ventasCorte.getColumnIndex("IdVenta")
+                                    )
+                            );
+                            ventaCorteDTO.setTiketVenta(
+                                    ventasCorte.getString(
+                                            ventasCorte.getColumnIndex("TiketVenta")
+                                    )
+                            );
+                            ventaCorteDTO.setCorte(
+                                    ventasCorte.getString(
+                                            ventasCorte.getColumnIndex("Corte")
+                                    )
+                            );
+                            corteDTO.getConceptos().add(ventaCorteDTO);
+                            ventasCorte.moveToNext();
+                        }
                         //values.put("FechaCorte",corteDTO.getFecha().toString());
                         if(Registrar(corteDTO,token)){
                             sagasSql.EliminarCorte(corteDTO.getClaveOperacion());
+                            sagasSql.EliminarVentasCorte(corteDTO.getClaveOperacion());
                         }
 
                     }catch (Exception ex){
@@ -471,15 +495,16 @@ public class Lisener{
                     traspasoDTO = new TraspasoDTO();
                     try {
                         traspasoDTO.setFecha(
-                                format.parse(
-                                    cursor.getString(
+
+                                /*format.parse(
+                                    (*/ cursor.getString(
                                             cursor.getColumnIndex("Fecha")
-                                    )
-                                )
+                                    )/*)
+                                )*/
                         );
                         traspasoDTO.setCantidadDeFotos(
                                 cursor.getInt(
-                                        cursor.getColumnIndex("CantidadDeFotos")
+                                        cursor.getColumnIndex("CantidadFotos")
                                 )
                         );
                         traspasoDTO.setClaveOperacion(
@@ -535,18 +560,16 @@ public class Lisener{
                                             imagenes.getColumnIndex("Imagen")
                                     )
                             );
-                            traspasoDTO.getImagenesUri().add(
+                            /*traspasoDTO.getImagenesUri().add(
                                     new URI(
                                             imagenes.getString(
                                                     cursor.getColumnIndex("Url")
                                             )
                                     )
-                            );
+                            );*/
                             imagenes.moveToNext();
                         }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    } catch (URISyntaxException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     boolean esFinal = cursor.getInt(cursor.getColumnIndex("EsFinal")) > 0;
