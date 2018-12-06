@@ -186,8 +186,10 @@ namespace Application.MainModule.Servicios.Mobile
                     //Diposición de efectivo
                     if(rol.AppDisposicionEfectivo && !_AppDisposicionEfectivo)
                     {
-                        var operador = PuntoVentaServicio.ObtenerOperador(idUsuario);
-                        var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
+                        var operadorDTO = PuntoVentaServicio.ObtenerOperador(idUsuario);
+                        var operador = OperadorChoferServicio.Obtener(operadorDTO.IdOperadorChofer);
+                        //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
+                        var puntoVenta = PuntoVentaServicio.Obtener(operador);
                         var unidadAlmacen = puntoVenta.UnidadesAlmacen;
 
                         if (unidadAlmacen.IdPipa != null)
