@@ -277,6 +277,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
         public static AlmacenGasMovimientoDto ToDTO(AlmacenGasMovimiento pv)
         {
+            var precioLt = CajaGeneralServicio.ObtenerPrecioLt(pv.IdEmpresa, pv.Year, pv.Mes, pv.Dia, pv.Orden);
             AlmacenGasMovimientoDto usDTO = new AlmacenGasMovimientoDto()
             {
                 IdEmpresa = pv.IdEmpresa,
@@ -307,8 +308,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 FechaAplicacion = pv.FechaAplicacion,
                 FechaRegistro = pv.FechaRegistro,
                 /********************/
-                VentaKg = pv.VentaKg,
-                VentaLt = pv.VentaLt,
+                venta = pv.SalidaLt * precioLt,
 
             };
             return usDTO;
@@ -847,14 +847,14 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             x.VentaLecturasP5000Lt = 0;
             x.VentaLecturasMagnatelKg = 0;
             x.VentaLecturasMagnatelLt = 0;
-            x.VentaLecturasP5000MesKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasP5000MesKg ?? 0, Dto.VentaLecturasP5000MesKg ?? 0);
-            x.VentaLecturasP5000MesLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasP5000MesLt ?? 0, Dto.VentaLecturasP5000MesLt ?? 0);
-            x.VentaLecturasMagnatelMesKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasMagnatelMesKg ?? 0, Dto.VentaLecturasMagnatelMesKg ?? 0);
-            x.VentaLecturasMagnatelMesLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasMagnatelMesLt ?? 0, Dto.VentaLecturasMagnatelMesLt ?? 0);
-            x.VentaLecturasP5000AnioKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasP5000AnioKg ?? 0, Dto.VentaLecturasP5000AnioKg ?? 0);
-            x.VentaLecturasP5000AnioLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasP5000AnioLt ?? 0, Dto.VentaLecturasP5000AnioLt ?? 0);
-            x.VentaLecturasMagnatelAnioKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasMagnatelAnioKg ?? 0, Dto.VentaLecturasMagnatelAnioKg ?? 0);
-            x.VentaLecturasMagnatelAnioLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasMagnatelAnioLt ?? 0, Dto.VentaLecturasMagnatelAnioLt ?? 0);
+            //x.VentaLecturasP5000MesKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasP5000MesKg ?? 0, Dto.VentaLecturasP5000MesKg ?? 0);
+            //x.VentaLecturasP5000MesLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasP5000MesLt ?? 0, Dto.VentaLecturasP5000MesLt ?? 0);
+            //x.VentaLecturasMagnatelMesKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasMagnatelMesKg ?? 0, Dto.VentaLecturasMagnatelMesKg ?? 0);
+            //x.VentaLecturasMagnatelMesLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasMagnatelMesLt ?? 0, Dto.VentaLecturasMagnatelMesLt ?? 0);
+            //x.VentaLecturasP5000AnioKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasP5000AnioKg ?? 0, Dto.VentaLecturasP5000AnioKg ?? 0);
+            //x.VentaLecturasP5000AnioLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasP5000AnioLt ?? 0, Dto.VentaLecturasP5000AnioLt ?? 0);
+            //x.VentaLecturasMagnatelAnioKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasMagnatelAnioKg ?? 0, Dto.VentaLecturasMagnatelAnioKg ?? 0);
+            //x.VentaLecturasMagnatelAnioLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasMagnatelAnioLt ?? 0, Dto.VentaLecturasMagnatelAnioLt ?? 0);
 
             return x;
 

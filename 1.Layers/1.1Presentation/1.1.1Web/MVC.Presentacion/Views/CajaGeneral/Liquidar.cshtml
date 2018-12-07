@@ -158,16 +158,27 @@
                                                                 foreach (var item in ViewBag.SalidaGas)
                                                                 {
                                                                     <tr>
-                                                                        <td>GAS</td>
-                                                                        <td>@item.SalidaLt</td>
+                                                                        <td>GAS</td>                                                                        
+                                                                        <td>@item.P5000Anterior</td>
                                                                         <td>@item.P5000Actual</td>
-                                                                        <td>@item.SalidaLt</td>
                                                                         <td>$@item.SalidaLt</td>
+                                                                        <td>@item.venta</td>
                                                                     </tr>
                                                                 }
                                                             }
                                                         </tbody>
                                                     </table>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    @if (ViewBag.SalidaGas != null && ViewBag.SalidaGas.Count >= 1)
+                                                    {
+                                                        <div class="col-md-6">
+                                                            Página @(ViewBag.SalidaGas.PageCount < ViewBag.SalidaGas.PageNumber ? 0 : ViewBag.SalidaGas.PageNumber) de @ViewBag.SalidaGas.PageCount
+                                                        </div>
+                                                        <div class="col-md-6 text-right">
+                                                            @Html.PagedListPager((IPagedList)ViewBag.SalidaGas, pagePipa => Url.Action("Buscar", new { pagePipa, @class = "btn btn-primary btn-simple" }))
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
                                         }

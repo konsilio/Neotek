@@ -27,12 +27,12 @@ namespace Application.MainModule.Flujos
                 return CajaGeneralServicio.Obtener().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
 
-        public List<AlmacenGasMovimientoDto> MovimientosGas(short unidad, short empresa, short year, byte month, byte dia, short? orden)
+        public List<AlmacenGasMovimientoDto> MovimientosGas(short unidad, short empresa, short year, byte month, byte dia, short? orden, string Folio)
         {           
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
 
-            return CajaGeneralServicio.ObtenerPVDetalle(unidad, empresa, year, month, dia, orden.Value).ToList();
+            return CajaGeneralServicio.ObtenerPVDetalle(unidad, empresa, year, month, dia, orden.Value, Folio).ToList();
 
         }
         public List<VentasPipaDto> MovimientosGas(short unidad, short empresa, short year, byte month, byte dia, short? orden,DateTime fecha, string Folio)
