@@ -18,6 +18,7 @@ public class Sincronizacion {
     public List<String> mensajes;
     private ProgressDialog progressDialog;
     private AlertDialog.Builder dialog;
+    private Session session;
 
     public  Sincronizacion(Context context,Activity activity){
         this.context = context;
@@ -25,6 +26,7 @@ public class Sincronizacion {
         this.mensajes = new ArrayList<>();
         this.dialog = new AlertDialog.Builder(activity, R.style.AlertDialog);
         this.progressDialog = new ProgressDialog(activity,R.style.AlertDialog);
+        this.session = new Session(this.context);
     }
     //region Sincronizar
     public void Sincronizar(){
@@ -33,7 +35,7 @@ public class Sincronizacion {
         progressDialog.setCancelable(false);
         progressDialog.show();
         //region Sincronizar papeletas
-        Papeleta papeleta = new Papeleta(context,new PapeletaSQL(context),this);
+        Papeleta papeleta = new Papeleta(context,new PapeletaSQL(context),this,session.getToken());
         boolean EnvioPapeleta = papeleta.SincronizarPapeletas();
         mensajes.addAll(papeleta.mensajes);
         //endregion
