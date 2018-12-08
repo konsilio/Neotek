@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                         }
-                    </div>         
+                    </div>
                     <div class="card">
                         <div class="body">
                             <div class="col-lg-12 col-md-12 col-sm-12 blockquote blockquote-info btn-round">
@@ -157,17 +157,28 @@
                                                             {
                                                                 foreach (var item in ViewBag.SalidaGas)
                                                                 {
-                                                                    <tr>
-                                                                        <td>GAS</td>
-                                                                        <td>@item.SalidaLt</td>
-                                                                        <td>@item.P5000Actual</td>
-                                                                        <td>@item.SalidaLt</td>
-                                                                        <td>$@item.SalidaLt</td>
-                                                                    </tr>
+                                                            <tr>
+                                                                <td>GAS</td>
+                                                                <td>@item.P5000Anterior</td>
+                                                                <td>@item.P5000Actual</td>
+                                                                <td>@item.SalidaLt.ToString().Replace(".0000","")</td>
+                                                                <td>$@item.venta</td>
+                                                            </tr>
                                                                 }
                                                             }
                                                         </tbody>
                                                     </table>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    @if (ViewBag.SalidaGas != null && ViewBag.SalidaGas.Count >= 1)
+                                                    {
+                                                    <div class="col-md-6">
+                                                        Página @(ViewBag.SalidaGas.PageCount < ViewBag.SalidaGas.PageNumber ? 0 : ViewBag.SalidaGas.PageNumber) de @ViewBag.SalidaGas.PageCount
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        @Html.PagedListPager((IPagedList)ViewBag.SalidaGas, pagePipa => Url.Action("Buscar", new { pagePipa, @class = "btn btn-primary btn-simple" }))
+                                                    </div>
+                                                    }
                                                 </div>
                                             </div>
                                         }
@@ -190,13 +201,13 @@
                                                             {
                                                                 foreach (var item in ViewBag.SalidaGasCilindro)
                                                                 {
-                                                                    <tr>
-                                                                        <td>@item.ProductoDescripcion</td>
-                                                                        <td>@item.Salida</td>
-                                                                        <td>@item.Recepcion</td>
-                                                                        <td>@item.CantidadProducto</td>
-                                                                        <td>$@item.Total</td>
-                                                                    </tr>
+                                                            <tr>
+                                                                <td>@item.ProductoDescripcion</td>
+                                                                <td>@item.Salida</td>
+                                                                <td>@item.Recepcion</td>
+                                                                <td>@item.CantidadProducto</td>
+                                                                <td>$@item.Total</td>
+                                                            </tr>
                                                                 }
                                                             }
                                                         </tbody>
@@ -224,13 +235,13 @@
                                                         {
                                                             foreach (var item in ViewBag.SalidaGasCilindro)
                                                             {
-                                                                <tr>
-                                                                    <td>@item.ProductoDescripcion</td>
-                                                                    <td>@item.Salida</td>
-                                                                    <td>@item.Recepcion</td>
-                                                                    <td>@item.CantidadProducto</td>
-                                                                    <td>$@item.Total</td>
-                                                                </tr>
+                                                        <tr>
+                                                            <td>@item.ProductoDescripcion</td>
+                                                            <td>@item.Salida</td>
+                                                            <td>@item.Recepcion</td>
+                                                            <td>@item.CantidadProducto</td>
+                                                            <td>$@item.Total</td>
+                                                        </tr>
                                                             }
                                                         }
                                                     </tbody>
@@ -259,7 +270,7 @@
                                                         {
                                                             <tr>
                                                                 <td>@item.FolioOperacionDia</td>
-                                                                <td>Contado</td>
+                                                                <td>@item.Tipo</td>
                                                                 <td>@item.Descuento</td>
                                                                 <td>@item.Subtotal</td>
                                                                 <td>@item.Iva</td>
@@ -282,7 +293,7 @@
                                             }
                                         </div><br />
                                         <div class="row clearfix">
-                                                                                    <div class="col-sm-8" style="text-align:right">
+                                            <div class="col-sm-8" style="text-align:right">
                                                 <b>Descuento:</b>
                                             </div>
                                             <div class="col-sm-4">

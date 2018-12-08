@@ -52,10 +52,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          ).ToList();
         }
 
-        public List<AlmacenGasMovimiento> Buscar(short empresa, short year, byte month, byte dia, short orden)
+        public List<AlmacenGasMovimiento> Buscar(short empresa, short year, byte month, byte dia, short orden, string Folio)
         {
             return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(empresa)
-            && x.Year.Equals(year) && x.Mes.Equals(month) && x.Dia.Equals(dia) //&& x.Orden.Equals(orden)
+            && x.Year.Equals(year) && x.Mes.Equals(month) && x.Dia.Equals(dia) && x.FolioOperacionDia.Equals(Folio)
                                                          ).ToList();
         }
         public List<VentaMovimiento> Buscar(int idPv)
