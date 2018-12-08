@@ -481,10 +481,16 @@ namespace Application.MainModule.Flujos
                 estacion = unidadAlmacen.EstacionCarburacion;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen).FindAll(x=>x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
-                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year)).ToList();
-                var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(Convert.ToByte(fecha.Day)) &&
-                   X.Mes.Equals(Convert.ToByte(fecha.Month)) && X.Year.Equals((short)fecha.Year)).ToList();
-                dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos);
+                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year) && x.IdTipoOperacion.Equals(1)).ToList();
+                var ventas = puntoVenta.VentaPuntoDeVenta;
+                var ventasActivas = ventas.Where(x => x.Dia.Equals((byte)fecha.Day) && x.Mes.Equals((byte)fecha.Month) && x.Year.Equals((short)fecha.Year));
+                var ventasSinCorte = new List<VentaPuntoDeVenta>();
+                foreach (var ventaActiva in ventasActivas)
+                {
+                    if (ventaActiva.FolioOperacionDia == null)
+                        ventasSinCorte.Add(ventaActiva);
+                }
+                dto = AnticiposCortesAdapter.ToDTOPipa(ventasSinCorte, anticipos, unidadAlmacen, esAnticipos);
             }
 
             if (unidadAlmacen.IdPipa > 0 && unidadAlmacen.IdPipa != null)
@@ -492,10 +498,16 @@ namespace Application.MainModule.Flujos
                 pipa = unidadAlmacen.Pipa;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x=>x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen).FindAll(x => x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
-                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year)).ToList();
-                var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(Convert.ToByte(fecha.Day)) &&
-                    X.Mes.Equals(Convert.ToByte(fecha.Month)) && X.Year.Equals((short)fecha.Year)).ToList();
-                dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos); 
+                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year) && x.IdTipoOperacion.Equals(1)).ToList();
+                var ventas = puntoVenta.VentaPuntoDeVenta;
+                var ventasActivas = ventas.Where(x => x.Dia.Equals((byte)fecha.Day) && x.Mes.Equals((byte)fecha.Month) && x.Year.Equals((short)fecha.Year));
+                var ventasSinCorte = new List<VentaPuntoDeVenta>();
+                foreach (var ventaActiva in ventasActivas)
+                {
+                    if (ventaActiva.FolioOperacionDia==null)
+                        ventasSinCorte.Add(ventaActiva);
+                }
+                dto = AnticiposCortesAdapter.ToDTOPipa(ventasSinCorte, anticipos, unidadAlmacen, esAnticipos); 
 
             }
                 
@@ -504,10 +516,16 @@ namespace Application.MainModule.Flujos
                 camioneta = unidadAlmacen.Camioneta;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var anticipos = PuntoVentaServicio.ObtenerAnticipos(unidadAlmacen).FindAll(x => x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
-                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year)).ToList();
-                var ventas = puntoVenta.VentaPuntoDeVenta.Where(X => X.Dia.Equals(fecha.Day) &&
-                    X.Mes.Equals(fecha.Month) && X.Year.Equals(fecha.Year)).ToList();
-                dto = AnticiposCortesAdapter.ToDTOPipa(ventas, anticipos, unidadAlmacen, esAnticipos);
+                x.FechaCorteAnticipo.Month.Equals(fecha.Month) && x.FechaCorteAnticipo.Year.Equals(fecha.Year) && x.IdTipoOperacion.Equals(1) ).ToList();
+                var ventas = puntoVenta.VentaPuntoDeVenta;
+                var ventasActivas = ventas.Where(x => x.Dia.Equals((byte)fecha.Day) && x.Mes.Equals((byte)fecha.Month) && x.Year.Equals((short)fecha.Year));
+                var ventasSinCorte = new List<VentaPuntoDeVenta>();
+                foreach (var ventaActiva in ventasActivas)
+                {
+                    if (ventaActiva.FolioOperacionDia == null)
+                        ventasSinCorte.Add(ventaActiva);
+                }
+                dto = AnticiposCortesAdapter.ToDTOPipa(ventasSinCorte, anticipos, unidadAlmacen, esAnticipos);
             }
                 
             return dto;

@@ -213,6 +213,40 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
 
             };
         }
+        public static PrecioVentaDTO ToDTO(PrecioVenta pv,Producto producto)
+        {
+            var nombreEmp = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial;
 
+            PrecioVentaDTO usDTO = new PrecioVentaDTO()
+            {
+                IdPrecioVenta = pv.IdPrecioVenta,
+                IdEmpresa = pv.IdEmpresa,
+                IdPrecioVentaEstatus = pv.IdPrecioVentaEstatus,
+                IdCategoria = pv.IdCategoria,
+                IdProductoLinea = pv.IdProductoLinea,
+                IdProducto = pv.IdProducto,
+                Categoria = pv.Categoria,
+                Linea = pv.Linea,
+                Producto = pv.Producto,
+                PrecioActual = pv.PrecioActual,
+                PrecioPemexKg = pv.PrecioPemexKg,
+                PrecioPemexLt = pv.PrecioPemexLt,
+                UtilidadEsperadaKg = pv.UtilidadEsperadaKg,
+                UtilidadEsperadaLt = pv.UtilidadEsperadaLt,
+                PrecioSalida = pv.PrecioSalida,
+                PrecioSalidaKg = pv.PrecioSalidaKg,
+                PrecioSalidaLt = pv.PrecioSalidaLt,
+                EsGas = pv.EsGas,
+                FechaProgramada = pv.FechaProgramada,
+                FechaVencimiento = pv.FechaVencimiento,
+                Activo = pv.Activo,
+                FechaRegistro = pv.FechaRegistro,
+                Empresa = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial,
+                PrecioVentaEstatus = PrecioVentaGasServicio.Obtener(pv.IdPrecioVentaEstatus).Descripción,
+                CategoriaProducto = ProductoServicio.ObtenerProducto((pv.IdProducto)).Descripcion,//Concepto
+                IdUnidaMedida = producto.IdUnidadMedida,
+            };
+            return usDTO;
+        }
     }
 }
