@@ -92,6 +92,12 @@ public class PrecioVentaDTO extends RespuestaDTO implements Serializable {
     @SerializedName("Empresa")
     private String Empresa;
 
+    @SerializedName("IdUnidadMedida")
+    private int IdUnidadMedida;
+
+    @SerializedName("UnidadMedida")
+    private String UnidadMedida;
+
     public int getIdPrecioVenta() {
         return IdPrecioVenta;
     }
@@ -298,5 +304,21 @@ public class PrecioVentaDTO extends RespuestaDTO implements Serializable {
 
     public void setEmpresa(String empresa) {
         Empresa = empresa;
+    }
+
+    public int getIdUnidadMedida() {
+        return IdUnidadMedida;
+    }
+
+    public void setIdUnidadMedida(int idUnidadMedida) {
+        IdUnidadMedida = idUnidadMedida;
+    }
+
+    public String getUnidadMedida() {
+        return UnidadMedida;
+    }
+
+    public void setUnidadMedida(String unidadMedida) {
+        UnidadMedida = unidadMedida;
     }
 }

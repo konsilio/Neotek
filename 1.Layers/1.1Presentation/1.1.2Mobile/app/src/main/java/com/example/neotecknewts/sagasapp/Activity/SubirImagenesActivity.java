@@ -109,6 +109,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsLecturaFinalPipa = false;
                 EsLecturaInicialAlmacen = false ;
                 EsLecturaFinalAlamacen = false;
+                setTitle("Registro papeleta");
             }
             else if(extras.getBoolean("EsDescargaIniciar")){
                 Log.w("SUBIR","EsDescargaIniciar");
