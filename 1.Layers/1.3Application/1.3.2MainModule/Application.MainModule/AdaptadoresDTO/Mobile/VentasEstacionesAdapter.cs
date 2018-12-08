@@ -97,8 +97,17 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     Subtotal = concepto.Subtotal,
                     IdProducto = concepto.IdProducto,
                     DescuentoTotal = concepto.Descuento,
-                    CantidadLt = concepto.LitrosDespachados,  
+                    CantidadLt = concepto.LitrosDespachados,
+                      
                     CantidadKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.LitrosDespachados, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),
+                    //Agregados recientemente
+                    IdUnidadMedida = concepto.IdUnidadMedida,
+                    PrecioUnitarioKg = concepto.PrecioUnitarioKg,
+                    PrecioUnitarioLt = concepto.PrecioUnitarioLt,
+                    DescuentoUnitarioKg = concepto.DescuentoUnitarioKg,
+                    DescuentoUnitarioLt = concepto.DescuentoUnitarioLt,
+                    
+
             });
                 idOrdenDetalle++;
             }
@@ -151,7 +160,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                         Nombre = "Cilindro " + cilindro.CapacidadKg,
                         PrecioUnitario = cilindro.Precio,
                         Id = cilindro.IdCilindro,                        
-                        Existencia = cilindro.CilindrosCamionetas.FirstOrDefault(x => x.IdCilindro.Equals(cilindro.IdCilindro) && x.IdCamioneta.Equals(IdCamioneta)).Cantidad
+                        Existencia = cilindro.CilindrosCamionetas.FirstOrDefault(x => x.IdCilindro.Equals(cilindro.IdCilindro) && x.IdCamioneta.Equals(IdCamioneta)).Cantidad,
+                        CapacidadKg = cilindro.CapacidadKg,
+                        CapacidadLt = cilindro.CapacidadLt
                     });
                 }
                 else
@@ -162,7 +173,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                         Nombre = "Cilindro " + cilindro.CapacidadKg,
                         PrecioUnitario = cilindro.Precio,
                         Id = cilindro.IdCilindro,
-                        
+                        CapacidadKg = cilindro.CapacidadKg,
+                        CapacidadLt = cilindro.CapacidadLt
                     });
                 }
             }

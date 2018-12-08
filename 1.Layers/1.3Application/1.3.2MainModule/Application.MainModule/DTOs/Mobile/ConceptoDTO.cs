@@ -28,5 +28,16 @@ namespace Application.MainModule.DTOs.Mobile
         public short IdProducto { get; set; }
 
         public decimal LitrosDespachados { get; set; }
+
+        public short IdUnidadMedida { get; set; }
+        public decimal PrecioUnitarioProducto { get; set; }
+        public decimal PrecioUnitarioLt { get; set; }
+        public decimal PrecioUnitarioKg { get; set; }
+        public decimal DescuentoUnitarioLt { get; set; }
+        public decimal DescuentoUnitarioKg { get; set; }
+        public short CantidadLt { get; set; }
+        public short CantidadKg { get; set; }
+        public decimal DescuentoTotal { get; set; }
+
     }
 }
