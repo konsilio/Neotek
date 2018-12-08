@@ -424,8 +424,9 @@ namespace Application.MainModule.Flujos
         public PrecioVentaDTO ObtenerPrecioVentaVigente()
         {
             var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+            var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
             //var pv = PrecioVentaGasServicio.ObtenerPrecioVigente((short)2); (Test)
-            return PrecioVentaGasAdapter.ToDTO(pv);
+            return PrecioVentaGasAdapter.ToDTO(pv,producto);
         }
         public RespuestaDto EliminaPreciosVenta(PrecioVentaDTO cteDto)
         {
