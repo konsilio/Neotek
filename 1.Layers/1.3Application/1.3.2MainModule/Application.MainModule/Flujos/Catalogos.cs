@@ -719,6 +719,8 @@ namespace Application.MainModule.Flujos
             if (centro == null) return CentroCostoServicio.NoExiste();
 
             var CentroCosto = CentroCostoAdapter.FromDto(ccDto, centro);
+             //CentroCosto = CentroCostoAdapter.FromEntity(CentroCosto);
+
             return CentroCostoServicio.ModificarCentroCosto(CentroCosto);
         }
 

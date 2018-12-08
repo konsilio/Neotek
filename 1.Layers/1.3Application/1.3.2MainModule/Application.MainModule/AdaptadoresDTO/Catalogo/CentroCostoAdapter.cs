@@ -45,13 +45,14 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             centroCosto.IdEmpresa = cCostoDto.IdEmpresa;
             centroCosto.IdTipoCentroCosto = cCostoDto.IdTipoCentroCosto;
             centroCosto.IdCAlmacenGas = cCostoDto.IdCAlmacenGas;
-            centroCosto.IdCamioneta = cCostoDto.IdCamioneta;
-            centroCosto.IdCilindro = cCostoDto.IdCilindro;
-            centroCosto.IdEquipoTransporte = cCostoDto.IdEquipoTransporte;
-            centroCosto.IdEstacionCarburacion = cCostoDto.IdEstacionCarburacion;
-            centroCosto.IdPipa = cCostoDto.IdPipa;
+            centroCosto.IdCamioneta = cCostoDto.IdCamioneta != 0 ? cCostoDto.IdCamioneta : null;
+            centroCosto.IdCilindro = cCostoDto.IdCilindro != 0 ? cCostoDto.IdCilindro : null; 
+            centroCosto.IdEquipoTransporte = cCostoDto.IdEquipoTransporte != 0 ? cCostoDto.IdCilindro : null;
+            centroCosto.IdEstacionCarburacion = cCostoDto.IdEstacionCarburacion != 0 ? cCostoDto.IdEstacionCarburacion : null;
+            centroCosto.IdPipa = cCostoDto.IdPipa != 0 ? cCostoDto.IdPipa : null;
             centroCosto.Numero = cCostoDto.Numero;
             centroCosto.Descripcion = cCostoDto.Descripcion;
+           // centroCosto.UnidadAlmacenGasCilindro = cc.UnidadAlmacenGasCilindro;
             return centroCosto;
         }
 

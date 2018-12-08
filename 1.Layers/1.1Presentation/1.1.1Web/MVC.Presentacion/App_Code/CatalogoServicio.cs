@@ -1692,9 +1692,12 @@ namespace MVC.Presentacion.App_Code
         #region Centro de Costo
         public static CentroCostoModel InitCentroCosto(string Tkn)
         {
+            short Id = TokenServicio.ObtenerIdEmpresa(Tkn);
             return new CentroCostoModel()
             {
-                IdEmpresa = TokenServicio.ObtenerIdEmpresa(Tkn),
+                IdEmpresa = Id,
+                Empresa = Empresas(Tkn).Where(x=>x.IdEmpresa.Equals(Id)).FirstOrDefault().NombreComercial,
+         
                 CentrosCostos = BuscarCentrosCosto(Tkn)
             };
         }
@@ -1723,11 +1726,14 @@ namespace MVC.Presentacion.App_Code
                 IdCentroCosto = model.IdCentroCosto,
                 Descripcion = model.Descripcion,
                 Numero = model.Numero,
-                IdTipoCentroCosto = model.IdTipoCentroCosto
+                IdTipoCentroCosto = model.IdTipoCentroCosto,
+                Empresa = model.Empresa,
+                IdEmpresa = model.IdEmpresa,
             };
             if (!model.IdEquipoTransporte.Equals(0)) dto.IdEquipoTransporte = model.IdEquipoTransporte;
             if (!model.IdEstacionCarburacion.Equals(0)) dto.IdEstacionCarburacion = model.IdEstacionCarburacion;
             if (!model.IdCAlmacenGas.Equals(0)) dto.IdCAlmacenGas = model.IdCAlmacenGas;
+           
             return ModificarCentroCosto(dto, tkn);
         }
         public static CentroCostoModel ActivarModificar(byte idcc, CentroCostoModel model, string tkn)

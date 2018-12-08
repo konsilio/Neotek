@@ -370,6 +370,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 IdPipa = EsCamioneta.IdPipa,
                 Descripcion = "",
                 Concepto = concepto,
+                Tipo = pv.VentaACredito == false ? "Contado" : "Credito",
             };
             return usDTO;
         }
