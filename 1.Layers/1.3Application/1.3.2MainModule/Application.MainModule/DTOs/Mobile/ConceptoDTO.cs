@@ -35,8 +35,8 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal PrecioUnitarioKg { get; set; }
         public decimal DescuentoUnitarioLt { get; set; }
         public decimal DescuentoUnitarioKg { get; set; }
-        public short CantidadLt { get; set; }
-        public short CantidadKg { get; set; }
+        public decimal CantidadLt { get; set; }
+        public decimal CantidadKg { get; set; }
         public decimal DescuentoTotal { get; set; }
 
     }
