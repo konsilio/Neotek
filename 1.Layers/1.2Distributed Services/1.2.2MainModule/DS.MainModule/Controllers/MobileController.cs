@@ -298,9 +298,9 @@ namespace DS.MainModule.Controllers
         }
         //[AllowAnonymous]
         [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}/{fecha}")]
-        public HttpResponseMessage GetVentasCortesAnticipos(int estacion, bool esAnticipos,DateTime fecha)
+        public HttpResponseMessage GetVentasCortesAnticipos(int estacion, bool esAnticipos, DateTime fecha)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos,fecha), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos, fecha), Request);
         }
         [Route("consulta/precioventa/vigente")]
         public HttpResponseMessage GetPreciosVentaVigente()
@@ -333,7 +333,12 @@ namespace DS.MainModule.Controllers
         [Route("buscar/cliente/{rfc}")]
         public HttpResponseMessage GetClientePorRFC(string rfc)
         {
-            return Request.CreateResponse(HttpStatusCode.OK ,_mobile.BuscarClientePorRFC(rfc));
+            return Request.CreateResponse(HttpStatusCode.OK, _mobile.BuscarClientePorRFC(rfc));
+        }
+        [Route("estacion/punto-venta")]
+        public HttpResponseMessage GetEstacion()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.ObtenerEstacion(),Request);
         }
     }
 }
