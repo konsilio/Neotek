@@ -97,9 +97,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     Subtotal = concepto.Subtotal,
                     IdProducto = concepto.IdProducto,
                     DescuentoTotal = concepto.Descuento,
-                    CantidadLt = concepto.LitrosDespachados,
-                      
-                    CantidadKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.LitrosDespachados, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),
+                    CantidadLt = concepto.CantidadLt,   
+                    CantidadKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.CantidadLt, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),
                     //Agregados recientemente
                     IdUnidadMedida = concepto.IdUnidadMedida,
                     PrecioUnitarioKg = concepto.PrecioUnitarioKg,

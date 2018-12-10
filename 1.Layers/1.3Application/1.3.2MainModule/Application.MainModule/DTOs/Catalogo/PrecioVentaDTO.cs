@@ -52,6 +52,6 @@ namespace Application.MainModule.DTOs.Catalogo
         public string CategoriaProducto { get; set; }
         public string LineaProducto { get; set; }
         public string Empresa { get; set; }
-        public Nullable<short> IdUnidaMedida { get; set; }
+        public Nullable<short> IdUnidadMedida { get; set; }
     }
 }
