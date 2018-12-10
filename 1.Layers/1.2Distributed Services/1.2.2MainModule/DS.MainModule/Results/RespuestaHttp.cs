@@ -8,6 +8,7 @@ using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Compras;
+using Application.MainModule.DTOs.Mobile.PuntoVenta;
 
 namespace DS.MainModule.Results
 {
@@ -128,6 +129,11 @@ namespace DS.MainModule.Results
         }
 
         public static HttpResponseMessage crearRespuesta(DatosOtrosDto respuesta, HttpRequestMessage request)
+        {
+            return request.CreateResponse(HttpStatusCode.OK, respuesta);
+        }
+
+        public static HttpResponseMessage crearRespuesta(PuntoVentaAsignadoDTO respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }

@@ -17,6 +17,7 @@ using Application.MainModule.Servicios.Compras;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.DTOs.Mobile.PuntoVenta;
 
 namespace Application.MainModule.Flujos
 {
@@ -433,6 +434,35 @@ namespace Application.MainModule.Flujos
             }
 
             return null;
+        }
+        /// <summary>
+        /// Permite retornar por medio de la session activa
+        /// si es un chofer , su nombre de punto de venta 
+        /// </summary>
+        /// <returns>Objeto PuntoVentaAsignadoDTO con lso datos encontrados</returns>
+        public PuntoVentaAsignadoDTO ObtenerEstacion()
+        {
+            var usuario = TokenServicio.ObtenerUsuarioAplicacion();
+            var operador = PuntoVentaServicio.ObtenerOperador(usuario.IdUsuario);
+            var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
+            var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+            PuntoVentaAsignadoDTO pvaDto = new PuntoVentaAsignadoDTO();
+            if (unidadAlmacen.IdPipa > 0)
+            {
+                Pipa pipaAsignada = unidadAlmacen.Pipa;
+                pvaDto= PuntoVentaAdapter.ToDTO(usuario,operador,puntoVenta,unidadAlmacen,pipaAsignada);
+            }
+            if (unidadAlmacen.IdCamioneta > 0)
+            {
+                Camioneta camionetaAsignada = unidadAlmacen.Camioneta;
+                pvaDto = PuntoVentaAdapter.ToDTO(usuario, operador, puntoVenta, unidadAlmacen, camionetaAsignada);
+            }
+            if (unidadAlmacen.IdEstacionCarburacion>0)
+            {
+                EstacionCarburacion estacionAsignada = unidadAlmacen.EstacionCarburacion;
+                pvaDto = PuntoVentaAdapter.ToDTO(usuario,operador,puntoVenta,unidadAlmacen,estacionAsignada);
+            }
+            return pvaDto;
         }
 
         public List<UnidadAlmacenGas> estacionesInicio(List<AlmacenGasAutoConsumo> autoconsumos, bool estaciones = true, bool pipas = false, bool camionetas = false)

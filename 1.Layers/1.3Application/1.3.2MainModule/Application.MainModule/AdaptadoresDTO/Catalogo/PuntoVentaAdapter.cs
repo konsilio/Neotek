@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.DTOs.Mobile.PuntoVenta;
 
 namespace Application.MainModule.AdaptadoresDTO.Catalogo
 {
@@ -74,6 +76,47 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaModificacion = cte.FechaModificacion,
                 Activo = cte.Activo,
                 FechaRegistro = cte.FechaRegistro,
+            };
+        }
+
+        public static PuntoVentaAsignadoDTO ToDTO(Usuario usuario, OperadorChoferDTO operador, PuntoVenta puntoVenta, UnidadAlmacenGas unidadAlmacen, Pipa pipaAsignada)
+        {
+            return new PuntoVentaAsignadoDTO()
+            {
+                 IdCAlmacen = unidadAlmacen.IdCAlmacenGas,
+                 IdEstacion = (short) pipaAsignada.IdPipa,
+                 IdOperadorChofer = (short) operador.IdOperadorChofer,
+                 IdUusario =  (short) usuario.IdUsuario,
+                 IdPuntoVenta = (short) puntoVenta.IdPuntoVenta,
+                 NombreOperador = usuario.Nombre+" "+usuario.Apellido1+ " "+ usuario.Apellido2,
+                 NombrePuntoVenta = pipaAsignada.Nombre
+            };
+        }
+
+        public static PuntoVentaAsignadoDTO ToDTO(Usuario usuario, OperadorChoferDTO operador, PuntoVenta puntoVenta, UnidadAlmacenGas unidadAlmacen, Camioneta camionetaAsignada)
+        {
+            return new PuntoVentaAsignadoDTO()
+            {
+                IdCAlmacen = unidadAlmacen.IdCAlmacenGas,
+                IdEstacion = (short)camionetaAsignada.IdCamioneta,
+                IdOperadorChofer = (short)operador.IdOperadorChofer,
+                IdUusario = (short)usuario.IdUsuario,
+                IdPuntoVenta = (short)puntoVenta.IdPuntoVenta,
+                NombreOperador = usuario.Nombre + " " + usuario.Apellido1 + " " + usuario.Apellido2,
+                NombrePuntoVenta = camionetaAsignada.Nombre
+            };
+        }
+        public static PuntoVentaAsignadoDTO ToDTO(Usuario usuario, OperadorChoferDTO operador, PuntoVenta puntoVenta, UnidadAlmacenGas unidadAlmacen, EstacionCarburacion estacionAsignada)
+        {
+            return new PuntoVentaAsignadoDTO()
+            {
+                IdCAlmacen = unidadAlmacen.IdCAlmacenGas,
+                IdEstacion = (short)estacionAsignada.IdEstacionCarburacion,
+                IdOperadorChofer = (short)operador.IdOperadorChofer,
+                IdUusario = (short)usuario.IdUsuario,
+                IdPuntoVenta = (short)puntoVenta.IdPuntoVenta,
+                NombreOperador = usuario.Nombre + " " + usuario.Apellido1 + " " + usuario.Apellido2,
+                NombrePuntoVenta = estacionAsignada.Nombre
             };
         }
     }
