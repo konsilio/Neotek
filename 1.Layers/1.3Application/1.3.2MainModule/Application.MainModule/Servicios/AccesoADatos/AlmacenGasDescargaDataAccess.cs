@@ -82,12 +82,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     foreach (var oc in ocs)
-                    {
                         uow.Repository<OrdenCompra>().Update(oc);
-                        if (oc.OrdenCompraPago.Count != 0)
-                            foreach (var p in oc.OrdenCompraPago)
-                                uow.Repository<OrdenCompraPago>().Insert(p);
-                    }
 
                     uow.Repository<AlmacenGasDescarga>().Update(_almDes);
                     foreach (var foto in _fotos)
