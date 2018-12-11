@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
@@ -407,7 +408,20 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "IdCategoria INTEGER," +
                 "IdLinea INTEGER," +
                 "IdProducto INTEGER,"+
-                "Falta BOOLEAN DEFAULT 1"+
+                "Falta BOOLEAN DEFAULT 1,"+
+                "Year INTEGER,"+
+                "Mes INTEGER,"+
+                "Dia INTEGER,"+
+                "PrecioUnitarioProducto DOUBLE,"+
+                "PrecioUnitarioLt DOUBLE,"+
+                "PrecioUnitatioKg DOUBLE,"+
+                "DescuentoUnitarioProducto DOUBLE,"+
+                "DescuentoUnitarioLt DOUBLE,"+
+                "DescuentoUnitarioKg DOUBLE,"+
+                "CantidadLt DOUBLE,"+
+                "CantidadKg DOUBLE,"+
+                "DescuentoTotal DOUBLE,"+
+                "IdEmpresa INTEGER"+
                 ")");
         //endregion
 
@@ -1869,21 +1883,45 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Long[] InsertarConcepto(VentaDTO ventaDTO) {
         int size = ventaDTO.getConcepto().size();
         Long[] _result = new Long[size];
-        ContentValues values = new ContentValues();
-        for (int x =0; x<size;x++){
-            ConceptoDTO conceptoDTO = ventaDTO.getConcepto().get(x);
-            values.put("FolioVenta",ventaDTO.getFolioVenta());
-            values.put("IdTipoGas",conceptoDTO.getIdTipoGas());
-            values.put("Cantidad",conceptoDTO.getCantidad());
-            values.put("PUnitario",conceptoDTO.getPUnitario());
-            values.put("Descuento",conceptoDTO.getDescuento());
-            values.put("Subtotal",conceptoDTO.getSubtotal());
-            values.put("IdCategoria",conceptoDTO.getIdCategoria());
-            values.put("IdLinea",conceptoDTO.getIdLinea());
-            values.put("IdProducto",conceptoDTO.getIdProducto());
-            values.put("Concepto",conceptoDTO.getConcepto());
-            _result[x]= this.getWritableDatabase().insert(TABLE_VENTAS_CONCEPTO,
-                    null,values);
+        try {
+            for (int x = 0; x < size; x++) {
+                ContentValues values = new ContentValues();
+                ConceptoDTO conceptoDTO = ventaDTO.getConcepto().get(x);
+                values.put("FolioVenta", ventaDTO.getFolioVenta());
+                values.put("IdTipoGas", conceptoDTO.getIdTipoGas());
+                values.put("Cantidad", conceptoDTO.getCantidad());
+                values.put("PUnitario", conceptoDTO.getPUnitario());
+                values.put("Descuento", conceptoDTO.getDescuento());
+                values.put("Subtotal", conceptoDTO.getSubtotal());
+                values.put("IdCategoria", conceptoDTO.getIdCategoria());
+                values.put("IdLinea", conceptoDTO.getIdLinea());
+                values.put("IdProducto", conceptoDTO.getIdProducto());
+                values.put("Concepto", conceptoDTO.getConcepto());
+
+                values.put("Year", conceptoDTO.getYear());
+                values.put("Mes", conceptoDTO.getMes());
+                values.put("Dia", conceptoDTO.getDia());
+                values.put("IdProducto", conceptoDTO.getIdProducto());
+                values.put("IdLinea", conceptoDTO.getIdLinea());
+                values.put("IdCategoria", conceptoDTO.getIdCategoria());
+                values.put("IdUnidadMedida", conceptoDTO.getIdUnidadmedida());
+                values.put("PrecioUnitarioProducto", conceptoDTO.getPrecioUnitarioProducto());
+                values.put("PrecioUnitarioLt", conceptoDTO.getPrecioUnitarioLt());
+                values.put("PrecioUnitatioKg", conceptoDTO.getPrecioUnitarioKg());
+                values.put("DescuentoUnitarioProducto", conceptoDTO.getDescuentoUnitarioProducto());
+                values.put("DescuentoUnitarioLt", conceptoDTO.getDescuentoUnitarioLt());
+                values.put("DescuentoUnitarioKg", conceptoDTO.getDescuentoUnitarioKg());
+                values.put("Cantidad", conceptoDTO.getCantidad());
+                values.put("CantidadLt", conceptoDTO.getCantidadLt());
+                values.put("CantidadKg", conceptoDTO.getCantidadKg());
+                values.put("DescuentoTotal", conceptoDTO.getDescuentoTotal());
+                values.put("IdEmpresa", conceptoDTO.getIdEmpresa());
+                _result[x] = this.getWritableDatabase().insert(TABLE_VENTAS_CONCEPTO,
+                        null, values);
+            }
+        }catch (Exception ex){
+            Log.e("Error sql",ex.getMessage());
+            ex.printStackTrace();
         }
         return _result;
     }
