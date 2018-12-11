@@ -125,7 +125,7 @@ namespace DS.MainModule.Controllers
         [Route("solictud/pago/expedidor")]
         public HttpResponseMessage PutSolicitarPagoExpedidor(ComplementoGasDTO oc)
         {
-            return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoExipedidor(oc), Request);
+            return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoExpedidor(oc), Request);
         }
         [Route("solictud/pago/porteador")]
         public HttpResponseMessage PutSolicitarPagoPorteador(ComplementoGasDTO oc)
