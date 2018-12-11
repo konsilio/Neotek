@@ -304,14 +304,26 @@ namespace MVC.Presentacion.Controllers
             ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             ViewBag.CentrosCosto = CatalogoServicio.BuscarCentrosCosto(tkn);
             ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
-           if (complemeto.OrdenCompraPorteador != null)
+            if (complemeto.OrdenCompraPorteador != null)
+            {
                 complemeto.OrdenCompraPorteador.Iva = Convert.ToDecimal(complemeto.OrdenCompraPorteador.Iva.Value.ToString().Replace(".0000", ""));//ToString().Replace(".0000", String.Empty);
-            ViewBag.Complemeto = complemeto;
-            TempData["intIdOrdenCompra"] = id ?? 0;
-            if (complemeto.OrdenCompraPorteador.Total != 0 && complemeto.OrdenCompraPorteador.Casetas != 0)
-            { ViewBag.enabled = true; }
+                if (complemeto.OrdenCompraPorteador.Total != 0 && complemeto.OrdenCompraPorteador.Casetas != 0 && complemeto.OrdenCompraPorteador.Casetas != null)
+                    ViewBag.enabled = true;
+            }
             else
                 ViewBag.enabled = false;
+
+            ViewBag.Complemeto = complemeto;
+            TempData["intIdOrdenCompra"] = id ?? 0;
+
+            if (complemeto.OrdenCompraPorteador != null)
+            {
+                if (complemeto.OrdenCompraExpedidor.MontBelvieuDlls != null && complemeto.OrdenCompraExpedidor.TarifaServicioPorGalonDlls != null)
+                    ViewBag.Expedidor = true;
+            }
+            else
+                ViewBag.Expedidor = false;
+
             if (TempData["RespuestaDTO"] != null)
             {
                 var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
