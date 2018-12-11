@@ -1109,7 +1109,10 @@ public class Lisener{
                             concepto.moveToNext();
                         }
                     }
-                    registrarVenta(ventaDTO,esCamioneta,esEstacion,esPipa);
+                    if(registrarVenta(ventaDTO,esCamioneta,esEstacion,esPipa)){
+                        sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
+                        sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
+                    }
                     cursor.moveToNext();
                 }
             }
@@ -1152,10 +1155,10 @@ public class Lisener{
                 _registrado = false;
             }
         });
-        if(_registrado){
+        /*if(_registrado){
             sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
             sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
-        }
+        }*/
         Log.w("Registro","Registro en servicio venta"+ventaDTO.getFolioVenta()+": "+
                 _registrado);
         return _registrado;
