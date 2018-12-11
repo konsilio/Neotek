@@ -21,7 +21,17 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         public static PipaDto ToDTO(Pipa pipa, List<TipoMedidorUnidadAlmacenGas> medidores, UnidadAlmacenGas unidadAlmacenGas, List<AlmacenGasTraspaso> traspasosEntrada)
         {
-            var ultimoTraspaso = traspasosEntrada.Find(x => x.IdCAlmacenGasEntrada.Equals(unidadAlmacenGas.IdCAlmacenGas));
+            //var ultimoTraspaso = traspasosEntrada.Find(x => x.IdCAlmacenGasEntrada.Equals(unidadAlmacenGas.IdCAlmacenGas));
+            AlmacenGasTraspaso ultimoTraspaso = new AlmacenGasTraspaso();
+            foreach (var traspaso in traspasosEntrada)
+            {
+                if (traspaso != null) { 
+                    if (traspaso.IdCAlmacenGasEntrada.Equals(unidadAlmacenGas.IdAlmacenGas))
+                    {
+                        ultimoTraspaso = traspaso;
+                    }
+                }
+            }
             decimal p5000 = 0, porcentajeMedidor = 0;
             if (ultimoTraspaso != null)
             {
