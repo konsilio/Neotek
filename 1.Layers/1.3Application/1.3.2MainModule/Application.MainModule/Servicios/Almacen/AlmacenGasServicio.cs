@@ -110,7 +110,7 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static RespuestaDto ActualizarDescargaGas(AlmacenGasDescarga alm, List<AlmacenGasDescargaFoto> fotos, List<OrdenCompra> ocs)
         {
-            return new AlmacenGasDescargaDataAccess().Actualizar(alm, fotos);
+            return new AlmacenGasDescargaDataAccess().Actualizar(alm, fotos, ocs);
         }
         public static List<AlmacenGas> ObtenerTodos(short idEmpresa)
         {

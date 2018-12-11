@@ -37,7 +37,7 @@ namespace Application.MainModule.Servicios.Mobile
             var complemento = OrdenCompraServicio.BuscarComplementoGas(OrdenCompraServicio.Buscar(desDto.IdOrdenCompra));
             var ocExp = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraExpedidor));
             ocExp.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
-            var ocPort = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraExpedidor));
+            var ocPort = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraPorteador));
             ocPort.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
 
             ocs.Add(ocExp);

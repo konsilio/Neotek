@@ -444,7 +444,8 @@ namespace Application.MainModule.Flujos
         {
             var usuario = TokenServicio.ObtenerUsuarioAplicacion();
             var operador = PuntoVentaServicio.ObtenerOperador(usuario.IdUsuario);
-            var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
+            //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var unidadAlmacen = puntoVenta.UnidadesAlmacen;
             PuntoVentaAsignadoDTO pvaDto = new PuntoVentaAsignadoDTO();
             if (unidadAlmacen.IdPipa > 0)
