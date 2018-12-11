@@ -245,7 +245,7 @@ public class VerReporteActivity extends AppCompatActivity {
         if(ventaDTO.getEstacion().trim().length()>0 || !ventaDTO.getEstacion().isEmpty()
                 && !ventaDTO.getEstacion().equals("")) {
                 HtmlReporte+="<tr>" +
-                "<td>Surtió</td>"+
+                "<td>Surtido</td>"+
                 "<td>[{Estacion}]</td>"+
                 "</tr>";
         }
@@ -356,7 +356,7 @@ public class VerReporteActivity extends AppCompatActivity {
                         "Hora\t[{Hora}]\n";
         if(ventaDTO.getEstacion().trim().length()>0 || !ventaDTO.getEstacion().isEmpty()
                 && !ventaDTO.getEstacion().equals("")) {
-            StringReporte+="Surtio: \t [{Estacion}]\n";
+            StringReporte+="Surtido: \t [{Estacion}]\n";
         }
         StringReporte+="_________________________\n";
         //region Busqueda por cliente

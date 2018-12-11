@@ -79,8 +79,11 @@
                     android:inputType="text"
                     android:visibility="gone"
                     android:hint="@string/razon_social"
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P"
                     android:singleLine="true"
-                    android:importantForAutofill="no" tools:targetApi="o" />
+                    android:importantForAutofill="no" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -101,7 +104,9 @@
                     android:textSize="18sp"
                     android:maxLength="13"
                     android:visibility="visible"
-                    tools:targetApi="o" />
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -120,7 +125,10 @@
                     android:hint="@string/nombre"
                     android:singleLine="true"
                     android:text=""
-                    android:importantForAutofill="no" tools:targetApi="o" />
+                    android:importantForAutofill="no"
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -139,7 +147,10 @@
                     android:textSize="25sp"
                     android:inputType="textPersonName"
                     android:text=""
-                    android:importantForAutofill="no" tools:targetApi="o" />
+                    android:importantForAutofill="no"
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -157,7 +168,10 @@
                     android:hint="@string/apellido_2"
                     android:text=""
                     android:singleLine="true"
-                    android:importantForAutofill="no" tools:targetApi="o" />
+                    android:importantForAutofill="no"
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -174,7 +188,10 @@
                     android:textSize="25sp"
                     android:inputType="phone"
                     android:singleLine="true"
-                    android:importantForAutofill="no" tools:targetApi="o" />
+                    android:importantForAutofill="no"
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -191,8 +208,24 @@
                     android:inputType="phone"
                     android:hint="@string/telef_no_fijo"
                     android:singleLine="true"
-                    android:importantForAutofill="no" tools:targetApi="o" />
+                    android:importantForAutofill="no"
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P"/>
             </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/BtnRegistroClienteActivityRegistrarCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
+                android:text="@string/registrar_cliente"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="30sp"
+                tools:ignore="UnusedAttribute" />
 
             <Button
                 android:id="@+id/BtnRegistroClienteActivityRegresar"
@@ -206,19 +239,6 @@
                 android:text="@string/regresar"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="24sp"
-                tools:ignore="UnusedAttribute" />
-
-            <Button
-                android:id="@+id/BtnRegistroClienteActivityRegistrarCliente"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                style="@style/SagasTheme.Button"
-                android:background="@drawable/ripple_effect"
-                android:text="@string/registrar_cliente"
-                android:textColor="@color/colorTextButtonLogin"
-                android:textSize="30sp"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>
