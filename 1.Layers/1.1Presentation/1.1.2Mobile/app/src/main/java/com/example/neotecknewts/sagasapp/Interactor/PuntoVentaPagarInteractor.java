@@ -6,4 +6,6 @@ import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 public interface PuntoVentaPagarInteractor {
     void pagar(VentaDTO ventaDTO, String token, boolean esCamioneta, boolean esEstacion,
                boolean esPipa, SAGASSql sagasSql);
+
+    void puntoVentaAsignado(String token);
 }

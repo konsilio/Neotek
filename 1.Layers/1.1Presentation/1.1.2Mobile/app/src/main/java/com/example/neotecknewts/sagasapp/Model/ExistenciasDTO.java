@@ -23,6 +23,12 @@ public class ExistenciasDTO implements Serializable {
     @SerializedName("Cantidad")
     private String cantidad;
 
+    @SerializedName("CapacidadLt")
+    private double CapacidadLt;
+
+    @SerializedName("CapacidadKg")
+    private double CapacidadKg;
+
     public int getId() {
         return Id;
     }
@@ -66,7 +72,24 @@ public class ExistenciasDTO implements Serializable {
     public void setCantidad(String cantidad) {
         this.cantidad= cantidad;
     }
+
     public String getCantidad(){
         return  this.cantidad;
+    }
+
+    public double getCapacidadLt() {
+        return CapacidadLt;
+    }
+
+    public void setCapacidadLt(double capacidadLt) {
+        CapacidadLt = capacidadLt;
+    }
+
+    public double getCapacidadKg() {
+        return CapacidadKg;
+    }
+
+    public void setCapacidadKg(double capacidadKg) {
+        CapacidadKg = capacidadKg;
     }
 }

@@ -41,8 +41,8 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
             EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
         }
         PuntoVentaSolicitarActivityTitulo = findViewById(R.id.PuntoVentaSolicitarActivityTitulo);
-        BtnPuntoVentaSolicitarActivitySeguirSinNumero = findViewById(R.id.
-                BtnPuntoVentaSolicitarActivitySeguirSinNumero);
+        /*BtnPuntoVentaSolicitarActivitySeguirSinNumero = findViewById(R.id.
+                BtnPuntoVentaSolicitarActivitySeguirSinNumero);*/
         BtnPuntoVentaSolicitarActivityRegistrarCliente = findViewById(R.id.
                 BtnPuntoVentaSolicitarActivityRegistrarCliente);
         BtnPuntoVentaSolicitarActivityBuscarCliente= findViewById(R.id.
@@ -81,7 +81,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         }
         Log.w("FolioVenta",ventaDTO.getFolioVenta());
 
-        BtnPuntoVentaSolicitarActivitySeguirSinNumero.setOnClickListener(v -> SeguirSinNumero());
+        //BtnPuntoVentaSolicitarActivitySeguirSinNumero.setOnClickListener(v -> SeguirSinNumero());
         BtnPuntoVentaSolicitarActivityRegistrarCliente.setOnClickListener(v -> RegistrarCliente());
         BtnPuntoVentaSolicitarActivityBuscarCliente.setOnClickListener(v-> Buscar());
     }

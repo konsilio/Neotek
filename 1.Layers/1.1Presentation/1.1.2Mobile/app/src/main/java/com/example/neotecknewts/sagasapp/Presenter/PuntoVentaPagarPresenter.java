@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
+import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
@@ -15,4 +16,10 @@ public interface PuntoVentaPagarPresenter {
     void onSuccess(RespuestaPuntoVenta data);
 
     void onSuccessAndroid();
+
+    void puntoVentaAsignado(String token);
+
+    void onSuccessPuntoVentaAsignado(PuntoVentaAsignadoDTO data);
+
+    void onErrorPuntoVenta(String s);
 }

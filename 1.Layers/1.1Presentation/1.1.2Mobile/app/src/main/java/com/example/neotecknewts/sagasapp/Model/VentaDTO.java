@@ -75,6 +75,8 @@ public class VentaDTO implements Serializable {
     private boolean EsRegistro;
     //endregion
 
+    private String Estacion;
+
     public String getFecha() {
         return Fecha;
     }
@@ -245,5 +247,13 @@ public class VentaDTO implements Serializable {
 
     public void setEsRegistro(boolean esRegistro) {
         EsRegistro = esRegistro;
+    }
+
+    public String getEstacion() {
+        return Estacion;
+    }
+
+    public void setEstacion(String estacion) {
+        Estacion = estacion;
     }
 }

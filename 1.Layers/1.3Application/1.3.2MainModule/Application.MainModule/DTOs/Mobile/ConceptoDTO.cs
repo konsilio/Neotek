@@ -18,7 +18,7 @@ namespace Application.MainModule.DTOs.Mobile
     public class ConceptoDTO
     {
         public short IdTipoGas { get; set; }
-        public int Cantidad { get; set; }
+        public decimal Cantidad { get; set; }
         public string Concepto { get; set; }
         public decimal PUnitario { get; set; }
         public decimal Descuento { get; set; }
@@ -35,8 +35,8 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal PrecioUnitarioKg { get; set; }
         public decimal DescuentoUnitarioLt { get; set; }
         public decimal DescuentoUnitarioKg { get; set; }
-        public short CantidadLt { get; set; }
-        public short CantidadKg { get; set; }
+        public decimal CantidadLt { get; set; }
+        public decimal CantidadKg { get; set; }
         public decimal DescuentoTotal { get; set; }
 
     }

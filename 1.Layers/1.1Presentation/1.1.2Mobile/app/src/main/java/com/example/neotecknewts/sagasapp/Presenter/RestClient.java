@@ -30,6 +30,7 @@ import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecioVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
@@ -419,5 +420,11 @@ public interface RestClient {
     Call<PrecioVentaDTO> getPrecioVenta(
             @Header("Authorization") String token,
             @Header("Content-type") String contenType
+    );
+
+    @GET(Constantes.GET_PUNTO_VENTA_ASIGNADO)
+    Call<PuntoVentaAsignadoDTO> getPuntoVentaAsigando(
+            @Header("Authorization") String token,
+            @Header("Content-type")  String contenType
     );
 }
