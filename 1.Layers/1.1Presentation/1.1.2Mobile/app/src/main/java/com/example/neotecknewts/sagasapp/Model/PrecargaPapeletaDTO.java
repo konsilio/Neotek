@@ -57,7 +57,7 @@ public class PrecargaPapeletaDTO implements Serializable {
     @SerializedName("PorcentajeTanque")
     private Double PorcentajeTanque;
 
-    @SerializedName("Masa")
+    @SerializedName("MasaKg")
     private Double Masa;
 
     @SerializedName("Sello")
