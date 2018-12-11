@@ -2792,7 +2792,7 @@ namespace MVC.Presentacion.Agente
         public void GuardarDatosPorteador(OrdenCompraComplementoGasDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarPagoPorteador"];
-            LLamada(dto, token, MetodoRestConst.Put).Wait();
+            LLamada(dto, token, MetodoRestConst.Post).Wait();
         }
         public void GuardarDatosExpedidor(OrdenCompraComplementoGasDTO dto, string token)
         {
