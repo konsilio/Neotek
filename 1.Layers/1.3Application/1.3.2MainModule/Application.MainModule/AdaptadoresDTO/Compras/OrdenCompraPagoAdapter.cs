@@ -36,15 +36,15 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 IdOrdenCompra = pago.IdOrdenCompra,
                 IdBanco = pago.IdBanco,
                 IdFormaPago = pago.IdFormaPago ?? 0,
-                formaPago = FormaPagoServicio.Obtener(pago.IdFormaPago.Value).Descripcion,
+                formaPago = FormaPagoServicio.Obtener(pago.IdFormaPago ?? 99).Descripcion,
                 CuentaBancaria = pago.CuentaBancaria,
                 FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString()).Date,
-                FechaConfirmacion = Convert.ToDateTime(pago.FechaConfirmacion.Value.ToShortDateString()).Date,
+                //FechaConfirmacion = pago.FechaConfirmacion != null ? Convert.ToDateTime(pago.FechaConfirmacion.Value.ToShortDateString()).Date : null,
                 TotalImporte = pago.TotalImporte,
                 MontoPagado = pago.MontoPagado,
-                Orden = 1,
-                PhysicalPathCapturaPantalla = pago.PhysicalPathCapturaPantalla,
-                UrlPathCapturaPantalla = pago.UrlPathCapturaPantalla
+                Orden = pago.Orden,
+                PhysicalPathCapturaPantalla = pago.PhysicalPathCapturaPantalla ?? "",
+                UrlPathCapturaPantalla = pago.UrlPathCapturaPantalla ?? ""
             };
         }
         public static List<OrdenCompraPagoDTO> ToDTO(List<OrdenCompraPago> pago)
