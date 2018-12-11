@@ -592,8 +592,15 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <input type="submit" id="btnPagoExpedidor" class="btn btn-raised btn-primary btn-round" disabled value="Solicitar Pago" />
+                                                        <div class="form-group">                                                            
+                                                            @if (ViewBag.Expedidor == false)
+                                                            {
+                                                                <input type="submit" class="btn btn-raised btn-primary btn-round" disabled formaction=@Url.Action("SolicitarPagoExpedidor") value="Solicitar Pago" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="submit" class="btn btn-raised btn-primary btn-round" formaction=@Url.Action("SolicitarPagoExpedidor") value="Solicitar Pago" />
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -770,7 +777,7 @@
                                                         <div class="form-group">
                                                             @if (ViewBag.enabled == false)
                                                             {
-                                                                <input type="submit" ID="btnSolicitarPagoPorteador" class="btn btn-raised btn-primary btn-round" disabled formaction=@Url.Action("SolicitarPagoPorteador") value="Solicitar Pago" />
+                                                                <input type="submit" class="btn btn-raised btn-primary btn-round" disabled formaction=@Url.Action("SolicitarPagoPorteador") value="Solicitar Pago" />
                                                             }
                                                             else
                                                             {
