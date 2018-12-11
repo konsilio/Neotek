@@ -535,7 +535,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "TiketVenta TEXT," +
                 "IdVenta INTEGER" +
                 ")");
-        //enregion
+        //endregion
     }
 
     /**

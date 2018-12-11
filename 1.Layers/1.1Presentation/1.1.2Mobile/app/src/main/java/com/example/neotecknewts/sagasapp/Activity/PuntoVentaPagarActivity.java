@@ -15,6 +15,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
+import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaPagarPresenter;
@@ -45,6 +46,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
     PuntoVentaPagarPresenter presenter;
     Session session;
     SAGASSql sagasSql;
+    PuntoVentaAsignadoDTO puntoVentaAsignadoDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         presenter = new PuntoVentaPagarPresenterImpl(this);
         session = new Session(this);
         sagasSql = new SAGASSql(this);
+        puntoVentaAsignadoDTO = new PuntoVentaAsignadoDTO();
         TLPuntoVentaPagarActivityConcepto = findViewById(R.id.TLPuntoVentaPagarActivityConcepto);
         BtnPuntoVentaPagarActivityCancelar = findViewById(R.id.BtnPuntoVentaPagarActivityCancelar);
         BtnPuntoVentaPagarActivityConfirmar = findViewById(R.id.BtnPuntoVentaPagarActivityConfirmar);
@@ -153,7 +156,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         tabla.Cabecera(R.array.condepto_venta);
         tabla.agregarFila(lista);
         calcula_total(ventaDTO.getConcepto());
-
+        presenter.puntoVentaAsignado(session.getToken());
     }
     @Override
     public void calcula_total(List<ConceptoDTO> conceptoDTOS){
@@ -238,6 +241,32 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
             intent.putExtra("EsVentaPipa",EsVentaPipa);
             startActivity(intent);
+        }));
+        builder.create().show();
+    }
+
+    @Override
+    public void onSuccessPuntoVentaAsignado(PuntoVentaAsignadoDTO data) {
+        puntoVentaAsignadoDTO = data;
+        if(data!=null){
+            if(!data.getNombrePuntoVenta().isEmpty()|| data.getNombrePuntoVenta().trim().length()>0)
+                ventaDTO.setEstacion(data.getNombrePuntoVenta());
+            else
+                ventaDTO.setEstacion("");
+        }else{
+            ventaDTO.setEstacion("");
+        }
+    }
+
+    @Override
+    public void onErrorPuntoVenta(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+        builder.setCancelable(false);
+        builder.setTitle("Error al identificar punto de venta");
+        builder.setMessage(mensaje);
+        builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
+            ventaDTO.setEstacion("");
+            dialog.dismiss();
         }));
         builder.create().show();
     }

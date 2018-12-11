@@ -1,6 +1,5 @@
 package com.example.neotecknewts.sagasapp.Util.Sincronizaciones;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
@@ -10,7 +9,6 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
-import com.example.neotecknewts.sagasapp.Util.Session;
 import com.example.neotecknewts.sagasapp.Util.Sincronizacion;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -28,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Papeleta {
     private PapeletaSQL sql;
     private Sincronizacion sincronizacion;
-    private Session session;
+    private String token;
     private boolean respuesta_servicio;
     public List<String> mensajes;
 
@@ -39,10 +37,10 @@ public class Papeleta {
      * @param context Contexto de la aplicación
      * @param sql Base de datos en SQLITE
      */
-    public Papeleta(Context context, PapeletaSQL sql, Sincronizacion sincronizacion){
+    public Papeleta(Context context, PapeletaSQL sql, Sincronizacion sincronizacion,String token){
         this.sql = sql;
         this.sincronizacion = sincronizacion;
-        this.session = new Session(context);
+        this.token = token;
     }
 
     /**
@@ -154,7 +152,7 @@ public class Papeleta {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
             RestClient restClient = retrofit.create(RestClient.class);
-            Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(dto,this.session.getToken(),
+            Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(dto,this.token,
                     "application/json");
 
             call.enqueue(new Callback<RespuestaPapeletaDTO>() {
@@ -182,6 +180,5 @@ public class Papeleta {
         }
         return respuesta_servicio;
     }
-
 
 }

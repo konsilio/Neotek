@@ -244,7 +244,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Empresa = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial,
                 PrecioVentaEstatus = PrecioVentaGasServicio.Obtener(pv.IdPrecioVentaEstatus).Descripción,
                 CategoriaProducto = ProductoServicio.ObtenerProducto((pv.IdProducto)).Descripcion,//Concepto
-                IdUnidaMedida = producto.IdUnidadMedida,
+                IdUnidadMedida = producto.IdUnidadMedida,
             };
             return usDTO;
         }

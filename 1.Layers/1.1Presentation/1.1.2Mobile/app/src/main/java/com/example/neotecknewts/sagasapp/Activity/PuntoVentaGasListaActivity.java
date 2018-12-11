@@ -20,6 +20,7 @@ import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.neotecknewts.sagasapp.Adapter.PuntoVentaAdapter;
 import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
@@ -36,6 +37,8 @@ import com.example.neotecknewts.sagasapp.Util.Tabla;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class PuntoVentaGasListaActivity extends AppCompatActivity implements PuntoVentaGasListaView{
@@ -78,6 +81,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             esCilindroGas = extras.getBoolean("esCilindroGas");
             esCilindro = extras.getBoolean("esCilindro");
         }
+        session = new Session(this);
         BtnPuntoVetaGasListActivityOpciones = findViewById(R.id.BtnPuntoVetaGasListActivityOpciones);
         BtnPuntoVetaGasListActivityOpciones.setVisibility(EsVentaCamioneta? View.VISIBLE:View.GONE);
         BtnPuntoVentaGasListaActivityGasListaAgregar = findViewById(R.id.
@@ -106,60 +110,14 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         });
 
         BtnPuntoVentaGasListaActivityGasListaAgregar.setOnClickListener(v->{
-            if(esCilindroGas ||esCilindro) {
-                int size = data_get.size();
-                List<ConceptoDTO> conceptoDTOS = new ArrayList<>();
-                for (int x = 0; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
-                    View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
-                    LinearLayout linearLayout = view.findViewById(R.id.Layout);
-                    CardView card = linearLayout.findViewById(R.id.CVEstacionesCarburacionItem);
-                    EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
-                            findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
-                    TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
-                    if (editText.getText().toString().trim().length() > 0) {
-                        ConceptoDTO conceptoDTO = new ConceptoDTO();
-                        conceptoDTO.setCantidad(Integer.parseInt(editText.getText().toString()));
-                        conceptoDTO.setConcepto(TVTipo.getText().toString());
-                        conceptoDTO.setPUnitario(data_get.get(x).getPrecioUnitario());
-                        conceptoDTO.setDescuento(data_get.get(x).getDescuento());
-                        conceptoDTOS.add(conceptoDTO);
-                        conceptoDTO.setIdTipoGas(data_get.get(x).getId());
-                        if (esCilindro || esCilindroGas) {
-                            //Falta agregar los valores de los cilindros
-                            ConceptoDTO conceptoDTOcilindro = new ConceptoDTO();
-                            conceptoDTOcilindro.setCantidad(Integer.parseInt(editText.getText().toString()));
-                            conceptoDTOcilindro.setConcepto(precioVentaDTO.getProducto());
-                            conceptoDTOcilindro.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
-                            conceptoDTOcilindro.setDescuento(0);
-                            double sub = Integer.parseInt(editText.getText().toString()) *
-                                    precioVentaDTO.getPrecioSalidaKg();
-                            conceptoDTO.setSubtotal(sub);
-                            conceptoDTOS.add(conceptoDTOcilindro);
-                        }
-                    }
-                }
-
-                for (int x=0;x<conceptoDTOS.size();x++){
-                    actualizarConceptos(conceptoDTOS.get(x));
-                }
-            }else{
-                List<ConceptoDTO> conceptoDTOS = new ArrayList<>();
-                ConceptoDTO conceptoDTO = new ConceptoDTO();
-                conceptoDTO.setCantidad(Integer.parseInt(adapter.cantidad.getText().toString()));
-                conceptoDTO.setConcepto(precioVentaDTO.getProducto());
-                conceptoDTO.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
-                conceptoDTO.setDescuento(0);
-                conceptoDTO.setIdTipoGas(precioVentaDTO.getIdProductoLinea());
-                double sub = Integer.parseInt(adapter.cantidad.getText().toString()) *
-                        precioVentaDTO.getPrecioSalidaKg();
-                conceptoDTO.setSubtotal(sub);
-                conceptoDTOS.add(conceptoDTO);
-                for (int x=0;x<conceptoDTOS.size();x++){
-                    actualizarConceptos(conceptoDTOS.get(x));
-                }
-            }
+            if(esCilindroGas)
+                VentaCilindroGas();
+            if(esCilindro)
+                VentaCilindro();
+            if(esGasLP)
+                VentaGaslp();
         });
-        session = new Session(this);
+
         BtnPuntoVentaGasListActivityPagar.setOnClickListener(v->{
             if(ventaDTO.getConcepto().size()>0) {
                 Intent intent = new Intent(PuntoVentaGasListaActivity.this,
@@ -256,6 +214,29 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         conceptoDTO.setDescuento(adapter.existencia.getDescuento());
         conceptoDTO.setSubtotal(Double.valueOf(adapter.Subtotal.getText().toString()));
         conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
+        conceptoDTO.setCantidadLt(Integer.valueOf(adapter.cantidad.getText().toString()));
+        Calendar  calendar = Calendar.getInstance();
+        conceptoDTO.setYear(calendar.get(Calendar.YEAR));
+        conceptoDTO.setMes(calendar.get(Calendar.MONTH)+1);
+        conceptoDTO.setDia(calendar.get(Calendar.DAY_OF_WEEK));
+        conceptoDTO.setPrecioUnitarioProducto(adapter.existencia.getPrecioUnitario());
+        conceptoDTO.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
+        conceptoDTO.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
+        conceptoDTO.setIdProducto(precioVentaDTO.getIdProducto());
+        conceptoDTO.setIdLinea(precioVentaDTO.getIdProductoLinea());
+        conceptoDTO.setIdCategoria(precioVentaDTO.getIdCategoria());
+        conceptoDTO.setIdUnidadmedida(precioVentaDTO.getIdUnidadMedida());
+        conceptoDTO.setCantidadKg(
+                precioVentaDTO.getPrecioSalidaKg()*
+                        Integer.parseInt(adapter.cantidad.getText().toString())
+        );
+        conceptoDTO.setCantidadLt(
+                precioVentaDTO.getPrecioSalidaLt() *
+                        Integer.parseInt(adapter.cantidad.getText().toString())
+        );
+        conceptoDTO.setLitrosDespachados(Integer.valueOf(adapter.cantidad.getText().toString()));
+        conceptoDTO.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+        conceptoDTO.setIdTipoGas(0);
         ventaDTO.getConcepto().add(conceptoDTO);
         Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                 PuntoVentaPagarActivity.class);
@@ -387,6 +368,182 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
                 RVPuntoVentaGasActivityListaGas.setAdapter(adapter);
             }
+        }
+    }
+
+    private void VentaCilindroGas() {
+        List<ConceptoDTO> conceptos = new ArrayList<>();
+        for (int x = 0; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
+            View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
+            LinearLayout linearLayout = view.findViewById(R.id.Layout);
+            CardView card = linearLayout.findViewById(R.id.CVEstacionesCarburacionItem);
+            EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
+                    findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
+            TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
+            Calendar  calendar = Calendar.getInstance();
+            if (editText.getText().toString().trim().length() > 0) {
+                ConceptoDTO cilindros = new ConceptoDTO();
+
+                cilindros.setIdEmpresa(session.getIdEmpresa());
+                cilindros.setDia(calendar.get(Calendar.DAY_OF_WEEK));
+                cilindros.setMes(calendar.get(Calendar.MONTH)+1);
+                cilindros.setYear(calendar.get(Calendar.YEAR));
+                cilindros.setIdProducto(0);//Queda pendiente el id del producto del cilindro
+                cilindros.setIdLinea(0);//Queda pendiente el id de linea del cilindro
+                cilindros.setIdCategoria(0);//Queda pendiete el id de la categoria del cilindro
+                cilindros.setIdUnidadmedida(0);//Queda pendiente el id de unidad de medida
+                // del cilindro
+                cilindros.setPrecioUnitarioProducto(data_get.get(x).getPrecioUnitario());
+                cilindros.setPrecioUnitarioKg(0);
+                cilindros.setPrecioUnitarioLt(0);
+                cilindros.setDescuento(0);//Queda pendiente que se consulte el descuento del cliente
+                cilindros.setDescuentoUnitarioKg(0.0);
+                cilindros.setDescuentoUnitarioLt(0.0);
+                cilindros.setCantidad(Integer.parseInt(editText.getText().toString()));
+                cilindros.setCantidadLt(0);
+                cilindros.setCantidadKg(0);
+                cilindros.setDescuentoTotal(0);//Qeuda pendiente el calculo de descuento total
+                cilindros.setSubtotal(
+                        cilindros.getCantidad() * cilindros.getPrecioUnitarioProducto()
+                );
+                cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
+                cilindros.setConcepto(TVTipo.getText().toString());
+                cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
+                conceptos.add(cilindros);
+                //Costo del gas
+                ConceptoDTO Gas = new ConceptoDTO();
+                Gas.setIdEmpresa(session.getIdEmpresa());
+                Gas.setYear(calendar.get(Calendar.YEAR));
+                Gas.setMes(calendar.get(Calendar.MONTH)+1);
+                Gas.setDia(calendar.get(Calendar.DAY_OF_WEEK));
+                Gas.setIdProducto(precioVentaDTO.getIdProducto());
+                Gas.setIdLinea(precioVentaDTO.getIdProductoLinea());
+                Gas.setIdCategoria(precioVentaDTO.getIdCategoria());
+                Gas.setIdUnidadmedida(precioVentaDTO.getIdUnidadMedida());
+                Gas.setPrecioUnitarioProducto(0);
+                Gas.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
+                Gas.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
+                Gas.setDescuento(0);
+                Gas.setDescuentoUnitarioKg(0);
+                Gas.setDescuentoUnitarioLt(0);
+                Gas.setCantidad(
+                        data_get.get(x).getCapacidadLt() *
+                        cilindros.getCantidad()
+                );
+                Gas.setCantidadKg(
+                        (precioVentaDTO.getPrecioSalidaKg() * data_get.get(x).getCapacidadKg()) *
+                                cilindros.getCantidad()
+                );
+                Gas.setCantidadLt(
+                        (precioVentaDTO.getPrecioSalidaLt() * data_get.get(x).getCapacidadLt()) *
+                                cilindros.getCantidad()
+                );
+                Gas.setSubtotal(Gas.getPrecioUnitarioLt()* Gas.getCantidad());
+                Gas.setConcepto("Gas");
+                Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
+                Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+                conceptos.add(Gas);
+            }
+        }
+        for (int x=0;x<conceptos.size();x++){
+            actualizarConceptos(conceptos.get(x));
+        }
+    }
+
+    private void VentaCilindro() {
+        List<ConceptoDTO> conceptos = new ArrayList<>();
+        for (int x = 0; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
+            View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
+            LinearLayout linearLayout = view.findViewById(R.id.Layout);
+            CardView card = linearLayout.findViewById(R.id.CVEstacionesCarburacionItem);
+            EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
+                    findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
+            TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
+            Calendar  calendar = Calendar.getInstance();
+            if (editText.getText().toString().trim().length() > 0) {
+                ConceptoDTO cilindros = new ConceptoDTO();
+
+                cilindros.setIdEmpresa(session.getIdEmpresa());
+                cilindros.setDia(calendar.get(Calendar.DAY_OF_WEEK));
+                cilindros.setMes(calendar.get(Calendar.MONTH)+1);
+                cilindros.setYear(calendar.get(Calendar.YEAR));
+                cilindros.setIdProducto(0);//Queda pendiente el id del producto del cilindro
+                cilindros.setIdLinea(0);//Queda pendiente el id de linea del cilindro
+                cilindros.setIdCategoria(0);//Queda pendiete el id de la categoria del cilindro
+                cilindros.setIdUnidadmedida(0);//Queda pendiente el id de unidad de medida
+                // del cilindro
+                cilindros.setPrecioUnitarioProducto(data_get.get(x).getPrecioUnitario());
+                cilindros.setPrecioUnitarioKg(0);
+                cilindros.setPrecioUnitarioLt(0);
+                cilindros.setDescuento(0);//Queda pendiente que se consulte el descuento del cliente
+                cilindros.setDescuentoUnitarioKg(0.0);
+                cilindros.setDescuentoUnitarioLt(0.0);
+                cilindros.setCantidad(Integer.parseInt(editText.getText().toString()));
+                cilindros.setCantidadLt(0);
+                cilindros.setCantidadKg(0);
+                cilindros.setDescuentoTotal(0);//Qeuda pendiente el calculo de descuento total
+                cilindros.setSubtotal(
+                        cilindros.getCantidad() * cilindros.getPrecioUnitarioProducto()
+                );
+                cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
+                cilindros.setConcepto(TVTipo.getText().toString());
+                cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
+                conceptos.add(cilindros);
+
+            }
+        }
+        for (int x=0;x<conceptos.size();x++){
+            actualizarConceptos(conceptos.get(x));
+        }
+    }
+
+    private void VentaGaslp() {
+        List<ConceptoDTO> conceptos = new ArrayList<>();
+        for (int x = 0; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
+            View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
+            LinearLayout linearLayout = view.findViewById(R.id.Layout);
+            CardView card = linearLayout.findViewById(R.id.CVEstacionesCarburacionItem);
+            EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
+                    findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
+            TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
+            Calendar  calendar = Calendar.getInstance();
+            if (editText.getText().toString().trim().length() > 0) {
+                //Costo del gas
+                ConceptoDTO Gas = new ConceptoDTO();
+                Gas.setIdEmpresa(session.getIdEmpresa());
+                Gas.setYear(calendar.get(Calendar.YEAR));
+                Gas.setMes(calendar.get(Calendar.MONTH)+1);
+                Gas.setDia(calendar.get(Calendar.DAY_OF_WEEK));
+                Gas.setIdProducto(precioVentaDTO.getIdProducto());
+                Gas.setIdLinea(precioVentaDTO.getIdProductoLinea());
+                Gas.setIdCategoria(precioVentaDTO.getIdCategoria());
+                Gas.setIdUnidadmedida(precioVentaDTO.getIdUnidadMedida());
+                Gas.setPrecioUnitarioProducto(0);
+                Gas.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
+                Gas.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
+                Gas.setDescuento(0);
+                Gas.setDescuentoUnitarioKg(0);
+                Gas.setDescuentoUnitarioLt(0);
+                Gas.setCantidad(
+                        Integer.parseInt(adapter.cantidad.getText().toString())
+                );
+                Gas.setCantidadKg(
+                        precioVentaDTO.getPrecioSalidaKg()*
+                                Integer.parseInt(adapter.cantidad.getText().toString())
+                );
+                Gas.setCantidadLt(
+                        precioVentaDTO.getPrecioSalidaLt() *
+                                Integer.parseInt(adapter.cantidad.getText().toString())
+                );
+                Gas.setSubtotal(Gas.getPrecioUnitarioLt()* Gas.getCantidad());
+                Gas.setConcepto(TVTipo.getText().toString());
+                Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
+                Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+                conceptos.add(Gas);
+            }
+        }
+        for (int x=0;x<conceptos.size();x++){
+            actualizarConceptos(conceptos.get(x));
         }
     }
 }
