@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaPagarPresenter;
@@ -25,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor {
     PuntoVentaPagarPresenter presenter;
-    boolean registro_local = false;
+    private boolean registro_local = false;
     public PuntoVentaPagarInteractorImpl(PuntoVentaPagarPresenter presenter) {
         this.presenter = presenter;
     }
@@ -94,7 +95,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                     }
 
                 }
-                if(registro_local) {
+                if(response.code()>=300) {
                     local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
                     presenter.onSuccessAndroid();
                     Lisener lisener = new Lisener(sagasSql,token);
@@ -123,11 +124,77 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
         }*/
     }
 
+    @Override
+    public void puntoVentaAsignado(String token) {
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<PuntoVentaAsignadoDTO> call = restClient.getPuntoVentaAsigando(
+                token,
+                "application/json"
+        );
+        Log.w("Url base",retrofit.baseUrl().toString());
+
+        call.enqueue(new Callback<PuntoVentaAsignadoDTO>() {
+            @Override
+            public void onResponse(Call<PuntoVentaAsignadoDTO> call, Response<PuntoVentaAsignadoDTO> response) {
+                PuntoVentaAsignadoDTO data = response.body();
+                if (response.isSuccessful()) {
+                    Log.w("Estatus","Success");
+                    presenter.onSuccessPuntoVentaAsignado(data);
+                    registro_local = false;
+                }
+                else {
+                    String mensaje = "";
+                    switch (response.code()) {
+                        case 404:
+                            Log.w("Error","not found");
+
+                            break;
+                        case 500:
+                            Log.w("Error", "server broken");
+
+                            break;
+                        default:
+                            Log.w("Error", "Error desconocido: "+response.code());
+
+                            break;
+                    }
+                    presenter.onErrorPuntoVenta("No se ha podido identificar el punto de venta");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<PuntoVentaAsignadoDTO> call, Throwable t) {
+                presenter.onErrorPuntoVenta("No se ha podido identificar el punto de venta");
+            }
+
+        });
+    }
+
     private void local(SAGASSql sagasSql, VentaDTO ventaDTO, boolean esCamioneta,
                        boolean esEstacion, boolean esPipa) {
-        if(sagasSql.GetVenta(ventaDTO.getFolioVenta()).getCount()<=0){
-            sagasSql.InsertarVenta(ventaDTO,esCamioneta,esEstacion,esPipa);
-            sagasSql.InsertarConcepto(ventaDTO);
+        try {
+            if (sagasSql.GetVenta(ventaDTO.getFolioVenta()).getCount() == 0) {
+                sagasSql.InsertarVenta(ventaDTO, esCamioneta, esEstacion, esPipa);
+                if(sagasSql.GetVentaConcepto(ventaDTO.getFolioVenta()).getCount()==0) {
+                    sagasSql.InsertarConcepto(ventaDTO);
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+            Log.e("Mensaje excepcion",ex.getMessage());
         }
 
     }

@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Presenter;
 import com.example.neotecknewts.sagasapp.Activity.PuntoVentaPagarView;
 import com.example.neotecknewts.sagasapp.Interactor.PuntoVentaPagarInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.PuntoVentaPagarInteractorImpl;
+import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.R;
@@ -45,5 +46,23 @@ public class PuntoVentaPagarPresenterImpl implements PuntoVentaPagarPresenter {
     public void onSuccessAndroid() {
         view.onHiddeProgress();
         view.onSuccessAndroid();
+    }
+
+    @Override
+    public void puntoVentaAsignado(String token) {
+        view.onShowProgress(R.string.message_cargando);
+        interactor.puntoVentaAsignado(token);
+    }
+
+    @Override
+    public void onSuccessPuntoVentaAsignado(PuntoVentaAsignadoDTO data) {
+        view.onHiddeProgress();
+        view.onSuccessPuntoVentaAsignado(data);
+    }
+
+    @Override
+    public void onErrorPuntoVenta(String mensaje) {
+        view.onHiddeProgress();
+        view.onErrorPuntoVenta(mensaje);
     }
 }

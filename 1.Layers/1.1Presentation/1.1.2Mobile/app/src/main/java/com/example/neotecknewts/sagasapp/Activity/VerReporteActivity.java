@@ -241,14 +241,25 @@ public class VerReporteActivity extends AppCompatActivity {
                 "<tr>" +
                 "<td>Hora</td>"+
                 "<td>[{Hora}]</td>"+
-                "</tr>"+
-                "</table>"+
+                "</tr>";
+        if(ventaDTO.getEstacion().trim().length()>0 || !ventaDTO.getEstacion().isEmpty()
+                && !ventaDTO.getEstacion().equals("")) {
+                HtmlReporte+="<tr>" +
+                "<td>Surtió</td>"+
+                "<td>[{Estacion}]</td>"+
+                "</tr>";
+        }
+        HtmlReporte+="</table>"+
                 "<hr>";
         //region Busqueda por cliente
         if(ventaDTO.isEsBusqueda()) {
             if(ventaDTO.getRazonSocial().trim().length()>0){
                 HtmlReporte += "<h3>Cliente</h3>" +
                             "<table>" +
+                            "<tr>"+
+                            "<td>No.Cliente</td>"+
+                            "<td>[{No.Cliente}]</td>"+
+                            "</tr>"+
                             "<tr>" +
                             "<td>Razon social</td>" +
                             "<td>[{Razon-social}]</td>" +
@@ -261,6 +272,10 @@ public class VerReporteActivity extends AppCompatActivity {
                 }else {
                 HtmlReporte += "<h3>Cliente</h3>" +
                         "<table>" +
+                        "<tr>"+
+                        "<td>No.Cliente</td>"+
+                        "<td>[{No.Cliente}]</td>"+
+                        "</tr>"+
                         "<tr>" +
                         "<td>Cliente</td>" +
                         "<td>[{Cliente}]</td>" +
@@ -333,20 +348,27 @@ public class VerReporteActivity extends AppCompatActivity {
         }
         HtmlReporte+="</table>"+
                 "</body>";
+
         StringReporte = "\tTiket de venta\n" +
                         "Gas Mundial de Guerrero\n\n"+
                         "Tiket\t[{Clave-venta}]\n"+
                         "Fecha\t[{Fecha}]\n"+
-                        "Hora\t[{Hora}]\n"+
-                        "_________________________\n";
+                        "Hora\t[{Hora}]\n";
+        if(ventaDTO.getEstacion().trim().length()>0 || !ventaDTO.getEstacion().isEmpty()
+                && !ventaDTO.getEstacion().equals("")) {
+            StringReporte+="Surtió: \t [{Estacion}]\n";
+        }
+        StringReporte+="_________________________\n";
         //region Busqueda por cliente
         if(ventaDTO.isEsBusqueda()) {
             if(ventaDTO.getRazonSocial().trim().length()>0){
                 StringReporte += "\tCliente\n" +
+                        "No.Cliente: \t[{No.Cliente}]\n"+
                         "Razon Social \t[{Razon-social}]\n" +
                         "RFC \t[{RFC}]\n";
             }else {
                 StringReporte += "\tCliente\n" +
+                        "No.Cliente: \t[{No.Cliente}]\n"+
                         "Cliente \t[{Cliente}]\n" +
                         "RFC \t[{RFC}]\n";
             }
@@ -356,10 +378,12 @@ public class VerReporteActivity extends AppCompatActivity {
         if(ventaDTO.isEsRegistro()){
             if(ventaDTO.getRazonSocial().trim().length()<=0){
                 StringReporte += "\tCliente\n" +
+                        "No.Cliente: \t[{No.Cliente}]\n"+
                         "Razon Social \t[{Razon-social}]\n" +
                         "RFC \t[{RFC}]\n";
             }else{
                 StringReporte += "\tCliente\n" +
+                        "No.Cliente: \t[{No.Cliente}]\n"+
                         "Cliente \t[{Cliente}]\n" +
                         "RFC \t[{RFC}]\n";
             }
@@ -402,6 +426,11 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(registro));
         StringReporte = StringReporte.replace("[{Hora}]",tdate.format(registro));
         HtmlReporte = HtmlReporte.replace("[{Hora}]",tdate.format(registro));
+        if(ventaDTO.getEstacion().trim().length()>0 || !ventaDTO.getEstacion().isEmpty() &&
+                !ventaDTO.getEstacion().equals("")) {
+            StringReporte = StringReporte.replace("[{Estacion}]", ventaDTO.getEstacion());
+            HtmlReporte = HtmlReporte.replace("[{Estacion}]", ventaDTO.getEstacion());
+        }
         if(ventaDTO.getRazonSocial().isEmpty()||ventaDTO.getRazonSocial()!=null) {
             StringReporte = StringReporte.replace("[{Razon-social}]", ventaDTO.getRazonSocial());
             HtmlReporte = HtmlReporte.replace("[{Razon-social}]", ventaDTO.getRazonSocial());
@@ -440,6 +469,10 @@ public class VerReporteActivity extends AppCompatActivity {
         //region Busqueda por cliente
         if(ventaDTO.isEsBusqueda()) {
             if(ventaDTO.getRazonSocial().trim().length()>0){
+                StringReporte = StringReporte.replace("[{No.Cliente}]",
+                        String.valueOf(ventaDTO.getIdCliente()));
+                HtmlReporte = HtmlReporte.replace("[{No.Cliente}]",
+                        String.valueOf(ventaDTO.getIdCliente()));
                 StringReporte = StringReporte.replace("[{Razon-social}]",
                         String.valueOf(ventaDTO.getRazonSocial()));
                 HtmlReporte = HtmlReporte.replace("[{Razon-social}]",
@@ -449,6 +482,10 @@ public class VerReporteActivity extends AppCompatActivity {
                 HtmlReporte = HtmlReporte.replace("[{RFC}]",
                         String.valueOf(ventaDTO.getIva()));
             }else {
+                StringReporte = StringReporte.replace("[{No.Cliente}]",
+                        String.valueOf(ventaDTO.getIdCliente()));
+                HtmlReporte = HtmlReporte.replace("[{No.Cliente}]",
+                        String.valueOf(ventaDTO.getIdCliente()));
                 StringReporte = StringReporte.replace("[{Cliente}]",
                         String.valueOf(ventaDTO.getNombre()));
                 HtmlReporte = HtmlReporte.replace("[{Cliente}]",
@@ -463,6 +500,10 @@ public class VerReporteActivity extends AppCompatActivity {
         //region Registro
         if(ventaDTO.isEsRegistro()){
             if(ventaDTO.getRazonSocial().trim().length()<=0){
+                StringReporte = StringReporte.replace("[{No.Cliente}]",
+                        String.valueOf(ventaDTO.getIdCliente()));
+                HtmlReporte = HtmlReporte.replace("[{No.Cliente}]",
+                        String.valueOf(ventaDTO.getIdCliente()));
                 StringReporte = StringReporte.replace("[{Razon-social}]",
                         String.valueOf(ventaDTO.getRazonSocial()));
                 HtmlReporte = HtmlReporte.replace("[{Razon-social}]",
@@ -472,6 +513,10 @@ public class VerReporteActivity extends AppCompatActivity {
                 HtmlReporte = HtmlReporte.replace("[{RFC}]",
                         String.valueOf(ventaDTO.getIva()));
             }else{
+                StringReporte = StringReporte.replace("[{No.Cliente}]",
+                        String.valueOf(ventaDTO.getIdCliente()));
+                HtmlReporte = HtmlReporte.replace("[{No.Cliente}]",
+                        String.valueOf(ventaDTO.getIdCliente()));
                 StringReporte = StringReporte.replace("[{Cliente}]",
                         String.valueOf(ventaDTO.getNombre()));
                 HtmlReporte = HtmlReporte.replace("[{Cliente}]",
