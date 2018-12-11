@@ -106,11 +106,12 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         public static EstacionesDto ToDTO(EstacionCarburacion estacion, List<UnidadAlmacenGas> estacionesInicioEnInicial, List<TipoMedidorUnidadAlmacenGas> medidores)
         {
-            var datos = estacionesInicioEnInicial.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(estacion.IdEstacionCarburacion));
+            //var datos = estacionesInicioEnInicial.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(estacion.IdEstacionCarburacion));
+            var datos = estacion.UnidadAlmacenGas.First();
             return new EstacionesDto()
             {
-                CantidadP5000 = datos.P5000Actual,
-                IdTipoMedidor = datos.IdTipoMedidor,
+                CantidadP5000 = datos.P5000Actual??0,
+                IdTipoMedidor = datos.IdTipoMedidor??0,
                 IdAlmacenGas = datos.IdCAlmacenGas,
                 Medidor = TipoMedidorAdapter.ToDto(datos.Medidor),
                 NombreAlmacen = estacion.Nombre,
@@ -165,10 +166,11 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         public static EstacionesDto ToDTO(Pipa pipa, List<UnidadAlmacenGas> estacionesInicioEnInicial, List<TipoMedidorUnidadAlmacenGas> medidores)
         {
-            var datosPipa = estacionesInicioEnInicial.FirstOrDefault(x => x.IdPipa.Value.Equals(pipa.IdPipa));
+            //var datosPipa = estacionesInicioEnInicial.FirstOrDefault(x => x.IdPipa.Value.Equals(pipa.IdPipa));
+            var datosPipa = pipa.UnidadAlmacenGas.First();
             return new EstacionesDto()
             {
-                CantidadP5000 = datosPipa.P5000Actual,
+                CantidadP5000 = datosPipa.P5000Actual??0,
                 IdTipoMedidor = datosPipa.IdTipoMedidor,
                 IdAlmacenGas = datosPipa.IdCAlmacenGas,
                 Medidor = TipoMedidorAdapter.ToDto(datosPipa.Medidor),

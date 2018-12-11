@@ -28,19 +28,24 @@ namespace DS.MainModule.Controllers
             _mobile = new Mobile();
         }
 
+        #region Servicio disponible
         [Route("servicio/disponible")]
         public HttpResponseMessage PostServicioDisponible()
         {
             return Request.CreateResponse(HttpStatusCode.OK, new RespuestaDto() { Exito = true });
         }
+        #endregion
 
+        #region Login
         [AllowAnonymous]
         [Route("login")]
         public HttpResponseMessage PostLogin(LoginFbDTO autenticacionDto)
         {
             return RespuestaHttp.crearRespuesta(_seguridad.AutenticacionMobile(autenticacionDto), Request);
         }
+        #endregion
 
+        #region Ordenes de compra
         [Route("lista/ordenes/compra")]
         public HttpResponseMessage GetListaOrdenesCompra(short IdEmpresa, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {
@@ -52,14 +57,17 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.ConsultarOCAlternativa(IdOrdenCompra), Request);
         }
+        #endregion
 
+        #region Menu
         [Route("obtener/menu")]
         public HttpResponseMessage GetObtenerMenu()
         {
             return RespuestaHttp.crearRespuesta(_mobile.ObtenerMenu(), Request);
         }
+        #endregion
 
-
+        #region Papeleta
         [Route("obtener/medidores")]
         public HttpResponseMessage GetObtenerMedidores()
         {
@@ -77,7 +85,9 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.RegistrarPapeleta(papeletaDTO), Request);
         }
+        #endregion
 
+        #region Descarga
         [Route("iniciar/descarga")]
         public HttpResponseMessage PostInicializarDescarga(DescargaDto desDto)
         {
@@ -89,7 +99,9 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarDescarga(desDto), Request);
         }
+        #endregion
 
+        #region Toma de lectura
         /// <summary>
         /// Permite realizar el registro de la toma de lectura,
         /// tomara como parametro un objeto LecturaAlmacenDto con los datos a guardar, 
@@ -140,6 +152,14 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.ConsultaDatosTomaLectura(esEstacion, esPipa, esCamioneta, esFinalizar), Request);
         }
+        #endregion
+
+        #region Recarga
+        [Route("catalogos/recarga/{esEstacion}/{esPipa}/{esCamioneta}")]
+        public HttpResponseMessage GetListaRecargas(bool esEstacion, bool esPipa, bool esCamioneta)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoRecargas(esEstacion, esPipa, esCamioneta), Request);
+        }
         /// <summary>
         /// Permite realizar el registro de la recarga para la 
         /// camioneta 
@@ -171,6 +191,9 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarRecarga(rfdto), Request);
         }
+        #endregion
+
+        #region Reporte del día 
         /// <summary>
         /// Permite retornar las unidades del reporte del día
         /// Falta
@@ -193,53 +216,7 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.ReporteDia(fecha, idCAlmacenGas), Request);
         }
-
-        #region Clientes punto venta mobile
-        /// <summary>
-        /// GetTipoPersona
-        /// Permite mostrar un listado de los tipos de persona para el registro de 
-        /// clientes, esta tendra ligada la razon social respectiva para el tipo de 
-        /// persona
-        /// </summary>
-        /// <returns>Dto con la lista de tipos de persona y razones sociales</returns>
-        [Route("catalogos/tipo-persona")]
-        public HttpResponseMessage GetTipoPersona()
-        {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoTipoPersona(), Request);
-        }
-        /// <summary>
-        /// Permite realizar el registro del cliente, realizara una busqueda para verificar 
-        /// si este ya este registrado, en caso de que si tomara el id y lo steara en el 
-        /// DTO para luego realizar un update, en caso de que no encuentre el id realizara 
-        /// un registro normal , retornando un obtjeto RespuestaDTO
-        /// </summary>
-        /// <param name="cliente">Objeto DTO con los datos del cliente</param>
-        /// <returns>Respuesta del registro</returns>
-        [Route("cliente/registrar")]
-        public HttpResponseMessage PostRegistrarCliente(ClienteDTO cliente)
-        {
-            return RespuestaHttp.crearRespuesta(_mobile.registrarCliente(cliente), Request);
-        }
         #endregion
-
-        #region Punto de venta
-        [Route("cliente/lista-clientes/{criterio}")]
-        public HttpResponseMessage GetListaClientes(String criterio)
-        {
-            return RespuestaHttp.crearRespuesta(_mobile.BuscadorClientes(criterio), Request);
-        }
-        [Route("venta")]
-        public HttpResponseMessage PostVenta(VentaDTO venta)
-        {
-            return RespuestaHttp.crearRespuesta(_mobile.Venta(venta), Request);
-        }
-        #endregion
-
-        [Route("catalogos/recarga/{esEstacion}/{esPipa}/{esCamioneta}")]
-        public HttpResponseMessage GetListaRecargas(bool esEstacion, bool esPipa, bool esCamioneta)
-        {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoRecargas(esEstacion, esPipa, esCamioneta), Request);
-        }
 
         #region Autoconsumos
         [Route("autoconsumo/{esFinal}")]
@@ -269,6 +246,7 @@ namespace DS.MainModule.Controllers
         }
         #endregion
 
+        #region Traspasos
         [Route("catalogos/traspaso/{esPipa}")]
         public HttpResponseMessage GetCatalogoTraspaso(bool esPipa)
         {
@@ -280,6 +258,9 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.Traspaso(dto, esFinal), Request);
         }
+        #endregion
+
+        #region Anticipos y cortes
         //Anticipos y corte
         [Route("catalogos/anticipo-y-corte/estaciones")]
         public HttpResponseMessage GetEstaciones()
@@ -301,6 +282,51 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetVentasCortesAnticipos(int estacion, bool esAnticipos, DateTime fecha)
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos, fecha), Request);
+        }
+        #endregion
+
+        #region Venta
+        #region Clientes
+        /// <summary>
+        /// GetTipoPersona
+        /// Permite mostrar un listado de los tipos de persona para el registro de 
+        /// clientes, esta tendra ligada la razon social respectiva para el tipo de 
+        /// persona
+        /// </summary>
+        /// <returns>Dto con la lista de tipos de persona y razones sociales</returns>
+        [Route("catalogos/tipo-persona")]
+        public HttpResponseMessage GetTipoPersona()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoTipoPersona(), Request);
+        }
+        /// <summary>
+        /// Permite realizar el registro del cliente, realizara una busqueda para verificar 
+        /// si este ya este registrado, en caso de que si tomara el id y lo steara en el 
+        /// DTO para luego realizar un update, en caso de que no encuentre el id realizara 
+        /// un registro normal , retornando un obtjeto RespuestaDTO
+        /// </summary>
+        /// <param name="cliente">Objeto DTO con los datos del cliente</param>
+        /// <returns>Respuesta del registro</returns>
+        [Route("cliente/registrar")]
+        public HttpResponseMessage PostRegistrarCliente(ClienteDTO cliente)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.registrarCliente(cliente), Request);
+        }
+        [Route("buscar/cliente/{rfc}")]
+        public HttpResponseMessage GetClientePorRFC(string rfc)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _mobile.BuscarClientePorRFC(rfc));
+        }
+        [Route("cliente/lista-clientes/{criterio}")]
+        public HttpResponseMessage GetListaClientes(String criterio)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.BuscadorClientes(criterio), Request);
+        }
+        #endregion
+        [Route("venta")]
+        public HttpResponseMessage PostVenta(VentaDTO venta)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.Venta(venta), Request);
         }
         [Route("consulta/precioventa/vigente")]
         public HttpResponseMessage GetPreciosVentaVigente()
@@ -330,15 +356,12 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogosGas(), Request);
         }
-        [Route("buscar/cliente/{rfc}")]
-        public HttpResponseMessage GetClientePorRFC(string rfc)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _mobile.BuscarClientePorRFC(rfc));
-        }
+
         [Route("estacion/punto-venta")]
         public HttpResponseMessage GetEstacion()
         {
             return RespuestaHttp.crearRespuesta(_mobile.ObtenerEstacion(),Request);
         }
+        #endregion
     }
 }
