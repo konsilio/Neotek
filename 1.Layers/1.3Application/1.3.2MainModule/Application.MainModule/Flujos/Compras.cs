@@ -284,14 +284,14 @@ namespace Application.MainModule.Flujos
             var Entity = OrdenComprasAdapter.FromEntity(ocExperidro);
             return OrdenCompraServicio.Actualizar(Entity);
         }
-        public RespuestaDto SolicitarPagoExipedidor(ComplementoGasDTO dto)
+        public RespuestaDto SolicitarPagoExpedidor(ComplementoGasDTO dto)
         {
             var ExistePago = BuscarPagos(dto.OrdenCompraExpedidor.IdOrdenCompra);
             if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistenteExpedidor();
-            var ocExperidro = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
-            ocExperidro.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.SolicitudPago;
-            var respActualiza = OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocExperidro));
-            if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(ocExperidro);
+            var ocExpedidor = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
+            ocExpedidor.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.SolicitudPago;
+            var respActualiza = OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocExpedidor));
+            if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(ocExpedidor);
 
             return respActualiza;
         }
@@ -335,7 +335,7 @@ namespace Application.MainModule.Flujos
             var ExistePago = BuscarPagos(dto.OrdenCompraPorteador.IdOrdenCompra);
             if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistentePorteador();
 
-            var ocPorteador = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
+            var ocPorteador = OrdenCompraServicio.Buscar(dto.OrdenCompraPorteador.IdOrdenCompra);
             ocPorteador.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.SolicitudPago;
 
             var respActualiza = OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocPorteador));
