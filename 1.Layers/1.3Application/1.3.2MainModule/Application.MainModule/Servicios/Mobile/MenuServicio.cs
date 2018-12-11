@@ -192,12 +192,13 @@ namespace Application.MainModule.Servicios.Mobile
                         var puntoVenta = PuntoVentaServicio.Obtener(operador);
                         var unidadAlmacen = puntoVenta.UnidadesAlmacen;
 
-                        if (unidadAlmacen.IdPipa != null)
+                        if (unidadAlmacen.IdPipa != null && unidadAlmacen.IdCamioneta!=null)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionAnticipoEstacionCarb"]));
+                            
                         }
-                        
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
+
                         _AppDisposicionEfectivo = true;
                     }
                     //Punto de venta - Camioneta
