@@ -1,6 +1,7 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
+import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface PuntoVentaPagarView {
     void onSuccess(RespuestaPuntoVenta data);
 
     void onSuccessAndroid();
+
+    void onSuccessPuntoVentaAsignado(PuntoVentaAsignadoDTO data);
+
+    void onErrorPuntoVenta(String mensaje);
 }

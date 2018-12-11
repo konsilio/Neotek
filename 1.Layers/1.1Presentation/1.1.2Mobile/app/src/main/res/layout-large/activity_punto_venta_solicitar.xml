@@ -27,7 +27,7 @@
                 android:textAlignment="center"
                 android:textSize="24sp" />
 
-            <TextView
+            <!-- <TextView
                 android:id="@+id/TVPuntoVentaActivityEnCasoTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,9 +38,9 @@
                 android:text="@string/en_caso_de_negativa_del_cliente"
                 android:textAlignment="center"
                 android:labelFor="@+id/BtnPuntoVentaSolicitarActivitySeguirSinNumero"
-                android:textSize="18sp" />
+                android:textSize="18sp" />-->
 
-            <Button
+            <!-- <Button
                 android:id="@+id/BtnPuntoVentaSolicitarActivitySeguirSinNumero"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 style="@style/SagasTheme.Button"
                 android:background="@drawable/ripple_effect"
                 android:textColor="@color/colorTextButtonLogin"
-                tools:ignore="UnusedAttribute" />
+                tools:ignore="UnusedAttribute" />-->
 
             <TextView
                 android:id="@+id/TVPuntoVentaSolicitarActivityRegistroTitulo"

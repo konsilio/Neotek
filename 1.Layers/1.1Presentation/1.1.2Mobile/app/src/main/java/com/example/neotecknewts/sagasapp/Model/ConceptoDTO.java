@@ -27,7 +27,7 @@ public class ConceptoDTO implements Serializable {
     private int IdCategoria;
 
     @SerializedName("IdUnidadMedida")
-    private int IdUnidadmedida;
+    private int IdUnidadMedida;
 
     @SerializedName("PrecioUnitarioProducto")
     private double PrecioUnitarioProducto;
@@ -191,11 +191,11 @@ public class ConceptoDTO implements Serializable {
     }
 
     public int getIdUnidadmedida() {
-        return IdUnidadmedida;
+        return IdUnidadMedida;
     }
 
     public void setIdUnidadmedida(int idUnidadmedida) {
-        IdUnidadmedida = idUnidadmedida;
+        IdUnidadMedida = idUnidadmedida;
     }
 
     public double getPrecioUnitarioProducto() {

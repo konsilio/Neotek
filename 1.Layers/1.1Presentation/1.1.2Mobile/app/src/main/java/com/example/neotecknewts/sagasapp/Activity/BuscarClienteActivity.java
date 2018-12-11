@@ -46,9 +46,9 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
             ventaDTO = (VentaDTO) extras.getSerializable("ventaDTO");
         }
         RVBuscarClienteActivityClientes = findViewById(R.id.RVBuscarClienteActivityClientes);
-        BtnBuscarClienteActivityNo = findViewById(R.id.BtnBuscarClienteActivityNo);
+        //BtnBuscarClienteActivityNo = findViewById(R.id.BtnBuscarClienteActivityNo);
         BtnBuscarClienteActivitySi = findViewById(R.id.BtnBuscarClienteActivitySi);
-        BtnBuscarClienteActivityNo.setOnClickListener(V->{
+       /* BtnBuscarClienteActivityNo.setOnClickListener(V->{
             Intent intent = new Intent(BuscarClienteActivity.this,
                     VentaGasActivity.class);
             intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
@@ -56,7 +56,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("ventaDTO",ventaDTO);
             startActivity(intent);
-        });
+        });*/
         BtnBuscarClienteActivitySi.setOnClickListener(V->{
             Intent intent = new Intent(BuscarClienteActivity.this,
                     RegistroClienteActivity.class);

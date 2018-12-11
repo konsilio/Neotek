@@ -214,6 +214,29 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         conceptoDTO.setDescuento(adapter.existencia.getDescuento());
         conceptoDTO.setSubtotal(Double.valueOf(adapter.Subtotal.getText().toString()));
         conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
+        conceptoDTO.setCantidadLt(Integer.valueOf(adapter.cantidad.getText().toString()));
+        Calendar  calendar = Calendar.getInstance();
+        conceptoDTO.setYear(calendar.get(Calendar.YEAR));
+        conceptoDTO.setMes(calendar.get(Calendar.MONTH)+1);
+        conceptoDTO.setDia(calendar.get(Calendar.DAY_OF_WEEK));
+        conceptoDTO.setPrecioUnitarioProducto(adapter.existencia.getPrecioUnitario());
+        conceptoDTO.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
+        conceptoDTO.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
+        conceptoDTO.setIdProducto(precioVentaDTO.getIdProducto());
+        conceptoDTO.setIdLinea(precioVentaDTO.getIdProductoLinea());
+        conceptoDTO.setIdCategoria(precioVentaDTO.getIdCategoria());
+        conceptoDTO.setIdUnidadmedida(precioVentaDTO.getIdUnidadMedida());
+        conceptoDTO.setCantidadKg(
+                precioVentaDTO.getPrecioSalidaKg()*
+                        Integer.parseInt(adapter.cantidad.getText().toString())
+        );
+        conceptoDTO.setCantidadLt(
+                precioVentaDTO.getPrecioSalidaLt() *
+                        Integer.parseInt(adapter.cantidad.getText().toString())
+        );
+        conceptoDTO.setLitrosDespachados(Integer.valueOf(adapter.cantidad.getText().toString()));
+        conceptoDTO.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+        conceptoDTO.setIdTipoGas(0);
         ventaDTO.getConcepto().add(conceptoDTO);
         Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                 PuntoVentaPagarActivity.class);
@@ -514,6 +537,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 );
                 Gas.setSubtotal(Gas.getPrecioUnitarioLt()* Gas.getCantidad());
                 Gas.setConcepto(TVTipo.getText().toString());
+                Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
                 Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
                 conceptos.add(Gas);
             }
