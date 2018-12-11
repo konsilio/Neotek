@@ -108,7 +108,7 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDescargaDataAccess().Insertar(alm);
         }
-        public static RespuestaDto ActualizarDescargaGas(AlmacenGasDescarga alm, List<AlmacenGasDescargaFoto> fotos)
+        public static RespuestaDto ActualizarDescargaGas(AlmacenGasDescarga alm, List<AlmacenGasDescargaFoto> fotos, List<OrdenCompra> ocs)
         {
             return new AlmacenGasDescargaDataAccess().Actualizar(alm, fotos);
         }
