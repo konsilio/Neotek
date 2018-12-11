@@ -221,7 +221,7 @@ namespace Application.MainModule.Flujos
 
             adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
             adapter.FolioVenta = venta.FolioVenta;
-            //adapter.FolioOperacionDia = venta.FolioVenta;
+            adapter.FolioOperacionDia = venta.FolioVenta;
             adapter.FechaRegistro = DateTime.Now;
             adapter.Dia = (byte)venta.Fecha.Day;
             adapter.Mes = (byte)venta.Fecha.Month;
