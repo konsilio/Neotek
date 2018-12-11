@@ -74,7 +74,34 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
+        public RespuestaDto Actualizar(AlmacenGasDescarga _almDes, List<AlmacenGasDescargaFoto> _fotos, List<OrdenCompra> ocs)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    foreach (var oc in ocs)
+                        uow.Repository<OrdenCompra>().Update(oc);
+                    uow.Repository<AlmacenGasDescarga>().Update(_almDes);
+                    foreach (var foto in _fotos)
+                        uow.Repository<AlmacenGasDescargaFoto>().Insert(foto);
+                    uow.SaveChanges();
+                    _respuesta.Id = _almDes.IdAlmacenEntradaGasDescarga;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "de la descargar de gas"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public void Actualizar(AplicaDescargaDto aplicacionDto)
         {
             using (uow)
