@@ -2787,7 +2787,7 @@ namespace MVC.Presentacion.Agente
         public void EnviarSolicitudPagoPorteador(OrdenCompraComplementoGasDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutSolicitarPagoPorteador"];
-            LLamada(dto, token, MetodoRestConst.Post).Wait();
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
         public void GuardarDatosPorteador(OrdenCompraComplementoGasDTO dto, string token)
         {

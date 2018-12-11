@@ -417,7 +417,7 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            @Html.TextBoxFor(m => m.OrdenCompraExpedidor.MontBelvieuDlls,Model.OrdenCompraExpedidor.MontBelvieuDlls.ToString(), new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
+                                                            @Html.TextBoxFor(m => m.OrdenCompraExpedidor.MontBelvieuDlls, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3 form-control-label">
@@ -714,14 +714,8 @@
                                                     </div>
                                                     <div class="col-md-4 form-control-label text-right">
                                                         
-                                                        @if (ViewBag.Complemeto.OrdenCompraPorteador.Total != null)
-                                                        {
-                                                            @Html.LabelFor(m => m.OrdenCompraPorteador.Total)
-                                                        }
-                                                        else
-                                                        {
-                                                            @Html.LabelFor(m => m.OrdenCompraPorteador.Total, new { id = "ImportePorteador" })
-                                                        }
+                                                         @Html.LabelFor(m => m.OrdenCompraPorteador.Total, new { id = "ImportePorteador" })
+                                                       
                                                         @Html.HiddenFor(m => m.OrdenCompraPorteador.Total)
                                                         @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.Total, "", new { @class = "alert-danger" })
                                                     </div>
