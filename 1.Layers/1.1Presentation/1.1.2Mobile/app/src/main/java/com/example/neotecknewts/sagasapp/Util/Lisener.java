@@ -1010,6 +1010,102 @@ public class Lisener{
                             conceptoDTO.setConcepto(concepto.getString(
                                     concepto.getColumnIndex("Concepto"))
                             );
+
+                            conceptoDTO.setDia(
+                                    concepto.getInt(
+                                            concepto.getColumnIndex("Dia")
+                                    )
+                            );
+                            conceptoDTO.setMes(
+                                    concepto.getInt(
+                                            concepto.getColumnIndex("Mes")
+                                    )
+                            );
+                            conceptoDTO.setYear(
+                                    concepto.getInt(
+                                            concepto.getColumnIndex("Year")
+                                    )
+                            );
+                            conceptoDTO.setIdProducto(
+                                    concepto.getInt(
+                                            concepto.getColumnIndex("IdProducto")
+                                    )
+                            );
+                            conceptoDTO.setIdLinea(
+                                    concepto.getInt(
+                                            concepto.getColumnIndex("IdLinea")
+                                    )
+                            );
+                            conceptoDTO.setIdCategoria(
+                                    concepto.getInt(
+                                            concepto.getColumnIndex("IdCategoria")
+                                    )
+                            );
+                            conceptoDTO.setIdUnidadmedida(
+                                    concepto.getInt(
+                                            concepto.getColumnIndex("IdUnidadMedida")
+                                    )
+                            );
+                            conceptoDTO.setPrecioUnitarioProducto(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex(
+                                                    "PrecioUnitarioProducto")
+                                    )
+                            );
+                            conceptoDTO.setPrecioUnitarioLt(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex("PrecioUnitarioLt")
+                                    )
+                            );
+                            conceptoDTO.setPrecioUnitarioKg(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex("PrecioUnitatioKg")
+                                    )
+                            );
+                            conceptoDTO.setDescuentoUnitarioProducto(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex("DescuentoUnitarioProducto")
+                                    )
+                            );
+                            conceptoDTO.setDescuentoUnitarioLt(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex("DescuentoUnitarioLt")
+                                    )
+                            );
+                            conceptoDTO.setDescuentoUnitarioKg(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex("DescuentoUnitarioKg")
+                                    )
+                            );
+
+                            conceptoDTO.setCantidad(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex("Cantidad")
+                                    )
+                            );
+                            conceptoDTO.setCantidadLt(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex("CantidadLt")
+                                    )
+                            );
+
+                            conceptoDTO.setCantidadKg(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex("CantidadKg")
+                                    )
+                            );
+                            conceptoDTO.setDescuentoUnitarioLt(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex("DescuentoTotal")
+                                    )
+                            );
+
+                            conceptoDTO.setDescuentoUnitarioLt(
+                                    concepto.getDouble(
+                                            concepto.getColumnIndex("IdEmpresa")
+                                    )
+                            );
+
                             concepto.moveToNext();
                         }
                     }
