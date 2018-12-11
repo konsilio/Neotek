@@ -180,7 +180,7 @@ namespace MVC.Presentacion.App_Code
                 CuentaBancaria = prov.Cuenta,
                 Empresa = oc.Empresa,
                 MontoPagado = oc.Total.Value,
-                Orden = pagos.LastOrDefault().Orden,
+                Orden = pagos.Count != 0 ? pagos.LastOrDefault().Orden : (short)0,
             };
         }
         public static RespuestaDTO ConfirmarPago(OrdenCompraPagoDTO dto, string tkn)

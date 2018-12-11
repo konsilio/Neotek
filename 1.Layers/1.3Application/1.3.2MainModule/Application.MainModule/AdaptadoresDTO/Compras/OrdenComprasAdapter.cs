@@ -62,7 +62,21 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 EsTransporteGas = oc.EsTransporteGas,
                 Productos = ProductosOCAdapter.ToDTOx(oc.Productos.ToList()),
                 FolioFiscalUUID = oc.FolioFiscalUUID,
-                FolioFactura = oc.FolioFactura
+                FolioFactura = oc.FolioFactura,
+                //Expedidor
+                MontBelvieuDlls = oc.MontBelvieuDlls,
+                TarifaServicioPorGalonDlls = oc.TarifaServicioPorGalonDlls,
+                TipoDeCambioDOF = oc.TipoDeCambioDOF,
+                PrecioPorGalon = oc.PrecioPorGalon,
+                FactorGalonALitros = oc.FactorGalonALitros,
+                ImporteEnLitros = oc.ImporteEnLitros,
+                FactorCompraLitrosAKilos = oc.FactorCompraLitrosAKilos,
+                PVPM = oc.PVPM,
+                //Porteador
+                FactorConvTransporte = oc.FactorConvTransporte,
+                PrecioTransporte = oc.PrecioTransporte,
+                Casetas = oc.Casetas,
+
             };
             return ocDTO;
         }
