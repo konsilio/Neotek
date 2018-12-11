@@ -82,7 +82,9 @@
                     android:singleLine="true"
                     android:textSize="18sp"
                     android:visibility="gone"
-                    tools:targetApi="o" />
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -103,7 +105,9 @@
                     android:textSize="18sp"
                     android:maxLength="13"
                     android:visibility="visible"
-                    tools:targetApi="o" />
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -123,7 +127,9 @@
                     android:singleLine="true"
                     android:text=""
                     android:textSize="18sp"
-                    tools:targetApi="o" />
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="p" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -143,8 +149,10 @@
                     android:inputType="textPersonName"
                     android:singleLine="true"
                     android:text=""
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
                     android:textSize="18sp"
-                    tools:targetApi="o" />
+                    tools:targetApi="P" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -164,7 +172,9 @@
                     android:singleLine="true"
                     android:text=""
                     android:textSize="18sp"
-                    tools:targetApi="o" />
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -183,7 +193,9 @@
                     android:inputType="phone"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    tools:targetApi="o" />
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -202,22 +214,10 @@
                     android:inputType="phone"
                     android:singleLine="true"
                     android:textSize="18sp"
-                    tools:targetApi="o" />
+                    android:textColor="@color/colorTextLogin"
+                    android:textColorHint="@color/colorTextLogin"
+                    tools:targetApi="P" />
             </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/BtnRegistroClienteActivityRegresar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp"
-                style="@style/SagasTheme.Button"
-                android:background="@drawable/ripple_effect"
-                android:text="@string/regresar"
-                android:textColor="@color/colorTextButtonLogin"
-                android:textSize="18sp"
-                tools:ignore="UnusedAttribute" />
 
             <Button
                 android:id="@+id/BtnRegistroClienteActivityRegistrarCliente"
@@ -232,6 +232,20 @@
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="18sp"
                 tools:ignore="UnusedAttribute" />
+            <Button
+                android:id="@+id/BtnRegistroClienteActivityRegresar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
+                android:text="@string/regresar"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="18sp"
+                tools:ignore="UnusedAttribute" />
+
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
