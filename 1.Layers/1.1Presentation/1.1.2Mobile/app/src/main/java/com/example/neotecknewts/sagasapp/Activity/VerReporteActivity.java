@@ -356,7 +356,7 @@ public class VerReporteActivity extends AppCompatActivity {
                         "Hora\t[{Hora}]\n";
         if(ventaDTO.getEstacion().trim().length()>0 || !ventaDTO.getEstacion().isEmpty()
                 && !ventaDTO.getEstacion().equals("")) {
-            StringReporte+="Surtió: \t [{Estacion}]\n";
+            StringReporte+="Surtio: \t [{Estacion}]\n";
         }
         StringReporte+="_________________________\n";
         //region Busqueda por cliente
