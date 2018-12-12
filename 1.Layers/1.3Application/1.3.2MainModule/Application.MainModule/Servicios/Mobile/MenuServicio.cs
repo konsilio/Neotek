@@ -39,12 +39,55 @@ namespace Application.MainModule.Servicios.Mobile
         private static bool _AppCamionetaPuntoVenta = false;
         private static bool _AppEstacionCarbPuntoVenta = false;
         private static bool _AppPipaPuntoVenta = false;
+
         public static List<MenuDto> Crear(int idUsuario)
         {
             List<MenuDto> lista = new List<MenuDto>();
             var usuario = new UsuarioDataAccess().Buscar(idUsuario);
+
             if (usuario.Roles != null)
             {
+                var operadorDTO = PuntoVentaServicio.ObtenerOperador(idUsuario);
+                var operador = OperadorChoferServicio.Obtener(operadorDTO.IdOperadorChofer);
+                //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
+                var puntoVenta = PuntoVentaServicio.Obtener(operador);
+                var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+                /*bool hayLecturaAnterior = false;
+                if (unidadAlmacen.IdPipa != 0 || unidadAlmacen.IdPipa != null) {
+                    if (unidadAlmacen.IdPipa != 0)
+                    {
+                        var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturasIniciales(unidadAlmacen.IdCAlmacenGas);
+                    }
+                    else
+                    {
+                        hayLecturaAnterior = false;
+                    }
+                    
+                }
+                if (unidadAlmacen.IdEstacionCarburacion!= 0 || unidadAlmacen.IdEstacionCarburacion != null)
+                {
+                    if(unidadAlmacen.IdCAlmacenGas!= 0)
+                    {
+                        var unltimaLectura = LecturaGasServicio.ObtenerUltimaLecturasIniciales(unidadAlmacen.IdCAlmacenGas);
+                    }
+                    else
+                    {
+                        hayLecturaAnterior = false;
+                    }
+                }
+                    
+                if (unidadAlmacen.IdCamioneta!=0 || unidadAlmacen.IdCamioneta != null)
+                {
+                    if (unidadAlmacen.IdCAlmacenGas != 0)
+                    {
+                        var unltimaLectura = LecturaGasServicio.ObtenerUltimaLecturasIniciales(unidadAlmacen.IdCAlmacenGas);
+                    }
+                    else
+                    {
+                        hayLecturaAnterior = false;
+                    }
+                }*/
+                    
                 foreach (Rol rol in usuario.Roles)
                 {
                     if (rol.AppCompraEntraGas && !_AppCompraEntraGas)
@@ -186,11 +229,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Diposición de efectivo
                     if(rol.AppDisposicionEfectivo && !_AppDisposicionEfectivo)
                     {
-                        var operadorDTO = PuntoVentaServicio.ObtenerOperador(idUsuario);
-                        var operador = OperadorChoferServicio.Obtener(operadorDTO.IdOperadorChofer);
-                        //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
-                        var puntoVenta = PuntoVentaServicio.Obtener(operador);
-                        var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+
 
                         if (unidadAlmacen.IdEstacionCarburacion>0 && unidadAlmacen.IdEstacionCarburacion!=0)
                         {

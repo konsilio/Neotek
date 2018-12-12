@@ -120,6 +120,23 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        /// <summary>
+        /// Retorna una lista de lecturas de pipas ordenadas por el orden que sea mayor 
+        /// </summary>
+        /// <param name="idPipa">Id de la pipa</param>
+        /// <param name="idCAlmacenGas"> Id de CAlmacenGas</param>
+        /// <returns>Listado de lecturas en caso de no encontrar , retornara un listado vacio</returns>
+        public List<AlmacenGasTomaLectura> ObtenerUltimaLecturasIniciales(short idCAlmacenGas)
+        {
+            List<AlmacenGasTomaLectura> inicial = new List<AlmacenGasTomaLectura>();
+            inicial = uow.Repository<AlmacenGasTomaLectura>().Get(
+                    x=>x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                    && x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
+                    && x.FechaAplicacion.Equals(DateTime.Now)
+                ).OrderByDescending(y=>y.IdOrden).ToList();
+            return inicial;
+        }
+
         public List<AlmacenGasRecarga> ObtenerRecargaInicial(short IdCAlmacenGasEntrada)
         {
             return uow.Repository<AlmacenGasRecarga>().Get(
