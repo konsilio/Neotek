@@ -16,7 +16,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/TVAnticipoTablaActivityTitulo"
+                android:id="@+id/TVAnticipoTablaActivityTituloUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
@@ -100,7 +100,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView20"
+                        android:id="@+id/TVAnticipoTablaActivityTitulo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

@@ -48,7 +48,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     TextView TVAnticipoTablaActivityTotal,TVAnticipoTablaActivityTitulo,TVAnticipoTablaActivityP5000,
             TVAnticipoTableActivityInicial,TVAnticipoTableActivityFinal,TVAnticipoTableActivityLitros,
         TVAnticipoTableMontoDeCorte,TVAnticipoTableActivityAnticipos,
-            TVAnticipoTablaActivityFecha;
+            TVAnticipoTablaActivityFecha,TVAnticipoTablaActivityTituloUsuario;
     //Spinner SPAnticipoTablaActivityFechaCorte;
     Spinner SPAnticipoTablaActvityUsuario;
     TableRow TRAnticipoTablaActivityTituloAnticipo,TRAnticipoTablaActivityFormAnticipar;
@@ -162,6 +162,10 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         }else if (EsAnticipo){
             presenter.usuarios(session.getToken());
         }
+        TVAnticipoTablaActivityTituloUsuario = findViewById(R.id.
+                TVAnticipoTablaActivityTituloUsuario);
+        TVAnticipoTablaActivityTituloUsuario.setText(EsAnticipo? R.string.recibi_de:
+        R.string.Recibe);
         //SPAnticipoTablaActvityUsuario.setVisibility(EsAnticipo? View.VISIBLE:View.GONE);
         SPAnticipoTablaActvityUsuario.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
@@ -276,7 +280,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 }
             } else {
                 if(datos.getCortes().size()>0) {
-                    if(total==0) {
+                    /*if(total==0) {*/
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                                 new SimpleDateFormat("ddMMyyyyhhmmssS");
                         SimpleDateFormat format = new SimpleDateFormat("HH:mm",
@@ -312,7 +316,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         builderMonto.create().show();
                     }
                     //startIntent();
-                }else{
+                /*}else{
                     AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
                     builderMonto.setCancelable(false);
                     builderMonto.setTitle(R.string.mensjae_error_campos);
@@ -321,7 +325,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     builderMonto.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
                             dialogInterface.dismiss());
                     builderMonto.create().show();
-                }
+                }*/
             }
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">SagasApp</string>
 
     <string name="activity_menu">Menú</string>
@@ -254,9 +254,10 @@
     <string-array name="Regimen_fiscal">
         <item>Sin obligaciones fiscales</item>
     </string-array>
+    <string name="Recibe">Recibirá </string>
     <string-array name="condepto_venta">
         <item>Concepto</item>
-        <item>Cant.</item>
+        <item tools:ignore="Typos">Cant.</item>
         <item>P.Uni</item>
         <item>Desc</item>
         <item>Subt.</item>
