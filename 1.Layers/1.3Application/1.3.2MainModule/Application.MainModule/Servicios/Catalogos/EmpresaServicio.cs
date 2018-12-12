@@ -97,5 +97,18 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
+        /// <summary>
+        /// Permite obtener por medio de una Entidad Empresa
+        /// la lista de usuarios que estan en ella
+        /// </summary>
+        /// <param name="empresa">Entidad de tipo empresa con la que se buscara los empleados</param>
+        /// <returns>Listado con los usuarios en la empresa</returns>
+        public static List<Usuario> ObtenerUsuarios(Empresa empresa)
+        {
+            if (empresa != null)
+                return new EmpresaDataAccess().GetUsuariosEmpresa(empresa);
+            else
+                return null;
+        }
     }
 }
