@@ -15,4 +15,8 @@ public interface AnticipoTablaInteractor {
     void Corte(CorteDTO corteDTO, SAGASSql sagasSql, String token);
 
     void getAnticipos(String token, int estacion, boolean esAnticipos, String fecha);
+
+    void usuarios(String token);
+
+    void usuariosCortes(String token);
 }

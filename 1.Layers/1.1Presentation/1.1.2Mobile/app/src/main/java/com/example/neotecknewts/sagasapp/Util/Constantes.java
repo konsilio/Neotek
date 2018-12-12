@@ -56,4 +56,6 @@ public class Constantes {
     public static final String GET_CATALOGOS_ANTICIPOS_CORTE_LISTA = "mobile/catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}/{fecha}";
     public static final String GET_PRECIO_VENTA = "mobile/consulta/precioventa/vigente";
     public static final String GET_PUNTO_VENTA_ASIGNADO = "mobile/estacion/punto-venta";
+    public static final String GET_USUARIOS_ANTICIPOS = "mobile/catalogos/anticipos-y-cortes/usuarios";
+    public static final String GETUSUARIOS_CORTES = "mobile/catalogos/anticipos-y-cortes/usuarios-liquitar";
 }

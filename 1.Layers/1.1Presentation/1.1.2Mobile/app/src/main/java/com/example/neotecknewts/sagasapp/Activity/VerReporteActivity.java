@@ -37,6 +37,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -777,6 +778,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "");
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void GenerarReporteAnticipo() {
         HtmlReporte = "<body>" +
                 "<h2 style='text-align: center; font-weight: bold; font-size:20px;'><u>Reporte-Anticipo</u></h2>" +
@@ -826,11 +828,21 @@ public class VerReporteActivity extends AppCompatActivity {
                 "Entregue:\n"+
                 "[{Usuario-entrego}]\n____________________________\n\n"+
                 "Recibi\n"+
-                        "[{Usuario-recibi}]\n________________________\n\n";
+                        "[{Usuario-recibi}]\n____________________________\n\n";
         HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
-        HtmlReporte = HtmlReporte.replace("[{Fecha}]",anticiposDTO.getFecha());
-        StringReporte = StringReporte.replace("[{Fecha}]",anticiposDTO.getFecha());
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter6 =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        try {
+            Date fecha=formatter6.parse(anticiposDTO.getFecha());
+            HtmlReporte = HtmlReporte.replace("[{Fecha}]",
+                    new SimpleDateFormat("dd/MM/YYYY").format(fecha));
+            StringReporte = StringReporte.replace("[{Fecha}]",
+                    new SimpleDateFormat("dd/MM/YYYY").format(fecha));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         HtmlReporte = HtmlReporte.replace("[{Hora}]",anticiposDTO.getHora());
         StringReporte = StringReporte.replace("[{Hora}]",anticiposDTO.getHora());
         HtmlReporte = HtmlReporte.replace("[{Estacion}]",anticiposDTO.getNombreEstacion());
@@ -845,9 +857,9 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte = StringReporte.replace("[{Usuario-recibi}]",
                 session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE));
         HtmlReporte = HtmlReporte.replace("[{Usuario-entrego}]]",
-                session.getAttribute(Session.KEY_NOMBRE)==null?"":anticiposDTO.getRecibe());
+                anticiposDTO.getNombreEntrega()==null?"":anticiposDTO.getNombreEntrega());
         StringReporte = StringReporte.replace("[{Usuario-entrego}]",
-                session.getAttribute(Session.KEY_NOMBRE)==null?"":anticiposDTO.getRecibe());
+                anticiposDTO.getNombreEntrega()==null?"":anticiposDTO.getNombreEntrega());
     }
 
     private void GenerarReporteTraspasoPipa(TraspasoDTO traspasoDTO) {

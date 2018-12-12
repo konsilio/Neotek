@@ -7,6 +7,7 @@ import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosEstacionesDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.UsuariosCorteDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
@@ -65,5 +66,41 @@ public class AnticipoTablaPresenterImpl implements AnticipoTablaPresenter {
     public void onSuccessList(RespuestaEstacionesVentaDTO data) {
         view.HiddeProgress();
         view.onSuccessList(data);
+    }
+
+    /**
+     * usuarios
+     * Permite invocar el servicio para obtener el listado de usuarios
+     * mostrara un dialogo de progress y llama el servicio
+     * @param token Token de usuario
+     */
+    @Override
+    public void usuarios(String token) {
+        view.onShowProgress(R.string.message_cargando);
+        interactor.usuarios(token);
+    }
+
+    /**
+     * onSuccessList
+     * Metodo para en caso de exito de obtener el listado de usuario para el apartado de
+     * anticipos y determinar de quien se cobra dicho anticipo
+     * @param data Modelo de tipo {@link UsuariosCorteDTO} en el que se contiene la lista de usuarios
+     */
+    @Override
+    public void onSuccessList(UsuariosCorteDTO data) {
+        view.HiddeProgress();
+        view.onSuccessList(data);
+    }
+
+    /**
+     * usuariosCorte
+     * Permite obtener el listado de usuarios para el corte, obtendra del serivicio un objeto
+     * de tipo {@link UsuariosCorteDTO} con la repsuesta
+     * @param token String que reprecenta el token del usuario
+     */
+    @Override
+    public void usuariosCorte(String token) {
+        view.onShowProgress(R.string.message_cargando);
+        interactor.usuariosCortes(token);
     }
 }

@@ -10,6 +10,7 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaCorteDto;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
+import com.example.neotecknewts.sagasapp.Model.UsuariosCorteDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
@@ -21,6 +22,7 @@ import com.google.gson.GsonBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -234,8 +236,136 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
         });
     }
 
+    /**
+     * usuarios
+     * Permite extraer el listado de usuario para determinar de quien se esta recibiendo el
+     * anticipo,retornara un objeto de tipo {@link UsuariosCorteDTO} con el que se determina
+     * si existe una lista de usuario o no
+     * @param token String que reprecenta el tonque de usuario
+     */
+    @Override
+    public void usuarios(String token) {
+        String url = Constantes.BASE_URL;
 
-    private void registra_local(AnticiposDTO anticiposDTO,SAGASSql sagasSql,String token){
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<UsuariosCorteDTO> call = restClient.getUsuarios(
+                token,
+                "application/json"
+        );
+        Log.w("Url base",retrofit.baseUrl().toString());
+
+        call.enqueue(new Callback<UsuariosCorteDTO>() {
+            @Override
+            public void onResponse(Call<UsuariosCorteDTO> call,
+                                   Response<UsuariosCorteDTO> response) {
+                UsuariosCorteDTO data = response.body();
+                if (response.isSuccessful()) {
+                    Log.w("Estatus","Success");
+                    if(data.isExito())
+                        presenter.onSuccessList(data);
+                    else
+                        presenter.onError(data.getMensaje());
+                }
+                else {
+                    switch (response.code()) {
+                        case 404:
+                            Log.w("Error","not found");
+
+                            break;
+                        case 500:
+                            Log.w("Error", "server broken");
+
+                            break;
+                        default:
+                            Log.w("Error", "Error desconocido: "+response.code());
+
+                            break;
+                    }
+                    presenter.onError(response.message());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<UsuariosCorteDTO> call, Throwable t) {
+                Log.e("error", "Error desconocido: "+t.toString());
+                presenter.onError(t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void usuariosCortes(String token) {
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<UsuariosCorteDTO> call = restClient.getUsuariosCorte(
+                token,
+                "application/json"
+        );
+        Log.w("Url base",retrofit.baseUrl().toString());
+
+        call.enqueue(new Callback<UsuariosCorteDTO>() {
+            @Override
+            public void onResponse(Call<UsuariosCorteDTO> call,
+                                   Response<UsuariosCorteDTO> response) {
+                UsuariosCorteDTO data = response.body();
+                if (response.isSuccessful()) {
+                    Log.w("Estatus","Success");
+                    if(data.isExito())
+                        presenter.onSuccessList(data);
+                    else
+                        presenter.onError(data.getMensaje());
+                }
+                else {
+                    switch (response.code()) {
+                        case 404:
+                            Log.w("Error","not found");
+
+                            break;
+                        case 500:
+                            Log.w("Error", "server broken");
+
+                            break;
+                        default:
+                            Log.w("Error", "Error desconocido: "+response.code());
+
+                            break;
+                    }
+                    presenter.onError(response.message());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<UsuariosCorteDTO> call, Throwable t) {
+                Log.e("error", "Error desconocido: "+t.toString());
+                presenter.onError(t.getMessage());
+            }
+        });
+    }
+
+    private void registra_local(AnticiposDTO anticiposDTO, SAGASSql sagasSql, String token){
         if(sagasSql.GetAnticipoByClaveOperacion(anticiposDTO.getClaveOperacion()).getCount()==0){
             sagasSql.InsertAnticipo(anticiposDTO);
             Lisener lisener = new Lisener(sagasSql,token);
