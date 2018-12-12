@@ -158,12 +158,13 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         elementos = new ArrayList<>();
         SPAnticipoTablaActvityUsuario = findViewById(R.id.SPAnticipoTablaActvityUsuario);
         if(EsCorte) {
-            presenter.usuarios(session.getToken());
-        }else if (EsAnticipo){
             presenter.usuariosCorte(session.getToken());
+        }else if (EsAnticipo){
+            presenter.usuarios(session.getToken());
         }
         //SPAnticipoTablaActvityUsuario.setVisibility(EsAnticipo? View.VISIBLE:View.GONE);
-        SPAnticipoTablaActvityUsuario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        SPAnticipoTablaActvityUsuario.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position>=0) {
@@ -175,8 +176,13 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                                         listUsuarios[position]
                                 )) {
                                     UsuariosDTO usuario = dataUsariosCorte.getUsuarios().get(x);
-                                    anticiposDTO.setNombreEntrega(usuario.getNombre());
-                                    anticiposDTO.setIdEntrega(usuario.getIdUsuario());
+                                    if(EsAnticipo) {
+                                        anticiposDTO.setNombreEntrega(usuario.getNombre());
+                                        anticiposDTO.setIdEntrega(usuario.getIdUsuario());
+                                    }else if (EsCorte){
+                                        corteDTO.setRecibe(usuario.getNombre());
+                                        corteDTO.setIdRecibio(usuario.getIdUsuario());
+                                    }
                                 }
                             }
                         }
@@ -186,8 +192,13 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                anticiposDTO.setNombreEntrega("");
-                anticiposDTO.setIdEntrega(0);
+                if (EsAnticipo) {
+                    anticiposDTO.setNombreEntrega("");
+                    anticiposDTO.setIdEntrega(0);
+                }else if(EsCorte){
+                    corteDTO.setEntrega("");
+                    corteDTO.setIdEntrega(0);
+                }
             }
         });
         NumberFormat format = NumberFormat.getCurrencyInstance();
@@ -279,7 +290,8 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         corteDTO.setFechaVenta(f.format(new Date()));
                         corteDTO.setClaveOperacion(clave_unica);
                         corteDTO.setTiket(clave_unica);
-                        corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
+                        corteDTO.setEntrega(session.getAttribute(Session.KEY_NOMBRE));
+                        corteDTO.setIdEntrega(Integer.valueOf(session.getAttribute(Session.KEY_ID_USUARIO)));
                         //Agrego las ventas correspondientes al corte
                         for (CorteDTO itemCorte : datos.getCortes()) {
                             VentasCorteDTO ventasCorteDTO = new VentasCorteDTO();
