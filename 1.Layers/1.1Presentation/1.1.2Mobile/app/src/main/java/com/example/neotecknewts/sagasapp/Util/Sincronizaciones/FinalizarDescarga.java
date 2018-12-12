@@ -1,14 +1,12 @@
-
 package com.example.neotecknewts.sagasapp.Util.Sincronizaciones;
 
 import android.database.Cursor;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
-import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
-import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
-import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Sincronizacion;
 import com.google.gson.FieldNamingPolicy;
@@ -25,68 +23,57 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Descarga {
-    private IniciarDescargaSQL db;
+public class FinalizarDescarga {
+    private FinalizarDescargaSQL db;
     private Sincronizacion sincronizacion;
     private boolean respuesta_servicio;
     private String token;
     public List<String> mensajes;
 
-    public Descarga(IniciarDescargaSQL db, Sincronizacion sincronizacion, String token) {
-        this.db = db;
+    public FinalizarDescarga ( FinalizarDescargaSQL db ,Sincronizacion sincronizacion,String token){
+        this.db =db;
         this.sincronizacion = sincronizacion;
         this.token = token;
     }
 
     /**
-     * SincronizarIniciarDescargas
-     * Permite realizar el envio de los datos de la descarga inicial al api,
-     * recuperara desde la base de datos sqlite los registros de las descargas
-     * y lo transformara a un modelo dto de tipo {@link IniciarDescargaDTO} el cual
-     * sera enviado a la api la cual repspondera un boolean de exito o fracaso , en
-     * caso de exito eliminara los registros locales
-     * @return boolean Bandera que determina que si hay o no registros en local
+     * SincronizarFinalizarDescargas
+     * Permite tomar los valores almacenados en la base de datos local y
+     * trasformarlos en un objeto de tipo {@link FinalizarDescargaDTO} para su envio al
+     * api
+     * @return boolean que reprecenta si se guardaron con exito
      */
-    public boolean SincronizarIniciarDescargas(){
-        Cursor cursor = db.GetIniciarDescargas();
-        cursor.moveToFirst();
-        //Verifico si hay descargas iniciales
+    public boolean SincronizarFinalizarDescargas(){
+        Cursor cursor = db.GetFinalizarDescargas();
         if(sincronizacion.servicioDisponible()) {
-            if (cursor.getCount() > 0) {
+            if(cursor.getCount()>0) {
+                cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
-                    IniciarDescargaDTO dto = new IniciarDescargaDTO();
+                    FinalizarDescargaDTO dto = new FinalizarDescargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     dto.setClaveOperacion(cursor.getString(
                             cursor.getColumnIndex("ClaveOperacion")));
                     dto.setIdOrdenCompra(cursor.getInt(
                             cursor.getColumnIndex("IdOrdenCompra")));
-                    dto.setClaveOperacion(cursor.getString(
-                            cursor.getColumnIndex("ClaveOperacion")));
                     dto.setFechaDescarga(cursor.getString(
                             cursor.getColumnIndex("FechaDescarga")));
-                    dto.setNombreTipoMedidorTractor(cursor.getString(
-                            cursor.getColumnIndex("NombreTipoMedidorTractor")));
-                    dto.setNombreTipoMedidorAlmacen(cursor.getString(
-                            cursor.getColumnIndex("NombreTipoMedidorAlmacen")));
                     dto.setIdTipoMedidorTractor(cursor.getInt(
                             cursor.getColumnIndex("IdTipoMedidorTractor")));
                     dto.setIdTipoMedidorAlmacen(cursor.getInt(
                             cursor.getColumnIndex("IdTipoMedidorAlmacen")));
-                    dto.setCantidadFotosAlmacen(cursor.getInt(
-                            cursor.getColumnIndex("CantidadFotosAlmacen")));
-                    dto.setCantidadFotosTractor(cursor.getInt(
-                            cursor.getColumnIndex("CantidadFotosTractor")));
+
                     boolean es_prestado = cursor.getInt(
                             cursor.getColumnIndex("TanquePrestado")) > 0;
                     dto.setTanquePrestado(es_prestado);
                     dto.setPorcentajeMedidorAlmacen(cursor.getDouble(
-                            cursor.getColumnIndex("PorcentajeMedidorAlmacen")));
+                            cursor.getColumnIndex("PorcentajeMedirorAlmacen")));
                     dto.setPorcentajeMedidorTractor(cursor.getDouble(
                             cursor.getColumnIndex("PorcentajeMedidorTractor")));
                     dto.setIdAlmacen(cursor.getInt(
                             cursor.getColumnIndex("IdAlmacen")));
 
-                    Cursor imagenes = db.GetImagenesDescargaByClaveUnica(dto.getClaveOperacion());
+                    Cursor imagenes = db.GetImagenesFinalizarDescargaByClaveOperacion(
+                            dto.getClaveOperacion());
                     imagenes.moveToFirst();
                     while (!imagenes.isAfterLast()) {
                         String iuri = imagenes.getString(imagenes.getColumnIndex("Url"));
@@ -102,19 +89,20 @@ public class Descarga {
                     }
 
                     Log.w("ClaveProceso", dto.getClaveOperacion());
-
-                    if (Registro(dto)) {
-                        db.EliminarDescarga(dto.getClaveOperacion());
-                        db.EliminarImagenesDescarga(dto.getClaveOperacion());
+                    boolean registrado = Registrar(dto);
+                    if (registrado){
+                        db.EliminarFinalizarDescarga(dto.getClaveOperacion());
+                        db.EliminarImagenes(dto.getClaveOperacion());
                     }
                     cursor.moveToNext();
                 }
-                return db.GetIniciarDescargas().getCount()==0;
-            } else {
-                mensajes.add("No hay papeletas pendientes");
+                    return db.GetFinalizarDescargas().getCount() == 0;
+            }else{
+                mensajes.add("No hay finalizaciónes de descarga pendientes");
                 return true;
             }
-        } else {
+        }
+        else {
             mensajes.add("No se pudieron realizar los registros de descargas, el servicio no esta" +
                     "disponible");
             return false;
@@ -122,13 +110,13 @@ public class Descarga {
     }
 
     /**
-     * Registro
-     * Realiza el registro de la  descarga inicial en el api, retornara un
-     * valor de tipo bool dependiendo de la repsuesta de este
-     * @param dto Objeto de tipo {@link IniciarDescargaDTO} con los valores almacenados
-     * @return boolean con el repsutado de la solicitud
+     * Registrar
+     * Realiza la acción de registrar los datos del modelo al api
+     * retornara un valor boolean dependiendo de la respuesta del registro
+     * @param dto Objeto de tipo {@link FinalizarDescargaDTO} con los valores a registrar
+     * @return boolean que reprecenta la repsuesta del servidor
      */
-    private boolean Registro(IniciarDescargaDTO dto){
+    private boolean Registrar(FinalizarDescargaDTO dto) {
         Log.w("Registro","Registrando en servicio "+dto.getClaveOperacion());
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -139,22 +127,23 @@ public class Descarga {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(dto,token,
+        Call<RespuestaFinalizarDescargaDTO> call = restClient.postFinalizarDescarga(dto,token,
                 "application/json");
-        call.enqueue(new Callback<RespuestaIniciarDescargaDTO>() {
+        call.enqueue(new Callback<RespuestaFinalizarDescargaDTO>() {
             @Override
-            public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
-                                   Response<RespuestaIniciarDescargaDTO> response) {
+            public void onResponse(Call<RespuestaFinalizarDescargaDTO> call,
+                                   Response<RespuestaFinalizarDescargaDTO> response) {
                 respuesta_servicio = call.isExecuted() && response.isSuccessful();
                 if(respuesta_servicio)
-                    Log.w("Registro descarga ini","Exito");
+                    Log.e("Registro fdescarga "+dto.getClaveOperacion(),
+                            String.valueOf(response.isSuccessful()));
                 else
-                    Log.w("Registro descarga ini "+dto.getClaveOperacion(),"Error "+
+                    Log.w("Registro f descarga "+dto.getClaveOperacion(),"Error "+
                             response.body().getMensaje());
             }
 
             @Override
-            public void onFailure(Call<RespuestaIniciarDescargaDTO> call, Throwable t) {
+            public void onFailure(Call<RespuestaFinalizarDescargaDTO> call, Throwable t) {
                 respuesta_servicio = false;
             }
         });
