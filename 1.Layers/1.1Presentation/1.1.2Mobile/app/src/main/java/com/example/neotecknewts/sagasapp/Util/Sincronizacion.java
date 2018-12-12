@@ -6,7 +6,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.Util.Sincronizaciones.Descarga;
+import com.example.neotecknewts.sagasapp.Util.Sincronizaciones.FinalizarDescarga;
 import com.example.neotecknewts.sagasapp.Util.Sincronizaciones.Papeleta;
 
 import java.util.ArrayList;
@@ -38,6 +42,14 @@ public class Sincronizacion {
         Papeleta papeleta = new Papeleta(context,new PapeletaSQL(context),this,session.getToken());
         boolean EnvioPapeleta = papeleta.SincronizarPapeletas();
         mensajes.addAll(papeleta.mensajes);
+        //endregion
+        //region Sincronizar descarga inicial
+        Descarga descarga = new Descarga(new IniciarDescargaSQL(context),this,session.getToken());
+        mensajes.addAll(descarga.mensajes);
+        //endregion
+        //region Sincronizar descarga final
+        FinalizarDescarga finalizarDescarga = new FinalizarDescarga(new FinalizarDescargaSQL(context),
+                this,session.getToken());
         //endregion
         progressDialog.hide();
     }
