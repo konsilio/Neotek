@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -21,7 +22,9 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
+import com.example.neotecknewts.sagasapp.Model.Cortes.UsuariosDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.UsuariosCorteDTO;
 import com.example.neotecknewts.sagasapp.Model.VentasCorteDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenterImpl;
@@ -47,6 +50,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         TVAnticipoTableMontoDeCorte,TVAnticipoTableActivityAnticipos,
             TVAnticipoTablaActivityFecha;
     //Spinner SPAnticipoTablaActivityFechaCorte;
+    Spinner SPAnticipoTablaActvityUsuario;
     TableRow TRAnticipoTablaActivityTituloAnticipo,TRAnticipoTablaActivityFormAnticipar;
     EditText ETAnticipoTablaActivityAnticipo;
     ImageButton IBAnticipotABLAactivityFecha;
@@ -66,6 +70,8 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     public int mYear,mMonth,mDay;
     public Date fecha;
     public boolean hasFecha;
+    public UsuariosCorteDTO dataUsariosCorte;
+    public String[] listUsuarios;
 
     public DatePickerDialog.OnDateSetListener onDateSetListener =
             (view, year, month, dayOfMonth) -> {
@@ -87,6 +93,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             corteDTO = (CorteDTO) bundle.getSerializable("corteDTO");
         }
         hasFecha = false;
+        dataUsariosCorte = new UsuariosCorteDTO();
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
@@ -149,25 +156,28 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         tabla = new Tabla(this, TLAnticipoTablaActivityTabla);
         tabla.Cabecera(R.array.header_tabla_anticipo);
         elementos = new ArrayList<>();
-       /* SPAnticipoTablaActivityFechaCorte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        SPAnticipoTablaActvityUsuario = findViewById(R.id.SPAnticipoTablaActvityUsuario);
+        if(EsCorte) {
+            presenter.usuarios(session.getToken());
+        }else if (EsAnticipo){
+            presenter.usuariosCorte(session.getToken());
+        }
+        //SPAnticipoTablaActvityUsuario.setVisibility(EsAnticipo? View.VISIBLE:View.GONE);
+        SPAnticipoTablaActvityUsuario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i>=0 && EsCorte) {
-                    if (datos != null) {
-                        for (int x = 0; x < datos.getFechasCorte().size(); x++) {
-                            @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate =
-                                    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                            @SuppressLint("SimpleDateFormat") SimpleDateFormat sfdate =
-                                    new SimpleDateFormat("dd/MM/yyyy");
-                            try {
-                                Date partialFecha = fdate.parse(datos.getFechasCorte().get(x));
-                                String txtFecha = sfdate.format(partialFecha);
-                                if (txtFecha.equals(
-                                        adapterView.getItemAtPosition(i).toString())) {
-                                    corteDTO.setFechaVenta(datos.getFechasCorte().get(x));
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position>=0) {
+                    if (dataUsariosCorte.isExito()) {
+                        if (dataUsariosCorte.getUsuarios().size() > 0 &&
+                                !dataUsariosCorte.getUsuarios().isEmpty()) {
+                            for (int x = 0; x < dataUsariosCorte.getUsuarios().size(); x++) {
+                                if (dataUsariosCorte.getUsuarios().get(x).getNombre().equals(
+                                        listUsuarios[position]
+                                )) {
+                                    UsuariosDTO usuario = dataUsariosCorte.getUsuarios().get(x);
+                                    anticiposDTO.setNombreEntrega(usuario.getNombre());
+                                    anticiposDTO.setIdEntrega(usuario.getIdUsuario());
                                 }
-                            }catch (Exception e){
-                                e.printStackTrace();
                             }
                         }
                     }
@@ -175,11 +185,11 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                corteDTO.setFechaVenta(null);
+            public void onNothingSelected(AdapterView<?> parent) {
+                anticiposDTO.setNombreEntrega("");
+                anticiposDTO.setIdEntrega(0);
             }
         });
-        */
         NumberFormat format = NumberFormat.getCurrencyInstance();
         session = new Session(this);
         sagasSql = new SAGASSql(this);
@@ -211,12 +221,12 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         }));
                         builder.create().show();
                     } else {
-                        if(Double.parseDouble(cantidad)<total || Double.parseDouble(cantidad)>total) {
+                        if(/*Double.parseDouble(cantidad)<total ||*/ Double.parseDouble(cantidad)>total) {
                             AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
                             builderMonto.setCancelable(false);
                             builderMonto.setTitle(R.string.mensjae_error_campos);
                             builderMonto.setMessage("El monto ingresado debe de ser el igual al " +
-                                    " monto total de las ventas no pude ser mayor o menor a este");
+                                    " monto total de las ventas no pude ser mayor");
                             builderMonto.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
                                     dialogInterface.dismiss());
                             builderMonto.create().show();
@@ -483,6 +493,36 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         }
     }
 
+    @Override
+    public void onSuccessList(UsuariosCorteDTO data) {
+        dataUsariosCorte = data;
+        if(data!=null){
+            if(data.isExito()){
+                if(!data.getUsuarios().isEmpty() && data.getUsuarios().size()>0){
+                    listUsuarios = new String[data.getUsuarios().size()];
+                    for (int x = 0; x<data.getUsuarios().size();x++){
+                        listUsuarios[x] = data.getUsuarios().get(x).getNombre();
+                    }
+                    SPAnticipoTablaActvityUsuario.setAdapter(new ArrayAdapter<>(
+                            this,R.layout.custom_spinner,
+                            listUsuarios
+                    ));
+                }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this,
+                            R.style.AlertDialog);
+                    builder.setCancelable(false);
+                    builder.setTitle(R.string.mensjae_error_campos);
+                    builder.setTitle(data.getMensaje().length()>0? data.getMensaje():
+                    "Se ha generado un error al obtener la lista de personas , revise su " +
+                            "conexion de internet o intente nuevamente mas tarde ");
+                    builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
+                            dialog.dismiss());
+                    builder.create().show();
+                }
+            }
+        }
+    }
+
     private void startIntent(){
         if(EsAnticipo){
             Intent intent = new Intent(AnticipoTablaActivity.this,
@@ -538,6 +578,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         }
         hasFecha=true;
     }
+
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case 0:

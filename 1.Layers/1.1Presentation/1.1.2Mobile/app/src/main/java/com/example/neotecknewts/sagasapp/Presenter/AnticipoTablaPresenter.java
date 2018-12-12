@@ -4,6 +4,7 @@ import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosEstacionesDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.UsuariosCorteDTO;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 import java.util.Date;
@@ -24,4 +25,10 @@ public interface AnticipoTablaPresenter {
     void getAnticipos(String token, int IdEstacion, boolean esAnticipos, String fecha);
 
     void onSuccessList(RespuestaEstacionesVentaDTO data);
+
+    void usuarios(String token);
+
+    void onSuccessList(UsuariosCorteDTO data);
+
+    void usuariosCorte(String token);
 }
