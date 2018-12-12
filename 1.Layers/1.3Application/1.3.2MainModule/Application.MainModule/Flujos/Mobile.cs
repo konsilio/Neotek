@@ -19,6 +19,7 @@ using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.DTOs.Mobile.PuntoVenta;
 using Application.MainModule.AdaptadoresDTO.Mobile.Cortes;
+using Application.MainModule.DTOs.Mobile.Cortes;
 
 namespace Application.MainModule.Flujos
 {
@@ -327,6 +328,35 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             return AutoconsumoServicio.Autoconsumo(dto, esFinal);
+        }
+
+        public UsuariosCorteDTO UsuariosAnticiposCorteLiquidar()
+        {
+            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
+            var usuarioSession = TokenServicio.ObtenerUsuarioAplicacion();
+            var usuarios = EmpresaServicio.ObtenerUsuarios(empresa);
+            List<Usuario> usuariosLiquidar = new List<Usuario>();
+
+            if (usuarios!=null && usuarios.Count != 0)
+            {
+                foreach (var usuario in usuarios)
+                {
+                    var usuariosRoles = usuario.UsuarioRoles;
+                    foreach (var usuarioRol in usuariosRoles)
+                    {
+                        var rolAcciones = RolServicio.Obtener(usuarioRol);
+                        if(rolAcciones.CatLiquidarCajaGeneral)
+                        {
+                            var buscar = usuariosLiquidar.Find(x => x.IdUsuario.Equals(usuario.IdUsuario));
+                            if (buscar==null)
+                                usuariosLiquidar.Add(usuario);
+                        }
+                    }
+                   
+                }
+            }
+            var adapter = UsuariosCorteAdapter.ToDTO(empresa, usuariosLiquidar);
+            return adapter;
         }
 
         public DatosAutoconsumoDto CatalogoAutoconsumo(bool esEstacion, bool esInventario, bool esPipas, bool esFinal)

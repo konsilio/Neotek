@@ -293,6 +293,16 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.UsuariosAnticiposCorte(), Request);
         }
+
+        /// <summary>
+        /// Permite retornar el listado de usuarios para ser implementados en 
+        /// los cortes de caja, para asignar el responsable del corte 
+        /// </summary>
+        /// <returns>Respuesta DTO con los datos </returns>
+        [Route("catalogos/anticipos-y-cortes/usuarios-liquitar")]
+        public HttpResponseMessage GetUsuariosCorte() {
+            return RespuestaHttp.crearRespuesta(_mobile.UsuariosAnticiposCorteLiquidar(), Request);
+        }
         #endregion
 
         #region Venta

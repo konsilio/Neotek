@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using Application.MainModule.Servicios.Seguridad;
 using System.Linq;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.AccesoADatos;
 
 namespace Application.MainModule.Servicios.Mobile
 {
@@ -91,6 +92,18 @@ namespace Application.MainModule.Servicios.Mobile
 
             almacenes.AddRange(alms);
             return almacenes;
+        }
+
+        /// <summary>
+        /// Permite obtener si existe alguna lectura en la pipa , encaso de no existir  
+        /// retornara una lista vacia 
+        /// </summary>
+        /// <param name="idPipa">Id de la pipa a buscar los registros</param>
+        /// <param name="idCAlmacenGas">Id del CAlmacenGas </param>
+        /// <returns>Listado encontrado de pipa en caso de no existir retorna una lista vacia</returns>
+        public static List<AlmacenGasTomaLectura> ObtenerUltimaLecturasIniciales(short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().ObtenerUltimaLecturasIniciales(idCAlmacenGas);
         }
 
         public static List<UnidadAlmacenGas> AcomodarUltimaLectura(List<UnidadAlmacenGas> alms, bool esFinalizar)

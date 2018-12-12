@@ -36,7 +36,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile.Cortes
                 return new UsuariosCorteDTO()
                 {
                     Exito = false,
-                    Mensaje = "No hay usuarios para realizar el corte",
+                    Mensaje = "No hay usuarios para mostrar en el listado",
                     ModeloValido = false
                                      
                 };
