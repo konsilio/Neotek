@@ -110,5 +110,20 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        /// <summary>
+        /// Retorna el listado de usuario por medio del id de empresa
+        /// </summary>
+        /// <param name="empresa">Entidad de tipo empresa con los datos de este</param>
+        /// <returns>Lista de usuarios que estan en la empresas</returns>
+        public List<Usuario> GetUsuariosEmpresa(Empresa empresa)
+        {
+            if (empresa != null)
+                return uow.Repository<Usuario>().Get(
+                    x => x.IdEmpresa.Equals(empresa.IdEmpresa)
+                    && x.Activo
+                    ).ToList();
+            else
+                return null;
+        }
     }
 }

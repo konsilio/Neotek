@@ -283,6 +283,16 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos, fecha), Request);
         }
+        /// <summary>
+        /// Permite retornar el listado de usuarios para ser implementados
+        /// en los cortes y anticipos 
+        /// </summary>
+        /// <returns>Respuesta DTO con la lista de usuarios encontrados en la empresa de session</returns>
+        [Route("catalogos/anticipos-y-cortes/usuarios")]
+        public HttpResponseMessage GetUsuariosAnticiposCorte()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.UsuariosAnticiposCorte(), Request);
+        }
         #endregion
 
         #region Venta

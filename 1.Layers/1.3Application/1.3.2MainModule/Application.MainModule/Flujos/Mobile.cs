@@ -18,6 +18,7 @@ using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.DTOs.Mobile.PuntoVenta;
+using Application.MainModule.AdaptadoresDTO.Mobile.Cortes;
 
 namespace Application.MainModule.Flujos
 {
@@ -303,6 +304,20 @@ namespace Application.MainModule.Flujos
                 return AlmacenRecargaAdapter.ToDTO(pipas, estaciones, tipoMedidores);
             }
             return null;
+        }
+        /// <summary>
+        /// UsuariosAnticiposCorte
+        /// Permite retornar la lista de usuarios para 
+        /// los anticipos o cortes de caja
+        /// </summary>
+        /// <returns></returns>
+        public RespuestaDto UsuariosAnticiposCorte()
+        {
+            var usuario = TokenServicio.ObtenerUsuarioAplicacion();
+            var empresa = usuario.Empresa;
+            var usuariosEmpresa = EmpresaServicio.ObtenerUsuarios(empresa);
+            var adapter = UsuariosCorteAdapter.ToDTO(empresa, usuariosEmpresa);
+            return adapter;
         }
 
         public RespuestaDto Autoconsumo(AutoconsumoDTO dto, bool esFinal)
