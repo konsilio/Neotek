@@ -862,7 +862,8 @@ namespace Application.MainModule.Flujos
                 puntoVenta = camioneta.UnidadAlmacenGas.First().PuntosVenta.First();
                 almacenPunto = camioneta.UnidadAlmacenGas.First();
             }
-            var entrega = puntoVenta.OperadorChofer.Usuario;
+            //var entrega = puntoVenta.OperadorChofer.Usuario;
+            var entrega = UsuarioServicio.Obtener(dto.IdEntrega);
             var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoVenta, almacenPunto, cortesYanticiposOrden);
             #region Insert en la tabla de VentaCajaGeneral
             if (corte.Exito)
