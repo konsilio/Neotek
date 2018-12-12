@@ -297,7 +297,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdPuntoVenta = puntoVenta.IdPuntoVenta,
                 IdOperadorChofer = puntoVenta.IdOperadorChofer,
                 IdUsuarioRecibe = usuario.IdUsuario,
-                IdUsuarioEntrega = entrega.IdUsuario,
+                IdUsuarioEntrega = dto.IdEntrega,
                 FolioOperacionDia = dto.ClaveOperacion,
                 VentaTotal = dto.Total,
                 VentaTotalContado = creditoTotal,
