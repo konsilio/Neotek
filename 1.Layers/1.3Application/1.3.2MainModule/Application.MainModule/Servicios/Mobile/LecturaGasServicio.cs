@@ -201,7 +201,7 @@ namespace Application.MainModule.Servicios.Mobile
         }
         public static DatosTomaLecturaDto ConsultaDatosReporteDelDia()
         {
-            var alms = ObtenerAlmacenesGas();
+            var alms = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
             return AlmacenLecturaAdapter.ToDtoReporte(alms);
         }
 
