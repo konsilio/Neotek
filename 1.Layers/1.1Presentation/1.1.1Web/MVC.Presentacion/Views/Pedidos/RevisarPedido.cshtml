@@ -1,0 +1,222 @@
+﻿@model  MVC.Presentacion.Models.Pedidos.PedidoModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="~/assets/js/pages/ui/notifications.js"></script>
+
+    <script type="text/javascript">
+    var mensaje = '@ViewBag.Msj';
+    if (mensaje != '') {
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+    }
+    </script>
+</head>
+<body style="height:100%">
+    @using (Html.BeginForm("EditarPedido", "Pedidos", FormMethod.Post))
+    {
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Call Center</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Pedido</li>
+                                <li class="breadcrumb-item">Revisión</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h2>Datos del <strong>Pedido</strong></h2>
+                                </div>
+                                <div class="body">
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="row clearfix">
+                                                <div class="col-sm-3">
+                                                    <b>Pedido:</b>
+                                                    @Html.LabelFor(model => model.NumPedido, new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <b>Estatus:</b>
+                                                    @Html.LabelFor(model => model.EstatusPedido, new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-sm-2">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <b>Fecha y hora solicitud:</b>
+                                                    @Html.LabelFor(model => model.FechaRegistroPedido, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="col-sm-2">
+                                                    <b>Cliente:</b>
+                                                    @Html.LabelFor(model => model.Nombre, new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-sm-2" style="top:20px">
+                                                    <b></b>
+                                                    @Html.LabelFor(model => model.Apellido1, new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-sm-2" style="top:20px">
+                                                    <b></b>
+                                                    @Html.LabelFor(model => model.Rfc, new { @class = "form-control" })
+                                                </div>
+                                                <div class="col-sm-2">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <b>Unidad:</b>
+                                                    @Html.LabelFor(model => model.Unidad, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            @if (Model.IdPipa != 0)
+                                            {
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-3">
+                                                        <b>Calle:</b>
+                                                        @Html.LabelFor(model => model.Calle, new { @class = "form-control" })
+                                                    </div><div class="col-sm-5">
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <b>Cantidad:</b>
+                                                        <div class="input-group">
+                                                            @Html.LabelFor(model => model.Cantidad, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-3">
+                                                        <b>Colonia:</b>
+                                                        @Html.LabelFor(model => model.Colonia, new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <b>Fecha y hora de entrega:</b>
+                                                        @Html.LabelFor(model => model.FechaEntregaPedido, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-3">
+                                                        <b>Teléfono:</b>
+                                                        @Html.LabelFor(model => model.Telefono1, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-3">
+                                                        <b>Referencia:</b>
+                                                        @Html.LabelFor(model => model.ReferenciaUbicacion, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <input type="submit" value="Editar datos del cliente" formaction=@Url.Action("EditarCliente") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <input type="submit" value="Modificar pedido" formaction=@Url.Action("EditarPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            @if (Model.IdCamioneta != 0)
+                                            {
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-3">
+                                                        <b>Calle:</b>
+                                                        @Html.LabelFor(model => model.Calle, new { @class = "form-control" })
+                                                    </div><div class="col-sm-5">
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <b>Cantidad 45 Kg:</b>
+                                                        <div class="input-group">
+                                                            @Html.LabelFor(model => model.Cantidad45, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-3">
+                                                        <b>Colonia:</b>
+                                                        @Html.LabelFor(model => model.Colonia, new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <b>Cantidad 30 Kg:</b>
+                                                        <div class="input-group">
+                                                            @Html.LabelFor(model => model.Cantidad30, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-3">
+                                                        <b>Teléfono:</b>
+                                                        @Html.LabelFor(model => model.Telefono1, new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <b>Cantidad 20 Kg:</b>
+                                                        <div class="input-group">
+                                                            @Html.LabelFor(model => model.Cantidad20, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-3">
+                                                        <b>Referencia:</b>
+                                                        @Html.LabelFor(model => model.ReferenciaUbicacion, new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <b>Fecha y hora de entrega:</b>
+                                                        @Html.LabelFor(model => model.FechaEntregaPedido, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <input type="submit" value="Editar datos del cliente" formaction=@Url.Action("EditarCliente") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <input type="submit" value="Modificar pedido" formaction=@Url.Action("EditarPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                }
+                                      
+                                            <hr />
+                                            <div class="row clearfix">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <input type="submit" value="Regresar" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+</body>
+
+</html>
