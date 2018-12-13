@@ -242,6 +242,27 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        /// <summary>
+        /// Permite buscar en el reporsitorio de AlmacenGasTomaLectura la última lectura inicial
+        /// que se encuentre con respecto al id de almacen (idCalmacenGas) y la fecha (fecha)
+        /// que se envie como parametro
+        /// </summary>
+        /// <param name="idCAlmacenGas">Id de CAlmacenGas a consultar </param>
+        /// <param name="fecha">Fecha de busqueda de dicha operación</param>
+        /// <returns>Entidad AlmacenGasTomaLectura con la última encontrada</returns>
+        public AlmacenGasTomaLectura ObtenerUltimaLecturaInicial(short idCAlmacenGas, DateTime fecha)
+        {
+                return  uow.Repository<AlmacenGasTomaLectura>().
+                    GetSingle(
+                    x=>x.IdCAlmacenGas.Equals(idCAlmacenGas) 
+                    && x.FechaAplicacion.Day.Equals(fecha.Day) 
+                    && x.FechaAplicacion.Month.Equals(fecha.Month)
+                    && x.FechaAplicacion.Year.Equals(fecha.Year)
+                    && x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
+                    && x.IdOrden>0
+                    );
+        }
+
         public RespuestaDto Actualizar(AlmacenGas _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
