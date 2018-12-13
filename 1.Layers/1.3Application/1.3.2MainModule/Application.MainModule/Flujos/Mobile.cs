@@ -599,7 +599,7 @@ namespace Application.MainModule.Flujos
                 var ventasSinCorte = new List<VentaPuntoDeVenta>();
                 foreach (var ventaActiva in ventasActivas)
                 {
-                    if (ventaActiva.FolioOperacionDia == null)
+                    //if (ventaActiva.FolioOperacionDia == null)
                         ventasSinCorte.Add(ventaActiva);
                 }
                 dto = AnticiposCortesAdapter.ToDTOPipa(ventasSinCorte, anticipos, unidadAlmacen, esAnticipos);
@@ -616,7 +616,7 @@ namespace Application.MainModule.Flujos
                 var ventasSinCorte = new List<VentaPuntoDeVenta>();
                 foreach (var ventaActiva in ventasActivas)
                 {
-                    if (ventaActiva.FolioOperacionDia==null)
+                    //if (ventaActiva.FolioOperacionDia==null)
                         ventasSinCorte.Add(ventaActiva);
                 }
                 dto = AnticiposCortesAdapter.ToDTOPipa(ventasSinCorte, anticipos, unidadAlmacen, esAnticipos); 
@@ -634,7 +634,7 @@ namespace Application.MainModule.Flujos
                 var ventasSinCorte = new List<VentaPuntoDeVenta>();
                 foreach (var ventaActiva in ventasActivas)
                 {
-                    if (ventaActiva.FolioOperacionDia == null)
+                    //if (ventaActiva.FolioOperacionDia == null)
                         ventasSinCorte.Add(ventaActiva);
                 }
                 dto = AnticiposCortesAdapter.ToDTOPipa(ventasSinCorte, anticipos, unidadAlmacen, esAnticipos);
