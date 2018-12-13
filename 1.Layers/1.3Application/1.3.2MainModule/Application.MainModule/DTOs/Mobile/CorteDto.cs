@@ -18,5 +18,7 @@ namespace Application.MainModule.DTOs.Mobile
         public DateTime FechaCorte { get; set; }
         public List<VentasCorteDTO> Conceptos { get; set; }
         public short IdEntrega { get; set; }
+        public short IdRecibe { get; set; }
+        public string Entrega { get; set; }
     }
 }

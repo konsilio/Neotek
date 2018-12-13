@@ -211,5 +211,17 @@ namespace Application.MainModule.Servicios.Mobile
             var acom = AcomodarUnidadAlmacenGasDelUsuario(alm);
             return acom;
         }
+
+        /// <summary>
+        /// Permite obtener la última lectura de una estación, se envia de parametros su 
+        /// Id de calmacen gas y una fecha como parametro la cual por defecto tiene la fecha actual  
+        /// </summary>
+        /// <param name="idCAlmacenGas">Id de CAlmacenGas</param>
+        /// <param name="fecha">Fecha actual en la que se desa buscar.Nota:solo se tomara dd/mm/YYYY para la busqueda</param>
+        /// <returns>Entidad AlmacenGasTomaLectura con el valor encontrado</returns>
+        public static AlmacenGasTomaLectura ObtenerUltimaLecturaInicial(short idCAlmacenGas, DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().ObtenerUltimaLecturaInicial(idCAlmacenGas, fecha);
+        }
     }
 }

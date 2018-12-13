@@ -29,6 +29,12 @@ namespace DS.MainModule.Controllers
         }
 
         #region Servicio disponible
+        /// <summary>
+        /// PostServicioDisponible
+        /// Permite revisar si el servicio actualmente esta disponible, respodenra un
+        /// objeto RespuestaDTO con el resultado
+        /// </summary>
+        /// <returns>Respuesta del servicio</returns>
         [Route("servicio/disponible")]
         public HttpResponseMessage PostServicioDisponible()
         {
@@ -37,6 +43,13 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Login
+        /// <summary>
+        /// Login
+        /// Metodo de inicio de session, recibe un objeto 
+        /// json con los datos para el modelo de LoginDTO para inciar secion
+        /// </summary>
+        /// <param name="autenticacionDto">Formulario de login(empresa,email,contraseña FireBase token)</param>
+        /// <returns>RespuestaDTO con el menu , token e información de la session</returns>
         [AllowAnonymous]
         [Route("login")]
         public HttpResponseMessage PostLogin(LoginFbDTO autenticacionDto)
@@ -343,11 +356,21 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.BuscadorClientes(criterio), Request);
         }
         #endregion
+        /// <summary>
+        /// Permite realizar el registro de la venta, toma de parametro los
+        /// datos de la misma que fueron enviados desde el telefono
+        /// </summary>
+        /// <param name="venta">Objeto de tipo VentaDTO con los datos de la venta</param>
+        /// <returns>RespuestaDTO con el reusltado de la operación</returns>
         [Route("venta")]
         public HttpResponseMessage PostVenta(VentaDTO venta)
         {
             return RespuestaHttp.crearRespuesta(_mobile.Venta(venta), Request);
         }
+        /// <summary>
+        /// Retorna el precio vigente de la venta de gas por empresa
+        /// </summary>
+        /// <returns>Objeto PrecioVentaDTO con los valores de venta de gas</returns>
         [Route("consulta/precioventa/vigente")]
         public HttpResponseMessage GetPreciosVentaVigente()
         {
@@ -376,12 +399,28 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogosGas(), Request);
         }
-
+        /// <summary>
+        /// Retorna el listado de estaciónes para el aprtado de punto de venta
+        /// </summary>
+        /// <returns>RespuestaDTO con la lista de estaciónes</returns>
         [Route("estacion/punto-venta")]
         public HttpResponseMessage GetEstacion()
         {
             return RespuestaHttp.crearRespuesta(_mobile.ObtenerEstacion(),Request);
         }
         #endregion
+
+        #region Revision de lectura inicial
+        /// <summary>
+        /// Verifica que la estación realizo su lectura inicial 
+        /// retornara un objeto de tipo RespuestaDTO 
+        /// </summary>
+        /// <returns>Retorna un Objeto de tipo RespuestaDTO con el resultado de esta consulta</returns>
+        /*[Route("estacion/verificar-lectura")]
+        public HttpResponseMessage GetVerificarLecturaIncial()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.VerificarLecturaInicial(), Request);
+        }*/
+        #endregion 
     }
 }

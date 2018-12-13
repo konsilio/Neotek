@@ -481,6 +481,42 @@ namespace Application.MainModule.Flujos
             return null;
         }
         /// <summary>
+        /// Retorna si actualmente se cuenta conuna lectura inicial registrada en 
+        /// la estación, pipa o camioneta para arrancar su día  
+        /// </summary>
+        /// <returns>RespuestaDTO con el resultado de esta consulta</returns>
+        public RespuestaDto VerificarLecturaInicial()
+        {
+            var usuario = TokenServicio.ObtenerUsuarioAplicacion();
+            var operadorChofer = usuario.OperadoresChoferes;
+            RespuestaDto respuesta = new RespuestaDto();
+            if (operadorChofer != null){
+                var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+                if (puntoVenta != null)
+                {
+                    var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+                    if (unidadAlmacen != null)
+                    {
+                        var LecturaInicialHoy = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
+                        if (LecturaInicialHoy != null)
+                            respuesta = new RespuestaDto()
+                            {
+                                Exito = true,
+                                Mensaje = "Hay una lectura inicial "
+                            };
+                        else
+                            respuesta = new RespuestaDto()
+                            {
+                                Exito = false,
+                                Mensaje = "No se ha realizado una lectura inicial"
+                            };
+                    }
+                }
+            }
+            return respuesta;
+        }
+
+        /// <summary>
         /// Permite retornar por medio de la session activa
         /// si es un chofer , su nombre de punto de venta 
         /// </summary>
