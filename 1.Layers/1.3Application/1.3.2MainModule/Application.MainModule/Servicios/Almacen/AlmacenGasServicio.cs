@@ -499,28 +499,30 @@ namespace Application.MainModule.Servicios.Almacenes
                 var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
                 var ventas = PuntoVentaServicio.BuscarPorOperadorChofer(operador.IdOperadorChofer);
                 var venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-
+                var reporte = CajaGeneralServicio.ObtenerRepCamionetas(idCAlmacenGas, fecha);
+                reporte[0].EsCamioneta = true;
+                return reporte[0];
                 //Falta agregar los valores de la venta de gas
-                var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor, linicial, lfinal);
-                reporte.Fecha = DateTime.Now;
-                reporte.EsCamioneta = false;
-                //reporte.ClaveReporte = "2018FG675DGD43";
-                reporte.ClaveReporte = FolioServicio.GeneraNumeroReferenciaReporte("R", almacen, reporte.Fecha, idCAlmacenGas);
-                var adapter = new ReporteAdapter().FormDto(reporte, operador, venta);
-                adapter.FolioOperacionDia = reporte.ClaveReporte;
-                adapter.Dia = (byte)reporte.Fecha.Day;
-                adapter.Mes = (byte)reporte.Fecha.Month;
-                adapter.Year = (short)reporte.Fecha.Year;
-                adapter.FechaRegistro = reporte.Fecha;
-                adapter.FechaReporte = reporte.Fecha;
-                adapter.Orden = (short)orden;
+                //var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor, linicial, lfinal);
+                //reporte.Fecha = DateTime.Now;
+                //reporte.EsCamioneta = false;
+                ////reporte.ClaveReporte = "2018FG675DGD43";
+                //reporte.ClaveReporte = FolioServicio.GeneraNumeroReferenciaReporte("R", almacen, reporte.Fecha, idCAlmacenGas);
+                //var adapter = new ReporteAdapter().FormDto(reporte, operador, venta);
+                //adapter.FolioOperacionDia = reporte.ClaveReporte;
+                //adapter.Dia = (byte)reporte.Fecha.Day;
+                //adapter.Mes = (byte)reporte.Fecha.Month;
+                //adapter.Year = (short)reporte.Fecha.Year;
+                //adapter.FechaRegistro = reporte.Fecha;
+                //adapter.FechaReporte = reporte.Fecha;
+                //adapter.Orden = (short)orden;
 
-                var respuesta = new AlmacenGasDataAccess().Insertar(adapter);
-                if (!respuesta.Exito)
-                {
-                    reporte.ClaveReporte = respuesta.Mensaje;
-                }
-                return reporte;
+                //var respuesta = new AlmacenGasDataAccess().Insertar(adapter);
+                //if (!respuesta.Exito)
+                //{
+                //    reporte.ClaveReporte = respuesta.Mensaje;
+                //}
+                //return reporte;
             }
         }
 
