@@ -60,7 +60,7 @@ namespace Application.MainModule.Servicios.Mobile
                         ban_visible = true;
                     else
                         ban_visible = false;
-                    var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdAlmacenGas.Value, DateTime.Now);
+                    var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
                     if (ultimaLectura != null)
                         ban = true;
                     else
