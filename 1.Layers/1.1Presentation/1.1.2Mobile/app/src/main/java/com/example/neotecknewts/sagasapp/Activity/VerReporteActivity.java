@@ -773,9 +773,9 @@ public class VerReporteActivity extends AppCompatActivity {
                 session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE));
 
         HtmlReporte = HtmlReporte.replace("[{Recibio}]]",
-                "");
+                corteDTO.getRecibe());
         StringReporte = StringReporte.replace("[{Recibio}]",
-                "");
+                corteDTO.getRecibe());
     }
 
     @SuppressLint("SimpleDateFormat")
