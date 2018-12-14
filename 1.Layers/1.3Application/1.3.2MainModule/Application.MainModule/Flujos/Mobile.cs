@@ -972,6 +972,7 @@ namespace Application.MainModule.Flujos
         {
             var categoria = ProductoServicio.ObtenerCategorias();
             var linea = ProductoServicio.ObtenerLineasProducto();
+
             var productos = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa());
 
             return VentasEstacionesAdapter.ToDTO(categoria, linea, productos);
@@ -998,6 +999,7 @@ namespace Application.MainModule.Flujos
         public List<DatosGasVentaDto> CatalogosGas()
         {
             var cilindros = AlmacenGasServicio.ObtenerCilindros();
+
             return VentasEstacionesAdapter.ToDTOC(cilindros);
         }
         public ClienteDTO BuscarClientePorRFC(string rfc)
