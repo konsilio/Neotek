@@ -5,11 +5,26 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
+import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
+import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Sincronizacion;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Lecturas {
     private SAGASSql db;
@@ -23,8 +38,8 @@ public class Lecturas {
         this.sincronizacion = sincronizacion;
         this.token = token;
     }
-    public boolean SincronizarLecturas(){
-        Log.w("Consulta de Lecturas","Consulta de lecturas"+new Date());
+    public boolean SincronizarLecturasEstacion(){
+        Log.w("Consulta de Lecturas","Consulta de lecturas estación"+new Date());
         Cursor lecturas = db.GetLecturasIniciales();
         lecturas.moveToFirst();
         Log.w("Total lecturas",String.valueOf(lecturas.getCount()));
@@ -36,14 +51,75 @@ public class Lecturas {
                                 lecturas.getColumnIndex("ClaveProceso")
                         )
                 );
-
+                dto.setIdTipoMedidor(lecturas.getInt(
+                        lecturas.getColumnIndex("IdTipoMedidor")));
+                dto.setNombreTipoMedidor(lecturas.getString(lecturas.getColumnIndex(
+                        "NombreTipoMedidor")));
+                dto.setCantidadFotografias(lecturas.getInt(lecturas.getColumnIndex(
+                        "CantidadFotografiasMedidor")));
+                dto.setNombreEstacionCarburacion(lecturas.getString(lecturas.getColumnIndex(
+                        "NombreEstacionCarburacion")));
+                dto.setIdEstacionCarburacion(lecturas.getInt(lecturas.getColumnIndex(
+                        "IdEstacionCarburacion")));
+                dto.setCantidadP5000(lecturas.getInt(lecturas.getColumnIndex(
+                        "CantidadP5000")));
+                dto.setPorcentajeMedidor(lecturas.getDouble(lecturas.getColumnIndex(
+                        "PorcentajeMedidor")));
+                Cursor imagenes = db.GetLecturaImagenesByClaveUnica(
+                        dto.getClaveProceso()
+                );
+                imagenes.moveToFirst();
+                while (!imagenes.isAfterLast()){
+                    String iuri = imagenes.getString(imagenes.getColumnIndex("Url"));
+                    try {
+                        dto.getImagenesURI().add(new URI(iuri));
+                        dto.getImagenes().add(
+                                imagenes.getString(imagenes.getColumnIndex("Imagen"))
+                        );
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                    imagenes.moveToNext();
+                }
+                if(Registro(dto)){
+                    db.EliminarLectura(dto.getClaveProceso());
+                    db.EliminarLecturaImagenes(dto.getClaveProceso());
+                }
                 lecturas.moveToNext();
             }
         }
-        return  true;
+        return  db.GetLecturasIniciales().getCount()==0;
     }
 
-    public boolean Registro(LecturaDTO lecturaDTO){
-        return false;
+    public boolean Registro(LecturaDTO dto){
+        Log.w("Registro","Registrando en servicio "+dto.getClaveProceso());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(dto,token,
+                "application/json");
+        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaLecturaInicialDTO> call,
+                                   Response<RespuestaLecturaInicialDTO> response) {
+                respuesta_servicio = call.isExecuted() && response.isSuccessful();
+                /*Log.e("lectura"+dto.getClaveProceso(),
+                        String.valueOf(response.isSuccessful()));*/
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
+                respuesta_servicio = false;
+            }
+        });
+        Log.w("Registro","Registro en servicio "+dto.getClaveProceso()+": "+
+                respuesta_servicio);
+        return respuesta_servicio;
     }
 }
