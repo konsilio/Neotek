@@ -154,12 +154,19 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 var IdCamioneta = VentaServicio.ObtenerIdCamioneta(TokenServicio.ObtenerIdUsuario());
                 if (IdCamioneta != 0)
                 {
+                    var cilindrosCamionetas = cilindro.CilindrosCamionetas;
+                    var cilindroExistencia = cilindro.Cantidad;
+                    
+                    //if (cilindrosCamionetas != null)
+                    //    cilindroExistencia = 0;
+                    //else
+                    //    cilindroExistencia =  cilindrosCamionetas.FirstOrDefault(x => x.IdCilindro.Equals(cilindro.IdCilindro) && x.IdCamioneta.Equals(IdCamioneta)).Cantidad;
                     list.Add(new DatosGasVentaDto()
                     {
                         Nombre = "Cilindro " + cilindro.CapacidadKg,
                         PrecioUnitario = cilindro.Precio,
                         Id = cilindro.IdCilindro,                        
-                        Existencia = cilindro.CilindrosCamionetas.FirstOrDefault(x => x.IdCilindro.Equals(cilindro.IdCilindro) && x.IdCamioneta.Equals(IdCamioneta)).Cantidad,
+                        Existencia = cilindroExistencia,//,
                         CapacidadKg = cilindro.CapacidadKg,
                         CapacidadLt = cilindro.CapacidadLt
                     });
@@ -228,5 +235,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 FechaRegistro = venta.FechaRegistro
             };
         }
+
+       
     }
 }
