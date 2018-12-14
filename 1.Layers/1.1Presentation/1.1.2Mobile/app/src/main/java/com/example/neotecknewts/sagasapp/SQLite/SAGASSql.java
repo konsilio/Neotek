@@ -2255,7 +2255,6 @@ public class SAGASSql extends SQLiteOpenHelper {
         values.put("IdEstacion",corteDTO.getIdEstacion());
         values.put("FechaCorte",corteDTO.getFecha());
         values.put("Hora",corteDTO.getHora());
-        values.put("FechaVenta",corteDTO.getFechaVenta());
         return this.getWritableDatabase().insert(
                 TABLE_CORTES,
                 null,
