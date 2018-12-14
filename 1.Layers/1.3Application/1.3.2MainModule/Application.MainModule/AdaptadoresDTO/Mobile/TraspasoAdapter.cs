@@ -67,7 +67,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             }
             else
             {
-                p5000 = unidadAlmacen.P5000Actual.Value;
+                p5000 = unidadAlmacen.P5000Actual??0;
                 porcentajeMedidor = unidadAlmacen.PorcentajeActual;
             }
 
