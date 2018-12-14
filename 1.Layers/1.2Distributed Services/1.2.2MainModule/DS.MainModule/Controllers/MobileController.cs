@@ -59,12 +59,24 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Ordenes de compra
+        /// <summary>
+        /// Permite obtener un lsiatdo con las ordenes de compra actuales
+        /// </summary>
+        /// <param name="IdEmpresa">Id de la empresa</param>
+        /// <param name="EsGas"> Boleano es una orden de gas</param>
+        /// <param name="EsActivoVenta">Boleano es un activo de venta</param>
+        /// <param name="EsTransporteGas">Boleano es transporte de gas</param>
+        /// <returns>Lista con las ordenes de compra que cumplan con la condición</returns>
         [Route("lista/ordenes/compra")]
         public HttpResponseMessage GetListaOrdenesCompra(short IdEmpresa, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {
             return RespuestaHttp.crearRespuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa, EsGas, EsActivoVenta, EsTransporteGas), Request);
         }
-
+        /// <summary>
+        /// Permite retornar la orden de compra secundaria con la que se liga la del expedidor o porteador
+        /// </summary>
+        /// <param name="IdOrdenCompra">Id de la orden de compra ya sea expedidor o porteador</param>
+        /// <returns></returns>
         [Route("lista/ordenes/compra/{IdOrdenCompra}")]
         public HttpResponseMessage GetListaPorteadoresxOrdenCompra(int IdOrdenCompra)
         {
@@ -73,6 +85,10 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Menu
+        /// <summary>
+        /// Retorna el menu de usuario segun sus permisos
+        /// </summary>
+        /// <returns>Retorna el menu deusaurio por permisos</returns>
         [Route("obtener/menu")]
         public HttpResponseMessage GetObtenerMenu()
         {
@@ -142,6 +158,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarTomaDeLectura(lfadto), Request);
         }
+        /// <summary>
+        /// Permite registrar la lectura inicial de la camioneta
+        /// </summary>
+        /// <param name="licdto">DTO con los datos de la lectura inicial de la camioneta</param>
+        /// <returns>Retorna la respuesta del registro</returns>
         [Route("iniciar/toma-lectura-camioneta")]
         public HttpResponseMessage PostIniciarTomaDeLecturaCamioneta(LecturaCamionetaDTO licdto)
         {
