@@ -142,7 +142,16 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
         presenter = new RegistroClientePresenterImpl(this);
         presenter.getLista(session.getToken());
         BtnRegistroClienteActivityRegistrarCliente.setOnClickListener(v -> verificarForm());
-        BtnRegistroClienteActivityRegresar.setOnClickListener(v -> finish());
+        BtnRegistroClienteActivityRegresar.setOnClickListener(v -> {
+            Intent intent =  new Intent(RegistroClienteActivity.this,PuntoVentaSolicitarActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("ventaDTO",ventaDTO);
+            intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa",EsVentaPipa);
+            startActivity(intent);
+            finish();
+        });
     }
 
     private void colocarRegimen(TipoPersonaDTO tipo,boolean esMoral) {

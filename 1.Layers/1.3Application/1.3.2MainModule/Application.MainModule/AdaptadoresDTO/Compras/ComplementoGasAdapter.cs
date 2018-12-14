@@ -14,6 +14,8 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
         {
             return new ComplementoGasDTO()
             {
+                IdOrdenCompraExpedidor = descarga.IdOrdenCompraExpedidor ?? 0,
+                IdOrdenCompraPorteador = descarga.IdOrdenCompraPorteador ?? 0,
                 FechaEmbarque = descarga.FechaEmbarque.Value,
                 NumeroEmbarque = descarga.NumeroEmbarque,
                 ValorCarga = descarga.ValorCarga.Value,

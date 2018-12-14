@@ -18,6 +18,8 @@ using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.DTOs.Mobile.PuntoVenta;
+using Application.MainModule.AdaptadoresDTO.Mobile.Cortes;
+using Application.MainModule.DTOs.Mobile.Cortes;
 
 namespace Application.MainModule.Flujos
 {
@@ -221,7 +223,7 @@ namespace Application.MainModule.Flujos
 
             adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
             adapter.FolioVenta = venta.FolioVenta;
-            //adapter.FolioOperacionDia = venta.FolioVenta;
+            adapter.FolioOperacionDia = venta.FolioVenta;
             adapter.FechaRegistro = DateTime.Now;
             adapter.Dia = (byte)venta.Fecha.Day;
             adapter.Mes = (byte)venta.Fecha.Month;
@@ -304,6 +306,20 @@ namespace Application.MainModule.Flujos
             }
             return null;
         }
+        /// <summary>
+        /// UsuariosAnticiposCorte
+        /// Permite retornar la lista de usuarios para 
+        /// los anticipos o cortes de caja
+        /// </summary>
+        /// <returns></returns>
+        public RespuestaDto UsuariosAnticiposCorte()
+        {
+            var usuario = TokenServicio.ObtenerUsuarioAplicacion();
+            var empresa = usuario.Empresa;
+            var usuariosEmpresa = EmpresaServicio.ObtenerUsuarios(empresa);
+            var adapter = UsuariosCorteAdapter.ToDTO(empresa, usuariosEmpresa);
+            return adapter;
+        }
 
         public RespuestaDto Autoconsumo(AutoconsumoDTO dto, bool esFinal)
         {
@@ -312,6 +328,35 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             return AutoconsumoServicio.Autoconsumo(dto, esFinal);
+        }
+
+        public UsuariosCorteDTO UsuariosAnticiposCorteLiquidar()
+        {
+            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
+            var usuarioSession = TokenServicio.ObtenerUsuarioAplicacion();
+            var usuarios = EmpresaServicio.ObtenerUsuarios(empresa);
+            List<Usuario> usuariosLiquidar = new List<Usuario>();
+
+            if (usuarios!=null && usuarios.Count != 0)
+            {
+                foreach (var usuario in usuarios)
+                {
+                    var usuariosRoles = usuario.UsuarioRoles;
+                    foreach (var usuarioRol in usuariosRoles)
+                    {
+                        var rolAcciones = RolServicio.Obtener(usuarioRol);
+                        if(rolAcciones.CatLiquidarCajaGeneral)
+                        {
+                            var buscar = usuariosLiquidar.Find(x => x.IdUsuario.Equals(usuario.IdUsuario));
+                            if (buscar==null)
+                                usuariosLiquidar.Add(usuario);
+                        }
+                    }
+                   
+                }
+            }
+            var adapter = UsuariosCorteAdapter.ToDTO(empresa, usuariosLiquidar);
+            return adapter;
         }
 
         public DatosAutoconsumoDto CatalogoAutoconsumo(bool esEstacion, bool esInventario, bool esPipas, bool esFinal)
@@ -436,6 +481,42 @@ namespace Application.MainModule.Flujos
             return null;
         }
         /// <summary>
+        /// Retorna si actualmente se cuenta conuna lectura inicial registrada en 
+        /// la estación, pipa o camioneta para arrancar su día  
+        /// </summary>
+        /// <returns>RespuestaDTO con el resultado de esta consulta</returns>
+        public RespuestaDto VerificarLecturaInicial()
+        {
+            var usuario = TokenServicio.ObtenerUsuarioAplicacion();
+            var operadorChofer = usuario.OperadoresChoferes;
+            RespuestaDto respuesta = new RespuestaDto();
+            if (operadorChofer != null){
+                var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+                if (puntoVenta != null)
+                {
+                    var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+                    if (unidadAlmacen != null)
+                    {
+                        var LecturaInicialHoy = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
+                        if (LecturaInicialHoy != null)
+                            respuesta = new RespuestaDto()
+                            {
+                                Exito = true,
+                                Mensaje = "Hay una lectura inicial "
+                            };
+                        else
+                            respuesta = new RespuestaDto()
+                            {
+                                Exito = false,
+                                Mensaje = "No se ha realizado una lectura inicial"
+                            };
+                    }
+                }
+            }
+            return respuesta;
+        }
+
+        /// <summary>
         /// Permite retornar por medio de la session activa
         /// si es un chofer , su nombre de punto de venta 
         /// </summary>
@@ -444,7 +525,8 @@ namespace Application.MainModule.Flujos
         {
             var usuario = TokenServicio.ObtenerUsuarioAplicacion();
             var operador = PuntoVentaServicio.ObtenerOperador(usuario.IdUsuario);
-            var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
+            //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var unidadAlmacen = puntoVenta.UnidadesAlmacen;
             PuntoVentaAsignadoDTO pvaDto = new PuntoVentaAsignadoDTO();
             if (unidadAlmacen.IdPipa > 0)
@@ -517,7 +599,7 @@ namespace Application.MainModule.Flujos
                 var ventasSinCorte = new List<VentaPuntoDeVenta>();
                 foreach (var ventaActiva in ventasActivas)
                 {
-                    if (ventaActiva.FolioOperacionDia == null)
+                    //if (ventaActiva.FolioOperacionDia == null)
                         ventasSinCorte.Add(ventaActiva);
                 }
                 dto = AnticiposCortesAdapter.ToDTOPipa(ventasSinCorte, anticipos, unidadAlmacen, esAnticipos);
@@ -534,7 +616,7 @@ namespace Application.MainModule.Flujos
                 var ventasSinCorte = new List<VentaPuntoDeVenta>();
                 foreach (var ventaActiva in ventasActivas)
                 {
-                    if (ventaActiva.FolioOperacionDia==null)
+                    //if (ventaActiva.FolioOperacionDia==null)
                         ventasSinCorte.Add(ventaActiva);
                 }
                 dto = AnticiposCortesAdapter.ToDTOPipa(ventasSinCorte, anticipos, unidadAlmacen, esAnticipos); 
@@ -552,7 +634,7 @@ namespace Application.MainModule.Flujos
                 var ventasSinCorte = new List<VentaPuntoDeVenta>();
                 foreach (var ventaActiva in ventasActivas)
                 {
-                    if (ventaActiva.FolioOperacionDia == null)
+                    //if (ventaActiva.FolioOperacionDia == null)
                         ventasSinCorte.Add(ventaActiva);
                 }
                 dto = AnticiposCortesAdapter.ToDTOPipa(ventasSinCorte, anticipos, unidadAlmacen, esAnticipos);
@@ -846,7 +928,8 @@ namespace Application.MainModule.Flujos
                 puntoVenta = camioneta.UnidadAlmacenGas.First().PuntosVenta.First();
                 almacenPunto = camioneta.UnidadAlmacenGas.First();
             }
-            var entrega = puntoVenta.OperadorChofer.Usuario;
+            //var entrega = puntoVenta.OperadorChofer.Usuario;
+            var entrega = UsuarioServicio.Obtener(dto.IdEntrega);
             var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoVenta, almacenPunto, cortesYanticiposOrden);
             #region Insert en la tabla de VentaCajaGeneral
             if (corte.Exito)

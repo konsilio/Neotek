@@ -120,6 +120,23 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        /// <summary>
+        /// Retorna una lista de lecturas de pipas ordenadas por el orden que sea mayor 
+        /// </summary>
+        /// <param name="idPipa">Id de la pipa</param>
+        /// <param name="idCAlmacenGas"> Id de CAlmacenGas</param>
+        /// <returns>Listado de lecturas en caso de no encontrar , retornara un listado vacio</returns>
+        public List<AlmacenGasTomaLectura> ObtenerUltimaLecturasIniciales(short idCAlmacenGas)
+        {
+            List<AlmacenGasTomaLectura> inicial = new List<AlmacenGasTomaLectura>();
+            inicial = uow.Repository<AlmacenGasTomaLectura>().Get(
+                    x=>x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                    && x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
+                    && x.FechaAplicacion.Equals(DateTime.Now)
+                ).OrderByDescending(y=>y.IdOrden).ToList();
+            return inicial;
+        }
+
         public List<AlmacenGasRecarga> ObtenerRecargaInicial(short IdCAlmacenGasEntrada)
         {
             return uow.Repository<AlmacenGasRecarga>().Get(
@@ -223,6 +240,27 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 _respuesta.MensajesError = CatchInnerException.Obtener(ex);
             }
             return _respuesta;
+        }
+
+        /// <summary>
+        /// Permite buscar en el reporsitorio de AlmacenGasTomaLectura la última lectura inicial
+        /// que se encuentre con respecto al id de almacen (idCalmacenGas) y la fecha (fecha)
+        /// que se envie como parametro
+        /// </summary>
+        /// <param name="idCAlmacenGas">Id de CAlmacenGas a consultar </param>
+        /// <param name="fecha">Fecha de busqueda de dicha operación</param>
+        /// <returns>Entidad AlmacenGasTomaLectura con la última encontrada</returns>
+        public AlmacenGasTomaLectura ObtenerUltimaLecturaInicial(short idCAlmacenGas, DateTime fecha)
+        {
+                return  uow.Repository<AlmacenGasTomaLectura>().
+                    GetSingle(
+                    x=>x.IdCAlmacenGas.Equals(idCAlmacenGas) 
+                    && x.FechaAplicacion.Day.Equals(fecha.Day) 
+                    && x.FechaAplicacion.Month.Equals(fecha.Month)
+                    && x.FechaAplicacion.Year.Equals(fecha.Year)
+                    && x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
+                    && x.IdOrden>0
+                    );
         }
 
         public RespuestaDto Actualizar(AlmacenGas _alm)

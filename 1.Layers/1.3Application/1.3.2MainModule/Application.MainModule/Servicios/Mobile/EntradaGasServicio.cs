@@ -1,9 +1,12 @@
-﻿using Application.MainModule.AdaptadoresDTO.Mobile;
+﻿using Application.MainModule.AdaptadoresDTO.Compras;
+using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Almacenes;
+using Application.MainModule.Servicios.Compras;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +33,17 @@ namespace Application.MainModule.Servicios.Mobile
             var descarga = AlmacenAdapter.FromEntity(des);
             descarga = AlmacenAdapter.FromDto(desDto, descarga, finDescarga);
             var fotos = AlmacenAdapter.FromDto(desDto.Imagenes, descarga.IdAlmacenEntradaGasDescarga, numOrden);
+            List<OrdenCompra> ocs = new List<OrdenCompra>();
+            var complemento = OrdenCompraServicio.BuscarComplementoGas(OrdenCompraServicio.Buscar(desDto.IdOrdenCompra));
+            var ocExp = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraExpedidor));
+            ocExp.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            var ocPort = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraPorteador));
+            ocPort.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
 
-            return AlmacenGasServicio.ActualizarDescargaGas(descarga, fotos);
+            ocs.Add(ocExp);
+            ocs.Add(ocPort);
+
+            return AlmacenGasServicio.ActualizarDescargaGas(descarga, fotos, ocs);
         }
 
         public static RespuestaDto EvaluarClaveOperacion(DescargaDto dto)

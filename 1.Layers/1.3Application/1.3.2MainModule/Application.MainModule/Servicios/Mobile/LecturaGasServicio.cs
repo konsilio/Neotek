@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using Application.MainModule.Servicios.Seguridad;
 using System.Linq;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.AccesoADatos;
 
 namespace Application.MainModule.Servicios.Mobile
 {
@@ -91,6 +92,18 @@ namespace Application.MainModule.Servicios.Mobile
 
             almacenes.AddRange(alms);
             return almacenes;
+        }
+
+        /// <summary>
+        /// Permite obtener si existe alguna lectura en la pipa , encaso de no existir  
+        /// retornara una lista vacia 
+        /// </summary>
+        /// <param name="idPipa">Id de la pipa a buscar los registros</param>
+        /// <param name="idCAlmacenGas">Id del CAlmacenGas </param>
+        /// <returns>Listado encontrado de pipa en caso de no existir retorna una lista vacia</returns>
+        public static List<AlmacenGasTomaLectura> ObtenerUltimaLecturasIniciales(short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().ObtenerUltimaLecturasIniciales(idCAlmacenGas);
         }
 
         public static List<UnidadAlmacenGas> AcomodarUltimaLectura(List<UnidadAlmacenGas> alms, bool esFinalizar)
@@ -188,7 +201,7 @@ namespace Application.MainModule.Servicios.Mobile
         }
         public static DatosTomaLecturaDto ConsultaDatosReporteDelDia()
         {
-            var alms = ObtenerAlmacenesGas();
+            var alms = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
             return AlmacenLecturaAdapter.ToDtoReporte(alms);
         }
 
@@ -197,6 +210,18 @@ namespace Application.MainModule.Servicios.Mobile
             var alm = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
             var acom = AcomodarUnidadAlmacenGasDelUsuario(alm);
             return acom;
+        }
+
+        /// <summary>
+        /// Permite obtener la última lectura de una estación, se envia de parametros su 
+        /// Id de calmacen gas y una fecha como parametro la cual por defecto tiene la fecha actual  
+        /// </summary>
+        /// <param name="idCAlmacenGas">Id de CAlmacenGas</param>
+        /// <param name="fecha">Fecha actual en la que se desa buscar.Nota:solo se tomara dd/mm/YYYY para la busqueda</param>
+        /// <returns>Entidad AlmacenGasTomaLectura con el valor encontrado</returns>
+        public static AlmacenGasTomaLectura ObtenerUltimaLecturaInicial(short idCAlmacenGas, DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().ObtenerUltimaLecturaInicial(idCAlmacenGas, fecha);
         }
     }
 }

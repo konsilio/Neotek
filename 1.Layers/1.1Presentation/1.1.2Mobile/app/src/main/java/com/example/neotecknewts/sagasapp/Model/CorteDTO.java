@@ -64,6 +64,15 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("Conceptos")
     private List<VentasCorteDTO> Conceptos;
 
+    @SerializedName("Entrega")
+    private String Entrega;
+
+    @SerializedName("IdRecibio")
+    private int IdRecibio;
+
+    @SerializedName("IdEntrega")
+    private int IdEntrega;
+
     public CorteDTO(){
         this.Conceptos = new ArrayList<>();
     }
@@ -218,5 +227,29 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
 
     public void setConceptos(List<VentasCorteDTO> conceptos) {
         Conceptos = conceptos;
+    }
+
+    public String getEntrega() {
+        return Entrega;
+    }
+
+    public void setEntrega(String entrega) {
+        Entrega = entrega;
+    }
+
+    public int getIdEntrega() {
+        return IdEntrega;
+    }
+
+    public void setIdEntrega(int IdEntrega) {
+        IdEntrega = IdEntrega;
+    }
+
+    public int getIdRecibio() {
+        return IdRecibio;
+    }
+
+    public void setIdRecibio(int idRecibio) {
+        IdRecibio = idRecibio;
     }
 }

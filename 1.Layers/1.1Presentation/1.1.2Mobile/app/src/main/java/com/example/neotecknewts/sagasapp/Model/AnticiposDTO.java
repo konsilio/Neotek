@@ -44,6 +44,12 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
     @SerializedName("FechaAnticipo")
     private String FechaAnticipo;
 
+    @SerializedName("IdEntrega")
+    private int IdEntrega;
+
+    @SerializedName("NombreEntrega")
+    private String NombreEntrega;
+
     public int getIdEstacion() {
         return IdEstacion;
     }
@@ -138,5 +144,21 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
 
     public void setFechaAnticipo(String fechaAnticipo) {
         FechaAnticipo = fechaAnticipo;
+    }
+
+    public int getIdEntrega() {
+        return IdEntrega;
+    }
+
+    public void setIdEntrega(int idEntrega) {
+        IdEntrega = idEntrega;
+    }
+
+    public String getNombreEntrega() {
+        return NombreEntrega;
+    }
+
+    public void setNombreEntrega(String nombreEntrega) {
+        NombreEntrega = nombreEntrega;
     }
 }

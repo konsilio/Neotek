@@ -9,9 +9,8 @@ public class Constantes {
 
     //public static final String BASE_URL = "http://192.168.0.12:7010/ds/api/";
     //public static final String BASE_URL = "http://pruebaswebneoteck.ddns.net:7010/ds/api/";
-    //public static final String BASE_URL = "http://sagasapi.ddns.net:7012/api/"; //QA
+    public static final String BASE_URL = "http://sagasapi.ddns.net:7012/api/"; //QA
     //public static final String BASE_URL = "http://sagasapi.ddns.net:7011/api/";//DEV
-    public static final String BASE_URL = "http://sagasapi.ddns.net:7013/api/";
     public static final int IdClienteGeneral = 0;
     public static final String LOGIN_URL = "mobile/login";
     public static final String LISTA_EMPRESAS   = "catalogos/empresas/listaempresaslogin";
@@ -57,4 +56,6 @@ public class Constantes {
     public static final String GET_CATALOGOS_ANTICIPOS_CORTE_LISTA = "mobile/catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}/{fecha}";
     public static final String GET_PRECIO_VENTA = "mobile/consulta/precioventa/vigente";
     public static final String GET_PUNTO_VENTA_ASIGNADO = "mobile/estacion/punto-venta";
+    public static final String GET_USUARIOS_ANTICIPOS = "mobile/catalogos/anticipos-y-cortes/usuarios";
+    public static final String GETUSUARIOS_CORTES = "mobile/catalogos/anticipos-y-cortes/usuarios-liquitar";
 }

@@ -70,6 +70,7 @@
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\CalibracionAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\Cortes\UsuariosCorteAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\VentasEstacionesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
@@ -107,6 +108,8 @@
     <Compile Include="DTOs\Mobile\CamionetaDto.cs" />
     <Compile Include="DTOs\Mobile\CategoriaDto.cs" />
     <Compile Include="DTOs\Mobile\CorteDto.cs" />
+    <Compile Include="DTOs\Mobile\Cortes\UsuarioDTO.cs" />
+    <Compile Include="DTOs\Mobile\Cortes\UsuariosCorteDTO.cs" />
     <Compile Include="DTOs\Mobile\Cortes\VentasCorteDTO.cs" />
     <Compile Include="DTOs\Mobile\DatosAnticiposCorteDto.cs" />
     <Compile Include="DTOs\Mobile\DatosAutoconsumoDto.cs" />

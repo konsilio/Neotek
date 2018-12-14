@@ -297,7 +297,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdPuntoVenta = puntoVenta.IdPuntoVenta,
                 IdOperadorChofer = puntoVenta.IdOperadorChofer,
                 IdUsuarioRecibe = usuario.IdUsuario,
-                IdUsuarioEntrega = entrega.IdUsuario,
+                IdUsuarioEntrega = dto.IdEntrega,
                 FolioOperacionDia = dto.ClaveOperacion,
                 VentaTotal = dto.Total,
                 VentaTotalContado = creditoTotal,
@@ -328,7 +328,11 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     TotalAnticiposCorte = cantidadVentas
                 };
             }else {
-                decimal cantidadAnticipos = ventas.Count > 0 ? anticipos.Sum(x => x.TotalAnticipado):0;
+                decimal cantidadAnticipos = 0;
+                if (unidadAlmacen.IdPipa!=null ||unidadAlmacen.IdPipa!=0  || unidadAlmacen.IdCamioneta!=null||unidadAlmacen.IdPipa!=0)
+                    cantidadAnticipos = ventas.Count > 0 ?ventas.Sum(x=>x.Total): 0;
+                else
+                    cantidadAnticipos = ventas.Count > 0 ? anticipos.Sum(x => x.TotalAnticipado) : 0;
                 return new DatosAnticiposCorteDto()
                 {
                    

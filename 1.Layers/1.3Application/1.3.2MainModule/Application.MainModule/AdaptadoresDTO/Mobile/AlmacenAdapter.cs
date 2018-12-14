@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.Servicios.Almacenes;
+using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;
@@ -15,6 +16,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
     {
         public static AlmacenGasDescarga FromDto(PapeletaDTO papeletaDto)
         {
+            var empresa = TokenServicio.ObtenerUsuarioAplicacion().Empresa;
+            var facator = empresa.FactorLitrosAKilos;
             return new AlmacenGasDescarga()
             {
                 ClaveOperacion = papeletaDto.ClaveOperacion,
@@ -42,7 +45,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 PlacasTractor = papeletaDto.PlacasTractor,
                 NumTanquePG = papeletaDto.NumeroTanque,
                 CapacidadTanqueLt = papeletaDto.CapacidadTanque,
-                //CapacidadTanqueKg = papeletaDto,
+                CapacidadTanqueKg = facator * papeletaDto.CapacidadTanque,
                 PorcenMagnatelPapeleta = papeletaDto.PorcentajeTanque,
                 MasaKg = Convert.ToDecimal(papeletaDto.Masa),
                 PresionTanque = papeletaDto.PresionTanque,

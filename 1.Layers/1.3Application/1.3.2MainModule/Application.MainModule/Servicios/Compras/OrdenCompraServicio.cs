@@ -362,6 +362,7 @@ namespace Application.MainModule.Servicios.Compras
                 IdOrdenCompra = oc.IdOrdenCompra,
                 Orden = orden,
                 IdBanco = proveedor.IdBanco,
+                IdFormaPago = 99,
                 CuentaBancaria = proveedor.Cuenta,
                 TotalImporte = oc.Total ?? 0,
                 MontoPagado = 0,

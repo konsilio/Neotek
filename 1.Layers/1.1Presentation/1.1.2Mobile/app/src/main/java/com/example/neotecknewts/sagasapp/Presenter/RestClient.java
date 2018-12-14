@@ -51,6 +51,7 @@ import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
+import com.example.neotecknewts.sagasapp.Model.UsuariosCorteDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 
@@ -424,6 +425,35 @@ public interface RestClient {
 
     @GET(Constantes.GET_PUNTO_VENTA_ASIGNADO)
     Call<PuntoVentaAsignadoDTO> getPuntoVentaAsigando(
+            @Header("Authorization") String token,
+            @Header("Content-type")  String contenType
+    );
+
+    /**
+     * getUsuarios
+     * Permite realizar la extración del listado de usuarios
+     * @param token Token del usuario
+     * @param contenType Indica el tipo de formato o contenido que se enviara en la solicitud al
+     *                   api
+     * @return Objeto de tipo {@link UsuariosCorteDTO} con los usuarios encontrados como resultado
+     */
+    @GET(Constantes.GET_USUARIOS_ANTICIPOS)
+    Call<UsuariosCorteDTO> getUsuarios(
+            @Header("Authorization") String token,
+            @Header("Content-type")  String contenType
+    );
+
+    /**
+     * getUsuariosCorte
+     * permite retornar el listado de usuarios para el corte de caja, retornara desde el
+     * api un objeto de tipo {@link UsuariosCorteDTO} en el cual se obtiene la respuesta del
+     * api , en caso de ser correcta retornara el listado de usuarios encontrados
+     * @param token String que reprecenta el token de usuario
+     * @param contenType String que reprecenta el tipo de contenido enviado
+     * @return Reprecenta un objeto de tipo {@link UsuariosCorteDTO} con el resultado del api
+     */
+    @GET(Constantes.GETUSUARIOS_CORTES)
+    Call<UsuariosCorteDTO> getUsuariosCorte(
             @Header("Authorization") String token,
             @Header("Content-type")  String contenType
     );

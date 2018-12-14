@@ -10737,6 +10737,7 @@
     <Content Include="fonts\notification_error.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="LogosEmpresa\Empresas.txt" />
     <Content Include="Resources\css\Clientes.css" />
     <Content Include="Resources\css\CreateForm.css" />
     <Content Include="Resources\css\tooltip.css" />
@@ -11544,7 +11545,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
-    <Folder Include="LogosEmpresa\" />
     <Folder Include="Servicios\" />
   </ItemGroup>
   <ItemGroup>

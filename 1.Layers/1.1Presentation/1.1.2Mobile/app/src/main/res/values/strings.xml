@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">SagasApp</string>
 
     <string name="activity_menu">Menú</string>
@@ -240,6 +240,7 @@
     <string name="calibraci_n_cilindro">Calibración-Cilindro</string>
     <string name="registra_el_porcentajede_calibraci_n_configurada">Registra el porcentajede calibración configurada</string>
     <string name="total_en_efectivo">Total en efectivo</string>
+    <string name="recibi_de">Recibi de</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
     <string-array name="header_tabla_anticipo">
         <item># Tiket</item>
@@ -253,9 +254,10 @@
     <string-array name="Regimen_fiscal">
         <item>Sin obligaciones fiscales</item>
     </string-array>
+    <string name="Recibe">Recibirá </string>
     <string-array name="condepto_venta">
         <item>Concepto</item>
-        <item>Cant.</item>
+        <item tools:ignore="Typos">Cant.</item>
         <item>P.Uni</item>
         <item>Desc</item>
         <item>Subt.</item>
