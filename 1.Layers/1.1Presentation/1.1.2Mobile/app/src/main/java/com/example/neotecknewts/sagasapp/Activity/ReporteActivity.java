@@ -207,10 +207,12 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case 0:
-                return new DatePickerDialog(this,
+                DatePickerDialog dialog = new DatePickerDialog(this,
                         R.style.datepicker,
                         onDateSetListener,
                         mYear, mMonth, mDay);
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                return dialog;
         }
         return null;
     }
