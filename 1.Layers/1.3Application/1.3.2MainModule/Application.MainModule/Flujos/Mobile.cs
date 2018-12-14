@@ -757,14 +757,16 @@ namespace Application.MainModule.Flujos
             {
                
                 var pipa = puntoVenta.UnidadesAlmacen.Pipa;
-                
+
                 var filtradas = lpipas.FindAll(x => !x.IdPipa.Equals(pipa.IdPipa));
                 var traspaso = AlmacenGasServicio.Traspasos(puntoVenta.UnidadesAlmacen.IdCAlmacenGas).OrderByDescending(x=>x.Orden).FirstOrDefault();
                 List<AlmacenGasTraspaso> traspasosEntrada = new List<AlmacenGasTraspaso>();
                 foreach (var filtrado in filtradas)
                 {
-                    var ultimo = AlmacenGasServicio.Traspasos(filtrado.UnidadAlmacenGas.SingleOrDefault().IdCAlmacenGas).OrderByDescending(x=>x.Orden).First();
-                    traspasosEntrada.Add(ultimo);
+                    var almacenGas = filtrado.UnidadAlmacenGas.FirstOrDefault();
+                    var ultimo = AlmacenGasServicio.Traspasos(almacenGas.IdCAlmacenGas);
+                    if(ultimo!=null)
+                        traspasosEntrada.Add(ultimo.FirstOrDefault());
                 }
                 return TraspasoAdapter.ToDTOPipa(lpipas,filtradas,pipa,medidores, unidadAlmacen,traspaso, traspasosEntrada);
             }

@@ -224,10 +224,11 @@ namespace Application.MainModule.Servicios.Almacenes
                         }
                         else
                         {
-                            var ultimalecturaInicial = uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final));
+                            
                             
                             if (!final)
                             {
+                                var ultimalecturaInicial = uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final));
                                 if (ultimalecturaInicial != null)
                                 {
                                     return ultimalecturaInicial;
