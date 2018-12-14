@@ -20,6 +20,7 @@ using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.Servicios.Ventas;
+using Application.MainModule.DTOs.Ventas;
 
 namespace Application.MainModule.Servicios.Almacenes
 {
@@ -480,8 +481,8 @@ namespace Application.MainModule.Servicios.Almacenes
 
             if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
             {
-                var reporte = CajaGeneralServicio.ObtenerRepCamionetas(idCAlmacenGas, fecha);
-                reporte[0].EsCamioneta = false;
+                var reporte = CajaGeneralServicio.ObtenerRepCamionetas(almacen.IdCAlmacenGas, fecha);
+                reporte[0].EsCamioneta = true;
                 return reporte[0];
                 /*var cilindros = new AlmacenGasDataAccess().BuscarTodosCilindros(TokenServicio.ObtenerIdEmpresa());
                 //Falta agregar los datos de la venta de tanques
@@ -494,15 +495,17 @@ namespace Application.MainModule.Servicios.Almacenes
             }
             else
             {
-                var tipoMedidor = TipoMedidorGasServicio.Obtener(almacen.IdTipoMedidor.Value);
-                var linicial = BuscarLecturaPorFecha(idCAlmacenGas, TipoEventoEnum.Inicial, fecha);
-                var lfinal = BuscarLecturaPorFecha(idCAlmacenGas, TipoEventoEnum.Final, fecha);
-                var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
-                var ventas = PuntoVentaServicio.BuscarPorOperadorChofer(operador.IdOperadorChofer);
-                var venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-                var reporte = CajaGeneralServicio.ObtenerRepCamionetas(idCAlmacenGas, fecha);
-                reporte[0].EsCamioneta = true;
-                return reporte[0];
+                //var tipoMedidor = TipoMedidorGasServicio.Obtener(almacen.IdTipoMedidor.Value);
+                //var linicial = BuscarLecturaPorFecha(idCAlmacenGas, TipoEventoEnum.Inicial, fecha);
+                //var lfinal = BuscarLecturaPorFecha(idCAlmacenGas, TipoEventoEnum.Final, fecha);
+                //var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
+                //var ventas = PuntoVentaServicio.BuscarPorOperadorChofer(operador.IdOperadorChofer);
+                //var venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+                //var reporte = CajaGeneralServicio.ObtenerRepCamionetas(idCAlmacenGas, fecha);
+                var reporte = CajaGeneralServicio.ObtenerRepPipas(idCAlmacenGas, fecha);
+                ReporteDiaDTO dtoReporteMobile = CrearReporteMobil(reporte,almacen);
+                //reporte[0].EsCamioneta = false;
+                return dtoReporteMobile;
                 //Falta agregar los valores de la venta de gas
                 //var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor, linicial, lfinal);
                 //reporte.Fecha = DateTime.Now;
@@ -525,6 +528,43 @@ namespace Application.MainModule.Servicios.Almacenes
                 //}
                 //return reporte;
             }
+        }
+
+        public static ReporteDiaDTO CrearReporteMobil(VPuntoVentaDetalleDTO reporte,UnidadAlmacenGas almacen)
+        {
+            string nombreAlmacen = "";
+            if (almacen.IdEstacionCarburacion != 0 && almacen != null)
+                nombreAlmacen = almacen.EstacionCarburacion.Nombre;
+
+            else if (almacen.IdPipa != 0 && almacen != null)
+                nombreAlmacen = almacen.Pipa.Nombre;
+            var litrosVenta = reporte.P5000Inicial ?? 0 - reporte.P5000Final ?? 0;
+            return new ReporteDiaDTO()
+            {
+                ClaveReporte = reporte.FolioOperacion,
+                EsCamioneta = false,
+                Carburacion = reporte.Carburacion ?? 0,
+                Fecha = reporte.FechaRegistro,
+                KilosDeVenta = reporte.CantidadKg ?? 0,
+                Importe = 0,
+                ImporteCredito = 0,
+                LecturaFinal = new LecturaAlmacenDto()
+                {
+                     PorcentajeP5000 = reporte.P5000Final??0,
+                     PorcentajeMedidor = reporte.PorcentajeFinal ??0
+                },
+                LecturaInicial = new LecturaAlmacenDto()
+                {
+                    PorcentajeP5000 = reporte.PorcentajeInicial??0,
+                    PorcentajeMedidor = reporte.PorcentajeInicial??0
+                },  
+                Medidor = TipoMedidorAdapter.ToDto(almacen.Medidor),
+                IdCAlmacenGas = almacen.IdCAlmacenGas,
+                NombreCAlmacen = nombreAlmacen,
+                Precio = reporte.PrecioLitro??0,
+                 LitrosVenta = litrosVenta
+                  
+            };
         }
 
         public static List<Pipa>  ObtenerPipasEmpresa(short idEmpresa)
