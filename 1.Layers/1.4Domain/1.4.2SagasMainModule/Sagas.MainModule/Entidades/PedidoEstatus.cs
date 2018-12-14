@@ -22,7 +22,7 @@ namespace Sagas.MainModule.Entidades
     
         public short IdPedidoEstatus { get; set; }
         public string Descripcion { get; set; }
-        public bool Actvio { get; set; }
+        public bool Activo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pedido> Pedido { get; set; }

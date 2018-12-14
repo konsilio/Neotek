@@ -1579,7 +1579,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdPedidoEstatus" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Actvio" Type="bit" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ReporteDelDia">
           <Key>
@@ -11897,8 +11897,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdPedidoEstatus" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Actvio" Type="Boolean" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Pedido" Relationship="Sagas.MainModuleModel.FK_Pedido_PedidoEstatus" FromRole="PedidoEstatus" ToRole="Pedido" />
+          <!--<Property Name="Activo" Type="Boolean" Nullable="false" />-->
         </EntityType>
         <Association Name="FK_Abono_Cargo1">
           <End Type="Sagas.MainModuleModel.Cargo" Role="Cargo" Multiplicity="1" />
@@ -14249,7 +14250,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="PedidoEstatus">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.PedidoEstatus">
               <MappingFragment StoreEntitySet="PedidoEstatus">
-                <ScalarProperty Name="Actvio" ColumnName="Actvio" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdPedidoEstatus" ColumnName="IdPedidoEstatus" />
               </MappingFragment>
