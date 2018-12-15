@@ -512,6 +512,20 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 ).ToList();
         }
 
+        public Camioneta ObtenerCamioneta(int IdC)
+        {
+            return uow.Repository<Camioneta>().GetSingle(
+                x => x.IdCamioneta.Equals(IdC) && x.Activo
+                );
+        }
+
+        public Pipa ObtenerPipa(int IdP)
+        {
+            return uow.Repository<Pipa>().GetSingle(
+                x => x.IdPipa.Equals(IdP) && x.Activo
+                );
+        }
+
         public void Actualizar(AplicaTomaLecturaDto aplicaTomaLectura)
         {
             using (uow)

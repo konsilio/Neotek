@@ -308,6 +308,7 @@
     <Compile Include="ObjetosValor\Constantes\TipoEventoConst.cs" />
     <Compile Include="ObjetosValor\Enum\CalibracionDestinoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\enumIVA.cs" />
+    <Compile Include="ObjetosValor\Enum\EstatusPedidoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\EstatusPrecioVentaEnum.cs" />
     <Compile Include="ObjetosValor\Enum\IdentidadUnidadAlmacenGasEnum.cs" />
     <Compile Include="ObjetosValor\Enum\ImagenDeEnum.cs" />

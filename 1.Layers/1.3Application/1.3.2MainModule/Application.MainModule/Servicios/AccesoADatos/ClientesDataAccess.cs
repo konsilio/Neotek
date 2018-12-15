@@ -186,7 +186,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Eliminar(ClienteLocacion cteL)
         {
             RespuestaDto _respuesta = new RespuestaDto();

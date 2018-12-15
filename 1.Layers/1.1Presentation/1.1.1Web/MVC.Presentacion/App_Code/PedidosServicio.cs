@@ -41,7 +41,12 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarEdicionPedido(model, tkn);
             return agente._RespuestaDTO;
         }
-
+        public static RespuestaDTO EliminarPedido(PedidoModel model, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.CancelarNuevoPedido(model, tkn);
+            return agente._RespuestaDTO;
+        }
         
     }
 }
