@@ -12,5 +12,11 @@ namespace Application.MainModule.Servicios.Catalogos
             List<RegimenDTO> lregimen = RegimenAdapter.ToDTO(new RegimenDataAccess().ListaRegimen());
             return lregimen;
         }
+
+        public static RegimenDTO Regimen(short IdRegimen)
+        {
+            RegimenDTO lregimen = RegimenAdapter.ToDTO(new RegimenDataAccess().Regimen(IdRegimen));
+            return lregimen;
+        }
     }
 }

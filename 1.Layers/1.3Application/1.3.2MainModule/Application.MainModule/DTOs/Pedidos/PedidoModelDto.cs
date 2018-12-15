@@ -1,14 +1,15 @@
-﻿using MVC.Presentacion.Models.Catalogos;
+﻿using Application.MainModule.DTOs.Catalogo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MVC.Presentacion.Models.Pedidos
+namespace Application.MainModule.DTOs.Pedidos
 {
-    public class PedidoModel : ClientesModel
+    public class PedidoModelDto : ClienteCrearDto
     {
-        public int IdPedido { get; set; }        
+        public int IdPedido { get; set; }
         public int IdEstatusPedido { get; set; }
         public string EstatusPedido { get; set; }
         public string Cantidad { get; set; }
@@ -19,7 +20,7 @@ namespace MVC.Presentacion.Models.Pedidos
         public string Calle { get; set; }
         public string Colonia { get; set; }
         public string Unidad { get; set; }
-        public string NombreRfc{ get; set; }
+        public string NombreRfc { get; set; }
         public int IdPipa { get; set; }
         public int IdCamioneta { get; set; }
         public string ReferenciaUbicacion { get; set; }
@@ -32,7 +33,8 @@ namespace MVC.Presentacion.Models.Pedidos
         public int Ruta { get; set; }
         public decimal TotalKilos { get; set; }
         public decimal TotalLitros { get; set; }
-        public List<PedidoModel> Pedidos { get; set; }     
-        public List<PedidoModel> Unidades { get; set; }
+        public List<PedidoModelDto> Pedidos { get; set; }
+        public List<PedidoModelDto> Unidades { get; set; }        
     }
+
 }

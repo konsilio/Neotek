@@ -446,6 +446,16 @@ namespace Application.MainModule.Servicios.Almacenes
             return new AlmacenGasDataAccess().ObtenerCamionetasEmpresa(idEmpresa);
         }
 
+        public static Camioneta ObtenerCamioneta(int camioneta)
+        {
+            return new AlmacenGasDataAccess().ObtenerCamioneta(camioneta);
+        }
+
+        public static Pipa ObtenerPipa(int pipa)
+        {
+            return new AlmacenGasDataAccess().ObtenerPipa(pipa);
+        }
+
         public static List<AlmacenGasCalibracionFoto> ObtenerImagenes(AlmacenGasCalibracion calibracion)
         {
             if (calibracion.Fotografias != null && calibracion.Fotografias.Count > 0)

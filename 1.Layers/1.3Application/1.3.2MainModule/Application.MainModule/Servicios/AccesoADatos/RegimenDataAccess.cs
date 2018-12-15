@@ -21,5 +21,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<RegimenFiscal>().GetAll().ToList();
         }
+        public RegimenFiscal Regimen(short reg)
+        {
+            return uow.Repository<RegimenFiscal>().GetSingle(x=>x.IdRegimenFiscal.Equals(reg));
+        }
     }
 }

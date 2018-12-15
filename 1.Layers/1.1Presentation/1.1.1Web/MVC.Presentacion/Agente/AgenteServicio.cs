@@ -793,17 +793,17 @@ namespace MVC.Presentacion.Agente
                 {
                     if (id != 0)
                     {
-                        _lstaClientes = (from x in lus where x.IdCliente == id select x).ToList();
+                        lus = (from x in lus where x.IdCliente == id select x).ToList();
                     }
 
                     if (rfc != "")
                     {
-                        _lstaClientes = (from x in lus where x.Rfc == rfc select x).ToList();
+                        lus = (from x in lus where x.Rfc == rfc select x).ToList();
                     }
 
                     if (nombre != "" && nombre != null)
                     {
-                        _lstaClientes = (from x in lus where x.RazonSocial == nombre || (x.Nombre + " " + x.Apellido1) == nombre select x).ToList();
+                        lus = (from x in lus where x.RazonSocial == nombre || (x.Nombre + " " + x.Apellido1) == nombre select x).ToList();
                     }
                 }
 
@@ -842,21 +842,21 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
 
-                if (tel1 != "" || rfc != "" || tel2 != "")
+                if (tel1 != null || rfc != "" || tel2 != null)
                 {
-                    if (tel1 != "")
+                    if (tel1 != "" && tel1 != null)
                     {
-                        _lstaClientesMod = (from x in lus where x.Telefono1 == tel1 select x).ToList();
+                        lus = (from x in lus where x.Telefono1 == tel1 select x).ToList();
                     }
 
                     if (rfc != "")
                     {
-                        _lstaClientesMod = (from x in lus where x.Rfc == rfc select x).ToList();
+                        lus = (from x in lus where x.Rfc == rfc select x).ToList();
                     }
 
-                    if (tel2 != "")
+                    if (tel2 != "" && tel2 != null)
                     {
-                        _lstaClientesMod = (from x in lus where x.Telefono2 == tel1 select x).ToList();
+                        lus = (from x in lus where x.Telefono2 == tel1 select x).ToList();
                     }
                 }
 
@@ -3105,7 +3105,7 @@ namespace MVC.Presentacion.Agente
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(api+id.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         pedido = await response.Content.ReadAsAsync<PedidoModel>();
                     else
@@ -3169,6 +3169,12 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+
+        public void CancelarNuevoPedido(PedidoModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutCancelarPedido"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
         private async Task LLamada<T>(T _dto, string token, string Tipo)
