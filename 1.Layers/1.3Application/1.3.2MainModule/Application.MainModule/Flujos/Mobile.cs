@@ -949,9 +949,7 @@ namespace Application.MainModule.Flujos
                 var precios = PuntoVentaServicio.ObtenerPreciosVenta(TokenServicio.ObtenerIdEmpresa());
                 var productosGas = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa(), true);
                 var kilosCamioneta = LecturaGasServicio.ObtenerKilosGasCamioneta(unidad.IdCAlmacenGas, DateTime.Now, pv.IdPuntoVenta);
-
-               return VentasEstacionesAdapter.ToDTO(productosGas, precios, kilosCamioneta);
-                
+                return VentasEstacionesAdapter.ToDTO(productosGas, precios, kilosCamioneta);
             }
             else if (esCilindroConGas)
             {
