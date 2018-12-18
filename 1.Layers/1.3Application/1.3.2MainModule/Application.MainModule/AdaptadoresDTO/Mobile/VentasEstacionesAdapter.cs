@@ -113,14 +113,14 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return list;
         }
 
-        public static List<DatosGasVentaDto> ToDTO(List<Producto> productosGas, List<PrecioVenta> precios)
+        public static List<DatosGasVentaDto> ToDTO(List<Producto> productosGas, List<PrecioVenta> precios, decimal CatidadKilosGas)
         {
-            return productosGas.Select(x => ToDTO(x, precios)).ToList();
+            return productosGas.Select(x => ToDTO(x, precios, CatidadKilosGas)).ToList();
         }
 
         public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios)
         {
-            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
+            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));           
             return new DatosGasVentaDto()
             {
                 Nombre = productoGas.Descripcion,
@@ -128,6 +128,31 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 PrecioUnitario = precio.PrecioSalidaKg.Value,
                 
             };
+        }
+        public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios, decimal CantidadKgGas)
+        {
+            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
+            if (productoGas.EsGas)
+            {
+                return new DatosGasVentaDto()
+                {
+                    Nombre = productoGas.Descripcion,
+                    Id = productoGas.IdProducto,
+                    PrecioUnitario = precio.PrecioSalidaKg.Value,
+                    Existencia = CantidadKgGas,
+                };
+            }
+            else
+            {
+                var existencias = ProductoAlmacenServicio.ObtenerAlmacen(productoGas.IdProducto, TokenServicio.ObtenerIdEmpresa());
+                return new DatosGasVentaDto()
+                {
+                    Nombre = productoGas.Descripcion,
+                    Id = productoGas.IdProducto,
+                    PrecioUnitario = precio.PrecioSalidaKg.Value,
+                    Existencia = existencias != null ? existencias.Cantidad : 0,
+                };
+            }
         }
 
         public static List<DatosGasVentaDto> ToDTO(UnidadAlmacenGas camioneta)

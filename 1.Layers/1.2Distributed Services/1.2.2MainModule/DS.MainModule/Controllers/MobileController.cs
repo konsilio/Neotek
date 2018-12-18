@@ -444,7 +444,8 @@ namespace DS.MainModule.Controllers
         /// </summary>
         /// <returns>Respuesta DTO con los datos </returns>
         [Route("catalogos/anticipos-y-cortes/usuarios-liquitar")]
-        public HttpResponseMessage GetUsuariosCorte() {
+        public HttpResponseMessage GetUsuariosCorte()
+        {
             return RespuestaHttp.crearRespuesta(_mobile.UsuariosAnticiposCorteLiquidar(), Request);
         }
         #endregion
@@ -547,7 +548,7 @@ namespace DS.MainModule.Controllers
         [Route("estacion/punto-venta")]
         public HttpResponseMessage GetEstacion()
         {
-            return RespuestaHttp.crearRespuesta(_mobile.ObtenerEstacion(),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.ObtenerEstacion(), Request);
         }
         #endregion
 

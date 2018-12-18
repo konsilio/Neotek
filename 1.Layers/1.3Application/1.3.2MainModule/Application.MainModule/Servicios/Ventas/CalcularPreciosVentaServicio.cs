@@ -614,5 +614,9 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarTodos().OrderByDescending(x => x.Orden).FirstOrDefault().Orden;
         }
+        public static decimal ObtenerKilosCamioneta(decimal TotalKilosInical, decimal TotalKilosVendidos)
+        {
+           return TotalKilosInical - TotalKilosVendidos;
+        }
     }
 }
