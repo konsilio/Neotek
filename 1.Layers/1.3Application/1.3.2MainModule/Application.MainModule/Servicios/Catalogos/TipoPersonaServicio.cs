@@ -15,5 +15,12 @@ namespace Application.MainModule.Servicios.Catalogos
             List<TipoPersonaDTO> lpaises = AdaptadoresDTO.Seguridad.TipoPerAdapter.ToDTO(new TipoPerDataAccess().ListaTiposPer());
             return lpaises;
         }
+
+        public static TipoPersonaDTO TipoPersona(short IdTipoP)
+        {
+            TipoPersonaDTO lp = AdaptadoresDTO.Seguridad.TipoPerAdapter.ToDTO(new TipoPerDataAccess().TiposPer(IdTipoP));
+            return lp;
+        }
+
     }
 }

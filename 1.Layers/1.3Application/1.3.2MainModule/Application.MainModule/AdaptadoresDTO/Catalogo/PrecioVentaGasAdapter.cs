@@ -14,7 +14,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
     {
         public static PrecioVentaDTO ToDTO(PrecioVenta pv)
         {
-            var nombreEmp = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial;
+            //var nombreEmp = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial;
 
             PrecioVentaDTO usDTO = new PrecioVentaDTO()
             {
