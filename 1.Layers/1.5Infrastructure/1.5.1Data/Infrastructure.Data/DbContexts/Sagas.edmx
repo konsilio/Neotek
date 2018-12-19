@@ -1629,6 +1629,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdRequisicionEstatus" Type="tinyint" Nullable="false" />
           <Property Name="FechaRequerida" Type="datetime" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="EsExterno" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RequisicionAlmacen">
           <Key>
@@ -7636,6 +7637,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <!--<Property Name="IdRequisicion" Type="Int32" Nullable="false" />-->
           <Property Name="IdUsuarioAutorizacion" Type="Int32" />
           <Property Name="FechaAutorizacion" Type="DateTime" Precision="3" />
+          <Property Name="EsExterno" Type="Boolean" Nullable="false" />
 
           <NavigationProperty Name="RequisicionEstatus" Relationship="Sagas.MainModuleModel.FK_Requisicion_RequisicionEstatus" FromRole="Requisicion" ToRole="RequisicionEstatus" />
           <NavigationProperty Name="Solicitante" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario" FromRole="Requisicion" ToRole="Usuario" />
@@ -7651,6 +7653,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="EntradasDeGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGasDescarga_Requisicion" FromRole="Requisicion" ToRole="AlmacenGasDescarga" />
           <NavigationProperty Name="EntradasDeProductos" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_Requisicion" FromRole="Requisicion" ToRole="AlmacenEntradaProducto" />
           <NavigationProperty Name="SalidasDeProductos" Relationship="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Requisicion" FromRole="Requisicion" ToRole="AlmacenSalidaProducto" />
+         
         </EntityType>
         <EntityType Name="RequisicionProducto">
           <Key>
@@ -12538,6 +12541,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Requisicion">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Requisicion">
               <MappingFragment StoreEntitySet="Requisicion">
+                <ScalarProperty Name="EsExterno" ColumnName="EsExterno" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="FechaRequerida" ColumnName="FechaRequerida" />
                 <ScalarProperty Name="IdRequisicionEstatus" ColumnName="IdRequisicionEstatus" />

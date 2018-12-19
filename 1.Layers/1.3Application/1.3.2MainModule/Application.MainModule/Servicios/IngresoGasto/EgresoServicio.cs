@@ -49,11 +49,10 @@ namespace Application.MainModule.Servicios.IngresoGasto
                 IdCentroCosto = Compra.IdCentroCosto,
                 IdCuentaContable = Compra.IdCuentaContable,
                 IdTipoEgreso = 1,
-                //IdOrdenCompra = Compra.IdOrdenCompra,
-                //Ticket = Compra.NumOrdenCompra,
+                Monto = Compra.Total ?? 0,
                 Descripcion = IngresoGastoConst.EgresoCompra,
                 FechaRegistro = DateTime.Now,
-                EsExterno = 1,
+                EsExterno = Compra.Requisicion.EsExterno,
             };
         }
     }
