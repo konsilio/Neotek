@@ -15,7 +15,7 @@ namespace Sagas.MainModule.Entidades
     public partial class PedidoDetalle
     {
         public int IdPedidoDetalle { get; set; }
-        public Nullable<int> IdPedido { get; set; }
+        public int IdPedido { get; set; }
         public Nullable<decimal> Cantidad { get; set; }
         public Nullable<bool> Cilindro20 { get; set; }
         public Nullable<bool> Cilindro30 { get; set; }

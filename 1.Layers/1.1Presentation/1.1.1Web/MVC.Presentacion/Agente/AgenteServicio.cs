@@ -1,4 +1,4 @@
-﻿using MVC.Presentacion.Models;
+using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Almacen;
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.OrdenCompra;
@@ -795,12 +795,12 @@ namespace MVC.Presentacion.Agente
                 {
                     if (id != 0)
                     {
-                        lus = (from x in lus where x.IdCliente == id select x).ToList();
+                        _lstaClientes = (from x in lus where x.IdCliente == id select x).ToList();
                     }
 
                     if (rfc != "")
                     {
-                        lus = (from x in lus where x.Rfc == rfc select x).ToList();
+                        _lstaClientes = (from x in lus where x.Rfc == rfc select x).ToList();
                     }
 
                     if (nombre != "" && nombre != null)

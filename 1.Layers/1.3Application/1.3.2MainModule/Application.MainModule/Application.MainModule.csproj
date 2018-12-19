@@ -66,6 +66,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\FormaPagoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\OperadorChoferAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Cobranza\AbonosAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="AdaptadoresDTO\Mobile\TipoRegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
+    <Compile Include="DTOs\Cobranza\AbonosDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
@@ -139,10 +141,13 @@
     <Compile Include="DTOs\ImagenDTO.cs" />
     <Compile Include="DTOs\Ventas\VentasPipaDto.cs" />
     <Compile Include="DTOs\Ventas\VPuntoVentaDetalleDTO.cs" />
+    <Compile Include="Servicios\AccesoADatos\AbonosDataAcces.cs" />
     <Compile Include="Flujos\Pedidos.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenEntradaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\EgresoDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\IngresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PedidosDataAccess.cs" />
     <Compile Include="Servicios\Almacen\RemanenteServicio.cs" />
@@ -244,6 +249,8 @@
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
     <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
     <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
+    <Compile Include="Servicios\IngresoGasto\EgresoServicio.cs" />
+    <Compile Include="Servicios\IngresoGasto\IngresoServicio.cs" />
     <Compile Include="Servicios\Mobile\AutoconsumoServicio.cs" />
     <Compile Include="Servicios\Mobile\CalibracionServicio.cs" />
     <Compile Include="Servicios\Mobile\ClientesServicio.cs" />
@@ -377,7 +384,9 @@
     <Compile Include="UnitOfWork\IGenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\SagasDataUow.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DTOs\IngresoGasto\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\1.1Presentation\1.1.1Web\MVC.Presentacion\MVC.Presentacion.csproj">
       <Project>{1751630E-103C-41AD-A84C-DAE1B576F0A5}</Project>
