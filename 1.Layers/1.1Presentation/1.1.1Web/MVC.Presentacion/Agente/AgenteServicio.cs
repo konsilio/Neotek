@@ -3059,7 +3059,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPedidos"];
             Pedidos(ApiCatalgos, token).Wait();
         }
-
         private async Task Pedidos(string api, string token = null)
         {
             using (var client = new HttpClient())
@@ -3089,13 +3088,11 @@ namespace MVC.Presentacion.Agente
                 _ListaPedidos = pedidos;
             }
         }
-
         public void ObtenerPedidoId(int id, string token)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetPedidoId"];
             PedidoId(ApiCatalgos, id, token).Wait();
         }
-
         private async Task PedidoId(string api, int id, string token = null)
         {
             using (var client = new HttpClient())
@@ -3125,13 +3122,11 @@ namespace MVC.Presentacion.Agente
                 _Pedido = pedido;
             }
         }
-
         public void BuscarEstatusPedido(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetEstatusPedido"];
             GetEstatusPedido(tkn).Wait();
         }
-
         private async Task GetEstatusPedido(string Token)
         {
             using (var client = new HttpClient())
@@ -3160,13 +3155,11 @@ namespace MVC.Presentacion.Agente
                 _ListaEstatusP = lus;
             }
         }
-
         public void GuardarEdicionPedido(PedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void GuardarNuevoPedido(PedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarPedido"];

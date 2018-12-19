@@ -112,11 +112,11 @@
                                                             <td>@item.Cantidad</td>
                                                             <td>@item.EstatusPedido</td>
                                                             <td>
-                                                                <a href="@Url.Action("RevisarPedido", "Pedidos", new { id = item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <a ID="lbEdit" href="@Url.Action("RevisarPedido", "Pedidos", new { idPedido = item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                     <i class="material-icons">edit</i>
                                                                     <span>Revisar pedido</span>
                                                                 </a>
-                                                                <a href="@Url.Action("CancelarPedido", "Pedidos", new {  id=item.IdPedido } )" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <a ID="lbBorrar" href="@Url.Action("CancelarPedido", "Pedidos", new {  idPedido =item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                     <i class="material-icons">delete</i>
                                                                     <span>Cancelar pedido</span>
                                                                 </a>

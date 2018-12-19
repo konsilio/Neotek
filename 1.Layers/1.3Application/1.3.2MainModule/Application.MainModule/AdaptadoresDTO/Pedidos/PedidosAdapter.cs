@@ -34,18 +34,14 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                     }
                     if (item.Cilindro30 == true)
                     {
-                        cant30 = item.Cantidad.ToString().Split(',')[0] + " " + "Cilindro(s) 30Kg " + ", ";
+                        cant30 = item.Cantidad.ToString().Split(',')[0] + " " + "Cilindro(s) 30Kg" + ", ";
                         cant += cant30;
                     }
                     if (item.Cilindro45 == true)
                     {
-                        cant45 = item.Cantidad.ToString().Split(',')[0] + " " + "Cilindro(s) 45Kg " + ", ";
+                        cant45 = item.Cantidad.ToString().Split(',')[0] + " " + "Cilindro(s) 45Kg" + ", ";
                         cant += cant45;
                     }
-                }
-                else
-                {
-                    cant = item.Cantidad.ToString().Split(',')[0];
                 }
             }
             var cliente = ClienteServicio.Obtener(p.IdCliente);
@@ -57,7 +53,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 IdEmpresa = p.IdEmpresa,
                 IdEstatusPedido = p.IdEstatusPedido,
                 EstatusPedido = PedidosServicio.getString(PedidosServicio.GetEstatusPedido(p.IdEstatusPedido).ToString()),
-                Cantidad = p.IdCamioneta > 0 ? cant.TrimEnd(',') : pd[0].Cantidad.ToString().Split(',')[0],
+                Cantidad = p.IdCamioneta > 0 ? cant.TrimEnd(' ').TrimEnd(',') : pd[0].Cantidad.ToString().Split(',')[0] + " Kg",
                 Cantidad20 = cant20,
                 Cantidad30 = cant30,
                 Cantidad45 = cant45,

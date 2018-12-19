@@ -41,7 +41,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Pedido:</b>
-                                                    @Html.LabelFor(model => model.NumPedido, new { @class = "form-control" })
+                                                    @Html.LabelFor(model => model.IdPedido, new { @class = "form-control" })
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <b>Estatus:</b>
@@ -57,7 +57,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-2">
                                                     <b>Cliente:</b>
-                                                    @Html.LabelFor(model => model.Nombre, new { @class = "form-control" })
+                                                    @Html.LabelFor(model => model.Nombre, new { @class = "form-control" }) - @Html.LabelFor(model => model.Rfc, new { @class = "form-control" })
                                                 </div>
                                                 <div class="col-sm-2" style="top:20px">
                                                     <b></b>
@@ -74,7 +74,7 @@
                                                     @Html.LabelFor(model => model.Unidad, new { @class = "form-control" })
                                                 </div>
                                             </div>
-                                            @if (Model.IdPipa != 0)
+                                            @if (Model.IdPipa > 0)
                                             {
                                                 <div class="row clearfix">
                                                     <div class="col-sm-3">
@@ -128,7 +128,7 @@
                                                     </div>
                                                 </div>
                                             }
-                                            @if (Model.IdCamioneta != 0)
+                                            @if (Model.IdCamioneta > 0)
                                             {
                                                 <div class="row clearfix">
                                                     <div class="col-sm-3">
