@@ -25,34 +25,39 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             List<PedidoDetalle> pd = new PedidosDataAccess().Buscar(p.IdPedido);
             foreach (var item in pd)
             {
-                if (item.Cilindro20 == true)
+                if (p.IdCamioneta > 0)
                 {
-                    cant20 = item.Cantidad.ToString();
+                    if (item.Cilindro20 == true)
+                    {
+                        cant20 = item.Cantidad.ToString().Split(',')[0] + " " + "Cilindro(s) 20Kg" + ", ";
+                        cant += cant20;
+                    }
+                    if (item.Cilindro30 == true)
+                    {
+                        cant30 = item.Cantidad.ToString().Split(',')[0] + " " + "Cilindro(s) 30Kg " + ", ";
+                        cant += cant30;
+                    }
+                    if (item.Cilindro45 == true)
+                    {
+                        cant45 = item.Cantidad.ToString().Split(',')[0] + " " + "Cilindro(s) 45Kg " + ", ";
+                        cant += cant45;
+                    }
                 }
-                if (item.Cilindro30 == true)
+                else
                 {
-                    cant30 = item.Cantidad.ToString();
-                }
-                if (item.Cilindro45 == true)
-                {
-                    cant45 = item.Cantidad.ToString();
-                }
-                if (item.TotalKilos != 0)
-                {
-                    cant = item.TotalKilos.ToString();
+                    cant = item.Cantidad.ToString().Split(',')[0];
                 }
             }
-            var estatus = PedidosServicio.GetEstatusPedido(p.IdEstatusPedido).ToString();
             var cliente = ClienteServicio.Obtener(p.IdCliente);
 
-            var uni = p.IdCamioneta != null ? AlmacenGasServicio.ObtenerCamioneta(p.IdCamioneta ?? 0).Nombre : AlmacenGasServicio.ObtenerPipa(p.IdPipa ?? 0).Nombre;
+            var uni = p.IdCamioneta > 0 ? AlmacenGasServicio.ObtenerCamioneta(p.IdCamioneta.Value).Nombre : AlmacenGasServicio.ObtenerPipa(p.IdPipa ?? 0).Nombre;
             PedidoModelDto usDTO = new PedidoModelDto()
             {
                 IdPedido = p.IdPedido,
                 IdEmpresa = p.IdEmpresa,
                 IdEstatusPedido = p.IdEstatusPedido,
                 EstatusPedido = PedidosServicio.getString(PedidosServicio.GetEstatusPedido(p.IdEstatusPedido).ToString()),
-                Cantidad = cant,
+                Cantidad = p.IdCamioneta > 0 ? cant.TrimEnd(',') : pd[0].Cantidad.ToString().Split(',')[0],
                 Cantidad20 = cant20,
                 Cantidad30 = cant30,
                 Cantidad45 = cant45,
@@ -60,7 +65,8 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 Calle = cliente.Domicilio,
                 Colonia = cliente.Domicilio,
                 Unidad = uni,
-                NombreRfc = cliente.Nombre + " " + cliente.Apellido1 + " " + cliente.Apellido2 + " - " + cliente.Rfc,
+                NombreRfc = cliente.Nombre + " " + cliente.Apellido1 + " " + cliente.Apellido2,
+                Rfc = cliente.Rfc,
                 IdPipa = p.IdPipa ?? 0,
                 IdCamioneta = p.IdCamioneta ?? 0,
                 ReferenciaUbicacion = "",
@@ -135,60 +141,68 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 PedidoDetalle = FromDtoDetalle(pedidoDTO),
             };
         }
-        public static PedidoDetalle FromDtoDetalleP45(PedidoModelDto pedidoDTO)
+        public static PedidoDetalle FromDtoDetalleP45(PedidoModelDto pedidoDTO, decimal factor)
         {
+            var kg = Decimal.Parse(pedidoDTO.Cantidad45) * 45;
             return new PedidoDetalle()
             {
                 IdPedido = pedidoDTO.IdPedido,
-                Cantidad = Decimal.Parse(pedidoDTO.Cantidad),
-                Cilindro45 = pedidoDTO.Cantidad45 != "" && pedidoDTO.Cantidad45 != null ? true : false,
-                TotalKilos = pedidoDTO.TotalKilos,
-                TotalLitros = pedidoDTO.TotalLitros,
+                Cantidad = Decimal.Parse(pedidoDTO.Cantidad45),
+                Cilindro45 = true,
+                TotalKilos = kg,
+                TotalLitros = kg * factor,
             };
         }
-        public static PedidoDetalle FromDtoDetalleP20(PedidoModelDto pedidoDTO)
+        public static PedidoDetalle FromDtoDetalleP20(PedidoModelDto pedidoDTO, decimal factor)
         {
+            var kg = Decimal.Parse(pedidoDTO.Cantidad20) * 20;
             return new PedidoDetalle()
             {
                 IdPedido = pedidoDTO.IdPedido,
-                Cantidad = Decimal.Parse(pedidoDTO.Cantidad),
-                Cilindro20 = pedidoDTO.Cantidad20 != "" && pedidoDTO.Cantidad20 != null ? true : false,
-                TotalKilos = pedidoDTO.TotalKilos,
-                TotalLitros = pedidoDTO.TotalLitros,
+                Cantidad = Decimal.Parse(pedidoDTO.Cantidad20),
+                Cilindro20 = true,
+                TotalKilos = kg,
+                TotalLitros = kg * factor,
             };
         }
-        public static PedidoDetalle FromDtoDetalleP30(PedidoModelDto pedidoDTO)
+        public static PedidoDetalle FromDtoDetalleP30(PedidoModelDto pedidoDTO, decimal factor)
         {
+            var kg = Decimal.Parse(pedidoDTO.Cantidad30) * 30;
             return new PedidoDetalle()
             {
                 IdPedido = pedidoDTO.IdPedido,
-                Cantidad = Decimal.Parse(pedidoDTO.Cantidad),
-                Cilindro30 = pedidoDTO.Cantidad30 != "" && pedidoDTO.Cantidad30 != null ? true : false,
-                TotalKilos = pedidoDTO.TotalKilos,
-                TotalLitros = pedidoDTO.TotalLitros,
+                Cantidad = Decimal.Parse(pedidoDTO.Cantidad30),
+                Cilindro30 = true,
+                TotalKilos = kg,
+                TotalLitros = kg * factor,
             };
         }
-        public static PedidoDetalle FromDtoDetallePipa(PedidoModelDto pedidoDTO)
+        public static PedidoDetalle FromDtoDetallePipa(PedidoModelDto pedidoDTO, decimal factor)
         {
             return new PedidoDetalle()
             {
                 IdPedido = pedidoDTO.IdPedido,
                 Cantidad = Decimal.Parse(pedidoDTO.Cantidad),
-                TotalKilos = pedidoDTO.TotalKilos,//hacer conversiones
-                TotalLitros = pedidoDTO.TotalLitros,
+                TotalKilos = Decimal.Parse(pedidoDTO.Cantidad),
+                TotalLitros = Decimal.Parse(pedidoDTO.Cantidad) * factor,
             };
         }
         public static List<PedidoDetalle> FromDtoDetalle(PedidoModelDto pedidoDTO)
         {
+            var factorLt = EmpresaServicio.Obtener(pedidoDTO.IdEmpresa).FactorLitrosAKilos;
             List<PedidoDetalle> _lst = new List<PedidoDetalle>();
-            if (pedidoDTO.Cantidad20 != "" && pedidoDTO.Cantidad20 != null)
-                _lst.Add(FromDtoDetalleP20(pedidoDTO));
-            if (pedidoDTO.Cantidad30 != "" && pedidoDTO.Cantidad30 != null)
-                _lst.Add(FromDtoDetalleP30(pedidoDTO));
-            if (pedidoDTO.Cantidad45 != "" && pedidoDTO.Cantidad45 != null)
-                _lst.Add(FromDtoDetalleP45(pedidoDTO));
+            if (pedidoDTO.IdCamioneta > 0)
+            {
+                if (pedidoDTO.Cantidad20 != "" && pedidoDTO.Cantidad20 != null)
+                    _lst.Add(FromDtoDetalleP20(pedidoDTO, factorLt));
+                if (pedidoDTO.Cantidad30 != "" && pedidoDTO.Cantidad30 != null)
+                    _lst.Add(FromDtoDetalleP30(pedidoDTO, factorLt));
+                if (pedidoDTO.Cantidad45 != "" && pedidoDTO.Cantidad45 != null)
+                    _lst.Add(FromDtoDetalleP45(pedidoDTO, factorLt));
+            }
+            else
+                _lst.Add(FromDtoDetallePipa(pedidoDTO, factorLt));
 
-            _lst.Add(FromDtoDetallePipa(pedidoDTO));
             return _lst;
         }
         public static Pedido FromDto(PedidoModelDto Pedidodto, Pedido catCte)

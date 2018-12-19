@@ -170,15 +170,15 @@
                 }
             </select>@Html.Action("_EstatusC")*@
                                                     @Html.DevExpress().ComboBox(settings =>
-{
-    settings.Name = "IdEstatusPedido";
-    settings.Width = 180;
-    settings.SelectedIndex = 0;
-    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-    settings.Properties.TextField = "Descripcion";
-    settings.Properties.ValueField = "IdEstatusPedido";
-}).BindList(ViewBag.Estatus).GetHtml()
+                                                {
+                                                    settings.Name = "IdEstatusPedido";
+                                                    settings.Width = 180;
+                                                    settings.SelectedIndex = 0;
+                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                    settings.Properties.TextField = "Descripcion";
+                                                    settings.Properties.ValueField = "IdEstatusPedido";
+                                                }).BindList(ViewBag.Estatus).GetHtml()
                                                 </div>
                                             </div>
                                             <div class="row clearfix selPipa" style="display:none">

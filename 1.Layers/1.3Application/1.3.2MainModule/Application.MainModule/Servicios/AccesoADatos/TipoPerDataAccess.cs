@@ -22,7 +22,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<TipoPersona>().GetAll().ToList();
         }
 
-        public TipoPersona TiposPer(short persona)
+        public TipoPersona TiposPer(byte persona)
         {
             return uow.Repository<TipoPersona>().GetSingle(x=>x.IdTipoPersona.Equals(persona));
         }

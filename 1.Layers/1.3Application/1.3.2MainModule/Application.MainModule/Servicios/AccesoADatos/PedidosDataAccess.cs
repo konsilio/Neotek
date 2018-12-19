@@ -25,7 +25,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<PedidoDetalle> Buscar(int idPedido)
         {
-            return uow.Repository<PedidoDetalle>().Get(x=> x.IdPedido.Equals(idPedido)).ToList();
+            return uow.Repository<PedidoDetalle>().Get(x=> x.IdPedido.Value.Equals(idPedido)).ToList();
         }
         public Pedido BuscarPedido(int idPedido)
         {

@@ -10,13 +10,13 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 {
    public static class TipoPerAdapter
     {
-        public static TipoPersonaDTO ToDTO(TipoPersona _pais)
+        public static TipoPersonaDTO ToDTO(TipoPersona _tpersona)
         {
-            TipoPersonaDTO paisDTO = new TipoPersonaDTO();
-            paisDTO.IdTipoPersona = _pais.IdTipoPersona;
-            paisDTO.Descripcion = _pais.Descripcion;
+            TipoPersonaDTO personaDTO = new TipoPersonaDTO();
+            personaDTO.IdTipoPersona = _tpersona.IdTipoPersona;
+            personaDTO.Descripcion = _tpersona.Descripcion;
 
-            return paisDTO;
+            return personaDTO;
         }
         public static List<TipoPersonaDTO> ToDTO(List<TipoPersona> lPais)
         {

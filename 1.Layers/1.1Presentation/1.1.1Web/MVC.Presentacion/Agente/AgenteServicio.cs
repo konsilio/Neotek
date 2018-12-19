@@ -3172,18 +3172,16 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void CancelarNuevoPedido(PedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutCancelarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-        public void BuscarCamionetas(short id,string tkn)
+        public void BuscarCamionetas(short id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetCamionetas"];
             GetUnidadCamioneta(id, tkn).Wait();
         }
-
         private async Task GetUnidadCamioneta(short id, string Token)
         {
             using (var client = new HttpClient())
@@ -3209,7 +3207,9 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                _ListaCamionetas = lus;
+                var item = AgregarUnidadC();
+                item.AddRange(lus);
+                _ListaCamionetas = item;
             }
         }
         public void BuscarPipas(short id, string tkn)
@@ -3217,7 +3217,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetPipas"];
             GetUnidadPipas(id, tkn).Wait();
         }
-
         private async Task GetUnidadPipas(short id, string Token)
         {
             using (var client = new HttpClient())
@@ -3243,8 +3242,26 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                _ListaPipas = lus;
+                var item = AgregarUnidadP();
+                item.AddRange(lus);
+                _ListaPipas = item;
             }
+        }
+        public List<CamionetaModel> AgregarUnidadC()
+        {
+            CamionetaModel c = new CamionetaModel();
+            c.Nombre = "Seleccione";
+            List<CamionetaModel> unidades = new List<CamionetaModel>();
+            unidades.Add(c);
+            return unidades;
+        }
+        public List<PipaModel> AgregarUnidadP()
+        {
+            PipaModel c = new PipaModel();
+            c.Nombre = "Seleccione";
+            List<PipaModel> unidades = new List<PipaModel>();
+            unidades.Add(c);
+            return unidades;
         }
         #endregion
         private async Task LLamada<T>(T _dto, string token, string Tipo)
