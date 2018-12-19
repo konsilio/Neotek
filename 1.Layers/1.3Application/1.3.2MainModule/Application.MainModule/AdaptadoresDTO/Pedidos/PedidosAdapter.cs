@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Pedidos;
+﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
@@ -78,6 +79,46 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             List<PedidoModelDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
+
+        public static CamionetaDTO ToDTO(Camioneta p)
+        {
+            CamionetaDTO usDTO = new CamionetaDTO()
+            {
+                IdCamioneta = p.IdCamioneta,
+                IdEmpresa = p.IdEmpresa,
+                Numero = p.Numero,
+                Nombre = p.Nombre,
+                Activo = p.Activo,
+                FechaRegistro = p.FechaRegistro,
+
+            };
+            return usDTO;
+        }
+        public static List<CamionetaDTO> ToDTO(List<Camioneta> lu)
+        {
+            List<CamionetaDTO> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
+            return luDTO;
+        }
+
+        public static PipaDTO ToDTO(Pipa p)
+        {
+            PipaDTO usDTO = new PipaDTO()
+            {
+                IdPipa = p.IdPipa,
+                IdEmpresa = p.IdEmpresa,
+                Numero = p.Numero,
+                Nombre = p.Nombre,
+                Activo = p.Activo,
+                FechaRegistro = p.FechaRegistro,
+
+            };
+            return usDTO;
+        }
+        public static List<PipaDTO> ToDTO(List<Pipa> lu)
+        {
+            List<PipaDTO> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
+            return luDTO;
+        }
         public static Pedido FromDto(PedidoModelDto pedidoDTO)
         {
             return new Pedido()
@@ -87,7 +128,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 IdEstatusPedido = (short)pedidoDTO.IdEstatusPedido,
                 FolioVenta = pedidoDTO.FolioVenta,
                 FechaRegistro = DateTime.Now,
-                FechaPedido = pedidoDTO.FechaEntregaPedido,
+                FechaPedido = DateTime.Now,//pedidoDTO.FechaEntregaPedido,
                 IdPipa = pedidoDTO.IdPipa,
                 IdCamioneta = pedidoDTO.IdCamioneta,
                 Ruta = pedidoDTO.Ruta,
@@ -100,9 +141,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             {
                 IdPedido = pedidoDTO.IdPedido,
                 Cantidad = Decimal.Parse(pedidoDTO.Cantidad),
-                //Cilindro20 = pedidoDTO.Cantidad20 != "" ? true : false,
-                //Cilindro30 = pedidoDTO.Cantidad30 != "" ? true : false,
-                Cilindro45 = pedidoDTO.Cantidad45 != "" ? true : false,
+                Cilindro45 = pedidoDTO.Cantidad45 != "" && pedidoDTO.Cantidad45 != null ? true : false,
                 TotalKilos = pedidoDTO.TotalKilos,
                 TotalLitros = pedidoDTO.TotalLitros,
             };
@@ -113,9 +152,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             {
                 IdPedido = pedidoDTO.IdPedido,
                 Cantidad = Decimal.Parse(pedidoDTO.Cantidad),
-                Cilindro20 = pedidoDTO.Cantidad20 != "" ? true : false,
-                //Cilindro30 = pedidoDTO.Cantidad30 != "" ? true : false,
-                //Cilindro45 = pedidoDTO.Cantidad45 != "" ? true : false,
+                Cilindro20 = pedidoDTO.Cantidad20 != "" && pedidoDTO.Cantidad20 != null ? true : false,
                 TotalKilos = pedidoDTO.TotalKilos,
                 TotalLitros = pedidoDTO.TotalLitros,
             };
@@ -126,19 +163,32 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             {
                 IdPedido = pedidoDTO.IdPedido,
                 Cantidad = Decimal.Parse(pedidoDTO.Cantidad),
-                //Cilindro20 = pedidoDTO.Cantidad20 != "" ? true : false,
-                Cilindro30 = pedidoDTO.Cantidad30 != "" ? true : false,
-                //Cilindro45 = pedidoDTO.Cantidad45 != "" ? true : false,
+                Cilindro30 = pedidoDTO.Cantidad30 != "" && pedidoDTO.Cantidad30 != null ? true : false,
                 TotalKilos = pedidoDTO.TotalKilos,
+                TotalLitros = pedidoDTO.TotalLitros,
+            };
+        }
+        public static PedidoDetalle FromDtoDetallePipa(PedidoModelDto pedidoDTO)
+        {
+            return new PedidoDetalle()
+            {
+                IdPedido = pedidoDTO.IdPedido,
+                Cantidad = Decimal.Parse(pedidoDTO.Cantidad),
+                TotalKilos = pedidoDTO.TotalKilos,//hacer conversiones
                 TotalLitros = pedidoDTO.TotalLitros,
             };
         }
         public static List<PedidoDetalle> FromDtoDetalle(PedidoModelDto pedidoDTO)
         {
             List<PedidoDetalle> _lst = new List<PedidoDetalle>();
-            _lst.Add(FromDtoDetalleP20(pedidoDTO));
-            _lst.Add(FromDtoDetalleP30(pedidoDTO));
-            _lst.Add(FromDtoDetalleP45(pedidoDTO));
+            if (pedidoDTO.Cantidad20 != "" && pedidoDTO.Cantidad20 != null)
+                _lst.Add(FromDtoDetalleP20(pedidoDTO));
+            if (pedidoDTO.Cantidad30 != "" && pedidoDTO.Cantidad30 != null)
+                _lst.Add(FromDtoDetalleP30(pedidoDTO));
+            if (pedidoDTO.Cantidad45 != "" && pedidoDTO.Cantidad45 != null)
+                _lst.Add(FromDtoDetalleP45(pedidoDTO));
+
+            _lst.Add(FromDtoDetallePipa(pedidoDTO));
             return _lst;
         }
         public static Pedido FromDto(PedidoModelDto Pedidodto, Pedido catCte)

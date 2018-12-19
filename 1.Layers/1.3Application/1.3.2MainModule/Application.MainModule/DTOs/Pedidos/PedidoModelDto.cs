@@ -34,7 +34,7 @@ namespace Application.MainModule.DTOs.Pedidos
         public decimal TotalKilos { get; set; }
         public decimal TotalLitros { get; set; }
         public List<PedidoModelDto> Pedidos { get; set; }
-        public List<PedidoModelDto> Unidades { get; set; }        
+        public List<ClienteCrearDto> clientes { get; set; }
     }
 
 }

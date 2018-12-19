@@ -85,6 +85,8 @@
     <Compile Include="DTOs\Almacen\RemaDto.cs" />
     <Compile Include="DTOs\Almacen\RemanenteGeneralDTO.cs" />
     <Compile Include="DTOs\Almacen\RemanentePuntoVentaDTO.cs" />
+    <Compile Include="DTOs\Catalogo\CamionetaDTO.cs" />
+    <Compile Include="DTOs\Catalogo\PipaDTO.cs" />
     <Compile Include="DTOs\Catalogo\PrecioVentaEstatusDTO.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PrecioVentaGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />

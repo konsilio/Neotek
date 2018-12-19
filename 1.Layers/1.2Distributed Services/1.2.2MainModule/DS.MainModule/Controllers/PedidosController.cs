@@ -33,6 +33,18 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _pedidos.ListaEstatusPedidos());
         }
 
+        [Route("buscar/camionetas/{id}")]
+        public HttpResponseMessage GetCamionetas(short id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.ListaCamionetas(id));
+        }
+
+        [Route("buscar/pipas/{id}")]
+        public HttpResponseMessage GetPipas(short id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.ListaPipas(id));
+        }
+
         [Route("modificar/pedido")]
         public HttpResponseMessage PutModificarPedidos(PedidoModelDto _model)
         {

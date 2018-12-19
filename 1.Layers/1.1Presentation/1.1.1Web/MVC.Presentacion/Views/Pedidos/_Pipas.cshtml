@@ -1,0 +1,16 @@
+﻿@Html.DevExpress().ComboBox(settings =>
+{
+    settings.Name = "IdPipa";
+    settings.Width = 180;
+    settings.SelectedIndex = 0;
+    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+    settings.Properties.TextField = "Nombre";
+    settings.Properties.ValueField = "IdPipa";
+}).BindList(Model).Bind(Model, "IdPipa").GetHtml()
+@*@Html.DevExpress().ComboBox(settings =>
+{
+...
+ settings.Name = "CompanyId";
+...
+}).BindList(LargeDatabaseDataProvider.GetPersonsRange, LargeDatabaseDataProvider.GetPersonByID).Bind(Model, "CompanyId").GetHtml()*@

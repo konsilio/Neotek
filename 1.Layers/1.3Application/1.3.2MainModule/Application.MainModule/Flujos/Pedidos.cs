@@ -1,9 +1,12 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Pedidos;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Pedidos;
 using Application.MainModule.Servicios.Seguridad;
+using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
@@ -40,6 +43,20 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
 
             return PedidosServicio.ObtenerEstatus().ToList();
+        }
+        public List<CamionetaDTO> ListaCamionetas(short IdEmpresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarPedido();
+            if (!resp.Exito) return null;
+
+            return PedidosServicio.ObtenerCamionetas(IdEmpresa).ToList();
+        }
+        public List<PipaDTO> ListaPipas(short IdEmpresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarPedido();
+            if (!resp.Exito) return null;
+
+            return PedidosServicio.ObtenerPipas(IdEmpresa).ToList();
         }
 
         public RespuestaDto Registra(PedidoModelDto pedidoDto)

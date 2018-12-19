@@ -52,8 +52,9 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Domicilio = us.Domicilio,
                 Empresa = us.Empresa.NombreComercial,
                 TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
-                RegimenFiscal = us.RegimenFiscal.Descripcion
-
+                RegimenFiscal = us.RegimenFiscal.Descripcion,
+                Cliente = us.Nombre + " " + us.Apellido1 + " " + us.Rfc,
+                Locaciones = ClienteServicio.ObtenerLoc(us.IdCliente),
             };
             return usDTO;
         }

@@ -33,6 +33,6 @@ namespace MVC.Presentacion.Models.Pedidos
         public decimal TotalKilos { get; set; }
         public decimal TotalLitros { get; set; }
         public List<PedidoModel> Pedidos { get; set; }     
-        public List<PedidoModel> Unidades { get; set; }
+        public List<ClientesModel> clientes { get; set; }
     }
 }

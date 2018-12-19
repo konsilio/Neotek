@@ -1,4 +1,5 @@
 ﻿using MVC.Presentacion.Agente;
+using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Pedidos;
 using MVC.Presentacion.Models.Seguridad;
 using System;
@@ -47,6 +48,18 @@ namespace MVC.Presentacion.App_Code
             agente.CancelarNuevoPedido(model, tkn);
             return agente._RespuestaDTO;
         }
-        
+        public static List<CamionetaModel> ObtenerCamionetas(short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarCamionetas(id, tkn);
+            return agente._ListaCamionetas;
+        }
+
+        public static List<PipaModel> ObtenerPipas(short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarPipas(id, tkn);
+            return agente._ListaPipas;
+        }
     }
 }

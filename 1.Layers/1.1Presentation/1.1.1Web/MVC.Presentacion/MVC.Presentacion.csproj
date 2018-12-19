@@ -282,6 +282,7 @@
     <Compile Include="Models\Almacen\RemanenteDTO.cs" />
     <Compile Include="Models\Almacen\RequisicionSalidaDTO.cs" />
     <Compile Include="Models\Catalogos\BancoDTO.cs" />
+    <Compile Include="Models\Catalogos\CamionetaModel.cs" />
     <Compile Include="Models\Catalogos\CatalogoRespuestaDTO.cs" />
     <Compile Include="Models\Catalogos\CategoriaProductoDTO.cs" />
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoCrearDTO.cs" />
@@ -311,6 +312,7 @@
     <Compile Include="Models\Catalogos\OperadorChoferModel.cs" />
     <Compile Include="Models\Catalogos\PaisModel.cs" />
     <Compile Include="Models\Catalogos\PartialViewModel.cs" />
+    <Compile Include="Models\Catalogos\PipaModel.cs" />
     <Compile Include="Models\Catalogos\PrecioVentaModel.cs" />
     <Compile Include="Models\Catalogos\ProductoDTO.cs" />
     <Compile Include="Models\Catalogos\ProveedorDTO.cs" />
@@ -10747,6 +10749,7 @@
     <Content Include="Resources\js\Empresas.js" />
     <Content Include="Resources\js\lib\Events.js" />
     <Content Include="Resources\js\lib\jquery-1.9.1.js" />
+    <Content Include="Resources\js\Pedidos.js" />
     <Content Include="Resources\js\PrecioVenta.js" />
     <Content Include="Resources\js\Roles.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
@@ -11541,6 +11544,11 @@
     <Content Include="Views\Pedidos\AltaCliente.cshtml" />
     <Content Include="Views\Pedidos\RevisarPedido.cshtml" />
     <Content Include="Views\Pedidos\EditarPedido.cshtml" />
+    <Content Include="Views\Pedidos\_LocacionesCliente.cshtml" />
+    <Content Include="Views\Pedidos\_DatosCliente.cshtml" />
+    <Content Include="Views\Pedidos\_TipoUnidad.cshtml" />
+    <Content Include="Views\Pedidos\_Camionetas.cshtml" />
+    <Content Include="Views\Pedidos\_Pipas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
