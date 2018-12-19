@@ -22,7 +22,7 @@ namespace Sagas.MainModule.Entidades
         public decimal Monto { get; set; }
         public short IdTipoEgreso { get; set; }
         public string Descripcion { get; set; }
-        public long EsExterno { get; set; }
+        public bool EsExterno { get; set; }
     
         public virtual CentroCosto CCentroCosto { get; set; }
         public virtual CuentaContable CCuentaContable { get; set; }

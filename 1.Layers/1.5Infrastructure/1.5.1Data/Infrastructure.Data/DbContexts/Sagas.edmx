@@ -16,6 +16,7 @@
           <Property Name="MontoAbono" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="IdFormaPago" Type="tinyint" Nullable="false" />
           <Property Name="FolioBancario" Type="varchar" MaxLength="25" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Almacen">
           <Key>
@@ -783,7 +784,7 @@
           <Property Name="IdCliente" Type="int" Nullable="false" />
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="Ticket" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="FechaRegrostro" Type="datetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
           <Property Name="TotalCargo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalAbonos" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="VentaExtraordinaria" Type="bit" Nullable="false" />
@@ -1320,7 +1321,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Monto" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="IdTipoEgreso" Type="smallint" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="EsExterno" Type="bigint" Nullable="false" />
+          <Property Name="EsExterno" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -1559,13 +1560,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdPipa" Type="int" />
           <Property Name="IdCamioneta" Type="int" />
           <Property Name="Ruta" Type="int" />
+          <Property Name="IdDireccion" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="PedidoDetalle">
           <Key>
             <PropertyRef Name="IdPedidoDetalle" />
           </Key>
           <Property Name="IdPedidoDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdPedido" Type="int" />
+          <Property Name="IdPedido" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="decimal" Precision="18" Scale="4" />
           <Property Name="Cilindro20" Type="bit" />
           <Property Name="Cilindro30" Type="bit" />
@@ -4362,8 +4364,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PedidoDetalle_Pedido">
-          <End Role="Pedido" Type="Self.Pedido" Multiplicity="0..1" />
+        <Association Name="FK_PedidoDetalle_Pedido1">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
           <End Role="PedidoDetalle" Type="Self.PedidoDetalle" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pedido">
@@ -5797,7 +5799,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="PedidoEstatus" EntitySet="PedidoEstatus" />
             <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
-          <AssociationSet Name="FK_PedidoDetalle_Pedido" Association="Self.FK_PedidoDetalle_Pedido">
+          <AssociationSet Name="FK_PedidoDetalle_Pedido1" Association="Self.FK_PedidoDetalle_Pedido1">
             <End Role="Pedido" EntitySet="Pedido" />
             <End Role="PedidoDetalle" EntitySet="PedidoDetalle" />
           </AssociationSet>
@@ -11793,6 +11795,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="FolioBancario" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cargo" Relationship="Sagas.MainModuleModel.FK_Abono_Cargo1" FromRole="Abono" ToRole="Cargo" />
           <NavigationProperty Name="CFormaPago" Relationship="Sagas.MainModuleModel.FK_Abono_CFormaPago" FromRole="Abono" ToRole="FormaPago" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Cargo">
           <Key>
@@ -11802,7 +11805,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdCliente" Type="Int32" Nullable="false" />
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
           <Property Name="Ticket" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FechaRegrostro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <!--<Property Name="FechaRegrostro" Type="DateTime" Nullable="false" Precision="3" />-->
           <Property Name="TotalCargo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="TotalAbonos" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="VentaExtraordinaria" Type="Boolean" Nullable="false" />
@@ -11811,6 +11815,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Saldada" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Abono" Relationship="Sagas.MainModuleModel.FK_Abono_Cargo1" FromRole="Cargo" ToRole="Abono" />
           <NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_Cargo_CCliente" FromRole="Cargo" ToRole="Cliente" />
+          
         </EntityType>
         <EntityType Name="CTipoEgreso">
           <Key>
@@ -11837,7 +11842,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Monto" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
           <Property Name="IdTipoEgreso" Type="Int16" Nullable="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EsExterno" Type="Int64" Nullable="false" />
+          <Property Name="EsExterno" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_Egreso_CCentroCosto" FromRole="Egreso" ToRole="CentroCosto" />
           <NavigationProperty Name="CCuentaContable" Relationship="Sagas.MainModuleModel.FK_Egreso_CCuentaContable" FromRole="Egreso" ToRole="CuentaContable" />
           <NavigationProperty Name="CTipoEgreso" Relationship="Sagas.MainModuleModel.FK_Egreso_CTipoEgreso" FromRole="Egreso" ToRole="CTipoEgreso" />
@@ -11874,15 +11879,17 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdPipa" Type="Int32" />
           <Property Name="IdCamioneta" Type="Int32" />
           <Property Name="Ruta" Type="Int32" />
+          <Property Name="IdDireccion" Type="Int16" Nullable="false" />
           <NavigationProperty Name="PedidoEstatus" Relationship="Sagas.MainModuleModel.FK_Pedido_PedidoEstatus" FromRole="Pedido" ToRole="PedidoEstatus" />
           <NavigationProperty Name="PedidoDetalle" Relationship="Sagas.MainModuleModel.FK_PedidoDetalle_Pedido" FromRole="Pedido" ToRole="PedidoDetalle" />
+         
         </EntityType>
         <EntityType Name="PedidoDetalle">
           <Key>
             <PropertyRef Name="IdPedidoDetalle" />
           </Key>
           <Property Name="IdPedidoDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdPedido" Type="Int32" />
+          <Property Name="IdPedido" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="Cilindro20" Type="Boolean" />
           <Property Name="Cilindro30" Type="Boolean" />
@@ -11899,7 +11906,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Pedido" Relationship="Sagas.MainModuleModel.FK_Pedido_PedidoEstatus" FromRole="PedidoEstatus" ToRole="Pedido" />
-          <!--<Property Name="Activo" Type="Boolean" Nullable="false" />-->
         </EntityType>
         <Association Name="FK_Abono_Cargo1">
           <End Type="Sagas.MainModuleModel.Cargo" Role="Cargo" Multiplicity="1" />
@@ -12022,7 +12028,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PedidoDetalle_Pedido">
-          <End Type="Sagas.MainModuleModel.Pedido" Role="Pedido" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.Pedido" Role="Pedido" Multiplicity="1" />
           <End Type="Sagas.MainModuleModel.PedidoDetalle" Role="PedidoDetalle" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Pedido">
@@ -14146,6 +14152,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Abono">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Abono">
               <MappingFragment StoreEntitySet="Abono">
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
                 <ScalarProperty Name="FolioBancario" ColumnName="FolioBancario" />
                 <ScalarProperty Name="IdFormaPago" ColumnName="IdFormaPago" />
                 <ScalarProperty Name="MontoAbono" ColumnName="MontoAbono" />
@@ -14159,13 +14166,13 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Cargo">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Cargo">
               <MappingFragment StoreEntitySet="Cargo">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="Saldada" ColumnName="Saldada" />
                 <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="VentaExtraordinaria" ColumnName="VentaExtraordinaria" />
                 <ScalarProperty Name="TotalAbonos" ColumnName="TotalAbonos" />
                 <ScalarProperty Name="TotalCargo" ColumnName="TotalCargo" />
-                <ScalarProperty Name="FechaRegrostro" ColumnName="FechaRegrostro" />
                 <ScalarProperty Name="Ticket" ColumnName="Ticket" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
@@ -14220,6 +14227,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Pedido">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Pedido">
               <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
                 <ScalarProperty Name="Ruta" ColumnName="Ruta" />
                 <ScalarProperty Name="IdCamioneta" ColumnName="IdCamioneta" />
                 <ScalarProperty Name="IdPipa" ColumnName="IdPipa" />

@@ -21,6 +21,7 @@ namespace Sagas.MainModule.Entidades
         public decimal MontoAbono { get; set; }
         public byte IdFormaPago { get; set; }
         public string FolioBancario { get; set; }
+        public bool ACTIVO { get; set; }
     
         public virtual Cargo Cargo { get; set; }
         public virtual FormaPago CFormaPago { get; set; }
