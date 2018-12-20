@@ -1,4 +1,4 @@
-using MVC.Presentacion.Models;
+﻿using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Almacen;
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.OrdenCompra;
@@ -3054,12 +3054,12 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Pedidos
-        public void ListaPedidos(string token)
+        public void ListaPedidos(short id, string token)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPedidos"];
-            Pedidos(ApiCatalgos, token).Wait();
+            Pedidos(id, ApiCatalgos, token).Wait();
         }
-        private async Task Pedidos(string api, string token = null)
+        private async Task Pedidos(short id, string api, string token = null)
         {
             using (var client = new HttpClient())
             {
@@ -3070,7 +3070,7 @@ namespace MVC.Presentacion.Agente
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         pedidos = await response.Content.ReadAsAsync<List<PedidoModel>>();
                     else

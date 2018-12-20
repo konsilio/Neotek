@@ -10,6 +10,7 @@ namespace Application.MainModule.DTOs.Pedidos
     public class PedidoModelDto : ClienteCrearDto
     {
         public int IdPedido { get; set; }
+        public int IdPedidoDetalle { get; set; }
         public int IdEstatusPedido { get; set; }
         public string EstatusPedido { get; set; }
         public string Cantidad { get; set; }
@@ -31,6 +32,7 @@ namespace Application.MainModule.DTOs.Pedidos
         public string RegimenFiscal { get; set; }
         public string FolioVenta { get; set; }
         public int Ruta { get; set; }
+        public short IdDireccion { get; set; }
         public decimal TotalKilos { get; set; }
         public decimal TotalLitros { get; set; }
         public List<PedidoModelDto> Pedidos { get; set; }

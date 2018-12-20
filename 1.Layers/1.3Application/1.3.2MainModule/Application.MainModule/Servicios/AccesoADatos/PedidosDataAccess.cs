@@ -18,14 +18,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-        public List<Pedido> BuscarTodos()
+        public List<Pedido> Buscar(short idempresa)
         {
-            return uow.Repository<Pedido>().GetAll().ToList();
+            return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa)).ToList();
         }
 
         public List<PedidoDetalle> Buscar(int idPedido)
         {
-            return uow.Repository<PedidoDetalle>().Get(x=> x.IdPedido.Value.Equals(idPedido)).ToList();
+            return uow.Repository<PedidoDetalle>().Get(x=> x.IdPedido.Equals(idPedido)).ToList();
         }
         public Pedido BuscarPedido(int idPedido)
         {
@@ -37,8 +37,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
             using (uow)
             {
                 try
-                {
+                {                  
                     uow.Repository<Sagas.MainModule.Entidades.Pedido>().Update(_pro);
+                    foreach (var det in _pro.PedidoDetalle)
+                    {
+                        uow.Repository<Sagas.MainModule.Entidades.PedidoDetalle>().Update(det);
+                    }
                     uow.SaveChanges();
                     _respuesta.Id = _pro.IdPedido;
                     _respuesta.Exito = true;

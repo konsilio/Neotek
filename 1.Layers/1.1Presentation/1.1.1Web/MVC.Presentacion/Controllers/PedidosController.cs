@@ -35,7 +35,7 @@ namespace MVC.Presentacion.Controllers
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
 
-            List<PedidoModel> lstPmodel = PedidosServicio.ObtenerPedidos(_tkn);
+            List<PedidoModel> lstPmodel = PedidosServicio.ObtenerPedidos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             PedidoModel model = new PedidoModel()
             {
                 Pedidos = lstPmodel,
@@ -158,8 +158,8 @@ namespace MVC.Presentacion.Controllers
             var list = new List<Data>();
             list.Add(new Data(0, "Seleccione"));
             list.Add(new Data(1, "Pipa"));
-            list.Add(new Data(2, "Camioneta"));         
-            
+            list.Add(new Data(2, "Camioneta"));
+
             return list;
 
         }
@@ -173,7 +173,7 @@ namespace MVC.Presentacion.Controllers
 
             public int IntTipoUndad { get; private set; }
             public string StrUnidad { get; private set; }
-        }     
+        }
         #endregion
         public ActionResult AltaCliente()
         {
@@ -229,20 +229,24 @@ namespace MVC.Presentacion.Controllers
             var model = PedidosServicio.ObtenerIdPedido(idPedido, _tkn);
             return View(model);
         }
-        public ActionResult EditarPedido(PedidoModel _model)
+        public ActionResult EditarPedido(int idPedido)//PedidoModel _model
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tkn = Session["StringToken"].ToString();
             ViewBag.Estatus = PedidosServicio.ObtenerEstatusPedidos(_tkn).ToList();
-            //ViewBag.Pipas    //llenar unidades
-            //    ViewBag.Camionetas
-            return View(_model);
+            var model = PedidosServicio.ObtenerIdPedido(idPedido, _tkn);
+            model.Cantidad = model.Cantidad.Replace("Kg", "");
+            ViewBag.Camionetas = PedidosServicio.ObtenerCamionetas(model.IdEmpresa, _tkn);
+            ViewBag.Pipas = PedidosServicio.ObtenerPipas(model.IdEmpresa, _tkn);
+            return View(model);
         }
         public ActionResult GuardarEdicionPedido(PedidoModel _model)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-
+            _model.IdTipoPersona = 0;
+            _model.IdRegimenFiscal = 0;
+          
             var Respuesta = PedidosServicio.ActualizarPedido(_model, Session["StringToken"].ToString());
             if (Respuesta.Exito)
             {

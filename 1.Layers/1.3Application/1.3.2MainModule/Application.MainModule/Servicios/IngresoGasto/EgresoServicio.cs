@@ -53,7 +53,7 @@ namespace Application.MainModule.Servicios.IngresoGasto
                 //Ticket = Compra.NumOrdenCompra,
                 Descripcion = IngresoGastoConst.EgresoCompra,
                 FechaRegistro = DateTime.Now,
-                EsExterno = 1,
+                EsExterno = true,
             };
         }
     }

@@ -15,9 +15,9 @@ namespace Application.MainModule.Servicios.Pedidos
 {
     public class PedidosServicio
     {
-        public static List<PedidoModelDto> Obtener()
+        public static List<PedidoModelDto> Obtener(short idempresa)
         {
-            List<PedidoModelDto> lPedidos = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PedidosDataAccess().BuscarTodos());
+            List<PedidoModelDto> lPedidos = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PedidosDataAccess().Buscar(idempresa));
             return lPedidos;
         }
 

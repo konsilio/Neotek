@@ -16,10 +16,10 @@ namespace DS.MainModule.Controllers
             _pedidos = new Pedidos();
         }
 
-        [Route("buscar/listapedidos")]
-        public HttpResponseMessage GetListaPedidos()
+        [Route("buscar/listapedidos/{id}")]
+        public HttpResponseMessage GetListaPedidosEmpresa(short id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.ListaPedidos());
+            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.ListaPedidos(id));
         }
         [Route("buscar/pedidos/{id}")]
         public HttpResponseMessage GetPedidosId(int id)

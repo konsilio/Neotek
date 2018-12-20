@@ -18,16 +18,16 @@ namespace Application.MainModule.Flujos
 {
     public class Pedidos
     {
-        public List<PedidoModelDto> ListaPedidos()
+        public List<PedidoModelDto> ListaPedidos(short idempresa)
         {
             var resp = PermisosServicio.PuedeConsultarPedido();
             if (!resp.Exito) return null;
 
             if (TokenServicio.EsSuperUsuario())
-                return PedidosServicio.Obtener().ToList();
+                return PedidosServicio.Obtener(idempresa).ToList();
 
             else
-                return PedidosServicio.Obtener().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+                return PedidosServicio.Obtener(idempresa).Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
 
         public PedidoModelDto PedidoId(int idPedido)
@@ -79,8 +79,7 @@ namespace Application.MainModule.Flujos
             var pedidos = new PedidosDataAccess().BuscarPedido(pedidoDto.IdPedido);
             if (pedidos == null) return PedidosServicio.NoExiste();
 
-            var pedido = PedidosAdapter.FromDto(pedidoDto, pedidos);
-            pedido.FechaRegistro = pedido.FechaRegistro;
+            var pedido = PedidosAdapter.FromDto(pedidoDto, pedidos);           
             return PedidosServicio.Modificar(pedido);
         }
         public RespuestaDto Elimina(PedidoModelDto pedidoDto)

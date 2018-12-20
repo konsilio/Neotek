@@ -11,10 +11,10 @@ namespace MVC.Presentacion.App_Code
 {
     public static class PedidosServicio
     {
-        public static List<PedidoModel> ObtenerPedidos(string tkn)
+        public static List<PedidoModel> ObtenerPedidos(short id, string tkn)
         {
             var agente = new AgenteServicio();
-            agente.ListaPedidos(tkn);
+            agente.ListaPedidos(id, tkn);
             return agente._ListaPedidos;
         }
         public static PedidoModel ObtenerIdPedido(int id,string tkn)
