@@ -18,6 +18,7 @@ namespace Sagas.MainModule.Entidades
         public Pedido()
         {
             this.PedidoDetalle = new HashSet<PedidoDetalle>();
+            this.RespuestaSatisfaccionPedido = new HashSet<RespuestaSatisfaccionPedido>();
         }
     
         public int IdPedido { get; set; }
@@ -31,9 +32,12 @@ namespace Sagas.MainModule.Entidades
         public Nullable<int> IdCamioneta { get; set; }
         public Nullable<int> Ruta { get; set; }
         public short IdDireccion { get; set; }
+        public string MotivoCancelacion { get; set; }
     
         public virtual PedidoEstatus PedidoEstatus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PedidoDetalle> PedidoDetalle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RespuestaSatisfaccionPedido> RespuestaSatisfaccionPedido { get; set; }
     }
 }

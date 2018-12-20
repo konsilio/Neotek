@@ -226,6 +226,9 @@
     <Compile Include="Entidades\RequisicionProducto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\RespuestaSatisfaccionPedido.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Rol.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
