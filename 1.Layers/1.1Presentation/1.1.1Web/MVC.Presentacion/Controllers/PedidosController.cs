@@ -229,7 +229,7 @@ namespace MVC.Presentacion.Controllers
             var model = PedidosServicio.ObtenerIdPedido(idPedido, _tkn);
             return View(model);
         }
-        public ActionResult EditarPedido(int idPedido)//PedidoModel _model
+        public ActionResult EditarPedido(int idPedido)//
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tkn = Session["StringToken"].ToString();
@@ -259,6 +259,29 @@ namespace MVC.Presentacion.Controllers
             }
 
         }
+        public ActionResult CancelarPedido(int idPedido, string MotivoCancela = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+            var _model = PedidosServicio.ObtenerIdPedido(idPedido, _tkn);
+            _model.IdTipoPersona = 0;
+            _model.IdRegimenFiscal = 0;
+            _model.Pedidos = null;
+            _model.MotivoCancelacion = MotivoCancela;
+
+            var Respuesta = PedidosServicio.EliminarPedido(_model, Session["StringToken"].ToString());
+            if (Respuesta.Exito)
+            {
+                return RedirectToAction("Index", new { msj = Respuesta.Mensaje });
+            }
+            else
+            {
+                TempData["RespuestaDTO"] = Respuesta;
+                return RedirectToAction("Index");
+            }
+
+        }
+        
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;

@@ -8,13 +8,50 @@
     <script src="~/assets/js/pages/ui/notifications.js"></script>
 
     <script type="text/javascript">
-    var mensaje = '@ViewBag.Msj';
-    if (mensaje != '') {
-        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
-    }
+        var mensaje = '@ViewBag.Msj';
+        if (mensaje != '') {
+            $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+        }
+        function AsignarEliminar(idPedido) {
+            $("#btnEliminar").attr("data-id", idPedido);
+        }
+        $(function () {
+            $("#btnEliminar").click(function () {
+                var id = $("#btnEliminar").attr("data-id")
+                var motivoC = $("#motivo").val();
+
+                debugger
+                // window.location = window.location.protocol + "//" + window.location.host + "/Pedidos/CancelarPedido" + "?idPedido=" + idPedido;
+                var url = "/Pedidos/CancelarPedido";
+
+                $.getJSON(url, { idPedido: id, MotivoCancela: motivoC}, function (data) {
+                        debugger
+                        var x = data;
+                        if (data != "[]") {
+
+
+                        }
+                        else {
+
+
+                        }
+                    });
+
+            });
+        });
+        var Cancelar = function () {
+            debugger
+            var url = "/Pedidos/CancelarPedido";
+            var id = $("#btnEliminar").attr("data-id")
+            var motivoC = $("#motivo").val()
+            $.get(url, { idPedido: id, MotivoCancela: motivoC }, function (data) {
+
+                window.location.href = '@Url.Action("Index", "Pedidos")';
+            });
+        };
     </script>
 </head>
-<body style="height:100%">
+<body>
     @using (Html.BeginForm("Nuevo", "Pedidos", FormMethod.Post))
     {
         <section class="content home">
@@ -116,10 +153,14 @@
                                                                     <i class="material-icons">edit</i>
                                                                     <span>Revisar pedido</span>
                                                                 </a>
-                                                                <a ID="lbBorrar" href="@Url.Action("CancelarPedido", "Pedidos", new {  idPedido =item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <a href="#ModalCancelar" data-toggle="modal" data-id="@item.IdPedido" id="btnok" class="tip" onclick="javascript: AsignarEliminar(@item.IdPedido)" data-target="#ModalCancelar" role="button" aria-haspopup="true" aria-expanded="false">
                                                                     <i class="material-icons">delete</i>
                                                                     <span>Cancelar pedido</span>
                                                                 </a>
+                                                                @*<a ID="lbBorrar" href="@Url.Action("CancelarPedido", "Pedidos", new {  idPedido =item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="material-icons">delete</i>
+                                                                        <span>Cancelar pedido</span>
+                                                                    </a>*@
                                                             </td>
                                                         </tr>
                                                     }
@@ -150,6 +191,31 @@
 
             </div>
         </section>
+        <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="title" id="ModalConfirmacionLabel">Motivo de la cancelación</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="body">
+                            <div class="col-sm-12">
+                                <div class="blockquote blockquote-info btn-round">
+                                    <textarea id="motivo" name="MotivoCancelacion" class="form-control" Rows="5" placeholder="Cual es el motivo de la cancelación?.."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        @*<input type="button" id="btnEliminar" value="Aceptar" class="btn btn-raised btn-primary btn-round waves-effect" />*@
+                        <button type="button" id="btnEliminar" class="btn btn-raised btn-primary btn-round" onclick="Cancelar()">Aceptar</button>
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     }
 </body>
+
 </html>
