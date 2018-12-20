@@ -42,7 +42,7 @@ public class Constantes {
     public static final String GET_CATALOGO_RAZON = "mobile/catalogos/tipo-persona";
     public static final String POST_CLIENTE = "mobile/cliente/registrar";
     public static final String GET_LIST_CLIENTES = "mobile/cliente/lista-clientes/{criterio}";
-    public static final String GET_LIST_EXISTENCIAS = "mobile/existencias/lista/{esGasLP}/{esCilindroConGas}/{esCilindro}";
+    public static final String GET_LIST_EXISTENCIAS = "mobile/catalogos/venta-gas/{esGasLP}/{esCilindroConGas}/{esCilindro}";
     public static final String GET_CATALOGO_PRODUCTO = "mobile/catalogos/venta-gas/otros";
     public static final String POST_VENTA = "mobile/venta";
     public static final String POST_ANTICIPO = "mobile/anticipos";

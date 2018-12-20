@@ -19,4 +19,9 @@ public interface PuntoVentaGasListaPresenter {
     void getPrecioVenta(String token);
 
     void onSuccessPrecioVenta(PrecioVentaDTO data);
+
+    void getCamionetaCilindros(boolean esGasLP, boolean esCilindroGas, boolean esCilindro,
+                               String token);
+
+    void onSuccessDatosCamioneta(List<ExistenciasDTO> data);
 }

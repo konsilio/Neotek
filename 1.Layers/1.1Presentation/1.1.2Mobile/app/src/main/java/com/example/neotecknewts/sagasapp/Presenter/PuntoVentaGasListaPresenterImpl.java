@@ -21,7 +21,7 @@ public class PuntoVentaGasListaPresenterImpl implements PuntoVentaGasListaPresen
     @Override
     public void getListaCamionetaCilindros(String token, boolean esGasLP,
                                            boolean esCilindroConGas, boolean esCilindro) {
-        view.onShowProgress(R.string.message_cargando);
+        //view.onShowProgress(R.string.message_cargando);
         interactor.getListaCamionetaCilindros(token, esGasLP,
          esCilindroConGas, esCilindro);
     }
@@ -34,7 +34,7 @@ public class PuntoVentaGasListaPresenterImpl implements PuntoVentaGasListaPresen
 
     @Override
     public void onSuccess(List<ExistenciasDTO> data) {
-        view.onHideProgress();
+        //view.onHideProgress();
         view.onSuccessListExistencia(data);
     }
 
@@ -57,5 +57,18 @@ public class PuntoVentaGasListaPresenterImpl implements PuntoVentaGasListaPresen
         //view.onHideProgress();
         view.onSuccessPrecioVenta(data);
 
+    }
+
+    @Override
+    public void getCamionetaCilindros(boolean esGasLP, boolean esCilindroGas, boolean esCilindro,
+                                      String token) {
+        //view.onShowProgress(R.string.message_cargando);
+        interactor.getCamionetaCilindros(esGasLP,esCilindroGas,esCilindro,token);
+    }
+
+    @Override
+    public void onSuccessDatosCamioneta(List<ExistenciasDTO> data) {
+        view.onHideProgress();
+        view.onSuccessDatosCamioneta(data);
     }
 }
