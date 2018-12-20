@@ -106,11 +106,11 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             intent.putExtra("ventaDTO",ventaDTO);
             startActivity(intent);
         });
-        if(ventaDTO.isCredito()){
+        if(ventaDTO.isTieneCredito()){
             SPuntoVentaActivityCredito.setChecked(ventaDTO.isCredito());
-            ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
-        }else{
             ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
+        }else{
+            ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
         }
         if( EsVentaPipa ||EsVentaCarburacion){
             BtnPuntoVentaPagarActivityOpciones.setVisibility(View.GONE);

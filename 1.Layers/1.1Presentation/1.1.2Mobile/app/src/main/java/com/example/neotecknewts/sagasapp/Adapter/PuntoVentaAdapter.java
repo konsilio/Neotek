@@ -1,6 +1,8 @@
 package com.example.neotecknewts.sagasapp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,27 +35,30 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.EsVentaCamioneta = EsVentaCamioneta;
         this.context = context;
     }
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.punto_venta_item,parent,false
         );
-        return new ExistenciasHolder(view);
+        ExistenciasHolder holder = new ExistenciasHolder(view);
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         ((ExistenciasHolder)holder).PuntoVentaGasListaActivityCantidadGas.setText(
-                String.valueOf(this.items.get(position).getExistencias())
+                String.valueOf(items.get(position).getExistencias())
         );
         ((ExistenciasHolder)holder).PuntoVentaGasListaActivityTipoGas.setText(
-                this.items.get(position).getNombre().replace(",0000","Kg.")
+                items.get(position).getNombre().replace(",0000","Kg.")
         );
         ((ExistenciasHolder) holder).PuntoVentaGasListActivityTituloCantidad.setText(
-                this.EsVentaCamioneta ? this.context.getString(R.string.cantidad):
+                EsVentaCamioneta ? this.context.getString(R.string.cantidad):
                         this.context.getString(R.string.litros_despachados)
         );
         EditText editText = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityCantidad;
+
         if(esVentaGas) {
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -116,16 +121,34 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     }
                 }
             });
+        }else
+        {
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    items.get(position).setCantidad(editText.getText().toString());
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    items.get(position).setCantidad(editText.getText().toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    items.get(position).setCantidad(editText.getText().toString());
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
-        return this.items.size();
+        return items.size();
     }
 
     public ExistenciasDTO getCilindro(int position) {
-        return  this.items.get(position);
+        return  items.get(position);
     }
 
     public class ExistenciasHolder extends RecyclerView.ViewHolder {

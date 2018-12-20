@@ -8,8 +8,8 @@ public class ExistenciasDTO implements Serializable {
     @SerializedName("Id")
     private int Id;
 
-    @SerializedName("Existencias")
-    private int Existencias;
+    @SerializedName("Existencia")
+    private double Existencias;
 
     @SerializedName("PrecioUnitario")
     private double PrecioUnitario;
@@ -37,11 +37,11 @@ public class ExistenciasDTO implements Serializable {
         Id = id;
     }
 
-    public int getExistencias() {
+    public double getExistencias() {
         return Existencias;
     }
 
-    public void setExistencias(int existencias) {
+    public void setExistencias(double existencias) {
         Existencias = existencias;
     }
 

@@ -42,13 +42,6 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        /*Call<DatosPuntoVentaDTO> call = restClient.getListaExistencias(
-                esGasLP,
-                esCilindroConGas,
-                esCilindro,
-                token,
-                "application/json"
-        );*/
         Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
                 token,
                 "application/json"
@@ -100,7 +93,8 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
     }
 
     @Override
-    public void getListEstacionGas(String token, boolean esGasLP, boolean esCilindroGas, boolean esCilindro) {
+    public void getListEstacionGas(String token, boolean esGasLP, boolean esCilindroGas, boolean
+            esCilindro) {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
@@ -114,13 +108,6 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        /*Call<DatosPuntoVentaDTO> call = restClient.getListaExistencias(
-                esGasLP,
-                esCilindroGas,
-                esCilindro,
-                token,
-                "application/json"
-        );*/
         Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
                 token,
                 "application/json"
@@ -230,6 +217,74 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
             public void onFailure(Call<PrecioVentaDTO> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
                 presenter.onError("Se ha generado un error: "+t.getCause());
+            }
+        });
+    }
+
+    @Override
+    public void getCamionetaCilindros(boolean esGasLP, boolean esCilindroGas, boolean esCilindro,
+                                      String token) {
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
+                esGasLP,
+                esCilindroGas,
+                esCilindro,
+                token,
+                "application/json"
+        );
+        Log.w("Url base",retrofit.baseUrl().toString());
+
+        call.enqueue(new Callback<List<ExistenciasDTO>>() {
+            @Override
+            public void onResponse(Call<List<ExistenciasDTO>> call, Response<List<ExistenciasDTO>> response) {
+                List<ExistenciasDTO> data = response.body();
+                if (response.isSuccessful()) {
+
+                    Log.w("Estatus","Success");
+                    presenter.onSuccessDatosCamioneta(data);
+                }
+                else {
+                    String mensaje = "";
+                    switch (response.code()) {
+                        case 404:
+                            Log.w("Error","not found");
+
+                            break;
+                        case 500:
+                            Log.w("Error", "server broken");
+
+                            break;
+                        default:
+                            Log.w("Error", "Error desconocido: "+response.code());
+
+                            break;
+                    }
+                    mensaje = "Se ha generado un error: "+response.message();
+                    if(data==null) {
+                        presenter.onError(mensaje);
+                    }else{
+                        presenter.onError(response.message());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ExistenciasDTO>> call, Throwable t) {
+                Log.e("error", "Error desconocido: "+t.toString());
+                presenter.onError("Se ha generado un error: "+t.getMessage());
             }
         });
     }
