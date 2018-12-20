@@ -76,13 +76,16 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         SPuntoVentaActivityCredito.setChecked(
                 ventaDTO.isCredito()
         );
-        SPuntoVentaPagarActivityFactura.setChecked(
+        /*SPuntoVentaPagarActivityFactura.setChecked(
                 ventaDTO.isFactura()
-        );
+        );*/
+        SPuntoVentaPagarActivityFactura.setVisibility(View.GONE);
+        ventaDTO.setFactura(true);
         SPuntoVentaActivityCredito.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {
                 TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
                 ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
+
             }else {
                 TVPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
                 ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
@@ -106,11 +109,16 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             intent.putExtra("ventaDTO",ventaDTO);
             startActivity(intent);
         });
-        if(ventaDTO.isCredito()){
-            SPuntoVentaActivityCredito.setChecked(ventaDTO.isCredito());
+        SPuntoVentaActivityCredito.setChecked(ventaDTO.isCredito());
+        if(ventaDTO.isTieneCredito()){
+            SPuntoVentaActivityCredito.setVisibility(View.VISIBLE);
+            TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
             ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
+
         }else{
+            SPuntoVentaActivityCredito.setVisibility(View.GONE);
             ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
+            TVPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
         }
         if( EsVentaPipa ||EsVentaCarburacion){
             BtnPuntoVentaPagarActivityOpciones.setVisibility(View.GONE);

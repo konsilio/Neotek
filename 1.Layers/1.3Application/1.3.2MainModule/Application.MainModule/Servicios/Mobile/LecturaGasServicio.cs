@@ -17,6 +17,7 @@ using Application.MainModule.Servicios.Seguridad;
 using System.Linq;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Ventas;
 
 namespace Application.MainModule.Servicios.Mobile
 {
@@ -74,7 +75,6 @@ namespace Application.MainModule.Servicios.Mobile
 
             return AlmacenGasServicio.InsertarLectura(adapter);
         }
-
         public static List<UnidadAlmacenGas> AcomodarUnidadAlmacenGasDelUsuario(List<UnidadAlmacenGas> alms)
         {
             var almacenes = new List<UnidadAlmacenGas>();
@@ -222,6 +222,23 @@ namespace Application.MainModule.Servicios.Mobile
         public static AlmacenGasTomaLectura ObtenerUltimaLecturaInicial(short idCAlmacenGas, DateTime fecha)
         {
             return new AlmacenGasDataAccess().ObtenerUltimaLecturaInicial(idCAlmacenGas, fecha);
+        }
+        public static decimal ObtenerKilosGasCamioneta(short idCAlmacenGas, DateTime fecha, int idPuntoVenta)
+        {
+            decimal TotalKilosGas = 0;
+            decimal TotalKilosVenta = 0;
+            var lecturaInical = ObtenerUltimaLecturaInicial(idCAlmacenGas, fecha);
+            var catCilindros = AlmacenGasServicio.ObtenerCilindros();
+            foreach (var cilindro in lecturaInical.Cilindros)
+            {
+                TotalKilosGas += cilindro.Cantidad * catCilindros.SingleOrDefault(x => x.IdCilindro.Equals(cilindro.IdCilindro)).CapacidadKg;
+            }
+            var Ventas = CajaGeneralServicio.ObtenerVentasPuntosVenta(idPuntoVenta);
+            foreach (var venta in Ventas)
+            {
+                TotalKilosVenta += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
+            }
+            return CalcularPreciosVentaServicio.ObtenerKilosCamioneta(TotalKilosGas, TotalKilosVenta);
         }
     }
 }

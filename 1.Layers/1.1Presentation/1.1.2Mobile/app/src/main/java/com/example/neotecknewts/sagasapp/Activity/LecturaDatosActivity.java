@@ -95,7 +95,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                 R.layout.custom_spinner, ListaTipoMedidor));*/
 
         /*lecturaDatosPresenter.getMedidores(session.getToken());*/
-        lecturaDatosPresenter.getEstacionesCarburacion(session.getToken(),esFinalizar);
+        lecturaDatosPresenter.getEstacionesCarburacion(session.getToken(),EsLecturaFinal);
         SLecturaDatosActivityTipoMedidor.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override

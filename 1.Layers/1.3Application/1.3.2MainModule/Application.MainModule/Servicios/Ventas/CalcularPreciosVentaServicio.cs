@@ -419,9 +419,7 @@ namespace Application.MainModule.Servicios.Ventas
         public static decimal ObtenerUltimoSaldoDia(int puntoventa, int position, string Tipo, int p)//puntos de venta
         {
             // return new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.Orden == (orden - 1)).FirstOrDefault().TotalDia;//.OrderByDescending(x => x.Orden).FirstOrDefault().TotalDia;
-
             decimal value = 0;//.OrderByDescending(x => x.FechaAplicacion).FirstOrDefault().TotalDia;
-
             if (Tipo == "TotalDia")
             {
                 if (position > 1)
@@ -455,7 +453,6 @@ namespace Application.MainModule.Servicios.Ventas
                     value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().TotalAnio;
                 }
             }
-
             if (Tipo == "TotalAcumDia")
             {
                 if (p > 1)
@@ -489,7 +486,6 @@ namespace Application.MainModule.Servicios.Ventas
                     value = new CajaGeneralDataAccess().BuscarTodosPV().OrderBy(x => x.Orden).FirstOrDefault().TotalAcumAnio;
                 }
             }
-
             if (Tipo == "IvaDia")
             {
                 if (position > 1)
@@ -501,7 +497,6 @@ namespace Application.MainModule.Servicios.Ventas
                     value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().IvaDia;
                 }
             }
-
             if (Tipo == "IvaMes")
             {
                 if (position > 1)
@@ -524,7 +519,6 @@ namespace Application.MainModule.Servicios.Ventas
                     value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().IvaAnio;
                 }
             }
-
             if (Tipo == "SubtotalDia")
             {
                 if (position > 1)
@@ -536,7 +530,6 @@ namespace Application.MainModule.Servicios.Ventas
                     value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().SubtotalDia;
                 }
             }
-
             if (Tipo == "SubtotalMes")
             {
                 if (position > 1)
@@ -548,7 +541,6 @@ namespace Application.MainModule.Servicios.Ventas
                     value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().SubtotalMes;
                 }
             }
-
             if (Tipo == "SubtotalAnio")
             {
                 if (position > 1)
@@ -560,7 +552,6 @@ namespace Application.MainModule.Servicios.Ventas
                     value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().SubtotalAnio;
                 }
             }
-
             if (Tipo == "DescuentoDia")
             {
                 if (position > 1)
@@ -572,7 +563,6 @@ namespace Application.MainModule.Servicios.Ventas
                     value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().DescuentoDia;
                 }
             }
-
             if (Tipo == "DescuentoMes")
             {
                 if (position > 1)
@@ -596,8 +586,6 @@ namespace Application.MainModule.Servicios.Ventas
                     value = new CajaGeneralDataAccess().BuscarPorPV(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().DescuentoAnio;
                 }
             }
-
-
             return value;
         }
         public static decimal ObtenerSumaTotalVenta(decimal Total, decimal TotalDia)
@@ -613,6 +601,10 @@ namespace Application.MainModule.Servicios.Ventas
         public static short ObtenerConsecutivoOrden()
         {
             return new CajaGeneralDataAccess().BuscarTodos().OrderByDescending(x => x.Orden).FirstOrDefault().Orden;
+        }
+        public static decimal ObtenerKilosCamioneta(decimal TotalKilosInical, decimal TotalKilosVendidos)
+        {
+           return TotalKilosInical - TotalKilosVendidos;
         }
     }
 }

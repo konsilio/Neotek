@@ -61,7 +61,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdTipoRegimen = cliente.IdRegimenFiscal.Value,
                 IdTipoPersona = cliente.IdTipoPersona.Value,
                 RFC = cliente.Rfc.Trim(),
-                Credito = (cliente.limiteCreditoDias <= 0 && cliente.limiteCreditoMonto > 0) ? true : false,
+                Credito = (cliente.limiteCreditoDias > 0 && cliente.limiteCreditoMonto > 0) ? true : false,
                 Factura = (cliente.Rfc.Trim()!="")? true:false
             };
         }     
