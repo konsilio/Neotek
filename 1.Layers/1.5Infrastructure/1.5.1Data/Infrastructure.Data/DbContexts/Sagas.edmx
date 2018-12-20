@@ -870,6 +870,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="limiteCreditoMonto" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="limiteCreditoDias" Type="smallint" Nullable="false" />
           <Property Name="CreditoDisponibleMonto" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="VentaExtraordinaria" Type="bit" />
         </EntityType>
         <EntityType Name="CClienteContacto">
           <Key>
@@ -10251,6 +10252,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
           <Property Name="Celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CorreoElectronico" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="Domicilio" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="VentaExtraordinaria" Type="Boolean" />
 
           <NavigationProperty Name="RegimenFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal" FromRole="Cliente" ToRole="RegimenFiscal" />
           <NavigationProperty Name="TipoPersonaFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CTipoPersona" FromRole="Cliente" ToRole="TipoPersona" />
@@ -10259,6 +10261,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
           <NavigationProperty Name="CuentaContable" Relationship="Sagas.MainModuleModel.FK_CCliente_CCuentaContable" FromRole="Cliente" ToRole="CuentaContable" />
           <NavigationProperty Name="VentaPuntoDeVenta" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_CCliente" FromRole="Cliente" ToRole="VentaPuntoDeVenta" />
           <NavigationProperty Name="Cargo" Relationship="Sagas.MainModuleModel.FK_Cargo_CCliente" FromRole="Cliente" ToRole="Cargo" />
+         
        
           <!--<NavigationProperty Name="CClienteCondicion" Relationship="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" FromRole="CCliente" ToRole="CClienteCondicion" />
           <NavigationProperty Name="CClienteContacto" Relationship="Sagas.MainModuleModel.FK_CClienteContacto_CCliente" FromRole="CCliente" ToRole="CClienteContacto" />
@@ -13541,6 +13544,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
               </MappingFragment>
 
               <MappingFragment StoreEntitySet="CClienteCondicion">
+                <ScalarProperty Name="VentaExtraordinaria" ColumnName="VentaExtraordinaria" />
                 <ScalarProperty Name="CreditoDisponibleMonto" ColumnName="CreditoDisponibleMonto" />
                 <ScalarProperty Name="DescuentoXKilo" ColumnName="DescuentoXKilo" />
                 <ScalarProperty Name="limiteCreditoDias" ColumnName="limiteCreditoDias" />
