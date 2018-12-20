@@ -47,6 +47,7 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
@@ -454,6 +455,22 @@ public interface RestClient {
      */
     @GET(Constantes.GETUSUARIOS_CORTES)
     Call<UsuariosCorteDTO> getUsuariosCorte(
+            @Header("Authorization") String token,
+            @Header("Content-type")  String contenType
+    );
+
+    /**
+     * getTieneVentaExtraforanea
+     * Realiza la consulta desde el web api de que si el cliente cuenta con un acceso a
+     * venta extraforanea, se retornara un objeto dto con la respuesta de este resultado
+     * @param idCliente {@link Integer} que reprecenta el Id del cliente
+     * @param token {@link String} que reprecenta el token de session
+     * @param contenType Tipo de contenido o formato en que se envian los datos
+     * @return Objeto de tipo {@link RespuestaVentaExtraforaneaDTO} con el resultado de la consulta
+     */
+    @GET(Constantes.GET_VENTA_EXTRAFORANEA)
+    Call<RespuestaVentaExtraforaneaDTO> getTieneVentaExtraforanea(
+            @Path(value = "idCliente") int idCliente,
             @Header("Authorization") String token,
             @Header("Content-type")  String contenType
     );

@@ -5,6 +5,7 @@ import com.example.neotecknewts.sagasapp.Interactor.PuntoVentaPagarInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.PuntoVentaPagarInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
@@ -64,5 +65,17 @@ public class PuntoVentaPagarPresenterImpl implements PuntoVentaPagarPresenter {
     public void onErrorPuntoVenta(String mensaje) {
         view.onHiddeProgress();
         view.onErrorPuntoVenta(mensaje);
+    }
+
+    @Override
+    public void verificarVentaExtraforanea(int idCliente, String token) {
+        view.onShowProgress(R.string.message_cargando);
+        interactor.verificarVentaExtraforanea(idCliente,token);
+    }
+
+    @Override
+    public void onSuccessVentaExtraforanea(RespuestaVentaExtraforaneaDTO data) {
+        view.onHiddeProgress();
+        view.onSuccessExtraforanea(data);
     }
 }
