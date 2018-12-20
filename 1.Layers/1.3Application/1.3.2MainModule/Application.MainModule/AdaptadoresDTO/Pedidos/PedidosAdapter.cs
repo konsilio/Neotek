@@ -255,7 +255,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 IdCamioneta = ped.IdCamioneta,
                 Ruta = ped.Ruta,
                 IdDireccion = ped.IdDireccion,
-                
+               
             };
         }
         public static List<PedidoModelDto> FromDtoDetalle(List<PedidoDetalle> lu)
