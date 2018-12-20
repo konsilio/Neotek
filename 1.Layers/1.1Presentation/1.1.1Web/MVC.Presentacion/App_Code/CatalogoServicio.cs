@@ -1515,6 +1515,13 @@ namespace MVC.Presentacion.App_Code
             return agente._lstaClientes;
         }
 
+        public static List<ClientesModel> ListaClientes(string tel1, string tel2, string rfc, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaClientesMod(tel1, tel2, rfc, token);
+            return agente._lstaClientesMod;
+        }
+
         public static List<ClienteLocacionMod> ObtenerLocaciones(int id, string token)
         {
             var agente = new AgenteServicio();

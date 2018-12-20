@@ -242,6 +242,7 @@
     <Compile Include="App_Code\AlmacenServicio.cs" />
     <Compile Include="App_Code\AutenticacionServicio.cs" />
     <Compile Include="App_Code\OrdenCompraServicio.cs" />
+    <Compile Include="App_Code\PedidosServicio.cs" />
     <Compile Include="App_Code\RequisicionServicio.cs" />
     <Compile Include="App_Code\CatalogoServicio.cs" />
     <Compile Include="App_Code\TokenServicio.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
+    <Compile Include="Controllers\PedidosController.cs" />
     <Compile Include="Controllers\PrecioVentaController.cs" />
     <Compile Include="Controllers\PrecioVentaOtroController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
@@ -345,6 +347,9 @@
     <Compile Include="Models\OrdenCompra\ProductoOCDevExpress.cs" />
     <Compile Include="Models\OrdenCompra\ProductoOCDTO.cs" />
     <Compile Include="Models\OrdenCompra\RequisicionOCDTO.cs" />
+    <Compile Include="Models\Pedidos\EstatusPedidoModel.cs" />
+    <Compile Include="Models\Pedidos\PedidoDetalleDto.cs" />
+    <Compile Include="Models\Pedidos\PedidoModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
@@ -11531,6 +11536,11 @@
     <Content Include="Views\PuntoVenta\AsignarChofer.cshtml" />
     <Content Include="Views\Remanente\DashBoard.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolMovilVenta.cshtml" />
+    <Content Include="Views\Pedidos\Index.cshtml" />
+    <Content Include="Views\Pedidos\Nuevo.cshtml" />
+    <Content Include="Views\Pedidos\AltaCliente.cshtml" />
+    <Content Include="Views\Pedidos\RevisarPedido.cshtml" />
+    <Content Include="Views\Pedidos\EditarPedido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

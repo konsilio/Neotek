@@ -300,6 +300,19 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoTraspaso_AlmacenGasMovimiento" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoVenta_AlmacenGasMovimiento" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_VentaPuntoDeVentaEfectivo_VentaPuntoDeVenta" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Abono" Width="1.5" PointX="27.625" PointY="6.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Cargo" Width="1.5" PointX="25.375" PointY="6" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CTipoEgreso" Width="1.5" PointX="14.375" PointY="25.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Egreso" Width="1.5" PointX="16.625" PointY="25" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Ingreso" Width="1.5" PointX="12.125" PointY="28.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Pedido" Width="1.5" PointX="22.625" PointY="1" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.PedidoDetalle" Width="1.5" PointX="24.875" PointY="1.25" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.PedidoEstatus" Width="1.5" PointX="20.375" PointY="1.75" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Abono_Cargo1" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Egreso_CTipoEgreso" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Ingreso_OrdenCompra" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Pedido_PedidoEstatus" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_PedidoDetalle_Pedido" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

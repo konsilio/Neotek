@@ -22,7 +22,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<VentaPuntoDeVenta> Buscar()
         {
             bool noProcesados = false;
-            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.DatosProcesados.Equals(noProcesados)).ToList();
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.DatosProcesados.Equals(noProcesados) & x.FolioOperacionDia != null).ToList();
         }
         public List<VentaPuntoDeVentaDetalle> BuscarDetalleVenta(short? empresa, short anio, byte mes, byte dia, short? orden)
         {
