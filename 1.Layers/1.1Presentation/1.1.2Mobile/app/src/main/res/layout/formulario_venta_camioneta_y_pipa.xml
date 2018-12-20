@@ -4,37 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/CLFormularioVentaCamionetaYPipaContenedor"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:layout_editor_absoluteY="81dp">
 
     <Switch
         android:id="@+id/SWFormularioVentaCamionetaYPipaCredito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/credito"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintEnd_toStartOf="@+id/tableLayout2"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="8dp" />
 
     <Switch
         android:id="@+id/SWFormularioVentaCamionetaYPipaFactura"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="92dp"
         android:checked="true"
         android:text="@string/factura"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tableLayout2"
+        app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SWFormularioVentaCamionetaYPipaCredito" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.973" />
 
     <TableLayout
         android:id="@+id/tableLayout2"
         android:layout_width="191dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="169dp"
+        android:layout_marginLeft="169dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/BtnFormularioVentaCamionetaYPipaPagar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
@@ -135,29 +151,40 @@
 
     <Button
         android:id="@+id/BtnFormularioVentaCamionetaYPipaCancelar"
-        android:layout_width="143dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         style="@style/SagasTheme.Button"
-        android:background="@drawable/ripple_effect"
-        android:text="@string/message_cancel"
-        android:textColor="@color/colorTextButtonLogin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout2"
-        tools:ignore="UnusedAttribute" />
-
-    <Button
-        android:id="@+id/BtnFormularioVentaCamionetaYPipaPagar"
         android:layout_width="143dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/ripple_effect"
+        android:text="@string/message_cancel"
+        android:textColor="@color/colorTextButtonLogin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/BtnFormularioVentaCamionetaYPipaPagar"
+        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.925"
+        tools:ignore="UnusedAttribute" />
+
+    <Button
+        android:id="@+id/BtnFormularioVentaCamionetaYPipaPagar"
         style="@style/SagasTheme.Button"
+        android:layout_width="143dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/ripple_effect"
         android:text="@string/pagar"
         android:textColor="@color/colorTextButtonLogin"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout2"
+        app:layout_constraintHorizontal_bias="0.923"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="UnusedAttribute" />
 </android.support.constraint.ConstraintLayout>

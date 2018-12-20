@@ -153,14 +153,20 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         SWFormularioVentaCamionetaYPipaCredito.setVisibility(
                 ventaDTO.isTieneCredito()? View.VISIBLE:View.GONE
         );
+        SWFormularioVentaCamionetaYPipaCredito.setVisibility(
+                ventaDTO.isTieneCredito()? View.VISIBLE:View.GONE
+        );
+
         SWFormularioVentaCamionetaYPipaCredito.setChecked(
                 ventaDTO.isCredito()
         );
         SWFormularioVentaCamionetaYPipaFactura = findViewById(R.id.
                 SWFormularioVentaCamionetaYPipaFactura);
+        ventaDTO.setFactura(true);
         SWFormularioVentaCamionetaYPipaFactura.setChecked(
                 ventaDTO.isFactura()
         );
+        SWFormularioVentaCamionetaYPipaFactura.setVisibility(View.GONE);
         BtnFormularioVentaCamionetaYPipaCancelar = findViewById(R.id.
                 BtnFormularioVentaCamionetaYPipaCancelar);
         BtnFormularioVentaCamionetaYPipaPagar = findViewById(R.id.
@@ -339,7 +345,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         ExistenciasDTO = respuesta;
         if(ExistenciasDTO!=null){
             adapter = new PuntoVentaAdapter(ExistenciasDTO,EsVentaCamioneta,this);
-
             if(!EsVentaCamioneta){
                 adapter.esVentaGas = true;
                 adapter.PrecioLitro = TVFormularioVentaCamionetaYPipaPrecio;
@@ -347,6 +352,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 adapter.Subtotal = TVFormularioVentaCamionetaYPipaSubtotal;
                 adapter.Iva = TVFormularioVentaCamionetaYPipaIva;
                 adapter.Total =TVFormularioVentaCamionetaYPipaTotal;
+                adapter.precioVentaDTO = precioVentaDTO;
             }
             //region Seteo de la lista del reciclerview
             LinearLayoutManager linearLayout = new LinearLayoutManager(
@@ -368,47 +374,51 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      * la venta {@link VentaDTO} en el apartado de detalle de venta {@link ConceptoDTO}
      */
     private void SetearLitrosDespachados() {
-        double total,subtotal, iva,precio,desc;
-        ventaDTO.setCredito(SWFormularioVentaCamionetaYPipaCredito.isChecked());
-        ventaDTO.setFactura(SWFormularioVentaCamionetaYPipaFactura.isChecked());
-        ConceptoDTO conceptoDTO = new ConceptoDTO();
-        conceptoDTO.setConcepto("Litros de gas");
-        conceptoDTO.setCantidad(Integer.valueOf(adapter.cantidad.getText().toString()));
-        conceptoDTO.setPUnitario(adapter.existencia.getPrecioUnitario());
-        conceptoDTO.setDescuento(adapter.existencia.getDescuento());
-        conceptoDTO.setSubtotal(Double.valueOf(adapter.Subtotal.getText().toString()));
-        conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
-        conceptoDTO.setCantidadLt(Integer.valueOf(adapter.cantidad.getText().toString()));
-        Calendar  calendar = Calendar.getInstance();
-        conceptoDTO.setYear(calendar.get(Calendar.YEAR));
-        conceptoDTO.setMes(calendar.get(Calendar.MONTH)+1);
-        conceptoDTO.setDia(calendar.get(Calendar.DAY_OF_WEEK));
-        conceptoDTO.setPrecioUnitarioProducto(adapter.existencia.getPrecioUnitario());
-        conceptoDTO.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
-        conceptoDTO.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
-        conceptoDTO.setIdProducto(precioVentaDTO.getIdProducto());
-        conceptoDTO.setIdLinea(precioVentaDTO.getIdProductoLinea());
-        conceptoDTO.setIdCategoria(precioVentaDTO.getIdCategoria());
-        conceptoDTO.setIdUnidadmedida(precioVentaDTO.getIdUnidadMedida());
-        conceptoDTO.setCantidadKg(
-                precioVentaDTO.getPrecioSalidaKg()*
-                        Integer.parseInt(adapter.cantidad.getText().toString())
-        );
-        conceptoDTO.setCantidadLt(
-                precioVentaDTO.getPrecioSalidaLt() *
-                        Integer.parseInt(adapter.cantidad.getText().toString())
-        );
-        conceptoDTO.setLitrosDespachados(Integer.valueOf(adapter.cantidad.getText().toString()));
-        conceptoDTO.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
-        conceptoDTO.setIdTipoGas(0);
-        ventaDTO.getConcepto().add(conceptoDTO);
-        Intent intent = new Intent(PuntoVentaGasListaActivity.this,
-                PuntoVentaPagarActivity.class);
-        intent.putExtra("ventaDTO",ventaDTO);
-        intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
-        intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
-        intent.putExtra("EsVentaPipa",EsVentaPipa);
-        startActivity(intent);
+        if(adapter.cantidad.getText()!=null && adapter.cantidad.getText().toString().length()>0) {
+            if (Double.valueOf(adapter.cantidad.getText().toString()) > 0) {
+                double total, subtotal, iva, precio, desc;
+                ventaDTO.setCredito(SWFormularioVentaCamionetaYPipaCredito.isChecked());
+                ventaDTO.setFactura(SWFormularioVentaCamionetaYPipaFactura.isChecked());
+                ConceptoDTO conceptoDTO = new ConceptoDTO();
+                conceptoDTO.setConcepto("Litros de gas");
+                conceptoDTO.setCantidad(Integer.valueOf(adapter.cantidad.getText().toString()));
+                conceptoDTO.setPUnitario(adapter.existencia.getPrecioUnitario());
+                conceptoDTO.setDescuento(adapter.existencia.getDescuento());
+                conceptoDTO.setSubtotal(Double.valueOf(adapter.Subtotal.getText().toString()));
+                conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
+                conceptoDTO.setCantidadLt(Integer.valueOf(adapter.cantidad.getText().toString()));
+                Calendar calendar = Calendar.getInstance();
+                conceptoDTO.setYear(calendar.get(Calendar.YEAR));
+                conceptoDTO.setMes(calendar.get(Calendar.MONTH) + 1);
+                conceptoDTO.setDia(calendar.get(Calendar.DAY_OF_WEEK));
+                conceptoDTO.setPrecioUnitarioProducto(adapter.existencia.getPrecioUnitario());
+                conceptoDTO.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
+                conceptoDTO.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
+                conceptoDTO.setIdProducto(precioVentaDTO.getIdProducto());
+                conceptoDTO.setIdLinea(precioVentaDTO.getIdProductoLinea());
+                conceptoDTO.setIdCategoria(precioVentaDTO.getIdCategoria());
+                conceptoDTO.setIdUnidadmedida(precioVentaDTO.getIdUnidadMedida());
+                conceptoDTO.setCantidadKg(
+                        precioVentaDTO.getPrecioSalidaKg() *
+                                Integer.parseInt(adapter.cantidad.getText().toString())
+                );
+                conceptoDTO.setCantidadLt(
+                        precioVentaDTO.getPrecioSalidaLt() *
+                                Integer.parseInt(adapter.cantidad.getText().toString())
+                );
+                conceptoDTO.setLitrosDespachados(Integer.valueOf(adapter.cantidad.getText().toString()));
+                conceptoDTO.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+                conceptoDTO.setIdTipoGas(0);
+                ventaDTO.getConcepto().add(conceptoDTO);
+                Intent intent = new Intent(PuntoVentaGasListaActivity.this,
+                        PuntoVentaPagarActivity.class);
+                intent.putExtra("ventaDTO", ventaDTO);
+                intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+                intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+                intent.putExtra("EsVentaPipa", EsVentaPipa);
+                startActivity(intent);
+            }
+        }
     }
 
     /**

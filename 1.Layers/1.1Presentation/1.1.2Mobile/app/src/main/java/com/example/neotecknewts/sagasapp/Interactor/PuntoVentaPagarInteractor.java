@@ -8,4 +8,6 @@ public interface PuntoVentaPagarInteractor {
                boolean esPipa, SAGASSql sagasSql);
 
     void puntoVentaAsignado(String token);
+
+    void verificarVentaExtraforanea(int idCliente, String token);
 }
