@@ -58,6 +58,7 @@ namespace Sagas.MainModule.Entidades
         public string Celular { get; set; }
         public string CorreoElectronico { get; set; }
         public string Domicilio { get; set; }
+        public Nullable<bool> VentaExtraordinaria { get; set; }
     
         public virtual RegimenFiscal RegimenFiscal { get; set; }
         public virtual TipoPersona TipoPersonaFiscal { get; set; }
