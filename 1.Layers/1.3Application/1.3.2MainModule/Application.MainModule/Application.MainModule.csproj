@@ -125,6 +125,7 @@
     <Compile Include="DTOs\Mobile\EstacionesDto.cs" />
     <Compile Include="DTOs\Mobile\LineaDto.cs" />
     <Compile Include="DTOs\Mobile\PipaDto.cs" />
+    <Compile Include="DTOs\Mobile\PuntoVenta\DatosVentaExtraforaneaDTO.cs" />
     <Compile Include="DTOs\Mobile\PuntoVenta\PuntoVentaAsignadoDTO.cs" />
     <Compile Include="DTOs\Mobile\TraspasoDto.cs" />
     <Compile Include="DTOs\Pedidos\EstatusPedidoDto.cs" />
