@@ -517,7 +517,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                             }
                         }
                         Gas.setCantidad(
-                                /*adapter.getCilindro(x).getCapacidadLt()*/ capacidadLt *
+                                /*adapter.getCilindro(x).getCapacidadLt()*/ capacidadKg *
                                         cilindros.getCantidad()
                         );
                         Gas.setCantidadKg(
@@ -528,7 +528,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                                 (precioVentaDTO.getPrecioSalidaLt() * capacidadLt /*adapter.getCilindro(x).getCapacidadLt()*/) *
                                         cilindros.getCantidad()
                         );
-                        Gas.setSubtotal(Gas.getPrecioUnitarioLt() * Gas.getCantidad());
+                        Gas.setSubtotal(Gas.getPrecioUnitarioKg() * Gas.getCantidad());
                         Gas.setConcepto("Gas");
                         Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
                         Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
