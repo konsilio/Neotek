@@ -108,5 +108,6 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<Pedido> Pedido { get; set; }
         public virtual DbSet<PedidoDetalle> PedidoDetalle { get; set; }
         public virtual DbSet<PedidoEstatus> PedidoEstatus { get; set; }
+        public virtual DbSet<RespuestaSatisfaccionPedido> RespuestaSatisfaccionPedido { get; set; }
     }
 }

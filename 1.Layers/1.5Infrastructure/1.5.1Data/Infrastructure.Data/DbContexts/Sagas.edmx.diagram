@@ -313,6 +313,8 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_Ingreso_OrdenCompra" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_Pedido_PedidoEstatus" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_PedidoDetalle_Pedido" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RespuestaSatisfaccionPedido" Width="1.5" PointX="24.875" PointY="28.875" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RespuestaSatisfaccionPedido_Pedido" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
