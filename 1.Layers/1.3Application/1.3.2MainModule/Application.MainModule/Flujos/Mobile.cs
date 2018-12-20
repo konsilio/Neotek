@@ -658,8 +658,8 @@ namespace Application.MainModule.Flujos
         public DatosVentaExtraforaneaDTO tieneVentaExtraforanea(short idCliente)
         {
             var cliente = ClienteServicio.Obtener(idCliente);
-            var extraforaneo="";//Se modificara para la extracción de los datos de la venta extraforanea autorizada
-            var adapter = PuntoVentaAdapter.ToDTO(cliente,extraforaneo);
+
+            var adapter = PuntoVentaAdapter.ToDTO(cliente);
             adapter.Exito = true;
             adapter.ModeloValido = true;
             adapter.Mensaje = "Exito";

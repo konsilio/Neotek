@@ -127,11 +127,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         /// <param name="cliente">Entidad con los datos del cliente</param>
         /// <param name="extraforaneo">Objeto con los datos de que es extraforaneo </param>
         /// <returns>Objeto DatosVentaExtraforaneaDTO con el resultado de la consulta</returns>
-        public static DatosVentaExtraforaneaDTO ToDTO(Cliente cliente, string extraforaneo)
+        public static DatosVentaExtraforaneaDTO ToDTO(Cliente cliente)
         {
             return new DatosVentaExtraforaneaDTO()
             {
-                VentaExtraforanea = false
+                VentaExtraforanea = cliente.VentaExtraordinaria??false
             };
         }
     }
