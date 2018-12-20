@@ -55,18 +55,6 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
                 cilindrosDTOS = (ArrayList<CilindrosDTO>) recargaDTO.getCilindros();
             }
         }
-        /*CilindrosDTO valor = new CilindrosDTO();
-        valor.setCilindroKg("20kg.");
-        valor.setCantidad(4);
-        valor.setIdCilindro(1);
-        CilindrosDTO valor2 = new CilindrosDTO();
-        valor2.setCilindroKg("30kg.");
-        valor2.setCantidad(24);
-        valor.setIdCilindro(2);
-        CilindrosDTO valor3 = new CilindrosDTO();
-        valor3.setCilindroKg("45kg.");
-        valor3.setCantidad(99);
-        valor.setIdCilindro(3);*/
 
         RVConfiguracionCamionetasCilindros = findViewById(R.id.RVConfiguracionCamionetasCilindros);
         RVConfiguracionCamionetasCilindros.setHasFixedSize(true);

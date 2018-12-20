@@ -335,7 +335,7 @@ public interface RestClient {
     );
 
     @GET(Constantes.GET_LIST_EXISTENCIAS)
-    Call<DatosPuntoVentaDTO> getListaExistencias(@Path(value = "esGasLP") boolean esGasLP,
+    Call<List<ExistenciasDTO>> getListaExistencias(@Path(value = "esGasLP") boolean esGasLP,
                                                  @Path(value = "esCilindroConGas")
                                                          boolean esCilindroConGas,
                                                  @Path(value = "esCilindro") boolean esCilindro,

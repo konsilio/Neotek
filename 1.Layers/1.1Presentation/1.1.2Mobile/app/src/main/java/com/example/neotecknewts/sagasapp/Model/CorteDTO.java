@@ -241,8 +241,8 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
         return IdEntrega;
     }
 
-    public void setIdEntrega(int IdEntrega) {
-        IdEntrega = IdEntrega;
+    public void setIdEntrega(int idEntrega) {
+        IdEntrega = idEntrega;
     }
 
     public int getIdRecibio() {

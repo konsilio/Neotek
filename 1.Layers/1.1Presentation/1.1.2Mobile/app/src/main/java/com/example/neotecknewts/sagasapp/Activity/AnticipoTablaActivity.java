@@ -263,6 +263,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                                 anticiposDTO.setClaveOperacion(clave_unica);
                                 anticiposDTO.setTiket(clave_unica);
                                 anticiposDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
+
                                 //Agrego las ventas correspondientes al corte
                                 presenter.Anticipo(anticiposDTO, sagasSql, session.getToken());
                             }else{
@@ -295,7 +296,8 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         corteDTO.setClaveOperacion(clave_unica);
                         corteDTO.setTiket(clave_unica);
                         corteDTO.setEntrega(session.getAttribute(Session.KEY_NOMBRE));
-                        corteDTO.setIdEntrega(Integer.valueOf(session.getAttribute(Session.KEY_ID_USUARIO)));
+                        int idSession =session.getAttributeInt(Session.KEY_ID_USUARIO);
+                        corteDTO.setIdEntrega(idSession);
                         //Agrego las ventas correspondientes al corte
                         for (CorteDTO itemCorte : datos.getCortes()) {
                             VentasCorteDTO ventasCorteDTO = new VentasCorteDTO();
@@ -469,7 +471,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 corteDTO.setMontoCorte(montoTotal);
                 corteDTO.setMonto(corteDTO.getTotalAnticipos());
                 corteDTO.setTotal(total);
-                corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
+                //corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
 
                 /*if(data.getFechasCorte()!=null){
                     if(data.getFechasCorte().size()>0){

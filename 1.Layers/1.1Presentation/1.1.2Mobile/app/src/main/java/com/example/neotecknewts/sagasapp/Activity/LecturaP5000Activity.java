@@ -409,9 +409,9 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
         ETLecturaP5000CantidadNull.getText().toString().length()>0){
             p5000 = Integer.parseInt(ETLecturaP5000CantidadNull.getText().toString());
         }
-        NPLecturaP500CantidadLectura.setValue(p5000);
-        NPLecturaP500CantidadLectura.setMaxValue(max_p5000);
+        NPLecturaP500CantidadLectura.setMaxValue(9999);
         NPLecturaP500CantidadLectura.setMinValue(0);
+        NPLecturaP500CantidadLectura.setValue(p5000);
     }
 
     @Override

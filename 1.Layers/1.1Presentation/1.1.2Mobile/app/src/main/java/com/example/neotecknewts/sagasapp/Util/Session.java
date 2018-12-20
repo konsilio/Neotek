@@ -106,6 +106,7 @@ public class Session {
 
         user.put(KEY_ID_EMPRESA, pref.getString(KEY_ID_EMPRESA,null));
 
+        user.put(KEY_ID_USUARIO,String.valueOf(pref.getInt(KEY_ID_USUARIO,0)));
         // return user
         return user;
     }
@@ -125,9 +126,13 @@ public class Session {
         return pref.getInt(KEY_ID_EMPRESA,0);
     }
 
+    public int getIdUser(){return pref.getInt(KEY_ID_USUARIO,0);}
+
     public String getAttribute(String attribute){
         return pref.getString(attribute,"");
     }
+
+    public int getAttributeInt(String atribute){return  pref.getInt(atribute,0);}
 
     public boolean isLogin(){
         return pref.getBoolean(IS_LOGIN,false);
