@@ -67,6 +67,10 @@ public class VentaDTO implements Serializable {
 
     @SerializedName("RazonSocial")
     private String RazonSocial;
+
+    @SerializedName("VentaExtraforanea")
+    private boolean VentaExtraforanea;
+
     //region Atributos de tipo reporte
     private boolean EsSinNumero;
 
@@ -76,6 +80,8 @@ public class VentaDTO implements Serializable {
     //endregion
 
     private String Estacion;
+
+    private double LimiteCreditoCliente;
 
     public String getFecha() {
         return Fecha;
@@ -255,5 +261,21 @@ public class VentaDTO implements Serializable {
 
     public void setEstacion(String estacion) {
         Estacion = estacion;
+    }
+
+    public double getLimiteCreditoCliente() {
+        return LimiteCreditoCliente;
+    }
+
+    public void setLimiteCreditoCliente(double limiteCreditoCliente) {
+        LimiteCreditoCliente = limiteCreditoCliente;
+    }
+
+    public boolean isVentaExtraforanea() {
+        return VentaExtraforanea;
+    }
+
+    public void setVentaExtraforanea(boolean ventaExtraforanea) {
+        VentaExtraforanea = ventaExtraforanea;
     }
 }

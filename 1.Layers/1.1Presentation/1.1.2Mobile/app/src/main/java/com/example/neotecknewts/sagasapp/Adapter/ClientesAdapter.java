@@ -86,6 +86,11 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else{
                 ventaDTO.setFactura(false);
             }
+
+            ventaDTO.setLimiteCreditoCliente(
+              items.get(position).getLimiteCredito()
+            );
+
             if(EsVentaCamioneta) {
                 Intent intent = new Intent(view.getContext(),
                         VentaGasActivity.class);

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaPagarPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
@@ -15,6 +16,10 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -177,6 +182,87 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
 
             @Override
             public void onFailure(Call<PuntoVentaAsignadoDTO> call, Throwable t) {
+                presenter.onErrorPuntoVenta("No se ha podido identificar el punto de venta");
+            }
+
+        });
+    }
+
+    @Override
+    public void verificarVentaExtraforanea(int idCliente, String token) {
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaVentaExtraforaneaDTO> call = restClient.getTieneVentaExtraforanea(
+                idCliente,
+                token,
+                "application/json"
+        );
+        Log.w("Url base",retrofit.baseUrl().toString());
+
+        call.enqueue(new Callback<RespuestaVentaExtraforaneaDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaVentaExtraforaneaDTO> call,
+                                   Response<RespuestaVentaExtraforaneaDTO> response) {
+
+                RespuestaVentaExtraforaneaDTO data = response.body();
+                if (response.isSuccessful()) {
+                    Log.w("Estatus","Success");
+                    presenter.onSuccessVentaExtraforanea(data);
+                    registro_local = false;
+                }
+                else {
+                    JSONObject respuesta = null;
+                    try {
+                        respuesta = new JSONObject(response.errorBody().string());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    switch (response.code()) {
+                        case 404:
+                            Log.w("Error","not found");
+
+                            break;
+                        case 500:
+                            Log.w("Error", "server broken");
+
+                            break;
+                        default:
+                            Log.w("Error", "Error desconocido: "+response.code());
+
+                            break;
+                    }
+                    if(respuesta!=null){
+                        try {
+                            Log.w("Error body",respuesta.toString());
+                            presenter.onError(respuesta.getString("Mensaje"));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        presenter.onError(response.message());
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaVentaExtraforaneaDTO> call, Throwable t) {
                 presenter.onErrorPuntoVenta("No se ha podido identificar el punto de venta");
             }
 
