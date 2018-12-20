@@ -50,7 +50,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 NombreAlmacen = estacion.Nombre,
                 P5000Inicial = lecturaInicial.P5000 != null ? lecturaInicial.P5000.Value : 0,
                 P5000Final = unidad.P5000Actual != null ? unidad.P5000Actual.Value : 0,
-                AnticiposEstacion = ToDTO(unidad)
+                AnticiposEstacion = ToDTO(unidad),
             };
         }
         public static CamionetaDto ToDTO(Camioneta camioneta, UnidadAlmacenGas unidad)
@@ -64,6 +64,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Medidor = TipoMedidorAdapter.ToDto(TipoMedidorGasServicio.Obtener(unidad.IdTipoMedidor.Value)),
                 IdTipoMedidor = unidad.IdTipoMedidor.Value,
                 IdAlmacenGas = (short)camioneta.IdCamioneta,
+                IdCAlmacen = (short) camioneta.IdCamioneta,
+                Numero = camioneta.Nombre,
                 NombreAlmacen = camioneta.Nombre,
                 //P5000Inicial = lecturaInicial.P5000.Value,
                 //P5000Final = unidad.P5000Actual.Value,

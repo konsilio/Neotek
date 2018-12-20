@@ -20,6 +20,7 @@ using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.DTOs.Mobile.PuntoVenta;
 using Application.MainModule.AdaptadoresDTO.Mobile.Cortes;
 using Application.MainModule.DTOs.Mobile.Cortes;
+using System.Net.Http;
 
 namespace Application.MainModule.Flujos
 {
@@ -646,6 +647,26 @@ namespace Application.MainModule.Flujos
 
              return AnticiposCortesAdapter.ToDTO(ventas, anticiposDia,almacen, esAnticipos);*/
         }
+
+        /// <summary>
+        /// Permite determinar si el cliente que se envía de parametro en la consulta 
+        /// se le ha permitido una venta extraforanea, este retornara un  objeto 
+        /// DTO con el resultado de la conslta
+        /// </summary>
+        /// <param name="idCliente">Id del cliente a consultar</param>
+        /// <returns>Modelo DTO con la respuesta de la consulta </returns>
+        public DatosVentaExtraforaneaDTO tieneVentaExtraforanea(short idCliente)
+        {
+            var cliente = ClienteServicio.Obtener(idCliente);
+            var extraforaneo="";//Se modificara para la extracción de los datos de la venta extraforanea autorizada
+            var adapter = PuntoVentaAdapter.ToDTO(cliente,extraforaneo);
+            adapter.Exito = true;
+            adapter.ModeloValido = true;
+            adapter.Mensaje = "Exito";
+            adapter.Id = cliente.IdCliente;
+            return adapter;
+        }
+
         public RespuestaDto Calibracion(CalibracionDto dto, bool esFinal)
         {
             var resp = CalibracionServicio.EvaluarClaveOperacion(dto);
