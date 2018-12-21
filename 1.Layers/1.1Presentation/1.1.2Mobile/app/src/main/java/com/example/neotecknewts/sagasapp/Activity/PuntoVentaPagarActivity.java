@@ -219,11 +219,13 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
 
     @Override
     public void onShowProgress(int mensaje) {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage(getString(mensaje));
-        progressDialog.setTitle(R.string.app_name);
-        progressDialog.show();
+        //if(!progressDialog.isShowing()) {
+            progressDialog = new ProgressDialog(this, R.style.AlertDialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage(getString(mensaje));
+            progressDialog.setTitle(R.string.app_name);
+            progressDialog.show();
+        //}
     }
 
     @Override

@@ -44,15 +44,30 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         String razon = items.get(position).getRazonSocial();
         String nombre = items.get(position).getNombre()+" "+items.get(position).getApellido_uno()
                 +" "+items.get(position).getApellido_dos();
-        ((ClientesHolder)holder).TVBuscarClienteActivityNombre.setText(
-                razon.trim().length()>0 ?razon:nombre
-        );
+        if(razon!=null && !razon.isEmpty()){
+            ((ClientesHolder)holder).TVBuscarClienteActivityNombre.setText(
+                    razon
+            );
+        }else{
+            ((ClientesHolder) holder).TVBuscarClienteActivityNombre.setText(
+                    nombre
+            );
+        }
+
         ((ClientesHolder)holder).TVBuscarClienteaCTIVITYrFC.setText(
                 items.get(position).getRFC()
         );
-        ((ClientesHolder) holder).TVBuscarClienteActivityTelefono.setText(
-                items.get(position).getTelefono_fijo()
-        );
+        if(!items.get(position).getTelefono_fijo().isEmpty()) {
+            ((ClientesHolder) holder).TVBuscarClienteActivityTelefono.setText(
+                    items.get(position).getTelefono_fijo()
+            );
+        }
+        if(!items.get(position).getCelular().isEmpty()){
+            ((ClientesHolder) holder).TVBuscarClienteActivityTelefono.setText(
+                    items.get(position).getCelular()
+            );
+        }
+
         ((ClientesHolder) holder).TvBuscarClienteActivityFactura.setText(
                 (items.get(position).isFactura()||items.get(position).getRazonSocial().trim().length()>0)
                         ?" Si":" No"
