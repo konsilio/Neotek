@@ -515,13 +515,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(), Request);
         }
-
         [Route("consulta/centro/costo/{idCosto}")]
         public HttpResponseMessage GetCentroCosto(int idCosto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCentroCosto(idCosto));
         }
-
         [Route("consulta/tipocentrosdecosto")]
         public HttpResponseMessage GetTipoCentroCostos()
         {
