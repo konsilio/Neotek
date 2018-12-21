@@ -78,19 +78,18 @@ function OnSelectedChange(s, e) {
     }
 }
 function getvalues(s, e) {
-    if (s.GetValue() == null) {//si viene null       
+    if (s.GetValue() != null) {//si viene null       
        
-         $('#btnCrearCte').prop('disabled', true)//desactivo
+        $('#btnCrearCte').prop('disabled', true)//desactivo
        
         //var str = '<a href="#ModalConfirmacion" data-toggle="modal" id="btnok"'
         //     + 'class="tip" data-target="#ModalCancelar" role="button" aria-haspopup="true" aria-expanded="false">'
         //    + '</a>'
       
     }
- //   else {
- //       $('#btnCrearCte').prop('disabled', false) //activo
- ////$('#ModalConfirmacion').modal('show');
- //   }
+    else {
+       // $('#btnCrearCte').prop('disabled', false) //activo
+    }
 }
 var Aceptar = function () {
     $('#btnCrearCte').prop('disabled', true) 

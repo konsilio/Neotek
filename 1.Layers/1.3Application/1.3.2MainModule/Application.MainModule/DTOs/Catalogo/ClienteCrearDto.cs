@@ -140,9 +140,8 @@ namespace Application.MainModule.DTOs.Catalogo
         [StringLength(350, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Domicilio")]
         public string Domicilio { get; set; }
-
         public string Cliente { get; set; }
-        public List<ClienteLocacionDTO> Locaciones { get; set; }       
-
+        public List<ClienteLocacionDTO> Locaciones { get; set; }
+        public bool VentaExtraordinaria { get; set; }
     }
 }

@@ -24,19 +24,18 @@ namespace MVC.Presentacion.Controllers
 
             if (TempData["RespuestaDTO"] != null)
             {
-                if (!((RespuestaDTO)ViewData["RespuestaDTO"]).Exito)
+                if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
                 {
                     ViewBag.Tipo = "alert-danger";
                     ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
                     TempData["RespuestaDTO"] = ViewBag.MensajeError;
+                    ViewBag.MensajeError = TempData["RespuestaDTO"];
                 }
                 else
                 {
                     ViewBag.Tipo = "alert-success";
                 }
-
             }
-            ViewBag.MensajeError = TempData["RespuestaDTO"];
 
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
             if (ViewBag.EsAdmin)
@@ -71,8 +70,10 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             ViewBag.Estatus = PedidosServicio.ObtenerEstatusPedidos(_tkn).ToList();
-            //ViewBag.Pipas    //llenar unidades
-            //    ViewBag.Camionetas
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.Msj = TempData["RespuestaDTO"];
+            }
             return View(_model);
         }
         [HttpPost]
@@ -164,6 +165,31 @@ namespace MVC.Presentacion.Controllers
 
             return View();
         }
+        public ActionResult AltaClienteDireccion(PedidoModel _model)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
+
+            TempData["ModelAltaCliente"] = _model;
+
+            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
+            //Se obtienen los estados 
+            ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
+
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.Msj = TempData["RespuestaDTO"];
+            }
+            
+
+            return View();
+        }
         [HttpPost]
         public ActionResult GuardarCliente(PedidoModel _model)
         {
@@ -175,16 +201,42 @@ namespace MVC.Presentacion.Controllers
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index");
+                return RedirectToAction("Nuevo");
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Nuevo");
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("AltaCliente");
             }
 
+        }
+        public ActionResult GuardarLocaciones(ClienteLocacionMod _Obj)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            _tkn = Session["StringToken"].ToString();
+
+            var respuesta = CatalogoServicio.CrearCliente((ClientesModel)TempData["ModelAltaCliente"], _tkn);
+            if (respuesta.Exito)
+            {
+                _Obj.IdCliente = respuesta.Id;
+                var respuestaLocacion = CatalogoServicio.RegistraLocaciones(_Obj, _tkn);
+                if (respuestaLocacion.Exito)
+                {
+                    TempData["RespuestaDTO"] = respuestaLocacion.Mensaje;
+                    return RedirectToAction("AltaClienteDireccion");
+                }
+                else
+                {
+                    TempData["RespuestaDTO"] = respuesta;
+                    return RedirectToAction("AltaCliente");
+                }
+            }
+            else
+            {
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                return RedirectToAction("Nuevo", "Pedidos");
+            }
         }
         public ActionResult RevisarPedido(int idPedido, string msj = null)
         {

@@ -14,6 +14,15 @@
 <html>
 <head>
     <script src="~/Resources/js/Pedidos.js"></script>
+    <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="~/assets/js/pages/ui/notifications.js"></script>
+    <script type="text/javascript">
+        var mensaje = '@ViewBag.Msj';
+        if (mensaje != '') {
+            $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+        }
+
+    </script>
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("Nuevo", "Pedidos", FormMethod.Post))
@@ -274,7 +283,7 @@
                         </div>
                     </div>
                     @if (ViewBag.MensajeError != null)
-                      {
+                    {
                         <div class="row clearfix">
                             <div id="divMensajeError" class="container">
                                 <div class="alert alert-danger">
@@ -287,7 +296,7 @@
                                 </div>
                             </div>
                         </div>
-                        }
+                    }
                 </div>
             </div>
         </section>
@@ -295,21 +304,20 @@
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="title" id="ModalConfirmacionLabel">No se encontraron resultados</h4>
-                        
+                        <h6 id="ModalConfirmacionLabel">No se encontraron resultados</h6>
                     </div>
                     <div class="modal-body">
                         <div class="body">
                             <div class="col-sm-12">
                                 <div>
-                                    <h3 class="title">¿Desea crear nuevo cliente?</h3>
+                                    ¿Desea crear nuevo cliente?
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-raised btn-primary btn-round" onclick="Aceptar()">Aceptar</button>
-                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal" onclick="Cancelar()">Cancelar</button>
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
 
                     </div>
                 </div>

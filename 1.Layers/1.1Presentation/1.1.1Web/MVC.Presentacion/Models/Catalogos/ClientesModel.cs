@@ -8,8 +8,7 @@ using System.Web;
 namespace MVC.Presentacion.Models.Catalogos
 {
     public class ClientesModel
-    {
-     
+    {  
 
         public int IdCliente { get; set; }
         public short Orden { get; set; }
@@ -80,6 +79,6 @@ namespace MVC.Presentacion.Models.Catalogos
 
         public string Cliente { get; set; }
         public List<ClienteLocacionMod> Locaciones { get; set; }
-
+        public bool VentaExtraordinaria { get; set; }
     }
 }

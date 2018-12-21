@@ -11549,6 +11549,7 @@
     <Content Include="Views\Pedidos\_TipoUnidad.cshtml" />
     <Content Include="Views\Pedidos\_Camionetas.cshtml" />
     <Content Include="Views\Pedidos\_Pipas.cshtml" />
+    <Content Include="Views\Pedidos\AltaClienteDireccion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

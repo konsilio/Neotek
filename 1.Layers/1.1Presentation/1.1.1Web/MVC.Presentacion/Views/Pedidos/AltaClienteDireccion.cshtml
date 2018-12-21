@@ -1,0 +1,347 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model List<ClienteLocacionMod>
+@{
+    ViewBag.Title = "Catálogo / Clientes";
+}
+
+@*<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />*@
+<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+<script src="~/Resources/js/Clientes.js"></script>
+<link href="~/Resources/css/Clientes.css" rel="stylesheet" />
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+<script type="text/javascript">
+    var message = '@ViewBag.Msj';
+    if (message != '') {
+        $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
+    }
+</script>
+@using (Html.BeginForm("GuardarLocaciones", "Pedidos", FormMethod.Post))
+{
+    <section class="content home">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Clientes</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Catálogos</li>
+                            <li class="breadcrumb-item">Clientes</li>
+                            <li class="breadcrumb-item">Locaciones</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div>
+                                                    @*<input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdCliente[0].RazonSocial=="")?ViewBag.IdCliente[0].Nombre + " " +ViewBag.IdCliente[0].Apellido1 + " " +ViewBag.IdCliente[0].Apellido2:ViewBag.IdCliente[0].RazonSocial )" />
+                                                        <input type="text" name="IdCliente" hidden="hidden" value="@ViewBag.IdCliente[0].IdCliente" readonly="readonly" class="form-control" />*@
+                                                    @*<input type="text" name="Orden" hidden="hidden" value="@((ViewBag.LocacionOrden!=null)?ViewBag.LocacionOrden:0)" readonly="readonly" class="form-control" />*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Tipo de locación(Lugar):
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <input type="text" name="TipoLocacion" class="form-control" placeholder="Sucursal/Oficina/Tienda/Vacío/etc.">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7">
+
+                                    </div>
+                                </div>
+                                <div class="row clearfix" id="Dir">
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Dirección del Lugar:
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                                        <div class="form-group">
+                                            <input type="text" name="txtDir" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="DirManual">
+                                    <div class="row clearfix">
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="txtNume">
+                                                        País:*
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="form-group">
+                                                <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
+                                                    @foreach (var lst in ViewBag.ListaPaises)
+                                                    {
+                                                        <option value="@lst.IdPais">@lst.Pais</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="txtNume">
+                                                        Estado:*
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="form-group">
+                                                <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                                    @foreach (var lst in ViewBag.ListaEstados)
+                                                    {
+                                                        <option value="@lst.IdEstadoRep">@lst.Estado</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="txtNume">
+                                                        Municipio:*
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="form-group">
+                                                <input type="text" name="Municipio" class="form-control" />
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m[0].Municipio, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="txtNume">
+                                                        Colonia:*
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="form-group">
+                                                <input type="text" name="Colonia" class="form-control" />
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m[0].Colonia, "", new { @class = "alert-danger" })
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="txtNume">
+                                                        Calle:*
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 col-md-7 col-sm-7">
+                                            <div class="form-group">
+                                                <input type="text" name="Calle" class="form-control" />
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m[0].Calle, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="txtNume">
+                                                        Núm Ext:*
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="form-group">
+                                                <input type="text" name="NumExt" class="form-control" />
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m[0].NumExt, "", new { @class = "alert-danger" })
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="txtNume">
+                                                        Núm. Int:
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="form-group">
+                                                <input type="text" name="NumInt" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="txtNume">
+                                                        Cod. Postal:*
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <div class="form-group">
+                                                <input type="text" name="CodigoPostal" class="form-control" />
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m[0].CodigoPostal, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="txtNume">
+                                                        Referencia Google Maps:*
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-10">
+                                            <div class="form-group">
+                                                <input type="text" name="NumExt" class="form-control" />
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m[0].formatted_address, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="form-group">
+                                            <input type="submit" id="btnRegresarIndexNC" value="Regresar" formaction=@Url.Action("Index") class="btn btn-raised btn-round btn-primary float-left" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7">
+                                        <div class="form-group">
+                                            <button class="btn btn-raised btn-round btn-primary float-right">Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>País</th>
+                                                        <th>Estado</th>
+                                                        <th>Municipio</th>
+                                                        <th>Tipo Locacion</th>
+                                                        <th>Cod Postal</th>
+                                                        <th>Colonia</th>
+                                                        <th>Calle</th>
+                                                        <th>Núm Int</th>
+                                                        <th>Núm Ext</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model != null)
+                                                    {
+                                                        foreach (var item in Model)
+                                                        {
+                                                    <tr>
+                                                        <td>@item.Pais</td>
+                                                        @if (@item.EstadoProvincia != "" && @item.EstadoProvincia != null)
+                                                                {
+                                                                <td>@item.EstadoProvincia</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                <td>@item.Estado</td>
+                                                                }
+                                                        <td>@item.Municipio</td>
+                                                        <td>@item.TipoLocacion</td>
+                                                        <td>@item.CodigoPostal</td>
+                                                        <td>@item.Colonia</td>
+                                                        <td>@item.Calle</td>
+                                                        <td>@item.NumInt</td>
+                                                        <td>@item.NumExt</td>
+                                                        <td>
+                                                            <a href="@Url.Action("EditarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">edit</i>
+                                                                <span>Editar locacion</span>
+                                                            </a>
+                                                            <a href="@Url.Action("BorrarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">delete</i>
+                                                                <span>Eliminar locacion</span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="form-group">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7">
+                                        <div class="form-group">
+                                            <button class="btn btn-raised btn-round btn-primary float-right">Finalizar</button>
+                                            <input type="submit" value="Finalizar" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-round btn-primary float-right" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (ViewBag.MessageError != null)
+                {
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MessageError</label>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
