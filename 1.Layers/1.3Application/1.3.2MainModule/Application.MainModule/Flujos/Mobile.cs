@@ -230,15 +230,20 @@ namespace Application.MainModule.Flujos
             var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
             if (ventaPuntoDeVenta.Exito)
             {
+                #region Registro de venta extraordinaria
                 //if(venta.VentaExtraordinaria)
                 int dias = Convert.ToInt32(cliente.limiteCreditoDias);
                 var cargo = CargoAdapter.FromDTO(venta, DateTime.Now.AddDays(dias),TokenServicio.ObtenerIdEmpresa());
+
                 var insertCargo = PuntoVentaServicio.insertCargoMobile(cargo);
                 if (insertCargo.Exito)
                 {
+                    #region Actualizacion de credito disponible
                     decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Total;
                     decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Total;
+                    #endregion
                 }
+                #endregion
             }
 
             return ventaPuntoDeVenta;
