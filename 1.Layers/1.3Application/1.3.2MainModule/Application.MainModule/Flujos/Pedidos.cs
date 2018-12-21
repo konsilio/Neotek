@@ -92,6 +92,7 @@ namespace Application.MainModule.Flujos
 
             var pedido = PedidosAdapter.FromEntity(pedidos);
             pedido.IdEstatusPedido = EstatusPedidoEnum.Cancelado;
+            pedido.MotivoCancelacion = pedidoDto.MotivoCancelacion;
             return PedidosServicio.Modificar(pedido);
         }
     }

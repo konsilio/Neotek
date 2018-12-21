@@ -18,4 +18,7 @@
     settings.Properties.Columns.Add("Nombre", "Nombre", 130);
     settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
     settings.Properties.Columns.Add("Rfc", "RFC", System.Web.UI.WebControls.Unit.Percentage(100));
+
+    settings.ClientEnabled = true;
+    settings.Properties.ClientSideEvents.Init = "getvalues";
 }).BindList(Model).GetHtml()

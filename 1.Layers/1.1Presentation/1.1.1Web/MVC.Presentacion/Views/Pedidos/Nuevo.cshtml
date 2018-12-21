@@ -98,7 +98,7 @@
                                                 </div>
                                                 <div class="col-sm-2" style="top: 10px;">
                                                     <div class="form-group">
-                                                        <input type="submit" id="btnCrearCte" value="Crear cliente" formaction=@Url.Action("AltaCliente") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" disabled />
+                                                        <input type="submit" id="btnCrearCte" value="Crear cliente" formaction=@Url.Action("AltaCliente") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-2">
@@ -160,15 +160,15 @@
                                                 <div class="col-sm-4">
                                                     <b>Estatus pedido:</b>
                                                     @*<select name="IdEstatusPedido" class="form-control show-tick">
-                <option value="0">Seleccione</option>
-                @if (ViewBag.Estatus != null)
-                {
-                    foreach (var lst in ViewBag.Estatus)
-                    {
-                        <option value="@lst.IdEstatusPedido">@lst.Descripcion</option>
-                    }
-                }
-            </select>@Html.Action("_EstatusC")*@
+                                                            <option value="0">Seleccione</option>
+                                                            @if (ViewBag.Estatus != null)
+                                                            {
+                                                                foreach (var lst in ViewBag.Estatus)
+                                                                {
+                                                                    <option value="@lst.IdEstatusPedido">@lst.Descripcion</option>
+                                                                }
+                                                            }
+                                                        </select>@Html.Action("_EstatusC")*@
                                                     @Html.DevExpress().ComboBox(settings =>
                                                 {
                                                     settings.Name = "IdEstatusPedido";
@@ -195,7 +195,7 @@
                                                             }
                                                         </select>*@
                                                     @Html.Action("_Pipas")
-                                                </div>                                               
+                                                </div>
                                             </div>
                                             <div class="row clearfix selPipa" style="display:none">
                                                 <div class="col-sm-3">
@@ -222,7 +222,7 @@
                                                             }
                                                         </select>*@
                                                     @Html.Action("_Camionetas")
-                                                </div>                                                
+                                                </div>
                                             </div>
                                             <div class="row clearfix selCamioneta">
                                                 <div class="col-sm-3">
@@ -273,9 +273,8 @@
                             </div>
                         </div>
                     </div>
-
                     @if (ViewBag.MensajeError != null)
-                {
+                      {
                         <div class="row clearfix">
                             <div id="divMensajeError" class="container">
                                 <div class="alert alert-danger">
@@ -288,11 +287,34 @@
                                 </div>
                             </div>
                         </div>
-                    }
+                        }
                 </div>
-
             </div>
         </section>
+        <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalConfirmacionLabel">No se encontraron resultados</h4>
+                        
+                    </div>
+                    <div class="modal-body">
+                        <div class="body">
+                            <div class="col-sm-12">
+                                <div>
+                                    <h3 class="title">¿Desea crear nuevo cliente?</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-raised btn-primary btn-round" onclick="Aceptar()">Aceptar</button>
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal" onclick="Cancelar()">Cancelar</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 </body>
 </html>
