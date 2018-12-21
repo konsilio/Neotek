@@ -113,6 +113,39 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        /// <summary>
+        /// Realiza al actualización de los datos de credito del cliente,
+        /// se envia como parametro los datos del cliente con el credito actualizado
+        /// </summary>
+        /// <param name="cliente">Entidad cliente con la actualización de datos</param>
+        /// <returns>Modelo DTO con la respuesta de la actualización</returns>
+        public RespuestaDto ActualizarCredito(Cliente cliente)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    var clienteCredito =  uow.Repository<Cliente>().GetSingle(x=>x.IdCliente.Equals(cliente.IdCliente));
+                    clienteCredito.CreditoDisponibleMonto = cliente.CreditoDisponibleMonto;
+                    uow.Repository<Cliente>().Update(clienteCredito);
+                    uow.SaveChanges();
+                    _respuesta.Id = cliente.IdCliente;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, " del credito del cliente");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
         public RespuestaDto Insertar(ClienteLocacion cte)
         {
             RespuestaDto _respuesta = new RespuestaDto();

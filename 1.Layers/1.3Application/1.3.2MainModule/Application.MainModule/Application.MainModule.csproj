@@ -73,6 +73,7 @@
     <Compile Include="AdaptadoresDTO\Mobile\CalibracionAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\Cortes\UsuariosCorteAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TraspasoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\VentaExtraordinaria\CargoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\VentasEstacionesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Pedidos\PedidosAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
