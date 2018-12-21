@@ -167,9 +167,9 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                     if (ventaDTO.getLimiteCreditoCliente() < ventaDTO.getTotal()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(this,
                                 R.style.AlertDialog);
-                        builder.setTitle("Avertencia");
-                        builder.setMessage("No se puede realizar la venta, favor de comunicarce con el" +
-                                "area de cobranza");
+                        builder.setTitle(R.string.error_titulo);
+                        builder.setMessage("No se puede realizar la venta, favor de comunicarse con el" +
+                                "área de crédito y  cobranza");
                         builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
                                 dialog.dismiss());
                         builder.create().show();
