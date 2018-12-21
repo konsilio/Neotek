@@ -180,7 +180,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Domicilio = cteDTO.Domicilio,
                 Activo = true,
                 FechaRegistro = DateTime.Now,
-               // VentaExtraordinaria =
+                VentaExtraordinaria = cteDTO.VentaExtraordinaria,
             };
         }
 
