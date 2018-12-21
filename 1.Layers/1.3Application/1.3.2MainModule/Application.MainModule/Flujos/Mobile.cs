@@ -21,6 +21,7 @@ using Application.MainModule.DTOs.Mobile.PuntoVenta;
 using Application.MainModule.AdaptadoresDTO.Mobile.Cortes;
 using Application.MainModule.DTOs.Mobile.Cortes;
 using System.Net.Http;
+using Application.MainModule.AdaptadoresDTO.Mobile.VentaExtraordinaria;
 
 namespace Application.MainModule.Flujos
 {
@@ -226,7 +227,21 @@ namespace Application.MainModule.Flujos
                 adapter.RazonSocial = cliente.RazonSocial;
             }
 
-            return PuntoVentaServicio.InsertMobile(adapter);
+            var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
+            if (ventaPuntoDeVenta.Exito)
+            {
+                //if(venta.VentaExtraordinaria)
+                int dias = Convert.ToInt32(cliente.limiteCreditoDias);
+                var cargo = CargoAdapter.FromDTO(venta, DateTime.Now.AddDays(dias),TokenServicio.ObtenerIdEmpresa());
+                var insertCargo = PuntoVentaServicio.insertCargoMobile(cargo);
+                if (insertCargo.Exito)
+                {
+                    decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Total;
+                    decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Total;
+                }
+            }
+
+            return ventaPuntoDeVenta;
         }
         public int Orden(List<VentaPuntoDeVenta> ventas, DateTime fechaVenta)
         {

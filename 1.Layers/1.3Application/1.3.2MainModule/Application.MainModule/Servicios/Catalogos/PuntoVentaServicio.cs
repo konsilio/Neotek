@@ -150,5 +150,17 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().ObtenerVenta(tiketVenta);
         }
+        /// <summary>
+        /// Permite realizar el registro del cargo de una venta 
+        /// que es de tipo extraordinaria, se envia como parametro
+        /// una entidad de tipo Cargo y retornara un objeto de tipo
+        /// RespuestaDTO con la respuesta del registro del cargo 
+        /// </summary>
+        /// <param name="cargo">Entidad de tipo Cargo con los datos a registrar de la venta extraordinaria</param>
+        /// <returns>Modelo DTO de tipo RespuestaDTO con la respuesta del registro</returns>
+        public static RespuestaDto insertCargoMobile(Cargo cargo)
+        {
+            return new PuntoVentaDataAccess().insertCargoMobile(cargo);
+        }
     }
 }
