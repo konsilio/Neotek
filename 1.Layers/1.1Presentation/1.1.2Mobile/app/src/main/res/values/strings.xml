@@ -26,9 +26,9 @@
     <string name="message_imagen_nitida">¿La imagen esta nítida?</string>
     <string name="message_nitida_si">Si, esta nítida/bien tomada</string>
     <string name="message_nitida_no">No, esta borrosa/mal tomada</string>
-    <string name="cargando_imagenes_inicio">Espere un momento...</string>
+    <string name="cargando_imagenes_inicio" tools:ignore="Typos">Espere un momento…</string>
     <string name="cargando_imagenes_fin">Proceso finalizado</string>
-    <string name="login_hint_username" translatable="false">Correo electronico</string>
+    <string name="login_hint_username" translatable="false">Correo electrónico</string>
     <string name="login_hint_password" translatable="false">Contraseña</string>
     <string name="login_button">Login</string>
     <string name="spinner_gaseras">Gasera</string>
@@ -58,8 +58,8 @@
     <string name="nombre_almacen">Numero de almacén</string>
     <string name="fecha">Fecha</string>
     <string name="fecha_embarque">Fecha de embarque</string>
-    <string name="seleccionar_fecha">Seleccione fecha...</string>
-    <string name="abr_cantidad">Cant.</string>
+    <string name="seleccionar_fecha">Seleccione fecha…</string>
+    <string name="abr_cantidad" tools:ignore="Typos">Cant.</string>
     <string name="cantidad_venta">Cantidad</string>
     <string name="abr_unidad_medida">UM</string>
     <string name="precio">Precio</string>
@@ -83,8 +83,8 @@
     <string name="usuario_sin_permisos">No tienes permisos para usar la aplicacion</string>
     <string name="message_continuar">Una vez iniciado el proceso no es posible regresar, ¿esta seguro de continuar?</string>
 
-    <string name="message_cargando">Cargando...</string>
-    <string name="message_datos_obtenidos">Los datos se obtuvieron correctamente...</string>
+    <string name="message_cargando">Cargando…</string>
+    <string name="message_datos_obtenidos">Los datos se obtuvieron correctamente…</string>
     <string name="error_conexion">Error de conexión</string>
 
     <string name="punto">.</string>
@@ -105,7 +105,7 @@
     <string name="titulo_exito_registro_papeleta">Operación Exitosa</string>
     <string name="mensaje_exito_papeleta_registro_en_servicio">Los datos se han guardado exitosamente</string>
     <string name="titulo_exito_registro_papeleta_android">Datos guardados en Android</string>
-    <string name="mensaje_exito_papeleta_android">No he logrado conectar con el servidor por falta de conexión a internet. Los datos se enviarán al detectar una conexion al internet.</string>
+    <string name="mensaje_exito_papeleta_android">No he logrado conectar con el servidor por falta de conexión a internet. Los datos se enviarán al detectar una conexión de internet.</string>
     <string name="titulo_error_papeleta">Se ha generado un error, intente nuevamente</string>
     <string name="toma_de_lectura_inicial">Toma de lectura inicial</string>
     <string name="seleciona_la_estaci_n_de_carburaci_n">Selecciona la Estación de Carburación:</string>
