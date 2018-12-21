@@ -23,15 +23,21 @@ namespace DS.MainModule.Controllers
         }
         [AllowAnonymous]
         [Route("servicio/disponible")]
+
         public HttpResponseMessage PostServicioDisponible()
         {
             return Request.CreateResponse(HttpStatusCode.OK, new RespuestaDto() { Exito = true });
         }
+        [Route("servicio/test")]
+        public HttpResponseMessage test()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _seguridad.Test());
+        }
         [AllowAnonymous]
         [Route("login")]
-        public HttpResponseMessage PostLogin(AutenticacionDto autenticacionDto)
+        public HttpResponseMessage PostLogin()
         {   
-            return Request.CreateResponse(HttpStatusCode.OK, _seguridad.Autenticacion(autenticacionDto));
+            return Request.CreateResponse(HttpStatusCode.OK, _seguridad.Test());
        }       
 
         #region Usuarios
