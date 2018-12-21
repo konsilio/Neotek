@@ -68,7 +68,7 @@ public class VentaDTO implements Serializable {
     @SerializedName("RazonSocial")
     private String RazonSocial;
 
-    @SerializedName("VentaExtraforanea")
+    @SerializedName("VentaExtraordinaria")
     private boolean VentaExtraforanea;
 
     //region Atributos de tipo reporte
