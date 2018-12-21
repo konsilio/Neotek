@@ -11,6 +11,7 @@ using Exceptions.MainModule.Validaciones;
 using MVC.Presentacion.Models.Seguridad;
 using PagedList;
 using Newtonsoft.Json;
+using MVC.Presentacion.Models.Catalogos;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -241,6 +242,17 @@ namespace MVC.Presentacion.Controllers
         {
             tkn = Session["StringToken"].ToString();
             var list = CatalogoServicio.ListaProductos(tkn).Where(x => x.IdProductoServicioTipo.Equals(idTipo)).ToList();
+            var JsonInfo = JsonConvert.SerializeObject(list);
+            return Json(JsonInfo, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetCentrosCosto(bool EsExterno)
+        {
+            tkn = Session["StringToken"].ToString();
+            List<CentroCostoDTO> list = new List<CentroCostoDTO>();
+            if (EsExterno.Equals(true))
+                list = CatalogoServicio.BuscarCentrosCosto(tkn).Where(x => x.IdEmpresa.Equals(EsExterno)).ToList();
+            else
+                list = CatalogoServicio.BuscarCentrosCosto(tkn).Where(x => x.IdEmpresa.Equals(EsExterno)).ToList();
             var JsonInfo = JsonConvert.SerializeObject(list);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
