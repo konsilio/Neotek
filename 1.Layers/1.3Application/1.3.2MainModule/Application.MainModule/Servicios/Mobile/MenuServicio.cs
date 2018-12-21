@@ -277,15 +277,18 @@ namespace Application.MainModule.Servicios.Mobile
                             {
                                 lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionAnticipoEstacionCarb"]));
                                 lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
+                            }else
+                            {
+                                if (ban)
+                                {
+                                    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
+
+                                }
                             }
                         //}
                         //else
                         //{
-                            if (ban)
-                            {
-                                lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
-
-                            }
+                           
                         //}
 
                         _AppDisposicionEfectivo = true;

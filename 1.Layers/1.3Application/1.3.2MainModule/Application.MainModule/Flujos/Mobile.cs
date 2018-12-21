@@ -226,27 +226,141 @@ namespace Application.MainModule.Flujos
                 adapter.RFC = cliente.Rfc;
                 adapter.RazonSocial = cliente.RazonSocial;
             }
-
-            var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
-            if (ventaPuntoDeVenta.Exito)
+            RespuestaDto respuesta = new RespuestaDto();
+            
+            #region Verifica si la venta que se realiza es extraordinaria
+            if (venta.Credito)
             {
-                #region Registro de venta extraordinaria
-                //if(venta.VentaExtraordinaria)
-                int dias = Convert.ToInt32(cliente.limiteCreditoDias);
-                var cargo = CargoAdapter.FromDTO(venta, DateTime.Now.AddDays(dias),TokenServicio.ObtenerIdEmpresa());
-
-                var insertCargo = PuntoVentaServicio.insertCargoMobile(cargo);
-                if (insertCargo.Exito)
+                if (cliente.CreditoDisponibleMonto==0) {
+                    RespuestaDto _res = new RespuestaDto();
+                    if (!cliente.VentaExtraordinaria.Value)
+                    {
+                        resp.Exito = false;
+                        resp.EsInsercion = false;
+                        resp.EsActulizacion = false;
+                        resp.Mensaje = "No se puede realizar la venta, favor de comunicarse con el área de crédito y cobranza";
+                        resp.Id = 0;
+                        resp.Codigo = null;
+                        resp.ModeloValido = false;
+                        return resp;
+                    }
+                }
+            }
+            #endregion 
+            if (venta.Credito)
+            {
+                if (venta.VentaExtraordinaria)
                 {
-                    #region Actualizacion de credito disponible
-                    decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Total;
-                    decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Total;
+                    #region Registro y actualización de credito
+                    int dias = Convert.ToInt32(cliente.limiteCreditoDias);
+                    var cargo = CargoAdapter.FromDTO(venta, DateTime.Now.AddDays(dias), TokenServicio.ObtenerIdEmpresa());
+
+                    var insertCargo = PuntoVentaServicio.insertCargoMobile(cargo);
+                    if (insertCargo.Exito)
+                    {
+                        #region Actualizacion de credito disponible
+
+                        if (cliente.CreditoDisponibleMonto == 0)
+                        {
+                            decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Total;
+                            cliente.CreditoDisponibleMonto = creditoDisponible;
+                        }
+                        else
+                        {
+                            if (cliente.CreditoDisponibleMonto > 0)
+                            {
+                                decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Total;
+                                cliente.CreditoDisponibleMonto = creditoDisponibleMonto;
+                            }
+                        }
+
+                       
+                        var actualizaCredito = ClienteServicio.ModificarCredito(cliente);
+                        if (actualizaCredito.Exito)
+                        {
+                            #region Registro de la venta
+                            var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
+                            respuesta = ventaPuntoDeVenta;
+                        }
+                        else
+                        {
+                            respuesta = actualizaCredito;
+                        }
+                            
+                        #endregion
+                        #endregion
+                    }
+                    else
+                    {
+                        respuesta = insertCargo;
+                    }
+                      
                     #endregion
                 }
-                #endregion
-            }
+                else
+                {
+                    #region Verifica si tiene credito disponible
+                    if (cliente.CreditoDisponibleMonto >0 && cliente.CreditoDisponibleMonto>=venta.Total)
+                    {
+                        #region Registro y actualización de credito
+                        int dias = Convert.ToInt32(cliente.limiteCreditoDias);
+                        var cargo = CargoAdapter.FromDTO(venta, DateTime.Now.AddDays(dias), TokenServicio.ObtenerIdEmpresa());
 
-            return ventaPuntoDeVenta;
+                        var insertCargo = PuntoVentaServicio.insertCargoMobile(cargo);
+                        if (insertCargo.Exito)
+                        {
+                            #region Actualizacion de credito disponible
+
+                            if (cliente.CreditoDisponibleMonto == 0)
+                            {
+                                decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Total;
+                                cliente.CreditoDisponibleMonto = creditoDisponible;
+                            }
+                            if (cliente.CreditoDisponibleMonto > 0)
+                            {
+                                decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Total;
+                                cliente.CreditoDisponibleMonto = creditoDisponibleMonto;
+                            }
+
+                            var actualizaCredito = ClienteServicio.ModificarCredito(cliente);
+                            if (actualizaCredito.Exito)
+                            {
+                                #region Registro de la venta
+                                var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
+                                respuesta = ventaPuntoDeVenta;
+                            }
+                            else
+                                respuesta = actualizaCredito;
+                            #endregion
+                                #endregion
+                        }
+                        else
+                        {
+                            respuesta = insertCargo;
+                        }
+                        #endregion
+                    }
+                    else
+                    {
+                        RespuestaDto _res = new RespuestaDto();
+                        resp.Exito = false;
+                        resp.EsInsercion = false;
+                        resp.EsActulizacion = false;
+                        resp.Mensaje = "No se puede realizar la venta, favor de comunicarse con el área de crédito y cobranza";
+                        resp.Id = 0;
+                        resp.Codigo = null;
+                        resp.ModeloValido = false;
+                        return resp;
+                    }
+                    #endregion
+                }
+            }
+            else
+            {
+                var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
+                respuesta = ventaPuntoDeVenta;
+            }
+            return respuesta;
         }
         public int Orden(List<VentaPuntoDeVenta> ventas, DateTime fechaVenta)
         {
