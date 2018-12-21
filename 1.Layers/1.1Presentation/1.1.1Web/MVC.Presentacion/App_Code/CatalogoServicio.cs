@@ -1687,6 +1687,12 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarCentrosCostos(Tkn);
             return agente._listaCentroCosto;
         }
+         public static List<CentroCostoDTO> BuscarCentrosCosto(string Tkn, bool EsExterno)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarCentrosCostos(Tkn, EsExterno);
+            return agente._listaCentroCosto;
+        }
         public static List<TipoCentroCostoDTO> BuscarTipoCentrosCosto(string Tkn)
         {
             var agente = new AgenteServicio();

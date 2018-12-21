@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
@@ -22,4 +23,8 @@ public interface PuntoVentaPagarPresenter {
     void onSuccessPuntoVentaAsignado(PuntoVentaAsignadoDTO data);
 
     void onErrorPuntoVenta(String s);
+
+    void verificarVentaExtraforanea(int idCliente, String token);
+
+    void onSuccessVentaExtraforanea(RespuestaVentaExtraforaneaDTO data);
 }

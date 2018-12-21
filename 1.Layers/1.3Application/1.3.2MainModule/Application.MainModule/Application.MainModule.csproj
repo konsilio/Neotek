@@ -73,6 +73,7 @@
     <Compile Include="AdaptadoresDTO\Mobile\CalibracionAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\Cortes\UsuariosCorteAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TraspasoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\VentaExtraordinaria\CargoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\VentasEstacionesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Pedidos\PedidosAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="DTOs\Mobile\EstacionesDto.cs" />
     <Compile Include="DTOs\Mobile\LineaDto.cs" />
     <Compile Include="DTOs\Mobile\PipaDto.cs" />
+    <Compile Include="DTOs\Mobile\PuntoVenta\DatosVentaExtraforaneaDTO.cs" />
     <Compile Include="DTOs\Mobile\PuntoVenta\PuntoVentaAsignadoDTO.cs" />
     <Compile Include="DTOs\Mobile\TraspasoDto.cs" />
     <Compile Include="DTOs\Pedidos\EstatusPedidoDto.cs" />
@@ -146,6 +148,7 @@
     <Compile Include="Servicios\AccesoADatos\AlmacenEntradaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\DataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EgresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\IngresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraProductoDataAccess.cs" />

@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface PuntoVentaPagarView {
     void onSuccessPuntoVentaAsignado(PuntoVentaAsignadoDTO data);
 
     void onErrorPuntoVenta(String mensaje);
+
+    void onSuccessExtraforanea(RespuestaVentaExtraforaneaDTO data);
 }

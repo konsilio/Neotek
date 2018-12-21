@@ -550,6 +550,19 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.ObtenerEstacion(), Request);
         }
+
+        /// <summary>
+        /// Permite determinar si el cliente que se envia de parametro en idCliente 
+        /// ya tiene atorizado por parte del area de cobranza realizarle una venta extraforanea
+        /// retornara un objeto DTO con el resultado de esta respuesta. 
+        /// </summary>
+        /// <param name="idCliente">Short que reprcenta el id del cliente </param>
+        /// <returns>Objeto DTO con el rersultado de la conslta </returns>
+        [Route("venta-extraforanea/{idCliente}")]
+        public HttpResponseMessage GetVentaExtraforanea(short idCliente)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.tieneVentaExtraforanea(idCliente), Request);
+        }
         #endregion
 
         #region Revision de lectura inicial

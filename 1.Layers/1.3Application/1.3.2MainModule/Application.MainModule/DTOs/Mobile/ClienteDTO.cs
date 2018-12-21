@@ -25,5 +25,6 @@ namespace Application.MainModule.DTOs.Mobile
         public string RazonSocial { get; set; }
         public bool Credito { get; set; }
         public bool Factura { get; internal set; }
+        public decimal LimiteCredito { get; set; }
     }
 }

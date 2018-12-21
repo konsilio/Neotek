@@ -9,12 +9,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Respuesta;
-
+using System.Data;
+using Application.MainModule.Servicios.AccesoADatos;
 
 namespace Application.MainModule.Flujos
 {
     public class Seguridad
     {
+        public DataSet Test()
+        {
+            List<System.Data.SqlClient.SqlParameter> lp = new List<System.Data.SqlClient.SqlParameter>();
+            lp.Add(new System.Data.SqlClient.SqlParameter("IdCliente", 1));
+            lp.Add(new System.Data.SqlClient.SqlParameter("Fecha", DBNull.Value));
+            lp.Add(new System.Data.SqlClient.SqlParameter("IdEmpresa", 2));
+            return new DataAccess().StoredProcedure_DataSet("SpSel_CarteraVencida", lp );
+        }
         public RespuestaAutenticacionDto Autenticacion(AutenticacionDto autenticacionDto)
         {
             return AutenticarServicio.AutenticarUsuario(autenticacionDto);
@@ -39,7 +48,6 @@ namespace Application.MainModule.Flujos
 
             return responce;
         }
-
 
         #region Usuarios
         public List<UsuariosModel> AllUsers()

@@ -1748,6 +1748,39 @@ namespace MVC.Presentacion.Agente
                 _listaCentroCosto = emp;
             }
         }
+        public void BuscarCentrosCostos(string tkn, bool EsExterno)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCentrosCostos"];
+            ListaCentrosCosto(tkn).Wait();
+        }
+        private async Task ListaCentrosCosto(string token, bool EsExterno)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CentroCostoDTO> emp = new List<CentroCostoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiCatalgos, EsExterno)).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<CentroCostoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<CentroCostoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaCentroCosto = emp;
+            }
+        }
         public void GuardarCentroCosto(CentroCostoCrearDTO dto, string tkn)
         {
             //this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraCentroCosto"];
