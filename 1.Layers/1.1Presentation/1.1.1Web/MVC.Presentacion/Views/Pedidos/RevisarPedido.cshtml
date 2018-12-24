@@ -99,6 +99,8 @@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             @Model.NombreRfc - @Model.Rfc
+                                                            <input type="hidden" name="NombreRfc" value="@Model.NombreRfc" />
+                                                            <input type="hidden" name="IdCliente" value="@Model.IdCliente" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -222,7 +224,7 @@
                                                 <div class="row clearfix">
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <input type="submit" value="Editar datos del cliente" formaction=@Url.Action("EditarCliente") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                            <input type="submit" value="Editar datos del cliente" formaction=@Url.Action("AltaClienteDireccion") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
@@ -355,7 +357,7 @@
                                                 <div class="row clearfix">
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
-                                                            <input type="submit" value="Editar datos del cliente" formaction=@Url.Action("EditarCliente") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                            <input type="submit" value="Editar datos del cliente" formaction=@Url.Action("AltaClienteDireccion") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">

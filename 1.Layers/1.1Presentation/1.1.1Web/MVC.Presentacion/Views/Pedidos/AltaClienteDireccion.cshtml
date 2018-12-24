@@ -44,9 +44,13 @@
                                         <div class="form-group">
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div>
-                                                    @*<input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdCliente[0].RazonSocial=="")?ViewBag.IdCliente[0].Nombre + " " +ViewBag.IdCliente[0].Apellido1 + " " +ViewBag.IdCliente[0].Apellido2:ViewBag.IdCliente[0].RazonSocial )" />
-                                                        <input type="text" name="IdCliente" hidden="hidden" value="@ViewBag.IdCliente[0].IdCliente" readonly="readonly" class="form-control" />*@
-                                                    @*<input type="text" name="Orden" hidden="hidden" value="@((ViewBag.LocacionOrden!=null)?ViewBag.LocacionOrden:0)" readonly="readonly" class="form-control" />*@
+                                                   <input type="text" name="IdCliente" hidden="hidden" value="@((ViewBag.Locaciones!=null)?ViewBag.Locaciones.IdCliente:0)"/>
+                                                    <input type="text" name="Orden" hidden="hidden" value="@((ViewBag.Locaciones!=null)?ViewBag.Locaciones.Orden:0)"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        @ViewBag.Cliente
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -64,7 +68,15 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
-                                            <input type="text" name="TipoLocacion" class="form-control" placeholder="Sucursal/Oficina/Tienda/Vacío/etc.">
+                                            <input type="text" name="TipoLocacion" class="form-control" placeholder="Sucursal/Oficina/Tienda/Vacío/etc." value="@((ViewBag.Locaciones!=null)? @ViewBag.Locaciones.TipoLocacion:"")">
+                                            @*@if (ViewBag.EsEdicion == null)                                                                             
+    {
+        <input type="text" name="TipoLocacion" class="form-control" placeholder="Sucursal/Oficina/Tienda/Vacío/etc." value="@ViewBag.Locaciones.TipoLocacion">
+    }
+    else
+    {
+        @Html.TextBoxFor(m => m[0].TipoLocacion, new { @class = "form-control", @placeholder = "Sucursal/Oficina/Tienda/Vacío/etc." })
+    }*@
                                         </div>
                                     </div>
                                     <div class="col-lg-7 col-md-7 col-sm-7">
@@ -101,9 +113,27 @@
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
                                                 <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
-                                                    @foreach (var lst in ViewBag.ListaPaises)
+                                                    @if (ViewBag.Locaciones == null)
                                                     {
-                                                        <option value="@lst.IdPais">@lst.Pais</option>
+                                                        foreach (var lst in ViewBag.ListaPaises)
+                                                        {
+                                                            <option value="@lst.IdPais">@lst.Pais</option>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        foreach (var lst in ViewBag.ListaPaises)
+                                                        {
+
+                                                            if (lst.IdPais == ViewBag.Locaciones.IdPais)
+                                                            {
+                                                                <option value="@lst.IdPais" selected>@lst.Pais</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@lst.IdPais">@lst.Pais</option>
+                                                            }
+                                                        }
                                                     }
                                                 </select>
                                             </div>
@@ -120,9 +150,27 @@
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
                                                 <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                                    @foreach (var lst in ViewBag.ListaEstados)
+                                                    @if (ViewBag.Locaciones == null)
                                                     {
-                                                        <option value="@lst.IdEstadoRep">@lst.Estado</option>
+                                                        foreach (var lst in ViewBag.ListaEstados)
+                                                        {
+                                                            <option value="@lst.IdEstadoRep">@lst.Estado</option>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        foreach (var lst in ViewBag.ListaEstados)
+                                                        {
+                                                            if (lst.IdEstadoRep == ViewBag.Locaciones.IdEstadoRep)
+                                                            {
+                                                                <option value="@lst.IdEstadoRep" selected>@lst.Estado</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@lst.IdEstadoRep">@lst.Estado</option>
+                                                            }
+
+                                                        }
                                                     }
                                                 </select>
                                             </div>
@@ -138,7 +186,15 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <input type="text" name="Municipio" class="form-control" />
+                                                <input type="text" name="Municipio" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.Municipio:"")"/>
+                                                @*@if (ViewBag.EsEdicion == null)                       
+    {
+        <input type="text" name="Municipio" class="form-control" />
+    }
+    else
+    {
+        @Html.TextBoxFor(m => m[0].Municipio, new { @class = "form-control" })
+    }*@
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].Municipio, "", new { @class = "alert-danger" })
                                         </div>
@@ -155,7 +211,15 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <input type="text" name="Colonia" class="form-control" />
+                                                <input type="text" name="Colonia" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.Colonia:"")"/>
+                                                @*@if (ViewBag.EsEdicion == null)                    
+    {
+        <input type="text" name="Colonia" class="form-control" />
+    }
+    else
+    {
+        @Html.TextBoxFor(m => m[0].Colonia, new { @class = "form-control" })
+    }*@
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].Colonia, "", new { @class = "alert-danger" })
                                         </div>
@@ -170,7 +234,15 @@
                                         </div>
                                         <div class="col-lg-7 col-md-7 col-sm-7">
                                             <div class="form-group">
-                                                <input type="text" name="Calle" class="form-control" />
+                                                <input type="text" name="Calle" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.Calle:"")"/>
+                                                @*@if (ViewBag.EsEdicion == null)                             
+    {
+        <input type="text" name="Calle" class="form-control" />
+    }
+    else
+    {
+        @Html.TextBoxFor(m => m[0].Calle, new { @class = "form-control" })
+    }*@
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].Calle, "", new { @class = "alert-danger" })
                                         </div>
@@ -187,7 +259,15 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <input type="text" name="NumExt" class="form-control" />
+                                                <input type="text" name="NumExt" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.NumExt:"")" />
+                                                @*@if (ViewBag.EsEdicion == null)                         
+    {
+        <input type="text" name="NumExt" class="form-control" />
+    }
+    else
+    {
+        @Html.TextBoxFor(m => m[0].NumExt, new { @class = "form-control" })
+    }*@
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].NumExt, "", new { @class = "alert-danger" })
                                         </div>
@@ -202,7 +282,15 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <input type="text" name="NumInt" class="form-control" />
+                                                <input type="text" name="NumInt" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.NumInt:"")"/>
+                                                @*@if (ViewBag.EsEdicion == null)
+                                                {
+                                                    <input type="text" name="NumInt" class="form-control" />
+                                                }
+                                                else
+                                                {
+                                                    @Html.TextBoxFor(m => m[0].NumInt, new { @class = "form-control" })
+                                                }*@
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1">
@@ -216,7 +304,16 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <input type="text" name="CodigoPostal" class="form-control" />
+                                                <input type="text" name="CodigoPostal" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.CodigoPostal:"")"/>
+                                                @*@if (ViewBag.EsEdicion == null)
+                                                {
+                                                   
+                                                }
+                                                else
+                                                {
+                                                    @Html.TextBoxFor(m => m[0].CodigoPostal, new { @class = "form-control" })
+                                                }*@
+
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].CodigoPostal, "", new { @class = "alert-danger" })
                                         </div>
@@ -233,7 +330,16 @@
                                         </div>
                                         <div class="col-lg-10 col-md-10 col-sm-10">
                                             <div class="form-group">
-                                                <input type="text" name="NumExt" class="form-control" />
+                                                <input type="text" name="formatted_address" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.formatted_address:"")"/>
+                                                @*@if (ViewBag.EsEdicion == null)
+                                                {
+                                                     <input type="text" name="formatted_address" class="form-control" />
+                                                }
+                                                else
+                                                { 
+                                                    @Html.TextBoxFor(m => m[0].formatted_address, new { @class = "form-control" })
+                                                }*@                                            
+                                               
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].formatted_address, "", new { @class = "alert-danger" })
                                         </div>
@@ -247,7 +353,18 @@
                                     </div>
                                     <div class="col-lg-7 col-md-7 col-sm-7">
                                         <div class="form-group">
-                                            <button class="btn btn-raised btn-round btn-primary float-right">Agregar</button>
+                                            @if (ViewBag.EsEdicion == null)
+                                            {
+                                                <button class="btn btn-round btn-primary float-right">
+                                                    <i class="zmdi zmdi-plus"></i> Agregar
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button btn formaction="EditarClienteLoc" class="btn btn-primary btn-round float-right">
+                                                    <i class="zmdi zmdi-swap"></i> Actualizar
+                                                </button>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -261,7 +378,7 @@
                                                         <th>País</th>
                                                         <th>Estado</th>
                                                         <th>Municipio</th>
-                                                        <th>Tipo Locacion</th>
+                                                        <th>Tipo Locación</th>
                                                         <th>Cod Postal</th>
                                                         <th>Colonia</th>
                                                         <th>Calle</th>
@@ -275,34 +392,34 @@
                                                     {
                                                         foreach (var item in Model)
                                                         {
-                                                    <tr>
-                                                        <td>@item.Pais</td>
-                                                        @if (@item.EstadoProvincia != "" && @item.EstadoProvincia != null)
+                                                            <tr>
+                                                                <td>@item.Pais</td>
+                                                                @if (@item.EstadoProvincia != "" && @item.EstadoProvincia != null)
                                                                 {
-                                                                <td>@item.EstadoProvincia</td>
+                                                                    <td>@item.EstadoProvincia</td>
                                                                 }
                                                                 else
                                                                 {
-                                                                <td>@item.Estado</td>
+                                                                    <td>@item.Estado</td>
                                                                 }
-                                                        <td>@item.Municipio</td>
-                                                        <td>@item.TipoLocacion</td>
-                                                        <td>@item.CodigoPostal</td>
-                                                        <td>@item.Colonia</td>
-                                                        <td>@item.Calle</td>
-                                                        <td>@item.NumInt</td>
-                                                        <td>@item.NumExt</td>
-                                                        <td>
-                                                            <a href="@Url.Action("EditarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">edit</i>
-                                                                <span>Editar locacion</span>
-                                                            </a>
-                                                            <a href="@Url.Action("BorrarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">delete</i>
-                                                                <span>Eliminar locacion</span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                                <td>@item.Municipio</td>
+                                                                <td>@item.TipoLocacion</td>
+                                                                <td>@item.CodigoPostal</td>
+                                                                <td>@item.Colonia</td>
+                                                                <td>@item.Calle</td>
+                                                                <td>@item.NumInt</td>
+                                                                <td>@item.NumExt</td>
+                                                                <td>
+                                                                    <a href="@Url.Action("EditarClienteLoc", "Pedidos", new { id = item.IdCliente , idOrden = item.Orden })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="material-icons">edit</i>
+                                                                        <span>Editar locacion</span>
+                                                                    </a>
+                                                                    <a href="@Url.Action("BorrarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="material-icons">delete</i>
+                                                                        <span>Eliminar locacion</span>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
                                                         }
                                                     }
                                                 </tbody>
@@ -317,7 +434,6 @@
                                     </div>
                                     <div class="col-lg-7 col-md-7 col-sm-7">
                                         <div class="form-group">
-                                            <button class="btn btn-raised btn-round btn-primary float-right">Finalizar</button>
                                             <input type="submit" value="Finalizar" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-round btn-primary float-right" />
                                         </div>
                                     </div>

@@ -35,9 +35,9 @@ namespace DS.MainModule.Controllers
         }
         [AllowAnonymous]
         [Route("login")]
-        public HttpResponseMessage PostLogin()
+        public HttpResponseMessage PostLogin(AutenticacionDto autenticacionDto)
         {   
-            return Request.CreateResponse(HttpStatusCode.OK, _seguridad.Test());
+            return Request.CreateResponse(HttpStatusCode.OK, _seguridad.Autenticacion(autenticacionDto));
        }       
 
         #region Usuarios
