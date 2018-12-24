@@ -931,17 +931,19 @@ namespace Application.MainModule.Flujos
                 {
                     var pipa = new EquipoTransporteDataAccess().BuscarPipa(unidad.IdPipa ?? 0);
                     dacDTO.pipa = AnticiposCortesAdapter.ToDTO(pipa, unidad);
+                    dacDTO.EsPipa = true;
                 }
                 if (unidad.IdCamioneta != null)
                 {
                     var camioneta = new EquipoTransporteDataAccess().BuscarCamioneta(unidad.IdCamioneta ?? 0);
                     dacDTO.camioneta = AnticiposCortesAdapter.ToDTO(camioneta, unidad);
-
+                    dacDTO.EsCamioneta = true;
                 }
                 if (unidad.IdEstacionCarburacion != null)
                 {
                     var Estacion = EstacionCarburacionServicio.Obtener(unidad.IdEstacionCarburacion ?? 0);
                     dacDTO.estaciones = AnticiposCortesAdapter.ToDTO(Estacion, unidad);
+                    dacDTO.EsEstacion = true;
                 }
             }
             //return AnticiposCortesAdapter.ToDTO(estaciones, unidades);
