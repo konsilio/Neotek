@@ -10,6 +10,8 @@ import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
+import org.json.JSONObject;
+
 public class PuntoVentaPagarPresenterImpl implements PuntoVentaPagarPresenter {
     PuntoVentaPagarView view;
     PuntoVentaPagarInteractor interactor;
@@ -78,4 +80,10 @@ public class PuntoVentaPagarPresenterImpl implements PuntoVentaPagarPresenter {
         //view.onHiddeProgress();
         view.onSuccessExtraforanea(data);
     }
+
+    @Override
+    public void onErrorInternalServer(JSONObject respuesta) {
+        view.onErrorInternalServer(respuesta);
+    }
+
 }

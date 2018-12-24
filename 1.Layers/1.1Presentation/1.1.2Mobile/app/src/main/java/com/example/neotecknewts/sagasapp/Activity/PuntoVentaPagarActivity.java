@@ -26,6 +26,8 @@ import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Session;
 import com.example.neotecknewts.sagasapp.Util.Tabla;
 
+import org.json.JSONObject;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -319,6 +321,23 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
     public void onSuccessExtraforanea(RespuestaVentaExtraforaneaDTO data) {
         if(data.isExito()){
             ventaDTO.setVentaExtraforanea(data.isVentaExtraforanea());
+        }
+    }
+
+    @Override
+    public void onErrorInternalServer(JSONObject respuesta) {
+        if (respuesta!=null) {
+            try {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
+                builder.setTitle(R.string.error_titulo);
+                builder.setMessage(respuesta.getString("Mensaje"));
+                builder.setCancelable(false);
+                builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
+                        dialog.dismiss());
+                builder.create().show();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }

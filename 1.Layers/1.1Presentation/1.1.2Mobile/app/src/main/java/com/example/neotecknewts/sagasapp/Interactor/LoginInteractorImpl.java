@@ -151,7 +151,6 @@ public class LoginInteractorImpl implements LoginInteractor {
                         JSONObject respuesta = null;
                         try {
                             respuesta = new JSONObject(response.errorBody().string());
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (IOException e) {

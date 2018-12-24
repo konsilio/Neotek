@@ -203,9 +203,9 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             );
         }else{
             presenter.getCamionetaCilindros(
-                    true,
-                    false,
-                    false,
+                    esGasLP,
+                    esCilindroGas,
+                    esCilindro,
                     session.getToken()
             );
         }
@@ -346,6 +346,15 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         if(ExistenciasDTO!=null){
             adapter = new PuntoVentaAdapter(ExistenciasDTO,EsVentaCamioneta,this);
             if(!EsVentaCamioneta){
+                adapter.esVentaGas = true;
+                adapter.PrecioLitro = TVFormularioVentaCamionetaYPipaPrecio;
+                adapter.Descuento = TVFormularioVentaCamionetaYPipaDescuento;
+                adapter.Subtotal = TVFormularioVentaCamionetaYPipaSubtotal;
+                adapter.Iva = TVFormularioVentaCamionetaYPipaIva;
+                adapter.Total =TVFormularioVentaCamionetaYPipaTotal;
+                adapter.precioVentaDTO = precioVentaDTO;
+            }
+            if(esGasLP && EsVentaCamioneta){
                 adapter.esVentaGas = true;
                 adapter.PrecioLitro = TVFormularioVentaCamionetaYPipaPrecio;
                 adapter.Descuento = TVFormularioVentaCamionetaYPipaDescuento;
