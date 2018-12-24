@@ -12,5 +12,8 @@ namespace Application.MainModule.DTOs.Mobile
         public List<CorteDto> cortes { get; set; }
         public List<DateTime> fechasCorte { get; set; }
         public decimal TotalAnticiposCorte { get; set; }
+        public bool EsCamioneta { get; set; }
+        public bool EsPipa { get; set; }
+        public bool EsEstacion { get; set; }
     }
 }

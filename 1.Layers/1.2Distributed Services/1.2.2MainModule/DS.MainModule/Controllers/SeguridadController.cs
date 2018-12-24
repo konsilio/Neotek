@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace DS.MainModule.Controllers
 {
-    
+
     [RoutePrefix("api/seguridad")]
     public class SeguridadController : ApiController
     {
@@ -35,10 +35,10 @@ namespace DS.MainModule.Controllers
         }
         [AllowAnonymous]
         [Route("login")]
-        public HttpResponseMessage PostLogin(AutenticacionDto autenticacionDto)
-        {   
-            return Request.CreateResponse(HttpStatusCode.OK, _seguridad.Autenticacion(autenticacionDto));
-       }       
+        public HttpResponseMessage PostLogin(AutenticacionDto dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _seguridad.Autenticacion(dto));
+        }
 
         #region Usuarios
 
@@ -96,7 +96,7 @@ namespace DS.MainModule.Controllers
 
         [Route("roles/listaAllRoles/{id}")]
         public HttpResponseMessage GetAllRoles(short id)
-        {             
+        {
             return Request.CreateResponse(HttpStatusCode.OK, _seguridad.AllRoles(id));
         }
         [Route("registra/roles")]

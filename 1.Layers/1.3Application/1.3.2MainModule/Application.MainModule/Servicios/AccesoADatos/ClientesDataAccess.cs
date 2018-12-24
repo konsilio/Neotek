@@ -85,6 +85,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 || x.Celular3.Contains(criterio)
                 || x.Rfc.ToLower().Contains(criterio)))
                 && x.IdEmpresa.Equals(idEmpresa)
+                && x.Activo
             ).ToList();
         }
 

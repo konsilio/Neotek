@@ -14,5 +14,6 @@ namespace Application.MainModule.DTOs.Mobile
         public Nullable<decimal> CantidadP5000 { get; set; }
         public Nullable<short> IdTipoMedidor { get; set; }
         public List<CilindroDto> Cilindros { get; set; }
+        public decimal Capacidad { get; set; }
     }
 }

@@ -40,6 +40,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.EsEncargadoPuerta = false;
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
+            var almacen = AlmacenGasServicio.ObtenerAlmacen(liadto.IdCAlmacenGas);
             
             return AlmacenGasServicio.InsertarLectura(adapter);
         }
