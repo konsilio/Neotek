@@ -425,7 +425,8 @@ namespace DS.MainModule.Controllers
         [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}/{fecha}")]
         public HttpResponseMessage GetVentasCortesAnticipos(int estacion, bool esAnticipos, DateTime fecha)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos, fecha), Request);
+            //return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos, fecha), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.BusquedaAnticipoCorteFecha(estacion, esAnticipos, fecha), Request);
         }
         /// <summary>
         /// Permite retornar el listado de usuarios para ser implementados
