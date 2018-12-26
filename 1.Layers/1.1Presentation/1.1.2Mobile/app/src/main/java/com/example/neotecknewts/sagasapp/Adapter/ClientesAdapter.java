@@ -22,6 +22,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private boolean EsVentaCarburacion,
             EsVentaCamioneta,
             EsVentaPipa;
+    public boolean esGasLP;
     public ClientesAdapter(List<ClienteDTO> items,boolean EsVentaCarburacion,
                            boolean EsVentaCamioneta,
                            boolean EsVentaPipa,VentaDTO ventaDTO){
@@ -113,6 +114,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
                 intent.putExtra("EsVentaPipa", EsVentaPipa);
                 intent.putExtra("ventaDTO", ventaDTO);
+                intent.putExtra("esGasLP",esGasLP);
                 view.getContext().startActivity(intent);
             }else{
                 Intent intent = new Intent(view.getContext(),
@@ -121,6 +123,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
                 intent.putExtra("EsVentaPipa", EsVentaPipa);
                 intent.putExtra("ventaDTO", ventaDTO);
+                intent.putExtra("esGasLP",esGasLP);
                 view.getContext().startActivity(intent);
             }
         });
