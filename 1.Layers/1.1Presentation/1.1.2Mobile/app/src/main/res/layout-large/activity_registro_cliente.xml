@@ -216,12 +216,14 @@
 
             <Button
                 android:id="@+id/BtnRegistroClienteActivityRegistrarCliente"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="20sp"
                 android:layout_marginRight="15dp"
-                style="@style/SagasTheme.Button"
                 android:background="@drawable/ripple_effect"
+                android:padding="10sp"
                 android:text="@string/registrar_cliente"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="30sp"
@@ -229,13 +231,15 @@
 
             <Button
                 android:id="@+id/BtnRegistroClienteActivityRegresar"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="20sp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                style="@style/SagasTheme.Button"
                 android:background="@drawable/ripple_effect"
+                android:padding="10sp"
                 android:text="@string/regresar"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="24sp"

@@ -34,6 +34,15 @@ public class RespuestaEstacionesVentaDTO extends RespuestaDTO implements Seriali
     @SerializedName("TotalAnticiposCorte")
     private double TotalAnticiposCorte;
 
+    @SerializedName("EsCamioneta")
+    private boolean EsCamioneta;
+
+    @SerializedName("EsPipa")
+    private boolean EsPipa;
+
+    @SerializedName("EsEstacion")
+    private boolean EsEstacion;
+
     public  RespuestaEstacionesVentaDTO(){
         //this.estaciones = new ArrayList<>();
         this.anticipos = new ArrayList<>();
@@ -96,4 +105,27 @@ public class RespuestaEstacionesVentaDTO extends RespuestaDTO implements Seriali
         this.camionetaDTO = camionetaDTO;
     }
 
+    public boolean isEsCamioneta() {
+        return EsCamioneta;
+    }
+
+    public void setEsCamioneta(boolean esCamioneta) {
+        EsCamioneta = esCamioneta;
+    }
+
+    public boolean isEsPipa() {
+        return EsPipa;
+    }
+
+    public void setEsPipa(boolean esPipa) {
+        EsPipa = esPipa;
+    }
+
+    public boolean isEsEstacion() {
+        return EsEstacion;
+    }
+
+    public void setEsEstacion(boolean esEstacion) {
+        EsEstacion = esEstacion;
+    }
 }

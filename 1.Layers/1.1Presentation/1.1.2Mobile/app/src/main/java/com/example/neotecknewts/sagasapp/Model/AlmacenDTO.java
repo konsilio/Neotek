@@ -29,6 +29,9 @@ public class AlmacenDTO extends RespuestaDTO  implements Serializable {
     @SerializedName("Cilindros")
     private List<CilindrosDTO> Cilindros;
 
+    @SerializedName("Capacidad")
+    private double Capacidad;
+
     public AlmacenDTO (){
         Cilindros = new ArrayList<>();
     }
@@ -79,6 +82,14 @@ public class AlmacenDTO extends RespuestaDTO  implements Serializable {
 
     public void setCilindros(List<CilindrosDTO> cilindros) {
         Cilindros = cilindros;
+    }
+
+    public double getCapacidad() {
+        return Capacidad;
+    }
+
+    public void setCapacidad(double capacidad) {
+        Capacidad = capacidad;
     }
 }
 

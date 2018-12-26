@@ -32,6 +32,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
     ProgressDialog progressDialog;
     VentaDTO ventaDTO;
     boolean EsVentaCarburacion,EsVentaCamioneta,EsVentaPipa;
+    boolean esGasLP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
             EsVentaCamioneta=extras.getBoolean("EsVentaCamioneta",false);
             EsVentaPipa=extras.getBoolean("EsVentaPipa",EsVentaPipa);
             ventaDTO = (VentaDTO) extras.getSerializable("ventaDTO");
+            esGasLP = extras.getBoolean("esGasLP",false);
         }
         RVBuscarClienteActivityClientes = findViewById(R.id.RVBuscarClienteActivityClientes);
         //BtnBuscarClienteActivityNo = findViewById(R.id.BtnBuscarClienteActivityNo);
@@ -70,6 +72,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
             intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("ventaDTO",ventaDTO);
+            intent.putExtra("esGasLP",esGasLP);
             startActivity(intent);
         });
         LinearLayoutManager linearLayout = new LinearLayoutManager(BuscarClienteActivity.this);
@@ -85,6 +88,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
                 EsVentaPipa,
                 ventaDTO
         );
+        adapter.esGasLP = esGasLP;
         RVBuscarClienteActivityClientes.setAdapter(adapter);
     }
 
@@ -114,6 +118,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
                     EsVentaCamioneta,
                     EsVentaPipa,
                     ventaDTO);
+            adapter.esGasLP = esGasLP;
             RVBuscarClienteActivityClientes.setAdapter(adapter);
         }
     }

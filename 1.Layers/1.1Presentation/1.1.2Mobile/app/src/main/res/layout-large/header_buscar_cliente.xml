@@ -54,17 +54,18 @@
 
             <Button
                 android:id="@+id/BtnBuscarClienteActivitySi"
+                style="@style/SagasTheme.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                style="@style/SagasTheme.Button"
                 android:background="@drawable/ripple_effect"
+                android:padding="10sp"
                 android:text="@string/registrar"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="30sp"
-                tools:ignore="ButtonStyle,UnusedAttribute"
-                android:layout_marginLeft="5dp" />
+                tools:ignore="ButtonStyle,UnusedAttribute" />
             <!--  android:text="@string/label_si"-->
         </TableRow>
 
