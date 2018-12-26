@@ -58,8 +58,17 @@ namespace Application.MainModule.DTOs.Mobile.Cortes
     /// </summary>
     public class CorteInfoDTO
     {
+        /// <summary>
+        /// Reprecenta el total de los cortes encontrados
+        /// </summary>
         public decimal totalCortes { get; set; }
+        /// <summary>
+        /// Listado de cortes encontrados
+        /// </summary>
         public List<CorteDto> cortes { get; set; }
+        /// <summary>
+        /// Constructor de clase para inicializar la lista de cortes 
+        /// </summary>
         public CorteInfoDTO()
         {
             cortes = new List<CorteDto>();
@@ -76,8 +85,13 @@ namespace Application.MainModule.DTOs.Mobile.Cortes
         /// Suma total de los totales de anticipos
         /// </summary>
         public decimal totalAnticipos { get; set; }
-
+        /// <summary>
+        /// Listado de anticipos registrados en la estación
+        /// </summary>
         public List<AnticipoDto> anticipos { get; set; }
+        /// <summary>
+        /// Constructor de clase para inicializar el listado de anticipos
+        /// </summary>
         public AnticipoInfoDTO()
         {
             anticipos = new List<AnticipoDto>();
@@ -89,8 +103,17 @@ namespace Application.MainModule.DTOs.Mobile.Cortes
     /// </summary>
     public class VentasInfoDTO
     {
-        public List<VentaDTO> ventas { get; set; }
+        /// <summary>
+        /// Reprecenta la suma total de las ventas realizadas
+        /// </summary>
         public decimal totalVentas { get; set; }
+        /// <summary>
+        /// Lista de ventas encontradas para el corte o anticipo
+        /// </summary>
+        public List<VentaDTO> ventas { get; set; }
+        /// <summary>
+        /// Constructor de clase para inicializar la lista de ventas
+        /// </summary>
         public VentasInfoDTO()
         {
             ventas = new List<VentaDTO>();

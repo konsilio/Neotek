@@ -822,7 +822,7 @@ namespace Application.MainModule.Flujos
                 var ventasSinCorte = new List<VentaPuntoDeVenta>();
                 foreach (var ventaActiva in ventasActivas)
                 {
-                    if(ventaActiva.FolioOperacionDia == null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
+                    //if(ventaActiva.FolioOperacionDia == null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
                         ventasSinCorte.Add(ventaActiva);
                 }
 
@@ -902,7 +902,7 @@ namespace Application.MainModule.Flujos
                 var ventasSinCorte = new List<VentaPuntoDeVenta>();
                 foreach (var ventaActiva in ventasActivas)
                 {
-                    if (ventaActiva.FolioOperacionDia == null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
+                    //if (ventaActiva.FolioOperacionDia == null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
                         ventasSinCorte.Add(ventaActiva);
                 }
                 if (ventasSinCorte.Count > 0)
@@ -979,7 +979,7 @@ namespace Application.MainModule.Flujos
                 var ventasSinCorte = new List<VentaPuntoDeVenta>();
                 foreach (var ventaActiva in ventasActivas)
                 {
-                    if (ventaActiva.FolioOperacionDia==null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
+                    //if (ventaActiva.FolioOperacionDia==null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
                         ventasSinCorte.Add(ventaActiva);
                 }
                 if (ventasSinCorte.Count > 0)
