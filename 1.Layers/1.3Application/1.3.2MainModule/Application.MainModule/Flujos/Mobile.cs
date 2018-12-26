@@ -783,6 +783,260 @@ namespace Application.MainModule.Flujos
         }
 
         /// <summary>
+        /// Permite realizar la busqueda de los datos para los cortes o anticipos de la sección de mobile
+        /// se retornara un objeto DatosBusquedaCortesDTO con los datos encontrados en este. Se requieren como 
+        /// parametros el idCAlmacenGas(idEstacion) a consultar, un boolean que determina si es anticipos o corte 
+        /// de cajas y la fecha de busqeuda de los datos 
+        /// </summary>
+        /// <param name="idEstacion">Id del idCAlmacenGas de la pipa, estación de carburación o camioneta </param>
+        /// <param name="esAnticipos">Bandera que determina si es anticipos(true) o corte de caja(false)</param>
+        /// <param name="fecha">Variable con la fecha en la que se desea realizar el corte o anticipo </param>
+        /// <returns>Objeto de tipo DatosBusquedaCortesDTO con los datos del corte o el anticipo a realizar , las ventas y la estación</returns>
+        public DatosBusquedaCortesDTO BusquedaAnticipoCorteFecha(int idEstacion,bool esAnticipos,DateTime fecha)
+        {
+            Usuario usuario = TokenServicio.ObtenerUsuarioAplicacion();
+            var unidadAlmacen = PuntoVentaServicio.ObtenerPorUsuarioAplicacion().UnidadesAlmacen;
+            Pipa pipa = null;
+            EstacionCarburacion estacion = null;
+            Camioneta camioneta = null;
+            DatosBusquedaCortesDTO dto = new DatosBusquedaCortesDTO();
+            #region Datos para la pipa
+            if(unidadAlmacen.IdPipa>0 && unidadAlmacen.IdPipa != null)
+            {
+                pipa = unidadAlmacen.Pipa;
+                var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
+                var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x => 
+                    x.TipoOperacion.Equals(1) && 
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x => 
+                    x.IdTipoOperacion.Equals(2) && 
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) && 
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) && 
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var ventas = puntoVenta.VentaPuntoDeVenta;
+                var ventasActivas = ventas.Where(x => x.Dia.Equals((byte)fecha.Day) && x.Mes.Equals((byte)fecha.Month) && x.Year.Equals((short)fecha.Year));
+                var ventasSinCorte = new List<VentaPuntoDeVenta>();
+                foreach (var ventaActiva in ventasActivas)
+                {
+                    if(ventaActiva.FolioOperacionDia == null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
+                        ventasSinCorte.Add(ventaActiva);
+                }
+
+                #region Creo el objeto a retornar 
+                if (ventasSinCorte.Count > 0)
+                {
+                    dto = AnticiposCortesAdapter.ToDTOBuscador(
+                            unidadAlmacen,
+                            anticipos,
+                            cortes,
+                            ventasSinCorte,
+                            pipa,
+                            esAnticipos
+                        );
+                    #region Verifico si hay datos de anticipos 
+                    if (anticipos != null)
+                        if (anticipos.Count > 0)
+                            dto.hayAnticipos = true;
+                        else
+                            dto.hayAnticipos = false;
+                    else
+                        dto.hayAnticipos = false;
+                    #endregion
+                    #region Verifico si hay cortes 
+                    if (cortes != null)
+                        if (cortes.Count > 0)
+                            dto.hayCortes = true;
+                        else
+                            dto.hayCortes = false;
+                    else
+                        dto.hayCortes = false;
+                    #endregion
+                    #region Verifico si hay ventas en esta fecha 
+                    if (ventas != null)
+                        if (ventas.Count > 0)
+                            dto.hayVentas = true;
+                        else
+                            dto.hayVentas = false;
+                    else
+                        dto.hayVentas = false;
+                    #endregion
+                    dto.Exito = true;
+                    dto.Mensaje = "Ok";
+                    dto.ModeloValido = true;
+                }
+                else
+                {
+                    dto.Exito = false;
+                    dto.Mensaje = esAnticipos ? "No se encontraron ventas para realizar un anticipo en la fecha " + fecha.ToString("MM/dd/yyyy"):
+                        "No se encontraron ventas para realizar un corte en la fecha " + fecha.ToString("MM/dd/yyyy");
+                    dto.ModeloValido = false;
+                    dto.EsInsercion = false;
+                    dto.EsActulizacion = false;
+                }
+                #endregion
+            }
+            #endregion
+            #region Datos para la estacion
+            if (unidadAlmacen.IdEstacionCarburacion>0 && unidadAlmacen.IdEstacionCarburacion != null)
+            {
+                estacion = unidadAlmacen.EstacionCarburacion;
+                var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
+                var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x =>
+                    x.TipoOperacion.Equals(1) &&
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x =>
+                    x.IdTipoOperacion.Equals(2) &&
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var ventas = puntoVenta.VentaPuntoDeVenta;
+                var ventasActivas = ventas.Where(x => x.Dia.Equals((byte)fecha.Day) && x.Mes.Equals((byte)fecha.Month) && x.Year.Equals((short)fecha.Year));
+                var ventasSinCorte = new List<VentaPuntoDeVenta>();
+                foreach (var ventaActiva in ventasActivas)
+                {
+                    if (ventaActiva.FolioOperacionDia == null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
+                        ventasSinCorte.Add(ventaActiva);
+                }
+                if (ventasSinCorte.Count > 0)
+                {
+                    dto = AnticiposCortesAdapter.ToDTOBuscador(
+                        unidadAlmacen,
+                        anticipos,
+                        cortes,
+                        ventasSinCorte,
+                        estacion,
+                        esAnticipos
+                    );
+                    #region Verifico si hay datos de anticipos 
+                    if (anticipos != null)
+                        if (anticipos.Count > 0)
+                            dto.hayAnticipos = true;
+                        else
+                            dto.hayAnticipos = false;
+                    else
+                        dto.hayAnticipos = false;
+                    #endregion
+                    #region Verifico si hay cortes 
+                    if (cortes != null)
+                        if (cortes.Count > 0)
+                            dto.hayCortes = true;
+                        else
+                            dto.hayCortes = false;
+                    else
+                        dto.hayCortes = false;
+                    #endregion
+                    #region Verifico si hay ventas en esta fecha 
+                    if (ventas != null)
+                        if (ventas.Count > 0)
+                            dto.hayVentas = true;
+                        else
+                            dto.hayVentas = false;
+                    else
+                        dto.hayVentas = false;
+                    #endregion
+                    dto.Exito = true;
+                    dto.Mensaje = "Ok";
+                    dto.ModeloValido = true;
+                }
+                else
+                {
+                    dto.Exito = false;
+                    dto.Mensaje = esAnticipos ? "No se encontraron ventas para realizar un anticipo en la fecha " + fecha.ToString("MM/dd/yyyy") :
+                        "No se encontraron ventas para realizar un corte en la fecha " + fecha.ToString("MM/dd/yyyy");
+                    dto.ModeloValido = false;
+                    dto.EsInsercion = false;
+                    dto.EsActulizacion = false;
+                }
+            }
+            #endregion
+            #region Datos para la camioneta
+            if (unidadAlmacen.IdCamioneta>0 && unidadAlmacen.IdCamioneta != null)
+            {
+                camioneta = unidadAlmacen.Camioneta;
+                var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
+                var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x =>
+                    x.TipoOperacion.Equals(1) &&
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x =>
+                    x.IdTipoOperacion.Equals(2) &&
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var ventas = puntoVenta.VentaPuntoDeVenta;
+                var ventasActivas = ventas.Where(x => x.Dia.Equals((byte)fecha.Day) && x.Mes.Equals((byte)fecha.Month) && x.Year.Equals((short)fecha.Year));
+                var ventasSinCorte = new List<VentaPuntoDeVenta>();
+                foreach (var ventaActiva in ventasActivas)
+                {
+                    if (ventaActiva.FolioOperacionDia==null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
+                        ventasSinCorte.Add(ventaActiva);
+                }
+                if (ventasSinCorte.Count > 0)
+                {
+                    dto = AnticiposCortesAdapter.ToDTOBuscador(
+                        unidadAlmacen,
+                        anticipos,
+                        cortes,
+                        ventasSinCorte,
+                        camioneta,
+                        esAnticipos
+                    );
+                    #region Verifico si hay datos de anticipos 
+                    if (anticipos != null)
+                        if (anticipos.Count > 0)
+                            dto.hayAnticipos = true;
+                        else
+                            dto.hayAnticipos = false;
+                    else
+                        dto.hayAnticipos = false;
+                    #endregion
+                    #region Verifico si hay cortes 
+                    if (cortes != null)
+                        if (cortes.Count > 0)
+                            dto.hayCortes = true;
+                        else
+                            dto.hayCortes = false;
+                    else
+                        dto.hayCortes = false;
+                    #endregion
+                    #region Verifico si hay ventas en esta fecha 
+                    if (ventas != null)
+                        if (ventas.Count > 0)
+                            dto.hayVentas = true;
+                        else
+                            dto.hayVentas = false;
+                    else
+                        dto.hayVentas = false;
+                    #endregion
+                    dto.Exito = true;
+                    dto.Mensaje = "Ok";
+                    dto.ModeloValido = true;
+                }
+                else
+                {
+                    dto.Exito = false;
+                    dto.Mensaje = esAnticipos ? "No se encontraron ventas para realizar un anticipo en la fecha " + fecha.ToString("MM/dd/yyyy") :
+                        "No se encontraron ventas para realizar un corte en la fecha " + fecha.ToString("MM/dd/yyyy");
+                    dto.ModeloValido = false;
+                    dto.EsInsercion = false;
+                    dto.EsActulizacion = false;
+                }
+            }
+            #endregion
+            return dto;
+        }
+        /// <summary>
         /// Permite determinar si el cliente que se envía de parametro en la consulta 
         /// se le ha permitido una venta extraforanea, este retornara un  objeto 
         /// DTO con el resultado de la conslta
