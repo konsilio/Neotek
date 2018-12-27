@@ -35,11 +35,11 @@ namespace Application.MainModule.DTOs.Mobile.Cortes
         /// <summary>
         /// Objeto que contiene información de los anticipos de la estación
         /// </summary>
-        public AnticipoInfoDTO anticipos { get; set; }
+        public AnticipoInfoDTO anticipo { get; set; }
         /// <summary>
         /// Objeto que contiene información de los cortes
         /// </summary>
-        public CorteInfoDTO cortes { get; set; }
+        public CorteInfoDTO corte { get; set; }
         /// <summary>
         /// Objeto con la información de la estación a la que se 
         /// le realiza el corte o anticipo
@@ -48,7 +48,7 @@ namespace Application.MainModule.DTOs.Mobile.Cortes
         /// <summary>
         /// Objeto con los datos de las ventas que se encontraron 
         /// </summary>
-        public VentasInfoDTO ventas { get; set; }
+        public VentasInfoDTO venta { get; set; }
 
     }
     #region Clases internas de respuesta
