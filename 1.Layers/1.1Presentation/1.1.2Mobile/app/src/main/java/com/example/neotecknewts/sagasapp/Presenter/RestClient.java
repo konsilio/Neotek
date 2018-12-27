@@ -7,6 +7,7 @@ import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.ClienteDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosBusquedaCortesDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosClientesDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosEmpresaConfiguracionDTO;
@@ -397,8 +398,16 @@ public interface RestClient {
             @Header("Authorization") String token,
             @Header("Content-type") String contenType
     );
-    @GET(Constantes.GET_CATALOGOS_ANTICIPOS_CORTE_LISTA)
+    /*@GET(Constantes.GET_CATALOGOS_ANTICIPOS_CORTE_LISTA)
     Call<RespuestaEstacionesVentaDTO> getAnticipo_y_Corte(
+            @Path(value = "estacion") int estacion,
+            @Path(value = "esAnticipos") boolean esAnticipos,
+            @Path(value = "fecha") String fecha,
+            @Header("Authorization") String token,
+            @Header("Content-type") String contenType
+    );*/
+    @GET(Constantes.GET_CATALOGOS_ANTICIPOS_CORTE_LISTA)
+    Call<DatosBusquedaCortesDTO> getAnticipo_y_Corte(
             @Path(value = "estacion") int estacion,
             @Path(value = "esAnticipos") boolean esAnticipos,
             @Path(value = "fecha") String fecha,
