@@ -135,7 +135,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             TVAnticipoTableActivityFinal = findViewById(R.id.TVAnticipoTableActivityFinal);
             TVAnticipoTableActivityFinal.setText(String.valueOf(corteDTO.getP5000Final()));
             TVAnticipoTableActivityLitros = findViewById(R.id.TVAnticipoTableActivityLitros);
-            String cadena = String.valueOf(corteDTO.getLitrosCorte())+"Lt.";
+            String cadena = String.valueOf(corteDTO.getLitrosCorte())+" Lt.";
             TVAnticipoTableActivityLitros.setText(cadena);
             TVAnticipoTableActivityAnticipos = findViewById(R.id.TVAnticipoTableActivityAnticipos);
             TVAnticipoTableMontoDeCorte = findViewById(R.id.TVAnticipoTableMontoDeCorte);
