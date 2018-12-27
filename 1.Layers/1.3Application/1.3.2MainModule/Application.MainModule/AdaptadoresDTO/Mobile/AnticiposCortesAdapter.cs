@@ -345,7 +345,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 };
             }
         }
-        #region Adaptador de DatosBusquedaCortesDTO para las pipas
+       # region Adaptador de DatosBusquedaCortesDTO para las pipas
         /// <summary>
         /// ToDTOBuscador
         /// Permite generar el dto para el buscador de fecvha para la tabla de cortes y anticipos,
@@ -363,9 +363,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
                 return new DatosBusquedaCortesDTO()
                 {
-                    anticipos = ToDTOAnticipos(anticipos),
-                    cortes = ToDTOCortes(cortes),
-                    ventas = ToDTOVentas(ventasSinCorte),
+                    anticipo = ToDTOAnticipos(anticipos),
+                    corte = ToDTOCortes(cortes),
+                    venta = ToDTOVentas(ventasSinCorte),
                     estacion = ToDTOPipa(pipa,unidadAlmacen)
                 };
         }
@@ -387,9 +387,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         public static DatosBusquedaCortesDTO ToDTOBuscador(UnidadAlmacenGas unidadAlmacen, List<VentaCorteAnticipoEC> anticipos, List<VentaCorteAnticipoEC> cortes, List<VentaPuntoDeVenta> ventasSinCorte, EstacionCarburacion estacion, bool esAnticipos)
         {
             return new DatosBusquedaCortesDTO() {
-                anticipos = ToDTOAnticipos(anticipos),
-                cortes = ToDTOCortes(cortes),
-                ventas = ToDTOVentas(ventasSinCorte),
+                anticipo = ToDTOAnticipos(anticipos),
+                corte = ToDTOCortes(cortes),
+                venta = ToDTOVentas(ventasSinCorte),
                 estacion = ToDTOEstacion(estacion, unidadAlmacen)
             };
         }
@@ -414,9 +414,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new DatosBusquedaCortesDTO()
             {
-                anticipos = ToDTOAnticipos(anticipos),
-                cortes = ToDTOCortes(cortes),
-                ventas = ToDTOVentas(ventasSinCorte),
+                anticipo = ToDTOAnticipos(anticipos),
+                corte = ToDTOCortes(cortes),
+                venta = ToDTOVentas(ventasSinCorte),
                 estacion = ToDTOEstacion(camioneta, unidadAlmacen)
             };
         }
