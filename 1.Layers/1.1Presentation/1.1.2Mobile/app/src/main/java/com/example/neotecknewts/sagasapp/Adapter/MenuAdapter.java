@@ -369,6 +369,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsVentaCarburacion",true);
                     intent.putExtra("EsVentaCamioneta",false);
                     intent.putExtra("EsVentaPipa",false);
+                    intent.putExtra("esGasLP",true);
                     view.getContext().startActivity(intent);
                 }else if(menuItem.getHeaderMenu().equals("Camioneta de cilindros")&&
                         menuItem.getName().equals("Punto de Venta")){
@@ -377,6 +378,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsVentaCarburacion",false);
                     intent.putExtra("EsVentaCamioneta",true);
                     intent.putExtra("EsVentaPipa",false);
+                    intent.putExtra("esGasLP",false);
                     view.getContext().startActivity(intent);
                 }else if(menuItem.getHeaderMenu().equals("Pipa")&&
                         menuItem.getName().equals("Punto de Venta")){
@@ -385,6 +387,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsVentaCarburacion",false);
                     intent.putExtra("EsVentaCamioneta",false);
                     intent.putExtra("EsVentaPipa",true);
+                    intent.putExtra("esGasLP",true);
                     view.getContext().startActivity(intent);
                 }
             }

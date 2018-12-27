@@ -215,10 +215,10 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 iniciar=false;
                 finalizar=false;
                 almacen=false;
-                textViewTitulo.setText(EsLecturaInicial? "Toma de lectura inicial":
+                textViewTitulo.setText(EsLecturaInicialAlmacen? "Toma de lectura inicial":
                         "Toma de lectura final");
                 textView.setText("Registra el porcentaje del "+
-                        lecturaAlmacenDTO.getNombreTipoMedidor()+"del almacén pral.");
+                        lecturaAlmacenDTO.getNombreTipoMedidor()+" del almacén pral.");
                 setTitle(R.string.toma_de_lectura);
             }else if(extras.getBoolean("EsRecargaEstacionInicial") ||
                     extras.getBoolean("EsRecargaEstacionFinal")){

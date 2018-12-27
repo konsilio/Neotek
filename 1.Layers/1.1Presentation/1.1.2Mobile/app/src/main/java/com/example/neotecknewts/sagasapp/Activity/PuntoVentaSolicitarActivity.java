@@ -22,6 +22,7 @@ import java.util.Random;
 
 public class PuntoVentaSolicitarActivity extends AppCompatActivity implements PuntoVentaSolicitarView {
     boolean EsVentaCarburacion,EsVentaCamioneta,EsVentaPipa;
+    boolean esGasLP;
     TextView PuntoVentaSolicitarActivityTitulo;
     Button BtnPuntoVentaSolicitarActivitySeguirSinNumero,
             BtnPuntoVentaSolicitarActivityRegistrarCliente,
@@ -39,6 +40,8 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
             EsVentaCarburacion = bundle.getBoolean("EsVentaCarburacion",false);
             EsVentaCamioneta = bundle.getBoolean("EsVentaCamioneta",false);
             EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
+            esGasLP = bundle.getBoolean("esGasLP",false);
+
         }
         PuntoVentaSolicitarActivityTitulo = findViewById(R.id.PuntoVentaSolicitarActivityTitulo);
         /*BtnPuntoVentaSolicitarActivitySeguirSinNumero = findViewById(R.id.
@@ -140,6 +143,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
         intent.putExtra("EsVentaPipa",EsVentaPipa);
         intent.putExtra("ventaDTO",ventaDTO);
+        intent.putExtra("esGasLP",esGasLP);
         startActivity(intent);
     }
 
@@ -158,6 +162,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("criterio", ETPuntoVentaSolicitarActivityBuscador.getText().toString());
             intent.putExtra("ventaDTO",ventaDTO);
+            intent.putExtra("esGasLP",esGasLP);
             startActivity(intent);
         }
     }

@@ -10,6 +10,8 @@ import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
+import org.json.JSONObject;
+
 public class PuntoVentaPagarPresenterImpl implements PuntoVentaPagarPresenter {
     PuntoVentaPagarView view;
     PuntoVentaPagarInteractor interactor;
@@ -51,13 +53,13 @@ public class PuntoVentaPagarPresenterImpl implements PuntoVentaPagarPresenter {
 
     @Override
     public void puntoVentaAsignado(String token) {
-        view.onShowProgress(R.string.message_cargando);
+        //view.onShowProgress(R.string.message_cargando);
         interactor.puntoVentaAsignado(token);
     }
 
     @Override
     public void onSuccessPuntoVentaAsignado(PuntoVentaAsignadoDTO data) {
-        view.onHiddeProgress();
+        //view.onHiddeProgress();
         view.onSuccessPuntoVentaAsignado(data);
     }
 
@@ -69,13 +71,19 @@ public class PuntoVentaPagarPresenterImpl implements PuntoVentaPagarPresenter {
 
     @Override
     public void verificarVentaExtraforanea(int idCliente, String token) {
-        view.onShowProgress(R.string.message_cargando);
+        //view.onShowProgress(R.string.message_cargando);
         interactor.verificarVentaExtraforanea(idCliente,token);
     }
 
     @Override
     public void onSuccessVentaExtraforanea(RespuestaVentaExtraforaneaDTO data) {
-        view.onHiddeProgress();
+        //view.onHiddeProgress();
         view.onSuccessExtraforanea(data);
     }
+
+    @Override
+    public void onErrorInternalServer(JSONObject respuesta) {
+        view.onErrorInternalServer(respuesta);
+    }
+
 }

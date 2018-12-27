@@ -6,6 +6,8 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
+import org.json.JSONObject;
+
 public interface PuntoVentaPagarPresenter {
     void pagar(VentaDTO ventaDTO, String token, boolean esCamioneta, boolean esEstacion,
                boolean esPipa, SAGASSql sagasSql);
@@ -27,4 +29,6 @@ public interface PuntoVentaPagarPresenter {
     void verificarVentaExtraforanea(int idCliente, String token);
 
     void onSuccessVentaExtraforanea(RespuestaVentaExtraforaneaDTO data);
+
+    void onErrorInternalServer(JSONObject respuesta);
 }

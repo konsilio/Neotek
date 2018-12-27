@@ -76,6 +76,15 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                     registro_local = false;
                 }
                 else {
+                    JSONObject respuesta = null;
+                    try {
+                        respuesta = new JSONObject(response.errorBody().string());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     String mensaje = "";
                     switch (response.code()) {
                         case 404:
@@ -93,19 +102,23 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                     }
                     mensaje = "Se ha generado un error: "+response.message();
                     registro_local = true;
-                    if(data!= null){
-                        presenter.onError(data);
+                    if(respuesta!=null){
+                        presenter.onErrorInternalServer(respuesta);
                     }else {
-                        presenter.onError(mensaje);
+                        if (data != null) {
+                            presenter.onError(data);
+                        } else {
+                            presenter.onError(mensaje);
+                        }
+                        if(response.code()>=300) {
+                            local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
+                            presenter.onSuccessAndroid();
+                            Lisener lisener = new Lisener(sagasSql,token);
+                            lisener.CrearRunable(Lisener.VENTA);
+                        }
                     }
+                }
 
-                }
-                if(response.code()>=300) {
-                    local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
-                    presenter.onSuccessAndroid();
-                    Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.VENTA);
-                }
             }
 
             @Override

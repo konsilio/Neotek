@@ -122,7 +122,7 @@ namespace Application.MainModule.Servicios.Mobile
                     }
 
                     //Almacen principal 
-                    if (rol.AppTomaLecturaCamionetaCilindro && !_AppTomaLecturaAlmacenPral)
+                    if (rol.AppTomaLecturaAlmacenPral && !_AppTomaLecturaAlmacenPral)
                     {
 
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaAlmacenPralInicial"]));

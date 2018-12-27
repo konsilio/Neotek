@@ -37,6 +37,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
     Button BtnRegistroClienteActivityRegistrarCliente,BtnRegistroClienteActivityRegresar;
     EditText ETRegistroClienteRfc;
     boolean EsVentaCarburacion,EsVentaCamioneta,EsVentaPipa;
+    boolean esGasLP;
     ProgressDialog progressDialog;
     RegistroClientePresenter presenter;
     Session session;
@@ -55,6 +56,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             EsVentaCamioneta = bundle.getBoolean("EsVentaCamioneta",false);
             EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
             ventaDTO = (VentaDTO) bundle.getSerializable("ventaDTO");
+            esGasLP = bundle.getBoolean("esGasLP",false);
         }
         session = new Session(this);
         clienteDTO = new ClienteDTO();
@@ -149,6 +151,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
             intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
             intent.putExtra("EsVentaPipa",EsVentaPipa);
+            intent.putExtra("esGasLP",esGasLP);
             startActivity(intent);
             finish();
         });
@@ -348,6 +351,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("ventaDTO", ventaDTO);
+            intent.putExtra("esGasLP",esGasLP);
             startActivity(intent);
         }else if(EsVentaCarburacion){
             Intent intent = new Intent(RegistroClienteActivity.this,
@@ -356,6 +360,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("ventaDTO", ventaDTO);
+            intent.putExtra("esGasLP",esGasLP);
             startActivity(intent);
 
         }else  if (EsVentaPipa){
@@ -365,6 +370,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("ventaDTO", ventaDTO);
+            intent.putExtra("esGasLP",esGasLP);
             startActivity(intent);
         }
     }
