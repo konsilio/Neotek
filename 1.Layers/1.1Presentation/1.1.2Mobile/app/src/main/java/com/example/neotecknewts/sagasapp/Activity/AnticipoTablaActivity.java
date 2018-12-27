@@ -72,6 +72,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     public boolean hasFecha;
     public UsuariosCorteDTO dataUsariosCorte;
     public String[] listUsuarios;
+    boolean EsCamioneta,EsEstacion,EsPipa;
 
     public DatePickerDialog.OnDateSetListener onDateSetListener =
             (view, year, month, dayOfMonth) -> {
@@ -91,6 +92,9 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             EsCorte = bundle.getBoolean("EsCorte",false);
             anticiposDTO = (AnticiposDTO) bundle.getSerializable("anticiposDTO");
             corteDTO = (CorteDTO) bundle.getSerializable("corteDTO");
+            EsCamioneta = bundle.getBoolean("EsCamioneta",false);
+            EsEstacion = bundle.getBoolean("EsEstacion",false);
+            EsPipa = bundle.getBoolean("EsPipa");
         }
         hasFecha = false;
         dataUsariosCorte = new UsuariosCorteDTO();
@@ -459,18 +463,32 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 corteDTO.setTotalAnticipos(data.getTotalAnticiposCorte());
                 double montoTotal = total-corteDTO.getTotalAnticipos();
                 String totalMonto = "$"+String.valueOf(dformat.format(montoTotal));
-                String totalAnticipo = "$("+String.valueOf(
-                    dformat.format(corteDTO.getTotalAnticipos())
-                )+")";
-                TVAnticipoTableActivityAnticipos.setText(totalAnticipo);
+                if(EsPipa||EsCamioneta){
+                    TVAnticipoTableActivityAnticipos.setText("$(0.00)");
+                    TVAnticipoTableMontoDeCorte.setText(
+                            "$"+String.valueOf(dformat.format(data.getTotalAnticiposCorte()))
+                    );
+                    corteDTO.setMontoCorte(total);
+                    corteDTO.setMonto(total);
+                    corteDTO.setTotal(total);
+                    corteDTO.setTotalAnticipos(0);
+                    corteDTO.setAnticipos(0);
+                }else {
+                    String totalAnticipo = "$(" + String.valueOf(
+                            dformat.format(corteDTO.getTotalAnticipos())
+                    ) + ")";
+                    TVAnticipoTableActivityAnticipos.setText(totalAnticipo);
+                    TVAnticipoTableMontoDeCorte.setText(
+                            totalMonto
+                    );
+                    corteDTO.setMontoCorte(montoTotal);
+                    corteDTO.setMonto(corteDTO.getTotalAnticipos());
+                    corteDTO.setTotal(total);
+                }
 
-                TVAnticipoTableMontoDeCorte.setText(
-                        totalMonto
-                );
 
-                corteDTO.setMontoCorte(montoTotal);
-                corteDTO.setMonto(corteDTO.getTotalAnticipos());
-                corteDTO.setTotal(total);
+
+
                 //corteDTO.setRecibe(session.getAttribute(Session.KEY_NOMBRE));
 
                 /*if(data.getFechasCorte()!=null){

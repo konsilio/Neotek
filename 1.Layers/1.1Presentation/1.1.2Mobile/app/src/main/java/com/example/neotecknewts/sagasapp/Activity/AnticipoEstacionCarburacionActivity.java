@@ -118,6 +118,7 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
                         data.getEstaciones()
                 );
             }
+
             if(data.getCamionetaDTO()!=null) {
                 DatosEstacionesDTO dto =new DatosEstacionesDTO();
                 dto.setIdCAlmacenGas(data.getCamionetaDTO().getIdCAlmacen());
@@ -147,7 +148,9 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
                     EsAnticipo,
                     EsCorte
             );
-
+            adatper.EsCamioneta = data.isEsCamioneta();
+            adatper.EsEstacion = data.isEsEstacion();
+            adatper.EsPipa = data.isEsPipa();
             RVAnticipoEstacionesCarburacionActivityContainer.setAdapter(adatper);
         }
     }
