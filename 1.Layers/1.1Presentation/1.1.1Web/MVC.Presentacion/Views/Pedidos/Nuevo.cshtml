@@ -93,17 +93,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Cliente:</b>
-                                                    @Html.Action("_DatosCliente", Model.clientes)
-                                                    @*<select id="cbxCte" name="IdCliente" class="form-control show-tick">
-                                                            <option value="0">Seleccione</option>
-                                                            @if (Model != null)
-                                                            {
-                                                                foreach (var lst in Model.Pedidos)
-                                                                {
-                                                                    <option value="@lst.IdCliente">@lst.Nombre @lst.Apellido1 - @lst.Rfc</option>
-                                                                }
-                                                            }
-                                                        </select>*@
+                                                    @Html.Action("_DatosCliente", Model.clientes)                                                
                                                 </div>
                                                 <div class="col-sm-2" style="top: 10px;">
                                                     <div class="form-group">
@@ -115,44 +105,40 @@
                                                 <div class="col-sm-3">
                                                     <b>Fecha:</b>
                                                     <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <i class="zmdi zmdi-calendar"></i>
-                                                        </span>
-                                                        <input type="text" name="FechaEntregaPedido" class="form-control" placeholder="formato: dd/mm/aaaa" />
+                                                             @Html.DevExpress().DateEdit(settings =>
+                                                       {
+                                                           settings.Name = "FechaEntregaPedido";
+                                                           settings.Properties.UseMaskBehavior = true;
+                                                           settings.Properties.EditFormat = EditFormat.Custom;
+                                                           settings.Theme = "Moderno";
+                                                           settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
+                                                           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                                                           settings.Properties.TimeSectionProperties.Visible = true;
+                                                           settings.Properties.TimeSectionProperties.Adaptive = true;
+                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                           settings.Date = DateTime.Now;
+                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                                       }).GetHtml()
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
-                                                    <b>Domicilio:</b>
-                                                    @*@if (Model != null)
-                                                        {
-                                                            @Html.Partial("_LocacionesCliente", Model.Locaciones)
-                                                        }*@
-
-                                                    @*<select id="cbxDomicilio" name="Domicilio" class="form-control show-tick">
-                                                            <option value="0">Seleccione</option>
-                                                            @if (Model != null)
-                                                            {
-                                                                foreach (var lst in Model.Pedidos)
-                                                                {
-                                                                    <option value="@lst.IdCliente">@lst.Domicilio</option>
-                                                                }
-                                                            }
-                                                        </select>*@
+                                                    <b>Domicilio:</b>                                                 
                                                     @Html.Action("_LocacionesCliente", Model.Locaciones)
                                                 </div><div class="col-sm-4">
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <b>Hora:</b>
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control" />
+                                                       
                                                     </div>
                                                 </div>
                                                 @*<div style="-webkit-box-flex: 0;-ms-flex: 0 0 16.666667%;flex: 0 0 16.666667%; max-width: 2.666667%;text-align: center;"><b>:</b></div>*@
                                                 <div class="col-sm-2" style="top: 20px;">
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control" />
+                                                  
                                                     </div>
                                                 </div>
                                             </div>
@@ -167,17 +153,7 @@
                                                     @Html.Action("_TipoUnidad")
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <b>Estatus pedido:</b>
-                                                    @*<select name="IdEstatusPedido" class="form-control show-tick">
-                                                            <option value="0">Seleccione</option>
-                                                            @if (ViewBag.Estatus != null)
-                                                            {
-                                                                foreach (var lst in ViewBag.Estatus)
-                                                                {
-                                                                    <option value="@lst.IdEstatusPedido">@lst.Descripcion</option>
-                                                                }
-                                                            }
-                                                        </select>@Html.Action("_EstatusC")*@
+                                                    <b>Estatus pedido:</b>                                                 
                                                     @Html.DevExpress().ComboBox(settings =>
                                                 {
                                                     settings.Name = "IdEstatusPedido";
@@ -193,16 +169,6 @@
                                             <div class="row clearfix selPipa" style="display:none">
                                                 <div class="col-sm-3">
                                                     <b>Unidad:</b>
-                                                    @*<select id="IdPipa" class="form-control show-tick">
-                                                            <option value="0">Seleccione</option>
-                                                            @if (ViewBag.Pipas != null)
-                                                            {
-                                                                foreach (var lst in ViewBag.Pipas)
-                                                                {
-                                                                    <option value="@lst.IdPipa">@lst.Nombre</option>
-                                                                }
-                                                            }
-                                                        </select>*@
                                                     @Html.Action("_Pipas")
                                                 </div>
                                             </div>
@@ -220,16 +186,6 @@
                                             <div class="row clearfix selCamioneta">
                                                 <div class="col-sm-3">
                                                     <b>Unidad:</b>
-                                                    @*<select id="IdCamioneta" class="form-control show-tick">
-                                                            <option value="0">Seleccione</option>
-                                                            @if (ViewBag.Camionetas != null)
-                                                            {
-                                                                foreach (var lst in ViewBag.Camionetas)
-                                                                {
-                                                                    <option value="@lst.IdCamioneta">@lst.Nombre</option>
-                                                                }
-                                                            }
-                                                        </select>*@
                                                     @Html.Action("_Camionetas")
                                                 </div>
                                             </div>
@@ -267,7 +223,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><br />
+                                    </div><br /><br /><br />
                                     <div class="row clearfix">
                                         <div class="col-sm-12">
                                             <div class="form-group">

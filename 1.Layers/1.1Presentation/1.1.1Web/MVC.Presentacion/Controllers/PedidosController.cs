@@ -323,8 +323,8 @@ namespace MVC.Presentacion.Controllers
                 {
                     ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
                 }
-
             }
+            msj = null;
             return View(model);
         }
         public ActionResult EditarPedido(int idPedido)//
@@ -375,13 +375,6 @@ namespace MVC.Presentacion.Controllers
             var JsonInfo = JsonConvert.SerializeObject(lstEncuesta);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
-
-        public class Estrellas
-        {
-            public int IdPedido { get; set; }
-            public int IdPregunta { get; set; }
-            public string Respuesta { get; set; }
-        }
         public ActionResult CancelarPedido(int idPedido, string MotivoCancela = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -394,17 +387,7 @@ namespace MVC.Presentacion.Controllers
 
             var Respuesta = PedidosServicio.EliminarPedido(_model, Session["StringToken"].ToString());
             ViewData["RespuestaDTO"] = Respuesta;
-            return RedirectToAction("Index");
-            //if (Respuesta.Exito)
-            //{
-            //    return RedirectToAction("Index", new { msj = Respuesta.Mensaje });
-            //}
-            //else
-            //{
-            //    TempData["RespuestaDTO"] = Respuesta;
-            //    return RedirectToAction("Index");
-            //}
-
+            return RedirectToAction("Index");           
         }
         private string Validar(RespuestaDTO Resp = null)
         {
@@ -422,7 +405,6 @@ namespace MVC.Presentacion.Controllers
                     if (Resp.MensajesError.Count > 1)
                         Mensaje = Resp.MensajesError[0] + " " + Resp.MensajesError[1];
                 }
-
             }
             return Mensaje;
         }
@@ -434,7 +416,7 @@ namespace MVC.Presentacion.Controllers
             string Tel1 = _model.Telefono1 ?? "";
             string Tel2 = _model.Telefono2 ?? "";
             string Rfc = _model.Rfc ?? "";
-            //_lst = CatalogoServicio.ObtenerLocaciones(_model.IdCliente, _tkn);
+            
             var lstClientes = CatalogoServicio.ListaClientes(Tel1, Tel2, Rfc, _tkn).ToList();
             _lst = CatalogoServicio.ObtenerLocaciones(lstClientes.Count() > 0 ? lstClientes.FirstOrDefault().IdCliente : 0, _tkn);
 
@@ -460,7 +442,6 @@ namespace MVC.Presentacion.Controllers
         {
             _tkn = Session["StringToken"].ToString();
             var Id = TokenServicio.ObtenerIdEmpresa(_tkn);
-            //List<CamionetaModel>
             var lst = PedidosServicio.ObtenerCamionetas(Id, _tkn);
             return PartialView(lst);
         }
@@ -468,7 +449,6 @@ namespace MVC.Presentacion.Controllers
         {
             _tkn = Session["StringToken"].ToString();
             var Id = TokenServicio.ObtenerIdEmpresa(_tkn);
-            //List<CamionetaModel>
             var lst = PedidosServicio.ObtenerPipas(Id, _tkn);
             return PartialView(lst);
         }
@@ -486,30 +466,12 @@ namespace MVC.Presentacion.Controllers
             public Data(int intValue, string strValue)
             {
                 IntTipoUndad = intValue;
-                StrUnidad = strValue;
+                TipoUnidad = strValue;
             }
 
             public int IntTipoUndad { get; private set; }
-            public string StrUnidad { get; private set; }
-        }
-
-        public List<EncuestaModel> AModel(List<Estrellas> _lst)
-        {
-            var List = new List<EncuestaModel>();
-            var item = new EncuestaModel();
-            var resp = "";
-            foreach (var x in _lst)
-            {
-                resp = x.Respuesta;
-                string res = resp.Substring(resp.Length - 1, 1);
-                item.IdPedido = x.IdPedido;
-                item.IdPregunta = x.IdPregunta;
-                item.Respuesta = res;//Convert.ToByte(res);
-                List.Add(item);
-            }
-
-            return List;
-        }
+            public string TipoUnidad { get; private set; }
+        }        
         #endregion
     }
 }

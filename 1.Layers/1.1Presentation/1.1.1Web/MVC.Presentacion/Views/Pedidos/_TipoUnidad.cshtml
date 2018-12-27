@@ -1,12 +1,11 @@
-﻿
-@Html.DevExpress().ComboBox(settings =>
+﻿@Html.DevExpress().ComboBox(settings =>
 {
     settings.Name = "TipoUnidad";
     settings.Width = 180;
     settings.SelectedIndex = 0;
     settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
     settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-    settings.Properties.TextField = "StrUnidad";
+    settings.Properties.TextField = "TipoUnidad";
     settings.Properties.ValueField = "IntTipoUndad";
     settings.ClientEnabled = true;
     settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChange";

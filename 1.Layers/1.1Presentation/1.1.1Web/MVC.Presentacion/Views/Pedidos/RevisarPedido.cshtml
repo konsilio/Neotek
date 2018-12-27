@@ -48,8 +48,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    @*<b>Pedido:</b>
-                                                        @Html.LabelFor(model => model.IdPedido, new { @class = "form-control" })*@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             @Model.IdPedido
@@ -65,22 +63,24 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    @*<b>Estatus:</b>
-                                                        @Html.LabelFor(model => model.EstatusPedido, new { @class = "form-control" })*@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             @Model.EstatusPedido
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-2">
+                                                <div class="col-sm-1">
                                                 </div>
-                                                <div class="col-sm-3">
-                                                    @*<b>Fecha y hora solicitud:</b>
-                                                        @Html.LabelFor(model => model.FechaRegistroPedido, new { @class = "form-control" })*@
+                                                <div class="col-sm-2">
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                            <strong>Fecha y hora solicitud: </strong> @Model.FechaRegistroPedido
+                                                            <strong>Fecha y hora de entrega: </strong> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        <div class="input-group"> @Model.FechaEntregaPedido
                                                         </div>
                                                     </div>
                                                 </div>
@@ -94,8 +94,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    @*<b>Cliente:</b>
-                                                        @Html.LabelFor(model => model.NombreRfc, new { @class = "form-control" })*@
                                                     <div class="form-group">
                                                         <div class="input-group">
                                                             @Model.NombreRfc - @Model.Rfc
@@ -104,24 +102,22 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-3" style="top:20px">
+                                                <div class="col-sm-2">
                                                 </div>
-                                                <div class="col-sm-1">
+                                                <div class="col-sm-2">
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                            <strong>Unidad: </strong>
+                                                            <strong>Fecha y hora solicitud: </strong>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    @*<b>Unidad:</b>
-                                                        @Html.LabelFor(model => model.Unidad, new { @class = "form-control" })*@
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                            @Model.Unidad
+                                                            @Model.FechaRegistroPedido
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>                                               
                                             </div>
                                             @if (Model.IdPipa > 0)
                                             {
@@ -134,34 +130,28 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-2">
-                                                        @*<b>Calle:</b>
-                                                            @Html.LabelFor(model => model.Calle, new { @class = "form-control" })*@
                                                         <div class="form-group">
                                                             <div class="input-group">
                                                                 @Model.Calle
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-4">
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <strong>Cantidad: </strong>
+                                                                <strong>Unidad: </strong>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-2">
-                                                        @*<b>Cantidad:</b>
-                                                            <div class="input-group">
-                                                                @Html.LabelFor(model => model.Cantidad, new { @class = "form-control" })
-                                                            </div>*@
+                                                    <div class="col-sm-3">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                @Model.Cantidad
+                                                                @Model.Unidad
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div>        
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-sm-1">
@@ -172,25 +162,28 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-2">
-                                                        @*<b>Colonia:</b>
-                                                            @Html.LabelFor(model => model.Colonia, new { @class = "form-control" })*@
                                                         <div class="form-group">
                                                             <div class="input-group">
                                                                 @Model.Colonia
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-4">
                                                     </div>
-                                                    <div class="col-sm-3">
-                                                        @*<b>Fecha y hora de entrega:</b>
-                                                            @Html.LabelFor(model => model.FechaEntregaPedido, new { @class = "form-control" })*@
+                                                    <div class="col-sm-1">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <strong>Fecha y hora de entrega: </strong> @Model.FechaEntregaPedido
+                                                                <strong>Cantidad: </strong>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.Cantidad
+                                                            </div>
+                                                        </div>
+                                                    </div>                                               
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-sm-1">
@@ -201,8 +194,6 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-2">
-                                                        @*<b>Teléfono:</b>
-                                                            @Html.LabelFor(model => model.Telefono1, new { @class = "form-control" })*@
                                                         <div class="form-group">
                                                             <div class="input-group">
                                                                 @Model.Telefono1
@@ -253,26 +244,22 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5">
-                                                    </div>
-                                                    <div class="col-sm-2" style="max-width: 13.666667%;">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Cantidad 45 Kg:</strong>
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-sm-4">
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        @*<b>Cantidad 45 Kg:</b>
-                                                            <div class="input-group">
-                                                                @Html.LabelFor(model => model.Cantidad45, new { @class = "form-control" })
-                                                            </div>*@
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                @Model.Cantidad45
+                                                                <strong>Unidad: </strong>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.Unidad
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                 
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-sm-1">
@@ -289,21 +276,22 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-4">
                                                     </div>
-                                                    <div class="col-sm-2" style="max-width: 13.666667%;">
+                                                    <div class="col-sm-3" style="max-width: 13.666667%;">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <strong>Cantidad 30 Kg: </strong> 
+                                                                <strong>Cantidad 45 Kg:</strong>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="col-sm-1">
                                                         <div class="form-group">
-                                                            <div class="input-group">@Model.Cantidad30
+                                                            <div class="input-group">
+                                                                @Model.Cantidad45
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div>                                                  
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-sm-1">
@@ -320,21 +308,22 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-4">
                                                     </div>
-                                                    <div class="col-sm-2" style="max-width: 13.666667%;">
+                                                    <div class="col-sm-3" style="max-width: 13.666667%;">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <strong>Cantidad 20 Kg: </strong>
+                                                                <strong>Cantidad 30 Kg: </strong>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <div class="form-group">
-                                                            <div class="input-group">@Model.Cantidad20
-                                                            </div>
+                                                            <div class="input-group">
+                                                                @Model.Cantidad30
                                                         </div>
                                                     </div>
+                                                </div>                                                    
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-sm-3">
@@ -344,15 +333,22 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-5">
-                                                    </div>
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-4">
+                                                    </div>                                               
+                                                    <div class="col-sm-3" style="max-width: 13.666667%;">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                <strong>Fecha y hora de entrega: </strong> @Model.FechaEntregaPedido
+                                                                <strong>Cantidad 20 Kg: </strong>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.Cantidad20
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-sm-4">

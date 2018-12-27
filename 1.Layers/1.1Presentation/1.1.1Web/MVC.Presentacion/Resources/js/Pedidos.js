@@ -61,7 +61,7 @@
     //        }
     //    });
     //});
-    });
+    });   
 });
 function OnSelectedChange(s, e) {
 
@@ -80,16 +80,8 @@ function OnSelectedChange(s, e) {
 function getvalues(s, e) {
     if (s.GetValue() != null) {//si viene null       
        
-        $('#btnCrearCte').prop('disabled', true)//desactivo
-       
-        //var str = '<a href="#ModalConfirmacion" data-toggle="modal" id="btnok"'
-        //     + 'class="tip" data-target="#ModalCancelar" role="button" aria-haspopup="true" aria-expanded="false">'
-        //    + '</a>'
-      
-    }
-    else {
-       // $('#btnCrearCte').prop('disabled', false) //activo
-    }
+        $('#btnCrearCte').prop('disabled', true)//desactivo           
+    }   
 }
 var Aceptar = function () {
     $('#btnCrearCte').prop('disabled', true) 
@@ -97,8 +89,3 @@ var Aceptar = function () {
 var Cancelar = function () {
     $('#btnCrearCte').prop('disabled', false)
 };
-//$("#altaPedido").click(function () {
-//    var form = $(this).parent("form");
-//    form.attr('action', '<%= Url.RouteUrl(new { Controller = "Pedidos", Action = "CrearPedido" }) %>');
-//    form.attr('method', 'post');
-//});
