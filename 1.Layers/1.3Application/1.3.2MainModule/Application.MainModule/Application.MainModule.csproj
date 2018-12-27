@@ -131,6 +131,7 @@
     <Compile Include="DTOs\Mobile\PuntoVenta\DatosVentaExtraforaneaDTO.cs" />
     <Compile Include="DTOs\Mobile\PuntoVenta\PuntoVentaAsignadoDTO.cs" />
     <Compile Include="DTOs\Mobile\TraspasoDto.cs" />
+    <Compile Include="DTOs\Pedidos\EncuestaDto.cs" />
     <Compile Include="DTOs\Pedidos\EstatusPedidoDto.cs" />
     <Compile Include="DTOs\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="DTOs\Pedidos\PedidoModelDto.cs" />

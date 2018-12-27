@@ -25,7 +25,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<PedidoDetalle> Buscar(int idPedido)
         {
-            return uow.Repository<PedidoDetalle>().Get(x=> x.IdPedido.Equals(idPedido)).ToList();
+            return uow.Repository<PedidoDetalle>().Get(x => x.IdPedido.Equals(idPedido)).ToList();
         }
         public Pedido BuscarPedido(int idPedido)
         {
@@ -37,7 +37,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             using (uow)
             {
                 try
-                {                  
+                {
                     uow.Repository<Sagas.MainModule.Entidades.Pedido>().Update(_pro);
                     foreach (var det in _pro.PedidoDetalle)
                     {
@@ -69,6 +69,34 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     uow.Repository<Pedido>().Insert(cte);
                     uow.SaveChanges();
                     _respuesta.Id = cte.IdPedido;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del pedido");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Insertar(List<RespuestaSatisfaccionPedido> cte)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    foreach (var item in cte)
+                    {
+                        uow.Repository<RespuestaSatisfaccionPedido>().Insert(item);
+                    }
+
+                    uow.SaveChanges();
+                    _respuesta.Id = cte[0].IdPedido;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;

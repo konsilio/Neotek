@@ -367,11 +367,10 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("RevisarPedido", new { idPedido = _model.IdPedido });
             }
         }
-        public JsonResult GuardarEncuesta(List<Estrellas> calificacion)
+        public JsonResult GuardarEncuesta(List<EncuestaModel> calificacion)
         {
             string _tkn = Session["StringToken"].ToString();
-            List<EncuestaModel> _lst = AModel(calificacion);
-            var lstEncuesta = PedidosServicio.AltaEncuestaPedido(_lst, _tkn);
+            var lstEncuesta = PedidosServicio.AltaEncuestaPedido(calificacion, _tkn);
 
             var JsonInfo = JsonConvert.SerializeObject(lstEncuesta);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
@@ -505,7 +504,7 @@ namespace MVC.Presentacion.Controllers
                 string res = resp.Substring(resp.Length - 1, 1);
                 item.IdPedido = x.IdPedido;
                 item.IdPregunta = x.IdPregunta;
-                item.Respuesta = Convert.ToByte(res);
+                item.Respuesta = res;//Convert.ToByte(res);
                 List.Add(item);
             }
 

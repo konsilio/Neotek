@@ -116,7 +116,6 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 Nombre = p.Nombre,
                 Activo = p.Activo,
                 FechaRegistro = p.FechaRegistro,
-
             };
             return usDTO;
         }
@@ -141,6 +140,25 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 IdDireccion = pedidoDTO.Orden,
                 PedidoDetalle = FromDtoDetalle(pedidoDTO),
             };
+        }
+        public static RespuestaSatisfaccionPedido FromDto(EncuestaDto p)
+        {
+            var resp = p.Respuesta;
+            string res = resp.Substring(resp.Length - 1, 1);
+            RespuestaSatisfaccionPedido usDTO = new RespuestaSatisfaccionPedido()
+            {
+                IdRespuesta = p.IdPregunta,
+                IdPedido = p.IdPedido,
+                IdPregunta = p.IdPregunta,
+                Respuesta = Convert.ToByte(res),
+                Activo = true,
+            };
+            return usDTO;
+        }
+        public static List<RespuestaSatisfaccionPedido> FromDto(List<EncuestaDto> lu)
+        {
+            List<RespuestaSatisfaccionPedido> luDTO = lu.ToList().Select(x => FromDto(x)).ToList();
+            return luDTO;
         }
         public static PedidoDetalle FromDtoDetalleP45(PedidoModelDto pedidoDTO, decimal factor, int idD)
         {

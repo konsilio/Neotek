@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.Flujos;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -58,9 +59,9 @@ namespace DS.MainModule.Controllers
         }
 
         [Route("registrar/encuesta")]
-        public HttpResponseMessage PostRegistrarEncuesta(PedidoModelDto _model)
+        public HttpResponseMessage PostRegistrarEncuesta(List<EncuestaDto> _model)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Registra(_model));
+            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.RegistraEncuesta(_model));
         }
 
         [Route("cancelar/pedido")]

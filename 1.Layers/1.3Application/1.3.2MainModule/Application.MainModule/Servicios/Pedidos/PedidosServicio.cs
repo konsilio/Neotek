@@ -89,7 +89,6 @@ namespace Application.MainModule.Servicios.Pedidos
 
             return cadena;
         }
-
         public static List<CamionetaDTO> ObtenerCamionetas(short idempresa)
         {
             List<CamionetaDTO> lCamionetas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new AlmacenGasDataAccess().ObtenerCamionetasEmpresa(idempresa));
@@ -99,9 +98,12 @@ namespace Application.MainModule.Servicios.Pedidos
         {
             List<PipaDTO> lPipas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new AlmacenGasDataAccess().ObtenerPipas(idempresa));
             return lPipas;
-        }
-        
+        }        
         public static RespuestaDto Alta(Pedido _pedidoDto)
+        {
+            return new PedidosDataAccess().Insertar(_pedidoDto);
+        }
+        public static RespuestaDto Alta(List<RespuestaSatisfaccionPedido> _pedidoDto)
         {
             return new PedidosDataAccess().Insertar(_pedidoDto);
         }

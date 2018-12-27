@@ -71,6 +71,15 @@ namespace Application.MainModule.Flujos
 
             return PedidosServicio.Alta(pedido);
         }
+        public RespuestaDto RegistraEncuesta(List<EncuestaDto> pedidoDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarPedido();
+            if (!resp.Exito) return resp;
+
+            var pedido = PedidosAdapter.FromDto(pedidoDto);            
+
+            return PedidosServicio.Alta(pedido);
+        }
         public RespuestaDto Modifica(PedidoModelDto pedidoDto)
         {
             var resp = PermisosServicio.PuedeModificarPedido();

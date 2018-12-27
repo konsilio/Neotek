@@ -96,6 +96,10 @@
         .alinear {
             text-align: center;
         }
+        .CalendarWidthClass
+        {
+           width:500px;
+        }
     </style>
 </head>
 <body style="height:100%">
@@ -248,11 +252,9 @@
                                                     <div class="col-sm-3">
                                                         <b>Fecha:</b>
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                <i class="zmdi zmdi-calendar"></i>
-                                                            </span>
-                                                            <input type="text" name="FechaEntregaPedido" class="form-control" placeholder="formato: dd/mm/aaaa" />
-                                                            @*@Html.TextBoxFor(model => model.FechaEntregaPedido, new { @class = "form-control", @placeholder = "formato: dd/mm/aaaa" })*@
+                                                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
+                                                            @*<input type="text" name="FechaEntregaPedido" class="form-control" placeholder="formato: dd/mm/aaaa" />*@
+                                                            @Html.TextBoxFor(model => model.FechaEntregaPedido, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -418,11 +420,25 @@
                                                     <div class="col-sm-3">
                                                         <b>Fecha:</b>
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                <i class="zmdi zmdi-calendar"></i>
-                                                            </span>
-                                                            <input type="text" name="FechaEntregaPedido" class="form-control" placeholder="formato: dd/mm/aaaa" />
-                                                            @*   @Html.TextBoxFor(model => model.FechaEntregaPedido, new { @class = "form-control", @placeholder = "formato: dd/mm/aaaa" })*@
+                                                            @*<span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>*@
+                                                            @*<input type="text" name="FechaEntregaPedido" class="form-control" placeholder="formato: dd/mm/aaaa" />*@
+                                                            @*@Html.TextBoxFor(model => model.FechaEntregaPedido, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })*@
+                                                            @Html.DevExpress().DateEdit(settings =>
+                                                       {
+                                                           settings.Name = "FechaEntregaPedido";
+                                                           settings.Properties.UseMaskBehavior = true;
+                                                           settings.Properties.EditFormat = EditFormat.Custom;
+                                                           settings.Theme = "Moderno";
+                                                           settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
+                                                           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                                                           settings.Properties.TimeSectionProperties.Visible = true;
+                                                           settings.Properties.TimeSectionProperties.Adaptive = true;
+                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                           settings.Date = DateTime.Now;
+                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                                       }).GetHtml()
                                                         </div>
                                                     </div>
                                                 </div>
@@ -432,14 +448,14 @@
                                                     <div class="col-sm-5">
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <b>Hora:</b>
+                                                        @*<b>Hora:</b>*@
                                                         <div class="input-group">
-                                                            <input name="Hora" type="number" class="form-control" />
+                                                            @*<input name="Hora" type="number" class="form-control" />*@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-1" style="top: 20px;">
                                                         <div class="input-group">
-                                                            <input name="Minutos" type="number" class="form-control" />
+                                                            @*<input name="Minutos" type="number" class="form-control" />*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -621,7 +637,6 @@
                                         <div class="col-sm-12 alinear">
                                             <h9>¿Qué probabilidad existe de que solicite nuevamente los servicios de Gas Mundial de Guerrero?</h9>
                                         </div>
-
                                     </div>
                                     <div class="row clearfix">
                                         <div class="col-sm-12" style="text-align:center">
@@ -711,8 +726,8 @@
                                         <div class="col-sm-4">
                                         </div>
                                         <div class="col-sm-4">
-                                            <div class="form-group">
-                                                <input type="submit" id="btnSave" value="Finalizar Edición" class="btn btn-raised btn-primary btn-round float-right" />
+                                            <div class="form-group">@*id="btnSave"*@
+                                                <input type="submit"  value="Finalizar Edición" class="btn btn-raised btn-primary btn-round float-right" />
                                             </div>
                                         </div>
                                     </div>
