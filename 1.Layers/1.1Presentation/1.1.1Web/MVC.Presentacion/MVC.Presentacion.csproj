@@ -256,6 +256,7 @@
     <Compile Include="Controllers\AlmacenController.cs" />
     <Compile Include="Controllers\CajaGeneralController.cs" />
     <Compile Include="Controllers\CentroCostoController.cs" />
+    <Compile Include="Controllers\CobranzaController.cs" />
     <Compile Include="Controllers\CuentaContableController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
@@ -329,6 +330,8 @@
     <Compile Include="Models\Catalogos\TipoPersonaModel.cs" />
     <Compile Include="Models\Catalogos\UsuarioDTO.cs" />
     <Compile Include="Models\Catalogos\UsuariosModel.cs" />
+    <Compile Include="Models\Cobranza\AbonosModel.cs" />
+    <Compile Include="Models\Cobranza\CargosModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImagenDTO.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -11557,6 +11560,7 @@
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
     <Folder Include="Servicios\" />
+    <Folder Include="Views\Cobranza\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -687,15 +687,15 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <input type="submit" value="Cancelar" id="btnRegresaRevision" class="btn btn-raised btn-primary btn-round float-left" />
+                                                <input type="submit" value="Cancelar"  formaction=@Url.Action("RevisarPedido",new {msj="" }) formmethod="post"  class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                @*id="btnSave"*@
-                                                <input type="submit" value="Finalizar Edición" formaction=@Url.Action("RevisarPedido",new {msj="" }) formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                                                @**@
+                                                <input type="submit" id="btnSave" value="Finalizar Edición"class="btn btn-raised btn-primary btn-round float-right" />
                                             </div>
                                         </div>
                                     </div>
