@@ -1,16 +1,66 @@
 ﻿@model  MVC.Presentacion.Models.Pedidos.PedidoModel
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <!DOCTYPE html>
 
 <html>
 <head>
+    <script src="~/Resources/js/Pedidos.js"></script>
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#btnSave").click(function () {
 
+                var calificacion = [];
+                var selected1 = $("input[name='estrellas1']:checked").val();
+                var selected2 = $("input[name='estrellas2']:checked").val();
+                var selected3 = $("input[name='estrellas3']:checked").val();
+                var selected4 = $("input[name='estrellas4']:checked").val();
+                var selected5 = $("input[name='estrellas5']:checked").val();
+                if (selected1 != undefined)
+                    calificacion.push({IdPedido:@Model.IdPedido, IdPregunta:1,Respuesta: selected1 });
+                if (selected2 != undefined)
+                    calificacion.push({IdPedido:@Model.IdPedido, IdPregunta:2,Respuesta: selected2 });
+                if (selected3 != undefined)
+                    calificacion.push({IdPedido:@Model.IdPedido, IdPregunta:3,Respuesta: selected3 });
+                if (selected4 != undefined)
+                    calificacion.push({ IdPedido:@Model.IdPedido,IdPregunta:4,Respuesta: selected4 });
+                if (selected5 != undefined)
+                    calificacion.push({IdPedido:@Model.IdPedido, IdPregunta:5,Respuesta: selected5 });
+
+                calificacion = JSON.stringify({ 'calificacion': calificacion });
+
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '/Pedidos/GuardarEncuesta',
+                    data: calificacion,
+                    success: function () {
+
+                    },
+                    failure: function (response) {
+
+                    }
+                });
+
+            });
         });
     </script>
     <style type="text/css">
         input[type = "radio"] {
+            display: none;
+        }
+
+        .radio {
             display: none;
         }
 
@@ -29,19 +79,29 @@
             color: orange;
         }
 
-
         input[type = "radio"]:checked ~ label {
+            color: orange;
+        }
+
+        .radio:checked {
             color: orange;
         }
 
         .alinear {
             text-align: center;
         }
+
+        .CalendarWidthClass {
+            width: 500px;
+        }
     </style>
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("GuardarEdicionPedido", "Pedidos", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.IdEmpresa)
+        @Html.HiddenFor(m => m.IdDireccion)
+        @Html.HiddenFor(m => m.IdPedidoDetalle)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -65,154 +125,249 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-12">
                                             <div class="row clearfix">
-                                                <div class="col-sm-3">
-                                                    <b>Pedido:</b>
-                                                    @Html.LabelFor(model => model.IdPedido, new { @class = "form-control" })
+                                                <div class="col-sm-1">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <strong>Pedido: </strong>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-3">
-                                                    <b>Estatus pedido:</b>
-                                                    <select name="IdCliente" class="form-control show-tick">
-                                                        <option value="0">Seleccione</option>
-                                                        @if (ViewBag.Estatus != null)
-                                                        {
-                                                            foreach (var lst in ViewBag.Estatus)
-                                                            {
-                                                                <option value="@lst.IdEstatusPedido">@lst.EstatusPedido</option>
-                                                            }
-                                                        }
-                                                    </select>
+                                                <div class="col-sm-1">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            @Model.IdPedido
+                                                            <input type="hidden" name="IdPedido" value="@Model.IdPedido" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="col-sm-2">
+                                                    <b>Estatus pedido:</b>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <b>Fecha y hora solicitud:</b>
-                                                    @Html.LabelFor(model => model.FechaRegistroPedido, new { @class = "form-control" })
+                                                    @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdEstatusPedido";
+                                                   settings.Width = 180;
+                                                   settings.SelectedIndex = Model.IdEstatusPedido - 1;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Properties.TextField = "Descripcion";
+                                                   settings.Properties.ValueField = "IdEstatusPedido";
+                                               }).BindList(ViewBag.Estatus).GetHtml()
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <strong>Fecha:</strong>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            @Html.DevExpress().DateEdit(settings =>
+                                                       {
+                                                           settings.Name = "FechaEntregaPedido";
+                                                           settings.Properties.UseMaskBehavior = true;
+                                                           settings.Properties.EditFormat = EditFormat.Custom;
+                                                           settings.Theme = "Moderno";
+                                                           settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
+                                                           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                                                           settings.Properties.TimeSectionProperties.Visible = true;
+                                                           settings.Properties.TimeSectionProperties.Adaptive = true;
+                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                           settings.Date = DateTime.Now;
+                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                                       }).GetHtml()
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            @if (Model.IdPipa != 0)
+                                            @if (Model.IdPipa > 0)
                                             {
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-2">
-                                                        <b>Cliente:</b>
-                                                        @Html.LabelFor(model => model.Nombre, new { @class = "form-control" })
+                                                    <div class="col-sm-1">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <strong>Cliente: </strong>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-2" style="top:20px">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.NombreRfc - @Model.Rfc
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-1">
                                                         <b></b>
-                                                        @Html.LabelFor(model => model.Apellido1, new { @class = "form-control" })
                                                     </div>
-                                                    <div class="col-sm-2" style="top:20px">
-                                                        <b></b>
-                                                        @Html.LabelFor(model => model.Rfc, new { @class = "form-control" })
+                                                    <div class="col-sm-1">
                                                     </div>
                                                     <div class="col-sm-2">
+                                                        <b>Fecha y hora solicitud:</b>
                                                     </div>
-                                                    <div class="col-sm-3">
-                                                        <b>Unidad:</b>
-                                                        <select id="IdPipa" class="form-control show-tick">
-                                                            <option value="0">Seleccione</option>
-                                                            @if (ViewBag.Pipas != null)
-                                                            {
-                                                                foreach (var lst in ViewBag.Pipas)
-                                                                {
-                                                                    <option value="@lst.IdPipa">@lst.Nombre</option>
-                                                                }
-                                                            }
-                                                        </select>
+                                                    <div class="col-sm-2">
+                                                        <div class="input-group">
+                                                            @Model.FechaRegistroPedido
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </div><br />
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-1">
                                                         <b>Calle:</b>
-                                                        @Html.LabelFor(model => model.Calle, new { @class = "form-control" })
-                                                    </div><div class="col-sm-5">
                                                     </div>
                                                     <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.Calle
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <b>Unidad:</b>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        @Html.DevExpress().ComboBox(settings =>
+                                                  {
+                                                      settings.Name = "IdPipa";
+                                                      settings.Width = 180;
+                                                      settings.SelectedIndex = Model.IdPipa;
+                                                      settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                      settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                      settings.Properties.TextField = "Nombre";
+                                                      settings.Properties.ValueField = "IdPipa";
+                                                  }).BindList(ViewBag.Pipas).GetHtml()
+                                                    </div>
+                                                </div><br />
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-1">
+                                                        <b>Colonia:</b>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.Colonia
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                    </div>
+                                                    <div class="col-sm-1">
                                                         <b>Cantidad:</b>
+                                                    </div>
+                                                    <div class="col-sm-2">
                                                         <div class="input-group">
                                                             @Html.TextBoxFor(model => model.Cantidad, new { @class = "form-control" })kg
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-3">
-                                                        <b>Colonia:</b>
-                                                        @Html.LabelFor(model => model.Colonia, new { @class = "form-control" })
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <b>Fecha:</b>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                <i class="zmdi zmdi-calendar"></i>
-                                                            </span>
-                                                            <input type="text" name="FechaEntregaPedido" class="form-control date" placeholder="formato: dd/mm/aaaa" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-3">
-                                                        <b>Teléfono:</b>
-                                                        @Html.LabelFor(model => model.Telefono1, new { @class = "form-control" })
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                    </div>
                                                     <div class="col-sm-1">
-                                                        <b>Hora:</b>
-                                                        <div class="input-group">
-                                                            <input name="Hora" type="number" class="form-control" />
+                                                        <b>Teléfono:</b>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.Telefono1
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-1" style="top: 20px;">
-                                                        <div class="input-group">
-                                                            <input name="Minutos" type="number" class="form-control" />
-                                                        </div>
+                                                    <div class="col-sm-5">
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-2">
                                                         <b>Referencia:</b>
-                                                        @Html.LabelFor(model => model.ReferenciaUbicacion, new { @class = "form-control" })
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.ReferenciaUbicacion
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-
                                             }
-                                            @if (Model.IdCamioneta != 0)
+                                            @if (Model.IdCamioneta > 0)
                                             {
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-2">
-                                                        <b>Cliente:</b>
-                                                        @Html.LabelFor(model => model.Nombre, new { @class = "form-control" })
-                                                    </div>
-                                                    <div class="col-sm-2" style="top:20px">
-                                                        <b></b>
-                                                        @Html.LabelFor(model => model.Apellido1, new { @class = "form-control" })
-                                                    </div>
-                                                    <div class="col-sm-2" style="top:20px">
-                                                        <b></b>
-                                                        @Html.LabelFor(model => model.Rfc, new { @class = "form-control" })
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <b>Unidad:</b>
-                                                        <select id="IdPipa" class="form-control show-tick">
-                                                            <option value="0">Seleccione</option>
-                                                            @if (ViewBag.Camionetas != null)
-                                                            {
-                                                                foreach (var lst in ViewBag.Camionetas)
-                                                                {
-                                                                    <option value="@lst.IdCamioneta">@lst.Nombre</option>
-                                                                }
-                                                            }
-                                                        </select>
+                                                    <div class="col-sm-12">
+                                                        <div class="row clearfix">
+                                                            <div class="col-sm-1">
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <strong>Cliente: </strong>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        @Model.NombreRfc - @Model.Rfc
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-2" style="top:20px">
+                                                                <b></b>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <b>Fecha y hora solicitud:</b>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <div class="input-group">
+                                                                    @Model.FechaRegistroPedido
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-3">
+                                                    <div class="col-sm-1">
                                                         <b>Calle:</b>
-                                                        @Html.LabelFor(model => model.Calle, new { @class = "form-control" })
-                                                    </div><div class="col-sm-5">
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.Calle
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <b>Unidad:</b>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        @Html.DevExpress().ComboBox(settings =>
+                                                                {
+                                                                    settings.Name = "IdCamioneta";
+                                                                    settings.Width = 180;
+                                                                    settings.SelectedIndex = Model.IdCamioneta;
+                                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                                    settings.Properties.TextField = "Nombre";
+                                                                    settings.Properties.ValueField = "IdCamioneta";
+                                                                }).BindList(ViewBag.Camionetas).GetHtml()
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-1">
+                                                        <b>Colonia:</b>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.Colonia
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <b>Cantidad:</b>
@@ -225,11 +380,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-3">
-                                                        <b>Colonia:</b>
-                                                        @Html.LabelFor(model => model.Colonia, new { @class = "form-control" })
+                                                    <div class="col-sm-1">
+                                                        <b>Teléfono:</b>
                                                     </div>
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.Telefono1
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <b>Cantidad:</b>
@@ -243,10 +404,14 @@
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-sm-3">
-                                                        <b>Teléfono:</b>
-                                                        @Html.LabelFor(model => model.Telefono1, new { @class = "form-control" })
+                                                        <b>Referencia:</b>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                @Model.ReferenciaUbicacion
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-4">
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <b>Cantidad:</b>
@@ -260,35 +425,18 @@
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-sm-3">
-                                                        <b>Referencia:</b>
-                                                        @Html.LabelFor(model => model.ReferenciaUbicacion, new { @class = "form-control" })
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <b>Fecha:</b>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                <i class="zmdi zmdi-calendar"></i>
-                                                            </span>
-                                                            <input type="text" name="FechaEntregaPedido" class="form-control date" placeholder="formato: dd/mm/aaaa" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-3">
                                                     </div>
                                                     <div class="col-sm-5">
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <b>Hora:</b>
+                                                        @*<b>Hora:</b>*@
                                                         <div class="input-group">
-                                                            <input name="Hora" type="number" class="form-control" />
+                                                            @*<input name="Hora" type="number" class="form-control" />*@
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-1" style="top: 20px;">
                                                         <div class="input-group">
-                                                            <input name="Minutos" type="number" class="form-control" />
+                                                            @*<input name="Minutos" type="number" class="form-control" />*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -323,23 +471,22 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio1" type="radio" name="estrellas" value="5">
-                                                    <!-- -->
+                                                    <input id="radio1" type="radio" name="estrellas1" value="Pregunta1Val5">
                                                     <label for="radio1">★</label>
                                                     <!-- -->
-                                                    <input id="radio2" type="radio" name="estrellas" value="4">
+                                                    <input id="radio2" type="radio" name="estrellas1" value="Pregunta1Val4">
                                                     <!-- -->
                                                     <label for="radio2">★</label>
                                                     <!-- -->
-                                                    <input id="radio3" type="radio" name="estrellas" value="3">
+                                                    <input id="radio3" type="radio" name="estrellas1" value="Pregunta1Val3">
                                                     <!--  -->
                                                     <label for="radio3">★</label>
                                                     <!--  -->
-                                                    <input id="radio4" type="radio" name="estrellas" value="2">
+                                                    <input id="radio4" type="radio" name="estrellas1" value="Pregunta1Val2">
                                                     <!--  -->
                                                     <label for="radio4">★</label>
                                                     <!--  -->
-                                                    <input id="radio5" type="radio" name="estrellas" value="1">
+                                                    <input id="radio5" type="radio" name="estrellas1" value="Pregunta1Val1">
                                                     <!--  -->
                                                     <label for="radio5">★</label>
                                                 </div>
@@ -356,23 +503,23 @@
                                                     <h9>1 Poco probable</h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio6" type="radio" name="estrellas" value="10">
+                                                    <input id="radio6" type="radio" name="estrellas2" value="Pregunta2Val5">
                                                     <!-- -->
                                                     <label for="radio6">★</label>
                                                     <!-- -->
-                                                    <input id="radio7" type="radio" name="estrellas" value="9">
+                                                    <input id="radio7" type="radio" name="estrellas2" value="Pregunta2Val4">
                                                     <!-- -->
                                                     <label for="radio7">★</label>
                                                     <!-- -->
-                                                    <input id="radio8" type="radio" name="estrellas" value="8">
+                                                    <input id="radio8" type="radio" name="estrellas2" value="Pregunta2Val3">
                                                     <!--  -->
                                                     <label for="radio8">★</label>
                                                     <!--  -->
-                                                    <input id="radio9" type="radio" name="estrellas" value="7">
+                                                    <input id="radio9" type="radio" name="estrellas2" value="Pregunta2Val2">
                                                     <!--  -->
                                                     <label for="radio9">★</label>
                                                     <!--  -->
-                                                    <input id="radio10" type="radio" name="estrellas" value="6">
+                                                    <input id="radio10" type="radio" name="estrellas2" value="Pregunta2Val1">
                                                     <!--  -->
                                                     <label for="radio10">★</label>
                                                 </div>
@@ -401,33 +548,33 @@
                                                     <h9>
                                                         1 Poco satisfecho
                                                     </h9>
-                                                </div> 
+                                                </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio1" type="radio" name="estrellas" value="5">
+                                                    <input id="radio11" type="radio" name="estrellas3" value="Pregunta3Val5">
                                                     <!-- -->
-                                                    <label for="radio1">★</label>
+                                                    <label for="radio11">★</label>
                                                     <!-- -->
-                                                    <input id="radio2" type="radio" name="estrellas" value="4">
+                                                    <input id="radio12" type="radio" name="estrellas3" value="Pregunta3Val4">
                                                     <!-- -->
-                                                    <label for="radio2">★</label>
+                                                    <label for="radio12">★</label>
                                                     <!-- -->
-                                                    <input id="radio3" type="radio" name="estrellas" value="3">
+                                                    <input id="radio13" type="radio" name="estrellas3" value="Pregunta3Val3">
                                                     <!--  -->
-                                                    <label for="radio3">★</label>
+                                                    <label for="radio13">★</label>
                                                     <!--  -->
-                                                    <input id="radio4" type="radio" name="estrellas" value="2">
+                                                    <input id="radio14" type="radio" name="estrellas3" value="Pregunta3Val2">
                                                     <!--  -->
-                                                    <label for="radio4">★</label>
+                                                    <label for="radio14">★</label>
                                                     <!--  -->
-                                                    <input id="radio5" type="radio" name="estrellas" value="1">
+                                                    <input id="radio15" type="radio" name="estrellas3" value="Pregunta3Val1">
                                                     <!--  -->
-                                                    <label for="radio5">★</label>
+                                                    <label for="radio15">★</label>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <h9>
                                                         5 Muy satisfecho
                                                     </h9>
-                                                </div>                                               
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -438,32 +585,32 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio1" type="radio" name="estrellas" value="5">
+                                                    <input id="radio16" type="radio" name="estrellas4" value="Pregunta4Val5">
                                                     <!-- -->
-                                                    <label for="radio1">★</label>
+                                                    <label for="radio16">★</label>
                                                     <!-- -->
-                                                    <input id="radio2" type="radio" name="estrellas" value="4">
+                                                    <input id="radio17" type="radio" name="estrellas4" value="Pregunta4Val4">
                                                     <!-- -->
-                                                    <label for="radio2">★</label>
+                                                    <label for="radio17">★</label>
                                                     <!-- -->
-                                                    <input id="radio3" type="radio" name="estrellas" value="3">
+                                                    <input id="radio18" type="radio" name="estrellas4" value="Pregunta4Val3">
                                                     <!--  -->
-                                                    <label for="radio3">★</label>
+                                                    <label for="radio18">★</label>
                                                     <!--  -->
-                                                    <input id="radio4" type="radio" name="estrellas" value="2">
+                                                    <input id="radio19" type="radio" name="estrellas4" value="Pregunta4Val2">
                                                     <!--  -->
-                                                    <label for="radio4">★</label>
+                                                    <label for="radio19">★</label>
                                                     <!--  -->
-                                                    <input id="radio5" type="radio" name="estrellas" value="1">
+                                                    <input id="radio20" type="radio" name="estrellas4" value="Pregunta4Val1">
                                                     <!--  -->
-                                                    <label for="radio5">★</label>
+                                                    <label for="radio20">★</label>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <h9>
                                                         5 Muy amable
                                                     </h9>
                                                 </div>
-                                            </div>                                           
+                                            </div>
                                         </div>
                                     </div>
                                     <br />
@@ -471,53 +618,68 @@
                                         <div class="col-sm-12 alinear">
                                             <h9>¿Qué probabilidad existe de que solicite nuevamente los servicios de Gas Mundial de Guerrero?</h9>
                                         </div>
-
                                     </div>
                                     <div class="row clearfix">
                                         <div class="col-sm-12" style="text-align:center">
                                             <div class="row clearfix">
                                                 <div class="col-sm-2">
                                                 </div>
-                                                    <div class="col-sm-3"  style="text-align:right">
-                                                        <h9>
-                                                            1 Poco probable
-                                                        </h9>
-                                                    </div>
-                                                    <div class="col-sm-3 clasificacion alinear">
-                                                        <input id="radio1" type="radio" name="estrellas" value="5">
-                                                        <!-- -->
-                                                        <label for="radio1">★</label>
-                                                        <!-- -->
-                                                        <input id="radio2" type="radio" name="estrellas" value="4">
-                                                        <!-- -->
-                                                        <label for="radio2">★</label>
-                                                        <!-- -->
-                                                        <input id="radio3" type="radio" name="estrellas" value="3">
-                                                        <!--  -->
-                                                        <label for="radio3">★</label>
-                                                        <!--  -->
-                                                        <input id="radio4" type="radio" name="estrellas" value="2">
-                                                        <!--  -->
-                                                        <label for="radio4">★</label>
-                                                        <!--  -->
-                                                        <input id="radio5" type="radio" name="estrellas" value="1">
-                                                        <!--  -->
-                                                        <label for="radio5">★</label>
-                                                    </div>
-                                                    <div class="col-sm-3" style="text-align:left">
-                                                        <h9>
-                                                            5 Muy probable
-                                                        </h9>
-                                                    </div>
+                                                <div class="col-sm-3" style="text-align:right">
+                                                    <h9>
+                                                        1 Poco probable
+                                                    </h9>
+                                                </div>
+                                                <div class="col-sm-3 clasificacion alinear">
+                                                    <input id="radio21" type="radio" name="estrellas5" value="Pregunta5Val5">
+                                                    <!-- -->
+                                                    <label for="radio21">★</label>
+                                                    <!-- -->
+                                                    <input id="radio22" type="radio" name="estrellas5" value="Pregunta5Val4">
+                                                    <!-- -->
+                                                    <label for="radio22">★</label>
+                                                    <!-- -->
+                                                    <input id="radio23" type="radio" name="estrellas5" value="Pregunta5Val3">
+                                                    <!--  -->
+                                                    <label for="radio23">★</label>
+                                                    <!--  -->
+                                                    <input id="radio24" type="radio" name="estrellas5" value="Pregunta5Val2">
+                                                    <!--  -->
+                                                    <label for="radio24">★</label>
+                                                    <!--  -->
+                                                    <input id="radio25" type="radio" name="estrellas5" value="Pregunta5Val1">
+                                                    <!--  -->
+                                                    <label for="radio25">★</label>
+                                                </div>
+                                                <div class="col-sm-3" style="text-align:left">
+                                                    <h9>
+                                                        5 Muy probable
+                                                    </h9>
+                                                </div>
                                                 <div class="col-sm-2">
                                                 </div>
-                                            </div>                                                 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @if (ViewBag.MensajeError != null)
+                {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MensajeError</label>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card">
@@ -525,14 +687,15 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <input type="submit" value="Cancelar" formaction=@Url.Action("RevisarPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                <input type="submit" value="Cancelar"  formaction=@Url.Action("RevisarPedido",new {msj="" }) formmethod="post"  class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <input type="submit" value="Finalizar Edición" class="btn btn-raised btn-primary btn-round float-right" />
+                                                @**@
+                                                <input type="submit" id="btnSave" value="Finalizar Edición"class="btn btn-raised btn-primary btn-round float-right" />
                                             </div>
                                         </div>
                                     </div>

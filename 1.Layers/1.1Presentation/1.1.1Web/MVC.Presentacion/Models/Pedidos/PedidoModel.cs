@@ -9,6 +9,7 @@ namespace MVC.Presentacion.Models.Pedidos
     public class PedidoModel : ClientesModel
     {
         public int IdPedido { get; set; }        
+        public int IdPedidoDetalle { get; set; }
         public int IdEstatusPedido { get; set; }
         public string EstatusPedido { get; set; }
         public string Cantidad { get; set; }
@@ -30,9 +31,17 @@ namespace MVC.Presentacion.Models.Pedidos
         public string RegimenFiscal { get; set; }
         public string FolioVenta { get; set; }
         public int Ruta { get; set; }
+        public short IdDireccion { get; set; }
         public decimal TotalKilos { get; set; }
         public decimal TotalLitros { get; set; }
         public List<PedidoModel> Pedidos { get; set; }     
-        public List<PedidoModel> Unidades { get; set; }
+        public List<ClientesModel> clientes { get; set; }
+       
+        public bool Pregunta1Val1 { get; set; }
+        public bool Pregunta1Val2 { get; set; }
+        public bool Pregunta1Val3 { get; set; }
+        public bool Pregunta1Val4 { get; set; }
+        public bool Pregunta1Val5 { get; set; }
+        
     }
 }

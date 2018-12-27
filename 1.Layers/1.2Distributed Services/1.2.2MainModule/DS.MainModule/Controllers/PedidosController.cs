@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.Flujos;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -16,10 +17,10 @@ namespace DS.MainModule.Controllers
             _pedidos = new Pedidos();
         }
 
-        [Route("buscar/listapedidos")]
-        public HttpResponseMessage GetListaPedidos()
+        [Route("buscar/listapedidos/{id}")]
+        public HttpResponseMessage GetListaPedidosEmpresa(short id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.ListaPedidos());
+            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.ListaPedidos(id));
         }
         [Route("buscar/pedidos/{id}")]
         public HttpResponseMessage GetPedidosId(int id)
@@ -33,6 +34,18 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _pedidos.ListaEstatusPedidos());
         }
 
+        [Route("buscar/camionetas/{id}")]
+        public HttpResponseMessage GetCamionetas(short id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.ListaCamionetas(id));
+        }
+
+        [Route("buscar/pipas/{id}")]
+        public HttpResponseMessage GetPipas(short id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.ListaPipas(id));
+        }
+
         [Route("modificar/pedido")]
         public HttpResponseMessage PutModificarPedidos(PedidoModelDto _model)
         {
@@ -43,6 +56,12 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostRegistrarPedidos(PedidoModelDto _model)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Registra(_model));
+        }
+
+        [Route("registrar/encuesta")]
+        public HttpResponseMessage PostRegistrarEncuesta(List<EncuestaDto> _model)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.RegistraEncuesta(_model));
         }
 
         [Route("cancelar/pedido")]

@@ -1,4 +1,5 @@
 ﻿using MVC.Presentacion.Agente;
+using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Pedidos;
 using MVC.Presentacion.Models.Seguridad;
 using System;
@@ -10,10 +11,10 @@ namespace MVC.Presentacion.App_Code
 {
     public static class PedidosServicio
     {
-        public static List<PedidoModel> ObtenerPedidos(string tkn)
+        public static List<PedidoModel> ObtenerPedidos(short id, string tkn)
         {
             var agente = new AgenteServicio();
-            agente.ListaPedidos(tkn);
+            agente.ListaPedidos(id, tkn);
             return agente._ListaPedidos;
         }
         public static PedidoModel ObtenerIdPedido(int id,string tkn)
@@ -35,6 +36,12 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarNuevoPedido(model, tkn);
             return agente._RespuestaDTO;
         }
+        public static RespuestaDTO AltaEncuestaPedido(List<EncuestaModel> model, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarEncuesta(model, tkn);
+            return agente._RespuestaDTO;
+        }
         public static RespuestaDTO ActualizarPedido(PedidoModel model, string tkn)
         {
             var agente = new AgenteServicio();
@@ -47,6 +54,18 @@ namespace MVC.Presentacion.App_Code
             agente.CancelarNuevoPedido(model, tkn);
             return agente._RespuestaDTO;
         }
-        
+        public static List<CamionetaModel> ObtenerCamionetas(short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarCamionetas(id, tkn);
+            return agente._ListaCamionetas;
+        }
+
+        public static List<PipaModel> ObtenerPipas(short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarPipas(id, tkn);
+            return agente._ListaPipas;
+        }
     }
 }

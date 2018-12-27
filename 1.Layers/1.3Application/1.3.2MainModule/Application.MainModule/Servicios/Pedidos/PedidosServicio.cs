@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Pedidos;
+﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Exceptions.MainModule.Validaciones;
@@ -14,9 +15,9 @@ namespace Application.MainModule.Servicios.Pedidos
 {
     public class PedidosServicio
     {
-        public static List<PedidoModelDto> Obtener()
+        public static List<PedidoModelDto> Obtener(short idempresa)
         {
-            List<PedidoModelDto> lPedidos = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PedidosDataAccess().BuscarTodos());
+            List<PedidoModelDto> lPedidos = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PedidosDataAccess().Buscar(idempresa));
             return lPedidos;
         }
 
@@ -88,7 +89,21 @@ namespace Application.MainModule.Servicios.Pedidos
 
             return cadena;
         }
+        public static List<CamionetaDTO> ObtenerCamionetas(short idempresa)
+        {
+            List<CamionetaDTO> lCamionetas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new AlmacenGasDataAccess().ObtenerCamionetasEmpresa(idempresa));
+            return lCamionetas;
+        }
+        public static List<PipaDTO> ObtenerPipas(short idempresa)
+        {
+            List<PipaDTO> lPipas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new AlmacenGasDataAccess().ObtenerPipas(idempresa));
+            return lPipas;
+        }        
         public static RespuestaDto Alta(Pedido _pedidoDto)
+        {
+            return new PedidosDataAccess().Insertar(_pedidoDto);
+        }
+        public static RespuestaDto Alta(List<RespuestaSatisfaccionPedido> _pedidoDto)
         {
             return new PedidosDataAccess().Insertar(_pedidoDto);
         }

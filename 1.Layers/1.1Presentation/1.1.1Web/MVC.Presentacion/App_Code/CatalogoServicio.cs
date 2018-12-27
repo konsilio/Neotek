@@ -456,7 +456,6 @@ namespace MVC.Presentacion.App_Code
             return Roles;
 
         }
-
         public static List<RolDto> PermisosMovilCompra(List<RolMovilCompra> lst)
         {
             List<RolDto> Roles = new List<RolDto>();
@@ -898,7 +897,6 @@ namespace MVC.Presentacion.App_Code
 
             return _roles;
         }
-
         public static List<RolDto> AddPermisosReq(RolDto cc, List<RolDto> _roles)
         {
             //List<RolDto> Roles = new List<RolDto>();
@@ -912,32 +910,18 @@ namespace MVC.Presentacion.App_Code
 
             return _roles;
         }
-
         public static List<RolDto> AddPermisosMovilCom(RolDto cc, List<RolDto> _roles)
         {
-            //List<RolDto> Roles = new List<RolDto>();
-            //Roles = (PermisosMovilCompra(cc.ListaMovilCompra));
-            //cc.ListaRoles = Roles;
-            //return cc;
             List<RolDto> Roles = new List<RolDto>();
             Roles = (PermisosMovilCompra(cc.ListaMovilCompra));
-
             _roles.AddRange(Roles);
-
             return _roles;
         }
-
         public static List<RolDto> AddPermisosMovilVenta(RolDto cc, List<RolDto> _roles)
         {
-            //List<RolDto> Roles = new List<RolDto>();
-            //Roles = (PermisosMovilCompra(cc.ListaMovilCompra));
-            //cc.ListaRoles = Roles;
-            //return cc;
             List<RolDto> Roles = new List<RolDto>();
             Roles = (PermisosMovilVenta(cc.ListaMovilVenta));
-
             _roles.AddRange(Roles);
-
             return _roles;
         }
         public static List<RolDto> ObtenerTodosRoles(string token)
@@ -946,14 +930,12 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarTodosRoles(token);
             return agente._lstaAllRoles;
         }
-
         public static List<RolDto> ObtenerRoles(string token, short emp)
         {
             var agente = new AgenteServicio();
             agente.BuscarRoles(token, emp);
             return agente._lstaAllRoles;
         }
-
         public static List<RolCompras> getListcompras(List<RolDto> lst)
         {
             List<RolCompras> Roles = new List<RolCompras>();
@@ -1266,7 +1248,6 @@ namespace MVC.Presentacion.App_Code
             }
             return Roles;
         }
-
         public static List<RolMovilVenta> getListmv(List<RolDto> lst)
         {
             List<RolMovilVenta> Roles = new List<RolMovilVenta>();
@@ -1384,35 +1365,30 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarRolesMovilCompras(token);
             return agente._lstaRolesMovilCom;
         }
-
         public static List<RolRequsicion> ObtenerRolesReq(string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarRolesRequisicion(token);
             return agente._lstaRolesReq;
         }
-
         public static List<RolDto> ObtenerRolesId(int id, string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarRolId(id, token);
             return agente._lstaAllRoles;
         }
-
         public static RespuestaDTO AgregarRoles(RolDto cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarNuevoRol(cc, tkn);
             return agente._RespuestaDTO;
         }
-
         public static RespuestaDTO ActualizaNombreRol(RolDto cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarModificacionRol(cc, tkn);
             return agente._RespuestaDTO;
         }
-
         public static RespuestaDTO ActualizaPermisos(RolDto cc, string tkn)
         {
             var agente = new AgenteServicio();
@@ -1427,7 +1403,6 @@ namespace MVC.Presentacion.App_Code
             return agente._RespuestaDTO;
 
         }
-
         public static RespuestaDTO ActualizaPermisosCompra(RolDto cc, string tkn)
         {
             var agente = new AgenteServicio();
@@ -1456,7 +1431,6 @@ namespace MVC.Presentacion.App_Code
             return agente._RespuestaDTO;
 
         }
-
         public static RespuestaDTO ActualizaPermisosMovilVenta(RolDto cc, string tkn)
         {
             var agente = new AgenteServicio();
@@ -1471,7 +1445,6 @@ namespace MVC.Presentacion.App_Code
             return agente._RespuestaDTO;
 
         }
-
         public static RespuestaDTO ActualizaPermisosMovilCompra(RolDto cc, string tkn)
         {
             var agente = new AgenteServicio();

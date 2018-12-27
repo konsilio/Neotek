@@ -18,14 +18,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-        public List<Pedido> BuscarTodos()
+        public List<Pedido> Buscar(short idempresa)
         {
-            return uow.Repository<Pedido>().GetAll().ToList();
+            return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa)).ToList();
         }
 
         public List<PedidoDetalle> Buscar(int idPedido)
         {
-            return uow.Repository<PedidoDetalle>().Get(x=> x.IdPedido.Equals(idPedido)).ToList();
+            return uow.Repository<PedidoDetalle>().Get(x => x.IdPedido.Equals(idPedido)).ToList();
         }
         public Pedido BuscarPedido(int idPedido)
         {
@@ -39,6 +39,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     uow.Repository<Sagas.MainModule.Entidades.Pedido>().Update(_pro);
+                    foreach (var det in _pro.PedidoDetalle)
+                    {
+                        uow.Repository<Sagas.MainModule.Entidades.PedidoDetalle>().Update(det);
+                    }
                     uow.SaveChanges();
                     _respuesta.Id = _pro.IdPedido;
                     _respuesta.Exito = true;
@@ -65,6 +69,34 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     uow.Repository<Pedido>().Insert(cte);
                     uow.SaveChanges();
                     _respuesta.Id = cte.IdPedido;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del pedido");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Insertar(List<RespuestaSatisfaccionPedido> cte)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    foreach (var item in cte)
+                    {
+                        uow.Repository<RespuestaSatisfaccionPedido>().Insert(item);
+                    }
+
+                    uow.SaveChanges();
+                    _respuesta.Id = cte[0].IdPedido;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;

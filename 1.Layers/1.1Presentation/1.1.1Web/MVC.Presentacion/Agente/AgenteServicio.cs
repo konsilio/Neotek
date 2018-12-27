@@ -1,4 +1,4 @@
-using MVC.Presentacion.Models;
+﻿using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Almacen;
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.OrdenCompra;
@@ -75,7 +75,7 @@ namespace MVC.Presentacion.Agente
         public List<TipoProveedorDTO> _listaTipoProveedor;
         public List<BancoDTO> _listaBanco;
         public List<FormaPagoDTO> _listaFormaPago;
-        public List<PuntoVentaModel> _listaPuntosV;      
+        public List<PuntoVentaModel> _listaPuntosV;
         public List<OperadorChoferModel> _listaOperadoresUsuarios;
         public List<OrdenCompraPagoDTO> _listaOrdenCompraPago;
         public List<PrecioVentaModel> _listaPreciosV;
@@ -90,6 +90,8 @@ namespace MVC.Presentacion.Agente
         public List<PedidoModel> _ListaPedidos;
         public PedidoModel _Pedido;
         public List<EstatusPedidoModel> _ListaEstatusP;
+        public List<CamionetaModel> _ListaCamionetas;
+        public List<PipaModel> _ListaPipas;
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -601,15 +603,15 @@ namespace MVC.Presentacion.Agente
                     if (idUser != 0 && idUser != -1)
                     {
                         _lstUserEmp = (from x in lus where x.IdUsuario == idUser select x).ToList();
-                       
+
                     }
                     if (!String.IsNullOrEmpty(mail) && mail != "0")
                     {
                         _lstUserEmp = (from x in lus where x.Email1 == mail select x).ToList();
-                       
+
                     }
                 }
-              
+
             }
         }
 
@@ -807,14 +809,13 @@ namespace MVC.Presentacion.Agente
                     }
                 }
 
-                else
-                    _lstaClientes = lus;
+                _lstaClientes = lus;
             }
         }
         public void BuscarListaClientesMod(string tel1, string tel2, string rfc, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetClientes"];
-            GetListaClientesMod(tel1, tel2,rfc,  tkn).Wait();
+            GetListaClientesMod(tel1, tel2, rfc, tkn).Wait();
         }
         private async Task GetListaClientesMod(string tel1, string tel2, string rfc, string Token)
         {
@@ -826,45 +827,46 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
-                    if (response.IsSuccessStatusCode)
-                        lus = await response.Content.ReadAsAsync<List<ClientesModel>>();
-                    else
+                    if (tel1 != "" || rfc != "" || tel2 != "")
                     {
-                        client.CancelPendingRequests();
-                        client.Dispose();
+                        HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                        if (response.IsSuccessStatusCode)
+                            lus = await response.Content.ReadAsAsync<List<ClientesModel>>();
+                        else
+                        {
+                            client.CancelPendingRequests();
+                            client.Dispose();
+                        }
+                        if (tel1 != "" && tel1 != null)
+                        {
+                            lus = (from x in lus where x.Telefono1 == tel1 select x).ToList();
+                        }
+
+                        if (rfc != "")
+                        {
+                            lus = (from x in lus where x.Rfc == rfc select x).ToList();
+                        }
+
+                        if (tel2 != "" && tel2 != null)
+                        {
+                            lus = (from x in lus where x.Telefono2 == tel2 select x).ToList();
+                        }
+
                     }
+
                 }
                 catch (Exception)
                 {
                     lus = new List<ClientesModel>();
                     client.CancelPendingRequests();
-                    client.Dispose(); ;
+                    client.Dispose();
                 }
+                _lstaClientesMod = lus;
 
-                if (tel1 != null || rfc != "" || tel2 != null)
-                {
-                    if (tel1 != "" && tel1 != null)
-                    {
-                        lus = (from x in lus where x.Telefono1 == tel1 select x).ToList();
-                    }
-
-                    if (rfc != "")
-                    {
-                        lus = (from x in lus where x.Rfc == rfc select x).ToList();
-                    }
-
-                    if (tel2 != "" && tel2 != null)
-                    {
-                        lus = (from x in lus where x.Telefono2 == tel1 select x).ToList();
-                    }
-                }
-
-                else
-                    _lstaClientesMod = lus;
             }
         }
-        
+
+
         public void BuscarListaLocaciones(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaLocacion"];
@@ -1013,7 +1015,7 @@ namespace MVC.Presentacion.Agente
                 }
             }
         }
-        
+
         public void BuscarListaPuntosVentaId(short _idEmpresa, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetPuntosVentaId"];
@@ -1206,7 +1208,7 @@ namespace MVC.Presentacion.Agente
                 }
 
                 _listaEstatus = lus;
-                
+
             }
         }
         public void BuscarListaPreciosVentaIdEmpresa(short idEmpresa, string tkn)
@@ -1264,7 +1266,7 @@ namespace MVC.Presentacion.Agente
         public void BuscarListaVentaCajaGral(string tkn, string type)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGral"];
-            GetListaCajaGral(tkn,type).Wait();
+            GetListaCajaGral(tkn, type).Wait();
         }
         private async Task GetListaCajaGral(string Token, string type)
         {
@@ -1297,7 +1299,7 @@ namespace MVC.Presentacion.Agente
                 {
                     _listaCajaGral = (from x in lus
                                       orderby x.PuntoVenta
-                                      select x).Distinct().ToList();                                     
+                                      select x).Distinct().ToList();
                 }
 
                 else
@@ -1307,7 +1309,7 @@ namespace MVC.Presentacion.Agente
                 }
             }
         }
-        
+
         public void BuscarListaVentaCajaGralIdE(short idE, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGralId"];
@@ -1350,12 +1352,12 @@ namespace MVC.Presentacion.Agente
             }
         }
 
-        public void BuscarListaCajaGralCamioneta(string cveReporte,string tkn)
+        public void BuscarListaCajaGralCamioneta(string cveReporte, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGralCamioneta"];
             GetListaCajaGralCamioneta(cveReporte, tkn).Wait();
         }
-        private async Task GetListaCajaGralCamioneta(string cveRep,string Token)
+        private async Task GetListaCajaGralCamioneta(string cveRep, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -1383,7 +1385,7 @@ namespace MVC.Presentacion.Agente
 
 
                 _listaCajaGralCamioneta = lus;
-                
+
             }
         }
 
@@ -1415,7 +1417,7 @@ namespace MVC.Presentacion.Agente
                 {
                     lus = new List<VentaCorteAnticipoModel>();
                     client.CancelPendingRequests();
-                    client.Dispose(); 
+                    client.Dispose();
                 }
 
                 _listaCajaGralEstacion = lus;
@@ -1447,7 +1449,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos,rep).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, rep).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         lus = await response.Content.ReadAsAsync<List<MovimientosGasModel>>();
                     else
@@ -1498,7 +1500,7 @@ namespace MVC.Presentacion.Agente
                     lus = new List<MovimientosGasCilindros>();
                     client.CancelPendingRequests();
                     client.Dispose();
-                }             
+                }
 
                 _ListaMovimientosGasC = lus;
             }
@@ -1785,7 +1787,7 @@ namespace MVC.Presentacion.Agente
             //GuardarCtroCosto(dto, tkn).Wait();
 
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraCentroCosto"];
-          LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         private async Task GuardarCtroCosto(CentroCostoCrearDTO _pcDTO, string token)
         {
@@ -2529,7 +2531,7 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRequisicion"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
-        }      
+        }
         public void ActualizarRequisicionRevision(RequisicionRevPutDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutActulizarRevision"];
@@ -2544,7 +2546,7 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutCancelarRequisicion"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();
-        }     
+        }
         public void RequisicionRevision(int IdRequisicion, string tkn)
         {
             ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionByNumRequisicion"];
@@ -2861,7 +2863,7 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarEntradas"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
         }
-        public void EnviarConfirmarPago (OrdenCompraPagoDTO dto, string token)
+        public void EnviarConfirmarPago(OrdenCompraPagoDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutConfirmarPago"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();
@@ -3085,13 +3087,12 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Pedidos
-        public void ListaPedidos(string token)
+        public void ListaPedidos(short id, string token)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPedidos"];
-            Pedidos(ApiCatalgos, token).Wait();
+            Pedidos(id, ApiCatalgos, token).Wait();
         }
-
-        private async Task Pedidos(string api, string token = null)
+        private async Task Pedidos(short id, string api, string token = null)
         {
             using (var client = new HttpClient())
             {
@@ -3102,7 +3103,7 @@ namespace MVC.Presentacion.Agente
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         pedidos = await response.Content.ReadAsAsync<List<PedidoModel>>();
                     else
@@ -3120,14 +3121,12 @@ namespace MVC.Presentacion.Agente
                 _ListaPedidos = pedidos;
             }
         }
-
-        public void ObtenerPedidoId(int id,string token)
+        public void ObtenerPedidoId(int id, string token)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetPedidoId"];
-            PedidoId(ApiCatalgos, id,token).Wait();
+            PedidoId(ApiCatalgos, id, token).Wait();
         }
-
-        private async Task PedidoId(string api, int id,string token = null)
+        private async Task PedidoId(string api, int id, string token = null)
         {
             using (var client = new HttpClient())
             {
@@ -3138,7 +3137,7 @@ namespace MVC.Presentacion.Agente
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(api+id.ToString()).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         pedido = await response.Content.ReadAsAsync<PedidoModel>();
                     else
@@ -3156,13 +3155,11 @@ namespace MVC.Presentacion.Agente
                 _Pedido = pedido;
             }
         }
-
         public void BuscarEstatusPedido(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetEstatusPedido"];
             GetEstatusPedido(tkn).Wait();
         }
-
         private async Task GetEstatusPedido(string Token)
         {
             using (var client = new HttpClient())
@@ -3191,23 +3188,111 @@ namespace MVC.Presentacion.Agente
                 _ListaEstatusP = lus;
             }
         }
-
         public void GuardarEdicionPedido(PedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void GuardarNuevoPedido(PedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
+        public void GuardarEncuesta(List<EncuestaModel> dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarEncuesta"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
         public void CancelarNuevoPedido(PedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutCancelarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void BuscarCamionetas(short id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCamionetas"];
+            GetUnidadCamioneta(id, tkn).Wait();
+        }
+        private async Task GetUnidadCamioneta(short id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CamionetaModel> lus = new List<CamionetaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + id).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<CamionetaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<CamionetaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                var item = AgregarUnidadC();
+                item.AddRange(lus);
+                _ListaCamionetas = item;
+            }
+        }
+        public void BuscarPipas(short id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetPipas"];
+            GetUnidadPipas(id, tkn).Wait();
+        }
+        private async Task GetUnidadPipas(short id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PipaModel> lus = new List<PipaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<PipaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<PipaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                var item = AgregarUnidadP();
+                item.AddRange(lus);
+                _ListaPipas = item;
+            }
+        }
+        public List<CamionetaModel> AgregarUnidadC()
+        {
+            CamionetaModel c = new CamionetaModel();
+            c.Nombre = "Seleccione";
+            List<CamionetaModel> unidades = new List<CamionetaModel>();
+            unidades.Add(c);
+            return unidades;
+        }
+        public List<PipaModel> AgregarUnidadP()
+        {
+            PipaModel c = new PipaModel();
+            c.Nombre = "Seleccione";
+            List<PipaModel> unidades = new List<PipaModel>();
+            unidades.Add(c);
+            return unidades;
         }
         #endregion
         private async Task LLamada<T>(T _dto, string token, string Tipo)

@@ -7,14 +7,27 @@
     <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <script src="~/assets/js/pages/ui/notifications.js"></script>
 
-    <script type="text/javascript">
-    var mensaje = '@ViewBag.Msj';
-    if (mensaje != '') {
-        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
-    }
+    <script type="text/javascript">  
+        var mensaje = '@ViewBag.Msj';
+        var tipo = '@ViewBag.Tipo';
+        if (mensaje != '') {
+            $(window).on("load", showNotification(tipo, mensaje, 'top', 'center', '', ''));
+        }
+        function AsignarEliminar(idPedido) {
+            $("#btnEliminar").attr("data-id", idPedido);
+        }
+
+        var Cancelar = function () {
+            var url = "/Pedidos/CancelarPedido";
+            var id = $("#btnEliminar").attr("data-id")
+            var motivoC = $("#motivo").val()
+            $.get(url, { idPedido: id, MotivoCancela: motivoC }, function (data) {
+                window.location.href = '@Url.Action("Index", "Pedidos")';
+            });
+        };
     </script>
 </head>
-<body style="height:100%">
+<body>
     @using (Html.BeginForm("Nuevo", "Pedidos", FormMethod.Post))
     {
         <section class="content home">
@@ -78,7 +91,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <input type="submit" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
+                                                <input type="submit" id="btnNuevoCte" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
                                                 <input type="submit" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
                                         </div>
@@ -86,6 +99,21 @@
                                 </div>
                             </div>
                             <br />
+                            @if (ViewBag.MensajeError != null)
+                            {
+                                <div class="row clearfix">
+                                    <div id="divMensajeError" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                <label>@ViewBag.MensajeError</label>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12 blockquote blockquote-info btn-round">
                                     <div class="table-responsive">
@@ -108,18 +136,22 @@
                                                         <tr>
                                                             <th>@item.IdPedido</th>
                                                             <th>@item.Rfc</th>
-                                                            <td>@item.Nombre @item.Apellido1 @item.Apellido2 </td>
+                                                            <td>@item.NombreRfc</td>
                                                             <td>@item.Cantidad</td>
                                                             <td>@item.EstatusPedido</td>
                                                             <td>
-                                                                <a href="@Url.Action("RevisarPedido", "Pedidos", new { id = item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <a ID="lbEdit" href="@Url.Action("RevisarPedido", "Pedidos", new { idPedido = item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                     <i class="material-icons">edit</i>
                                                                     <span>Revisar pedido</span>
                                                                 </a>
-                                                                <a href="@Url.Action("CancelarPedido", "Pedidos", new {  id=item.IdPedido } )" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <a href="#ModalCancelar" data-toggle="modal" data-id="@item.IdPedido" id="btnok" class="tip" onclick="javascript: AsignarEliminar(@item.IdPedido)" data-target="#ModalCancelar" role="button" aria-haspopup="true" aria-expanded="false">
                                                                     <i class="material-icons">delete</i>
                                                                     <span>Cancelar pedido</span>
                                                                 </a>
+                                                                @*<a ID="lbBorrar" href="@Url.Action("CancelarPedido", "Pedidos", new {  idPedido =item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="material-icons">delete</i>
+                                                                        <span>Cancelar pedido</span>
+                                                                    </a>*@
                                                             </td>
                                                         </tr>
                                                     }
@@ -131,25 +163,36 @@
                             </div>
                         </div>
                     </div>
-                    @if (ViewBag.MensajeError != null)
-                    {
-                        <div class="row clearfix">
-                            <div id="divMensajeError" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
-                                    </div>
-                                    <strong>
-                                        <label>@ViewBag.MensajeError</label>
-                                    </strong>
-                                </div>
-                            </div>
-                        </div>
-                    }
+
                 </div>
 
             </div>
         </section>
+        <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="title" id="ModalConfirmacionLabel">Motivo de la cancelación</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="body">
+                            <div class="col-sm-12">
+                                <div class="blockquote blockquote-info btn-round">
+                                    <textarea id="motivo" name="MotivoCancelacion" class="form-control" Rows="5" placeholder="Cual es el motivo de la cancelación?.."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        @*<input type="button" id="btnEliminar" value="Aceptar" class="btn btn-raised btn-primary btn-round waves-effect" />*@
+                        <button type="button" id="btnEliminar" class="btn btn-raised btn-primary btn-round" onclick="Cancelar()">Aceptar</button>
+                        <button type="button" id="btnclose" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     }
 </body>
+
 </html>

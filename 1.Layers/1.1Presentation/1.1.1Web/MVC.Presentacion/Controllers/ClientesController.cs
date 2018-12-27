@@ -40,7 +40,6 @@ namespace MVC.Presentacion.Controllers
 
             return View();
         }
-
         public ActionResult Nuevo()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -96,7 +95,6 @@ namespace MVC.Presentacion.Controllers
             ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View();
         }
-
         [HttpPost]
         public ActionResult GuardaEdicionCliente(ClientesDto _Obj)
         {
@@ -138,7 +136,6 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }      
         }
-
         public ActionResult EditarLocaciones(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -160,9 +157,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
                 TempData["RespuestaDTOError"] = ViewBag.MessageError;
             }
-
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
-            
+            ViewBag.MessageError = TempData["RespuestaDTOError"];           
 
             return View(_lst);
         }

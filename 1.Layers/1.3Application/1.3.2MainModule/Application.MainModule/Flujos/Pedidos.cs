@@ -1,9 +1,12 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Pedidos;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Pedidos;
 using Application.MainModule.Servicios.Seguridad;
+using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
@@ -15,16 +18,16 @@ namespace Application.MainModule.Flujos
 {
     public class Pedidos
     {
-        public List<PedidoModelDto> ListaPedidos()
+        public List<PedidoModelDto> ListaPedidos(short idempresa)
         {
             var resp = PermisosServicio.PuedeConsultarPedido();
             if (!resp.Exito) return null;
 
             if (TokenServicio.EsSuperUsuario())
-                return PedidosServicio.Obtener().ToList();
+                return PedidosServicio.Obtener(idempresa).ToList();
 
             else
-                return PedidosServicio.Obtener().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+                return PedidosServicio.Obtener(idempresa).Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
 
         public PedidoModelDto PedidoId(int idPedido)
@@ -41,6 +44,20 @@ namespace Application.MainModule.Flujos
 
             return PedidosServicio.ObtenerEstatus().ToList();
         }
+        public List<CamionetaDTO> ListaCamionetas(short IdEmpresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarPedido();
+            if (!resp.Exito) return null;
+
+            return PedidosServicio.ObtenerCamionetas(IdEmpresa).ToList();
+        }
+        public List<PipaDTO> ListaPipas(short IdEmpresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarPedido();
+            if (!resp.Exito) return null;
+
+            return PedidosServicio.ObtenerPipas(IdEmpresa).ToList();
+        }
 
         public RespuestaDto Registra(PedidoModelDto pedidoDto)
         {
@@ -54,6 +71,15 @@ namespace Application.MainModule.Flujos
 
             return PedidosServicio.Alta(pedido);
         }
+        public RespuestaDto RegistraEncuesta(List<EncuestaDto> pedidoDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarPedido();
+            if (!resp.Exito) return resp;
+
+            var pedido = PedidosAdapter.FromDto(pedidoDto);            
+
+            return PedidosServicio.Alta(pedido);
+        }
         public RespuestaDto Modifica(PedidoModelDto pedidoDto)
         {
             var resp = PermisosServicio.PuedeModificarPedido();
@@ -62,8 +88,7 @@ namespace Application.MainModule.Flujos
             var pedidos = new PedidosDataAccess().BuscarPedido(pedidoDto.IdPedido);
             if (pedidos == null) return PedidosServicio.NoExiste();
 
-            var pedido = PedidosAdapter.FromDto(pedidoDto, pedidos);
-            pedido.FechaRegistro = pedido.FechaRegistro;
+            var pedido = PedidosAdapter.FromDto(pedidoDto, pedidos);           
             return PedidosServicio.Modificar(pedido);
         }
         public RespuestaDto Elimina(PedidoModelDto pedidoDto)
@@ -76,6 +101,7 @@ namespace Application.MainModule.Flujos
 
             var pedido = PedidosAdapter.FromEntity(pedidos);
             pedido.IdEstatusPedido = EstatusPedidoEnum.Cancelado;
+            pedido.MotivoCancelacion = pedidoDto.MotivoCancelacion;
             return PedidosServicio.Modificar(pedido);
         }
     }
