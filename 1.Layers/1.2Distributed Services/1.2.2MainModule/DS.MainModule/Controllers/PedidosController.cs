@@ -57,6 +57,12 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Registra(_model));
         }
 
+        [Route("registrar/encuesta")]
+        public HttpResponseMessage PostRegistrarEncuesta(PedidoModelDto _model)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Registra(_model));
+        }
+
         [Route("cancelar/pedido")]
         public HttpResponseMessage PutCancelarPedidos(PedidoModelDto _model)
         {

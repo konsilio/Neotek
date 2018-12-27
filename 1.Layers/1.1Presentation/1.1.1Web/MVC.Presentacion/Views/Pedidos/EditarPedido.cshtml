@@ -16,18 +16,57 @@
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            //    $("#btnRegresaRevision").click(function () {
+            //        var form = $(this).parent("form");
+            //        form.attr('action', '<%= Url.RouteUrl(new { Controller = "Pedidos", Action = "Index"}) %>');
+            //        form.attr('method', 'post');
+            //    });
 
+            $("#btnSave").click(function () {
+
+                var calificacion = [];
+                var selected1 = $("input[name='estrellas1']:checked").val();
+                var selected2 = $("input[name='estrellas2']:checked").val();
+                var selected3 = $("input[name='estrellas3']:checked").val();
+                var selected4 = $("input[name='estrellas4']:checked").val();
+                var selected5 = $("input[name='estrellas5']:checked").val();
+                if (selected1 != undefined)
+                    calificacion.push({IdPedido:@Model.IdPedido, IdPregunta:1,Respuesta: selected1 });
+                if (selected2 != undefined)
+                    calificacion.push({IdPedido:@Model.IdPedido, IdPregunta:2,Respuesta: selected2 });
+                if (selected3 != undefined)
+                    calificacion.push({IdPedido:@Model.IdPedido, IdPregunta:3,Respuesta: selected3 });
+                if (selected4 != undefined)
+                    calificacion.push({ IdPedido:@Model.IdPedido,IdPregunta:4,Respuesta: selected4 });
+                if (selected5 != undefined)
+                    calificacion.push({IdPedido:@Model.IdPedido, IdPregunta:5,Respuesta: selected5 });
+
+                calificacion = JSON.stringify({ 'calificacion': calificacion });
+                
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    url: '/Pedidos/GuardarEncuesta',
+                    data: calificacion,
+                    success: function () {
+                       
+                    },
+                    failure: function (response) {
+                        
+                    }
+                });
+
+            });
         });
 
-        $("#btnRegresaRevision").click(function () {
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Pedidos", Action = "RevisarPedido"}) %>');
-            form.attr//('method', 'post');
-            form.attr('method', 'post');
-        });
     </script>
     <style type="text/css">
         input[type = "radio"] {
+            display: none;
+        }
+
+        .radio {
             display: none;
         }
 
@@ -46,8 +85,11 @@
             color: orange;
         }
 
-
         input[type = "radio"]:checked ~ label {
+            color: orange;
+        }
+
+        .radio:checked {
             color: orange;
         }
 
@@ -210,6 +252,7 @@
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
                                                             <input type="text" name="FechaEntregaPedido" class="form-control" placeholder="formato: dd/mm/aaaa" />
+                                                            @*@Html.TextBoxFor(model => model.FechaEntregaPedido, new { @class = "form-control", @placeholder = "formato: dd/mm/aaaa" })*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -250,7 +293,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             }
                                             @if (Model.IdCamioneta > 0)
                                             {
@@ -380,6 +422,7 @@
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
                                                             <input type="text" name="FechaEntregaPedido" class="form-control" placeholder="formato: dd/mm/aaaa" />
+                                                            @*   @Html.TextBoxFor(model => model.FechaEntregaPedido, new { @class = "form-control", @placeholder = "formato: dd/mm/aaaa" })*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -431,23 +474,22 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio1" type="radio" name="estrellas" value="5">
-                                                    <!-- -->
+                                                    <input id="radio1" type="radio" name="estrellas1" value="Pregunta1Val5">
                                                     <label for="radio1">★</label>
                                                     <!-- -->
-                                                    <input id="radio2" type="radio" name="estrellas" value="4">
+                                                    <input id="radio2" type="radio" name="estrellas1" value="Pregunta1Val4">
                                                     <!-- -->
                                                     <label for="radio2">★</label>
                                                     <!-- -->
-                                                    <input id="radio3" type="radio" name="estrellas" value="3">
+                                                    <input id="radio3" type="radio" name="estrellas1" value="Pregunta1Val3">
                                                     <!--  -->
                                                     <label for="radio3">★</label>
                                                     <!--  -->
-                                                    <input id="radio4" type="radio" name="estrellas" value="2">
+                                                    <input id="radio4" type="radio" name="estrellas1" value="Pregunta1Val2">
                                                     <!--  -->
                                                     <label for="radio4">★</label>
                                                     <!--  -->
-                                                    <input id="radio5" type="radio" name="estrellas" value="1">
+                                                    <input id="radio5" type="radio" name="estrellas1" value="Pregunta1Val1">
                                                     <!--  -->
                                                     <label for="radio5">★</label>
                                                 </div>
@@ -464,23 +506,23 @@
                                                     <h9>1 Poco probable</h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio6" type="radio" name="estrellas" value="10">
+                                                    <input id="radio6" type="radio" name="estrellas2" value="Pregunta2Val5">
                                                     <!-- -->
                                                     <label for="radio6">★</label>
                                                     <!-- -->
-                                                    <input id="radio7" type="radio" name="estrellas" value="9">
+                                                    <input id="radio7" type="radio" name="estrellas2" value="Pregunta2Val4">
                                                     <!-- -->
                                                     <label for="radio7">★</label>
                                                     <!-- -->
-                                                    <input id="radio8" type="radio" name="estrellas" value="8">
+                                                    <input id="radio8" type="radio" name="estrellas2" value="Pregunta2Val3">
                                                     <!--  -->
                                                     <label for="radio8">★</label>
                                                     <!--  -->
-                                                    <input id="radio9" type="radio" name="estrellas" value="7">
+                                                    <input id="radio9" type="radio" name="estrellas2" value="Pregunta2Val2">
                                                     <!--  -->
                                                     <label for="radio9">★</label>
                                                     <!--  -->
-                                                    <input id="radio10" type="radio" name="estrellas" value="6">
+                                                    <input id="radio10" type="radio" name="estrellas2" value="Pregunta2Val1">
                                                     <!--  -->
                                                     <label for="radio10">★</label>
                                                 </div>
@@ -511,25 +553,25 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio1" type="radio" name="estrellas" value="5">
+                                                    <input id="radio11" type="radio" name="estrellas3" value="Pregunta3Val5">
                                                     <!-- -->
-                                                    <label for="radio1">★</label>
+                                                    <label for="radio11">★</label>
                                                     <!-- -->
-                                                    <input id="radio2" type="radio" name="estrellas" value="4">
+                                                    <input id="radio12" type="radio" name="estrellas3" value="Pregunta3Val4">
                                                     <!-- -->
-                                                    <label for="radio2">★</label>
+                                                    <label for="radio12">★</label>
                                                     <!-- -->
-                                                    <input id="radio3" type="radio" name="estrellas" value="3">
+                                                    <input id="radio13" type="radio" name="estrellas3" value="Pregunta3Val3">
                                                     <!--  -->
-                                                    <label for="radio3">★</label>
+                                                    <label for="radio13">★</label>
                                                     <!--  -->
-                                                    <input id="radio4" type="radio" name="estrellas" value="2">
+                                                    <input id="radio14" type="radio" name="estrellas3" value="Pregunta3Val2">
                                                     <!--  -->
-                                                    <label for="radio4">★</label>
+                                                    <label for="radio14">★</label>
                                                     <!--  -->
-                                                    <input id="radio5" type="radio" name="estrellas" value="1">
+                                                    <input id="radio15" type="radio" name="estrellas3" value="Pregunta3Val1">
                                                     <!--  -->
-                                                    <label for="radio5">★</label>
+                                                    <label for="radio15">★</label>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <h9>
@@ -546,25 +588,25 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio1" type="radio" name="estrellas" value="5">
+                                                    <input id="radio16" type="radio" name="estrellas4" value="Pregunta4Val5">
                                                     <!-- -->
-                                                    <label for="radio1">★</label>
+                                                    <label for="radio16">★</label>
                                                     <!-- -->
-                                                    <input id="radio2" type="radio" name="estrellas" value="4">
+                                                    <input id="radio17" type="radio" name="estrellas4" value="Pregunta4Val4">
                                                     <!-- -->
-                                                    <label for="radio2">★</label>
+                                                    <label for="radio17">★</label>
                                                     <!-- -->
-                                                    <input id="radio3" type="radio" name="estrellas" value="3">
+                                                    <input id="radio18" type="radio" name="estrellas4" value="Pregunta4Val3">
                                                     <!--  -->
-                                                    <label for="radio3">★</label>
+                                                    <label for="radio18">★</label>
                                                     <!--  -->
-                                                    <input id="radio4" type="radio" name="estrellas" value="2">
+                                                    <input id="radio19" type="radio" name="estrellas4" value="Pregunta4Val2">
                                                     <!--  -->
-                                                    <label for="radio4">★</label>
+                                                    <label for="radio19">★</label>
                                                     <!--  -->
-                                                    <input id="radio5" type="radio" name="estrellas" value="1">
+                                                    <input id="radio20" type="radio" name="estrellas4" value="Pregunta4Val1">
                                                     <!--  -->
-                                                    <label for="radio5">★</label>
+                                                    <label for="radio20">★</label>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <h9>
@@ -592,25 +634,25 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio1" type="radio" name="estrellas" value="5">
+                                                    <input id="radio21" type="radio" name="estrellas5" value="Pregunta5Val5">
                                                     <!-- -->
-                                                    <label for="radio1">★</label>
+                                                    <label for="radio21">★</label>
                                                     <!-- -->
-                                                    <input id="radio2" type="radio" name="estrellas" value="4">
+                                                    <input id="radio22" type="radio" name="estrellas5" value="Pregunta5Val4">
                                                     <!-- -->
-                                                    <label for="radio2">★</label>
+                                                    <label for="radio22">★</label>
                                                     <!-- -->
-                                                    <input id="radio3" type="radio" name="estrellas" value="3">
+                                                    <input id="radio23" type="radio" name="estrellas5" value="Pregunta5Val3">
                                                     <!--  -->
-                                                    <label for="radio3">★</label>
+                                                    <label for="radio23">★</label>
                                                     <!--  -->
-                                                    <input id="radio4" type="radio" name="estrellas" value="2">
+                                                    <input id="radio24" type="radio" name="estrellas5" value="Pregunta5Val2">
                                                     <!--  -->
-                                                    <label for="radio4">★</label>
+                                                    <label for="radio24">★</label>
                                                     <!--  -->
-                                                    <input id="radio5" type="radio" name="estrellas" value="1">
+                                                    <input id="radio25" type="radio" name="estrellas5" value="Pregunta5Val1">
                                                     <!--  -->
-                                                    <label for="radio5">★</label>
+                                                    <label for="radio25">★</label>
                                                 </div>
                                                 <div class="col-sm-3" style="text-align:left">
                                                     <h9>
@@ -622,10 +664,40 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @*<hr /><div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <input type="submit" value="Cancelar" id="btnRegresaRevision" class="btn btn-raised btn-primary btn-round float-left" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <input type="submit" value="Finalizar Edición" class="btn btn-raised btn-primary btn-round float-right" />
+                                                </div>
+                                            </div>
+                                        </div>*@
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @if (ViewBag.MensajeError != null)
+                {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MensajeError</label>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card">
@@ -633,14 +705,14 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <input type="submit" value="Cancelar" id="btnRegresaRevision" formaction=@Url.Action("RevisarPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                <input type="submit" value="Cancelar" id="btnRegresaRevision" class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <input type="submit" value="Finalizar Edición" class="btn btn-raised btn-primary btn-round float-right" />
+                                                <input type="submit" id="btnSave" value="Finalizar Edición" class="btn btn-raised btn-primary btn-round float-right" />
                                             </div>
                                         </div>
                                     </div>

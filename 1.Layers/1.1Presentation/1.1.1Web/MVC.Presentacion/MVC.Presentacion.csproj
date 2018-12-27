@@ -349,6 +349,7 @@
     <Compile Include="Models\OrdenCompra\ProductoOCDevExpress.cs" />
     <Compile Include="Models\OrdenCompra\ProductoOCDTO.cs" />
     <Compile Include="Models\OrdenCompra\RequisicionOCDTO.cs" />
+    <Compile Include="Models\Pedidos\EncuestaModel.cs" />
     <Compile Include="Models\Pedidos\EstatusPedidoModel.cs" />
     <Compile Include="Models\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="Models\Pedidos\PedidoModel.cs" />

@@ -4,8 +4,6 @@
     ViewBag.Title = "Catálogo / Clientes";
 }
 
-@*<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />*@
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/Resources/js/Clientes.js"></script>
 <link href="~/Resources/css/Clientes.css" rel="stylesheet" />
@@ -44,8 +42,10 @@
                                         <div class="form-group">
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div>
-                                                   <input type="text" name="IdCliente" hidden="hidden" value="@((ViewBag.Locaciones!=null)?ViewBag.Locaciones.IdCliente:0)"/>
-                                                    <input type="text" name="Orden" hidden="hidden" value="@((ViewBag.Locaciones!=null)?ViewBag.Locaciones.Orden:0)"/>
+                                                    @if (Model.Count > 0)
+                                                    {
+                                                        <input type="text" name="IdCliente" hidden="hidden" value="@((ViewBag.Locaciones!=null)?ViewBag.Locaciones.IdCliente:Model[0].IdCliente)" />
+                                                    } <input type="text" name="Orden" hidden="hidden" value="@((ViewBag.Locaciones!=null)?ViewBag.Locaciones.Orden:0)" />
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="input-group">
@@ -69,14 +69,14 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
                                             <input type="text" name="TipoLocacion" class="form-control" placeholder="Sucursal/Oficina/Tienda/Vacío/etc." value="@((ViewBag.Locaciones!=null)? @ViewBag.Locaciones.TipoLocacion:"")">
-                                            @*@if (ViewBag.EsEdicion == null)                                                                             
-    {
-        <input type="text" name="TipoLocacion" class="form-control" placeholder="Sucursal/Oficina/Tienda/Vacío/etc." value="@ViewBag.Locaciones.TipoLocacion">
-    }
-    else
-    {
-        @Html.TextBoxFor(m => m[0].TipoLocacion, new { @class = "form-control", @placeholder = "Sucursal/Oficina/Tienda/Vacío/etc." })
-    }*@
+                                            @*@if (ViewBag.EsEdicion == null)
+                                                {
+                                                    <input type="text" name="TipoLocacion" class="form-control" placeholder="Sucursal/Oficina/Tienda/Vacío/etc." value="@ViewBag.Locaciones.TipoLocacion">
+                                                }
+                                                else
+                                                {
+                                                    @Html.TextBoxFor(m => m[0].TipoLocacion, new { @class = "form-control", @placeholder = "Sucursal/Oficina/Tienda/Vacío/etc." })
+                                                }*@
                                         </div>
                                     </div>
                                     <div class="col-lg-7 col-md-7 col-sm-7">
@@ -186,15 +186,15 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <input type="text" name="Municipio" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.Municipio:"")"/>
-                                                @*@if (ViewBag.EsEdicion == null)                       
-    {
-        <input type="text" name="Municipio" class="form-control" />
-    }
-    else
-    {
-        @Html.TextBoxFor(m => m[0].Municipio, new { @class = "form-control" })
-    }*@
+                                                <input type="text" name="Municipio" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.Municipio:"")" />
+                                                @*@if (ViewBag.EsEdicion == null)
+                                                    {
+                                                        <input type="text" name="Municipio" class="form-control" />
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m[0].Municipio, new { @class = "form-control" })
+                                                    }*@
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].Municipio, "", new { @class = "alert-danger" })
                                         </div>
@@ -211,15 +211,15 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <input type="text" name="Colonia" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.Colonia:"")"/>
-                                                @*@if (ViewBag.EsEdicion == null)                    
-    {
-        <input type="text" name="Colonia" class="form-control" />
-    }
-    else
-    {
-        @Html.TextBoxFor(m => m[0].Colonia, new { @class = "form-control" })
-    }*@
+                                                <input type="text" name="Colonia" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.Colonia:"")" />
+                                                @*@if (ViewBag.EsEdicion == null)
+                                                    {
+                                                        <input type="text" name="Colonia" class="form-control" />
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m[0].Colonia, new { @class = "form-control" })
+                                                    }*@
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].Colonia, "", new { @class = "alert-danger" })
                                         </div>
@@ -234,15 +234,15 @@
                                         </div>
                                         <div class="col-lg-7 col-md-7 col-sm-7">
                                             <div class="form-group">
-                                                <input type="text" name="Calle" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.Calle:"")"/>
-                                                @*@if (ViewBag.EsEdicion == null)                             
-    {
-        <input type="text" name="Calle" class="form-control" />
-    }
-    else
-    {
-        @Html.TextBoxFor(m => m[0].Calle, new { @class = "form-control" })
-    }*@
+                                                <input type="text" name="Calle" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.Calle:"")" />
+                                                @*@if (ViewBag.EsEdicion == null)
+                                                    {
+                                                        <input type="text" name="Calle" class="form-control" />
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m[0].Calle, new { @class = "form-control" })
+                                                    }*@
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].Calle, "", new { @class = "alert-danger" })
                                         </div>
@@ -260,14 +260,14 @@
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
                                                 <input type="text" name="NumExt" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.NumExt:"")" />
-                                                @*@if (ViewBag.EsEdicion == null)                         
-    {
-        <input type="text" name="NumExt" class="form-control" />
-    }
-    else
-    {
-        @Html.TextBoxFor(m => m[0].NumExt, new { @class = "form-control" })
-    }*@
+                                                @*@if (ViewBag.EsEdicion == null)
+                                                    {
+                                                        <input type="text" name="NumExt" class="form-control" />
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m[0].NumExt, new { @class = "form-control" })
+                                                    }*@
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].NumExt, "", new { @class = "alert-danger" })
                                         </div>
@@ -282,15 +282,15 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <input type="text" name="NumInt" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.NumInt:"")"/>
+                                                <input type="text" name="NumInt" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.NumInt:"")" />
                                                 @*@if (ViewBag.EsEdicion == null)
-                                                {
-                                                    <input type="text" name="NumInt" class="form-control" />
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(m => m[0].NumInt, new { @class = "form-control" })
-                                                }*@
+                                                    {
+                                                        <input type="text" name="NumInt" class="form-control" />
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m[0].NumInt, new { @class = "form-control" })
+                                                    }*@
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1">
@@ -304,15 +304,15 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <input type="text" name="CodigoPostal" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.CodigoPostal:"")"/>
+                                                <input type="text" name="CodigoPostal" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.CodigoPostal:"")" />
                                                 @*@if (ViewBag.EsEdicion == null)
-                                                {
-                                                   
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(m => m[0].CodigoPostal, new { @class = "form-control" })
-                                                }*@
+                                                    {
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m[0].CodigoPostal, new { @class = "form-control" })
+                                                    }*@
 
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].CodigoPostal, "", new { @class = "alert-danger" })
@@ -330,16 +330,16 @@
                                         </div>
                                         <div class="col-lg-10 col-md-10 col-sm-10">
                                             <div class="form-group">
-                                                <input type="text" name="formatted_address" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.formatted_address:"")"/>
+                                                <input type="text" name="formatted_address" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.formatted_address:"")" />
                                                 @*@if (ViewBag.EsEdicion == null)
-                                                {
-                                                     <input type="text" name="formatted_address" class="form-control" />
-                                                }
-                                                else
-                                                { 
-                                                    @Html.TextBoxFor(m => m[0].formatted_address, new { @class = "form-control" })
-                                                }*@                                            
-                                               
+                                                    {
+                                                         <input type="text" name="formatted_address" class="form-control" />
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m[0].formatted_address, new { @class = "form-control" })
+                                                    }*@
+
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].formatted_address, "", new { @class = "alert-danger" })
                                         </div>
@@ -348,12 +348,19 @@
                                 <div class="row clearfix">
                                     <div class="col-lg-5 col-md-5 col-sm-5">
                                         <div class="form-group">
-                                            <input type="submit" id="btnRegresarIndexNC" value="Regresar" formaction=@Url.Action("Index") class="btn btn-raised btn-round btn-primary float-left" />
+                                            @if (Model.Count > 0)
+                                            {
+                                                <input type="submit" id="btnRegresarIndexNC" value="Regresar" formaction=@Url.Action("Index") class="btn btn-raised btn-round btn-primary float-left" />
+                                            }
+                                            else
+                                            {
+                                                <input type="submit" id="btnRegresarIndexNC" value="Regresar" formaction=@Url.Action("AltaCliente") class="btn btn-raised btn-round btn-primary float-left" />
+                                            }
                                         </div>
                                     </div>
                                     <div class="col-lg-7 col-md-7 col-sm-7">
                                         <div class="form-group">
-                                            @if (ViewBag.EsEdicion == null)
+                                            @if (ViewBag.EsEdicion == false || ViewBag.EsEdicion == null)
                                             {
                                                 <button class="btn btn-round btn-primary float-right">
                                                     <i class="zmdi zmdi-plus"></i> Agregar
@@ -434,7 +441,16 @@
                                     </div>
                                     <div class="col-lg-7 col-md-7 col-sm-7">
                                         <div class="form-group">
-                                            <input type="submit" value="Finalizar" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-round btn-primary float-right" />
+                                            @*@if (ViewBag.Locaciones == null && ViewBag.EsEdicion != null && ViewBag.EsEdicion != true)
+                                                {
+                                                    <input type="submit" value="Finalizar" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-round btn-primary float-right" />
+                                                }*@
+                                            @if (Model.Count > 0)
+                                            { }
+                                            else
+                                            {
+                                                <input type="submit" value="Finalizar" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-round btn-primary float-right" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -442,7 +458,7 @@
                         </div>
                     </div>
                 </div>
-                @if (ViewBag.MessageError != null)
+                @if (ViewBag.MensajeError != null)
                 {
                     <div class="row clearfix">
                         <div id="divMensajeError" class="container">
@@ -451,7 +467,7 @@
                                     <i class="zmdi zmdi-block"></i>
                                 </div>
                                 <strong>
-                                    <label>@ViewBag.MessageError</label>
+                                    <label>@ViewBag.MensajeError</label>
                                 </strong>
                             </div>
                         </div>

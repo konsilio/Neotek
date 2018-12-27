@@ -36,5 +36,12 @@ namespace MVC.Presentacion.Models.Pedidos
         public decimal TotalLitros { get; set; }
         public List<PedidoModel> Pedidos { get; set; }     
         public List<ClientesModel> clientes { get; set; }
+       
+        public bool Pregunta1Val1 { get; set; }
+        public bool Pregunta1Val2 { get; set; }
+        public bool Pregunta1Val3 { get; set; }
+        public bool Pregunta1Val4 { get; set; }
+        public bool Pregunta1Val5 { get; set; }
+        
     }
 }

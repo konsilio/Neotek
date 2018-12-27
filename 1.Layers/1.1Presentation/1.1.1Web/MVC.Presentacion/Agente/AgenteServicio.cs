@@ -3198,6 +3198,11 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
+        public void GuardarEncuesta(List<EncuestaModel> dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarEncuesta"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
         public void CancelarNuevoPedido(PedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutCancelarPedido"];
