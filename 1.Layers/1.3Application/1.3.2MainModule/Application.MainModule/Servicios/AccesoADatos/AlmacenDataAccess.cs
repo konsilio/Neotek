@@ -118,6 +118,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
         public RespuestaDto ActualizarAlmacenSalidas(List<Almacen> _alm, List<AlmacenSalidaProducto> _entrada, Requisicion _requisicion, List<RequisicionProducto> _productos)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -230,5 +231,43 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<EstacionCarburacion>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
         }
+
+        /// <summary>
+        /// Actualizar
+        /// Permite actualizar una entidad de cilindros en una camioneta
+        /// al momento de registrar una lectura inicial o final , retornara 
+        /// un objeto RespuestaDTO con el resultado de la actualización
+        /// </summary>
+        /// <param name="camioentaCilindro">Entidad de típo CamionetaCilindro con los cilindros a actualizar</param>
+        /// <returns>Objeto de tipo RespuestaDTO con el resultado de la actualización</returns>
+        public RespuestaDto Actualizar(CamionetaCilindro camioentaCilindro)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    var buscar = uow.Repository<CamionetaCilindro>().GetSingle(x => x.IdEmpresa.Equals(camioentaCilindro.IdEmpresa)
+                    && x.IdCilindro.Equals(camioentaCilindro.IdCilindro) && x.IdCamioneta.Equals(camioentaCilindro.IdCamioneta));
+                    buscar.Cantidad = camioentaCilindro.Cantidad;
+                    uow.Repository<CamionetaCilindro>().Update(buscar);
+                     uow.SaveChanges();
+                    _respuesta.Id = 0;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, " de los cilindros ");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
     }
 }

@@ -65,6 +65,7 @@ namespace Application.MainModule.Servicios.Mobile
         {
             
             var al = AlmacenGasServicio.ObtenerLecturas(lcdto.IdCAlmacenGas);
+            var almacen = AlmacenGasServicio.ObtenerAlmacen(lcdto.IdCAlmacenGas);
             int idOrden = Orden(al);
             var adapter = AlmacenLecturaAdapter.FromDTO(lcdto,idOrden);
 
@@ -73,8 +74,25 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;            
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
+            var lecturaCamioenta = AlmacenGasServicio.InsertarLectura(adapter);
+            #region Actualizo los cilindros
+            if (lecturaCamioenta.Exito)
+            {
+ 
+                foreach(AlmacenGasTomaLecturaCilindro cilindro in adapter.Cilindros)
+                {
+                    CamionetaCilindro camionetaCilindro = new CamionetaCilindro();
+                    camionetaCilindro.IdCamioneta = almacen.IdCamioneta.Value;
+                    camionetaCilindro.IdEmpresa = almacen.IdEmpresa;
+                    camionetaCilindro.IdCilindro = cilindro.IdCilindro;
+                    camionetaCilindro.Cantidad = cilindro.Cantidad;
 
-            return AlmacenGasServicio.InsertarLectura(adapter);
+                    var actualizar = AlmacenGasServicio.ActualizaCilindro(camionetaCilindro);
+                }
+                
+            }
+            #endregion
+            return lecturaCamioenta;
         }
         public static List<UnidadAlmacenGas> AcomodarUnidadAlmacenGasDelUsuario(List<UnidadAlmacenGas> alms)
         {
