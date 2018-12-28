@@ -82,7 +82,7 @@ public class ConceptoDTO implements Serializable {
     private boolean EsVentaCilindro;
 
     @SerializedName("IdCilindro")
-    public int IdCilindro;
+    private int IdCilindro;
     //endregion
 
 
@@ -276,5 +276,21 @@ public class ConceptoDTO implements Serializable {
 
     public void setDescuentoTotal(double descuentoTotal) {
         DescuentoTotal = descuentoTotal;
+    }
+
+    public boolean isEsVentaCilindro() {
+        return EsVentaCilindro;
+    }
+
+    public void setEsVentaCilindro(boolean esVentaCilindro) {
+        EsVentaCilindro = esVentaCilindro;
+    }
+
+    public int getIdCilindro() {
+        return IdCilindro;
+    }
+
+    public void setIdCilindro(int idCilindro) {
+        IdCilindro = idCilindro;
     }
 }
