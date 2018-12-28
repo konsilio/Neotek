@@ -77,6 +77,14 @@ public class ConceptoDTO implements Serializable {
     @SerializedName("LitrosDespachados")
     private double LitrosDespachados;
 
+    //region Campos para descontar del inventario lo cilindros vendidos
+    @SerializedName("EsVentaCilindro")
+    private boolean EsVentaCilindro;
+
+    @SerializedName("IdCilindro")
+    public int IdCilindro;
+    //endregion
+
 
     public int getIdTipoGas() {
         return IdTipoGas;

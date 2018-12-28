@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.RespuestaCortesAntesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
+import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaSolicitarPresenter;
+import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaSolicitarPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
+import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +35,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
     EditText ETPuntoVentaSolicitarActivityBuscador;
     ProgressDialog progressDialog;
     VentaDTO ventaDTO;
+    PuntoVentaSolicitarPresenter presenter;
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,9 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
             esGasLP = bundle.getBoolean("esGasLP",false);
 
         }
+        presenter = new PuntoVentaSolicitarPresenterImpl(this);
+        Session session = new Session(this);
+        presenter.hayCorte(session.getToken());
         PuntoVentaSolicitarActivityTitulo = findViewById(R.id.PuntoVentaSolicitarActivityTitulo);
         /*BtnPuntoVentaSolicitarActivitySeguirSinNumero = findViewById(R.id.
                 BtnPuntoVentaSolicitarActivitySeguirSinNumero);*/
@@ -190,6 +199,35 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         if(progressDialog!= null && progressDialog.isShowing()){
             progressDialog.hide();
             progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onResultVerificaCorte(RespuestaCortesAntesVentaDTO data) {
+        if(data!=null){
+            if(data.isExito()){
+                if(data.isHayCorte()){
+                    AlertDialog.Builder builder = new
+                            AlertDialog.Builder(this,R.style.AlertDialog);
+                    builder.setTitle(R.string.error_titulo);
+                    builder.setMessage("Ya se ha realizado un corte por lo cual "+
+                    " no se pueden realizar mas ventas ");
+                    builder.setCancelable(false);
+                    builder.setPositiveButton(
+                            R.string.message_acept,
+                            (dialog, which) -> {
+                                Intent intent = new Intent(
+                                        PuntoVentaSolicitarActivity.this,
+                                        MenuActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                dialog.dismiss();
+                                finish();
+                                startActivity(intent);
+                            }
+                    );
+                    builder.create().show();
+                }
+            }
         }
     }
 }
