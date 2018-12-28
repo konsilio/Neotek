@@ -594,6 +594,24 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 PorcentajeMedidor = unidadAlmacen.PorcentajeActual
             };
         }
+        /// <summary>
+        /// ToDTO
+        /// Permite realizar la adaptación de los datos del corte 
+        /// para ser mostrado en la verificacion del corte 
+        /// </summary>
+        /// <param name="corte">Entidad de tipo VentaCorteAnticipoEC con los datos a adaptar al dto</param>
+        /// <returns>Datos adaptados en un objeto de tipo CorteDto</returns>
+        public static CorteDto ToDTO(VentaCorteAnticipoEC corte)
+        {
+            return new CorteDto()
+            {
+                ClaveOperacion = corte.FolioOperacionDia,
+                Fecha = corte.FechaRegistro,
+                FechaCorte = corte.FechaCorteAnticipo,
+                IdCAlmacenGas = corte.IdCAlmacenGas,
+                Total = corte.TotalAnticipado
+            };
+        }
         #endregion
     }
 }

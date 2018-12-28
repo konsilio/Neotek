@@ -166,6 +166,26 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     x.VentaACredito.Equals(esCredito)
                ).ToList();
         }
+        /// <summary>
+        /// BuscarCorte
+        /// Permite realizar la busqueda de un corte de una estacion en especifico y fecha en especifico
+        /// retornara un objeto de tipo VentaCorteAnticipoEC
+        /// </summary>
+        /// <param name="dia">Día en el que se realiza la consulta</param>
+        /// <param name="mes">Mes en que se realiza la consulta</param>
+        /// <param name="year">Año en el que se realiza la consulta </param>
+        /// <param name="idCAlmacenGas">Id del CAlmacenGas a consultar</param>
+        /// <returns>Entidad de tipo VentaCorteAnticipoEC con los datos encontrados</returns>
+        public VentaCorteAnticipoEC BuscarCorte(DateTime fecha, short idCAlmacenGas)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().GetSingle(
+                    x => x.IdCAlmacenGas.Equals(idCAlmacenGas) &&
+                    x.Dia.Equals((byte)fecha.Day) &&
+                    x.Mes.Equals((byte)fecha.Month) &&
+                    x.Year.Equals((short)fecha.Year) &&
+                    x.IdTipoOperacion.Equals(2)
+                );
+        }
 
         public RespuestaDto Eliminar(PuntoVenta cteL)
         {
