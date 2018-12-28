@@ -139,7 +139,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             TVAnticipoTableActivityLitros.setText(cadena);
             TVAnticipoTableActivityAnticipos = findViewById(R.id.TVAnticipoTableActivityAnticipos);
             TVAnticipoTableMontoDeCorte = findViewById(R.id.TVAnticipoTableMontoDeCorte);
-
+            corteDTO.setCamioneta(EsCamioneta);
         }
 
         TLAnticipoTablaActivityResultadosCorteDeCaja = findViewById(R.id.
@@ -432,6 +432,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     public void onSuccessList(DatosBusquedaCortesDTO data) {
         if(data!=null){
             if(data.isExito()){
+                datosBusqueda = data;
                 if(data.isHayVentas()){
 
                     TLAnticipoTablaActivityTabla.removeAllViews();

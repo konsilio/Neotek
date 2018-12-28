@@ -73,6 +73,8 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("IdEntrega")
     private int IdEntrega;
 
+    private boolean Camioneta;
+
     public CorteDTO(){
         this.Conceptos = new ArrayList<>();
     }
@@ -251,5 +253,13 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
 
     public void setIdRecibio(int idRecibio) {
         IdRecibio = idRecibio;
+    }
+
+    public boolean isCamioneta() {
+        return Camioneta;
+    }
+
+    public void setCamioneta(boolean camioneta) {
+        Camioneta = camioneta;
     }
 }

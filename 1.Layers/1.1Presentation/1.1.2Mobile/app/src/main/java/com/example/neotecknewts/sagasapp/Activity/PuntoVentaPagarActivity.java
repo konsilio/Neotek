@@ -149,10 +149,21 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
 
             if(!SPuntoVentaActivityCredito.isChecked()) {
                 if(ETPuntoVentaPagarActivityEfectivo.getText().toString().trim().length()>0) {
+
                     double efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo
                             .getText().toString());
-                    ventaDTO.setEfectivo(efectivio);
-                    ventaDTO.setCambio(ventaDTO.getEfectivo()-ventaDTO.getTotal());
+                    if(efectivio<ventaDTO.getTotal()){
+                        error = true;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+                        builder.setTitle(R.string.mensjae_error_campos);
+                        builder.setMessage("El monto es menor al pago requerido");
+                        builder.setPositiveButton(R.string.regresar, (dialogInterface, i) ->
+                                dialogInterface.dismiss());
+                        builder.create().show();
+                    }else {
+                        ventaDTO.setEfectivo(efectivio);
+                        ventaDTO.setCambio(ventaDTO.getEfectivo() - ventaDTO.getTotal());
+                    }
                 }else{
                     error = true;
                     AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
@@ -179,6 +190,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                     }
                 }
             }
+
             if(!error) {
                 presenter.pagar(ventaDTO, session.getToken(), EsVentaCamioneta, EsVentaCarburacion,
                         EsVentaPipa, sagasSql);

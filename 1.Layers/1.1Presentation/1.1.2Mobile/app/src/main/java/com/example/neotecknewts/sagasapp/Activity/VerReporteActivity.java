@@ -624,30 +624,32 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tr>" +
                 "</tbody>" +
                 "</table >"+
-                "<hr>"+
-                "<h3 style='text-align: center;'>P5000</h3>"+
-                "<table style='font-size:14px; width:100%;margin-left:5px;margin-rigth:5px;'>"+
-                "<tbody>"+
-                "<tr>" +
-                "<td>Inicial: </td>" +
-                "<td style='text-align: right; font-weight:bold;'> [{Inicial}]</td>" +
-                "</tr>" +
-                "<tr>" +
-                "<td>Final: </td>" +
-                "<td style='text-align: right; font-weight:bold;'>[{Final}]</td>" +
-                "</tr>" +
-                "<tr>" +
-                "<td>Litros vendidos: </td>" +
-                "<td style='text-align: right; font-weight:bold;'>[{Litros-vendidos}]</td>" +
-                "</tr>" +
-                "</tbody>"+
-                "</table>"+
+                "<hr>";
+                if(!corteDTO.isCamioneta()) {
+                    HtmlReporte += "<h3 style='text-align: center;'>P5000</h3>" +
+                            "<table style='font-size:14px; width:100%;margin-left:5px;margin-rigth:5px;'>" +
+                            "<tbody>" +
+                            "<tr>" +
+                            "<td>Inicial: </td>" +
+                            "<td style='text-align: right; font-weight:bold;'> [{Inicial}]</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td>Final: </td>" +
+                            "<td style='text-align: right; font-weight:bold;'>[{Final}]</td>" +
+                            "</tr>" +
+                            "<tr>" +
+                            "<td>Litros vendidos: </td>" +
+                            "<td style='text-align: right; font-weight:bold;'>[{Litros-vendidos}]</td>" +
+                            "</tr></tbody>"+
+                    "</table>";
+                }
+                HtmlReporte +=
                 "</body>";
 
         StringReporte =
                         "Reporte-Corte de caja\n" +
 
-                        "Clave Anticipo\t" +
+                        "Clave Corte\t" +
                         "[{ClaveTraspaso}]\n" +
                         "Fecha \t" +
                         "[{Fecha}]\n" +
@@ -664,15 +666,17 @@ public class VerReporteActivity extends AppCompatActivity {
                         "[{Anticipos}]\n" +
                         "Monto de corte \t"+
                         "[{Monto-corte}]\n" +
-                        "-----------------------\n"+
-                        "\tP5000"+
-                        "Inicial: \t" +
-                        "[{Inicial}]\n" +
-                        "Final: \t" +
-                        "[{Final}]\n" +
-                        "Litros vendidos: \t" +
-                        "[{Litros-vendidos}]\n" +
-                        "Entregue\n"+
+                        "-----------------------\n";
+        if(!corteDTO.isCamioneta()) {
+             StringReporte +="\tP5000" +
+                    "Inicial: \t" +
+                    "[{Inicial}]\n" +
+                    "Final: \t" +
+                    "[{Final}]\n" +
+                    "Litros vendidos: \t" +
+                    "[{Litros-vendidos}]\n" ;
+        }
+                StringReporte+="Entregue\n"+
                         "[{Entrego-nombre}]\n\n" +
                         "________________________\n"+
                         "Recibi:\n"+
@@ -738,33 +742,33 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte = StringReporte.replace("[{Monto-corte}]",
                 "$"+dformat.format(corteDTO.getMontoCorte())
         );
+        if(!corteDTO.isCamioneta()) {
+            StringReporte = StringReporte.replace("[{Inicial}]",
+                    String.valueOf(corteDTO.getP5000Inicial())
+            );
 
-        StringReporte = StringReporte.replace("[{Inicial}]",
-                String.valueOf(corteDTO.getP5000Inicial())
-        );
+            HtmlReporte = HtmlReporte.replace("[{Inicial}]",
+                    String.valueOf(corteDTO.getP5000Inicial())
+            );
 
-        HtmlReporte = HtmlReporte.replace("[{Inicial}]",
-                String.valueOf(corteDTO.getP5000Inicial())
-        );
+            StringReporte = StringReporte.replace("[{Final}]",
+                    String.valueOf(corteDTO.getP5000Final())
+            );
 
-        StringReporte = StringReporte.replace("[{Final}]",
-                String.valueOf(corteDTO.getP5000Final())
-        );
+            HtmlReporte = HtmlReporte.replace("[{Final}]",
+                    String.valueOf(corteDTO.getP5000Final())
+            );
 
-        HtmlReporte = HtmlReporte.replace("[{Final}]",
-                String.valueOf(corteDTO.getP5000Final())
-        );
+            StringReporte = StringReporte.replace("[{Litros-vendidos}]",
+                    String.valueOf(corteDTO.getP5000Final())
+            );
 
-        StringReporte = StringReporte.replace("[{Litros-vendidos}]",
-                String.valueOf(corteDTO.getP5000Final())
-        );
-
-        HtmlReporte = HtmlReporte.replace("[{Litros-vendidos}]",
-                String.valueOf(corteDTO.getLitrosCorte() )
-        );
-
+            HtmlReporte = HtmlReporte.replace("[{Litros-vendidos}]",
+                    String.valueOf(corteDTO.getLitrosCorte())
+            );
+        }
         StringReporte = StringReporte.replace("[{Monto-corte}]",
-                String.valueOf(corteDTO.getLitrosCorte() )
+                String.valueOf(corteDTO.getLitrosCorte())
         );
 
         HtmlReporte = HtmlReporte.replace("[{Entrego-nombre}]]",
