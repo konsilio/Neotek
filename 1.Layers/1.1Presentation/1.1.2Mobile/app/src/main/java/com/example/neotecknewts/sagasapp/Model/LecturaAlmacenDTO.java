@@ -47,6 +47,8 @@ public class LecturaAlmacenDTO implements Serializable {
     @SerializedName("FechaAplicacion")
     private String FechaAplicacion;
 
+    private double CapacidadAlmacen;
+
     public LecturaAlmacenDTO(){
         Imagenes = new ArrayList<>();
         ImagenesURI = new ArrayList<>();
@@ -130,5 +132,13 @@ public class LecturaAlmacenDTO implements Serializable {
 
     public void setFechaAplicacion(String fechaAplicacion) {
         FechaAplicacion = fechaAplicacion;
+    }
+
+    public double getCapacidadAlmacen() {
+        return CapacidadAlmacen;
+    }
+
+    public void setCapacidadAlmacen(double capacidadAlmacen) {
+        CapacidadAlmacen = capacidadAlmacen;
     }
 }

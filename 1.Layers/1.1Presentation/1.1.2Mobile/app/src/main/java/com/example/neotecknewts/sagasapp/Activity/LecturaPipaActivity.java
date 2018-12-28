@@ -93,6 +93,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
                             lecturaPipaDTO.setNombrePipa(almacenDTO.getNombreAlmacen());
                             lecturaPipaDTO.setPorcentajeMedidor(almacenDTO.getPorcentajeMedidor());
                             lecturaPipaDTO.setCantidadP5000(almacenDTO.getCantidadP5000());
+                            lecturaPipaDTO.setCapacidadAlmacen(almacenDTO.getCapacidad());
                         }
                     }
                     /*for (String m : ListaPipas) {
