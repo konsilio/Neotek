@@ -564,6 +564,19 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.tieneVentaExtraforanea(idCliente), Request);
         }
+        /// <summary>
+        /// Permite verificar antes de realizar una venta el dia de hoy no exista ya un corte de caja 
+        /// retornarta un objeto de respuesta.
+        /// </summary>
+        /// <param name="dia">Día del corte que se requiere consultar</param>
+        /// <param name="mes">Mes del quen se requiere consultar</param>
+        /// <param name="year">Año que se reuiqere consultar</param>
+        /// <returns>Retorna una respuesta determinando si ya previamente se ha hecho un corte</returns>
+        [Route("hay-corte-estacion/{fecha}")]
+        public HttpResponseMessage GetHayCorte(DateTime fecha)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.GetHayCorte(fecha),Request);
+        }
         #endregion
 
         #region Revision de lectura inicial

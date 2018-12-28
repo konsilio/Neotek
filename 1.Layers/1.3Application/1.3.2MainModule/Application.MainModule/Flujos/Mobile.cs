@@ -652,6 +652,37 @@ namespace Application.MainModule.Flujos
             }
             return pvaDto;
         }
+        /// <summary>
+        /// GetHayCorte
+        /// Permite realizar la busqueda de un corte en la estación 
+        /// por una fecha especifica, se envia como parametros ,el dia
+        /// el mesy la fecha y se retornara una respuesta de la busqueda
+        /// </summary>
+        /// <param name="dia">Dia que se desea consultar Ej. 1</param>
+        /// <param name="mes">Mes que se desea consultar Ej. 12</param>
+        /// <param name="year">Año que se desea consultar Ej. 2018</param>
+        /// <returns>Respuesta de dicha busqueda</returns>
+        public DatosCortesAntesVentaDTO GetHayCorte(DateTime fecha)
+        {
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var corte = PuntoVentaServicio.buscarCorte(fecha, puntoVenta.IdCAlmacenGas);
+            DatosCortesAntesVentaDTO _respuesta = new DatosCortesAntesVentaDTO();
+            if (corte != null)
+            {
+                
+                _respuesta.HayCorte = true;
+                _respuesta.Corte = AnticiposCortesAdapter.ToDTO(corte);
+            }
+            else
+            {
+
+                _respuesta.HayCorte = false;
+                _respuesta.Corte = null;
+               
+            }
+            return _respuesta;
+        }
+
         public List<UnidadAlmacenGas> estacionesInicio(List<AlmacenGasAutoConsumo> autoconsumos, bool estaciones = true, bool pipas = false, bool camionetas = false)
         {
             List<UnidadAlmacenGas> list = new List<UnidadAlmacenGas>();

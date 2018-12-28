@@ -113,6 +113,7 @@
     <Compile Include="DTOs\Mobile\CategoriaDto.cs" />
     <Compile Include="DTOs\Mobile\CorteDto.cs" />
     <Compile Include="DTOs\Mobile\Cortes\DatosBusquedaCortesDTO.cs" />
+    <Compile Include="DTOs\Mobile\Cortes\DatosCortesAntesVentaDTO.cs" />
     <Compile Include="DTOs\Mobile\Cortes\UsuarioDTO.cs" />
     <Compile Include="DTOs\Mobile\Cortes\UsuariosCorteDTO.cs" />
     <Compile Include="DTOs\Mobile\Cortes\VentasCorteDTO.cs" />
