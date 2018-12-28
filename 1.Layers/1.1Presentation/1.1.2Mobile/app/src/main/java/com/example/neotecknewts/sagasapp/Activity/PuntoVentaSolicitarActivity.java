@@ -205,29 +205,21 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
     @Override
     public void onResultVerificaCorte(RespuestaCortesAntesVentaDTO data) {
         if(data!=null){
-            if(data.isExito()){
                 if(data.isHayCorte()){
                     AlertDialog.Builder builder = new
                             AlertDialog.Builder(this,R.style.AlertDialog);
                     builder.setTitle(R.string.error_titulo);
-                    builder.setMessage("Ya se ha realizado un corte por lo cual "+
+                    builder.setMessage("Ya se ha realizado un corte del día de hoy por lo cual "+
                     " no se pueden realizar mas ventas ");
                     builder.setCancelable(false);
                     builder.setPositiveButton(
                             R.string.message_acept,
                             (dialog, which) -> {
-                                Intent intent = new Intent(
-                                        PuntoVentaSolicitarActivity.this,
-                                        MenuActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                dialog.dismiss();
-                                finish();
-                                startActivity(intent);
+                                this.finish();
                             }
                     );
                     builder.create().show();
                 }
-            }
         }
     }
 }
