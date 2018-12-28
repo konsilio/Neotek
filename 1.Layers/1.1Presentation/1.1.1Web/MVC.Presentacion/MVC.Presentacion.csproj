@@ -11554,13 +11554,14 @@
     <Content Include="Views\Pedidos\_Camionetas.cshtml" />
     <Content Include="Views\Pedidos\_Pipas.cshtml" />
     <Content Include="Views\Pedidos\AltaClienteDireccion.cshtml" />
+    <Content Include="Views\Cobranza\Index.cshtml" />
+    <Content Include="Views\Cobranza\_AbonosPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
     <Folder Include="Servicios\" />
-    <Folder Include="Views\Cobranza\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

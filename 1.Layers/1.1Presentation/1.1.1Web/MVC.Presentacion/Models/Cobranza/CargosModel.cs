@@ -9,6 +9,7 @@ namespace MVC.Presentacion.Models.Cobranza
     {
         public int IdCargo { get; set; }
         public int IdCliente { get; set; }
+        public string Rfc { get; set; }
         public short IdEmpresa { get; set; }
         public string Ticket { get; set; }
         public System.DateTime FechaRegistro { get; set; }
@@ -18,5 +19,7 @@ namespace MVC.Presentacion.Models.Cobranza
         public bool Activo { get; set; }
         public System.DateTime FechaVencimiento { get; set; }
         public bool Saldada { get; set; }
-    }
+
+        public List<AbonosModel> Abonos { get; set; }
+}
 }
