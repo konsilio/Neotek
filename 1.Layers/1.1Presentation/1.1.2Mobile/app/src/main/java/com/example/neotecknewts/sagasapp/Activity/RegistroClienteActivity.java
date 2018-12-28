@@ -264,24 +264,49 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
     public void verificarForm() {
         boolean error = false;
         ArrayList<String> mensajes = new ArrayList<>();
+
         if(SRegistroClienteActivityTipoPersona.getSelectedItemPosition()<0){
             error = true;
             mensajes.add("El tipo de persona es un valor requerido");
         }
+
         if(SRegistroClienteActivityRegimenFiscal.getSelectedItemPosition()<0){
             error = true;
             mensajes.add("El regiment fiscal es un valor requerido");
         }
-        if(ETRegistroClienteActivityNombre.getText().length()<=0){
+
+        if(SRegistroClienteActivityTipoPersona.getSelectedItemPosition()==1){
+            if(ETRegistroClienteActivityRazonSocial.getText().length()<=0 ||
+                    ETRegistroClienteActivityRazonSocial.getText().toString().isEmpty()){
+                error = true;
+                mensajes.add("Es necesario especificar la razon social");
+            }
+        }
+
+        if(ETRegistroClienteActivityNombre.getText().toString().isEmpty() ||
+                ETRegistroClienteActivityNombre.getText().length()<=0){
             error = true;
             mensajes.add("El nombre de la persona es un valor requerido");
         }
-        if(ETRegistroClienteActivityApellidoPaterno.getText().length()<=0){
+
+        if(ETRegistroClienteActivityApellidoPaterno.getText().toString().isEmpty()
+            ||ETRegistroClienteActivityApellidoPaterno.getText().length()<=0){
             error = true;
             mensajes.add("El primer apellido es un valor requerido");
-
         }
 
+        if(ETRegistroClienteActivityCelular.getText().toString().isEmpty()||
+                ETRegistroClienteActivityCelular.getText().length()<=0){
+            error = true;
+            mensajes.add("Es necesario un teléfono de celular");
+        }
+
+        if(ETRegistroClienteActivityTelefonoFijo.getText().toString().isEmpty()||
+                ETRegistroClienteActivityTelefonoFijo.getText().length()<=0){
+            error = true;
+            mensajes.add("Es necesario un número de teléfono fijo");
+        }
+        
         if(error){
             mostrarDialogoErrores(mensajes);
         }else{

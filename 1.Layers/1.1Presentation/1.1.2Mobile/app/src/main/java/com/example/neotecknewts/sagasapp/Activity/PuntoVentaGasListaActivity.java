@@ -390,12 +390,12 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 ventaDTO.setFactura(SWFormularioVentaCamionetaYPipaFactura.isChecked());
                 ConceptoDTO conceptoDTO = new ConceptoDTO();
                 conceptoDTO.setConcepto("Litros de gas");
-                conceptoDTO.setCantidad(Integer.valueOf(adapter.cantidad.getText().toString()));
+                conceptoDTO.setCantidad(Double.valueOf(adapter.cantidad.getText().toString()));
                 conceptoDTO.setPUnitario(adapter.existencia.getPrecioUnitario());
                 conceptoDTO.setDescuento(adapter.existencia.getDescuento());
                 conceptoDTO.setSubtotal(Double.valueOf(adapter.Subtotal.getText().toString()));
                 conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
-                conceptoDTO.setCantidadLt(Integer.valueOf(adapter.cantidad.getText().toString()));
+                conceptoDTO.setCantidadLt(Double.valueOf(adapter.cantidad.getText().toString()));
                 Calendar calendar = Calendar.getInstance();
                 conceptoDTO.setYear(calendar.get(Calendar.YEAR));
                 conceptoDTO.setMes(calendar.get(Calendar.MONTH) + 1);
@@ -409,13 +409,13 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 conceptoDTO.setIdUnidadmedida(precioVentaDTO.getIdUnidadMedida());
                 conceptoDTO.setCantidadKg(
                         precioVentaDTO.getPrecioSalidaKg() *
-                                Integer.parseInt(adapter.cantidad.getText().toString())
+                                Double.parseDouble(adapter.cantidad.getText().toString())
                 );
                 conceptoDTO.setCantidadLt(
                         precioVentaDTO.getPrecioSalidaLt() *
-                                Integer.parseInt(adapter.cantidad.getText().toString())
+                                Double.parseDouble(adapter.cantidad.getText().toString())
                 );
-                conceptoDTO.setLitrosDespachados(Integer.valueOf(adapter.cantidad.getText().toString()));
+                conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
                 conceptoDTO.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
                 conceptoDTO.setIdTipoGas(0);
                 ventaDTO.getConcepto().add(conceptoDTO);

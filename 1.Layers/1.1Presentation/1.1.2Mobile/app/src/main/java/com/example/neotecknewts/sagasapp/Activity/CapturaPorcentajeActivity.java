@@ -42,6 +42,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public NumberPicker numberPickerDecimal;
     public TextView textViewTitulo;
     public TextView textView;
+    public TextView TVCapturaPorcentajeActivityTotalGas;
 
     //objetos a completar con el porcentaje obtenido
     PrecargaPapeletaDTO papeletaDTO;
@@ -72,6 +73,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
     public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
 
+    //Variable para guardar total de gas
+    double TotalGas;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -88,7 +91,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
 
         //se declaran los extras de donde se obtendran los valores que vienen de otro activity
         Bundle extras = getIntent().getExtras();
-
+        TVCapturaPorcentajeActivityTotalGas = findViewById(R.id.TVCapturaPorcentajeActivityTotalGas);
         if (extras !=null){
             //si es papeleta se cambian los textos y se obtiene el objeto del activity anterior
             if(extras.getBoolean("EsPapeleta")) {
@@ -298,7 +301,17 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 setTitle(R.string.Calibracion);
             }
         }
-
+        //region Permite mostrar calculo aprox. de gas
+        if(EsLecturaInicial || EsLecturaFinal){
+            TVCapturaPorcentajeActivityTotalGas.setVisibility(View.VISIBLE);
+        }else if (EsLecturaInicialAlmacen || EsLecturaFinalAlmacen){
+            TVCapturaPorcentajeActivityTotalGas.setVisibility(View.VISIBLE);
+        }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+            TVCapturaPorcentajeActivityTotalGas.setVisibility(View.VISIBLE);
+        }else{
+            TVCapturaPorcentajeActivityTotalGas.setVisibility(View.GONE);
+        }
+        //endregion
 
         //se pone un valor minimo y maximo para cada number picker
         numberPickerProcentaje.setMaxValue(100);
@@ -327,6 +340,23 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             new 	NumberPicker.OnValueChangeListener(){
                 @Override
                 public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                    double porcentajeCalculo = (numberPickerProcentaje.getValue())
+                            +(numberPickerDecimal.getValue()*.10);
+                    if(EsLecturaInicial || EsLecturaFinal){
+
+                        TotalGas = (lecturaDTO.getCapacidadAlmacen()  *porcentajeCalculo )/100;
+                        TVCapturaPorcentajeActivityTotalGas.setText(
+                                "Total de gas aproximado: "+String.valueOf(TotalGas)+"Lt.");
+                    }else if (EsLecturaInicialAlmacen || EsLecturaFinalAlmacen){
+                        TotalGas = (lecturaAlmacenDTO.getCapacidadAlmacen()  *porcentajeCalculo )/100;
+                        TVCapturaPorcentajeActivityTotalGas.setText(
+                                "Total de gas aproximado: "+String.valueOf(TotalGas)+"Lt.");
+                    }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+                        TotalGas = (lecturaPipaDTO.getCapacidadAlmacen()  *porcentajeCalculo )/100;
+                        TVCapturaPorcentajeActivityTotalGas.setText(
+                                "Total de gas aproximado: "+String.valueOf(TotalGas)+"Lt.");
+                    }
+                    //Log.v("Total aproximado de gas",String.valueOf(TotalGas));
                     if(numberPickerProcentaje.getValue()==100){
                         numberPickerDecimal.setValue(0);
                     }

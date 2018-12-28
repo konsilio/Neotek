@@ -136,6 +136,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                             lecturaDTO.setIdEstacionCarburacion(estacion.getIdAlmacenGas());
                             lecturaDTO.setCantidadP5000(estacion.getCantidadP5000());
                             lecturaDTO.setPorcentajeMedidor(estacion.getPorcentajeMedidor());
+                            lecturaDTO.setCapacidadAlmacen(estacion.getCapacidad());
                         }
                     }
                 }

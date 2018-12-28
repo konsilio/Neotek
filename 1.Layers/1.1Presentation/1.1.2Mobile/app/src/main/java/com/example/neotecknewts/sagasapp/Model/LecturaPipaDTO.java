@@ -58,6 +58,8 @@ public class LecturaPipaDTO implements Serializable {
     @SerializedName("FechaAplicacion")
     private String FechaAplicacion;
 
+    private double CapacidadAlmacen;
+
     //region Constructores
     public LecturaPipaDTO() {
         Imagenes = new ArrayList<>();
@@ -167,5 +169,13 @@ public class LecturaPipaDTO implements Serializable {
 
     public void setFechaAplicacion(String fechaAplicacion) {
         FechaAplicacion = fechaAplicacion;
+    }
+
+    public double getCapacidadAlmacen() {
+        return CapacidadAlmacen;
+    }
+
+    public void setCapacidadAlmacen(double capacidadAlmacen) {
+        CapacidadAlmacen = capacidadAlmacen;
     }
 }
