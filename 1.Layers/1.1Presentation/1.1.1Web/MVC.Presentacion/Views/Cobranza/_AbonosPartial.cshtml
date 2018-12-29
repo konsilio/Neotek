@@ -4,7 +4,7 @@
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "Abonos";
-        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "AbonosPartial" };
+        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
         settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
 
         settings.KeyFieldName = "IdCargo";
@@ -25,7 +25,7 @@
         settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
         settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
         settings.Styles.Table.CssClass = "table";
-        
+
         settings.Columns.Add(c =>
         {
             c.FieldName = "IdCargo";
@@ -72,95 +72,85 @@
         {
             c.FieldName = "FechaRegistro";
             c.Caption = "Fecha Abono";
-            c.Settings.AllowSort = DefaultBoolean.False;
+            //c.ColumnType = MVCxGridViewColumnType.DateEdit;
+            //c.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+            //c.Width = 100;
+            // ((DateEditProperties)c.PropertiesEdit).MinDate = DateTime.Today;
+            c.SetDataItemTemplateContent(diTemplate =>
+            {
+                GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
+                Html.DevExpress().DateEdit(s =>
+                {
+                    s.Name = string.Format("dtFechaRegistro_{0}", diTemplate.VisibleIndex);
+                    s.Properties.UseMaskBehavior = true;
+                    s.Properties.EditFormat = EditFormat.Custom;
+                    s.Theme = "Moderno";
+                    s.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
+                    s.Properties.EditFormatString = "dd/MM/yyyy";
+                    s.Date = DateTime.Now;
+                    s.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                    s.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                }).GetHtml();
+            });
+
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "FolioBancario";
+            col.Caption = "Folio";
+            col.SetDataItemTemplateContent(diTemplate =>
+            {
+                GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
+                Html.DevExpress().TextBox(txtSettings =>
+                {
+                    txtSettings.Name = string.Format("txtFolioBancario_{0}", diTemplate.VisibleIndex);
+                    //txtSettings.Text = DataBinder.Eval(diTemplate.DataItem, diTemplate.Column.FieldName).ToString();
+                    //txtSettings.Properties.ClientSideEvents.GotFocus = string.Format("function(s, e) {{OnValueGotFocus(s, e, '{0}', '{1}'); }}", container.KeyValue.ToString(), container.Column.FieldName);
+                }).Render();
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdFormaPago";
+            c.Caption = "Metodo de Pago";
             c.EditorProperties().ComboBox(p =>
             {
                 p.TextField = "Descripcion";
-                p.ValueField = "IdCentroCosto";
+                p.ValueField = "IdFormaPago";
                 p.ValueType = typeof(int);
-                p.DataSource = ViewBag.CentrosCosto;
+                p.DataSource = ViewBag.FormasPago;
             });
         });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "MontoAbono";
+            col.Caption = "Cantidad";
+            col.SetDataItemTemplateContent(Template =>
+            {
+                GridViewDataItemTemplateContainer cont = Template as GridViewDataItemTemplateContainer;
+                Html.DevExpress().TextBox(txtSettings =>
+                {
+                    txtSettings.Name = string.Format("txtAbono_{0}", Template.ItemIndex.ToString());
+                    //txtSettings.Text = DataBinder.Eval(diTemplate.DataItem, diTemplate.Column.FieldName).ToString();
+                    //txtSettings.Properties.ClientSideEvents.GotFocus = string.Format("function(s, e) {{OnValueGotFocus(s, e, '{0}', '{1}'); }}", container.KeyValue.ToString(), container.Column.FieldName);
+                }).Render();
+            });
+        });
+
         settings.Columns.Add(c =>
         {
-            c.FieldName = "IdCuentaContable";
-            c.Caption = "Cuenta Contable";
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.EditorProperties().ComboBox(p =>
+            c.Caption = "Acción";
+            c.SetDataItemTemplateContent(d =>
             {
-                p.TextField = "Descripcion";
-                p.ValueField = "IdCuentaContable";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.CuentasContables;
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Editar", new { id = d.KeyValue }) + "><i class='material-icons'>edit</i> <span class='icon-name'></span></a>"));
             });
         });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Precio";
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.EditorProperties().SpinEdit(p =>
-            {
-                p.DisplayFormatString = "c";
-                p.DisplayFormatInEditMode = true;
-                p.MinValue = 0;
-                p.MaxValue = 1000000;
-            });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Descuento";
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.EditorProperties().SpinEdit(p =>
-            {
-                p.DisplayFormatString = "{0} %";
-                p.MinValue = 0;
-                p.MaxValue = 100;
-            });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "IVA";
-            c.Caption = "IVA";
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.EditorProperties().ComboBox(p =>
-            {
-                p.TextField = "Text";
-                p.ValueField = "Value";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.IVAs;
-            });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "IEPS";
-            c.Caption = "IEPS";
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.EditorProperties().ComboBox(p =>
-            {
-                p.TextField = "Text";
-                p.ValueField = "Value";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.IEPs;
-            });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Importe";
-            c.Settings.ShowEditorInBatchEditMode = false;
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
-            c.ReadOnly = true;
-            c.EditorProperties().SpinEdit(p =>
-            {
-                p.DisplayFormatString = "c";
-            });
-        });
-        settings.CellEditorInitialize = (s, e) =>
-        {
-            ASPxEdit editor = (ASPxEdit)e.Editor;
-            editor.ValidationSettings.Display = Display.None;
-        };
-        settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+
     });
 }
 @grid.Bind(Model).GetHtml()

@@ -30,14 +30,14 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         public static Abono FromDTO(AbonosDTO pDTO)
         {
             Abono _p = new Abono();
-           
-                _p.IdAbono = pDTO.IdAbono;
-                _p.IdCargo = pDTO.IdCargo;
-                _p.FechaRegistro = pDTO.FechaRegistro;
-                _p.FechaAbono = pDTO.FechaAbono;
-                _p.MontoAbono = pDTO.MontoAbono;
-                _p.IdFormaPago = pDTO.IdFormaPago;
-                _p.FolioBancario = pDTO.FolioBancario;
+
+            _p.IdAbono = pDTO.IdAbono;
+            _p.IdCargo = pDTO.IdCargo;
+            _p.FechaRegistro = pDTO.FechaRegistro;
+            _p.FechaAbono = pDTO.FechaAbono;
+            _p.MontoAbono = pDTO.MontoAbono;
+            _p.IdFormaPago = pDTO.IdFormaPago;
+            _p.FolioBancario = pDTO.FolioBancario;
 
             return _p;
         }
@@ -59,10 +59,30 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
                 FolioBancario = pAnterior.FolioBancario,
             };
         }
-
         static List<Abono> FromEntity(List<Abono> lPDTO)
         {
             return lPDTO.ToList().Select(x => FromEntity(x)).ToList();
+        }
+        public static CargosDTO ToDTO(Cargo _dto)
+        {
+            CargosDTO dto = new CargosDTO();
+            dto.IdCargo = _dto.IdCargo;
+            dto.IdCliente = _dto.IdCliente;
+            dto.IdEmpresa = _dto.IdEmpresa;
+            dto.Ticket = _dto.Ticket;
+            dto.FechaRegistro = _dto.FechaRegistro;
+            dto.TotalCargo = _dto.TotalCargo;
+            dto.TotalAbonos = _dto.TotalAbonos;
+            dto.VentaExtraordinaria = _dto.VentaExtraordinaria;
+            dto.Activo = _dto.Activo;
+            dto.FechaVencimiento = _dto.FechaVencimiento;
+            dto.Saldada = _dto.Saldada;
+            return dto;
+        }
+        public static List<CargosDTO> ToDTO(List<Cargo> lCargo)
+        {
+            List<CargosDTO> lprodDTO = lCargo.ToList().Select(x => ToDTO(x)).ToList();
+            return lprodDTO;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Almacen;
 using MVC.Presentacion.Models.Catalogos;
+using MVC.Presentacion.Models.Cobranza;
 using MVC.Presentacion.Models.OrdenCompra;
 using MVC.Presentacion.Models.Pedidos;
 using MVC.Presentacion.Models.Requisicion;
@@ -92,6 +93,8 @@ namespace MVC.Presentacion.Agente
         public List<EstatusPedidoModel> _ListaEstatusP;
         public List<CamionetaModel> _ListaCamionetas;
         public List<PipaModel> _ListaPipas;
+        public List<CargosModel> _ListaCargos;
+        public CargosModel _Cargo;
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -3294,6 +3297,87 @@ namespace MVC.Presentacion.Agente
             unidades.Add(c);
             return unidades;
         }
+        #endregion
+        #region Cargos
+        public void ListaCargos(short id, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCargos"];
+            Cargos(id, ApiCatalgos, token).Wait();
+        }
+        private async Task Cargos(short id, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CargosModel> cargos = new List<CargosModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        cargos = await response.Content.ReadAsAsync<List<CargosModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargos = new List<CargosModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); 
+                }
+                _ListaCargos = cargos;
+            }
+        }
+        public void ObtenerCargoId(int id, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCargoId"];
+            CargoId(ApiCatalgos, id, token).Wait();
+        }
+        private async Task CargoId(string api, int id, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                CargosModel cargo = new CargosModel();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        cargo = await response.Content.ReadAsAsync<CargosModel>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargo = new CargosModel();
+                    client.CancelPendingRequests();
+                    client.Dispose(); 
+                }
+                _Cargo = cargo;
+            }
+        }
+        public void GuardarEdicionCargo(CargosModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificarPedido"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void GuardarNuevoAbono(CargosModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarAbono"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+
         #endregion
         private async Task LLamada<T>(T _dto, string token, string Tipo)
         {

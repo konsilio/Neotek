@@ -437,6 +437,23 @@ namespace Application.MainModule.Servicios.Seguridad
         }
         #endregion
 
+        #region Abonos
+        public static RespuestaDto PuedeRegistrarAbonos()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarEmpresa).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Abonos");
+        }
+        public static RespuestaDto PuedeConsultarCargos()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Abonos");
+        }
+   
+        #endregion
         private static RespuestaDto EvaluarPermiso(List<UsuarioRol> roles, string error, string format = "")
         {
             if (roles == null & roles.Count <= 0)

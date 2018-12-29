@@ -278,6 +278,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlmacenController.cs" />
     <Compile Include="Controllers\CatalogosController.cs" />
+    <Compile Include="Controllers\CobranzaController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />
@@ -393,6 +394,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="LogosEmpresa\" />
+    <Folder Include="Views\Cobranza\" />
     <Folder Include="Views\Pedidos\" />
     <Folder Include="Views\Ventas\" />
   </ItemGroup>

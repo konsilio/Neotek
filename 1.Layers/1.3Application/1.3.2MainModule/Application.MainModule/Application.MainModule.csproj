@@ -105,6 +105,7 @@
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
     <Compile Include="DTOs\Cobranza\AbonosDTO.cs" />
+    <Compile Include="DTOs\Cobranza\CargosDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="DTOs\ImagenDTO.cs" />
     <Compile Include="DTOs\Ventas\VentasPipaDto.cs" />
     <Compile Include="DTOs\Ventas\VPuntoVentaDetalleDTO.cs" />
+    <Compile Include="Flujos\Cobranza.cs" />
     <Compile Include="Servicios\AccesoADatos\AbonosDataAcces.cs" />
     <Compile Include="Flujos\Pedidos.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenEntradaProductoDataAccess.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Servicios\AccesoADatos\OrdenCompraProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PedidosDataAccess.cs" />
     <Compile Include="Servicios\Almacen\RemanenteServicio.cs" />
+    <Compile Include="Servicios\Cobranza\CobranzaServicio.cs" />
     <Compile Include="Servicios\Compras\CalcularPagoServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraPagoServicio.cs" />
     <Compile Include="AdaptadoresDTO\Seguridad\RolAdapter.cs" />
