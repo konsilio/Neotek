@@ -149,8 +149,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 FolioOperacion = dto.ClaveOperacion,
                 FolioOperacionDia = dto.ClaveOperacion,
                 TotalVenta = dto.Total,
-                IdUsuarioRecibe = idUsuario,
-                IdOperadorChofer = puntoVenta.IdOperadorChofer,
+                IdUsuarioRecibe = puntoVenta.IdOperadorChofer,
+                IdOperadorChofer = idUsuario,
                 IdPuntoVenta = puntoVenta.IdPuntoVenta,
                 UsuarioRecibe = dto.Recibe
             };
