@@ -193,8 +193,10 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                                 )) {
                                     UsuariosDTO usuario = dataUsariosCorte.getUsuarios().get(x);
                                     if(EsAnticipo) {
-                                        anticiposDTO.setNombreEntrega(usuario.getNombre());
-                                        anticiposDTO.setIdEntrega(usuario.getIdUsuario());
+                                        //anticiposDTO.setNombreEntrega(usuario.getNombre());
+                                        //anticiposDTO.setIdEntrega(usuario.getIdUsuario());
+                                        anticiposDTO.setIdRecibe(usuario.getIdUsuario());
+                                        anticiposDTO.setRecibe(usuario.getNombre());
                                     }else if (EsCorte){
                                         corteDTO.setRecibe(usuario.getNombre());
                                         corteDTO.setIdRecibio(usuario.getIdUsuario());

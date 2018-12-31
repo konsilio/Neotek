@@ -27,6 +27,8 @@ import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by neotecknewts on 03/08/18.
  */
@@ -155,13 +157,18 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 EsLecturaFinal = (boolean) extras.get("EsLecturaFinal");
                 porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
                 if(porcentaje_inicial>0) {
-                    double val_per =  Double.valueOf(porcentaje_inicial.toString());
-                    int num = (int) val_per;
-                    double decimal = (Double.valueOf(val_per) - num);
-                    String decimal_tem = String.valueOf(decimal);
-                    int dec_cant = Integer.valueOf( decimal_tem.replace(".",""));
-                    numberPickerProcentaje.setValue(num);
-                    numberPickerDecimal.setValue(dec_cant);
+                    //double val_per =  Double.valueOf(porcentaje_inicial.toString());
+                    int index = porcentaje_inicial.toString().indexOf(".");
+                    String entero = porcentaje_inicial.toString().substring(
+                            0,index
+                    );
+                    String decimal = porcentaje_inicial.toString().substring(
+                            index+1,
+                            porcentaje_inicial.toString().length()
+                    );
+
+                    numberPickerProcentaje.setValue(Integer.parseInt(entero));
+                    numberPickerDecimal.setValue(Integer.parseInt(decimal));
                 }
                 papeleta=false;
                 iniciar=false;

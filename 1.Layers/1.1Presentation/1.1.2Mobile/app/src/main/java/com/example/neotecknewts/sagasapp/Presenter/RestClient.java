@@ -37,6 +37,7 @@ import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaClienteDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaCorteDto;
+import com.example.neotecknewts.sagasapp.Model.RespuestaCortesAntesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
@@ -482,5 +483,11 @@ public interface RestClient {
             @Path(value = "idCliente") int idCliente,
             @Header("Authorization") String token,
             @Header("Content-type")  String contenType
+    );
+
+    @GET(Constantes.GET_HAY_VENTA)
+    Call<RespuestaCortesAntesVentaDTO> getHayVenta(@Path(value = "fecha") String fecha,
+                                                   @Header("Authorization")  String token,
+                                                   @Header("Content-type") String contenType
     );
 }

@@ -510,6 +510,8 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
                         cilindros.setConcepto(TVTipo.getText().toString());
                         cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
+                        cilindros.setEsVentaCilindro(true);
+                        cilindros.setIdCilindro(adapter.getCilindro(x).getId());
                         conceptos.add(cilindros);
                         //Costo del gas
                         ConceptoDTO Gas = new ConceptoDTO();
@@ -635,6 +637,8 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
                         cilindros.setConcepto(adapter.getCilindro(x).getNombre());
                         cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
+                        cilindros.setEsVentaCilindro(true);
+                        cilindros.setIdCilindro(adapter.getCilindro(x).getId());
                         conceptos.add(cilindros);
 
                     }
