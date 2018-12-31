@@ -1,8 +1,8 @@
 ﻿@model  MVC.Presentacion.Models.Pedidos.PedidoModel
 @Html.DevExpress().GetStyleSheets(
-            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Moderno" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Moderno" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" }
         )
 @Html.DevExpress().GetScripts(
             new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },

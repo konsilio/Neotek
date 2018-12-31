@@ -693,14 +693,12 @@ namespace MVC.Presentacion.Agente
 
         #endregion
         #region Clientes
-
         public void BuscarTiposPersona(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetTiposPersona"];
             GetTiposPersona(tkn).Wait();
         }
-
-        private async Task GetTiposPersona(string Token)
+       private async Task GetTiposPersona(string Token)
         {
             using (var client = new HttpClient())
             {
@@ -728,13 +726,11 @@ namespace MVC.Presentacion.Agente
                 _lstaTipoPersona = lus;
             }
         }
-
         public void BuscarRegimenFiscal(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetRegimenFiscal"];
             GetRegimen(tkn).Wait();
         }
-
         private async Task GetRegimen(string Token)
         {
             using (var client = new HttpClient())
@@ -761,6 +757,40 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _lstaRegimenFiscal = lus;
+            }
+        }
+        public void BuscarListaClientes(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaClientes"];
+            GetListaClientes(idEmpresa, tkn).Wait();
+        }
+        private async Task GetListaClientes(short idEmpresa, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ClientesDto> lus = new List<ClientesDto>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<ClientesDto>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<ClientesDto>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }              
+
+                _lstaClientes = lus;
             }
         }
         public void BuscarListaClientes(int id, string rfc, string nombre, string tkn)//short idEmpresa, 
@@ -867,9 +897,7 @@ namespace MVC.Presentacion.Agente
                 _lstaClientesMod = lus;
 
             }
-        }
-
-
+        }       
         public void BuscarListaLocaciones(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaLocacion"];
@@ -906,25 +934,21 @@ namespace MVC.Presentacion.Agente
                 //  SetEdoPais(lus,Token);
             }
         }
-
         public void GuardarNuevoCliente(ClientesModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraClientes"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void EditarCliente(ClientesDto dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaClientes"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void EliminarCliente(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminaClientes"];
             EliminarClienteSeleccionado(id, tkn).Wait();
         }
-
         private async Task EliminarClienteSeleccionado(int _id, string token)
         {
             using (var client = new HttpClient())
@@ -955,25 +979,21 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-
         public void GuardarClienteLocacion(ClienteLocacionMod dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraClienteLoc"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void EditarClienteLocacion(ClienteLocacionMod dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaClienteLocacion"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void EliminarClienteLocacion(ClienteLocacionMod dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaClienteLocacion"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         #endregion
         #region Puntos de Venta
 

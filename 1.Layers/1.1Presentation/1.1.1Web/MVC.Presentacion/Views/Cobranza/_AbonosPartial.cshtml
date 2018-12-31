@@ -1,11 +1,13 @@
 ﻿@model List<MVC.Presentacion.Models.Cobranza.CargosModel>
 
 @{
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "Abonos";
-        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
-        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
+        settings.Name = "Abono";
+        //settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
+        //settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
 
         settings.KeyFieldName = "IdCargo";
 
@@ -20,10 +22,11 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
-        settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
-        settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
-        settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        //settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        //settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+        //settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+        //settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
         settings.Styles.Table.CssClass = "table";
 
         settings.Columns.Add(c =>
@@ -84,7 +87,7 @@
                     s.Name = string.Format("dtFechaRegistro_{0}", diTemplate.VisibleIndex);
                     s.Properties.UseMaskBehavior = true;
                     s.Properties.EditFormat = EditFormat.Custom;
-                    s.Theme = "Moderno";
+                    //s.Theme = "Moderno";
                     s.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
                     s.Properties.EditFormatString = "dd/MM/yyyy";
                     s.Date = DateTime.Now;
@@ -94,38 +97,65 @@
             });
 
         });
-        settings.Columns.Add(col =>
+        //settings.Columns.Add(col =>
+        //{
+        //    col.FieldName = "Abonos.FolioBancario";
+        //    col.Caption = "Folio";
+        //    col.SetDataItemTemplateContent(diTemplate =>
+        //    {
+        //        GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
+        //        Html.DevExpress().TextBox(txtSettings =>
+        //        {
+        //            txtSettings.Name = string.Format("txtFolioBancario_{0}", diTemplate.VisibleIndex);
+        //        }).Render();
+        //    });
+        //});
+
+        settings.Columns.Add(c =>
         {
-            col.FieldName = "FolioBancario";
-            col.Caption = "Folio";
-            col.SetDataItemTemplateContent(diTemplate =>
+            c.FieldName = "Abono";
+            c.Caption = "Folio";
+            c.ColumnType = MVCxGridViewColumnType.TextBox;
+            c.SetDataItemTemplateContent(diTemplate =>
             {
                 GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
                 Html.DevExpress().TextBox(txtSettings =>
                 {
                     txtSettings.Name = string.Format("txtFolioBancario_{0}", diTemplate.VisibleIndex);
-                    //txtSettings.Text = DataBinder.Eval(diTemplate.DataItem, diTemplate.Column.FieldName).ToString();
-                    //txtSettings.Properties.ClientSideEvents.GotFocus = string.Format("function(s, e) {{OnValueGotFocus(s, e, '{0}', '{1}'); }}", container.KeyValue.ToString(), container.Column.FieldName);
-                }).Render();
+                }).Bind(DataBinder.Eval(diTemplate.DataItem, diTemplate.Column.FieldName)).Render();
             });
         });
         settings.Columns.Add(c =>
         {
-            c.FieldName = "IdFormaPago";
+            c.FieldName = "Abonos.IdFormaPago";
             c.Caption = "Metodo de Pago";
+            //c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            //var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
+            //comboBoxProperties.DataSource = ViewBag.FormasPago;
+            //comboBoxProperties.TextField = "Descripcion";
+            //comboBoxProperties.ValueField = "Abonos.IdFormaPago";
+            //comboBoxProperties.ValueType = typeof(int);
+            c.Settings.AllowSort = DefaultBoolean.False;
             c.EditorProperties().ComboBox(p =>
             {
                 p.TextField = "Descripcion";
                 p.ValueField = "IdFormaPago";
-                p.ValueType = typeof(int);
+                p.ValueType = typeof(byte);
                 p.DataSource = ViewBag.FormasPago;
             });
         });
-        settings.Columns.Add(col =>
+        settings.Columns.Add(c =>
         {
-            col.FieldName = "MontoAbono";
-            col.Caption = "Cantidad";
-            col.SetDataItemTemplateContent(Template =>
+            c.FieldName = "Abonos.MontoAbono";
+            c.Caption = "Cantidad";
+            //c.Width = 100;
+            //c.ColumnType = MVCxGridViewColumnType.TextBox;
+            //var textboxProperties = c.PropertiesEdit as TextBoxProperties;
+            //textboxProperties.ClientInstanceName = "txtAdi";
+            //textboxProperties.ClientSideEvents.TextChanged = "SelectionChanged";
+            //c.FieldName = "Abonos.MontoAbono";
+            //c.Caption = "Cantidad";
+            c.SetDataItemTemplateContent(Template =>
             {
                 GridViewDataItemTemplateContainer cont = Template as GridViewDataItemTemplateContainer;
                 Html.DevExpress().TextBox(txtSettings =>
@@ -142,15 +172,10 @@
             c.Caption = "Acción";
             c.SetDataItemTemplateContent(d =>
             {
-                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Editar", new { id = d.KeyValue }) + "><i class='material-icons'>edit</i> <span class='icon-name'></span></a>"));
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Editar", new { id = d.KeyValue }) + ">Abonar</a>"));
             });
         });
-    });
-    if (ViewData["EditError"] != null)
-    {
-        grid.SetEditErrorText((string)ViewData["EditError"]);
-    }
-
+        settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
     });
 }
 @grid.Bind(Model).GetHtml()

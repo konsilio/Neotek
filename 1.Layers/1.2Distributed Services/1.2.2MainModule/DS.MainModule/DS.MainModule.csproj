@@ -394,9 +394,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="LogosEmpresa\" />
-    <Folder Include="Views\Cobranza\" />
-    <Folder Include="Views\Pedidos\" />
-    <Folder Include="Views\Ventas\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

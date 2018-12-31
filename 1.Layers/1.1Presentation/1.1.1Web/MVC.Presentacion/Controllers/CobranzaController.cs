@@ -29,7 +29,35 @@ namespace MVC.Presentacion.Controllers
 
             return View(_model);
         }
+        public ActionResult CreditoRecuperado()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(_tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
+            List<CargosModel> _model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
 
+            return View(_model);
+        }
+        public ActionResult CarteraVencida()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(_tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            List<CargosModel> _model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+
+            return View(_model);
+        }
         public ActionResult CrearPedido(CargosModel _model)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -48,22 +76,21 @@ namespace MVC.Presentacion.Controllers
             }
         }
 
-        public ActionResult Editar(short? id, CargosModel model)
+        public ActionResult Editar(short? id, CargosModel _model)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tkn = Session["StringToken"].ToString();
-            if (id != null)
-                return RedirectToAction("ActualizacionExistencias", AlmacenServicio.ActivarEditarAlmacen(id.Value, _tkn));
+            var Id = TokenServicio.ObtenerIdEmpresa(_tkn);
+            _model.IdEmpresa = Id;
+            var Respuesta = CobranzaServicio.AltaNuevoCargo(_model, Session["StringToken"].ToString());
+            if (Respuesta.Exito)
+            {
+                return RedirectToAction("Index", new { msj = Respuesta.Mensaje });
+            }
             else
             {
-                var respuesta = CobranzaServicio.AltaNuevoCargo(model, _tkn);
-                if (respuesta.Exito)
-                    return RedirectToAction("Index", new { msj = respuesta.Mensaje });
-                else
-                {
-                    TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("Index");
-                }
+                TempData["RespuestaDTO"] = Respuesta;
+                return RedirectToAction("Index");
             }
         }
         [HttpPost, ValidateInput(false)]

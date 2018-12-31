@@ -9,6 +9,7 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
+)
 <!DOCTYPE html>
 
 <html>
@@ -16,7 +17,7 @@
 
 </head>
 <body>
-    @using (Html.BeginForm("Buscar", "Cobranza", FormMethod.Post))
+    @using (Html.BeginForm("BuscarCartera", "Cobranza", FormMethod.Post))
     {
         <section class="content home">
             <div class="container-fluid">
@@ -27,7 +28,7 @@
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Crédito y Cobranza</li>
-                                <li class="breadcrumb-item">Abonos</li>
+                                <li class="breadcrumb-item">Cartera vencida</li>
                             </ul>
                         </div>
                     </div>
@@ -64,25 +65,20 @@
                             <br />
                             <div class="row clearfix">
                                 <div class="col-sm-12">
-                                    <div class="row clearfix">
-                                        <div class="col-sm-2">
-                                            <b>No Cliente:</b>
-                                            @Html.TextBoxFor(m => m[0].IdCliente, new { @class = "form-control"})
-                                        </div>
-                                        <div class="col-sm-2" style="top:20px">
-                                           @Html.DevExpress().DateEdit(settings =>
-                                                       {
-                                                           settings.Name = "FechaRango1";
-                                                           settings.Properties.UseMaskBehavior = true;
-                                                           settings.Properties.EditFormat = EditFormat.Custom;
-                                                           settings.Theme = "Moderno";
-                                                           settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
-                                                           settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                                           settings.Date = DateTime.Now;
-                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                                       }).GetHtml()
-                                        </div>
+                                    <div class="row clearfix">                                         
+                                        <div class="col-sm-4">
+                                            <b>Cliente:</b>
+                                            @Html.DevExpress().ComboBox(settings =>
+                                                {
+                                                    settings.Name = "IdCliente";
+                                                    settings.Width = 180;
+                                                    settings.SelectedIndex = 0;
+                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                    settings.Properties.TextField = "Nombre";
+                                                    settings.Properties.ValueField = "IdCliente";
+                                                }).BindList(ViewBag.Clientes).GetHtml()
+                                        </div>                                
                                         <div class="col-sm-2" style="top:20px">
                                             @Html.DevExpress().DateEdit(settings =>
                                                        {
@@ -97,10 +93,7 @@
                                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                                        }).GetHtml()
                                         </div>
-                                        <div class="col-sm-3">
-                                            <b>RFC:</b>
-                                            @Html.TextBoxFor(m => m[0].Rfc, new { @class = "form-control", placeholder = "RFC del cliente" })
-                                        </div>
+
                                         <div class="col-sm-3" style="top:10px">
                                             <div class="form-group">
                                                 <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
@@ -124,19 +117,74 @@
                                         </div>
                                     </div>
                                 </div>
-                            }
-                            <div class="row clearfix blockquote blockquote-info btn-round">                             
-                                    <div class="table-responsive">
-                                        @Html.Partial("_AbonosPartial", Model)
-                                    </div>                            
+                            }<strong>Reporte del cliente detallado</strong>
+                            <div class="row clearfix blockquote blockquote-info btn-round">
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Fecha</th>
+                                                <th>Fecha</th>
+                                                <th>Vencimiento</th>
+                                                <th>Ticket</th>
+                                                <th>Serie</th>
+                                                <th>Saldo Actual</th>
+                                                <th>Saldo corriente</th>
+                                                <th>Vencido</th>
+                                                <th>Días 1-7</th>
+                                                <th>8-16</th>
+                                                <th>17-31</th>
+                                                <th>32-61</th>
+                                                <th>62-91</th>
+                                                <th>mas 91</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @*@if (Model != null)
+                                            {
+                                                foreach (var item in Model)
+                                                {
+                                                   
+                                                }
+                                            }*@
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><strong>Global</strong>
+                            <div class="row clearfix blockquote blockquote-info btn-round">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Saldo Actual</th>
+                                                <th>Saldo corriente</th>
+                                                <th>Vencido</th>
+                                                <th>Días 1-7</th>
+                                                <th>8-16</th>
+                                                <th>17-31</th>
+                                                <th>32-61</th>
+                                                <th>62-91</th>
+                                                <th>mas 91</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                              
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </section>
     }
 </body>
 </html>
+

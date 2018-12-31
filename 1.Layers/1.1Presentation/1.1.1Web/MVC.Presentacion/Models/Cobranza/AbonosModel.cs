@@ -12,9 +12,10 @@ namespace MVC.Presentacion.Models.Cobranza
         public int IdCargo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public System.DateTime FechaAbono { get; set; }
-        //public decimal MontoAbono { get; set; }
-        //public byte IdFormaPago { get; set; }
-        // public string FolioBancario { get; set; }
+        public decimal MontoAbono { get; set; }
+        public byte IdFormaPago { get; set; }
+        public string FolioBancario { get; set; }
+        public string FormaPago { get; set; }
         public List<FormaPagoDTO> MetodoPago { get; set; }
 
     }

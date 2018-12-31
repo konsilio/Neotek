@@ -11558,6 +11558,8 @@
     <Content Include="Views\Pedidos\AltaClienteDireccion.cshtml" />
     <Content Include="Views\Cobranza\Index.cshtml" />
     <Content Include="Views\Cobranza\_AbonosPartial.cshtml" />
+    <Content Include="Views\Cobranza\CreditoRecuperado.cshtml" />
+    <Content Include="Views\Cobranza\CarteraVencida.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
