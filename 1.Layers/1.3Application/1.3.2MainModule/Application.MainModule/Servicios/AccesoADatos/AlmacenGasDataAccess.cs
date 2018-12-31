@@ -607,6 +607,26 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                 && x.Mes.Equals(mes)
                                                                 && x.Dia.Equals(dia)).ToList();
         }
+        /// <summary>
+        /// Permite retornar una lectura de un CAlmacenGas tomando como parametro
+        /// el id de este en la base de datos, una fecha en especifico y una bandera 
+        /// de que si este se buscara como inicial o final, se retornara un objeto de tipo
+        /// entidad AlmacenGasTomaLectura con la busqueda
+        /// </summary>
+        /// <param name="idCAlmacenGas">Id del IdCAlmacenGas</param>
+        /// <param name="fecha">Fecha que se requiere buscar</param>
+        /// <param name="inicial">Determina si se retornara una lectura inicial o final</param>
+        /// <returns>Entidad de tipo AlmacenGasTomaLectura con los datos encontrados</returns>
+        public AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, DateTime fecha, bool inicial)
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().GetSingle(
+                x=>x.IdCAlmacenGas.Equals(idCAlmacenGas) &&
+                x.FechaAplicacion.Day.Equals(fecha.Day) &&
+                x.FechaAplicacion.Month.Equals(fecha.Month) && 
+                x.FechaAplicacion.Day.Equals(fecha.Day) &&
+                x.IdTipoEvento.Equals( inicial ? TipoEventoEnum.Inicial:TipoEventoEnum.Final)
+                );
+        }
 
         public List<AlmacenGasMovimiento> BuscarMovimientosConTipoEvento(short idEmpresa, byte idTipoEvento, short year, byte mes, byte dia)
         {

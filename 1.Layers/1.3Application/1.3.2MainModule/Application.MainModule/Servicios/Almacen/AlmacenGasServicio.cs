@@ -587,6 +587,22 @@ namespace Application.MainModule.Servicios.Almacenes
             };
         }
 
+        /// <summary>
+        /// BuscarLectura
+        /// Permite realizar la busqeuda de una lectura con los parametros enviados.
+        /// Se envian de parametros el id del IdCAlmacengas a buscar la lectura, una
+        /// fecha de busqueda en especifico y si es inicial o final lo que se retorna
+        /// en caso de encontrar retornara una entidad de tipo AlmacenGasTomaLectura
+        /// </summary>
+        /// <param name="idCAlmacenGas">Id de CAlmacenGas</param>
+        /// <param name="fecha">Fecha de busqueda</param>
+        /// <param name="inicial">Es una lectura incial o final </param>
+        /// <returns>Una entidad de tipo AlmacenGasTomaLectura en caso de existir</returns>
+        public static AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, DateTime fecha,bool inicial = true)
+        {
+                return new AlmacenGasDataAccess().BuscarLectura(idCAlmacenGas, fecha, inicial);
+        }
+
         public static List<Pipa>  ObtenerPipasEmpresa(short idEmpresa)
         {
             return new AlmacenGasDataAccess().ObtenerPipas(idEmpresa);

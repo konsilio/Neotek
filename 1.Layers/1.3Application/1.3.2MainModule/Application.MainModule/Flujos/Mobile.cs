@@ -587,6 +587,41 @@ namespace Application.MainModule.Flujos
             return null;
         }
         /// <summary>
+        /// Permite determinar si actualmente se cuentas con la lectura incial y 
+        /// final en el almacen del día de hoy, en caso de no contar con ellas 
+        /// se retornara un mensaje de error en un modelo RespuestaDTO
+        /// </summary>
+        /// <returns>Modelo de tipo RespuestaDTO con el resultado </returns>
+        public RespuestaDto HayLectura()
+        {
+            RespuestaDto respuesta = new RespuestaDto();
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var unidadAlmacen = AlmacenGasServicio.ObtenerAlmacen(puntoVenta.IdCAlmacenGas);
+            var lecturaInicial = AlmacenGasServicio.BuscarLectura(unidadAlmacen.IdCAlmacenGas,DateTime.Now);
+            var lecturaFinal = AlmacenGasServicio.BuscarLectura(unidadAlmacen.IdCAlmacenGas, DateTime.Now, false);
+            if (lecturaInicial != null && lecturaFinal != null)
+            {
+                respuesta.Exito = true;
+                respuesta.Mensaje = "Exito si hay lecturas";
+            }
+            else
+            {
+                if(lecturaInicial== null)
+                {
+                    respuesta.Mensaje = "Para poder continuar es necesario haber realizado la lectura inicial del día";
+                }
+                if(lecturaFinal== null)
+                {
+                    if (respuesta.Mensaje!=null || respuesta.Mensaje=="")
+                        respuesta.Mensaje += " y es necesario registrar su lectura final de día";
+                    else
+                        respuesta.Mensaje = "Para poder continuar es necesario haber realizado la lectura final del día";
+                }
+            }
+            return respuesta;
+        }
+
+        /// <summary>
         /// Retorna si actualmente se cuenta conuna lectura inicial registrada en 
         /// la estación, pipa o camioneta para arrancar su día  
         /// </summary>
