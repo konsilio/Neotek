@@ -253,7 +253,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         if(/*Double.parseDouble(cantidad)<total ||*/ Double.parseDouble(cantidad)>total) {
                             AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
                             builderMonto.setCancelable(false);
-                            builderMonto.setTitle(R.string.mensjae_error_campos);
+                            builderMonto.setTitle(R.string.info);
                             builderMonto.setMessage("El monto ingresado debe de ser el igual al " +
                                     " monto total de las ventas no pude ser mayor");
                             builderMonto.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
@@ -334,7 +334,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                             if(datosBusqueda.anticipo.getTotalAnticipos()<0) {
                                 AlertDialog.Builder builderMonto = new AlertDialog.Builder(this, R.style.AlertDialog);
                                 builderMonto.setCancelable(false);
-                                builderMonto.setTitle(R.string.mensjae_error_campos);
+                                builderMonto.setTitle(R.string.info);
                                 builderMonto.setMessage("No se puede hacer un corte ya que faltan anticipos");
                                 builderMonto.setPositiveButton(R.string.message_acept, (dialogInterface, i) ->
                                         dialogInterface.dismiss());
@@ -359,7 +359,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
             builder.setCancelable(false);
-            builder.setTitle(R.string.mensjae_error_campos);
+            builder.setTitle(R.string.info);
             builder.setMessage(EsCorte?"Es necesario que especifiques la fecha de corte a realizar":
             "Es necesario que especifiques la fecha de anticipo a realizar");
             builder.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
