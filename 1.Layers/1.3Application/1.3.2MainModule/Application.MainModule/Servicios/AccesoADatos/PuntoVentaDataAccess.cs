@@ -329,7 +329,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Format(Error.S0004, "registrar la venta.");
+                    _respuesta.Mensaje = string.Format(Error.S0004, "actualizar la venta.");
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
