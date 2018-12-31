@@ -1300,23 +1300,27 @@ namespace Application.MainModule.Flujos
         {
             var resp = VentaServicio.EvaluarClaveOperacion(dto);
             if (resp.Exito) return resp;
+            var puntoVentaBusqueda = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            short idCAlmacenGas = puntoVentaBusqueda.IdCAlmacenGas;
+            var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacenGas);
+            
 
             var cortes = VentaServicio.ObtenerCortes(TokenServicio.ObtenerIdEmpresa());
             var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
-            var estacion = estaciones.Find(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
-            var almacenes = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
-            var almacen = almacenes.Find(x => x.IdEstacionCarburacion.Value.Equals(dto.IdCAlmacenGas));
-            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
-            var puntoventa = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+            var estacion = estaciones.Find(x => x.IdEstacionCarburacion.Equals(almacen.IdEstacionCarburacion));
+            //var almacenes = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
+            //var almacen = almacenes.Find(x => x.IdEstacionCarburacion.Value.Equals(puntoVentaBusqueda.IdCAlmacenGas));
+            //var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
+            //var puntoventa = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(puntoVentaBusqueda.IdCAlmacenGas));
             //var entrega = puntoventa.OperadorChofer.Usuario;
 
             var lpipas = AlmacenGasServicio.ObtenerPipasEmpresa(TokenServicio.ObtenerIdEmpresa());
             var lestaciones = AlmacenGasServicio.ObtenerEstacionesEmpresa(TokenServicio.ObtenerIdEmpresa());
             var lcamionetas = AlmacenGasServicio.ObtenerCamionetasEmpresa(TokenServicio.ObtenerIdEmpresa());
 
-            var pipa = lpipas.SingleOrDefault(x => x.IdPipa.Equals(dto.IdCAlmacenGas));
-            var camioneta = lcamionetas.SingleOrDefault(x => x.IdCamioneta.Equals(dto.IdCAlmacenGas));
-            var estacionCarb = lestaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
+            var pipa = lpipas.SingleOrDefault(x => x.IdPipa.Equals(almacen.IdPipa));
+            var camioneta = lcamionetas.SingleOrDefault(x => x.IdCamioneta.Equals(almacen.IdCamioneta));
+            var estacionCarb = lestaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(almacen.IdEstacionCarburacion));
             var cortesYanticiposOrden = PuntoVentaServicio.ObtenerCortesAnticipos();
             PuntoVenta puntoVenta = null;
             UnidadAlmacenGas almacenPunto = null;
