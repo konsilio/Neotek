@@ -449,6 +449,17 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.UsuariosAnticiposCorteLiquidar(), Request);
         }
+        /// <summary>
+        /// Permite realizar la verificación de que si se registro la lectura incial y final 
+        /// del día de la estación. Retornara un objeto de tipo RespuestaDTO con el resultado
+        /// de la consulta 
+        /// </summary>
+        /// <returns>Objeto de tipo RespuestaDTO con el resultado de la consulta</returns>
+        [Route("cortes/verificar-lecturas")]
+        public HttpResponseMessage GetHayLectura()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.HayLectura(), Request);
+        }
         #endregion
 
         #region Venta
