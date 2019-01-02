@@ -50,6 +50,7 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVerificarLecturasDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
@@ -485,9 +486,35 @@ public interface RestClient {
             @Header("Content-type")  String contenType
     );
 
+    /**
+     * getHayVenta
+     * Permite verificar si actualmente existe un corte en el día de hoy,
+     * retornar un objeto de tipo {@link RespuestaCortesAntesVentaDTO} con
+     * la respuesta que genero el servidor api
+     * @param fecha Fecha actual o de consulta
+     * @param token Token del usuario
+     * @param contenType Tipo de contenido que se envía
+     * @return Objeto de tipo {@link RespuestaCortesAntesVentaDTO} con la repsuesta
+     *          que retorno el objeto
+     */
     @GET(Constantes.GET_HAY_VENTA)
     Call<RespuestaCortesAntesVentaDTO> getHayVenta(@Path(value = "fecha") String fecha,
                                                    @Header("Authorization")  String token,
                                                    @Header("Content-type") String contenType
+    );
+
+    /**
+     * getHasLecturas
+     * Permite realizar una verificación de que si existe tanto lectura inicial como
+     * lectura final antes de realizar el corte de caja
+     * @param token Token del usuario
+     * @param contenType Tipo de contenido enviado en la solicitud
+     * @return Retornara un objeto de tipo {@link RespuestaVerificarLecturasDTO} con la respuesta
+     *          obtenida por el servidor
+     */
+    @GET(Constantes.GET_HAY_LECTURAS)
+    Call<RespuestaVerificarLecturasDTO> getHasLecturas(
+            @Header("Authorization")  String token,
+            @Header("Content-type") String contenType
     );
 }
