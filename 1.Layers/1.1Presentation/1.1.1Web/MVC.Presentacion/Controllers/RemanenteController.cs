@@ -11,6 +11,9 @@ namespace MVC.Presentacion.Controllers
         // GET: Remanente
         public ActionResult DashBoard()
         {
+
+
+
             return View();
         }
 
