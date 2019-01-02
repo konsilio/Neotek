@@ -78,16 +78,20 @@ namespace Application.MainModule.Servicios.Mobile
             #region Actualizo los cilindros
             if (lecturaCamioenta.Exito)
             {
- 
+                var camioneta = AlmacenGasServicio.ObtenerAlmacen(lcdto.IdCAlmacenGas); 
                 foreach(AlmacenGasTomaLecturaCilindro cilindro in adapter.Cilindros)
                 {
-                    CamionetaCilindro camionetaCilindro = new CamionetaCilindro();
-                    camionetaCilindro.IdCamioneta = almacen.IdCamioneta.Value;
-                    camionetaCilindro.IdEmpresa = almacen.IdEmpresa;
-                    camionetaCilindro.IdCilindro = cilindro.IdCilindro;
-                    camionetaCilindro.Cantidad = cilindro.Cantidad;
+                    var camionetaCilindro = AlmacenGasServicio.BuscarCamionetaCilindro(camioneta.IdCamioneta.Value, cilindro.IdCilindro,almacen.IdEmpresa);
+                    CamionetaCilindro camionetaCilindroActualizar = new CamionetaCilindro();
+                    camionetaCilindroActualizar.IdCamioneta = camionetaCilindro.IdCamioneta;
+                    camionetaCilindroActualizar.IdEmpresa = camionetaCilindro.IdEmpresa;
+                    camionetaCilindroActualizar.IdCilindro = camionetaCilindro.IdCilindro;
+                    camionetaCilindroActualizar.Cantidad = cilindro.Cantidad;
+                    //camionetaCilindroActualizar.Camioneta = camionetaCilindro.Camioneta;
+                    //camionetaCilindroActualizar.Empresa = camionetaCilindro.Empresa;
+                    //camionetaCilindroActualizar.UnidadAlmacenGasCilindro = camionetaCilindro.UnidadAlmacenGasCilindro;
 
-                    var actualizar = AlmacenGasServicio.ActualizaCilindro(camionetaCilindro);
+                    var actualizar = AlmacenGasServicio.ActualizaCilindro(camionetaCilindroActualizar);
                 }
                 
             }
