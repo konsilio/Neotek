@@ -64,11 +64,20 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         TextView TVCamposCamionetasHeaderInstrucciones = findViewById(R.id.
                 TVCamposCamionetasHeaderInstrucciones);
         TextView TVCamposCamionetaHader = findViewById(R.id.TVCamposCamionetaHader);
+        TextView TVCamposCamionetasHeaderContabiliza = findViewById(R.id.
+                TVCamposCamionetasHeaderContabiliza);
 
         if(EsLecturaInicialCamioneta){
             TVCamposCamionetasHeaderTitulo.setText(getString(R.string.toma_de_lectura)+" inicial");
+            TVCamposCamionetasHeaderInstrucciones.setText(R.string.Registra_configuracion);
         }else if (EsLecturaFinalCamioneta){
             TVCamposCamionetasHeaderTitulo.setText(getString(R.string.toma_de_lectura)+" final");
+            TVCamposCamionetasHeaderInstrucciones.setText(R.string.Registra_configuracion_final);
+            TVCamposCamionetasHeaderContabiliza.setText(
+                    lecturaCamionetaDTO.isEsEncargadoPuerta()?
+                            "Contabiliza todos los cilindros llenos y vacios":
+                            "Contabiliza todos los cilindros llenos"
+            );
         }else if(EsRecargaCamioneta){
             String estacion = (recargaDTO.getNombreEstacionEntrada().isEmpty())? "":": "+
                     recargaDTO.getNombreEstacionEntrada();

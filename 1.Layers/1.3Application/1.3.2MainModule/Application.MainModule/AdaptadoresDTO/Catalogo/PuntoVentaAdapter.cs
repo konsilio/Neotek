@@ -119,5 +119,20 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 NombrePuntoVenta = estacionAsignada.Nombre
             };
         }
+        /// <summary>
+        /// Permite generar un DTO de respuesta para 
+        /// determinar si el cliente tiene permiso de realizar una 
+        /// venta extraforanea
+        /// </summary>
+        /// <param name="cliente">Entidad con los datos del cliente</param>
+        /// <param name="extraforaneo">Objeto con los datos de que es extraforaneo </param>
+        /// <returns>Objeto DatosVentaExtraforaneaDTO con el resultado de la consulta</returns>
+        public static DatosVentaExtraforaneaDTO ToDTO(Cliente cliente)
+        {
+            return new DatosVentaExtraforaneaDTO()
+            {
+                VentaExtraforanea = cliente.VentaExtraordinaria??false
+            };
+        }
     }
 }

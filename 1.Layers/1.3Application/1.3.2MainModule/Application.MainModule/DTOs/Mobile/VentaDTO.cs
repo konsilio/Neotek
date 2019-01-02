@@ -29,5 +29,6 @@ namespace Application.MainModule.DTOs.Mobile
         public bool SinNumero { get; set; }
         public bool TieneCredito { get; set; }
         public List<ConceptoDTO> Concepto { get; set; }
+        public bool VentaExtraordinaria { get; set; }
     }
 }

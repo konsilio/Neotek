@@ -37,6 +37,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
     Button BtnRegistroClienteActivityRegistrarCliente,BtnRegistroClienteActivityRegresar;
     EditText ETRegistroClienteRfc;
     boolean EsVentaCarburacion,EsVentaCamioneta,EsVentaPipa;
+    boolean esGasLP;
     ProgressDialog progressDialog;
     RegistroClientePresenter presenter;
     Session session;
@@ -55,6 +56,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             EsVentaCamioneta = bundle.getBoolean("EsVentaCamioneta",false);
             EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
             ventaDTO = (VentaDTO) bundle.getSerializable("ventaDTO");
+            esGasLP = bundle.getBoolean("esGasLP",false);
         }
         session = new Session(this);
         clienteDTO = new ClienteDTO();
@@ -149,6 +151,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
             intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
             intent.putExtra("EsVentaPipa",EsVentaPipa);
+            intent.putExtra("esGasLP",esGasLP);
             startActivity(intent);
             finish();
         });
@@ -261,24 +264,49 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
     public void verificarForm() {
         boolean error = false;
         ArrayList<String> mensajes = new ArrayList<>();
+
         if(SRegistroClienteActivityTipoPersona.getSelectedItemPosition()<0){
             error = true;
             mensajes.add("El tipo de persona es un valor requerido");
         }
+
         if(SRegistroClienteActivityRegimenFiscal.getSelectedItemPosition()<0){
             error = true;
             mensajes.add("El regiment fiscal es un valor requerido");
         }
-        if(ETRegistroClienteActivityNombre.getText().length()<=0){
+
+        if(SRegistroClienteActivityTipoPersona.getSelectedItemPosition()==1){
+            if(ETRegistroClienteActivityRazonSocial.getText().length()<=0 ||
+                    ETRegistroClienteActivityRazonSocial.getText().toString().isEmpty()){
+                error = true;
+                mensajes.add("Es necesario especificar la razon social");
+            }
+        }
+
+        if(ETRegistroClienteActivityNombre.getText().toString().isEmpty() ||
+                ETRegistroClienteActivityNombre.getText().length()<=0){
             error = true;
             mensajes.add("El nombre de la persona es un valor requerido");
         }
-        if(ETRegistroClienteActivityApellidoPaterno.getText().length()<=0){
+
+        if(ETRegistroClienteActivityApellidoPaterno.getText().toString().isEmpty()
+            ||ETRegistroClienteActivityApellidoPaterno.getText().length()<=0){
             error = true;
             mensajes.add("El primer apellido es un valor requerido");
-
         }
 
+        if(ETRegistroClienteActivityCelular.getText().toString().isEmpty()||
+                ETRegistroClienteActivityCelular.getText().length()<=0){
+            error = true;
+            mensajes.add("Es necesario un teléfono de celular");
+        }
+
+        if(ETRegistroClienteActivityTelefonoFijo.getText().toString().isEmpty()||
+                ETRegistroClienteActivityTelefonoFijo.getText().length()<=0){
+            error = true;
+            mensajes.add("Es necesario un número de teléfono fijo");
+        }
+        
         if(error){
             mostrarDialogoErrores(mensajes);
         }else{
@@ -348,6 +376,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("ventaDTO", ventaDTO);
+            intent.putExtra("esGasLP",esGasLP);
             startActivity(intent);
         }else if(EsVentaCarburacion){
             Intent intent = new Intent(RegistroClienteActivity.this,
@@ -356,6 +385,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("ventaDTO", ventaDTO);
+            intent.putExtra("esGasLP",esGasLP);
             startActivity(intent);
 
         }else  if (EsVentaPipa){
@@ -365,6 +395,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("ventaDTO", ventaDTO);
+            intent.putExtra("esGasLP",esGasLP);
             startActivity(intent);
         }
     }

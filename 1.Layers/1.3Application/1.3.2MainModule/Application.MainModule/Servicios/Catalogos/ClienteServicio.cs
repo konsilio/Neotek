@@ -67,8 +67,7 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<ClienteLocacionDTO> ObtenerLoc(int IdCliente)
         {
             List<ClienteLocacionDTO> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTOLoc(new ClientesDataAccess().BuscarLocacion(IdCliente));
-            return lClientes;
-            // return new ClientesDataAccess().Buscar(IdCliente);
+            return lClientes;          
         }
 
         public static RespuestaDto Eliminar(ClienteLocacion cteLoc)
@@ -101,6 +100,17 @@ namespace Application.MainModule.Servicios.Catalogos
         public static Cliente BuscarClientePorRFC(string rfc)
         {
             return new ClientesDataAccess().Buscar(rfc);
+        }
+
+        /// <summary>
+        /// Permite realizar la actualización de los
+        /// datos de credito del cliente
+        /// </summary>
+        /// <param name="cliente">Entidad de Cliente con los datos de creditoActualizados</param>
+        /// <returns>Restorna la respuesta de la actualización del credito</returns>
+        public static RespuestaDto ModificarCredito(Cliente cliente)
+        {
+           return new ClientesDataAccess().ActualizarCredito(cliente);
         }
     }
 }

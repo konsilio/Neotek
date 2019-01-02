@@ -7,6 +7,7 @@ import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.ClienteDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosBusquedaCortesDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosClientesDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosEmpresaConfiguracionDTO;
@@ -36,6 +37,7 @@ import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaClienteDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaCorteDto;
+import com.example.neotecknewts.sagasapp.Model.RespuestaCortesAntesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
@@ -47,6 +49,8 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVerificarLecturasDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
@@ -396,8 +400,16 @@ public interface RestClient {
             @Header("Authorization") String token,
             @Header("Content-type") String contenType
     );
-    @GET(Constantes.GET_CATALOGOS_ANTICIPOS_CORTE_LISTA)
+    /*@GET(Constantes.GET_CATALOGOS_ANTICIPOS_CORTE_LISTA)
     Call<RespuestaEstacionesVentaDTO> getAnticipo_y_Corte(
+            @Path(value = "estacion") int estacion,
+            @Path(value = "esAnticipos") boolean esAnticipos,
+            @Path(value = "fecha") String fecha,
+            @Header("Authorization") String token,
+            @Header("Content-type") String contenType
+    );*/
+    @GET(Constantes.GET_CATALOGOS_ANTICIPOS_CORTE_LISTA)
+    Call<DatosBusquedaCortesDTO> getAnticipo_y_Corte(
             @Path(value = "estacion") int estacion,
             @Path(value = "esAnticipos") boolean esAnticipos,
             @Path(value = "fecha") String fecha,
@@ -456,5 +468,53 @@ public interface RestClient {
     Call<UsuariosCorteDTO> getUsuariosCorte(
             @Header("Authorization") String token,
             @Header("Content-type")  String contenType
+    );
+
+    /**
+     * getTieneVentaExtraforanea
+     * Realiza la consulta desde el web api de que si el cliente cuenta con un acceso a
+     * venta extraforanea, se retornara un objeto dto con la respuesta de este resultado
+     * @param idCliente {@link Integer} que reprecenta el Id del cliente
+     * @param token {@link String} que reprecenta el token de session
+     * @param contenType Tipo de contenido o formato en que se envian los datos
+     * @return Objeto de tipo {@link RespuestaVentaExtraforaneaDTO} con el resultado de la consulta
+     */
+    @GET(Constantes.GET_VENTA_EXTRAFORANEA)
+    Call<RespuestaVentaExtraforaneaDTO> getTieneVentaExtraforanea(
+            @Path(value = "idCliente") int idCliente,
+            @Header("Authorization") String token,
+            @Header("Content-type")  String contenType
+    );
+
+    /**
+     * getHayVenta
+     * Permite verificar si actualmente existe un corte en el día de hoy,
+     * retornar un objeto de tipo {@link RespuestaCortesAntesVentaDTO} con
+     * la respuesta que genero el servidor api
+     * @param fecha Fecha actual o de consulta
+     * @param token Token del usuario
+     * @param contenType Tipo de contenido que se envía
+     * @return Objeto de tipo {@link RespuestaCortesAntesVentaDTO} con la repsuesta
+     *          que retorno el objeto
+     */
+    @GET(Constantes.GET_HAY_VENTA)
+    Call<RespuestaCortesAntesVentaDTO> getHayVenta(@Path(value = "fecha") String fecha,
+                                                   @Header("Authorization")  String token,
+                                                   @Header("Content-type") String contenType
+    );
+
+    /**
+     * getHasLecturas
+     * Permite realizar una verificación de que si existe tanto lectura inicial como
+     * lectura final antes de realizar el corte de caja
+     * @param token Token del usuario
+     * @param contenType Tipo de contenido enviado en la solicitud
+     * @return Retornara un objeto de tipo {@link RespuestaVerificarLecturasDTO} con la respuesta
+     *          obtenida por el servidor
+     */
+    @GET(Constantes.GET_HAY_LECTURAS)
+    Call<RespuestaVerificarLecturasDTO> getHasLecturas(
+            @Header("Authorization")  String token,
+            @Header("Content-type") String contenType
     );
 }

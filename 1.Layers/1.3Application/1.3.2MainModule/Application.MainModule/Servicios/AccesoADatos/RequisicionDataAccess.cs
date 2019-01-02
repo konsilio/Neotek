@@ -39,6 +39,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Requisicion>().GetAll().ToList();
         }
+        public List<Requisicion> BuscarTodas(bool EsExterno)
+        {
+            return uow.Repository<Requisicion>().Get(x => x.EsExterno.Equals(EsExterno)).ToList();
+        }
         public RespuestaDto InsertarNueva(Requisicion _req)
         {
             RespuestaDto _respuesta = new RespuestaDto();

@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import com.example.neotecknewts.sagasapp.Adapter.EstacionesAdatper;
 import com.example.neotecknewts.sagasapp.Model.DatosEstacionesDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVerificarLecturasDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoEstacionCarburacionPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoEstacionCarburacionPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
@@ -47,6 +49,7 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
         presenter.getEstaciones(session.getToken());
         setTitle((EsCorte)?getString(R.string.corte_de_caja):
                 getString(R.string.Anticipo));
+        presenter.checkLecturas(session.getToken());
 
     }
 
@@ -118,6 +121,7 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
                         data.getEstaciones()
                 );
             }
+
             if(data.getCamionetaDTO()!=null) {
                 DatosEstacionesDTO dto =new DatosEstacionesDTO();
                 dto.setIdCAlmacenGas(data.getCamionetaDTO().getIdCAlmacen());
@@ -147,8 +151,38 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
                     EsAnticipo,
                     EsCorte
             );
-
+            adatper.EsCamioneta = data.isEsCamioneta();
+            adatper.EsEstacion = data.isEsEstacion();
+            adatper.EsPipa = data.isEsPipa();
             RVAnticipoEstacionesCarburacionActivityContainer.setAdapter(adatper);
         }
+    }
+
+    @Override
+    public void onSuccessRespuestaLecturas(RespuestaVerificarLecturasDTO data) {
+        if(!data.isExito()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+            builder.setTitle(R.string.info);
+            builder.setMessage(data.getMensaje());
+            builder.setPositiveButton(R.string.message_acept, (dialog, which) -> {
+                dialog.dismiss();
+                finish();
+            });
+            builder.setCancelable(false);
+            builder.create().show();
+        }
+    }
+
+    @Override
+    public void onErrorVerificarLecturas(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+        builder.setTitle(R.string.error_titulo);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton(R.string.message_acept, (dialog, which) -> {
+            dialog.dismiss();
+            finish();
+        });
+        builder.setCancelable(false);
+        builder.create().show();
     }
 }

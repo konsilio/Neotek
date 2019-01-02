@@ -4,6 +4,7 @@ import com.example.neotecknewts.sagasapp.Activity.AnticipoEstacionCarburacionVie
 import com.example.neotecknewts.sagasapp.Interactor.AnticipoEstacionCarburacionInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.AnticipoEstacionCarburacionInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVerificarLecturasDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 public class AnticipoEstacionCarburacionPresenterImpl implements AnticipoEstacionCarburacionPresenter {
@@ -36,5 +37,23 @@ public class AnticipoEstacionCarburacionPresenterImpl implements AnticipoEstacio
     public void onSuccess(RespuestaEstacionesVentaDTO data) {
         view.onHiddeProgress();
         view.onSuccess(data);
+    }
+
+    @Override
+    public void checkLecturas(String token) {
+        view.onShowProgress(R.string.message_cargando);
+        interactor.checkLecturas(token);
+    }
+
+    @Override
+    public void onSuccessVerificarLecturas(RespuestaVerificarLecturasDTO data) {
+        view.onHiddeProgress();
+        view.onSuccessRespuestaLecturas(data);
+    }
+
+    @Override
+    public void onErrorVerificarLecturas(String mensaje) {
+        view.onHiddeProgress();
+        view.onErrorVerificarLecturas(mensaje);
     }
 }

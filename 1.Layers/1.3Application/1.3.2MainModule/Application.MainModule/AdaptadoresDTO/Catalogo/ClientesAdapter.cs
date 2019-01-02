@@ -23,8 +23,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Nombre = us.Nombre,
                 Apellido1 = us.Apellido1,
                 Apellido2 = us.Apellido2,
-                //Activo = us.Activo,
-                //FechaRegistro = us.FechaRegistro,
                 DescuentoXKilo = us.DescuentoXKilo,
                 limiteCreditoMonto = us.limiteCreditoMonto,
                 limiteCreditoDias = us.limiteCreditoDias,
@@ -52,8 +50,9 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Domicilio = us.Domicilio,
                 Empresa = us.Empresa.NombreComercial,
                 TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
-                RegimenFiscal = us.RegimenFiscal.Descripcion
-
+                RegimenFiscal = us.RegimenFiscal.Descripcion,
+                Cliente = us.Nombre + " " + us.Apellido1 + " " + us.Rfc,
+                Locaciones = ClienteServicio.ObtenerLoc(us.IdCliente),
             };
             return usDTO;
         }
@@ -114,7 +113,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Calle = cteDTO.Calle,
                 NumExt = cteDTO.NumExt,
                 NumInt = cteDTO.NumInt,
-                formatted_address = cteDTO.Calle + cteDTO.Colonia + cteDTO.NumExt,//cteDTO.formatted_address,
+                formatted_address = cteDTO.formatted_address,//cteDTO.Calle + cteDTO.Colonia + cteDTO.NumExt,
                 location_lat = "1",//cteDTO.location_lat,
                 location_lng = "1",//cteDTO.location_lng,
                 place_id = "1",//cteDTO.place_id,
@@ -180,7 +179,8 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 CorreoElectronico = cteDTO.CorreoElectronico,
                 Domicilio = cteDTO.Domicilio,
                 Activo = true,
-                FechaRegistro = DateTime.Now
+                FechaRegistro = DateTime.Now,
+                VentaExtraordinaria = cteDTO.VentaExtraordinaria,
             };
         }
 

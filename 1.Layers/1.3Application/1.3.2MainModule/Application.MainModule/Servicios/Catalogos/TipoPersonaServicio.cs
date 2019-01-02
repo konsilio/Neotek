@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,12 @@ namespace Application.MainModule.Servicios.Catalogos
             List<TipoPersonaDTO> lpaises = AdaptadoresDTO.Seguridad.TipoPerAdapter.ToDTO(new TipoPerDataAccess().ListaTiposPer());
             return lpaises;
         }
+
+        public static TipoPersonaDTO TipoPersona(byte IdTipoP)
+        {
+            TipoPersonaDTO lp = AdaptadoresDTO.Seguridad.TipoPerAdapter.ToDTO(new TipoPerDataAccess().TiposPer(IdTipoP));
+            return lp;
+        }
+
     }
 }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
+import com.example.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaPagarPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaPagarPresenterImpl;
@@ -24,6 +25,8 @@ import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Session;
 import com.example.neotecknewts.sagasapp.Util.Tabla;
+
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -59,6 +62,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             EsVentaCarburacion = extras.getBoolean("EsVentaCarburacion",false);
             EsVentaPipa = extras.getBoolean("EsVentaPipa",false);
         }
+        ventaDTO.setVentaExtraforanea(false);
         presenter = new PuntoVentaPagarPresenterImpl(this);
         session = new Session(this);
         sagasSql = new SAGASSql(this);
@@ -73,6 +77,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         SPuntoVentaPagarActivityFactura = findViewById(R.id.SPuntoVentaPagarActivityFactura);
         SPuntoVentaActivityCredito = findViewById(R.id.SPuntoVentaActivityCredito);
         TVPuntoVentaPagarActivityEfectivo = findViewById(R.id.TVPuntoVentaPagarActivityEfectivo);
+        ETPuntoVentaPagarActivityEfectivo = findViewById(R.id.ETPuntoVentaPagarActivityEfectivo);
         SPuntoVentaActivityCredito.setChecked(
                 ventaDTO.isCredito()
         );
@@ -81,6 +86,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         );*/
         SPuntoVentaPagarActivityFactura.setVisibility(View.GONE);
         ventaDTO.setFactura(true);
+
         SPuntoVentaActivityCredito.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {
                 TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
@@ -91,7 +97,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                 ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
             }
         });
-        ETPuntoVentaPagarActivityEfectivo = findViewById(R.id.ETPuntoVentaPagarActivityEfectivo);
+
 
         BtnPuntoVentaPagarActivityCancelar.setOnClickListener(v->{
             Intent intent = new Intent(PuntoVentaPagarActivity.this,
@@ -111,15 +117,26 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         });
         SPuntoVentaActivityCredito.setChecked(ventaDTO.isCredito());
         if(ventaDTO.isTieneCredito()){
-            SPuntoVentaActivityCredito.setVisibility(View.VISIBLE);
-            TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
-            ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
+
+            if (ventaDTO.isCredito()){
+                SPuntoVentaActivityCredito.setVisibility(View.VISIBLE);
+                TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
+                ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
+            }else{
+
+                TVPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
+                ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
+            }
+            //SPuntoVentaActivityCredito.setVisibility(View.VISIBLE);
+            //TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
+            //ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
 
         }else{
             SPuntoVentaActivityCredito.setVisibility(View.GONE);
             ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
             TVPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
         }
+
         if( EsVentaPipa ||EsVentaCarburacion){
             BtnPuntoVentaPagarActivityOpciones.setVisibility(View.GONE);
         }
@@ -127,22 +144,53 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             ventaDTO.setFactura(SPuntoVentaPagarActivityFactura.isChecked());
             ventaDTO.setCredito(SPuntoVentaActivityCredito.isChecked());
             boolean error = false;
+            //Verifica si esta habilitado la venta extraforanea
+            presenter.verificarVentaExtraforanea(ventaDTO.getIdCliente(),session.getToken());
+
             if(!SPuntoVentaActivityCredito.isChecked()) {
                 if(ETPuntoVentaPagarActivityEfectivo.getText().toString().trim().length()>0) {
+
                     double efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo
                             .getText().toString());
-                    ventaDTO.setEfectivo(efectivio);
-                    ventaDTO.setCambio(ventaDTO.getEfectivo()-ventaDTO.getTotal());
+                    if(efectivio<ventaDTO.getTotal()){
+                        error = true;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+                        builder.setTitle(R.string.info);
+                        builder.setMessage("El monto es menor al pago requerido");
+                        builder.setPositiveButton(R.string.regresar, (dialogInterface, i) ->
+                                dialogInterface.dismiss());
+                        builder.create().show();
+                    }else {
+                        ventaDTO.setEfectivo(efectivio);
+                        ventaDTO.setCambio(ventaDTO.getEfectivo() - ventaDTO.getTotal());
+                    }
                 }else{
                     error = true;
                     AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
-                    builder.setTitle(R.string.mensjae_error_campos);
+                    builder.setTitle(R.string.info);
                     builder.setMessage("Es necesario indicar el monto pagado");
                     builder.setPositiveButton(R.string.regresar, (dialogInterface, i) ->
                             dialogInterface.dismiss());
                     builder.create().show();
                 }
             }
+            else
+            {
+                if(!ventaDTO.isVentaExtraforanea()) {
+                    if (ventaDTO.getLimiteCreditoCliente() < ventaDTO.getTotal()) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this,
+                                R.style.AlertDialog);
+                        builder.setTitle(R.string.info);
+                        builder.setMessage("No se puede realizar la venta, favor de comunicarse con el" +
+                                "área de crédito y  cobranza");
+                        builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
+                                dialog.dismiss());
+                        builder.create().show();
+                        error = true;
+                    }
+                }
+            }
+
             if(!error) {
                 presenter.pagar(ventaDTO, session.getToken(), EsVentaCamioneta, EsVentaCarburacion,
                         EsVentaPipa, sagasSql);
@@ -185,11 +233,13 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
 
     @Override
     public void onShowProgress(int mensaje) {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage(getString(mensaje));
-        progressDialog.setTitle(R.string.app_name);
-        progressDialog.show();
+        //if(!progressDialog.isShowing()) {
+            progressDialog = new ProgressDialog(this, R.style.AlertDialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage(getString(mensaje));
+            progressDialog.setTitle(R.string.app_name);
+            progressDialog.show();
+        //}
     }
 
     @Override
@@ -213,7 +263,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
     @Override
     public void onError(RespuestaPuntoVenta data) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
-        builder.setTitle(R.string.error_titulo);
+        builder.setTitle(R.string.info);
         builder.setMessage(data.getMensaje());
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
         builder.create();
@@ -277,5 +327,29 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             dialog.dismiss();
         }));
         builder.create().show();
+    }
+
+    @Override
+    public void onSuccessExtraforanea(RespuestaVentaExtraforaneaDTO data) {
+        if(data.isExito()){
+            ventaDTO.setVentaExtraforanea(data.isVentaExtraforanea());
+        }
+    }
+
+    @Override
+    public void onErrorInternalServer(JSONObject respuesta) {
+        if (respuesta!=null) {
+            try {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
+                builder.setTitle(R.string.error_titulo);
+                builder.setMessage(respuesta.getString("Mensaje"));
+                builder.setCancelable(false);
+                builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
+                        dialog.dismiss());
+                builder.create().show();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }

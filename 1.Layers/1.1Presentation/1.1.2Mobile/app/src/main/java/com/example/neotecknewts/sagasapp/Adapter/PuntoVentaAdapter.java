@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +75,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                                     String.valueOf(0)
                                     );
                             double sub = precioVentaDTO.getPrecioSalidaLt() *
-                                    Integer.parseInt(editText.getText().toString());
+                                    Double.parseDouble(editText.getText().toString());
                             Subtotal.setText(new DecimalFormat("#.##").format(sub));
                             double iva = sub * 0.16;
                             Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
@@ -92,7 +93,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                             Descuento.setText(String.valueOf(0));
                             double sub = precioVentaDTO.getPrecioSalidaLt() *
-                                    Integer.parseInt(editText.getText().toString());
+                                    Double.parseDouble(editText.getText().toString());
                             Subtotal.setText(new DecimalFormat("#.##").format(sub));
                             double iva = sub * 0.16;
                             Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
@@ -110,7 +111,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                             Descuento.setText(String.valueOf(0));
                             double sub = precioVentaDTO.getPrecioSalidaLt() *
-                                    Integer.parseInt(editText.getText().toString());
+                                    Double.parseDouble(editText.getText().toString());
                             Subtotal.setText(new DecimalFormat("#.##").format(sub));
                             double iva = sub * 0.16;
                             Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
@@ -121,8 +122,10 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     }
                 }
             });
-        }else
+        }
+        else
         {
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

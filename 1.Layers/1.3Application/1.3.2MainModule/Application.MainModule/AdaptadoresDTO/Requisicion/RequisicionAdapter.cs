@@ -25,7 +25,8 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
                 IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
                 RequisicionEstatus = _requisicion.RequisicionEstatus.Estatus,
                 FechaRequerida = _requisicion.FechaRequerida,
-                FechaRegistro = _requisicion.FechaRegistro
+                FechaRegistro = _requisicion.FechaRegistro,
+                EsExterno =_requisicion.EsExterno
             };
             return requiscionDTO;
         }
@@ -108,38 +109,10 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
                 IdRequisicionEstatus = dto.IdRequisicionEstatus,
                 FechaRequerida = Convert.ToDateTime(dto.FechaRequerida.ToShortDateString()),
                 FechaRegistro = dto.FechaRegistro,
-                Productos = RequisicionProductoAdapter.FromDTO(dto.Productos)
+                Productos = RequisicionProductoAdapter.FromDTO(dto.Productos),
+                EsExterno = dto.EsExterno,
             };
-        }
-        //public static Requisicion FromDTO(RequisicionCancelaDTO _requisicionDTO, Requisicion entidadAnterior)
-        //{
-        //    Requisicion _requisicion = FromEntity(entidadAnterior);
-        //    _requisicion.IdRequisicion = _requisicionDTO.IdRequisicion;
-        //    _requisicion.IdRequisicionEstatus = _requisicionDTO.IdRequisicionEstatus;
-        //    _requisicion.IdUsuarioRevision = _requisicionDTO.IdUsuarioRevision;
-        //    _requisicion.MotivoCancelacion = _requisicionDTO.MotivoCancelacion;
-        //    if (_requisicionDTO.IdUsuarioRevision != 0)
-        //    {
-        //        _requisicion.IdUsuarioRevision = _requisicionDTO.IdUsuarioRevision;
-        //        _requisicion.FechaRevision = _requisicionDTO.FechaAutorizacion;
-        //    }
-        //    else
-        //    {
-        //        _requisicion.IdUsuarioAutorizacion = _requisicionDTO.IdUsuarioAutorizacion;
-        //        _requisicion.FechaAutorizacion = _requisicionDTO.FechaAutorizacion;
-        //    }
-        //    return _requisicion;
-        //}
-        //public static Requisicion FromDTO(RequisicionCancelaDTO _requisicion)
-        //{
-        //    Requisicion requiscionDTO = new Requisicion()
-        //    {
-        //        NumeroRequisicion = _requisicion.NumeroRequisicion,
-        //        MotivoCancelacion = _requisicion.MotivoCancelacion,
-        //        IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
-        //    };
-        //    return requiscionDTO;
-        //}
+        }        
         public static Requisicion FromDTORevision(RequisicionDTO requiscionDTO, Requisicion _requisicion)
         {
             _requisicion.IdRequisicion = requiscionDTO.IdRequisicion;
@@ -225,6 +198,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
                 MotivoCancelacion = _entidadAnterior.MotivoCancelacion,
                 IdUsuarioAutorizacion = _entidadAnterior.IdUsuarioAutorizacion,
                 FechaAutorizacion = _entidadAnterior.FechaAutorizacion,
+                EsExterno = _entidadAnterior.EsExterno,
             };
             return _endidad;
         }
@@ -253,7 +227,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
         {
             return lProdDTO.ToList().Select(x => FromEntity(x)).ToList();
         }
-        public static Requisicion FromEntity(Requisicion _entidadAnterior, List<Sagas.MainModule.Entidades.RequisicionProducto> _productos)
+        public static Requisicion FromEntity(Requisicion _entidadAnterior, List<RequisicionProducto> _productos)
         {
             Requisicion _endidad = FromEntity(_entidadAnterior);
             _endidad.Productos = FromEntity(_productos);

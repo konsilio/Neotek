@@ -5,12 +5,12 @@
     <string name="title_iniciar_descarga">Iniciar descarga</string>
     <string name="title_finalizar_descarga">Finalizar descarga</string>
     <string name="title_registro_papeleta">Registro de papeleta</string>
-    <string name="title_medidor_almacen">Medidor almacen</string>
+    <string name="title_medidor_almacen">Medidor almacén</string>
     <string name="title_medidor_tractor">Medidor tractor</string>
-    <string name="title_foto_magnatel_almacen">Foto Magnatel - Almacen Principal</string>
+    <string name="title_foto_magnatel_almacen">Foto Magnatel - Almacén Principal</string>
     <string name="title_foto_magnatel_tractor">Foto Magnatel - Tractor</string>
     <string name="title_foto_rotogate_tractor">Foto Rotogate - Tractor</string>
-    <string name="title_foto_rotogate_almacen">Foto Rotogate - Almacen Principal</string>
+    <string name="title_foto_rotogate_almacen">Foto Rotogate - Almacén Principal</string>
     <string name="title_foto_papeleta">Foto Papeleta</string>
     <string name="title_proceso_descarga">Proceso descarga</string>
     <string name="title_orden_compra">Orden de Compra</string>
@@ -24,11 +24,11 @@
     <string name="porcentaje_medidor_tractor_message">Registra el porcentaje del medidor del tractor</string>
     <string name="porcentaje_medidor_almacen_message">Registra el porcentaje del medidor del almacen</string>
     <string name="message_imagen_nitida">¿La imagen esta nítida?</string>
-    <string name="message_nitida_si">Si,esta nítida/bien tomada</string>
+    <string name="message_nitida_si">Si, esta nítida/bien tomada</string>
     <string name="message_nitida_no">No, esta borrosa/mal tomada</string>
-    <string name="cargando_imagenes_inicio">Espere un momento...</string>
+    <string name="cargando_imagenes_inicio" tools:ignore="Typos">Espere un momento…</string>
     <string name="cargando_imagenes_fin">Proceso finalizado</string>
-    <string name="login_hint_username" translatable="false">Correo electronico</string>
+    <string name="login_hint_username" translatable="false">Correo electrónico</string>
     <string name="login_hint_password" translatable="false">Contraseña</string>
     <string name="login_button">Login</string>
     <string name="spinner_gaseras">Gasera</string>
@@ -54,12 +54,12 @@
     <string name="label_si">Si</string>
     <string name="label_no">No</string>
     <string name="tipo_medidor_tractor">Tipo de medidor del tractor</string>
-    <string name="tipo_medidor_almacen">Tipo de medidor del almacen</string>
-    <string name="nombre_almacen">Numero de almacen</string>
+    <string name="tipo_medidor_almacen">Tipo de medidor del almacén</string>
+    <string name="nombre_almacen">Numero de almacén</string>
     <string name="fecha">Fecha</string>
     <string name="fecha_embarque">Fecha de embarque</string>
-    <string name="seleccionar_fecha">Seleccione fecha...</string>
-    <string name="abr_cantidad">Cant.</string>
+    <string name="seleccionar_fecha">Seleccione fecha…</string>
+    <string name="abr_cantidad" tools:ignore="Typos">Cant.</string>
     <string name="cantidad_venta">Cantidad</string>
     <string name="abr_unidad_medida">UM</string>
     <string name="precio">Precio</string>
@@ -71,21 +71,21 @@
     <string name="abr_porcentaje_desc">% Desc.</string>
 
 
-    <string name="empty_field">Hay campos vacios</string>
+    <string name="empty_field">Hay campos vacíos</string>
 
     <string name="registrar">Registrar</string>
     <string name="limpiar_campos">Limpiar campos</string>
     <string name="message_cancel">Cancelar</string>
     <string name="message_acept">Aceptar</string>
-    <string name="invalid_email">El correo electronico no es valido</string>
+    <string name="invalid_email">El correo electrónico no es valido</string>
     <string name="usuario_incorrecto">El usuario y la contraseña no coinciden</string>
     <string name="login_sucess">Usuario correcto</string>
     <string name="usuario_sin_permisos">No tienes permisos para usar la aplicacion</string>
     <string name="message_continuar">Una vez iniciado el proceso no es posible regresar, ¿esta seguro de continuar?</string>
 
-    <string name="message_cargando">Cargando...</string>
-    <string name="message_datos_obtenidos">Los datos se obtuvieron correctamente...</string>
-    <string name="error_conexion">Error de conexion</string>
+    <string name="message_cargando">Cargando…</string>
+    <string name="message_datos_obtenidos">Los datos se obtuvieron correctamente…</string>
+    <string name="error_conexion">Error de conexión</string>
 
     <string name="punto">.</string>
     <string name="porcentaje">%</string>
@@ -105,16 +105,16 @@
     <string name="titulo_exito_registro_papeleta">Operación Exitosa</string>
     <string name="mensaje_exito_papeleta_registro_en_servicio">Los datos se han guardado exitosamente</string>
     <string name="titulo_exito_registro_papeleta_android">Datos guardados en Android</string>
-    <string name="mensaje_exito_papeleta_android">No he logrado conectar con el servidor por falta de conexión a internet. Los datos se enviarán al detectar una conexion al internet.</string>
-    <string name="titulo_error_papeleta">Se ha generado un error,intente nuevamente</string>
+    <string name="mensaje_exito_papeleta_android">No he logrado conectar con el servidor por falta de conexión a internet. Los datos se enviarán al detectar una conexión de internet.</string>
+    <string name="titulo_error_papeleta">Se ha generado un error, intente nuevamente</string>
     <string name="toma_de_lectura_inicial">Toma de lectura inicial</string>
-    <string name="seleciona_la_estaci_n_de_carburaci_n">Seleciona la Estación de Carburación:</string>
+    <string name="seleciona_la_estaci_n_de_carburaci_n">Selecciona la Estación de Carburación:</string>
     <string name="selecciona_el_tipo_de_medidor_porcentual">Selecciona el tipo de medidor porcentual:</string>
     <string name="toma_de_lectura_final">Toma de lectura final</string>
     <string name="error_titulo">Error</string>
     <string name="toma_de_lectura">Toma de lectura</string>
     <string name="p500">P5000 -</string>
-    <string name="c_al_es_la_lectura_del_p500">¿Cúal es la lectura del P5000?</string>
+    <string name="c_al_es_la_lectura_del_p500">¿Cuál es la lectura del P5000?</string>
     <string name="registra_la_lectura_del_p500_de_la_estaci_n">Registra la lectura del P5000 de la estación</string>
     <string name="mensjae_error_campos">Existen errores en algunos campos:</string>
     <string name="tomar_foto">Tomar foto</string>
@@ -123,10 +123,10 @@
     <string name="selecciona_la_pipa">Selecciona la pipa</string>
     <string name="Pipa">Pipa</string>
     <string name="registra_la_lectura_del_p500_de_la_pipa">Registra la lectura del P5000 de la pipa</string>
-    <string name="selecciona_almacen_principal">Seleccióna el Almacén principal</string>
+    <string name="selecciona_almacen_principal">Selecciona el Almacén principal</string>
     <string name="Almacen">Almacén</string>
     <string name="Camioneta">Camioneta</string>
-    <string name="Recordatorio_uno">Recuerda que en la siguiente pantalla debes contabilizar <u>todos</u> los cilindros sin importar que <b>esten llenos o vacíos</b>.<u>El total.</u></string>
+    <string name="Recordatorio_uno">Recuerda que en la siguiente pantalla debes contabilizar <u>todos</u> los cilindros sin importar que <b>estén llenos o vacíos</b>.<u>El total.</u></string>
     <string name="Recordatorio_dos">Recuerda que las siguiente pantalla debes contabilizar <u>todos</u> los cilindros <b>llenos.</b></string>
     <string name="Selecciona_la_camioneta">Selecciona la camioneta:</string>
     <string name="Quien_eres">¿Quién toma la lectura? es decir, ¿quién eres?</string>
@@ -136,7 +136,7 @@
     <string name="Registra_configuracion">Registra la configuración de salida de la camioneta</string>
     <string name="Contabiliza">Contabiliza los llenos</string>
     <string name="Reporte">Reporte</string>
-    <string name="reporte_del_dia">Reporte del dia</string>
+    <string name="reporte_del_dia">Reporte del día</string>
     <string name="selecciona_la_fecha_a_reportar">Selecciona la fecha a reportar:</string>
     <string name="selecciona_la_unidad">Selecciona la unidad:</string>
     <string name="generando_reporte">Generando reporte....</string>
@@ -148,7 +148,7 @@
     <string name="recarga">Recarga</string>
     <string name="registra_configuracion_recarga">Registra la configuración de recarga de la camioneta</string>
     <string name="Recarga_de_estacion">Recarga estación</string>
-    <string name="datos_inciales">Datos inciales</string>
+    <string name="datos_inciales">Datos iniciales</string>
     <string name="selecciona_la_pipa_de_salida">Selecciona la pipa de salida:</string>
     <string name="selecciona_medidor_porcentual_salida">Selecciona el tipo de medidor porcentual:</string>
     <string name="selecciona_estacion_destino">Selecciona la Estación de Carburación:</string>
@@ -160,7 +160,7 @@
     <string name="carburaci_n_de_gas">Carburación de Gas</string>
     <string name="selecciona_la_estaci_n_de_salida">Selecciona la estación de salida:</string>
     <string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>
-    <string name="Autoconsumo_inventario">Autoconsumo Inventario Gral</string>
+    <string name="Autoconsumo_inventario">Autoconsumo Inventario Gral.</string>
     <string name="autoconsumo_inventario_gral">Autoconsumo Inventario Gral</string>
     <string name="la_salida_es_desde_el_inventario_general">La salida es desde el inventario general</string>
     <string name="Autoconsumo">Autoconsumo</string>
@@ -194,21 +194,21 @@
     <string name="seguir_sin_numero">Seguir sin número</string>
     <string name="desea_que_lo_registre_como_cliente">¿Desea que lo registre como cliente?</string>
     <string name="registrar_cliente">Registrar Cliente</string>
-    <string name="cual_es_su_numero_de_celular_telofono_fijo_o_rfc">¿Cuál es su número de celular,teléfono fijo o RFC?</string>
+    <string name="cual_es_su_numero_de_celular_telofono_fijo_o_rfc">¿Cuál es su número de celular, teléfono fijo o RFC?</string>
     <string name="buscar_cliente">Buscar Cliente</string>
     <string name="Buscar">Buscar</string>
     <string name="pipa">Pipa</string>
     <string name="tipo_de_persona_fiscal">Tipo de persona fiscal</string>
-    <string name="regimen_fiscal">Regimen fiscal</string>
-    <string name="nombre">Nombre</string>
+    <string name="regimen_fiscal">Régimen fiscal</string>
+    <string name="nombre">Nombre *</string>
     <string name="apellido_1">Apellido 1 *</string>
     <string name="apellido_2">Apellido 2</string>
-    <string name="celular">Celular</string>
-    <string name="telef_no_fijo">Telefóno fijo</string>
-    <string name="razon_social">Razón Social</string>
+    <string name="celular">Celular *</string>
+    <string name="telef_no_fijo">Teléfono fijo *</string>
+    <string name="razon_social">Razón Social *</string>
     <string name="cel">CEL</string>
     <string name="nom">NOM</string>
-    <string name="rfc">RFC</string>
+    <string name="rfc">RFC *</string>
     <string name="factura">FACTURA</string>
     <string name="gas_lp">GAS LP</string>
     <string name="cilindro_con_gas_btn">CILINDRO CON GAS</string>
@@ -225,7 +225,7 @@
     <string name="efectivo">Efectivo($):</string>
     <string name="confirmar">Confirmar</string>
     <string name="No_venta">No hay datos en la venta.</string>
-    <string name="categoria">Categoria</string>
+    <string name="categoria">Categoría</string>
     <string name="linea">Linea</string>
     <string name="concepto">Concepto</string>
     <string name="precio_lt">Precio (lt):</string>
@@ -233,9 +233,9 @@
     <string name="litros_despachados">Litros despachados</string>
     <string name="cliente_no_encontrado">Cliente no encontrado</string>
     <string name="registrar_al_cliente">¿Registrar al cliente?</string>
-    <string name="selecciona_el_almacen">Selecciona el almacen</string>
+    <string name="selecciona_el_almacen">Selecciona el almacén</string>
     <string name="selecciona_el_tipo_de_medidor_de_la_pipa">Selecciona el tipo de medidor de la pipa:</string>
-    <string name="error_conexion_lista_login">obtener las empresas por favor intente abriendo nuevamente la apliación</string>
+    <string name="error_conexion_lista_login">obtener las empresas por favor intente abriendo nuevamente la aplicación</string>
     <string name="calibracion_cilindros">Calibración cilindros</string>
     <string name="calibraci_n_cilindro">Calibración-Cilindro</string>
     <string name="registra_el_porcentajede_calibraci_n_configurada">Registra el porcentajede calibración configurada</string>
@@ -248,7 +248,7 @@
         <item>Monto</item>
     </string-array>
     <string-array name="Tipo_persona">
-        <item>Persona Fisica</item>
+        <item>Persona Física</item>
         <item>Persona Moral</item>
     </string-array>
     <string-array name="Regimen_fiscal">
@@ -262,4 +262,6 @@
         <item>Desc</item>
         <item>Subt.</item>
     </string-array>
+    <string name="info">Información</string>
+    <string name="Registra_configuracion_final">Registra la configuración de entrada de la camioneta</string>
 </resources>

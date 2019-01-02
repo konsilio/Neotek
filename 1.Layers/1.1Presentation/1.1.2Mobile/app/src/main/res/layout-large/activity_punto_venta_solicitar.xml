@@ -67,13 +67,16 @@
 
             <Button
                 android:id="@+id/BtnPuntoVentaSolicitarActivityRegistrarCliente"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="20sp"
                 android:layout_marginRight="15dp"
-                android:text="@string/registrar_cliente"
-                style="@style/SagasTheme.Button"
+                android:layout_marginBottom="15sp"
                 android:background="@drawable/ripple_effect"
+                android:padding="20sp"
+                android:text="@string/registrar_cliente"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="18sp"
                 tools:ignore="UnusedAttribute" />
@@ -105,15 +108,16 @@
 
             <Button
                 android:id="@+id/BtnPuntoVentaSolicitarActivityBuscarCliente"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20sp"
                 android:layout_marginRight="15dp"
-                style="@style/SagasTheme.Button"
                 android:background="@drawable/ripple_effect"
-                android:textColor="@color/colorTextButtonLogin"
+                android:padding="20sp"
                 android:text="@string/buscar_cliente"
+                android:textColor="@color/colorTextButtonLogin"
                 android:textSize="24sp"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>

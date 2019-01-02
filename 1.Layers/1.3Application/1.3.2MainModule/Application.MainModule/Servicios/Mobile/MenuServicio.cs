@@ -122,7 +122,7 @@ namespace Application.MainModule.Servicios.Mobile
                     }
 
                     //Almacen principal 
-                    if (rol.AppTomaLecturaCamionetaCilindro && !_AppTomaLecturaAlmacenPral)
+                    if (rol.AppTomaLecturaAlmacenPral && !_AppTomaLecturaAlmacenPral)
                     {
 
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaAlmacenPralInicial"]));
@@ -277,15 +277,18 @@ namespace Application.MainModule.Servicios.Mobile
                             {
                                 lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionAnticipoEstacionCarb"]));
                                 lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
+                            }else
+                            {
+                                if (ban)
+                                {
+                                    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
+
+                                }
                             }
                         //}
                         //else
                         //{
-                            if (ban)
-                            {
-                                lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
-
-                            }
+                           
                         //}
 
                         _AppDisposicionEfectivo = true;

@@ -39,6 +39,7 @@ namespace Sagas.MainModule.Entidades
         public string MotivoCancelacion { get; set; }
         public Nullable<int> IdUsuarioAutorizacion { get; set; }
         public Nullable<System.DateTime> FechaAutorizacion { get; set; }
+        public bool EsExterno { get; set; }
     
         public virtual RequisicionEstatus RequisicionEstatus { get; set; }
         public virtual Usuario Solicitante { get; set; }

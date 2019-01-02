@@ -50,6 +50,9 @@ public class ClienteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("Factura")
     private boolean Factura;
 
+    @SerializedName("LimiteCredito")
+    private double LimiteCredito;
+
     public boolean isFactura() {
         return Factura;
     }
@@ -144,5 +147,13 @@ public class ClienteDTO extends RespuestaDTO implements Serializable {
 
     public void setCredito(boolean credito) {
         Credito = credito;
+    }
+
+    public double getLimiteCredito() {
+        return LimiteCredito;
+    }
+
+    public void setLimiteCredito(double limiteCredito) {
+        LimiteCredito = limiteCredito;
     }
 }

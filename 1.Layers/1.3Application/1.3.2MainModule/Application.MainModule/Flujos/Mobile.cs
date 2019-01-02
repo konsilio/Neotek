@@ -20,6 +20,8 @@ using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.DTOs.Mobile.PuntoVenta;
 using Application.MainModule.AdaptadoresDTO.Mobile.Cortes;
 using Application.MainModule.DTOs.Mobile.Cortes;
+using System.Net.Http;
+using Application.MainModule.AdaptadoresDTO.Mobile.VentaExtraordinaria;
 
 namespace Application.MainModule.Flujos
 {
@@ -224,8 +226,141 @@ namespace Application.MainModule.Flujos
                 adapter.RFC = cliente.Rfc;
                 adapter.RazonSocial = cliente.RazonSocial;
             }
+            RespuestaDto respuesta = new RespuestaDto();
+            
+            #region Verifica si la venta que se realiza es extraordinaria
+            if (venta.Credito)
+            {
+                if (cliente.CreditoDisponibleMonto==0) {
+                    RespuestaDto _res = new RespuestaDto();
+                    if (!cliente.VentaExtraordinaria.Value)
+                    {
+                        resp.Exito = false;
+                        resp.EsInsercion = false;
+                        resp.EsActulizacion = false;
+                        resp.Mensaje = "No se puede realizar la venta, favor de comunicarse con el área de crédito y cobranza";
+                        resp.Id = 0;
+                        resp.Codigo = null;
+                        resp.ModeloValido = false;
+                        return resp;
+                    }
+                }
+            }
+            #endregion 
+            if (venta.Credito)
+            {
+                if (venta.VentaExtraordinaria)
+                {
+                    #region Registro y actualización de credito
+                    int dias = Convert.ToInt32(cliente.limiteCreditoDias);
+                    var cargo = CargoAdapter.FromDTO(venta, DateTime.Now.AddDays(dias), TokenServicio.ObtenerIdEmpresa());
 
-            return PuntoVentaServicio.InsertMobile(adapter);
+                    var insertCargo = PuntoVentaServicio.insertCargoMobile(cargo);
+                    if (insertCargo.Exito)
+                    {
+                        #region Actualizacion de credito disponible
+
+                        if (cliente.CreditoDisponibleMonto == 0)
+                        {
+                            decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Total;
+                            cliente.CreditoDisponibleMonto = creditoDisponible;
+                        }
+                        else
+                        {
+                            if (cliente.CreditoDisponibleMonto > 0)
+                            {
+                                decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Total;
+                                cliente.CreditoDisponibleMonto = creditoDisponibleMonto;
+                            }
+                        }
+
+                       
+                        var actualizaCredito = ClienteServicio.ModificarCredito(cliente);
+                        if (actualizaCredito.Exito)
+                        {
+                            #region Registro de la venta
+                            var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
+                            respuesta = ventaPuntoDeVenta;
+                        }
+                        else
+                        {
+                            respuesta = actualizaCredito;
+                        }
+                            
+                        #endregion
+                        #endregion
+                    }
+                    else
+                    {
+                        respuesta = insertCargo;
+                    }
+                      
+                    #endregion
+                }
+                else
+                {
+                    #region Verifica si tiene credito disponible
+                    if (cliente.CreditoDisponibleMonto >0 && cliente.CreditoDisponibleMonto>=venta.Total)
+                    {
+                        #region Registro y actualización de credito
+                        int dias = Convert.ToInt32(cliente.limiteCreditoDias);
+                        var cargo = CargoAdapter.FromDTO(venta, DateTime.Now.AddDays(dias), TokenServicio.ObtenerIdEmpresa());
+
+                        var insertCargo = PuntoVentaServicio.insertCargoMobile(cargo);
+                        if (insertCargo.Exito)
+                        {
+                            #region Actualizacion de credito disponible
+
+                            if (cliente.CreditoDisponibleMonto == 0)
+                            {
+                                decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Total;
+                                cliente.CreditoDisponibleMonto = creditoDisponible;
+                            }
+                            if (cliente.CreditoDisponibleMonto > 0)
+                            {
+                                decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Total;
+                                cliente.CreditoDisponibleMonto = creditoDisponibleMonto;
+                            }
+
+                            var actualizaCredito = ClienteServicio.ModificarCredito(cliente);
+                            if (actualizaCredito.Exito)
+                            {
+                                #region Registro de la venta
+                                var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
+                                respuesta = ventaPuntoDeVenta;
+                            }
+                            else
+                                respuesta = actualizaCredito;
+                            #endregion
+                                #endregion
+                        }
+                        else
+                        {
+                            respuesta = insertCargo;
+                        }
+                        #endregion
+                    }
+                    else
+                    {
+                        RespuestaDto _res = new RespuestaDto();
+                        resp.Exito = false;
+                        resp.EsInsercion = false;
+                        resp.EsActulizacion = false;
+                        resp.Mensaje = "No se puede realizar la venta, favor de comunicarse con el área de crédito y cobranza";
+                        resp.Id = 0;
+                        resp.Codigo = null;
+                        resp.ModeloValido = false;
+                        return resp;
+                    }
+                    #endregion
+                }
+            }
+            else
+            {
+                var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
+                respuesta = ventaPuntoDeVenta;
+            }
+            return respuesta;
         }
         public int Orden(List<VentaPuntoDeVenta> ventas, DateTime fechaVenta)
         {
@@ -452,6 +587,41 @@ namespace Application.MainModule.Flujos
             return null;
         }
         /// <summary>
+        /// Permite determinar si actualmente se cuentas con la lectura incial y 
+        /// final en el almacen del día de hoy, en caso de no contar con ellas 
+        /// se retornara un mensaje de error en un modelo RespuestaDTO
+        /// </summary>
+        /// <returns>Modelo de tipo RespuestaDTO con el resultado </returns>
+        public RespuestaDto HayLectura()
+        {
+            RespuestaDto respuesta = new RespuestaDto();
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var unidadAlmacen = AlmacenGasServicio.ObtenerAlmacen(puntoVenta.IdCAlmacenGas);
+            var lecturaInicial = AlmacenGasServicio.BuscarLectura(unidadAlmacen.IdCAlmacenGas,DateTime.Now);
+            var lecturaFinal = AlmacenGasServicio.BuscarLectura(unidadAlmacen.IdCAlmacenGas, DateTime.Now, false);
+            if (lecturaInicial != null && lecturaFinal != null)
+            {
+                respuesta.Exito = true;
+                respuesta.Mensaje = "Exito si hay lecturas";
+            }
+            else
+            {
+                if(lecturaInicial== null)
+                {
+                    respuesta.Mensaje = "Para poder continuar es necesario haber realizado la lectura inicial del día";
+                }
+                if(lecturaFinal== null)
+                {
+                    if (respuesta.Mensaje!=null || respuesta.Mensaje=="")
+                        respuesta.Mensaje += " y es necesario registrar su lectura final de día";
+                    else
+                        respuesta.Mensaje = "Para poder continuar es necesario haber realizado la lectura final del día";
+                }
+            }
+            return respuesta;
+        }
+
+        /// <summary>
         /// Retorna si actualmente se cuenta conuna lectura inicial registrada en 
         /// la estación, pipa o camioneta para arrancar su día  
         /// </summary>
@@ -517,6 +687,37 @@ namespace Application.MainModule.Flujos
             }
             return pvaDto;
         }
+        /// <summary>
+        /// GetHayCorte
+        /// Permite realizar la busqueda de un corte en la estación 
+        /// por una fecha especifica, se envia como parametros ,el dia
+        /// el mesy la fecha y se retornara una respuesta de la busqueda
+        /// </summary>
+        /// <param name="dia">Dia que se desea consultar Ej. 1</param>
+        /// <param name="mes">Mes que se desea consultar Ej. 12</param>
+        /// <param name="year">Año que se desea consultar Ej. 2018</param>
+        /// <returns>Respuesta de dicha busqueda</returns>
+        public DatosCortesAntesVentaDTO GetHayCorte(DateTime fecha)
+        {
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var corte = PuntoVentaServicio.buscarCorte(fecha, puntoVenta.IdCAlmacenGas);
+            DatosCortesAntesVentaDTO _respuesta = new DatosCortesAntesVentaDTO();
+            if (corte != null)
+            {
+                
+                _respuesta.HayCorte = true;
+                _respuesta.Corte = AnticiposCortesAdapter.ToDTO(corte);
+            }
+            else
+            {
+
+                _respuesta.HayCorte = false;
+                _respuesta.Corte = null;
+               
+            }
+            return _respuesta;
+        }
+
         public List<UnidadAlmacenGas> estacionesInicio(List<AlmacenGasAutoConsumo> autoconsumos, bool estaciones = true, bool pipas = false, bool camionetas = false)
         {
             List<UnidadAlmacenGas> list = new List<UnidadAlmacenGas>();
@@ -646,6 +847,280 @@ namespace Application.MainModule.Flujos
 
              return AnticiposCortesAdapter.ToDTO(ventas, anticiposDia,almacen, esAnticipos);*/
         }
+
+        /// <summary>
+        /// Permite realizar la busqueda de los datos para los cortes o anticipos de la sección de mobile
+        /// se retornara un objeto DatosBusquedaCortesDTO con los datos encontrados en este. Se requieren como 
+        /// parametros el idCAlmacenGas(idEstacion) a consultar, un boolean que determina si es anticipos o corte 
+        /// de cajas y la fecha de busqeuda de los datos 
+        /// </summary>
+        /// <param name="idEstacion">Id del idCAlmacenGas de la pipa, estación de carburación o camioneta </param>
+        /// <param name="esAnticipos">Bandera que determina si es anticipos(true) o corte de caja(false)</param>
+        /// <param name="fecha">Variable con la fecha en la que se desea realizar el corte o anticipo </param>
+        /// <returns>Objeto de tipo DatosBusquedaCortesDTO con los datos del corte o el anticipo a realizar , las ventas y la estación</returns>
+        public DatosBusquedaCortesDTO BusquedaAnticipoCorteFecha(int idEstacion,bool esAnticipos,DateTime fecha)
+        {
+            Usuario usuario = TokenServicio.ObtenerUsuarioAplicacion();
+            var unidadAlmacen = PuntoVentaServicio.ObtenerPorUsuarioAplicacion().UnidadesAlmacen;
+            Pipa pipa = null;
+            EstacionCarburacion estacion = null;
+            Camioneta camioneta = null;
+            DatosBusquedaCortesDTO dto = new DatosBusquedaCortesDTO();
+            #region Datos para la pipa
+            if(unidadAlmacen.IdPipa>0 && unidadAlmacen.IdPipa != null)
+            {
+                pipa = unidadAlmacen.Pipa;
+                var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
+                var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x => 
+                    x.TipoOperacion.Equals(1) && 
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x => 
+                    x.IdTipoOperacion.Equals(2) && 
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) && 
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) && 
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var ventas = puntoVenta.VentaPuntoDeVenta;
+                var ventasActivas = ventas.Where(x => x.Dia.Equals((byte)fecha.Day) && x.Mes.Equals((byte)fecha.Month) && x.Year.Equals((short)fecha.Year));
+                var ventasSinCorte = new List<VentaPuntoDeVenta>();
+                foreach (var ventaActiva in ventasActivas)
+                {
+                    //if(ventaActiva.FolioOperacionDia == null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
+                        ventasSinCorte.Add(ventaActiva);
+                }
+
+                #region Creo el objeto a retornar 
+                if (ventasSinCorte.Count > 0)
+                {
+                    dto = AnticiposCortesAdapter.ToDTOBuscador(
+                            unidadAlmacen,
+                            anticipos,
+                            cortes,
+                            ventasSinCorte,
+                            pipa,
+                            esAnticipos
+                        );
+                    #region Verifico si hay datos de anticipos 
+                    if (anticipos != null)
+                        if (anticipos.Count > 0)
+                            dto.hayAnticipos = true;
+                        else
+                            dto.hayAnticipos = false;
+                    else
+                        dto.hayAnticipos = false;
+                    #endregion
+                    #region Verifico si hay cortes 
+                    if (cortes != null)
+                        if (cortes.Count > 0)
+                            dto.hayCortes = true;
+                        else
+                            dto.hayCortes = false;
+                    else
+                        dto.hayCortes = false;
+                    #endregion
+                    #region Verifico si hay ventas en esta fecha 
+                    if (ventas != null)
+                        if (ventas.Count > 0)
+                            dto.hayVentas = true;
+                        else
+                            dto.hayVentas = false;
+                    else
+                        dto.hayVentas = false;
+                    #endregion
+                    dto.Exito = true;
+                    dto.Mensaje = "Ok";
+                    dto.ModeloValido = true;
+                }
+                else
+                {
+                    dto.Exito = false;
+                    dto.Mensaje = esAnticipos ? "No se encontraron ventas para realizar un anticipo en la fecha " + fecha.ToString("MM/dd/yyyy"):
+                        "No se encontraron ventas para realizar un corte en la fecha " + fecha.ToString("MM/dd/yyyy");
+                    dto.ModeloValido = false;
+                    dto.EsInsercion = false;
+                    dto.EsActulizacion = false;
+                }
+                #endregion
+            }
+            #endregion
+            #region Datos para la estacion
+            if (unidadAlmacen.IdEstacionCarburacion>0 && unidadAlmacen.IdEstacionCarburacion != null)
+            {
+                estacion = unidadAlmacen.EstacionCarburacion;
+                var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
+                var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x =>
+                    x.TipoOperacion.Equals(1) &&
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x =>
+                    x.IdTipoOperacion.Equals(2) &&
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var ventas = puntoVenta.VentaPuntoDeVenta;
+                var ventasActivas = ventas.Where(x => x.Dia.Equals((byte)fecha.Day) && x.Mes.Equals((byte)fecha.Month) && x.Year.Equals((short)fecha.Year));
+                var ventasSinCorte = new List<VentaPuntoDeVenta>();
+                foreach (var ventaActiva in ventasActivas)
+                {
+                    //if (ventaActiva.FolioOperacionDia == null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
+                        ventasSinCorte.Add(ventaActiva);
+                }
+                if (ventasSinCorte.Count > 0)
+                {
+                    dto = AnticiposCortesAdapter.ToDTOBuscador(
+                        unidadAlmacen,
+                        anticipos,
+                        cortes,
+                        ventasSinCorte,
+                        estacion,
+                        esAnticipos
+                    );
+                    #region Verifico si hay datos de anticipos 
+                    if (anticipos != null)
+                        if (anticipos.Count > 0)
+                            dto.hayAnticipos = true;
+                        else
+                            dto.hayAnticipos = false;
+                    else
+                        dto.hayAnticipos = false;
+                    #endregion
+                    #region Verifico si hay cortes 
+                    if (cortes != null)
+                        if (cortes.Count > 0)
+                            dto.hayCortes = true;
+                        else
+                            dto.hayCortes = false;
+                    else
+                        dto.hayCortes = false;
+                    #endregion
+                    #region Verifico si hay ventas en esta fecha 
+                    if (ventas != null)
+                        if (ventas.Count > 0)
+                            dto.hayVentas = true;
+                        else
+                            dto.hayVentas = false;
+                    else
+                        dto.hayVentas = false;
+                    #endregion
+                    dto.Exito = true;
+                    dto.Mensaje = "Ok";
+                    dto.ModeloValido = true;
+                }
+                else
+                {
+                    dto.Exito = false;
+                    dto.Mensaje = esAnticipos ? "No se encontraron ventas para realizar un anticipo en la fecha " + fecha.ToString("MM/dd/yyyy") :
+                        "No se encontraron ventas para realizar un corte en la fecha " + fecha.ToString("MM/dd/yyyy");
+                    dto.ModeloValido = false;
+                    dto.EsInsercion = false;
+                    dto.EsActulizacion = false;
+                }
+            }
+            #endregion
+            #region Datos para la camioneta
+            if (unidadAlmacen.IdCamioneta>0 && unidadAlmacen.IdCamioneta != null)
+            {
+                camioneta = unidadAlmacen.Camioneta;
+                var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
+                var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x =>
+                    x.TipoOperacion.Equals(1) &&
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x =>
+                    x.IdTipoOperacion.Equals(2) &&
+                    x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
+                    x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                    x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                ).ToList();
+                var ventas = puntoVenta.VentaPuntoDeVenta;
+                var ventasActivas = ventas.Where(x => x.Dia.Equals((byte)fecha.Day) && x.Mes.Equals((byte)fecha.Month) && x.Year.Equals((short)fecha.Year));
+                var ventasSinCorte = new List<VentaPuntoDeVenta>();
+                foreach (var ventaActiva in ventasActivas)
+                {
+                    //if (ventaActiva.FolioOperacionDia==null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
+                        ventasSinCorte.Add(ventaActiva);
+                }
+                if (ventasSinCorte.Count > 0)
+                {
+                    dto = AnticiposCortesAdapter.ToDTOBuscador(
+                        unidadAlmacen,
+                        anticipos,
+                        cortes,
+                        ventasSinCorte,
+                        camioneta,
+                        esAnticipos
+                    );
+                    #region Verifico si hay datos de anticipos 
+                    if (anticipos != null)
+                        if (anticipos.Count > 0)
+                            dto.hayAnticipos = true;
+                        else
+                            dto.hayAnticipos = false;
+                    else
+                        dto.hayAnticipos = false;
+                    #endregion
+                    #region Verifico si hay cortes 
+                    if (cortes != null)
+                        if (cortes.Count > 0)
+                            dto.hayCortes = true;
+                        else
+                            dto.hayCortes = false;
+                    else
+                        dto.hayCortes = false;
+                    #endregion
+                    #region Verifico si hay ventas en esta fecha 
+                    if (ventas != null)
+                        if (ventas.Count > 0)
+                            dto.hayVentas = true;
+                        else
+                            dto.hayVentas = false;
+                    else
+                        dto.hayVentas = false;
+                    #endregion
+                    dto.Exito = true;
+                    dto.Mensaje = "Ok";
+                    dto.ModeloValido = true;
+                }
+                else
+                {
+                    dto.Exito = false;
+                    dto.Mensaje = esAnticipos ? "No se encontraron ventas para realizar un anticipo en la fecha " + fecha.ToString("MM/dd/yyyy") :
+                        "No se encontraron ventas para realizar un corte en la fecha " + fecha.ToString("MM/dd/yyyy");
+                    dto.ModeloValido = false;
+                    dto.EsInsercion = false;
+                    dto.EsActulizacion = false;
+                }
+            }
+            #endregion
+            return dto;
+        }
+        /// <summary>
+        /// Permite determinar si el cliente que se envía de parametro en la consulta 
+        /// se le ha permitido una venta extraforanea, este retornara un  objeto 
+        /// DTO con el resultado de la conslta
+        /// </summary>
+        /// <param name="idCliente">Id del cliente a consultar</param>
+        /// <returns>Modelo DTO con la respuesta de la consulta </returns>
+        public DatosVentaExtraforaneaDTO tieneVentaExtraforanea(short idCliente)
+        {
+            var cliente = ClienteServicio.Obtener(idCliente);
+
+            var adapter = PuntoVentaAdapter.ToDTO(cliente);
+            adapter.Exito = true;
+            adapter.ModeloValido = true;
+            adapter.Mensaje = "Exito";
+            adapter.Id = cliente.IdCliente;
+            return adapter;
+        }
+
         public RespuestaDto Calibracion(CalibracionDto dto, bool esFinal)
         {
             var resp = CalibracionServicio.EvaluarClaveOperacion(dto);
@@ -776,17 +1251,19 @@ namespace Application.MainModule.Flujos
                 {
                     var pipa = new EquipoTransporteDataAccess().BuscarPipa(unidad.IdPipa ?? 0);
                     dacDTO.pipa = AnticiposCortesAdapter.ToDTO(pipa, unidad);
+                    dacDTO.EsPipa = true;
                 }
                 if (unidad.IdCamioneta != null)
                 {
                     var camioneta = new EquipoTransporteDataAccess().BuscarCamioneta(unidad.IdCamioneta ?? 0);
                     dacDTO.camioneta = AnticiposCortesAdapter.ToDTO(camioneta, unidad);
-
+                    dacDTO.EsCamioneta = true;
                 }
                 if (unidad.IdEstacionCarburacion != null)
                 {
                     var Estacion = EstacionCarburacionServicio.Obtener(unidad.IdEstacionCarburacion ?? 0);
                     dacDTO.estaciones = AnticiposCortesAdapter.ToDTO(Estacion, unidad);
+                    dacDTO.EsEstacion = true;
                 }
             }
             //return AnticiposCortesAdapter.ToDTO(estaciones, unidades);
@@ -858,23 +1335,27 @@ namespace Application.MainModule.Flujos
         {
             var resp = VentaServicio.EvaluarClaveOperacion(dto);
             if (resp.Exito) return resp;
+            var puntoVentaBusqueda = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            short idCAlmacenGas = puntoVentaBusqueda.IdCAlmacenGas;
+            var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacenGas);
+            
 
             var cortes = VentaServicio.ObtenerCortes(TokenServicio.ObtenerIdEmpresa());
             var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
-            var estacion = estaciones.Find(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
-            var almacenes = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
-            var almacen = almacenes.Find(x => x.IdEstacionCarburacion.Value.Equals(dto.IdCAlmacenGas));
-            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
-            var puntoventa = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+            var estacion = estaciones.Find(x => x.IdEstacionCarburacion.Equals(almacen.IdEstacionCarburacion));
+            //var almacenes = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
+            //var almacen = almacenes.Find(x => x.IdEstacionCarburacion.Value.Equals(puntoVentaBusqueda.IdCAlmacenGas));
+            //var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
+            //var puntoventa = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(puntoVentaBusqueda.IdCAlmacenGas));
             //var entrega = puntoventa.OperadorChofer.Usuario;
 
             var lpipas = AlmacenGasServicio.ObtenerPipasEmpresa(TokenServicio.ObtenerIdEmpresa());
             var lestaciones = AlmacenGasServicio.ObtenerEstacionesEmpresa(TokenServicio.ObtenerIdEmpresa());
             var lcamionetas = AlmacenGasServicio.ObtenerCamionetasEmpresa(TokenServicio.ObtenerIdEmpresa());
 
-            var pipa = lpipas.SingleOrDefault(x => x.IdPipa.Equals(dto.IdCAlmacenGas));
-            var camioneta = lcamionetas.SingleOrDefault(x => x.IdCamioneta.Equals(dto.IdCAlmacenGas));
-            var estacionCarb = lestaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
+            var pipa = lpipas.SingleOrDefault(x => x.IdPipa.Equals(almacen.IdPipa));
+            var camioneta = lcamionetas.SingleOrDefault(x => x.IdCamioneta.Equals(almacen.IdCamioneta));
+            var estacionCarb = lestaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(almacen.IdEstacionCarburacion));
             var cortesYanticiposOrden = PuntoVentaServicio.ObtenerCortesAnticipos();
             PuntoVenta puntoVenta = null;
             UnidadAlmacenGas almacenPunto = null;

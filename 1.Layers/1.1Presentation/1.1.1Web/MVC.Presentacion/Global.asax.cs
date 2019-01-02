@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Web.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace MVC.Presentacion
             CultureInfo culture = new CultureInfo("es-MX");
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
+        }
+        protected void Application_PreRequestHandlerExecute(object sender, EventArgs e)
+        {
+            DevExpressHelper.Theme = "Moderno";
         }
     }
 }

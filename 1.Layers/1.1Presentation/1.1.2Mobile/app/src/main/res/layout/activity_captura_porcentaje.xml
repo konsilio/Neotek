@@ -97,6 +97,13 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/TVCapturaPorcentajeActivityTotalGas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
     <Button
         android:id="@+id/aceptar_button"
         style="@style/SagasTheme.Button"

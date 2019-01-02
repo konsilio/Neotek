@@ -425,7 +425,8 @@ namespace DS.MainModule.Controllers
         [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}/{fecha}")]
         public HttpResponseMessage GetVentasCortesAnticipos(int estacion, bool esAnticipos, DateTime fecha)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos, fecha), Request);
+            //return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos, fecha), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.BusquedaAnticipoCorteFecha(estacion, esAnticipos, fecha), Request);
         }
         /// <summary>
         /// Permite retornar el listado de usuarios para ser implementados
@@ -447,6 +448,17 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetUsuariosCorte()
         {
             return RespuestaHttp.crearRespuesta(_mobile.UsuariosAnticiposCorteLiquidar(), Request);
+        }
+        /// <summary>
+        /// Permite realizar la verificación de que si se registro la lectura incial y final 
+        /// del día de la estación. Retornara un objeto de tipo RespuestaDTO con el resultado
+        /// de la consulta 
+        /// </summary>
+        /// <returns>Objeto de tipo RespuestaDTO con el resultado de la consulta</returns>
+        [Route("cortes/verificar-lecturas")]
+        public HttpResponseMessage GetHayLectura()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.HayLectura(), Request);
         }
         #endregion
 
@@ -549,6 +561,32 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetEstacion()
         {
             return RespuestaHttp.crearRespuesta(_mobile.ObtenerEstacion(), Request);
+        }
+
+        /// <summary>
+        /// Permite determinar si el cliente que se envia de parametro en idCliente 
+        /// ya tiene atorizado por parte del area de cobranza realizarle una venta extraforanea
+        /// retornara un objeto DTO con el resultado de esta respuesta. 
+        /// </summary>
+        /// <param name="idCliente">Short que reprcenta el id del cliente </param>
+        /// <returns>Objeto DTO con el rersultado de la conslta </returns>
+        [Route("venta-extraforanea/{idCliente}")]
+        public HttpResponseMessage GetVentaExtraforanea(short idCliente)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.tieneVentaExtraforanea(idCliente), Request);
+        }
+        /// <summary>
+        /// Permite verificar antes de realizar una venta el dia de hoy no exista ya un corte de caja 
+        /// retornarta un objeto de respuesta.
+        /// </summary>
+        /// <param name="dia">Día del corte que se requiere consultar</param>
+        /// <param name="mes">Mes del quen se requiere consultar</param>
+        /// <param name="year">Año que se reuiqere consultar</param>
+        /// <returns>Retorna una respuesta determinando si ya previamente se ha hecho un corte</returns>
+        [Route("hay-corte-estacion/{fecha}")]
+        public HttpResponseMessage GetHayCorte(DateTime fecha)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.GetHayCorte(fecha),Request);
         }
         #endregion
 
