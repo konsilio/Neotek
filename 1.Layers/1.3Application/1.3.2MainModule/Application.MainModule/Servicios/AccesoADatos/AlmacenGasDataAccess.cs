@@ -119,6 +119,24 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        /// <summary>
+        /// Permite realizar la busqueda de una entidad de tipo CamionetaCilindro
+        /// para retornar la cantidad de cilindro que tiene la camioneta, se envian como parametros
+        /// el id de la camioneta , el id del cilindro y el id de la empresa, tras finalizar retornara el 
+        /// registro buscado 
+        /// </summary>
+        /// <param name="idCamioneta">Id de la camioneta </param>
+        /// <param name="idCilindro">Id del cilindro </param>
+        /// <param name="idEmpresa">Id de la empresa</param>
+        /// <returns>Entidad de tipo CamionetaCilindro con el cilindro buscado </returns>
+        public CamionetaCilindro BuscarCamionetaCilindro(int idCamioneta, int idCilindro, short idEmpresa)
+        {
+            return uow.Repository<CamionetaCilindro>().GetSingle(
+                x=>x.IdCamioneta.Equals(idCamioneta) &&
+                x.IdCilindro.Equals(idCilindro) &&
+                x.IdEmpresa.Equals(idEmpresa)
+                );
+        }
 
         /// <summary>
         /// Retorna una lista de lecturas de pipas ordenadas por el orden que sea mayor 

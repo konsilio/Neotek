@@ -84,6 +84,12 @@ namespace Application.MainModule.Servicios.Almacenes
             resp = new AlmacenGasDataAccess().Insertar(unidad);
             return ObtenerUnidadAlamcenGas((short)resp.Id);
         }
+
+        public static CamionetaCilindro BuscarCamionetaCilindro(int idCamioneta, int idCilindro, short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().BuscarCamionetaCilindro(idCamioneta, idCilindro,idEmpresa);
+        }
+
         /// <summary>
         /// ActualizaCilindro
         /// Permite actualizar los cilindros de la camioneta 

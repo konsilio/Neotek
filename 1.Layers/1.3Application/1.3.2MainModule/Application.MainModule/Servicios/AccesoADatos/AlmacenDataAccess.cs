@@ -247,11 +247,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    var buscar = uow.Repository<CamionetaCilindro>().GetSingle(x => x.IdEmpresa.Equals(camioentaCilindro.IdEmpresa)
+                    /*var buscar = uow.Repository<CamionetaCilindro>().GetSingle(x => x.IdEmpresa.Equals(camioentaCilindro.IdEmpresa)
                     && x.IdCilindro.Equals(camioentaCilindro.IdCilindro) && x.IdCamioneta.Equals(camioentaCilindro.IdCamioneta));
-                    buscar.Cantidad = camioentaCilindro.Cantidad;
-                    uow.Repository<CamionetaCilindro>().Update(buscar);
-                     uow.SaveChanges();
+                    buscar.Cantidad = camioentaCilindro.Cantidad;*/
+                    //uow.Repository<CamionetaCilindro>().Update(buscar);
+                    uow.Repository<CamionetaCilindro>().Update(camioentaCilindro);
+                    uow.SaveChanges();
                     _respuesta.Id = 0;
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;
