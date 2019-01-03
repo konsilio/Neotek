@@ -1,13 +1,28 @@
-﻿@model List<MVC.Presentacion.Models.Cobranza.CargosModel>
-
+﻿@*@model List<MVC.Presentacion.Models.Cobranza.CargosModel>*@
 @{
-    Html.EnableClientValidation();
-    Html.EnableUnobtrusiveJavaScript();
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnSave').click(function () {
+                debugger;
+                GridView.UpdateEdit();
+            });
+        });
+
+    </script>
+}
+@{
+
     var grid = Html.DevExpress().GridView(settings =>
     {
-        settings.Name = "Abono";
-        //settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
-        //settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
+        settings.Name = "Abn";
+        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "AbonosPartial" };
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
+
+        //settings.CustomActionRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
+        settings.SettingsCommandButton.UpdateButton.Text = "Abonar";
+       // settings.SettingsCommandButton.UpdateButton.RenderMode = GridCommandButtonRenderMode.Button;//SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Button;
+        settings.SettingsCommandButton.UpdateButton.RenderMode = GridCommandButtonRenderMode.Link;//SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Button;
 
         settings.KeyFieldName = "IdCargo";
 
@@ -22,10 +37,10 @@
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
-        //settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        //settings.SettingsEditing.BatchEditSettings.EditMode = BatchEditingOptions.EditMode;
         //settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
-        //settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+        settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
         //settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
         settings.Styles.Table.CssClass = "table";
 
@@ -97,64 +112,37 @@
             });
 
         });
-        //settings.Columns.Add(col =>
-        //{
-        //    col.FieldName = "Abonos.FolioBancario";
-        //    col.Caption = "Folio";
-        //    col.SetDataItemTemplateContent(diTemplate =>
-        //    {
-        //        GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
-        //        Html.DevExpress().TextBox(txtSettings =>
-        //        {
-        //            txtSettings.Name = string.Format("txtFolioBancario_{0}", diTemplate.VisibleIndex);
-        //        }).Render();
-        //    });
-        //});
-
-        settings.Columns.Add(c =>
+        settings.Columns.Add(col =>
         {
-            c.FieldName = "Abono";
-            c.Caption = "Folio";
-            c.ColumnType = MVCxGridViewColumnType.TextBox;
-            c.SetDataItemTemplateContent(diTemplate =>
+            col.FieldName = "Abonos.FolioBancario";
+            col.Caption = "Folio";
+            col.SetDataItemTemplateContent(diTemplate =>
             {
                 GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
                 Html.DevExpress().TextBox(txtSettings =>
                 {
                     txtSettings.Name = string.Format("txtFolioBancario_{0}", diTemplate.VisibleIndex);
-                }).Bind(DataBinder.Eval(diTemplate.DataItem, diTemplate.Column.FieldName)).Render();
+                }).Render();
             });
         });
         settings.Columns.Add(c =>
         {
             c.FieldName = "Abonos.IdFormaPago";
             c.Caption = "Metodo de Pago";
-            //c.ColumnType = MVCxGridViewColumnType.ComboBox;
-            //var comboBoxProperties = c.PropertiesEdit as ComboBoxProperties;
-            //comboBoxProperties.DataSource = ViewBag.FormasPago;
-            //comboBoxProperties.TextField = "Descripcion";
-            //comboBoxProperties.ValueField = "Abonos.IdFormaPago";
-            //comboBoxProperties.ValueType = typeof(int);
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditorProperties().ComboBox(p =>
             {
                 p.TextField = "Descripcion";
                 p.ValueField = "IdFormaPago";
-                p.ValueType = typeof(byte);
+                p.ValueType = typeof(int);
                 p.DataSource = ViewBag.FormasPago;
+
             });
         });
         settings.Columns.Add(c =>
         {
             c.FieldName = "Abonos.MontoAbono";
             c.Caption = "Cantidad";
-            //c.Width = 100;
-            //c.ColumnType = MVCxGridViewColumnType.TextBox;
-            //var textboxProperties = c.PropertiesEdit as TextBoxProperties;
-            //textboxProperties.ClientInstanceName = "txtAdi";
-            //textboxProperties.ClientSideEvents.TextChanged = "SelectionChanged";
-            //c.FieldName = "Abonos.MontoAbono";
-            //c.Caption = "Cantidad";
             c.SetDataItemTemplateContent(Template =>
             {
                 GridViewDataItemTemplateContainer cont = Template as GridViewDataItemTemplateContainer;
@@ -166,16 +154,29 @@
                 }).Render();
             });
         });
-
         settings.Columns.Add(c =>
         {
             c.Caption = "Acción";
             c.SetDataItemTemplateContent(d =>
             {
-                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Editar", new { id = d.KeyValue }) + ">Abonar</a>"));
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Editar", new { id = d.KeyValue, monto = DataBinder.Eval(d.DataItem, "Abonos.MontoAbono") }) + ">Abonar</a>"));
+                //ViewContext.Writer.Write(Html.ActionLink("Abonar", "Editar",  new { id = d.KeyValue, monto = DataBinder.Eval(d.DataItem, "Abonos.MontoAbono") }));
+
             });
         });
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+            editor.ValidationSettings.Display = Display.Dynamic;
+        };
         settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
     });
 }
+
 @grid.Bind(Model).GetHtml()
+@*@Html.DevExpress().Button(settings =>
+    {
+        settings.Name = "btn_Save";
+        settings.Text = "SAVE";
+        settings.ClientSideEvents.Click = "function(s, e) { GridView.UpdateEdit(); }";
+    }).GetHtml()*@

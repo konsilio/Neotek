@@ -72,6 +72,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Abono>().GetAll().ToList();
         }
+        public List<Abono> BuscarTodos(int idCargo)
+        {
+            return uow.Repository<Abono>().Get(x => x.IdCargo.Equals(idCargo)
+                                                        )
+                                                         .ToList();
+        }
         public List<Cargo> BuscarTodos(short idEmpresa)
         {
             return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa)

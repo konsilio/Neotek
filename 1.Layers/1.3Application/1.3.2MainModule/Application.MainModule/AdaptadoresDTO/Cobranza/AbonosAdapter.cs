@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Cobranza;
+using Application.MainModule.Servicios.AccesoADatos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -77,12 +78,33 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.Activo = _dto.Activo;
             dto.FechaVencimiento = _dto.FechaVencimiento;
             dto.Saldada = _dto.Saldada;
+            List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
+            //if (lst != null && lst.Count > 0)
+            //{ dto.Abonos = ToDTO(lst.LastOrDefault()); }
+
+            //else
+            //{
+                dto.Abonos = FromInit(_dto.IdCargo);
+            //}
+
             return dto;
         }
         public static List<CargosDTO> ToDTO(List<Cargo> lCargo)
         {
             List<CargosDTO> lprodDTO = lCargo.ToList().Select(x => ToDTO(x)).ToList();
             return lprodDTO;
+        }
+        public static AbonosDTO FromInit(int id)
+        {
+            AbonosDTO dto = new AbonosDTO();
+            // dto.IdAbono = _Abono.IdAbono;
+            dto.IdCargo = id;
+            dto.FechaRegistro = DateTime.Now;
+            dto.FechaAbono = DateTime.Now;
+            dto.MontoAbono = 0;
+            dto.IdFormaPago = 1;
+            dto.FolioBancario = "";
+            return dto;
         }
     }
 }

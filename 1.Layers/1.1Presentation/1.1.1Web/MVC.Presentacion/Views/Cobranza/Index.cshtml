@@ -13,7 +13,18 @@
 
 <html>
 <head>
+    <script type="text/javascript">
 
+    function OnBeginGridCallback(s, e) {
+        e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
+    }
+    $(document).ready(function () {
+        $('#btnSave').click(function () {
+            debugger;
+            GridView.UpdateEdit();
+        });
+    });
+    </script>
 </head>
 <body>
     @using (Html.BeginForm("Buscar", "Cobranza", FormMethod.Post))
@@ -127,7 +138,8 @@
                             }
                             <div class="row clearfix blockquote blockquote-info btn-round">                             
                                     <div class="table-responsive">
-                                        @Html.Partial("_AbonosPartial", Model)
+                                        @*@Html.Partial("_AbonosPartial", Model )*@
+                                        @Html.Action("AbonosPartial")
                                     </div>                            
                             </div>
                         </div>

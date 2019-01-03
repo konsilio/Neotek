@@ -21,6 +21,7 @@ namespace MVC.Presentacion.Controllers
             _tkn = Session["StringToken"].ToString();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
             ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(_tkn);
+
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             else
@@ -75,13 +76,14 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
-
-        public ActionResult Editar(short? id, CargosModel _model)
+        public ActionResult Editar(MVCxGridViewBatchUpdateValues<CargosModel, int> updateValues)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tkn = Session["StringToken"].ToString();
             var Id = TokenServicio.ObtenerIdEmpresa(_tkn);
-            _model.IdEmpresa = Id;
+            var _model = new List<CargosModel>();
+          //  _model.IdEmpresa = Id;
+            var VModel = Session["xyz"];
             var Respuesta = CobranzaServicio.AltaNuevoCargo(_model, Session["StringToken"].ToString());
             if (Respuesta.Exito)
             {
@@ -93,7 +95,7 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
-        [HttpPost, ValidateInput(false)]
+        [ValidateInput(false)]
         public ActionResult AbonosPartialUpdate(MVCxGridViewBatchUpdateValues<CargosModel, int> updateValues)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -106,7 +108,9 @@ namespace MVC.Presentacion.Controllers
         [ValidateInput(false)]
         public ActionResult AbonosPartial()
         {
-            var model = new object[0];
+            _tkn = Session["StringToken"].ToString();
+            ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(_tkn);
+            var model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             return PartialView("_AbonosPartial", model);
         }
     }
