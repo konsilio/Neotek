@@ -506,48 +506,47 @@ namespace Application.MainModule.Servicios.Almacenes
 
             var reportes = new AlmacenGasDataAccess().ObtenerReportes();
             int orden = ordenReportes(reportes);
+            ReporteDiaDTO reporteDTO = new ReporteDiaDTO();
+            var lectInicial = BuscarLecturaPorFecha(almacen.IdCAlmacenGas, TipoEventoEnum.Inicial, fecha);
+            var lectFinal = BuscarLecturaPorFecha(almacen.IdCAlmacenGas, TipoEventoEnum.Final, fecha);
 
             if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
             {
-                var reporte = CajaGeneralServicio.ObtenerRepCamionetas(almacen.IdCAlmacenGas, fecha);
-                reporte[0].EsCamioneta = true;
-                return reporte[0];
-                /*var cilindros = new AlmacenGasDataAccess().BuscarTodosCilindros(TokenServicio.ObtenerIdEmpresa());
-                //Falta agregar los datos de la venta de tanques
-                var reporte = new ReporteAdapter().ToDto(almacen);
-                reporte.EsCamioneta = true;
-                reporte.Fecha = DateTime.Now;
-                //reporte.ClaveReporte = "2018FG675DGD43";
-                reporte.ClaveReporte = FolioServicio.GeneraNumeroReferenciaReporte("R", almacen, reporte.Fecha, idCAlmacenGas);
-                return reporte;*/
+                #region Verifico si hay lecturas
+                if(lectInicial!=null && lectFinal != null)
+                {
+                    var reporte = CajaGeneralServicio.ObtenerRepCamionetas(almacen.IdCAlmacenGas, fecha);
+                    reporte[0].EsCamioneta = true;
+                    reporteDTO = reporte[0];
+                    reporteDTO.Error = false;
+                    reporteDTO.Mensaje = "Exito";
+                }
+                else
+                {
+                    reporteDTO.Error = true;
+                    reporteDTO.Mensaje = "Para poder realizar el reporte del día es necesario tener las lecturas iniciales y finales la camioneta: "+almacen.Camioneta.Nombre;
+                }
+                #endregion
             }
             else
             {
-                //var tipoMedidor = TipoMedidorGasServicio.Obtener(almacen.IdTipoMedidor.Value);
-                //var linicial = BuscarLecturaPorFecha(idCAlmacenGas, TipoEventoEnum.Inicial, fecha);
-                //var lfinal = BuscarLecturaPorFecha(idCAlmacenGas, TipoEventoEnum.Final, fecha);
-                //var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
-                //var ventas = PuntoVentaServicio.BuscarPorOperadorChofer(operador.IdOperadorChofer);
-                //var venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-                //var reporte = CajaGeneralServicio.ObtenerRepCamionetas(idCAlmacenGas, fecha);
-                var reporte = CajaGeneralServicio.ObtenerRepPipas(idCAlmacenGas, fecha);
-                ReporteDiaDTO dtoReporteMobile = CrearReporteMobil(reporte, almacen);
-                //reporte[0].EsCamioneta = false;
-                return dtoReporteMobile;
-                //Falta agregar los valores de la venta de gas
-                //var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor, linicial, lfinal);
-                //reporte.Fecha = DateTime.Now;
-                //reporte.EsCamioneta = false;
-                ////reporte.ClaveReporte = "2018FG675DGD43";
-                //reporte.ClaveReporte = FolioServicio.GeneraNumeroReferenciaReporte("R", almacen, reporte.Fecha, idCAlmacenGas);
-                //var adapter = new ReporteAdapter().FormDto(reporte, operador, venta);
-                //adapter.FolioOperacionDia = reporte.ClaveReporte;
-                //adapter.Dia = (byte)reporte.Fecha.Day;
-                //adapter.Mes = (byte)reporte.Fecha.Month;
-                //adapter.Year = (short)reporte.Fecha.Year;
-                //adapter.FechaRegistro = reporte.Fecha;
-                //adapter.FechaReporte = reporte.Fecha;
-                //adapter.Orden = (short)orden;
+                #region Verifico si hay lecturas
+                if(lectInicial!=null && lectFinal != null)
+                {
+                    var reporte = CajaGeneralServicio.ObtenerRepPipas(idCAlmacenGas, fecha);
+                    reporteDTO = CrearReporteMobil(reporte, almacen);
+                    reporteDTO.Error = false;
+                    reporteDTO.Mensaje = "Exito";
+                }
+                else
+                {
+                    reporteDTO.Error = true;
+                    if (almacen.IdPipa > 0)
+                        reporteDTO.Mensaje = "Para poder realizar el reporte del día es necesario tener las lecturas iniciales y finales de la pipa: " + almacen.Pipa.Nombre;
+                    else
+                        reporteDTO.Mensaje = "Para poder realizar el reporte del día es necesario tener las lecturas iniciales y finales de la estación: " + almacen.EstacionCarburacion.Nombre;
+                }
+                #endregion
 
                 //var respuesta = new AlmacenGasDataAccess().Insertar(adapter);
                 //if (!respuesta.Exito)
@@ -556,6 +555,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 //}
                 //return reporte;
             }
+            return reporteDTO;
         }
 
         public static ReporteDiaDTO CrearReporteMobil(VPuntoVentaDetalleDTO reporte, UnidadAlmacenGas almacen)
