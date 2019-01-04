@@ -16,7 +16,6 @@ namespace MVC.Presentacion.Models.Cobranza
         public byte IdFormaPago { get; set; }
         public string FolioBancario { get; set; }
         public string FormaPago { get; set; }
-        public List<FormaPagoDTO> MetodoPago { get; set; }
 
     }
 }

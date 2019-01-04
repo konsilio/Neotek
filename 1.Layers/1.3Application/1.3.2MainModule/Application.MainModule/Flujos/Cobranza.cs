@@ -40,5 +40,20 @@ namespace Application.MainModule.Flujos
                        
             return CobranzaServicio.Alta(abono);
         }
+        public RespuestaDto Registra(List<AbonosDTO> abonosDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarAbonos();
+            if (!resp.Exito) return resp;
+
+            var abono = AbonosAdapter.FromDTO(abonosDto);
+
+            var insAbono = CobranzaServicio.Alta(abono);
+            if (!insAbono.Exito) return resp;
+
+            var cargo = CobranzaServicio.Obtener(abonosDto[0].IdCargo);            
+            var UpdCargo = AbonosAdapter.FromDTO(cargo, abonosDto[0].MontoAbono);
+            return CobranzaServicio.Update(UpdCargo);
+           
+        }
     }
 }

@@ -33,7 +33,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _cobranza.Registra(_model));
         }
-
+        [Route("registrar/abonos")]
+        public HttpResponseMessage PostRegistrarAbonosLst(List<AbonosDTO> _model)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.Registra(_model));
+        }
 
     }
 }

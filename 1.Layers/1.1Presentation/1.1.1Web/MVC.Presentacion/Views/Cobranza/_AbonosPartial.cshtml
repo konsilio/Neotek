@@ -17,12 +17,17 @@
         settings.Name = "Abn";
         settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "AbonosPartial" };
         settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
+        //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
 
         //settings.CustomActionRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
         settings.SettingsCommandButton.UpdateButton.Text = "Abonar";
-       // settings.SettingsCommandButton.UpdateButton.RenderMode = GridCommandButtonRenderMode.Button;//SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Button;
+        // settings.SettingsCommandButton.UpdateButton.RenderMode = GridCommandButtonRenderMode.Button;//SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Button;
         settings.SettingsCommandButton.UpdateButton.RenderMode = GridCommandButtonRenderMode.Link;//SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Button;
+
+        //GridViewCommandColumnCustomButton customButton = new GridViewCommandColumnCustomButton();
+        //customButton.Text = "Abonar";
+        //customButton.ID = "deleteButton";
+        //settings.CommandColumn.CustomButtons.Add(customButton);
 
         settings.KeyFieldName = "IdCargo";
 
@@ -88,12 +93,8 @@
         });
         settings.Columns.Add(c =>
         {
-            c.FieldName = "FechaRegistro";
+            c.FieldName = "Abonos.FechaAbono";
             c.Caption = "Fecha Abono";
-            //c.ColumnType = MVCxGridViewColumnType.DateEdit;
-            //c.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
-            //c.Width = 100;
-            // ((DateEditProperties)c.PropertiesEdit).MinDate = DateTime.Today;
             c.SetDataItemTemplateContent(diTemplate =>
             {
                 GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
@@ -149,7 +150,7 @@
                 Html.DevExpress().TextBox(txtSettings =>
                 {
                     txtSettings.Name = string.Format("txtAbono_{0}", Template.ItemIndex.ToString());
-                    //txtSettings.Text = DataBinder.Eval(diTemplate.DataItem, diTemplate.Column.FieldName).ToString();
+                   // txtSettings.Text = DataBinder.Eval(Template.DataItem, Template.Column.FieldName).ToString();
                     //txtSettings.Properties.ClientSideEvents.GotFocus = string.Format("function(s, e) {{OnValueGotFocus(s, e, '{0}', '{1}'); }}", container.KeyValue.ToString(), container.Column.FieldName);
                 }).Render();
             });

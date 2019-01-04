@@ -46,16 +46,16 @@
                                             <div>
                                                 @if (ViewBag.EsAdmin)
                                                 {
-                                                    <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                        @foreach (var lst in ViewBag.Empresas)
+                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                    @foreach (var lst in ViewBag.Empresas)
                                                         {
-                                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                         }
-                                                    </select>
+                                                </select>
                                                 }
                                                 else
                                                 {
-                                                    @ViewBag.Empresas
+                                                @ViewBag.Empresas
                                                 }
                                             </div>
                                         </div>
@@ -65,8 +65,8 @@
                             <br />
                             <div class="row clearfix">
                                 <div class="col-sm-12">
-                                    <div class="row clearfix">                                         
-                                        <div class="col-sm-4">
+                                    <div class="row clearfix">
+                                        <div class="col-sm-3">
                                             <b>Cliente:</b>
                                             @Html.DevExpress().ComboBox(settings =>
                                                 {
@@ -75,10 +75,10 @@
                                                     settings.SelectedIndex = 0;
                                                     settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                     settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                    settings.Properties.TextField = "Nombre";
+                                                    settings.Properties.TextField = "Cliente";
                                                     settings.Properties.ValueField = "IdCliente";
                                                 }).BindList(ViewBag.Clientes).GetHtml()
-                                        </div>                                
+                                        </div>
                                         <div class="col-sm-2" style="top:20px">
                                             @Html.DevExpress().DateEdit(settings =>
                                                        {
@@ -88,12 +88,11 @@
                                                            settings.Theme = "Moderno";
                                                            settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
                                                            settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                                           settings.Date = DateTime.Now;
+                                                           settings.Attributes.Clear();
                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                                        }).GetHtml()
                                         </div>
-
                                         <div class="col-sm-3" style="top:10px">
                                             <div class="form-group">
                                                 <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
@@ -125,8 +124,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Fecha</th>
-                                                <th>Fecha</th>
-                                                <th>Vencimiento</th>
+                                                <th>Fecha Vencimiento</th>
                                                 <th>Ticket</th>
                                                 <th>Serie</th>
                                                 <th>Saldo Actual</th>
@@ -142,12 +140,12 @@
                                         </thead>
                                         <tbody>
                                             @*@if (Model != null)
-                                            {
-                                                foreach (var item in Model)
                                                 {
-                                                   
-                                                }
-                                            }*@
+                                                    foreach (var item in Model)
+                                                    {
+
+                                                    }
+                                                }*@
                                         </tbody>
                                     </table>
                                 </div>
@@ -172,7 +170,7 @@
                                         <tbody>
                                             @if (Model != null)
                                             {
-                                              
+
                                             }
                                         </tbody>
                                     </table>

@@ -23,9 +23,56 @@ namespace Application.MainModule.Servicios.Cobranza
             CargosDTO Pedido = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().Buscar(idCargo));
             return Pedido;
         }
+        public static decimal Total(List<CargosDTO> lst, string type)
+        {
+            decimal result = 0;
+
+            if(type =="T")
+             foreach(var x in lst)
+                {
+                    foreach (var s in x.lstCreditoR)
+                    {
+                        result += s.MontoAbono;
+                    }
+                }
+            if (type == "TE")
+                foreach (var x in lst)
+                {
+                    foreach (var s in x.lstCreditoR.Where(t=>t.IdFormaPago == 1))
+                    {
+                        result += s.MontoAbono;
+                    }
+                }
+            if (type == "TC")
+                foreach (var x in lst)
+                {
+                    foreach (var s in x.lstCreditoR.Where(t => t.IdFormaPago == 2))
+                    {
+                        result += s.MontoAbono;
+                    }
+                }
+            if (type == "TT")
+                foreach (var x in lst)
+                {
+                    foreach (var s in x.lstCreditoR.Where(t => t.IdFormaPago == 3))
+                    {
+                        result += s.MontoAbono;
+                    }
+                }
+
+            return result;
+        }
         public static RespuestaDto Alta(Abono _abonoDto)
         {
             return new AbonosDataAcces().Insertar(_abonoDto);
+        }
+        public static RespuestaDto Alta(List<Abono> _abonoDto)
+        {
+            return new AbonosDataAcces().Insertar(_abonoDto);
+        }
+        public static RespuestaDto Update(Cargo _abonoDto)
+        {
+            return new AbonosDataAcces().Actualizar(_abonoDto);
         }
         public static RespuestaDto NoExiste()
         {

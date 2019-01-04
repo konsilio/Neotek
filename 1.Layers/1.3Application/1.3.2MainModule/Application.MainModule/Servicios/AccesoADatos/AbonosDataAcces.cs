@@ -44,6 +44,34 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public RespuestaDto Insertar(List<Abono> _cc)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    foreach (var item in _cc)
+                    {
+                        uow.Repository<Abono>().Insert(item);
+                    }
+
+                    uow.SaveChanges();
+                    _respuesta.Id = _cc[0].IdCargo;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del cargo "+ _cc[0].IdCargo);
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public RespuestaDto Actualizar(Abono _pro)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -63,6 +91,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 {
                     _respuesta.Exito = false;
                     _respuesta.Mensaje = string.Format(Error.C0003, "del centro de costo"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Actualizar(Cargo _pro)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.Cargo>().Update(_pro);
+                    uow.SaveChanges();
+                    _respuesta.Id = _pro.IdCargo;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del cargo"); ;
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }

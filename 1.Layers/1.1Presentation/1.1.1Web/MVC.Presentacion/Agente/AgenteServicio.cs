@@ -698,7 +698,7 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetTiposPersona"];
             GetTiposPersona(tkn).Wait();
         }
-       private async Task GetTiposPersona(string Token)
+        private async Task GetTiposPersona(string Token)
         {
             using (var client = new HttpClient())
             {
@@ -788,7 +788,7 @@ namespace MVC.Presentacion.Agente
                     lus = new List<ClientesDto>();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
-                }              
+                }
 
                 _lstaClientes = lus;
             }
@@ -897,7 +897,7 @@ namespace MVC.Presentacion.Agente
                 _lstaClientesMod = lus;
 
             }
-        }       
+        }
         public void BuscarListaLocaciones(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaLocacion"];
@@ -3319,11 +3319,67 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Cargos
+        public void ListaCargosFilter(DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCargos"];
+            Cargos(fecha1, fecha2, Cliente, rfc, ticket, id, ApiCatalgos, token).Wait();
+        }
+        private async Task Cargos(DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CargosModel> cargos = new List<CargosModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        cargos = await response.Content.ReadAsAsync<List<CargosModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargos = new List<CargosModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                if (fecha1.Day != 1 && fecha1.Month != 1 && fecha1.Year != 1)
+                {
+                    cargos = (from x in cargos where x.FechaRegistro >= fecha1 select x).ToList();
+                }
+                if (fecha2.Day != 1 && fecha2.Month != 1 && fecha2.Year != 1)
+                {
+                    cargos = (from x in cargos where x.FechaRegistro <= fecha2 select x).ToList();
+                }
+                if (rfc != null)
+                {
+                    cargos = (from x in cargos where x.Rfc == rfc select x).ToList();
+                }
+
+                if (Cliente != 0)
+                {
+                    cargos = (from x in cargos where x.IdCliente == Cliente select x).ToList();
+                }
+                if (ticket != null)
+                {
+                    cargos = (from x in cargos where x.Ticket == ticket select x).ToList();
+                }
+                _ListaCargos = cargos;
+            }
+        }
         public void ListaCargos(short id, string token)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCargos"];
             Cargos(id, ApiCatalgos, token).Wait();
         }
+        //DateTime? fecha1, DateTime? fecha2, int? Cliente, string rfc = null
         private async Task Cargos(short id, string api, string token = null)
         {
             using (var client = new HttpClient())
@@ -3348,7 +3404,7 @@ namespace MVC.Presentacion.Agente
                 {
                     cargos = new List<CargosModel>();
                     client.CancelPendingRequests();
-                    client.Dispose(); 
+                    client.Dispose();
                 }
                 _ListaCargos = cargos;
             }
@@ -3382,7 +3438,7 @@ namespace MVC.Presentacion.Agente
                 {
                     cargo = new CargosModel();
                     client.CancelPendingRequests();
-                    client.Dispose(); 
+                    client.Dispose();
                 }
                 _Cargo = cargo;
             }
@@ -3397,7 +3453,11 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarAbono"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
+        public void GuardarNuevoAbono(List<AbonosModel> dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarAbonosLst"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
         #endregion
         private async Task LLamada<T>(T _dto, string token, string Tipo)
         {

@@ -16,6 +16,12 @@ namespace MVC.Presentacion.App_Code
             agente.ListaCargos(id, tkn);
             return agente._ListaCargos;
         }
+        public static List<CargosModel> ObtenerCargosFilter(DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaCargosFilter(fecha1, fecha2, Cliente, rfc, ticket, id, tkn);
+            return agente._ListaCargos;
+        }
         public static CargosModel ObtenerIdCargo(int id, string tkn)
         {
             var agente = new AgenteServicio();
@@ -29,10 +35,10 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarNuevoAbono(model, tkn);
             return agente._RespuestaDTO;
         }
-        public static RespuestaDTO AltaNuevoCargo(List<CargosModel> model, string tkn)
+        public static RespuestaDTO AltaAbonos(List<AbonosModel> model, string tkn)
         {
             var agente = new AgenteServicio();
-           // agente.GuardarNuevoAbono(model, tkn);
+            agente.GuardarNuevoAbono(model, tkn);
             return agente._RespuestaDTO;
         }
         public static RespuestaDTO ActualizarCargo(CargosModel model, string tkn)
@@ -46,7 +52,6 @@ namespace MVC.Presentacion.App_Code
         //    var agente = new AgenteServicio();
         //    agente.CancelarNuevoCargo(model, tkn);
         //    return agente._RespuestaDTO;
-        //}
-     
+        //}     
     }
 }

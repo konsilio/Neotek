@@ -3,6 +3,7 @@ using DevExpress.Web.Demos.Mvc;
 using DevExpress.Web.Mvc;
 using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Cobranza;
+using MVC.Presentacion.Models.Seguridad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace MVC.Presentacion.Controllers
     {
         string _tkn = string.Empty;
         // GET: Cobranza
-        public ActionResult Index()
+        public ActionResult Index(DateTime? fecha1, DateTime? fecha2, int? Cliente, string rfc = null, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
@@ -26,11 +27,42 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
-            List<CargosModel> _model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            List<CargosModel> _model = new List<CargosModel>();
+            if (fecha1 != null || fecha2 != null || Cliente != null || rfc != null)
+            {
+                _model = CobranzaServicio.ObtenerCargosFilter(fecha1.Value, fecha2.Value, Cliente.Value, rfc, null,TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            }
+            else
+                _model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
 
+            if (TempData["RespuestaDTO"] != null)
+            {
+                if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
+                {
+                    ViewBag.Tipo = "alert-danger";
+                    ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+                    //TempData["RespuestaDTO"] = ViewBag.MensajeError;
+                    //ViewBag.MensajeError = TempData["RespuestaDTO"];
+                }
+                else
+                {
+                    ViewBag.Tipo = "alert-success";
+                    ViewBag.Msj = msj;
+                }
+            }
             return View(_model);
         }
-        public ActionResult CreditoRecuperado()
+        public ActionResult Buscar(CargosModel _model)
+        {
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            return RedirectToAction("Index", new { fecha1 = _model.FechaRango1, fecha2 = _model.FechaRango2, Cliente = _model.IdCliente, rfc = _model.Rfc });
+        }
+        public ActionResult BuscarCredito(CargosModel _model)
+        {
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            return RedirectToAction("CreditoRecuperado", new { fecha1 = _model.FechaRango1, fecha2 = _model.FechaRango2, Cliente = _model.IdCliente, ticket = _model.Ticket });
+        }
+        public ActionResult CreditoRecuperado(DateTime? fecha1, DateTime? fecha2, int? Cliente, string ticket = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
@@ -40,7 +72,13 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
-            List<CargosModel> _model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            List<CargosModel> _model = new List<CargosModel>();
+            if (fecha1 != null || fecha2 != null || Cliente != null || ticket != null)
+            {
+                _model = CobranzaServicio.ObtenerCargosFilter(fecha1.Value, fecha2.Value, Cliente.Value, null,ticket, TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            }
+            else
+                _model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
 
             return View(_model);
         }
@@ -76,14 +114,13 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public ActionResult Editar(MVCxGridViewBatchUpdateValues<CargosModel, int> updateValues)
+        public ActionResult Editar(CargosModel _model)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tkn = Session["StringToken"].ToString();
             var Id = TokenServicio.ObtenerIdEmpresa(_tkn);
-            var _model = new List<CargosModel>();
-          //  _model.IdEmpresa = Id;
-            var VModel = Session["xyz"];
+            // var _model = new List<CargosModel>();
+            _model.IdEmpresa = Id;
             var Respuesta = CobranzaServicio.AltaNuevoCargo(_model, Session["StringToken"].ToString());
             if (Respuesta.Exito)
             {
@@ -100,10 +137,12 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
-            var id = (int)TempData["intIdOrdenCompra"];
-            updateValues.Update = updateValues.Update.Select(x => { x.IdCargo = id; return x; }).ToList();
-            TempData["RespuestaDTO"] = CobranzaServicio.AltaNuevoCargo(updateValues.Update, _tkn);
-            return RedirectToAction("Index");
+            updateValues.Update[0].Abonos.IdCargo = updateValues.Update[0].IdCargo;
+            List<AbonosModel> _lst = new List<AbonosModel>();
+            _lst.Add(updateValues.Update[0].Abonos);
+            var respuesta = CobranzaServicio.AltaAbonos(_lst, _tkn);
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Index", new { msj = respuesta.Mensaje });
         }
         [ValidateInput(false)]
         public ActionResult AbonosPartial()
@@ -113,5 +152,27 @@ namespace MVC.Presentacion.Controllers
             var model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             return PartialView("_AbonosPartial", model);
         }
+        private string Validar(RespuestaDTO Resp = null)
+        {
+            string Mensaje = string.Empty;
+            ModelState.Clear();
+            if (Resp != null)
+            {
+                if (Resp.ModelStatesStandar != null)
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                    {
+                        ModelState.AddModelError(error.Key, error.Value);
+                    }
+                if (Resp.MensajesError != null)
+                {
+                    if (Resp.MensajesError.Count > 1)
+                        Mensaje = Resp.MensajesError[0] + " " + Resp.MensajesError[1];
+                    else
+                        Mensaje = Resp.MensajesError[0];
+                }
+            }
+            return Mensaje;
+        }
+
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Application.MainModule.DTOs.Cobranza
 {
     public class CargosDTO
@@ -28,5 +27,24 @@ namespace Application.MainModule.DTOs.Cobranza
         public decimal TotalEfectivo { get; set; }
         public decimal TotalCheques { get; set; }
         public decimal TotalTransferencia { get; set; }
+        public List<AbonosDTO> lstCreditoR { get; set; }
+        //cartera vencida
+        public string Serie { get; set; }
+        public decimal SaldoActual { get; set; }
+        public decimal SaldoCorriente { get; set; }
+        public decimal SaldoVencido { get; set; }
+        public decimal Dias1a7 { get; set; }
+        public decimal Dias17a31 { get; set; }
+        public decimal Dias32a61 { get; set; }
+        public decimal Dias62a91 { get; set; }
+        public decimal Diasmas91 { get; set; }
+        public decimal TotSaldoActual { get; set; }
+        public decimal TotSaldoCorriente { get; set; }
+        public decimal TotSaldoVencido { get; set; }
+        public decimal TotDias1a7 { get; set; }
+        public decimal TotDias17a31 { get; set; }
+        public decimal TotDias32a61 { get; set; }
+        public decimal TotDias62a91 { get; set; }
+        public decimal TotDiasmas91 { get; set; }
     }
 }
