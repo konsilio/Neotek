@@ -1462,10 +1462,38 @@ namespace Application.MainModule.Flujos
             var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(pv.IdCAlmacenGas);
             if (esLP)
             {
+                var lectInicial = AlmacenGasServicio.ObtenerUltimaLectura(unidad, false);
+                var puntoVenta = PuntoVentaServicio.Obtener(unidad);
+                var ventas = puntoVenta.VentaPuntoDeVenta.Where(x=>x.FechaRegistro.Equals(DateTime.Now));
                 var precios = PuntoVentaServicio.ObtenerPreciosVenta(TokenServicio.ObtenerIdEmpresa());
                 var productosGas = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa(), true);
                 var kilosCamioneta = LecturaGasServicio.ObtenerKilosGasCamioneta(unidad.IdCAlmacenGas, DateTime.Now, pv.IdPuntoVenta);
-                return VentasEstacionesAdapter.ToDTO(productosGas, precios, kilosCamioneta);
+
+                decimal totalKilos = 0,calculo=0;
+
+                if (unidad.IdCamioneta>0)
+                {
+                    var cilindros = AlmacenGasServicio.ObtenerCilindros(unidad);
+                    var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+                    return VentasEstacionesAdapter.ToDTOGas(cilindros, kilosCamioneta, precioVenta);
+                }
+                else
+                {
+                    calculo = ((lectInicial.Porcentaje??0/100) * unidad.CapacidadTanqueKg ?? 0) * (decimal)0.54;
+                    foreach (var item in ventas)
+                    {
+                        foreach (var itemDetalle in item.VentaPuntoDeVentaDetalle)
+                        {
+                            totalKilos += itemDetalle.CantidadKg ?? 0;
+                        }
+                    }
+                    if(totalKilos>0)
+                        calculo = calculo - totalKilos;
+                    return VentasEstacionesAdapter.ToDTO(productosGas, precios, calculo);
+                    //return VentasEstacionesAdapter.ToDTO(productosGas, precios, kilosCamioneta);
+                }
+
+                
             }
             else if (esCilindroConGas)
             {
