@@ -84,10 +84,9 @@ namespace Application.MainModule.Servicios.Almacenes
             resp = new AlmacenGasDataAccess().Insertar(unidad);
             return ObtenerUnidadAlamcenGas((short)resp.Id);
         }
-
         public static CamionetaCilindro BuscarCamionetaCilindro(int idCamioneta, int idCilindro, short idEmpresa)
         {
-            return new AlmacenGasDataAccess().BuscarCamionetaCilindro(idCamioneta, idCilindro,idEmpresa);
+            return new AlmacenGasDataAccess().BuscarCamionetaCilindro(idCamioneta, idCilindro, idEmpresa);
         }
 
         /// <summary>
@@ -100,7 +99,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenDataAccess().Actualizar(camionetaCilindro);
         }
-
         public static List<AlmacenGasRecarga> ObtenerRecargaInicial(short IdCAlmacenGasEntrada)
         {
             return new AlmacenGasDataAccess().ObtenerRecargaInicial(IdCAlmacenGasEntrada);
@@ -140,6 +138,14 @@ namespace Application.MainModule.Servicios.Almacenes
         public static List<AlmacenGasTomaLectura> ObtenerLecturas(short idCAlmacenGas)
         {
             return new AlmacenGasDataAccess().BuscarLecturas(idCAlmacenGas);
+        }
+        public static List<AlmacenGasTomaLecturaCilindro> ObtenerLecturasCamioneta(short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().BuscarLecturasCamioneta(idCAlmacenGas);
+        }
+        public static List<AlmacenGasTomaLectura> ObtenerLecturaIncialdelMes(short idCAlmacenGas, int mes, int anio)
+        {
+            return new AlmacenGasDataAccess().BuscarLecturas(idCAlmacenGas, mes, anio);
         }
         public static List<AlmacenGasTomaLectura> ObtenerTomaLecturasDatosNoProcesados(UnidadAlmacenGas unidad)
         {
@@ -241,23 +247,16 @@ namespace Application.MainModule.Servicios.Almacenes
                         }
                         else
                         {
-
-
                             if (!final)
                             {
                                 var ultimalecturaInicial = uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final));
                                 if (ultimalecturaInicial != null)
-                                {
                                     return ultimalecturaInicial;
-                                }
                                 else
-                                {
                                     return uniAlm.TomasLectura.Last();
-                                }
                             }
                             else
                             {
-
                                 var lecFinales = uniAlm.TomasLectura.ToList().Find(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
                                 if (lecFinales != null)
                                 {
@@ -265,14 +264,12 @@ namespace Application.MainModule.Servicios.Almacenes
                                     return ultimalecturaFinal;
                                 }
                                 else
-                                {
                                     return uniAlm.TomasLectura.Last();
-                                }
                             }
                         }
             return !final
-                ? BuscarUltimaLectura(uniAlm.IdCAlmacenGas, TipoEventoEnum.Final)
-                : BuscarUltimaLectura(uniAlm.IdCAlmacenGas, TipoEventoEnum.Inicial);
+            ? BuscarUltimaLectura(uniAlm.IdCAlmacenGas, TipoEventoEnum.Final)
+            : BuscarUltimaLectura(uniAlm.IdCAlmacenGas, TipoEventoEnum.Inicial);
         }
         public static AlmacenGas Obtener(short idAlmacenGas)
         {
@@ -353,7 +350,6 @@ namespace Application.MainModule.Servicios.Almacenes
                         return autoConsumo.UnidadSalida;
                 }
             }
-
             if (!deSalida)
                 return ObtenerUnidadAlamcenGas(autoConsumo.IdCAlmacenGasEntrada);
             else
@@ -366,7 +362,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 if (calibracion.UnidadAlmacenGas != null)
                     return calibracion.UnidadAlmacenGas;
             }
-
             return ObtenerUnidadAlamcenGas(calibracion.IdCAlmacenGas);
         }
         public static UnidadAlmacenGas ObtenerUnidadAlmacenGas(AlmacenGasTomaLectura tomaLectura)
@@ -376,7 +371,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 if (tomaLectura.UnidadAlmacenGas != null)
                     return tomaLectura.UnidadAlmacenGas;
             }
-
             return ObtenerUnidadAlamcenGas(tomaLectura.IdCAlmacenGas);
         }
         public static UnidadAlmacenGas ObtenerUnidadAlmacenGasAlterno(short idEmpresa)
@@ -391,7 +385,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 if (unidades != null & unidades.Count > 0)
                     return unidades;
             }
-
             return new AlmacenGasDataAccess().ObtenerUnidadesAlmacenGasAlterno(empresa.IdEmpresa);
         }
 
@@ -408,7 +401,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 if (unidades != null & unidades.Count > 0)
                     return unidades;
             }
-
             return new AlmacenGasDataAccess().ObtenerUnidadesAlmacenGasAlternoNoActivos(empresa.IdEmpresa);
         }
         public static AlmacenGasDescarga ObtenerDescargaPorOCompraExpedidor(int idOCompra)
@@ -463,7 +455,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             if (AutoConsumo.Fotografias != null && AutoConsumo.Fotografias.Count > 0)
                 return AutoConsumo.Fotografias.ToList();
-
             return new AlmacenGasDataAccess().BuscarImagenesAutoConsumo(AutoConsumo.IdEmpresa, AutoConsumo.Year, AutoConsumo.Mes, AutoConsumo.Dia, AutoConsumo.Orden);
         }
 
@@ -486,14 +477,12 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             if (calibracion.Fotografias != null && calibracion.Fotografias.Count > 0)
                 return calibracion.Fotografias.ToList();
-
             return new AlmacenGasDataAccess().BuscarImagenesCalibracion(calibracion.IdCAlmacenGas);
         }
         public static List<AlmacenGasTomaLecturaFoto> ObtenerImagenes(AlmacenGasTomaLectura TomaLectura)
         {
             if (TomaLectura.Fotografias != null && TomaLectura.Fotografias.Count > 0)
                 return TomaLectura.Fotografias.ToList();
-
             return new AlmacenGasDataAccess().BuscarImagenesTomaLectura(TomaLectura.IdCAlmacenGas);
         }
         public static string ObtenerNombreUnidadAlmacenGas(UnidadAlmacenGas uAG)
@@ -519,7 +508,7 @@ namespace Application.MainModule.Servicios.Almacenes
             if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
             {
                 #region Verifico si hay lecturas
-                if(lectInicial!=null && lectFinal != null)
+                if (lectInicial != null && lectFinal != null)
                 {
                     var reporte = CajaGeneralServicio.ObtenerRepCamionetas(almacen.IdCAlmacenGas, fecha);
                     reporte[0].EsCamioneta = true;
@@ -530,14 +519,14 @@ namespace Application.MainModule.Servicios.Almacenes
                 else
                 {
                     reporteDTO.Error = true;
-                    reporteDTO.Mensaje = "Para poder realizar el reporte del día es necesario tener las lecturas iniciales y finales la camioneta: "+almacen.Camioneta.Nombre;
+                    reporteDTO.Mensaje = "Para poder realizar el reporte del día es necesario tener las lecturas iniciales y finales la camioneta: " + almacen.Camioneta.Nombre;
                 }
                 #endregion
             }
             else
             {
                 #region Verifico si hay lecturas
-                if(lectInicial!=null && lectFinal != null)
+                if (lectInicial != null && lectFinal != null)
                 {
                     var reporte = CajaGeneralServicio.ObtenerRepPipas(idCAlmacenGas, fecha);
                     reporteDTO = CrearReporteMobil(reporte, almacen);
@@ -612,9 +601,9 @@ namespace Application.MainModule.Servicios.Almacenes
         /// <param name="fecha">Fecha de busqueda</param>
         /// <param name="inicial">Es una lectura incial o final </param>
         /// <returns>Una entidad de tipo AlmacenGasTomaLectura en caso de existir</returns>
-        public static AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, DateTime fecha,bool inicial = true)
+        public static AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, DateTime fecha, bool inicial = true)
         {
-                return new AlmacenGasDataAccess().BuscarLectura(idCAlmacenGas, fecha, inicial);
+            return new AlmacenGasDataAccess().BuscarLectura(idCAlmacenGas, fecha, inicial);
         }
 
         public static List<Pipa> ObtenerPipasEmpresa(short idEmpresa)
@@ -1061,6 +1050,10 @@ namespace Application.MainModule.Servicios.Almacenes
         public static UnidadAlmacenGas ObtenerAlmacen(short idCAlmacenGas)
         {
             return new AlmacenGasDataAccess().BuscarAlmacen(idCAlmacenGas);
+        }
+        public static UnidadAlmacenGas ObtenerAlmacenPrincipal(short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().BuscarAlmacenPrincipal(idEmpresa);
         }
         public static UnidadAlmacenGas AplicarDescargaAlmacenAlterno(UnidadAlmacenGas unidadEntrada, AlmacenGasDescarga descarga)
         {
@@ -2533,6 +2526,29 @@ namespace Application.MainModule.Servicios.Almacenes
         public static List<EstacionCarburacion> ObtenerEstacionesEmpresa(short idEmpresa)
         {
             return new AlmacenDataAccess().ObtenerEstaciones(idEmpresa);
+        }
+        public static decimal ObtenerKgInventarioFisico(DateTime fecha,short idEmpresa)
+        {
+            decimal Ifkg = 0;
+            var almacenes = ObtenerAlmacenes(idEmpresa);
+            foreach (var almacen in almacenes)
+            {
+                var lecturas = ObtenerLecturas(almacen.IdCAlmacenGas);
+                foreach (var lect in lecturas)
+                {
+                    if (lect.FechaAplicacion.Equals(fecha) && lect.ClaveOperacion.Contains("LF"))
+                    {
+                        if (lect.Porcentaje != null)
+                            Ifkg += CalcularAlmacenServicio.ObtenerKgLectura(lect.UnidadAlmacenGas.CapacidadTanqueLt ?? 0, lect.Porcentaje ?? 0, almacen.EsGeneral ? 1 : (decimal)0.54);
+                        else
+                        {
+                            foreach (var cilindro in lect.Cilindros)
+                                Ifkg += CalcularAlmacenServicio.ObtenerKgLecturaCilindro(cilindro.Cantidad, cilindro.Cilindro.CapacidadKg);
+                        }
+                    }
+                }
+            }       
+            return Ifkg;
         }
     }
 }

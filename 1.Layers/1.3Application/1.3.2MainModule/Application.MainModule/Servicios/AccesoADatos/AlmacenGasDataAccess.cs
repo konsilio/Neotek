@@ -182,6 +182,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                     ).ToList();
         }
+        public List<AlmacenGasTomaLecturaCilindro> BuscarLecturasCamioneta(short idCAlmacenGas)
+        {
+            return uow.Repository<AlmacenGasTomaLecturaCilindro>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                                                    ).ToList();
+        }
+        public List<AlmacenGasTomaLectura> BuscarLecturas(short idCAlmacenGas, int mes, int anio)
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+            && x.FechaAplicacion.Month.Equals(mes) && x.FechaAplicacion.Year.Equals(anio)).ToList();
+        }
         public List<AlmacenGasTomaLectura> BuscarLecturas(short idCAlmacenGas, bool noProcesados)
         {
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
@@ -372,7 +382,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
                 catch (Exception)
                 {
-                    //_respuesta.Exito = false;
+                    //_respuesta.Exito = false; 
                     //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
                     //_respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
@@ -868,6 +878,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<UnidadAlmacenGas>().GetSingle(
                 x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                && x.Activo
+            );
+        }
+        public UnidadAlmacenGas BuscarAlmacenPrincipal(short idEmpresa)
+        {
+            return uow.Repository<UnidadAlmacenGas>().GetSingle(
+                x => x.IdEmpresa.Equals(idEmpresa)
+                && x.EsGeneral
                 && x.Activo
             );
         }

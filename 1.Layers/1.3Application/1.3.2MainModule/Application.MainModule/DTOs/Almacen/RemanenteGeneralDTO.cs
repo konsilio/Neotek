@@ -8,17 +8,18 @@ namespace Application.MainModule.DTOs.Almacen
 {
     public class RemanenteGeneralDTO
     {
-        short IdEmpresa { get; set; }
-        decimal InventarioInicial { get; set; }
-        decimal Ventas { get; set; }
-        decimal Carburacion { get; set; }
-        decimal InventarioLibro { get; set; }
-        decimal InventarioFisico { get; set; }
-        decimal GasSobrante { get; set; }
-        decimal RemanenteDecimal { get; set; }
-        int Anio { get; set; }
-        int Mes { get; set; }
-        int dia { get; set; }
+        public short IdEmpresa { get; set; }
+        public decimal InventarioInicial { get; set; }
+        public decimal AcumuladoCompras { get; set; }
+        public decimal Ventas { get; set; }
+        public decimal Carburacion { get; set; }
+        public decimal InventarioLibro { get; set; }
+        public decimal InventarioFisico { get; set; }
+        public decimal GasSobrante { get; set; }
+        public decimal RemanenteDecimal { get; set; }
+        public int Anio { get; set; }
+        public int Mes { get; set; }
+        public int dia { get; set; }
 
     }
 }
