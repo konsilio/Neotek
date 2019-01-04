@@ -162,5 +162,20 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().insertCargoMobile(cargo);
         }
+        /// <summary>
+        /// buscarCorte
+        /// Permite realizar la consulta de un corte en la estación, se envian como
+        /// parametros el día , mes , año y la estación a buscar , se retornara uno bjeto det tipo
+        /// VentaCorteAnticipoEC con el resultado de la conslta.
+        /// </summary>
+        /// <param name="dia">Día en que se realizo la venta </param>
+        /// <param name="mes">Mes en que se realizo la venta </param>
+        /// <param name="year">Año en que se relizo la venta </param>
+        /// <param name="idCAlmacenGas">Id del CAlmacenGas del que se consulta </param>
+        /// <returns>Retornara un objeto de tipo VentaCorteAnticipoEC con la respuesta de este </returns>
+        public static VentaCorteAnticipoEC  buscarCorte(DateTime fecha, short idCAlmacenGas)
+        {
+            return new PuntoVentaDataAccess().BuscarCorte(fecha, idCAlmacenGas);
+        }
     }
 }

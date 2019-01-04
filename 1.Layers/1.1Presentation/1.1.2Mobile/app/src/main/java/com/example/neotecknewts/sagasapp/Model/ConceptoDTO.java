@@ -77,6 +77,14 @@ public class ConceptoDTO implements Serializable {
     @SerializedName("LitrosDespachados")
     private double LitrosDespachados;
 
+    //region Campos para descontar del inventario lo cilindros vendidos
+    @SerializedName("EsVentaCilindro")
+    private boolean EsVentaCilindro;
+
+    @SerializedName("IdCilindro")
+    private int IdCilindro;
+    //endregion
+
 
     public int getIdTipoGas() {
         return IdTipoGas;
@@ -268,5 +276,21 @@ public class ConceptoDTO implements Serializable {
 
     public void setDescuentoTotal(double descuentoTotal) {
         DescuentoTotal = descuentoTotal;
+    }
+
+    public boolean isEsVentaCilindro() {
+        return EsVentaCilindro;
+    }
+
+    public void setEsVentaCilindro(boolean esVentaCilindro) {
+        EsVentaCilindro = esVentaCilindro;
+    }
+
+    public int getIdCilindro() {
+        return IdCilindro;
+    }
+
+    public void setIdCilindro(int idCilindro) {
+        IdCilindro = idCilindro;
     }
 }

@@ -813,14 +813,11 @@
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="CCamionetaCilindro">
           <Key>
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdCamioneta" />
             <PropertyRef Name="IdCilindro" />
-            <PropertyRef Name="Cantidad" />
           </Key>
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="IdCamioneta" Type="int" Nullable="false" />
@@ -1711,7 +1708,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
             <PropertyRef Name="IdPregunta" />
             <PropertyRef Name="Respuesta" />
           </Key>
-          <Property Name="IdRespuesta" Type="int" Nullable="false" />
+          <Property Name="IdRespuesta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdPedido" Type="int" Nullable="false" />
           <Property Name="IdPregunta" Type="int" Nullable="false" />
           <Property Name="Respuesta" Type="tinyint" Nullable="false" />
@@ -5048,6 +5045,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
           <EntitySet Name="Cargo" EntityType="Self.Cargo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CBanco" EntityType="Self.CBanco" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCamioneta" EntityType="Self.CCamioneta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CCamionetaCilindro" EntityType="Self.CCamionetaCilindro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCentroCosto" EntityType="Self.CCentroCosto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCliente" EntityType="Self.CCliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CClienteCondicion" EntityType="Self.CClienteCondicion" Schema="dbo" store:Type="Tables" />
@@ -5130,14 +5128,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
           <EntitySet Name="VentaPuntoDeVenta" EntityType="Self.VentaPuntoDeVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaPuntoDeVentaDetalle" EntityType="Self.VentaPuntoDeVentaDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaPuntoDeVentaEfectivo" EntityType="Self.VentaPuntoDeVentaEfectivo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CCamionetaCilindro" EntityType="Self.CCamionetaCilindro" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [CCamionetaCilindro].[IdEmpresa] AS [IdEmpresa], 
-    [CCamionetaCilindro].[IdCamioneta] AS [IdCamioneta], 
-    [CCamionetaCilindro].[IdCilindro] AS [IdCilindro], 
-    [CCamionetaCilindro].[Cantidad] AS [Cantidad]
-    FROM [dbo].[CCamionetaCilindro] AS [CCamionetaCilindro]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="CProductoAsociado" EntityType="Self.CProductoAsociado" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [CProductoAsociado].[IdProducto] AS [IdProducto], 
@@ -8860,15 +8850,15 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
             <PropertyRef Name="IdEmpresa" />
             <PropertyRef Name="IdCamioneta" />
             <PropertyRef Name="IdCilindro" />
-            <PropertyRef Name="Cantidad" />
+            <!--<PropertyRef Name="Cantidad" />-->
           </Key>
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
           <Property Name="IdCamioneta" Type="Int32" Nullable="false" />
           <Property Name="IdCilindro" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="UnidadAlmacenGasCilindro" Relationship="Sagas.MainModuleModel.FK_CamionetaCilindro_CAlmacenGasCilindro" FromRole="CamionetaCilindro" ToRole="UnidadAlmacenGasCilindro" />
           <NavigationProperty Name="Camioneta" Relationship="Sagas.MainModuleModel.FK_CamionetaCilindro_Camioneta" FromRole="CamionetaCilindro" ToRole="Camioneta" />
-          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CamionetaCilindro_Empresa" FromRole="CamionetaCilindro" ToRole="Empresa" />
-          <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CamionetaCilindro_Empresa" FromRole="CamionetaCilindro" ToRole="Empresa" />          
         </EntityType>
         <Association Name="FK_Almacen_Producto">
           <End Type="Sagas.MainModuleModel.Producto" Role="Producto" Multiplicity="1" />
@@ -13234,11 +13224,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
           </EntitySetMapping>
           <EntitySetMapping Name="CamionetaCilindro">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.CamionetaCilindro">
-              <MappingFragment StoreEntitySet="CCamionetaCilindro">
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+              <MappingFragment StoreEntitySet="CCamionetaCilindro">                
                 <ScalarProperty Name="IdCilindro" ColumnName="IdCilindro" />
                 <ScalarProperty Name="IdCamioneta" ColumnName="IdCamioneta" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

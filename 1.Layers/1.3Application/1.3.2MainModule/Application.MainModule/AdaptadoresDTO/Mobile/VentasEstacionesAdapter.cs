@@ -40,7 +40,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new LineaDto()
             {
                 Id = linea.IdProductoLinea,
-                Nombre = linea.Descripcion
+                Nombre = linea.Descripcion,
+                IdLinea = linea.IdProductoLinea
             };
         }
 
@@ -50,6 +51,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 Id = categoria.IdCategoria,
                 Nombre = categoria.Nombre,
+                IdCategoria = categoria.IdCategoria
             };
         }
 

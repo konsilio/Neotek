@@ -67,7 +67,7 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("Entrega")
     private String Entrega;
 
-    @SerializedName("IdRecibio")
+    @SerializedName("IdRecibe")
     private int IdRecibio;
 
     @SerializedName("IdEntrega")

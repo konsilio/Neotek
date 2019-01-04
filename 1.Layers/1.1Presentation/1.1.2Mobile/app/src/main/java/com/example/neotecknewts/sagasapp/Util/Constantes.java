@@ -59,4 +59,6 @@ public class Constantes {
     public static final String GET_USUARIOS_ANTICIPOS = "mobile/catalogos/anticipos-y-cortes/usuarios";
     public static final String GETUSUARIOS_CORTES = "mobile/catalogos/anticipos-y-cortes/usuarios-liquitar";
     public static final String GET_VENTA_EXTRAFORANEA = "mobile/venta-extraforanea/{idCliente}" ;
+    public static final String GET_HAY_VENTA = "mobile/hay-corte-estacion/{fecha}";
+    public static final String GET_HAY_LECTURAS = "mobile/cortes/verificar-lecturas";
 }

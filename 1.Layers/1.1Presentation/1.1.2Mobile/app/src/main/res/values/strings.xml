@@ -262,4 +262,6 @@
         <item>Desc</item>
         <item>Subt.</item>
     </string-array>
+    <string name="info">Información</string>
+    <string name="Registra_configuracion_final">Registra la configuración de entrada de la camioneta</string>
 </resources>

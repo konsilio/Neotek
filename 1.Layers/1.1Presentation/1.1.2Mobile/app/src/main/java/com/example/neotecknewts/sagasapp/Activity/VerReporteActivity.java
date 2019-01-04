@@ -652,7 +652,7 @@ public class VerReporteActivity extends AppCompatActivity {
                         "Clave Corte\t" +
                         "[{ClaveTraspaso}]\n" +
                         "Fecha \t" +
-                        "[{Fecha}]\n" +
+                        " [{Fecha}]\n" +
                         "Hora \t" +
                         "[{Hora}]\n" +
                         "----------------------\n" +
@@ -676,12 +676,14 @@ public class VerReporteActivity extends AppCompatActivity {
                     "Litros vendidos: \t" +
                     "[{Litros-vendidos}]\n" ;
         }
-                StringReporte+="Entregue\n"+
+                StringReporte+="Entrega\n"+
                         "[{Entrego-nombre}]\n\n" +
                         "________________________\n"+
-                        "Recibi:\n"+
+                        "Firma\n\n"+
+                        "Recibe:\n"+
                         "[{Recibio}]\n\n"+
-                        "________________________\n"
+                        "________________________\n"+
+                        "Firma\n\n"
                         ;
         HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",
                 corteDTO.getClaveOperacion());
@@ -817,22 +819,24 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</body>";
 
         StringReporte =
-                "\t Reporte-Anticipo\n" +
-                "Clave Anticipo\t" +
+                "\t Reporte-Anticipo \n" +
+                "Clave Anticipo \t" +
                 "[{ClaveTraspaso}]\n" +
-                "Fecha\t" +
-                "[{Fecha}]\n" +
-                "Hora\t" +
+                "Fecha \t" +
+                " [{Fecha}]\n" +
+                "Hora \t" +
                 "[{Hora}]\n" +
                 "-----------------------------\n" +
-                "Estacion\t"+
+                "Estacion \t"+
                 "[{Estacion}]\n" +
                 "Monto anticipado: \t" +
                 "[{Monto-anticipo}]\n\n"+
-                "Entregue:\n"+
-                "[{Usuario-entrego}]\n____________________________\n\n"+
-                "Recibi\n"+
-                        "[{Usuario-recibi}]\n____________________________\n\n";
+                "Entrega: \n"+
+                "[{Usuario-entrego}]\n____________________________\n"+
+                        "Firma\n\n"+
+                "Recibe\n"+
+                        "[{Usuario-recibi}]\n____________________________\n"+
+        "Firma\n\n";
         HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter6 =

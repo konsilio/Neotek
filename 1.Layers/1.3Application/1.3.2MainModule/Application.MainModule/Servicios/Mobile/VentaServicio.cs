@@ -176,7 +176,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.IdTipoOperacion = 2;
             adapter.PuntoVenta = almacen.Numero;
             adapter.FechaAplicacion = dto.Fecha;
-            adapter.OperadorChofer = puntoVenta.OperadorChofer.Usuario.Nombre + "" + puntoVenta.OperadorChofer.Usuario.Apellido1 + puntoVenta.OperadorChofer.Usuario.Apellido2;
+            adapter.OperadorChofer = puntoVenta.OperadorChofer.Usuario.Nombre + " " + puntoVenta.OperadorChofer.Usuario.Apellido1 +" "+ puntoVenta.OperadorChofer.Usuario.Apellido2;
             return GasServicio.Corte(adapter);
         }
         public static int ObtenerIdCamioneta(int idUsuario)

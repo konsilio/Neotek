@@ -155,7 +155,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                     if(efectivio<ventaDTO.getTotal()){
                         error = true;
                         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
-                        builder.setTitle(R.string.mensjae_error_campos);
+                        builder.setTitle(R.string.info);
                         builder.setMessage("El monto es menor al pago requerido");
                         builder.setPositiveButton(R.string.regresar, (dialogInterface, i) ->
                                 dialogInterface.dismiss());
@@ -167,7 +167,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                 }else{
                     error = true;
                     AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
-                    builder.setTitle(R.string.mensjae_error_campos);
+                    builder.setTitle(R.string.info);
                     builder.setMessage("Es necesario indicar el monto pagado");
                     builder.setPositiveButton(R.string.regresar, (dialogInterface, i) ->
                             dialogInterface.dismiss());
@@ -180,7 +180,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                     if (ventaDTO.getLimiteCreditoCliente() < ventaDTO.getTotal()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(this,
                                 R.style.AlertDialog);
-                        builder.setTitle(R.string.error_titulo);
+                        builder.setTitle(R.string.info);
                         builder.setMessage("No se puede realizar la venta, favor de comunicarse con el" +
                                 "área de crédito y  cobranza");
                         builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
@@ -263,7 +263,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
     @Override
     public void onError(RespuestaPuntoVenta data) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
-        builder.setTitle(R.string.error_titulo);
+        builder.setTitle(R.string.info);
         builder.setMessage(data.getMensaje());
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
         builder.create();

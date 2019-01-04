@@ -35,27 +35,27 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/textView12"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/producto"
+                android:text="@string/categoria"
                 android:textAlignment="textStart"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/TVPuntoVentaOtrosActivityTitulo"
                 tools:ignore="RtlCompat" />
 
             <Spinner
-                android:id="@+id/SPuntoVentaOtrosActivityProducto"
-                android:layout_width="match_parent"
+                android:id="@+id/SPuntoVentaOtrosCategoria"
+                android:layout_width="192dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textView14"
-                app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaOtrosLinea" />
+                app:layout_constraintStart_toEndOf="@+id/textView12"
+                app:layout_constraintTop_toBottomOf="@+id/TVPuntoVentaOtrosActivityTitulo" />
         </TableRow>
 
         <TableRow
@@ -91,27 +91,27 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/textView14"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/categoria"
+                android:text="@string/producto"
                 android:textAlignment="textStart"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/TVPuntoVentaOtrosActivityTitulo"
+                app:layout_constraintTop_toBottomOf="@+id/textView13"
                 tools:ignore="RtlCompat" />
 
             <Spinner
-                android:id="@+id/SPuntoVentaOtrosCategoria"
-                android:layout_width="192dp"
+                android:id="@+id/SPuntoVentaOtrosActivityProducto"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/textView12"
-                app:layout_constraintTop_toBottomOf="@+id/TVPuntoVentaOtrosActivityTitulo" />
+                app:layout_constraintStart_toEndOf="@+id/textView14"
+                app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaOtrosLinea" />
         </TableRow>
 
         <TableRow

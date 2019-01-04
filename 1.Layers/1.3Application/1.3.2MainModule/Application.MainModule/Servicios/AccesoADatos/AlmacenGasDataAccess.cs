@@ -119,6 +119,24 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        /// <summary>
+        /// Permite realizar la busqueda de una entidad de tipo CamionetaCilindro
+        /// para retornar la cantidad de cilindro que tiene la camioneta, se envian como parametros
+        /// el id de la camioneta , el id del cilindro y el id de la empresa, tras finalizar retornara el 
+        /// registro buscado 
+        /// </summary>
+        /// <param name="idCamioneta">Id de la camioneta </param>
+        /// <param name="idCilindro">Id del cilindro </param>
+        /// <param name="idEmpresa">Id de la empresa</param>
+        /// <returns>Entidad de tipo CamionetaCilindro con el cilindro buscado </returns>
+        public CamionetaCilindro BuscarCamionetaCilindro(int idCamioneta, int idCilindro, short idEmpresa)
+        {
+            return uow.Repository<CamionetaCilindro>().GetSingle(
+                x=>x.IdCamioneta.Equals(idCamioneta) &&
+                x.IdCilindro.Equals(idCilindro) &&
+                x.IdEmpresa.Equals(idEmpresa)
+                );
+        }
 
         /// <summary>
         /// Retorna una lista de lecturas de pipas ordenadas por el orden que sea mayor 
@@ -606,6 +624,26 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                 && x.Year.Equals(year)
                                                                 && x.Mes.Equals(mes)
                                                                 && x.Dia.Equals(dia)).ToList();
+        }
+        /// <summary>
+        /// Permite retornar una lectura de un CAlmacenGas tomando como parametro
+        /// el id de este en la base de datos, una fecha en especifico y una bandera 
+        /// de que si este se buscara como inicial o final, se retornara un objeto de tipo
+        /// entidad AlmacenGasTomaLectura con la busqueda
+        /// </summary>
+        /// <param name="idCAlmacenGas">Id del IdCAlmacenGas</param>
+        /// <param name="fecha">Fecha que se requiere buscar</param>
+        /// <param name="inicial">Determina si se retornara una lectura inicial o final</param>
+        /// <returns>Entidad de tipo AlmacenGasTomaLectura con los datos encontrados</returns>
+        public AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, DateTime fecha, bool inicial)
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().GetSingle(
+                x=>x.IdCAlmacenGas.Equals(idCAlmacenGas) &&
+                x.FechaAplicacion.Day.Equals(fecha.Day) &&
+                x.FechaAplicacion.Month.Equals(fecha.Month) && 
+                x.FechaAplicacion.Day.Equals(fecha.Day) &&
+                x.IdTipoEvento.Equals( inicial ? TipoEventoEnum.Inicial:TipoEventoEnum.Final)
+                );
         }
 
         public List<AlmacenGasMovimiento> BuscarMovimientosConTipoEvento(short idEmpresa, byte idTipoEvento, short year, byte mes, byte dia)

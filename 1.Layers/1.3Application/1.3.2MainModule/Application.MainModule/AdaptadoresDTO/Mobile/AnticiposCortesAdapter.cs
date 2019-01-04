@@ -149,7 +149,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 FolioOperacion = dto.ClaveOperacion,
                 FolioOperacionDia = dto.ClaveOperacion,
                 TotalVenta = dto.Total,
-                IdUsuarioRecibe = idUsuario,
+                IdUsuarioRecibe = dto.IdRecibe,
                 IdOperadorChofer = puntoVenta.IdOperadorChofer,
                 IdPuntoVenta = puntoVenta.IdPuntoVenta,
                 UsuarioRecibe = dto.Recibe
@@ -299,7 +299,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdEmpresa = idEmpresa,
                 IdPuntoVenta = puntoVenta.IdPuntoVenta,
                 IdOperadorChofer = puntoVenta.IdOperadorChofer,
-                IdUsuarioRecibe = usuario.IdUsuario,
+                IdUsuarioRecibe = dto.IdRecibe,
                 IdUsuarioEntrega = dto.IdEntrega,
                 FolioOperacionDia = dto.ClaveOperacion,
                 VentaTotal = dto.Total,
@@ -592,6 +592,24 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 NombreAlmacen = camioneta.Nombre,
                 NombrePipa = camioneta.Nombre,
                 PorcentajeMedidor = unidadAlmacen.PorcentajeActual
+            };
+        }
+        /// <summary>
+        /// ToDTO
+        /// Permite realizar la adaptación de los datos del corte 
+        /// para ser mostrado en la verificacion del corte 
+        /// </summary>
+        /// <param name="corte">Entidad de tipo VentaCorteAnticipoEC con los datos a adaptar al dto</param>
+        /// <returns>Datos adaptados en un objeto de tipo CorteDto</returns>
+        public static CorteDto ToDTO(VentaCorteAnticipoEC corte)
+        {
+            return new CorteDto()
+            {
+                ClaveOperacion = corte.FolioOperacionDia,
+                Fecha = corte.FechaRegistro,
+                FechaCorte = corte.FechaCorteAnticipo,
+                IdCAlmacenGas = corte.IdCAlmacenGas,
+                Total = corte.TotalAnticipado
             };
         }
         #endregion

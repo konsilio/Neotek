@@ -587,6 +587,41 @@ namespace Application.MainModule.Flujos
             return null;
         }
         /// <summary>
+        /// Permite determinar si actualmente se cuentas con la lectura incial y 
+        /// final en el almacen del día de hoy, en caso de no contar con ellas 
+        /// se retornara un mensaje de error en un modelo RespuestaDTO
+        /// </summary>
+        /// <returns>Modelo de tipo RespuestaDTO con el resultado </returns>
+        public RespuestaDto HayLectura()
+        {
+            RespuestaDto respuesta = new RespuestaDto();
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var unidadAlmacen = AlmacenGasServicio.ObtenerAlmacen(puntoVenta.IdCAlmacenGas);
+            var lecturaInicial = AlmacenGasServicio.BuscarLectura(unidadAlmacen.IdCAlmacenGas,DateTime.Now);
+            var lecturaFinal = AlmacenGasServicio.BuscarLectura(unidadAlmacen.IdCAlmacenGas, DateTime.Now, false);
+            if (lecturaInicial != null && lecturaFinal != null)
+            {
+                respuesta.Exito = true;
+                respuesta.Mensaje = "Exito si hay lecturas";
+            }
+            else
+            {
+                if(lecturaInicial== null)
+                {
+                    respuesta.Mensaje = "Para poder continuar es necesario haber realizado la lectura inicial del día";
+                }
+                if(lecturaFinal== null)
+                {
+                    if (respuesta.Mensaje!=null || respuesta.Mensaje=="")
+                        respuesta.Mensaje += " y es necesario registrar su lectura final de día";
+                    else
+                        respuesta.Mensaje = "Para poder continuar es necesario haber realizado la lectura final del día";
+                }
+            }
+            return respuesta;
+        }
+
+        /// <summary>
         /// Retorna si actualmente se cuenta conuna lectura inicial registrada en 
         /// la estación, pipa o camioneta para arrancar su día  
         /// </summary>
@@ -652,6 +687,37 @@ namespace Application.MainModule.Flujos
             }
             return pvaDto;
         }
+        /// <summary>
+        /// GetHayCorte
+        /// Permite realizar la busqueda de un corte en la estación 
+        /// por una fecha especifica, se envia como parametros ,el dia
+        /// el mesy la fecha y se retornara una respuesta de la busqueda
+        /// </summary>
+        /// <param name="dia">Dia que se desea consultar Ej. 1</param>
+        /// <param name="mes">Mes que se desea consultar Ej. 12</param>
+        /// <param name="year">Año que se desea consultar Ej. 2018</param>
+        /// <returns>Respuesta de dicha busqueda</returns>
+        public DatosCortesAntesVentaDTO GetHayCorte(DateTime fecha)
+        {
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var corte = PuntoVentaServicio.buscarCorte(fecha, puntoVenta.IdCAlmacenGas);
+            DatosCortesAntesVentaDTO _respuesta = new DatosCortesAntesVentaDTO();
+            if (corte != null)
+            {
+                
+                _respuesta.HayCorte = true;
+                _respuesta.Corte = AnticiposCortesAdapter.ToDTO(corte);
+            }
+            else
+            {
+
+                _respuesta.HayCorte = false;
+                _respuesta.Corte = null;
+               
+            }
+            return _respuesta;
+        }
+
         public List<UnidadAlmacenGas> estacionesInicio(List<AlmacenGasAutoConsumo> autoconsumos, bool estaciones = true, bool pipas = false, bool camionetas = false)
         {
             List<UnidadAlmacenGas> list = new List<UnidadAlmacenGas>();
@@ -1269,23 +1335,27 @@ namespace Application.MainModule.Flujos
         {
             var resp = VentaServicio.EvaluarClaveOperacion(dto);
             if (resp.Exito) return resp;
+            var puntoVentaBusqueda = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            short idCAlmacenGas = puntoVentaBusqueda.IdCAlmacenGas;
+            var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacenGas);
+            
 
             var cortes = VentaServicio.ObtenerCortes(TokenServicio.ObtenerIdEmpresa());
             var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
-            var estacion = estaciones.Find(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
-            var almacenes = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
-            var almacen = almacenes.Find(x => x.IdEstacionCarburacion.Value.Equals(dto.IdCAlmacenGas));
-            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
-            var puntoventa = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+            var estacion = estaciones.Find(x => x.IdEstacionCarburacion.Equals(almacen.IdEstacionCarburacion));
+            //var almacenes = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
+            //var almacen = almacenes.Find(x => x.IdEstacionCarburacion.Value.Equals(puntoVentaBusqueda.IdCAlmacenGas));
+            //var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
+            //var puntoventa = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(puntoVentaBusqueda.IdCAlmacenGas));
             //var entrega = puntoventa.OperadorChofer.Usuario;
 
             var lpipas = AlmacenGasServicio.ObtenerPipasEmpresa(TokenServicio.ObtenerIdEmpresa());
             var lestaciones = AlmacenGasServicio.ObtenerEstacionesEmpresa(TokenServicio.ObtenerIdEmpresa());
             var lcamionetas = AlmacenGasServicio.ObtenerCamionetasEmpresa(TokenServicio.ObtenerIdEmpresa());
 
-            var pipa = lpipas.SingleOrDefault(x => x.IdPipa.Equals(dto.IdCAlmacenGas));
-            var camioneta = lcamionetas.SingleOrDefault(x => x.IdCamioneta.Equals(dto.IdCAlmacenGas));
-            var estacionCarb = lestaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
+            var pipa = lpipas.SingleOrDefault(x => x.IdPipa.Equals(almacen.IdPipa));
+            var camioneta = lcamionetas.SingleOrDefault(x => x.IdCamioneta.Equals(almacen.IdCamioneta));
+            var estacionCarb = lestaciones.SingleOrDefault(x => x.IdEstacionCarburacion.Equals(almacen.IdEstacionCarburacion));
             var cortesYanticiposOrden = PuntoVentaServicio.ObtenerCortesAnticipos();
             PuntoVenta puntoVenta = null;
             UnidadAlmacenGas almacenPunto = null;

@@ -7,11 +7,6 @@
  *  Date: 29/10/2018 09:56
  *  Update 29/10/2018 09:56
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Mobile
 {
@@ -26,9 +21,7 @@ namespace Application.MainModule.DTOs.Mobile
         public short IdCategoria { get; set; }
         public short IdLinea { get; set; }
         public short IdProducto { get; set; }
-
         public decimal LitrosDespachados { get; set; }
-
         public short IdUnidadMedida { get; set; }
         public decimal PrecioUnitarioProducto { get; set; }
         public decimal PrecioUnitarioLt { get; set; }
@@ -38,6 +31,9 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal CantidadLt { get; set; }
         public decimal CantidadKg { get; set; }
         public decimal DescuentoTotal { get; set; }
-
+        #region Permite identificar si en el detalle de la venta se debe descontar un cilindro
+        public bool EsVentaCilindro { get; set; }
+        public short IdCilindro { get; set; }
+        #endregion
     }
 }
