@@ -394,6 +394,12 @@ namespace Application.MainModule.Servicios.Almacenes
 
             return new AlmacenGasDataAccess().ObtenerUnidadesAlmacenGasAlterno(empresa.IdEmpresa);
         }
+
+        public static RespuestaDto ActualizaCilindroCamioneta(CamionetaCilindro cilindro)
+        {
+            return new AlmacenDataAccess().Actualizar(cilindro);
+        }
+
         private static List<UnidadAlmacenGas> ObtenerUnidadesAlmacenGasAlternoNoActivos(Empresa empresa)
         {
             if (empresa.UnidadesAlmacenGas != null & empresa.UnidadesAlmacenGas.Count > 0)

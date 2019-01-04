@@ -192,6 +192,7 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var almacen = punto_venta.UnidadesAlmacen;
             var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
             //var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);     
 
@@ -363,8 +364,39 @@ namespace Application.MainModule.Flujos
              */
             var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
             respuesta = ventaPuntoDeVenta;
+            if (respuesta.Exito)
+            {
+                if (almacen.IdCamioneta > 0)
+                {
+                    verificaInventarioCilindros(venta);
+                }
+                
+            }
             return respuesta;
         }
+
+        public void verificaInventarioCilindros(VentaDTO venta)
+        {
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var almacen = puntoVenta.UnidadesAlmacen;
+            var camioneta = almacen.Camioneta;
+            var idEmpresa = TokenServicio.ObtenerIdEmpresa();
+            
+            foreach(ConceptoDTO concepto in venta.Concepto)
+            {
+                if (concepto.EsVentaCilindro)
+                {
+                    var cilindro = AlmacenGasServicio.BuscarCamionetaCilindro(almacen.IdCamioneta.Value, concepto.IdCilindro, idEmpresa);
+                    CamionetaCilindro editar = new CamionetaCilindro();
+                    editar.IdCamioneta = cilindro.IdCamioneta;
+                    editar.IdEmpresa = cilindro.IdEmpresa;
+                    editar.IdCilindro = cilindro.IdCilindro;
+                    editar.Cantidad = cilindro.Cantidad - concepto.Cantidad;
+                    var actualizar = AlmacenGasServicio.ActualizaCilindroCamioneta(editar);
+                }
+            }
+        }
+
         public int Orden(List<VentaPuntoDeVenta> ventas, DateTime fechaVenta)
         {
             var busqueda = ventas.FindAll(x => x.FechaRegistro.Day.Equals(
