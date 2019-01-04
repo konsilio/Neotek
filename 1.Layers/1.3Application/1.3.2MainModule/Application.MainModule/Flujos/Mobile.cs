@@ -387,8 +387,12 @@ namespace Application.MainModule.Flujos
                 if (concepto.EsVentaCilindro)
                 {
                     var cilindro = AlmacenGasServicio.BuscarCamionetaCilindro(almacen.IdCamioneta.Value, concepto.IdCilindro, idEmpresa);
-                    cilindro.Cantidad = cilindro.Cantidad - concepto.Cantidad;
-                    var actualizar = AlmacenGasServicio.ActualizaCilindroCamioneta(cilindro);
+                    CamionetaCilindro editar = new CamionetaCilindro();
+                    editar.IdCamioneta = cilindro.IdCamioneta;
+                    editar.IdEmpresa = cilindro.IdEmpresa;
+                    editar.IdCilindro = cilindro.IdCilindro;
+                    editar.Cantidad = cilindro.Cantidad - concepto.Cantidad;
+                    var actualizar = AlmacenGasServicio.ActualizaCilindroCamioneta(editar);
                 }
             }
         }
