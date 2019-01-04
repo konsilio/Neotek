@@ -263,6 +263,24 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-       
+        public static List<DatosGasVentaDto> ToDTOGas(List<CamionetaCilindro> cilindros, decimal kilosCamioneta, PrecioVenta pv)
+        {
+            return cilindros.Select(x => ToDTO(x, kilosCamioneta, pv)).ToList();
+        }
+
+        public static DatosGasVentaDto ToDTO(CamionetaCilindro cilindro, decimal kilosCamioneta, PrecioVenta pv)
+        {
+            var almacenCilindro = AlmacenGasServicio.ObtenerCilindro(cilindro.IdCilindro);
+            return new DatosGasVentaDto()
+            {
+                Nombre = "Gas LP " + almacenCilindro.CapacidadKg,
+                Existencia = cilindro.Cantidad,
+                Id = cilindro.IdCilindro,
+                PrecioUnitario = pv.PrecioSalidaKg??0,
+                CapacidadKg =  almacenCilindro.CapacidadKg,
+                CapacidadLt = almacenCilindro.CapacidadLt,
+                Descuento =0
+            };
+        }
     }
 }
