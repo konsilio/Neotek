@@ -30,6 +30,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public boolean esVentaGas;
     public EditText cantidad;
     public ExistenciasDTO existencia;
+    public boolean Mostrar;
 
     public PuntoVentaAdapter(List<ExistenciasDTO>  items,boolean EsVentaCamioneta,Context context){
         this.items = items;
@@ -50,6 +51,12 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         ((ExistenciasHolder)holder).PuntoVentaGasListaActivityCantidadGas.setText(
                 String.valueOf(items.get(position).getExistencias())
+        );
+        ((ExistenciasHolder) holder).PuntoVentaGasListaActivityCantidadGas.setVisibility(
+                Mostrar ? View.VISIBLE:View.GONE
+        );
+        ((ExistenciasHolder) holder).PuntoVentaGasListActivityExistencia.setVisibility(
+                Mostrar ? View.VISIBLE:View.GONE
         );
         ((ExistenciasHolder)holder).PuntoVentaGasListaActivityTipoGas.setText(
                 items.get(position).getNombre().replace(",0000","Kg.")
@@ -156,7 +163,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public class ExistenciasHolder extends RecyclerView.ViewHolder {
         TextView PuntoVentaGasListaActivityCantidadGas,PuntoVentaGasListaActivityTipoGas,
-                PuntoVentaGasListActivityTituloCantidad;
+                PuntoVentaGasListActivityTituloCantidad,PuntoVentaGasListActivityExistencia;
         EditText ETPuntoVentaGasListActivityCantidad;
         ExistenciasHolder(View view) {
             super(view);
@@ -168,6 +175,8 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     PuntoVentaGasListActivityTituloCantidad);
             ETPuntoVentaGasListActivityCantidad = view.findViewById(
                     R.id.ETPuntoVentaGasListActivityCantidad);
+            PuntoVentaGasListActivityExistencia = view.findViewById(
+                    R.id.PuntoVentaGasListActivityExistencia);
         }
     }
 }

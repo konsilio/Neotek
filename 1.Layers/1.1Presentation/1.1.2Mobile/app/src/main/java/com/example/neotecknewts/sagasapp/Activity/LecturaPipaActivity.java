@@ -96,12 +96,6 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
                             lecturaPipaDTO.setCapacidadAlmacen(almacenDTO.getCapacidad());
                         }
                     }
-                    /*for (String m : ListaPipas) {
-                        if (m.equals(parent.getItemAtPosition(position).toString())) {
-                            lecturaPipaDTO.setNombrePipa(m);
-                            lecturaPipaDTO.setIdPipa(1);
-                        }
-                    }*/
                 }
             }
 
