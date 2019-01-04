@@ -363,6 +363,11 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 adapter.Total =TVFormularioVentaCamionetaYPipaTotal;
                 adapter.precioVentaDTO = precioVentaDTO;
             }
+            if(esCilindro){
+                adapter.Mostrar = false;
+            }else{
+                adapter.Mostrar = true;
+            }
             //region Seteo de la lista del reciclerview
             LinearLayoutManager linearLayout = new LinearLayoutManager(
                     PuntoVentaGasListaActivity.this);
