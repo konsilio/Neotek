@@ -72,7 +72,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     if(esVentaGas) {
-                        if(!editText.getText().toString().isEmpty()) {
+                        if(!editText.getText().toString().isEmpty() && editText.getText()!=null) {
                             PrecioLitro.setText(
                                     new DecimalFormat("#.##").format(
                                             precioVentaDTO.getPrecioSalidaLt()
@@ -96,7 +96,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     if(esVentaGas) {
-                        if(!editText.getText().toString().isEmpty()) {
+                        if(!editText.getText().toString().isEmpty() && editText.getText()!=null) {
                             PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                             Descuento.setText(String.valueOf(0));
                             double sub = precioVentaDTO.getPrecioSalidaLt() *
@@ -114,7 +114,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 @Override
                 public void afterTextChanged(Editable editable) {
                     if(esVentaGas) {
-                        if(!editText.getText().toString().isEmpty()) {
+                        if(!editText.getText().toString().isEmpty() && editText.getText()!=null){
                             PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                             Descuento.setText(String.valueOf(0));
                             double sub = precioVentaDTO.getPrecioSalidaLt() *
@@ -164,7 +164,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public class ExistenciasHolder extends RecyclerView.ViewHolder {
         TextView PuntoVentaGasListaActivityCantidadGas,PuntoVentaGasListaActivityTipoGas,
                 PuntoVentaGasListActivityTituloCantidad,PuntoVentaGasListActivityExistencia;
-        EditText ETPuntoVentaGasListActivityCantidad;
+        public EditText ETPuntoVentaGasListActivityCantidad;
         ExistenciasHolder(View view) {
             super(view);
             PuntoVentaGasListaActivityCantidadGas = view.findViewById(R.id.

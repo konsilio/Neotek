@@ -121,6 +121,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             if(esCilindroGas) VentaCilindroGas();
             else if(esCilindro) VentaCilindro();
             else if(esGasLP) VentaGaslp();
+            LimpiarLista();
         });
 
         BtnPuntoVentaGasListActivityPagar.setOnClickListener(v->{
@@ -446,7 +447,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             precio = conceptoDTO.getPUnitario() - conceptoDTO.getDescuento();
         }
         precio = precio * conceptoDTO.getCantidad();
-        conceptoDTO.setSubtotal(precio);
+        //conceptoDTO.setSubtotal(precio);
         ventaDTO.getConcepto().add(conceptoDTO);
         NumberFormat format = NumberFormat.getCurrencyInstance();
         TLPuntoVentaGasListaActivityConcepto.removeAllViews();
@@ -674,8 +675,8 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             if(!editText.getText().toString().isEmpty()) {
                 double cantidadVenta = Double.valueOf(editText.getText().toString());
                 double cantidadActual = adapter.getCilindro(x).getExistencias();
-                if (editText.getText().toString().trim().length() > 0 && cantidadVenta>0) {
-                    if(cantidadVenta<=cantidadActual ) {
+                if (editText.getText().toString().trim().length() > 0 && cantidadVenta>0 ) {
+                    if(cantidadVenta<=cantidadActual) {
                         //Costo del gas
                         ConceptoDTO Gas = new ConceptoDTO();
                         Gas.setIdEmpresa(session.getIdEmpresa());
@@ -695,16 +696,38 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         Gas.setCantidad(
                                 cantidadVenta
                         );
-                        Gas.setCantidadKg(
-                                precioVentaDTO.getPrecioSalidaKg() * cantidadVenta
-                        );
-                        Gas.setCantidadLt(
-                                precioVentaDTO.getPrecioSalidaLt() * cantidadVenta
-                        );
-                        Gas.setSubtotal(Gas.getPrecioUnitarioLt() * Gas.getCantidad());
-                        Gas.setConcepto(TVTipo.getText().toString());
-                        Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
-                        Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+                        if(EsVentaCamioneta && esGasLP){
+                            double cap = ExistenciasDTO.get(x).getCapacidadKg();
+                            Gas.setCantidadKg(
+                                    cap * cantidadVenta *
+                                    precioVentaDTO.getPrecioSalidaKg()
+
+                            );
+                            Gas.setCantidadLt(
+                                    cap * cantidadVenta *
+                                    precioVentaDTO.getPrecioSalidaLt()
+                            );
+
+                            Gas.setSubtotal(
+                                    cap * cantidadVenta * precioVentaDTO.getPrecioSalidaKg()
+                            );
+                            Gas.setConcepto(TVTipo.getText().toString());
+                            Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
+                            Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+                        }else{
+                            Gas.setCantidadKg(
+                                    precioVentaDTO.getPrecioSalidaKg() * cantidadVenta
+                            );
+                            Gas.setCantidadLt(
+                                    precioVentaDTO.getPrecioSalidaLt() * cantidadVenta
+                            );
+                            Gas.setSubtotal(Gas.getPrecioUnitarioLt() * Gas.getCantidad());
+                            Gas.setConcepto(TVTipo.getText().toString());
+                            Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
+                            Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+                        }
+
+
                         conceptos.add(Gas);
                     }
                     else
@@ -723,6 +746,16 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         }
         for (int x=0;x<conceptos.size();x++){
             actualizarConceptos(conceptos.get(x));
+        }
+    }
+
+    public void LimpiarLista(){
+        for (int x = 0; x <data_get.size()-1; x++) {
+           View view = RVPuntoVentaGasActivityListaGas.getLayoutManager().getChildAt(x);
+           CardView CVEstacionesCarburacionItem = view.findViewById(R.id.CVEstacionesCarburacionItem);
+           EditText editText = CVEstacionesCarburacionItem.findViewById(R.id.Grid).
+                   findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
+           editText.setText("");
         }
     }
     //endregion
