@@ -164,7 +164,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public class ExistenciasHolder extends RecyclerView.ViewHolder {
         TextView PuntoVentaGasListaActivityCantidadGas,PuntoVentaGasListaActivityTipoGas,
                 PuntoVentaGasListActivityTituloCantidad,PuntoVentaGasListActivityExistencia;
-        EditText ETPuntoVentaGasListActivityCantidad;
+        public EditText ETPuntoVentaGasListActivityCantidad;
         ExistenciasHolder(View view) {
             super(view);
             PuntoVentaGasListaActivityCantidadGas = view.findViewById(R.id.
