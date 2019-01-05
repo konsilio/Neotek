@@ -1090,7 +1090,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         int intentos_post = 0;
         registra_descarga = true;
         /*while(intentos_post<3) {*/
-            Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialPipa(
+            Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalPipa(
                     lecturaPipaDTO,  token, "application/json");
             Log.w(TAG, retrofit.baseUrl().toString());
             call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {

@@ -121,6 +121,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             if(esCilindroGas) VentaCilindroGas();
             else if(esCilindro) VentaCilindro();
             else if(esGasLP) VentaGaslp();
+            LimpiarLista();
         });
 
         BtnPuntoVentaGasListActivityPagar.setOnClickListener(v->{
@@ -718,6 +719,16 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         }
         for (int x=0;x<conceptos.size();x++){
             actualizarConceptos(conceptos.get(x));
+        }
+    }
+
+    public void LimpiarLista(){
+        for (int x = 0; x <data_get.size()-1; x++) {
+            View view = RVPuntoVentaGasActivityListaGas.getLayoutManager().getChildAt(x);
+            CardView CVEstacionesCarburacionItem = view.findViewById(R.id.CVEstacionesCarburacionItem);
+            EditText editText = CVEstacionesCarburacionItem.findViewById(R.id.Grid).
+                    findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
+            editText.setText("");
         }
     }
     //endregion
