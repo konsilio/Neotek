@@ -1,6 +1,7 @@
 ﻿using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Almacen;
 using MVC.Presentacion.Models.Catalogos;
+using MVC.Presentacion.Models.Cobranza;
 using MVC.Presentacion.Models.OrdenCompra;
 using MVC.Presentacion.Models.Pedidos;
 using MVC.Presentacion.Models.Requisicion;
@@ -92,6 +93,9 @@ namespace MVC.Presentacion.Agente
         public List<EstatusPedidoModel> _ListaEstatusP;
         public List<CamionetaModel> _ListaCamionetas;
         public List<PipaModel> _ListaPipas;
+        public List<CargosModel> _ListaCargos;
+        public CargosModel _Cargo;
+        public ReporteModel _repCartera;
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -103,7 +107,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
             GetListaRolesReq(tkn).Wait();
         }
-
         private async Task GetListaRolesReq(string Token)
         {
             using (var client = new HttpClient())
@@ -132,13 +135,11 @@ namespace MVC.Presentacion.Agente
                 _lstaRolesReq = (from x in lus where x.NombreRol != "Super Usuario" select x).ToList();
             }
         }
-
         public void BuscarRolesMovilCompras(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
             GetListaRolesMovilCom(tkn).Wait();
         }
-
         private async Task GetListaRolesMovilCom(string Token)
         {
             using (var client = new HttpClient())
@@ -172,7 +173,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
             GetListaRolesCom(tkn).Wait();
         }
-
         private async Task GetListaRolesCom(string Token)
         {
             using (var client = new HttpClient())
@@ -206,7 +206,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
             GetListaRoles(tkn, emp).Wait();
         }
-
         private async Task GetListaRoles(string Token, short emp)
         {
             using (var client = new HttpClient())
@@ -240,7 +239,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
             GetListaTodosRoles(tkn).Wait();
         }
-
         private async Task GetListaTodosRoles(string Token)
         {
             using (var client = new HttpClient())
@@ -269,7 +267,6 @@ namespace MVC.Presentacion.Agente
                 _lstaAllRoles = (from x in lus where x.NombreRol != "Super Usuario" select x).ToList();
             }
         }
-
         public void BuscarRolId(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
@@ -313,19 +310,16 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaRoles"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void GuardarPermisos(List<RolDto> dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaPermisos"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void EliminarRol(short dto, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminarRol"];
             EliminarRolSeleccionado(dto, tkn).Wait();
         }
-
         private async Task EliminarRolSeleccionado(short _pcDTO, string token)
         {
 
@@ -357,7 +351,6 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-
         #endregion
         #region Empresa
         public void ListaEmpresasLogin()
@@ -370,7 +363,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEmpresas"];
             ListaEmp(ApiCatalgos, token).Wait();
         }
-
         private async Task ListaEmp(string api, string token = null)
         {
             using (var client = new HttpClient())
@@ -400,22 +392,18 @@ namespace MVC.Presentacion.Agente
                 _listaEmpresas = emp;
             }
         }
-
         public void GuardarEmpresaNueva(EmpresaModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraEmpresas"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void EliminarEmpresa(short dto, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminarEmpresa"];
             EliminarEmpresaSeleccionada(dto, tkn).Wait();
         }
-
         private async Task EliminarEmpresaSeleccionada(short _pcDTO, string token)
         {
-
             using (var client = new HttpClient())
             {
                 RespuestaDTO resp = new RespuestaDTO();
@@ -454,10 +442,9 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaEmpresas"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         #endregion
         #region Usuarios
-        public void BuscarListaUsuarios(short idEmpresa, string tkn)
+       public void BuscarListaUsuarios(short idEmpresa, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
             GetListaUsuarios(idEmpresa, tkn).Wait();
@@ -495,7 +482,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
             GetListaIdUsuario(id, tkn).Wait();
         }
-
         private async Task GetListaIdUsuario(int id, string Token)
         {
             using (var client = new HttpClient())
@@ -524,13 +510,11 @@ namespace MVC.Presentacion.Agente
                 _lstUserEmp = (from x in lus where x.IdUsuario == id select x).ToList();
             }
         }
-
         public void BuscarTodosUsuarios(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
             GetListaTodosUsuarios(id, tkn).Wait();
         }
-
         private async Task GetListaTodosUsuarios(int id, string Token)
         {
             using (var client = new HttpClient())
@@ -564,13 +548,11 @@ namespace MVC.Presentacion.Agente
                     _lstUserEmp = lus;
             }
         }
-
         public void FiltrarUsuarios(int idEmpresa, int idUser, string mail, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
             GetListaFiltroUsuarios(idEmpresa, idUser, mail, tkn).Wait();
         }
-
         private async Task GetListaFiltroUsuarios(int idEmpresa, int idUser, string mail, string Token)
         {
             using (var client = new HttpClient())
@@ -614,25 +596,21 @@ namespace MVC.Presentacion.Agente
 
             }
         }
-
         public void GuardarNuevoUsuario(UsuarioDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraUsuarios"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void GuardarCredenciales(UsuarioDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaCredencial"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void GuardarRolesAsig(UsuarioRolModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostAsignarRol"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void GuardarUsuarioEdicion(UsuarioDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaUsuarios"];
@@ -643,19 +621,16 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminarUsuario"];
             EliminarUsuarioSeleccionado(dto, tkn).Wait();
         }
-
         public void EliminarRolesAsig(UsuariosModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaUsuarioRol"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void EliminarRolesAsig(UsuarioRolModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaUsuarioRol"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         private async Task EliminarUsuarioSeleccionado(short _pcDTO, string token)
         {
             using (var client = new HttpClient())
@@ -687,16 +662,13 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-
         #endregion
         #region Clientes
-
         public void BuscarTiposPersona(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetTiposPersona"];
             GetTiposPersona(tkn).Wait();
         }
-
         private async Task GetTiposPersona(string Token)
         {
             using (var client = new HttpClient())
@@ -725,13 +697,11 @@ namespace MVC.Presentacion.Agente
                 _lstaTipoPersona = lus;
             }
         }
-
         public void BuscarRegimenFiscal(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetRegimenFiscal"];
             GetRegimen(tkn).Wait();
         }
-
         private async Task GetRegimen(string Token)
         {
             using (var client = new HttpClient())
@@ -759,6 +729,50 @@ namespace MVC.Presentacion.Agente
                 }
                 _lstaRegimenFiscal = lus;
             }
+        }
+        public void BuscarListaClientes(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaClientes"];
+            GetListaClientes(idEmpresa, tkn).Wait();
+        }
+        private async Task GetListaClientes(short idEmpresa, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ClientesDto> lus = new List<ClientesDto>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<ClientesDto>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<ClientesDto>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+              
+                var item = AgregaritemCliente();
+                item.AddRange(lus);
+                _lstaClientes = item;
+            }
+        }
+        public List<ClientesDto> AgregaritemCliente()
+        {
+            ClientesDto rol = new ClientesDto();
+            rol.Cliente = "Seleccione";
+            List<ClientesDto> Paises = new List<ClientesDto>();
+            Paises.Add(rol);
+            return Paises;
         }
         public void BuscarListaClientes(int id, string rfc, string nombre, string tkn)//short idEmpresa, 
         {
@@ -865,8 +879,6 @@ namespace MVC.Presentacion.Agente
 
             }
         }
-
-
         public void BuscarListaLocaciones(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaLocacion"];
@@ -903,25 +915,21 @@ namespace MVC.Presentacion.Agente
                 //  SetEdoPais(lus,Token);
             }
         }
-
         public void GuardarNuevoCliente(ClientesModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraClientes"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void EditarCliente(ClientesDto dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaClientes"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void EliminarCliente(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminaClientes"];
             EliminarClienteSeleccionado(id, tkn).Wait();
         }
-
         private async Task EliminarClienteSeleccionado(int _id, string token)
         {
             using (var client = new HttpClient())
@@ -952,28 +960,23 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-
         public void GuardarClienteLocacion(ClienteLocacionMod dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraClienteLoc"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void EditarClienteLocacion(ClienteLocacionMod dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaClienteLocacion"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void EliminarClienteLocacion(ClienteLocacionMod dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaClienteLocacion"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         #endregion
         #region Puntos de Venta
-
         public void BuscarListaPuntosVenta(int idPV, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetPuntosVenta"];
@@ -1015,7 +1018,6 @@ namespace MVC.Presentacion.Agente
                 }
             }
         }
-
         public void BuscarListaPuntosVentaId(short _idEmpresa, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetPuntosVentaId"];
@@ -1049,19 +1051,16 @@ namespace MVC.Presentacion.Agente
                 _listaPuntosV = lus;
             }
         }
-
         public void EliminarPuntosVenta(PuntoVentaModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaPuntosVenta"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void BuscarUsarioOperador(short id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetUsuariosPuntoVenta"];
             GetUsuariosOpe(id, tkn).Wait();
         }
-
         private async Task GetUsuariosOpe(short id, string Token)
         {
             using (var client = new HttpClient())
@@ -1090,13 +1089,11 @@ namespace MVC.Presentacion.Agente
                 _listaOperadoresUsuarios = lus;
             }
         }
-
         public void BuscarIdChofer(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetOperadorIdUsuario"];
             GetIdChofer(id, tkn).Wait();
         }
-
         private async Task GetIdChofer(int id, string Token)
         {
             using (var client = new HttpClient())
@@ -1125,7 +1122,6 @@ namespace MVC.Presentacion.Agente
                 Operador = lus;
             }
         }
-
         public void EditarPuntoVenta(PuntoVentaModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaOperador"];
@@ -1133,7 +1129,6 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Precio de Venta Gas
-
         public void BuscarListaPrecioVenta(short idPrecioV, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPrecioVenta"];
@@ -1175,7 +1170,6 @@ namespace MVC.Presentacion.Agente
                 }
             }
         }
-
         public void BuscarListaEstatus(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEstatusPV"];
@@ -1244,7 +1238,6 @@ namespace MVC.Presentacion.Agente
                 _listaPreciosV = lus;
             }
         }
-
         public void EliminarPrecioVenta(PrecioVentaModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaPreciosVenta"];
@@ -1255,7 +1248,6 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraPrecioVenta"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void ModificarPrecioVenta(PrecioVentaModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaPreciosVenta"];
@@ -1309,7 +1301,6 @@ namespace MVC.Presentacion.Agente
                 }
             }
         }
-
         public void BuscarListaVentaCajaGralIdE(short idE, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGralId"];
@@ -1351,7 +1342,6 @@ namespace MVC.Presentacion.Agente
                 }
             }
         }
-
         public void BuscarListaCajaGralCamioneta(string cveReporte, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGralCamioneta"];
@@ -1388,7 +1378,6 @@ namespace MVC.Presentacion.Agente
 
             }
         }
-
         public void BuscarListaCajaGralEstacion(string cveReporte, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGralEstacion"];
@@ -1464,13 +1453,10 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-
-
                 _ListaMovimientosGas = lus;
 
             }
         }
-
         public void BuscarListaMovGasCilindros(MovimientosGasCilindros reporte, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutListaMovGasCilindros"];
@@ -1505,7 +1491,6 @@ namespace MVC.Presentacion.Agente
                 _ListaMovimientosGasC = lus;
             }
         }
-
         #endregion
         #region Paises
         public void BuscarPaises(string tkn)
@@ -1520,9 +1505,7 @@ namespace MVC.Presentacion.Agente
             rol.Pais = "Seleccione";
             List<PaisModel> Paises = new List<PaisModel>();
             Paises.Add(rol);
-
             return Paises;
-
         }
         private async Task ListaPaises(string api, string token)
         {
@@ -3293,6 +3276,180 @@ namespace MVC.Presentacion.Agente
             List<PipaModel> unidades = new List<PipaModel>();
             unidades.Add(c);
             return unidades;
+        }
+        #endregion
+        #region Cargos
+        public void ListaCargosFilter(DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCargos"];
+            Cargos(fecha1, fecha2, Cliente, rfc, ticket, id, ApiCatalgos, token).Wait();
+        }
+        private async Task Cargos(DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CargosModel> cargos = new List<CargosModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        cargos = await response.Content.ReadAsAsync<List<CargosModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargos = new List<CargosModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                if (fecha1.Day != 1 && fecha1.Month != 1 && fecha1.Year != 1)
+                {
+                    cargos = (from x in cargos where x.FechaRegistro >= fecha1 select x).ToList();
+                }
+                if (fecha2.Day != 1 && fecha2.Month != 1 && fecha2.Year != 1)
+                {
+                    cargos = (from x in cargos where x.FechaRegistro <= fecha2 select x).ToList();
+                }
+                if (rfc != null)
+                {
+                    cargos = (from x in cargos where x.Rfc == rfc select x).ToList();
+                }
+
+                if (Cliente != 0)
+                {
+                    cargos = (from x in cargos where x.IdCliente == Cliente select x).ToList();
+                }
+                if (ticket != null)
+                {
+                    cargos = (from x in cargos where x.Ticket == ticket select x).ToList();
+                }
+                _ListaCargos = cargos;
+            }
+        }
+        public void ListaCargos(short id, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCargos"];
+            Cargos(id, ApiCatalgos, token).Wait();
+        }
+        private async Task Cargos(short id, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CargosModel> cargos = new List<CargosModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        cargos = await response.Content.ReadAsAsync<List<CargosModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargos = new List<CargosModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListaCargos = cargos;
+            }
+        }
+        public void ListaCartera(CargosModel dto, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutListaCartera"];
+            CarteraVencida(ApiCatalgos, dto, token).Wait();
+        }
+        private async Task CarteraVencida( string api, CargosModel dto, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                ReporteModel cargos = new ReporteModel();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(api, dto).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        cargos = await response.Content.ReadAsAsync<ReporteModel>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargos = new ReporteModel();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _repCartera = cargos;
+            }
+        }
+        public void ObtenerCargoId(int id, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCargoId"];
+            CargoId(ApiCatalgos, id, token).Wait();
+        }
+        private async Task CargoId(string api, int id, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                CargosModel cargo = new CargosModel();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        cargo = await response.Content.ReadAsAsync<CargosModel>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargo = new CargosModel();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _Cargo = cargo;
+            }
+        }
+        public void GuardarEdicionCargo(CargosModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificarPedido"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void GuardarNuevoAbono(CargosModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarAbono"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public void GuardarNuevoAbono(List<AbonosModel> dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarAbonosLst"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         #endregion
         private async Task LLamada<T>(T _dto, string token, string Tipo)

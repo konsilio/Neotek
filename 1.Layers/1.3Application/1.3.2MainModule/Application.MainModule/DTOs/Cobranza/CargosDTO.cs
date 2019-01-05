@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-
-namespace MVC.Presentacion.Models.Cobranza
+using System.Text;
+using System.Threading.Tasks;
+namespace Application.MainModule.DTOs.Cobranza
 {
-    public class CargosModel
+    public class CargosDTO
     {
         public int IdCargo { get; set; }
         public int IdCliente { get; set; }
@@ -22,13 +22,13 @@ namespace MVC.Presentacion.Models.Cobranza
         public bool Activo { get; set; }
         public System.DateTime FechaVencimiento { get; set; }
         public bool Saldada { get; set; }
-        public AbonosModel Abonos { get; set; }
+        public AbonosDTO Abonos { get; set; }
         public decimal Total { get; set; }
         public decimal TotalEfectivo { get; set; }
         public decimal TotalCheques { get; set; }
         public decimal TotalTransferencia { get; set; }
-        public List<AbonosModel> lstCreditoR { get; set; }
-        //cartera vencida        
+        public List<AbonosDTO> lstCreditoR { get; set; }
+        //cartera vencida
         public string Nombre { get; set; }
         public decimal SaldoActual { get; set; }
         public decimal SaldoCorriente { get; set; }

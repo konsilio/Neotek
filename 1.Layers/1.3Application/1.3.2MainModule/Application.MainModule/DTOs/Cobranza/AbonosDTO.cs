@@ -16,5 +16,6 @@ namespace Application.MainModule.DTOs.Cobranza
         public decimal MontoAbono { get; set; }
         public byte IdFormaPago { get; set; }
         public string FolioBancario { get; set; }
+        public string FormaPago { get; set; }
     }
 }

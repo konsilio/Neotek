@@ -404,6 +404,8 @@ namespace MVC.Presentacion.Controllers
                 {
                     if (Resp.MensajesError.Count > 1)
                         Mensaje = Resp.MensajesError[0] + " " + Resp.MensajesError[1];
+                    else
+                        Mensaje = Resp.MensajesError[0];
                 }
             }
             return Mensaje;

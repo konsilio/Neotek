@@ -1,16 +1,4 @@
-﻿@Html.DevExpress().GetStyleSheets(
-    new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Moderno" },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Moderno" },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.HtmlEditor, Theme = "Moderno" },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.PivotGrid, Theme = "Moderno" },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.Chart, Theme = "Moderno" },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.Report, Theme = "Moderno" },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.Scheduler, Theme = "Moderno" },
-    new StyleSheet { ExtensionSuite = ExtensionSuite.TreeList, Theme = "Moderno" }
-)
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -96,7 +84,15 @@
                 {
                     <li class="menu_dark"><a href="@Url.Action("Inicio", "Home")"><i class="material-icons">dashboard</i> <span class="icon-name">Dashboard</span></a></li>
                     <li class="menu_dark"><a href="@Url.Action("Requisiciones", "Requisicion")"><i class="material-icons">feedback </i><span class="icon-name">Requisición</span> </a></li>
-                    <li class="menu_dark"><a href="@Url.Action("Index", "Pedidos")"><i class="material-icons">phone </i><span class="icon-name">Call Center</span> </a></li>
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">monetization_on</i><span>Crédito y Cobranza</span> </a>
+                        <ul class="ml-menu">
+                            <li>@Html.ActionLink("Captura de abonos", "Index", "Cobranza")</li>
+                            <li>@Html.ActionLink("Crédito recuperado", "CreditoRecuperado", "Cobranza")</li>      
+                            <li>@Html.ActionLink("Cartera vencida", "CarteraVencida", "Cobranza")</li>                        
+                        </ul>
+                    </li>
+                       <li class="menu_dark"><a href="@Url.Action("Index", "Pedidos")"><i class="material-icons">phone </i><span class="icon-name">Call Center</span> </a></li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
                         <ul class="ml-menu">

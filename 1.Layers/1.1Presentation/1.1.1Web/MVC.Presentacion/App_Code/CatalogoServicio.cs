@@ -1487,6 +1487,12 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarListaClientes(id, rfc, nombre, token);
             return agente._lstaClientes;
         }
+        public static List<ClientesDto> ListaClientes(short idEmpresa, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaClientes(idEmpresa, token);
+            return agente._lstaClientes;
+        }
 
         public static List<ClientesModel> ListaClientes(string tel1, string tel2, string rfc, string token)
         {

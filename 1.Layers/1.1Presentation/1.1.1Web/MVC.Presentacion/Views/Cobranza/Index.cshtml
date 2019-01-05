@@ -1,0 +1,162 @@
+﻿@model  List<MVC.Presentacion.Models.Cobranza.CargosModel>
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Moderno" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Moderno" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="~/assets/js/pages/ui/notifications.js"></script>
+    <script type="text/javascript">
+        function OnBeginGridCallback(s, e) {
+            e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
+        }
+        $(document).ready(function () {
+            $('#btnSave').click(function () {
+                debugger;
+                GridView.UpdateEdit();
+            });
+        });
+        var mensaje = '@ViewBag.Msj';
+        var tipo = '@ViewBag.Tipo';
+        if (mensaje != '') {
+            $(window).on("load", showNotification(tipo, mensaje, 'top', 'center', '', ''));
+        }
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm("Buscar", "Cobranza", FormMethod.Post))
+    {
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Crédito y Cobranza</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Crédito y Cobranza</li>
+                                <li class="breadcrumb-item">Abonos</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row clearfix">
+                                        <div class="col-sm-3">
+                                            <div>
+                                                <strong>Gasera</strong>
+                                            </div>
+                                            <div>
+                                                @if (ViewBag.EsAdmin)
+                                                {
+                                                    <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                        @foreach (var lst in ViewBag.Empresas)
+                                                        {
+                                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                        }
+                                                    </select>
+                                                }
+                                                else
+                                                {
+                                                    @ViewBag.Empresas
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="row clearfix">
+                                        <div class="col-sm-2">
+                                            <b>No Cliente:</b>
+                                            @*@Html.TextBoxFor(m => m[0].IdCliente, new { @class = "form-control" })*@
+                                            <input type="text" name="IdCliente" class = "form-control" placeholder="No del cliente" />
+                                        </div>
+                                        <div class="col-sm-2" style="top:20px">
+                                            @Html.DevExpress().DateEdit(settings =>
+                                      {
+                                          settings.Name = "FechaRango1";
+                                          settings.Properties.UseMaskBehavior = true;
+                                          settings.Properties.EditFormat = EditFormat.Custom;
+                                          settings.Theme = "Moderno";
+                                          settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
+                                          settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                          settings.Attributes.Clear();
+                                          settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                          settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                      }).GetHtml()
+                                        </div>
+                                        <div class="col-sm-2" style="top:20px">
+                                            @Html.DevExpress().DateEdit(settings =>
+                                       {
+                                           settings.Name = "FechaRango2";
+                                           settings.Properties.UseMaskBehavior = true;
+                                           settings.Properties.EditFormat = EditFormat.Custom;
+                                           settings.Theme = "Moderno";
+                                           settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
+                                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                           settings.Attributes.Clear();
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       }).GetHtml()
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <b>RFC:</b>
+                                            @Html.TextBoxFor(m => m[0].Rfc, new { @class = "form-control", @placeholder = "RFC del cliente" })
+                                            <input type="text" name="Rfc" hidden/>
+                                        </div>
+                                        <div class="col-sm-3" style="top:10px">
+                                            <div class="form-group">
+                                                <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            @if (ViewBag.MensajeError != null)
+                            {
+                                <div class="row clearfix">
+                                    <div id="divMensajeError" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                <label>@ViewBag.MensajeError</label>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row clearfix blockquote blockquote-info btn-round">
+                                <div class="table-responsive">
+                                    @*@Html.Partial("_AbonosPartial", Model )*@
+                                    @Html.Action("AbonosPartial")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    }
+</body>
+</html>
