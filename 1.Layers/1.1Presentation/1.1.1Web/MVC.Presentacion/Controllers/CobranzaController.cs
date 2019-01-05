@@ -21,6 +21,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
             ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(_tkn);
 
             if (ViewBag.EsAdmin)
@@ -82,20 +83,29 @@ namespace MVC.Presentacion.Controllers
 
             return View(_model);
         }
-        public ActionResult CarteraVencida()
+        public ActionResult CarteraVencida(int? idCliente, DateTime? fecha, CargosModel model)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
-            ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(_tkn);
-            if (ViewBag.EsAdmin)
+            ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
+             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
             ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
-            List<CargosModel> _model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
-
+            if(model.IdEmpresa == 0) { model.IdEmpresa = ViewBag.IdEmpresa; }
+            if(idCliente!=null) { model.IdCliente = idCliente.Value; ViewBag.IdCliente = idCliente; }
+            DateTime dt = new DateTime();
+            if(model.FechaRango1.Year == 1) { model.FechaRango1 = dt; }
+            ReporteModel _model = CobranzaServicio.ObtenerListaCartera(_tkn, model );
+            if(ViewBag.IdCliente!= null) { ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet[0].Nombre; }
             return View(_model);
+        }
+        public ActionResult BuscarCartera(CargosModel _model)
+        {
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            return RedirectToAction("CarteraVencida", new { idCliente = _model.IdCliente, fecha = _model.FechaRango1});
         }
         public ActionResult CrearPedido(CargosModel _model)
         {

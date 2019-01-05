@@ -1,4 +1,4 @@
-﻿@model  List<MVC.Presentacion.Models.Cobranza.CargosModel>
+﻿@model  MVC.Presentacion.Models.Cobranza.ReporteModel
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Moderno" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Moderno" },
@@ -46,16 +46,18 @@
                                             <div>
                                                 @if (ViewBag.EsAdmin)
                                                 {
-                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                    @foreach (var lst in ViewBag.Empresas)
+                                                    <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                        @foreach (var lst in ViewBag.Empresas)
                                                         {
-                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                         }
-                                                </select>
+                                                    </select>
                                                 }
                                                 else
                                                 {
-                                                @ViewBag.Empresas
+                                                    @ViewBag.Empresas
+                                                    <label style="visibility:hidden">@ViewBag.IdEmpresa</label>
+                                                    @Html.HiddenFor(m => m.reportedet[0].IdEmpresa)
                                                 }
                                             </div>
                                         </div>
@@ -82,7 +84,7 @@
                                         <div class="col-sm-2" style="top:20px">
                                             @Html.DevExpress().DateEdit(settings =>
                                                        {
-                                                           settings.Name = "FechaRango2";
+                                                           settings.Name = "FechaRango1";
                                                            settings.Properties.UseMaskBehavior = true;
                                                            settings.Properties.EditFormat = EditFormat.Custom;
                                                            settings.Theme = "Moderno";
@@ -116,7 +118,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            }<strong>Reporte del cliente detallado</strong>
+                            }<div style="text-align:center"><strong>Reporte del cliente detallado</strong></div>
+                            <div style="text-align:center"><strong>@ViewBag.IdCliente</strong></div>
                             <div class="row clearfix blockquote blockquote-info btn-round">
 
                                 <div class="table-responsive">
@@ -135,21 +138,35 @@
                                                 <th>17-31</th>
                                                 <th>32-61</th>
                                                 <th>62-91</th>
-                                                <th>mas 91</th>
+                                                <th>más 91</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @*@if (Model != null)
+                                            @if (Model != null)
+                                            {
+                                                foreach (var item in Model.reportedet)
                                                 {
-                                                    foreach (var item in Model)
-                                                    {
-
-                                                    }
-                                                }*@
+                                                    <tr>
+                                                        <td>@item.FechaRegistro</td>
+                                                        <td>@item.FechaVencimiento</td>
+                                                        <td>@item.Ticket</td>
+                                                        <td>@item.Serie</td>
+                                                        <td>@item.SaldoActual</td>
+                                                        <td>@item.SaldoCorriente</td>
+                                                        <td>@item.SaldoVencido</td>
+                                                        <td>@item.Dias1a7</td>
+                                                        <td>@item.Dias8a16</td>
+                                                        <td>@item.Dias17a31</td>
+                                                        <td>@item.Dias32a61</td>
+                                                        <td>@item.Dias62a91</td>
+                                                        <td>@item.Mas91</td>
+                                                    </tr>
+                                                }
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
-                            </div><strong>Global</strong>
+                            </div><div style="text-align:center"><strong>Global</strong></div>
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
@@ -164,13 +181,27 @@
                                                 <th>17-31</th>
                                                 <th>32-61</th>
                                                 <th>62-91</th>
-                                                <th>mas 91</th>
+                                                <th>más 91</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @if (Model != null)
                                             {
-
+                                                foreach (var item in Model.global)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Nombre</td>
+                                                        <td>@item.SaldoActualTotal</td>
+                                                        <td>@item.SaldoCorrienteTotal</td>
+                                                        <td>@item.SaldoVencidoTotal</td>
+                                                        <td>@item.Dias1_7Total</td>
+                                                        <td>@item.Dias8_16Total</td>
+                                                        <td>@item.Dias17_31Total</td>
+                                                        <td>@item.Dias32_61Total</td>
+                                                        <td>@item.Dias62_91Total</td>
+                                                        <td>@item.Mas91Total</td>
+                                                    </tr>
+                                                }
                                             }
                                         </tbody>
                                     </table>
@@ -185,4 +216,3 @@
     }
 </body>
 </html>
-

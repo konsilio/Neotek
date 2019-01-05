@@ -18,6 +18,11 @@ namespace Application.MainModule.Servicios.Cobranza
             List<CargosDTO> lPedidos = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().BuscarTodos(idempresa));
             return lPedidos;
         }
+        public static ReporteDTO Obtener(List<CarteraVencidaDTO> lCargoV, List<CarteraVencidaDTO> lCargoT)
+        {
+            ReporteDTO lPedidos = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTORep(lCargoV, lCargoT);
+            return lPedidos;
+        }
         public static CargosDTO Obtener(int idCargo)
         {
             CargosDTO Pedido = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().Buscar(idCargo));

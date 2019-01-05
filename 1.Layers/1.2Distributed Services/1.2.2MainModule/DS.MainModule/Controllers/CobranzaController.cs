@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Cobranza;
 using Application.MainModule.Flujos;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -27,7 +28,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _cobranza.CargoId(id));
         }
-
+        [Route("buscar/carteravencida")]//{idCliente}/{fecha}/{idEmpresa}
+        public HttpResponseMessage PutCarteraVencida(CargosDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.ListaCargos(dto.IdCliente, dto.FechaRango1, dto.IdEmpresa));
+        }
         [Route("registrar/abono")]
         public HttpResponseMessage PostRegistrarAbonos(AbonosDTO _model)
         {

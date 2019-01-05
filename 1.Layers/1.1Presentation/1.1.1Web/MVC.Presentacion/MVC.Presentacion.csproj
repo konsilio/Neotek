@@ -333,6 +333,8 @@
     <Compile Include="Models\Catalogos\UsuariosModel.cs" />
     <Compile Include="Models\Cobranza\AbonosModel.cs" />
     <Compile Include="Models\Cobranza\CargosModel.cs" />
+    <Compile Include="Models\Cobranza\CarteraVencidaModel.cs" />
+    <Compile Include="Models\Cobranza\ReporteModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImagenDTO.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

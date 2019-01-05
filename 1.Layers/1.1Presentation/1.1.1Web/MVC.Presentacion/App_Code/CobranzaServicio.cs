@@ -22,13 +22,18 @@ namespace MVC.Presentacion.App_Code
             agente.ListaCargosFilter(fecha1, fecha2, Cliente, rfc, ticket, id, tkn);
             return agente._ListaCargos;
         }
+        public static ReporteModel ObtenerListaCartera( string tkn, CargosModel model)
+        {
+            var agente = new AgenteServicio();           
+            agente.ListaCartera(model, tkn);
+            return agente._repCartera;
+        }        
         public static CargosModel ObtenerIdCargo(int id, string tkn)
         {
             var agente = new AgenteServicio();
             agente.ObtenerCargoId(id, tkn);
             return agente._Cargo;
-        }
-      
+        }      
         public static RespuestaDTO AltaNuevoCargo(CargosModel model, string tkn)
         {
             var agente = new AgenteServicio();

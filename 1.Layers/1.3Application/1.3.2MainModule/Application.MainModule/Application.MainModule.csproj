@@ -106,6 +106,8 @@
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
     <Compile Include="DTOs\Cobranza\AbonosDTO.cs" />
     <Compile Include="DTOs\Cobranza\CargosDTO.cs" />
+    <Compile Include="DTOs\Cobranza\CarteraVencidaDTO.cs" />
+    <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
