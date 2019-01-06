@@ -177,5 +177,26 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarCorte(fecha, idCAlmacenGas);
         }
+
+        public static List<VentaCorteAnticipoEC> ObtenerAnticipos(PuntoVenta puntoVenta, DateTime fecha)
+        {
+            if (puntoVenta != null)
+                return new PuntoVentaDataAccess().BuscarAnticipos(fecha, puntoVenta.IdCAlmacenGas);
+            else
+                return null;
+        }
+
+        public static VentaCorteAnticipoEC ObtenerCortes(PuntoVenta puntoVenta, DateTime fecha)
+        {
+            if (puntoVenta != null)
+                return new PuntoVentaDataAccess().BuscarCorte(fecha, puntoVenta.IdCAlmacenGas);
+            else
+                return null;
+        }
+
+        public static RespuestaDto RegistarReporteDia(ReporteDelDia reporteEntity)
+        {
+            return new PuntoVentaDataAccess().RegistrarReporteDia(reporteEntity);
+        }
     }
 }

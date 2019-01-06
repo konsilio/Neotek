@@ -187,6 +187,23 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<AlmacenGasTomaLecturaCilindro>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                     ).ToList();
         }
+        /// <summary>
+        /// Permite realizar la busqueda de un reporte del día en caso de que 
+        /// exista alguno con los datos ya enviados se retornara como respuesta
+        /// </summary>
+        /// <param name="fecha">Fecha de busqueda</param>
+        /// <param name="idCAlmacenGas">Id del CAlmacenGas buscado</param>
+        /// <param name="idEmpresa">Id de la empresa que se busca</param>
+        /// <returns>Entidad de típo reporte del día encontrada</returns>
+        public ReporteDelDia BuscarReporte(DateTime fecha, short idCAlmacenGas,short idEmpresa)
+        {
+            return uow.Repository<ReporteDelDia>().GetSingle(x=>
+            x.IdCAlmacenGas.Equals(idCAlmacenGas) &&
+            x.FechaReporte.Equals(fecha) &&
+            x.IdEmpresa.Equals(idEmpresa)
+            );
+        }
+
         public List<AlmacenGasTomaLectura> BuscarLecturas(short idCAlmacenGas, int mes, int anio)
         {
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
