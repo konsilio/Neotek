@@ -221,5 +221,25 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Venta =  FINAL
             };
         }
+
+        public static ReporteDelDia FromDTO(ReporteDiaDTO reporteDTO)
+        {
+            return new ReporteDelDia()
+            {
+                 FolioOperacionDia = reporteDTO.ClaveReporte,
+                 Dia = (byte)reporteDTO.Fecha.Day,
+                 Mes = (byte)reporteDTO.Fecha.Month,
+                 Year = (short) reporteDTO.Fecha.Year,
+                 FechaRegistro = reporteDTO.Fecha,
+                 FechaReporte = reporteDTO.Fecha,
+                 IdCAlmacenGas = (short)reporteDTO.IdCAlmacenGas,
+                 LitrosVenta = reporteDTO.LitrosVenta,
+                 KilosVenta = reporteDTO.KilosDeVenta,
+                 ImporteContado = reporteDTO.Importe,
+                 ImporteCredito = reporteDTO.ImporteCredito,
+                 Total = reporteDTO.Importe + reporteDTO.ImporteCredito,
+
+            };
+        }
     }
 }

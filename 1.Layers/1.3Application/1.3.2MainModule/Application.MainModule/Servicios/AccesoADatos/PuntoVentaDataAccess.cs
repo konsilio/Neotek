@@ -187,6 +187,40 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 );
         }
 
+        public List<VentaCorteAnticipoEC> BuscarAnticipos(DateTime fecha, short idCAlmacenGas)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get(
+                x=>x.IdCAlmacenGas.Equals(idCAlmacenGas) && 
+                x.FechaCorteAnticipo.Day.Equals(fecha.Day) && 
+                x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
+                x.FechaCorteAnticipo.Year.Equals(fecha.Year) &&
+                x.TipoOperacion.Equals(1)
+             ).ToList();
+        }
+
+        public RespuestaDto RegistrarReporteDia(ReporteDelDia reporteEntity)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<ReporteDelDia>().Insert(reporteEntity);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, " registrar el reporte del dìa ");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
         public RespuestaDto Eliminar(PuntoVenta cteL)
         {
             RespuestaDto _respuesta = new RespuestaDto();

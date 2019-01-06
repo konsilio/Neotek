@@ -542,7 +542,7 @@ namespace Application.MainModule.Servicios.Almacenes
             var ventasCredito = PuntoVentaServicio.ObtenerVentasCredito(puntoVenta.IdPuntoVenta, fecha);
             var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             decimal precioVentaGas = precioVenta.PrecioSalidaKg ?? 0;
-
+            #region Camioneta
             if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
             {
                 #region Verifico si hay lecturas
@@ -600,6 +600,7 @@ namespace Application.MainModule.Servicios.Almacenes
                     reporteDTO.NombreCAlmacen = almacen.Camioneta.Nombre;
                     reporteDTO.ClaveReporte = DateTime.Now.Year + "R" + DateTime.Now.Ticks;
                     reporteDTO.KilosDeVenta = KiliosVenta;
+                   
                     //Anterior
                     /*var reporte = CajaGeneralServicio.ObtenerRepCamionetas(almacen.IdCAlmacenGas, fecha);
                     reporte[0].EsCamioneta = true;
@@ -614,6 +615,8 @@ namespace Application.MainModule.Servicios.Almacenes
                 }
                 #endregion
             }
+            #endregion
+            #region Estación y pipa
             else
             {
                 #region Verifico si hay lecturas
@@ -653,6 +656,47 @@ namespace Application.MainModule.Servicios.Almacenes
                 //}
                 //return reporte;
             }
+            #endregion
+            #region Registro reporte en tabla
+            if (reporteDTO.Error == false)
+            {
+                var reporteEntity = ReporteAdapter.FromDTO(reporteDTO);
+                var usuario = TokenServicio.ObtenerUsuarioAplicacion();
+                var operadorChofer = puntoVenta.OperadorChofer;
+                var usuarioEncargado = puntoVenta.OperadorChofer.Usuario;
+                var cortes = PuntoVentaServicio.ObtenerCortes(puntoVenta, fecha);
+                decimal totalAnticipos = 0;
+                decimal totalCortes = 0;
+                if (almacen.IdEstacionCarburacion > 0)
+                {
+                    var anticipos = PuntoVentaServicio.ObtenerAnticipos(puntoVenta, fecha);
+                    if (anticipos != null && anticipos.Count > 0)
+                        totalAnticipos = anticipos.Sum(x => x.TotalAnticipado);
+                }
+                
+                if (cortes != null)
+                    totalCortes = cortes.TotalAnticipado;
+
+                reporteEntity.IdPuntoVenta = puntoVenta.IdPuntoVenta;
+                reporteEntity.IdOperadorChofer = puntoVenta.IdOperadorChofer;
+                reporteEntity.IdEmpresa = almacen.IdEmpresa;
+                reporteEntity.Orden = (short)orden;
+                reporteEntity.IdUsuarioJEC = usuario.IdUsuario;
+                reporteEntity.UsuarioJEC = usuario.Nombre + " " + usuario.Apellido1 + " " + usuario.Apellido2;
+                reporteEntity.OperadorChofer = usuarioEncargado.Nombre + " " + usuarioEncargado.Apellido1 + " " + usuarioEncargado.Apellido2;
+                reporteEntity.ImporteAnticipos = totalAnticipos;
+                reporteEntity.ImporteCortes = totalCortes;
+                reporteEntity.PuntoVenta = reporteDTO.NombreCAlmacen;
+
+                var respuesta = PuntoVentaServicio.RegistarReporteDia(reporteEntity);
+                if (!respuesta.Exito)
+                {
+                    reporteDTO.Error = true;
+                    reporteDTO.Mensaje = respuesta.Mensaje;
+                }
+
+            }
+            #endregion
             return reporteDTO;
         }
 
