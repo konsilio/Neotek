@@ -177,7 +177,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdCAlmacenGas = almacen.IdCAlmacenGas,
                 Importe = ventasContado.Sum(x => x.Total),
                 ImporteCredito = ventasCredito.Sum(x => x.Total),
-                NombreCAlmacen = almacen.Pipa.Nombre,
+                NombreCAlmacen = almacen.EstacionCarburacion.Nombre,
                 Medidor = TipoMedidorAdapter.ToDto(almacen.Medidor)
 
             };

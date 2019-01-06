@@ -909,16 +909,18 @@ namespace Application.MainModule.Flujos
             #region Datos para la pipa
             if(unidadAlmacen.IdPipa>0 && unidadAlmacen.IdPipa != null)
             {
+                var lectInicial = AlmacenGasServicio.BuscarUltimaLectura(unidadAlmacen.IdCAlmacenGas, TipoEventoEnum.Inicial);
+                var lectFinal = AlmacenGasServicio.BuscarUltimaLectura(unidadAlmacen.IdCAlmacenGas, TipoEventoEnum.Final);
                 pipa = unidadAlmacen.Pipa;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x => 
-                    x.TipoOperacion.Equals(1) && 
+                    x.TipoOperacion.Equals(2) && 
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
                 ).ToList();
                 var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x => 
-                    x.IdTipoOperacion.Equals(2) && 
+                    x.IdTipoOperacion.Equals(1) && 
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) && 
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) && 
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
@@ -941,7 +943,9 @@ namespace Application.MainModule.Flujos
                             cortes,
                             ventasSinCorte,
                             pipa,
-                            esAnticipos
+                            esAnticipos,
+                            lectInicial,
+                            lectFinal
                         );
                     #region Verifico si hay datos de anticipos 
                     if (anticipos != null)
@@ -989,16 +993,18 @@ namespace Application.MainModule.Flujos
             #region Datos para la estacion
             if (unidadAlmacen.IdEstacionCarburacion>0 && unidadAlmacen.IdEstacionCarburacion != null)
             {
+                var lectInicial = AlmacenGasServicio.BuscarUltimaLectura(unidadAlmacen.IdCAlmacenGas, TipoEventoEnum.Inicial);
+                var lectFinal = AlmacenGasServicio.BuscarUltimaLectura(unidadAlmacen.IdCAlmacenGas, TipoEventoEnum.Final);
                 estacion = unidadAlmacen.EstacionCarburacion;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x =>
-                    x.TipoOperacion.Equals(1) &&
+                    x.TipoOperacion.Equals(2) &&
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
                 ).ToList();
                 var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x =>
-                    x.IdTipoOperacion.Equals(2) &&
+                    x.IdTipoOperacion.Equals(1) &&
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
@@ -1006,6 +1012,7 @@ namespace Application.MainModule.Flujos
                 var ventas = puntoVenta.VentaPuntoDeVenta;
                 var ventasActivas = ventas.Where(x => x.Dia.Equals((byte)fecha.Day) && x.Mes.Equals((byte)fecha.Month) && x.Year.Equals((short)fecha.Year));
                 var ventasSinCorte = new List<VentaPuntoDeVenta>();
+
                 foreach (var ventaActiva in ventasActivas)
                 {
                     //if (ventaActiva.FolioOperacionDia == null || ventaActiva.FolioOperacionDia.Equals(ventaActiva.FolioVenta))
@@ -1019,7 +1026,9 @@ namespace Application.MainModule.Flujos
                         cortes,
                         ventasSinCorte,
                         estacion,
-                        esAnticipos
+                        esAnticipos,
+                        lectInicial,
+                        lectFinal
                     );
                     #region Verifico si hay datos de anticipos 
                     if (anticipos != null)
@@ -1069,13 +1078,13 @@ namespace Application.MainModule.Flujos
                 camioneta = unidadAlmacen.Camioneta;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x =>
-                    x.TipoOperacion.Equals(1) &&
+                    x.TipoOperacion.Equals(2) &&
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
                 ).ToList();
                 var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x =>
-                    x.IdTipoOperacion.Equals(2) &&
+                    x.IdTipoOperacion.Equals(1) &&
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
