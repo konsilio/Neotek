@@ -82,9 +82,27 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="resp">Entidad con el reporte encontrado</param>
         /// <param name="almacen">Unidad Almnacen gas en este caso la camioneta </param>
         /// <returns>Objeto de tipo ReporteDiaDTo con los datos encontrados </returns>
-        public static ReporteDiaDTO ToDtoCamioneta(ReporteDelDia resp, UnidadAlmacenGas almacen)
+        public static ReporteDiaDTO ToDtoCamioneta(ReporteDelDia resp, UnidadAlmacenGas almacen,ICollection<AlmacenGasTomaLecturaCilindro> cilindrosInicial, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosFinal, AlmacenGasTomaLectura inicial, AlmacenGasTomaLectura final, List<OtrasVentasDto>  otrasVentas, List<VentaPuntoDeVenta> ventasContado, List<VentaPuntoDeVenta> ventasCredito)
         {
-            throw new NotImplementedException();
+            return new ReporteDiaDTO()
+            {
+                ImporteCredito = resp.ImporteCredito ?? 0,
+                Importe = resp.ImporteContado ?? 0,
+                IdCAlmacenGas = resp.IdCAlmacenGas ?? 0,
+                NombreCAlmacen = almacen.Camioneta.Nombre,
+                ClaveReporte = resp.FolioOperacionDia,
+                Precio = resp.PrecioLt ?? 0,
+                LitrosVenta = resp.LitrosVenta ?? 0,
+                Fecha = resp.FechaReporte,
+                LecturaInicial = ToDTO(inicial),
+                LecturaFinal = ToDTO(final),
+                Error = false,
+                Mensaje = "Exito",
+                EsCamioneta = true,
+                Tanques = ToDTO(cilindrosInicial,cilindrosFinal),
+                OtrasVentas = otrasVentas
+
+            };
         }
         /// <summary>
         /// permite retornar un objeto ReporteDiaDTO de un registro existente 
@@ -95,9 +113,24 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="resp">Entidad con el reporte encontrado</param>
         /// <param name="almacen">Unidad Almnacen gas en este caso la Estación </param>
         /// <returns>Objeto de tipo ReporteDiaDTo con los datos encontrados </returns>
-        public static ReporteDiaDTO ToDtoEstacion(ReporteDelDia resp, UnidadAlmacenGas almacen)
+        public static ReporteDiaDTO ToDtoEstacion(ReporteDelDia resp, UnidadAlmacenGas almacen, AlmacenGasTomaLectura inicial, AlmacenGasTomaLectura final)
         {
-            throw new NotImplementedException();
+            return new ReporteDiaDTO()
+            {
+                ImporteCredito = resp.ImporteCredito ?? 0,
+                Importe = resp.ImporteContado ?? 0,
+                IdCAlmacenGas = resp.IdCAlmacenGas ?? 0,
+                NombreCAlmacen = almacen.EstacionCarburacion.Nombre,
+                ClaveReporte = resp.FolioOperacionDia,
+                Precio = resp.PrecioLt ?? 0,
+                LitrosVenta = resp.LitrosVenta ?? 0,
+                Fecha = resp.FechaReporte,
+                LecturaInicial = ToDTO(inicial),
+                LecturaFinal = ToDTO(final),
+                Error = false,
+                Mensaje = "Exito",
+                EsCamioneta = false
+            };
         }
         /// <summary>
         /// permite retornar un objeto ReporteDiaDTO de un registro existente 
@@ -108,9 +141,24 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="resp">Entidad con el reporte encontrado</param>
         /// <param name="almacen">Unidad Almnacen gas en este caso la Pipa </param>
         /// <returns>Objeto de tipo ReporteDiaDTo con los datos encontrados </returns>
-        public static ReporteDiaDTO ToDtoPipa(ReporteDelDia resp, UnidadAlmacenGas almacen)
+        public static ReporteDiaDTO ToDtoPipa(ReporteDelDia resp, UnidadAlmacenGas almacen, AlmacenGasTomaLectura inicial, AlmacenGasTomaLectura final)
         {
-            throw new NotImplementedException();
+            return new ReporteDiaDTO()
+            {
+                ImporteCredito = resp.ImporteCredito??0,
+                Importe = resp.ImporteContado??0,
+                IdCAlmacenGas = resp.IdCAlmacenGas??0,
+                NombreCAlmacen = almacen.Pipa.Nombre,
+                ClaveReporte = resp.FolioOperacionDia,
+                Precio = resp.PrecioLt??0,
+                LitrosVenta = resp.LitrosVenta??0,
+                Fecha = resp.FechaReporte,
+                LecturaInicial = ToDTO(inicial),
+                LecturaFinal = ToDTO(final),
+                Error = false,
+                Mensaje = "Exito",
+                EsCamioneta = false
+            };
         }
         /// <summary>
         /// Permite generar un objeto de tipo ReporteDiaDTO para el reporte 

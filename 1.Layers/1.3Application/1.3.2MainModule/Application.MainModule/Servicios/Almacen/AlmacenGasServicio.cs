@@ -179,12 +179,61 @@ namespace Application.MainModule.Servicios.Almacenes
         public static ReporteDiaDTO ReporteDiaExistente(ReporteDelDia resp, UnidadAlmacenGas almacen)
         {
             ReporteDiaDTO reporte = null;
+            var lectInicial = BuscarLecturaPorFecha(almacen.IdCAlmacenGas, TipoEventoEnum.Inicial, resp.FechaReporte);
+            var lectFinal = BuscarLecturaPorFecha(almacen.IdCAlmacenGas, TipoEventoEnum.Final, resp.FechaReporte);
             if (almacen.IdCamioneta > 0 && almacen.IdCamioneta != null)
-                reporte =  ReporteAdapter.ToDtoCamioneta(resp, almacen);
+            {
+                var cilindrosInicial = lectInicial.Cilindros;
+                var cilindrosFinal = lectFinal.Cilindros;
+                var autoConsumo = new AlmacenDataAccess().BuscarAutoconsumo(almacen, resp.FechaReporte);
+                var puntoVenta = PuntoVentaServicio.Obtener(almacen);
+                var ventasContado = PuntoVentaServicio.ObtenerVentasContado(puntoVenta.IdPuntoVenta, resp.FechaReporte);
+                var ventasCredito = PuntoVentaServicio.ObtenerVentasCredito(puntoVenta.IdPuntoVenta, resp.FechaReporte);
+                var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+                var ventas = new PuntoVentaDataAccess().ObtenerVentas(puntoVenta.IdPuntoVenta, resp.FechaReporte);
+                decimal precioVentaGas = precioVenta.PrecioSalidaKg ?? 0;
+                decimal totalVentaCilindros = 0, totalVentaGas=0, KiliosVenta =0, LitrosVenta = 0, totalOtros=0;
+                List<OtrasVentasDto> otrasVentas = new List<OtrasVentasDto>();
+                foreach (var item in ventas)
+                {
+                    foreach (var itemConcepto in item.VentaPuntoDeVentaDetalle)
+                    {
+                        if (itemConcepto.IdProducto == 0 && itemConcepto.IdProductoLinea == 0 && itemConcepto.IdCategoria == 0)//Cilindros
+                            totalVentaCilindros += itemConcepto.Subtotal;
+                        else if (itemConcepto.IdProducto == precioVenta.IdProducto && itemConcepto.IdProductoLinea == precioVenta.IdProductoLinea && itemConcepto.IdCategoria == precioVenta.IdCategoria)
+                        {//Gas lp
+                            totalVentaGas += itemConcepto.Subtotal;
+                            KiliosVenta += itemConcepto.CantidadKg ?? 0;
+                            LitrosVenta += itemConcepto.CantidadLt ?? 0;
+                        }
+                        else
+                        {//otros
+                            totalOtros += itemConcepto.Subtotal;
+                            otrasVentas.Add(
+                                new OtrasVentasDto()
+                                {
+                                    Cantidad = itemConcepto.CantidadProducto ?? 0,
+                                    Tipo = itemConcepto.ProductoDescripcion
+                                }
+                            );
+                        }
+                    }
+                }
+                decimal totalCarburacion = 0;
+                if (autoConsumo != null)
+                    totalCarburacion = (autoConsumo.UnidadEntrada.CapacidadTanqueLt ?? 0 / 100) * lectFinal.Porcentaje ?? 0;
+                reporte = ReporteAdapter.ToDtoCamioneta(resp, almacen,cilindrosInicial,cilindrosFinal,lectInicial,lectFinal,otrasVentas,ventasContado,ventasCredito);
+
+                reporte.Carburacion = totalCarburacion;
+                reporte.OtrasVentasTotal = totalOtros;
+                reporte.Precio = precioVenta.PrecioSalidaLt ?? 0;
+                reporte.KilosDeVenta = KiliosVenta;
+            }
+
             if (almacen.IdEstacionCarburacion > 0 && almacen.IdEstacionCarburacion != null)
-                reporte = ReporteAdapter.ToDtoEstacion(resp, almacen);
-            if (almacen.IdPipa > 0 && almacen.IdPipa != null)
-                reporte = ReporteAdapter.ToDtoPipa(resp, almacen);
+                reporte = ReporteAdapter.ToDtoEstacion(resp, almacen, lectInicial, lectFinal);
+            if (almacen.IdPipa > 0 && almacen.IdPipa != null) 
+                reporte = ReporteAdapter.ToDtoPipa(resp, almacen,lectInicial,lectFinal);
             return reporte;
         }
 
