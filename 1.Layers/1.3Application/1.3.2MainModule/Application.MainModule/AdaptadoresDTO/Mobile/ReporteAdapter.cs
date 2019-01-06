@@ -182,5 +182,44 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
             };
         }
+
+        public static ReporteDiaDTO ToDtoCamioneta(UnidadAlmacenGas almacen, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosInicial, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosFinal, List<VentaPuntoDeVenta> ventasContado, List<VentaPuntoDeVenta> ventasCredito,
+            AlmacenGasTomaLectura inicial, AlmacenGasTomaLectura final)
+        {
+            return new ReporteDiaDTO()
+            {
+                Medidor = TipoMedidorAdapter.ToDto(almacen.Medidor),
+                Importe = ventasContado.Sum(x => x.Total),
+                ImporteCredito = ventasCredito.Sum(x=>x.Total),
+                 LecturaInicial = ToDTO(inicial),
+                 LecturaFinal = ToDTO(final),
+                 Tanques = ToDTO(cilindrosInicial,cilindrosFinal)
+
+            };
+        }
+
+        public static List<TanquesDto> ToDTO(ICollection<AlmacenGasTomaLecturaCilindro> cilindrosInicial, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosFinal)
+        {
+            return cilindrosInicial.Select(x => ToDTO(x, cilindrosFinal)).ToList();
+        }
+
+        public static TanquesDto ToDTO(AlmacenGasTomaLecturaCilindro cilindro, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosFinal)
+        {
+            var cilindroFinal = cilindrosFinal.Where(x => x.IdCilindro.Equals(cilindro.IdCilindro)).First();
+            decimal FINAL = 0;
+
+            if (cilindroFinal != null) { 
+                FINAL = cilindro.Cantidad - cilindroFinal.Cantidad;
+            }else
+            {
+                FINAL = cilindroFinal.Cantidad;
+            }
+            return new TanquesDto()
+            {
+                NombreTanque = cilindro.Cilindro.CapacidadKg.ToString() + "KG",
+                Normal = cilindro.Cantidad,
+                Venta =  FINAL
+            };
+        }
     }
 }

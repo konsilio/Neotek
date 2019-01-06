@@ -548,11 +548,64 @@ namespace Application.MainModule.Servicios.Almacenes
                 #region Verifico si hay lecturas
                 if (lectInicial != null && lectFinal != null)
                 {
-                    var reporte = CajaGeneralServicio.ObtenerRepCamionetas(almacen.IdCAlmacenGas, fecha);
+                    var cilindrosInicial = lectInicial.Cilindros;
+                    var cilindrosFinal = lectFinal.Cilindros;
+                    var ventas = new PuntoVentaDataAccess().ObtenerVentas(puntoVenta.IdPuntoVenta,fecha);
+                    var autoConsumo = new AlmacenDataAccess().BuscarAutoconsumo(almacen, fecha);
+                    decimal totalCarburacion = 0;
+                    if (autoConsumo != null)
+                        totalCarburacion = (autoConsumo.UnidadEntrada.CapacidadTanqueLt ?? 0/100) * lectFinal.Porcentaje ?? 0;
+
+                    decimal totalOtros = 0;
+                    decimal totalVentaGas = 0;
+                    decimal totalVentaCilindros = 0;
+                    decimal KiliosVenta = 0;
+                    decimal LitrosVenta = 0;
+                    List<OtrasVentasDto> otrasVentas = new List<OtrasVentasDto>();
+                    foreach (var item in ventas)
+                    {
+                        foreach (var itemConcepto in item.VentaPuntoDeVentaDetalle)
+                        {
+                            if (itemConcepto.IdProducto == 0 && itemConcepto.IdProductoLinea == 0 && itemConcepto.IdCategoria == 0)//Cilindros
+                                totalVentaCilindros += itemConcepto.Subtotal;
+                            else if (itemConcepto.IdProducto == precioVenta.IdProducto && itemConcepto.IdProductoLinea == precioVenta.IdProductoLinea && itemConcepto.IdCategoria == precioVenta.IdCategoria)
+                            {//Gas lp
+                                totalVentaGas += itemConcepto.Subtotal;
+                                KiliosVenta += itemConcepto.CantidadKg ?? 0;
+                                LitrosVenta += itemConcepto.CantidadLt ?? 0; 
+                            }
+                            else
+                            {//otros
+                                totalOtros += itemConcepto.Subtotal;
+                                otrasVentas.Add(
+                                    new OtrasVentasDto()
+                                    {
+                                         Cantidad = itemConcepto.CantidadProducto??0,
+                                         Tipo = itemConcepto.ProductoDescripcion
+                                    }
+                                );
+                            }
+                        }
+                    }
+                    reporteDTO = ReporteAdapter.ToDtoCamioneta(almacen, cilindrosInicial, cilindrosFinal,ventasContado,ventasCredito,lectInicial,lectFinal);
+                    reporteDTO.OtrasVentas = otrasVentas;
+                    reporteDTO.Fecha = fecha;
+                    reporteDTO.EsCamioneta = true;
+                    reporteDTO.Carburacion = totalCarburacion;
+                    reporteDTO.OtrasVentasTotal = totalOtros;
+                    reporteDTO.Precio = precioVenta.PrecioSalidaLt??0;
+                    reporteDTO.Error = false;
+                    reporteDTO.Mensaje = "Exito";
+                    reporteDTO.IdCAlmacenGas = almacen.IdCAlmacenGas;
+                    reporteDTO.NombreCAlmacen = almacen.Camioneta.Nombre;
+                    reporteDTO.ClaveReporte = DateTime.Now.Year + "R" + DateTime.Now.Ticks;
+                    reporteDTO.KilosDeVenta = KiliosVenta;
+                    //Anterior
+                    /*var reporte = CajaGeneralServicio.ObtenerRepCamionetas(almacen.IdCAlmacenGas, fecha);
                     reporte[0].EsCamioneta = true;
                     reporteDTO = reporte[0];
                     reporteDTO.Error = false;
-                    reporteDTO.Mensaje = "Exito";
+                    reporteDTO.Mensaje = "Exito";*/
                 }
                 else
                 {

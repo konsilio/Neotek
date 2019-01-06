@@ -373,5 +373,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _Respuesta;
         }
 
+        public List<VentaPuntoDeVenta> ObtenerVentas(int idPuntoVenta,DateTime fecha)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x=>x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Year.Equals(fecha.Year)
+            && x.IdPuntoVenta.Equals(idPuntoVenta)).ToList();
+        }
     }
 }

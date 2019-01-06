@@ -269,5 +269,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
+        public AlmacenGasAutoConsumo BuscarAutoconsumo(UnidadAlmacenGas almacen, DateTime fecha)
+        {
+            return uow.Repository<AlmacenGasAutoConsumo>().GetSingle(x => x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.Year.Equals(fecha.Year) &&
+            x.IdCAlmacenGasEntrada.Equals(almacen.IdCAlmacenGas));
+        }
     }
 }
