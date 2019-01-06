@@ -169,6 +169,38 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarRecargaClaveOperacion(claveOperacion);
         }
+        /// <summary>
+        /// Permite crear un objeto de tipo Reporte del día en 
+        /// caso de que este ya este registrado 
+        /// </summary>
+        /// <param name="resp">Entidad de tipo RporteDia</param>
+        /// <param name="almacen">Unidad Almacen gas que se reuiqere el reporte </param>
+        /// <returns></returns>
+        public static ReporteDiaDTO ReporteDiaExistente(ReporteDelDia resp, UnidadAlmacenGas almacen)
+        {
+            ReporteDiaDTO reporte = null;
+            if (almacen.IdCamioneta > 0 && almacen.IdCamioneta != null)
+                reporte =  ReporteAdapter.ToDtoCamioneta(resp, almacen);
+            if (almacen.IdEstacionCarburacion > 0 && almacen.IdEstacionCarburacion != null)
+                reporte = ReporteAdapter.ToDtoEstacion(resp, almacen);
+            if (almacen.IdPipa > 0 && almacen.IdPipa != null)
+                reporte = ReporteAdapter.ToDtoPipa(resp, almacen);
+            return reporte;
+        }
+
+        /// <summary>
+        /// Permite realizar la busqueda de un reporte del día en caso de existir con 
+        /// los parametros que se envian 
+        /// </summary>
+        /// <param name="fecha">Fecha de busqueda</param>
+        /// <param name="idCAlmacenGas">Id de CAlmacenGas a buscar</param>
+        /// <param name="idEmpresa">id de la empresa a la que pertenece el almacen</param>
+        /// <returns>Entidad de tipo ReporteDia con los datos encontrados</returns>
+        public static ReporteDelDia BuscarReporteDia(DateTime fecha, short idCAlmacenGas,short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().BuscarReporte(fecha, idCAlmacenGas,idEmpresa);
+        }
+
         public static List<UnidadAlmacenGas> ObtenerAlmacenGeneral(short idEmpresa, bool incluyeAlterno = false)
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa, true, incluyeAlterno);
@@ -499,11 +531,17 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             var almacen = ObtenerAlmacen(idCAlmacenGas);
 
+
             var reportes = new AlmacenGasDataAccess().ObtenerReportes();
             int orden = ordenReportes(reportes);
             ReporteDiaDTO reporteDTO = new ReporteDiaDTO();
             var lectInicial = BuscarLecturaPorFecha(almacen.IdCAlmacenGas, TipoEventoEnum.Inicial, fecha);
             var lectFinal = BuscarLecturaPorFecha(almacen.IdCAlmacenGas, TipoEventoEnum.Final, fecha);
+            var puntoVenta = PuntoVentaServicio.Obtener(almacen);
+            var ventasContado = PuntoVentaServicio.ObtenerVentasContado(puntoVenta.IdPuntoVenta, fecha);
+            var ventasCredito = PuntoVentaServicio.ObtenerVentasCredito(puntoVenta.IdPuntoVenta, fecha);
+            var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+            decimal precioVentaGas = precioVenta.PrecioSalidaKg ?? 0;
 
             if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
             {
@@ -528,10 +566,22 @@ namespace Application.MainModule.Servicios.Almacenes
                 #region Verifico si hay lecturas
                 if (lectInicial != null && lectFinal != null)
                 {
-                    var reporte = CajaGeneralServicio.ObtenerRepPipas(idCAlmacenGas, fecha);
-                    reporteDTO = CrearReporteMobil(reporte, almacen);
+
+                    if (almacen.IdPipa > 0)
+                        reporteDTO = ReporteAdapter.ToDtoPipa(almacen, lectInicial, lectFinal, ventasContado, ventasCredito);
+                    else
+                        reporteDTO = ReporteAdapter.ToDtoEstacion(almacen, lectInicial, lectFinal, ventasContado, ventasCredito);
+                    reporteDTO.LitrosVenta = reporteDTO.LecturaInicial.PorcentajeP5000 - reporteDTO.LecturaFinal.PorcentajeP5000;
+                    reporteDTO.Fecha = fecha;
+                    reporteDTO.Precio = precioVentaGas;
+                    reporteDTO.ClaveReporte = DateTime.Now.Year + "R" + DateTime.Now.Ticks;
                     reporteDTO.Error = false;
                     reporteDTO.Mensaje = "Exito";
+                    //Metodo anterior 
+                    /*var reporte = CajaGeneralServicio.ObtenerRepPipas(idCAlmacenGas, fecha);
+                    reporteDTO = CrearReporteMobil(reporte, almacen);
+                    reporteDTO.Error = false;
+                    reporteDTO.Mensaje = "Exito";*/
                 }
                 else
                 {
