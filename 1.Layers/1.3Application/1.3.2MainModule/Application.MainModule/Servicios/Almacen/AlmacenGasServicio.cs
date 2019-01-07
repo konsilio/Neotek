@@ -84,6 +84,12 @@ namespace Application.MainModule.Servicios.Almacenes
             resp = new AlmacenGasDataAccess().Insertar(unidad);
             return ObtenerUnidadAlamcenGas((short)resp.Id);
         }
+
+        public static RespuestaDto ActualizarCalibracionAlmacen(UnidadAlmacenGas almacenActualizar)
+        {
+            return new AlmacenDataAccess().ActualizaAlmacen(almacenActualizar);
+        }
+
         public static CamionetaCilindro BuscarCamionetaCilindro(int idCamioneta, int idCilindro, short idEmpresa)
         {
             return new AlmacenGasDataAccess().BuscarCamionetaCilindro(idCamioneta, idCilindro, idEmpresa);

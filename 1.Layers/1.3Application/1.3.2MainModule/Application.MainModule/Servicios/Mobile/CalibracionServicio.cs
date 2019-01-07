@@ -8,6 +8,7 @@ using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.Almacenes;
+using Sagas.MainModule.Entidades;
 
 namespace Application.MainModule.Servicios.Mobile
 {
@@ -30,10 +31,24 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = dto.FechaRegistro;
             adapter.FechaAplicacion = dto.FechaAplicacion;
+           
             if (esFinal)
                 adapter.IdDestinoCalibracion = (dto.IdDestino == 1) ? CalibracionDestinoEnum.MismoTanque : CalibracionDestinoEnum.TanquePortatil;
-
-            return AlmacenGasServicio.InsertarCalibracion(adapter);
+            var calibracion = AlmacenGasServicio.InsertarCalibracion(adapter);
+            if (calibracion.Exito)
+            {
+                var unidadAlmacen = AlmacenGasServicio.ObtenerAlmacen(adapter.IdCAlmacenGas);
+                //UnidadAlmacenGas almacenGas = new UnidadAlmacenGas() ;
+               
+                var almacenGas = CalibracionAdapter.FromDTOAlmacenCalibracion(unidadAlmacen,adapter);
+                
+                var respuestaDTO = AlmacenGasServicio.ActualizarCalibracionAlmacen(almacenGas);
+                if (respuestaDTO.Exito)
+                    return calibracion;
+                else
+                    return respuestaDTO;
+            }
+            return calibracion;
         }
 
         public static int ObtenerOrden()

@@ -119,6 +119,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+
+
         public RespuestaDto ActualizarAlmacenSalidas(List<Almacen> _alm, List<AlmacenSalidaProducto> _entrada, Requisicion _requisicion, List<RequisicionProducto> _productos)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -274,6 +276,32 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasAutoConsumo>().GetSingle(x => x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.Year.Equals(fecha.Year) &&
             x.IdCAlmacenGasEntrada.Equals(almacen.IdCAlmacenGas));
+        }
+
+        public RespuestaDto ActualizaAlmacen(UnidadAlmacenGas almacenActualizar)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<UnidadAlmacenGas>().Update(almacenActualizar);
+                    uow.SaveChanges();
+                    _respuesta.Id = 0;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, " el porcentaje de calibracion en la unidad de almacen ");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
         }
     }
 }
