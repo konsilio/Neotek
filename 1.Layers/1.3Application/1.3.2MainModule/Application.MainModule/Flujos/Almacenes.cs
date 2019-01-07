@@ -164,7 +164,7 @@ namespace Application.MainModule.Flujos
         {
             return AlmacenGasServicio.AplicarDescargas();
         }
-        public List<RemanenteGeneralDTO> ConsultarRemanente(short idEmpresa, DateTime fecha)
+        public List<RemanenteGeneralDTO> ConsultarRemanenteGeneral(short idEmpresa, DateTime fecha)
         {
             List<RemanenteGeneralDTO> remaGeneral = new List<RemanenteGeneralDTO>();
             if (TokenServicio.ObtenerEsAdministracionCentral())
@@ -174,8 +174,7 @@ namespace Application.MainModule.Flujos
             var AlmacenPrincipal = AlmacenGasServicio.ObtenerAlmacenPrincipal(idEmpresa == (short)0 ? TokenServicio.ObtenerIdEmpresa() : idEmpresa);
             var lectura = AlmacenGasServicio.ObtenerLecturaIncialdelMes(AlmacenPrincipal.IdCAlmacenGas, fecha.Month, fecha.Year).OrderByDescending(x => x.FechaAplicacion).FirstOrDefault();
             var descargas = AlmacenGasServicio.ObtenerDescargasTodas();
-            var pventas = PuntoVentaServicio.ObtenerIdEmp(idEmpresa);
-        
+            var pventas = PuntoVentaServicio.ObtenerIdEmp(idEmpresa);        
 
             for (int i = 0; i < DateTime.DaysInMonth(fecha.Year, fecha.Month); i++)
             {
@@ -222,7 +221,6 @@ namespace Application.MainModule.Flujos
                 rema.dia = fecha.Day;
                 rema.Mes = fecha.Month;
                 rema.Anio = fecha.Year;
-
 
                 remaGeneral.Add(rema);
             }
