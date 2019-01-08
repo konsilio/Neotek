@@ -124,7 +124,8 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public ActionResult Editar(CargosModel _model)
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AbonosPartialUpdateItem([ModelBinder(typeof(DevExpressEditorsBinder))] CargosModel _model, string contactId)//[ModelBinder(typeof(DevExpressEditorsBinder))] updateValues)//
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tkn = Session["StringToken"].ToString();
@@ -142,6 +143,10 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
+        public ActionResult AbonosPartialUpdateItem()
+        {
+            return RedirectToAction("_AbonosPartial");
+        }
         [ValidateInput(false)]
         public ActionResult AbonosPartialUpdate(MVCxGridViewBatchUpdateValues<CargosModel, int> updateValues)
         {
@@ -153,6 +158,15 @@ namespace MVC.Presentacion.Controllers
             var respuesta = CobranzaServicio.AltaAbonos(_lst, _tkn);
             TempData["RespuestaDTO"] = respuesta;
             return RedirectToAction("Index", new { msj = respuesta.Mensaje });
+        }
+        [ValidateInput(false)]
+        public ActionResult EditModesUpdatePartial([ModelBinder (typeof (DevExpressEditorsBinder))]  AbonosModel product)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            var respuesta = CobranzaServicio.AltaAbono(product, _tkn);
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("_AbonosPartial", new { msj = respuesta.Mensaje });
         }
         [ValidateInput(false)]
         public ActionResult AbonosPartial()

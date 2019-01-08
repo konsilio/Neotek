@@ -1,52 +1,20 @@
 ﻿@*@model List<MVC.Presentacion.Models.Cobranza.CargosModel>*@
 @{
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#btnSave').click(function () {
-                debugger;
-                GridView.UpdateEdit();
-            });
-        });
 
-    </script>
 }
 @{
-
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "Abn";
-        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "AbonosPartial" };
-        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
-        //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
-
-        //settings.CustomActionRouteValues = new { Controller = "Cobranza", Action = "AbonosPartialUpdate" };
-        settings.SettingsCommandButton.UpdateButton.Text = "Abonar";
-        // settings.SettingsCommandButton.UpdateButton.RenderMode = GridCommandButtonRenderMode.Button;//SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Button;
-        settings.SettingsCommandButton.UpdateButton.RenderMode = GridCommandButtonRenderMode.Link;//SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Button;
-
-        //GridViewCommandColumnCustomButton customButton = new GridViewCommandColumnCustomButton();
-        //customButton.Text = "Abonar";
-        //customButton.ID = "deleteButton";
-        //settings.CommandColumn.CustomButtons.Add(customButton);
-
         settings.KeyFieldName = "IdCargo";
+        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "AbonosPartial" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Cobranza", Action = "EditModesUpdatePartial" };
+        settings.SettingsCommandButton.UpdateButton.Text = "Abonar";
+        settings.SettingsCommandButton.UpdateButton.RenderMode = GridCommandButtonRenderMode.Link;//SettingsCommandButton.UpdateButton.ButtonType = GridViewCommandButtonType.Button;
+        settings.SettingsEditing.Mode = GridViewEditingMode.Inline;
 
-        settings.SettingsPager.Visible = true;
-        settings.Settings.ShowGroupPanel = false;
-        settings.Settings.ShowFilterRow = false;
-        settings.SettingsBehavior.AllowSelectByRowClick = false;
-
-        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
-        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
-        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
-        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
-
-        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
-        //settings.SettingsEditing.BatchEditSettings.EditMode = BatchEditingOptions.EditMode;
-        //settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
-        settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
-        //settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
         settings.Styles.Table.CssClass = "table";
 
         settings.Columns.Add(c =>
@@ -95,6 +63,7 @@
         {
             c.FieldName = "Abonos.FechaAbono";
             c.Caption = "Fecha Abono";
+            c.ColumnType = MVCxGridViewColumnType.DateEdit;
             c.SetDataItemTemplateContent(diTemplate =>
             {
                 GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
@@ -103,10 +72,8 @@
                     s.Name = string.Format("dtFechaRegistro_{0}", diTemplate.VisibleIndex);
                     s.Properties.UseMaskBehavior = true;
                     s.Properties.EditFormat = EditFormat.Custom;
-                    //s.Theme = "Moderno";
-                    s.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
                     s.Properties.EditFormatString = "dd/MM/yyyy";
-                    s.Date = DateTime.Now;
+                    settings.Attributes.Clear();
                     s.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                     s.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                 }).GetHtml();
@@ -150,7 +117,7 @@
                 Html.DevExpress().TextBox(txtSettings =>
                 {
                     txtSettings.Name = string.Format("txtAbono_{0}", Template.ItemIndex.ToString());
-                   // txtSettings.Text = DataBinder.Eval(Template.DataItem, Template.Column.FieldName).ToString();
+                    // txtSettings.Text = DataBinder.Eval(Template.DataItem, Template.Column.FieldName).ToString();
                     //txtSettings.Properties.ClientSideEvents.GotFocus = string.Format("function(s, e) {{OnValueGotFocus(s, e, '{0}', '{1}'); }}", container.KeyValue.ToString(), container.Column.FieldName);
                 }).Render();
             });
@@ -162,22 +129,32 @@
             {
                 ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Editar", new { id = d.KeyValue, monto = DataBinder.Eval(d.DataItem, "Abonos.MontoAbono") }) + ">Abonar</a>"));
                 //ViewContext.Writer.Write(Html.ActionLink("Abonar", "Editar",  new { id = d.KeyValue, monto = DataBinder.Eval(d.DataItem, "Abonos.MontoAbono") }));
-
+                //Html.RenderAction("Editar", "Cobranza");
             });
         });
-        settings.CellEditorInitialize = (s, e) =>
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.PreRender = (sender, e) =>
         {
-            ASPxEdit editor = (ASPxEdit)e.Editor;
-            editor.ValidationSettings.Display = Display.Dynamic;
+            ((MVCxGridView)sender).StartEdit(1);
         };
-        settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
+
+        settings.ClientSideEvents.BeginCallback = "onBeginCallback";
+        // DevExpress.Web.Demos.GridViewFeaturesHelper.SetupGlobalGridViewBehavior(settings);
+
     });
-}
+
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+
+    }
 
 @grid.Bind(Model).GetHtml()
-@*@Html.DevExpress().Button(settings =>
-    {
-        settings.Name = "btn_Save";
-        settings.Text = "SAVE";
-        settings.ClientSideEvents.Click = "function(s, e) { GridView.UpdateEdit(); }";
-    }).GetHtml()*@
+@functions {
+    GridViewEditingMode EditMode { get { return ViewBag.EditMode; } }
+}

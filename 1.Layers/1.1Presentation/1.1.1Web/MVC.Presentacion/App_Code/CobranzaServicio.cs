@@ -40,6 +40,12 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarNuevoAbono(model, tkn);
             return agente._RespuestaDTO;
         }
+        public static RespuestaDTO AltaAbono(AbonosModel model, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarNuevoAbono(LST(model), tkn);
+            return agente._RespuestaDTO;
+        }
         public static RespuestaDTO AltaAbonos(List<AbonosModel> model, string tkn)
         {
             var agente = new AgenteServicio();
@@ -51,6 +57,17 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.GuardarEdicionCargo(model, tkn);
             return agente._RespuestaDTO;
+        }
+        public static List<AbonosModel> LST(AbonosModel model)
+        {
+            List<AbonosModel> lst = new List<AbonosModel>();
+            AbonosModel nam = new AbonosModel();
+            nam.FechaAbono = model.FechaAbono;
+            nam.FolioBancario = model.FolioBancario;
+            nam.IdFormaPago = model.IdFormaPago;
+            nam.MontoAbono = model.MontoAbono;
+            lst.Add(model);
+            return lst;
         }
         //public static RespuestaDTO EliminarCargo(CargosModel model, string tkn)
         //{
