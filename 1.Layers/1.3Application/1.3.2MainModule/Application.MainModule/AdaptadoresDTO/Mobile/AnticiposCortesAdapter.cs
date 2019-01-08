@@ -366,7 +366,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     anticipo = ToDTOAnticipos(anticipos),
                     corte = ToDTOCortes(cortes),
                     venta = ToDTOVentas(ventasSinCorte),
-                    estacion = ToDTOPipa(pipa,unidadAlmacen,lectura,lecturaFinal)
+                    estacion = esAnticipos? ToDTOPipa(pipa, unidadAlmacen) : ToDTOPipa(pipa,unidadAlmacen,lectura,lecturaFinal)
                 };
         }
         #endregion
@@ -390,7 +390,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 anticipo = ToDTOAnticipos(anticipos),
                 corte = ToDTOCortes(cortes),
                 venta = ToDTOVentas(ventasSinCorte),
-                estacion = ToDTOEstacion(estacion, unidadAlmacen,lectura,lecturaFinal)
+                estacion = esAnticipos? ToDTOEstacion(estacion,unidadAlmacen) :ToDTOEstacion(estacion, unidadAlmacen,lectura,lecturaFinal)
             };
         }
         #endregion
@@ -417,7 +417,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 anticipo = ToDTOAnticipos(anticipos),
                 corte = ToDTOCortes(cortes),
                 venta = ToDTOVentas(ventasSinCorte),
-                estacion = ToDTOEstacion(camioneta, unidadAlmacen)
+                estacion =  ToDTOEstacion(camioneta, unidadAlmacen)
             };
         }
         #endregion
@@ -554,6 +554,19 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
             };
         }
+        public static EstacionesDto ToDTOPipa(Pipa pipa, UnidadAlmacenGas unidadAlmacen)
+        {
+            return new EstacionesDto()
+            {
+                IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
+                NombreAlmacen = pipa.Nombre,
+                NombrePipa = pipa.Nombre,
+                PorcentajeMedidor =  0,
+                P5000Inicial =  0,
+                P5000Final =  0
+
+            };
+        }
         #endregion
         #region Creación del objeto DTO para los datos de la Estación de carburación para el corte o anticipo
         /// <summary>
@@ -576,6 +589,18 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 PorcentajeMedidor = lecturaFinal.Porcentaje??0,
                 P5000Inicial = lecturaInicial.P5000??0,
                 P5000Final = lecturaFinal.P5000??0
+            };
+        }
+        public static EstacionesDto ToDTOEstacion(EstacionCarburacion estacion, UnidadAlmacenGas unidadAlmacen)
+        {
+            return new EstacionesDto()
+            {
+                IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
+                NombreAlmacen = estacion.Nombre,
+                NombrePipa = estacion.Nombre,
+                PorcentajeMedidor = 0,
+                P5000Inicial = 0,
+                P5000Final = 0
             };
         }
         #endregion
