@@ -22,7 +22,7 @@ namespace Application.MainModule.DTOs.Cobranza
         public bool Activo { get; set; }
         public System.DateTime FechaVencimiento { get; set; }
         public bool Saldada { get; set; }
-        public AbonosDTO Abonos { get; set; }
+        public AbonosDTO Abono { get; set; }
         public decimal Total { get; set; }
         public decimal TotalEfectivo { get; set; }
         public decimal TotalCheques { get; set; }

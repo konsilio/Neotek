@@ -22,7 +22,7 @@ namespace MVC.Presentacion.Models.Cobranza
         public bool Activo { get; set; }
         public System.DateTime FechaVencimiento { get; set; }
         public bool Saldada { get; set; }
-        public AbonosModel Abonos { get; set; }
+        public AbonosModel Abono { get; set; }
         public decimal Total { get; set; }
         public decimal TotalEfectivo { get; set; }
         public decimal TotalCheques { get; set; }

@@ -70,8 +70,12 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var abono = AbonosAdapter.FromDTO(abonosDto);
+            var insAbono = CobranzaServicio.Alta(abono);
+            if (!insAbono.Exito) return resp;
 
-            return CobranzaServicio.Alta(abono);
+            var cargo = CobranzaServicio.Obtener(abonosDto.IdCargo);
+            var UpdCargo = AbonosAdapter.FromDTO(cargo, abonosDto.MontoAbono);
+            return CobranzaServicio.Update(UpdCargo);
         }
         public RespuestaDto Registra(List<AbonosDTO> abonosDto)
         {
