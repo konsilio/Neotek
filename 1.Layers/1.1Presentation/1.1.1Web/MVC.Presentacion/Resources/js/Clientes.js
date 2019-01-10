@@ -47,16 +47,18 @@
         form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "Index" }) %>');
         form.attr('method', 'post');
     });
-
     $("#btnBuscar").click(function () {
         var form = $(this).parent("form");
         form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "Buscar" }) %>');
         form.attr('method', 'post');
     });
-    //$("#btnRegresarIndex").click(function () {
+    $("#btncrearCl").click(function () {
+               debugger
+        var form = $('#FrmClientes');
+        //form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "GuardarCliente" }) %>');
+        //form.attr('method', 'post');
+        form.submit();
+       // $("form").submit();
+    });
 
-    //    var form = $(this).parent("form");
-    //    form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "EditarLocaciones" }) %>');
-    //    form.attr('method', 'post');
-    //});
 });

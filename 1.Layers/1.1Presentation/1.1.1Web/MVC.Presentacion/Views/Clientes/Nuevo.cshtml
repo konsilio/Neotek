@@ -6,12 +6,72 @@
 
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/Resources/js/Clientes.js"></script>
+<!-- JS includes -->
 
-@using (Html.BeginForm("GuardarCliente", "Clientes", FormMethod.Post))
+<style type="text/css">
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+        .switch input {
+            display: none;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+    input[type="checkbox"]:checked + input[type="hidden"] + .slider,
+    input[type="checkbox"]:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input[type="checkbox"]:focus + input[type="hidden"] + .slider,
+    input[type="checkbox"]:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input[type="checkbox"]:checked + input[type="hidden"] + .slider:before,
+    input[type="checkbox"]:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+
+@using (Html.BeginForm("GuardarCliente", "Clientes", FormMethod.Post, new { id = "FrmClientes"}))
 {
     <section class="content home">
         <div class="container-fluid">
-            <div class="row clearfix">               
+            <div class="row clearfix">
                 <div class="col-lg-5 col-md-5 col-sm-12">
                     <h2>Clientes</h2>
                     <ul class="breadcrumb padding-0">
@@ -21,8 +81,7 @@
                         <li class="breadcrumb-item">Nuevo</li>
                     </ul>
                 </div>
-
-            </div>
+            </div>          
             <div class="card">
                 <div class="body">
                     <div class="row clearfix">
@@ -168,7 +227,6 @@
 
                 </div>
             </div>
-
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
@@ -177,31 +235,64 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:12.666667%">
                                     <div class="form-group">
                                         Límite de crédito:
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
                                     <div class="form-group">
-                                        Monto $ <input name="limiteCreditoMonto" type="number" />
-
+                                        Monto $ <input name="limiteCreditoMonto" class="form-control" type="number" />
                                     </div>
                                 </div>
-
-                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
                                     <div class="form-group">
                                         <div>
-                                            Días <input name="limiteCreditoDias" type="number" />
+                                            Días <input name="limiteCreditoDias" class="form-control" type="number" />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
                                     <div class="form-group">
                                         <div>
-                                            Descuento $ x kilo:
-                                            <input name="DescuentoXKilo" type="number" />
+                                            Credito disponible:
+                                            <input name="DescuentoXKilo" class="form-control" type="number" />
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                    <div class="form-group">
+                                        <div>
+                                            Descuento %:
+                                            <input name="DescuentoXKilo" class="form-control" type="number" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                    <div class="form-group">
+                                        <div>
+                                            Autorizar ventas con límite de crédito excedido
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                    @*<div class="form-group">
+                                <div>
+                                    @Html.LabelFor(m => m.VentaExtraordinaria)
+                                    <label class="switch">
+                                        @*<input type="checkbox" name="VentaExtraordinaria">
+                                        <span class="slider round"></span>*@
+                                    @* @Html.CheckBoxFor(model => model.VentaExtraordinaria, new { @class = "form-control" })
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>*@
+                                    <div class="form-group">
+                                        <label class="switch">
+                                            @Html.CheckBoxFor(m => m.VentaExtraordinaria, new { @class = "form-control" })
+                                            @*<div class="slider round"></div>*@
+                                            <span class="slider round"></span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -350,7 +441,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="body">
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
@@ -360,8 +450,7 @@
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-7">
                         <div class="form-group">
-                            <input type="submit" value="Crear" formaction="GuardarCliente" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
-
+                            <input type="submit" value="Crear" formaction=@Url.Action("GuardarCliente") class="btn btn-raised btn-primary btn-round float-right" />
                         </div>
                     </div>
                 </div>

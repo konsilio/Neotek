@@ -98,6 +98,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.FechaRegistro = _dto.FechaRegistro;
             dto.TotalCargo = _dto.TotalCargo;
             dto.TotalAbonos = _dto.TotalAbonos;
+            dto.SaldoInsoluto = _dto.TotalCargo- _dto.TotalAbonos;
             dto.VentaExtraordinaria = _dto.VentaExtraordinaria;
             dto.Activo = _dto.Activo;
             dto.FechaVencimiento = _dto.FechaVencimiento;

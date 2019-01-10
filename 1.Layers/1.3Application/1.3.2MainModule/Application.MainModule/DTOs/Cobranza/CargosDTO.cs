@@ -18,6 +18,7 @@ namespace Application.MainModule.DTOs.Cobranza
         public System.DateTime FechaRango2 { get; set; }
         public decimal TotalCargo { get; set; }
         public decimal TotalAbonos { get; set; }
+        public decimal SaldoInsoluto { get; set; }
         public bool VentaExtraordinaria { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaVencimiento { get; set; }

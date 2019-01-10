@@ -31,5 +31,10 @@ namespace MVC.Presentacion
         {
             DevExpressHelper.Theme = "Moderno";
         }
+        protected void Application_EndRequest()
+        {   //here breakpoint
+            // under debug mode you an find the exceptions at code: this.Context.AllErrors
+         
+        }
     }
 }
