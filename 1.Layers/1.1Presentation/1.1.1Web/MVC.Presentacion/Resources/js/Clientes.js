@@ -53,7 +53,6 @@
         form.attr('method', 'post');
     });
     $("#btncrearCl").click(function () {
-               debugger
         var form = $('#FrmClientes');
         //form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "GuardarCliente" }) %>');
         //form.attr('method', 'post');

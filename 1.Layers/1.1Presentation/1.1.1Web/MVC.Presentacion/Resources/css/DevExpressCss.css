@@ -1,0 +1,67 @@
+﻿.devexpress-select .btn-group {
+    float: none;
+    display: inline-block;
+    margin-left: 0;
+}
+
+.itemst {
+    color: #616161;
+    padding: 7px 18px;
+    transition: all 0.5s;
+    line-height: 25px;
+    font-size: 14px;
+}
+
+.devExpressDropDown {
+    background-color: #888;
+    color: #fff;
+    padding: 5px 22px;
+    border-radius: .1875rem;
+    font-family: inherit;
+    font-size: .93em;
+    padding-left: 10px;
+}
+
+    .devExpressDropDown input {
+        background-color: #888 !important;
+        color: #fff !important;
+        white-space: nowrap;
+    }
+
+    .devExpressDropDown select {
+        background-color: #888 !important;
+        color: #fff !important;
+        white-space: nowrap;
+    }
+
+    .devExpressDropDown .ddlbtn:hover {
+        background-color: #888 !important;
+        border-color: #888 !important;
+    }
+
+.bootstrap-select .dropdown-menu li.selected a {
+    background-color: #eee !important;
+    color: #616161 !important;
+}
+
+.ddlSelect {
+    background-color: #eee !important;
+    color: #616161 !important;
+}
+
+.ddlbtn {
+    font-weight: 400;
+    font-size: .93em;
+    line-height: 1.35em;
+    background-color: #888 !important;
+}
+
+.dxeButtonEditButtonHover_Material {
+    background-color: #888 !important;
+}
+/*.dxeButtonEditSys .dxeButton,*/
+/*input[type="text"].dxeEditAreaSys
+ { 
+     background-color: #888;
+    color: #fff;
+}*/

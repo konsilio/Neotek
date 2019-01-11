@@ -29,7 +29,7 @@ namespace MVC.Presentacion
         }
         protected void Application_PreRequestHandlerExecute(object sender, EventArgs e)
         {
-            DevExpressHelper.Theme = "Moderno";
+            DevExpressHelper.Theme = "Material";
         }
         protected void Application_EndRequest()
         {   //here breakpoint
