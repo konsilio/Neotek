@@ -44,6 +44,7 @@ namespace Application.MainModule.Servicios.Mobile
         {
             List<MenuDto> lista = new List<MenuDto>();
             var usuario = new UsuarioDataAccess().Buscar(idUsuario);
+            bool esChofer = false;
 
             if (usuario.Roles != null)
             {
@@ -51,6 +52,7 @@ namespace Application.MainModule.Servicios.Mobile
                 
                 if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count!=0)
                 {
+                    esChofer = true;
                     var operadorDTO = PuntoVentaServicio.ObtenerOperador(idUsuario);
                     var operador = OperadorChoferServicio.Obtener(operadorDTO.IdOperadorChofer);
                     //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
@@ -111,8 +113,9 @@ namespace Application.MainModule.Servicios.Mobile
                     }
                                         
                     //Estación Calibacion 
-                    if (rol.AppTomaLecturaEstacionCarb && !_AppTomaLecturaEstacionCarb)
+                    if (rol.AppTomaLecturaEstacionCarb && !_AppTomaLecturaEstacionCarb && !esChofer)
                     {
+                        
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaEstacionCarbInicial"]));
                         if (ban)
                         {
@@ -122,7 +125,7 @@ namespace Application.MainModule.Servicios.Mobile
                     }
 
                     //Almacen principal 
-                    if (rol.AppTomaLecturaAlmacenPral && !_AppTomaLecturaAlmacenPral)
+                    if (rol.AppTomaLecturaAlmacenPral && !_AppTomaLecturaAlmacenPral && !esChofer)
                     {
 
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaAlmacenPralInicial"]));
@@ -133,7 +136,7 @@ namespace Application.MainModule.Servicios.Mobile
                     }
 
                     //Pipa
-                    if (rol.AppTomaLecturaPipa && !_AppTomaLecturaPipa)
+                    if (rol.AppTomaLecturaPipa && !_AppTomaLecturaPipa && !esChofer)
                     {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaPipaInicial"]));
                         if (ban) { 
@@ -143,7 +146,7 @@ namespace Application.MainModule.Servicios.Mobile
                     }
 
                     //Camioneta
-                    if (rol.AppTomaLecturaCamionetaCilindro && !_AppTomaLecturaCamionetaCilindro)
+                    if (rol.AppTomaLecturaCamionetaCilindro && !_AppTomaLecturaCamionetaCilindro &&  !esChofer)
                     {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaCamionetaCilindroInicial"]));
                         if (ban)
