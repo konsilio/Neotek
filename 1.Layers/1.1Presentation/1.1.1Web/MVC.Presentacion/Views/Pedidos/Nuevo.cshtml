@@ -1,5 +1,8 @@
 ﻿@model  MVC.Presentacion.Models.Pedidos.PedidoModel
 @Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Moderno" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Moderno" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" }
@@ -9,10 +12,12 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
+
 <!DOCTYPE html>
 
 <html>
 <head>
+    <link href="~/Resources/css/DevExpressCss.css" rel="stylesheet" />
     <script src="~/Resources/js/Pedidos.js"></script>
     <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <script src="~/assets/js/pages/ui/notifications.js"></script>
@@ -93,7 +98,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Cliente:</b>
-                                                    @Html.Action("_DatosCliente", Model.clientes)                                                
+                                                    @Html.Action("_DatosCliente", Model.clientes)
                                                 </div>
                                                 <div class="col-sm-2" style="top: 10px;">
                                                     <div class="form-group">
@@ -105,40 +110,40 @@
                                                 <div class="col-sm-3">
                                                     <b>Fecha:</b>
                                                     <div class="input-group">
-                                                             @Html.DevExpress().DateEdit(settings =>
-                                                       {
-                                                           settings.Name = "FechaEntregaPedido";
-                                                           settings.Properties.UseMaskBehavior = true;
-                                                           settings.Properties.EditFormat = EditFormat.Custom;
-                                                           settings.Theme = "Moderno";
-                                                           settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
-                                                           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
-                                                           settings.Properties.TimeSectionProperties.Visible = true;
-                                                           settings.Properties.TimeSectionProperties.Adaptive = true;
-                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
-                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
-                                                           settings.Date = DateTime.Now;
-                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                                       }).GetHtml()
+                                                        @Html.DevExpress().DateEdit(settings =>
+                                                        {
+                                                            settings.Name = "FechaEntregaPedido";
+                                                            settings.Properties.UseMaskBehavior = true;
+                                                            settings.Properties.EditFormat = EditFormat.Custom;
+                                                            settings.Theme = "Moderno";
+                                                            settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
+                                                            settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                                                            settings.Properties.TimeSectionProperties.Visible = true;
+                                                            settings.Properties.TimeSectionProperties.Adaptive = true;
+                                                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                            settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                            settings.Date = DateTime.Now;
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                                        }).GetHtml()
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
-                                                    <b>Domicilio:</b>                                                 
+                                                    <b>Domicilio:</b>
                                                     @Html.Action("_LocacionesCliente", Model.Locaciones)
                                                 </div><div class="col-sm-4">
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <div class="input-group">
-                                                       
+
                                                     </div>
                                                 </div>
                                                 @*<div style="-webkit-box-flex: 0;-ms-flex: 0 0 16.666667%;flex: 0 0 16.666667%; max-width: 2.666667%;text-align: center;"><b>:</b></div>*@
                                                 <div class="col-sm-2" style="top: 20px;">
                                                     <div class="input-group">
-                                                  
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -153,17 +158,27 @@
                                                     @Html.Action("_TipoUnidad")
                                                 </div>
                                                 <div class="col-sm-4">
-                                                    <b>Estatus pedido:</b>                                                 
+                                                    <b>Estatus pedido:</b>
                                                     @Html.DevExpress().ComboBox(settings =>
-                                                {
-                                                    settings.Name = "IdEstatusPedido";
-                                                    settings.Width = 180;
-                                                    settings.SelectedIndex = 0;
-                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                    settings.Properties.TextField = "Descripcion";
-                                                    settings.Properties.ValueField = "IdEstatusPedido";
-                                                }).BindList(ViewBag.Estatus).GetHtml()
+                                               {
+                                                   settings.Name = "IdEstatusPedido";
+                                                   settings.Width = 180;
+                                                   settings.SelectedIndex = 0;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   //dxeListBoxItem_Material itemst dxeListBoxItemSelected_Material
+                                                   settings.Properties.ItemStyle.SelectedStyle.CssClass = "ddlSelect";
+                                                   settings.Properties.ButtonStyle.CssClass = "ddlbtn";
+                                                   settings.Properties.ButtonStyle.Cursor = "pointer";
+                                                   settings.Properties.ButtonStyle.HoverStyle.CssClass = "btnhover";
+                                                   settings.Theme = "Material";
+                                                   //settings.Properties.DropDownHeight =25; altura listbox desplegable
+                                                   settings.ControlStyle.CssClass = "devExpressDropDown";
+                                                   settings.Properties.CaptionStyle.CssClass = "BoldCaption";
+                                                   settings.Properties.ItemStyle.CssClass = "itemst";
+                                                   settings.Properties.TextField = "Descripcion";
+                                                   settings.Properties.ValueField = "IdEstatusPedido";
+                                               }).BindList(ViewBag.Estatus).GetHtml()
                                                 </div>
                                             </div>
                                             <div class="row clearfix selPipa" style="display:none">

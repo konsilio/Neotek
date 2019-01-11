@@ -18,11 +18,12 @@ namespace Application.MainModule.DTOs.Cobranza
         public System.DateTime FechaRango2 { get; set; }
         public decimal TotalCargo { get; set; }
         public decimal TotalAbonos { get; set; }
+        public decimal SaldoInsoluto { get; set; }
         public bool VentaExtraordinaria { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaVencimiento { get; set; }
         public bool Saldada { get; set; }
-        public AbonosDTO Abonos { get; set; }
+        public AbonosDTO Abono { get; set; }
         public decimal Total { get; set; }
         public decimal TotalEfectivo { get; set; }
         public decimal TotalCheques { get; set; }

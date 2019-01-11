@@ -13,18 +13,10 @@
 
 <html>
 <head>
+    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <script src="~/assets/js/pages/ui/notifications.js"></script>
     <script type="text/javascript">
-        function OnBeginGridCallback(s, e) {
-            e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
-        }
-        $(document).ready(function () {
-            $('#btnSave').click(function () {
-                debugger;
-                GridView.UpdateEdit();
-            });
-        });
         var mensaje = '@ViewBag.Msj';
         var tipo = '@ViewBag.Tipo';
         if (mensaje != '') {
@@ -84,8 +76,7 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-2">
                                             <b>No Cliente:</b>
-                                            @*@Html.TextBoxFor(m => m[0].IdCliente, new { @class = "form-control" })*@
-                                            <input type="text" name="IdCliente" class = "form-control" placeholder="No del cliente" />
+                                            <input type="text" name="IdCliente" class="form-control" placeholder="No del cliente" />
                                         </div>
                                         <div class="col-sm-2" style="top:20px">
                                             @Html.DevExpress().DateEdit(settings =>
@@ -117,8 +108,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <b>RFC:</b>
-                                            @Html.TextBoxFor(m => m[0].Rfc, new { @class = "form-control", @placeholder = "RFC del cliente" })
-                                            <input type="text" name="Rfc" hidden/>
+                                            <input type="text" name="Rfc" class="form-control" placeholder="RFC del cliente"/>
                                         </div>
                                         <div class="col-sm-3" style="top:10px">
                                             <div class="form-group">
@@ -146,17 +136,14 @@
                             }
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
-                                    @*@Html.Partial("_AbonosPartial", Model )*@
-                                    @Html.Action("AbonosPartial")
+                                    @Html.Partial("_AbonosPartial", Model)
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </section>
-    }
+    }    
 </body>
 </html>

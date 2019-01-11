@@ -29,7 +29,12 @@ namespace MVC.Presentacion
         }
         protected void Application_PreRequestHandlerExecute(object sender, EventArgs e)
         {
-            DevExpressHelper.Theme = "Moderno";
+            DevExpressHelper.Theme = "Material";
+        }
+        protected void Application_EndRequest()
+        {   //here breakpoint
+            // under debug mode you an find the exceptions at code: this.Context.AllErrors
+         
         }
     }
 }

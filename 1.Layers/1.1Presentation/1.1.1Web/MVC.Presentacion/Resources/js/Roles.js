@@ -91,7 +91,7 @@
         $('#MovilCompra').css("display", "");
         $('#SistemaCompra').css("display", "");
         $('#divgvwCompra').css("display", "");
-        $('#DivgvwMovilCompra').css("display", "none");
+        $('#DivgvwMovilCompra').css("display", "");
         $('#DivgvwMovilVenta').css("display", "");
         $('#tabSisCompra').css("display", "");
         $('#tabSisVenta').css("display", "none");

@@ -59,6 +59,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<PrecioVenta>().Get().ToList();
         }
+        public int BuscarUltimoPrecio()
+        {
+            if (uow.Repository<PrecioVenta>().GetAll().ToList().Count.Equals(0))
+                return 0;
+            else
+                return uow.Repository<PrecioVenta>().GetAll().ToList().Last().IdPrecioVenta;
+        }
         public RespuestaDto Insertar(List<PrecioVenta> cte)
         {
             RespuestaDto _respuesta = new RespuestaDto();

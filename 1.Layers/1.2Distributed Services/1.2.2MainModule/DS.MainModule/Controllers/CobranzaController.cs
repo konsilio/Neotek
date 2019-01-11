@@ -34,9 +34,9 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _cobranza.ListaCargos(dto.IdCliente, dto.FechaRango1, dto.IdEmpresa));
         }
         [Route("registrar/abono")]
-        public HttpResponseMessage PostRegistrarAbonos(AbonosDTO _model)
+        public HttpResponseMessage PostRegistrarAbonos(CargosDTO _model)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.Registra(_model));
+            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.Registra(_model.Abono));
         }
         [Route("registrar/abonos")]
         public HttpResponseMessage PostRegistrarAbonosLst(List<AbonosDTO> _model)

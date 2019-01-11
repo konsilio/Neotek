@@ -444,7 +444,7 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Usuarios
-       public void BuscarListaUsuarios(short idEmpresa, string tkn)
+        public void BuscarListaUsuarios(short idEmpresa, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
             GetListaUsuarios(idEmpresa, tkn).Wait();
@@ -760,7 +760,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-              
+
                 var item = AgregaritemCliente();
                 item.AddRange(lus);
                 _lstaClientes = item;
@@ -3310,22 +3310,21 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
+                if (Cliente != 0)
+                {
+                    cargos = (from x in cargos where x.IdCliente == Cliente select x).ToList();
+                }
                 if (fecha1.Day != 1 && fecha1.Month != 1 && fecha1.Year != 1)
                 {
-                    cargos = (from x in cargos where x.FechaRegistro >= fecha1 select x).ToList();
+                    cargos = (from x in cargos where x.FechaRegistro.Date >= fecha1.Date select x).ToList();
                 }
                 if (fecha2.Day != 1 && fecha2.Month != 1 && fecha2.Year != 1)
                 {
-                    cargos = (from x in cargos where x.FechaRegistro <= fecha2 select x).ToList();
+                    cargos = (from x in cargos where x.FechaRegistro.Date <= fecha2 select x).ToList();
                 }
                 if (rfc != null)
                 {
                     cargos = (from x in cargos where x.Rfc == rfc select x).ToList();
-                }
-
-                if (Cliente != 0)
-                {
-                    cargos = (from x in cargos where x.IdCliente == Cliente select x).ToList();
                 }
                 if (ticket != null)
                 {
@@ -3373,7 +3372,7 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutListaCartera"];
             CarteraVencida(ApiCatalgos, dto, token).Wait();
         }
-        private async Task CarteraVencida( string api, CargosModel dto, string token = null)
+        private async Task CarteraVencida(string api, CargosModel dto, string token = null)
         {
             using (var client = new HttpClient())
             {
