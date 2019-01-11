@@ -68,7 +68,7 @@ namespace Application.MainModule.Servicios.Catalogos
         public static PuntoVenta ObtenerPorUsuarioAplicacion()
         {
             var operadorChofer = OperadorChoferServicio.ObtenerPorUsuarioAplicacion();
-            return Obtener(operadorChofer);
+            return operadorChofer != null ? Obtener(operadorChofer) : null;
         }
        
         public static RespuestaDto Eliminar(PuntoVenta cteLoc)
