@@ -166,6 +166,26 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     x.VentaACredito.Equals(esCredito)
                ).ToList();
         }
+        /// <summary>
+        /// BuscarCorte
+        /// Permite realizar la busqueda de un corte de una estacion en especifico y fecha en especifico
+        /// retornara un objeto de tipo VentaCorteAnticipoEC
+        /// </summary>
+        /// <param name="dia">Día en el que se realiza la consulta</param>
+        /// <param name="mes">Mes en que se realiza la consulta</param>
+        /// <param name="year">Año en el que se realiza la consulta </param>
+        /// <param name="idCAlmacenGas">Id del CAlmacenGas a consultar</param>
+        /// <returns>Entidad de tipo VentaCorteAnticipoEC con los datos encontrados</returns>
+        public VentaCorteAnticipoEC BuscarCorte(DateTime fecha, short idCAlmacenGas)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().GetSingle(
+                    x => x.IdCAlmacenGas.Equals(idCAlmacenGas) &&
+                    x.Dia.Equals((byte)fecha.Day) &&
+                    x.Mes.Equals((byte)fecha.Month) &&
+                    x.Year.Equals((short)fecha.Year) &&
+                    x.IdTipoOperacion.Equals(2)
+                );
+        }
 
         public RespuestaDto Eliminar(PuntoVenta cteL)
         {
@@ -309,7 +329,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Format(Error.S0004, "registrar la venta.");
+                    _respuesta.Mensaje = string.Format(Error.S0004, "actualizar la venta.");
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
@@ -319,5 +339,39 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<VentaPuntoDeVenta>().GetSingle(x => x.FolioVenta.Equals(tiketVenta));
         }
+        /// <summary>
+        /// Permite realizar el registro de un cargo 
+        /// para el caso de una venta extraordinaria desde el app
+        /// mobile, se toma como parametro una entidad de tipo Cargo 
+        /// con los datos a registrar y se retorna un modelo DTO de tipo 
+        /// RespuestaDTO con los datos de este 
+        /// </summary>
+        /// <param name="cargo">Entidad de tipo Cargo con los datos del mismo</param>
+        /// <returns>Modelo RespuestaDTO con el resultado del registro </returns>
+        public RespuestaDto insertCargoMobile(Cargo cargo)
+        {
+            RespuestaDto _Respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Cargo>().Insert(cargo);
+                    uow.SaveChanges();
+                    _Respuesta.Exito = true;
+                    _Respuesta.EsInsercion = true;
+                    _Respuesta.Id = cargo.IdCargo;
+                    _Respuesta.ModeloValido = true;
+                    _Respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _Respuesta.Exito = false;
+                    _Respuesta.Mensaje = string.Format(Error.S0004, "registar el cargo");
+                    _Respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _Respuesta;
+        }
+
     }
 }

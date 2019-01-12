@@ -36,7 +36,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             if (ultimoTraspaso != null)
             {
                 p5000 = ultimoTraspaso.P5000Salida;
-                porcentajeMedidor = ultimoTraspaso.PorcentajeSalida.Value;
+                porcentajeMedidor = ultimoTraspaso.PorcentajeSalida??0;
             }
             else
             {
@@ -67,7 +67,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             }
             else
             {
-                p5000 = unidadAlmacen.P5000Actual.Value;
+                p5000 = unidadAlmacen.P5000Actual??0;
                 porcentajeMedidor = unidadAlmacen.PorcentajeActual;
             }
 

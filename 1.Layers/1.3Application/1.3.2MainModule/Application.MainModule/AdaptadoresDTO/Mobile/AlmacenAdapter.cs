@@ -210,10 +210,11 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 IdAlmacenGas = alm.IdCAlmacenGas,
                 IdTipoMedidor = alm.IdTipoMedidor,
-                NombreAlmacen= AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(alm),
+                NombreAlmacen = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(alm),
                 CantidadP5000 = alm.P5000Actual,
                 PorcentajeMedidor = alm.PorcentajeActual,
                 Cilindros = null,
+                Capacidad = alm.CapacidadTanqueLt??0
             };
         }
 

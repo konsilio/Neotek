@@ -12,8 +12,10 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -116,14 +118,15 @@ public class LoginInteractorImpl implements LoginInteractor {
         call.enqueue(new Callback<UsuarioDTO>() {
             @Override
             public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
+                UsuarioDTO data = response.body();
                 if (response.isSuccessful()) {
-                    UsuarioDTO data = response.body();
+                    //UsuarioDTO data = response.body();
                     Log.w(TAG,"Sucess");
                     loginPresenter.onSuccessLogin(data);
 
                 }
                 else {
-                    UsuarioDTO data = response.body();
+                    //UsuarioDTO data = response.body();
                     switch (response.code()) {
                         case 404:
                             Log.w(TAG,"not found");
@@ -141,14 +144,30 @@ public class LoginInteractorImpl implements LoginInteractor {
                             //loginPresenter.onError(data.getMensaje());
                             break;
                     }
+
                     if(data!=null){
-                        if(response.code()==400){
-                            loginPresenter.onError("El usuario o la contraseña es incorrecta" +
-                                    "\n o no es de esta empresa.");
-                        }
                         loginPresenter.onError(data.getMensaje());
                     }else {
-                        loginPresenter.onError(response.message());
+                        JSONObject respuesta = null;
+                        try {
+                            respuesta = new JSONObject(response.errorBody().string());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if(respuesta!=null){
+                            try {
+                                Log.w("Error body",respuesta.toString());
+                                loginPresenter.onError(respuesta.getString("Mensaje"));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }else {
+                            loginPresenter.onError(response.message());
+                        }
                     }
                 }
 

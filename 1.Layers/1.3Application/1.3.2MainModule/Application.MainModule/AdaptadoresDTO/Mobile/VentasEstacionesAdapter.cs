@@ -40,7 +40,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new LineaDto()
             {
                 Id = linea.IdProductoLinea,
-                Nombre = linea.Descripcion
+                Nombre = linea.Descripcion,
+                IdLinea = linea.IdProductoLinea
             };
         }
 
@@ -50,6 +51,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 Id = categoria.IdCategoria,
                 Nombre = categoria.Nombre,
+                IdCategoria = categoria.IdCategoria
             };
         }
 
@@ -113,14 +115,14 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return list;
         }
 
-        public static List<DatosGasVentaDto> ToDTO(List<Producto> productosGas, List<PrecioVenta> precios)
+        public static List<DatosGasVentaDto> ToDTO(List<Producto> productosGas, List<PrecioVenta> precios, decimal CatidadKilosGas)
         {
-            return productosGas.Select(x => ToDTO(x, precios)).ToList();
+            return productosGas.Select(x => ToDTO(x, precios, CatidadKilosGas)).ToList();
         }
 
         public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios)
         {
-            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
+            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));           
             return new DatosGasVentaDto()
             {
                 Nombre = productoGas.Descripcion,
@@ -128,6 +130,31 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 PrecioUnitario = precio.PrecioSalidaKg.Value,
                 
             };
+        }
+        public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios, decimal CantidadKgGas)
+        {
+            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
+            if (productoGas.EsGas)
+            {
+                return new DatosGasVentaDto()
+                {
+                    Nombre = productoGas.Descripcion,
+                    Id = productoGas.IdProducto,
+                    PrecioUnitario = precio.PrecioSalidaKg.Value,
+                    Existencia = CantidadKgGas,
+                };
+            }
+            else
+            {
+                var existencias = ProductoAlmacenServicio.ObtenerAlmacen(productoGas.IdProducto, TokenServicio.ObtenerIdEmpresa());
+                return new DatosGasVentaDto()
+                {
+                    Nombre = productoGas.Descripcion,
+                    Id = productoGas.IdProducto,
+                    PrecioUnitario = precio.PrecioSalidaKg.Value,
+                    Existencia = existencias != null ? existencias.Cantidad : 0,
+                };
+            }
         }
 
         public static List<DatosGasVentaDto> ToDTO(UnidadAlmacenGas camioneta)
@@ -154,12 +181,19 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 var IdCamioneta = VentaServicio.ObtenerIdCamioneta(TokenServicio.ObtenerIdUsuario());
                 if (IdCamioneta != 0)
                 {
+                    var cilindrosCamionetas = cilindro.CilindrosCamionetas;
+                    var cilindroExistencia = cilindro.Cantidad;
+                    
+                    //if (cilindrosCamionetas != null)
+                    //    cilindroExistencia = 0;
+                    //else
+                    //    cilindroExistencia =  cilindrosCamionetas.FirstOrDefault(x => x.IdCilindro.Equals(cilindro.IdCilindro) && x.IdCamioneta.Equals(IdCamioneta)).Cantidad;
                     list.Add(new DatosGasVentaDto()
                     {
                         Nombre = "Cilindro " + cilindro.CapacidadKg,
                         PrecioUnitario = cilindro.Precio,
                         Id = cilindro.IdCilindro,                        
-                        Existencia = cilindro.CilindrosCamionetas.FirstOrDefault(x => x.IdCilindro.Equals(cilindro.IdCilindro) && x.IdCamioneta.Equals(IdCamioneta)).Cantidad,
+                        Existencia = cilindroExistencia,//,
                         CapacidadKg = cilindro.CapacidadKg,
                         CapacidadLt = cilindro.CapacidadLt
                     });
@@ -228,5 +262,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 FechaRegistro = venta.FechaRegistro
             };
         }
+
+       
     }
 }

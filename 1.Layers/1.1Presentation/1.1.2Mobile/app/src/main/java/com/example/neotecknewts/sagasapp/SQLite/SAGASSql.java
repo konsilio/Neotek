@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.SQLite;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -12,26 +13,39 @@ import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
+import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
+import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentasCorteDTO;
+
+import java.net.URI;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Clase SAGASSql para el manejo de base de datos local
  * @author Jorge Omar Tovar Martínez <jorge.tovar@neothec.com.mx>
  * @companny Neoteck
  * @date 28/08/2018
- * @updated 06/09/2018
+ * @updated 14/12/2018
  */
 public class SAGASSql extends SQLiteOpenHelper {
     //region Variables estaticas
     private static final String DB_NAME = "sagas_db";
     private static final int DB_VERSION = 1;
+    private static final String TABLE_PAPELETAS = "papeletas";
+    private static final String TABLE_PAPELETAS_IMAGENES = "papeletas_imagenes";
+    private static final String TABLE_DESCARGAS = "iniciar_descarga";
+    private static final String TABLE_DESCARGAS_IMAGENES = "iniciar_descarga_imagenes";
+    private static final String TABLE_FINALIZAR_DESCARGA="finalizar_descarga";
+    private static final String TABLE_IMAGENES_FINALIZAR_DESCARGA = "imagenes_finalizar_descarga";
     private static final String TABLE_LECTURA_INICIAL = "lectura_inicial";
     private static final String TABLE_LECTURA_INICIAL_P5000 = "lectura_inicial_p5000";
     private static final String TABLE_LECTURA_INICIAL_IMAGENES = "lectura_inicial_imagenes";
@@ -107,6 +121,101 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //region Tabla Papeleta
+        db.execSQL("CREATE TABLE "+TABLE_PAPELETAS+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                "ClaveOperacion TEXT," +
+                "IdOrdenCompraExpedidor INTEGER,"+
+                "IdOrdenCompraPorteador INTEGER,"+
+                "IdProveedorPorteador INTEGER,"+
+                "IdProveedorExpedidor INTEGER," +
+                "Fecha DATE,"+
+                "FechaEmbarque DATE,"+
+                "NumeroEmbarque TEXT,"+
+                "PlacasTractor TEXT,"+
+                "NombreOperador TEXT,"+
+                "Producto TEXT,"+
+                "NumeroTanque TEXT,"+
+                "PresionTanque DECIMAL(10,2),"+
+                "CapacidadTanque DECIMAL(10,2),"+
+                "PorcentajeTanque DECIMAL(10,2),"+
+                "Masa DECIMAL(10,2),"+
+                "Sello TEXT,"+
+                "ValorCarga DECIMAL(10,2),"+
+                "NombreResponsable TEXT,"+
+                "PorcentajeMedidor TEXT,"+
+                "NombreTipoMedidorTractor TEXT,"+
+                "IdTipoMedidorTractor INTEGER,"+
+                "CantidadFotosTractor INTEGER,"+
+                "Falta BOOLEAN DEFAULT 1)");
+
+        //endregion
+        //region tabla Imagenes de la papeleta
+        db.execSQL("CREATE TABLE "+TABLE_PAPELETAS_IMAGENES+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                "Imagen TEXT,"+
+                "Url TEXT,"+
+                "CalveUnica TEXT,"+
+                "Falta BOOLEAN DEFAULT 1"+
+                ")");
+        //endregion
+
+        //region Tabla de iniciar descargas
+        db.execSQL(
+                "CREATE TABLE "+TABLE_DESCARGAS+
+                        "(Id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                        "IdOrdenCompra INTEGER,"+
+                        "ClaveOperacion TEXT,"+
+                        "FechaDescarga DATE,"+
+                        "NombreTipoMedidorTractor TEXT,"+
+                        "NombreTipoMedidorAlmacen TEXT,"+
+                        "IdTipoMedidorTractor INTEGER,"+
+                        "IdTipoMedidorAlmacen INTEGER,"+
+                        "CantidadFotosAlmacen INTEGER,"+
+                        "CantidadFotosTractor INTEGER,"+
+                        "TanquePrestado BOOLEAN DEFAULT 1,"+
+                        "PorcentajeMedidorAlmacen DOUBLE,"+
+                        "PorcentajeMedidorTractor DOUBLE,"+
+                        "IdAlmacen INTEGER," +
+                        "Falta BOOLEAN DEFAULT 1)"
+        );
+        //endregion
+        //region Tabla de imagenes descargas
+        db.execSQL(
+                "CREATE TABLE "+TABLE_DESCARGAS_IMAGENES+
+                        "(Id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                        "ClaveOperacion TEXT,"+
+                        "Imagen TEXT,"+
+                        "Uri TEXT,"+
+                        "Falta BOOLEAN DEFAULT 1)"
+        );
+        //endregion
+
+        //region Tabla de Finalizar descarga
+        db.execSQL("CREATE TABLE "+TABLE_FINALIZAR_DESCARGA+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                "ClaveOperacion TEXT,"+
+                "IdOrdenCompra INTEGER,"+
+                "IdTipoMedidorTractor INTEGER,"+
+                "IdTipoMedidorAlmacen INTEGER,"+
+                "TanquePrestado BOOLEAN DEFAULT 1,"+
+                "PorcentajeMedirorAlmacen DECIMAL,"+
+                "PorcentajeMedidorTractor DECIMAL,"+
+                "IdAlmacen INTEGER,"+
+                "FechaDescarga TEXT,"+
+                "Falta BOOLEAN DEFAULT 1"+
+                ")");
+        //endregion
+        //region Tabla de imagenes finalizar descarga
+        db.execSQL("CREATE TABLE "+TABLE_IMAGENES_FINALIZAR_DESCARGA+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Url TEXT," +
+                "Imagen TEXT," +
+                "ClaveOperacion TEXT,"+
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+
         //region Tabla lectura_inicial Calibacion
         db.execSQL("CREATE TABLE "+TABLE_LECTURA_INICIAL+"(" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -421,7 +530,8 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "CantidadLt DOUBLE,"+
                 "CantidadKg DOUBLE,"+
                 "DescuentoTotal DOUBLE,"+
-                "IdEmpresa INTEGER"+
+                "IdEmpresa INTEGER,"+
+                "IdUnidadMedida INTEGER"+
                 ")");
         //endregion
 
@@ -570,6 +680,12 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_PAPELETAS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_PAPELETAS_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_DESCARGAS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_DESCARGAS_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_FINALIZAR_DESCARGA);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_IMAGENES_FINALIZAR_DESCARGA);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_P5000);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_IMAGENES);
@@ -605,6 +721,431 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_CORTES);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_CORTES_VENTAS);
         onCreate(db);
+    }
+    //endregion
+
+    //region Metodos para la  papeleta
+    /**
+     * Permite hacer el registro en local de los datos de la
+     * papeleta, retornara un string del objeto {@link UUID}
+     * como referencia del registro
+     * @param papeletaDTO Modelo de {@link PrecargaPapeletaDTO} con los datos a registra
+     * @return boolean Resultado del registro en base de datos
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public boolean Insert(PrecargaPapeletaDTO papeletaDTO,String clave_operacion){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ClaveOperacion",clave_operacion);
+        contentValues.put("IdOrdenCompraExpedidor",papeletaDTO.getIdOrdenCompraExpedidor());
+        contentValues.put("IdOrdenCompraPorteador",papeletaDTO.getIdOrdenCompraPorteador());
+        contentValues.put("IdProveedorPorteador",papeletaDTO.getIdProveedorPorteador());
+        contentValues.put("IdProveedorExpedidor",papeletaDTO.getIdProveedorExpedidor());
+        contentValues.put("Fecha",papeletaDTO.getFecha().toString());
+        contentValues.put("FechaEmbarque",papeletaDTO.getFechaEmbarque().toString());
+        contentValues.put("NumeroEmbarque",papeletaDTO.getNumeroEmbarque());
+        contentValues.put("PlacasTractor",papeletaDTO.getPlacasTractor());
+        contentValues.put("NombreOperador",papeletaDTO.getNombreOperador());
+        contentValues.put("Producto",papeletaDTO.getProducto());
+        contentValues.put("NumeroTanque",papeletaDTO.getNumeroTanque());
+        contentValues.put("PresionTanque",papeletaDTO.getPresionTanque());
+        contentValues.put("CapacidadTanque",papeletaDTO.getPresionTanque());
+        contentValues.put("PorcentajeTanque",papeletaDTO.getPorcentajeTanque());
+        contentValues.put("Masa",papeletaDTO.getMasa());
+        contentValues.put("Sello",papeletaDTO.getSello());
+        contentValues.put("ValorCarga",papeletaDTO.getValorCarga());
+        contentValues.put("NombreResponsable",papeletaDTO.getValorCarga());
+        contentValues.put("PorcentajeMedidor",papeletaDTO.getPorcentajeMedidor());
+        contentValues.put("NombreTipoMedidorTractor",papeletaDTO.getNombreTipoMedidorTractor());
+        contentValues.put("IdTipoMedidorTractor",papeletaDTO.getIdTipoMedidorTractor());
+        contentValues.put("CantidadFotosTractor",papeletaDTO.getImagenes().size());
+        contentValues.put("Falta",true);
+
+        Long id = db.insert(TABLE_PAPELETAS,null,contentValues);
+        Log.v("Registro",String.valueOf(id));
+        return true;
+    }
+
+    /**
+     * Eliminar
+     * Permite realizar el borrado del registro especificado por
+     * medio de su {@link UUID} generado
+     * @param ClaveOperacion String generado a partir la clave unica
+     * @return Numero de registro eliminados
+     */
+    public Integer Eliminar(String ClaveOperacion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_PAPELETAS,
+                "ClaveOperacion = '"+ClaveOperacion+"'",
+                null);
+    }
+
+    /**
+     * Permite buscar un registro por medio de su id en la base de datos local
+     * retornara un objeto de tipo {@link Cursor} con los datos encontrados
+     * @param id Id del registro a buscar
+     * @return Objeto {@link Cursor} con los datos obtenidos
+     *
+     */
+    public Integer EliminarById(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_PAPELETAS,
+                "Id = "+id,
+                null);
+    }
+    /**
+     * GetRecordByUuid
+     * Permite realizar la busqueda de un registro por medio del uuid generado
+     * @param ClaveOperacion String de la clave unica generada
+     * @return Objeto con los registros de la consulta
+     */
+    public Cursor GetRecordByCalveUnica(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_PAPELETAS+ " WHERE ClaveOperacion = '"+
+                ClaveOperacion+"'",null);
+    }
+
+    /**
+     * GetNumberOfRecors
+     * Prime obtener el numero total de registros en la tabla
+     * @return Un valor de tipo entero que reprecenta el numero de registros en la base de datos
+     */
+    public int GetNumberOfRecors(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return (int) DatabaseUtils.queryNumEntries(db, TABLE_PAPELETAS);
+    }
+    //endregion
+
+    //region Metodos para las Imagenes de la  papeleta
+    /**
+     * InsertImagenes
+     * Realiza el registro en base de datos de los datos de la imagen,
+     * retornara en caso de ser correcto el id del registro en caso contrario retornara un -1
+     * @param imagen String de 64 bits de la imagen
+     * @param url Url en el dispositvo de la imagen
+     * @param CalveUnica Clave unica de la papeleta
+     * @return En caso de ser correcto el Id del registro, en caso erroneo un -1
+     */
+    public Long[] InsertImagenes(List<URI> imagen, List<String> url, String CalveUnica){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Long[] inserts = new Long[imagen.size()];
+        for (int x = 0;x<imagen.size();x++){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("IMAGEN",imagen.get(x).toString());
+            contentValues.put("Url",url.get(x));
+            contentValues.put("CalveUnica",CalveUnica);
+            inserts[x] =  db.insert(TABLE_PAPELETAS_IMAGENES,null,contentValues);
+            Log.w("Imagenes",String.valueOf(inserts[x]));
+
+        }
+        return inserts;
+    }
+    /**
+     * GetRecordsByCalveUnica
+     * Retorna un arreglo con las imagenes de la papeleta, se tomara como parametro la
+     * ClaveOperacion
+     * @param ClaveOperacion Clave unica del la orden
+     * @return Registro/os que retorno la consulta
+     */
+    public Cursor GetRecordsByCalveUnica(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_PAPELETAS_IMAGENES+
+                " WHERE CalveUnica ='"+ClaveOperacion+"'",null);
+    }
+
+    /**
+     * Permite retornar todos los registros de la papeleta,
+     * retornara un objeto {@link Cursor} con los resultados de la consulta
+     * @return Objeto {@link Cursor} con las papeletas
+     */
+    public Cursor GetPapeletas(){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_PAPELETAS,
+                null);
+    }
+
+    public Integer EliminarImagenes(String ClaveOperacion){
+        return  this.getWritableDatabase().delete(TABLE_PAPELETAS_IMAGENES,
+                "CalveUnica = '"+ClaveOperacion+"'",null);
+    }
+    //endregion
+
+    //region Metodos para Iniciar descarga
+
+    /**
+     * InsertDescarga
+     * Permite el registro de una nueva descarga en local, tras ser generada la tabla  se tomaran
+     * los valores del modelo de la clase {@link IniciarDescargaDTO} y se colocara para la sentencia
+     * insert para su registro en la tabla en local de descargas, al finalizar retornara el id del
+     * registro , en caso de no registrar se retornara un -1
+     * @param iniciarDescargaDTO Objeto {@link IniciarDescargaDTO} que contiene los valores a ser
+     *                           registrados en la base de datos
+     * @param ClaveOperacion {@link String} de clave unica de la operaciòn que le corresponde
+     * @return Long que reprecenta el resultado del registro , en caso de ser -1 no se ha registrado
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     *
+     */
+    public Long InsertDescarga(IniciarDescargaDTO iniciarDescargaDTO,String ClaveOperacion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("IdOrdenCompra",iniciarDescargaDTO.getIdOrdenCompra());
+        contentValues.put("ClaveOperacion",ClaveOperacion);
+        contentValues.put("NombreTipoMedidorTractor",iniciarDescargaDTO.getNombreTipoMedidorTractor());
+        contentValues.put("NombreTipoMedidorAlmacen",iniciarDescargaDTO.getIdTipoMedidorAlmacen());
+        contentValues.put("IdTipoMedidorTractor",iniciarDescargaDTO.getIdTipoMedidorTractor());
+        contentValues.put("IdTipoMedidorAlmacen",iniciarDescargaDTO.getIdTipoMedidorAlmacen());
+        contentValues.put("CantidadFotosAlmacen",iniciarDescargaDTO.getCantidadFotosAlmacen());
+        contentValues.put("CantidadFotosTractor",iniciarDescargaDTO.getCantidadFotosTractor());
+        contentValues.put("TanquePrestado",iniciarDescargaDTO.isTanquePrestado());
+        contentValues.put("PorcentajeMedidorAlmacen",iniciarDescargaDTO.getPorcentajeMedidorAlmacen());
+        contentValues.put("PorcentajeMedidorTractor",iniciarDescargaDTO.getPorcentajeMedidorTractor());
+        contentValues.put("IdAlmacen",iniciarDescargaDTO.getIdAlmacen());
+        contentValues.put("FechaDescarga",iniciarDescargaDTO.getFechaDescarga());//Falta verificar si la fecha es digitada o es timestamp
+        contentValues.put("Falta",true);
+        return db.insert(TABLE_DESCARGAS,null,contentValues);
+    }
+
+    /**
+     * GetDescargaByClaveOperacion
+     * Permite consultar un registro de la clave de operaciónes , se tomara como parametro la
+     * clave de operación, en caso de obtener algun registro se retornara en un objeto
+     * {@link Cursor}.
+     *
+     * @param ClaveOperacion {@link String} de clave unica de la operaciòn que le corresponde
+     * @return Objeto {@link Cursor} con los datos que se obtienen o un null en caso de no encontrar
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     *
+     */
+    public Cursor GetDescargaByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_DESCARGAS+" WHERE ClaveOperacion = '"
+                +ClaveOperacion+"'",null);
+    }
+
+    /**
+     * GetDescargaById
+     * Permite obtener por medio de la id un registro de la descarga
+     * @param Id {@link String} que reprecenta el Id del registro en base de datos
+     * @return Un objeto de tipo {@link Cursor} con los valores de la consulta en caso de existir
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Cursor GetDescargaById(String Id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_DESCARGAS+" WHERE Id = '"
+                +Id+"'",null);
+    }
+
+    /**
+     * EliminarDescarga
+     * Permite realizar la eliminación de un registro en la base de datos ,
+     * se requerira como parametro un {@link String} que reprecenta la clave de operación y
+     * este retornara un valor entero con el total de registro eliminados.
+     * @param ClaveOperacion Cadena de tipo {@link String} de clave unica de la operaciòn
+     * @return Valor de tipo {@link Integer} que reprecenta el número de registros eliminados.
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Integer EliminarDescarga(String ClaveOperacion) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_DESCARGAS,
+                "ClaveOperacion = '"+ClaveOperacion+"'",
+                null);
+    }
+    //endregion
+    //region Metodos para Imagenes de Iniciar descarga
+
+    /**
+     * IncertarImagenesDescarga
+     * Permite realizar el registro de la imagenes en la base de datos local, se envian como
+     * parametros un objeto de tipo {@link IniciarDescargaDTO} que contiene la imagenes y un
+     * {@link String} que sera la clave de operación que le corresponde, tras finalizar de
+     * registrar todas las imagenes se retornara un arreglo de tipo {@link Long} con los id
+     * de las imagenes.
+     * @param iniciarDescargaDTO Objeto Objeto {@link IniciarDescargaDTO} que contiene las listas
+     *                           de tipo {@link java.util.List} con las imagenes
+     * @param ClaveOperacion     {@link String} de la clave de operación
+     * @return Un arreglo de tipo {@link Long} con los id de los datos registrados en base de datos
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     */
+    public Long[] IncertarImagenesDescarga(IniciarDescargaDTO iniciarDescargaDTO,
+                                           String ClaveOperacion){
+        Long[] inserts = new Long[iniciarDescargaDTO.getImagenes().size()];
+        SQLiteDatabase db = this.getWritableDatabase();
+        for (int x = 0; x<iniciarDescargaDTO.getImagenes().size(); x++){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ClaveOperacion",ClaveOperacion);
+            contentValues.put("Imagen", iniciarDescargaDTO.getImagenes().get(x));
+            contentValues.put("Uri",iniciarDescargaDTO.getImagenesURI().get(x).toString());
+            inserts[x] =  db.insert(TABLE_DESCARGAS_IMAGENES,null, contentValues);
+        }
+        return inserts;
+    }
+
+    /**
+     * GetImagenesDescargaByClaveUnica
+     * Permite obtener por medio de la clave unica todas las imagenes que tiene esa descarga ,
+     * se neviara como parametro un {@link String} la clave unica de la operación y se retornara
+     * como resultado las imagenes referenciadas a esta en un objeto {@link Cursor}.
+     * @param ClaveUnica {@link String} que reprecenta la clave unica de operación
+     * @return Un objeto {@link Cursor} con los resultados de la consulta
+     */
+    public Cursor GetImagenesDescargaByClaveUnica(String ClaveUnica){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_DESCARGAS_IMAGENES+" WHERE ClaveOperacion = '"+ClaveUnica+"'",null);
+    }
+
+    /**
+     * EliminarImagenesDescarga
+     * Permite eliminar los registros de las imagenes de la base de datos, se enviara como parametro
+     * un {@link String} que reprecenta la clave unica de la descarga, en caso de que se eliminen
+     * los registro se retornara un valor de tipo {@link Integer} con la cantidad de registros
+     * eliminados.
+     * @param ClaveUnica {@link String} que reprecenta la clave única de la descarga
+     * @return Valor de tipo {@link Integer} que reprecenta los registros eliminados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Integer EliminarImagenesDescarga(String ClaveUnica){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_DESCARGAS_IMAGENES,"WHERE ClaveUnica = '"+ClaveUnica+"'",null);
+    }
+
+    public Cursor GetIniciarDescargas() {
+        return  this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_DESCARGAS,
+                null);
+    }
+    //endregion
+
+    //region Metodos de la tabla de finalizar descarga
+    /**
+     * InsertFinalizarDescarga
+     * Permite realizar el registro en local de la finalización de descarga, se tomaran como
+     * parametros un objeto de tipo {@link FinalizarDescargaDTO} que contendra los datos y un
+     * {@link String} con la clave del proceso , tras finalizar retornara un valor de tipo
+     * {@link Long} que retornara el id del regitro en caso de ser correcto, en caso contrario
+     * retornara un -1
+     * @param finalizarDescargaDTO Objeto de tipo {@link FinalizarDescargaDTO} con los datos
+     *                             de la finalización de descarga
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave de proceso
+     * @return Valor de tipo {@link Long} que en caso de ser mayor a -1 quiere decir que se
+     *          registro en local
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     * @date 28/08/2018
+     */
+    public Long InsertFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO,String ClaveOperacion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ClaveOperacion",ClaveOperacion);
+        contentValues.put("IdOrdenCompra",finalizarDescargaDTO.getIdOrdenCompra());
+        contentValues.put("IdTipoMedidorTractor",finalizarDescargaDTO.getIdTipoMedidorTractor());
+        contentValues.put("IdTipoMedidorAlmacen",finalizarDescargaDTO.getIdTipoMedidorAlmacen());
+        contentValues.put("TanquePrestado",finalizarDescargaDTO.getTanquePrestado());
+        contentValues.put("PorcentajeMedirorAlmacen",finalizarDescargaDTO.getPorcentajeMedidorAlmacen());
+        contentValues.put("PorcentajeMedidorTractor",finalizarDescargaDTO.getPorcentajeMedidorTractor());
+        contentValues.put("IdAlmacen",finalizarDescargaDTO.getIdAlmacen());
+        contentValues.put("FechaDescarga",finalizarDescargaDTO.getFechaDescarga());
+        return db.insert(TABLE_FINALIZAR_DESCARGA,null,contentValues);
+    }
+
+    /**
+     * GetFinalizarDescargaByClaveOperacion
+     * Permite realizar la consulta de un registro de finalizar descarga, se enviara como parametro
+     * un {@link String} que reprecenta la clave de operación y el metodo en caso de encontrar
+     * algun registro lo retornara en una variable de tipo {@link Cursor}.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave de operación
+     * @return Objeto de tipo {@link Cursor} con los datos de la consulta en caso de existir
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     * @date 28/08/2018
+     */
+    public Cursor GetFinalizarDescargaByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_FINALIZAR_DESCARGA+" WHERE ClaveOperacion ='"
+                +ClaveOperacion+"'",null);
+    }
+
+    /**
+     * DeleteFinalizarDescarga
+     * Permite realizar la eliminaciòn de un registro por medio de su clave unica , tras finalizar
+     * retornara un valor de tipo {@link Integer} que reprecenta el numero de registros eliminados.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave de opreación a
+     *                     eliminar
+     * @return Valor de tipo {@link Integer} que reprecenta el numero de registros eliminados.
+     */
+    public Integer EliminarFinalizarDescarga(String ClaveOperacion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_FINALIZAR_DESCARGA,
+                "ClaveOperacion = '"+ClaveOperacion+"'",
+                null);
+    }
+    //endregion
+    //region Metodos para la tabla de imagenes de finalizar descarga
+
+    /**
+     * <h3>InsertarImagenes</h3>
+     * Permite realizar el registro de las imagenes de finalizar descarga, se requieren como parametros
+     * un objeto de tipo {@link FinalizarDescargaDTO} el cual cotiene los datos requeridos y una cadena
+     * de tipo {@link String} que reprecenta la clave unica de operación , se retornara un array de
+     * tipo {@link Long} que contiene los id de los registros realizados en caso de ser correctos.
+     * @param finalizarDescargaDTO Objeto de tipo {@link FinalizarDescargaDTO} con los datos
+     *                             de la finalización de descarga
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave de operación
+     * @return Array de tipo {@link Long} con los id registrados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     * @date 28/08/2018
+     */
+    public Long[] InsertarImagenes(FinalizarDescargaDTO finalizarDescargaDTO,String ClaveOperacion){
+        Long[] inserts = new Long[finalizarDescargaDTO.getImagenes().size()];
+        SQLiteDatabase db =  this.getWritableDatabase();
+        for (int x = 0; x< finalizarDescargaDTO.getImagenes().size();x++){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("Url",finalizarDescargaDTO.getImagenesURI().get(x).toString());
+            contentValues.put("Imagen",finalizarDescargaDTO.getImagenes().get(x));
+            contentValues.put("ClaveOperacion",ClaveOperacion);
+            inserts[x] = db.insert(TABLE_IMAGENES_FINALIZAR_DESCARGA,null,contentValues);
+        }
+        return inserts;
+    }
+
+    /**
+     * <h3>EliminarImagenesFinalizarDescarga</h3>
+     * Permite realizar la eliminación de las imagenes que se encuentren registradas en local,
+     * tomara como parametro un {@link String} que reprecenta la clave de operación de
+     * finalizar descarga , al final retornara un valor de tipo {@link Integer} con el total de
+     * registros eliminados.
+     * @param ClaveOperacion Cadena {@link String} que reprecenta la clave de operación
+     * @return Valor de tipo {@link Integer} con el total de registros afectados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     * @date 28/08/2018
+     */
+    public Integer EliminarImagenesFinalizarDescarga(String ClaveOperacion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_IMAGENES_FINALIZAR_DESCARGA,
+                "ClaveOperacion = '"+ClaveOperacion+"'",
+                null);
+    }
+
+    /**
+     * <h3>GetImagenesFinalizarDescargaByClaveOperacion</h3>
+     * Permite realizar la consulta de la imagenes registradas en local de la finalización de
+     * la descarga, obtiene como parametro un {@link String} con la clave de operación para
+     * retornar un objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave de operación
+     * @return Objeto {@link Cursor} con el resultado de la consulta
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     * @date 28/08/2018
+     */
+    public Cursor GetImagenesFinalizarDescargaByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_IMAGENES_FINALIZAR_DESCARGA+
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
+    }
+
+    /**
+     * Permite realizar una consulta de todos los registros de finalizar descarga, retornara
+     * un objeto de tipo {@link Cursor} con los datos resultantes
+     * @return Objeto {@link Cursor} con el resultado de los datos
+     */
+    public Cursor GetFinalizarDescargas() {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_FINALIZAR_DESCARGA,
+                null);
     }
     //endregion
 
@@ -1890,32 +2431,30 @@ public class SAGASSql extends SQLiteOpenHelper {
                 values.put("FolioVenta", ventaDTO.getFolioVenta());
                 values.put("IdTipoGas", conceptoDTO.getIdTipoGas());
                 values.put("Cantidad", conceptoDTO.getCantidad());
+                values.put("Concepto", conceptoDTO.getConcepto());
                 values.put("PUnitario", conceptoDTO.getPUnitario());
                 values.put("Descuento", conceptoDTO.getDescuento());
                 values.put("Subtotal", conceptoDTO.getSubtotal());
                 values.put("IdCategoria", conceptoDTO.getIdCategoria());
                 values.put("IdLinea", conceptoDTO.getIdLinea());
                 values.put("IdProducto", conceptoDTO.getIdProducto());
-                values.put("Concepto", conceptoDTO.getConcepto());
 
                 values.put("Year", conceptoDTO.getYear());
                 values.put("Mes", conceptoDTO.getMes());
                 values.put("Dia", conceptoDTO.getDia());
-                values.put("IdProducto", conceptoDTO.getIdProducto());
-                values.put("IdLinea", conceptoDTO.getIdLinea());
-                values.put("IdCategoria", conceptoDTO.getIdCategoria());
-                values.put("IdUnidadMedida", conceptoDTO.getIdUnidadmedida());
                 values.put("PrecioUnitarioProducto", conceptoDTO.getPrecioUnitarioProducto());
                 values.put("PrecioUnitarioLt", conceptoDTO.getPrecioUnitarioLt());
                 values.put("PrecioUnitatioKg", conceptoDTO.getPrecioUnitarioKg());
                 values.put("DescuentoUnitarioProducto", conceptoDTO.getDescuentoUnitarioProducto());
                 values.put("DescuentoUnitarioLt", conceptoDTO.getDescuentoUnitarioLt());
                 values.put("DescuentoUnitarioKg", conceptoDTO.getDescuentoUnitarioKg());
-                values.put("Cantidad", conceptoDTO.getCantidad());
                 values.put("CantidadLt", conceptoDTO.getCantidadLt());
                 values.put("CantidadKg", conceptoDTO.getCantidadKg());
                 values.put("DescuentoTotal", conceptoDTO.getDescuentoTotal());
                 values.put("IdEmpresa", conceptoDTO.getIdEmpresa());
+                values.put("IdUnidadMedida", conceptoDTO.getIdUnidadmedida());
+
+
                 _result[x] = this.getWritableDatabase().insert(TABLE_VENTAS_CONCEPTO,
                         null, values);
             }
@@ -2255,7 +2794,6 @@ public class SAGASSql extends SQLiteOpenHelper {
         values.put("IdEstacion",corteDTO.getIdEstacion());
         values.put("FechaCorte",corteDTO.getFecha());
         values.put("Hora",corteDTO.getHora());
-        values.put("FechaVenta",corteDTO.getFechaVenta());
         return this.getWritableDatabase().insert(
                 TABLE_CORTES,
                 null,

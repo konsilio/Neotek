@@ -55,18 +55,6 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
                 cilindrosDTOS = (ArrayList<CilindrosDTO>) recargaDTO.getCilindros();
             }
         }
-        /*CilindrosDTO valor = new CilindrosDTO();
-        valor.setCilindroKg("20kg.");
-        valor.setCantidad(4);
-        valor.setIdCilindro(1);
-        CilindrosDTO valor2 = new CilindrosDTO();
-        valor2.setCilindroKg("30kg.");
-        valor2.setCantidad(24);
-        valor.setIdCilindro(2);
-        CilindrosDTO valor3 = new CilindrosDTO();
-        valor3.setCilindroKg("45kg.");
-        valor3.setCantidad(99);
-        valor.setIdCilindro(3);*/
 
         RVConfiguracionCamionetasCilindros = findViewById(R.id.RVConfiguracionCamionetasCilindros);
         RVConfiguracionCamionetasCilindros.setHasFixedSize(true);
@@ -76,11 +64,20 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         TextView TVCamposCamionetasHeaderInstrucciones = findViewById(R.id.
                 TVCamposCamionetasHeaderInstrucciones);
         TextView TVCamposCamionetaHader = findViewById(R.id.TVCamposCamionetaHader);
+        TextView TVCamposCamionetasHeaderContabiliza = findViewById(R.id.
+                TVCamposCamionetasHeaderContabiliza);
 
         if(EsLecturaInicialCamioneta){
             TVCamposCamionetasHeaderTitulo.setText(getString(R.string.toma_de_lectura)+" inicial");
+            TVCamposCamionetasHeaderInstrucciones.setText(R.string.Registra_configuracion);
         }else if (EsLecturaFinalCamioneta){
             TVCamposCamionetasHeaderTitulo.setText(getString(R.string.toma_de_lectura)+" final");
+            TVCamposCamionetasHeaderInstrucciones.setText(R.string.Registra_configuracion_final);
+            TVCamposCamionetasHeaderContabiliza.setText(
+                    lecturaCamionetaDTO.isEsEncargadoPuerta()?
+                            "Contabiliza todos los cilindros llenos y vacios":
+                            "Contabiliza todos los cilindros llenos"
+            );
         }else if(EsRecargaCamioneta){
             String estacion = (recargaDTO.getNombreEstacionEntrada().isEmpty())? "":": "+
                     recargaDTO.getNombreEstacionEntrada();

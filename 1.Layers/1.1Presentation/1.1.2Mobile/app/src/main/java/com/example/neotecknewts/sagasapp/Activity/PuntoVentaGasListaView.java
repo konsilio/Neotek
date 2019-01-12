@@ -15,4 +15,6 @@ public interface PuntoVentaGasListaView {
     void onSuccessListExistencia(List<ExistenciasDTO> data);
 
     void onSuccessPrecioVenta(PrecioVentaDTO data);
+
+    void onSuccessDatosCamioneta(List<ExistenciasDTO> data);
 }

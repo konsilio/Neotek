@@ -9,8 +9,8 @@ public class Constantes {
 
     //public static final String BASE_URL = "http://192.168.0.12:7010/ds/api/";
     //public static final String BASE_URL = "http://pruebaswebneoteck.ddns.net:7010/ds/api/";
-    public static final String BASE_URL = "http://sagasapi.ddns.net:7012/api/"; //QA
-    //public static final String BASE_URL = "http://sagasapi.ddns.net:7011/api/";//DEV
+    //public static final String BASE_URL = "http://sagasapi.ddns.net:7012/api/"; //QA
+    public static final String BASE_URL = "http://sagasapi.ddns.net:7011/api/";//DEV
     public static final int IdClienteGeneral = 0;
     public static final String LOGIN_URL = "mobile/login";
     public static final String LISTA_EMPRESAS   = "catalogos/empresas/listaempresaslogin";
@@ -42,7 +42,7 @@ public class Constantes {
     public static final String GET_CATALOGO_RAZON = "mobile/catalogos/tipo-persona";
     public static final String POST_CLIENTE = "mobile/cliente/registrar";
     public static final String GET_LIST_CLIENTES = "mobile/cliente/lista-clientes/{criterio}";
-    public static final String GET_LIST_EXISTENCIAS = "mobile/existencias/lista/{esGasLP}/{esCilindroConGas}/{esCilindro}";
+    public static final String GET_LIST_EXISTENCIAS = "mobile/catalogos/venta-gas/{esGasLP}/{esCilindroConGas}/{esCilindro}";
     public static final String GET_CATALOGO_PRODUCTO = "mobile/catalogos/venta-gas/otros";
     public static final String POST_VENTA = "mobile/venta";
     public static final String POST_ANTICIPO = "mobile/anticipos";
@@ -58,4 +58,7 @@ public class Constantes {
     public static final String GET_PUNTO_VENTA_ASIGNADO = "mobile/estacion/punto-venta";
     public static final String GET_USUARIOS_ANTICIPOS = "mobile/catalogos/anticipos-y-cortes/usuarios";
     public static final String GETUSUARIOS_CORTES = "mobile/catalogos/anticipos-y-cortes/usuarios-liquitar";
+    public static final String GET_VENTA_EXTRAFORANEA = "mobile/venta-extraforanea/{idCliente}" ;
+    public static final String GET_HAY_VENTA = "mobile/hay-corte-estacion/{fecha}";
+    public static final String GET_HAY_LECTURAS = "mobile/cortes/verificar-lecturas";
 }

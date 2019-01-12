@@ -43,8 +43,7 @@ namespace Application.MainModule.Flujos
             return CajaGeneralServicio.ObtenerVentasPipas(unidad, empresa, year, month, dia, orden.Value, fecha, Folio).ToList();
 
         }
-        
-
+       
         public List<VPuntoVentaDetalleDTO> MovimientosGasCilindro(short? empresa, short year, byte month, byte dia, short? orden)
         {
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();

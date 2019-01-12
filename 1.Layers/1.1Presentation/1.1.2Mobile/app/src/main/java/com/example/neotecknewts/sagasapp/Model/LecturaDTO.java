@@ -56,6 +56,8 @@ public class LecturaDTO implements Serializable {
 
     @SerializedName("FechaAplicacion")
     private Date FechaAplicacion;
+
+    private double CapacidadAlmacen;
     //endregion
 
     public Date getFechaAplicacion() {
@@ -168,5 +170,14 @@ public class LecturaDTO implements Serializable {
     public void setClaveProceso(String claveProceso) {
         ClaveProceso = claveProceso;
     }
+
+    public double getCapacidadAlmacen() {
+        return CapacidadAlmacen;
+    }
+
+    public void setCapacidadAlmacen(double capacidadAlmacen) {
+        CapacidadAlmacen = capacidadAlmacen;
+    }
+
     //endregion
 }

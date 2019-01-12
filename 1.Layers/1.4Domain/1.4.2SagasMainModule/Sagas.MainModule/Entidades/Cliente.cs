@@ -19,6 +19,7 @@ namespace Sagas.MainModule.Entidades
         {
             this.Locaciones = new HashSet<ClienteLocacion>();
             this.VentaPuntoDeVenta = new HashSet<VentaPuntoDeVenta>();
+            this.Cargo = new HashSet<Cargo>();
         }
     
         public int IdCliente { get; set; }
@@ -34,6 +35,7 @@ namespace Sagas.MainModule.Entidades
         public decimal DescuentoXKilo { get; set; }
         public decimal limiteCreditoMonto { get; set; }
         public short limiteCreditoDias { get; set; }
+        public decimal CreditoDisponibleMonto { get; set; }
         public string Telefono1 { get; set; }
         public string Telefono2 { get; set; }
         public string Telefono3 { get; set; }
@@ -56,6 +58,7 @@ namespace Sagas.MainModule.Entidades
         public string Celular { get; set; }
         public string CorreoElectronico { get; set; }
         public string Domicilio { get; set; }
+        public Nullable<bool> VentaExtraordinaria { get; set; }
     
         public virtual RegimenFiscal RegimenFiscal { get; set; }
         public virtual TipoPersona TipoPersonaFiscal { get; set; }
@@ -65,5 +68,7 @@ namespace Sagas.MainModule.Entidades
         public virtual CuentaContable CuentaContable { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VentaPuntoDeVenta> VentaPuntoDeVenta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cargo> Cargo { get; set; }
     }
 }

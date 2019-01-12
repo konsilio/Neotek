@@ -19,6 +19,8 @@ namespace Sagas.MainModule.Entidades
         {
             this.ReqProductos = new HashSet<RequisicionProducto>();
             this.OCompraProductos = new HashSet<OrdenCompraProducto>();
+            this.Egreso = new HashSet<Egreso>();
+            this.Ingreso = new HashSet<Ingreso>();
         }
     
         public int IdCentroCosto { get; set; }
@@ -47,5 +49,9 @@ namespace Sagas.MainModule.Entidades
         public virtual EstacionCarburacion EstacionCarburacion { get; set; }
         public virtual Pipa Pipa { get; set; }
         public virtual TipoCentroCosto TipoCentroCosto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Egreso> Egreso { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ingreso> Ingreso { get; set; }
     }
 }

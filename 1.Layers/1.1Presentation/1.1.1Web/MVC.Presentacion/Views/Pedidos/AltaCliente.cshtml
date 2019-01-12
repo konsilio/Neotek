@@ -1,0 +1,480 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  ClientesModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script src="~/Resources/js/Clientes.js"></script>
+    <link href="~/Resources/css/Clientes.css" rel="stylesheet" />
+    <style type="text/css">
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+            .switch input {
+                display: none;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: .4s;
+            }
+
+        input[type="checkbox"]:checked + input[type="hidden"] + .slider,
+        input[type="checkbox"]:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input[type="checkbox"]:focus + input[type="hidden"] + .slider,
+        input[type="checkbox"]:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input[type="checkbox"]:checked + input[type="hidden"] + .slider:before,
+        input[type="checkbox"]:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+    </style>
+</head>
+<body style="height:100%">
+    @using (Html.BeginForm("GuardarCliente", "Clientes", FormMethod.Post))
+    {
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Clientes</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Catálogo</li>
+                            <li class="breadcrumb-item">Clientes</li>
+                            <li class="breadcrumb-item">Nuevo</li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="card">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-sm-3">
+                                    <div>
+                                        <strong>Gasera</strong>
+                                    </div>
+                                    <div>
+                                        @if (ViewBag.EsAdmin)
+                                        {
+                                            <select name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            @ViewBag.Empresas
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Fiscales</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            Tipo Persona:*  <select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
+                                                <option value="0">Seleccione</option>
+                                                @foreach (var lst in ViewBag.TipoPersona)
+                                            {
+                                        <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
+                                            }
+                                            </select>
+                                            @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                                        <div class="form-group">
+                                            Régimen Fiscal:*  <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
+                                                @foreach (var lst in ViewBag.Regimen)
+                                            {
+                                        <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
+                                            }
+                                            </select>
+                                            @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                                        <div class="form-group" id="hide_razonS">
+                                            Razón Social:*
+                                            <input type="text" name="RazonSocial" id="txtRS" class="form-control" />
+                                            @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            RFC:*
+                                            <input type="text" name="Rfc" id="txtRfc" class="form-control" />
+                                            @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix" id="div_hideRP">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="card">
+                                            <div class="header">
+                                                <h2><strong>Representante Legal</strong></h2>
+                                            </div>
+                                            <div class="body">
+                                                <div class="row clearfix">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            Nombre Completo: <input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <div class="form-group">
+                                                            <div>
+                                                                Teléfono:
+                                                                <input type="text" name="Telefono" id="txtTel" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            Dirección:
+                                                            <input type="text" name="Domicilio" id="txtNomCom" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <div class="form-group">
+                                                            Celular:
+                                                            <input type="text" name="Celular" id="txtTel" class="form-control" />
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            E-mail:
+                                                            <input type="text" name="CorreoElectronico" id="txtEmail" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix" id="div_hidePM">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            Nombres:* <input type="text" name="Nombre" class="form-control" />
+                                            @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Apellido 1:*
+                                                <input type="text" name="Apellido1" class="form-control" />
+                                                @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Apellido 2:
+                                                <input type="text" name="Apellido2" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Condición del crédito y descuento</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:12.666667%">
+                                        <div class="form-group">
+                                            Límite de crédito:
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            Monto $ <input name="limiteCreditoMonto" class="form-control" type="number" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                             Días <input name="limiteCreditoDias" class="form-control" type="number" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Credito disponible:
+                                                <input name="DescuentoXKilo" class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Descuento %:
+                                                <input name="DescuentoXKilo" class="form-control" type="number" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Autorizar ventas con límite de crédito excedido
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <label class="switch">
+                                                @Html.CheckBoxFor(m => m.VentaExtraordinaria, new { @class = "form-control" })
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Portal de Facturación</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                @Html.CheckBoxFor(m => m.AccesoPortal)
+                                                <label for="checkAcceso">
+                                                    Acceso al portal de Facturación
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Contacto</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            Teléfono 1: <input id="txtTel1" name="Telefono1" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Celular 1:
+                                                <input id="txtCel1" type="text" name="Celular1" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Email 1:
+                                                <input id="txtEmail1" type="text" name="Email1" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            Teléfono 2:
+                                            <input id="txtTel2" name="Telefono2" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Celular 2:
+                                                <input id="txtCel2" name="Celular2" type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Email 2:
+                                                <input id="txtEmail2" type="text" name="Email2" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            Teléfono 3:
+                                            <input id="txtTel3" name="Telefono3" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Celular 3:
+                                                <input id="txtCel3" type="text" name="Celular3" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Email 3:
+                                                <input id="txtEmail3" type="text" name="Email3" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <div>
+                                                Sitio web 1:
+                                                <input id="txtweb1" name="SitioWeb1" type="text" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <div>
+                                                Sitio web 2:
+                                                <input id="txtweb2" name="SitioWeb2" type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            Sitio web 3:
+                                            <input id="txtweb3" name="SitioWeb3" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-5">
+                            <div class="form-group">
+                                <input type="submit" value="Cancelar" id="btnRegresarIndexNC" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-primary btn-round float-left" />
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7">
+                            <div class="form-group">
+                                @*<input type="submit" value="Crear" formaction="GuardarCliente" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />*@
+                                <input type="submit" value="Continuar" formaction="AltaClienteDireccion" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (ViewBag.MessageError != null)
+                {
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MessageError</label>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+    }
+</body>
+</html>

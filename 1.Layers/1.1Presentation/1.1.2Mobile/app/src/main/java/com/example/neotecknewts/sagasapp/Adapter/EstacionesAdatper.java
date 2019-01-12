@@ -34,6 +34,7 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
     private boolean EsAnticipo,EsCorte;
     private AnticiposDTO anticiposDTO;
     private CorteDTO corteDTO;
+    public boolean EsCamioneta,EsEstacion,EsPipa;
 
     public EstacionesAdatper(Context activity,List<DatosEstacionesDTO> itemObjects,
                              boolean EsAnticipo,boolean EsCorte){
@@ -94,6 +95,9 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
                 intent.putExtra("EsCorte",EsCorte);
                 intent.putExtra("anticiposDTO",anticiposDTO);
                 intent.putExtra("corteDTO",corteDTO);
+                intent.putExtra("EsCamioneta",EsCamioneta);
+                intent.putExtra("EsEstacion",EsEstacion);
+                intent.putExtra("EsPipa",EsPipa);
                 v.getContext().startActivity(intent);
             });
         }

@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entidades\Abono.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Almacen.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -109,6 +112,9 @@
     <Compile Include="Entidades\CamionetaCilindro.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Cargo.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\CategoriaProducto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -121,10 +127,16 @@
     <Compile Include="Entidades\ClienteLocacion.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\CTipoEgreso.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\CTipoMovimiento.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\CuentaContable.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Egreso.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Empresa.cs">
@@ -143,6 +155,9 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\ImagenDe.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Ingreso.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\LineaProducto.cs">
@@ -164,6 +179,15 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Pais.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\Pedido.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\PedidoDetalle.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\PedidoEstatus.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Pipa.cs">
@@ -200,6 +224,9 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\RequisicionProducto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\RespuestaSatisfaccionPedido.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Rol.cs">
@@ -280,10 +307,12 @@
     <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />
     <Compile Include="ObjetosValor\Constantes\AlmacenGasConst.cs" />
     <Compile Include="ObjetosValor\Constantes\AlmacenConst.cs" />
+    <Compile Include="ObjetosValor\Constantes\IngresoGastoConst.cs" />
     <Compile Include="ObjetosValor\Constantes\NotificacionPushConst.cs" />
     <Compile Include="ObjetosValor\Constantes\TipoEventoConst.cs" />
     <Compile Include="ObjetosValor\Enum\CalibracionDestinoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\enumIVA.cs" />
+    <Compile Include="ObjetosValor\Enum\EstatusPedidoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\EstatusPrecioVentaEnum.cs" />
     <Compile Include="ObjetosValor\Enum\IdentidadUnidadAlmacenGasEnum.cs" />
     <Compile Include="ObjetosValor\Enum\ImagenDeEnum.cs" />

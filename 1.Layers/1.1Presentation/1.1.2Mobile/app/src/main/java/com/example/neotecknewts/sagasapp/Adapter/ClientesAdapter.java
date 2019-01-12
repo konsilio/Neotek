@@ -22,6 +22,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private boolean EsVentaCarburacion,
             EsVentaCamioneta,
             EsVentaPipa;
+    public boolean esGasLP;
     public ClientesAdapter(List<ClienteDTO> items,boolean EsVentaCarburacion,
                            boolean EsVentaCamioneta,
                            boolean EsVentaPipa,VentaDTO ventaDTO){
@@ -44,67 +45,86 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         String razon = items.get(position).getRazonSocial();
         String nombre = items.get(position).getNombre()+" "+items.get(position).getApellido_uno()
                 +" "+items.get(position).getApellido_dos();
-        ((ClientesHolder)holder).TVBuscarClienteActivityNombre.setText(
-                razon.trim().length()>0 ?razon:nombre
-        );
+        if(razon!=null && !razon.isEmpty()){
+            ((ClientesHolder)holder).TVBuscarClienteActivityNombre.setText(
+                    razon
+            );
+        }else{
+            ((ClientesHolder) holder).TVBuscarClienteActivityNombre.setText(
+                    nombre
+            );
+        }
+
         ((ClientesHolder)holder).TVBuscarClienteaCTIVITYrFC.setText(
                 items.get(position).getRFC()
         );
-        ((ClientesHolder) holder).TVBuscarClienteActivityTelefono.setText(
-                items.get(position).getTelefono_fijo()
-        );
+        if(!items.get(position).getTelefono_fijo().isEmpty()) {
+            ((ClientesHolder) holder).TVBuscarClienteActivityTelefono.setText(
+                    items.get(position).getTelefono_fijo()
+            );
+        }
+        if(!items.get(position).getCelular().isEmpty()){
+            ((ClientesHolder) holder).TVBuscarClienteActivityTelefono.setText(
+                    items.get(position).getCelular()
+            );
+        }
+
         ((ClientesHolder) holder).TvBuscarClienteActivityFactura.setText(
                 (items.get(position).isFactura()||items.get(position).getRazonSocial().trim().length()>0)
                         ?" Si":" No"
         );
 
-        ((ClientesHolder) holder).CVEstacionesCarburacionItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ventaDTO.setIdCliente(
-                        items.get(position).getIdCliente()
-                );
-                ventaDTO.setNombre(
-                        items.get(position).getNombre()
-                        +" "+items.get(position).getApellido_uno()
-                        +" "+items.get(position).getApellido_dos()
-                );
-                ventaDTO.setRFC(
-                        items.get(position).getRFC()
-                );
-                ventaDTO.setRazonSocial(
-                        items.get(position).getRazonSocial()
-                );
-                ventaDTO.setSinNumero(false);
-                if(items.get(position).isCredito()) {
-                    ventaDTO.setCredito(true);
-                    ventaDTO.setTieneCredito(true);
-                }else{
-                    ventaDTO.setCredito(false);
-                    ventaDTO.setTieneCredito(false);
-                }
-                if(items.get(position).isFactura()||items.get(position).getRazonSocial().trim().length()>0){
-                    ventaDTO.setFactura(true);
-                }else{
-                    ventaDTO.setFactura(false);
-                }
-                if(EsVentaCamioneta) {
-                    Intent intent = new Intent(view.getContext(),
-                            VentaGasActivity.class);
-                    intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
-                    intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
-                    intent.putExtra("EsVentaPipa", EsVentaPipa);
-                    intent.putExtra("ventaDTO", ventaDTO);
-                    view.getContext().startActivity(intent);
-                }else{
-                    Intent intent = new Intent(view.getContext(),
-                            PuntoVentaGasListaActivity.class);
-                    intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
-                    intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
-                    intent.putExtra("EsVentaPipa", EsVentaPipa);
-                    intent.putExtra("ventaDTO", ventaDTO);
-                    view.getContext().startActivity(intent);
-                }
+        ((ClientesHolder) holder).CVEstacionesCarburacionItem.setOnClickListener(view -> {
+            ventaDTO.setIdCliente(
+                    items.get(position).getIdCliente()
+            );
+            ventaDTO.setNombre(
+                    items.get(position).getNombre()
+                    +" "+items.get(position).getApellido_uno()
+                    +" "+items.get(position).getApellido_dos()
+            );
+            ventaDTO.setRFC(
+                    items.get(position).getRFC()
+            );
+            ventaDTO.setRazonSocial(
+                    items.get(position).getRazonSocial()
+            );
+            ventaDTO.setSinNumero(false);
+            if(items.get(position).isCredito()) {
+                ventaDTO.setCredito(true);
+                ventaDTO.setTieneCredito(true);
+            }else{
+                ventaDTO.setCredito(false);
+                ventaDTO.setTieneCredito(false);
+            }
+            if(items.get(position).isFactura()||items.get(position).getRazonSocial().trim().length()>0){
+                ventaDTO.setFactura(true);
+            }else{
+                ventaDTO.setFactura(false);
+            }
+
+            ventaDTO.setLimiteCreditoCliente(
+              items.get(position).getLimiteCredito()
+            );
+
+            if(EsVentaCamioneta) {
+                Intent intent = new Intent(view.getContext(),
+                        VentaGasActivity.class);
+                intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+                intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+                intent.putExtra("EsVentaPipa", EsVentaPipa);
+                intent.putExtra("ventaDTO", ventaDTO);
+                intent.putExtra("esGasLP",esGasLP);
+                view.getContext().startActivity(intent);
+            }else{
+                Intent intent = new Intent(view.getContext(),
+                        PuntoVentaGasListaActivity.class);
+                intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+                intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+                intent.putExtra("EsVentaPipa", EsVentaPipa);
+                intent.putExtra("ventaDTO", ventaDTO);
+                intent.putExtra("esGasLP",esGasLP);
+                view.getContext().startActivity(intent);
             }
         });
 

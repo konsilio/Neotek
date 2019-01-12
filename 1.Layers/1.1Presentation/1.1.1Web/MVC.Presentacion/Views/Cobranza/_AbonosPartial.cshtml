@@ -1,0 +1,127 @@
+﻿@model List<MVC.Presentacion.Models.Cobranza.CargosModel>
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "Abonos";
+        settings.KeyFieldName = "IdCargo";
+        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "_AbonosPartial" };
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Cobranza", Action = "EditingAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Cobranza", Action = "EditingUpdate" };
+        //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Cobranza", Action = "EditingDelete" };
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.Theme = "Moderno";
+        settings.SettingsCommandButton.UpdateButton.Text = "Abonar";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdCargo";
+            c.Caption = "No Cargo";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Ticket";
+            c.Caption = "Ticket";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "TotalCargo";
+            c.Caption = "Importe";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Settings.ShowEditorInBatchEditMode = false;
+            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            c.ReadOnly = true;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "TotalAbonos";
+            c.Caption = "Abonado";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SaldoInsoluto";
+            c.Caption = "Saldo insoluto";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Abono.FechaAbono";
+            c.Caption = "Fecha Abono";
+            c.ColumnType = MVCxGridViewColumnType.DateEdit;
+            c.SetDataItemTemplateContent(diTemplate =>
+            {
+                GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
+                Html.DevExpress().DateEdit(s =>
+                {
+                    s.Name = string.Format("dtFechaRegistro_{0}", diTemplate.VisibleIndex);
+                    s.Properties.UseMaskBehavior = true;
+                    s.Properties.EditFormat = EditFormat.Custom;
+                    s.Properties.EditFormatString = "dd/MM/yyyy";
+                    settings.Attributes.Clear();
+                    s.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                    s.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                }).GetHtml();
+            });
+
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Abono.FolioBancario";
+            col.Caption = "Folio";
+            //col.SetDataItemTemplateContent(diTemplate =>
+            //{
+            //    GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
+            //    Html.DevExpress().TextBox(txtSettings =>
+            //    {
+            //        txtSettings.Name = string.Format("txtFolioBancario_{0}", diTemplate.VisibleIndex);
+            //    }).Render();
+            //});
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Abono.IdFormaPago";
+            c.Caption = "Metodo de Pago";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.TextField = "Descripcion";
+                p.ValueField = "IdFormaPago";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.FormasPago;
+
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Abono.MontoAbono";
+            c.Caption = "Cantidad";
+            //c.SetDataItemTemplateContent(Template =>
+            //{
+            //    GridViewDataItemTemplateContainer cont = Template as GridViewDataItemTemplateContainer;
+            //    Html.DevExpress().TextBox(txtSettings =>
+            //    {
+            //        txtSettings.Name = string.Format("txtAbono_{0}", Template.ItemIndex.ToString());
+            //    }).Render();
+            //});
+        });
+    }
+).Bind(Model).GetHtml()
+

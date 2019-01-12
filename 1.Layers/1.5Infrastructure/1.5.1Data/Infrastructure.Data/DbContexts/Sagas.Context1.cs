@@ -100,5 +100,14 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<VentaMovimiento> VentaMovimiento { get; set; }
         public virtual DbSet<VentaPuntoDeVenta> VentaPuntoDeVenta { get; set; }
         public virtual DbSet<VentaPuntoDeVentaDetalle> VentaPuntoDeVentaDetalle { get; set; }
+        public virtual DbSet<Abono> Abono { get; set; }
+        public virtual DbSet<Cargo> Cargo { get; set; }
+        public virtual DbSet<CTipoEgreso> CTipoEgreso { get; set; }
+        public virtual DbSet<Egreso> Egreso { get; set; }
+        public virtual DbSet<Ingreso> Ingreso { get; set; }
+        public virtual DbSet<Pedido> Pedido { get; set; }
+        public virtual DbSet<PedidoDetalle> PedidoDetalle { get; set; }
+        public virtual DbSet<PedidoEstatus> PedidoEstatus { get; set; }
+        public virtual DbSet<RespuestaSatisfaccionPedido> RespuestaSatisfaccionPedido { get; set; }
     }
 }

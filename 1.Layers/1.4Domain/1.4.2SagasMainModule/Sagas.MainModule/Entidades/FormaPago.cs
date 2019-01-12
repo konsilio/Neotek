@@ -18,6 +18,7 @@ namespace Sagas.MainModule.Entidades
         public FormaPago()
         {
             this.CProveedor = new HashSet<Proveedor>();
+            this.Abono = new HashSet<Abono>();
         }
     
         public byte IdFormaPago { get; set; }
@@ -27,5 +28,7 @@ namespace Sagas.MainModule.Entidades
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Proveedor> CProveedor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Abono> Abono { get; set; }
     }
 }

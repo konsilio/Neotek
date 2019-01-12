@@ -113,7 +113,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
         int intentos_post = 0;
         registra_lectura = true;
         /*while(intentos_post<3) {*/
-            Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalCamioneta(
+            Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialCamioneta(
                     lecturaCamionetaDTO,token,"application/json");
             Log.w("Url camioneta", retrofit.baseUrl().toString());
             call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {

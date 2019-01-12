@@ -174,14 +174,12 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             return usDTO;
         }
-
         public static List<VPuntoVentaDetalleDTO> ToDTO(List<VentaPuntoDeVentaDetalle> lu)
         {
             List<VPuntoVentaDetalleDTO> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
 
             return luDTO;
         }
-
         public static VPuntoVentaDetalleDTO ToDTOVC(VentaPuntoDeVentaDetalle pv, decimal cilindrosVendidos)
         {
             VPuntoVentaDetalleDTO usDTO = new VPuntoVentaDetalleDTO()
@@ -219,7 +217,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             return usDTO;
         }
-
         public static List<VPuntoVentaDetalleDTO> ToDTOVC(List<VentaPuntoDeVentaDetalle> lu)
         {
             decimal totalVentas = 0;
@@ -231,7 +228,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             return luDTO;
         }
-
         public static TanquesDto ToDTO(VentaPuntoDeVentaDetalle pv, decimal cilindrosVendidos)
         {
             var Nombre = "";
@@ -257,7 +253,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             return usDTO;
         }
-
         public static List<TanquesDto> ToDTOT(List<VentaPuntoDeVentaDetalle> lu)
         {
             decimal totalVentas = 0;
@@ -274,7 +269,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         //      ).OrderBy(x => x.FechaRegistro).Last();
 
         //var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacen);
-
         public static AlmacenGasMovimientoDto ToDTO(AlmacenGasMovimiento pv)
         {
             var precioLt = CajaGeneralServicio.ObtenerPrecioLt(pv.IdEmpresa, pv.Year, pv.Mes, pv.Dia, pv.Orden);
@@ -415,7 +409,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             List<VentaCorteAnticipoDTO> luDTO = lu.ToList().Select(x => ToDTOCE(x)).ToList();
             return luDTO;
         }
-
         public static VentaPuntoVentaDTO ToDTOP(VentaPuntoDeVenta pv)
         {
             VentaPuntoVentaDTO usDTO = new VentaPuntoVentaDTO()
@@ -479,7 +472,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             return lstFinal;
         }
-
         public static VentaCajaGeneral FromDto(VentaCajaGeneral pvDTO)
         {
             return new VentaCajaGeneral()
@@ -511,12 +503,10 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             };
         }
-
         public static List<VentaCajaGeneral> FromDto(List<VentaCajaGeneral> DTO)
         {
             return DTO.ToList().Select(x => FromDto(x)).ToList();
         }
-
         public static VentaCorteAnticipoEC FromDtoCE(VentaCorteAnticipoDTO pvDTO)
         {
             return new VentaCorteAnticipoEC()
@@ -612,7 +602,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         {
             return DTO.ToList().Select(x => FromDtoVtaMov(x)).ToList();
         }
-
         public static VentaPuntoDeVenta FromEntity(VentaPuntoDeVenta venta)
         {
             return new VentaPuntoDeVenta()
@@ -683,7 +672,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 EfectivoRecibidoAcumAnio = venta.EfectivoRecibidoAcumAnio,
             };
         }
-
         public static VentaMovimiento FromEntity(VentaMovimiento venta)
         {
             return new VentaMovimiento()
@@ -713,7 +701,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 FechaRegistro = venta.FechaRegistro,
             };
         }
-
         public static VentaCorteAnticipoEC FromEntity(VentaCorteAnticipoEC venta)
         {
             return new VentaCorteAnticipoEC()
@@ -743,7 +730,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 FechaRegistro = venta.FechaRegistro,
             };
         }
-
         public static AlmacenGasMovimiento FromEntity(UnidadAlmacenGas unidadSalida, Empresa empresa, AlmacenGasMovimientoDto Dto, Decimal Linicial, Decimal Lfinal)
         {
             decimal unidadSalidaCantidadKg = unidadSalida.CantidadActualKg;
@@ -860,7 +846,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             return x;
 
         }
-
         public static VPuntoVentaDetalleDTO ToDto(VentaPuntoDeVentaDetalle pv, decimal totalCilindros, decimal P5000Inicial, decimal P5000Final, decimal PorcentajeInicial, decimal PorcentajeFinal)
         {
             VPuntoVentaDetalleDTO usDTO = new VPuntoVentaDetalleDTO()
@@ -900,7 +885,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             return usDTO;
 
         }
-
         public static VPuntoVentaDetalleDTO ToDto(VentaCajaGeneral entidad, string Folio, decimal LtVendidos, decimal PrecioLt, DateTime fecha, decimal P5000Inicial, decimal P5000Final, decimal PorcentajeInicial, decimal PorcentajeFinal)
         {
             VPuntoVentaDetalleDTO usDTO = new VPuntoVentaDetalleDTO()
@@ -921,7 +905,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             return usDTO;
 
         }
-
         public static VentasPipaDto ToDto(decimal P500Ini, decimal P500Fin, decimal LtVendidos, PrecioVentaDTO ent)
         {
             VentasPipaDto usDTO = new VentasPipaDto()
@@ -935,16 +918,13 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             };
             return usDTO;
         }
-
         public static List<VentasPipaDto> ToDTO(List<VentasPipaDto> lu, decimal P500Ini, decimal P500Fin, decimal LtVendidos, PrecioVentaDTO ent)
         {
             List<VentasPipaDto> luDTO = lu.ToList().Select(x => ToDto(P500Ini, P500Fin, LtVendidos, ent)).ToList();
             return luDTO;
         }
-
         public static ReporteDiaDTO ToDTOC(VPuntoVentaDetalleDTO pv, VentaCajaGeneral entidad, UnidadAlmacenGas almacen, List<TanquesDto> tanques, decimal k)
         {
-
             ReporteDiaDTO usDTO = new ReporteDiaDTO()
             {
                 IdCAlmacenGas = almacen.IdCamioneta != null ? almacen.IdCamioneta.Value : 0,
@@ -965,11 +945,9 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             return usDTO;
         }
-
         public static List<ReporteDiaDTO> ToDtoC(List<VPuntoVentaDetalleDTO> lu, VentaCajaGeneral entidad, UnidadAlmacenGas almacen, List<TanquesDto> tanques)
         {
             var capacidad = 0;
-
             //Obtener Kilos venta
             decimal kgVentas = 0;
             foreach (var x in tanques)

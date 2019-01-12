@@ -54,7 +54,6 @@
                                                             <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                         }
                                                     </select>
-
                                                 }
                                                 else
                                                 {
@@ -64,10 +63,12 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    @*<label>Número de Requisición:</label>&nbsp;
-                                                        <Label ID="lblIdRequisicion">@Model.NumeroRequisicion</Label>*@
+                                            <div id="divServ">
+                                                <div class="form-group">
+                                                    @Html.CheckBoxFor(m => m.EsExterno, new { id = "cbEsExterno", @style = "width: 20px; height: 20px;" })                                                  
+                                                    <label for="cbServicioTransporte" class="z-index:8">
+                                                        ¿Requisición Externa?
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -112,7 +113,7 @@
                                             <b>Se requiere en:</b>
                                             <div class="blockquote blockquote-info btn-round">
                                                 @if (ViewBag.EsNueva)
-                                                {  
+                                                {
                                                     @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control no-resize", @placeholder = "Se requiere en...", @rows = "4" })
                                                 }
                                                 else

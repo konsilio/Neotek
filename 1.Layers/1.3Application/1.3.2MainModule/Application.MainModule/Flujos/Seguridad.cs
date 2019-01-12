@@ -9,12 +9,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Respuesta;
-
+using System.Data;
+using Application.MainModule.Servicios.AccesoADatos;
 
 namespace Application.MainModule.Flujos
 {
     public class Seguridad
     {
+        public DataSet Test()
+        {
+            List<System.Data.SqlClient.SqlParameter> lp = new List<System.Data.SqlClient.SqlParameter>();
+            lp.Add(new System.Data.SqlClient.SqlParameter("IdCliente", 1));
+            lp.Add(new System.Data.SqlClient.SqlParameter("Fecha", DBNull.Value));
+            lp.Add(new System.Data.SqlClient.SqlParameter("IdEmpresa", 2));
+            return new DataAccess().StoredProcedure_DataSet("SpSel_CarteraVencida", lp );
+        }
         public RespuestaAutenticacionDto Autenticacion(AutenticacionDto autenticacionDto)
         {
             return AutenticarServicio.AutenticarUsuario(autenticacionDto);
@@ -40,13 +49,11 @@ namespace Application.MainModule.Flujos
             return responce;
         }
 
-
         #region Usuarios
         public List<UsuariosModel> AllUsers()
         {
             return UsuarioServicio.ListaAllUsuarios().ToList();
         }
-
         public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
         {
             if (TokenServicio.EsSuperUsuario())
@@ -54,7 +61,6 @@ namespace Application.MainModule.Flujos
             else
                 return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
-
         public RespuestaDto AltaUsuarios(UsuarioDTO userDto)
         {
             var resp = PermisosServicio.PuedeRegistrarUsuario();
@@ -67,7 +73,6 @@ namespace Application.MainModule.Flujos
 
             return UsuarioServicio.AltaUsuario(usuario);
         }
-
         public RespuestaDto ModificaCredencial(UsuarioDTO userDto)
         {
             var resp = PermisosServicio.PuedeModificarUsuario();
@@ -80,7 +85,6 @@ namespace Application.MainModule.Flujos
             emp.FechaRegistro = emp.FechaRegistro;
             return UsuarioServicio.Actualizar(emp);
         }
-
         public RespuestaDto ModificaUsuario(UsuarioDTO userDto)
         {
             var resp = PermisosServicio.PuedeModificarUsuario();
@@ -93,7 +97,6 @@ namespace Application.MainModule.Flujos
             emp.FechaRegistro = emp.FechaRegistro;
             return UsuarioServicio.Actualizar(emp);
         }
-
         public RespuestaDto EliminaUsuario(short id)
         {
             var resp = PermisosServicio.PuedeEliminarUsuario();
@@ -158,7 +161,6 @@ namespace Application.MainModule.Flujos
             else            
                 return RolServicio.ListaAllRoles(TokenServicio.ObtenerIdEmpresa()).ToList();
         }
-
         public RespuestaDto AltaRoles(RolDto rolDto)
         {
             var resp = PermisosServicio.PuedeRegistrarRol();
@@ -171,7 +173,6 @@ namespace Application.MainModule.Flujos
 
             return RolServicio.AltaRol(rol);
         }
-
         public RespuestaDto ModificaRolName(RolDto rolDto)
         {
             var resp = PermisosServicio.PuedeModificarRol();
@@ -185,7 +186,6 @@ namespace Application.MainModule.Flujos
             return RolServicio.Actualizar(emp);
             //insertar Rol in data access
         }
-
         public RespuestaDto ModificaPermisos(List<RolDto> rolDto)
         {
             var resp = PermisosServicio.PuedeModificarRol();
@@ -196,7 +196,6 @@ namespace Application.MainModule.Flujos
 
             //insertar Rol in data access
         }
-
         public RespuestaDto EliminaRol(short id)
         {
             var resp = PermisosServicio.PuedeEliminarRol();

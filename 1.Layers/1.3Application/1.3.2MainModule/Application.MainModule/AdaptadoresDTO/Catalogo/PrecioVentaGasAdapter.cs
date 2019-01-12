@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Ventas;
 using Sagas.MainModule.Entidades;
@@ -14,7 +15,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
     {
         public static PrecioVentaDTO ToDTO(PrecioVenta pv)
         {
-            var nombreEmp = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial;
+            //var nombreEmp = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial;
 
             PrecioVentaDTO usDTO = new PrecioVentaDTO()
             {
@@ -75,9 +76,42 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(PVGasDTO.IdEmpresa));
             var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
-            var IdPreVenta = PVGasDTO.IdPrecioVenta == 0 ? 1 : PrecioVentaGasServicio.ObtenerUltimoIdPrecioVenta() + 1;
-            
+            var IdPreVenta = PVGasDTO.IdPrecioVenta == 0 ? 1 : PrecioVentaGasServicio.ObtenerUltimoIdPrecioVenta() + 1;            
 
+            return new PrecioVenta()
+            {
+                IdPrecioVenta = (short)IdPreVenta,
+                IdEmpresa = PVGasDTO.IdEmpresa,
+                IdPrecioVentaEstatus = IdStatus,
+                IdCategoria = PVGasDTO.IdCategoria,
+                IdProductoLinea = PVGasDTO.IdProductoLinea,
+                IdProducto = PVGasDTO.IdProducto,
+                Categoria = PVGasDTO.Categoria,
+                Linea = PVGasDTO.Linea,
+                Producto = PVGasDTO.Producto,
+                PrecioActual = PVGasDTO.PrecioActual,
+                PrecioPemexKg = PVGasDTO.PrecioPemexKg,
+                PrecioPemexLt = PVGasDTO.PrecioPemexLt,
+                UtilidadEsperadaKg = PVGasDTO.UtilidadEsperadaKg,
+                UtilidadEsperadaLt = PVGasDTO.UtilidadEsperadaLt,
+                PrecioSalida = PVGasDTO.PrecioSalida,
+                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg),//PVGasDTO.PrecioSalidaKg,
+                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt((decimal)PVGasDTO.PrecioPemexKg, factorLtaKg),
+                EsGas = PVGasDTO.EsGas,
+                FechaProgramada = PVGasDTO.FechaProgramada,
+                FechaVencimiento = PVGasDTO.FechaVencimiento,
+                Activo = true,
+                FechaRegistro = DateTime.Now
+
+            };
+        }
+        public static PrecioVenta FromTO(PrecioVentaDTO PVGasDTO)
+        {
+            var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(PVGasDTO.IdEmpresa));
+            var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
+            var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
+            var IdPreVenta = new PrecioVentaDataAccess().BuscarUltimoPrecio() + 1;//PrecioVentaGasServicio.ObtenerUltimoIdPrecioVenta() + 1;
+            
             return new PrecioVenta()
             {
                 IdPrecioVenta = (short)IdPreVenta,
@@ -118,7 +152,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 }
             }
 
-            return _lst.Select(x => FromTo(x)).ToList();
+            return _lst.Select(x => FromTO(x)).ToList();
         }
 
         public static PrecioVentaDTO EmpresaProds(PrecioVentaDTO entidad, Producto p)

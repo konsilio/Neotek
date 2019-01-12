@@ -241,7 +241,9 @@
     <Compile Include="Agente\AgenteServicio.cs" />
     <Compile Include="App_Code\AlmacenServicio.cs" />
     <Compile Include="App_Code\AutenticacionServicio.cs" />
+    <Compile Include="App_Code\CobranzaServicio.cs" />
     <Compile Include="App_Code\OrdenCompraServicio.cs" />
+    <Compile Include="App_Code\PedidosServicio.cs" />
     <Compile Include="App_Code\RequisicionServicio.cs" />
     <Compile Include="App_Code\CatalogoServicio.cs" />
     <Compile Include="App_Code\TokenServicio.cs" />
@@ -255,12 +257,14 @@
     <Compile Include="Controllers\AlmacenController.cs" />
     <Compile Include="Controllers\CajaGeneralController.cs" />
     <Compile Include="Controllers\CentroCostoController.cs" />
+    <Compile Include="Controllers\CobranzaController.cs" />
     <Compile Include="Controllers\CuentaContableController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
+    <Compile Include="Controllers\PedidosController.cs" />
     <Compile Include="Controllers\PrecioVentaController.cs" />
     <Compile Include="Controllers\PrecioVentaOtroController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
@@ -280,6 +284,7 @@
     <Compile Include="Models\Almacen\RemanenteDTO.cs" />
     <Compile Include="Models\Almacen\RequisicionSalidaDTO.cs" />
     <Compile Include="Models\Catalogos\BancoDTO.cs" />
+    <Compile Include="Models\Catalogos\CamionetaModel.cs" />
     <Compile Include="Models\Catalogos\CatalogoRespuestaDTO.cs" />
     <Compile Include="Models\Catalogos\CategoriaProductoDTO.cs" />
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoCrearDTO.cs" />
@@ -309,6 +314,7 @@
     <Compile Include="Models\Catalogos\OperadorChoferModel.cs" />
     <Compile Include="Models\Catalogos\PaisModel.cs" />
     <Compile Include="Models\Catalogos\PartialViewModel.cs" />
+    <Compile Include="Models\Catalogos\PipaModel.cs" />
     <Compile Include="Models\Catalogos\PrecioVentaModel.cs" />
     <Compile Include="Models\Catalogos\ProductoDTO.cs" />
     <Compile Include="Models\Catalogos\ProveedorDTO.cs" />
@@ -325,6 +331,10 @@
     <Compile Include="Models\Catalogos\TipoPersonaModel.cs" />
     <Compile Include="Models\Catalogos\UsuarioDTO.cs" />
     <Compile Include="Models\Catalogos\UsuariosModel.cs" />
+    <Compile Include="Models\Cobranza\AbonosModel.cs" />
+    <Compile Include="Models\Cobranza\CargosModel.cs" />
+    <Compile Include="Models\Cobranza\CarteraVencidaModel.cs" />
+    <Compile Include="Models\Cobranza\ReporteModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImagenDTO.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -345,6 +355,10 @@
     <Compile Include="Models\OrdenCompra\ProductoOCDevExpress.cs" />
     <Compile Include="Models\OrdenCompra\ProductoOCDTO.cs" />
     <Compile Include="Models\OrdenCompra\RequisicionOCDTO.cs" />
+    <Compile Include="Models\Pedidos\EncuestaModel.cs" />
+    <Compile Include="Models\Pedidos\EstatusPedidoModel.cs" />
+    <Compile Include="Models\Pedidos\PedidoDetalleDto.cs" />
+    <Compile Include="Models\Pedidos\PedidoModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
@@ -10736,12 +10750,15 @@
     <Content Include="LogosEmpresa\Empresas.txt" />
     <Content Include="Resources\css\Clientes.css" />
     <Content Include="Resources\css\CreateForm.css" />
+    <Content Include="Resources\css\DevExpressCss.css" />
     <Content Include="Resources\css\tooltip.css" />
     <Content Include="Resources\js\CajaGeneral.js" />
     <Content Include="Resources\js\Clientes.js" />
+    <Content Include="Resources\js\Cobranza.js" />
     <Content Include="Resources\js\Empresas.js" />
     <Content Include="Resources\js\lib\Events.js" />
     <Content Include="Resources\js\lib\jquery-1.9.1.js" />
+    <Content Include="Resources\js\Pedidos.js" />
     <Content Include="Resources\js\PrecioVenta.js" />
     <Content Include="Resources\js\Roles.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
@@ -11531,6 +11548,21 @@
     <Content Include="Views\PuntoVenta\AsignarChofer.cshtml" />
     <Content Include="Views\Remanente\DashBoard.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolMovilVenta.cshtml" />
+    <Content Include="Views\Pedidos\Index.cshtml" />
+    <Content Include="Views\Pedidos\Nuevo.cshtml" />
+    <Content Include="Views\Pedidos\AltaCliente.cshtml" />
+    <Content Include="Views\Pedidos\RevisarPedido.cshtml" />
+    <Content Include="Views\Pedidos\EditarPedido.cshtml" />
+    <Content Include="Views\Pedidos\_LocacionesCliente.cshtml" />
+    <Content Include="Views\Pedidos\_DatosCliente.cshtml" />
+    <Content Include="Views\Pedidos\_TipoUnidad.cshtml" />
+    <Content Include="Views\Pedidos\_Camionetas.cshtml" />
+    <Content Include="Views\Pedidos\_Pipas.cshtml" />
+    <Content Include="Views\Pedidos\AltaClienteDireccion.cshtml" />
+    <Content Include="Views\Cobranza\Index.cshtml" />
+    <Content Include="Views\Cobranza\_AbonosPartial.cshtml" />
+    <Content Include="Views\Cobranza\CreditoRecuperado.cshtml" />
+    <Content Include="Views\Cobranza\CarteraVencida.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

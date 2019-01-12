@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosBusquedaCortesDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosEstacionesDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaCorteDto;
@@ -20,6 +21,10 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -190,7 +195,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<RespuestaEstacionesVentaDTO> call = restClient.getAnticipo_y_Corte(
+        Call<DatosBusquedaCortesDTO> call = restClient.getAnticipo_y_Corte(
                 estacion,
                 esAnticipos,
                 fecha,
@@ -199,10 +204,10 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 
-        call.enqueue(new Callback<RespuestaEstacionesVentaDTO>() {
+        call.enqueue(new Callback<DatosBusquedaCortesDTO>() {
             @Override
-            public void onResponse(Call<RespuestaEstacionesVentaDTO> call, Response<RespuestaEstacionesVentaDTO> response) {
-                RespuestaEstacionesVentaDTO data = response.body();
+            public void onResponse(Call<DatosBusquedaCortesDTO> call, Response<DatosBusquedaCortesDTO> response) {
+                DatosBusquedaCortesDTO data = response.body();
                 if (response.isSuccessful()) {
                     Log.w("Estatus","Success");
                     presenter.onSuccessList(data);
@@ -222,14 +227,37 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
 
                             break;
                     }
-                    presenter.onError(response.message());
+                    JSONObject respuesta = null;
+                    try {
+                        respuesta = new JSONObject(response.errorBody().string());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if(respuesta!=null){
+
+                        try {
+                            presenter.onError(respuesta.getString("Mensaje"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }else{
+                        if(data!=null){
+                            presenter.onError(data);
+                        }else{
+                            presenter.onError(response.message());
+                        }
+                    }
 
                 }
 
             }
 
             @Override
-            public void onFailure(Call<RespuestaEstacionesVentaDTO> call, Throwable t) {
+            public void onFailure(Call<DatosBusquedaCortesDTO> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
                 presenter.onError(t.getMessage());
             }
