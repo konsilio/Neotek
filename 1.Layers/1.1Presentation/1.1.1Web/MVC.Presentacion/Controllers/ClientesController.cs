@@ -13,14 +13,14 @@ namespace MVC.Presentacion.Controllers
     {
         string _tok = string.Empty;
         // GET: Clientes
-        public ActionResult Index()
+        public ActionResult Index(string rfc =null,string nombre = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
           
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(0,"","", _tkn);
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0, rfc, nombre, _tkn);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
@@ -255,14 +255,14 @@ namespace MVC.Presentacion.Controllers
         public ActionResult Buscar(ClientesModel filterObj)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            string _tkn = Session["StringToken"].ToString();
+            //string _tkn = Session["StringToken"].ToString();
           
-            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-            ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
-            ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(0, filterObj.Rfc, filterObj.RazonSocial, _tkn);
+            //ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            //ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
+            //ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
+            //ViewBag.Clientes = CatalogoServicio.ListaClientes(0, filterObj.Rfc, filterObj.RazonSocial, _tkn);
  
-            return View("Index", filterObj);
+            return RedirectToAction("Index", new { rfc=filterObj.Rfc, nombre=filterObj.RazonSocial });
         }
 
         private string Validar(RespuestaDTO Resp = null)
