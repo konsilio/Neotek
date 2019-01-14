@@ -359,14 +359,14 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="pipa">Entidad con los datos de la pipa</param>
         /// <param name="esAnticipos">Bandera que determina si se esta realizando un corte o anticipo</param>
         /// <returns>Objeto de tipo DatosBusquedaCortesDTO con la respuesta de los datos para realizar el corte o anticipo</returns>
-        public static DatosBusquedaCortesDTO ToDTOBuscador(UnidadAlmacenGas unidadAlmacen, List<VentaCorteAnticipoEC> anticipos, List<VentaCorteAnticipoEC> cortes, List<VentaPuntoDeVenta> ventasSinCorte, Pipa pipa, bool esAnticipos)
+        public static DatosBusquedaCortesDTO ToDTOBuscador(UnidadAlmacenGas unidadAlmacen, List<VentaCorteAnticipoEC> anticipos, List<VentaCorteAnticipoEC> cortes, List<VentaPuntoDeVenta> ventasSinCorte, Pipa pipa, bool esAnticipos,AlmacenGasTomaLectura lectura,AlmacenGasTomaLectura lecturaFinal)
         {
                 return new DatosBusquedaCortesDTO()
                 {
                     anticipo = ToDTOAnticipos(anticipos),
                     corte = ToDTOCortes(cortes),
                     venta = ToDTOVentas(ventasSinCorte),
-                    estacion = ToDTOPipa(pipa,unidadAlmacen)
+                    estacion = esAnticipos? ToDTOPipa(pipa, unidadAlmacen) : ToDTOPipa(pipa,unidadAlmacen,lectura,lecturaFinal)
                 };
         }
         #endregion
@@ -384,13 +384,13 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="estacion">Entidad de Estación Carburación de la unidad almacen</param>
         /// <param name="esAnticipos">Determina si la busqueda es para anticipos o cortes de caja</param>
         /// <returns>Objeto de tipo DatosBusquedaCortesDTO adaptado con los datos enviados </returns>
-        public static DatosBusquedaCortesDTO ToDTOBuscador(UnidadAlmacenGas unidadAlmacen, List<VentaCorteAnticipoEC> anticipos, List<VentaCorteAnticipoEC> cortes, List<VentaPuntoDeVenta> ventasSinCorte, EstacionCarburacion estacion, bool esAnticipos)
+        public static DatosBusquedaCortesDTO ToDTOBuscador(UnidadAlmacenGas unidadAlmacen, List<VentaCorteAnticipoEC> anticipos, List<VentaCorteAnticipoEC> cortes, List<VentaPuntoDeVenta> ventasSinCorte, EstacionCarburacion estacion, bool esAnticipos, AlmacenGasTomaLectura lectura, AlmacenGasTomaLectura lecturaFinal)
         {
             return new DatosBusquedaCortesDTO() {
                 anticipo = ToDTOAnticipos(anticipos),
                 corte = ToDTOCortes(cortes),
                 venta = ToDTOVentas(ventasSinCorte),
-                estacion = ToDTOEstacion(estacion, unidadAlmacen)
+                estacion = esAnticipos? ToDTOEstacion(estacion,unidadAlmacen) :ToDTOEstacion(estacion, unidadAlmacen,lectura,lecturaFinal)
             };
         }
         #endregion
@@ -417,7 +417,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 anticipo = ToDTOAnticipos(anticipos),
                 corte = ToDTOCortes(cortes),
                 venta = ToDTOVentas(ventasSinCorte),
-                estacion = ToDTOEstacion(camioneta, unidadAlmacen)
+                estacion =  ToDTOEstacion(camioneta, unidadAlmacen)
             };
         }
         #endregion
@@ -541,6 +541,19 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="pipa">Entidad de tipo Pipa con los datos de la Pipa</param>
         /// <param name="unidadAlmacen">Entidad de tipo UnidadAlmacenGas que le corresponde a la pipa</param>
         /// <returns>Objeto de tipo EstacionesDto con los datos adaptados</returns>
+        public static EstacionesDto ToDTOPipa(Pipa pipa, UnidadAlmacenGas unidadAlmacen,AlmacenGasTomaLectura lecturaInicial,AlmacenGasTomaLectura lecturaFinal)
+        {
+            return new EstacionesDto()
+            {
+                IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
+                NombreAlmacen = pipa.Nombre,
+                NombrePipa = pipa.Nombre,
+                PorcentajeMedidor = lecturaInicial.Porcentaje??0,
+                P5000Inicial = lecturaInicial.P5000??0,
+                P5000Final = lecturaFinal.P5000??0
+
+            };
+        }
         public static EstacionesDto ToDTOPipa(Pipa pipa, UnidadAlmacenGas unidadAlmacen)
         {
             return new EstacionesDto()
@@ -548,7 +561,10 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
                 NombreAlmacen = pipa.Nombre,
                 NombrePipa = pipa.Nombre,
-                PorcentajeMedidor = unidadAlmacen.PorcentajeActual 
+                PorcentajeMedidor =  0,
+                P5000Inicial =  0,
+                P5000Final =  0
+
             };
         }
         #endregion
@@ -563,6 +579,18 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="estacion">Entidad de la estación de carburación para el corte o anticipo</param>
         /// <param name="unidadAlmacen">Entidad de la UnidadAlmacenGas de la estación para el corte o anticipo</param>
         /// <returns>Objeto de tipo EstacionesDto adaptado con los datos </returns>
+        public static EstacionesDto ToDTOEstacion(EstacionCarburacion estacion, UnidadAlmacenGas unidadAlmacen,AlmacenGasTomaLectura lecturaInicial,AlmacenGasTomaLectura lecturaFinal)
+        {
+            return new EstacionesDto()
+            {
+                IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
+                NombreAlmacen = estacion.Nombre,
+                NombrePipa = estacion.Nombre,
+                PorcentajeMedidor = lecturaFinal.Porcentaje??0,
+                P5000Inicial = lecturaInicial.P5000??0,
+                P5000Final = lecturaFinal.P5000??0
+            };
+        }
         public static EstacionesDto ToDTOEstacion(EstacionCarburacion estacion, UnidadAlmacenGas unidadAlmacen)
         {
             return new EstacionesDto()
@@ -570,7 +598,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
                 NombreAlmacen = estacion.Nombre,
                 NombrePipa = estacion.Nombre,
-                PorcentajeMedidor = unidadAlmacen.PorcentajeActual
+                PorcentajeMedidor = 0,
+                P5000Inicial = 0,
+                P5000Final = 0
             };
         }
         #endregion

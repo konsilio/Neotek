@@ -68,7 +68,7 @@ namespace Application.MainModule.Servicios.Catalogos
         public static PuntoVenta ObtenerPorUsuarioAplicacion()
         {
             var operadorChofer = OperadorChoferServicio.ObtenerPorUsuarioAplicacion();
-            return Obtener(operadorChofer);
+            return operadorChofer!=null ? Obtener(operadorChofer):null;
         }
        
         public static RespuestaDto Eliminar(PuntoVenta cteLoc)
@@ -176,6 +176,27 @@ namespace Application.MainModule.Servicios.Catalogos
         public static VentaCorteAnticipoEC  buscarCorte(DateTime fecha, short idCAlmacenGas)
         {
             return new PuntoVentaDataAccess().BuscarCorte(fecha, idCAlmacenGas);
+        }
+
+        public static List<VentaCorteAnticipoEC> ObtenerAnticipos(PuntoVenta puntoVenta, DateTime fecha)
+        {
+            if (puntoVenta != null)
+                return new PuntoVentaDataAccess().BuscarAnticipos(fecha, puntoVenta.IdCAlmacenGas);
+            else
+                return null;
+        }
+
+        public static VentaCorteAnticipoEC ObtenerCortes(PuntoVenta puntoVenta, DateTime fecha)
+        {
+            if (puntoVenta != null)
+                return new PuntoVentaDataAccess().BuscarCorte(fecha, puntoVenta.IdCAlmacenGas);
+            else
+                return null;
+        }
+
+        public static RespuestaDto RegistarReporteDia(ReporteDelDia reporteEntity)
+        {
+            return new PuntoVentaDataAccess().RegistrarReporteDia(reporteEntity);
         }
     }
 }

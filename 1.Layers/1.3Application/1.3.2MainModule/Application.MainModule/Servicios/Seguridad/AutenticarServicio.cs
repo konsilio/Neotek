@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.Servicios.Mobile;
+using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -65,13 +66,20 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(AutenticacionDto autDto)
         {
             var aut = AutenticarUsuario(autDto);
+            var usuario = new UsuarioDataAccess().Buscar(aut.IdUsuario);
+            List<MenuDto> menu= aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : new List<MenuDto>();
+            if (usuario.OperadoresChoferes!=null && usuario.OperadoresChoferes.Count != 0 && !menu.Any())
+            {
+                aut.Mensaje = "No se ha realizado lectura inicial";
+                aut.Exito = false; 
+            }
             return new RespuestaAutenticacionMobileDto()
             {
                 IdUsuario = aut.IdUsuario,
                 Exito = aut.Exito,
                 Mensaje = aut.Mensaje,
                 token = aut.token,
-                listMenu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : null,
+                listMenu = menu,
             };        
         }       
 

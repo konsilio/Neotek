@@ -182,6 +182,33 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                     ).ToList();
         }
+        public List<AlmacenGasTomaLecturaCilindro> BuscarLecturasCamioneta(short idCAlmacenGas)
+        {
+            return uow.Repository<AlmacenGasTomaLecturaCilindro>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                                                    ).ToList();
+        }
+        /// <summary>
+        /// Permite realizar la busqueda de un reporte del día en caso de que 
+        /// exista alguno con los datos ya enviados se retornara como respuesta
+        /// </summary>
+        /// <param name="fecha">Fecha de busqueda</param>
+        /// <param name="idCAlmacenGas">Id del CAlmacenGas buscado</param>
+        /// <param name="idEmpresa">Id de la empresa que se busca</param>
+        /// <returns>Entidad de típo reporte del día encontrada</returns>
+        public ReporteDelDia BuscarReporte(DateTime fecha, short idCAlmacenGas,short idEmpresa)
+        {
+            return uow.Repository<ReporteDelDia>().GetSingle(x=>
+            x.IdCAlmacenGas.Equals(idCAlmacenGas) &&
+            x.FechaReporte.Equals(fecha) &&
+            x.IdEmpresa.Equals(idEmpresa)
+            );
+        }
+
+        public List<AlmacenGasTomaLectura> BuscarLecturas(short idCAlmacenGas, int mes, int anio)
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+            && x.FechaAplicacion.Month.Equals(mes) && x.FechaAplicacion.Year.Equals(anio)).ToList();
+        }
         public List<AlmacenGasTomaLectura> BuscarLecturas(short idCAlmacenGas, bool noProcesados)
         {
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
@@ -372,7 +399,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
                 catch (Exception)
                 {
-                    //_respuesta.Exito = false;
+                    //_respuesta.Exito = false; 
                     //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
                     //_respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
@@ -868,6 +895,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<UnidadAlmacenGas>().GetSingle(
                 x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                && x.Activo
+            );
+        }
+        public UnidadAlmacenGas BuscarAlmacenPrincipal(short idEmpresa)
+        {
+            return uow.Repository<UnidadAlmacenGas>().GetSingle(
+                x => x.IdEmpresa.Equals(idEmpresa)
+                && x.EsGeneral
                 && x.Activo
             );
         }
