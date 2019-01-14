@@ -37,6 +37,16 @@ namespace Application.MainModule.Flujos
             usuario = UsuarioAdapter.FromEntity(usuario);
             usuario.MovileKey = autenticacionDto.FbToken;
             var respuesta = UsuarioServicio.Actualizar(usuario);
+            var operadorChofer = new PuntoVentaDataAccess().BuscarPorUsuario(usuario.IdUsuario);
+
+            if (operadorChofer != null)
+            {
+                var puntoVenta = PuntoVentaServicio.BuscarPorOperadorChofer(operadorChofer.IdOperadorChofer);
+                if (puntoVenta != null && puntoVenta.Any())
+                {
+                    responce.IdCAlmacenGas = puntoVenta.FirstOrDefault().IdCAlmacenGas;
+                }
+            }
             if (!respuesta.Exito)
             {
                 responce.Exito = respuesta.Exito;

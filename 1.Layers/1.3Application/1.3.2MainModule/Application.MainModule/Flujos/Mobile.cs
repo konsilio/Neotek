@@ -587,6 +587,45 @@ namespace Application.MainModule.Flujos
             return null;
         }
         /// <summary>
+        /// Permite realizar la comprovacion antes del corte si 
+        /// ya se tienen o ya se ha echo una lectura final
+        /// </summary>
+        /// <param name="idCAlmacenGas">Id del almacen de Gas (IdCAlmacenGas)</param>
+        /// <returns>Respuesta resultante de la comprobacion</returns>
+        public RespuestaDto GetHayLecturaFinal(short idCAlmacenGas)
+        {
+            var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacenGas);
+            RespuestaDto respuesta = new RespuestaDto();
+            if (almacen != null) { 
+                var lecturaIncial = AlmacenGasServicio.ObtenerLecturaFinal(DateTime.Now, idCAlmacenGas);
+                
+                if (lecturaIncial != null)
+                { 
+                    respuesta.Exito = true;
+                    respuesta.Mensaje = "Se ha encontrado una lectura final " + lecturaIncial.ClaveOperacion;
+                }
+                else
+                {
+                    respuesta.Exito = false;
+                    if (almacen.IdCamioneta!=null && almacen.IdCamioneta > 0)
+                        respuesta.Mensaje = "No se ha realiado una lectura final para la camioneta: " + almacen.Camioneta.Nombre;
+                    else if (almacen.IdPipa!=null && almacen.IdPipa > 0)
+                        respuesta.Mensaje = "No se ha realizado la lectura final para la pipa: "+almacen.Pipa.Nombre;
+                    else if (almacen.IdEstacionCarburacion !=null && almacen.IdEstacionCarburacion > 0)
+                        respuesta.Mensaje = "No se ha realizado la lectura final para la estación: " + almacen.EstacionCarburacion.Nombre;
+                    else
+                        respuesta.Mensaje = "No se ha realizado la lectura final para el almacen: " + almacen.Numero;
+                }
+            }else
+            {
+                respuesta.Exito = false;
+                respuesta.Mensaje = "El alamcen no fue encontrado o no esta disponible, intente nuevamente";
+            }
+            return respuesta;
+
+        }
+
+        /// <summary>
         /// Permite determinar si actualmente se cuentas con la lectura incial y 
         /// final en el almacen del día de hoy, en caso de no contar con ellas 
         /// se retornara un mensaje de error en un modelo RespuestaDTO

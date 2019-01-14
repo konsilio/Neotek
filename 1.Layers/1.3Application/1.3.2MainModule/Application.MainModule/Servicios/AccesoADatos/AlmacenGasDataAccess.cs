@@ -616,6 +616,25 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                 && x.Dia.Equals(dia)).ToList();
         }
 
+        /// <summary>
+        /// Permite verificar si hay una lectura final registrada 
+        /// para poder continuar con el corte de caja , en caso de 
+        ///  existir una lectura se retorna una entidad de tipo AlmacenGasTomaLectura
+        /// </summary>
+        /// <param name="fecha">Fecha actual de registro</param>
+        /// <param name="idCAlmacenGas">Id del CAlmacenGas</param>
+        /// <returns>Una entidad de tipo AlmacenGasTomaLectura en caso de existir una lectura </returns>
+        public AlmacenGasTomaLectura ObtenerLectura(DateTime fecha, short idCAlmacenGas)
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().GetSingle(x =>
+            x.IdCAlmacenGas.Equals(idCAlmacenGas) &&
+            x.FechaRegistro.Day.Equals(fecha.Day) &&
+            x.FechaRegistro.Month.Equals(fecha.Month) &&
+            x.FechaRegistro.Year.Equals(fecha.Year) &&
+            x.IdTipoEvento.Equals(TipoEventoEnum.Final)        
+            ) ?? null;
+        }
+
         public List<AlmacenGasMovimiento> BuscarMovimientosEnInventario(short idAlmacenGas, short idCAlmacenGas, short idEmpresa, short year, byte mes, byte dia)
         {
             return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
