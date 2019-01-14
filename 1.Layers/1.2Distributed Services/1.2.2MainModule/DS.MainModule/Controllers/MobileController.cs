@@ -460,6 +460,15 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.HayLectura(), Request);
         }
+        /// <summary>
+        /// Permite verificar si existen cortes 
+        /// </summary>
+        /// <returns>Respuesta con el resultado de la comprobacion</returns>
+        [Route("cortes/hay-lectura-final/{idCAlmacenGas}")]
+        public HttpResponseMessage GetHayLecturaFinal(short idCAlmacenGas)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.GetHayLecturaFinal(idCAlmacenGas), Request);
+        }
         #endregion
 
         #region Venta

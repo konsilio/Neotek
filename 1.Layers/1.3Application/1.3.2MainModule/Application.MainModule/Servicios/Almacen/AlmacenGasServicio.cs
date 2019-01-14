@@ -594,6 +594,19 @@ namespace Application.MainModule.Servicios.Almacenes
 
             };
         }
+        /// <summary>
+        /// Permuite buscar si el almacen de gas cuenta con una lectura, 
+        /// en la fecha actual, retornara una entidad de tipo 
+        /// AlmacenGasTomaLectura como resultado, en caso de que no 
+        /// retornara un objeto nulo 
+        /// </summary>
+        /// <param name="fecha">Fecha de busqueda </param>
+        /// <param name="idCAlmacenGas">Id del CAlmacenGas que se consultara </param>
+        /// <returns>Entidad resultado en caso de existir un registro</returns>
+        public static AlmacenGasTomaLectura ObtenerLecturaFinal(DateTime fecha, short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().ObtenerLectura(fecha,idCAlmacenGas);
+        }
 
         /// <summary>
         /// BuscarLectura
