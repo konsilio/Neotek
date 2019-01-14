@@ -2,12 +2,10 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
-import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
-import com.example.neotecknewts.sagasapp.Model.DatosReporteDTO;
-import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Presenter.RecargaCamionetaPresenterImpl;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -27,18 +25,8 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
 
     @Override
     public void getCamionetas(String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<DatosRecargaDto> call = restClient.getCatalogsRecarga(
                 false,
                 false,
@@ -46,7 +34,7 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL.toString());
 
         call.enqueue(new Callback<DatosRecargaDto>() {
             @Override

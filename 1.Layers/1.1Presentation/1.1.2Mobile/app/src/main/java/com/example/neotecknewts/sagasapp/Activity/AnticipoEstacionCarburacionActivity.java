@@ -28,27 +28,35 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
     ProgressDialog progressDialog;
     List<DatosEstacionesDTO> list;
 
-    private boolean EsAnticipo,EsCorte;
+    private boolean EsAnticipo, EsCorte;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anticipo_estacion_carburacion);
         Bundle bundle = getIntent().getExtras();
+
         if(bundle!= null){
             EsAnticipo = bundle.getBoolean("EsAnticipo",false);
             EsCorte = bundle.getBoolean("EsCorte",false);
         }
+
+
+
         RVAnticipoEstacionesCarburacionActivityContainer = findViewById(R.id.
                 RVAnticipoEstacionesCarburacionActivityContainer);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(
                 AnticipoEstacionCarburacionActivity.this);
+
         RVAnticipoEstacionesCarburacionActivityContainer.setLayoutManager(linearLayoutManager);
         RVAnticipoEstacionesCarburacionActivityContainer.setHasFixedSize(true);
+
         session = new Session(this);
         presenter = new AnticipoEstacionCarburacionPresenterImpl(this);
         presenter.getEstaciones(session.getToken());
-        setTitle((EsCorte)?getString(R.string.corte_de_caja):
-                getString(R.string.Anticipo));
+
+        setTitle((EsCorte)? getString(R.string.corte_de_caja): getString(R.string.Anticipo));
+
         presenter.checkLecturas(session.getToken());
 
     }
@@ -58,16 +66,6 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
         DatosEstacionesDTO header = new DatosEstacionesDTO();
         header.setNombreCAlmacen(getString(R.string.selecciona_la_estacion_de_carburacion));
 
-        /*if(list ==null){
-
-            //Items
-            for (int x = 0; x < 20; x++){
-                DatosEstacionesDTO item = new DatosEstacionesDTO();
-                item.setNombreCAlmacen("Estación Bulevar "+String.valueOf(x));
-                item.setIdCAlmacenGas(x);
-                list.add(item);
-            }
-        }*/
         list.add(0,header);
 
         return  list;

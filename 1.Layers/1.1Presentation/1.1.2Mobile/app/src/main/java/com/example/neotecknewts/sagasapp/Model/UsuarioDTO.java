@@ -23,6 +23,9 @@ public class UsuarioDTO {
     @SerializedName("Mensaje")
     private String Mensaje;
 
+    @SerializedName("IdCAlmacenGas")
+    private int IdAlmacen;
+
     public MenuDTO[] getListMenu() {
         return listMenu;
     }
@@ -61,5 +64,15 @@ public class UsuarioDTO {
 
     public void setMensaje(String mensaje) {
         Mensaje = mensaje;
+    }
+
+    @SerializedName("IdCAlmacenGas")
+    public int getIdAlmacen() {
+        return IdAlmacen;
+    }
+
+    @SerializedName("IdCAlmacenGas")
+    public void setIdAlmacen(int idAlmacen) {
+        IdAlmacen = idAlmacen;
     }
 }

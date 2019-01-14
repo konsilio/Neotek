@@ -6,7 +6,8 @@ import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Sincronizacion;
@@ -143,15 +144,8 @@ public class Papeleta {
     private boolean Registro(PrecargaPapeletaDTO dto) {
         Log.w("Registro papeleta ",dto.getClaveOperacion());
         if(sincronizacion.servicioDisponible()){
-            Gson gson = new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                    .create();
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(Constantes.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-            RestClient restClient = retrofit.create(RestClient.class);
+
+            RestClient restClient = ApiClient.getClient().create(RestClient.class);
             Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(dto,this.token,
                     "application/json");
 
