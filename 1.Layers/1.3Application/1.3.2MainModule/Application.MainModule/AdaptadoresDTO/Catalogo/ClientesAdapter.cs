@@ -113,7 +113,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Calle = cteDTO.Calle,
                 NumExt = cteDTO.NumExt,
                 NumInt = cteDTO.NumInt,
-                formatted_address = cteDTO.formatted_address,//cteDTO.Calle + cteDTO.Colonia + cteDTO.NumExt,
+                formatted_address = cteDTO.formatted_address??"",//cteDTO.Calle + cteDTO.Colonia + cteDTO.NumExt,
                 location_lat = "1",//cteDTO.location_lat,
                 location_lng = "1",//cteDTO.location_lng,
                 place_id = "1",//cteDTO.place_id,
