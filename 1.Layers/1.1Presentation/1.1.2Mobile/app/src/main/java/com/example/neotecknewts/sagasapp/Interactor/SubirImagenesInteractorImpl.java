@@ -20,7 +20,8 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
@@ -88,15 +89,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         precargaPapeletaDTO.setClaveOperacion(clave_unica);
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -132,25 +126,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
 
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_papeleta = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(precargaPapeletaDTO,
                     token, "application/json");
 
-            Log.w(TAG, retrofit.baseUrl().toString());
+            Log.w(TAG, ApiClient.BASE_URL);
             Log.w("Numero ", precargaPapeletaDTO.toString());
 
             call.enqueue(new Callback<RespuestaPapeletaDTO>() {
@@ -256,15 +241,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         iniciarDescargaDTO.setFechaDescarga(formato_fecha_operacion);
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -300,24 +278,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la descarga
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(iniciarDescargaDTO,
                     token, "application/json");
-            Log.w(TAG, retrofit.baseUrl().toString());
+            Log.w(TAG, ApiClient.BASE_URL);
             Log.w("Numero ", iniciarDescargaDTO.toString());
             call.enqueue(new Callback<RespuestaIniciarDescargaDTO>() {
                 @Override
@@ -413,15 +382,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         finalizarDescargaDTO.setTanquePrestado(false);
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -457,25 +419,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la descarga
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaFinalizarDescargaDTO> call =
                     restClient.postFinalizarDescarga(finalizarDescargaDTO,
                     token, "application/json");
-            Log.w(TAG, retrofit.baseUrl().toString());
+            Log.w(TAG, ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaFinalizarDescargaDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaFinalizarDescargaDTO> call,
@@ -570,15 +523,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new
                 SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         lecturaDTO.setFechaAplicacion((Date) Calendar.getInstance().getTime());
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -614,24 +560,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la descarga
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
        /* while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(lecturaDTO,
                     token, "application/json");
-            Log.w(TAG, retrofit.baseUrl().toString());
+            Log.w(TAG, ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaLecturaInicialDTO> call,
@@ -718,15 +655,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new
                 SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         lecturaDTO.setFechaAplicacion((Date) Calendar.getInstance().getTime());
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -762,24 +692,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la descarga
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinal(lecturaDTO,
                     token, "application/json");
-            Log.w(TAG, retrofit.baseUrl().toString());
+            Log.w(TAG, ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaLecturaInicialDTO> call,
@@ -874,15 +795,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         lecturaPipaDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -918,24 +832,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la descarga
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialPipa(
                     lecturaPipaDTO,  token, "application/json");
-            Log.w(TAG, retrofit.baseUrl().toString());
+            Log.w(TAG, ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaLecturaInicialDTO> call,
@@ -1031,15 +936,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         lecturaPipaDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -1075,24 +973,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la descarga
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalPipa(
                     lecturaPipaDTO,  token, "application/json");
-            Log.w(TAG, retrofit.baseUrl().toString());
+            Log.w(TAG, ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaLecturaInicialDTO> call,
@@ -1186,15 +1075,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         lecturaAlmacenDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -1230,24 +1112,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la descarga
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialAlmacen(
                     lecturaAlmacenDTO,  token, "application/json");
-            Log.w(TAG, retrofit.baseUrl().toString());
+            Log.w(TAG, ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaLecturaInicialDTO> call,
@@ -1343,15 +1216,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         lecturaAlmacenDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -1387,24 +1253,14 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la descarga
 
-        String url = Constantes.BASE_URL;
-
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofits.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
 
         int intentos_post = 0;
         registra_descarga = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalAlmacen(
                     lecturaAlmacenDTO,  token, "application/json");
-            Log.w(TAG, retrofit.baseUrl().toString());
+            Log.w(TAG, ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaLecturaInicialDTO> call,
@@ -1496,15 +1352,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         recargaDTO.setFechaApliacacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -1540,16 +1389,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la lectura final de la camioneta
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_reacrga = true;
         /*while(intentos_post<3) {*/
@@ -1569,7 +1409,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             recargaDTO,token,"application/json"
                     );
 
-            Log.w("Url recarga estación ", retrofit.baseUrl().toString());
+            Log.w("Url recarga estación ", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaRecargaDTO> call,
@@ -1660,15 +1500,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         recargaDTO.setFechaApliacacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -1704,16 +1537,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la lectura final de la camioneta
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_reacrga = true;
         /*while(intentos_post<3) {*/
@@ -1726,7 +1550,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         recargaDTO,token,"application/json"
                 );
             }
-            Log.w("Url recarga pipa", retrofit.baseUrl().toString());
+            Log.w("Url recarga pipa", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaRecargaDTO> call,
@@ -1818,15 +1642,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
         autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -1863,16 +1680,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro del autoconsumo
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
          /*int intentos_post = 0;
         registra_reacrga = true;
         while(intentos_post<3) {*/
@@ -1886,7 +1694,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         token,
                         "application/json"
             );
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url camioneta", ApiClient.BASE_URL);
 
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
 
@@ -1997,15 +1805,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -2042,16 +1843,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro del autoconsumo
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         /*int intentos_post = 0;
         registra_reacrga = true;
         while(intentos_post<3) {*/
@@ -2064,7 +1858,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     token,
                     "application/json"
             );
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url camioneta", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaRecargaDTO> call,
@@ -2161,15 +1955,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -2206,16 +1993,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro del autoconsumo
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         /*int intentos_post = 0;
         registra_reacrga = true;
         while(intentos_post<3) {*/
@@ -2228,7 +2008,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     token,
                     "application/json"
             );
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url camioneta", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaRecargaDTO> call,
@@ -2324,15 +2104,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         traspasoDTO.setFechaAplicacion(sf.format(new Date()));*/
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -2368,16 +2141,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
         //endregion
         //region Realiza el registro del autoconsumo
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         /*int intentos_post = 0;
         registra_reacrga = true;
         while(intentos_post<3) {*/
@@ -2389,7 +2155,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     token,
                     "application/json"
             );
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url camioneta", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaTraspasoDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaTraspasoDTO> call,
@@ -2486,15 +2252,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         traspasoDTO.setFechaAplicacion(Calendar.getInstance().getTime().toString());*/
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -2531,16 +2290,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro del autoconsumo
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         /*int intentos_post = 0;
         registra_reacrga = true;
         while(intentos_post<3) {*/
@@ -2552,7 +2304,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     token,
                     "application/json"
             );
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url camioneta", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaTraspasoDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaTraspasoDTO> call,
@@ -2647,15 +2399,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         calibracionDTO.setFechaRegistro((Date) Calendar.getInstance().getTime());
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -2692,16 +2437,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro del autoconsumo
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         /*int intentos_post = 0;
         registra_reacrga = true;
         while(intentos_post<3) {*/
@@ -2713,7 +2451,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     token,
                     "application/json"
             );
-            Log.w("Url calibración", retrofit.baseUrl().toString());
+            Log.w("Url calibración", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaTraspasoDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaTraspasoDTO> call,
@@ -2808,15 +2546,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         calibracionDTO.setFechaRegistro((Date) Calendar.getInstance().getTime());
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -2853,16 +2584,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro del autoconsumo
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         /*int intentos_post = 0;
         registra_reacrga = true;
         while(intentos_post<3) {*/
@@ -2874,7 +2598,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     token,
                     "application/json"
             );
-            Log.w("Url calibración", retrofit.baseUrl().toString());
+            Log.w("Url calibración", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaTraspasoDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaTraspasoDTO> call,

@@ -31,7 +31,8 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentasCorteDTO;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
@@ -42,7 +43,6 @@ import com.google.gson.GsonBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.Executors;
@@ -341,16 +341,8 @@ public class Lisener{
     }
 
     private  boolean Registrar(CorteDTO corteDTO,String token){
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClient = retrofits.create(RestClient.class);
 
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
 
         Call<RespuestaCorteDto> call = restClient.
                 postCorte(corteDTO,token,"application/json");
@@ -446,15 +438,8 @@ public class Lisener{
     }
 
     private boolean Registrar(AnticiposDTO anticiposDTO, String token) {
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClient = retrofits.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
 
 
         Call<RespuestaAnticipoDTO> call = restClient.
@@ -588,16 +573,9 @@ public class Lisener{
     private  boolean Registrar(TraspasoDTO dto,String tipo,boolean esFinal){
         if(ServicioDisponible()){
             Log.w("Iniciando",new Date()+"Envio del traspaso: "+dto.getClaveOperacion());
-            Gson gson = new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .create();
+            
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(Constantes.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-
-            RestClient restClient = retrofit.create(RestClient.class);
+            RestClient restClient = ApiClient.getClient().create(RestClient.class);
             Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
                     dto,
                     /*tipo.equals(SAGASSql.TIPO_TRASPASO_ESTACION),
@@ -606,7 +584,7 @@ public class Lisener{
                     token,
                     "application/json"
             );
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url camioneta", ApiClient.getClient().baseUrl().toString());
             call.enqueue(new Callback<RespuestaTraspasoDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaTraspasoDTO> call,
@@ -758,15 +736,8 @@ public class Lisener{
      */
     private boolean Registrar(CalibracionDTO dto,String token,boolean esFinal, String tipo){
         Log.w("Registro","Registrando en servicio "+dto.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaTraspasoDTO> call = null;
 
         restClient.postCalibracion(dto,
@@ -899,16 +870,8 @@ public class Lisener{
      * @return boolean con el resultado del registro en la api
      */
     private boolean Registrar(AutoconsumoDTO dto,String Tipo,boolean esFinal) {
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                 dto,
                 /*Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION),
@@ -918,7 +881,7 @@ public class Lisener{
                 token,
                 "application/json"
         );
-        Log.w("Url camioneta", retrofit.baseUrl().toString());
+        Log.w("Url camioneta", ApiClient.BASE_URL);
         call.enqueue(new Callback<RespuestaRecargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaRecargaDTO> call,
@@ -1124,15 +1087,8 @@ public class Lisener{
                                 esPipa) {
 
         Log.w("Registro","Registrando en servicio de ventas: "+ventaDTO.getFolioVenta());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaPuntoVenta> call = restClient.pagar(
                 ventaDTO,
                 /*esCamioneta,
@@ -1253,15 +1209,8 @@ public class Lisener{
      */
     private boolean RegistrarRecarga(RecargaDTO recargaDTO,String tipo,boolean esInicial) {
         Log.w("Registro","Registrando en servicio "+recargaDTO.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaRecargaDTO> call = null;
         if(esInicial) {
             restClient.postRecargaInicial(
@@ -1367,15 +1316,8 @@ public class Lisener{
      */
     private boolean RegistrarRecargaCamioneta(RecargaDTO recargaDTO){
         Log.w("Registro","Registrando en servicio "+recargaDTO.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaRecargaDTO> call = restClient.postRecarga(
                 recargaDTO,token,"application/json");
         call.enqueue(new Callback<RespuestaRecargaDTO>() {
@@ -1455,15 +1397,8 @@ public class Lisener{
 
     private boolean RegistrarLecturaInicialCamioneta(LecturaCamionetaDTO lecturaDTO){
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialCamioneta(lecturaDTO,
                 token,"application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
@@ -1542,15 +1477,8 @@ public class Lisener{
 
     private boolean RegistrarLecturaFinalCamioneta(LecturaCamionetaDTO lecturaDTO){
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalCamioneta(lecturaDTO,
                 token,"application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
@@ -1639,15 +1567,8 @@ public class Lisener{
      */
     private boolean RegistrarLecturaFinalAlmacen(LecturaAlmacenDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalAlmacen(lecturaDTO,
                 token,"application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
@@ -1736,15 +1657,8 @@ public class Lisener{
      */
     private boolean RegistrarLecturaInicialAlmacen(LecturaAlmacenDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialAlmacen(lecturaDTO,
                 token,"application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
@@ -1853,15 +1767,8 @@ public class Lisener{
      */
     private boolean RegistrarLecturaInicialPipa(LecturaPipaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialPipa(lecturaDTO,
                 token,"application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
@@ -1964,15 +1871,8 @@ public class Lisener{
      */
     private boolean RegistrarLecturaFinalPipa(LecturaPipaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalPipa(lecturaDTO,
                 token,"application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
@@ -2081,15 +1981,8 @@ public class Lisener{
      */
     private boolean RegistrarLecturaFinal(LecturaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinal(lecturaDTO,token,
                 "application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
@@ -2199,15 +2092,8 @@ public class Lisener{
      */
     private boolean RegistrarLecturaInicial(LecturaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(lecturaDTO,token,
                 "application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
@@ -2302,15 +2188,8 @@ public class Lisener{
 
     private boolean RegistrarLecturaFinalizarDescarga(FinalizarDescargaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaFinalizarDescargaDTO> call = restClient.postFinalizarDescarga(lecturaDTO,token,
                 "application/json");
         call.enqueue(new Callback<RespuestaFinalizarDescargaDTO>() {
@@ -2404,15 +2283,8 @@ public class Lisener{
 
     private boolean RegistrarLecturaDescarga(IniciarDescargaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(lecturaDTO,token,
                 "application/json");
         call.enqueue(new Callback<RespuestaIniciarDescargaDTO>() {
@@ -2523,15 +2395,8 @@ public class Lisener{
 
     private boolean RegistrarPapeleta(PrecargaPapeletaDTO lecturaDTO){
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+        
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(lecturaDTO,token,
                 "application/json");
         call.enqueue(new Callback<RespuestaPapeletaDTO>() {
@@ -2557,15 +2422,8 @@ public class Lisener{
     //region Estatus servicio
     private boolean ServicioDisponible(){
         Log.v("Servicio","Verifica el estatus del servicio");
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+        
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
                 "application/json");
         callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {

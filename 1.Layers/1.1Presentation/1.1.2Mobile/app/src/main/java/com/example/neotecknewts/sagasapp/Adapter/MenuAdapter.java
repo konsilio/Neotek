@@ -347,21 +347,15 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsCalibracionPipaInicial",false);
                     intent.putExtra("EsCalibracionPipaFinal",true);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getHeaderMenu().equals("Disposición de efectivo - Anticipo")
-                        && menuItem.getName().equals("Estación Carburación")){
-                    Intent intent = new Intent(view.getContext(),
-                            AnticipoEstacionCarburacionActivity.class);
-                    intent.putExtra("EsAnticipo",true);
-                    intent.putExtra("EsCorte",false);
+                }else if( menuItem.getName().equals("Estación Carburación")){
+                    boolean esAnticipo = menuItem.getHeaderMenu().equals("Disposición de efectivo - Anticipo"),
+                            esCorte = menuItem.getHeaderMenu().equals("Disposición de efectivo - Corte de caja");
+
+                    Intent intent = new Intent(view.getContext(), AnticipoEstacionCarburacionActivity.class);
+                    intent.putExtra("EsAnticipo", esAnticipo);
+                    intent.putExtra("EsCorte", esCorte);
                     view.getContext().startActivity(intent);
 
-                }else if(menuItem.getHeaderMenu().equals("Disposición de efectivo - Corte de caja")
-                        && menuItem.getName().equals("Estación Carburación")){
-                    Intent intent = new Intent(view.getContext(),
-                            AnticipoEstacionCarburacionActivity.class);
-                    intent.putExtra("EsAnticipo",false);
-                    intent.putExtra("EsCorte",true);
-                    view.getContext().startActivity(intent);
                 }else if(menuItem.getHeaderMenu().equals("Estación de Carburación")&&
                         menuItem.getName().equals("Punto de Venta")){
                     Intent intent = new Intent(view.getContext(),

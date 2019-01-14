@@ -5,7 +5,8 @@ import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Sincronizacion;
@@ -118,15 +119,8 @@ public class FinalizarDescarga {
      */
     private boolean Registrar(FinalizarDescargaDTO dto) {
         Log.w("Registro","Registrando en servicio "+dto.getClaveOperacion());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
+
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaFinalizarDescargaDTO> call = restClient.postFinalizarDescarga(dto,token,
                 "application/json");
         call.enqueue(new Callback<RespuestaFinalizarDescargaDTO>() {

@@ -1,4 +1,4 @@
-package com.example.neotecknewts.sagasapp.Presenter;
+package com.example.neotecknewts.sagasapp.Presenter.Rest;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
