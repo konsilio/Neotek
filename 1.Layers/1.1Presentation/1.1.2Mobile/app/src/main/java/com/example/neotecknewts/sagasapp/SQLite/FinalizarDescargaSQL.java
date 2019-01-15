@@ -164,7 +164,7 @@ public class FinalizarDescargaSQL extends SQLiteOpenHelper {
     public Integer EliminarFinalizarDescarga(String ClaveOperacion){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_FINALIZAR_DESCARGA,
-                "ClaveOperacion = '"+ClaveOperacion+"'",
+                " ClaveOperacion = '"+ClaveOperacion+"'",
                 null);
     }
     //endregion
@@ -210,7 +210,7 @@ public class FinalizarDescargaSQL extends SQLiteOpenHelper {
     public Integer EliminarImagenes(String ClaveOperacion){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_IMAGENES_FINALIZAR_DESCARGA,
-                "ClaveOperacion = '"+ClaveOperacion+"'",
+                " ClaveOperacion = '"+ClaveOperacion+"'",
                 null);
     }
 

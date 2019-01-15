@@ -104,11 +104,11 @@ public class Lisener{
     /*public Lisener(IniciarDescargaSQL iniciarDescargaSQL ,String token){
         this.iniciarDescargaSQL = iniciarDescargaSQL;
         this.token = token;
-    }*/
+    }
     public Lisener(FinalizarDescargaSQL finalizarDescargaSQL ,String token){
         this.finalizarDescargaSQL = finalizarDescargaSQL;
         this.token = token;
-    }
+    }*/
     //endregion
     public void CrearRunable(final String proceso){
         final Runnable myTask = () -> {
@@ -2125,7 +2125,7 @@ public class Lisener{
         boolean registrado;
         if(servicio) {
             Log.w("Iniciando", "Revisando finalizar descarga: " + new Date());
-            Cursor cursor = finalizarDescargaSQL.GetFinalizarDescargas();
+            Cursor cursor = sagasSql.GetFinalizarDescargas();
             FinalizarDescargaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
@@ -2161,18 +2161,19 @@ public class Lisener{
                     lecturaDTO.setIdAlmacen(cursor.getInt(
                             cursor.getColumnIndex("IdAlmacen")));
 
-                    Cursor cantidad = finalizarDescargaSQL.GetImagenesFinalizarDescargaByClaveOperacion(lecturaDTO.getClaveOperacion());
+                    Cursor cantidad = sagasSql.
+                            GetImagenesFinalizarDescargaByClaveOperacion(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
                         String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                        //try {
+                          //  lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
                                     cantidad.getString(cantidad.getColumnIndex("Imagen"))
                             );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
+                        //} catch (URISyntaxException e) {
+                        //    e.printStackTrace();
+                        //}
                         cantidad.moveToNext();
                     }
 
@@ -2264,8 +2265,8 @@ public class Lisener{
                         //try {
                           //  lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
-                                  //  cantidad.getString(cantidad.getColumnIndex("Imagen"))
-                            iuri
+                                    cantidad.getString(cantidad.getColumnIndex("Imagen"))
+                            //iuri
                             );
                         //} catch (URISyntaxException e) {
                         //    e.printStackTrace();

@@ -378,7 +378,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     @Override
     public void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO,
                                            String token,
-                                           FinalizarDescargaSQL finalizarDescargaSQL) {
+                                           SAGASSql finalizarDescargaSQL) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "FD"+s.format(new Date());
@@ -2799,7 +2799,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx
      * @date 28/08/2018
      */
-    private void registrar_finalizar_local(FinalizarDescargaSQL finalizarDescargaSQL,
+    /*private void registrar_finalizar_local(FinalizarDescargaSQL finalizarDescargaSQL,
+                                           FinalizarDescargaDTO finalizarDescargaDTO,
+                                           String clave_unica){*/
+    private void registrar_finalizar_local(SAGASSql finalizarDescargaSQL,
                                            FinalizarDescargaDTO finalizarDescargaDTO,
                                            String clave_unica){
         if(finalizarDescargaSQL.GetFinalizarDescargaByClaveOperacion(clave_unica).getCount()==0){

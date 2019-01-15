@@ -27,7 +27,8 @@ public interface SubirImagenesPresenter {
     void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token,  SAGASSql sagasSql, Context applicationContext);
     //void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO, String token, IniciarDescargaSQL iniciarDescargaSQL);
     void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO, String token, SAGASSql sagasSql);
-    void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO, String token, FinalizarDescargaSQL finalizarDescargaSQL);
+   // void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO, String token, FinalizarDescargaSQL finalizarDescargaSQL);
+   void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO, String token, SAGASSql finalizarDescargaSQL);
     void onSuccessRegistrarPapeleta();
     void onSuccessRegistrarIniciarDescarga();
     void onSuccessRegistrarFinalizarDescarga();

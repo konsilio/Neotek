@@ -827,7 +827,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 //presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),iniciarDescargaSQL);
                 presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),sagasSql);
             }else if (finalizar){
-                presenter.registrarFinalizarDescarga(finalizarDescarga,session.getToken(),finalizarDescargaSQL);
+                //presenter.registrarFinalizarDescarga(finalizarDescarga,session.getToken(),finalizarDescargaSQL);
+                presenter.registrarFinalizarDescarga(finalizarDescarga,session.getToken(),sagasSql);
             }else if (EsLecturaInicial){
                 presenter.registrarLecturaInicial(sagasSql,session.getToken(),lecturaDTO);
             }else if (EsLecturaFinal){

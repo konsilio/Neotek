@@ -60,7 +60,8 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     }
 
     @Override
-    public void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO, String token, FinalizarDescargaSQL finalizarDescargaSQL) {
+    public void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO, String token,
+                                           SAGASSql finalizarDescargaSQL) {
         //crear show progress en vista igual que en otras vistas
         subirImagenesView.showProgress(R.string.message_cargando);
         interactor.registrarFinalizarDescarga(finalizarDescargaDTO,token,finalizarDescargaSQL);

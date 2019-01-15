@@ -39,9 +39,9 @@ public class Semaforo {
      */
     public Semaforo(Context context){
         sagasSql = new SAGASSql(context);
-        papeletaSQL = new PapeletaSQL(context);
-        finalizarDescargaSQL = new FinalizarDescargaSQL(context);
-        iniciarDescargaSQL = new IniciarDescargaSQL(context);
+        //papeletaSQL = new PapeletaSQL(context);
+        //finalizarDescargaSQL = new FinalizarDescargaSQL(context);
+        //iniciarDescargaSQL = new IniciarDescargaSQL(context);
     }
     //endregion
 
@@ -61,9 +61,9 @@ public class Semaforo {
         //if(papeletaSQL.GetPapeletas().getCount()>0)
         if(sagasSql.GetPapeletas().getCount()>0)
             ban = true;
-        if(iniciarDescargaSQL.GetIniciarDescargas().getCount()>0)
+        if(sagasSql.GetIniciarDescargas().getCount()>0)
             ban = true;
-        if(finalizarDescargaSQL.GetFinalizarDescargas().getCount()>0)
+        if(sagasSql.GetFinalizarDescargas().getCount()>0)
             ban = true;
         if(sagasSql.GetLecturasIniciales().getCount()>0 )
             ban = true;
@@ -114,13 +114,13 @@ public class Semaforo {
             mensajes.add("Existen un total de "+
                     String.valueOf(sagasSql.GetPapeletas().getCount())
             +" papeletas pendientes");
-        if(iniciarDescargaSQL.GetIniciarDescargas().getCount()>0)
+        if(sagasSql.GetIniciarDescargas().getCount()>0)
             mensajes.add("Existen un total de "+
-                    String.valueOf(iniciarDescargaSQL.GetIniciarDescargas().getCount())
+                    String.valueOf(sagasSql.GetIniciarDescargas().getCount())
                     +" inicios de descarga pendientes");
-        if(finalizarDescargaSQL.GetFinalizarDescargas().getCount()>0)
+        if(sagasSql.GetFinalizarDescargas().getCount()>0)
             mensajes.add("Existen un total de "+
-                    String.valueOf(finalizarDescargaSQL.GetFinalizarDescargas().getCount())
+                    String.valueOf(sagasSql.GetFinalizarDescargas().getCount())
                     +" finalización de  pendientes");
         if(sagasSql.GetAutoconsumos().getCount()>0)
             mensajes.add("Existen un total de "+
@@ -181,11 +181,11 @@ public class Semaforo {
         /*Lisener lisener = new Lisener(papeletaSQL,token,this.context);*/
         Lisener lisener;
         /*lisener = new Lisener(iniciarDescargaSQL,token);*/
-        lisener = new Lisener(finalizarDescargaSQL,token);
-        lisener.CrearRunable(Lisener.FinalizarDescarga);
+        /*lisener = new Lisener(finalizarDescargaSQL,token);*/
         lisener = new Lisener(sagasSql,token);
         lisener.CrearRunable(Lisener.Papeleta);
         lisener.CrearRunable(Lisener.IniciarDescarga);
+        lisener.CrearRunable(Lisener.FinalizarDescarga);
         lisener.CrearRunable(Lisener.LecturaInicial);
         lisener.CrearRunable(Lisener.LecturaFinal);
         lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
