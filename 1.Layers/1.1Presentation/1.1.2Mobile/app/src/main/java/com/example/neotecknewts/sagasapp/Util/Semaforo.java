@@ -58,7 +58,8 @@ public class Semaforo {
      */
     public boolean VerificarEstatus(){
         boolean ban = false;
-        if(papeletaSQL.GetPapeletas().getCount()>0)
+        //if(papeletaSQL.GetPapeletas().getCount()>0)
+        if(sagasSql.GetPapeletas().getCount()>0)
             ban = true;
         if(iniciarDescargaSQL.GetIniciarDescargas().getCount()>0)
             ban = true;
@@ -108,9 +109,10 @@ public class Semaforo {
         List<String> mensajes = new ArrayList<>();
         int lecturas_iniciales = 0;
         int lecturas_finales = 0;
-        if(papeletaSQL.GetPapeletas().getCount()>0)
+        //if(papeletaSQL.GetPapeletas().getCount()>0)
+        if(sagasSql.GetPapeletas().getCount()>0)
             mensajes.add("Existen un total de "+
-                    String.valueOf(papeletaSQL.GetPapeletas().getCount())
+                    String.valueOf(sagasSql.GetPapeletas().getCount())
             +" papeletas pendientes");
         if(iniciarDescargaSQL.GetIniciarDescargas().getCount()>0)
             mensajes.add("Existen un total de "+
@@ -175,14 +177,15 @@ public class Semaforo {
         return mensajes;
     }
 
-    public void sincronizar(String token,ProgressDialog progressDialog){
-        Lisener lisener = new Lisener(papeletaSQL,token);
-        lisener.CrearRunable(Lisener.Papeleta);
-        lisener = new Lisener(iniciarDescargaSQL,token);
-        lisener.CrearRunable(Lisener.IniciarDescarga);
+    public void sincronizar(String token){
+        /*Lisener lisener = new Lisener(papeletaSQL,token,this.context);*/
+        Lisener lisener;
+        /*lisener = new Lisener(iniciarDescargaSQL,token);*/
         lisener = new Lisener(finalizarDescargaSQL,token);
         lisener.CrearRunable(Lisener.FinalizarDescarga);
         lisener = new Lisener(sagasSql,token);
+        lisener.CrearRunable(Lisener.Papeleta);
+        lisener.CrearRunable(Lisener.IniciarDescarga);
         lisener.CrearRunable(Lisener.LecturaInicial);
         lisener.CrearRunable(Lisener.LecturaFinal);
         lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
@@ -198,7 +201,7 @@ public class Semaforo {
         lisener.CrearRunable(Lisener.Anticipo);
         lisener.CrearRunable(Lisener.CorteDeCaja);
         lisener.CrearRunable(Lisener.VENTA);
-        progressDialog.hide();
+        //progressDialog.hide();
     }
     //endregion
 }

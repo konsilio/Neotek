@@ -1,6 +1,7 @@
 package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
@@ -73,11 +74,13 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      *                            papeleta
      * @param token {@link String} que reprecenta el token de usuario
      * @param papeletaSQL Objeto {@link PapeletaSQL} que permite la conexion a la base de datos
-     *                    local
+     * @param applicationContext Objeto de tipo {@link Context} Contexto de la aplicación
      */
     @Override
+    /*public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,
+                                  String token, PapeletaSQL papeletaSQL, Context applicationContext) {*/
     public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,
-                                  String token, PapeletaSQL papeletaSQL) {
+                                  String token, SAGASSql papeletaSQL, Context applicationContext) {
         registro_local =false;
         Log.w("Entra", String.valueOf(precargaPapeletaDTO.getImagenes().size()));
 
@@ -179,7 +182,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     if(response.code()>=300){
                         registrar_local(papeletaSQL,precargaPapeletaDTO,clave_unica);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
+                        //Lisener lisener = new Lisener(papeletaSQL,token,applicationContext);
                         Lisener lisener = new Lisener(papeletaSQL,token);
+                            lisener.context = applicationContext;
                         lisener.CrearRunable(Lisener.Papeleta);
                     }
                 }
@@ -190,7 +195,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registra_papeleta = false;
                     registrar_local(papeletaSQL,precargaPapeletaDTO,clave_unica);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
+                    //Lisener lisener = new Lisener(papeletaSQL,token,applicationContext);
                     Lisener lisener = new Lisener(papeletaSQL,token);
+                    lisener.context = applicationContext;
                     lisener.CrearRunable(Lisener.Papeleta);
                     //subirImagenesPresenter.onError();
                 }
@@ -226,8 +233,11 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
      */
     @Override
-    public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO,
+    /*public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO,
                                          String token, IniciarDescargaSQL iniciarDescargaSQL) {
+*/
+    public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO,
+                                         String token, SAGASSql iniciarDescargaSQL) {
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
@@ -2736,7 +2746,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @param clave_unica String con la calve unica que se registrara de la papeleta
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx >
      */
-    private void registrar_local(PapeletaSQL papeletaSQL,
+    /*private void registrar_local(PapeletaSQL papeletaSQL,
+                                 PrecargaPapeletaDTO precargaPapeletaDTO,
+                                 String clave_unica){*/
+    private void registrar_local(SAGASSql papeletaSQL,
                                  PrecargaPapeletaDTO precargaPapeletaDTO,
                                  String clave_unica){
         if (papeletaSQL.GetRecordByCalveUnica(clave_unica).getCount() == 0) {
@@ -2758,7 +2771,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @param clave_unica        Cadena {@link String} que reprecenta la clave unica de la operación
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx >
      */
-    private void registrar_descarga_local(IniciarDescargaSQL iniciarDescargaSQL,
+    /*private void registrar_descarga_local(IniciarDescargaSQL iniciarDescargaSQL,
+                                          IniciarDescargaDTO iniciarDescargaDTO,
+                                          String clave_unica){*/
+    private void registrar_descarga_local(SAGASSql iniciarDescargaSQL,
                                           IniciarDescargaDTO iniciarDescargaDTO,
                                           String clave_unica){
         if(iniciarDescargaSQL.GetDescargaByClaveOperacion(clave_unica).getCount()== 0){

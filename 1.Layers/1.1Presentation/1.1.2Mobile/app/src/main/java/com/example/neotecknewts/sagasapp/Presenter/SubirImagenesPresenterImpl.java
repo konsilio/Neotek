@@ -1,5 +1,7 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
+import android.content.Context;
+
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaView;
 import com.example.neotecknewts.sagasapp.Activity.SubirImagenesView;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractor;
@@ -38,15 +40,20 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     }
 
     @Override
-    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL) {
+    /*public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token,
+                                  PapeletaSQL papeletaSQL, Context applicationContext) {*/
+    public  void registrarPapeleta(PrecargaPapeletaDTO  precargaPapeletaDTO,String token,
+                                   SAGASSql sagasSql,Context applicationContext){
         //crear show progress en vista igual que en otras vistas
         subirImagenesView.showProgress(R.string.message_cargando);
-        interactor.registrarPapeleta(precargaPapeletaDTO,token,papeletaSQL);
+        //interactor.registrarPapeleta(precargaPapeletaDTO,token,papeletaSQL,applicationContext);
+        interactor.registrarPapeleta(precargaPapeletaDTO,token,sagasSql,applicationContext);
 
     }
 
     @Override
-    public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO, String token, IniciarDescargaSQL iniciarDescargaSQL) {
+    public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO, String token,
+                                         SAGASSql iniciarDescargaSQL) {
         //crear show progress en vista igual que en otras vistas
         subirImagenesView.showProgress(R.string.message_cargando);
         interactor.registrarIniciarDescarga(iniciarDescargaDTO,token,iniciarDescargaSQL);

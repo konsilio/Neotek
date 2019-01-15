@@ -263,11 +263,14 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
         }
         if(papeleta) {
-            papeletaSQL = new PapeletaSQL(this.getApplicationContext());
+            //papeletaSQL = new PapeletaSQL(this.getApplicationContext());
+            sagasSql = new SAGASSql(getApplicationContext());
         }else if (iniciar) {
-            iniciarDescargaSQL = new IniciarDescargaSQL(getApplicationContext());
+            //iniciarDescargaSQL = new IniciarDescargaSQL(getApplicationContext());
+            sagasSql = new SAGASSql(getApplicationContext());
         }else if(finalizar){
-            finalizarDescargaSQL = new FinalizarDescargaSQL(getApplicationContext());
+            //finalizarDescargaSQL = new FinalizarDescargaSQL(getApplicationContext());
+            sagasSql = new SAGASSql(getApplicationContext());
         }else if (EsLecturaInicial || EsLecturaFinal){
             sagasSql = new SAGASSql(getApplicationContext());
         }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
@@ -818,9 +821,11 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         @Override
         protected void onPostExecute(Void result) {
             if(papeleta) {
-                presenter.registrarPapeleta(papeletaDTO, session.getToken(), papeletaSQL);
+                //presenter.registrarPapeleta(papeletaDTO, session.getToken(), papeletaSQL,getApplicationContext());
+                presenter.registrarPapeleta(papeletaDTO, session.getToken(), sagasSql,getApplicationContext());
             }else if (iniciar){
-                presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),iniciarDescargaSQL);
+                //presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),iniciarDescargaSQL);
+                presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),sagasSql);
             }else if (finalizar){
                 presenter.registrarFinalizarDescarga(finalizarDescarga,session.getToken(),finalizarDescargaSQL);
             }else if (EsLecturaInicial){
