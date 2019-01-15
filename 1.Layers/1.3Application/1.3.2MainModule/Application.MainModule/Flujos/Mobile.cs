@@ -908,16 +908,18 @@ namespace Application.MainModule.Flujos
             #region Datos para la pipa
             if(unidadAlmacen.IdPipa>0 && unidadAlmacen.IdPipa != null)
             {
+                var lectInicial = AlmacenGasServicio.BuscarUltimaLectura(unidadAlmacen.IdCAlmacenGas, TipoEventoEnum.Inicial);
+                var lectFinal = AlmacenGasServicio.BuscarUltimaLectura(unidadAlmacen.IdCAlmacenGas, TipoEventoEnum.Final);
                 pipa = unidadAlmacen.Pipa;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x => 
-                    x.TipoOperacion.Equals(1) && 
+                    x.TipoOperacion.Equals(2) && 
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
                 ).ToList();
                 var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x => 
-                    x.IdTipoOperacion.Equals(2) && 
+                    x.IdTipoOperacion.Equals(1) && 
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) && 
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) && 
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
@@ -940,7 +942,9 @@ namespace Application.MainModule.Flujos
                             cortes,
                             ventasSinCorte,
                             pipa,
-                            esAnticipos
+                            esAnticipos,
+                            lectInicial,
+                            lectFinal
                         );
                     #region Verifico si hay datos de anticipos 
                     if (anticipos != null)
@@ -988,16 +992,18 @@ namespace Application.MainModule.Flujos
             #region Datos para la estacion
             if (unidadAlmacen.IdEstacionCarburacion>0 && unidadAlmacen.IdEstacionCarburacion != null)
             {
+                var lectInicial = AlmacenGasServicio.BuscarUltimaLectura(unidadAlmacen.IdCAlmacenGas, TipoEventoEnum.Inicial);
+                var lectFinal = AlmacenGasServicio.BuscarUltimaLectura(unidadAlmacen.IdCAlmacenGas, TipoEventoEnum.Final);
                 estacion = unidadAlmacen.EstacionCarburacion;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x =>
-                    x.TipoOperacion.Equals(1) &&
+                    x.TipoOperacion.Equals(2) &&
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
                 ).ToList();
                 var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x =>
-                    x.IdTipoOperacion.Equals(2) &&
+                    x.IdTipoOperacion.Equals(1) &&
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
@@ -1018,7 +1024,9 @@ namespace Application.MainModule.Flujos
                         cortes,
                         ventasSinCorte,
                         estacion,
-                        esAnticipos
+                        esAnticipos,
+                        lectInicial,
+                        lectFinal
                     );
                     #region Verifico si hay datos de anticipos 
                     if (anticipos != null)
@@ -1068,13 +1076,13 @@ namespace Application.MainModule.Flujos
                 camioneta = unidadAlmacen.Camioneta;
                 var puntoVenta = unidadAlmacen.PuntosVenta.First(x => x.IdCAlmacenGas.Equals(unidadAlmacen.IdCAlmacenGas));
                 var cortes = puntoVenta.VentaCorteAnticipoEC.Where(x =>
-                    x.TipoOperacion.Equals(1) &&
+                    x.TipoOperacion.Equals(2) &&
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
                 ).ToList();
                 var anticipos = puntoVenta.VentaCorteAnticipoEC.Where(x =>
-                    x.IdTipoOperacion.Equals(2) &&
+                    x.IdTipoOperacion.Equals(1) &&
                     x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
                     x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
                     x.FechaCorteAnticipo.Year.Equals(fecha.Year)
@@ -1466,10 +1474,38 @@ namespace Application.MainModule.Flujos
             var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(pv.IdCAlmacenGas);
             if (esLP)
             {
+                var lectInicial = AlmacenGasServicio.ObtenerUltimaLectura(unidad, false);
+                var puntoVenta = PuntoVentaServicio.Obtener(unidad);
+                var ventas = puntoVenta.VentaPuntoDeVenta.Where(x=>x.FechaRegistro.Equals(DateTime.Now));
                 var precios = PuntoVentaServicio.ObtenerPreciosVenta(TokenServicio.ObtenerIdEmpresa());
                 var productosGas = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa(), true);
                 var kilosCamioneta = LecturaGasServicio.ObtenerKilosGasCamioneta(unidad.IdCAlmacenGas, DateTime.Now, pv.IdPuntoVenta);
-                return VentasEstacionesAdapter.ToDTO(productosGas, precios, kilosCamioneta);
+
+                decimal totalKilos = 0,calculo=0;
+
+                if (unidad.IdCamioneta>0)
+                {
+                    var cilindros = AlmacenGasServicio.ObtenerCilindros(unidad);
+                    var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+                    return VentasEstacionesAdapter.ToDTOGas(cilindros, kilosCamioneta, precioVenta);
+                }
+                else
+                {
+                    calculo = ((lectInicial.Porcentaje??0/100) * unidad.CapacidadTanqueKg ?? 0) * (decimal)0.54;
+                    foreach (var item in ventas)
+                    {
+                        foreach (var itemDetalle in item.VentaPuntoDeVentaDetalle)
+                        {
+                            totalKilos += itemDetalle.CantidadKg ?? 0;
+                        }
+                    }
+                    if(totalKilos>0)
+                        calculo = calculo - totalKilos;
+                    return VentasEstacionesAdapter.ToDTO(productosGas, precios, calculo);
+                    //return VentasEstacionesAdapter.ToDTO(productosGas, precios, kilosCamioneta);
+                }
+
+                
             }
             else if (esCilindroConGas)
             {
