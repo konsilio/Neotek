@@ -9,14 +9,9 @@
  */
 package com.example.neotecknewts.sagasapp.Util;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.neotecknewts.sagasapp.R;
-import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 import java.util.ArrayList;
@@ -25,9 +20,9 @@ import java.util.List;
 public class Semaforo {
     //region Variables privadas
     SAGASSql sagasSql;
-    PapeletaSQL papeletaSQL;
-    FinalizarDescargaSQL finalizarDescargaSQL;
-    IniciarDescargaSQL iniciarDescargaSQL;
+   // PapeletaSQL papeletaSQL;
+   // FinalizarDescargaSQL finalizarDescargaSQL;
+   // IniciarDescargaSQL iniciarDescargaSQL;
     //endregion
 
     //region Constructor de clase
@@ -54,7 +49,7 @@ public class Semaforo {
      * @return boolean Regresa **true** en caso de existir , en caso contrario retorna false
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx/>
      * @date 22/10/2018
-     * @update 22/10/2018
+     * @update 15/01/2019
      */
     public boolean VerificarEstatus(){
         boolean ban = false;
@@ -103,7 +98,7 @@ public class Semaforo {
      * @return List de tipo string con los mensajes a mostrar
      * @author Jorge Omar Tovar Martínez
      * @date 22/10/2018
-     * @update 22/10/2018
+     * @update 15/01/2019
      */
     public List<String> obtenerCantidadesRestantes(){
         List<String> mensajes = new ArrayList<>();
@@ -121,7 +116,7 @@ public class Semaforo {
         if(sagasSql.GetFinalizarDescargas().getCount()>0)
             mensajes.add("Existen un total de "+
                     String.valueOf(sagasSql.GetFinalizarDescargas().getCount())
-                    +" finalización de  pendientes");
+                    +" finalización de descarga pendientes");
         if(sagasSql.GetAutoconsumos().getCount()>0)
             mensajes.add("Existen un total de "+
                     String.valueOf(sagasSql.GetAutoconsumos().getCount())
@@ -135,7 +130,8 @@ public class Semaforo {
         if(sagasSql.GetLecturasIncialesPipas().getCount()>0)
             lecturas_iniciales = lecturas_iniciales +sagasSql.GetLecturasIniciales().getCount();
         if(sagasSql.GetLecturasIncialesCamioneta().getCount()>0)
-            lecturas_iniciales = lecturas_iniciales +sagasSql.GetLecturasIncialesCamioneta().getCount();
+            lecturas_iniciales = lecturas_iniciales +sagasSql.GetLecturasIncialesCamioneta()
+                    .getCount();
         if(sagasSql.GetLecturasFinales().getCount()>0)
             lecturas_finales = sagasSql.GetLecturasFinales().getCount();
         if(sagasSql.GetLecturasFinaesPipas().getCount()>0)
@@ -179,10 +175,9 @@ public class Semaforo {
 
     public void sincronizar(String token){
         /*Lisener lisener = new Lisener(papeletaSQL,token,this.context);*/
-        Lisener lisener;
         /*lisener = new Lisener(iniciarDescargaSQL,token);*/
         /*lisener = new Lisener(finalizarDescargaSQL,token);*/
-        lisener = new Lisener(sagasSql,token);
+        Lisener lisener = new Lisener(sagasSql,token);
         lisener.CrearRunable(Lisener.Papeleta);
         lisener.CrearRunable(Lisener.IniciarDescarga);
         lisener.CrearRunable(Lisener.FinalizarDescarga);
