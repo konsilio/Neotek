@@ -13,8 +13,11 @@ import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by neotecknewts on 07/08/18.
@@ -66,6 +69,10 @@ public class Utilidades {
     //metodo que devuelve el string proveniente del sha256
     static String bin2hex(byte[] data) {
         return String.format("%0" + (data.length * 2) + 'x', new BigInteger(1, data)).toUpperCase();
+    }
+
+    public static String getCurrentDate(String format) {
+        return new SimpleDateFormat(format, new Locale("es","MX")).format(new Date());
     }
 }
 
