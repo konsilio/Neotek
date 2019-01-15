@@ -48,7 +48,7 @@ namespace Application.MainModule.Servicios.Mobile
 
             if (usuario.Roles != null)
             {
-                bool ban = true,ban_visible = true;
+                bool hayLectura = true,esEstacion = true;
                 
                 if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count!=0)
                 {
@@ -59,19 +59,19 @@ namespace Application.MainModule.Servicios.Mobile
                     var puntoVenta = PuntoVentaServicio.Obtener(operador);
                     var unidadAlmacen = puntoVenta.UnidadesAlmacen;
                     if (unidadAlmacen.IdEstacionCarburacion > 0 && unidadAlmacen.IdEstacionCarburacion != 0)
-                        ban_visible = true;
+                        esEstacion = true;
                     else
-                        ban_visible = false;
+                        esEstacion = false;
                     var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
                     if (ultimaLectura != null)
-                        ban = true;
+                        hayLectura = true;
                     else
-                        ban = false;
+                        hayLectura = false;
                     
                 }
                 else
                 {
-                    ban = true;
+                    hayLectura = true;
                 }
 
                     
@@ -79,7 +79,7 @@ namespace Application.MainModule.Servicios.Mobile
                 {
                     if (rol.AppCompraEntraGas && !_AppCompraEntraGas)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraEntraGas"]));
                         }
@@ -88,7 +88,7 @@ namespace Application.MainModule.Servicios.Mobile
 
                     if (rol.AppCompraGasIniciarDescarga && !_AppCompraGasIniciarDescarga)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasIniciarDescarga"]));
                         }
@@ -97,7 +97,7 @@ namespace Application.MainModule.Servicios.Mobile
 
                     if (rol.AppCompraGasFinalizarDescarga && !_AppCompraGasFinalizarDescarga)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasFinalizarDescarga"]));
                         }
@@ -105,7 +105,7 @@ namespace Application.MainModule.Servicios.Mobile
                     }
                     if(rol.AppCompraVerOCompra && !_AppCompraVerOCompra)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraVerOCompra"]));
                         }
@@ -117,7 +117,7 @@ namespace Application.MainModule.Servicios.Mobile
                     {
                         
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaEstacionCarbInicial"]));
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaEstacionCarbFinal"]));
                         }
@@ -129,7 +129,7 @@ namespace Application.MainModule.Servicios.Mobile
                     {
 
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaAlmacenPralInicial"]));
-                        if (ban) { 
+                        if (hayLectura) { 
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaAlmacenPralFinal"]));
                         }
                         _AppTomaLecturaAlmacenPral = true;
@@ -139,7 +139,7 @@ namespace Application.MainModule.Servicios.Mobile
                     if (rol.AppTomaLecturaPipa && !_AppTomaLecturaPipa && !esChofer)
                     {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaPipaInicial"]));
-                        if (ban) { 
+                        if (hayLectura) { 
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaPipaFinal"]));
                         }
                         _AppTomaLecturaPipa = true;
@@ -149,7 +149,7 @@ namespace Application.MainModule.Servicios.Mobile
                     if (rol.AppTomaLecturaCamionetaCilindro && !_AppTomaLecturaCamionetaCilindro &&  !esChofer)
                     {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaCamionetaCilindroInicial"]));
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaCamionetaCilindroFinal"]));
                         }
@@ -159,7 +159,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Reporte del día 
                     if (rol.AppTomaLecturaReporteDelDia && !_AppTomaLecturaReporteDelDia)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaReporteDelDia"]));
                         }
@@ -168,7 +168,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Auto-consumo Estacion Carb.
                     if (rol.AppAutoconsumoEstacionCarb && !_AppAutoconsumoEstacionCarb)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAutoconsumoEstacionCarbInicial"]));
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAutoconsumoEstacionCarbFinal"]));
@@ -178,7 +178,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Auto-consumo Inventario Gral.
                     if (rol.AppAutoconsumoInventarioGral && !_AppAutoconsumoInventarioGral)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAutoconsumoInventarioGralInicial"]));
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAutoconsumoInventarioGralFinal"]));
@@ -188,7 +188,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Auto-consumo Pipa
                     if (rol.AppAutoconsumoPipa && !_AppAutoconsumoPipa)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAutoconsumoPipaInicial"]));
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAutoconsumoPipaFinal"]));
@@ -198,7 +198,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Calibración Unidad de Gas Estación Carb. 
                     if(rol.AppCalibracionEstacionCarb && !_AppCalibracionEstacionCarb)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionEstacionCarbInicial"]));
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionEstacionCarbFinal"]));
@@ -208,7 +208,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Calibración Unidad de Gas Pipa
                     if (rol.AppCalibracionPipa && !_AppCalibracionPipa)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionPipaInicial"]));
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionPipaFinal"]));
@@ -224,7 +224,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Recarga - Gas Estación Carb.
                     if(rol.AppRecargaEstacionCarb && !_AppRecargaEstacionCarb)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppRecargaEstacionCarbInicial"]));
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppRecargaEstacionCarbFinal"]));
@@ -234,7 +234,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Recarga - Gas Pipa.
                     if (rol.AppRecargaPipa && !_AppRecargaPipa)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppRecargaPipaInicial"]));
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppRecargaPipaFinal"]));
@@ -244,7 +244,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Recarga - camioneta cilindro
                     if (rol.AppRecargaCamionetaCilindro && !_AppRecargaCamionetaCilindro)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppRecargaCamionetaCilindro"]));
                         }
@@ -253,7 +253,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Traspaso - Gas Estacion Carb.
                     if (rol.AppTraspasoEstacionCarb && !_AppTraspasoEstacionCarb)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTraspasoEstacionCarbInicial"]));
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTraspasoEstacionCarbFinal"]));
@@ -263,7 +263,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Traspaso - Gas Pipa.
                     if (rol.AppTraspasoPipa && !_AppTraspasoPipa)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTraspasoPipaInicial"]));
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTraspasoPipaFinal"]));
@@ -276,13 +276,13 @@ namespace Application.MainModule.Servicios.Mobile
                         //if (unidadAlmacen.IdEstacionCarburacion > 0 && unidadAlmacen.IdEstacionCarburacion != 0)
                         //{
                             
-                            if (ban && ban_visible)
+                            if (hayLectura && esEstacion)
                             {
                                 lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionAnticipoEstacionCarb"]));
                                 lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
                             }else
                             {
-                                if (ban)
+                                if (hayLectura)
                                 {
                                     lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
 
@@ -299,7 +299,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Punto de venta - Camioneta
                     if (rol.AppCamionetaPuntoVenta && !_AppCamionetaPuntoVenta)
                     {
-                        if (ban) { 
+                        if (hayLectura) { 
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCamionetaPuntoVenta"]));
                         }
                         _AppCamionetaPuntoVenta = true;
@@ -308,7 +308,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Punto de venta - Estacion de carb.
                     if (rol.AppEstacionCarbPuntoVenta && !_AppEstacionCarbPuntoVenta)
                     {
-                        if (ban) { 
+                        if (hayLectura) { 
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbPuntoVenta"]));
                         }
                         _AppEstacionCarbPuntoVenta = true;
@@ -316,7 +316,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Punto de venta - Pipa
                     if (rol.AppPipaPuntoVenta && !_AppPipaPuntoVenta)
                     {
-                        if (ban)
+                        if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppPipaPuntoVenta"]));
                         }
