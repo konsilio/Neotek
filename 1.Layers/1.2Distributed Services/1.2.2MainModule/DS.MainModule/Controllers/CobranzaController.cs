@@ -31,7 +31,7 @@ namespace DS.MainModule.Controllers
         [Route("buscar/carteravencida")]//{idCliente}/{fecha}/{idEmpresa}
         public HttpResponseMessage PutCarteraVencida(CargosDTO dto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.ListaCargos(dto.IdCliente, dto.FechaRango1, dto.IdEmpresa));
+            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.ListaCargos(dto.IdCliente, dto.FechaRango1.Date, dto.IdEmpresa));
         }
         [Route("registrar/abono")]
         public HttpResponseMessage PostRegistrarAbonos(CargosDTO _model)

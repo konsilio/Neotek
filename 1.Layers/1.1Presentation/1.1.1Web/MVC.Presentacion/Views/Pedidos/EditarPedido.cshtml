@@ -2,7 +2,10 @@
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Moderno" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Moderno" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" }
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" },
+             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
         )
 @Html.DevExpress().GetScripts(
             new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -13,6 +16,7 @@
 
 <html>
 <head>
+    <link href="~/Resources/css/DevExpressCss.css" rel="stylesheet" />
     <script src="~/Resources/js/Pedidos.js"></script>
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
@@ -148,6 +152,7 @@
                                                {
                                                    settings.Name = "IdEstatusPedido";
                                                    settings.Width = 180;
+                                                   settings.Theme = "Material";
                                                    settings.SelectedIndex = Model.IdEstatusPedido - 1;
                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -170,7 +175,7 @@
                                                            settings.Name = "FechaEntregaPedido";
                                                            settings.Properties.UseMaskBehavior = true;
                                                            settings.Properties.EditFormat = EditFormat.Custom;
-                                                           settings.Theme = "Moderno";
+                                                           settings.Theme = "Material";
                                                            settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
                                                            settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
                                                            settings.Properties.TimeSectionProperties.Visible = true;
