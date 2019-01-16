@@ -29,6 +29,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public bool EsTransporteGas { get; set; }
         public bool Activo { get; set; }
         public DateTime FechaRequerida { get; set; }
+        public DateTime FechaRegistro { get; set; }
         public Nullable<System.DateTime> FechaAutorizacion { get; set; }
         public Nullable<System.DateTime> FechaComplemento { get; set; }
         public Nullable<decimal> SubtotalSinIva { get; set; }

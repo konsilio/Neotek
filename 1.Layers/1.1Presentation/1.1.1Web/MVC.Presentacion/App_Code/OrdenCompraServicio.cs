@@ -24,6 +24,31 @@ namespace MVC.Presentacion.App_Code
                 OrdenesCompra = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
             };
         }
+        public static OrdenesCompraModel InitOrdenesCompraFiltros(string tkn, OrdenesCompraModel model)
+        {          
+            model.Requisiciones = RequisicionServicio.BuscarRequisicionesOC(tkn);
+            var Ordenes = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            if (!model.FechaRequeridaA.Equals(DateTime.MinValue))
+            {
+                //Ordenes = Ordenes.Where(x => x.FechaRequerida <)
+            }
+            if (!model.FechaRequeridaDe.Equals(DateTime.MinValue))
+            {
+
+            }
+            if (!model.FechaRegistroA.Equals(DateTime.MinValue))
+            {
+
+            }
+            if (!model.FechaRegistroDe.Equals(DateTime.MinValue))
+            {
+
+            }
+
+            //model.OrdenesCompra = Ordenes.
+            return model;
+            
+        }
         public static List<OrdenCompraDTO> ObtenerOrdenesCompra(short idEmpresa, string Tkn)
         {
             AgenteServicio agente = new AgenteServicio();
