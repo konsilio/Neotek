@@ -83,7 +83,7 @@ public class Lisener{
     private IniciarDescargaSQL iniciarDescargaSQL;
     private FinalizarDescargaSQL finalizarDescargaSQL;
     private boolean EstaDisponible;
-    boolean _registrado;
+    private boolean _registrado;
     public Context context;
     //endregion
     //region Constructores
@@ -2175,8 +2175,8 @@ public class Lisener{
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaFinalizarDescarga(lecturaDTO);
                     if (registrado){
-                        finalizarDescargaSQL.EliminarFinalizarDescarga(lecturaDTO.getClaveOperacion());
-                        finalizarDescargaSQL.EliminarImagenes(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarFinalizarDescarga(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarImagenes(lecturaDTO.getClaveOperacion());
                     }
                     cursor.moveToNext();
                 }

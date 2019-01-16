@@ -852,7 +852,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetRecordsByCalveUnica(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_PAPELETAS_IMAGENES+
-                " WHERE CalveUnica ='"+ClaveOperacion+"'",null);
+                " WHERE ClaveUnica ='"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -867,7 +867,7 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Integer EliminarImagenes(String ClaveOperacion){
         return  this.getWritableDatabase().delete(TABLE_PAPELETAS_IMAGENES,
-                "CalveUnica = '"+ClaveOperacion+"'",null);
+                "ClaveUnica = '"+ClaveOperacion+"'",null);
     }
     //endregion
 
