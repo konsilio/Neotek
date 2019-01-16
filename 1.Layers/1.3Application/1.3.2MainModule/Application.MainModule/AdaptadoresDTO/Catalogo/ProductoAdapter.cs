@@ -242,6 +242,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             prodDTO.EsActivoVenta = _prod.EsActivoVenta;
             prodDTO.EsGas = _prod.EsGas;
             prodDTO.EsTransporteGas = _prod.EsTransporteGas;
+            prodDTO.IdCuentaContable = _prod.IdCuentaContable;
 
 
             return prodDTO;

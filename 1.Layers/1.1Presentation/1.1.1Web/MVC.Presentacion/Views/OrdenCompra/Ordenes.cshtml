@@ -3,6 +3,17 @@
 @using PagedList;
 @using System.Configuration;
 @model OrdenesCompraModel
+    @Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdminCentral).Equals(false) ? "disabled" : "";
 }
@@ -143,40 +154,84 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-3">
                                         <label>Fecha de registro</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-                                            @Html.TextBoxFor(model => model.FechaRegistroDe, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
-                                        </div>
+                                   @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "FechaRegistroDe";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
+                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
+
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       settings.Theme = "Material";
+                                   }).Bind(Model.FechaRegistroDe).GetHtml()
+                                        @*<div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+                                                @Html.TextBoxFor(model => model.FechaRegistroDe, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
+                                            </div>*@
                                         @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-sm-3">
                                         <label>&nbsp; </label>
-                                        <div class="input-group">
+                                        @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "FechaRegistroA";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
+                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       settings.Theme = "Material";
+                                   }).Bind(Model.FechaRegistroA).GetHtml()
+                                        @*<div class="input-group">
                                             <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
                                             @Html.TextBoxFor(model => model.FechaRegistroA, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
-                                        </div>
+                                        </div>*@
                                         @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-sm-3">
                                         <label>Fecha de requisición</label>
-                                        <div class="input-group">
+                                        @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "FechaRequeridaDe";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
+                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       settings.Theme = "Material";
+                                   }).Bind(Model.FechaRequeridaDe).GetHtml()
+                                        @*<div class="input-group">
                                             <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
                                             @Html.TextBoxFor(model => model.FechaRequeridaDe, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
-                                        </div>
+                                        </div>*@
                                         @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-sm-3">
                                         <label>&nbsp;</label>
-                                        <div class="input-group">
+                                        @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "FechaRequeridaA";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
+                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       settings.Theme = "Material";
+                                   }).Bind(Model.FechaRequeridaA).GetHtml()
+                                        @*<div class="input-group">
                                             <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
                                             @Html.TextBoxFor(model => model.FechaRequeridaA, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
-                                        </div>
+                                        </div>*@
                                         @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-sm-1">
                                         <div class="input-group">
                                             <b>&nbsp; </b>
-
                                             <button ID="lblAction" class="tn btn-danger btn-simple btn-round btn-sm" formaction="Buscar">
                                                 <i class="material-icons">search</i>
                                                 <span class="icon-name"></span>
@@ -226,16 +281,16 @@
                                                                 <span>Agregar mercancía</span>
                                                             </a>
                                                             @*<a ID="lbPDF" href="@Url.Action("", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
-                                    <i class="material-icons">picture_as_pdf</i>
-                                    <span class="icon-name"></span>
-                                </a>*@
+                                                                    <i class="material-icons">picture_as_pdf</i>
+                                                                    <span class="icon-name"></span>
+                                                                </a>*@
                                                         }
                                                         @if (_oc.OrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_cancelada))
                                                         {
                                                             @*<a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraResumen", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
-                                    <i class="material-icons">remove_red_eye</i>
-                                    <span class="icon-name"></span>
-                                </a>*@
+                                                                    <i class="material-icons">remove_red_eye</i>
+                                                                    <span class="icon-name"></span>
+                                                                </a>*@
                                                         }
                                                         @if (_oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.SolicitudPago))
                                                         {
