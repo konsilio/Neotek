@@ -20,12 +20,6 @@ import java.util.List;
 public class Semaforo {
     //region Variables privadas
     SAGASSql sagasSql;
-   // PapeletaSQL papeletaSQL;
-   // FinalizarDescargaSQL finalizarDescargaSQL;
-   // IniciarDescargaSQL iniciarDescargaSQL;
-    //endregion
-
-    //region Constructor de clase
 
     /**
      * Constructor de clas, tomara de parametro
@@ -34,9 +28,6 @@ public class Semaforo {
      */
     public Semaforo(Context context){
         sagasSql = new SAGASSql(context);
-        //papeletaSQL = new PapeletaSQL(context);
-        //finalizarDescargaSQL = new FinalizarDescargaSQL(context);
-        //iniciarDescargaSQL = new IniciarDescargaSQL(context);
     }
     //endregion
 
@@ -174,28 +165,25 @@ public class Semaforo {
     }
 
     public void sincronizar(String token){
-        /*Lisener lisener = new Lisener(papeletaSQL,token,this.context);*/
-        /*lisener = new Lisener(iniciarDescargaSQL,token);*/
-        /*lisener = new Lisener(finalizarDescargaSQL,token);*/
         Lisener lisener = new Lisener(sagasSql,token);
-        lisener.CrearRunable(Lisener.Papeleta);
-        lisener.CrearRunable(Lisener.IniciarDescarga);
-        lisener.CrearRunable(Lisener.FinalizarDescarga);
-        lisener.CrearRunable(Lisener.LecturaInicial);
-        lisener.CrearRunable(Lisener.LecturaFinal);
-        lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
-        lisener.CrearRunable(Lisener.LecturaFinalAlmacen);
-        lisener.CrearRunable(Lisener.LecturaInicialCamioneta);
-        lisener.CrearRunable(Lisener.LecturaFinalCamioneta);
-        lisener.CrearRunable(Lisener.Autoconsumo);
-        lisener.CrearRunable(Lisener.Calibracion);
-        lisener.CrearRunable(Lisener.RecargaEstacion);
-        lisener.CrearRunable(Lisener.RecargaPipa);
-        lisener.CrearRunable(Lisener.RecargaCamioneta);
-        lisener.CrearRunable(Lisener.Traspaso);
-        lisener.CrearRunable(Lisener.Anticipo);
-        lisener.CrearRunable(Lisener.CorteDeCaja);
-        lisener.CrearRunable(Lisener.VENTA);
+//        lisener.CrearRunable(Lisener.Proceso.Papeleta);
+//        lisener.CrearRunable(Lisener.Proceso.IniciarDescarga);
+//        lisener.CrearRunable(Lisener.Proceso.FinalizarDescarga);
+//        lisener.CrearRunable(Lisener.Proceso.LecturaInicial);
+//        lisener.CrearRunable(Lisener.Proceso.LecturaFinal);
+//        lisener.CrearRunable(Lisener.Proceso.LecturaInicialAlmacen);
+//        lisener.CrearRunable(Lisener.Proceso.LecturaFinalAlmacen);
+//        lisener.CrearRunable(Lisener.Proceso.LecturaInicialCamioneta);
+//        lisener.CrearRunable(Lisener.Proceso.LecturaFinalCamioneta);
+//        lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
+//        lisener.CrearRunable(Lisener.Proceso.Calibracion);
+//        lisener.CrearRunable(Lisener.Proceso.RecargaEstacion);
+//        lisener.CrearRunable(Lisener.Proceso.RecargaPipa);
+//        lisener.CrearRunable(Lisener.Proceso.RecargaCamioneta);
+//        lisener.CrearRunable(Lisener.Proceso.Traspaso);
+//        lisener.CrearRunable(Lisener.Proceso.Anticipo);
+//        lisener.CrearRunable(Lisener.Proceso.CorteDeCaja);
+//        lisener.CrearRunable(Lisener.Proceso.Venta);
         //progressDialog.hide();
     }
     //endregion

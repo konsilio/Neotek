@@ -17,9 +17,6 @@ import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
-import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 /**
@@ -41,9 +38,9 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
 
     @Override
     /*public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token,
-                                  PapeletaSQL papeletaSQL, Context applicationContext) {*/
+                                  SAGASSql sagasSql, Context applicationContext) {*/
     public  void registrarPapeleta(PrecargaPapeletaDTO  precargaPapeletaDTO,String token,
-                                   SAGASSql sagasSql,Context applicationContext){
+                                   SAGASSql sagasSql, Context applicationContext){
         //crear show progress en vista igual que en otras vistas
         subirImagenesView.showProgress(R.string.message_cargando);
         //interactor.registrarPapeleta(precargaPapeletaDTO,token,papeletaSQL,applicationContext);

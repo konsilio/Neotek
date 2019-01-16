@@ -24,12 +24,13 @@ import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
-import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Lisener;
+import com.example.neotecknewts.sagasapp.Util.Utilidades;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -73,14 +74,14 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @param precargaPapeletaDTO Objeto de tipo {@link PrecargaPapeletaDTO} con los datos de la
      *                            papeleta
      * @param token {@link String} que reprecenta el token de usuario
-     * @param papeletaSQL Objeto {@link PapeletaSQL} que permite la conexion a la base de datos
+     * @param sagasSql Objeto {@link SAGASSql} que permite la conexion a la base de datos
      * @param applicationContext Objeto de tipo {@link Context} Contexto de la aplicación
      */
     @Override
     /*public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,
-                                  String token, PapeletaSQL papeletaSQL, Context applicationContext) {*/
+                                  String token, SAGASSql sagasSql, Context applicationContext) {*/
     public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,
-                                  String token, SAGASSql papeletaSQL, Context applicationContext) {
+                                  String token, SAGASSql sagasSql, Context applicationContext) {
         registro_local =false;
         Log.w("Entra", String.valueOf(precargaPapeletaDTO.getImagenes().size()));
 
@@ -122,13 +123,11 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-           registrar_local(papeletaSQL,precargaPapeletaDTO,clave_unica);
+           registrar_local(sagasSql,precargaPapeletaDTO,clave_unica);
             registro_local = true;
         }
 
         //endregion
-
-
 
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
@@ -180,12 +179,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
                     }
                     if(response.code()>=300){
-                        registrar_local(papeletaSQL,precargaPapeletaDTO,clave_unica);
+                        registrar_local(sagasSql,precargaPapeletaDTO,clave_unica);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
-                        //Lisener lisener = new Lisener(papeletaSQL,token,applicationContext);
-                        Lisener lisener = new Lisener(papeletaSQL,token);
+                        //Lisener lisener = new Lisener(sagasSql,token,applicationContext);
+                        Lisener lisener = new Lisener(sagasSql,token);
                             lisener.context = applicationContext;
-                        lisener.CrearRunable(Lisener.Papeleta);
+                        lisener.CrearRunable(Lisener.Proceso.Papeleta);
                     }
                 }
 
@@ -193,31 +192,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 public void onFailure(Call<RespuestaPapeletaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
                     registra_papeleta = false;
-                    registrar_local(papeletaSQL,precargaPapeletaDTO,clave_unica);
+                    registrar_local(sagasSql,precargaPapeletaDTO,clave_unica);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
-                    //Lisener lisener = new Lisener(papeletaSQL,token,applicationContext);
-                    Lisener lisener = new Lisener(papeletaSQL,token);
+                    //Lisener lisener = new Lisener(sagasSql,token,applicationContext);
+                    Lisener lisener = new Lisener(sagasSql,token);
                     lisener.context = applicationContext;
-                    lisener.CrearRunable(Lisener.Papeleta);
+                    lisener.CrearRunable(Lisener.Proceso.Papeleta);
                     //subirImagenesPresenter.onError();
                 }
             });
-            /*intentos_post++;
-            if(registra_papeleta){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local(papeletaSQL,precargaPapeletaDTO,clave_unica);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-            Lisener lisener = new Lisener(papeletaSQL,token);
-            lisener.CrearRunable(Lisener.Papeleta);
-        }*/
     }
 
     /**
@@ -225,17 +208,14 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * Hace el llamado al servicio web para realizar el registro de la descarga , recive como
      * parametros  un objeto de tipo {@link IniciarDescargaDTO} que contiene todos los datos de
      * la descrga, un {@link String} que reprecenta el token de seguridad del usuario y un
-     * objeto {@link IniciarDescargaSQL} para el almacienamiento en local en caso de error
+     * objeto {@link SAGASSql} para el almacienamiento en local en caso de error
      * @param iniciarDescargaDTO Objeto {@link IniciarDescargaDTO} con los datos de la descarga
      * @param token {@link String} que reprecenta el token de seguridad
-     * @param iniciarDescargaSQL Objeto {@link IniciarDescargaSQL} que permite el uso de base de
+     * @param iniciarDescargaSQL Objeto {@link SAGASSql} que permite el uso de base de
      *                           datos en local de la descarga
      * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
      */
     @Override
-    /*public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO,
-                                         String token, IniciarDescargaSQL iniciarDescargaSQL) {
-*/
     public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO,
                                          String token, SAGASSql iniciarDescargaSQL) {
 
@@ -329,7 +309,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_descarga_local(iniciarDescargaSQL,iniciarDescargaDTO,clave_unica);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(iniciarDescargaSQL,token);
-                        lisener.CrearRunable(Lisener.IniciarDescarga);
+                        lisener.CrearRunable(Lisener.Proceso.IniciarDescarga);
                     }
                 }
 
@@ -340,37 +320,20 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registrar_descarga_local(iniciarDescargaSQL,iniciarDescargaDTO,clave_unica);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(iniciarDescargaSQL,token);
-                    lisener.CrearRunable(Lisener.IniciarDescarga);
+                    lisener.CrearRunable(Lisener.Proceso.IniciarDescarga);
                 }
             });
-            /*intentos_post++;
-            if(registra_descarga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_descarga_local(iniciarDescargaSQL,iniciarDescargaDTO,clave_unica);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-            Lisener lisener = new Lisener(iniciarDescargaSQL,token);
-            lisener.CrearRunable(Lisener.IniciarDescarga);
-        }*/
-        //endregion
     }
 
     /**
      * Permite realizar el registro de la finalización de la descarga, se enviara como parametros
      * un objeto de tipo {@link FinalizarDescargaDTO} con los datos para finalizar la descarga,
      * un {@link String } que reprecenta el token de seguridad y un objeto de tipo
-     * {@link FinalizarDescargaSQL} para poder registrar en local.
+     * {@link SAGASSql} para poder registrar en local.
      * @param finalizarDescargaDTO Objeto de tipo {@link FinalizarDescargaDTO} con los valores que
      *                             se registraron de finalizar descarga
      * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
-     * @param finalizarDescargaSQL Objeto de tipo {@link FinalizarDescargaSQL} para registrar
+     * @param finalizarDescargaSQL Objeto de tipo {@link SAGASSql} para registrar
      *                             en base de datos local.
      * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
      * @date 28/08/2018
@@ -474,7 +437,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 clave_unica);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(finalizarDescargaSQL,token);
-                        lisener.CrearRunable(Lisener.FinalizarDescarga);
+                        lisener.CrearRunable(Lisener.Proceso.FinalizarDescarga);
                     }
                 }
 
@@ -485,27 +448,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             clave_unica);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(finalizarDescargaSQL,token);
-                    lisener.CrearRunable(Lisener.FinalizarDescarga);
+                    lisener.CrearRunable(Lisener.Proceso.FinalizarDescarga);
                 }
             });
-            /*intentos_post++;
-            if(registra_descarga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-       /* }*/
-        /*if(intentos_post==3){
-            registrar_finalizar_local(finalizarDescargaSQL,finalizarDescargaDTO,clave_unica);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-            Lisener lisener = new Lisener(finalizarDescargaSQL,token);
-            lisener.CrearRunable(Lisener.FinalizarDescarga);
-        }*/
         //endregion
-
     }
 
     /**
@@ -526,9 +472,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LIEC"+s.format(new Date());
         lecturaDTO.setClaveProceso(clave_unica);
-        /*sagasSql.InsertLecturaInicial(lecturaDTO);
-        sagasSql.InsertLecturaImagenes(lecturaDTO);
-        sagasSql.InsertLecturaP5000(lecturaDTO);*/
         //region Verifica si el servcio esta disponible
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new
                 SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -611,7 +554,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_local(sagasSql, lecturaDTO, clave_unica,false);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.LecturaInicial);
+                        lisener.CrearRunable(Lisener.Proceso.LecturaInicial);
                     }
                 }
 
@@ -621,26 +564,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registrar_local(sagasSql, lecturaDTO, clave_unica,false);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.LecturaInicial);
+                    lisener.CrearRunable(Lisener.Proceso.LecturaInicial);
                 }
             });
-            /*intentos_post++;
-            if(registra_descarga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local(sagasSql,lecturaDTO,clave_unica);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.LecturaInicial);
-        }*/
-        //endregion
     }
 
     /**
@@ -702,8 +628,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la descarga
 
-
-
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
@@ -742,7 +666,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_local(sagasSql,lecturaDTO,clave_unica,true);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.LecturaFinal);
+                        lisener.CrearRunable(Lisener.Proceso.LecturaFinal);
                     }
                 }
 
@@ -752,31 +676,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registrar_local(sagasSql,lecturaDTO,clave_unica,true);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.LecturaFinal);
+                    lisener.CrearRunable(Lisener.Proceso.LecturaFinal);
                 }
             });
-            /*intentos_post++;
-            if(registra_descarga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local(sagasSql,lecturaDTO,clave_unica);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.LecturaFinal);
-        }*/
-        //endregion
-        /*sagasSql.IncertarLecturaFinal(lecturaDTO);
-        sagasSql.InsertImagenLecturaFinalP5000(lecturaDTO);
-        sagasSql.IncertImagenesLecturaFinal(lecturaDTO);
-        subirImagenesPresenter.onSuccessRegistroAndroid();*/
-
     }
 
     /**
@@ -842,8 +744,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro de la descarga
 
-
-
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
@@ -882,7 +782,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_local(sagasSql,lecturaPipaDTO,clave_unica,false);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.LecturaInicialPipas);
+                        lisener.CrearRunable(Lisener.Proceso.LecturaInicialPipas);
                     }
                 }
 
@@ -892,32 +792,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registrar_local(sagasSql,lecturaPipaDTO,clave_unica,false);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.LecturaInicialPipas);
+                    lisener.CrearRunable(Lisener.Proceso.LecturaInicialPipas);
                 }
             });
-            /*intentos_post++;
-            if(registra_descarga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local(sagasSql,lecturaPipaDTO,clave_unica,false);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.LecturaInicialPipas);
-        }*/
-        //endregion
-        /*
-        sagasSql.InsertLecturaInicialPipas(lecturaPipaDTO);
-        sagasSql.InsertLecturaInicialPipaP5000(lecturaPipaDTO);
-        sagasSql.InsertImagenesLecturaInicialPipa(lecturaPipaDTO);
-        subirImagenesPresenter.onSuccessRegistroAndroid();*/
-
     }
 
     /**
@@ -1023,7 +900,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_local(sagasSql,lecturaPipaDTO,clave_unica,true);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.LecturaFinalPipas);
+                        lisener.CrearRunable(Lisener.Proceso.LecturaFinalPipas);
                     }
                 }
 
@@ -1033,30 +910,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registrar_local(sagasSql,lecturaPipaDTO,clave_unica,true);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.LecturaFinalPipas);
+                    lisener.CrearRunable(Lisener.Proceso.LecturaFinalPipas);
                 }
             });
-            /*intentos_post++;
-            if(registra_descarga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local(sagasSql,lecturaPipaDTO,clave_unica,true);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.LecturaFinalPipas);
-        }*/
-        //endregion
-        /*sagasSql.InsertLecturaFinalPipas(lecturaPipaDTO);
-        sagasSql.InsertLecturaFinalPipaP5000(lecturaPipaDTO);
-        sagasSql.InsertImagenesLecturaFinalPipa(lecturaPipaDTO);
-        subirImagenesPresenter.onSuccessRegistroAndroid();*/
     }
 
     /**
@@ -1163,7 +1019,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 false);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
+                        lisener.CrearRunable(Lisener.Proceso.LecturaInicialAlmacen);
                     }
                 }
 
@@ -1174,29 +1030,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             false);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
+                    lisener.CrearRunable(Lisener.Proceso.LecturaInicialAlmacen);
                 }
             });
-           /* intentos_post++;
-            if(registra_descarga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,false);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
-        }*/
-        //endregion
-        /*sagasSql.InsertLecturaInicialAlmacen(lecturaAlmacenDTO);
-        sagasSql.InsertImagenesLecturaInicialAlamacen(lecturaAlmacenDTO);
-        subirImagenesPresenter.onSuccessRegistroAndroid();*/
     }
 
 
@@ -1303,7 +1139,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 true);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.LecturaFinalAlmacen);
+                        lisener.CrearRunable(Lisener.Proceso.LecturaFinalAlmacen);
                     }
                 }
 
@@ -1313,29 +1149,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,true);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.LecturaFinalAlmacen);
+                    lisener.CrearRunable(Lisener.Proceso.LecturaFinalAlmacen);
                 }
             });
-            /*intentos_post++;
-            if(registra_descarga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,true);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.LecturaFinalAlmacen);
-        }*/
-        //endregion
-        /*sagasSql.InsertLecturaFinalAlmacen(lecturaAlmacenDTO);
-        sagasSql.InsertImagenesLecturaFinalAlamacen(lecturaAlmacenDTO);
-        subirImagenesPresenter.onSuccessRegistroAndroid();*/
     }
 
     /**
@@ -1402,16 +1218,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_reacrga = true;
-        /*while(intentos_post<3) {*/
-            /*Call<RespuestaRecargaDTO> call = null;
-            if(EsRecargaEstacionInicial) {
-                restClient.postRecargaInicial(
-                        recargaDTO, token, "application/json");
-            }else{
-                restClient.postRecargaFinal(
-                  recargaDTO,token,"application/json"
-                );
-            }*/
             Call<RespuestaRecargaDTO> call = EsRecargaEstacionInicial ?
                     restClient.postRecargaInicial(
                     recargaDTO, token, "application/json"):
@@ -1452,7 +1258,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_local_recarga(sagasSql,recargaDTO,recargaDTO.getClaveOperacion(),
                                 EsRecargaEstacionInicial);
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.RecargaEstacion);
+                        lisener.CrearRunable(Lisener.Proceso.RecargaEstacion);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
@@ -1463,26 +1269,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registrar_local_recarga(sagasSql,recargaDTO,recargaDTO.getClaveOperacion(),
                             EsRecargaEstacionInicial);
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.RecargaEstacion);
+                    lisener.CrearRunable(Lisener.Proceso.RecargaEstacion);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            /*intentos_post++;
-            if(registra_reacrga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local_recarga(sagasSql,recargaDTO,clave_unica);
-            registro_local = true;
-        }
-        if(registro_local ){
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-        }*/
         //endregion
     }
 
@@ -1593,7 +1383,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_local_recarga(sagasSql,recargaDTO,recargaDTO.getClaveOperacion(),
                                 esRecargaPipaFinal);
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.RecargaPipa);
+                        lisener.CrearRunable(Lisener.Proceso.RecargaPipa);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
@@ -1605,26 +1395,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registrar_local_recarga(sagasSql,recargaDTO,recargaDTO.getClaveOperacion(),
                             esRecargaPipaFinal);
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.RecargaPipa);
+                    lisener.CrearRunable(Lisener.Proceso.RecargaPipa);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-           /* intentos_post++;
-            if(registra_reacrga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-       /* }*/
-        /*if(intentos_post==3){
-            registrar_local_recarga(sagasSql,recargaDTO,clave_unica);
-            registro_local = true;
-        }
-        if(registro_local ){
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-        }*/
         //endregion
     }
 
@@ -1743,7 +1517,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION,
                                 esAutoconsumoEstacionFinal);
                         Lisener lisener = new Lisener(sagasSql, token);
-                        lisener.CrearRunable(Lisener.Autoconsumo);
+                        lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
@@ -1756,36 +1530,11 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION,
                             esAutoconsumoEstacionFinal);
                     Lisener lisener = new Lisener(sagasSql, token);
-                    lisener.CrearRunable(Lisener.Autoconsumo);
+                    lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
 
-            /*if (registro_local){
-                registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
-                        SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION, esAutoconsumoEstacionFinal);
-                subirImagenesPresenter.onSuccessRegistroAndroid();
-                Lisener lisener = new Lisener(sagasSql,token);
-                lisener.CrearRunable(Lisener.Autoconsumo);
-                subirImagenesPresenter.onSuccessRegistroAndroid();
-            }
-            intentos_post++;
-            if(registra_reacrga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-       /* if(intentos_post==3){
-            registrar_local_autoconsumo(sagasSql,autoconsumoDTO,
-                    SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION,esAutoconsumoEstacionFinal);
-            registro_local = true;
-        }
-        if(registro_local ){
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-        }*/
         //endregion
 
     }
@@ -1856,9 +1605,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
-        /*int intentos_post = 0;
-        registra_reacrga = true;
-        while(intentos_post<3) {*/
             Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                     autoconsumoDTO,
                     /*false,
@@ -1904,7 +1650,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL,
                                 esAutoconsumoInventarioFinal);
                         Lisener lisener = new Lisener(sagasSql, token);
-                        lisener.CrearRunable(Lisener.Autoconsumo);
+                        lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
@@ -1917,25 +1663,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL,
                             esAutoconsumoInventarioFinal);
                     Lisener lisener = new Lisener(sagasSql, token);
-                    lisener.CrearRunable(Lisener.Autoconsumo);
+                    lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-           /* intentos_post++;
-            if(registra_reacrga){
-                break;
-            }else{
-                intentos_post++;
-            }
-        }
-        if(intentos_post==3){
-            registrar_local_autoconsumo(sagasSql,autoconsumoDTO,
-                    SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL,esAutoconsumoInventarioFinal);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-        }*/
         //endregion
 
     }
@@ -2003,8 +1734,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro del autoconsumo
 
-
-
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         /*int intentos_post = 0;
         registra_reacrga = true;
@@ -2054,7 +1783,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 autoconsumoDTO,SAGASSql.TIPO_AUTOCONSUMO_PIPAS,
                                 esAutoconsumoPipaFinal);
                         Lisener lisener = new Lisener(sagasSql, token);
-                        lisener.CrearRunable(Lisener.Autoconsumo);
+                        lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
@@ -2067,7 +1796,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             autoconsumoDTO,SAGASSql.TIPO_AUTOCONSUMO_PIPAS,
                             esAutoconsumoPipaFinal);
                     Lisener lisener = new Lisener(sagasSql, token);
-                    lisener.CrearRunable(Lisener.Autoconsumo);
+                    lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
@@ -2201,7 +1930,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoEstacionFinal,
                                 SAGASSql.TIPO_TRASPASO_ESTACION);
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.Traspaso);
+                        lisener.CrearRunable(Lisener.Proceso.Traspaso);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
@@ -2213,7 +1942,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoEstacionFinal,
                             SAGASSql.TIPO_TRASPASO_ESTACION);
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.Traspaso);
+                    lisener.CrearRunable(Lisener.Proceso.Traspaso);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
@@ -2230,7 +1959,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
         if(registro_local ){
             //Lisener lisener = new Lisener(sagasSql,token);
-            //lisener.CrearRunable(Lisener.RecargaCamioneta);
+            //lisener.CrearRunable(Lisener.Proceso.RecargaCamioneta);
             subirImagenesPresenter.onSuccessRegistroAndroid();
         }*/
         //endregion
@@ -2250,18 +1979,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     @Override
     public void registrarTraspasoPipa(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO,
                                       boolean esTraspasoPipaFinal) {
-        /*@SuppressLint("SimpleDateFormat") SimpleDateFormat s =
-                new SimpleDateFormat("ddMMyyyyhhmmssS");
-        String clave_unica = "TP";
-        clave_unica += (esTraspasoPipaFinal)? "F":"I";
-        clave_unica += s.format(new Date());
-        traspasoDTO.setClaveOperacion(clave_unica);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
-                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        traspasoDTO.setFecha((Date) Calendar.getInstance().getTime());
-        traspasoDTO.setFechaAplicacion(Calendar.getInstance().getTime().toString());*/
-        //region Verifica si el servcio esta disponible
 
+        //region Verifica si el servcio esta disponible
 
         RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
@@ -2299,8 +2018,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
         //endregion
         //region Realiza el registro del autoconsumo
-
-
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         /*int intentos_post = 0;
@@ -2349,7 +2066,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoPipaFinal,
                                 SAGASSql.TIPO_TRASPASO_PIPA);
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.Traspaso);
+                        lisener.CrearRunable(Lisener.Proceso.Traspaso);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
@@ -2361,27 +2078,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             SAGASSql.TIPO_TRASPASO_PIPA);
                     registra_reacrga = false;
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.Traspaso);
+                    lisener.CrearRunable(Lisener.Proceso.Traspaso);
                     subirImagenesPresenter.errorSolicitud(t.getMessage());
                 }
             });
-
-            /*intentos_post++;
-            if(registra_reacrga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local_traspaso(sagasSql,traspasoDTO);
-            registro_local = true;
-        }*/
-        /*if(registro_local ){
-            //Lisener lisener = new Lisener(sagasSql,token);
-            //lisener.CrearRunable(Lisener.RecargaCamioneta);
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-        }*/
         //endregion
     }
 
@@ -2405,8 +2105,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += s.format(new Date());
         Log.w("Clave",clave_unica);
         calibracionDTO.setClaveOperacion(clave_unica);
-        calibracionDTO.setFechaAplicacion((Date) Calendar.getInstance().getTime());
-        calibracionDTO.setFechaRegistro((Date) Calendar.getInstance().getTime());
+        calibracionDTO.setFechaAplicacion(Utilidades.getCurrentDate(Constantes.FORMATO_FECHA));
+        calibracionDTO.setFechaRegistro(Utilidades.getCurrentDate(Constantes.FORMATO_FECHA));
         //region Verifica si el servcio esta disponible
 
 
@@ -2499,7 +2199,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 esCalibracionEstacionFinal);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.Calibracion);
+                        lisener.CrearRunable(Lisener.Proceso.Calibracion);
                     }
                 }
 
@@ -2511,24 +2211,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             SAGASSql.TIPO_CALIBRACION_ESTACION,
                             esCalibracionEstacionFinal);
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.Calibracion);
+                    lisener.CrearRunable(Lisener.Proceso.Calibracion);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            /*intentos_post++;
-            if(registra_reacrga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local_calibracion(sagasSql,calibracionDTO);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-        }*/
         //endregion
     }
 
@@ -2552,8 +2238,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (esCalibracionPipaFinal)? "F":"I";
         clave_unica += s.format(new Date());
         calibracionDTO.setClaveOperacion(clave_unica);
-        calibracionDTO.setFechaAplicacion((Date) Calendar.getInstance().getTime());
-        calibracionDTO.setFechaRegistro((Date) Calendar.getInstance().getTime());
+        calibracionDTO.setFechaAplicacion(Utilidades.getCurrentDate(Constantes.FORMATO_FECHA));
+        calibracionDTO.setFechaRegistro(Utilidades.getCurrentDate(Constantes.FORMATO_FECHA));
         //region Verifica si el servcio esta disponible
 
 
@@ -2592,9 +2278,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         //endregion
+
         //region Realiza el registro del autoconsumo
-
-
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         /*int intentos_post = 0;
@@ -2643,7 +2328,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_local_calibracion(sagasSql,calibracionDTO,
                                 SAGASSql.TIPO_CALIBRACION_PIPA,esCalibracionPipaFinal);
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.Calibracion);
+                        lisener.CrearRunable(Lisener.Proceso.Calibracion);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
@@ -2656,29 +2341,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     registrar_local_calibracion(sagasSql,calibracionDTO,
                             SAGASSql.TIPO_CALIBRACION_PIPA,esCalibracionPipaFinal);
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.Calibracion);
+                    lisener.CrearRunable(Lisener.Proceso.Calibracion);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            /*intentos_post++;
-            if(registra_reacrga){
-                break;
-            }else{
-                intentos_post++;
-            }*/
-        /*}*/
-        /*if(intentos_post==3){
-            registrar_local_calibracion(sagasSql,calibracionDTO,SAGASSql.TIPO_CALIBRACION_PIPA
-                    ,esCalibracionPipaFinal);
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.Calibracion);
-            registro_local = true;
-        }
-        if(registro_local ){
-            subirImagenesPresenter.onSuccessRegistroAndroid();
-        }*/
-        //endregion
     }
 
     /**
@@ -2740,22 +2406,19 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * Permite realizar el registro de los datos de la papeleta en local , primero
      * verificara si los registros ya existen , en caso de no existir los registrara
      * en local
-     * @param papeletaSQL Objeto {@link PapeletaSQL} que permite la conexion a la base de datos local
+     * @param sagasSql Objeto {@link SAGASSql} que permite la conexion a la base de datos local
      * @param precargaPapeletaDTO Objeto {@link PrecargaPapeletaDTO} con los datos a guardar de la
      *                            papeleta
      * @param clave_unica String con la calve unica que se registrara de la papeleta
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx >
      */
-    /*private void registrar_local(PapeletaSQL papeletaSQL,
-                                 PrecargaPapeletaDTO precargaPapeletaDTO,
-                                 String clave_unica){*/
-    private void registrar_local(SAGASSql papeletaSQL,
+    private void registrar_local(SAGASSql sagasSql,
                                  PrecargaPapeletaDTO precargaPapeletaDTO,
                                  String clave_unica){
-        if (papeletaSQL.GetRecordByCalveUnica(clave_unica).getCount() == 0) {
-            papeletaSQL.Insert(precargaPapeletaDTO, clave_unica);
-            if (papeletaSQL.GetRecordsByCalveUnica(clave_unica).getCount() == 0) {
-                papeletaSQL.InsertImagenes(precargaPapeletaDTO.getImagenesURI(), precargaPapeletaDTO.getImagenes(), clave_unica);
+        if (sagasSql.GetRecordByCalveUnica(clave_unica).getCount() == 0) {
+            sagasSql.Insert(precargaPapeletaDTO, clave_unica);
+            if (sagasSql.GetRecordsByCalveUnica(clave_unica).getCount() == 0) {
+                sagasSql.InsertImagenes(precargaPapeletaDTO.getImagenesURI(), precargaPapeletaDTO.getImagenes(), clave_unica);
             }
         }
     }
@@ -2764,16 +2427,13 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * registrar_descarga_local
      * Permite realizar el envio para el registro en local de los datos de la descarga, primero
      * se verifica si los registros ya existen, en caso contrario se realiza el registro en local.
-     * @param iniciarDescargaSQL Objeto {@link IniciarDescargaSQL} que permite el uso de base
+     * @param iniciarDescargaSQL Objeto {@link SAGASSql} que permite el uso de base
      *                           de datos en local de la descarga
      * @param iniciarDescargaDTO Objero {@link IniciarDescargaDTO} que reprecenta el modelo con
      *                           los datos de la descarga
      * @param clave_unica        Cadena {@link String} que reprecenta la clave unica de la operación
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx >
      */
-    /*private void registrar_descarga_local(IniciarDescargaSQL iniciarDescargaSQL,
-                                          IniciarDescargaDTO iniciarDescargaDTO,
-                                          String clave_unica){*/
     private void registrar_descarga_local(SAGASSql iniciarDescargaSQL,
                                           IniciarDescargaDTO iniciarDescargaDTO,
                                           String clave_unica){
@@ -2788,10 +2448,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     /**
      * <h3>registrar_finalizar_local</h3>
      * Permite realizar el registro en local de los datos de la finalización de la descarga,
-     * tomara como parametros un objeto de tipo {@link FinalizarDescargaSQL} ,un objeto de
+     * tomara como parametros un objeto de tipo {@link SAGASSql} ,un objeto de
      * tipo {@link FinalizarDescargaDTO} con los datos proporcionados previamente
      * y un {@link String} con la clave de operación.
-     * @param finalizarDescargaSQL Objeto de tipo {@link FinalizarDescargaSQL} para registrar
+     * @param finalizarDescargaSQL Objeto de tipo {@link SAGASSql} para registrar
      *                             en base de datos local.
      * @param finalizarDescargaDTO Objeto de tipo {@link FinalizarDescargaDTO} con los valores que
      *                             se registraron de finalizar descarga
@@ -2799,9 +2459,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx
      * @date 28/08/2018
      */
-    /*private void registrar_finalizar_local(FinalizarDescargaSQL finalizarDescargaSQL,
-                                           FinalizarDescargaDTO finalizarDescargaDTO,
-                                           String clave_unica){*/
     private void registrar_finalizar_local(SAGASSql finalizarDescargaSQL,
                                            FinalizarDescargaDTO finalizarDescargaDTO,
                                            String clave_unica){
@@ -2829,9 +2486,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 if (sagasSql.GetLecturaImagenesByClaveUnica(clave_unica).getCount() == 0) {
                     sagasSql.InsertLecturaImagenes(lecturaDTO);
                 }
-            /*if(sagasSql.GetLecturaP5000ByClaveUnica(clave_unica).getCount()==0){
-                sagasSql.InsertLecturaP5000(lecturaDTO);
-            }*/
             }
         }
     }

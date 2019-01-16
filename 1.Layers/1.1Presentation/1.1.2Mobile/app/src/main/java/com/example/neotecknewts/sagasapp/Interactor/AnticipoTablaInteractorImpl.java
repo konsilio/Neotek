@@ -340,7 +340,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
         if(sagasSql.GetAnticipoByClaveOperacion(anticiposDTO.getClaveOperacion()).getCount()==0){
             sagasSql.InsertAnticipo(anticiposDTO);
             Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.Anticipo);
+            lisener.CrearRunable(Lisener.Proceso.Anticipo);
         }
     }
 
@@ -350,7 +350,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
             if(sagasSql.GetVentasCorte(corteDTO.getClaveOperacion()).getCount()==0) {
                 sagasSql.InsertVentasCorte(corteDTO);
                 Lisener lisener = new Lisener(sagasSql, token);
-                lisener.CrearRunable(Lisener.CorteDeCaja);
+                lisener.CrearRunable(Lisener.Proceso.CorteDeCaja);
             }
         }
     }

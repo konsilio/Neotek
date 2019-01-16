@@ -8,12 +8,8 @@ import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
-import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
-import com.example.neotecknewts.sagasapp.Util.Constantes;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Sincronizacion;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -22,17 +18,15 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Descarga {
-    private IniciarDescargaSQL db;
+    private SAGASSql db;
     private Sincronizacion sincronizacion;
     private boolean respuesta_servicio;
     private String token;
     public List<String> mensajes;
 
-    public Descarga(IniciarDescargaSQL db, Sincronizacion sincronizacion, String token) {
+    public Descarga(SAGASSql db, Sincronizacion sincronizacion, String token) {
         this.db = db;
         this.sincronizacion = sincronizacion;
         this.token = token;

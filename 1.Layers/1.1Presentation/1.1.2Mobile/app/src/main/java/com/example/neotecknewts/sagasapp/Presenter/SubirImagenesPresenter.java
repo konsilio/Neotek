@@ -12,9 +12,6 @@ import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
-import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 /**
@@ -23,12 +20,9 @@ import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 public interface SubirImagenesPresenter {
 
-    //void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL, Context applicationContext);
     void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token,  SAGASSql sagasSql, Context applicationContext);
-    //void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO, String token, IniciarDescargaSQL iniciarDescargaSQL);
     void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO, String token, SAGASSql sagasSql);
-   // void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO, String token, FinalizarDescargaSQL finalizarDescargaSQL);
-   void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO, String token, SAGASSql finalizarDescargaSQL);
+    void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO, String token, SAGASSql finalizarDescargaSQL);
     void onSuccessRegistrarPapeleta();
     void onSuccessRegistrarIniciarDescarga();
     void onSuccessRegistrarFinalizarDescarga();

@@ -103,7 +103,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                             local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
                             presenter.onSuccessAndroid();
                             Lisener lisener = new Lisener(sagasSql,token);
-                            lisener.CrearRunable(Lisener.VENTA);
+                            lisener.CrearRunable(Lisener.Proceso.Venta);
                         }
                     }
                 }
@@ -118,7 +118,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                 local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
                 presenter.onSuccessAndroid();
                 Lisener lisener = new Lisener(sagasSql,token);
-                lisener.CrearRunable(Lisener.VENTA);
+                lisener.CrearRunable(Lisener.Proceso.Venta);
 
             }
 
@@ -127,7 +127,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
             local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
             presenter.onSuccessAndroid();
             Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.VENTA);
+            lisener.CrearRunable(Lisener.Proceso.VENTA);
         }*/
     }
 

@@ -55,10 +55,10 @@ public class CalibracionDTO implements Serializable {
     private List<URI> ImagenesUri;
 
     @SerializedName("FechaAplicacion")
-    private Date FechaAplicacion;
+    private String FechaAplicacion;
 
     @SerializedName("FechaRegistro")
-    private Date FechaRegistro;
+    private String FechaRegistro;
 
     @SerializedName("PorcentajeMedidor2")
     private double PorcentajeMedidor2;
@@ -165,19 +165,19 @@ public class CalibracionDTO implements Serializable {
         NombreMedidor = nombreMedidor;
     }
 
-    public Date getFechaAplicacion() {
+    public String getFechaAplicacion() {
         return FechaAplicacion;
     }
 
-    public void setFechaAplicacion(Date fechaAplicacion) {
+    public void setFechaAplicacion(String fechaAplicacion) {
         FechaAplicacion = fechaAplicacion;
     }
 
-    public Date getFechaRegistro() {
+    public String getFechaRegistro() {
         return FechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(String fechaRegistro) {
         FechaRegistro = fechaRegistro;
     }
 

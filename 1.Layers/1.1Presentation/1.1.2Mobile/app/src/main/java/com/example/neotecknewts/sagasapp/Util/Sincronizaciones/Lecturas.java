@@ -95,8 +95,7 @@ public class Lecturas {
         Log.w("Registro","Registrando en servicio "+dto.getClaveProceso());
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
-        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(dto,token,
-                "application/json");
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(dto, token, "application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,

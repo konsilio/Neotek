@@ -34,9 +34,6 @@ import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentasCorteDTO;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
-import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 import java.net.URI;
@@ -53,35 +50,35 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Lisener{
-    //region Variables estaticas
-    public static final String LecturaInicial = "LecturaInicial";
-    public static final String LecturaFinal = "LecturaFinal";
-    public static final String Papeleta = "Papeleta";
-    public static final String IniciarDescarga = "IniciarDescarga";
-    public static final String FinalizarDescarga = "FinalizarDescarga";
-    public static final String LecturaInicialPipas = "LecturaInicialPipas";
-    public static final String LecturaFinalPipas = "LecturaFinalPipas";
-    public static final String LecturaInicialAlmacen = "LecturaInicialAlmacen";
-    public static final String LecturaFinalAlmacen = "LecturaFinalAlmacen";
-    public static final String LecturaInicialCamioneta = "LecturaInicialCamioneta";
-    public static final String LecturaFinalCamioneta = "LecturaFinalCamioneta";
-    public static final String RecargaCamioneta = "RecargaCamioneta";
-    public static final String RecargaEstacion ="RecargaEstacion";
-    public static final String VENTA = "Venta";
-    public static final String Autoconsumo = "Autoconsumo";
-    public static final String Calibracion = "Calibracion";
-    public static final String Traspaso = "Traspaso";
-    public static final String Anticipo = "Anticipo";
-    public static final String CorteDeCaja = "CorteDeCaja";
-    public static final String RecargaPipa = "RecargaPipa";
+
+    // Variables de procesos
+    public enum Proceso {
+        LecturaInicial,
+        LecturaFinal,
+        Papeleta,
+        IniciarDescarga,
+        FinalizarDescarga,
+        LecturaInicialPipas,
+        LecturaFinalPipas,
+        LecturaInicialAlmacen,
+        LecturaFinalAlmacen,
+        LecturaInicialCamioneta,
+        LecturaFinalCamioneta,
+        RecargaCamioneta,
+        RecargaEstacion,
+        Venta,
+        Autoconsumo,
+        Calibracion,
+        Traspaso,
+        Anticipo,
+        CorteDeCaja,
+        RecargaPipa
+    }
     //endregion
     //region Variables privadas
     private  String token;
     private boolean completo ;
     private SAGASSql sagasSql;
-    private PapeletaSQL papeletaSQL;
-    private IniciarDescargaSQL iniciarDescargaSQL;
-    private FinalizarDescargaSQL finalizarDescargaSQL;
     private boolean EstaDisponible;
     private boolean _registrado;
     public Context context;
@@ -91,22 +88,10 @@ public class Lisener{
         this.sagasSql = sagasSql;
         this.token = token;
     }
-    /*public Lisener(PapeletaSQL papeletaSQL, String token, Context applicationContext){
-        this.papeletaSQL = papeletaSQL;
-        this.token = token;
-        this.context = applicationContext;
-    }*/
-    /*public Lisener(IniciarDescargaSQL iniciarDescargaSQL ,String token){
-        this.iniciarDescargaSQL = iniciarDescargaSQL;
-        this.token = token;
-    }
-    public Lisener(FinalizarDescargaSQL finalizarDescargaSQL ,String token){
-        this.finalizarDescargaSQL = finalizarDescargaSQL;
-        this.token = token;
-    }*/
+
     //endregion
-    public void CrearRunable(final String proceso){
-        final Runnable myTask = () -> {
+    public void CrearRunable(Proceso proceso){
+//        final Runnable myTask = () -> {
             switch (proceso){
                 case Papeleta:
                     completo = Papeletas();
@@ -150,7 +135,7 @@ public class Lisener{
                 case RecargaPipa:
                     completo = RecargaPipa();
                     break;
-                case VENTA:
+                case Venta:
                     completo = PuntoVenta();
                     break;
                 case Autoconsumo:
@@ -168,14 +153,14 @@ public class Lisener{
                 case CorteDeCaja:
                     completo = Corte();
             }
-        };
+//        };
 
-        ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
-        ScheduledFuture scheduledFuture = timer.
-                scheduleAtFixedRate(myTask, 10, 10, TimeUnit.SECONDS);
-        if(this.completo) {
-            scheduledFuture.cancel(false);
-        }
+//        ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
+//        ScheduledFuture scheduledFuture = timer.
+//                scheduleAtFixedRate(myTask, 10, 10, TimeUnit.SECONDS);
+//        if(this.completo) {
+//            scheduledFuture.cancel(false);
+//        }
     }
 
     //region Recarga pipa
@@ -644,15 +629,14 @@ public class Lisener{
                                     cursor.getColumnIndex("NombreCAlmacenGas")
                             )
                     );
-                    dto.setFechaRegistro(new Date(
+                    dto.setFechaRegistro(
                             cursor.getString(
-                                    cursor.getColumnIndex("FechaRegistro")
-                            ))
-                    );
-                    dto.setFechaAplicacion(new Date(
-                            cursor.getString(
-                                    cursor.getColumnIndex("FechaAplicacion")
+                                cursor.getColumnIndex("FechaRegistro")
                             )
+                    );
+                    dto.setFechaAplicacion(
+                            cursor.getString(
+                                cursor.getColumnIndex("FechaAplicacion")
                             )
                     );
 
@@ -680,7 +664,7 @@ public class Lisener{
                             )
                     );
 
-                    Cursor imagenes =sagasSql.GetFotografiasCalibracion(dto.getClaveOperacion());
+                    Cursor imagenes = sagasSql.GetFotografiasCalibracion(dto.getClaveOperacion());
                     imagenes.moveToFirst();
                     while (!imagenes.isAfterLast()){
                         try {
@@ -2182,7 +2166,7 @@ public class Lisener{
                 }
             }
         }
-        return (papeletaSQL.GetPapeletas().getCount()==0);
+        return (sagasSql.GetPapeletas().getCount()==0);
     }
 
     private boolean RegistrarLecturaFinalizarDescarga(FinalizarDescargaDTO lecturaDTO) {
@@ -2393,7 +2377,7 @@ public class Lisener{
                 }
             }
         }
-        return (papeletaSQL.GetPapeletas().getCount()==0);
+        return (sagasSql.GetPapeletas().getCount()==0);
     }
 
     private boolean RegistrarPapeleta(PrecargaPapeletaDTO lecturaDTO){

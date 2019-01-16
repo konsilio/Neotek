@@ -28,9 +28,6 @@ import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
-import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Session;
 
@@ -77,9 +74,6 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public SubirImagenesPresenter presenter;
     public ProgressDialog progressDialog;
     public Session session;
-    public PapeletaSQL papeletaSQL;
-    public IniciarDescargaSQL iniciarDescargaSQL;
-    public FinalizarDescargaSQL finalizarDescargaSQL;
     public SAGASSql sagasSql;
 
     @Override
@@ -263,13 +257,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
         }
         if(papeleta) {
-            //papeletaSQL = new PapeletaSQL(this.getApplicationContext());
             sagasSql = new SAGASSql(getApplicationContext());
         }else if (iniciar) {
-            //iniciarDescargaSQL = new IniciarDescargaSQL(getApplicationContext());
             sagasSql = new SAGASSql(getApplicationContext());
         }else if(finalizar){
-            //finalizarDescargaSQL = new FinalizarDescargaSQL(getApplicationContext());
             sagasSql = new SAGASSql(getApplicationContext());
         }else if (EsLecturaInicial || EsLecturaFinal){
             sagasSql = new SAGASSql(getApplicationContext());
@@ -821,13 +812,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         @Override
         protected void onPostExecute(Void result) {
             if(papeleta) {
-                //presenter.registrarPapeleta(papeletaDTO, session.getToken(), papeletaSQL,getApplicationContext());
                 presenter.registrarPapeleta(papeletaDTO, session.getToken(), sagasSql,getApplicationContext());
             }else if (iniciar){
-                //presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),iniciarDescargaSQL);
                 presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),sagasSql);
             }else if (finalizar){
-                //presenter.registrarFinalizarDescarga(finalizarDescarga,session.getToken(),finalizarDescargaSQL);
                 presenter.registrarFinalizarDescarga(finalizarDescarga,session.getToken(),sagasSql);
             }else if (EsLecturaInicial){
                 presenter.registrarLecturaInicial(sagasSql,session.getToken(),lecturaDTO);

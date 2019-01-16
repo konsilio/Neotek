@@ -128,7 +128,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     if(response.code()>=300){
                         registrar_local(sagasSql,lecturaCamionetaDTO,clave_unica,false);
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.LecturaInicialCamioneta);
+                        lisener.CrearRunable(Lisener.Proceso.LecturaInicialCamioneta);
                         enviarDatosPresenter.onSuccessAndroid();
 
                     }
@@ -139,7 +139,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     Log.e("error", t.toString());
                     registrar_local(sagasSql,lecturaCamionetaDTO,clave_unica,false);
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.LecturaInicialCamioneta);
+                    lisener.CrearRunable(Lisener.Proceso.LecturaInicialCamioneta);
                     enviarDatosPresenter.onSuccessAndroid();
                 }
             });
@@ -257,7 +257,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     if(response.code()>=300){
                         registrar_local(sagasSql,lecturaCamionetaDTO,clave_unica,true);
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.LecturaFinalCamioneta);
+                        lisener.CrearRunable(Lisener.Proceso.LecturaFinalCamioneta);
                         enviarDatosPresenter.onSuccessAndroid();
                     }
                 }
@@ -267,7 +267,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     Log.e("error", t.toString());
                     registrar_local(sagasSql,lecturaCamionetaDTO,clave_unica,true);
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.LecturaFinalCamioneta);
+                    lisener.CrearRunable(Lisener.Proceso.LecturaFinalCamioneta);
                     enviarDatosPresenter.onSuccessAndroid();
                 }
             });
@@ -382,7 +382,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     if(response.code()>=300){
                         registrar_local(sagasSql,recargaDTO,"C");
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.RecargaCamioneta);
+                        lisener.CrearRunable(Lisener.Proceso.RecargaCamioneta);
                         enviarDatosPresenter.onSuccessAndroid();
                     }
                 }
@@ -392,7 +392,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     Log.e("error", t.toString());
                     registrar_local(sagasSql,recargaDTO,"C");
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.RecargaCamioneta);
+                    lisener.CrearRunable(Lisener.Proceso.RecargaCamioneta);
                     enviarDatosPresenter.onSuccessAndroid();
                 }
             });
@@ -409,7 +409,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
         }
         if(registro_local ){
             Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);
+            lisener.CrearRunable(Lisener.Proceso.RecargaCamioneta);
             enviarDatosPresenter.onSuccessAndroid();
         }*/
         //endregion
