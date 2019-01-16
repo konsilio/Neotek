@@ -24,8 +24,6 @@ namespace MVC.Presentacion.Models.Catalogos
         public System.DateTime FechaRegistro { get; set; }
         public bool Activo { get; set; }
 
-
-
         [Required(ErrorMessage = eReq)]
         [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
         [Display(Name = "Nombre Comercial")]
@@ -103,7 +101,7 @@ namespace MVC.Presentacion.Models.Catalogos
 
         [Required(ErrorMessage = eReq)]
         [Display(Name = "IdPais")]
-        public Nullable<byte> IdPais { get; set; }
+        public byte IdPais { get; set; }
 
         [Display(Name = "IdEstadoRep")]
         public Nullable<byte> IdEstadoRep { get; set; }
@@ -166,6 +164,8 @@ namespace MVC.Presentacion.Models.Catalogos
 
         public byte InventarioSano { get; set; }
         public decimal MaxRemaGaseraMensual { get; set; }
+        public byte IdPaisSec { get; set; }
+        public Nullable<byte> IdEstadoRepSec { get; set; }
 
     }
 }

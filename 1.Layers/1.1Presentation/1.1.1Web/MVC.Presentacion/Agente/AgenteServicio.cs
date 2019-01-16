@@ -1255,6 +1255,14 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Caja General
+        public List<PaisModel> AddSelect()
+        {
+            PaisModel rol = new PaisModel();
+            rol.Pais = "Seleccione";
+            List<PaisModel> Paises = new List<PaisModel>();
+            Paises.Add(rol);
+            return Paises;
+        }
         public void BuscarListaVentaCajaGral(string tkn, string type)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGral"];
@@ -3451,6 +3459,7 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         #endregion
+       
         private async Task LLamada<T>(T _dto, string token, string Tipo)
         {
             using (var client = new HttpClient())

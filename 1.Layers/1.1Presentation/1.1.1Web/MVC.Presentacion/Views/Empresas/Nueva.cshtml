@@ -1,4 +1,14 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 @model  EmpresaModel
 @{
     ViewBag.Title = "Nueva";
@@ -7,7 +17,7 @@
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/Empresas.js"></script>
 <script type="text/javascript">
-  $(function () {
+    $(function () {
         $('select').on('change', function () {
             if ($('#ddlPais').val() !== "1") {
                 $('#ddlEdo').parent().hide();
@@ -19,15 +29,43 @@
                 $('#txtEdoP').hide();
             }
         });
-  });
+    });
+    function OnSelectedChangeCountry(s, e) {
+        debugger
+        var value = s.GetValue();
+        if (value == 1)//Mexico
+        {
+            $('#txtEdoP').hide();
+            $('#IdEstadoRep').show();
+        }
+        if (value == 2)//EU
+        {
+            $('#IdEstadoRep').hide();
+            $('#txtEdoP').show();
+        }
+    } 
+    function OnSelectedChangeCountryTest(s, e) {
+        debugger
+        var value = s.GetValue();
+        if (value == 1)//Mexico
+        {
+            $('#txtEdoP').hide();
+            $('#IdEstadoRep').show();
+        }
+        if (value == 2)//EU
+        {
+            $('#IdEstadoRep').hide();
+            $('#txtEdoP').show();
+        }
+    } 
 </script>
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
 <style type="text/css">
     .hid {
-        display:none;
+        display: none;
     }
-    </style>
+</style>
 
 @using (Html.BeginForm((ViewBag.EsEdicion == null) ? "Crear" : "GuardaEdicionEmpresa", "Empresas", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -35,6 +73,8 @@
         <div class="container-fluid">
             <div class="block-header">
                 @Html.HiddenFor(m => m.IdEmpresa)
+                @Html.HiddenFor(m => m.IdPais)
+                @Html.HiddenFor(m => m.IdPaisSec)
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <h2>Gaseras</h2>
@@ -71,7 +111,7 @@
                                                     </label>
                                                     @Html.TextBoxFor(m => m.NombreComercial, new { @class = "form-control", @placeholder = "Nombre Comercial" })
                                                     @*@Html.TextBoxFor(m => m.IdEmpresa, new { @class = "hid" })
-                                                    <input type="text" name="IdEmpresa" hidden="hidden"value="@((ViewBag.Empresa==null)?"":ViewBag.Empresa.IdEmpresa)" />*@
+                                                        <input type="text" name="IdEmpresa" hidden="hidden"value="@((ViewBag.Empresa==null)?"":ViewBag.Empresa.IdEmpresa)" />*@
                                                     @Html.ValidationMessageFor(m => m.NombreComercial, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
@@ -111,7 +151,6 @@
                                                 <label for="txtRazonS">
                                                     Razón Social:*
                                                 </label>
-                                                @*<input type="text" name="RazonSocial" id="txtRazonS" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].RazonSocial)" />*@
                                                 @Html.TextBoxFor(m => m.RazonSocial, new { @class = "form-control", @placeholder = "Razón Social" })
                                                 @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
                                             </div>
@@ -122,7 +161,6 @@
                                             <label for="txtRfc">
                                                 RFC:*
                                             </label>
-                                            @*<input type="text" name="Rfc" id="txtRfc" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Rfc)" />*@
                                             @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control", @placeholder = "RFC" })
                                             @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
                                         </div>
@@ -276,34 +314,46 @@
                                             <label for="ddlPais">
                                                 País:*
                                             </label>
-                                            <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
-                                                @*@foreach (var lst in ViewBag.ListaPaises)
-                                                    {
-                                                        <option value="@lst.IdPais">@lst.Pais</option>
-                                                    }*@
-                                                @if (ViewBag.Empresa == null)
+                                            @if (ViewBag.Empresa == null)
+                                            {
+                                                @Html.DevExpress().ComboBox(settings =>
+                                           {
+                                               settings.Name = "IdPais";
+                                               settings.Width = 180;
+                                               settings.SelectedIndex = 0;
+                                               //settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                               settings.Theme = "Material";
+                                               settings.Properties.TextField = "Pais";
+                                               settings.Properties.ValueField = "IdPais";
+                                               //settings.Properties.ValueType = typeof(int);
+                                               //settings.ClientEnabled = true;
+                                               //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                           }).BindList(ViewBag.ListaPaises).GetHtml()
+                                            }
+                                            else
+                                            {
+                                                foreach (var lst in ViewBag.ListaPaises)
                                                 {
-                                                    foreach (var lst in ViewBag.ListaPaises)
+                                                    if (ViewBag.Empresa.IdPais == lst.IdPais)
                                                     {
-                                                        <option value="@lst.IdPais">@lst.Pais</option>
+                                                        @Html.DevExpress().ComboBox(settings =>
+                                                            {
+                                                                settings.Name = "IdPaisSec";
+                                                                settings.Width = 180;
+                                                                settings.SelectedIndex = @lst.IdPais;
+                                                                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                                settings.Theme = "Material";
+                                                                settings.Properties.TextField = "Pais";
+                                                                settings.Properties.ValueField = "IdPais";
+                                                                settings.ClientEnabled = true;
+                                                                settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountryTest";
+                                                            }).BindList(ViewBag.ListaPaises).GetHtml()
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    foreach (var lst in ViewBag.ListaPaises)
-                                                    {
-
-                                                        if (ViewBag.Empresa.IdPais == lst.IdPais)
-                                                        {
-                                                            <option value="@lst.IdPais" selected>@lst.Pais</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@lst.IdPais">@lst.Pais</option>
-                                                        }
-                                                    }
-                                                }
-                                            </select>
+                                                @Html.ValidationMessageFor(m => m.IdPaisSec, "", new { @class = "alert-danger" })
+                                            }
                                             @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -312,35 +362,41 @@
                                             <label for="ddlEdo">
                                                 Estado:*
                                             </label>
-                                            @Html.TextBoxFor(m => m.EstadoProvincia, new {@id = "txtEdoP", @class = "form-control hid", @placeholder = "Estado" })
-                                            <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                                @*@foreach (var lst in ViewBag.ListaEstados)
-                                                    {
-                                                        <option value="@lst.IdEstadoRep">@lst.Estado</option>
-                                                    }*@
-                                                @if (ViewBag.Empresa == null)
+                                            @Html.TextBoxFor(m => m.EstadoProvincia, new { @id = "txtEdoP", @class = "form-control hid", @placeholder = "Estado" })
+                                            @if (ViewBag.Empresa == null)
+                                            {
+                                                @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdEstadoRep";
+                                                   settings.Width = 180;
+                                                   settings.SelectedIndex = 0;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Theme = "Material";
+                                                   settings.Properties.TextField = "Estado";
+                                                   settings.Properties.ValueField = "IdEstadoRep";
+                                               }).BindList(ViewBag.ListaEstados).GetHtml()
+                                            }
+                                            else
+                                            {
+                                                foreach (var lst2 in ViewBag.ListaEstados)
                                                 {
-                                                    foreach (var lst2 in ViewBag.ListaEstados)
+                                                    if (ViewBag.Empresa.IdEstadoRep == lst2.IdEstadoRep)
                                                     {
-                                                        <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
+                                                        @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdEstadoRepSec";
+                                                   settings.Width = 180;
+                                                   settings.SelectedIndex = @lst2.IdEstadoRep;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Theme = "Material";
+                                                   settings.Properties.TextField = "Estado";
+                                                   settings.Properties.ValueField = "IdEstadoRep";
+                                               }).BindList(ViewBag.ListaEstados).GetHtml()
                                                     }
                                                 }
-                                                else
-                                                {
-                                                    foreach (var lst2 in ViewBag.ListaEstados)
-                                                    {
-
-                                                        if (ViewBag.Empresa.IdEstadoRep == lst2.IdEstadoRep)
-                                                        {
-                                                            <option value="@lst2.IdEstadoRep" selected>@lst2.Estado</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
-                                                        }
-                                                    }
-                                                }
-                                            </select>
+                                            }
                                             @Html.ValidationMessageFor(m => m.IdEstadoRep, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -348,7 +404,7 @@
                                         <div class="form-group">
                                             <label for="txtMun">
                                                 Municipio:*
-                                            </label>                                        
+                                            </label>
                                             @Html.TextBoxFor(m => m.Municipio, new { @class = "form-control", @placeholder = "Municipio" })
                                             @Html.ValidationMessageFor(m => m.Municipio, "", new { @class = "alert-danger" })
                                         </div>
@@ -421,21 +477,18 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             Pequeño (180px X 180px)
-                                            @*<input type="file" name="UrlLogotipo180px" id="file" accept="image/gif, image/jpeg , image/jpg" class="form-control-file" />*@
-                                            @Html.TextBoxFor(m => m.UrlLogotipo180px, new { type = "file" })                                          
+                                            @Html.TextBoxFor(m => m.UrlLogotipo180px, new { type = "file" })
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             Mediano (500px X 500px)
-                                            @*<input id="txtMed" type="file" name="UrlLogotipo500px" accept="image/gif, image/jpeg , image/jpg" class="form-control-file" />*@
                                             @Html.TextBoxFor(m => m.UrlLogotipo500px, new { type = "file" })
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             Grande (1000px X 1000px)
-                                            @*<input id="txtGra" type="file" name="UrlLogotipo1000px" class="form-control-file" />*@
                                             @Html.TextBoxFor(m => m.UrlLogotipo1000px, new { type = "file" })
                                         </div>
                                     </div>
@@ -455,11 +508,11 @@
                             <div class="form-group">
                                 @if (@ViewBag.EsEdicion == null)
                                 {
-                                    <input type="submit" value="Crear" formaction="Crear" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                                <input type="submit" value="Crear" formaction="Crear" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
                                 }
                                 else
                                 {
-                                    <input type="submit" value="Actualizar" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                                <input type="submit" value="Actualizar" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
                                 }
                             </div>
                         </div>

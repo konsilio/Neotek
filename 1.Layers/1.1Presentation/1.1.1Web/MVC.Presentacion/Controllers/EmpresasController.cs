@@ -47,11 +47,11 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
-            {
-                TempData["RespuestaDTOError"] = CatalogoServicio.SinPermisos();
-                return RedirectToAction("Index");
-            }
+            //if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            //{
+            //    TempData["RespuestaDTOError"] = CatalogoServicio.SinPermisos();
+            //    return RedirectToAction("Index");
+            //}
             //Se obtienen los paises         
             ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
             //Se obtienen los estados 
@@ -78,7 +78,8 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-                        var respuesta = CatalogoServicio.create(Objemp, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
+            Objemp.IdPais = Objemp.IdPaisSec;
+            var respuesta = CatalogoServicio.create(Objemp, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
 
             if (respuesta.Exito)
             {
@@ -172,6 +173,8 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
+            _Obj.IdEstadoRep = _Obj.IdEstadoRepSec;
+            _Obj.IdPais = _Obj.IdPaisSec;
             var respuesta = CatalogoServicio.ActualizaEdicionEmpresa(_Obj, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
 
             if (respuesta.Exito)
