@@ -10,7 +10,9 @@ import android.widget.TableLayout;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Tabla;
+import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -33,7 +35,8 @@ public class VentaGasActivity extends AppCompatActivity implements VentaGasActiv
             EsVentaCamioneta = extras.getBoolean("EsVentaCamioneta",false);
             EsVentaCarburacion = extras.getBoolean("EsVentaCarburacion",false);
             EsVentaPipa = extras.getBoolean("EsVentaPipa",false);
-            ventaDTO.setFecha(new Date().toString());
+
+            ventaDTO.setFecha(Utilidades.getCurrentDate(Constantes.FORMATO_FECHA_API));
         }
 
         BtnVentaGasActivityGasLp = findViewById(R.id.BtnVentaGasActivityGasLp);

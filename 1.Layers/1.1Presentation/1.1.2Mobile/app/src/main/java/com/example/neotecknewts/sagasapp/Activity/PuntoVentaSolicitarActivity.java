@@ -19,6 +19,7 @@ import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaSolicitarPresenterI
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Session;
+import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -103,7 +104,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         ventaDTO.setIdCliente(Constantes.IdClienteGeneral);
         ventaDTO.setCredito(false);
         ventaDTO.setFactura(false);
-        ventaDTO.setFecha(new Date().toString());
+        ventaDTO.setFecha(Utilidades.getCurrentDate(Constantes.FORMATO_FECHA_API));
         ventaDTO.setRFC("");
         ventaDTO.setRazonSocial("");
         ventaDTO.setNombre("");
@@ -141,7 +142,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
 
     @Override
     public void RegistrarCliente() {
-        ventaDTO.setFecha(new Date().toString());
+        ventaDTO.setFecha(Utilidades.getCurrentDate(Constantes.FORMATO_FECHA_API));
         ventaDTO.setSinNumero(false);
         ventaDTO.setEsSinNumero(false);
         ventaDTO.setEsRegistro(true);
@@ -159,7 +160,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
     @Override
     public void Buscar() {
         if(ETPuntoVentaSolicitarActivityBuscador.getText().length()>0) {
-            ventaDTO.setFecha(new Date().toString());
+            ventaDTO.setFecha(Utilidades.getCurrentDate(Constantes.FORMATO_FECHA_API));
             ventaDTO.setSinNumero(false);
             ventaDTO.setEsSinNumero(false);
             ventaDTO.setEsRegistro(false);

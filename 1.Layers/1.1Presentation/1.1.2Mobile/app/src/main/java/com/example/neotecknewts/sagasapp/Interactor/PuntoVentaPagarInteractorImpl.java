@@ -44,9 +44,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
 
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
-                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        ventaDTO.setFecha(f.format(new Date(ventaDTO.getFecha())));
+        ventaDTO.setFecha(ventaDTO.getFecha());
         Call<RespuestaPuntoVenta> call = restClient.pagar(
                 ventaDTO,
                 /*esCamioneta,
@@ -105,7 +103,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                             local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
                             presenter.onSuccessAndroid();
                             Lisener lisener = new Lisener(sagasSql,token);
-                            lisener.CrearRunable(Lisener.VENTA);
+                            lisener.CrearRunable(Lisener.Proceso.Venta);
                         }
                     }
                 }
@@ -120,7 +118,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                 local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
                 presenter.onSuccessAndroid();
                 Lisener lisener = new Lisener(sagasSql,token);
-                lisener.CrearRunable(Lisener.VENTA);
+                lisener.CrearRunable(Lisener.Proceso.Venta);
 
             }
 
@@ -129,7 +127,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
             local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
             presenter.onSuccessAndroid();
             Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.VENTA);
+            lisener.CrearRunable(Lisener.Proceso.VENTA);
         }*/
     }
 

@@ -8,7 +8,7 @@ import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Sincronizacion;
 import com.google.gson.FieldNamingPolicy;
@@ -25,7 +25,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Papeleta {
-    private PapeletaSQL sql;
+    private SAGASSql db;
     private Sincronizacion sincronizacion;
     private String token;
     private boolean respuesta_servicio;
@@ -36,10 +36,10 @@ public class Papeleta {
      * Permite realizar la sincronización de los datos de la
      * papeleta
      * @param context Contexto de la aplicación
-     * @param sql Base de datos en SQLITE
+     * @param db Base de datos en SQLITE
      */
-    public Papeleta(Context context, PapeletaSQL sql, Sincronizacion sincronizacion,String token){
-        this.sql = sql;
+    public Papeleta(Context context, SAGASSql db, Sincronizacion sincronizacion,String token){
+        this.db = db;
         this.sincronizacion = sincronizacion;
         this.token = token;
     }
@@ -53,7 +53,7 @@ public class Papeleta {
      */
     public boolean SincronizarPapeletas(){
         Log.w("Consulta papeletas","Consulta de papeletas: "+new Date());
-        Cursor papeletas = this.sql.GetPapeletas();
+        Cursor papeletas = this.db.GetPapeletas();
         papeletas.moveToFirst();
         Log.w("Total papeletas",String.valueOf(papeletas.getCount()));
         //Verifico si es necesario registrar las papeletas
@@ -113,7 +113,7 @@ public class Papeleta {
                 dto.setCantidadFotosTractor(papeletas.getInt(
                         papeletas.getColumnIndex("CantidadFotosTractor")));
                 papeletas.moveToNext();
-                Cursor imagenes = sql.GetRecordsByCalveUnica(dto.getClaveOperacion());
+                Cursor imagenes = db.GetRecordsByCalveUnica(dto.getClaveOperacion());
                 //Obtener imagenes papeleta
                 while (!imagenes.isAfterLast()) {
                     dto.getImagenes().add(
@@ -122,11 +122,11 @@ public class Papeleta {
                     imagenes.moveToNext();
                 }
                 if (Registro(dto)) {
-                    this.sql.Eliminar(dto.getClaveOperacion());
-                    this.sql.EliminarImagenes(dto.getClaveOperacion());
+                    this.db.Eliminar(dto.getClaveOperacion());
+                    this.db.EliminarImagenes(dto.getClaveOperacion());
                 }
             }
-            int total = sql.GetPapeletas().getCount();
+            int total = db.GetPapeletas().getCount();
             return total == 0;
         }
         //En caso de que no existan registros le digo que este no tiene nada y todo correcto

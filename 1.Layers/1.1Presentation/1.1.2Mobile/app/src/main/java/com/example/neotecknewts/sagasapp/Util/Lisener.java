@@ -1,6 +1,7 @@
 package com.example.neotecknewts.sagasapp.Util;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -33,13 +34,7 @@ import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentasCorteDTO;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
-import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -53,62 +48,50 @@ import java.util.concurrent.TimeUnit;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Lisener{
-    //region Variables estaticas
-    public static final String LecturaInicial = "LecturaInicial";
-    public static final String LecturaFinal = "LecturaFinal";
-    public static final String Papeleta = "Papeleta";
-    public static final String IniciarDescarga = "IniciarDescarga";
-    public static final String FinalizarDescarga = "FinalizarDescarga";
-    public static final String LecturaInicialPipas = "LecturaInicialPipas";
-    public static final String LecturaFinalPipas = "LecturaFinalPipas";
-    public static final String LecturaInicialAlmacen = "LecturaInicialAlmacen";
-    public static final String LecturaFinalAlmacen = "LecturaFinalAlmacen";
-    public static final String LecturaInicialCamioneta = "LecturaInicialCamioneta";
-    public static final String LecturaFinalCamioneta = "LecturaFinalCamioneta";
-    public static final String RecargaCamioneta = "RecargaCamioneta";
-    public static final String RecargaEstacion ="RecargaEstacion";
-    public static final String VENTA = "Venta";
-    public static final String Autoconsumo = "Autoconsumo";
-    public static final String Calibracion = "Calibracion";
-    public static final String Traspaso = "Traspaso";
-    public static final String Anticipo = "Anticipo";
-    public static final String CorteDeCaja = "CorteDeCaja";
-    public static final String RecargaPipa = "RecargaPipa";
+
+    // Variables de procesos
+    public enum Proceso {
+        LecturaInicial,
+        LecturaFinal,
+        Papeleta,
+        IniciarDescarga,
+        FinalizarDescarga,
+        LecturaInicialPipas,
+        LecturaFinalPipas,
+        LecturaInicialAlmacen,
+        LecturaFinalAlmacen,
+        LecturaInicialCamioneta,
+        LecturaFinalCamioneta,
+        RecargaCamioneta,
+        RecargaEstacion,
+        Venta,
+        Autoconsumo,
+        Calibracion,
+        Traspaso,
+        Anticipo,
+        CorteDeCaja,
+        RecargaPipa
+    }
     //endregion
     //region Variables privadas
     private  String token;
     private boolean completo ;
     private SAGASSql sagasSql;
-    private PapeletaSQL papeletaSQL;
-    private IniciarDescargaSQL iniciarDescargaSQL;
-    private FinalizarDescargaSQL finalizarDescargaSQL;
     private boolean EstaDisponible;
-    boolean _registrado;
+    private boolean _registrado;
+    public Context context;
     //endregion
     //region Constructores
     public Lisener(SAGASSql sagasSql,String token){
         this.sagasSql = sagasSql;
         this.token = token;
     }
-    public Lisener(PapeletaSQL papeletaSQL,String token){
-        this.papeletaSQL = papeletaSQL;
-        this.token = token;
-    }
-    public Lisener(IniciarDescargaSQL iniciarDescargaSQL ,String token){
-        this.iniciarDescargaSQL = iniciarDescargaSQL;
-        this.token = token;
-    }
-    public Lisener(FinalizarDescargaSQL finalizarDescargaSQL ,String token){
-        this.finalizarDescargaSQL = finalizarDescargaSQL;
-        this.token = token;
-    }
+
     //endregion
-    public void CrearRunable(final String proceso){
-        final Runnable myTask = () -> {
+    public void CrearRunable(Proceso proceso){
+//        final Runnable myTask = () -> {
             switch (proceso){
                 case Papeleta:
                     completo = Papeletas();
@@ -152,7 +135,7 @@ public class Lisener{
                 case RecargaPipa:
                     completo = RecargaPipa();
                     break;
-                case VENTA:
+                case Venta:
                     completo = PuntoVenta();
                     break;
                 case Autoconsumo:
@@ -170,14 +153,14 @@ public class Lisener{
                 case CorteDeCaja:
                     completo = Corte();
             }
-        };
+//        };
 
-        ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
-        ScheduledFuture scheduledFuture = timer.
-                scheduleAtFixedRate(myTask, 10, 10, TimeUnit.SECONDS);
-        if(this.completo) {
-            scheduledFuture.cancel(false);
-        }
+//        ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
+//        ScheduledFuture scheduledFuture = timer.
+//                scheduleAtFixedRate(myTask, 10, 10, TimeUnit.SECONDS);
+//        if(this.completo) {
+//            scheduledFuture.cancel(false);
+//        }
     }
 
     //region Recarga pipa
@@ -646,15 +629,14 @@ public class Lisener{
                                     cursor.getColumnIndex("NombreCAlmacenGas")
                             )
                     );
-                    dto.setFechaRegistro(new Date(
+                    dto.setFechaRegistro(
                             cursor.getString(
-                                    cursor.getColumnIndex("FechaRegistro")
-                            ))
-                    );
-                    dto.setFechaAplicacion(new Date(
-                            cursor.getString(
-                                    cursor.getColumnIndex("FechaAplicacion")
+                                cursor.getColumnIndex("FechaRegistro")
                             )
+                    );
+                    dto.setFechaAplicacion(
+                            cursor.getString(
+                                cursor.getColumnIndex("FechaAplicacion")
                             )
                     );
 
@@ -682,7 +664,7 @@ public class Lisener{
                             )
                     );
 
-                    Cursor imagenes =sagasSql.GetFotografiasCalibracion(dto.getClaveOperacion());
+                    Cursor imagenes = sagasSql.GetFotografiasCalibracion(dto.getClaveOperacion());
                     imagenes.moveToFirst();
                     while (!imagenes.isAfterLast()){
                         try {
@@ -2122,7 +2104,7 @@ public class Lisener{
         boolean registrado;
         if(servicio) {
             Log.w("Iniciando", "Revisando finalizar descarga: " + new Date());
-            Cursor cursor = finalizarDescargaSQL.GetFinalizarDescargas();
+            Cursor cursor = sagasSql.GetFinalizarDescargas();
             FinalizarDescargaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
@@ -2158,32 +2140,33 @@ public class Lisener{
                     lecturaDTO.setIdAlmacen(cursor.getInt(
                             cursor.getColumnIndex("IdAlmacen")));
 
-                    Cursor cantidad = finalizarDescargaSQL.GetImagenesFinalizarDescargaByClaveOperacion(lecturaDTO.getClaveOperacion());
+                    Cursor cantidad = sagasSql.
+                            GetImagenesFinalizarDescargaByClaveOperacion(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
                         String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                        //try {
+                          //  lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
                                     cantidad.getString(cantidad.getColumnIndex("Imagen"))
                             );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
+                        //} catch (URISyntaxException e) {
+                        //    e.printStackTrace();
+                        //}
                         cantidad.moveToNext();
                     }
 
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaFinalizarDescarga(lecturaDTO);
                     if (registrado){
-                        finalizarDescargaSQL.EliminarFinalizarDescarga(lecturaDTO.getClaveOperacion());
-                        finalizarDescargaSQL.EliminarImagenes(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarFinalizarDescarga(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarImagenes(lecturaDTO.getClaveOperacion());
                     }
                     cursor.moveToNext();
                 }
             }
         }
-        return (papeletaSQL.GetPapeletas().getCount()==0);
+        return (sagasSql.GetPapeletas().getCount()==0);
     }
 
     private boolean RegistrarLecturaFinalizarDescarga(FinalizarDescargaDTO lecturaDTO) {
@@ -2217,7 +2200,7 @@ public class Lisener{
         boolean registrado = false;
         if(ServicioDisponible()) {
             Log.w("Iniciando", "Revisando inicio descarga: " + new Date());
-            Cursor cursor = iniciarDescargaSQL.GetIniciarDescargas();
+            Cursor cursor = sagasSql.GetIniciarDescargas();
             IniciarDescargaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
@@ -2253,32 +2236,34 @@ public class Lisener{
                     lecturaDTO.setIdAlmacen(cursor.getInt(
                             cursor.getColumnIndex("IdAlmacen")));
 
-                    Cursor cantidad = iniciarDescargaSQL.GetImagenesDescargaByClaveUnica(lecturaDTO.getClaveOperacion());
+                    Cursor cantidad = sagasSql.
+                            GetImagenesDescargaByClaveUnica(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
                         String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                        //try {
+                          //  lecturaDTO.getImagenesURI().add(new URI(iuri));
                             lecturaDTO.getImagenes().add(
                                     cantidad.getString(cantidad.getColumnIndex("Imagen"))
+                            //iuri
                             );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
+                        //} catch (URISyntaxException e) {
+                        //    e.printStackTrace();
+                        //}
                         cantidad.moveToNext();
                     }
 
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaDescarga(lecturaDTO);
                     if (registrado){
-                        iniciarDescargaSQL.EliminarDescarga(lecturaDTO.getClaveOperacion());
-                        iniciarDescargaSQL.EliminarImagenesDescarga(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarDescarga(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarImagenesDescarga(lecturaDTO.getClaveOperacion());
                     }
                     cursor.moveToNext();
                 }
             }
         }
-        return (papeletaSQL.GetPapeletas().getCount()==0);
+        return (sagasSql.GetIniciarDescargas().getCount()==0);
     }
 
     private boolean RegistrarLecturaDescarga(IniciarDescargaDTO lecturaDTO) {
@@ -2312,7 +2297,8 @@ public class Lisener{
         boolean registrado = false;
         if(ServicioDisponible()) {
             Log.w("Iniciando", "Revisando papeleta: " + new Date());
-            Cursor cursor = papeletaSQL.GetPapeletas();
+            //Cursor cursor = papeletaSQL.GetPapeletas();
+            Cursor cursor = sagasSql.GetPapeletas();
             PrecargaPapeletaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
@@ -2365,7 +2351,8 @@ public class Lisener{
                     lecturaDTO.setCantidadFotosTractor(cursor.getInt(
                             cursor.getColumnIndex("CantidadFotosTractor")));
 
-                    Cursor cantidad = papeletaSQL.GetRecordsByCalveUnica(lecturaDTO.getClaveOperacion());
+                    //Cursor cantidad = papeletaSQL.GetRecordsByCalveUnica(lecturaDTO.getClaveOperacion());
+                    Cursor cantidad = sagasSql.GetRecordsByCalveUnica(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
                         //String iuri = cantidad.getString(cantidad.getColumnIndex("Imagen"));
@@ -2383,14 +2370,14 @@ public class Lisener{
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarPapeleta(lecturaDTO);
                     if (registrado){
-                        papeletaSQL.Eliminar(lecturaDTO.getClaveOperacion());
-                        papeletaSQL.EliminarImagenes(lecturaDTO.getClaveOperacion());
+                        sagasSql.Eliminar(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarImagenes(lecturaDTO.getClaveOperacion());
                     }
                     cursor.moveToNext();
                 }
             }
         }
-        return (papeletaSQL.GetPapeletas().getCount()==0);
+        return (sagasSql.GetPapeletas().getCount()==0);
     }
 
     private boolean RegistrarPapeleta(PrecargaPapeletaDTO lecturaDTO){

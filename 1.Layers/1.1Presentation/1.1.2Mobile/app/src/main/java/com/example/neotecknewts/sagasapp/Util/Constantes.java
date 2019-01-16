@@ -64,5 +64,6 @@ public class Constantes {
 
     public static final String FORMATO_FECHA = "yyyy-MM-dd HH:mm:ss";
     public static final String FORMATO_FECHA_SESSION = "yyyy-MM-dd";
+    public static final String FORMATO_FECHA_API = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
 }
