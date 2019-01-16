@@ -31,6 +31,8 @@ namespace MVC.Presentacion.Models.Ventas
         public string OperadorChoferNombre { get; set; }
         public System.DateTime FechaAplicacion { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public System.DateTime IdDe { get; set; }
+        public System.DateTime IdA { get; set; }
 
         public string CAlmacenGas { get; set; }
         public string COperadorChofer { get; set; }

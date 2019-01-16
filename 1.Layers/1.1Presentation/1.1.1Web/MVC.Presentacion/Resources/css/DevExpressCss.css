@@ -103,6 +103,9 @@ div.dxeCalendarDETS.dxeCalendarVerticalDETS .dxeICC > div {
 .dxeCalendarFooter_Material {
     padding: 3px 0;
 }
+/*div.dxeCalendarDETS > div {
+    width: 100%;
+}*/
 /*.dxeButtonEditSys .dxeButton,*/
 /*input[type="text"].dxeEditAreaSys
  { 

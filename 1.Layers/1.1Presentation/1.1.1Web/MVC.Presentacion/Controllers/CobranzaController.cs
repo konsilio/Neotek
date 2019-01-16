@@ -32,6 +32,8 @@ namespace MVC.Presentacion.Controllers
             if (fecha1 != null || fecha2 != null || Cliente != null || rfc != null)
             {
                 _model = CobranzaServicio.ObtenerCargosFilter(fecha1.Value, fecha2.Value, Cliente.Value, rfc, null, TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                _model[0].FechaRango1 = fecha1.Value.Date;
+                _model[0].FechaRango2 = fecha2.Value.Date;
             }
             else
                 _model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
@@ -106,7 +108,7 @@ namespace MVC.Presentacion.Controllers
                  m.FechaRango1 = fecha??dt; } 
             
             ReporteModel _model = CobranzaServicio.ObtenerListaCartera(_tkn, m);
-            if(_model.reportedet.Count==0) { _model.reportedet[0].FechaRango1 = fecha.Value; _model.reportedet[0].IdEmpresa = ViewBag.IdEmpresa; }
+            if(_model.reportedet.Count>0) { _model.reportedet[0].FechaRango1 = fecha.Value; _model.reportedet[0].IdEmpresa = ViewBag.IdEmpresa; }
             if (ViewBag.IdCliente != null && idCliente.Value != 0 && idCliente != null) { ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet[0].Nombre; }
 
             return View(_model);
@@ -116,7 +118,6 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             return RedirectToAction("CarteraVencida", new { idCliente = _model.IdCliente, fecha = _model.FechaRango1 });
         }
-
         [ValidateInput(false)]
         public ActionResult AbonosPartialUpdate(MVCxGridViewBatchUpdateValues<CargosModel, int> updateValues)
         {
@@ -130,7 +131,6 @@ namespace MVC.Presentacion.Controllers
             return RedirectToAction("Index", new { msj = respuesta.Mensaje });
         }
         [ValidateInput(false)]
-
         public ActionResult _AbonosPartial()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -139,7 +139,6 @@ namespace MVC.Presentacion.Controllers
             var model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             return PartialView(model);
         }
-
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] CargosModel m)
         {
@@ -178,6 +177,5 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
-
     }
 }

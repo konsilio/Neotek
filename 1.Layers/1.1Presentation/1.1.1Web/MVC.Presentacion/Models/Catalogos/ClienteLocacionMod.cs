@@ -26,5 +26,8 @@ namespace MVC.Presentacion.Models.Catalogos
 
         public string Pais { get; set; }
         public string Estado { get; set; }
+
+        public byte IdPais2 { get; set; }
+        public Nullable<byte> IdEstadoRep2 { get; set; }
     }
 }
