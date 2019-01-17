@@ -68,7 +68,7 @@ namespace MVC.Presentacion.Controllers
             }
         }
         public ActionResult Ordenes(int? pageO, int? pageR, string msj = null)
-        {
+      {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             if (!string.IsNullOrEmpty(msj)) ViewBag.Msj = msj;
