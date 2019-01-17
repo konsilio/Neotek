@@ -28,7 +28,7 @@
         debugger
         var value = s.GetValue();
         if (value == 1)//Mexico
-        {           
+        {
             $('#txtEdoP').hide();
             $('#IdEstadoRep').show();
         }
@@ -89,7 +89,7 @@
                                                     @if (Model.Count > 0)
                                                     {
                                                         <input type="text" name="IdCliente" hidden="hidden" value="@((ViewBag.Locaciones!=null)?ViewBag.Locaciones.IdCliente:Model[0].IdCliente)" />
-                                                    } 
+                                                    }
                                                     @*<input type="text" name="Orden" hidden="hidden" value="@((ViewBag.Locaciones!=null)?ViewBag.Locaciones.Orden:0)" />*@
                                                     <input type="text" name="Orden" hidden="hidden" value="@Model.Count" />
                                                 </div>
@@ -116,6 +116,7 @@
                                         <div class="form-group">
                                             <input type="text" name="TipoLocacion" class="form-control" placeholder="Sucursal/Oficina/Tienda/Vacío/etc." value="@((ViewBag.Locaciones!=null)? @ViewBag.Locaciones.TipoLocacion:"")">
                                         </div>
+                                        @Html.ValidationMessageFor(model => model[0].TipoLocacion, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-lg-7 col-md-7 col-sm-7">
 
@@ -175,6 +176,7 @@
                                                     </select>*@
                                                 @if (ViewBag.Locaciones == null)
                                                 {
+                                                    @*@Html.Action("ComboBoxPartialPais")*@
                                                     @Html.DevExpress().ComboBox(settings =>
                                                {
                                                    settings.Name = "IdPais";
@@ -185,19 +187,19 @@
                                                    settings.Theme = "Material";
                                                    settings.Properties.TextField = "Pais";
                                                    settings.Properties.ValueField = "IdPais";
-                                                   settings.Properties.ValueType = typeof(int);
+                                                   settings.Properties.ValueType = typeof(byte);
                                                    settings.ClientEnabled = true;
                                                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+
                                                }).BindList(ViewBag.ListaPaises).GetHtml()
+                                                    <input type="text" name="IdPais" hidden />
                                                 }
                                                 else
                                                 {
                                                     foreach (var lst in ViewBag.ListaPaises)
                                                     {
-
                                                         if (lst.IdPais == ViewBag.Locaciones.IdPais)
                                                         {
-                                                            @*<option value="@lst.IdPais" selected>@lst.Pais</option>*@
                                                             @Html.DevExpress().ComboBox(settings =>
                                                        {
                                                            settings.Name = "IdPais2";
@@ -211,10 +213,13 @@
                                                            settings.ClientEnabled = true;
                                                            settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry2";
                                                        }).BindList(ViewBag.ListaPaises).GetHtml()
-                                                        }                                                     
+                                                        }
                                                     }
+                                                    <input type="text" name="IdPais2" hidden />
                                                 }
-
+                                                @Html.ValidationMessageFor(model => model[0].IdPais, "", new { @class = "text-danger" })
+                                               <input type="text" name="IdPais" hidden /> @*@Html.HiddenFor(m => m[0].IdPais)
+                                                @Html.HiddenFor(m => m[0].IdPais2)*@
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1">
@@ -252,8 +257,7 @@
                                                         }
                                                     </select>*@
                                                 @*@Html.TextBoxFor(m => m[0].EstadoProvincia, new { @id = "txtEdoP", @class = "form-control hid", @placeholder = "Estado" })*@
-                                                <input type="text" name="EstadoProvincia" id ="txtEdoP" class="form-control hid" placeholder = "Estado"/>
-
+                                                <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
                                                 @if (ViewBag.Locaciones == null)
                                                 {
                                                     @Html.DevExpress().ComboBox(settings =>
@@ -272,7 +276,6 @@
                                                 {
                                                     foreach (var lst in ViewBag.ListaEstados)
                                                     {
-
                                                         if (lst.IdEstadoRep == ViewBag.Locaciones.IdEstadoRep)
                                                         {
                                                             @Html.DevExpress().ComboBox(settings =>
@@ -289,6 +292,7 @@
                                                         }
                                                     }
                                                 }
+                                                @Html.ValidationMessageFor(m => m[0].IdEstadoRep, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1">

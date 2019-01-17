@@ -254,7 +254,6 @@ namespace Application.MainModule.Flujos
             cte.FechaRegistro = cte.FechaRegistro;
             return PuntoVentaServicio.Modificar(cte);
         }
-
         #endregion
 
         #region Precio de venta
@@ -387,7 +386,6 @@ namespace Application.MainModule.Flujos
                 }
             }           
         }
-
         public List<PrecioVentaDTO> ListaPreciosVenta()
         {
             var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
@@ -405,7 +403,6 @@ namespace Application.MainModule.Flujos
 
             return PrecioVentaGasServicio.Obtener().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
         }
-
         public List<PrecioVentaEstatusDTO> TipoFecha()
         {
             var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
@@ -413,7 +410,6 @@ namespace Application.MainModule.Flujos
 
             return PrecioVentaGasServicio.ObtenerListEstatus().ToList();
         }
-
         public List<PrecioVentaDTO> PreciosVentaIdEmpresa(short IdEmpresa)
         {
             var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
@@ -440,12 +436,10 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeRegistrarPrecioVentaGas();
             if (!resp.Exito) return resp;
-
             //  var precio = PrecioVentaGasAdapter.FromTo(cteDto);          
             var precio = PrecioVentaGasAdapter.FromDTO(cteDto);
             return PrecioVentaGasServicio.AltaPrecioVentaGas(precio);
         }
-
         public RespuestaDto ModificaPrecioVentaGas(PrecioVentaDTO cteDto)
         {
             var resp = PermisosServicio.PuedeModificarPrecioVentaGas();
@@ -458,7 +452,6 @@ namespace Application.MainModule.Flujos
             cte.FechaRegistro = cte.FechaRegistro;
             return PrecioVentaGasServicio.Modificar(cte);
         }
-
         #endregion
 
         #region Productos

@@ -101,7 +101,7 @@ namespace MVC.Presentacion.Models.Catalogos
 
         [Required(ErrorMessage = eReq)]
         [Display(Name = "IdPais")]
-        public byte IdPais { get; set; }
+        public Nullable<byte> IdPais { get; set; }
 
         [Display(Name = "IdEstadoRep")]
         public Nullable<byte> IdEstadoRep { get; set; }
@@ -164,7 +164,7 @@ namespace MVC.Presentacion.Models.Catalogos
 
         public byte InventarioSano { get; set; }
         public decimal MaxRemaGaseraMensual { get; set; }
-        public byte IdPaisSec { get; set; }
+        public Nullable<byte> IdPaisSec { get; set; }
         public Nullable<byte> IdEstadoRepSec { get; set; }
 
     }

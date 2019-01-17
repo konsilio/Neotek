@@ -233,7 +233,7 @@ namespace MVC.Presentacion.Controllers
                 else
                 {
                     TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("AltaCliente");
+                    return RedirectToAction("AltaClienteDireccion");//AltaCliente
                 }
             }
             //ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
@@ -305,7 +305,7 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
-                ViewBag.Message = String.Format("Values from {0} were posted", ComboBoxExtension.GetValue<System.Int32>("MyComboBox"));
+                //ViewBag.Message = String.Format("Values from {0} were posted", ComboBoxExtension.GetValue<System.Int32>("MyComboBox"));
                 var respuestaLocacion = CatalogoServicio.RegistraLocaciones(_Obj, _tkn);
                 TempData["RespuestaDTO"] = respuestaLocacion;
                 TempData["Locaciones"] = _Obj;
@@ -425,6 +425,13 @@ namespace MVC.Presentacion.Controllers
             return Mensaje;
         }
         #region Combos
+        public ActionResult ComboBoxPartialPais()
+        {
+            _tkn = Session["StringToken"].ToString();
+            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
+            List<ClienteLocacionMod> model = new List<ClienteLocacionMod>();
+            return PartialView("_ComboBoxPartialPais", model);
+        }
         public ActionResult _LocacionesCliente(PedidoModel _model)
         {
             _tkn = Session["StringToken"].ToString();

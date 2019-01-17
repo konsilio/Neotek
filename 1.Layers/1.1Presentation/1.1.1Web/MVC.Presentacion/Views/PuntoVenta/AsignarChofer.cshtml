@@ -1,6 +1,15 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
 @model  PuntoVentaModel
-
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 @{
     ViewBag.Title = "Catálogo / Punto de Venta";
 }
@@ -51,15 +60,31 @@
                                       @if (ViewBag.Usuarios != null)
                                                         {
                                                           
-                                                                <select name="IdUsuario" class="form-control show-tick">
-                                                                    <option value="0">Seleccione...</option>
-                                                                    @foreach (var lst in ViewBag.Usuarios)
-                                                                    {                                                                       
-                                                                        <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1 @lst.Apellido2</option>                                                                       
-                                                                    }
-                                                                </select>
-                                                          
-                                                        }
+                                                                @*<select name="IdUsuario" class="form-control show-tick">
+        <option value="0">Seleccione...</option>
+        @foreach (var lst in ViewBag.Usuarios)
+        {
+            <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1 @lst.Apellido2</option>
+        }
+    </select>*@
+                                        @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "IdUsuario";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Theme = "Material";
+                                       settings.Properties.TextField = "NombreCompleto"; //+ " Apellido1" + " Apellido2";
+                                       settings.Properties.ValueField = "IdUsuario";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                           combo.SelectedIndex = 0;
+                                       };
+                                   }).BindList(ViewBag.Usuarios).GetHtml()
+
+                                      }
                                         </div>
 
                                         <div class="col-sm-3">
