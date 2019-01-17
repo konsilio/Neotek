@@ -1,20 +1,54 @@
 ﻿@model MVC.Presentacion.Models.Catalogos.ProductoDTO
 @using PagedList.Mvc;
 @using PagedList;
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+
+
 @{
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
 }
-<script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
+@*<script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>*@
 <script language="JavaScript" type="text/javascript">
     $(function () {
         $('#ddlEmpresasFilter').on('change', function () {
-            
             var id = $(this).val();
 
             var url = '@Url.Action("Producto", "Producto", new { idempresa = "__param__" })';
             window.location.href = url.replace('__param__', encodeURIComponent(id));
         });
     });
+    function ChangeProdServ(s, e) {
+        var sel = s.GetValue();
+        if (sel == 2) {
+            $('#divProd').show();
+            $('#divServ').hide();
+            $('#cbServicioTransporte').prop('checked', false);
+        }
+        if (sel == 3) {
+            $('#divProd').hide();
+            $('#divServ').show();
+            $('#cbEsGas').prop('checked', false);
+            $('#cbActivoVenta').prop('checked', false);
+        }
+        if (sel == 0) {
+            $('#divProd').hide();
+            $('#divServ').hide();
+            $('#cbEsGas').prop('checked', false);
+            $('#cbActivoVenta').prop('checked', false);
+            $('#cbServicioTransporte').prop('checked', false);
+        }
+        cbServicioTransporte
+    };
 </script>
 <section class="content home">
     <div class="container-fluid">
@@ -65,58 +99,56 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <b>Tipo: ¿Es producto o Servicio?</b>
-                                            <select name="IdProductoServicioTipo" id="tipoproducto" class="form-control z-index show-tick" data-live-search="true">
-                                                <option value="0">Seleccione uno</option>
-                                                @if (Model.IdProductoServicioTipo == 3)
-                                                {
-                                                    <option value="2">Producto</option>
-                                                    <option value="3" selected>Servicio</option>
-                                                }                                              
-                                                else
-                                                {
-                                                    <option value="2" selected>Producto</option>
-                                                    <option value="3">Servicio</option> 
-                                                }
-
-                                            </select>
+                                            @Html.DevExpress().ComboBox(settings =>
+                                            {
+                                                settings.Name = "IdProductoServicioTipo";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.SelectedIndex = 0;
+                                                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                //settings.Properties.ValueType = typeof(string);
+                                                settings.Properties.Items.Add("Seleccione uno", "0");
+                                                settings.Properties.Items.Add("Producto", "2");
+                                                settings.Properties.Items.Add("Servicio", "3");
+                                                settings.ClientEnabled = true;
+                                                settings.Properties.ValueType = typeof(short);
+                                                settings.Properties.ClientSideEvents.SelectedIndexChanged = "ChangeProdServ";
+                                                settings.Properties.ClientSideEvents.Init = "ChangeProdServ";
+                                            }).Bind(Model.IdProductoServicioTipo).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdProductoServicioTipo, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <b>Cuenta contable:</b>
-                                            <select id="cuentacontable" name="IdCuentaContable" class="form-control z-index show-tick" data-live-search="true">
-                                                @foreach (var cc in ViewBag.CuentasContables)
-                                                {
-                                                    if (cc.IdCuentaContable == Model.IdCuentaContable)
-                                                    {
-                                                        <option value="@cc.IdCuentaContable" selected>@cc.Descripcion</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@cc.IdCuentaContable">@cc.Descripcion</option>
-                                                    }
-                                                }
-                                            </select>
+                                            @Html.DevExpress().ComboBox(settings =>
+                                            {
+                                                settings.Name = "IdCuentaContable";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.SelectedIndex = 0;
+                                                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                settings.Properties.ValueType = typeof(int);
+                                                settings.Properties.TextField = "Descripcion";
+                                                settings.Properties.ValueField = "IdCuentaContable";
+                                            }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <b>Categorías:</b>
-                                            <select name="IdCategoria" class="form-control z-index show-tick" data-live-search="true">
-                                                @foreach (var cc in ViewBag.Categorias)
-                                                {
-                                                    if (cc.IdCategoria == Model.IdCategoria)
-                                                    {
-                                                        <option value="@cc.IdCategoria" selected>@cc.Nombre</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@cc.IdCategoria">@cc.Nombre</option>
-                                                    }
-                                                }
-                                            </select>
+                                            @Html.DevExpress().ComboBox(settings =>
+                                            {
+                                                settings.Name = "IdCategoria";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.SelectedIndex = 0;
+                                                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                settings.Properties.TextField = "Nombre";
+                                                settings.Properties.ValueField = "IdCategoria";
+                                                settings.Properties.ValueType = typeof(short);
+                                            }).BindList(ViewBag.Categorias).Bind(Model.IdCategoria).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdCategoria, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -125,58 +157,51 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <b>Línea de Productos:</b>
-                                            <select name="IdProductoLinea" class="form-control z-index show-tick" data-live-search="true">
-                                                @foreach (var cc in ViewBag.LineasProducto)
-                                                {
-                                                    if (cc.IdProductoLinea == Model.IdProductoLinea)
-                                                    {
-                                                        <option value="@cc.IdProductoLinea" selected>@cc.Linea</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@cc.IdProductoLinea">@cc.Linea</option>
-                                                    }
-                                                }
-                                            </select>
+                                            @Html.DevExpress().ComboBox(settings =>
+                                            {
+                                                settings.Name = "IdProductoLinea";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.SelectedIndex = 0;
+                                                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                settings.Properties.TextField = "Linea";
+                                                settings.Properties.ValueField = "IdProductoLinea";
+                                                settings.Properties.ValueType = typeof(short);
+                                            }).BindList(ViewBag.LineasProducto).Bind(Model.IdProductoLinea).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdProductoLinea, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <b>Unidad de medida:</b>
-                                            <select name="IdUnidadMedida" class="form-control z-index show-tick" data-live-search="true">
-                                                @foreach (var cc in ViewBag.UnidadesMedida)
-                                                {
-                                                    if (cc.IdUnidadMedida == Model.IdUnidadMedida)
-                                                    {
-                                                        <option value="@cc.IdUnidadMedida" selected>@cc.Acronimo</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@cc.IdUnidadMedida">@cc.Acronimo</option>
-                                                    }
-                                                }
-                                            </select>
+                                            @Html.DevExpress().ComboBox(settings =>
+                                           {
+                                               settings.Name = "IdUnidadMedida";
+                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                               settings.SelectedIndex = 0;
+                                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                               settings.Properties.TextField = "Acronimo";
+                                               settings.Properties.ValueField = "IdUnidadMedida";
+                                               settings.Properties.ValueType = typeof(short);
+                                           }).BindList(ViewBag.UnidadesMedida).Bind(Model.IdUnidadMedida).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdUnidadMedida, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <b>Unidad de medida alternativa: (Opcional)</b>
-                                            <select name="IdUnidadMedida2" class="form-control z-index show-tick" data-live-search="true">
-                                                <option>Seleccione unidad </option>
-                                                @foreach (var cc in ViewBag.UnidadesMedida2)
-                                                {
-                                                    if (cc.IdUnidadMedida == Model.IdUnidadMedida2)
-                                                    {
-                                                        <option value="@cc.IdUnidadMedida" selected>@cc.Acronimo</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@cc.IdUnidadMedida">@cc.Acronimo</option>
-                                                    }
-                                                }
-                                            </select>
+                                            @Html.DevExpress().ComboBox(settings =>
+                                            {
+                                                settings.Name = "IdUnidadMedida2";
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                settings.SelectedIndex = 0;
+                                                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                settings.Properties.TextField = "Acronimo";
+                                                settings.Properties.ValueField = "IdUnidadMedida";
+                                                settings.Properties.ValueType = typeof(short);
+                                            }).BindList(ViewBag.UnidadesMedida).Bind(Model.IdUnidadMedida2).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdUnidadMedida, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>

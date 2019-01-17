@@ -147,7 +147,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             string res = resp.Substring(resp.Length - 1, 1);
             RespuestaSatisfaccionPedido usDTO = new RespuestaSatisfaccionPedido()
             {
-                IdRespuesta = p.IdPregunta,
+                //IdRespuesta = p.IdPregunta,
                 IdPedido = p.IdPedido,
                 IdPregunta = p.IdPregunta,
                 Respuesta = Convert.ToByte(res),

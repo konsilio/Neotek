@@ -805,16 +805,16 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
 
-                if (id != 0 || rfc != "" || (nombre != "" && nombre != null))
+                if (id != 0 ||( rfc != "" && rfc != null) || (nombre != "" && nombre != null))
                 {
                     if (id != 0)
                     {
-                        _lstaClientes = (from x in lus where x.IdCliente == id select x).ToList();
+                        lus = (from x in lus where x.IdCliente == id select x).ToList();
                     }
 
                     if (rfc != "")
                     {
-                        _lstaClientes = (from x in lus where x.Rfc == rfc select x).ToList();
+                        lus = (from x in lus where x.Rfc == rfc select x).ToList();
                     }
 
                     if (nombre != "" && nombre != null)

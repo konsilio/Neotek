@@ -24,6 +24,28 @@ namespace MVC.Presentacion.App_Code
                 OrdenesCompra = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
             };
         }
+        public static OrdenesCompraModel InitOrdenesCompraFiltros(string tkn, OrdenesCompraModel model)
+        {          
+            model.Requisiciones = RequisicionServicio.BuscarRequisicionesOC(tkn);
+            var Ordenes = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+
+            if (model.IdProveedor != 0)
+                Ordenes = Ordenes.Where(x => x.IdProveedor.Equals(model.IdProveedor)).ToList();
+            if (model.Estatus != 0)
+                Ordenes = Ordenes.Where(x => x.IdOrdenCompraEstatus.Equals(model.Estatus)).ToList();
+            if (!model.FechaRequeridaA.Equals(DateTime.MinValue))            
+                Ordenes = Ordenes.Where(x => x.FechaRequerida < model.FechaRequeridaA).ToList();            
+            if (!model.FechaRequeridaDe.Equals(DateTime.MinValue))            
+                Ordenes = Ordenes.Where(x => x.FechaRequerida > model.FechaRequeridaDe).ToList();            
+            if (!model.FechaRegistroA.Equals(DateTime.MinValue))            
+                Ordenes = Ordenes.Where(x => x.FechaRegistro < model.FechaRegistroA).ToList();            
+            if (!model.FechaRegistroDe.Equals(DateTime.MinValue))            
+                Ordenes = Ordenes.Where(x => x.FechaRegistro < model.FechaRegistroDe).ToList();
+
+            model.OrdenesCompra = Ordenes;
+            return model;
+            
+        }
         public static List<OrdenCompraDTO> ObtenerOrdenesCompra(short idEmpresa, string Tkn)
         {
             AgenteServicio agente = new AgenteServicio();
