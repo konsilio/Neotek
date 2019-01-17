@@ -5,7 +5,8 @@ import android.util.Log;
 import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AutoconsumoPipaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.AutoconsumoPipaPresenterImpl;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Session;
 import com.google.gson.FieldNamingPolicy;
@@ -27,18 +28,9 @@ public class AutoconsumoPipasInteractorImpl implements AutoconsumoPipaInteractor
     @Override
     public void getList(Session session, boolean esAutoconsumoPipaFinal) {
         DatosAutoconsumoDTO dto = new DatosAutoconsumoDTO();
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<DatosAutoconsumoDTO> call = restClient.getDatosAutoconsumo(
                 false,
                 false,
@@ -47,7 +39,7 @@ public class AutoconsumoPipasInteractorImpl implements AutoconsumoPipaInteractor
                 session.getToken(),
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<DatosAutoconsumoDTO>() {
             @Override

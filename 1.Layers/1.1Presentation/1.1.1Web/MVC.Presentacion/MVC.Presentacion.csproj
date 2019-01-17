@@ -10768,7 +10768,7 @@
     <Content Include="Scripts\bootstrap-material-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ApplicationInsights.config">
+    <Content Include="Views\ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\fonts\Material-Design-Iconic-Font.eot">

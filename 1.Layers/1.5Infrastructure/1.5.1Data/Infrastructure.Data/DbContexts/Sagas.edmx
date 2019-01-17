@@ -1699,14 +1699,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="EsGas" Type="bit" Nullable="false" />
           <Property Name="EsTransporteGas" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPedido' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="RespuestaSatisfaccionPedido">
           <Key>
             <PropertyRef Name="IdRespuesta" />
-            <PropertyRef Name="IdPedido" />
-            <PropertyRef Name="IdPregunta" />
-            <PropertyRef Name="Respuesta" />
           </Key>
           <Property Name="IdRespuesta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdPedido" Type="int" Nullable="false" />
@@ -5112,6 +5107,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
           <EntitySet Name="RequisicionAutorizacionProducto" EntityType="Self.RequisicionAutorizacionProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequisicionEstatus" EntityType="Self.RequisicionEstatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequisicionProducto" EntityType="Self.RequisicionProducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RespuestaSatisfaccionPedido" EntityType="Self.RespuestaSatisfaccionPedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolAccion" EntityType="Self.RolAccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolAccionCatalogo" EntityType="Self.RolAccionCatalogo" Schema="dbo" store:Type="Tables" />
@@ -5135,15 +5131,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
     [CProductoAsociado].[Activo] AS [Activo], 
     [CProductoAsociado].[FechaRegistro] AS [FechaRegistro]
     FROM [dbo].[CProductoAsociado] AS [CProductoAsociado]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="RespuestaSatisfaccionPedido" EntityType="Self.RespuestaSatisfaccionPedido" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [RespuestaSatisfaccionPedido].[IdRespuesta] AS [IdRespuesta], 
-    [RespuestaSatisfaccionPedido].[IdPedido] AS [IdPedido], 
-    [RespuestaSatisfaccionPedido].[IdPregunta] AS [IdPregunta], 
-    [RespuestaSatisfaccionPedido].[Respuesta] AS [Respuesta], 
-    [RespuestaSatisfaccionPedido].[Activo] AS [Activo]
-    FROM [dbo].[RespuestaSatisfaccionPedido] AS [RespuestaSatisfaccionPedido]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Abono_Cargo1" Association="Self.FK_Abono_Cargo1">
             <End Role="Cargo" EntitySet="Cargo" />
@@ -12089,9 +12076,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.RespuestaSatisfaccionPe
         <EntityType Name="RespuestaSatisfaccionPedido">
           <Key>
             <PropertyRef Name="IdRespuesta" />
-            <PropertyRef Name="IdPedido" />
-            <PropertyRef Name="IdPregunta" />
-            <PropertyRef Name="Respuesta" />
+            <!--<PropertyRef Name="IdPedido" />-->
+            <!--<PropertyRef Name="IdPregunta" />
+            <PropertyRef Name="Respuesta" />-->
           </Key>
           <Property Name="IdRespuesta" Type="Int32" Nullable="false" />
           <Property Name="IdPedido" Type="Int32" Nullable="false" />

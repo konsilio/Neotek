@@ -335,20 +335,12 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaDto SolicitarPagoPorteador(ComplementoGasDTO dto)
         {
-            //    var ExistePago = BuscarPagos(dto.OrdenCompraPorteador.IdOrdenCompra);
-            //    if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistentePorteador();
-
-            //    var ocPorteador = OrdenCompraServicio.Buscar(dto.OrdenCompraPorteador.IdOrdenCompra);
-            //    ocPorteador.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.SolicitudPago;
-
-            //    var respActualiza = OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocPorteador));
-            //    if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(ocPorteador);
-
-            //    return respActualiza;
-
-
             var oc = BuscarOrdenCompra(dto.OrdenCompraPorteador.IdOrdenCompra);
             return SolicitarPago(oc);
+        }
+        public List<OrdenCompra> BuscarCompras(short idEmpresa)
+        {
+            return OrdenCompraServicio.BuscarTodo(idEmpresa);
         }
     }
 }

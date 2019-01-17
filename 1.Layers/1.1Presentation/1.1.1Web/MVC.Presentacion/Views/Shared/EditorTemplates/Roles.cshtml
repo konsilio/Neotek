@@ -2,8 +2,7 @@
 @{
     var tipoRol = ViewData["tipo"] ?? new { };
 }
-@*Hidden Fields*@
-<tr class="hideControl">
+
     @Html.HiddenFor(m => m.IdRol)
     @Html.HiddenFor(m => m.IdEmpresa)
     @Html.HiddenFor(m => m.NombreRol)
@@ -60,7 +59,7 @@
     @Html.HiddenFor(m => m.CatConsultarCentroCosto)
     @Html.HiddenFor(m => m.CatInsertarCuentaContable)
     @Html.HiddenFor(m => m.CatModificarCuentaContable)
-    @Html.HiddenFor(m => m.CatEliminarCuentaContable)<
+    @Html.HiddenFor(m => m.CatEliminarCuentaContable)
     @Html.HiddenFor(m => m.CatConsultarCuentaContable)
     @Html.HiddenFor(m => m.CatInsertarCliente)
     @Html.HiddenFor(m => m.CatModificarCliente)
@@ -90,7 +89,6 @@
     @Html.HiddenFor(m => m.CatEliminarPrecioVenta)
     @Html.HiddenFor(m => m.CatConsultarPrecioVenta)
 
-</tr>
 <tr>
     <td>@Model.NombreRol </td>
 
@@ -145,8 +143,7 @@
         <td>@Html.CheckBoxFor(m => m.CatConsultarPrecioVenta) </td>
     }
     @if (tipoRol.Equals("compras"))
-    {
-        <td>@Model.NombreRol </td>
+    {   
         <td>@Html.CheckBoxFor(m => m.CompraVerOCompra)</td>
         <td>@Html.CheckBoxFor(m => m.CompraGenerarOCompra)</td>
         <td>@Html.CheckBoxFor(m => m.CompraAutorizarOCompra)</td>

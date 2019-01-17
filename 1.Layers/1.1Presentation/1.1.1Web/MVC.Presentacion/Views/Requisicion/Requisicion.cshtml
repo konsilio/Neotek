@@ -1,4 +1,15 @@
 ﻿@model MVC.Presentacion.Models.Requisicion.RequisicionDTO
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdmin).Equals(false) ? "disabled" : "";
     string EnabledEsNueva = Convert.ToBoolean(ViewBag.EsNueva).Equals(true) ? "" : "disabled";
@@ -26,7 +37,7 @@
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             <h2>Requisición</h2>
                             <ul class="breadcrumb padding-0">
-                                <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home" )><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Requisición</li>
                                 <li class="breadcrumb-item"> Nueva </li>
                             </ul>
@@ -62,24 +73,41 @@
                                                 @Html.HiddenFor(m => m.IdEmpresa)
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        @*<div class="col-sm-6">
                                             <div id="divServ">
                                                 <div class="form-group">
-                                                    @Html.CheckBoxFor(m => m.EsExterno, new { id = "cbEsExterno", @style = "width: 20px; height: 20px;" })                                                  
+                                                    @Html.CheckBoxFor(m => m.EsExterno, new { id = "cbEsExterno", @style = "width: 20px; height: 20px;" })
                                                     <label for="cbServicioTransporte" class="z-index:8">
                                                         ¿Requisición Externa?
                                                     </label>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>*@
                                     </div>
                                     <div class="row clearfix z-index" id="divCamposRequi">
                                         <div class="col-lg-3">
                                             <b>Fecha requerida:</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-                                                @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
-                                            </div>
+
+                                            @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "FechaRequerida";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       //settings.Properties.NullText = "dd/MM/yyyy";
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
+                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
+                                       //settings.Properties.TimeSectionProperties.Visible = true;
+                                       //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                       //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "HH:mm";
+                                       //settings.PopupCalendarOwnerName = "FechaRequerida";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       settings.Theme = "Material";
+                                   }).Bind(Model.FechaRequerida).GetHtml()
+                                            @*<div class="input-group">
+                                                    <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+                                                    @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
+                                                </div>*@
                                             @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
                                             @Html.HiddenFor(m => m.FechaRequerida)
                                         </div>
@@ -277,11 +305,11 @@
                                                                 <td>@prodReq.Aplicacion</td>
                                                                 <td>@prodReq.CentroCosto</td>
                                                                 <td>
-                                                                    <a href="@Url.Action("Editar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                    <a href="@Url.Action(" Editar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">edit</i>
                                                                         <span>Editar</span>
                                                                     </a>
-                                                                    <a href="@Url.Action("Borrar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                    <a href="@Url.Action(" Borrar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">delete</i>
                                                                         <span>Eliminar</span>
                                                                     </a>
@@ -300,7 +328,7 @@
                                     }
                                     <div class="row clearfix">
                                         <div class="col-lg-4 col-md-8 text-center">
-                                            <a href="@Url.Action("Requisiciones", "Requisicion" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
+                                            <a href="@Url.Action(" Requisiciones", "Requisicion" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
                                                 Regresar
                                             </a>
                                         </div>

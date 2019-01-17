@@ -1,4 +1,5 @@
-﻿using MVC.Presentacion.Controllers.Shared;
+﻿using DevExpress.Web.Mvc;
+using MVC.Presentacion.Controllers.Shared;
 using MVC.Presentacion.App_Code;
 using System;
 using System.Collections.Generic;
@@ -152,8 +153,8 @@ namespace MVC.Presentacion.Controllers
             if (TempData["ListProductosRequisicion"] != null)
                 model.Productos = (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"];
             var newModel = new RequisicionDTO();
-            var fechaR = TempData["ListProducto"] != null ? ((RequisicionDTO)TempData["ListProducto"]).FechaRequerida : model.FechaRequerida;
-            model.FechaRequerida = fechaR;
+            //var fechaR = TempData["ListProducto"] != null ? ((RequisicionDTO)TempData["ListProducto"]).FechaRequerida : model.FechaRequerida;
+            //model.FechaRequerida = fechaR;
             if (TempData["IdEmpresa"] != null)
             {
                 var id = (TempData["IdEmpresa"]);
@@ -289,6 +290,11 @@ namespace MVC.Presentacion.Controllers
                     Mensaje = Resp.MensajesError[0];
             }
             return Mensaje;
+        }
+
+        public ActionResult ReqTipoProdServPartial()
+        {
+            return PartialView("_ReqTipoProdServPartial");
         }
     }
 }

@@ -287,7 +287,9 @@ namespace Application.MainModule.Servicios.Compras
             var ImporteLitros = CalcularOrdenCompraServicio.ComplementoImporteEnLitros(PrecioXGalon, FactorCGalLtr ?? 0);
             var PVPM = CalcularOrdenCompraServicio.ComplementoPVPMKg(ImporteLitros, FactorCaKg ?? 0);
             var PVIva = decimal.Round(CalcularOrdenCompraServicio.ComplementoPVIVA(PVPM, Iva ?? 0), 5);
-            var ImportePagar = CalcularOrdenCompraServicio.ComplementoImporte(kilogramosPapeleta, PVIva); 
+            var ImportePagar = CalcularOrdenCompraServicio.ComplementoImporte(kilogramosPapeleta, PVIva);
+
+            CargarDatosPapeleta(dto);
 
             oc.MontBelvieuDlls = dto.OrdenCompraExpedidor.MontBelvieuDlls;
             oc.TarifaServicioPorGalonDlls = dto.OrdenCompraExpedidor.TarifaServicioPorGalonDlls;

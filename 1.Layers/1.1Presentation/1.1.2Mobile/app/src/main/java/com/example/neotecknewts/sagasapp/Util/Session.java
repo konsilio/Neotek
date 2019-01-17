@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,6 +17,7 @@ import java.util.HashMap;
  */
 //clase para guardar la sesion
 public class Session {
+
     // Shared Preferences
     SharedPreferences pref;
 
@@ -53,6 +56,9 @@ public class Session {
     public static final String KEY_TIME_SESSION = "time";
 
     public static final String KEY_ID_USUARIO = "id";
+
+    private static final String KEY_ID_ALMACEN = "idAlmacen";
+
     // Constructor
     public Session(Context context){
         this._context = context;
@@ -61,8 +67,9 @@ public class Session {
     }
 
 
-    public void createLoginSession(String password, String email, String token, int idEmpresa,
-                                   String fb_token,String mensaje,String nombre,int idUsuario){
+
+    public void createLoginSession(String password, String email, int idEmpresa,
+                                   String fb_token,String mensaje,String nombre,UsuarioDTO usuario){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -72,7 +79,7 @@ public class Session {
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
 
-        editor.putString(KEY_TOKEN, token);
+        editor.putString(KEY_TOKEN, usuario.getToken());
 
         editor.putInt(KEY_ID_EMPRESA,idEmpresa);
 
@@ -82,9 +89,11 @@ public class Session {
 
         editor.putString(KEY_NOMBRE,nombre);
 
-        editor.putString(KEY_TIME_SESSION,new Date().toString());
+        editor.putString(KEY_TIME_SESSION, new SimpleDateFormat(Constantes.FORMATO_FECHA_SESSION).format(new Date()));
 
-        editor.putInt(KEY_ID_USUARIO,idUsuario);
+        editor.putInt(KEY_ID_USUARIO,usuario.getIdUsuario());
+
+        editor.putInt(KEY_ID_ALMACEN,usuario.getIdAlmacen());
 
         // commit changes
         editor.commit();
@@ -147,11 +156,19 @@ public class Session {
     }
 
     public boolean isExpired(){
-        Calendar calendar = Calendar.getInstance();
-        Date fecha_session = new Date(pref.getString(KEY_TIME_SESSION,
-                calendar.getTime().toString()));
+
+        SimpleDateFormat format = new SimpleDateFormat(Constantes.FORMATO_FECHA_SESSION);
+
+        String prefFechaSesion = pref.getString(KEY_TIME_SESSION, format.format(new Date()));
+        Date fecha_session = new Date();
+
+        try {
+            fecha_session = format.parse(prefFechaSesion);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         boolean ban= true;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String current = format.format(new Date());
 
 
@@ -166,4 +183,5 @@ public class Session {
         }
         return ban;
     }
+
 }

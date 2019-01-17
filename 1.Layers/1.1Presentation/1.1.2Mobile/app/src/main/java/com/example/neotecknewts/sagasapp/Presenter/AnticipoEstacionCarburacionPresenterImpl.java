@@ -41,19 +41,19 @@ public class AnticipoEstacionCarburacionPresenterImpl implements AnticipoEstacio
 
     @Override
     public void checkLecturas(String token) {
-        view.onShowProgress(R.string.message_cargando);
+        //view.onShowProgress(R.string.message_cargando);
         interactor.checkLecturas(token);
     }
 
     @Override
     public void onSuccessVerificarLecturas(RespuestaVerificarLecturasDTO data) {
-        view.onHiddeProgress();
+        //view.onHiddeProgress();
         view.onSuccessRespuestaLecturas(data);
     }
 
     @Override
     public void onErrorVerificarLecturas(String mensaje) {
-        view.onHiddeProgress();
+        //view.onHiddeProgress();
         view.onErrorVerificarLecturas(mensaje);
     }
 }

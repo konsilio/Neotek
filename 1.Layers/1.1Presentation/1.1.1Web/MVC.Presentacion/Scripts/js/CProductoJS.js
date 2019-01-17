@@ -40,28 +40,28 @@
     });
 
 });//document.ready
-$(function () {
-    $('select').on('change', function () {
-        if ($('#tipoproducto').find('option:selected').val() == 2) {
-            $('#divProd').show();
-            $('#divServ').hide();
-            $('#cbServicioTransporte').prop('checked', false);
-        }
-        if ($('#tipoproducto').find('option:selected').val() == 3) {
-            $('#divProd').hide();
-            $('#divServ').show();
-            $('#cbEsGas').prop('checked', false);
-            $('#cbActivoVenta').prop('checked', false);
-        }
-        if ($('#tipoproducto').find('option:selected').val() == 0) {
-            $('#divProd').hide();
-            $('#divServ').hide();
-            $('#cbEsGas').prop('checked', false);
-            $('#cbActivoVenta').prop('checked', false);
-            $('#cbServicioTransporte').prop('checked', false);
-        }
-        cbServicioTransporte
-    });
+//function ChangeProdServ(s, e) {
+//    var sel = s.GetValue();
 
-
-});
+//    $('select').on('change', function () {
+//        if (sel == 2) {
+//            $('#divProd').show();
+//            $('#divServ').hide();
+//            $('#cbServicioTransporte').prop('checked', false);
+//        }
+//        if (sel == 3) {
+//            $('#divProd').hide();
+//            $('#divServ').show();
+//            $('#cbEsGas').prop('checked', false);
+//            $('#cbActivoVenta').prop('checked', false);
+//        }
+//        if (sel == 0) {
+//            $('#divProd').hide();
+//            $('#divServ').hide();
+//            $('#cbEsGas').prop('checked', false);
+//            $('#cbActivoVenta').prop('checked', false);
+//            $('#cbServicioTransporte').prop('checked', false);
+//        }
+//        cbServicioTransporte
+//    });
+//};

@@ -23,7 +23,7 @@ namespace Application.MainModule.Servicios.Ventas
     {
         public static List<CajaGeneralDTO> Obtener()
         {
-            List<CajaGeneralDTO> lPventas = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().BuscarTodos());
+            List<CajaGeneralDTO> lPventas = CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().BuscarTodos());
             return lPventas;
         }
 
@@ -114,7 +114,7 @@ namespace Application.MainModule.Servicios.Ventas
         /*OBTENER  Lt y Kg vendidos del punto de venta por la cve del reporte tbl VentaPuntoDeVentaDetalle*/
         public static List<AlmacenGasMovimientoDto> ObtenerPVDetalle(short unidad, short empresa, short year, byte month, byte dia, short orden, string Folio)
         {
-            List<AlmacenGasMovimientoDto> ldetalles = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(empresa, year, month, dia, orden, Folio));
+            List<AlmacenGasMovimientoDto> ldetalles = CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(empresa, year, month, dia, orden, Folio));
             return ldetalles;
         }
         public static List<VentasPipaDto> ObtenerVentasPipas(short unidad, short empresa, short year, byte month, byte dia, short orden, DateTime fecha, string FolioOperacion)
@@ -131,7 +131,7 @@ namespace Application.MainModule.Servicios.Ventas
 
         public static List<CajaGeneralDTO> ObtenerIdEmp(short IdEmpresa)
         {
-            List<CajaGeneralDTO> lPventas = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(IdEmpresa));
+            List<CajaGeneralDTO> lPventas = CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(IdEmpresa));
             return lPventas;
         }
         public static VentaCajaGeneral ObtenerCG(string cve)
@@ -140,13 +140,13 @@ namespace Application.MainModule.Servicios.Ventas
         }
         public static List<VentaPuntoVentaDTO> ObtenerPV(string cve)
         {
-            List<VentaPuntoVentaDTO> lPventas = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTOC(new CajaGeneralDataAccess().BuscarPorCve(cve));
+            List<VentaPuntoVentaDTO> lPventas = CajaGeneralAdapter.ToDTOC(new CajaGeneralDataAccess().BuscarPorCve(cve));
             return lPventas;
         }
 
         public static List<VentaCorteAnticipoDTO> ObtenerCE(string cve)
         {
-            List<VentaCorteAnticipoDTO> lPventas = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTOCE(new CajaGeneralDataAccess().BuscarPorCveEC(cve));
+            List<VentaCorteAnticipoDTO> lPventas = CajaGeneralAdapter.ToDTOCE(new CajaGeneralDataAccess().BuscarPorCveEC(cve));
             return lPventas;
         }
 
