@@ -57,7 +57,7 @@
         //form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "GuardarCliente" }) %>');
         //form.attr('method', 'post');
         form.submit();
-       // $("form").submit();
+        // $("form").submit();
     });
 
 });

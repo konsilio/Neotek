@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Exceptions.MainModule.Validaciones;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,6 +11,8 @@ namespace MVC.Presentacion.Models.Catalogos
     {
         public int IdCliente { get; set; }
         public short Orden { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "IdPais")]
         public byte IdPais { get; set; }
         public Nullable<byte> IdEstadoRep { get; set; }
         public string EstadoProvincia { get; set; }
@@ -26,5 +30,8 @@ namespace MVC.Presentacion.Models.Catalogos
 
         public string Pais { get; set; }
         public string Estado { get; set; }
+
+        public byte IdPais2 { get; set; }
+        public Nullable<byte> IdEstadoRep2 { get; set; }
     }
 }

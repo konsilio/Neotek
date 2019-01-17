@@ -1,4 +1,5 @@
 ﻿using DevExpress.Web.Demos.Mvc;
+using DevExpress.Web.Mvc;
 using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Pedidos;
@@ -221,6 +222,8 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
+                model.IdEstadoRep = model.IdEstadoRep2;
+                model.IdPais = model.IdPais2;
                 var respuesta = CatalogoServicio.ModificarClienteLocacion(model, _tkn);
                 if (respuesta.Exito)
                 {
@@ -230,7 +233,7 @@ namespace MVC.Presentacion.Controllers
                 else
                 {
                     TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("AltaCliente");
+                    return RedirectToAction("AltaClienteDireccion");//AltaCliente
                 }
             }
             //ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
@@ -302,12 +305,23 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
+                //ViewBag.Message = String.Format("Values from {0} were posted", ComboBoxExtension.GetValue<System.Int32>("MyComboBox"));
                 var respuestaLocacion = CatalogoServicio.RegistraLocaciones(_Obj, _tkn);
                 TempData["RespuestaDTO"] = respuestaLocacion;
                 TempData["Locaciones"] = _Obj;
                 return RedirectToAction("AltaClienteDireccion", new { IdCliente = _Obj.IdCliente });
 
             }
+
+        }
+        public ActionResult BorrarClienteLoc(int id, short idOrden)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+            ClienteLocacionMod _ObjModel = CatalogoServicio.ObtenerModel(idOrden, id, _tkn);
+            var respuesta = CatalogoServicio.EliminarClienteLocacion(_ObjModel, _tkn);
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("AltaClienteDireccion");
 
         }
         public ActionResult RevisarPedido(int? idPedido, string msj = null)
@@ -387,7 +401,7 @@ namespace MVC.Presentacion.Controllers
 
             var Respuesta = PedidosServicio.EliminarPedido(_model, Session["StringToken"].ToString());
             ViewData["RespuestaDTO"] = Respuesta;
-            return RedirectToAction("Index");           
+            return RedirectToAction("Index");
         }
         private string Validar(RespuestaDTO Resp = null)
         {
@@ -411,6 +425,13 @@ namespace MVC.Presentacion.Controllers
             return Mensaje;
         }
         #region Combos
+        public ActionResult ComboBoxPartialPais()
+        {
+            _tkn = Session["StringToken"].ToString();
+            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
+            List<ClienteLocacionMod> model = new List<ClienteLocacionMod>();
+            return PartialView("_ComboBoxPartialPais", model);
+        }
         public ActionResult _LocacionesCliente(PedidoModel _model)
         {
             _tkn = Session["StringToken"].ToString();
@@ -418,7 +439,7 @@ namespace MVC.Presentacion.Controllers
             string Tel1 = _model.Telefono1 ?? "";
             string Tel2 = _model.Telefono2 ?? "";
             string Rfc = _model.Rfc ?? "";
-            
+
             var lstClientes = CatalogoServicio.ListaClientes(Tel1, Tel2, Rfc, _tkn).ToList();
             _lst = CatalogoServicio.ObtenerLocaciones(lstClientes.Count() > 0 ? lstClientes.FirstOrDefault().IdCliente : 0, _tkn);
 
@@ -473,7 +494,7 @@ namespace MVC.Presentacion.Controllers
 
             public int IntTipoUndad { get; private set; }
             public string TipoUnidad { get; private set; }
-        }        
+        }
         #endregion
     }
 }

@@ -11563,6 +11563,8 @@
     <Content Include="Views\Cobranza\_AbonosPartial.cshtml" />
     <Content Include="Views\Cobranza\CreditoRecuperado.cshtml" />
     <Content Include="Views\Cobranza\CarteraVencida.cshtml" />
+    <Content Include="Views\Empresas\_DatabaseComboBoxPartial.cshtml" />
+    <Content Include="Views\Pedidos\_ComboBoxPartialPais.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

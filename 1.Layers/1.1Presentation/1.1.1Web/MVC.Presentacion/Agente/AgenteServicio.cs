@@ -774,12 +774,12 @@ namespace MVC.Presentacion.Agente
             Paises.Add(rol);
             return Paises;
         }
-        public void BuscarListaClientes(int id, string rfc, string nombre, string tkn)//short idEmpresa, 
+        public void BuscarListaClientes(int id, int TipoPersona, int regimen, string rfc, string nombre, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetClientes"];
-            GetListaClientes(id, rfc, nombre, tkn).Wait();
+            GetListaClientes(id, TipoPersona, regimen, rfc, nombre, tkn).Wait();
         }
-        private async Task GetListaClientes(int id, string rfc, string nombre, string Token)
+        private async Task GetListaClientes(int id, int TipoPersona, int regimen, string rfc, string nombre, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -805,14 +805,14 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
 
-                if (id != 0 ||( rfc != "" && rfc != null) || (nombre != "" && nombre != null))
+                if (id != 0 ||( rfc != "" && rfc != null) || (nombre != "" && nombre != null) || (TipoPersona != 0) || (regimen != 0) )
                 {
                     if (id != 0)
                     {
                         lus = (from x in lus where x.IdCliente == id select x).ToList();
                     }
 
-                    if (rfc != "")
+                    if (rfc != "" && rfc != null)
                     {
                         lus = (from x in lus where x.Rfc == rfc select x).ToList();
                     }
@@ -821,6 +821,16 @@ namespace MVC.Presentacion.Agente
                     {
                         lus = (from x in lus where x.RazonSocial == nombre || (x.Nombre + " " + x.Apellido1) == nombre select x).ToList();
                     }
+                    if (TipoPersona != 0)
+                    {
+                        lus = (from x in lus where x.IdTipoPersona == TipoPersona select x).ToList();
+                    }
+
+                    if (regimen != 0)
+                    {
+                        lus = (from x in lus where x.IdRegimenFiscal == regimen select x).ToList();
+                    }
+
                 }
 
                 _lstaClientes = lus;
@@ -1255,6 +1265,14 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Caja General
+        public List<PaisModel> AddSelect()
+        {
+            PaisModel rol = new PaisModel();
+            rol.Pais = "Seleccione";
+            List<PaisModel> Paises = new List<PaisModel>();
+            Paises.Add(rol);
+            return Paises;
+        }
         public void BuscarListaVentaCajaGral(string tkn, string type)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGral"];
@@ -3451,6 +3469,7 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         #endregion
+       
         private async Task LLamada<T>(T _dto, string token, string Tipo)
         {
             using (var client = new HttpClient())

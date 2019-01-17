@@ -1,22 +1,20 @@
 ﻿@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
-
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <!DOCTYPE html>
-
 <html>
 <head>
     @{
         ViewBag.Title = "Index";
     }
-    <!-- Bootstrap Select Css -->
-    @*<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />*@
-
-    <!-- datetimepicker Css -->
-    @*<link href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />*@
-
-    <!-- datetimepicker Js -->
-    @*<script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-        <script src="~/assets/plugins/momentjs/moment.js"></script>*@
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -47,8 +45,40 @@
             });//key up.
 
         });
-
     </script>
+    <style type="text/css">
+        .col-sm-01 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+            max-width: 2.666667%;
+            text-align: left;
+        }
+
+        .col-sm-013 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+            max-width: 13.666667%;
+            text-align: right;
+        }
+
+        .col-sm-05 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+            max-width: 8.666667%;
+            text-align: center;
+        }
+
+        .col-sm-005 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+            max-width: 12.666667%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("ActualizarPrecioVenta", "PrecioVenta", FormMethod.Post))
@@ -63,38 +93,64 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="col-sm-005" style="text-align:center">
                                     <div class="form-group">
-                                        Precio PEMEX: @* , id = "PrecioPMX" @Html.TextBoxFor(m => m.PrecioPemexKg, new { @class = "form-control"})kg.*@
-                                        <input name="PrecioPemexKg" id="PrecioPMX" type="text" class="form-control" value="@(ViewBag.ListaPV[0].PrecioPemexKg)" />kg.
+                                        Precio PEMEX:
                                     </div>
                                 </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="col-sm-005">
                                     <div class="form-group">
-                                        Utilidad esperada: @*@Html.TextBoxFor(m => m.UtilidadEsperadaKg, new { @class = "form-control"})kg., " *@
-                                        <input name="UtilidadEsperadaKg" id="txtUtilidad" type="text" class="form-control" value="@(ViewBag.ListaPV[0].UtilidadEsperadaKg)"/>
+                                        <input name="PrecioPemexKg" id="PrecioPMX" type="text" class="form-control" />
                                     </div>
                                 </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="col-sm-01">
+                                    <div class="form-group">
+                                        kg.
+                                    </div>
+                                </div>
+                                <div class="col-sm-005" style="text-align:center">
+                                    <div class="form-group">
+                                        Utilidad esperada:
+                                    </div>
+                                </div>
+                                <div class="col-sm-005">
+                                    <div class="form-group">
+                                        <input name="UtilidadEsperadaKg" id="txtUtilidad" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-01">
+                                    <div class="form-group">
+                                        kg.
+                                    </div>
+                                </div>
+                                <div class="col-sm-005" style="text-align:center">
                                     <div class="form-group">
                                         Precio salida:
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="col-sm-005">
                                     <div class="form-group">
-                                        @* @Html.LabelFor(m => m.PrecioSalidaKg, new { @class = "form-control" }), *@
-                                        <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" readonly="readonly"/>
+                                        <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" readonly="readonly" />
                                     </div>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-01">
                                     <div class="form-group">
-                                        <input name="PrecioSalidaLt" type="text" class="form-control" readonly="readonly" />
+                                        kg.
+                                    </div>
+                                </div>
+                                <div class="col-sm-005">
+                                    <div class="form-group">
+                                        <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" readonly="readonly" />
                                         <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
                                         <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
-                                        <input type="text" name="IdPrecioVenta" hidden="hidden" value="@(ViewBag.ListaPV[0].IdPrecioVenta)" />
-
+                                        <input type="text" name="Categoria" class="form-control date" hidden="hidden" value="Combustibles" />
+                                        <input type="text" name="Linea" class="form-control date" hidden="hidden" value="Gas" />
+                                        <input type="text" name="Producto" class="form-control date" hidden="hidden" value="Gas" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-01">
+                                    <div class="form-group">
+                                        Lt.
                                     </div>
                                 </div>
                             </div>
@@ -103,15 +159,20 @@
                                     <b>Fecha programada:</b>
                                 </div>
                                 <div class="col-sm-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="zmdi zmdi-calendar"></i>
-                                        </span>
-                                        <input type="text" name="FechaProgramada" class="form-control datetimepicker" placeholder="Fecha programada" data-dtp="dtp_REMsB">
-                                    </div>
+                                    @Html.DevExpress().DateEdit(settings =>
+                               {
+                                   settings.Name = "FechaProgramada";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Custom;
+                                   settings.Theme = "Material";
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.NullText = "dd/MM/yyyy";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                               }).GetHtml()
                                 </div>
                                 <div class="col-sm-7">
-                                    <input type="submit" id="btnActualizaPrecio" value="Actualizar Precio" formaction=@Url.Action("ActualizarPrecioVenta") formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
+                                    <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
                                 </div>
                             </div>
                         </div>

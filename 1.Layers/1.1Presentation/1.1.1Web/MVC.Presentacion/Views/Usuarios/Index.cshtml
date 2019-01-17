@@ -1,13 +1,20 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
-
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 @model  UsuarioDTO
 
 @{
     ViewBag.Title = "Index";
 }
 
-<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
@@ -70,13 +77,13 @@
                                     else
                                     {
                                         @ViewBag.Empresas
+                                        <input type="text" name="IdEmpresa" value="@ViewBag.IdEmpresa" hidden />
                                     }
                                 </div>
                             </div>
                         </div>
                         <br />
                         <div class="row clearfix">
-
                         </div>
                         <br />
                         <div class="row clearfix">
@@ -84,25 +91,52 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-3">
                                         <strong>Nombre:</strong>
-                                        <select id="ddlUser" name="IdUsuario" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
-                                            <option value="-1">Seleccione uno</option>
-                                            @foreach (var lst in ViewBag.ListaUsuarios)
-                                            {
-                                                <option value="@lst.IdUsuario">@lst.Nombre</option>
-                                            }
-                                        </select>
+                                        @*<select id="ddlUser" name="IdUsuario" data-live-search="true">
+                                                <option value="-1">Seleccione uno</option>
+                                                @foreach (var lst in ViewBag.ListaUsuarios)
+                                                {
+                                                    <option value="@lst.IdUsuario">@lst.Nombre</option>
+                                                }
+                                            </select>*@
+                                        @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "IdUsuario";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Theme = "Material";
+                                       settings.Properties.TextField = "Nombre";
+                                       settings.Properties.ValueField = "IdUsuario";                                       
+                                       settings.Properties.ValidationSettings.RequiredField.IsRequired = false;
+
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                           combo.Properties.ValueType = typeof(int);
+                                           combo.SelectedIndex = 0;
+                                       };
+                                   }).BindList(ViewBag.ListaUsuarios).Bind(Model.IdUsuario).GetHtml()
                                     </div>
 
                                     <div class="col-sm-3">
                                         <strong>Correo Elect. (Acceso):</strong>
-                                        <select id="ddlUser" name="Email1" class="form-control show-tick" data-live-search="true">
-                                            <option value="0">Seleccione uno</option>
-                                            @foreach (var lst in ViewBag.ListaUsuarios)
-                                            {
-                                                <option value="@lst.Email1">@lst.Email1</option>
-                                            }
-                                        </select>
-
+                                        @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "Email1";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Theme = "Material";
+                                       settings.Properties.TextField = "Email1";
+                                       settings.Properties.ValueField = "Email1";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                           combo.SelectedIndex = 0;
+                                       };
+                                   }).BindList(ViewBag.ListaUsuarios).GetHtml()
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="form-group">
@@ -113,7 +147,7 @@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <div> &nbsp; </div>
-                                            <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
+                                            <input type="submit" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
                                         </div>
                                     </div>
                                 </div>
@@ -152,31 +186,31 @@
                                         <tbody>
                                             @foreach (var item in Model.Listausuarios)
                                             {
-                                                <tr>
-                                                    <th>@item.Empresa</th>
-                                                    <td>@item.Nombre @item.Apellido1 @item.Apellido2 </td>
-                                                    <td>@item.Email1</td>
-                                                    <td>@item.Celular1</td>
-                                                    <td>@item.Telefono1</td>
-                                                    <td>
-                                                        <a href="@Url.Action("EditarUsuario", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="material-icons">edit</i>
-                                                            <span>Editar usuario</span>
-                                                        </a>
-                                                        <a href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="zmdi zmdi-settings"></i>
-                                                            <span>Actualiza credenciales</span>
-                                                        </a>
-                                                        <a href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="material-icons">dashboard</i>
-                                                            <span>Actualiza roles</span>
-                                                        </a>
-                                                        <a href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="material-icons">delete</i>
-                                                            <span>Eliminar usuario</span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <th>@item.Empresa</th>
+                                                <td>@item.Nombre @item.Apellido1 @item.Apellido2 </td>
+                                                <td>@item.Email1</td>
+                                                <td>@item.Celular1</td>
+                                                <td>@item.Telefono1</td>
+                                                <td>
+                                                    <a href="@Url.Action("EditarUsuario", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="material-icons">edit</i>
+                                                        <span>Editar usuario</span>
+                                                    </a>
+                                                    <a href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="zmdi zmdi-settings"></i>
+                                                        <span>Actualiza credenciales</span>
+                                                    </a>
+                                                    <a href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="material-icons">dashboard</i>
+                                                        <span>Actualiza roles</span>
+                                                    </a>
+                                                    <a href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="material-icons">delete</i>
+                                                        <span>Eliminar usuario</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -187,20 +221,20 @@
                     </div>
                 </div>
                 @*@if (ViewBag.MessageError != null)
-                {
-                    <div class="row clearfix">
-                        <div id="divMensajeError" class="container">
-                            <div class="alert alert-danger">
-                                <div class="alert-icon">
-                                    <i class="zmdi zmdi-block"></i>
+                    {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MessageError</label>
+                                    </strong>
                                 </div>
-                                <strong>
-                                    <label>@ViewBag.MessageError</label>
-                                </strong>
                             </div>
                         </div>
-                    </div>
-                }*@
+                    }*@
             </div>
         </div>
     </section>

@@ -1481,10 +1481,10 @@ namespace MVC.Presentacion.App_Code
             return agente._lstaRegimenFiscal;
         }
 
-        public static List<ClientesDto> ListaClientes(int id, string rfc, string nombre, string token)
+        public static List<ClientesDto> ListaClientes(int id, int? TipoPersona, int? regimen, string rfc, string nombre, string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaClientes(id, rfc, nombre, token);
+            agente.BuscarListaClientes(id, TipoPersona??0, regimen ?? 0, rfc, nombre, token);
             return agente._lstaClientes;
         }
         public static List<ClientesDto> ListaClientes(short idEmpresa, string token)

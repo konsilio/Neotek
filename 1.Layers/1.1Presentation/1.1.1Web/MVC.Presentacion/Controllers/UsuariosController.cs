@@ -18,6 +18,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             else
@@ -33,11 +34,9 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaDTOError"] != null)
             {
                 ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);    
-            }
-         
+            }         
             return View(model);
         }
-
         public ActionResult Nuevo()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -63,14 +62,12 @@ namespace MVC.Presentacion.Controllers
             _tok = Session["StringToken"].ToString();
 
             var respuesta = CatalogoServicio.CrearUsuario(_ojUs, _tok);
-
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
-
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;
@@ -99,14 +96,12 @@ namespace MVC.Presentacion.Controllers
             _tok = Session["StringToken"].ToString();
 
             var respuesta = CatalogoServicio.ActualizaCredencialesUser(objUser, _tok);
-
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
-
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;
@@ -127,8 +122,7 @@ namespace MVC.Presentacion.Controllers
                 if (!(bool)TempData["RespuestaDTO"])
                     ViewBag.Tipo = "alert-danger";
                 else
-                    ViewBag.Tipo = "alert-success";
-              
+                    ViewBag.Tipo = "alert-success";              
             }
             else
                 ViewBag.Tipo = "alert-success";
@@ -147,12 +141,10 @@ namespace MVC.Presentacion.Controllers
             {           
                 TempData["RespuestaDTO"] = respuesta.Exito;
                 return RedirectToAction("ActualizaRoles", new { id = objUser.IdUsuario, msj = string.Concat("Asignacion exitosa de Rol ", objUser.IdRol) });
-
-            }
+}
 
             else
-            {
-              
+            {              
                 TempData["RespuestaDTO"] = respuesta.Exito;               
                 return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario, msj = respuesta.MensajesError[0] });
             }
@@ -258,7 +250,7 @@ namespace MVC.Presentacion.Controllers
             //{
             //    Listausuarios = CatalogoServicio.FiltrarBusquedaUsuario(filterObj, _tkn)
             //};
-            //filterObj.Listausuarios = CatalogoServicio.FiltrarBusquedaUsuario(filterObj, _tkn);
+            filterObj.Listausuarios = CatalogoServicio.FiltrarBusquedaUsuario(filterObj, _tkn);
             return RedirectToAction("Index", "Usuarios" , filterObj);
         }
 
