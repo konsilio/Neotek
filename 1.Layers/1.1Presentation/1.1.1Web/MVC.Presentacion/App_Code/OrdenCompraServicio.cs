@@ -28,24 +28,21 @@ namespace MVC.Presentacion.App_Code
         {          
             model.Requisiciones = RequisicionServicio.BuscarRequisicionesOC(tkn);
             var Ordenes = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            if (!model.FechaRequeridaA.Equals(DateTime.MinValue))
-            {
-                //Ordenes = Ordenes.Where(x => x.FechaRequerida <)
-            }
-            if (!model.FechaRequeridaDe.Equals(DateTime.MinValue))
-            {
 
-            }
-            if (!model.FechaRegistroA.Equals(DateTime.MinValue))
-            {
+            if (model.IdProveedor != 0)
+                Ordenes = Ordenes.Where(x => x.IdProveedor.Equals(model.IdProveedor)).ToList();
+            if (model.Estatus != 0)
+                Ordenes = Ordenes.Where(x => x.IdOrdenCompraEstatus.Equals(model.Estatus)).ToList();
+            if (!model.FechaRequeridaA.Equals(DateTime.MinValue))            
+                Ordenes = Ordenes.Where(x => x.FechaRequerida < model.FechaRequeridaA).ToList();            
+            if (!model.FechaRequeridaDe.Equals(DateTime.MinValue))            
+                Ordenes = Ordenes.Where(x => x.FechaRequerida > model.FechaRequeridaDe).ToList();            
+            if (!model.FechaRegistroA.Equals(DateTime.MinValue))            
+                Ordenes = Ordenes.Where(x => x.FechaRegistro < model.FechaRegistroA).ToList();            
+            if (!model.FechaRegistroDe.Equals(DateTime.MinValue))            
+                Ordenes = Ordenes.Where(x => x.FechaRegistro < model.FechaRegistroDe).ToList();
 
-            }
-            if (!model.FechaRegistroDe.Equals(DateTime.MinValue))
-            {
-
-            }
-
-            //model.OrdenesCompra = Ordenes.
+            model.OrdenesCompra = Ordenes;
             return model;
             
         }

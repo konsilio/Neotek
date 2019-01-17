@@ -134,6 +134,7 @@
                                 <div class="col-sm-4">
                                     <label>Proveedor</label>
                                     <select name="IdProveedor" class="form-control z-index show-tick selectpicker" data-live-search="true">
+                                        <option value="0">Seleccione uno</option>
                                         @foreach (var lst in ViewBag.Proveedores)
                                         {
                                             <option value="@lst.IdProveedor">@lst.NombreComercial</option>
@@ -143,6 +144,7 @@
                                 <div class="col-sm-4">
                                     <label>Estatus</label>
                                     <select name="Estatus" class="form-control z-index show-tick selectpicker" data-live-search="true">
+                                        <option value="0" >Seleccione uno</option>
                                         @foreach (var lst in ViewBag.Estatus)
                                         {
                                             <option value="@lst.IdOrdenCompraEstatus">@lst.Descripcion</option>
@@ -161,7 +163,6 @@
                                        settings.Properties.EditFormat = EditFormat.Custom;
                                        settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
                                        settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
-
                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                        settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                        settings.Theme = "Material";
