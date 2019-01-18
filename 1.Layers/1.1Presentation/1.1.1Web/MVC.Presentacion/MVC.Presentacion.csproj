@@ -10751,6 +10751,7 @@
     <Content Include="Resources\css\Clientes.css" />
     <Content Include="Resources\css\CreateForm.css" />
     <Content Include="Resources\css\DevExpressCss.css" />
+    <Content Include="Resources\css\toggleCl.css" />
     <Content Include="Resources\css\tooltip.css" />
     <Content Include="Resources\js\CajaGeneral.js" />
     <Content Include="Resources\js\Clientes.js" />

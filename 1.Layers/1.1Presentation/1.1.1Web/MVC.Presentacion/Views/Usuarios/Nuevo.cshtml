@@ -3,9 +3,17 @@
 @{
     ViewBag.Title = "Catálogo / Usuarios";
 }
-<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+
 <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
 <script type="text/javascript">
     $(function () {
@@ -19,9 +27,7 @@
                 $('#ddlEdo').parent().show();
                 $('#txtEdoP').hide();
             }
-
         });
-
     });
 </script>
 @using (Html.BeginForm((ViewBag.IdUser == null) ? "GuardarUsuario" : "GuardaEdicionUsuario", "Usuarios", FormMethod.Post))
@@ -53,15 +59,31 @@
                     <div class="row clearfix">
                         <div class="col-sm-3">
                             <b>Gasera</b>
-                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                @if (ViewBag.Empresas != null)
-                                {
-                                    foreach (var lst in ViewBag.Empresas)
+                            @*<select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                    @if (ViewBag.Empresas != null)
                                     {
-                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                        foreach (var lst in ViewBag.Empresas)
+                                        {
+                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                        }
                                     }
-                                }
-                            </select>
+                                </select>*@
+                            @Html.DevExpress().ComboBox(settings =>
+                       {
+                           settings.Name = "IdEmpresa";
+                           settings.Width = 180;
+                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                           settings.Theme = "Material";
+                           settings.Properties.TextField = "NombreComercial";
+                           settings.Properties.ValueField = "IdEmpresa";
+                           settings.PreRender = (s, e) =>
+                           {
+                               MVCxComboBox combo = s as MVCxComboBox;
+                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                               combo.SelectedIndex = 0;
+                           };
+                       }).BindList(ViewBag.Empresas).GetHtml()
                             @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                         </div>
                     </div>
@@ -345,8 +367,6 @@
                                         <label for="ddlEdo">
                                             Estado:*
                                         </label><input type="text" name="EstadoProvincia" style="display:none" id="txtEdoP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].EstadoProvincia)" />
-
-
                                         <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                             @if (ViewBag.IdUser == null)
                                             {

@@ -1,71 +1,42 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
 @model  ClientesModel
-@{
-    ViewBag.Title = "Catálogo / Clientes";
-}
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/Resources/js/Clientes.js"></script>
+<script src="~/Resources/js/Clientes.js"></script>
+<script type="text/javascript">
+    function OnSelectedChangeFilter(s, e) {
+        debugger
+        if (s.GetValue() == 2) {//($('#ddlTipopersona').find('option:selected').text() == 'Moral') {
+            $('#div_hideRP').show();
+            $('#div_hidePM').hide();
+            $('#hide_razonS').show();
+        }
+
+        if (s.GetValue() == 1) {// ($('#ddlTipopersona').find('option:selected').text() == 'Física') {
+            $('#div_hideRP').hide();
+            $('#hide_razonS').hide();
+            $('#div_hidePM').show();
+        }
+
+        if (s.GetValue() == 0) {//($('#ddlTipopersona').find('option:selected').text() == 'Seleccione') {
+            $('#div_hidePM').show();
+            $('#div_hideRP').show();
+            $('#hide_razonS').show();
+        }     
+    }
+</script>
 <!-- JS includes -->
-<style type="text/css">
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-    }
-
-        .switch input {
-            display: none;
-        }
-
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        transition: .4s;
-    }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-        }
-
-    input[type="checkbox"]:checked + input[type="hidden"] + .slider,
-    input[type="checkbox"]:checked + .slider {
-        background-color: #2196F3;
-    }
-
-    input[type="checkbox"]:focus + input[type="hidden"] + .slider,
-    input[type="checkbox"]:focus + .slider {
-        box-shadow: 0 0 1px #2196F3;
-    }
-
-    input[type="checkbox"]:checked + input[type="hidden"] + .slider:before,
-    input[type="checkbox"]:checked + .slider:before {
-        transform: translateX(26px);
-    }
-
-    /* Rounded sliders */
-    .slider.round {
-        border-radius: 34px;
-    }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
-</style>
-
-@using (Html.BeginForm("GuardarCliente", "Clientes", FormMethod.Post, new { id = "FrmClientes"}))
+@using (Html.BeginForm("GuardarCliente", "Clientes", FormMethod.Post, new { id = "FrmClientes" }))
 {
     <section class="content home">
         <div class="container-fluid">
@@ -79,18 +50,34 @@
                         <li class="breadcrumb-item">Nuevo</li>
                     </ul>
                 </div>
-            </div>          
+            </div>
             <div class="card">
                 <div class="body">
                     <div class="row clearfix">
                         <div class="col-sm-3">
                             <b>Gasera</b>
-                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                @foreach (var lst in ViewBag.Empresas)
-                                {
-                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                }
-                            </select>
+                            @*<select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                    @foreach (var lst in ViewBag.Empresas)
+                                    {
+                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                    }
+                                </select>*@
+                            @Html.DevExpress().ComboBox(settings =>
+                       {
+                           settings.Name = "IdEmpresa";
+                           settings.Width = 180;
+                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                           settings.Theme = "Material";
+                           settings.Properties.TextField = "NombreComercial";
+                           settings.Properties.ValueField = "IdEmpresa";
+                           settings.PreRender = (s, e) =>
+                           {
+                               MVCxComboBox combo = s as MVCxComboBox;
+                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                               combo.SelectedIndex = 0;
+                           };
+                       }).BindList(ViewBag.Empresas).GetHtml()
                             @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                         </div>
                     </div>
@@ -106,25 +93,62 @@
                             <div class="row clearfix">
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
-                                        Tipo Persona:*  <select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
-                                            <option value="0">Seleccione</option>
-                                            @foreach (var lst in ViewBag.TipoPersona)
-                                            {
-                                                <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
-                                            }
-                                        </select>
+                                        <b>Tipo Persona:*</b>
+                                        @*<select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
+                                                <option value="0">Seleccione</option>
+                                                @foreach (var lst in ViewBag.TipoPersona)
+                                                {
+                                                    <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
+                                                }
+                                            </select>*@
+                                        @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "IdTipoPersona";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Theme = "Material";
+                                       settings.Properties.TextField = "Descripcion";
+                                       settings.Properties.ValueField = "IdTipoPersona";
+                                       settings.ClientEnabled = true;
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                           combo.Properties.ValueType = typeof(int);
+                                           combo.SelectedIndex = 0;
+                                       };
+                                   }).BindList(ViewBag.TipoPersona).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-
                                 <div class="col-lg-8 col-md-8 col-sm-8">
                                     <div class="form-group">
-                                        Régimen Fiscal:*  <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
-                                            @foreach (var lst in ViewBag.Regimen)
-                                            {
-                                                <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
-                                            }
-                                        </select>
+                                        <b> Régimen Fiscal:*</b>
+                                        @*<select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
+                                                @foreach (var lst in ViewBag.Regimen)
+                                                {
+                                                    <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
+                                                }
+                                            </select>*@
+                                        @Html.DevExpress().ComboBox(settings =>
+                           {
+                               settings.Name = "IdRegimenFiscal";
+                               settings.Width = 180;
+                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                               settings.Theme = "Material";
+                               settings.Properties.TextField = "Descripcion";
+                               settings.Properties.ValueField = "IdRegimenFiscal";
+                               settings.PreRender = (s, e) =>
+                               {
+                                   MVCxComboBox combo = s as MVCxComboBox;
+                                   combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                   combo.Properties.ValueType = typeof(int);
+                                   combo.SelectedIndex = 0;
+                               };
+                           }).BindList(ViewBag.Regimen).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -272,7 +296,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1">                                 
+                                <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <label class="switch">
                                             @Html.CheckBoxFor(m => m.VentaExtraordinaria, new { @class = "form-control" })

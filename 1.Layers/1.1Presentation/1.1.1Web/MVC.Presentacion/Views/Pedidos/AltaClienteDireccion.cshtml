@@ -38,20 +38,6 @@
             $('#txtEdoP').show();
         }
     }
-    function OnSelectedChangeCountry2(s, e) {
-        debugger
-        var value = s.GetValue();
-        if (value == 1)//Mexico
-        {
-            $('#txtEdoP').hide();
-            $('#IdEstadoRep').show();
-        }
-        if (value == 2)//EU
-        {
-            $('#IdEstadoRep').hide();
-            $('#txtEdoP').show();
-        }
-    }
 </script>
 <style type="text/css">
     .hid {
@@ -151,7 +137,7 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                @*<select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
+                                                <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
                                                         @if (ViewBag.Locaciones == null)
                                                         {
                                                             foreach (var lst in ViewBag.ListaPaises)
@@ -173,53 +159,10 @@
                                                                 }
                                                             }
                                                         }
-                                                    </select>*@
-                                                @if (ViewBag.Locaciones == null)
-                                                {
-                                                    @*@Html.Action("ComboBoxPartialPais")*@
-                                                    @Html.DevExpress().ComboBox(settings =>
-                                               {
-                                                   settings.Name = "IdPais";
-                                                   settings.Width = 180;
-                                                   settings.SelectedIndex = 0;
-                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                   settings.Theme = "Material";
-                                                   settings.Properties.TextField = "Pais";
-                                                   settings.Properties.ValueField = "IdPais";
-                                                   settings.Properties.ValueType = typeof(byte);
-                                                   settings.ClientEnabled = true;
-                                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
-
-                                               }).BindList(ViewBag.ListaPaises).GetHtml()
-                                                    <input type="text" name="IdPais" hidden />
-                                                }
-                                                else
-                                                {
-                                                    foreach (var lst in ViewBag.ListaPaises)
-                                                    {
-                                                        if (lst.IdPais == ViewBag.Locaciones.IdPais)
-                                                        {
-                                                            @Html.DevExpress().ComboBox(settings =>
-                                                       {
-                                                           settings.Name = "IdPais2";
-                                                           settings.Width = 180;
-                                                           settings.SelectedIndex = @lst.IdPais;
-                                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                           settings.Theme = "Material";
-                                                           settings.Properties.TextField = "Pais";
-                                                           settings.Properties.ValueField = "IdPais";
-                                                           settings.ClientEnabled = true;
-                                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry2";
-                                                       }).BindList(ViewBag.ListaPaises).GetHtml()
-                                                        }
-                                                    }
-                                                    <input type="text" name="IdPais2" hidden />
-                                                }
+                                                    </select>
+                                       
                                                 @Html.ValidationMessageFor(model => model[0].IdPais, "", new { @class = "text-danger" })
-                                               <input type="text" name="IdPais" hidden /> @*@Html.HiddenFor(m => m[0].IdPais)
-                                                @Html.HiddenFor(m => m[0].IdPais2)*@
+                                               <input type="text" name="IdPais" hidden />
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1">
@@ -233,7 +176,8 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                @*<select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                                <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
+                                                <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                         @if (ViewBag.Locaciones == null)
                                                         {
                                                             foreach (var lst in ViewBag.ListaEstados)
@@ -255,43 +199,9 @@
                                                                 }
                                                             }
                                                         }
-                                                    </select>*@
+                                                    </select>
                                                 @*@Html.TextBoxFor(m => m[0].EstadoProvincia, new { @id = "txtEdoP", @class = "form-control hid", @placeholder = "Estado" })*@
-                                                <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
-                                                @if (ViewBag.Locaciones == null)
-                                                {
-                                                    @Html.DevExpress().ComboBox(settings =>
-                                               {
-                                                   settings.Name = "IdEstadoRep";
-                                                   settings.Width = 180;
-                                                   settings.SelectedIndex = 0;
-                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                   settings.Theme = "Material";
-                                                   settings.Properties.TextField = "Estado";
-                                                   settings.Properties.ValueField = "IdEstadoRep";
-                                               }).BindList(ViewBag.ListaEstados).GetHtml()
-                                                }
-                                                else
-                                                {
-                                                    foreach (var lst in ViewBag.ListaEstados)
-                                                    {
-                                                        if (lst.IdEstadoRep == ViewBag.Locaciones.IdEstadoRep)
-                                                        {
-                                                            @Html.DevExpress().ComboBox(settings =>
-                                               {
-                                                   settings.Name = "IdEstadoRep2";
-                                                   settings.Width = 180;
-                                                   settings.SelectedIndex = @lst.IdEstadoRep;
-                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                   settings.Theme = "Material";
-                                                   settings.Properties.TextField = "Estado";
-                                                   settings.Properties.ValueField = "IdEstadoRep";
-                                               }).BindList(ViewBag.ListaEstados).GetHtml()
-                                                        }
-                                                    }
-                                                }
+                                               
                                                 @Html.ValidationMessageFor(m => m[0].IdEstadoRep, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
