@@ -17,21 +17,20 @@
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/Empresas.js"></script>
 <script type="text/javascript">
-    $(function () {
-        $('select').on('change', function () {
-            if ($('#ddlPais').val() !== "1") {
-                $('#ddlEdo').parent().hide();
-                $('#txtEdoP').show();
-            }
+    //$(function () {
+    //    $('select').on('change', function () {
+    //        if ($('#ddlPais').val() !== "1") {
+    //            $('#ddlEdo').parent().hide();
+    //            $('#txtEdoP').show();
+    //        }
 
-            if ($('#ddlPais').find('option:selected').val() == "1" || $('#ddlPais').find('option:selected').val() == "0") {
-                $('#ddlEdo').parent().show();
-                $('#txtEdoP').hide();
-            }
-        });
-    });
+    //        if ($('#ddlPais').find('option:selected').val() == "1" || $('#ddlPais').find('option:selected').val() == "0") {
+    //            $('#ddlEdo').parent().show();
+    //            $('#txtEdoP').hide();
+    //        }
+    //    });
+    //});
     function OnSelectedChangeCountry(s, e) {
-        debugger
         var value = s.GetValue();
         if (value == 1)//Mexico
         {
@@ -43,24 +42,6 @@
             $('#IdEstadoRep').hide();
             $('#txtEdoP').show();
         }
-    }
-    function OnSelectedChangeCountryTest(s, e) {
-        debugger
-        var value = s.GetValue();
-        if (value == 1)//Mexico
-        {
-            $('#txtEdoP').hide();
-            $('#IdEstadoRep').show();
-        }
-        if (value == 2)//EU
-        {
-            $('#IdEstadoRep').hide();
-            $('#txtEdoP').show();
-        }
-    }
-    function onComboBoxSelectedIndexChanged(s, e) {
-
-        $('form').submit();
     }
 </script>
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
@@ -70,7 +51,6 @@
         display: none;
     }
 </style>
-
 @using (Html.BeginForm((ViewBag.EsEdicion == null) ? "Crear" : "GuardaEdicionEmpresa", "Empresas", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <section class="content home">
@@ -316,7 +296,7 @@
                                             <label for="ddlPais">
                                                 País:*
                                             </label>
-                                            <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
+                                            @*<select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
                                                 @if (ViewBag.Empresa == null)
                                                 {
                                                     foreach (var lst in ViewBag.ListaPaises)
@@ -338,9 +318,22 @@
                                                         }
                                                     }
                                                 }
-                                            </select>
+                                            </select>*@
+                                            @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdPais";
+                                                   settings.Width = 180;
+                                                   settings.SelectedIndex = Model.IdPais.Value;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Theme = "Material";
+                                                   settings.Properties.TextField = "Pais";
+                                                   settings.Properties.ValueField = "IdPais";
+                                                   settings.Properties.ValueType = typeof(byte);
+                                                   settings.ClientEnabled = true;
+                                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                               }).BindList(ViewBag.ListaPaises).Bind(Model.IdPais.Value).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
-                                            <input type="text" class="form-control" name="IdPais" hidden />
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
@@ -350,7 +343,7 @@
                                             </label>
                                             @Html.TextBoxFor(m => m.EstadoProvincia, new { @id = "txtEdoP", @class = "form-control hid", @placeholder = "Estado" })
 
-                                            <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                            @*<select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                 @if (ViewBag.Empresa == null)
                                                 {
                                                     foreach (var lst in ViewBag.ListaEstados)
@@ -372,7 +365,19 @@
                                                         }
                                                     }
                                                 }
-                                            </select>                                          
+                                            </select>*@         
+                                            @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdEstadoRep";
+                                                   settings.Width = 180;
+                                                   settings.SelectedIndex = Model.IdEstadoRep.Value;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Theme = "Material";
+                                                   settings.Properties.TextField = "Estado";
+                                                   settings.Properties.ValueField = "IdEstadoRep";
+                                                   settings.Properties.ValueType = typeof(byte?);
+                                               }).BindList(ViewBag.ListaEstados).Bind(Model.IdEstadoRep.Value).GetHtml()                               
                                             @Html.ValidationMessageFor(m => m.IdEstadoRep, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>

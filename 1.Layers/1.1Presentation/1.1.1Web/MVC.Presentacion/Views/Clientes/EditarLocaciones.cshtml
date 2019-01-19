@@ -1,12 +1,7 @@
 ﻿@*@model MVC.Presentacion.Models.Catalogos.ClienteLocacionMod*@
 @using MVC.Presentacion.Models.Catalogos
 @model List<ClienteLocacionMod>
-@{
-    ViewBag.Title = "Catálogo / Clientes";
-}
 
-@*<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />*@
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/Resources/js/Clientes.js"></script>
 <link href="~/Resources/css/Clientes.css" rel="stylesheet" />
@@ -17,7 +12,25 @@
     if (message != '') {
         $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
     }
+    $(function () {
+        $('select').on('change', function () {
+            if ($('#ddlPais').val() !== "1") {
+                $('#ddlEdo').parent().hide();
+                $('#txtEdoP').show();
+            }
+
+            if ($('#ddlPais').find('option:selected').val() == "1" || $('#ddlPais').find('option:selected').val() == "0") {
+                $('#ddlEdo').parent().show();
+                $('#txtEdoP').hide();
+            }
+        });
+    });
 </script>
+<style type="text/css">
+    .hid {
+        display: none;
+    }
+</style>
 @using (Html.BeginForm("GuardarLocaciones", "Clientes", FormMethod.Post))
 {
     <section class="content home">
@@ -68,7 +81,7 @@
                                             <input type="text" name="TipoLocacion" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-lg-7 col-md-7 col-sm-7">
+                                    @*<div class="col-lg-7 col-md-7 col-sm-7">
                                         <div class="form-group">
                                             <div>
                                                 Localización Manual
@@ -79,7 +92,7 @@
                                                 Localización Google Maps
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>*@
                                 </div>
                                 <div class="row clearfix" id="Dir">
                                     <div class="col-lg-2 col-md-2 col-sm-2">
@@ -129,6 +142,7 @@
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
+                                                <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
                                                 <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                     @foreach (var lst in ViewBag.ListaEstados)
                                                     {
@@ -229,6 +243,32 @@
                                                 <input type="text" name="CodigoPostal" class="form-control" />
                                             </div>
                                             @Html.ValidationMessageFor(m => m[0].CodigoPostal, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div class="form-group">
+                                                <div>
+                                                    <label for="txtNume">
+                                                        Referencia Google Maps:*
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-10">
+                                            <div class="form-group">
+                                                <input type="text" name="formatted_address" class="form-control" />
+                                                @*@if (ViewBag.EsEdicion == null)
+                    {
+                         <input type="text" name="formatted_address" class="form-control" />
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(m => m[0].formatted_address, new { @class = "form-control" })
+                    }*@
+
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m[0].formatted_address, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>

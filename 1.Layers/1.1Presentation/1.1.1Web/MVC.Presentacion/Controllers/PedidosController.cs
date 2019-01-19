@@ -111,7 +111,7 @@ namespace MVC.Presentacion.Controllers
             string Tel1 = _mod.Telefono1 ?? "";
             string Tel2 = _mod.Telefono2 ?? "";
             string Rfc = _mod.Rfc ?? "";
-            var lstClientes = CatalogoServicio.ListaClientes(Tel1, Tel2, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.ListaClientes(0,Tel1, Tel2, Rfc, _tkn).ToList();
             if (lstClientes.Count > 0)
                 TempData["PedidosPorCliente"] = lstClientes;
             else TempData["Msj"] = "No se encontraron registros";
@@ -121,7 +121,7 @@ namespace MVC.Presentacion.Controllers
         public JsonResult BuscarClientesPedido(string Tel1, string Tel2, string Rfc)
         {
             string _tkn = Session["StringToken"].ToString();
-            var lstClientes = CatalogoServicio.ListaClientes(Tel1, Tel2, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.ListaClientes(0,Tel1, Tel2, Rfc, _tkn).ToList();
 
             var JsonInfo = JsonConvert.SerializeObject(lstClientes);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
@@ -133,7 +133,7 @@ namespace MVC.Presentacion.Controllers
             string Tel1 = _mod.Telefono1 ?? "";
             string Tel2 = _mod.Telefono2 ?? "";
             string Rfc = _mod.Rfc ?? "";
-            var lstClientes = CatalogoServicio.ListaClientes(Tel1, Tel2, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.ListaClientes(0,Tel1, Tel2, Rfc, _tkn).ToList();
             _mod.clientes = lstClientes;
             if (lstClientes.Count > 0)
                 _mod.Locaciones = CatalogoServicio.ObtenerLocaciones(lstClientes.FirstOrDefault().IdCliente, _tkn);
@@ -145,7 +145,7 @@ namespace MVC.Presentacion.Controllers
         public JsonResult BuscarClientesPedidoDireccion(string Tel1, string Tel2, string Rfc)
         {
             string _tkn = Session["StringToken"].ToString();
-            var lstClientes = CatalogoServicio.ListaClientes(Tel1, Tel2, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.ListaClientes(0,Tel1, Tel2, Rfc, _tkn).ToList();
             List<ClienteLocacionMod> _lst = CatalogoServicio.ObtenerLocaciones(lstClientes.FirstOrDefault().IdCliente, _tkn);
             var JsonInfo = JsonConvert.SerializeObject(_lst);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
@@ -192,10 +192,11 @@ namespace MVC.Presentacion.Controllers
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
             List<ClienteLocacionMod> _lst = CatalogoServicio.ObtenerLocaciones(idCliente, _tkn);
-
+            _lst[0].IdEstadoRep = 0; _lst[0].IdPais = 0;
             if (model != null && model.IdCliente != 0 && model.Orden != 0)
             {
                 ViewBag.EsEdicion = true; ViewBag.Locaciones = model;
+                _lst[0].IdEstadoRep = ViewBag.Locaciones.IdEstadoRep; _lst[0].IdPais = ViewBag.Locaciones.IdPais;
             }
             if (TempData["RespuestaDTO"] != null)
             {
@@ -203,11 +204,13 @@ namespace MVC.Presentacion.Controllers
                 {
                     ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
                     ViewBag.EsEdicion = false; ViewBag.Locaciones = TempData["Locaciones"];
+                    _lst[0].IdEstadoRep = ViewBag.Locaciones.IdEstadoRep; _lst[0].IdPais = ViewBag.Locaciones.IdPais;
                 }
                 else
                 {
                     ViewBag.Msj = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
                     ViewBag.EsEdicion = false; ViewBag.Locaciones = null;
+                    _lst[0].IdEstadoRep = 0; _lst[0].IdPais = 0;
                 }
             }
             return View(_lst);
@@ -222,8 +225,8 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
-                model.IdEstadoRep = model.IdEstadoRep2;
-                model.IdPais = model.IdPais2;
+                //model.IdEstadoRep = model.IdEstadoRep2;
+                //model.IdPais = model.IdPais2;
                 var respuesta = CatalogoServicio.ModificarClienteLocacion(model, _tkn);
                 if (respuesta.Exito)
                 {
@@ -440,7 +443,7 @@ namespace MVC.Presentacion.Controllers
             string Tel2 = _model.Telefono2 ?? "";
             string Rfc = _model.Rfc ?? "";
 
-            var lstClientes = CatalogoServicio.ListaClientes(Tel1, Tel2, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.ListaClientes(0,Tel1, Tel2, Rfc, _tkn).ToList();
             _lst = CatalogoServicio.ObtenerLocaciones(lstClientes.Count() > 0 ? lstClientes.FirstOrDefault().IdCliente : 0, _tkn);
 
             return PartialView(_lst);
@@ -451,7 +454,7 @@ namespace MVC.Presentacion.Controllers
             string Tel1 = _model.Telefono1 ?? "";
             string Tel2 = _model.Telefono2 ?? "";
             string Rfc = _model.Rfc ?? "";
-            var lstClientes = CatalogoServicio.ListaClientes(Tel1, Tel2, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.ListaClientes(0,Tel1, Tel2, Rfc, _tkn).ToList();
 
             return PartialView(lstClientes);
         }

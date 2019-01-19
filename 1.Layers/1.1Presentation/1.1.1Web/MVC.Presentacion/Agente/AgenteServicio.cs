@@ -836,12 +836,12 @@ namespace MVC.Presentacion.Agente
                 _lstaClientes = lus;
             }
         }
-        public void BuscarListaClientesMod(string tel1, string tel2, string rfc, string tkn)//short idEmpresa, 
+        public void BuscarListaClientesMod(int cliente,string tel1, string tel2, string rfc, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetClientes"];
-            GetListaClientesMod(tel1, tel2, rfc, tkn).Wait();
+            GetListaClientesMod(cliente, tel1, tel2, rfc, tkn).Wait();
         }
-        private async Task GetListaClientesMod(string tel1, string tel2, string rfc, string Token)
+        private async Task GetListaClientesMod(int cliente, string tel1, string tel2, string rfc, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -851,7 +851,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    if (tel1 != "" || rfc != "" || tel2 != "")
+                    if (tel1 != "" || rfc != "" || tel2 != "" || cliente != 0)
                     {
                         HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
                         if (response.IsSuccessStatusCode)
@@ -861,12 +861,16 @@ namespace MVC.Presentacion.Agente
                             client.CancelPendingRequests();
                             client.Dispose();
                         }
+                        if (cliente != 0)
+                        {
+                            lus = (from x in lus where x.IdCliente == cliente select x).ToList();
+                        }
                         if (tel1 != "" && tel1 != null)
                         {
                             lus = (from x in lus where x.Telefono1 == tel1 select x).ToList();
                         }
 
-                        if (rfc != "")
+                        if (rfc != "" && rfc != null)
                         {
                             lus = (from x in lus where x.Rfc == rfc select x).ToList();
                         }

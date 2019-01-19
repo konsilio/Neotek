@@ -90,14 +90,7 @@
                             <div class="col-sm-12">
                                 <div class="row clearfix">
                                     <div class="col-sm-3">
-                                        <strong>Nombre:</strong>
-                                        @*<select id="ddlUser" name="IdUsuario" data-live-search="true">
-                                                <option value="-1">Seleccione uno</option>
-                                                @foreach (var lst in ViewBag.ListaUsuarios)
-                                                {
-                                                    <option value="@lst.IdUsuario">@lst.Nombre</option>
-                                                }
-                                            </select>*@
+                                       <strong>Nombre:</strong>                                    
                                         @Html.DevExpress().ComboBox(settings =>
                                    {
                                        settings.Name = "IdUsuario";
@@ -105,10 +98,9 @@
                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                        settings.Theme = "Material";
-                                       settings.Properties.TextField = "Nombre";
+                                       settings.Properties.TextField = "NombreCompleto";
                                        settings.Properties.ValueField = "IdUsuario";                                       
                                        settings.Properties.ValidationSettings.RequiredField.IsRequired = false;
-
                                        settings.PreRender = (s, e) =>
                                        {
                                            MVCxComboBox combo = s as MVCxComboBox;
@@ -118,7 +110,6 @@
                                        };
                                    }).BindList(ViewBag.ListaUsuarios).Bind(Model.IdUsuario).GetHtml()
                                     </div>
-
                                     <div class="col-sm-3">
                                         <strong>Correo Elect. (Acceso):</strong>
                                         @Html.DevExpress().ComboBox(settings =>
@@ -154,7 +145,7 @@
                             </div>
                         </div>
                         @if (ViewBag.MessageError != null)
-                {
+                       {
                             <div class="row clearfix">
                                 <div id="divMensajeError" class="container">
                                     <div class="alert alert-danger">

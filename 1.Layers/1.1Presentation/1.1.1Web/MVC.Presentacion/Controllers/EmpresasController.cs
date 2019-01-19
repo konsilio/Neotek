@@ -52,6 +52,8 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = CatalogoServicio.SinPermisos();
                 return RedirectToAction("Index");
             }
+            EmpresaModel model = new EmpresaModel();
+            model.IdPais = 0;model.IdEstadoRep = 0;
             //Se obtienen los paises         
             ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
             //Se obtienen los estados 
@@ -60,6 +62,7 @@ namespace MVC.Presentacion.Controllers
             {
                 if (TempData["RespuestaDTO"] != null) ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
                 ViewBag.EsEdicion = null;
+                ((EmpresaModel)TempData["model"]).IdPais = 0; ((EmpresaModel)TempData["model"]).IdEstadoRep = 0;
                 return View((EmpresaModel)TempData["model"]);
             }
             if (TempData["modelEditar"] != null)
@@ -69,7 +72,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresa = TempData["modelEditar"];
                 return View((EmpresaModel)TempData["modelEditar"]);
             }
-            return View();
+            return View(model);
         }
         [HttpPost]
         public ActionResult Crear(EmpresaModel Objemp, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px)
@@ -171,9 +174,7 @@ namespace MVC.Presentacion.Controllers
         public ActionResult GuardaEdicionEmpresa(EmpresaModel _Obj, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            _tok = Session["StringToken"].ToString();
-            _Obj.IdEstadoRep = _Obj.IdEstadoRepSec;
-            _Obj.IdPais = _Obj.IdPaisSec;
+            _tok = Session["StringToken"].ToString();           
             var respuesta = CatalogoServicio.ActualizaEdicionEmpresa(_Obj, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
 
             if (respuesta.Exito)

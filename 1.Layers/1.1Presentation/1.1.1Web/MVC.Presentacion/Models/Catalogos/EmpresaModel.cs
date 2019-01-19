@@ -163,9 +163,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public byte InventarioCrítico { get; set; }
 
         public byte InventarioSano { get; set; }
-        public decimal MaxRemaGaseraMensual { get; set; }
-        public Nullable<byte> IdPaisSec { get; set; }
-        public Nullable<byte> IdEstadoRepSec { get; set; }
+        public decimal MaxRemaGaseraMensual { get; set; }      
 
     }
 }
