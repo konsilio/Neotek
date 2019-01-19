@@ -93,7 +93,8 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = ViewBag.MessageError;
             }
             ViewBag.MessageError = TempData["RespuestaDTOError"];
-            return View();
+            ClientesModel model = CatalogoServicio.ListaClientes(id, "", "", "", _tkn)[0];
+            return View(model);
         }
         [HttpPost]
         public ActionResult GuardaEdicionCliente(ClientesDto _Obj)

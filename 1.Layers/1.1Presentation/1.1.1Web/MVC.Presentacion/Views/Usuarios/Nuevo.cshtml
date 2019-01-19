@@ -17,19 +17,37 @@
 <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
 <script type="text/javascript">
     $(function () {
-        $('select').on('change', function () {
-            if ($('#ddlPais').val() !== "1") {
-                $('#ddlEdo').parent().hide();
-                $('#txtEdoP').show();
-            }
+        //$('select').on('change', function () {
+        //    if ($('#ddlPais').val() !== "1") {
+        //        $('#ddlEdo').parent().hide();
+        //        $('#txtEdoP').show();
+        //    }
 
-            if ($('#ddlPais').find('option:selected').val() == "1" || $('#ddlPais').find('option:selected').val() == "0") {
-                $('#ddlEdo').parent().show();
-                $('#txtEdoP').hide();
-            }
-        });
+        //    if ($('#ddlPais').find('option:selected').val() == "1" || $('#ddlPais').find('option:selected').val() == "0") {
+        //        $('#ddlEdo').parent().show();
+        //        $('#txtEdoP').hide();
+        //    }
+        //});
     });
+    function OnSelectedChangeCountry(s, e) {
+        var value = s.GetValue();
+        if (value == 1)//Mexico
+        {
+            $('#txtEdoP').hide();
+            $('#IdEstadoRep').show();
+        }
+        if (value == 2)//EU
+        {
+            $('#IdEstadoRep').hide();
+            $('#txtEdoP').show();
+        }
+    }
 </script>
+<style type="text/css">
+    .hid {
+        display: none;
+    }
+</style>
 @using (Html.BeginForm((ViewBag.IdUser == null) ? "GuardarUsuario" : "GuardaEdicionUsuario", "Usuarios", FormMethod.Post))
 {
     <section class="content home">
@@ -81,7 +99,7 @@
                            {
                                MVCxComboBox combo = s as MVCxComboBox;
                                combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                               combo.SelectedIndex = 0;
+                               combo.SelectedIndex = Model.IdEmpresa; 
                            };
                        }).BindList(ViewBag.Empresas).GetHtml()
                             @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
@@ -104,8 +122,8 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input type="text" name="Nombre" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Nombre)" />
-                                        <input id="IdUsuario" type="text" name="IdUsuario" hidden="hidden" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].IdUsuario)" />
+                                        <input type="text" name="Nombre" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Nombre)" />
+                                        <input id="IdUsuario" type="text" name="IdUsuario" hidden="hidden" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.IdUsuario)" />
                                         @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -116,7 +134,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input type="text" name="Email1" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Email1)" class="form-control">
+                                        <input type="text" name="Email1" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Email1)" class="form-control">
                                         @Html.ValidationMessageFor(m => m.Email1, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -134,7 +152,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input type="text" name="Apellido1" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Apellido1)" />
+                                        <input type="text" name="Apellido1" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Apellido1)" />
                                         @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -163,7 +181,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input type="text" name="Apellido2" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Apellido2)" />
+                                        <input type="text" name="Apellido2" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Apellido2)" />
                                     </div>
                                 </div>
 
@@ -172,7 +190,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
@@ -188,7 +205,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input id="txtTel1" name="Telefono1" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Telefono1)" />
+                                        <input id="txtTel1" name="Telefono1" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Telefono1)" />
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-md-1 col-sm-1">
@@ -198,7 +215,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input id="txtCel1" type="text" name="Celular1" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Celular1)" />
+                                        <input id="txtCel1" type="text" name="Celular1" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Celular1)" />
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +228,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input id="txtTel2" name="Telefono2" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Telefono2)" />
+                                        <input id="txtTel2" name="Telefono2" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Telefono2)" />
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-md-1 col-sm-1">
@@ -221,7 +238,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input id="txtCel2" name="Celular2" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Celular2)" />
+                                        <input id="txtCel2" name="Celular2" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Celular2)" />
                                     </div>
                                 </div>
                             </div>
@@ -234,7 +251,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input id="txtTel3" name="Telefono3" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Telefono3)" />
+                                        <input id="txtTel3" name="Telefono3" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Telefono3)" />
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-md-1 col-sm-1">
@@ -244,7 +261,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input id="txtCel3" type="text" name="Celular3" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Celular3)" />
+                                        <input id="txtCel3" type="text" name="Celular3" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Celular3)" />
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +274,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
-                                        <input id="txtmail2" name="Email2" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Email2)" />
+                                        <input id="txtmail2" name="Email2" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Email2)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-05">
@@ -267,7 +284,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
-                                        <input id="txtweb1" name="SitioWeb1" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].SitioWeb1)" />
+                                        <input id="txtweb1" name="SitioWeb1" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.SitioWeb1)" />
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +297,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
-                                        <input id="txtmail3" name="Email3" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Email3)" />
+                                        <input id="txtmail3" name="Email3" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Email3)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-05">
@@ -290,7 +307,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
-                                        <input id="txtweb2" name="SitioWeb2" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].SitioWeb2)" />
+                                        <input id="txtweb2" name="SitioWeb2" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.SitioWeb2)" />
                                     </div>
                                 </div>
                             </div>
@@ -312,16 +329,14 @@
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
-                                        <input id="txtweb3" name="SitioWeb3" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].SitioWeb3)" />
+                                        <input id="txtweb3" name="SitioWeb3" type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.SitioWeb3)" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
@@ -335,30 +350,43 @@
                                         <label for="ddlPais">
                                             País:*
                                         </label>
-                                        <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
-                                            @if (ViewBag.IdUser == null)
-                                            {
-                                                foreach (var lst in ViewBag.ListaPaises)
+                                        @*<select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
+                                                @if (ViewBag.IdUser == null)
                                                 {
-                                                    <option value="@lst.IdPais">@lst.Pais</option>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                foreach (var lst in ViewBag.ListaPaises)
-                                                {
-
-                                                    if (ViewBag.IdUser[0].IdPais == lst.IdPais)
-                                                    {
-                                                        <option value="@lst.IdPais" selected>@lst.Pais</option>
-                                                    }
-                                                    else
+                                                    foreach (var lst in ViewBag.ListaPaises)
                                                     {
                                                         <option value="@lst.IdPais">@lst.Pais</option>
                                                     }
                                                 }
-                                            }
-                                        </select>
+                                                else
+                                                {
+                                                    foreach (var lst in ViewBag.ListaPaises)
+                                                    {
+                                                        if (ViewBag.IdUser.IdPais == lst.IdPais)
+                                                        {
+                                                            <option value="@lst.IdPais" selected>@lst.Pais</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@lst.IdPais">@lst.Pais</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>*@
+                                        @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "IdPais";
+                                       settings.Width = 180;
+                                       settings.SelectedIndex = Model.IdPais;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Theme = "Material";
+                                       settings.Properties.TextField = "Pais";
+                                       settings.Properties.ValueField = "IdPais";
+                                       settings.Properties.ValueType = typeof(byte);
+                                       settings.ClientEnabled = true;
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                   }).BindList(ViewBag.ListaPaises).Bind(Model.IdPais).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -366,32 +394,46 @@
                                     <div class="form-group">
                                         <label for="ddlEdo">
                                             Estado:*
-                                        </label><input type="text" name="EstadoProvincia" style="display:none" id="txtEdoP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].EstadoProvincia)" />
-                                        <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                            @if (ViewBag.IdUser == null)
-                                            {
-                                                foreach (var lst2 in ViewBag.ListaEstados)
+                                        </label>
+                                        @Html.TextBoxFor(m => m.EstadoProvincia, new { @id = "txtEdoP", @class = "form-control hid", @placeholder = "Estado" })
+                                        @*<input type="text" name="EstadoProvincia" style="display:none" id="txtEdoP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas.EstadoProvincia)" />*@
+                                        @*<select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                                @if (ViewBag.IdUser == null)
                                                 {
-                                                    <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                foreach (var lst2 in ViewBag.ListaEstados)
-                                                {
-
-                                                    if (ViewBag.IdUser[0].IdEstadoRep == lst2.IdEstadoRep)
-                                                    {
-                                                        <option value="@lst2.IdEstadoRep" selected>@lst2.Estado</option>
-                                                    }
-                                                    else
+                                                    foreach (var lst2 in ViewBag.ListaEstados)
                                                     {
                                                         <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
                                                     }
                                                 }
-                                            }
+                                                else
+                                                {
+                                                    foreach (var lst2 in ViewBag.ListaEstados)
+                                                    {
 
-                                        </select>
+                                                        if (ViewBag.IdUser.IdEstadoRep == lst2.IdEstadoRep)
+                                                        {
+                                                            <option value="@lst2.IdEstadoRep" selected>@lst2.Estado</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>*@
+                                        @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdEstadoRep";
+                                                   settings.Width = 180;
+                                                   settings.SelectedIndex = Model.IdEstadoRep.Value;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Theme = "Material";
+                                                   settings.Properties.TextField = "Estado";
+                                                   settings.Properties.ValueField = "IdEstadoRep";
+                                                   settings.Properties.ValueType = typeof(byte?);
+                                               }).BindList(ViewBag.ListaEstados).Bind(Model.IdEstadoRep.Value).GetHtml()
+
                                         @Html.ValidationMessageFor(m => m.IdEstadoRep, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -400,7 +442,7 @@
                                         <label for="txtMun">
                                             Municipio:*
                                         </label>
-                                        <input type="text" name="Municipio" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Municipio)" />
+                                        <input type="text" name="Municipio" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Municipio)" />
                                         @Html.ValidationMessageFor(m => m.Municipio, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -409,7 +451,7 @@
                                         <label for="txtCP">
                                             C.P.:*
                                         </label>
-                                        <input type="text" name="CodigoPostal" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].CodigoPostal)" />
+                                        <input type="text" name="CodigoPostal" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.CodigoPostal)" />
                                         @Html.ValidationMessageFor(m => m.CodigoPostal, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -422,7 +464,7 @@
                                             <label for="txtCol">
                                                 Colonia:*
                                             </label>
-                                            <input type="text" name="Colonia" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Colonia)" />
+                                            <input type="text" name="Colonia" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Colonia)" />
                                             @Html.ValidationMessageFor(m => m.Colonia, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -432,7 +474,7 @@
                                         <label for="txtCalle">
                                             Calle:*
                                         </label>
-                                        <input type="text" name="Calle" id="txtCalle" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Calle)" />
+                                        <input type="text" name="Calle" id="txtCalle" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Calle)" />
                                         @Html.ValidationMessageFor(m => m.Calle, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -445,7 +487,7 @@
                                             <label for="txtNume">
                                                 Núm. Ext.:*
                                             </label>
-                                            <input type="text" name="NumExt" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].NumExt)" />
+                                            <input type="text" name="NumExt" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.NumExt)" />
                                             @Html.ValidationMessageFor(m => m.NumExt, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -455,7 +497,7 @@
                                         <label for="txtNumI">
                                             Núm. Int.:
                                         </label>
-                                        <input type="text" name="NumInt" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].NumInt)" />
+                                        <input type="text" name="NumInt" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.NumInt)" />
                                     </div>
                                 </div>
                             </div>
@@ -487,7 +529,7 @@
             </div>
 
             @if (ViewBag.MessageError != null)
-                {
+            {
                 <div class="row clearfix">
                     <div id="divMensajeError" class="container">
                         <div class="alert alert-danger">

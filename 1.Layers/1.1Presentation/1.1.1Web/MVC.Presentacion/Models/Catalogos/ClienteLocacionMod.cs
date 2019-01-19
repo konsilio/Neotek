@@ -10,9 +10,7 @@ namespace MVC.Presentacion.Models.Catalogos
     public class ClienteLocacionMod
     {
         public int IdCliente { get; set; }
-        public short Orden { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdPais")]
+        public short Orden { get; set; }       
         public byte IdPais { get; set; }
         public Nullable<byte> IdEstadoRep { get; set; }
         public string EstadoProvincia { get; set; }
@@ -27,11 +25,8 @@ namespace MVC.Presentacion.Models.Catalogos
         public string location_lng { get; set; }
         public string place_id { get; set; }
         public string TipoLocacion { get; set; }
-
         public string Pais { get; set; }
         public string Estado { get; set; }
-
-        public byte IdPais2 { get; set; }
-        public Nullable<byte> IdEstadoRep2 { get; set; }
+    
     }
 }
