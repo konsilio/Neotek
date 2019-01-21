@@ -282,6 +282,7 @@
     <Compile Include="Models\Almacen\AlmacenSalidaDTO.cs" />
     <Compile Include="Models\Almacen\RegistroDTO.cs" />
     <Compile Include="Models\Almacen\RemanenteDTO.cs" />
+    <Compile Include="Models\Almacen\RemanenteGeneralDTO.cs" />
     <Compile Include="Models\Almacen\RequisicionSalidaDTO.cs" />
     <Compile Include="Models\Catalogos\BancoDTO.cs" />
     <Compile Include="Models\Catalogos\CamionetaModel.cs" />

@@ -42,6 +42,9 @@ namespace MVC.Presentacion.Agente
         public OperadorChoferModel Operador;
         public OrdenCompraComplementoGasDTO _complementoGas;
         public RequisicionSalidaDTO _RequisicionSalida;
+        public CargosModel _Cargo;
+        public ReporteModel _repCartera;
+        public PedidoModel _Pedido;
 
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
@@ -89,13 +92,15 @@ namespace MVC.Presentacion.Agente
         public List<MovimientosGasModel> _ListaMovimientosGas;
         public List<MovimientosGasCilindros> _ListaMovimientosGasC;
         public List<PedidoModel> _ListaPedidos;
-        public PedidoModel _Pedido;
         public List<EstatusPedidoModel> _ListaEstatusP;
         public List<CamionetaModel> _ListaCamionetas;
         public List<PipaModel> _ListaPipas;
         public List<CargosModel> _ListaCargos;
-        public CargosModel _Cargo;
-        public ReporteModel _repCartera;
+        public List<RemanenteGeneralDTO> _ListaRemanenteGenaral;
+
+        
+
+
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -3090,6 +3095,40 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarSalida"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
         }
+        public void BuscarRemanenteGeneral(short idEmpresa, string tkn)
+        {
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetProductosAlmacen"];
+            ListaRemanenteGeneral(idEmpresa, tkn).Wait();
+        }
+        private async Task ListaRemanenteGeneral(short idEmpresa, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RemanenteGeneralDTO> emp = new List<RemanenteGeneralDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idEmpresa.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<RemanenteGeneralDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    emp = new List<RemanenteGeneralDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaRemanenteGenaral = emp;
+            }
+        }
+
         #endregion
         #region Pedidos
         public void ListaPedidos(short id, string token)
