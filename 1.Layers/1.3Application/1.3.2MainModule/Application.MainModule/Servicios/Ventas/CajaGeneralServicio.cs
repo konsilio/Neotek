@@ -453,18 +453,6 @@ namespace Application.MainModule.Servicios.Ventas
                 }
                 ActualizarSaldos(listMov, "", CurrentSaldo);
             }
-            //   }
-            //actualizar totales de VentasMovimientos
-            //     var puntosventa = lst.GroupBy(x => x.IdPuntoVenta);
-            //foreach (var x in puntosventa)
-            //{/*Seleccionar ultimo registro del movimiento, perteneciente a los insertados de los anticipos*/
-            // //ActualizarSaldos(ObtenerListaMovimientos(x.Select(z => z.IdPuntoVenta).FirstOrDefault()),"");
-            // //insertar registro en tabla movimientos como ingreso al jefe de estaciones, cada registro o monto
-            //    List<RegistrarVentasMovimientosDTO> _lstmov = MergeLstAnticipos(x.ToList());
-            //    List<VentaMovimiento> _lstmov2 = AdaptadoresDTO.Ventas.CajaGeneralAdapter.FromDtoVtaM(_lstmov);
-            //    //var CurrentSaldo = CalcularPreciosVentaServicio.ObtenerSaldoActual(x.Select(w => w.IdPuntoVenta).FirstOrDefault());
-            //    ActualizarSaldos(_lstmov2, "", CurrentSaldo);
-            //}
 
         }
         public static List<VentaPuntoDeVenta> ObtenerVentasPuntosVentaNoProc()

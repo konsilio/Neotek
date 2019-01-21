@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Web.Http;
 
 namespace DS.MainModule.Controllers
-{
+{ 
     [Authorize]
     [RoutePrefix("api/compras")]
     public class ComprasController : ApiController
@@ -111,7 +111,6 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_compras.CrearOrdenCompraPago(oc), Request);
         }
-
         [Route("guardar/pago/porteador")]
         public HttpResponseMessage PostGuardarPago(ComplementoGasDTO oc)
         {
