@@ -21,8 +21,37 @@
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#btnSave").click(function () {
+            debugger
+            if($('#radio1').is(':checked')) { alert("it's checked"); }
+            //var check = $("input[name=estrellas1][value='Pregunta1Val5']").attr('checked', 'checked');
 
+            $("input[name='estrellas1']:checked").each(function() {
+                if (this.value == "Pregunta1Val5") {
+                    //do something with this input
+                    var $radio = $(this).closest('form').find('input[type="radio"]:checked');
+                    // $('label').css('color','#000');
+                    $radio.closest('label').css('color','green');
+                }
+                if (this.value == "Pregunta1Val4") {
+                    //do something with this input
+                    var $radio = $(this).closest('form').find('input[type="radio"]:checked');
+                    // $('label').css('color','#000');
+                    $radio.closest('label').css('color','green');
+                }
+                if (this.value == "Pregunta1Val3") {
+                    //do something with this input
+                }
+                if (this.value == "Pregunta1Val2") {
+                    //do something with this input
+                }
+                if (this.value == "Pregunta1Val1") {
+                    $("input[name=estrellas1]").css('color', 'grey')
+                    $("input[name=estrellas1]:checked").css('color', 'orange');
+
+                }
+            });
+
+            $("#btnSave").click(function () {
                 var calificacion = [];
                 var selected1 = $("input[name='estrellas1']:checked").val();
                 var selected2 = $("input[name='estrellas2']:checked").val();
@@ -60,6 +89,9 @@
         });
     </script>
     <style type="text/css">
+        .ui-datepicker-calendar {
+    display: none;
+    }
         input[type = "radio"] {
             display: none;
         }
@@ -98,7 +130,7 @@
         .CalendarWidthClass {
             width: 500px;
         }
-    </style>
+    </style>    
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("GuardarEdicionPedido", "Pedidos", FormMethod.Post))
@@ -170,23 +202,23 @@
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                            @Html.DevExpress().DateEdit(settings =>
-                                                       {
-                                                           settings.Name = "FechaEntregaPedido";
-                                                           settings.Properties.UseMaskBehavior = true;
-                                                           settings.Properties.EditFormat = EditFormat.Custom;
-                                                           settings.Theme = "Material";
-                                                           settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
-                                                           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
-                                                           settings.Properties.TimeSectionProperties.Visible = true;
-                                                           settings.Properties.TimeSectionProperties.Adaptive = true;
-                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
-                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
-                                                           settings.Date = DateTime.Now;
-                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                                       }).GetHtml()
-                                                        </div>
+                                                                 @Html.DevExpress().DateEdit(settings =>
+                                                            {
+                                                                settings.Name = "FechaEntregaPedido";
+                                                                settings.Properties.UseMaskBehavior = true;
+                                                                settings.Properties.EditFormat = EditFormat.Custom;
+                                                                settings.Theme = "Material";
+                                                                settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
+                                                                settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                                                                settings.Properties.TimeSectionProperties.Visible = true;
+                                                                settings.Properties.TimeSectionProperties.Adaptive = true;
+                                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                                settings.Date = DateTime.Now;
+                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                                                settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                                            }).GetHtml()
+                                                             </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -476,22 +508,22 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio1" type="radio" name="estrellas1" value="Pregunta1Val5">
+                                                    <input id="radio1" type="radio" name="estrellas1" value="Pregunta1Val5" checked="checked" /> @*checked="@Model.encuesta[0].Pregunta1Val5">*@
                                                     <label for="radio1">★</label>
                                                     <!-- -->
-                                                    <input id="radio2" type="radio" name="estrellas1" value="Pregunta1Val4">
+                                                    <input id="radio2" type="radio" name="estrellas1" value="Pregunta1Val4" checked="checked">@*checked="@Model.encuesta[0].Pregunta1Val4"*@
                                                     <!-- -->
                                                     <label for="radio2">★</label>
                                                     <!-- -->
-                                                    <input id="radio3" type="radio" name="estrellas1" value="Pregunta1Val3">
+                                                    <input id="radio3" type="radio" name="estrellas1" value="Pregunta1Val3" checked="@Model.encuesta[0].Pregunta1Val3">
                                                     <!--  -->
                                                     <label for="radio3">★</label>
                                                     <!--  -->
-                                                    <input id="radio4" type="radio" name="estrellas1" value="Pregunta1Val2">
+                                                    <input id="radio4" type="radio" name="estrellas1" value="Pregunta1Val2" checked="@Model.encuesta[0].Pregunta1Val2">
                                                     <!--  -->
                                                     <label for="radio4">★</label>
                                                     <!--  -->
-                                                    <input id="radio5" type="radio" name="estrellas1" value="Pregunta1Val1">
+                                                    <input id="radio5" type="radio" name="estrellas1" value="Pregunta1Val1" checked="@Model.encuesta[0].Pregunta1Val1">
                                                     <!--  -->
                                                     <label for="radio5">★</label>
                                                 </div>
@@ -508,23 +540,23 @@
                                                     <h9>1 Poco probable</h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio6" type="radio" name="estrellas2" value="Pregunta2Val5">
+                                                    <input id="radio6" type="radio" name="estrellas2" value="Pregunta2Val5" checked="@Model.encuesta[1].Pregunta1Val5">
                                                     <!-- -->
                                                     <label for="radio6">★</label>
                                                     <!-- -->
-                                                    <input id="radio7" type="radio" name="estrellas2" value="Pregunta2Val4">
+                                                    <input id="radio7" type="radio" name="estrellas2" value="Pregunta2Val4" checked="@Model.encuesta[1].Pregunta1Val4">
                                                     <!-- -->
                                                     <label for="radio7">★</label>
                                                     <!-- -->
-                                                    <input id="radio8" type="radio" name="estrellas2" value="Pregunta2Val3">
+                                                    <input id="radio8" type="radio" name="estrellas2" value="Pregunta2Val3" checked="@Model.encuesta[1].Pregunta1Val3">
                                                     <!--  -->
                                                     <label for="radio8">★</label>
                                                     <!--  -->
-                                                    <input id="radio9" type="radio" name="estrellas2" value="Pregunta2Val2">
+                                                    <input id="radio9" type="radio" name="estrellas2" value="Pregunta2Val2" checked="@Model.encuesta[1].Pregunta1Val2">
                                                     <!--  -->
                                                     <label for="radio9">★</label>
                                                     <!--  -->
-                                                    <input id="radio10" type="radio" name="estrellas2" value="Pregunta2Val1">
+                                                    <input id="radio10" type="radio" name="estrellas2" value="Pregunta2Val1" checked="@Model.encuesta[1].Pregunta1Val1">
                                                     <!--  -->
                                                     <label for="radio10">★</label>
                                                 </div>
@@ -555,23 +587,23 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio11" type="radio" name="estrellas3" value="Pregunta3Val5">
+                                                    <input id="radio11" type="radio" name="estrellas3" value="Pregunta3Val5" checked="@Model.encuesta[2].Pregunta1Val5">
                                                     <!-- -->
                                                     <label for="radio11">★</label>
                                                     <!-- -->
-                                                    <input id="radio12" type="radio" name="estrellas3" value="Pregunta3Val4">
+                                                    <input id="radio12" type="radio" name="estrellas3" value="Pregunta3Val4" checked="@Model.encuesta[2].Pregunta1Val4">
                                                     <!-- -->
                                                     <label for="radio12">★</label>
                                                     <!-- -->
-                                                    <input id="radio13" type="radio" name="estrellas3" value="Pregunta3Val3">
+                                                    <input id="radio13" type="radio" name="estrellas3" value="Pregunta3Val3" checked="@Model.encuesta[2].Pregunta1Val3">
                                                     <!--  -->
                                                     <label for="radio13">★</label>
                                                     <!--  -->
-                                                    <input id="radio14" type="radio" name="estrellas3" value="Pregunta3Val2">
+                                                    <input id="radio14" type="radio" name="estrellas3" value="Pregunta3Val2" checked="@Model.encuesta[2].Pregunta1Val2">
                                                     <!--  -->
                                                     <label for="radio14">★</label>
                                                     <!--  -->
-                                                    <input id="radio15" type="radio" name="estrellas3" value="Pregunta3Val1">
+                                                    <input id="radio15" type="radio" name="estrellas3" value="Pregunta3Val1" checked="@Model.encuesta[2].Pregunta1Val1">
                                                     <!--  -->
                                                     <label for="radio15">★</label>
                                                 </div>
@@ -590,23 +622,23 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio16" type="radio" name="estrellas4" value="Pregunta4Val5">
+                                                    <input id="radio16" type="radio" name="estrellas4" value="Pregunta4Val5" checked="@Model.encuesta[2].Pregunta1Val5">
                                                     <!-- -->
                                                     <label for="radio16">★</label>
                                                     <!-- -->
-                                                    <input id="radio17" type="radio" name="estrellas4" value="Pregunta4Val4">
+                                                    <input id="radio17" type="radio" name="estrellas4" value="Pregunta4Val4" checked="@Model.encuesta[2].Pregunta1Val4">
                                                     <!-- -->
                                                     <label for="radio17">★</label>
                                                     <!-- -->
-                                                    <input id="radio18" type="radio" name="estrellas4" value="Pregunta4Val3">
+                                                    <input id="radio18" type="radio" name="estrellas4" value="Pregunta4Val3" checked="@Model.encuesta[2].Pregunta1Val3">
                                                     <!--  -->
                                                     <label for="radio18">★</label>
                                                     <!--  -->
-                                                    <input id="radio19" type="radio" name="estrellas4" value="Pregunta4Val2">
+                                                    <input id="radio19" type="radio" name="estrellas4" value="Pregunta4Val2" checked="@Model.encuesta[2].Pregunta1Val2">
                                                     <!--  -->
                                                     <label for="radio19">★</label>
                                                     <!--  -->
-                                                    <input id="radio20" type="radio" name="estrellas4" value="Pregunta4Val1">
+                                                    <input id="radio20" type="radio" name="estrellas4" value="Pregunta4Val1" checked="@Model.encuesta[2].Pregunta1Val1">
                                                     <!--  -->
                                                     <label for="radio20">★</label>
                                                 </div>
@@ -635,23 +667,23 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio21" type="radio" name="estrellas5" value="Pregunta5Val5">
+                                                    <input id="radio21" type="radio" name="estrellas5" value="Pregunta5Val5" checked="@Model.encuesta[4].Pregunta1Val5" />
                                                     <!-- -->
                                                     <label for="radio21">★</label>
                                                     <!-- -->
-                                                    <input id="radio22" type="radio" name="estrellas5" value="Pregunta5Val4">
+                                                    <input id="radio22" type="radio" name="estrellas5" value="Pregunta5Val4" checked="@(Model.encuesta[4].Pregunta1Val4)" />
                                                     <!-- -->
                                                     <label for="radio22">★</label>
                                                     <!-- -->
-                                                    <input id="radio23" type="radio" name="estrellas5" value="Pregunta5Val3">
+                                                    <input id="radio23" type="radio" name="estrellas5" value="Pregunta5Val3" checked="@(Model.encuesta[4].Pregunta1Val3)" />
                                                     <!--  -->
                                                     <label for="radio23">★</label>
                                                     <!--  -->
-                                                    <input id="radio24" type="radio" name="estrellas5" value="Pregunta5Val2">
+                                                    <input id="radio24" type="radio" name="estrellas5" value="Pregunta5Val2" checked="@(Model.encuesta[4].Pregunta1Val2)" />
                                                     <!--  -->
                                                     <label for="radio24">★</label>
                                                     <!--  -->
-                                                    <input id="radio25" type="radio" name="estrellas5" value="Pregunta5Val1">
+                                                    <input id="radio25" type="radio" name="estrellas5" value="Pregunta5Val1" checked="@(Model.encuesta[4].Pregunta1Val1)" />
                                                     <!--  -->
                                                     <label for="radio25">★</label>
                                                 </div>
@@ -692,7 +724,7 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <input type="submit" value="Cancelar"  formaction=@Url.Action("RevisarPedido",new {msj="" }) formmethod="post"  class="btn btn-raised btn-primary btn-round float-left" />
+                                                <input type="submit" value="Cancelar" formaction=@Url.Action("RevisarPedido",new {msj="" }) formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
@@ -700,7 +732,7 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 @**@
-                                                <input type="submit" id="btnSave" value="Finalizar Edición"class="btn btn-raised btn-primary btn-round float-right" />
+                                                <input type="submit" id="btnSave" value="Finalizar Edición" class="btn btn-raised btn-primary btn-round float-right" />
                                             </div>
                                         </div>
                                     </div>
