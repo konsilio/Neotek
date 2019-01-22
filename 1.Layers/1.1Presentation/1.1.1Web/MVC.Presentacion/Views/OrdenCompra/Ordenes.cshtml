@@ -17,7 +17,7 @@
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdminCentral).Equals(false) ? "disabled" : "";
 }
-<link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
+@*<link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />*@
 
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
@@ -28,7 +28,7 @@
         $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
     }
 </script>
-<body style="padding-top:10px">
+<body>
     @using (Html.BeginForm("Ordenes", "OrdenCompra", FormMethod.Post))
     {
         <div class="page-loader-wrapper">
@@ -337,5 +337,5 @@
         </section>
     }
 </body>
-<script src="assets/js/pages/forms/advanced-form-elements.js"></script>
+@*<script src="~/assets/js/pages/forms/advanced-form-elements.js"></script>*@
 <script src="~/Scripts/js/OrdenesJS.js"></script>
