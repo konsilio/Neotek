@@ -1,5 +1,6 @@
 ﻿using DevExpress.Web.Mvc;
 using MVC.Presentacion.App_Code;
+using MVC.Presentacion.Models.Almacen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             //ViewBag.UnidadesVenta = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-            return View();
+            return View(new RemananteModel());
         }
         public ActionResult Buscar()
         {

@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" ?><!--
+  Para obtener más información acerca de cómo configurar una aplicación ASP.NET, consulte
+  http://go.microsoft.com/fwlink/?LinkId=301880
+  -->
+<configuration>
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+    <sectionGroup name="devExpress">
+      <section name="themes" type="DevExpress.Web.ThemesConfigurationSection, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
+      <section name="compression" type="DevExpress.Web.CompressionConfigurationSection, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
+      <section name="settings" type="DevExpress.Web.SettingsConfigurationSection, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
+      <section name="errors" type="DevExpress.Web.ErrorsConfigurationSection, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
+      <section name="resources" type="DevExpress.Web.ResourcesConfigurationSection, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
+    </sectionGroup>
+  </configSections>
+  <connectionStrings>
+    <add name="DefaultConnection" connectionString="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-MVC.Presentacion-20180904054745.mdf;Initial Catalog=aspnet-MVC.Presentacion-20180904054745;Integrated Security=True" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <appSettings>
+    <!--Formatos-->
+    <add key="FechaHora_F24H" value="dd/MM/yyyy HH:mm" />
+    <!--Formatos-->
+    <add key="webpages:Version" value="3.0.0.0" />
+    <add key="webpages:Enabled" value="false" />
+    <add key="ClientValidationEnabled" value="true" />
+    <add key="UnobtrusiveJavaScriptEnabled" value="true" />
+    <add key="WebApiUrlBase" value="http://localhost:5469/" />
+    <add key="GuardarLogoEmpresa" value="~/LogosEmpresa" />
+    <!--Login-->
+    <add key="PostLogin" value="api/seguridad/login" />
+    <add key="GetListaEmpresasLogin" value="api/catalogos/empresas/listaempresaslogin" />
+    <!--Login-->
+    <!--Seguridad-->
+    <add key="GetListaUsuarios" value="api/seguridad/usuarios/listausuarios/" />
+    <add key="PostRegistraUsuarios" value="api/seguridad/registra/usuarios" />
+    <add key="PutModificaCredencial" value="api/seguridad/modifica/usuariocredencial" />
+    <add key="PutModificaUsuarios" value="api/seguridad/modifica/usuario" />
+    <add key="PutEliminarUsuario" value="api/seguridad/elimina/usuario/" />
+    <add key="PutEliminaUsuarioRol" value="api/seguridad/eliminar/usuariorol" />
+    <add key="GetListaRoles" value="api/seguridad/roles/listaAllRoles/" />
+    <add key="PostRegistraRol" value="api/seguridad/registra/roles" />
+    <add key="PutModificaRoles" value="api/seguridad/modifica/nombrerol" />
+    <add key="PutModificaPermisos" value="api/seguridad/modifica/permisos" />
+    <add key="PutEliminarRol" value="api/seguridad/elimina/rol/" />
+    <add key="PostAsignarRol" value="api/seguridad/asignar/rol" />
+    <!--Seguridad-->
+    <!--Catalogos-->
+    <add key="GetListaEmpresasLogin" value="api/catalogos/empresas/listaempresaslogin" />
+    <add key="PostRegistraEmpresas" value="api/catalogos/registra/empresa" />
+    <add key="GetListaPaises" value="api/catalogos/paises" />
+    <add key="GetListaEstadosR" value="api/catalogos/estadosr" />
+    <add key="GetListaEmpresas" value="api/catalogos/empresas/listaempresa" />
+    <add key="GetListaEstacionCarburacion" value="api/catalogos/consulta/estacioncarburacion" />
+    <add key="GetListaUnidadAlmcenGas" value="api/catalogos/consulta/unidadalmacengas/" />
+    <add key="GetListaEquiposTransporte" value="api/catalogos/consulta/equipotransporte" />
+    <add key="GetListaBancos" value="api/catalogos/consulta/bancos" />
+    <add key="GetListaFormasPago" value="api/catalogos/consulta/formaspago" />
+    <add key="GetPuntosVenta" value="api/catalogos/puntoventa/listapuntosventa" />
+    <add key="GetPuntosVentaId" value="api/catalogos/puntoventa/listapuntosventa/" />
+    <add key="PutEliminaPuntosVenta" value="api/catalogos/elimina/puntoventa" />
+    <add key="GetOperadorIdUsuario" value="api/catalogos/puntoventa/operadores/" />
+    <add key="PutModificaOperador" value="api/catalogos/modifica/puntoventa" />
+    <add key="GetUsuariosPuntoVenta" value="api/catalogos/puntoventa/usuariooperador/" />
+    <add key="PostRegistraPrecioVenta" value="api/catalogos/registra/precioventa" />
+    <add key="GetListaPrecioVenta" value="api/catalogos/consulta/precioventa" />
+    <add key="GetListaPrecioVIdEmpresa" value="api/catalogos/consulta/listaprecioventa/" />
+    <add key="PutEliminaPreciosVenta" value="api/catalogos/elimina/precioventa" />
+    <add key="PutModificaPreciosVenta" value="api/catalogos/modifica/precioventa" />
+    <add key="GetListaEstatusPV" value="api/catalogos/consulta/estatustipofecha" />
+    <add key="PutEmpresaConfig" value="api/catalogos/modifica/empresaconfiguracion" />
+    <add key="PutModificaEmpresas" value="api/catalogos/modifica/empresa" />
+    <add key="PutEliminarEmpresa" value="api/catalogos/elimina/empresa/" />
+    <add key="GetTiposPersona" value="api/catalogos/clientes/tipopersona" />
+    <add key="GetRegimenFiscal" value="api/catalogos/clientes/regimenfiscal" />
+    <add key="GetListaClientes" value="api/catalogos/clientes/listaclientes/" />
+    <add key="GetClientes" value="api/catalogos/clientes/listaclientes" />
+    <add key="PostRegistraClientes" value="api/catalogos/registra/cliente" />
+    <add key="PutModificaClientes" value="api/catalogos/modifica/cliente" />
+    <add key="PutEliminaClientes" value="api/catalogos/elimina/cliente/" />
+    <add key="PostRegistraClienteLoc" value="api/catalogos/registra/clientelocacion" />
+    <add key="GetListaLocacion" value="api/catalogos/clientes/listaclientesloc/" />
+    <add key="PutModificaClienteLocacion" value="api/catalogos/modifica/clientelocacion" />
+    <add key="PutEliminaClienteLocacion" value="api/catalogos/elimina/clientelocacion" />
+    <add key="GetCentrosCostos" value="api/catalogos/consulta/centrosdecosto" />
+    <add key="PostRegistraCentroCosto" value="api/catalogos/registra/centro/costo" />
+    <add key="PutModificaCentroCosto" value="api/catalogos/modifica/centro/costo" />
+    <add key="PutEliminaCentroCosto" value="api/catalogos/elimina/centro/costo" />
+    <add key="GetCentroCosto" value="api/catalogos/centro/costo/" />
+    <add key="GetTipoCentroCostos" value="api/catalogos/consulta/tipocentrosdecosto" />
+    <add key="GetListaProductos" value="api/catalogos/consulta/producto" />
+    <add key="GetProducto" value="api/catalogos/consulta/producto/" />
+    <add key="GetProductos" value="api/catalogos/consulta/producto" />
+    <add key="PostRegistraProducto" value="api/catalogos/registra/producto" />
+    <add key="PutModificaProducto" value="api/catalogos/modifica/producto" />
+    <add key="PutEliminaProducto" value="api/catalogos/elimina/producto" />
+    <add key="GetUnidadMedida" value="api/catalogos/consulta/unidad/medida/" />
+    <add key="GetUnidadMedidas" value="api/catalogos/consulta/unidades/medida" />
+    <add key="PostRegistraUnidadMedida" value="api/catalogos/registra/unidad/medida" />
+    <add key="PutModificaUnidadMedida" value="api/catalogos/modifica/unidad/medida" />
+    <add key="PutEliminaUnidadMedida" value="api/catalogos/elimina/unidad/medida" />
+    <add key="PostRegistraCuentaContable" value="api/catalogos/registra/cuenta/contable" />
+    <add key="PutModificaCuentaContable" value="api/catalogos/modifica/cuenta/contable" />
+    <add key="PutEliminaCuentaContable" value="api/catalogos/elimina/cuenta/contable" />
+    <add key="GetListaCuentasContables" value="api/catalogos/consulta/cuentas/contables/" />
+    <add key="GetCuentaContable" value="api/catalogos/consulta/cuenta/contable/" />
+    <add key="GetListaProveedores" value="api/catalogos/consulta/proveedores" />
+    <add key="GetListaProveedoresIdProveedor" value="api/catalogos/consulta/proveedores/" />
+    <add key="PostRegistraProveedor" value="api/catalogos/registra/proveedor" />
+    <add key="PutModificaProveedor" value="api/catalogos/modifica/proveedor" />
+    <add key="PutEliminaProveedor" value="api/catalogos/elimina/proveedor" />
+    <add key="GetListaTipoProveedores" value="api/catalogos/consulta/tipos/proveedor" />
+    <add key="GetCategoriaProducto" value="api/catalogos/consulta/categoria/producto/" />
+    <add key="GetCategoriasProducto" value="api/catalogos/consulta/categorias/producto" />
+    <add key="PostRegistraCategoriaProducto" value="api/catalogos/registra/categoria/producto" />
+    <add key="PutModificaCategoriaProducto" value="api/catalogos/modifica/categoria/producto" />
+    <add key="PutEliminaCategoriaProducto" value="api/catalogos/elimina/categoria/producto" />
+    <add key="GetLineaProducto" value="api/catalogos/consulta/linea/producto/" />
+    <add key="GetLineasProducto" value="api/catalogos/consulta/lineas/producto" />
+    <add key="PostRegistraLineaProducto" value="api/catalogos/registra/linea/producto" />
+    <add key="PutModificaLineaProducto" value="api/catalogos/modifica/linea/producto" />
+    <add key="PutEliminaLineaProducto" value="api/catalogos/elimina/linea/producto" />
+    <!--Catalogos-->
+    <!--Requisicion-->
+    <add key="GetRequisicionEstatus" value="api/requisicion/buscar/requisicion/estatus" />
+    <add key="PostRequisicion" value="api/requisicion/guardar/requisicion" />
+    <add key="GetRequisicionesByIdEmpresa" value="api/requisicion/buscar/requisiciones/" />
+    <add key="GetRequisicionByNumRequisicion" value="api/requisicion/buscar/requisicion/" />
+    <add key="GetRequisicionByNumRequisicionAut" value="api/requisicion/buscar/requisicion/autorizacion/" />
+    <add key="PutActulizarRevision" value="api/requisicion/update/requisicion/revision" />
+    <add key="PutActulizarAutorizacion" value="api/requisicion/update/requisicion/autorizacion" />
+    <add key="PutCancelarRequisicion" value="api/requisicion/cancela/requisicion" />
+    <!--Requisicion-->
+    <!--Compras-->
+    <add key="PostCompraGas" value="api/compras/gas/PostCompraGas" />
+    <add key="GetBuscarReq" value="api/compras/buscar/requisicion/" />
+    <add key="PostGenerarOrdenesCompra" value="api/compras/guardar/ordencompra" />
+    <add key="PutCancelarOrdenCompra" value="api/compras/cancelar/ordencompra" />
+    <add key="PutAutorizarCompra" value="api/compras/autorizar/ordencompra" />
+    <add key="PutDatosFactura" value="api/compras/actualiza/ordencompra/datosfactura" />
+    <add key="GetOrdenesCompra" value="api/compras/buscar/ordenescompra/" />
+    <add key="GetBuscarOrdenCompra" value="api/compras/buscar/ordencompra/" />
+    <add key="GetOrdenCompraEstatus" value="api/compras/buscar/ordenescompra/estatus" />
+    <add key="GetOrdenCompraComplementoGas" value="api/compras/buscar/ordencompra/complemento/gas/" />
+    <add key="PutConfirmarPago" value="api/compras/guardar/confirmacionpago" />
+    <add key="PostGenerarPago" value="api/compras/guardar/pago" />
+    <add key="PostGuardarPagoPorteador" value="api/compras/guardar/pago/porteador" />
+    <add key="GetListaPagos" value="api/compras/buscar/pagos/" />
+    <add key="PutAutorizarProductoOordenCompra" value="api/compras/actualiza/productos/ordencompra" />
+    <add key="PutSolicitarPago" value="api/compras/solictud/pago/mercancia" />
+    <add key="PutSolicitarPagoPorteador" value="api/compras/solictud/pago/porteador" />
+    <add key="PutSolicitarPagoExpedidor" value="api/compras/solictud/pago/expedidor" />
+    <add key="PutGuardarDatosPapeleta" value="api/compras/guardar/datos/papeleta" />
+    <add key="PutDatosOrdenCompraExpedidor" value="api/compras/actualiza/ordencompra/datosexpedidor" />
+    <!--Compras-->
+    <!-- Almacen -->
+    <add key="PostGuardarEntradas" value="api/almacen/entrada/producto" />
+    <add key="PostGuardarSalida" value="api/almacen/salida/producto" />
+    <add key="PostActulizarAlmacenProducto" value="api/almacen/actualiza/almacenproducto" />
+    <add key="GetOrdenCompraEntrada" value="api/almacen/buscar/ordecompraentrada/" />
+    <add key="GetProductosAlmacen" value="api/almacen/buscar/productos/" />
+    <add key="GetRequisiconAlmacen" value="api/almacen/buscar/almacen/requisicion/" />
+    <add key="GetRegistroAlmacen" value="api/almacen/buscar/registro/" />
+    <add key="GetRemanenteGeneral" value="api/almacen/buscar/remananete/general"/>
+    <add key="GetRemanentePuntoVenta" value="api/almacen/buscar/remananete/puntoventa"/>
+    <!-- Almacen -->
+    <!-- Ventas -->
+    <add key="GetListaCajaGral" value="api/ventas/buscar/listacajageneral" />
+    <add key="GetListaCajaGralId" value="api/ventas/buscar/listacajageneral/" />
+    <add key="GetListaCajaGralCamioneta" value="api/ventas/buscar/listacajageneralcamioneta/" />
+    <add key="GetListaCajaGralEstacion" value="api/ventas/buscar/listacajageneralestacion/" />
+    <add key="PutLiquidarCajaGral" value="api/ventas/Modifica/liquidarcajageneral" />
+    <add key="PutLiquidarCajaGralEst" value="api/ventas/Modifica/liquidarcajageneralest" />
+    <add key="PutListaMovGas" value="api/ventas/buscar/listamovimientosgas" />
+    <add key="PutListaMovGasCilindros" value="api/ventas/buscar/listamovimientosgascilindros" />
+    <!-- Ventas -->
+    <!-- Pedidos -->
+    <add key="GetListaPedidos" value="api/pedidos/buscar/listapedidos/" />
+    <add key="GetEstatusPedido" value="api/pedidos/buscar/listaestatuspedidos" />
+    <add key="GetPedidoId" value="api/pedidos/buscar/pedidos/" />
+    <add key="PutModificarPedido" value="api/pedidos/modificar/pedido" />
+    <add key="PostRegistrarPedido" value="api/pedidos/registrar/pedido" />
+    <add key="PostRegistrarEncuesta" value="api/pedidos/registrar/encuesta" />
+    <add key="PutCancelarPedido" value="api/pedidos/cancelar/pedido" />
+    <add key="GetCamionetas" value="api/pedidos/buscar/camionetas/" />
+    <add key="GetPipas" value="api/pedidos/buscar/pipas/" />
+    <!-- Pedidos -->
+    <!-- Cobranza -->
+    <add key="GetListaCargos" value="api/cobranza/buscar/listacargos/" />
+    <add key="GetCargoId" value="api/cobranza/buscar/cargos/" />
+    <add key="PostRegistrarAbono" value="api/cobranza/registrar/abono" />
+    <add key="PostRegistrarAbonosLst" value="api/cobranza/registrar/abonos" />
+    <add key="PutListaCartera" value="api/cobranza/buscar/carteravencida" />
+    <!-- Cobranza -->
+    <add key="vs:EnableBrowserLink" value="false" />
+  </appSettings>
+  <system.web>
+    <customErrors defaultRedirect="Error404.cshtml" mode="On">
+      <error statusCode="404" redirect="Error404.cshtml" />
+    </customErrors>
+    <pages validateRequest="true" clientIDMode="Predictable">
+      <controls>
+        <add assembly="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35" namespace="System.Web.Mvc" tagPrefix="mvc" />
+        <add assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagPrefix="ajaxToolkit" />
+      </controls>
+      <namespaces>
+        <add namespace="DevExpress.Utils" />
+        <add namespace="DevExpress.Web.ASPxThemes" />
+        <add namespace="DevExpress.Web" />
+        <add namespace="DevExpress.Web.Mvc" />
+        <add namespace="DevExpress.Web.Mvc.UI" />
+      </namespaces>
+    </pages>
+    <authentication mode="None" />
+    <compilation debug="true" targetFramework="4.5.2">
+      <assemblies>
+        <add assembly="DevExpress.Utils.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Data.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Web.ASPxThemes.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.RichEdit.v17.2.Core, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Printing.v17.2.Core, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Web.Mvc5.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+      </assemblies>
+    </compilation>
+    <httpRuntime targetFramework="4.5.2" maxRequestLength="4096" requestValidationMode="4.0" executionTimeout="110" />
+    <httpModules>
+      <add name="ApplicationInsightsWebTracking" type="Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule, Microsoft.AI.Web" />
+      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" name="ASPxHttpHandlerModule" />
+    </httpModules>
+    <globalization uiCulture="es" culture="es"></globalization>
+    <httpHandlers>
+      <add type="DevExpress.Web.ASPxUploadProgressHttpHandler, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="ASPxUploadProgressHandlerPage.ashx" validate="false" />
+      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET" path="DX.ashx" validate="false" />
+    </httpHandlers>
+  </system.web>
+  <system.webServer>
+    <modules>
+      <remove name="FormsAuthentication" />
+      <remove name="ApplicationInsightsWebTracking" />
+      <add name="ApplicationInsightsWebTracking" type="Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule, Microsoft.AI.Web" preCondition="managedHandler" />
+      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" name="ASPxHttpHandlerModule" />
+    </modules>
+    <validation validateIntegratedModeConfiguration="false" />
+    <handlers>
+      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <remove name="OPTIONSVerbHandler" />
+      <remove name="TRACEVerbHandler" />
+      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
+      <add type="DevExpress.Web.ASPxUploadProgressHttpHandler, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="ASPxUploadProgressHandlerPage.ashx" name="ASPxUploadProgressHandler" preCondition="integratedMode" />
+      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET" path="DX.ashx" name="ASPxHttpHandlerModule" preCondition="integratedMode" />
+    </handlers>
+    <security>
+      <requestFiltering>
+        <requestLimits maxAllowedContentLength="30000000" />
+      </requestFiltering>
+    </security>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.OAuth" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin.Security.Cookies" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" culture="neutral" publicKeyToken="30ad4fe6b2a6aeed" />
+        <bindingRedirect oldVersion="0.0.0.0-11.0.0.0" newVersion="11.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Optimization" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-1.1.0.0" newVersion="1.1.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-1.5.2.14234" newVersion="1.5.2.14234" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Http" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Net.Http.Formatting" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
+        <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="mssqllocaldb" />
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+  <system.codedom>
+    <compilers>
+      <compiler language="c#;cs;csharp" extension=".cs" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:6 /nowarn:1659;1699;1701" />
+      <compiler language="vb;vbs;visualbasic;vbscript" extension=".vb" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.VBCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:14 /nowarn:41008 /define:_MYTYPE=\&quot;Web\&quot; /optionInfer+" />
+    </compilers>
+  </system.codedom>
+  <devExpress>
+    <themes enableThemesAssembly="true" theme="Material" baseColor="#F78119" customThemeAssemblies="" />
+    <compression enableHtmlCompression="false" enableCallbackCompression="true" enableResourceCompression="true" enableResourceMerging="true" />
+    <settings rightToLeft="false" checkReferencesToExternalScripts="true" doctypeMode="Html5" accessibilityCompliant="false" />
+    <errors callbackErrorRedirectUrl="" />
+    <resources>
+      <add type="ThirdParty" />
+      <add type="DevExtreme" />
+    </resources>
+  </devExpress>
+</configuration>

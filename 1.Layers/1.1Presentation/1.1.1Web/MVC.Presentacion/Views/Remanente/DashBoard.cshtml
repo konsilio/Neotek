@@ -1,4 +1,5 @@
-﻿@Html.DevExpress().GetStyleSheets(
+﻿@model MVC.Presentacion.Models.Almacen.RemananteModel
+@Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
@@ -9,6 +10,43 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
+@*@section AdditionalResources {
+    <style type="text/css">
+        .dateContainer {
+            display: table;
+            width: 100%;
+            padding-bottom: 24px;
+        }
+
+        .dateEditor {
+            max-width: 350px;
+            padding-bottom: 10px;
+        }
+
+        .description {
+            line-height: 22px;
+        }
+
+        @@media (min-width:800px) {
+            .dateContainer {
+                padding-bottom: 30px;
+            }
+
+                .dateContainer > div {
+                    display: table-cell;
+                }
+
+            .dateEditor {
+                padding-right: 100px;
+                width: 150px;
+            }
+
+            .description {
+                vertical-align: top;
+            }
+        }
+    </style>
+}*@
 <script language="JavaScript" type="text/javascript">
     function ChangeTipo(s, e) {
         var sel = s.GetValue();
@@ -24,8 +62,7 @@
             $('#PuntoVentaTabla').hide();
             $('#RemaneteGeneralDatos').show();
             $('#RemaneteGeneralTabla').show();
-
-        }      
+        }
     };
 </script>
 <body>
@@ -56,7 +93,7 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <strong>Gasera:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
                                         {
@@ -69,16 +106,16 @@
                                             settings.Properties.Items.Add("Selecciones uno", 0);
                                             settings.Properties.TextField = "NombreComercial";
                                             settings.Properties.ValueField = "IdEmpresa";
-                                        }).BindList(ViewBag.Empresas).GetHtml()
+                                        }).BindList(ViewBag.Empresas).Bind(Model.IdEmpresa).GetHtml()
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <strong>Tipo:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
                                     {
                                         settings.Name = "IdTipo";
                                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                         settings.SelectedIndex = 0;
-                                        settings.Properties.DisplayFormatString = "Remanente {0}";
+                                        settings.Properties.DisplayFormatString = "{0}";
                                         settings.Properties.ValueType = typeof(int);
                                         settings.ClientEnabled = true;
                                         settings.Properties.ClientSideEvents.SelectedIndexChanged = "ChangeTipo";
@@ -86,14 +123,27 @@
                                         settings.Properties.Items.Add("Selecciones uno", 0);
                                         settings.Properties.Items.Add("General", 1);
                                         settings.Properties.Items.Add("Por punto de venta", 2);
-                                    }).GetHtml()
+                                    }).Bind(Model.IdTipo).GetHtml()
                                 </div>
                                 <div class="col-md-3" id="PuntoVentaCampos">
                                     <strong>Punto de venta</strong>
                                     @Html.Action("cbPuntosventaPartial")
                                 </div>
-                                <div class="col-md-3">
-                                    
+                                <div class="col-md-2">
+                                    <strong>Periodo</strong>
+                                    @Html.DevExpress().DateEdit(settings =>
+                               {                                   
+                                   settings.Name = "Fecha";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.PickerType = DatePickerType.Months;
+                                   settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                   settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                   settings.Date = DateTime.Today;
+                               }).Bind(Model.Fecha).GetHtml()
+                                </div>
+                                <div class="col-md-1">
+                                    <strong> </strong>
+                                    <button class="btn btn-round btn-default"> Buscar</button>
                                 </div>
                             </div>
                             <br />
@@ -115,12 +165,12 @@
                                         </thead>
                                         <tbody>
                                             @if (ViewBag.RemaGeneral != null)
+                                            {
+                                                foreach (var item in ViewBag.RemaGeneral)
                                                 {
-                                                    foreach (var item in ViewBag.RemaGeneral)
-                                                    {
 
-                                                    }
                                                 }
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -192,12 +242,12 @@
                                         </thead>
                                         <tbody>
                                             @if (ViewBag.RemaPuntoVenta != null)
+                                            {
+                                                foreach (var item in ViewBag.RemaPuntoVenta)
                                                 {
-                                                    foreach (var item in ViewBag.RemaPuntoVenta)
-                                                    {
 
-                                                    }
                                                 }
+                                            }
                                     </table>
                                 </div>
                             </div>

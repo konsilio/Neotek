@@ -3097,7 +3097,7 @@ namespace MVC.Presentacion.Agente
         }
         public void BuscarRemanenteGeneral(short idEmpresa, string tkn)
         {
-            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetProductosAlmacen"];
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetRemanenteGeneral"];
             ListaRemanenteGeneral(idEmpresa, tkn).Wait();
         }
         private async Task ListaRemanenteGeneral(short idEmpresa, string token)
