@@ -37,6 +37,7 @@ namespace Application.MainModule.DTOs.Pedidos
         public decimal TotalLitros { get; set; }
         public List<PedidoModelDto> Pedidos { get; set; }
         public List<ClienteCrearDto> clientes { get; set; }
+        public List<EncuestaDto> encuesta { get; set; }
     }
 
 }
