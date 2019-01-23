@@ -13,21 +13,12 @@ namespace MVC.Presentacion.Controllers
     {
         string tkn = string.Empty;
         // GET: Remanente
-        public ActionResult DashBoard()
+        public ActionResult DashBoard(RemanenteModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            //ViewBag.UnidadesVenta = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-        
-            //var Rema = new RemanenteModel()
-            //{
-            //    IdEmpresa = 2,
-            //    IdPuntoVenta = 3,
-            //    IdTipo = 2,
-            //    Fecha = DateTime.Now
-            //};
-            return View();
+            ViewBag.Empresas = CatalogoServicio.Empresas(tkn);        
+            return View(model);
         }
         public ActionResult Buscar(RemanenteModel model = null)
         {

@@ -45,5 +45,11 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarRequsicionSalida(idRequisicion, tkn);
             return agente._RequisicionSalida;
         }
+        public static List<RemanenteGeneralDTO> BuscarRemanente(RemanenteModel model, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.BuscarRemanenteGeneral(model, tkn);
+            return agente._ListaRemanenteGenaral;
+        }
     }
 }
