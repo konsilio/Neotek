@@ -263,6 +263,7 @@
     <Compile Include="Controllers\CuentaContableController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
+    <Compile Include="Controllers\EquipoTransporteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
@@ -338,6 +339,7 @@
     <Compile Include="Models\Cobranza\CargosModel.cs" />
     <Compile Include="Models\Cobranza\CarteraVencidaModel.cs" />
     <Compile Include="Models\Cobranza\ReporteModel.cs" />
+    <Compile Include="Models\EquipoTransporte\ParqueVehicularModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImagenDTO.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -11573,6 +11575,7 @@
     <Content Include="Views\Empresas\_DatabaseComboBoxPartial.cshtml" />
     <Content Include="Views\Pedidos\_ComboBoxPartialPais.cshtml" />
     <Content Include="Views\Remanente\_cbPuntosventaPartial.cshtml" />
+    <Content Include="Views\EquipoTransporte\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
