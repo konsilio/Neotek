@@ -43,5 +43,6 @@ namespace MVC.Presentacion.Models.Catalogos
         public string NumInt { get; set; }
         public string Empresa { get; set; }
         public List<RolDto> Roles { get; set; }
+        public string NombreCompleto { get; set; }
     }
 }

@@ -10,7 +10,8 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Presenter.EnviarDatosPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.EnviarDatosPresenterImpl;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Lisener;
@@ -56,15 +57,8 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
         lecturaCamionetaDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -98,24 +92,15 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
         //endregion
         //region Realiza el registro de la lectura inicial de camioneta
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_lectura = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialCamioneta(
                     lecturaCamionetaDTO,token,"application/json");
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url camioneta", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaLecturaInicialDTO> call,
@@ -143,7 +128,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     if(response.code()>=300){
                         registrar_local(sagasSql,lecturaCamionetaDTO,clave_unica,false);
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.LecturaInicialCamioneta);
+                        lisener.CrearRunable(Lisener.Proceso.LecturaInicialCamioneta);
                         enviarDatosPresenter.onSuccessAndroid();
 
                     }
@@ -154,7 +139,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     Log.e("error", t.toString());
                     registrar_local(sagasSql,lecturaCamionetaDTO,clave_unica,false);
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.LecturaInicialCamioneta);
+                    lisener.CrearRunable(Lisener.Proceso.LecturaInicialCamioneta);
                     enviarDatosPresenter.onSuccessAndroid();
                 }
             });
@@ -199,15 +184,8 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
         lecturaCamionetaDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -243,24 +221,15 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
         //endregion
         //region Realiza el registro de la lectura final de la camioneta
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_lectura = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalCamioneta(
                     lecturaCamionetaDTO,token,"application/json");
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url camioneta", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaLecturaInicialDTO> call,
@@ -288,7 +257,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     if(response.code()>=300){
                         registrar_local(sagasSql,lecturaCamionetaDTO,clave_unica,true);
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.LecturaFinalCamioneta);
+                        lisener.CrearRunable(Lisener.Proceso.LecturaFinalCamioneta);
                         enviarDatosPresenter.onSuccessAndroid();
                     }
                 }
@@ -298,7 +267,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     Log.e("error", t.toString());
                     registrar_local(sagasSql,lecturaCamionetaDTO,clave_unica,true);
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.LecturaFinalCamioneta);
+                    lisener.CrearRunable(Lisener.Proceso.LecturaFinalCamioneta);
                     enviarDatosPresenter.onSuccessAndroid();
                 }
             });
@@ -342,15 +311,8 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
         recargaDTO.setFechaApliacacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
         esta_disponible= true;
@@ -384,24 +346,15 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
         //endregion
         //region Realiza el registro de la lectura final de la camioneta
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
 
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
         registra_lectura = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaRecargaDTO> call = restClient.postRecarga(
                     recargaDTO,token,"application/json");
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url camioneta", ApiClient.BASE_URL);
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaRecargaDTO> call,
@@ -429,7 +382,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     if(response.code()>=300){
                         registrar_local(sagasSql,recargaDTO,"C");
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.RecargaCamioneta);
+                        lisener.CrearRunable(Lisener.Proceso.RecargaCamioneta);
                         enviarDatosPresenter.onSuccessAndroid();
                     }
                 }
@@ -439,7 +392,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                     Log.e("error", t.toString());
                     registrar_local(sagasSql,recargaDTO,"C");
                     Lisener lisener = new Lisener(sagasSql,token);
-                    lisener.CrearRunable(Lisener.RecargaCamioneta);
+                    lisener.CrearRunable(Lisener.Proceso.RecargaCamioneta);
                     enviarDatosPresenter.onSuccessAndroid();
                 }
             });
@@ -456,7 +409,7 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
         }
         if(registro_local ){
             Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);
+            lisener.CrearRunable(Lisener.Proceso.RecargaCamioneta);
             enviarDatosPresenter.onSuccessAndroid();
         }*/
         //endregion

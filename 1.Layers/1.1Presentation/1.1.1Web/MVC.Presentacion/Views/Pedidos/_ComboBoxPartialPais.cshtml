@@ -1,0 +1,18 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model List<ClienteLocacionMod>
+@Html.DevExpress().ComboBox(settings =>
+{  
+    settings.Name = "IdPais";
+    settings.Width = 180;
+    settings.SelectedIndex = 0;
+    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+    settings.Theme = "Material";
+    settings.Properties.TextField = "Pais";
+    settings.Properties.ValueField = "IdPais";
+    settings.Properties.ValueType = typeof(byte);
+    settings.ClientEnabled = true;
+    settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+
+}).BindList(ViewBag.ListaPaises).GetHtml()
+

@@ -12,6 +12,9 @@ namespace Application.MainModule.DTOs.Catalogo
     {
         public int IdCliente { get; set; }
         public short Orden { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "IdPais")]
         public byte IdPais { get; set; }
         public Nullable<byte> IdEstadoRep { get; set; }
 
@@ -55,5 +58,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public string TipoLocacion { get; set; }
         public string Pais { get; set; }
         public string Estado { get; set; }
+        public byte IdPais2 { get; set; }
+        public Nullable<byte> IdEstadoRep2 { get; set; }
     }
 }

@@ -86,10 +86,9 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
         empresaDTOs = new ArrayList<>();
 
-
         //editTextContraseña.setText("saadmin");
         editTextCorreoElectronico.setText(!session.getAttribute(Session.KEY_EMAIL).equals("") ?
-                session.getAttribute(Session.KEY_EMAIL):""
+                session.getAttribute(Session.KEY_EMAIL):"aaron.gallegos@neoteck.com.mx"
         );
 
 
@@ -263,9 +262,13 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 //showDialog(getResources().getString(R.string.login_sucess));
                 Log.w("success",getResources().getString(R.string.login_sucess));
                 //se crea la sesion
-                String[]datos = usuarioDTO.getMensaje().trim().split("\\|");
-                session.createLoginSession(contraseña,usuario,usuarioDTO.getToken(),IdEmpresa,
-                        fb_token,"",datos[1],usuarioDTO.getIdUsuario());
+
+                String[] datos = usuarioDTO.getMensaje().trim().split("\\|");
+
+                String nombre = datos[1];
+
+                session.createLoginSession(contraseña, usuario, IdEmpresa, fb_token, "", nombre, usuarioDTO);
+
                 ArrayList<MenuDTO> menuDTOs = new ArrayList<MenuDTO>(Arrays.asList(usuarioDTO.getListMenu()));
                 startActivity(menuDTOs);
                 finish();

@@ -22,10 +22,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa)).ToList();
         }
-
         public List<PedidoDetalle> Buscar(int idPedido)
         {
             return uow.Repository<PedidoDetalle>().Get(x => x.IdPedido.Equals(idPedido)).ToList();
+        }
+        public List<RespuestaSatisfaccionPedido> BuscarEnc(int idPedido)
+        {
+            return uow.Repository<RespuestaSatisfaccionPedido>().Get(x => x.IdPedido.Equals(idPedido)).ToList();
         }
         public Pedido BuscarPedido(int idPedido)
         {

@@ -237,13 +237,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.PuntosVentaIdEmpresa(idEmpresa));
         }
-
         [Route("puntoventa/listapuntosventa")]
         public HttpResponseMessage GetListaPuntosVenta()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPuntosVenta());
         }
-
         [Route("elimina/puntoventa")]
         public HttpResponseMessage PutEliminaPuntosVenta(PuntoVentaDTO cteLoc)
         {
@@ -254,13 +252,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.GetOperador(id));
         }
-
         [Route("puntoventa/usuariooperador/{idEmpresa}")]
         public HttpResponseMessage GetUsuarioOperador(short idEmpresa)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.GetUsuariosIdEmpesa(idEmpresa));
         }
-
         [Route("modifica/puntoventa")]
         public HttpResponseMessage PutModificaOperador(PuntoVentaDTO PuntoVta)
         {

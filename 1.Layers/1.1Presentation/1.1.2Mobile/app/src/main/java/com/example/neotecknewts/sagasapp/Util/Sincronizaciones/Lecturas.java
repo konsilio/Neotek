@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
-import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Sincronizacion;
@@ -93,17 +93,9 @@ public class Lecturas {
 
     public boolean Registro(LecturaDTO dto){
         Log.w("Registro","Registrando en servicio "+dto.getClaveProceso());
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        RestClient restClient = retrofit.create(RestClient.class);
-        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(dto,token,
-                "application/json");
+
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(dto, token, "application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,

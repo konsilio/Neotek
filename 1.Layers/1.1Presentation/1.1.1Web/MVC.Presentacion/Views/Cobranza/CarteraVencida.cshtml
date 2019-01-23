@@ -82,10 +82,12 @@
                                                     settings.Properties.ValueField = "IdCliente";
                                                 }).BindList(ViewBag.Clientes).GetHtml()
                                         </div>
-                                        <div class="col-sm-2" style="top:20px">
+                                        <div class="col-sm-2">
+                                            <b>Fecha:</b>
                                             @Html.DevExpress().DateEdit(settings =>
                                        {
                                            settings.Name = "FechaRango1";
+                                           settings.Properties.NullDisplayText = "dd/MM/yyyy";
                                            settings.Properties.UseMaskBehavior = true;
                                            settings.Properties.EditFormat = EditFormat.Custom;
                                            //settings.Theme = "Moderno";
@@ -94,7 +96,7 @@
                                            settings.Attributes.Clear();
                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       }).GetHtml()
+                                       }).Bind(Model.reportedet[0].FechaRango1).GetHtml()
                                         </div>
                                         <div class="col-sm-3" style="top:10px">
                                             <div class="form-group">

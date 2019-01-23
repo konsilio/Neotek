@@ -776,12 +776,12 @@ namespace MVC.Presentacion.Agente
             Paises.Add(rol);
             return Paises;
         }
-        public void BuscarListaClientes(int id, string rfc, string nombre, string tkn)//short idEmpresa, 
+        public void BuscarListaClientes(int id, int TipoPersona, int regimen, string rfc, string nombre, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetClientes"];
-            GetListaClientes(id, rfc, nombre, tkn).Wait();
+            GetListaClientes(id, TipoPersona, regimen, rfc, nombre, tkn).Wait();
         }
-        private async Task GetListaClientes(int id, string rfc, string nombre, string Token)
+        private async Task GetListaClientes(int id, int TipoPersona, int regimen, string rfc, string nombre, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -807,14 +807,14 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
 
-                if (id != 0 ||( rfc != "" && rfc != null) || (nombre != "" && nombre != null))
+                if (id != 0 ||( rfc != "" && rfc != null) || (nombre != "" && nombre != null) || (TipoPersona != 0) || (regimen != 0) )
                 {
                     if (id != 0)
                     {
                         lus = (from x in lus where x.IdCliente == id select x).ToList();
                     }
 
-                    if (rfc != "")
+                    if (rfc != "" && rfc != null)
                     {
                         lus = (from x in lus where x.Rfc == rfc select x).ToList();
                     }
@@ -823,17 +823,27 @@ namespace MVC.Presentacion.Agente
                     {
                         lus = (from x in lus where x.RazonSocial == nombre || (x.Nombre + " " + x.Apellido1) == nombre select x).ToList();
                     }
+                    if (TipoPersona != 0)
+                    {
+                        lus = (from x in lus where x.IdTipoPersona == TipoPersona select x).ToList();
+                    }
+
+                    if (regimen != 0)
+                    {
+                        lus = (from x in lus where x.IdRegimenFiscal == regimen select x).ToList();
+                    }
+
                 }
 
                 _lstaClientes = lus;
             }
         }
-        public void BuscarListaClientesMod(string tel1, string tel2, string rfc, string tkn)//short idEmpresa, 
+        public void BuscarListaClientesMod(int cliente,string tel1, string tel2, string rfc, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetClientes"];
-            GetListaClientesMod(tel1, tel2, rfc, tkn).Wait();
+            GetListaClientesMod(cliente, tel1, tel2, rfc, tkn).Wait();
         }
-        private async Task GetListaClientesMod(string tel1, string tel2, string rfc, string Token)
+        private async Task GetListaClientesMod(int cliente, string tel1, string tel2, string rfc, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -843,7 +853,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    if (tel1 != "" || rfc != "" || tel2 != "")
+                    if (tel1 != "" || rfc != "" || tel2 != "" || cliente != 0)
                     {
                         HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
                         if (response.IsSuccessStatusCode)
@@ -853,12 +863,16 @@ namespace MVC.Presentacion.Agente
                             client.CancelPendingRequests();
                             client.Dispose();
                         }
+                        if (cliente != 0)
+                        {
+                            lus = (from x in lus where x.IdCliente == cliente select x).ToList();
+                        }
                         if (tel1 != "" && tel1 != null)
                         {
                             lus = (from x in lus where x.Telefono1 == tel1 select x).ToList();
                         }
 
-                        if (rfc != "")
+                        if (rfc != "" && rfc != null)
                         {
                             lus = (from x in lus where x.Rfc == rfc select x).ToList();
                         }
@@ -1257,6 +1271,14 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Caja General
+        public List<PaisModel> AddSelect()
+        {
+            PaisModel rol = new PaisModel();
+            rol.Pais = "Seleccione";
+            List<PaisModel> Paises = new List<PaisModel>();
+            Paises.Add(rol);
+            return Paises;
+        }
         public void BuscarListaVentaCajaGral(string tkn, string type)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGral"];
@@ -3070,12 +3092,12 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarSalida"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
         }
-        public void BuscarRemanenteGeneral(short idEmpresa, string tkn)
+        public void BuscarRemanenteGeneral(RemanenteModel model, string tkn)
         {
-            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetProductosAlmacen"];
-            ListaRemanenteGeneral(idEmpresa, tkn).Wait();
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetRemanenteGeneral"];
+            ListaRemanenteGeneral(model, tkn).Wait();
         }
-        private async Task ListaRemanenteGeneral(short idEmpresa, string token)
+        private async Task ListaRemanenteGeneral(RemanenteModel model, string token)
         {
             using (var client = new HttpClient())
             {
@@ -3085,7 +3107,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idEmpresa.ToString())).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, model)).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<RemanenteGeneralDTO>>();
                     else
@@ -3131,8 +3153,9 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    //ex.Message;
                     pedidos = new List<PedidoModel>();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
@@ -3487,6 +3510,7 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         #endregion
+       
         private async Task LLamada<T>(T _dto, string token, string Tipo)
         {
             using (var client = new HttpClient())

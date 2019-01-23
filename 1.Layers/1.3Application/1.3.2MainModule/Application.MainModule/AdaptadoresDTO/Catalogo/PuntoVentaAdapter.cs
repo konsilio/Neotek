@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Mobile.PuntoVenta;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.AdaptadoresDTO.Catalogo
 {
@@ -32,9 +33,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 UnidadesAlmacen = result.ToString(),//pv.UnidadesAlmacen,
                 OperadorChofer = idUser.Usuario.Nombre + " " + idUser.Usuario.Apellido1 + " " + idUser.Usuario.Apellido2,//UsuarioServicio.Obtener(idUser.IdUsuario).ToString(),
                 Empresa = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial,
-                PuntoVenta = EquipoTransporteServicio.ObtenerNumero(pv.IdEmpresa, pv.IdCAlmacenGas),
+                PuntoVenta = EquipoTransporteServicio.ObtenerNombre(Unidad),
                 IdUsuario = idUser.Usuario.IdUsuario,
-            };
+            };            
             return usDTO;
         }
         public static List<PuntoVentaDTO> ToDTO(List<PuntoVenta> lu)

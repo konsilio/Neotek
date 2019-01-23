@@ -16,7 +16,8 @@ namespace Application.MainModule.Servicios.Catalogos
                 return new EquipoTransporteDataAccess().BuscarCamioneta(uAG).Nombre;
             if (uAG.IdPipa != null)
                 return new EquipoTransporteDataAccess().BuscarPipa(uAG).Nombre;
-            
+            if (uAG.IdEstacionCarburacion != null)
+                return new EquipoTransporteDataAccess().BuscarEstacion(uAG).Nombre;
             return null;
         }
 

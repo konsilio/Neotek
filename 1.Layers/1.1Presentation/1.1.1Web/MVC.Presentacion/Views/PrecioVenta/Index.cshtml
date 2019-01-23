@@ -1,4 +1,14 @@
 ﻿@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,9 +66,9 @@
                 /**********/
 
             });//key up.
-
             /*******/
             $("#IdA").keyup(function () {
+                debugger
                 var from = $("#IdDe").val();
                 var To = $(this).val();
                 var index = 0;
@@ -93,8 +103,7 @@
                     }
                 });
             });
-            $('select').on('change', function () {
-
+            $('select').on('change', function () {          
                 var from = $("#IdDe").val();
                 var To = $("#IdA").val();
                 var value = $('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
@@ -137,6 +146,84 @@
                 }
             });
         });
+        function OnSelectedChangeFilter(s, e) {
+            var from = IdDe.GetDate();
+            //var from = $("#IdDe").GetValue();
+            var To = IdA.GetDate();//$("#IdA").GetValue();
+            var value = s.GetSelectedIndex();//$('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
+            //var value = IdTipoFecha.GetSelectedIndex();
+            if (from != null && To != null && value != 0) {
+                var index = 0;
+
+                if (value == 1) {
+                    index = 4;
+                }
+                if (value == 2) {
+                    index = 7;
+                }
+                if (value == 3) {
+                    index = 5;
+                }
+
+                var dateParts = from.split("/");
+                var datefrom = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+                var dateParts2 = To.split("/");
+                var dateto = new Date(dateParts2[2], dateParts2[1] - 1, dateParts2[0]);
+
+                $('#tblfilterable tbody tr').each(function () {
+                    var filterdate = $(this).find("td").eq(index).html();//get value of column Fecha Programada  x
+                    var dateParts3 = filterdate.split("/");
+                    var datefilter = new Date(dateParts3[2].split(" ", 1), dateParts3[1] - 1, dateParts3[0]);
+                    if (datefilter >= datefrom && datefilter <= dateto) {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
+                    }
+                    else {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
+                    }
+                });
+            }
+
+            if (value == 0) {
+                $('#tblfilterable tbody tr').show();
+            }
+        }
+        function keyupDateEdit(s, e) {
+            var from = IdDe.GetDate();
+            //var from = $("#IdDe").GetValue();
+            var To = s.GetValue();
+            var index = 0;
+            var value = IdTipoFecha.GetSelectedIndex();//$('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
+            if (value == 1) {
+                index = 4;
+            }
+            if (value == 2) {
+                index = 7;
+            }
+            if (value == 3) {
+                index = 6;
+            }
+            if (from != "" && To != "") {
+                $('#tblfilterable tbody tr').each(function () {
+                    var filterdate = $(this).find("td").eq(index).html();//get value of column Fecha x
+                    var dateParts3 = filterdate.split("/");
+                    var datefilter = new Date(dateParts3[2].split(" ", 1), dateParts3[1] - 1, dateParts3[0]);
+
+                    if (datefilter >= from && datefilter <= To) {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
+                    }
+                    else {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
+                    }
+                });
+            }
+            else {
+                $('#tblfilterable tbody tr').show();
+            }
+        };
     </script>
     <style type="text/css">
         .col-sm-01 {
@@ -218,7 +305,7 @@
                                             {
                                                 @ViewBag.Empresas
                                                 <label id="lblIdEmpresa" style="visibility:hidden">@ViewBag.IdEmpresa</label>
-                                                @Html.HiddenFor(m => m.IdEmpresa)
+                                                <input type="text" name="IdEmpresa" hidden value="@ViewBag.IdEmpresa" />
                                             }
                                         </div>
                                     </div>
@@ -297,13 +384,19 @@
                                 <div class="col-sm-2">
                                     <b>Fecha programada:</b>
                                 </div>
-                                <div class="col-sm-3">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="zmdi zmdi-calendar"></i>
-                                        </span>
-                                        <input type="text" name="FechaProgramada" class="form-control date" placeholder="formato: dd/mm/aaaa" />
-                                    </div>
+                                <div class="col-sm-3">                               
+                                    @Html.DevExpress().DateEdit(settings =>
+                               {
+                                   settings.Name = "FechaProgramada";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Custom;
+                                   settings.Theme = "Material";
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.NullText = "dd/MM/yyyy";
+                                   //settings.Attributes.Clear();
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                               }).GetHtml()
                                 </div>
                                 <div class="col-sm-7">
                                     <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
@@ -315,32 +408,60 @@
                     <div class="card">
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-sm-3">
-                                    <b>Tipo de Fecha:</b>
-                                    <select id="IdTipoFecha" class="form-control selectpicker z-index show-tick">
-                                        <option value="0">Seleccione</option>
-                                        <option value="1">Fecha Programada</option>
-                                        <option value="2">Fecha Registro</option>
-                                        <option value="3">Fecha Vencimiento</option>
-                                    </select>
+                                <div class="col-sm-3">                                   
+                                    @Html.DevExpress().ComboBox(settings =>
+                               {
+                                   settings.Name = "IdTipoFecha";
+                                   settings.Width = 180;
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Theme = "Material";
+                                   settings.ClientEnabled = true;
+                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
+                                       combo.Properties.Items.Insert(1, new ListEditItem("Fecha Programada"));
+                                       combo.Properties.Items.Insert(2, new ListEditItem("Fecha Registro"));
+                                       combo.Properties.Items.Insert(3, new ListEditItem("Fecha Vencimiento"));
+                                       combo.Properties.ValueField = "IdTipoFecha";
+                                       combo.SelectedIndex = 0;
+                                   };
+                               }).GetHtml()
                                 </div>
                                 <div class="col-sm-3">
                                     <b>De:</b>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="zmdi zmdi-calendar"></i>
-                                        </span>
-                                        <input type="text" id="IdDe" class="form-control date" placeholder="formato: dd/mm/aaaa" />
-                                    </div>
+                                    @Html.DevExpress().DateEdit(settings =>
+                               {
+                                   settings.Name = "IdDe";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Custom;
+                                   settings.Theme = "Material";
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.NullText = "dd/MM/yyyy";
+                                   //settings.Attributes.Clear();
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                
+                               }).GetHtml()
                                 </div>
                                 <div class="col-sm-3">
                                     <b>A:</b>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="zmdi zmdi-calendar"></i>
-                                        </span>
-                                        <input type="text" id="IdA" class="form-control date" placeholder="formato: dd/mm/aaaa" />
-                                    </div>
+                                    @Html.DevExpress().DateEdit(settings =>
+                               {
+                                   settings.Name = "IdA";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Custom;
+                                   settings.Theme = "Material";
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.NullText = "dd/MM/yyyy";
+                                   settings.Attributes.Clear();
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                   settings.ClientEnabled = true;
+                                   settings.Properties.ClientSideEvents.DateChanged = "keyupDateEdit";
+                               }).GetHtml()
                                 </div>
                             </div>
                             <br />
