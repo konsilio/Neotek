@@ -3,18 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
-using System.Web.Mvc;
+using System.Web;
 
 namespace DS.MainModule.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/cobranza")]
+    [RoutePrefix("api/equipotransporte")]
     public class EquipoTransporteController : ApiController
     {
-        // GET: EquipoTransporte
-        public ActionResult Index()
+        private EquipoTransporte _eqTransporte;
+        public EquipoTransporteController()
         {
-            return View();
+            _eqTransporte = new EquipoTransporte();
         }
+        // GET: EquipoTransporte
+
     }
 }

@@ -27,5 +27,7 @@ namespace MVC.Presentacion.Models.EquipoTransporte
         public int IdTipoUnidad { get; set; }
         public bool UnidadActiva { get; set; }
         public string AliasUnidad { get; set; }
+        public List<ParqueVehicularModel> vehiculos { get; set; }
+        
     }
 }

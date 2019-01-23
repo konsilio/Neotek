@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.Servicios.EqTransporte;
 
 namespace Application.MainModule.Flujos
 {
@@ -15,8 +16,8 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarParqueVehicular();
             if (!resp.Exito) return null;
 
-            
-             return CobranzaServicio.Obtener(idempresa).ToList();
-   }
+
+            return EquipoTransporteServicio.Obtener(idempresa).ToList();
+        }
     }
 }
