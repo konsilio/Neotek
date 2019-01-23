@@ -2,11 +2,11 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
-import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecioVentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaGasListaPresenter;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -29,24 +29,13 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
     @Override
     public void getListaCamionetaCilindros(String token, boolean esGasLP,
                                            boolean esCilindroConGas, boolean esCilindro) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<List<ExistenciasDTO>>() {
             @Override
@@ -95,24 +84,14 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
     @Override
     public void getListEstacionGas(String token, boolean esGasLP, boolean esCilindroGas, boolean
             esCilindro) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<List<ExistenciasDTO>>() {
             @Override
@@ -159,24 +138,14 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
 
     @Override
     public void getPrecioVenta(String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<PrecioVentaDTO> call = restClient.getPrecioVenta(
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<PrecioVentaDTO>() {
             @Override
@@ -224,19 +193,9 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
     @Override
     public void getCamionetaCilindros(boolean esGasLP, boolean esCilindroGas, boolean esCilindro,
                                       String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
                 esGasLP,
                 esCilindroGas,
@@ -244,7 +203,7 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<List<ExistenciasDTO>>() {
             @Override

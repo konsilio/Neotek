@@ -5,7 +5,8 @@ import android.util.Log;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenterImpl;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -25,19 +26,9 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
 
     @Override
     public void GetListCamionetas(String token,boolean esFinalizar) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
                 false,
                 false,
@@ -46,7 +37,7 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<DatosTomaLecturaDto>() {
             @Override

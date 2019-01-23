@@ -1481,10 +1481,10 @@ namespace MVC.Presentacion.App_Code
             return agente._lstaRegimenFiscal;
         }
 
-        public static List<ClientesDto> ListaClientes(int id, string rfc, string nombre, string token)
+        public static List<ClientesDto> ListaClientes(int id, int? TipoPersona, int? regimen, string rfc, string nombre, string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaClientes(id, rfc, nombre, token);
+            agente.BuscarListaClientes(id, TipoPersona??0, regimen ?? 0, rfc, nombre, token);
             return agente._lstaClientes;
         }
         public static List<ClientesDto> ListaClientes(short idEmpresa, string token)
@@ -1494,10 +1494,10 @@ namespace MVC.Presentacion.App_Code
             return agente._lstaClientes;
         }
 
-        public static List<ClientesModel> ListaClientes(string tel1, string tel2, string rfc, string token)
+        public static List<ClientesModel> ListaClientes(int idCliente,string tel1, string tel2, string rfc, string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaClientesMod(tel1, tel2, rfc, token);
+            agente.BuscarListaClientesMod(idCliente, tel1, tel2, rfc, token);
             return agente._lstaClientesMod;
         }
 
@@ -1548,7 +1548,6 @@ namespace MVC.Presentacion.App_Code
         }
         public static ClienteLocacionMod ObtenerModel(short idOrden, int IdCliente, string tkn)
         {
-
             var cat = ObtenerLocaciones(IdCliente, tkn).SingleOrDefault(x => x.Orden.Equals(idOrden));
             return new ClienteLocacionMod()
             {

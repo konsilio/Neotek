@@ -6,7 +6,8 @@ import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaDatosPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaDatosPresenterImpl;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -28,20 +29,11 @@ public class LecturaDatosInteractorImpl implements LecturaDatosInteractor {
 
     @Override
     public void getMedidores(String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<MedidorDTO>> call = restClient.getMedidores(token);
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<List<MedidorDTO>>() {
             @Override
@@ -81,18 +73,9 @@ public class LecturaDatosInteractorImpl implements LecturaDatosInteractor {
 
     @Override
     public void getEstacionesCarburacion(String token,boolean esFinalizar) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
                 true,
                 false,

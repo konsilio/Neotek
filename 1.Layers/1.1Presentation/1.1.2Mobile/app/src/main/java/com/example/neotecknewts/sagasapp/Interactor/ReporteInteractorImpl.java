@@ -1,21 +1,16 @@
 package com.example.neotecknewts.sagasapp.Interactor;
 
-import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.DatosReporteDTO;
 import com.example.neotecknewts.sagasapp.Model.ReporteDto;
-import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Presenter.ReportePresenterImpl;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,19 +26,8 @@ public class ReporteInteractorImpl implements ReporteInteractor {
 
     @Override
     public void GetUnidades(String token) {
-        String url  = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<DatosReporteDTO> call = restClient.getUnidades(token,"application/json");
 
         call.enqueue(new Callback<DatosReporteDTO>() {
@@ -85,18 +69,8 @@ public class ReporteInteractorImpl implements ReporteInteractor {
 
     @Override
     public void Reporte(int idUnidad, String fecha, String token) {
-        String url  = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<ReporteDto> call = restClient.getReporte(
                 idUnidad,
                 fecha,

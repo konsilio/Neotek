@@ -256,6 +256,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlmacenController.cs" />
+    <Compile Include="Controllers\AsignacionController.cs" />
     <Compile Include="Controllers\CajaGeneralController.cs" />
     <Compile Include="Controllers\CentroCostoController.cs" />
     <Compile Include="Controllers\CobranzaController.cs" />
@@ -282,7 +283,7 @@
     <Compile Include="Models\Almacen\AlmacenDTO.cs" />
     <Compile Include="Models\Almacen\AlmacenSalidaDTO.cs" />
     <Compile Include="Models\Almacen\RegistroDTO.cs" />
-    <Compile Include="Models\Almacen\RemanenteDTO.cs" />
+    <Compile Include="Models\Almacen\RemananteModel.cs" />
     <Compile Include="Models\Almacen\RemanenteGeneralDTO.cs" />
     <Compile Include="Models\Almacen\RequisicionSalidaDTO.cs" />
     <Compile Include="Models\Catalogos\BancoDTO.cs" />
@@ -10753,6 +10754,7 @@
     <Content Include="Resources\css\Clientes.css" />
     <Content Include="Resources\css\CreateForm.css" />
     <Content Include="Resources\css\DevExpressCss.css" />
+    <Content Include="Resources\css\toggleCl.css" />
     <Content Include="Resources\css\tooltip.css" />
     <Content Include="Resources\js\CajaGeneral.js" />
     <Content Include="Resources\js\Clientes.js" />
@@ -10770,7 +10772,7 @@
     <Content Include="Scripts\bootstrap-material-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ApplicationInsights.config">
+    <Content Include="Views\ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\fonts\Material-Design-Iconic-Font.eot">
@@ -11434,7 +11436,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -11565,12 +11569,18 @@
     <Content Include="Views\Cobranza\_AbonosPartial.cshtml" />
     <Content Include="Views\Cobranza\CreditoRecuperado.cshtml" />
     <Content Include="Views\Cobranza\CarteraVencida.cshtml" />
+    <Content Include="Views\Asignacion\Index.cshtml" />
+    <Content Include="Views\Empresas\_DatabaseComboBoxPartial.cshtml" />
+    <Content Include="Views\Pedidos\_ComboBoxPartialPais.cshtml" />
+    <Content Include="Views\Remanente\_cbPuntosventaPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
     <Folder Include="Servicios\" />
+    <Folder Include="Views\Mantenimiento\" />
+    <Folder Include="Views\RecargaCombustibles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

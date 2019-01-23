@@ -29,7 +29,6 @@ namespace Application.MainModule.Flujos
             else
                 return PedidosServicio.Obtener(idempresa).Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
-
         public PedidoModelDto PedidoId(int idPedido)
         {
             var resp = PermisosServicio.PuedeConsultarPedido();
@@ -58,7 +57,6 @@ namespace Application.MainModule.Flujos
 
             return PedidosServicio.ObtenerPipas(IdEmpresa).ToList();
         }
-
         public RespuestaDto Registra(PedidoModelDto pedidoDto)
         {
             var resp = PermisosServicio.PuedeRegistrarPedido();

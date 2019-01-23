@@ -62,8 +62,7 @@ namespace Application.MainModule.Servicios.Mobile
         }
 
         public static RespuestaDto Lectura(LecturaCamionetaDTO lcdto,bool finalizar = false)
-        {
-            
+        {            
             var al = AlmacenGasServicio.ObtenerLecturas(lcdto.IdCAlmacenGas);
             var almacen = AlmacenGasServicio.ObtenerAlmacen(lcdto.IdCAlmacenGas);
             int idOrden = Orden(al);

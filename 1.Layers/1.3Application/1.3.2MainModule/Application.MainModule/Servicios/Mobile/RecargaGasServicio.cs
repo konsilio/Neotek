@@ -11,6 +11,8 @@ using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Sagas.MainModule.ObjetosValor.Enum;
+using Sagas.MainModule.Entidades;
+using Application.MainModule.Servicios.Seguridad;
 
 namespace Application.MainModule.Servicios.Mobile
 {
@@ -30,7 +32,26 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.FechaRegistro = DateTime.Now;
             adapter.FechaAplicacion = rdto.FechaAplicacion;
 
-            return AlmacenGasServicio.InsertarRecargaGas(adapter);
+            var recarga = AlmacenGasServicio.InsertarRecargaGas(adapter);
+            if (recarga.Exito)
+            {
+                #region Actualizo el inventario despues de la recarga
+                foreach (var reargaCilindro in adapter.Cilindros)
+                {
+                    CamionetaCilindro cilindro = new CamionetaCilindro();
+                    cilindro.IdCamioneta = adapter.IdCAlmacenGasEntrada;
+                    cilindro.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+                    cilindro.IdCilindro = reargaCilindro.IdCilindro;
+                    cilindro.Cantidad = reargaCilindro.Cantidad;
+                    if (cilindro.Cantidad > 0)
+                    {
+                        var actualizar = AlmacenGasServicio.ActualizaCilindroCamioneta(cilindro);
+                    }
+                }
+                #endregion
+            }
+
+            return recarga;
         }
 
         public static RespuestaDto Recarga(RecargaDTO rdto,bool esFinal = false)

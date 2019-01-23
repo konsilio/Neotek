@@ -27,11 +27,12 @@ namespace Application.MainModule.Flujos
         }
         public DataSet ReporteDetallado(int? idCliente, DateTime? fecha, short? empresa)
         {
+           
             List<System.Data.SqlClient.SqlParameter> lp = new List<System.Data.SqlClient.SqlParameter>();
             if (idCliente != 0)
                 lp.Add(new System.Data.SqlClient.SqlParameter("IdCliente", idCliente));
-            if (fecha.Value.Year != 1)
-                lp.Add(new System.Data.SqlClient.SqlParameter("Fecha", fecha));
+            if (fecha.Value.Year != 1) {              
+            lp.Add(new System.Data.SqlClient.SqlParameter("Fecha", fecha));}
             if (empresa != 0)
                 lp.Add(new System.Data.SqlClient.SqlParameter("IdEmpresa", empresa));
             return new DataAccess().StoredProcedure_DataSet("SpSel_CarteraVencida", lp);         

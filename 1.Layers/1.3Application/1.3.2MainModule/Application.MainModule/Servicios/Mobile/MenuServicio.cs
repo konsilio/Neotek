@@ -113,7 +113,7 @@ namespace Application.MainModule.Servicios.Mobile
                     }
                                         
                     //Estación Calibacion 
-                    if (rol.AppTomaLecturaEstacionCarb && !_AppTomaLecturaEstacionCarb && !esChofer)
+                    if (rol.AppTomaLecturaEstacionCarb && !_AppTomaLecturaEstacionCarb && esChofer && esEstacion)
                     {
                         
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaEstacionCarbInicial"]));

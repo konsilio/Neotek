@@ -39,7 +39,9 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
     String []ListaMedidores,ListaPipas;
     List<MedidorDTO> MedidorDTOList;
     DatosTomaLecturaDto DatosTomaLecturaDto;
+
     LecturaPipaPresenter lecturaPipaPresenter;
+
     Session session;
     LecturaPipaDTO lecturaPipaDTO;
     Boolean EsLecturaInicialPipa,EsLecturaFinalPipa,EsFinal;
@@ -80,7 +82,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaPipas));*/
         //lecturaPipaPresenter.getMedidores(session.getToken());
-        lecturaPipaPresenter.getPipas(session.getToken(),EsFinal);
+        lecturaPipaPresenter.getPipas(session.getToken(), EsFinal);
 
         SLecturaPipaActivityListaPipa.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
@@ -96,12 +98,6 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
                             lecturaPipaDTO.setCapacidadAlmacen(almacenDTO.getCapacidad());
                         }
                     }
-                    /*for (String m : ListaPipas) {
-                        if (m.equals(parent.getItemAtPosition(position).toString())) {
-                            lecturaPipaDTO.setNombrePipa(m);
-                            lecturaPipaDTO.setIdPipa(1);
-                        }
-                    }*/
                 }
             }
 

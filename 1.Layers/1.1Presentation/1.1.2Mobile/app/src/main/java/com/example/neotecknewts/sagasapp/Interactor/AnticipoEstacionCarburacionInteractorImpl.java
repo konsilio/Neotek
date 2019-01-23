@@ -5,7 +5,8 @@ import android.util.Log;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaVerificarLecturasDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoEstacionCarburacionPresenter;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -30,22 +31,13 @@ public class AnticipoEstacionCarburacionInteractorImpl implements AnticipoEstaci
 
     @Override
     public void getEstaciones(String token) {
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaEstacionesVentaDTO> call = restClient.getEstaciones(
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<RespuestaEstacionesVentaDTO>() {
             @Override
@@ -94,22 +86,13 @@ public class AnticipoEstacionCarburacionInteractorImpl implements AnticipoEstaci
      */
     @Override
     public void checkLecturas(String token) {
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaVerificarLecturasDTO> call = restClient.getHasLecturas(
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<RespuestaVerificarLecturasDTO>() {
             @Override

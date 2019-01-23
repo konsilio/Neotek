@@ -8,7 +8,8 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaPagarPresenter;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Lisener;
@@ -40,22 +41,10 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
     public void pagar(VentaDTO ventaDTO, String token, boolean esCamioneta, boolean esEstacion,
                       boolean esPipa, SAGASSql sagasSql) {
 
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
-                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        ventaDTO.setFecha(f.format(new Date(ventaDTO.getFecha())));
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
+        ventaDTO.setFecha(ventaDTO.getFecha());
         Call<RespuestaPuntoVenta> call = restClient.pagar(
                 ventaDTO,
                 /*esCamioneta,
@@ -64,7 +53,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<RespuestaPuntoVenta>() {
             @Override
@@ -114,7 +103,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                             local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
                             presenter.onSuccessAndroid();
                             Lisener lisener = new Lisener(sagasSql,token);
-                            lisener.CrearRunable(Lisener.VENTA);
+                            lisener.CrearRunable(Lisener.Proceso.Venta);
                         }
                     }
                 }
@@ -129,7 +118,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                 local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
                 presenter.onSuccessAndroid();
                 Lisener lisener = new Lisener(sagasSql,token);
-                lisener.CrearRunable(Lisener.VENTA);
+                lisener.CrearRunable(Lisener.Proceso.Venta);
 
             }
 
@@ -138,30 +127,20 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
             local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
             presenter.onSuccessAndroid();
             Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.VENTA);
+            lisener.CrearRunable(Lisener.Proceso.VENTA);
         }*/
     }
 
     @Override
     public void puntoVentaAsignado(String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<PuntoVentaAsignadoDTO> call = restClient.getPuntoVentaAsigando(
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<PuntoVentaAsignadoDTO>() {
             @Override
@@ -203,25 +182,15 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
 
     @Override
     public void verificarVentaExtraforanea(int idCliente, String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaVentaExtraforaneaDTO> call = restClient.getTieneVentaExtraforanea(
                 idCliente,
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<RespuestaVentaExtraforaneaDTO>() {
             @Override

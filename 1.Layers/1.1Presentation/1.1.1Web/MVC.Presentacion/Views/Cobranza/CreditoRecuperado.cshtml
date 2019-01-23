@@ -2,7 +2,10 @@
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Moderno" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Moderno" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" }
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" },
+             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
         )
 @Html.DevExpress().GetScripts(
             new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -70,9 +73,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <b>Ticket:</b>
-                                            @*@Html.TextBoxFor(m => m[0].Rfc, new { @class = "form-control", placeholder = "Número de ticket" })*@
                                             <input type="text" name="Ticket" class="form-control" placeholder="No de ticket" />
-
                                         </div>
                                         <div class="col-sm-2" style="top:20px">
                                             @Html.DevExpress().DateEdit(settings =>
@@ -80,13 +81,12 @@
                                                            settings.Name = "FechaRango1";
                                                            settings.Properties.UseMaskBehavior = true;
                                                            settings.Properties.EditFormat = EditFormat.Custom;
-                                                           settings.Theme = "Moderno";
-                                                           settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
                                                            settings.Properties.EditFormatString = "dd/MM/yyyy";
                                                            settings.Attributes.Clear();
                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                                       }).GetHtml()
+                                                           settings.Theme = "Material";
+                                                       }).Bind(Model[0].FechaRango1).GetHtml()
                                         </div>
                                         <div class="col-sm-2" style="top:20px">
                                             @Html.DevExpress().DateEdit(settings =>
@@ -94,13 +94,13 @@
                                                            settings.Name = "FechaRango2";
                                                            settings.Properties.UseMaskBehavior = true;
                                                            settings.Properties.EditFormat = EditFormat.Custom;
-                                                           settings.Theme = "Moderno";
                                                            settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
                                                            settings.Properties.EditFormatString = "dd/MM/yyyy";
                                                            settings.Attributes.Clear();
                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                                       }).GetHtml()
+                                                           settings.Theme = "Material";
+                                                       }).Bind(Model[0].FechaRango2).GetHtml()
                                         </div>
 
                                         <div class="col-sm-3" style="top:10px">

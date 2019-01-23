@@ -9,8 +9,8 @@ public class Constantes {
 
     //public static final String BASE_URL = "http://192.168.0.12:7010/ds/api/";
     //public static final String BASE_URL = "http://pruebaswebneoteck.ddns.net:7010/ds/api/";
-    //public static final String BASE_URL = "http://sagasapi.ddns.net:7012/api/"; //QA
-    public static final String BASE_URL = "http://sagasapi.ddns.net:7011/api/";//DEV
+//    public static final String BASE_URL = "http://sagasapi.ddns.net:7012/api/"; //QA
+    //public static final String BASE_URL = "http://sagasapi.ddns.net:7011/api/";//DEV
     public static final int IdClienteGeneral = 0;
     public static final String LOGIN_URL = "mobile/login";
     public static final String LISTA_EMPRESAS   = "catalogos/empresas/listaempresaslogin";
@@ -61,4 +61,9 @@ public class Constantes {
     public static final String GET_VENTA_EXTRAFORANEA = "mobile/venta-extraforanea/{idCliente}" ;
     public static final String GET_HAY_VENTA = "mobile/hay-corte-estacion/{fecha}";
     public static final String GET_HAY_LECTURAS = "mobile/cortes/verificar-lecturas";
+
+    public static final String FORMATO_FECHA = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMATO_FECHA_SESSION = "yyyy-MM-dd";
+    public static final String FORMATO_FECHA_API = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+
 }

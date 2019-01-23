@@ -47,6 +47,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             var cliente = ClienteServicio.Obtener(p.IdCliente);
             var clienteL = ClienteServicio.ObtenerCL(p.IdCliente, p.IdDireccion);
             var uni = p.IdCamioneta > 0 ? AlmacenGasServicio.ObtenerCamioneta(p.IdCamioneta.Value).Nombre : AlmacenGasServicio.ObtenerPipa(p.IdPipa ?? 0).Nombre;
+            List<RespuestaSatisfaccionPedido> pe = new PedidosDataAccess().BuscarEnc(p.IdPedido);
             PedidoModelDto usDTO = new PedidoModelDto()
             {
                 IdPedido = p.IdPedido,
@@ -76,6 +77,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 TipoPersonaFiscal = TipoPersonaServicio.TipoPersona(cliente.IdTipoPersona ?? 0).Descripcion,
                 RegimenFiscal = RegimenServicio.Regimen(cliente.IdRegimenFiscal ?? 0).Descripcion,
                 Pedidos = FromDtoDetalle(pd),
+                encuesta = pe.Count > 0 ? FromDto(pe) : FromInit(p.IdPedido),
                 //public List<PedidoModel> Unidades 
             };
             return usDTO;
@@ -85,7 +87,6 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             List<PedidoModelDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
-
         public static CamionetaDTO ToDTO(Camioneta p)
         {
             CamionetaDTO usDTO = new CamionetaDTO()
@@ -105,7 +106,6 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             List<CamionetaDTO> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
-
         public static PipaDTO ToDTO(Pipa p)
         {
             PipaDTO usDTO = new PipaDTO()
@@ -281,7 +281,6 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             List<PedidoModelDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
-
         public static PedidoModelDto ToDTO(PedidoDetalle lu)
         {
             PedidoModelDto usDTO = new PedidoModelDto()
@@ -293,6 +292,56 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 Cantidad30 = lu.Cilindro30 != null ? "Si" : "No",
                 Cantidad45 = lu.Cilindro45 != null ? "Si" : "No",
             };
+            return usDTO;
+        }
+        public static List<EncuestaDto> FromDto(List<RespuestaSatisfaccionPedido> lu)
+        {
+            List<EncuestaDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
+            return luDTO;
+        }
+        public static EncuestaDto ToDTO(RespuestaSatisfaccionPedido lu)
+        {
+            EncuestaDto usDTO = new EncuestaDto()
+            {
+                IdRespuesta = lu.IdRespuesta,
+                IdPedido = lu.IdPedido,
+                IdPregunta = lu.IdPregunta,
+              //  Respuesta = lu.Respuesta,
+                Pregunta1Val1 = lu.Respuesta >= 1 ? true : false,
+                Pregunta1Val2 = lu.Respuesta >= 2 ? true : false,
+                Pregunta1Val3 = lu.Respuesta >= 3 ? true : false,
+                Pregunta1Val4 = lu.Respuesta >= 4 ? true : false,
+                Pregunta1Val5 = lu.Respuesta >= 5 ? true : false,
+        };
+                 
+            return usDTO;
+        }
+        
+        public static List<EncuestaDto> FromInit(int pedido)
+        {
+            List<EncuestaDto> luDTO = new List<EncuestaDto>();
+            for (int i = 1; i < 6; i++)
+            {
+                luDTO.Add(ToDTOInit(pedido, i, i));
+            }
+            
+            return luDTO;
+        }
+
+        public static EncuestaDto ToDTOInit(int pedido,int resp, int preg)
+        {         
+            EncuestaDto usDTO = new EncuestaDto()
+            {
+                IdRespuesta = resp,
+                IdPedido = pedido,
+                IdPregunta = preg,
+                Pregunta1Val1 = false,
+                Pregunta1Val2 = false,
+                Pregunta1Val3 = false,
+                Pregunta1Val4 = false,
+                Pregunta1Val5 = false,
+            };
+
             return usDTO;
         }
     }

@@ -832,7 +832,8 @@ public class SAGASSql extends SQLiteOpenHelper {
         Long[] inserts = new Long[imagen.size()];
         for (int x = 0;x<imagen.size();x++){
             ContentValues contentValues = new ContentValues();
-            contentValues.put("IMAGEN",imagen.get(x).toString());
+            //contentValues.put("IMAGEN",imagen.get(x).toString());
+            contentValues.put("Imagen",imagen.get(x).toString());
             contentValues.put("Url",url.get(x));
             contentValues.put("CalveUnica",CalveUnica);
             inserts[x] =  db.insert(TABLE_PAPELETAS_IMAGENES,null,contentValues);
@@ -851,7 +852,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetRecordsByCalveUnica(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_PAPELETAS_IMAGENES+
-                " WHERE CalveUnica ='"+ClaveOperacion+"'",null);
+                " WHERE ClaveUnica ='"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -866,7 +867,7 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Integer EliminarImagenes(String ClaveOperacion){
         return  this.getWritableDatabase().delete(TABLE_PAPELETAS_IMAGENES,
-                "CalveUnica = '"+ClaveOperacion+"'",null);
+                "ClaveUnica = '"+ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -947,7 +948,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarDescarga(String ClaveOperacion) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_DESCARGAS,
-                "ClaveOperacion = '"+ClaveOperacion+"'",
+                " ClaveOperacion = '"+ClaveOperacion+"'",
                 null);
     }
     //endregion
@@ -990,7 +991,8 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Cursor GetImagenesDescargaByClaveUnica(String ClaveUnica){
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM "+TABLE_DESCARGAS_IMAGENES+" WHERE ClaveOperacion = '"+ClaveUnica+"'",null);
+        return db.rawQuery("SELECT * FROM "+TABLE_DESCARGAS_IMAGENES+
+                " WHERE ClaveOperacion = '"+ClaveUnica+"'",null);
     }
 
     /**
@@ -1005,7 +1007,8 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarImagenesDescarga(String ClaveUnica){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_DESCARGAS_IMAGENES,"WHERE ClaveUnica = '"+ClaveUnica+"'",null);
+        return db.delete(TABLE_DESCARGAS_IMAGENES,
+                " ClaveUnica = '"+ClaveUnica+"'",null);
     }
 
     public Cursor GetIniciarDescargas() {

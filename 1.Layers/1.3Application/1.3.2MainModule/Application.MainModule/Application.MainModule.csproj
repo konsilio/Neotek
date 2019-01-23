@@ -85,6 +85,7 @@
     <Compile Include="DTOs\Almacen\InventarioAnteriorDto.cs" />
     <Compile Include="DTOs\Almacen\RegistroDTO.cs" />
     <Compile Include="DTOs\Almacen\RemaDto.cs" />
+    <Compile Include="DTOs\Almacen\RemanenteDTO.cs" />
     <Compile Include="DTOs\Almacen\RemanenteGeneralDTO.cs" />
     <Compile Include="DTOs\Almacen\RemanentePuntoVentaDTO.cs" />
     <Compile Include="DTOs\Catalogo\CamionetaDTO.cs" />

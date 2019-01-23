@@ -3,9 +3,12 @@
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Moderno" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Moderno" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" }
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Metropolis" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Metropolis" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Metropolis" },
+             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Office365" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Office365" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Office365" }
         )
 @Html.DevExpress().GetScripts(
             new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -14,10 +17,9 @@
         )
 
 <!DOCTYPE html>
-
 <html>
 <head>
-    <link href="~/Resources/css/DevExpressCss.css" rel="stylesheet" />
+
     <script src="~/Resources/js/Pedidos.js"></script>
     <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <script src="~/assets/js/pages/ui/notifications.js"></script>
@@ -26,7 +28,6 @@
         if (mensaje != '') {
             $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
         }
-
     </script>
 </head>
 <body style="height:100%">
@@ -102,31 +103,71 @@
                                                 </div>
                                                 <div class="col-sm-2" style="top: 10px;">
                                                     <div class="form-group">
-                                                        <input type="submit" id="btnCrearCte" value="Crear cliente" formaction=@Url.Action("AltaCliente") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                                                        <input type="submit" id="btnCrearCte" value="Crear cliente" formaction=@Url.Action("AltaCliente") formmethod="post" class="btn btn-raised btn-primary btn-round float-center" />
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-2">
-                                                </div>
+                                                @*<div class="col-sm-2">
+                                                    </div>*@
                                                 <div class="col-sm-3">
                                                     <b>Fecha:</b>
-                                                    <div class="input-group">
-                                                        @Html.DevExpress().DateEdit(settings =>
+                                                    <div class="container">
+                                                        <div class="editor">
+                                                            @Html.DevExpress().DateEdit(settings =>
+       {
+           settings.Name = "FechaEntregaPedido";
+           settings.Properties.UseMaskBehavior = true;
+           settings.Theme = "Office365";
+           settings.Properties.EditFormat = EditFormat.Custom;
+           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+           settings.Properties.TimeSectionProperties.Visible = true;
+           settings.Properties.TimeSectionProperties.Adaptive = true;
+           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+           settings.Date = DateTime.Now;
+           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);           
+           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+       }).GetHtml()
+                                                        </div>
+                                                        <div class="content">
+                                                            @*UseMaskBehavior = true<br />
+                                                            EditFormat = EditFormat.Custom<br />
+                                                            EditFormatString = "dd/MM/yyyy hh:mm tt"<br />
+                                                            TimeSectionProperties.Visible = true;<br />
+                                                            TimeSectionProperties.Adaptive = true;<br />
+                                                            TimeEditProperties.EditFormat = EditFormat.Custom;<br />
+                                                            TimeEditProperties.EditFormatString = "hh:mm tt";*@
+                                                        </div>
+                                                    </div>
+
+                                                    @*<div class="input-group">
+                                                             @Html.DevExpress().DateEdit(settings =>
                                                         {
                                                             settings.Name = "FechaEntregaPedido";
+                                                            //settings.Properties.UseMaskBehavior = true;
+                                                            //settings.Properties.EditFormat = EditFormat.Custom;
+                                                            //settings.Theme = "Material";
+                                                            //settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
+                                                            //settings.Properties.CalendarProperties.DayStyle.Paddings.Padding = 0;
+                                                            //settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                                                            //settings.Properties.TimeSectionProperties.Visible = true;
+                                                            //settings.Properties.TimeSectionProperties.Adaptive = true;
+                                                            //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                            //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                            //settings.Date = DateTime.Now;
+                                                            //settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                                            //settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                                             settings.Properties.UseMaskBehavior = true;
                                                             settings.Properties.EditFormat = EditFormat.Custom;
-                                                            settings.Theme = "Moderno";
                                                             settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
                                                             settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
                                                             settings.Properties.TimeSectionProperties.Visible = true;
                                                             settings.Properties.TimeSectionProperties.Adaptive = true;
                                                             settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
                                                             settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
-                                                            settings.Date = DateTime.Now;
-                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                                            //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                                             settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                                         }).GetHtml()
-                                                    </div>
+                                                         </div>*@
                                                 </div>
                                             </div>
                                             <div class="row clearfix">

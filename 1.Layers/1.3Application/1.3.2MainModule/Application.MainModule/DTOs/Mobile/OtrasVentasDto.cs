@@ -6,13 +6,13 @@
  * Developer: Jorge Omar Tovar Martínez
  * Company: Neoteck
  * Date:03/10/2018
- * Update:03/10/2018
+ * Update:06/01/2019
  **/
 namespace Application.MainModule.DTOs.Mobile
 {
     public class OtrasVentasDto
     {
         public string Tipo { get; set; }
-        public int Cantidad { get; set; }
+        public decimal Cantidad { get; set; }
     }
 }

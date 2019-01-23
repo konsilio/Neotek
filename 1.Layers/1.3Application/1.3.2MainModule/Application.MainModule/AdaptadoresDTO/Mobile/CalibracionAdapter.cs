@@ -54,7 +54,37 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Fotografias = dto.Imagenes.Select(x => ToDTO(x, IdOrden, num++,dto.IdCAlmacenGas)).ToList(),
             };
         }
-        
+
+        public static UnidadAlmacenGas FromDTOAlmacenCalibracion(UnidadAlmacenGas unidadAlmacen, AlmacenGasCalibracion adapter)
+        {
+            return new UnidadAlmacenGas()
+            {
+                Activo = unidadAlmacen.Activo,
+                CantidadActualKg = unidadAlmacen.CantidadActualKg,
+                CantidadActualLt = unidadAlmacen.CantidadActualLt,
+                PorcentajeCalibracionPlaneada = adapter.PorcentajeCalibracion??0,
+                EsAlterno = unidadAlmacen.EsAlterno,
+                EsGeneral = unidadAlmacen.EsGeneral,
+                FechaRegistro = unidadAlmacen.FechaRegistro,
+                IdAlmacenGas = unidadAlmacen.IdAlmacenGas,
+                IdCAlmacenGas = unidadAlmacen.IdCAlmacenGas,
+                IdCamioneta= unidadAlmacen.IdCamioneta,
+                IdPipa = unidadAlmacen.IdPipa,
+                IdEstacionCarburacion = unidadAlmacen.IdEstacionCarburacion,
+                IdEmpresa = unidadAlmacen.IdEmpresa,
+                IdTipoAlmacen = unidadAlmacen.IdTipoAlmacen,
+                IdTipoMedidor = unidadAlmacen.IdTipoMedidor,
+                //Medidor = unidadAlmacen.Medidor,
+                Numero = unidadAlmacen.Numero,
+                //duda
+                P5000Actual = unidadAlmacen.P5000Actual,
+                PorcentajeActual = unidadAlmacen.PorcentajeActual,
+                CapacidadTanqueLt = unidadAlmacen.CapacidadTanqueLt,
+                CapacidadTanqueKg = unidadAlmacen.CapacidadTanqueKg,
+                
+            };
+        }
+
         public static AlmacenGasCalibracionFoto ToDTO(string fotografia,int IdOrden,int IdOrdenFoto,short IdCAlmacenGas)
         {
             return new AlmacenGasCalibracionFoto()

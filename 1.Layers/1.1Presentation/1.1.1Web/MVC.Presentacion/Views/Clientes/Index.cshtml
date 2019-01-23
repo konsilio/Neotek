@@ -1,13 +1,17 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
 @model  ClientesModel
-
-@{
-    ViewBag.Title = "Index";
-}
-
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <!-- Bootstrap Select Css -->
-<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/Resources/js/Clientes.js"></script>
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
@@ -78,21 +82,59 @@
                         <div class="row clearfix">
                             <div class="col-sm-3">
                                 <b>Tipo Persona</b>
-                                <select name="IdTipoPersona" id="ddlTipoPersona" class="form-control show-tick" data-live-search="true">
+                                @*<select name="IdTipoPersona" id="ddlTipoPersona" class="form-control show-tick" data-live-search="true">
                                     @foreach (var lst in ViewBag.TipoPersona)
                                     {
                                         <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
                                     }
-                                </select>
+                                </select>*@
+                                @Html.DevExpress().ComboBox(settings =>
+                           {
+                               settings.Name = "IdTipoPersona";
+                               settings.Width = 180;
+                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                               settings.Theme = "Material";
+                               settings.Properties.TextField = "Descripcion";
+                               settings.Properties.ValueField = "IdTipoPersona";
+                               settings.Properties.ValidationSettings.RequiredField.IsRequired = false;
+
+                               settings.PreRender = (s, e) =>
+                               {
+                                   MVCxComboBox combo = s as MVCxComboBox;
+                                   combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                   combo.Properties.ValueType = typeof(int);
+                                   combo.SelectedIndex = 0;
+                               };
+                           }).BindList(ViewBag.TipoPersona).GetHtml()
                             </div>
                             <div class="col-sm-6">
                                 <b>Régimen Fiscal</b>
-                                <select name="IdRegimenFiscal" class="form-control show-tick" data-live-search="true">
+                                @*<select name="IdRegimenFiscal" class="form-control show-tick" data-live-search="true">
                                     @foreach (var lst in ViewBag.RegimenFiscal)
                                     {
                                         <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
                                     }
-                                </select>
+                                </select>*@
+                                @Html.DevExpress().ComboBox(settings =>
+                           {
+                               settings.Name = "IdRegimenFiscal";
+                               settings.Width = 180;
+                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                               settings.Theme = "Material";
+                               settings.Properties.TextField = "Descripcion";
+                               settings.Properties.ValueField = "IdRegimenFiscal";
+                               settings.Properties.ValidationSettings.RequiredField.IsRequired = false;
+
+                               settings.PreRender = (s, e) =>
+                               {
+                                   MVCxComboBox combo = s as MVCxComboBox;
+                                   combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                   combo.Properties.ValueType = typeof(int);
+                                   combo.SelectedIndex = 0;
+                               };
+                           }).BindList(ViewBag.RegimenFiscal).GetHtml()
                             </div>
                         </div> <br />
                         <div class="row clearfix">
