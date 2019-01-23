@@ -17,7 +17,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public string Nombre { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
-
+        public string NombreCompleto { get; set; }
         //public virtual TipoOperadorChofer TipoOperadorChofer { get; set; }
         //public virtual Usuario Usuario { get; set; }
         // public virtual ICollection<PuntoVenta> PuntosVenta { get; set; }

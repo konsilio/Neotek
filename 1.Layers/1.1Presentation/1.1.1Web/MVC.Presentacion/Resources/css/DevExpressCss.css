@@ -59,6 +59,53 @@
 .dxeButtonEditButtonHover_Material {
     background-color: #888 !important;
 }
+
+.CalendarWidthClass {
+}
+
+.dxeDateEditClockCell_Material {
+    padding: 17px 28px 0 45px;
+    font: 12px Roboto Medium, Helvetica, "Droid Sans", Tahoma, Geneva, sans-serif;
+}
+
+.dxeCalendar_Material {
+    font: 12px Roboto Medium, Helvetica, "Droid Sans", Tahoma, Geneva, sans-serif;
+}
+
+.dxeDateEditTimeEditCell_Material {
+    padding: 10px 54px 0 73px;
+    width: 90px;
+}
+
+.dxeCalendarDay_Material {
+    /*padding: 10px;*/
+    padding: 2px 11px 3px;
+}
+
+.dxeCalendarSelected_Material, .dxeCalendarToday_Material {
+    background-repeat: no-repeat;
+    background-position: center 3px;
+    background-size: 30px 35px;
+}
+
+div.dxeCalendarDETS.dxeCalendarVerticalDETS .dxeICC > div {
+    height: 190px;
+}
+
+.dxeCalendar_Material td.dxMonthGridWithWeekNumbers > table > tbody > tr:last-child > td,
+.dxeCalendar_Material td.dxMonthGrid > table > tbody > tr:last-child > td {
+    padding-bottom: 25px;
+    padding-top: 0px;
+}
+.dxeCalendarDayHeader_Material {
+    padding: 10px 4px 10px;
+}
+.dxeCalendarFooter_Material {
+    padding: 3px 0;
+}
+/*div.dxeCalendarDETS > div {
+    width: 100%;
+}*/
 /*.dxeButtonEditSys .dxeButton,*/
 /*input[type="text"].dxeEditAreaSys
  { 

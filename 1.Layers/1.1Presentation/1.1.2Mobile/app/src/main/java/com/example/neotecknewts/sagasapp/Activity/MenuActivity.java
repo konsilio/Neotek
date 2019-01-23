@@ -148,7 +148,8 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                             progressSincronizar.setMessage(getString( R.string.message_cargando));
                             progressSincronizar.setTitle(R.string.app_name);
                             progressSincronizar.show();
-                            semaforo.sincronizar(session.getToken(),progressSincronizar);
+                            //semaforo.sincronizar(session.getToken(),progressSincronizar);
+                            semaforo.sincronizar(session.getToken());
                             dialogInterface.dismiss();
                         }
                     }

@@ -4,16 +4,14 @@ import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
-import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosBusquedaCortesDTO;
-import com.example.neotecknewts.sagasapp.Model.DatosEstacionesDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaCorteDto;
-import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuariosCorteDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenter;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.example.neotecknewts.sagasapp.Util.Lisener;
@@ -25,9 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,16 +39,8 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
     @Override
     public void Anticipo(AnticiposDTO anticiposDTO, SAGASSql sagasSql, String token) {
         if(VerificarServicio(token)){
-            Gson gsons = new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                    .create();
-            Retrofit retrofits =  new Retrofit.Builder()
-                    .baseUrl(Constantes.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gsons))
-                    .build();
-            RestClient restClient = retrofits.create(RestClient.class);
 
+            RestClient restClient = ApiClient.getClient().create(RestClient.class);
 
             Call<RespuestaAnticipoDTO> call = restClient.
                     postAnticipo(anticiposDTO,token,"application/json");
@@ -92,15 +79,8 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
     public boolean VerificarServicio(String token) {
         //region Verifica si el servcio esta disponible
         final boolean[] esta_disponible = {true};
-        Gson gsons = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
-        Retrofit retrofits =  new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gsons))
-                .build();
-        RestClient restClientS = retrofits.create(RestClient.class);
+
+        RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
 
@@ -136,15 +116,8 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
     @Override
     public void Corte(CorteDTO corteDTO, SAGASSql sagasSql, String token) {
         if(VerificarServicio(token)){
-            Gson gsons = new GsonBuilder()
-                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                    .create();
-            Retrofit retrofits =  new Retrofit.Builder()
-                    .baseUrl(Constantes.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gsons))
-                    .build();
-            RestClient restClient = retrofits.create(RestClient.class);
+
+            RestClient restClient = ApiClient.getClient().create(RestClient.class);
             //corteDTO.setFecha(new Date().toString());
 
             Call<RespuestaCorteDto> call = restClient.
@@ -182,19 +155,9 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
 
     @Override
     public void getAnticipos(String token,int estacion,boolean esAnticipos,String fecha) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<DatosBusquedaCortesDTO> call = restClient.getAnticipo_y_Corte(
                 estacion,
                 esAnticipos,
@@ -202,7 +165,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<DatosBusquedaCortesDTO>() {
             @Override
@@ -273,24 +236,14 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
      */
     @Override
     public void usuarios(String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<UsuariosCorteDTO> call = restClient.getUsuarios(
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<UsuariosCorteDTO>() {
             @Override
@@ -334,24 +287,14 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
 
     @Override
     public void usuariosCortes(String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<UsuariosCorteDTO> call = restClient.getUsuariosCorte(
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<UsuariosCorteDTO>() {
             @Override
@@ -397,7 +340,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
         if(sagasSql.GetAnticipoByClaveOperacion(anticiposDTO.getClaveOperacion()).getCount()==0){
             sagasSql.InsertAnticipo(anticiposDTO);
             Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.Anticipo);
+            lisener.CrearRunable(Lisener.Proceso.Anticipo);
         }
     }
 
@@ -407,7 +350,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
             if(sagasSql.GetVentasCorte(corteDTO.getClaveOperacion()).getCount()==0) {
                 sagasSql.InsertVentasCorte(corteDTO);
                 Lisener lisener = new Lisener(sagasSql, token);
-                lisener.CrearRunable(Lisener.CorteDeCaja);
+                lisener.CrearRunable(Lisener.Proceso.CorteDeCaja);
             }
         }
     }

@@ -1,14 +1,42 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
 @model  ClientesModel
-@{
-    ViewBag.Title = "Catálogo / Clientes";
-}
-
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/Resources/js/Clientes.js"></script>
+<link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
+<script type="text/javascript">
+    function OnSelectedChangeFilter(s, e) {
+        debugger
+        if (s.GetValue() == 2) {//($('#ddlTipopersona').find('option:selected').text() == 'Moral') {
+            $('#div_hideRP').show();
+            $('#div_hidePM').hide();
+            $('#hide_razonS').show();
+        }
 
+        if (s.GetValue() == 1) {// ($('#ddlTipopersona').find('option:selected').text() == 'Física') {
+            $('#div_hideRP').hide();
+            $('#hide_razonS').hide();
+            $('#div_hidePM').show();
+        }
+
+        if (s.GetValue() == 0) {//($('#ddlTipopersona').find('option:selected').text() == 'Seleccione') {
+            $('#div_hidePM').show();
+            $('#div_hideRP').show();
+            $('#hide_razonS').show();
+        }
+    }
+</script>
 @using (Html.BeginForm("GuardaEdicionCliente", "Clientes", FormMethod.Post))
 {
     <section class="content home">
@@ -30,12 +58,28 @@
                         <div class="row clearfix">
                             <div class="col-sm-3">
                                 <b>Gasera</b>
-                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                @*<select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                     @foreach (var lst in ViewBag.Empresas)
                                     {
                                         <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                     }
-                                </select>
+                                </select>*@
+                                @Html.DevExpress().ComboBox(settings =>
+                       {
+                           settings.Name = "IdEmpresa";
+                           settings.Width = 180;
+                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                           settings.Theme = "Material";
+                           settings.Properties.TextField = "NombreComercial";
+                           settings.Properties.ValueField = "IdEmpresa";
+                           settings.PreRender = (s, e) =>
+                           {
+                               MVCxComboBox combo = s as MVCxComboBox;
+                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                               combo.SelectedIndex = Model.IdEmpresa;
+                           };
+                       }).BindList(ViewBag.Empresas).GetHtml()
                                 @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                             </div>
                         </div>
@@ -51,25 +95,62 @@
                                 <div class="row clearfix">
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
-                                            Tipo Persona:*  <select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
-                                                <option value="0">Seleccione</option>
-                                                @foreach (var lst in ViewBag.TipoPersona)
-                                                {
-                                                    <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
-                                                }
-                                            </select>
+                                            <b>Tipo Persona:*</b>
+                                            @*<select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
+                                                    <option value="0">Seleccione</option>
+                                                    @foreach (var lst in ViewBag.TipoPersona)
+                                                    {
+                                                        <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
+                                                    }
+                                                </select>*@
+                                            @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "IdTipoPersona";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Theme = "Material";
+                                       settings.Properties.TextField = "Descripcion";
+                                       settings.Properties.ValueField = "IdTipoPersona";
+                                       settings.ClientEnabled = true;
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                           combo.Properties.ValueType = typeof(int);
+                                           combo.SelectedIndex = Model.IdTipoPersona.Value;
+                                       };
+                                   }).BindList(ViewBag.TipoPersona).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
-
                                     <div class="col-lg-8 col-md-8 col-sm-8">
                                         <div class="form-group">
-                                            Régimen Fiscal:*  <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
-                                                @foreach (var lst in ViewBag.RegimenFiscal)
-                                                {
-                                                    <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
-                                                }
-                                            </select>
+                                            <b> Régimen Fiscal:*</b>
+                                            @*<select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
+                                                    @foreach (var lst in ViewBag.RegimenFiscal)
+                                                    {
+                                                        <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
+                                                    }
+                                                </select>*@
+                                            @Html.DevExpress().ComboBox(settings =>
+                           {
+                               settings.Name = "IdRegimenFiscal";
+                               settings.Width = 180;
+                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                               settings.Theme = "Material";
+                               settings.Properties.TextField = "Descripcion";
+                               settings.Properties.ValueField = "IdRegimenFiscal";
+                               settings.PreRender = (s, e) =>
+                               {
+                                   MVCxComboBox combo = s as MVCxComboBox;
+                                   combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                   combo.Properties.ValueType = typeof(int);
+                                   combo.SelectedIndex = Model.IdRegimenFiscal.Value;
+                               };
+                           }).BindList(ViewBag.RegimenFiscal).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -103,11 +184,9 @@
                                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                                         <div class="form-group">
                                                             Nombre completo: <input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].RepresentanteLegal)" />
-
                                                         </div>
-                                                    </div>
-
-                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                   </div>
+                                                                                                        <div class="col-lg-4 col-md-4 col-sm-4">
                                                         <div class="form-group">
                                                             <div>
                                                                 Teléfono:
@@ -142,7 +221,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row clearfix" id="div_hidePM">
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
@@ -171,12 +249,69 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Condición del crédito y descuento</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:12.666667%">
+                                        <div class="form-group">
+                                            Límite de crédito:
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            Monto $ <input name="limiteCreditoMonto" class="form-control" type="number" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Días <input name="limiteCreditoDias" class="form-control" type="number" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Credito disponible:
+                                                <input name="DescuentoXKilo" class="form-control" type="number" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Descuento %:
+                                                <input name="DescuentoXKilo" class="form-control" type="number" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Autorizar ventas con límite de crédito excedido
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <label class="switch">
+                                                @Html.CheckBoxFor(m => m.VentaExtraordinaria, new { @class = "form-control" })
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="header">
                                 <h2><strong>Condición del crédito y descuento</strong></h2>
@@ -213,9 +348,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
-
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
@@ -239,7 +373,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
@@ -271,7 +404,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row clearfix">
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
@@ -279,7 +411,6 @@
                                             <input id="txtTel2" name="Telefono2" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono2)" />
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <div>
@@ -288,7 +419,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <div>
@@ -298,7 +428,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row clearfix">
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
@@ -306,7 +435,6 @@
                                             <input id="txtTel3" name="Telefono3" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono3)" />
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <div>
@@ -324,7 +452,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row clearfix">
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
@@ -353,7 +480,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="body">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-5">

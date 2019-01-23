@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace MVC.Presentacion.Models.OrdenCompra
 {
     [Serializable]

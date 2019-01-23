@@ -6,9 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 
 import com.example.neotecknewts.sagasapp.R;
-import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Sincronizaciones.Descarga;
 import com.example.neotecknewts.sagasapp.Util.Sincronizaciones.FinalizarDescarga;
 import com.example.neotecknewts.sagasapp.Util.Sincronizaciones.Papeleta;
@@ -24,7 +22,7 @@ public class Sincronizacion {
     private AlertDialog.Builder dialog;
     private Session session;
 
-    public  Sincronizacion(Context context,Activity activity){
+    public  Sincronizacion(Context context, Activity activity){
         this.context = context;
         this.activity = activity;
         this.mensajes = new ArrayList<>();
@@ -32,24 +30,25 @@ public class Sincronizacion {
         this.progressDialog = new ProgressDialog(activity,R.style.AlertDialog);
         this.session = new Session(this.context);
     }
-    //region Sincronizar
+//    region Sincronizar
     public void Sincronizar(){
         progressDialog.setTitle(R.string.app_name);
         progressDialog.setMessage(context.getString(R.string.message_cargando));
         progressDialog.setCancelable(false);
         progressDialog.show();
+        SAGASSql db = new SAGASSql(context);
         //region Sincronizar papeletas
-        Papeleta papeleta = new Papeleta(context,new PapeletaSQL(context),this,session.getToken());
+        Papeleta papeleta = new Papeleta(context, db,this,session.getToken());
         boolean EnvioPapeleta = papeleta.SincronizarPapeletas();
         mensajes.addAll(papeleta.mensajes);
         //endregion
         //region Sincronizar descarga inicial
-        Descarga descarga = new Descarga(new IniciarDescargaSQL(context),this,session.getToken());
+        Descarga descarga = new Descarga(db,this,session.getToken());
         mensajes.addAll(descarga.mensajes);
         //endregion
         //region Sincronizar descarga final
-        FinalizarDescarga finalizarDescarga = new FinalizarDescarga(new FinalizarDescargaSQL(context),
-                this,session.getToken());
+        FinalizarDescarga finalizarDescarga = new FinalizarDescarga(db, this, session.getToken());
+        mensajes.addAll(finalizarDescarga.mensajes);
         //endregion
         progressDialog.hide();
     }

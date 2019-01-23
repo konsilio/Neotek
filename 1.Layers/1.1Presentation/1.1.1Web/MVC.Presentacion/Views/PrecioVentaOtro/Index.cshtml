@@ -1,18 +1,20 @@
 ﻿@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
 <!-- Otros-->
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <!DOCTYPE html>
 
 <html>
 <head>
-    @{
-        ViewBag.Title = "Index";
-    }
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
-    @*<script src="~/Resources/js/PrecioVenta.js"></script>*@
-
     <script type="text/javascript">
         //$(function () {
         //    $('select').on('change', function () {
@@ -27,14 +29,12 @@
         //                var rowindex = $(this).index();
         //                $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
         //            }
-
         //            if (value == 'Seleccione') {
         //                $('#tblfilterable tbody tr').show();
         //            }
         //        });
         //    });
         //});
-
         $(document).ready(function () {
             $("#txtUtilidad").keyup(function () {
 
@@ -134,7 +134,86 @@
                 }
             });
         });
+        function OnSelectedChangeFilter(s, e) {
+            debugger
+            var from = IdDe.GetDate();
+            //var from = $("#IdDe").GetValue();
+            var To = IdA.GetDate();//$("#IdA").GetValue();
+            var value = s.GetSelectedIndex();//$('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
+            //var value = IdTipoFecha.GetSelectedIndex();
+            if (from != null && To != null && value != 0) {
+                var index = 0;
 
+                if (value == 1) {
+                    index = 4;
+                }
+                if (value == 2) {
+                    index = 7;
+                }
+                if (value == 3) {
+                    index = 5;
+                }
+
+                var dateParts = from.split("/");
+                var datefrom = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+                var dateParts2 = To.split("/");
+                var dateto = new Date(dateParts2[2], dateParts2[1] - 1, dateParts2[0]);
+
+                $('#tblfilterable tbody tr').each(function () {
+                    var filterdate = $(this).find("td").eq(index).html();//get value of column Fecha Programada  x
+                    var dateParts3 = filterdate.split("/");
+                    var datefilter = new Date(dateParts3[2].split(" ", 1), dateParts3[1] - 1, dateParts3[0]);
+                    if (datefilter >= datefrom && datefilter <= dateto) {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
+                    }
+                    else {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
+                    }
+                });
+            }
+
+            if (value == 0) {
+                $('#tblfilterable tbody tr').show();
+            }
+        }
+        function keyupDateEdit(s, e) {
+            debugger
+            var from = IdDe.GetDate();
+            //var from = $("#IdDe").GetValue();
+            var To = s.GetValue();
+            var index = 0;
+            var value = IdTipoFecha.GetSelectedIndex();//$('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
+            if (value == 1) {
+                index = 4;
+            }
+            if (value == 2) {
+                index = 7;
+            }
+            if (value == 3) {
+                index = 6;
+            }
+            if (from != "" && To != "") {
+                $('#tblfilterable tbody tr').each(function () {
+                    var filterdate = $(this).find("td").eq(index).html();//get value of column Fecha x
+                    var dateParts3 = filterdate.split("/");
+                    var datefilter = new Date(dateParts3[2].split(" ", 1), dateParts3[1] - 1, dateParts3[0]);
+
+                    if (datefilter >= from && datefilter <= To) {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
+                    }
+                    else {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
+                    }
+                });
+            }
+            else {
+                $('#tblfilterable tbody tr').show();
+            }
+        };
     </script>
 </head>
 <body style="height:100%">
@@ -166,16 +245,16 @@
                                         <div>
                                             @if (ViewBag.EsAdmin)
                                             {
-                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                    @foreach (var lst in ViewBag.Empresas)
+                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
                                                     {
-                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                     }
-                                                </select>
+                                            </select>
                                             }
                                             else
                                             {
-                                                @ViewBag.Empresas
+                                            @ViewBag.Empresas
                                             }
                                         </div>
                                     </div>
@@ -183,7 +262,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card">
                         <div class="header">
                             <h2><strong>Registrar precio de salida</strong></h2>
@@ -191,40 +269,90 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        Categoría:
-                                        <select name="IdCategoria" class="form-control selectpicker z-index show-tick">
+
+                                    <strong>Categoría:</strong>
+                                    @*<select name="IdCategoria" class="form-control selectpicker z-index show-tick">
                                             <option value="0">Seleccione..</option>
                                             @foreach (var lst in ViewBag.Categoria)
                                             {
                                                 <option value="@lst.IdCategoria">@lst.Categoria</option>
                                             }
-                                        </select>
-                                    </div>
+                                        </select>*@
+                                    @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "IdCategoria";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Categoria";
+                                       settings.Properties.ValueField = "IdCategoria";
+                                       settings.Theme = "Material";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
+                                           combo.SelectedIndex = 0;
+                                       };
+                                   }).BindList(ViewBag.Categoria).GetHtml()
+
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        Línea:
-                                        <select name="IdProductoLinea" class="form-control selectpicker z-index show-tick">
-                                            <option value="0">Seleccione..</option>
-                                            @foreach (var lst in ViewBag.Linea)
-                                            {
-                                            <option value="@lst.IdProductoLinea">@lst.Linea</option>
-                                            }
-                                        </select>
-                                    </div>
+                                    @*<div class="form-group">
+                                            Línea:
+                                            <select name="IdProductoLinea" class="form-control selectpicker z-index show-tick">
+                                                <option value="0">Seleccione..</option>
+                                                @foreach (var lst in ViewBag.Linea)
+                                                {
+                                                <option value="@lst.IdProductoLinea">@lst.Linea</option>
+                                                }
+                                            </select>
+                                        </div>*@
+                                    <strong>Línea:</strong>
+                                    @Html.DevExpress().ComboBox(settings =>
+                                {
+                                    settings.Name = "IdProductoLinea";
+                                    settings.Width = 180;
+                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                    settings.Properties.TextField = "Linea";
+                                    settings.Properties.ValueField = "IdProductoLinea";
+                                    settings.Theme = "Material";
+                                    settings.PreRender = (s, e) =>
+                                    {
+                                        MVCxComboBox combo = s as MVCxComboBox;
+                                        combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
+                                        combo.SelectedIndex = 0;
+                                    };
+                                }).BindList(ViewBag.Linea).GetHtml()
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        Producto:
-                                        <select name="IdProducto" class="form-control selectpicker z-index show-tick">
-                                            <option value="0">Seleccione..</option>
-                                            @foreach (var lst in ViewBag.Producto)
-                                            {
-                                            <option value="@lst.IdProducto">@lst.Producto</option>
-                                            }
-                                        </select>
-                                    </div>
+                                    @*<div class="form-group">
+                                            Producto:
+                                            <select name="IdProducto" class="form-control selectpicker z-index show-tick">
+                                                <option value="0">Seleccione..</option>
+                                                @foreach (var lst in ViewBag.Producto)
+                                                {
+                                                <option value="@lst.IdProducto">@lst.Producto</option>
+                                                }
+                                            </select>
+                                        </div>*@
+                                    <strong>Producto:</strong>
+                                    @Html.DevExpress().ComboBox(settings =>
+                                {
+                                    settings.Name = "IdProducto";
+                                    settings.Width = 180;
+                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                    settings.Properties.TextField = "Producto";
+                                    settings.Properties.ValueField = "IdProducto";
+                                    settings.Theme = "Material";
+                                    settings.PreRender = (s, e) =>
+                                    {
+                                        MVCxComboBox combo = s as MVCxComboBox;
+                                        combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
+                                        combo.SelectedIndex = 0;
+                                    };
+                                }).BindList(ViewBag.Producto).GetHtml()
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="form-group">
@@ -247,14 +375,25 @@
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
-                                        Fecha programada:
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="zmdi zmdi-calendar"></i>
-                                            </span>
-                                            <input type="text" class="form-control date" placeholder="formato: dd/mm/aaaa" />
+                                        <b>Fecha programada:</b>
+                                        @*<div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="zmdi zmdi-calendar"></i>
+                                                </span>
+                                                <input type="text" class="form-control date" placeholder="formato: dd/mm/aaaa" />
 
-                                        </div>
+                                            </div>*@
+                                        @Html.DevExpress().DateEdit(settings =>
+                               {
+                                   settings.Name = "FechaProgramada";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Custom;
+                                   settings.Theme = "Material";
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.NullText = "dd/MM/yyyy";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                               }).GetHtml()
                                     </div>
                                 </div>
                             </div>
@@ -270,34 +409,79 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-3">
                                         <b>Tipo de Fecha:</b>
-                                        <select id="IdTipoFecha" class="form-control selectpicker z-index show-tick">
-                                            <option value="0">Seleccione</option>
-                                            @*@foreach (var lst in ViewBag.ListaStatus)
-                                                {
-                                                    <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
-                                                }*@
-                                            <option value="1">Fecha Programada</option>
-                                            <option value="2">Fecha Registro</option>
-                                            <option value="3">Fecha Vencimiento</option>
-                                        </select>
+                                        @*<select id="IdTipoFecha" class="form-control selectpicker z-index show-tick">
+                                            <option value="0">Seleccione</option>*@
+                                        @*@foreach (var lst in ViewBag.ListaStatus)
+                                            {
+                                                <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
+                                            }*@
+                                        @*<option value="1">Fecha Programada</option>
+                                                <option value="2">Fecha Registro</option>
+                                                <option value="3">Fecha Vencimiento</option>
+                                            </select>*@
+                                        @Html.DevExpress().ComboBox(settings =>
+                               {
+                                   settings.Name = "IdTipoFecha";
+                                   settings.Width = 180;
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Theme = "Material";
+                                   settings.ClientEnabled = true;
+                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
+                                       combo.Properties.Items.Insert(1, new ListEditItem("Fecha Programada"));
+                                       combo.Properties.Items.Insert(2, new ListEditItem("Fecha Registro"));
+                                       combo.Properties.Items.Insert(3, new ListEditItem("Fecha Vencimiento"));
+                                       combo.Properties.ValueField = "IdTipoFecha";
+                                       combo.SelectedIndex = 0;
+                                   };
+                               }).GetHtml()
                                     </div>
                                     <div class="col-sm-3">
+                                        @*< <b>De:</b>
+                                            div class="input-group">
+                                                 <span class="input-group-addon">
+                                                     <i class="zmdi zmdi-calendar"></i>
+                                                 </span>
+                                                 <input type="text" id="IdDe" class="form-control date" placeholder="formato: dd/mm/aaaa" />
+                                             </div>*@
                                         <b>De:</b>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="zmdi zmdi-calendar"></i>
-                                            </span>
-                                            <input type="text" id="IdDe" class="form-control date" placeholder="formato: dd/mm/aaaa" />
-                                        </div>
+                                        @Html.DevExpress().DateEdit(settings =>
+                               {
+                                   settings.Name = "IdDe";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Custom;
+                                   settings.Theme = "Material";
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.NullText = "dd/MM/yyyy";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                               }).GetHtml()
                                     </div>
                                     <div class="col-sm-3">
                                         <b>A:</b>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="zmdi zmdi-calendar"></i>
-                                            </span>
-                                            <input type="text" id="IdA" class="form-control date" placeholder="formato: dd/mm/aaaa" />
-                                        </div>
+                                        @*<div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="zmdi zmdi-calendar"></i>
+                                                </span>
+                                                <input type="text" id="IdA" class="form-control date" placeholder="formato: dd/mm/aaaa" />
+                                            </div>*@
+                                        @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "IdA";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Theme = "Material";
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                       settings.Properties.NullText = "dd/MM/yyyy";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       settings.ClientEnabled = true;
+                                       settings.Properties.ClientSideEvents.DateChanged = "keyupDateEdit";
+                                   }).GetHtml()
                                     </div>
                                 </div>
                                 <br />

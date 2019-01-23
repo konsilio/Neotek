@@ -260,7 +260,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                                     dialogInterface.dismiss());
                             builderMonto.create().show();
                         }else{
-                            if(datos.getAnticipos().size()>0) {
+                            //if(datos.getAnticipos().size()>0) {
                                 anticiposDTO.setAnticipar(Double.parseDouble(cantidad));
                                 @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
                                         "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -280,16 +280,16 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
 
                                 //Agrego las ventas correspondientes al corte
                                 presenter.Anticipo(anticiposDTO, sagasSql, session.getToken());
-                            }else{
+                            /*}else{
                                 AlertDialog.Builder builderMonto = new AlertDialog.Builder(this,R.style.AlertDialog);
                                 builderMonto.setCancelable(false);
-                                builderMonto.setTitle(R.string.mensjae_error_campos);
+                                builderMonto.setTitle(R.string.info);
                                 builderMonto.setMessage("La fecha ingresada no tiene ventas para" +
                                         " realizar el anticipo");
                                 builderMonto.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
                                         dialogInterface.dismiss());
                                 builderMonto.create().show();
-                            }
+                            }*/
                         }
                     }
                 }

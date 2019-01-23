@@ -6,7 +6,8 @@ import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Presenter.IniciarDescargaPresenter;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -37,21 +38,11 @@ public class IniciarDescargaInteractorImpl implements IniciarDescargaInteractor 
     //obtiene todas las ordenes de compra
     @Override
     public void getOrdenesCompra(int IdEmpresa, String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaOrdenesCompraDTO> call = restClient.getOrdenesCompra(IdEmpresa,true,true,false,token);
-        Log.w(TAG,retrofit.baseUrl().toString());
+        Log.w(TAG,ApiClient.BASE_URL);
 
         call.enqueue(new Callback<RespuestaOrdenesCompraDTO>() {
             @Override
@@ -92,20 +83,11 @@ public class IniciarDescargaInteractorImpl implements IniciarDescargaInteractor 
     //obtiene todas los medidores
     @Override
     public void getMedidores(String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<MedidorDTO>> call = restClient.getMedidores(token);
-        Log.w(TAG,retrofit.baseUrl().toString());
+        Log.w(TAG,ApiClient.BASE_URL);
 
         call.enqueue(new Callback<List<MedidorDTO>>() {
             @Override
@@ -146,20 +128,11 @@ public class IniciarDescargaInteractorImpl implements IniciarDescargaInteractor 
     //obtiene todas los almacenes
     @Override
     public void getAlmacenes(String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<AlmacenDTO>> call = restClient.getAlmacenes(token);
-        Log.w(TAG,retrofit.baseUrl().toString());
+        Log.w(TAG,ApiClient.BASE_URL);
 
         call.enqueue(new Callback<List<AlmacenDTO>>() {
             @Override

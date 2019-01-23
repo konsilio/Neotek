@@ -1,6 +1,15 @@
 ﻿@using MVC.Presentacion.Models.Seguridad
 @model  UsuarioRolModel
-
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 @{
     ViewBag.Title = "Catálogo / Usuarios";
 }
@@ -48,13 +57,29 @@
                             <div class="col-sm-12">
                                 <div class="row clearfix">
                                     <div class="col-sm-5">
-                                        <select id="ddlRoles" name="IdRol" class="form-control show-tick">
+                                        @*<select id="ddlRoles" name="IdRol" class="form-control show-tick">
                                             <option value="0">Seleccione..</option>
                                             @foreach (var lst in ViewBag.AllRoles)
                                             {
                                                 <option value="@lst.IdRol">@lst.NombreRol</option>
                                             }
-                                        </select>
+                                        </select>*@
+                                        @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "IdRol";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Theme = "Material";
+                                       settings.Properties.TextField = "NombreRol";
+                                       settings.Properties.ValueField = "IdRol";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                           combo.SelectedIndex = 0;
+                                       };
+                                   }).BindList(ViewBag.AllRoles).GetHtml()
                                     </div>
 
                                     <div class="col-sm-3">

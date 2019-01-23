@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Exceptions.MainModule.Validaciones;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -8,7 +10,7 @@ namespace MVC.Presentacion.Models.Catalogos
     public class ClienteLocacionMod
     {
         public int IdCliente { get; set; }
-        public short Orden { get; set; }
+        public short Orden { get; set; }       
         public byte IdPais { get; set; }
         public Nullable<byte> IdEstadoRep { get; set; }
         public string EstadoProvincia { get; set; }
@@ -23,8 +25,8 @@ namespace MVC.Presentacion.Models.Catalogos
         public string location_lng { get; set; }
         public string place_id { get; set; }
         public string TipoLocacion { get; set; }
-
         public string Pais { get; set; }
         public string Estado { get; set; }
+    
     }
 }

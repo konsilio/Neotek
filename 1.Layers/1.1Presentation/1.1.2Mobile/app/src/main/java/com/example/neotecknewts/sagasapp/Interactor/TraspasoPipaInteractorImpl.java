@@ -3,7 +3,8 @@ package com.example.neotecknewts.sagasapp.Interactor;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.DatosTraspasoDTO;
-import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
+import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.Presenter.TraspasoPipaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.TraspasoPipaPresenterImpl;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
@@ -25,25 +26,16 @@ public class TraspasoPipaInteractorImpl implements TraspasoPipaInteractor {
 
     @Override
     public void GetList(String token) {
-        String url = Constantes.BASE_URL;
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        RestClient restClient = retrofit.create(RestClient.class);
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<DatosTraspasoDTO> call = restClient.getDatosTraspaso(
                 true,
                 /*false,*/
                 token,
                 "application/json"
         );
-        Log.w("Url base",retrofit.baseUrl().toString());
+        Log.w("Url base",ApiClient.BASE_URL);
 
         call.enqueue(new Callback<DatosTraspasoDTO>() {
             @Override

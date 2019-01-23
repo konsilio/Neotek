@@ -13,6 +13,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
     {
         public static OperadorChoferDTO ToOperador(OperadorChofer lu)
         {
+            Usuario _objUser = UsuarioServicio.Obtener(lu.IdUsuario);
             OperadorChoferDTO _opeDTO = new OperadorChoferDTO()
             {
                 IdOperadorChofer = lu.IdOperadorChofer,
@@ -21,9 +22,10 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 IdUsuario = lu.IdUsuario,
                 Activo = lu.Activo,
                 FechaRegistro = lu.FechaRegistro,
-                Nombre = UsuarioServicio.Obtener(lu.IdUsuario).Nombre,
-                Apellido1 = UsuarioServicio.Obtener(lu.IdUsuario).Apellido1,
-                Apellido2 = UsuarioServicio.Obtener(lu.IdUsuario).Apellido2,
+                Nombre = _objUser.Nombre,
+                Apellido1 = _objUser.Apellido1,
+                Apellido2 = _objUser.Apellido2,
+                NombreCompleto = _objUser.Nombre +" "+ _objUser.Apellido1 + " " + _objUser.Apellido2,
             };
             return _opeDTO;
         }
