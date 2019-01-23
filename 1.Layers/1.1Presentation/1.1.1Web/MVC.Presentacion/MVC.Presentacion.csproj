@@ -256,6 +256,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlmacenController.cs" />
+    <Compile Include="Controllers\AsignacionController.cs" />
     <Compile Include="Controllers\CajaGeneralController.cs" />
     <Compile Include="Controllers\CentroCostoController.cs" />
     <Compile Include="Controllers\CobranzaController.cs" />
@@ -284,7 +285,6 @@
     <Compile Include="Models\Almacen\RegistroDTO.cs" />
     <Compile Include="Models\Almacen\RemananteModel.cs" />
     <Compile Include="Models\Almacen\RemanenteGeneralDTO.cs" />
-    <Compile Include="Models\Almacen\RemanenteDTO.cs" />
     <Compile Include="Models\Almacen\RequisicionSalidaDTO.cs" />
     <Compile Include="Models\Catalogos\BancoDTO.cs" />
     <Compile Include="Models\Catalogos\CamionetaModel.cs" />
