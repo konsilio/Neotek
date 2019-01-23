@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.AdaptadoresDTO.Cobranza
 {
-    class AbonosAdapter
+   public class AbonosAdapter
     {
         public static AbonosDTO ToDTO(Abono _Abono)
         {

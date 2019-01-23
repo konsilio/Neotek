@@ -323,6 +323,7 @@
     <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoUnidadAlmacenGasEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoUnidadEqTransporte.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>

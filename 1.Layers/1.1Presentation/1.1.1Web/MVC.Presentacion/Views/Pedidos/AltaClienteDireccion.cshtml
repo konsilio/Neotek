@@ -162,30 +162,6 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
                                             <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
-                                            @*<select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                                    @if (ViewBag.Locaciones == null)
-                                                    {
-                                                        foreach (var lst in ViewBag.ListaEstados)
-                                                        {
-                                                            <option value="@lst.IdEstadoRep">@lst.Estado</option>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        foreach (var lst in ViewBag.ListaEstados)
-                                                        {
-                                                            if (lst.IdEstadoRep == ViewBag.Locaciones.ListaEstados)
-                                                            {
-                                                                <option value="@lst.IdEstadoRep" selected>@lst.Estado</option>
-                                                            }
-                                                            else
-                                                            {
-                                                                <option value="@lst.IdEstadoRep">@lst.Estado</option>
-                                                            }
-                                                        }
-                                                    }
-                                                </select>*@
-
                                             @Html.DevExpress().ComboBox(settings =>
                                                {
                                                    settings.Name = "IdEstadoRep";
