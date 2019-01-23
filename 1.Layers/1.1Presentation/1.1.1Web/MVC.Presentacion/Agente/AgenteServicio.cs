@@ -3156,8 +3156,9 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    //ex.Message;
                     pedidos = new List<PedidoModel>();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
