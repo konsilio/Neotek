@@ -1,4 +1,4 @@
-﻿@model MVC.Presentacion.Models.Almacen.RemananteModel
+﻿@model MVC.Presentacion.Models.Almacen.RemanenteModel
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -102,7 +102,7 @@
                                             settings.SelectedIndex = 0;
                                             settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                             settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                            settings.Properties.ValueType = typeof(int);
+                                            settings.Properties.ValueType = typeof(short);
                                             settings.Properties.Items.Add("Selecciones uno", 0);
                                             settings.Properties.TextField = "NombreComercial";
                                             settings.Properties.ValueField = "IdEmpresa";
@@ -127,7 +127,7 @@
                                 </div>
                                 <div class="col-md-3" id="PuntoVentaCampos">
                                     <strong>Punto de venta</strong>
-                                    @Html.Action("cbPuntosventaPartial")
+                                    @Html.Action("cbPuntosventaPartial", Model)
                                 </div>
                                 <div class="col-md-2">
                                     <strong>Periodo</strong>

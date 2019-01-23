@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Almacen
 {
-    public class RemananteModel
+    public class RemanenteModel
     {
         public short IdEmpresa { get; set; }
         public int IdTipo { get; set; }

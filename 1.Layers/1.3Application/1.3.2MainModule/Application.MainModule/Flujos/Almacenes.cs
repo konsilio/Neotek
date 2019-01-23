@@ -164,25 +164,25 @@ namespace Application.MainModule.Flujos
         {
             return AlmacenGasServicio.AplicarDescargas();
         }
-        public List<RemanenteGeneralDTO> ConsultarRemanenteGeneral(short idEmpresa, DateTime fecha)
+        public List<RemanenteGeneralDTO> ConsultarRemanenteGeneral(RemanenteDTO dto)
         {
             List<RemanenteGeneralDTO> remaGeneral = new List<RemanenteGeneralDTO>();
             if (TokenServicio.ObtenerEsAdministracionCentral())
             {
                 return new List<RemanenteGeneralDTO>();
             }
-            var AlmacenPrincipal = AlmacenGasServicio.ObtenerAlmacenPrincipal(idEmpresa == (short)0 ? TokenServicio.ObtenerIdEmpresa() : idEmpresa);
-            var lectura = AlmacenGasServicio.ObtenerLecturaIncialdelMes(AlmacenPrincipal.IdCAlmacenGas, fecha.Month, fecha.Year).OrderByDescending(x => x.FechaAplicacion).FirstOrDefault();
+            var AlmacenPrincipal = AlmacenGasServicio.ObtenerAlmacenPrincipal(dto.IdEmpresa == (short)0 ? TokenServicio.ObtenerIdEmpresa() : dto.IdEmpresa);
+            var lectura = AlmacenGasServicio.ObtenerLecturaIncialdelMes(AlmacenPrincipal.IdCAlmacenGas, dto.Fecha.Month, dto.Fecha.Year).OrderByDescending(x => x.FechaAplicacion).FirstOrDefault();
             var descargas = AlmacenGasServicio.ObtenerDescargasTodas();
-            var pventas = PuntoVentaServicio.ObtenerIdEmp(idEmpresa);        
+            var pventas = PuntoVentaServicio.ObtenerIdEmp(dto.IdEmpresa);        
 
-            for (int i = 0; i < DateTime.DaysInMonth(fecha.Year, fecha.Month); i++)
+            for (int i = 0; i < DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month); i++)
             {
-                fecha.AddDays(i);
+                dto.Fecha.AddDays(i);
                 RemanenteGeneralDTO rema = new RemanenteGeneralDTO();
                 rema.InventarioInicial = CalcularAlmacenServicio.ObtenerKgLectura(lectura.UnidadAlmacenGas.CapacidadTanqueLt ?? 0, lectura.Porcentaje ?? 0, (decimal)0.54);
 
-                rema.AcumuladoCompras = descargas.Where(c => c.FechaRegistro < fecha).Sum(x => x.MasaKg) ?? 0;
+                rema.AcumuladoCompras = descargas.Where(c => c.FechaRegistro < dto.Fecha).Sum(x => x.MasaKg) ?? 0;
                 foreach (var pventa in pventas)
                 {
                     if (pventa.UnidadesAlmacen.IdCamioneta != null)
@@ -190,7 +190,7 @@ namespace Application.MainModule.Flujos
                         var ventasCamioneta = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
                         foreach (var venta in ventasCamioneta)
                         {
-                            if (venta.FechaRegistro < fecha)                            
+                            if (venta.FechaRegistro < dto.Fecha)                            
                                 rema.Ventas += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);                            
                         }
                     }
@@ -199,7 +199,7 @@ namespace Application.MainModule.Flujos
                         var ventasPipa = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
                         foreach (var venta in ventasPipa)
                         {
-                            if (venta.FechaRegistro < fecha)
+                            if (venta.FechaRegistro < dto.Fecha)
                                 rema.Ventas += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
                         }
                     }
@@ -208,19 +208,19 @@ namespace Application.MainModule.Flujos
                         var ventasCarburacion = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
                         foreach (var venta in ventasCarburacion)
                         {
-                            if (venta.FechaRegistro < fecha)
+                            if (venta.FechaRegistro < dto.Fecha)
                                 rema.Carburacion += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
                         }
                     }
                 }
                 rema.InventarioLibro = rema.InventarioInicial + rema.AcumuladoCompras - rema.Ventas - rema.Carburacion;
-                rema.InventarioFisico = AlmacenGasServicio.ObtenerKgInventarioFisico(fecha, idEmpresa);
+                rema.InventarioFisico = AlmacenGasServicio.ObtenerKgInventarioFisico(dto.Fecha, dto.IdEmpresa);
                 rema.GasSobrante = CalcularAlmacenServicio.ObtenerGasSobrante(rema.InventarioLibro, rema.InventarioFisico);
                 rema.RemanenteDecimal = CalcularAlmacenServicio.ObtenerRemaPorcentaje(rema.Ventas, rema.GasSobrante);
 
-                rema.dia = fecha.Day;
-                rema.Mes = fecha.Month;
-                rema.Anio = fecha.Year;
+                rema.dia = dto.Fecha.Day;
+                rema.Mes = dto.Fecha.Month;
+                rema.Anio = dto.Fecha.Year;
 
                 remaGeneral.Add(rema);
             }

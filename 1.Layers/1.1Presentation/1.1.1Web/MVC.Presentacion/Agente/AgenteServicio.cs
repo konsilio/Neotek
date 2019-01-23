@@ -3095,12 +3095,12 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarSalida"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
         }
-        public void BuscarRemanenteGeneral(short idEmpresa, string tkn)
+        public void BuscarRemanenteGeneral(RemanenteModel model, string tkn)
         {
             this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetRemanenteGeneral"];
-            ListaRemanenteGeneral(idEmpresa, tkn).Wait();
+            ListaRemanenteGeneral(model, tkn).Wait();
         }
-        private async Task ListaRemanenteGeneral(short idEmpresa, string token)
+        private async Task ListaRemanenteGeneral(RemanenteModel model, string token)
         {
             using (var client = new HttpClient())
             {
@@ -3110,7 +3110,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idEmpresa.ToString())).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, model)).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<RemanenteGeneralDTO>>();
                     else

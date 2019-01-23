@@ -2,7 +2,7 @@
 {
     settings.Name = "IdPuntoVenta";
     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-    settings.SelectedIndex = 0;
+    settings.SelectedIndex = (int)ViewData["IdPuntoVenta"];
     settings.Properties.DropDownWidth = 550;
     settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
     settings.CallbackRouteValues = new { Controller = "Remanente", Action = "cbPuntosventaPartial" };
@@ -11,7 +11,6 @@
     settings.Properties.TextFormatString = "{1}";
     settings.Properties.ValueField = "IdPuntoVenta";
     settings.Properties.ValueType = typeof(int);
-
     settings.Properties.Columns.Add("UnidadesAlmacen", "Tipo", System.Web.UI.WebControls.Unit.Percentage(100));
     settings.Properties.Columns.Add("PuntoVenta", "Nombre", System.Web.UI.WebControls.Unit.Percentage(100));
     settings.Properties.Columns.Add("OperadorChofer", "Operador", System.Web.UI.WebControls.Unit.Percentage(100));

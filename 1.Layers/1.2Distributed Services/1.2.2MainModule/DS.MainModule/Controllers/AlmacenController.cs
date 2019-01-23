@@ -64,14 +64,14 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.AplicarDescargas());
         }
         [Route("buscar/remananete/general")]
-        public HttpResponseMessage GetRemanenteGeneral(short IdEmpresa)
+        public HttpResponseMessage GetRemanenteGeneral(RemanenteDTO dto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanenteGeneral(IdEmpresa, DateTime.Now));
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanenteGeneral(dto));
         }
         [Route("buscar/remananete/puntoventa")]
-        public HttpResponseMessage GetRemanentePorPV(short IdEmpresa)
+        public HttpResponseMessage GetRemanentePorPV(RemanenteDTO dto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanenteGeneral(IdEmpresa, DateTime.Now));
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanenteGeneral(dto));
         }
     }
 }
