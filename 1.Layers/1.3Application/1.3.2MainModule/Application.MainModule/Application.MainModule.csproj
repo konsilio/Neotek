@@ -159,7 +159,6 @@
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\DataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EgresoDataAccess.cs" />
-    <Compile Include="Servicios\AccesoADatos\EqTransporteDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\IngresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PedidosDataAccess.cs" />
@@ -400,6 +399,7 @@
     <Compile Include="UnitOfWork\SagasDataUow.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DTOs\EquipoTransporte\" />
     <Folder Include="DTOs\IngresoGasto\" />
   </ItemGroup>
   <ItemGroup>

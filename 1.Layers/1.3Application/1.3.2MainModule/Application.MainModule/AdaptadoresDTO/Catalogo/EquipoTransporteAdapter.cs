@@ -45,5 +45,29 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return ecs.Select(x => FromDTO(x)).ToList();
         }
+
+        public static EquipoTransporte FromDto(EquipoTransporteDTO Vehiculodto, EquipoTransporte catCte)
+        {
+            var _unidad = FromEntity(catCte);
+            _unidad.IdEmpresa = Vehiculodto.IdEmpresa;
+            _unidad.IdEquipoTransporte = Vehiculodto.IdEquipoTransporte;
+            _unidad.IdCamioneta = Vehiculodto.IdCamioneta;
+            _unidad.IdPipa = Vehiculodto.IdPipa;
+            _unidad.IdVehiculoUtilitario = Vehiculodto.IdVehiculoUtilitario;
+            _unidad.FechaRegistro = Vehiculodto.FechaRegistro;
+            return _unidad;
+        }
+        public static EquipoTransporte FromEntity(EquipoTransporte ec)
+        {
+            return new EquipoTransporte()
+            {
+                IdEmpresa = ec.IdEmpresa,
+                IdEquipoTransporte = ec.IdEquipoTransporte,
+                IdCamioneta = ec.IdCamioneta,
+                IdPipa = ec.IdPipa,
+                IdVehiculoUtilitario = ec.IdVehiculoUtilitario,
+                FechaRegistro = ec.FechaRegistro
+            };
+        }
     }
 }
