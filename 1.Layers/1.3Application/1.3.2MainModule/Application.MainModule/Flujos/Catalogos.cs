@@ -903,6 +903,13 @@ namespace Application.MainModule.Flujos
 
             return EquipoTransporteServicio.ObtenerTransportes(pipas, camiontas, estaciones);
         }
+        public List<EquipoTransporteDTO> ListaEquipoTrasnporte(short idempresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
+            if (!resp.Exito) return null;
+
+            return EquipoTransporteServicio.Obtener(idempresa).ToList();
+        }
         #endregion
         #endregion
 
