@@ -11,10 +11,10 @@ namespace DS.MainModule.Controllers
     [RoutePrefix("api/equipotransporte")]
     public class EquipoTransporteController : ApiController
     {
-        private EquipoTransporte _eqTransporte;
+        private Catalogos _eqTransporte;
         public EquipoTransporteController()
         {
-            _eqTransporte = new EquipoTransporte();
+            _eqTransporte = new Catalogos();
         }
         // GET: EquipoTransporte
 
