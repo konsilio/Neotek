@@ -315,6 +315,20 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_PedidoDetalle_Pedido" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.RespuestaSatisfaccionPedido" Width="1.5" PointX="24.875" PointY="28.875" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_RespuestaSatisfaccionPedido_Pedido" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CCombustible" Width="1.5" PointX="5.25" PointY="47.25" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CDetalleEquipoTransporte" Width="1.5" PointX="13.5" PointY="42.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CMantenimiento" Width="1.5" PointX="5.25" PointY="43.25" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CUtilitario" Width="1.5" PointX="5.25" PointY="39.25" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.DetalleMantenimiento" Width="1.5" PointX="7.5" PointY="42.625" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.DetalleRecargaCombustible" Width="1.5" PointX="7.5" PointY="52.5" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CCombustible_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CCombustible" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCombustible" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CDetalleEquipoTransporte" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CUtilitario" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CMantenimiento_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_DetalleMantenimiento_CMantenimiento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CUtilitario_Empresa" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

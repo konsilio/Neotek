@@ -46,7 +46,6 @@ namespace Application.MainModule.Servicios.Catalogos
                 else
                     return new EquipoTransporteDataAccess().BuscarCamioneta(qt.IdCamioneta.Value).Nombre;
             }
-
             if (qt.IdPipa != null)
             {
                 if (qt.Pipas != null)
@@ -54,12 +53,10 @@ namespace Application.MainModule.Servicios.Catalogos
                 else
                     return new EquipoTransporteDataAccess().BuscarPipa(qt.IdPipa.Value).Nombre;
             }
-
             //if (qt.Vehiculo != null)
             //    return qt.Vehiculo.Nombre;
             //else
             //    return new EquipoTransporteDataAccess().BuscarVehiculo(qt.Vehiculo.Value).Nombre; 
-
             return null;
 
         }

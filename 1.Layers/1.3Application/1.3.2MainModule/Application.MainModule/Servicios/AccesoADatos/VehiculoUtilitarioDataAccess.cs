@@ -11,24 +11,24 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
-    public class PipaDataAccess
+     public class VehiculoUtilitarioDataAccess
     {
         private SagasDataUow uow;
 
-        public PipaDataAccess()
+        public VehiculoUtilitarioDataAccess()
         {
             uow = new SagasDataUow();
         }
-        public RespuestaDto Insertar(Pipa entidad)
+        public RespuestaDto Insertar(CUtilitario _cc)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<Pipa>().Insert(entidad);
+                    uow.Repository<CUtilitario>().Insert(_cc);
                     uow.SaveChanges();
-                    _respuesta.Id = entidad.IdPipa;
+                    _respuesta.Id = _cc.IdUtilitario;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
@@ -43,16 +43,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public RespuestaDto Actualizar(Pipa entidad)
+        public RespuestaDto Actualizar(CUtilitario _pro)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.Pipa>().Update(entidad);
+                    uow.Repository<CUtilitario>().Update(_pro);
                     uow.SaveChanges();
-                    _respuesta.Id = entidad.IdPipa;
+                    _respuesta.Id = _pro.IdUtilitario;
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;
                     _respuesta.ModeloValido = true;
@@ -67,21 +67,19 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
-        public Pipa ObtenerPipa(int IdP)
+        public CUtilitario Obtener(int IdP)
         {
-            return uow.Repository<Pipa>().GetSingle(
-                x => x.IdPipa.Equals(IdP) && x.Activo
+            return uow.Repository<CUtilitario>().GetSingle(
+                x => x.IdUtilitario.Equals(IdP) && x.Activo
                 );
         }
-        public List<Pipa> ObtenerPipas()
+        public List<CUtilitario> Obtener(short idEmpresa)
         {
-            return uow.Repository<Pipa>().Get(x => x.Activo).ToList();
+            return uow.Repository<CUtilitario>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
         }
-        public List<Pipa> ObtenerPipas(short idEmpresa)
+        public List<CUtilitario> Obtener()
         {
-            return uow.Repository<Pipa>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
+            return uow.Repository<CUtilitario>().Get(x => x.Activo).ToList();
         }
-
     }
 }

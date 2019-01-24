@@ -21,6 +21,9 @@ namespace Sagas.MainModule.Entidades
             this.Cilindros = new HashSet<CamionetaCilindro>();
             this.CCentroCosto = new HashSet<CentroCosto>();
             this.EquipoTransporte = new HashSet<EquipoTransporte>();
+            this.CDetalleEquipoTransporte = new HashSet<CDetalleEquipoTransporte>();
+            this.DetalleMantenimiento = new HashSet<DetalleMantenimiento>();
+            this.DetalleRecargaCombustible = new HashSet<DetalleRecargaCombustible>();
         }
     
         public int IdCamioneta { get; set; }
@@ -39,5 +42,11 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<CentroCosto> CCentroCosto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipoTransporte> EquipoTransporte { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CDetalleEquipoTransporte> CDetalleEquipoTransporte { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetalleMantenimiento> DetalleMantenimiento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetalleRecargaCombustible> DetalleRecargaCombustible { get; set; }
     }
 }
