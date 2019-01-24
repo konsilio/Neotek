@@ -1,5 +1,7 @@
 ﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -13,8 +15,13 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<EquipoTransporteDTO> Obtener(short idempresa)
         {
-            List<EquipoTransporteDTO> lPedidos = AdaptadoresDTO.EqTransporte.EquipoTransporteAdapter.ToDTO(new EqTransporteDataAccess().BuscarTodos(idempresa));
-            return lPedidos;
+            List<EquipoTransporteDTO> lVehiculos = AdaptadoresDTO.Catalogo.EquipoTransporteAdapter.toDTO(new EquipoTransporteDataAccess().Buscar(idempresa));
+            return lVehiculos;
+        }
+        public static EquipoTransporteDTO Obtener(int idVehiculo)
+        {
+            EquipoTransporteDTO Vehiculo = AdaptadoresDTO.Catalogo.EquipoTransporteAdapter.toDTO(new EquipoTransporteDataAccess().Buscar(idVehiculo));
+            return Vehiculo;
         }
         public static string ObtenerNombre(UnidadAlmacenGas uAG)
         {
@@ -70,6 +77,26 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<EquipoTransporte> BuscarEquipoTransporte(short IdEmpresa)
         {
             return new EquipoTransporteDataAccess().BuscarEquipoTransporte(IdEmpresa);
+        }
+
+        public static RespuestaDto Alta(EquipoTransporte _VehiculoDto)
+        {
+            return new EquipoTransporteDataAccess().Insertar(_VehiculoDto);
+        }     
+        public static RespuestaDto Modificar(EquipoTransporte _VehiculoDto)
+        {
+            return new EquipoTransporteDataAccess().Actualizar(_VehiculoDto);
+        }
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "El equipo transporte");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

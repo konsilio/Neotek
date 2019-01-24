@@ -16,5 +16,19 @@ namespace Application.MainModule.DTOs
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public string Descripcion { get; set; }
+
+        //Info Vehicular
+        public string NumeroIdentificacion { get; set; }
+        public string NumeroPlacas { get; set; }
+        public string NumeroMotor { get; set; }
+        public string Vehiculo { get; set; }
+        public string Marca { get; set; }
+        public string Modelo { get; set; }
+        public string Color { get; set; }
+        public int Cilindros { get; set; }
+        public int IdTipoCombustible { get; set; }
+        public int IdTipoUnidad { get; set; }
+        public bool UnidadActiva { get; set; }
+        public string AliasUnidad { get; set; }
     }
 }
