@@ -302,7 +302,7 @@ namespace Application.MainModule.Flujos
                     {
                         DateTime FechaProgDate = item.FechaProgramada;
                         DateTime currentDateTime = DateTime.Now;
-                        
+
                         if (item.IdPrecioVentaEstatus == 1)
                         {       //20-10/2018----22/10/2018
                             if (FechaProgDate < currentDateTime)
@@ -334,7 +334,7 @@ namespace Application.MainModule.Flujos
                 {
                     string FechaProgString = item.FechaProgramada.ToString("dd/MM/yyyy");
                     if (FechaProgString == CurrentDateS)
-                    {                       
+                    {
                         /**Actualizar Estatus de Programado a Vigente***/
                         if (item.IdPrecioVentaEstatus == 1)//1-Programado, 2-Vigente, 3-Vencido
                         {
@@ -354,13 +354,13 @@ namespace Application.MainModule.Flujos
                             entity.IdPrecioVentaEstatus = 3;  //3-Vencido
                             ModificaPrecioVentaGas(entity);
                         }
-                                                
+
                     }
                     else
-                    {                     
+                    {
 
                         if (item.IdPrecioVentaEstatus == 1)
-                        {    
+                        {
                             DateTime FechaProgDate = item.FechaProgramada;
                             DateTime currentDateTime = DateTime.Now;
                             //20-10/2018----22/10/2018
@@ -386,7 +386,7 @@ namespace Application.MainModule.Flujos
                     }
 
                 }
-            }           
+            }
         }
         public List<PrecioVentaDTO> ListaPreciosVenta()
         {
@@ -424,7 +424,7 @@ namespace Application.MainModule.Flujos
             var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
             //var pv = PrecioVentaGasServicio.ObtenerPrecioVigente((short)2); (Test)
-            return PrecioVentaGasAdapter.ToDTO(pv,producto);
+            return PrecioVentaGasAdapter.ToDTO(pv, producto);
         }
         public RespuestaDto EliminaPreciosVenta(PrecioVentaDTO cteDto)
         {
@@ -715,7 +715,7 @@ namespace Application.MainModule.Flujos
             if (centro == null) return CentroCostoServicio.NoExiste();
 
             var CentroCosto = CentroCostoAdapter.FromDto(ccDto, centro);
-             //CentroCosto = CentroCostoAdapter.FromEntity(CentroCosto);
+            //CentroCosto = CentroCostoAdapter.FromEntity(CentroCosto);
 
             return CentroCostoServicio.ModificarCentroCosto(CentroCosto);
         }
@@ -880,13 +880,6 @@ namespace Application.MainModule.Flujos
         {
             return EquipoTransporteAdapter.toDTO(EquipoTransporteServicio.BuscarEquipoTransporte());
         }
-        public List<EquipoTransporteDTO> ListaEquipoTransporte(short idempresa)
-        {
-            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
-            if (!resp.Exito) return null;
-
-            return EquipoTransporteServicio.Obtener(idempresa).ToList();
-        }
 
         public List<EquipoTransporteDTO> ListaEquiposdeTransporte(short idempresa)
         {
@@ -914,7 +907,7 @@ namespace Application.MainModule.Flujos
 
             return EquipoTransporteServicio.Alta(vehiculo);
         }
-   
+
         public RespuestaDto Modifica(EquipoTransporteDTO vehiculoDto)
         {
             var resp = PermisosServicio.PuedeModificarPedido();
@@ -938,7 +931,7 @@ namespace Application.MainModule.Flujos
             Dtovehiculo.Activo = false;
             return EquipoTransporteServicio.Modificar(Dtovehiculo);
         }
-       
+
         #endregion
 
         #region Tipo proveedor
@@ -949,6 +942,71 @@ namespace Application.MainModule.Flujos
 
             return TipoProveedorAdapter.ToDTO(TipoProveedorServicio.Obtener());
         }
+        #endregion
+
+        #region Combustible
+        public List<CombustibleDTO> ListaCombustible()
+        {
+            return CombustibleAdapter.toDTO(CombustibleServicio.Obtener());
+        }
+        public List<CombustibleDTO> ListaCombustible(short idempresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
+            if (!resp.Exito) return null;
+
+            return CombustibleAdapter.toDTO(CombustibleServicio.Obtener(idempresa));
+        }
+        public List<CombustibleDTO> ListaCombustible(short idEmpresa, string desc)
+        {
+            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
+            if (!resp.Exito) return null;
+
+            return CombustibleAdapter.toDTO(CombustibleServicio.Obtener(idEmpresa,desc));
+        }
+        public CombustibleDTO CombustibleId(int idCombustible)
+        {
+            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
+            if (!resp.Exito) return null;
+
+            return CombustibleAdapter.toDTO(CombustibleServicio.Obtener(idCombustible));
+        }
+        public RespuestaDto Registra(CombustibleDTO entidadDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarPedido();
+            if (!resp.Exito) return resp;
+
+            var ent = CombustibleAdapter.FromDTO(entidadDto);
+
+            if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
+                ent.Id_Empresa = TokenServicio.ObtenerIdEmpresa();
+
+            return CombustibleServicio.Registrar(ent);
+        }
+
+        public RespuestaDto Modifica(CombustibleDTO vehiculoDto)
+        {
+            var resp = PermisosServicio.PuedeModificarPedido();
+            if (!resp.Exito) return resp;
+
+            var combustible = CombustibleServicio.Obtener(vehiculoDto.Id_Combustible);
+            if (combustible == null) return CombustibleServicio.NoExiste();
+
+            var Dtovehiculo = CombustibleAdapter.FromDto(vehiculoDto, combustible);
+            return CombustibleServicio.Modificar(Dtovehiculo);
+        }
+        public RespuestaDto Eliminar(int id)
+        {
+            var resp = PermisosServicio.PuedeEliminarPedido();
+            if (!resp.Exito) return resp;
+
+            var combustible = CombustibleServicio.Obtener(id);
+            if (combustible == null) return CombustibleServicio.NoExiste();
+
+            var Dtovehiculo = CombustibleAdapter.FromEntity(combustible);
+          
+            return CombustibleServicio.Eliminar(Dtovehiculo);
+        }
+
         #endregion
 
         #region Banco
@@ -968,7 +1026,7 @@ namespace Application.MainModule.Flujos
             //if (!resp.Exito) return null;
 
             return FormaPagoAdapter.ToDTO(FormaPagoServicio.Obtener());
-        }   
-        #endregion      
+        }
+        #endregion
     }
 }

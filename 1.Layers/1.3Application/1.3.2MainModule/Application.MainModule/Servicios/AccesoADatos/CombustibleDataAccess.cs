@@ -66,17 +66,45 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public CCombustible ObtenerCamioneta(int IdP)
+        public RespuestaDto Eliminar(CCombustible cteL)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<CCombustible>().Delete(cteL);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "Eliminar ccombustible");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public CCombustible ObtenerCombustible(int IdP)
         {
             return uow.Repository<CCombustible>().GetSingle(
                 x => x.Id_Combustible.Equals(IdP) && x.Activo
                 );
         }
-        public List<CCombustible> ObtenerCamionetas(short idEmpresa)
+        public List<CCombustible> ObtenerCombustible(short idEmpresa)
         {
-            return uow.Repository<CCombustible>().Get(x => x.Id_Empresa.Equals(idEmpresa) && x.Activo).ToList();
+            return uow.Repository<CCombustible>().Get(
+                x => x.Id_Empresa.Equals(idEmpresa) && x.Activo
+                ).ToList();
         }
-        public List<CCombustible> ObtenerCamionetas()
+        public List<CCombustible> ObtenerCombustible(short idEmpresa, string descripcion)
+        {
+            return uow.Repository<CCombustible>().Get(x => x.Id_Empresa.Equals(idEmpresa)&& x.Descripcion.Contains(descripcion) && x.Activo).ToList();
+        }       
+        public List<CCombustible> ObtenerCombustible()
         {
             return uow.Repository<CCombustible>().Get(x => x.Activo).ToList();
         }

@@ -389,7 +389,6 @@
     <Compile Include="Models\Seguridad\RespuestaDTO.cs" />
     <Compile Include="Models\Catalogos\UnidadMedidaDTO.cs" />
     <Compile Include="Models\Seguridad\UsuarioRolModel.cs" />
-    <Compile Include="Models\Transporte\AsignacionModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralCamionetaModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralModel.cs" />
     <Compile Include="Models\Ventas\MovimientosGasCilindros.cs" />
@@ -11581,6 +11580,7 @@
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
     <Folder Include="Models\EquipoTransporte\" />
+    <Folder Include="Models\Transporte\" />
     <Folder Include="Servicios\" />
     <Folder Include="Views\Mantenimiento\" />
     <Folder Include="Views\RecargaCombustibles\" />
