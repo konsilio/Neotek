@@ -67,6 +67,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\OperadorChoferAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Cobranza\AbonosAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\EquipoTrasnporte\MantenimientoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
@@ -165,9 +166,12 @@
     <Compile Include="Servicios\AccesoADatos\DataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EgresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\IngresoDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\MantenimientoDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\MantenimientoDetDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PedidosDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PipaDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\RecargaCombustibleDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\VehiculoUtilitarioDataAccess.cs" />
     <Compile Include="Servicios\Almacen\RemanenteServicio.cs" />
     <Compile Include="Servicios\Catalogos\CamionetaServicio.cs" />
@@ -408,7 +412,6 @@
     <Compile Include="UnitOfWork\SagasDataUow.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DTOs\EquipoTransporte\" />
     <Folder Include="DTOs\IngresoGasto\" />
   </ItemGroup>
   <ItemGroup>

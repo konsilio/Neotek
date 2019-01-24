@@ -13,5 +13,14 @@ namespace Application.MainModule.DTOs.EquipoTransporte
         public string Descripcion { get; set; }
         public bool Activo { get; set; }
         public short Id_Empresa { get; set; }
+        public System.DateTime FechaMtto { get; set; }
+        public int idVehiculo { get; set; }
+        public bool EsCamioneta { get; set; }
+        public bool EsPipa { get; set; }
+        public bool EsUtilitario { get; set; }
+        public int IdTipomtto { get; set; }
+        public string DescripcionMtto { get; set; }
+        public int KilometrajeActual { get; set; }
+        public string NumeroOC { get; set; }
     }
 }
