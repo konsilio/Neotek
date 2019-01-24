@@ -66,10 +66,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public Camioneta ObtenerCamioneta(int IdP)
+        public CCombustible ObtenerCamioneta(int IdP)
         {
-            return uow.Repository<Camioneta>().GetSingle(
-                x => x.IdCamioneta.Equals(IdP) && x.Activo
+            return uow.Repository<CCombustible>().GetSingle(
+                x => x.Id_Combustible.Equals(IdP) && x.Activo
                 );
         }
         public List<CCombustible> ObtenerCamionetas(short idEmpresa)

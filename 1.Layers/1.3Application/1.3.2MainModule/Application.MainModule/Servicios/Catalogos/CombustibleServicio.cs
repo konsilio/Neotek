@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
@@ -13,24 +14,24 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static RespuestaDto Registrar(CCombustible entidad)
         {
-            return new CamionetaDataAccess().Insertar(entidad);
+            return new CombustibleDataAccess().Insertar(entidad);
         }
         public static RespuestaDto Modificar(CCombustible entidad)
         {
-            return new CamionetaDataAccess().Actualizar(entidad);
+            return new CombustibleDataAccess().Actualizar(entidad);
         }
         public static List<CCombustible> Obtener()
         {
             var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
 
             if (empresa.EsAdministracionCentral)
-                return new CamionetaDataAccess().ObtenerCamionetas();
+                return new CombustibleDataAccess().ObtenerCamionetas();
             else
-                return new CamionetaDataAccess().ObtenerCamionetas(empresa.IdEmpresa);
+                return new CombustibleDataAccess().ObtenerCamionetas(empresa.IdEmpresa);
         }
         public static List<CCombustible> Obtener(short idEmpresa)
         {
-            return new CamionetaDataAccess().ObtenerCamionetas(idEmpresa).ToList();
+            return new CombustibleDataAccess().ObtenerCamionetas(idEmpresa).ToList();
         }
     }
 }
