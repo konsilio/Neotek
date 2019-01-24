@@ -14,6 +14,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.Servicios.Ventas;
+using Application.MainModule.DTOs.Transporte;
+using Application.MainModule.Servicios.Pedidos;
 
 namespace Application.MainModule.Flujos
 {
@@ -878,6 +880,30 @@ namespace Application.MainModule.Flujos
         {
             return EquipoTransporteAdapter.toDTO(EquipoTransporteServicio.BuscarEquipoTransporte());
         }
+        public List<EquipoTransporteDTO> ListaCargos(short idempresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
+            if (!resp.Exito) return null;
+
+
+            return EquipoTransporteServicio.Obtener(idempresa).ToList();
+        }
+
+        #region Asignacion de Vehiculos
+        public List<EquipoTransporteDTO> ListaCehiculos(TransporteDTO dto)
+        {
+            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
+            if (!resp.Exito) return null;
+
+
+            var camiontas = PedidosServicio.ObtenerCamionetas(dto.IdEmpresa);
+            var pipas = PedidosServicio.ObtenerPipas(dto.IdEmpresa);
+            var estaciones = EstacionCarburacionServicio.ObtenerTodas(dto.IdEmpresa);
+            //var utilitarios = VehiculoUtilitarioServicio.ObtenerTodos(dto.IdEmpresa);
+
+            return EquipoTransporteServicio.ObtenerTransportes(pipas, camiontas, estaciones);
+        }
+        #endregion
         #endregion
 
         #region Tipo proveedor
