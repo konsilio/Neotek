@@ -9,7 +9,7 @@ namespace Application.MainModule.Flujos
 {
     public class EquipoTransporte
     {
-        public List<EquipoTransporteDTO> ListaCargos(short idempresa)
+        public List<EquipoTransporteDTO> ListaEquiposdeTransporte(short idempresa)
         {
             var resp = PermisosServicio.PuedeConsultarParqueVehicular();
             if (!resp.Exito) return null;
