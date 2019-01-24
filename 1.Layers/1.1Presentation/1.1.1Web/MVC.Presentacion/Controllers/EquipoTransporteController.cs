@@ -1,5 +1,5 @@
 ﻿using MVC.Presentacion.App_Code;
-using MVC.Presentacion.Models.EquipoTransporte;
+using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Seguridad;
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,9 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
-
-
+            ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
+            ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            //EquipoTransporteDTO _model = 
             if (TempData["RespuestaDTO"] != null)
             {
                 if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
@@ -35,12 +36,12 @@ namespace MVC.Presentacion.Controllers
             }
             return View();
         }
-        public ActionResult Buscar(ParqueVehicularModel _model)
+        public ActionResult Buscar(EquipoTransporteDTO _model)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            return RedirectToAction("Index", new { placa = _model.NumeroPlacas, vehiculo = _model.AliasUnidad });
+            return RedirectToAction("Index", new { placa = _model.Placas, vehiculo = _model.AliasUnidad });
         }
-        public ActionResult Alta(ParqueVehicularModel _model, int? Id)
+        public ActionResult Alta(EquipoTransporteDTO _model, int? Id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
@@ -58,7 +59,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
-            ParqueVehicularModel _lst = EquipoTrServicio.Obtener(Id.Value, _tkn);
+            EquipoTransporteDTO _lst = CatalogoServicio.Obtener(Id.Value, _tkn);
             //_lst[0].IdEstadoRep = 0; _lst[0].IdPais = 0;
             //if (model != null && model.IdCliente != 0 && model.Orden != 0)
             //{
@@ -82,7 +83,7 @@ namespace MVC.Presentacion.Controllers
             }
             return View(_lst);//
         }
-        public ActionResult EditarVehiculo(int id, ParqueVehicularModel model)
+        public ActionResult EditarVehiculo(int id, EquipoTransporteDTO model)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
@@ -92,11 +93,11 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
-                var respuesta = EquipoTrServicio.Crear(model, _tkn);
+                var respuesta = CatalogoServicio.Crear(model, _tkn);
                 if (respuesta.Exito)
                 {
                     TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("Alta", EquipoTrServicio.Obtener(model.IdEquipoTransporte, _tkn));
+                    return RedirectToAction("Alta", CatalogoServicio.Obtener(model.IdEquipoTransporte, _tkn));
                 }
                 else
                 {
@@ -137,7 +138,7 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
 
-            var respuesta = CatalogoServicio.EliminaEmpresaSel(id, _tkn);
+            var respuesta = CatalogoServicio.Eliminar(id, _tkn);
             TempData["RespuestaDTO"] = respuesta;
             return RedirectToAction("Index", new { msj = respuesta.Mensaje });
         }

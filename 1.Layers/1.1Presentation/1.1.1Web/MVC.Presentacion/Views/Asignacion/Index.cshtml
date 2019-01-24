@@ -1,4 +1,4 @@
-﻿@model MVC.Presentacion.Models.Catalogos.ProductoDTO
+﻿@model MVC.Presentacion.Models.Transporte.AsignacionModel
 @using PagedList.Mvc;
 @using PagedList;
 @Html.DevExpress().GetStyleSheets(
@@ -16,7 +16,7 @@
     <div class="container-fluid">
         @using (Html.BeginForm("Asignar", "Index", FormMethod.Post))
         {
-            @Html.HiddenFor(m => m.IdProducto)
+           
             <div class="block-header">
                 <div class="row">
                     <div class="col-lg-5 col-md-5 col-sm-12">
@@ -49,8 +49,8 @@
                                                 settings.Properties.ValueType = typeof(int);
                                                 settings.Properties.TextField = "Nombre";
                                                 settings.Properties.ValueField = "Idusuario";
-                                            }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
-                                            @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
+                                            }).BindList(ViewBag.Usuarios).Bind(Model.IdChofer).GetHtml()
+                                            @Html.ValidationMessageFor(m => m.IdChofer, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-5">
@@ -58,16 +58,16 @@
                                             <strong>Vehiculo</strong>
                                             @Html.DevExpress().ComboBox(settings =>
                                             {
-                                                settings.Name = "IdVeiculo";
+                                                settings.Name = "IdVehiculo";
                                                 settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                                 settings.SelectedIndex = 0;
                                                 settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                 settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                                 settings.Properties.ValueType = typeof(int);
-                                                settings.Properties.TextField = "Descripcion";
-                                                settings.Properties.ValueField = "IdCuentaContable";
-                                            }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
-                                            @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
+                                                settings.Properties.TextField = "Nombre";
+                                                settings.Properties.ValueField = "IdVehiculo";
+                                            }).BindList(ViewBag.CuentasContables).Bind(Model.IdVehiculo).GetHtml()
+                                            @Html.ValidationMessageFor(m => m.IdVehiculo, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                            

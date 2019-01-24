@@ -14,6 +14,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.Servicios.Ventas;
+using Application.MainModule.DTOs.Transporte;
+using Application.MainModule.Servicios.Pedidos;
 
 namespace Application.MainModule.Flujos
 {
@@ -936,6 +938,7 @@ namespace Application.MainModule.Flujos
             Dtovehiculo.Activo = false;
             return EquipoTransporteServicio.Modificar(Dtovehiculo);
         }
+       
         #endregion
 
         #region Tipo proveedor

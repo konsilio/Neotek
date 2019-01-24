@@ -1,5 +1,6 @@
-﻿using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
@@ -38,7 +39,7 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             if (idEmpresa != 0)
                 return new EquipoTransporteDataAccess().BuscarUnidades(idEmpresa, idCAlmacenGas).Numero;
-          
+
             return null;
         }
 
@@ -49,24 +50,21 @@ namespace Application.MainModule.Servicios.Catalogos
                 if (qt.Camionetas != null)
                     return qt.Camionetas.Nombre;
                 else
-                    return new EquipoTransporteDataAccess().BuscarCamioneta(qt.IdCamioneta.Value).Nombre; 
+                    return new EquipoTransporteDataAccess().BuscarCamioneta(qt.IdCamioneta.Value).Nombre;
             }
-
-            if (qt.IdPipa!= null)
+            if (qt.IdPipa != null)
             {
                 if (qt.Pipas != null)
                     return qt.Pipas.Nombre;
                 else
-                    return new EquipoTransporteDataAccess().BuscarPipa(qt.IdPipa.Value).Nombre; 
+                    return new EquipoTransporteDataAccess().BuscarPipa(qt.IdPipa.Value).Nombre;
             }
-
             //if (qt.Vehiculo != null)
             //    return qt.Vehiculo.Nombre;
             //else
             //    return new EquipoTransporteDataAccess().BuscarVehiculo(qt.Vehiculo.Value).Nombre; 
-
             return null;
-            
+
         }
 
         public static List<EquipoTransporte> BuscarEquipoTransporte()
@@ -77,6 +75,22 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<EquipoTransporte> BuscarEquipoTransporte(short IdEmpresa)
         {
             return new EquipoTransporteDataAccess().BuscarEquipoTransporte(IdEmpresa);
+        }
+
+        public static List<EquipoTransporteDTO> ObtenerTransportes(List<PipaDTO> pipas, List<CamionetaDTO> camionetas, List<EstacionCarburacion> estaciones) //,List<Utilitario> utilitariso)
+        {
+            List<EquipoTransporteDTO> parqueVehicular = new List<EquipoTransporteDTO>();
+            foreach (var pip in pipas)
+                parqueVehicular.Add(new EquipoTransporteDTO { IdPipa = pip.IdPipa, DescVehiculo = pip.Nombre, IdEmpresa = pip.IdEmpresa });
+            foreach (var est in estaciones)
+                parqueVehicular.Add(new EquipoTransporteDTO { IdEstacion = est.IdEstacionCarburacion, DescVehiculo = est.Nombre, IdEmpresa = est.IdEmpresa });
+            foreach (var cam in camionetas)
+                parqueVehicular.Add(new EquipoTransporteDTO { IdCamioneta = cam.IdCamioneta, DescVehiculo = cam.Nombre, IdEmpresa = cam.IdEmpresa });
+            //foreach (var util in utilitarios)
+            //{
+            //parqueVehicular.Add(new EquipoTransporteDTO { IdVehiculoUtilitario = util.IdUtilitario, Vehiculo = util.Nombre, IdEmpresa = util.IdEmpresa });
+            //}
+            return parqueVehicular;
         }
 
         public static RespuestaDto Alta(EquipoTransporte _VehiculoDto)
