@@ -1981,26 +1981,32 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarListaEquipoTransporte(tkn);
             return agente._listaEquipoTransporte;
         }
-        public static List<ParqueVehicularModel> Obtener(short id, string tkn)
+        public static List<EquipoTransporteDTO> Obtener(short id, string tkn)
         {
             var agente = new AgenteServicio();
-            agente.ListaPedidos(id, tkn);
+            agente.ListaVehiculos(id, tkn);
             return agente._ListaVehiculos;
         }
-        public static ParqueVehicularModel Obtener(int id, string tkn)
+        public static EquipoTransporteDTO Obtener(int id, string tkn)
         {
             var agente = new AgenteServicio();
             agente.ObtenerVehiculoId(id, tkn);
             return agente._Vehiculos;
         }
-        public static RespuestaDTO Crear(ParqueVehicularModel cc, string tkn)
+        public static List<EquipoTransporteDTO> Obtener(short id, string Placas, string Nombre, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaVehiculosFiltrar(id, Placas, Nombre, tkn);
+            return agente._ListaVehiculos;
+        }
+        public static RespuestaDTO Crear(EquipoTransporteDTO cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarVehiculo(cc, tkn);
             return agente._RespuestaDTO;
         }
 
-        public static RespuestaDTO Modificar(ParqueVehicularModel cc, string tkn)
+        public static RespuestaDTO Modificar(EquipoTransporteDTO cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.EditarVehiculo(cc, tkn);

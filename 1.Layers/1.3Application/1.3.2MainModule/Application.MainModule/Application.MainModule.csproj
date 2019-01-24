@@ -162,6 +162,7 @@
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CamionetaDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\CombustibleDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\DataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EgresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\IngresoDataAccess.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Servicios\AccesoADatos\VehiculoUtilitarioDataAccess.cs" />
     <Compile Include="Servicios\Almacen\RemanenteServicio.cs" />
     <Compile Include="Servicios\Catalogos\CamionetaServicio.cs" />
+    <Compile Include="Servicios\Catalogos\CombustibleServicio.cs" />
     <Compile Include="Servicios\Catalogos\PipaServicio.cs" />
     <Compile Include="Servicios\Catalogos\VehiculoUtilitarioServicio.cs" />
     <Compile Include="Servicios\Cobranza\CobranzaServicio.cs" />
@@ -408,7 +410,6 @@
     <Compile Include="UnitOfWork\SagasDataUow.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DTOs\EquipoTransporte\" />
     <Folder Include="DTOs\IngresoGasto\" />
   </ItemGroup>
   <ItemGroup>

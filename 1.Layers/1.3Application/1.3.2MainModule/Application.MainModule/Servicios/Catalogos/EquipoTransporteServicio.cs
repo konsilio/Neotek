@@ -81,11 +81,11 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             List<EquipoTransporteDTO> parqueVehicular = new List<EquipoTransporteDTO>();
             foreach (var pip in pipas)
-                parqueVehicular.Add(new EquipoTransporteDTO { IdPipa = pip.IdPipa, Vehiculo = pip.Nombre, IdEmpresa = pip.IdEmpresa });
+                parqueVehicular.Add(new EquipoTransporteDTO { IdPipa = pip.IdPipa, DescVehiculo = pip.Nombre, IdEmpresa = pip.IdEmpresa });
             foreach (var est in estaciones)
-                parqueVehicular.Add(new EquipoTransporteDTO { IdEstacion = est.IdEstacionCarburacion, Vehiculo = est.Nombre, IdEmpresa = est.IdEmpresa });
+                parqueVehicular.Add(new EquipoTransporteDTO { IdEstacion = est.IdEstacionCarburacion, DescVehiculo = est.Nombre, IdEmpresa = est.IdEmpresa });
             foreach (var cam in camionetas)
-                parqueVehicular.Add(new EquipoTransporteDTO { IdCamioneta = cam.IdCamioneta, Vehiculo = cam.Nombre, IdEmpresa = cam.IdEmpresa });
+                parqueVehicular.Add(new EquipoTransporteDTO { IdCamioneta = cam.IdCamioneta, DescVehiculo = cam.Nombre, IdEmpresa = cam.IdEmpresa });
             //foreach (var util in utilitarios)
             //{
             //parqueVehicular.Add(new EquipoTransporteDTO { IdVehiculoUtilitario = util.IdUtilitario, Vehiculo = util.Nombre, IdEmpresa = util.IdEmpresa });

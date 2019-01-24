@@ -242,7 +242,6 @@
     <Compile Include="App_Code\AlmacenServicio.cs" />
     <Compile Include="App_Code\AutenticacionServicio.cs" />
     <Compile Include="App_Code\CobranzaServicio.cs" />
-    <Compile Include="App_Code\EquipoTrServicio.cs" />
     <Compile Include="App_Code\OrdenCompraServicio.cs" />
     <Compile Include="App_Code\PedidosServicio.cs" />
     <Compile Include="App_Code\RequisicionServicio.cs" />
@@ -339,7 +338,6 @@
     <Compile Include="Models\Cobranza\CargosModel.cs" />
     <Compile Include="Models\Cobranza\CarteraVencidaModel.cs" />
     <Compile Include="Models\Cobranza\ReporteModel.cs" />
-    <Compile Include="Models\EquipoTransporte\ParqueVehicularModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImagenDTO.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -11582,6 +11580,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
+    <Folder Include="Models\EquipoTransporte\" />
     <Folder Include="Servicios\" />
     <Folder Include="Views\Mantenimiento\" />
     <Folder Include="Views\RecargaCombustibles\" />
