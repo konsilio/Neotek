@@ -945,6 +945,16 @@
           <Property Name="location_lng" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="place_id" Type="varchar" MaxLength="350" Nullable="false" />
         </EntityType>
+        <EntityType Name="CCombustible">
+          <Key>
+            <PropertyRef Name="Id_Combustible" />
+          </Key>
+          <Property Name="Id_Combustible" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoCombustible" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="Id_Empresa" Type="smallint" Nullable="false" />
+        </EntityType>
         <EntityType Name="CCuentaContable">
           <Key>
             <PropertyRef Name="IdCuentaContable" />
@@ -955,6 +965,25 @@
           <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CDetalleEquipoTransporte">
+          <Key>
+            <PropertyRef Name="Id_DetalleEtransporte" />
+          </Key>
+          <Property Name="Id_DetalleEtransporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Vehiculo" Type="int" Nullable="false" />
+          <Property Name="EsCamioneta" Type="bit" />
+          <Property Name="EsPipa" Type="bit" />
+          <Property Name="EsUtilitario" Type="bit" />
+          <Property Name="NumIdVehicular" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Placas" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="NumMotor" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DescVehiculo" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="Marca" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Modelo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Color" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="cilindros" Type="smallint" Nullable="false" />
+          <Property Name="IdTipoCombustible" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CEquipoTransporte">
           <Key>
@@ -996,6 +1025,16 @@
           <Property Name="FormaPago" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CMantenimiento">
+          <Key>
+            <PropertyRef Name="Id_Mantenimiento" />
+          </Key>
+          <Property Name="Id_Mantenimiento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Mantenimiento" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="Id_Empresa" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="COperadorChofer">
           <Key>
@@ -1307,6 +1346,46 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdTipoPersona" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CUtilitario">
+          <Key>
+            <PropertyRef Name="IdUtilitario" />
+          </Key>
+          <Property Name="IdUtilitario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Numero" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DetalleMantenimiento">
+          <Key>
+            <PropertyRef Name="Id_DetalleMtto" />
+          </Key>
+          <Property Name="Id_DetalleMtto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FechaMtto" Type="date" Nullable="false" />
+          <Property Name="id_vehiculo" Type="int" Nullable="false" />
+          <Property Name="EsCamioneta" Type="bit" Nullable="false" />
+          <Property Name="EsPipa" Type="bit" Nullable="false" />
+          <Property Name="EsUtilitario" Type="bit" Nullable="false" />
+          <Property Name="Id_tipomtto" Type="int" Nullable="false" />
+          <Property Name="DescripcionMtto" Type="varchar" MaxLength="150" />
+          <Property Name="Kilometraje_Actual" Type="int" Nullable="false" />
+          <Property Name="NumeroOC" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="DetalleRecargaCombustible">
+          <Key>
+            <PropertyRef Name="Id_DetalleRecargaComb" />
+          </Key>
+          <Property Name="Id_DetalleRecargaComb" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Vehiculo" Type="int" Nullable="false" />
+          <Property Name="EsCamioneta" Type="bit" Nullable="false" />
+          <Property Name="EsPipa" Type="bit" Nullable="false" />
+          <Property Name="EsUtilitario" Type="bit" Nullable="false" />
+          <Property Name="KilometrajeActual" Type="int" Nullable="false" />
+          <Property Name="KilometrajeRecorrido" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="LitrosRecargados" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="IdTipoCombustible" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Egreso">
           <Key>
@@ -3477,6 +3556,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CCombustible_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CCombustible" Type="Self.CCombustible" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CCombustible">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CCuentaContable_Empresa">
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
           <End Role="CCuentaContable" Type="Self.CCuentaContable" Multiplicity="*" />
@@ -3486,6 +3577,66 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="CCuentaContable">
               <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CDetalleEquipoTransporte_CCamioneta">
+          <End Role="CCamioneta" Type="Self.CCamioneta" Multiplicity="1" />
+          <End Role="CDetalleEquipoTransporte" Type="Self.CDetalleEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCamioneta">
+              <PropertyRef Name="IdCamioneta" />
+            </Principal>
+            <Dependent Role="CDetalleEquipoTransporte">
+              <PropertyRef Name="Id_Vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CDetalleEquipoTransporte_CCombustible">
+          <End Role="CCombustible" Type="Self.CCombustible" Multiplicity="1" />
+          <End Role="CDetalleEquipoTransporte" Type="Self.CDetalleEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCombustible">
+              <PropertyRef Name="Id_Combustible" />
+            </Principal>
+            <Dependent Role="CDetalleEquipoTransporte">
+              <PropertyRef Name="IdTipoCombustible" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CDetalleEquipoTransporte_CDetalleEquipoTransporte">
+          <End Role="CDetalleEquipoTransporte" Type="Self.CDetalleEquipoTransporte" Multiplicity="1" />
+          <End Role="CDetalleEquipoTransporte1" Type="Self.CDetalleEquipoTransporte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CDetalleEquipoTransporte">
+              <PropertyRef Name="Id_DetalleEtransporte" />
+            </Principal>
+            <Dependent Role="CDetalleEquipoTransporte1">
+              <PropertyRef Name="Id_DetalleEtransporte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CDetalleEquipoTransporte_CPipa">
+          <End Role="CPipa" Type="Self.CPipa" Multiplicity="1" />
+          <End Role="CDetalleEquipoTransporte" Type="Self.CDetalleEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CPipa">
+              <PropertyRef Name="IdPipa" />
+            </Principal>
+            <Dependent Role="CDetalleEquipoTransporte">
+              <PropertyRef Name="Id_Vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CDetalleEquipoTransporte_CUtilitario">
+          <End Role="CUtilitario" Type="Self.CUtilitario" Multiplicity="1" />
+          <End Role="CDetalleEquipoTransporte" Type="Self.CDetalleEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUtilitario">
+              <PropertyRef Name="IdUtilitario" />
+            </Principal>
+            <Dependent Role="CDetalleEquipoTransporte">
+              <PropertyRef Name="Id_Vehiculo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3536,6 +3687,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="CEstacionCarburacion">
               <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CMantenimiento_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CMantenimiento" Type="Self.CMantenimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CMantenimiento">
+              <PropertyRef Name="Id_Empresa" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4014,6 +4177,90 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="CRegimenFiscal">
               <PropertyRef Name="IdTipoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CUtilitario_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CUtilitario" Type="Self.CUtilitario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CUtilitario">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMantenimiento_CCamioneta">
+          <End Role="CCamioneta" Type="Self.CCamioneta" Multiplicity="1" />
+          <End Role="DetalleMantenimiento" Type="Self.DetalleMantenimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCamioneta">
+              <PropertyRef Name="IdCamioneta" />
+            </Principal>
+            <Dependent Role="DetalleMantenimiento">
+              <PropertyRef Name="id_vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMantenimiento_CMantenimiento">
+          <End Role="CMantenimiento" Type="Self.CMantenimiento" Multiplicity="1" />
+          <End Role="DetalleMantenimiento" Type="Self.DetalleMantenimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CMantenimiento">
+              <PropertyRef Name="Id_Mantenimiento" />
+            </Principal>
+            <Dependent Role="DetalleMantenimiento">
+              <PropertyRef Name="Id_tipomtto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMantenimiento_CPipa">
+          <End Role="CPipa" Type="Self.CPipa" Multiplicity="1" />
+          <End Role="DetalleMantenimiento" Type="Self.DetalleMantenimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CPipa">
+              <PropertyRef Name="IdPipa" />
+            </Principal>
+            <Dependent Role="DetalleMantenimiento">
+              <PropertyRef Name="id_vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleRecargaCombustible_CCamioneta">
+          <End Role="CCamioneta" Type="Self.CCamioneta" Multiplicity="1" />
+          <End Role="DetalleRecargaCombustible" Type="Self.DetalleRecargaCombustible" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCamioneta">
+              <PropertyRef Name="IdCamioneta" />
+            </Principal>
+            <Dependent Role="DetalleRecargaCombustible">
+              <PropertyRef Name="Id_Vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleRecargaCombustible_CCombustible">
+          <End Role="CCombustible" Type="Self.CCombustible" Multiplicity="1" />
+          <End Role="DetalleRecargaCombustible" Type="Self.DetalleRecargaCombustible" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCombustible">
+              <PropertyRef Name="Id_Combustible" />
+            </Principal>
+            <Dependent Role="DetalleRecargaCombustible">
+              <PropertyRef Name="IdTipoCombustible" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleRecargaCombustible_CPipa">
+          <End Role="CPipa" Type="Self.CPipa" Multiplicity="1" />
+          <End Role="DetalleRecargaCombustible" Type="Self.DetalleRecargaCombustible" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CPipa">
+              <PropertyRef Name="IdPipa" />
+            </Principal>
+            <Dependent Role="DetalleRecargaCombustible">
+              <PropertyRef Name="Id_Vehiculo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5050,11 +5297,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="CClienteLegal" EntityType="Self.CClienteLegal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CClienteLocacion" EntityType="Self.CClienteLocacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CClienteLocacionGoogle" EntityType="Self.CClienteLocacionGoogle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CCombustible" EntityType="Self.CCombustible" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCuentaContable" EntityType="Self.CCuentaContable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDetalleEquipoTransporte" EntityType="Self.CDetalleEquipoTransporte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CEquipoTransporte" EntityType="Self.CEquipoTransporte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CEstacionCarburacion" EntityType="Self.CEstacionCarburacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CEstadosRep" EntityType="Self.CEstadosRep" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CFormaPago" EntityType="Self.CFormaPago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CMantenimiento" EntityType="Self.CMantenimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="COperadorChofer" EntityType="Self.COperadorChofer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CPais" EntityType="Self.CPais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CPipa" EntityType="Self.CPipa" Schema="dbo" store:Type="Tables" />
@@ -5079,6 +5329,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="CTipoMovimiento" EntityType="Self.CTipoMovimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTipoOperadorChofer" EntityType="Self.CTipoOperadorChofer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTipoPersona" EntityType="Self.CTipoPersona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUtilitario" EntityType="Self.CUtilitario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleMantenimiento" EntityType="Self.DetalleMantenimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleRecargaCombustible" EntityType="Self.DetalleRecargaCombustible" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Egreso" EntityType="Self.Egreso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaConfiguracion" EntityType="Self.EmpresaConfiguracion" Schema="dbo" store:Type="Tables" />
@@ -5528,9 +5781,33 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CClienteLocacion" EntitySet="CClienteLocacion" />
             <End Role="CClienteLocacionGoogle" EntitySet="CClienteLocacionGoogle" />
           </AssociationSet>
+          <AssociationSet Name="FK_CCombustible_Empresa" Association="Self.FK_CCombustible_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CCombustible" EntitySet="CCombustible" />
+          </AssociationSet>
           <AssociationSet Name="FK_CCuentaContable_Empresa" Association="Self.FK_CCuentaContable_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CCuentaContable" EntitySet="CCuentaContable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CDetalleEquipoTransporte_CCamioneta" Association="Self.FK_CDetalleEquipoTransporte_CCamioneta">
+            <End Role="CCamioneta" EntitySet="CCamioneta" />
+            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CDetalleEquipoTransporte_CCombustible" Association="Self.FK_CDetalleEquipoTransporte_CCombustible">
+            <End Role="CCombustible" EntitySet="CCombustible" />
+            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CDetalleEquipoTransporte_CDetalleEquipoTransporte" Association="Self.FK_CDetalleEquipoTransporte_CDetalleEquipoTransporte">
+            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
+            <End Role="CDetalleEquipoTransporte1" EntitySet="CDetalleEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CDetalleEquipoTransporte_CPipa" Association="Self.FK_CDetalleEquipoTransporte_CPipa">
+            <End Role="CPipa" EntitySet="CPipa" />
+            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CDetalleEquipoTransporte_CUtilitario" Association="Self.FK_CDetalleEquipoTransporte_CUtilitario">
+            <End Role="CUtilitario" EntitySet="CUtilitario" />
+            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
           </AssociationSet>
           <AssociationSet Name="FK_CEquipoTransporte_CCamioneta" Association="Self.FK_CEquipoTransporte_CCamioneta">
             <End Role="CCamioneta" EntitySet="CCamioneta" />
@@ -5547,6 +5824,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_CEstacionCarburacion_Empresa" Association="Self.FK_CEstacionCarburacion_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CEstacionCarburacion" EntitySet="CEstacionCarburacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CMantenimiento_Empresa" Association="Self.FK_CMantenimiento_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CMantenimiento" EntitySet="CMantenimiento" />
           </AssociationSet>
           <AssociationSet Name="FK_COperadorChofer_CTipoOperadorChofer" Association="Self.FK_COperadorChofer_CTipoOperadorChofer">
             <End Role="CTipoOperadorChofer" EntitySet="CTipoOperadorChofer" />
@@ -5703,6 +5984,34 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_CRegimenFiscal_CTipoPersona" Association="Self.FK_CRegimenFiscal_CTipoPersona">
             <End Role="CTipoPersona" EntitySet="CTipoPersona" />
             <End Role="CRegimenFiscal" EntitySet="CRegimenFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CUtilitario_Empresa" Association="Self.FK_CUtilitario_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CUtilitario" EntitySet="CUtilitario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMantenimiento_CCamioneta" Association="Self.FK_DetalleMantenimiento_CCamioneta">
+            <End Role="CCamioneta" EntitySet="CCamioneta" />
+            <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMantenimiento_CMantenimiento" Association="Self.FK_DetalleMantenimiento_CMantenimiento">
+            <End Role="CMantenimiento" EntitySet="CMantenimiento" />
+            <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMantenimiento_CPipa" Association="Self.FK_DetalleMantenimiento_CPipa">
+            <End Role="CPipa" EntitySet="CPipa" />
+            <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleRecargaCombustible_CCamioneta" Association="Self.FK_DetalleRecargaCombustible_CCamioneta">
+            <End Role="CCamioneta" EntitySet="CCamioneta" />
+            <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleRecargaCombustible_CCombustible" Association="Self.FK_DetalleRecargaCombustible_CCombustible">
+            <End Role="CCombustible" EntitySet="CCombustible" />
+            <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleRecargaCombustible_CPipa" Association="Self.FK_DetalleRecargaCombustible_CPipa">
+            <End Role="CPipa" EntitySet="CPipa" />
+            <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
           </AssociationSet>
           <AssociationSet Name="FK_Egreso_CCentroCosto" Association="Self.FK_Egreso_CCentroCosto">
             <End Role="CCentroCosto" EntitySet="CCentroCosto" />
@@ -6130,6 +6439,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="OperadoresChoferes" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_Empresa" FromRole="Empresa" ToRole="OperadorChofer" />
           <NavigationProperty Name="PreciosVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa" FromRole="Empresa" ToRole="PrecioVenta" />
           <NavigationProperty Name="AlmacenGasMovimiento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_Empresa" FromRole="Empresa" ToRole="AlmacenGasMovimiento" />
+          <NavigationProperty Name="CCombustible" Relationship="Sagas.MainModuleModel.FK_CCombustible_Empresa" FromRole="Empresa" ToRole="CCombustible" />
+          <NavigationProperty Name="CMantenimiento" Relationship="Sagas.MainModuleModel.FK_CMantenimiento_Empresa" FromRole="Empresa" ToRole="CMantenimiento" />
+          <NavigationProperty Name="CUtilitario" Relationship="Sagas.MainModuleModel.FK_CUtilitario_Empresa" FromRole="Empresa" ToRole="CUtilitario" />
 
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="EmpresaFiscal" ToRole="Empresa" />          
@@ -7552,6 +7864,68 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Pedido" EntitySet="Pedido" />
             <End Role="RespuestaSatisfaccionPedido" EntitySet="RespuestaSatisfaccionPedido" />
           </AssociationSet>
+          <EntitySet Name="CCombustible" EntityType="Sagas.MainModuleModel.CCombustible" />
+          <EntitySet Name="CDetalleEquipoTransporte" EntityType="Sagas.MainModuleModel.CDetalleEquipoTransporte" />
+          <EntitySet Name="CMantenimiento" EntityType="Sagas.MainModuleModel.CMantenimiento" />
+          <EntitySet Name="CUtilitario" EntityType="Sagas.MainModuleModel.CUtilitario" />
+          <EntitySet Name="DetalleMantenimiento" EntityType="Sagas.MainModuleModel.DetalleMantenimiento" />
+          <EntitySet Name="DetalleRecargaCombustible" EntityType="Sagas.MainModuleModel.DetalleRecargaCombustible" />
+          <AssociationSet Name="FK_CDetalleEquipoTransporte_CCamioneta" Association="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CCamioneta">
+            <End Role="Camioneta" EntitySet="Camioneta" />
+            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMantenimiento_CCamioneta" Association="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCamioneta">
+            <End Role="Camioneta" EntitySet="Camioneta" />
+            <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleRecargaCombustible_CCamioneta" Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCamioneta">
+            <End Role="Camioneta" EntitySet="Camioneta" />
+            <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCombustible_Empresa" Association="Sagas.MainModuleModel.FK_CCombustible_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CCombustible" EntitySet="CCombustible" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CDetalleEquipoTransporte_CCombustible" Association="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CCombustible">
+            <End Role="CCombustible" EntitySet="CCombustible" />
+            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleRecargaCombustible_CCombustible" Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCombustible">
+            <End Role="CCombustible" EntitySet="CCombustible" />
+            <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CDetalleEquipoTransporte_CDetalleEquipoTransporte" Association="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CDetalleEquipoTransporte">
+            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
+            <End Role="CDetalleEquipoTransporte1" EntitySet="CDetalleEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CDetalleEquipoTransporte_CPipa" Association="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CPipa">
+            <End Role="Pipa" EntitySet="Pipa" />
+            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CDetalleEquipoTransporte_CUtilitario" Association="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CUtilitario">
+            <End Role="CUtilitario" EntitySet="CUtilitario" />
+            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CMantenimiento_Empresa" Association="Sagas.MainModuleModel.FK_CMantenimiento_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CMantenimiento" EntitySet="CMantenimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMantenimiento_CMantenimiento" Association="Sagas.MainModuleModel.FK_DetalleMantenimiento_CMantenimiento">
+            <End Role="CMantenimiento" EntitySet="CMantenimiento" />
+            <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMantenimiento_CPipa" Association="Sagas.MainModuleModel.FK_DetalleMantenimiento_CPipa">
+            <End Role="Pipa" EntitySet="Pipa" />
+            <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleRecargaCombustible_CPipa" Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CPipa">
+            <End Role="Pipa" EntitySet="Pipa" />
+            <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CUtilitario_Empresa" Association="Sagas.MainModuleModel.FK_CUtilitario_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CUtilitario" EntitySet="CUtilitario" />
+          </AssociationSet>
           <!--<EntitySet Name="AlmacenGasMovimientoAutoconsumo" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoAutoconsumo" />
           <EntitySet Name="AlmacenGasMovimientoCalibracion" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoCalibracion" />
           <EntitySet Name="AlmacenGasMovimientoDescarga" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoDescarga" />
@@ -8716,6 +9090,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Cilindros" Relationship="Sagas.MainModuleModel.FK_CamionetaCilindro_Camioneta" FromRole="Camioneta" ToRole="CamionetaCilindro" />
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CCamioneta" FromRole="Camioneta" ToRole="CentroCosto" />
           <NavigationProperty Name="EquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_CCamioneta" FromRole="Camioneta" ToRole="EquipoTransporte" />
+          <NavigationProperty Name="CDetalleEquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CCamioneta" FromRole="Camioneta" ToRole="CDetalleEquipoTransporte" />
+          <NavigationProperty Name="DetalleMantenimiento" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCamioneta" FromRole="Camioneta" ToRole="DetalleMantenimiento" />
+          <NavigationProperty Name="DetalleRecargaCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCamioneta" FromRole="Camioneta" ToRole="DetalleRecargaCombustible" />
         </EntityType>
         <EntityType Name="EstacionCarburacion">
           <Key>
@@ -8756,6 +9133,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Pipa_Empresa" FromRole="Pipa" ToRole="Empresa" />
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CPipa" FromRole="Pipa" ToRole="CentroCosto" />
           <NavigationProperty Name="EquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_CPipa" FromRole="Pipa" ToRole="EquipoTransporte" />
+          <NavigationProperty Name="CDetalleEquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CPipa" FromRole="Pipa" ToRole="CDetalleEquipoTransporte" />
+          <NavigationProperty Name="DetalleMantenimiento" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CPipa" FromRole="Pipa" ToRole="DetalleMantenimiento" />
+          <NavigationProperty Name="DetalleRecargaCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CPipa" FromRole="Pipa" ToRole="DetalleRecargaCombustible" />
         </EntityType>
         <EntityType Name="ImagenDe">
           <Key>
@@ -12099,6 +12479,272 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CCombustible">
+          <Key>
+            <PropertyRef Name="Id_Combustible" />
+          </Key>
+          <Property Name="Id_Combustible" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoCombustible" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="Id_Empresa" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CCombustible_Empresa" FromRole="CCombustible" ToRole="Empresa" />
+          <NavigationProperty Name="CDetalleEquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CCombustible" FromRole="CCombustible" ToRole="CDetalleEquipoTransporte" />
+          <NavigationProperty Name="DetalleRecargaCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCombustible" FromRole="CCombustible" ToRole="DetalleRecargaCombustible" />
+        </EntityType>
+        <EntityType Name="CDetalleEquipoTransporte">
+          <Key>
+            <PropertyRef Name="Id_DetalleEtransporte" />
+          </Key>
+          <Property Name="Id_DetalleEtransporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Vehiculo" Type="Int32" Nullable="false" />
+          <Property Name="EsCamioneta" Type="Boolean" />
+          <Property Name="EsPipa" Type="Boolean" />
+          <Property Name="EsUtilitario" Type="Boolean" />
+          <Property Name="NumIdVehicular" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Placas" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="NumMotor" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DescVehiculo" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Marca" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Modelo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="cilindros" Type="Int16" Nullable="false" />
+          <Property Name="IdTipoCombustible" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CCamioneta" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CCamioneta" FromRole="CDetalleEquipoTransporte" ToRole="Camioneta" />
+          <NavigationProperty Name="CCombustible" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CCombustible" FromRole="CDetalleEquipoTransporte" ToRole="CCombustible" />
+          <NavigationProperty Name="CDetalleEquipoTransporte1" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CDetalleEquipoTransporte" FromRole="CDetalleEquipoTransporte" ToRole="CDetalleEquipoTransporte1" />
+          <NavigationProperty Name="CDetalleEquipoTransporte2" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CDetalleEquipoTransporte" FromRole="CDetalleEquipoTransporte1" ToRole="CDetalleEquipoTransporte" />
+          <NavigationProperty Name="CPipa" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CPipa" FromRole="CDetalleEquipoTransporte" ToRole="Pipa" />
+          <NavigationProperty Name="CUtilitario" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CUtilitario" FromRole="CDetalleEquipoTransporte" ToRole="CUtilitario" />
+        </EntityType>
+        <EntityType Name="CMantenimiento">
+          <Key>
+            <PropertyRef Name="Id_Mantenimiento" />
+          </Key>
+          <Property Name="Id_Mantenimiento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Mantenimiento" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="Id_Empresa" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CMantenimiento_Empresa" FromRole="CMantenimiento" ToRole="Empresa" />
+          <NavigationProperty Name="DetalleMantenimiento" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CMantenimiento" FromRole="CMantenimiento" ToRole="DetalleMantenimiento" />
+        </EntityType>
+        <EntityType Name="CUtilitario">
+          <Key>
+            <PropertyRef Name="IdUtilitario" />
+          </Key>
+          <Property Name="IdUtilitario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Numero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CDetalleEquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CUtilitario" FromRole="CUtilitario" ToRole="CDetalleEquipoTransporte" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CUtilitario_Empresa" FromRole="CUtilitario" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="DetalleMantenimiento">
+          <Key>
+            <PropertyRef Name="Id_DetalleMtto" />
+          </Key>
+          <Property Name="Id_DetalleMtto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaMtto" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_vehiculo" Type="Int32" Nullable="false" />
+          <Property Name="EsCamioneta" Type="Boolean" Nullable="false" />
+          <Property Name="EsPipa" Type="Boolean" Nullable="false" />
+          <Property Name="EsUtilitario" Type="Boolean" Nullable="false" />
+          <Property Name="Id_tipomtto" Type="Int32" Nullable="false" />
+          <Property Name="DescripcionMtto" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Kilometraje_Actual" Type="Int32" Nullable="false" />
+          <Property Name="NumeroOC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CCamioneta" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCamioneta" FromRole="DetalleMantenimiento" ToRole="Camioneta" />
+          <NavigationProperty Name="CMantenimiento" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CMantenimiento" FromRole="DetalleMantenimiento" ToRole="CMantenimiento" />
+          <NavigationProperty Name="CPipa" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CPipa" FromRole="DetalleMantenimiento" ToRole="Pipa" />
+        </EntityType>
+        <EntityType Name="DetalleRecargaCombustible">
+          <Key>
+            <PropertyRef Name="Id_DetalleRecargaComb" />
+          </Key>
+          <Property Name="Id_DetalleRecargaComb" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Vehiculo" Type="Int32" Nullable="false" />
+          <Property Name="EsCamioneta" Type="Boolean" Nullable="false" />
+          <Property Name="EsPipa" Type="Boolean" Nullable="false" />
+          <Property Name="EsUtilitario" Type="Boolean" Nullable="false" />
+          <Property Name="KilometrajeActual" Type="Int32" Nullable="false" />
+          <Property Name="KilometrajeRecorrido" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="LitrosRecargados" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="IdTipoCombustible" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CCamioneta" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCamioneta" FromRole="DetalleRecargaCombustible" ToRole="Camioneta" />
+          <NavigationProperty Name="CCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCombustible" FromRole="DetalleRecargaCombustible" ToRole="CCombustible" />
+          <NavigationProperty Name="CPipa" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CPipa" FromRole="DetalleRecargaCombustible" ToRole="Pipa" />
+        </EntityType>
+        <Association Name="FK_CDetalleEquipoTransporte_CCamioneta">
+          <End Type="Sagas.MainModuleModel.Camioneta" Role="Camioneta" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CDetalleEquipoTransporte" Role="CDetalleEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Camioneta">
+              <PropertyRef Name="IdCamioneta" />
+            </Principal>
+            <Dependent Role="CDetalleEquipoTransporte">
+              <PropertyRef Name="Id_Vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMantenimiento_CCamioneta">
+          <End Type="Sagas.MainModuleModel.Camioneta" Role="Camioneta" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.DetalleMantenimiento" Role="DetalleMantenimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Camioneta">
+              <PropertyRef Name="IdCamioneta" />
+            </Principal>
+            <Dependent Role="DetalleMantenimiento">
+              <PropertyRef Name="id_vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleRecargaCombustible_CCamioneta">
+          <End Type="Sagas.MainModuleModel.Camioneta" Role="Camioneta" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.DetalleRecargaCombustible" Role="DetalleRecargaCombustible" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Camioneta">
+              <PropertyRef Name="IdCamioneta" />
+            </Principal>
+            <Dependent Role="DetalleRecargaCombustible">
+              <PropertyRef Name="Id_Vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCombustible_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CCombustible" Role="CCombustible" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CCombustible">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CDetalleEquipoTransporte_CCombustible">
+          <End Type="Sagas.MainModuleModel.CCombustible" Role="CCombustible" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CDetalleEquipoTransporte" Role="CDetalleEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCombustible">
+              <PropertyRef Name="Id_Combustible" />
+            </Principal>
+            <Dependent Role="CDetalleEquipoTransporte">
+              <PropertyRef Name="IdTipoCombustible" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleRecargaCombustible_CCombustible">
+          <End Type="Sagas.MainModuleModel.CCombustible" Role="CCombustible" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.DetalleRecargaCombustible" Role="DetalleRecargaCombustible" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCombustible">
+              <PropertyRef Name="Id_Combustible" />
+            </Principal>
+            <Dependent Role="DetalleRecargaCombustible">
+              <PropertyRef Name="IdTipoCombustible" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CDetalleEquipoTransporte_CDetalleEquipoTransporte">
+          <End Type="Sagas.MainModuleModel.CDetalleEquipoTransporte" Role="CDetalleEquipoTransporte" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CDetalleEquipoTransporte" Role="CDetalleEquipoTransporte1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CDetalleEquipoTransporte">
+              <PropertyRef Name="Id_DetalleEtransporte" />
+            </Principal>
+            <Dependent Role="CDetalleEquipoTransporte1">
+              <PropertyRef Name="Id_DetalleEtransporte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CDetalleEquipoTransporte_CPipa">
+          <End Type="Sagas.MainModuleModel.Pipa" Role="Pipa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CDetalleEquipoTransporte" Role="CDetalleEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pipa">
+              <PropertyRef Name="IdPipa" />
+            </Principal>
+            <Dependent Role="CDetalleEquipoTransporte">
+              <PropertyRef Name="Id_Vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CDetalleEquipoTransporte_CUtilitario">
+          <End Type="Sagas.MainModuleModel.CUtilitario" Role="CUtilitario" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CDetalleEquipoTransporte" Role="CDetalleEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUtilitario">
+              <PropertyRef Name="IdUtilitario" />
+            </Principal>
+            <Dependent Role="CDetalleEquipoTransporte">
+              <PropertyRef Name="Id_Vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CMantenimiento_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CMantenimiento" Role="CMantenimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CMantenimiento">
+              <PropertyRef Name="Id_Empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMantenimiento_CMantenimiento">
+          <End Type="Sagas.MainModuleModel.CMantenimiento" Role="CMantenimiento" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.DetalleMantenimiento" Role="DetalleMantenimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CMantenimiento">
+              <PropertyRef Name="Id_Mantenimiento" />
+            </Principal>
+            <Dependent Role="DetalleMantenimiento">
+              <PropertyRef Name="Id_tipomtto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMantenimiento_CPipa">
+          <End Type="Sagas.MainModuleModel.Pipa" Role="Pipa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.DetalleMantenimiento" Role="DetalleMantenimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pipa">
+              <PropertyRef Name="IdPipa" />
+            </Principal>
+            <Dependent Role="DetalleMantenimiento">
+              <PropertyRef Name="id_vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleRecargaCombustible_CPipa">
+          <End Type="Sagas.MainModuleModel.Pipa" Role="Pipa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.DetalleRecargaCombustible" Role="DetalleRecargaCombustible" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pipa">
+              <PropertyRef Name="IdPipa" />
+            </Principal>
+            <Dependent Role="DetalleRecargaCombustible">
+              <PropertyRef Name="Id_Vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CUtilitario_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CUtilitario" Role="CUtilitario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CUtilitario">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <!--<Association Name="FK_AlmacenGasMovimientoAutoconsumo_AlmacenGasMovimiento">
           <End Type="Sagas.MainModuleModel.AlmacenGasMovimiento" Role="AlmacenGasMovimiento" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -14336,6 +14982,91 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="IdPregunta" ColumnName="IdPregunta" />
                 <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
                 <ScalarProperty Name="IdRespuesta" ColumnName="IdRespuesta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CCombustible">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CCombustible">
+              <MappingFragment StoreEntitySet="CCombustible">
+                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="TipoCombustible" ColumnName="TipoCombustible" />
+                <ScalarProperty Name="Id_Combustible" ColumnName="Id_Combustible" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDetalleEquipoTransporte">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CDetalleEquipoTransporte">
+              <MappingFragment StoreEntitySet="CDetalleEquipoTransporte">
+                <ScalarProperty Name="IdTipoCombustible" ColumnName="IdTipoCombustible" />
+                <ScalarProperty Name="cilindros" ColumnName="cilindros" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="DescVehiculo" ColumnName="DescVehiculo" />
+                <ScalarProperty Name="NumMotor" ColumnName="NumMotor" />
+                <ScalarProperty Name="Placas" ColumnName="Placas" />
+                <ScalarProperty Name="NumIdVehicular" ColumnName="NumIdVehicular" />
+                <ScalarProperty Name="EsUtilitario" ColumnName="EsUtilitario" />
+                <ScalarProperty Name="EsPipa" ColumnName="EsPipa" />
+                <ScalarProperty Name="EsCamioneta" ColumnName="EsCamioneta" />
+                <ScalarProperty Name="Id_Vehiculo" ColumnName="Id_Vehiculo" />
+                <ScalarProperty Name="Id_DetalleEtransporte" ColumnName="Id_DetalleEtransporte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CMantenimiento">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CMantenimiento">
+              <MappingFragment StoreEntitySet="CMantenimiento">
+                <ScalarProperty Name="Id_Empresa" ColumnName="Id_Empresa" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Mantenimiento" ColumnName="Mantenimiento" />
+                <ScalarProperty Name="Id_Mantenimiento" ColumnName="Id_Mantenimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUtilitario">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CUtilitario">
+              <MappingFragment StoreEntitySet="CUtilitario">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdUtilitario" ColumnName="IdUtilitario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleMantenimiento">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.DetalleMantenimiento">
+              <MappingFragment StoreEntitySet="DetalleMantenimiento">
+                <ScalarProperty Name="NumeroOC" ColumnName="NumeroOC" />
+                <ScalarProperty Name="Kilometraje_Actual" ColumnName="Kilometraje_Actual" />
+                <ScalarProperty Name="DescripcionMtto" ColumnName="DescripcionMtto" />
+                <ScalarProperty Name="Id_tipomtto" ColumnName="Id_tipomtto" />
+                <ScalarProperty Name="EsUtilitario" ColumnName="EsUtilitario" />
+                <ScalarProperty Name="EsPipa" ColumnName="EsPipa" />
+                <ScalarProperty Name="EsCamioneta" ColumnName="EsCamioneta" />
+                <ScalarProperty Name="id_vehiculo" ColumnName="id_vehiculo" />
+                <ScalarProperty Name="FechaMtto" ColumnName="FechaMtto" />
+                <ScalarProperty Name="Id_DetalleMtto" ColumnName="Id_DetalleMtto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleRecargaCombustible">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.DetalleRecargaCombustible">
+              <MappingFragment StoreEntitySet="DetalleRecargaCombustible">
+                <ScalarProperty Name="IdTipoCombustible" ColumnName="IdTipoCombustible" />
+                <ScalarProperty Name="LitrosRecargados" ColumnName="LitrosRecargados" />
+                <ScalarProperty Name="KilometrajeRecorrido" ColumnName="KilometrajeRecorrido" />
+                <ScalarProperty Name="KilometrajeActual" ColumnName="KilometrajeActual" />
+                <ScalarProperty Name="EsUtilitario" ColumnName="EsUtilitario" />
+                <ScalarProperty Name="EsPipa" ColumnName="EsPipa" />
+                <ScalarProperty Name="EsCamioneta" ColumnName="EsCamioneta" />
+                <ScalarProperty Name="Id_Vehiculo" ColumnName="Id_Vehiculo" />
+                <ScalarProperty Name="Id_DetalleRecargaComb" ColumnName="Id_DetalleRecargaComb" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

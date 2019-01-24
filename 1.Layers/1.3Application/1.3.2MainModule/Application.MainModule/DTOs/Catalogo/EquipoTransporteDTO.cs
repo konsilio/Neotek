@@ -31,5 +31,18 @@ namespace Application.MainModule.DTOs
         public int IdTipoUnidad { get; set; }
         public bool UnidadActiva { get; set; }
         public string AliasUnidad { get; set; }
+
+        public int Id_DetalleEtransporte { get; set; }
+        public int Id_Vehiculo { get; set; }
+        public Nullable<bool> EsCamioneta { get; set; }
+        public Nullable<bool> EsPipa { get; set; }
+        public Nullable<bool> EsUtilitario { get; set; }
+        public string NumIdVehicular { get; set; }
+        public string Placas { get; set; }
+        public string NumMotor { get; set; }
+        public string DescVehiculo { get; set; }
+       
+        public short cilindros { get; set; }
+       
     }
 }

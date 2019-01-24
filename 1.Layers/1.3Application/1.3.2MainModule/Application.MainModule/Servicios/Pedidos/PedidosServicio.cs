@@ -90,7 +90,7 @@ namespace Application.MainModule.Servicios.Pedidos
         }
         public static List<CamionetaDTO> ObtenerCamionetas(short idempresa)
         {
-            List<CamionetaDTO> lCamionetas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new AlmacenGasDataAccess().ObtenerCamionetasEmpresa(idempresa));
+            List<CamionetaDTO> lCamionetas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new CamionetaDataAccess().ObtenerCamionetas(idempresa));
             return lCamionetas;
         }
         public static List<PipaDTO> ObtenerPipas(short idempresa)
