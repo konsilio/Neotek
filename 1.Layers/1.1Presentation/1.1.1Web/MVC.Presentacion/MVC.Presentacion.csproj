@@ -242,6 +242,7 @@
     <Compile Include="App_Code\AlmacenServicio.cs" />
     <Compile Include="App_Code\AutenticacionServicio.cs" />
     <Compile Include="App_Code\CobranzaServicio.cs" />
+    <Compile Include="App_Code\EquipoTrServicio.cs" />
     <Compile Include="App_Code\OrdenCompraServicio.cs" />
     <Compile Include="App_Code\PedidosServicio.cs" />
     <Compile Include="App_Code\RequisicionServicio.cs" />
