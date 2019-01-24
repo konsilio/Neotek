@@ -1,4 +1,4 @@
-﻿@model  MVC.Presentacion.Models.EquipoTransporte.ParqueVehicularModel
+﻿@model  MVC.Presentacion.Models.Catalogos.EquipoTransporteDTO
 <!DOCTYPE html>
 
 <html>
@@ -147,9 +147,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if (Model.vehiculos != null)
+                                                    @if (ViewBag.Vehiculos != null)
                                                 {
-                                                    foreach (var item in Model.vehiculos)
+                                                    foreach (var item in ViewBag.Vehiculos)
                                                     {
                                                 <tr>
                                                     <th>@item.IdEquipoTransporte</th>

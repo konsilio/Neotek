@@ -113,7 +113,6 @@
     <Compile Include="DTOs\Cobranza\CarteraVencidaDTO.cs" />
     <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
-    <Compile Include="DTOs\EquipoTransporte\MantenimientoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\RecargaCombustibleDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />

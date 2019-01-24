@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Catalogo
 {
-    public class CombustibleDTO
+   public class CombustibleDTO
     {
-
         public int Id_Combustible { get; set; }
         public string TipoCombustible { get; set; }
         public string Descripcion { get; set; }
