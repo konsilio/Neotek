@@ -95,7 +95,7 @@ namespace Application.MainModule.Servicios.Pedidos
         }
         public static List<PipaDTO> ObtenerPipas(short idempresa)
         {
-            List<PipaDTO> lPipas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new AlmacenGasDataAccess().ObtenerPipas(idempresa));
+            List<PipaDTO> lPipas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PipaDataAccess().ObtenerPipas(idempresa));
             return lPipas;
         }        
         public static RespuestaDto Alta(Pedido _pedidoDto)

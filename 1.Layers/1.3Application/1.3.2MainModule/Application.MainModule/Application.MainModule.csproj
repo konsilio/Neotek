@@ -163,6 +163,7 @@
     <Compile Include="Servicios\AccesoADatos\IngresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PedidosDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\PipaDataAccess.cs" />
     <Compile Include="Servicios\Almacen\RemanenteServicio.cs" />
     <Compile Include="Servicios\Cobranza\CobranzaServicio.cs" />
     <Compile Include="Servicios\Compras\CalcularPagoServicio.cs" />

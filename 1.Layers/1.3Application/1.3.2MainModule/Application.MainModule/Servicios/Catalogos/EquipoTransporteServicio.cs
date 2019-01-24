@@ -15,7 +15,7 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<EquipoTransporteDTO> Obtener(short idempresa)
         {
-            List<EquipoTransporteDTO> lPedidos = AdaptadoresDTO.EqTransporte.EquipoTransporteAdapter.ToDTO(new EqTransporteDataAccess().BuscarTodos(idempresa));
+            List<EquipoTransporteDTO> lPedidos = EquipoTransporteAdapter.toDTO(new EqTransporteDataAccess().BuscarTodos(idempresa));
             return lPedidos;
         }
         public static string ObtenerNombre(UnidadAlmacenGas uAG)
@@ -72,11 +72,6 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<EquipoTransporte> BuscarEquipoTransporte(short IdEmpresa)
         {
             return new EquipoTransporteDataAccess().BuscarEquipoTransporte(IdEmpresa);
-        }
-        public static List<EquipoTransporteDTO> Obtener(short idempresa)
-        {
-            List<EquipoTransporteDTO> lPedidos = EquipoTransporteAdapter.toDTO(new EqTransporteDataAccess().BuscarTodos(idempresa));
-            return lPedidos;
         }
 
         public static List<EquipoTransporteDTO> ObtenerTransportes(List<PipaDTO> pipas, List<CamionetaDTO> camionetas, List<EstacionCarburacion> estaciones) //,List<Utilitario> utilitariso)
