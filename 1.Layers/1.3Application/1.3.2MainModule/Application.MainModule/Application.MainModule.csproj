@@ -108,11 +108,13 @@
     <Compile Include="AdaptadoresDTO\Mobile\TipoRegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
+    <Compile Include="DTOs\Catalogo\VehiculoUtilitarioDTO.cs" />
     <Compile Include="DTOs\Cobranza\AbonosDTO.cs" />
     <Compile Include="DTOs\Cobranza\CargosDTO.cs" />
     <Compile Include="DTOs\Cobranza\CarteraVencidaDTO.cs" />
     <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
+    <Compile Include="DTOs\EquipoTransporte\MantenimientoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\RecargaCombustibleDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
