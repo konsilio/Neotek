@@ -67,7 +67,6 @@
     <Compile Include="AdaptadoresDTO\Catalogo\OperadorChoferAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Cobranza\AbonosAdapter.cs" />
-    <Compile Include="AdaptadoresDTO\EqTransporte\EquipoTransporteAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
@@ -111,7 +110,6 @@
     <Compile Include="DTOs\Cobranza\CarteraVencidaDTO.cs" />
     <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
-    <Compile Include="DTOs\EquipoTransporte\EquipoTransporteDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticiposEstacionDTO.cs" />
@@ -144,6 +142,7 @@
     <Compile Include="DTOs\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="DTOs\Pedidos\PedidoModelDto.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionSalidaDTO.cs" />
+    <Compile Include="DTOs\EquipoTransporte\TransporteDTO.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />
     <Compile Include="DTOs\Ventas\RegistrarVentasMovimientosDTO.cs" />
     <Compile Include="DTOs\Ventas\ReporteDelDiaDTO.cs" />
@@ -153,7 +152,6 @@
     <Compile Include="DTOs\Ventas\VentasPipaDto.cs" />
     <Compile Include="DTOs\Ventas\VPuntoVentaDetalleDTO.cs" />
     <Compile Include="Flujos\Cobranza.cs" />
-    <Compile Include="Flujos\EquipoTransporte.cs" />
     <Compile Include="Servicios\AccesoADatos\AbonosDataAcces.cs" />
     <Compile Include="Flujos\Pedidos.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenEntradaProductoDataAccess.cs" />
@@ -265,7 +263,6 @@
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
     <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
     <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
-    <Compile Include="Servicios\EqTransporte\EquipoTransporteServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\EgresoServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\IngresoServicio.cs" />
     <Compile Include="Servicios\Mobile\AutoconsumoServicio.cs" />
