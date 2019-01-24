@@ -58,6 +58,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\BancoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ClientesAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\CombustibleAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CuentaContableAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EquipoTransporteAdapter.cs" />
@@ -107,7 +108,6 @@
     <Compile Include="AdaptadoresDTO\Mobile\TipoRegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
-    <Compile Include="DTOs\Catalogo\VehiculoUtilitarioDTO.cs" />
     <Compile Include="DTOs\Cobranza\AbonosDTO.cs" />
     <Compile Include="DTOs\Cobranza\CargosDTO.cs" />
     <Compile Include="DTOs\Cobranza\CarteraVencidaDTO.cs" />
@@ -163,6 +163,7 @@
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CamionetaDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\CombustibleDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\DataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EgresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\IngresoDataAccess.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Servicios\AccesoADatos\VehiculoUtilitarioDataAccess.cs" />
     <Compile Include="Servicios\Almacen\RemanenteServicio.cs" />
     <Compile Include="Servicios\Catalogos\CamionetaServicio.cs" />
+    <Compile Include="Servicios\Catalogos\CombustibleServicio.cs" />
     <Compile Include="Servicios\Catalogos\PipaServicio.cs" />
     <Compile Include="Servicios\Catalogos\VehiculoUtilitarioServicio.cs" />
     <Compile Include="Servicios\Cobranza\CobranzaServicio.cs" />
