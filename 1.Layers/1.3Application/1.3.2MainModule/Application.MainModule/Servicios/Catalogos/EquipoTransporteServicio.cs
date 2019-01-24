@@ -1,7 +1,8 @@
-﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,13 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<EquipoTransporteDTO> Obtener(short idempresa)
         {
-            List<EquipoTransporteDTO> lPedidos = EquipoTransporteAdapter.toDTO(new EqTransporteDataAccess().BuscarTodos(idempresa));
-            return lPedidos;
+            List<EquipoTransporteDTO> lVehiculos = AdaptadoresDTO.Catalogo.EquipoTransporteAdapter.toDTO(new EquipoTransporteDataAccess().Buscar(idempresa));
+            return lVehiculos;
+        }
+        public static EquipoTransporteDTO Obtener(int idVehiculo)
+        {
+            EquipoTransporteDTO Vehiculo = AdaptadoresDTO.Catalogo.EquipoTransporteAdapter.toDTO(new EquipoTransporteDataAccess().Buscar(idVehiculo));
+            return Vehiculo;
         }
         public static string ObtenerNombre(UnidadAlmacenGas uAG)
         {
@@ -85,6 +91,26 @@ namespace Application.MainModule.Servicios.Catalogos
             //parqueVehicular.Add(new EquipoTransporteDTO { IdVehiculoUtilitario = util.IdUtilitario, Vehiculo = util.Nombre, IdEmpresa = util.IdEmpresa });
             //}
             return parqueVehicular;
+        }
+
+        public static RespuestaDto Alta(EquipoTransporte _VehiculoDto)
+        {
+            return new EquipoTransporteDataAccess().Insertar(_VehiculoDto);
+        }     
+        public static RespuestaDto Modificar(EquipoTransporte _VehiculoDto)
+        {
+            return new EquipoTransporteDataAccess().Actualizar(_VehiculoDto);
+        }
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "El equipo transporte");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

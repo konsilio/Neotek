@@ -880,35 +880,63 @@ namespace Application.MainModule.Flujos
         {
             return EquipoTransporteAdapter.toDTO(EquipoTransporteServicio.BuscarEquipoTransporte());
         }
-        public List<EquipoTransporteDTO> ListaCargos(short idempresa)
-        {
-            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
-            if (!resp.Exito) return null;
-
-
-            return EquipoTransporteServicio.Obtener(idempresa).ToList();
-        }
-
-        #region Asignacion de Vehiculos
-        public List<EquipoTransporteDTO> ListaVehiculos(TransporteDTO dto)
-        {
-            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
-            if (!resp.Exito) return null;
-
-
-            var camiontas = PedidosServicio.ObtenerCamionetas(dto.IdEmpresa);
-            var pipas = PedidosServicio.ObtenerPipas(dto.IdEmpresa);
-            var estaciones = EstacionCarburacionServicio.ObtenerTodas(dto.IdEmpresa);
-            //var utilitarios = VehiculoUtilitarioServicio.ObtenerTodos(dto.IdEmpresa);
-
-            return EquipoTransporteServicio.ObtenerTransportes(pipas, camiontas, estaciones);
-        }
-        public List<EquipoTransporteDTO> ListaEquipoTrasnporte(short idempresa)
+        public List<EquipoTransporteDTO> ListaEquipoTransporte(short idempresa)
         {
             var resp = PermisosServicio.PuedeConsultarParqueVehicular();
             if (!resp.Exito) return null;
 
             return EquipoTransporteServicio.Obtener(idempresa).ToList();
+        }
+
+        public List<EquipoTransporteDTO> ListaEquiposdeTransporte(short idempresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
+            if (!resp.Exito) return null;
+
+            return EquipoTransporteServicio.Obtener(idempresa).ToList();
+        }
+        public EquipoTransporteDTO VehiculoId(int idVehiculo)
+        {
+            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
+            if (!resp.Exito) return null;
+
+            return EquipoTransporteServicio.Obtener(idVehiculo);
+        }
+        public RespuestaDto Registra(EquipoTransporteDTO vehiculoDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarPedido();
+            if (!resp.Exito) return resp;
+
+            var vehiculo = EquipoTransporteAdapter.FromDTO(vehiculoDto);
+
+            if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
+                vehiculo.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+
+            return EquipoTransporteServicio.Alta(vehiculo);
+        }
+   
+        public RespuestaDto Modifica(EquipoTransporteDTO vehiculoDto)
+        {
+            var resp = PermisosServicio.PuedeModificarPedido();
+            if (!resp.Exito) return resp;
+
+            var vehiculo = new EquipoTransporteDataAccess().Buscar(vehiculoDto.IdEquipoTransporte);//EquipoTransporteServicio.Obtener(vehiculoDto.IdEquipoTransporte);
+            if (vehiculo == null) return EquipoTransporteServicio.NoExiste();
+
+            var Dtovehiculo = EquipoTransporteAdapter.FromDto(vehiculoDto, vehiculo);
+            return EquipoTransporteServicio.Modificar(Dtovehiculo);
+        }
+        public RespuestaDto Elimina(int id)
+        {
+            var resp = PermisosServicio.PuedeEliminarPedido();
+            if (!resp.Exito) return resp;
+
+            var vehiculo = new EquipoTransporteDataAccess().Buscar(id);
+            if (vehiculo == null) return EquipoTransporteServicio.NoExiste();
+
+            var Dtovehiculo = EquipoTransporteAdapter.FromEntity(vehiculo);
+            Dtovehiculo.Activo = false;
+            return EquipoTransporteServicio.Modificar(Dtovehiculo);
         }
         #endregion
         #endregion
