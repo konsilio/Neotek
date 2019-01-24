@@ -1,4 +1,5 @@
-﻿using Application.MainModule.Servicios.AccesoADatos;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.Servicios.AccesoADatos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,11 @@ namespace Application.MainModule.Servicios.Catalogos
 {
     public static class EquipoTransporteServicio
     {
+        public static List<EquipoTransporteDTO> Obtener(short idempresa)
+        {
+            List<EquipoTransporteDTO> lPedidos = AdaptadoresDTO.EqTransporte.EquipoTransporteAdapter.ToDTO(new EqTransporteDataAccess().BuscarTodos(idempresa));
+            return lPedidos;
+        }
         public static string ObtenerNombre(UnidadAlmacenGas uAG)
         {
             if (uAG.IdCamioneta != null)

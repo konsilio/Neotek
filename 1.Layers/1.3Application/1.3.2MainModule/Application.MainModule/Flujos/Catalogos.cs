@@ -878,6 +878,13 @@ namespace Application.MainModule.Flujos
         {
             return EquipoTransporteAdapter.toDTO(EquipoTransporteServicio.BuscarEquipoTransporte());
         }
+        public List<EquipoTransporteDTO> ListaEquipoTrasnporte(short idempresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
+            if (!resp.Exito) return null;
+
+            return EquipoTransporteServicio.Obtener(idempresa).ToList();
+        }
         #endregion
 
         #region Tipo proveedor

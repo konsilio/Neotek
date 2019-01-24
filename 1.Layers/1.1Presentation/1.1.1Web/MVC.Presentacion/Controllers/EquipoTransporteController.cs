@@ -13,7 +13,7 @@ namespace MVC.Presentacion.Controllers
     {
         string _tkn = string.Empty;
         // GET: EquipoTransporte
-        public ActionResult Index(string placa=null,string vehiculo = null, string msj = null)
+        public ActionResult Index(string placa = null, string vehiculo = null, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
@@ -51,14 +51,14 @@ namespace MVC.Presentacion.Controllers
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
             //int idCliente = _model != null ? _model.IdCliente : IdCliente.Value;
-           // _model.IdTipoPersona = 0; _model.IdRegimenFiscal = 0;
+            // _model.IdTipoPersona = 0; _model.IdRegimenFiscal = 0;
             TempData["ModelAltaCliente"] = _model;
 
             //ViewBag.Cliente = _model.NombreRfc;
             ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
-            //List<ClienteLocacionMod> _lst = CatalogoServicio.ObtenerLocaciones(idCliente, _tkn);
+            ParqueVehicularModel _lst = EquipoTrServicio.Obtener(Id.Value, _tkn);
             //_lst[0].IdEstadoRep = 0; _lst[0].IdPais = 0;
             //if (model != null && model.IdCliente != 0 && model.Orden != 0)
             //{
@@ -71,41 +71,41 @@ namespace MVC.Presentacion.Controllers
                 {
                     ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
                     ViewBag.EsEdicion = false; ViewBag.Locaciones = TempData["Locaciones"];
-                   // _lst[0].IdEstadoRep = ViewBag.Locaciones.IdEstadoRep; _lst[0].IdPais = ViewBag.Locaciones.IdPais;
+                    // _lst[0].IdEstadoRep = ViewBag.Locaciones.IdEstadoRep; _lst[0].IdPais = ViewBag.Locaciones.IdPais;
                 }
                 else
                 {
                     ViewBag.Msj = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
                     ViewBag.EsEdicion = false; ViewBag.Locaciones = null;
-                  //  _lst[0].IdEstadoRep = 0; _lst[0].IdPais = 0;
+                    //  _lst[0].IdEstadoRep = 0; _lst[0].IdPais = 0;
                 }
             }
-            return View();//_lst
+            return View(_lst);//
         }
-        //public ActionResult EditarVehiculo(int id, ParqueVehicularModel model)
-        //{
-        //    if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-        //    string _tkn = Session["StringToken"].ToString();
-        //    if (id != 0)
-        //    {
-        //        return RedirectToAction("Alta", new { id = id });//, new { msj = respuesta.Mensaje });
-        //    }
-        //    else
-        //    {
-        //        var respuesta = CatalogoServicio.ModificarClienteLocacion(model, _tkn);
-        //        if (respuesta.Exito)
-        //        {
-        //            TempData["RespuestaDTO"] = respuesta;
-        //            return RedirectToAction("AltaClienteDireccion", CatalogoServicio.ObtenerModel(model.Orden, model.IdCliente, _tkn));
-        //        }
-        //        else
-        //        {
-        //            TempData["RespuestaDTO"] = respuesta;
-        //            return RedirectToAction("AltaClienteDireccion");//AltaCliente
-        //        }
-        //    }
-           
-        //}
+        public ActionResult EditarVehiculo(int id, ParqueVehicularModel model)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+            if (id != 0)
+            {
+                return RedirectToAction("Alta", new { id = id, _model = model });//, new { msj = respuesta.Mensaje });
+            }
+            else
+            {
+                var respuesta = EquipoTrServicio.Crear(model, _tkn);
+                if (respuesta.Exito)
+                {
+                    TempData["RespuestaDTO"] = respuesta;
+                    return RedirectToAction("Alta", EquipoTrServicio.Obtener(model.IdEquipoTransporte, _tkn));
+                }
+                else
+                {
+                    TempData["RespuestaDTO"] = respuesta;
+                    return RedirectToAction("Alta");
+                }
+            }
+
+        }
         //[HttpPost]
         //public ActionResult GuardarCliente(PedidoModel _model)
         //{
@@ -136,12 +136,12 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = CatalogoServicio.SinPermisos();
                 return RedirectToAction("Index");
             }
-           
+
             var respuesta = CatalogoServicio.EliminaEmpresaSel(id, _tkn);
             TempData["RespuestaDTO"] = respuesta;
             return RedirectToAction("Index", new { msj = respuesta.Mensaje });
         }
-    
+
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;
