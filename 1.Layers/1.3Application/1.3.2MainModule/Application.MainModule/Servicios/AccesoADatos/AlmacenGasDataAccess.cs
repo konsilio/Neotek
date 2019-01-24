@@ -564,13 +564,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 );
         }
 
-        public Pipa ObtenerPipa(int IdP)
-        {
-            return uow.Repository<Pipa>().GetSingle(
-                x => x.IdPipa.Equals(IdP) && x.Activo
-                );
-        }
-
+     
         public void Actualizar(AplicaTomaLecturaDto aplicaTomaLectura)
         {
             using (uow)
@@ -1199,10 +1193,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
-        public List<Pipa> ObtenerPipas(short idEmpresa)
-        {
-            return uow.Repository<Pipa>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
-        }
+       
     }
 }
 

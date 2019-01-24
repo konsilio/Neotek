@@ -890,7 +890,7 @@ namespace Application.MainModule.Flujos
         }
 
         #region Asignacion de Vehiculos
-        public List<EquipoTransporteDTO> ListaCehiculos(TransporteDTO dto)
+        public List<EquipoTransporteDTO> ListaVehiculos(TransporteDTO dto)
         {
             var resp = PermisosServicio.PuedeConsultarParqueVehicular();
             if (!resp.Exito) return null;
