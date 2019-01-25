@@ -282,6 +282,7 @@
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
     <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
     <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
+    <Compile Include="Servicios\EquipoTransporte\MantenimientoDetalleSerivicio.cs" />
     <Compile Include="Servicios\EquipoTransporte\MantenimientoServicio.cs" />
     <Compile Include="Servicios\EquipoTransporte\RecargaCombustibleServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\EgresoServicio.cs" />
