@@ -69,6 +69,8 @@
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Cobranza\AbonosAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\MantenimientoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\EquipoTrasnporte\MantenimientoDetalleAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\EquipoTrasnporte\RecargaMantenimientoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="DTOs\Cobranza\CarteraVencidaDTO.cs" />
     <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
+    <Compile Include="DTOs\EquipoTransporte\MantenimientoDetalleDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\RecargaCombustibleDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
@@ -279,6 +282,8 @@
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
     <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
     <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
+    <Compile Include="Servicios\EquipoTransporte\MantenimientoServicio.cs" />
+    <Compile Include="Servicios\EquipoTransporte\RecargaCombustibleServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\EgresoServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\IngresoServicio.cs" />
     <Compile Include="Servicios\Mobile\AutoconsumoServicio.cs" />

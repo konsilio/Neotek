@@ -17,6 +17,5 @@ namespace Application.MainModule.DTOs.EquipoTransporte
         public decimal KilometrajeRecorrido { get; set; }
         public decimal LitrosRecargados { get; set; }
         public int IdTipoCombustible { get; set; }
-
     }
 }
