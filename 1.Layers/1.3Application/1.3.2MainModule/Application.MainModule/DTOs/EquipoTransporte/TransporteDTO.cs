@@ -13,5 +13,6 @@ namespace Application.MainModule.DTOs.Transporte
         public string Chofer { get; set; }
         public int IdVehiculo { get; set; }
         public string Vehiculo { get; set; }
+        public short TipoVehiculo { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.MainModule.Servicios.EquipoTransporte
+namespace Application.MainModule.Servicios.Equipo
 {
     public static class MantenimientoServicio
     {

@@ -931,6 +931,17 @@ namespace Application.MainModule.Flujos
             Dtovehiculo.Activo = false;
             return EquipoTransporteServicio.Modificar(Dtovehiculo);
         }
+        public RespuestaDto RegistraAsignacion(TransporteDTO vehiculoDto)
+        {
+            var resp = PermisosServicio.PuedeAsignarVehiculo();
+            if (!resp.Exito) return resp;
+
+            var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
+            //var asignacion 
+
+            //return 
+        }
+
 
         #endregion
 

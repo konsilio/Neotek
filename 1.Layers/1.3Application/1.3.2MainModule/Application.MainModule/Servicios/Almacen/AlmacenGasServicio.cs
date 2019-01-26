@@ -1250,7 +1250,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 CantidadAnteriorGeneralLt = almacenGeneralCantidadActualLt,
                 PorcentajeAnteriorGeneral = almacenGeneralPorcent,
             };
-
             return new AplicaDescargaDto()
             {
                 AlmacenGas = AlmacenGasAdapter.FromEntity(almacenGasTotal),

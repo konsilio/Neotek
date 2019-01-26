@@ -282,9 +282,9 @@
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
     <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
     <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
-    <Compile Include="Servicios\EquipoTransporte\MantenimientoDetalleSerivicio.cs" />
-    <Compile Include="Servicios\EquipoTransporte\MantenimientoServicio.cs" />
-    <Compile Include="Servicios\EquipoTransporte\RecargaCombustibleServicio.cs" />
+    <Compile Include="Servicios\Equipo\MantenimientoDetalleSerivicio.cs" />
+    <Compile Include="Servicios\Equipo\MantenimientoServicio.cs" />
+    <Compile Include="Servicios\Equipo\RecargaCombustibleServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\EgresoServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\IngresoServicio.cs" />
     <Compile Include="Servicios\Mobile\AutoconsumoServicio.cs" />
