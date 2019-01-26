@@ -976,7 +976,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var ent = CombustibleAdapter.FromDTO(entidadDto);
-
+            ent.Activo = true;
             if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
                 ent.Id_Empresa = TokenServicio.ObtenerIdEmpresa();
 
@@ -989,6 +989,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var combustible = CombustibleServicio.Obtener(vehiculoDto.Id_Combustible);
+            combustible.Activo = true;
             if (combustible == null) return CombustibleServicio.NoExiste();
 
             var Dtovehiculo = CombustibleAdapter.FromDto(vehiculoDto, combustible);

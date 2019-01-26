@@ -1484,7 +1484,7 @@ namespace MVC.Presentacion.App_Code
         public static List<ClientesDto> ListaClientes(int id, int? TipoPersona, int? regimen, string rfc, string nombre, string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaClientes(id, TipoPersona??0, regimen ?? 0, rfc, nombre, token);
+            agente.BuscarListaClientes(id, TipoPersona ?? 0, regimen ?? 0, rfc, nombre, token);
             return agente._lstaClientes;
         }
         public static List<ClientesDto> ListaClientes(short idEmpresa, string token)
@@ -1494,7 +1494,7 @@ namespace MVC.Presentacion.App_Code
             return agente._lstaClientes;
         }
 
-        public static List<ClientesModel> ListaClientes(int idCliente,string tel1, string tel2, string rfc, string token)
+        public static List<ClientesModel> ListaClientes(int idCliente, string tel1, string tel2, string rfc, string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarListaClientesMod(idCliente, tel1, tel2, rfc, token);
@@ -1681,8 +1681,8 @@ namespace MVC.Presentacion.App_Code
             return new CentroCostoModel()
             {
                 IdEmpresa = Id,
-                Empresa = Empresas(Tkn).Where(x=>x.IdEmpresa.Equals(Id)).FirstOrDefault().NombreComercial,
-         
+                Empresa = Empresas(Tkn).Where(x => x.IdEmpresa.Equals(Id)).FirstOrDefault().NombreComercial,
+
                 CentrosCostos = BuscarCentrosCosto(Tkn)
             };
         }
@@ -1692,7 +1692,7 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarCentrosCostos(Tkn);
             return agente._listaCentroCosto;
         }
-         public static List<CentroCostoDTO> BuscarCentrosCosto(string Tkn, bool EsExterno)
+        public static List<CentroCostoDTO> BuscarCentrosCosto(string Tkn, bool EsExterno)
         {
             var agente = new AgenteServicio();
             agente.BuscarCentrosCostos(Tkn, EsExterno);
@@ -1724,7 +1724,7 @@ namespace MVC.Presentacion.App_Code
             if (!model.IdEquipoTransporte.Equals(0)) dto.IdEquipoTransporte = model.IdEquipoTransporte;
             if (!model.IdEstacionCarburacion.Equals(0)) dto.IdEstacionCarburacion = model.IdEstacionCarburacion;
             if (!model.IdCAlmacenGas.Equals(0)) dto.IdCAlmacenGas = model.IdCAlmacenGas;
-           
+
             return ModificarCentroCosto(dto, tkn);
         }
         public static CentroCostoModel ActivarModificar(byte idcc, CentroCostoModel model, string tkn)
@@ -2166,6 +2166,54 @@ namespace MVC.Presentacion.App_Code
             return agente._listaFormaPago;
         }
 
+        #endregion
+
+        #region Combustible
+        public static List<CombustibleModel> ListaCombustible(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GetListaCombustible(tkn);
+            return agente._ListaCombustibles;
+        }
+        public static List<CombustibleModel> ListaCombustibleIdEmp(short idempresa,string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GetListaCombustibleIdE(idempresa, tkn);
+            return agente._ListaCombustibles;
+        }
+        public static List<CombustibleModel> ListaCombustibleFiltrado(CombustibleModel dto, string tkn)
+        {
+            if (dto.Id_Empresa.Equals(0)) dto.Id_Empresa = TokenServicio.ObtenerIdEmpresa(tkn);
+            var agente = new AgenteServicio();
+            agente.ListaCombustibleFiltrar(dto, tkn);
+            return agente._ListaCombustibles;
+        }
+        public static CombustibleModel ListaCombustibleID(int idcombustible, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GetListaCombustibleID(idcombustible, tkn);
+            return agente._Combustible;
+        }
+        public static RespuestaDTO CrearCombustible(CombustibleModel dto, string tkn)
+        {
+            if (dto.Id_Empresa.Equals(0)) dto.Id_Empresa = TokenServicio.ObtenerIdEmpresa(tkn);
+            var agente = new AgenteServicio();
+            agente.GuardarCombustible(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarCombustible(CombustibleModel dto, string tkn)
+        {
+            if (dto.Id_Empresa.Equals(0)) dto.Id_Empresa = TokenServicio.ObtenerIdEmpresa(tkn);
+            var agente = new AgenteServicio();
+            agente.ModificarCombustible(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO EliminiarCombustible(int idCombustible, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarCombustible(idCombustible, tkn);
+            return agente._RespuestaDTO;
+        }
         #endregion
 
         public static RespuestaDTO SinPermisos()
