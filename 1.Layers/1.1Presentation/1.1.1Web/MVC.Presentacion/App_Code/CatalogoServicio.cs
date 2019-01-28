@@ -2181,9 +2181,12 @@ namespace MVC.Presentacion.App_Code
             agente.GetListaCombustibleIdE(idempresa, tkn);
             return agente._ListaCombustibles;
         }
-        public static List<CombustibleModel> ListaCombustibleFiltrado(CombustibleModel dto, string tkn)
+        public static List<CombustibleModel> ListaCombustibleFiltrado(string desc, string tkn)
         {
+            CombustibleModel dto = new CombustibleModel();
             if (dto.Id_Empresa.Equals(0)) dto.Id_Empresa = TokenServicio.ObtenerIdEmpresa(tkn);
+            dto.Descripcion = desc;
+            dto.TipoCombustible = "na";
             var agente = new AgenteServicio();
             agente.ListaCombustibleFiltrar(dto, tkn);
             return agente._ListaCombustibles;
