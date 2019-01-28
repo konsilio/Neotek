@@ -25,7 +25,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
-                try
+                try 
                 {
                     uow.Repository<OperadorChofer>().Insert(_cc);
                     uow.SaveChanges();
@@ -83,7 +83,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<OperadorChofer>().GetSingle(x => x.IdOperadorChofer.Equals(idOperadorChofer)
                                                          && x.Activo);
         }
-
         public OperadorChofer BuscarPorUsuario(int idUsuario)
         {
             return uow.Repository<OperadorChofer>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
