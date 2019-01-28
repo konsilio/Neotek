@@ -939,7 +939,7 @@ namespace Application.MainModule.Flujos
             var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
             //var asignacion 
 
-            //return 
+            return new RespuestaDto();
         }
 
 
