@@ -937,9 +937,20 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
-            //var asignacion 
+            var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
 
-            return new RespuestaDto();
+            return PuntoVentaServicio.Insertar(npv);
+        }
+        public RespuestaDto EliminarAsignacion(TransporteDTO vehiculoDto)
+        {
+            var resp = PermisosServicio.PuedeBorrarAsignacionVehicular();
+            if (!resp.Exito) return resp;
+
+            var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
+            var pv = PuntoVentaServicio.Obtener(almacen);
+            var Entity = PuntoVentaAdapter.FromEntity(pv);
+
+            return PuntoVentaServicio.Eliminar(Entity);
         }
 
 
