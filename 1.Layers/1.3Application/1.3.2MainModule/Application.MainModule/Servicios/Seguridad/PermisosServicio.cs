@@ -491,8 +491,8 @@ namespace Application.MainModule.Servicios.Seguridad
 
             return EvaluarPermiso(roles, Error.P0001, "Asignacion Vehicular");
         }
-
         #endregion
+
         private static RespuestaDto EvaluarPermiso(List<UsuarioRol> roles, string error, string format = "")
         {
             if (roles == null & roles.Count <= 0)

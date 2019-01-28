@@ -14,6 +14,12 @@ namespace Sagas.MainModule.Entidades
     
     public partial class EquipoTransporte
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EquipoTransporte()
+        {
+            this.DetalleEquipoTransporte = new HashSet<CDetalleEquipoTransporte>();
+        }
+    
         public int IdEquipoTransporte { get; set; }
         public short IdEmpresa { get; set; }
         public Nullable<int> IdVehiculoUtilitario { get; set; }
@@ -25,5 +31,8 @@ namespace Sagas.MainModule.Entidades
         public virtual Camioneta Camionetas { get; set; }
         public virtual Pipa Pipas { get; set; }
         public virtual Empresa Empresa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CDetalleEquipoTransporte> DetalleEquipoTransporte { get; set; }
+        public virtual CUtilitario Utilitario { get; set; }
     }
 }
