@@ -101,7 +101,6 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new EquipoTransporteDataAccess().Actualizar(_VehiculoDto);
         }
-        public static 
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El equipo transporte");
