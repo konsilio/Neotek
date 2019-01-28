@@ -20,7 +20,14 @@ namespace MVC.Presentacion.Controllers
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
             ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
-            //EquipoTransporteDTO _model = 
+            ViewBag.TipoCombustible = CatalogoServicio.ListaCombustibleIdEmp(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            List<EquipoTransporteDTO> _model = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(_tkn), placa, vehiculo, _tkn);
+            EquipoTransporteDTO model = new EquipoTransporteDTO();
+            if (_model.Count > 1)
+            {
+                model = _model[0];
+            }
+
             if (TempData["RespuestaDTO"] != null)
             {
                 if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
@@ -34,7 +41,7 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Msj = msj;
                 }
             }
-            return View();
+            return View(model);
         }
         public ActionResult Buscar(EquipoTransporteDTO _model)
         {
