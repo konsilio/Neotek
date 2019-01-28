@@ -17,7 +17,7 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CUtilitario()
         {
-            this.CDetalleEquipoTransporte = new HashSet<CDetalleEquipoTransporte>();
+            this.EquipoTransporte = new HashSet<EquipoTransporte>();
         }
     
         public int IdUtilitario { get; set; }
@@ -27,8 +27,8 @@ namespace Sagas.MainModule.Entidades
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CDetalleEquipoTransporte> CDetalleEquipoTransporte { get; set; }
         public virtual Empresa Empresa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EquipoTransporte> EquipoTransporte { get; set; }
     }
 }
