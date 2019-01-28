@@ -454,6 +454,7 @@ namespace Application.MainModule.Servicios.Seguridad
         }
 
         #endregion
+
         #region EquipoTransporte
         public static RespuestaDto PuedeRegistrarParqueVehicular()
         {
@@ -468,6 +469,27 @@ namespace Application.MainModule.Servicios.Seguridad
             var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "EquipoTransporte");
+        }
+        public static RespuestaDto PuedeAsignarVehiculo()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarEmpresa).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Asignacion Vehicular");
+        }
+        public static RespuestaDto PuedeConsultarAsignacionVehicular()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Asignacion Vehicular");
+        }
+        public static RespuestaDto PuedeBorrarAsignacionVehicular()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Asignacion Vehicular");
         }
 
         #endregion
