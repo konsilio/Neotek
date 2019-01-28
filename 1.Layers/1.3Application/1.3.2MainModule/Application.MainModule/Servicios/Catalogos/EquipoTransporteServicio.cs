@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs.Transporte;
+using Application.MainModule.Servicios.Seguridad;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -100,7 +102,17 @@ namespace Application.MainModule.Servicios.Catalogos
         public static RespuestaDto Modificar(EquipoTransporte _VehiculoDto)
         {
             return new EquipoTransporteDataAccess().Actualizar(_VehiculoDto);
-        } 
+        }
+        public static PuntoVenta GenerarAsignacion(UnidadAlmacenGas almacen, TransporteDTO transporte)
+        {
+            return new PuntoVenta()
+            {
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
+                IdCAlmacenGas = almacen.IdCAlmacenGas,
+                IdOperadorChofer = transporte.IdChofer,
+                Activo = true,
+            };
+        }
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El equipo transporte");

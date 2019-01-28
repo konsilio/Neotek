@@ -14,8 +14,8 @@ namespace Sagas.MainModule.Entidades
     
     public partial class CDetalleEquipoTransporte
     {
-        public int Id_DetalleEtransporte { get; set; }
-        public int Id_Vehiculo { get; set; }
+        public int IdEquipoTransporteDetalle { get; set; }
+        public int IdEquipoTransporte { get; set; }
         public Nullable<bool> EsCamioneta { get; set; }
         public Nullable<bool> EsPipa { get; set; }
         public Nullable<bool> EsUtilitario { get; set; }
@@ -26,14 +26,10 @@ namespace Sagas.MainModule.Entidades
         public string Marca { get; set; }
         public string Modelo { get; set; }
         public string Color { get; set; }
-        public short cilindros { get; set; }
+        public short Cilindros { get; set; }
         public int IdTipoCombustible { get; set; }
     
-        public virtual Camioneta CCamioneta { get; set; }
-        public virtual CCombustible CCombustible { get; set; }
-        public virtual CDetalleEquipoTransporte CDetalleEquipoTransporte1 { get; set; }
-        public virtual CDetalleEquipoTransporte CDetalleEquipoTransporte2 { get; set; }
-        public virtual Pipa CPipa { get; set; }
-        public virtual CUtilitario CUtilitario { get; set; }
+        public virtual CCombustible Combustible { get; set; }
+        public virtual EquipoTransporte EquipoTransporte { get; set; }
     }
 }

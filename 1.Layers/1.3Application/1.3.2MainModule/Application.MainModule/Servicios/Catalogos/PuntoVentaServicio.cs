@@ -70,7 +70,10 @@ namespace Application.MainModule.Servicios.Catalogos
             var operadorChofer = OperadorChoferServicio.ObtenerPorUsuarioAplicacion();
             return operadorChofer != null ? Obtener(operadorChofer) : null;
         }
-       
+        public static RespuestaDto Insertar(PuntoVenta pv)
+        {
+            return new PuntoVentaDataAccess().Insertar(pv);
+        }
         public static RespuestaDto Eliminar(PuntoVenta cteLoc)
         {
             return new PuntoVentaDataAccess().Actualizar(cteLoc);

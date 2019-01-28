@@ -109,10 +109,10 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<PedidoDetalle> PedidoDetalle { get; set; }
         public virtual DbSet<PedidoEstatus> PedidoEstatus { get; set; }
         public virtual DbSet<RespuestaSatisfaccionPedido> RespuestaSatisfaccionPedido { get; set; }
-        public virtual DbSet<CCombustible> CCombustible { get; set; }
-        public virtual DbSet<CDetalleEquipoTransporte> CDetalleEquipoTransporte { get; set; }
-        public virtual DbSet<CMantenimiento> CMantenimiento { get; set; }
-        public virtual DbSet<CUtilitario> CUtilitario { get; set; }
+        public virtual DbSet<CCombustible> Combustible { get; set; }
+        public virtual DbSet<CDetalleEquipoTransporte> DetalleEquipoTransporte { get; set; }
+        public virtual DbSet<CMantenimiento> Mantenimiento { get; set; }
+        public virtual DbSet<CUtilitario> Utilitario { get; set; }
         public virtual DbSet<DetalleMantenimiento> DetalleMantenimiento { get; set; }
         public virtual DbSet<DetalleRecargaCombustible> DetalleRecargaCombustible { get; set; }
     }
