@@ -952,6 +952,7 @@ namespace Application.MainModule.Flujos
 
             return PuntoVentaServicio.Eliminar(Entity);
         }
+        public
 
 
         #endregion

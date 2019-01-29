@@ -9,7 +9,7 @@ namespace Application.MainModule.DTOs.EquipoTransporte
     public class MantenimientoDetalleDTO
     {
         public int Id_DetalleMtto { get; set; }
-        public System.DateTime FechaMtto { get; set; }
+        public DateTime FechaMtto { get; set; }
         public int id_vehiculo { get; set; }
         public bool EsCamioneta { get; set; }
         public bool EsPipa { get; set; }

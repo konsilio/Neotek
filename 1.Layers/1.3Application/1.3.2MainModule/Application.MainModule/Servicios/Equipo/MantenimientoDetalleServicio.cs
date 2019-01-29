@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.Equipo
 {
-    public static class MantenimientoDetalleSerivicio
+    public static class MantenimientoDetalleServicio
     {
         public static RespuestaDto Crear(DetalleMantenimiento entidad)
         {
             return new MantenimientoDetDataAccess().Insertar(entidad);
         }
-        public static RespuestaDto Actuualizar(DetalleMantenimiento entidad)
+        public static RespuestaDto Actualizar(DetalleMantenimiento entidad)
         {
             return new MantenimientoDetDataAccess().Actualizar(entidad);
         }

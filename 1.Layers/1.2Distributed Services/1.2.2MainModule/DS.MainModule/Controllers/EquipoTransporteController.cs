@@ -7,6 +7,7 @@ using System.Web;
 using System.Net.Http;
 using DS.MainModule.Results;
 using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.EquipoTransporte;
 
 namespace DS.MainModule.Controllers
 {
@@ -15,6 +16,8 @@ namespace DS.MainModule.Controllers
     public class EquipoTransporteController : ApiController
     {
         private Catalogos _eqTransporte;
+        private RecargaCombustible _rc;
+
         public EquipoTransporteController()
         {
             _eqTransporte = new Catalogos();
@@ -48,5 +51,53 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_eqTransporte.Elimina(id), Request);
         }
+        #region RecargaCombustible
+        [Route("buscar/recargascombustible/{id}")]
+        public HttpResponseMessage GetRecargasCombustible(short id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _rc.Todo(id));
+        }
+        [Route("modificar/recargacombustible")]
+        public HttpResponseMessage PutModificarRecargaCombustible(RecargaCombustibleDTO _model)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _rc.Modificar(_model));
+        }
+
+        [Route("registrar/recargacombustible")]
+        public HttpResponseMessage PostRegistrarRecargaCombustible(RecargaCombustibleDTO _model)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _rc.Crear(_model));
+        }
+
+        [Route("eliminar/recargacombustible/{id}")]
+        public HttpResponseMessage PutEliminaRecargaCombustible(int id)
+        {
+            return RespuestaHttp.crearRespuesta(_rc.Eliminar(id), Request);
+        }
+        #endregion
+        #region Asignacion
+        [Route("buscar/asignacion/{id}")]
+        public HttpResponseMessage GetAsigancion(short id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _eqTransporte.RegistraAsignacion(id));
+        }
+        [Route("modificar/asignacion")]
+        public HttpResponseMessage PutModificarAsignacion(RecargaCombustibleDTO _model)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _rc.Modificar(_model));
+        }
+
+        [Route("registrar/asignacion")]
+        public HttpResponseMessage PostRegistrarAsignacion(RecargaCombustibleDTO _model)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _rc.Crear(_model));
+        }
+
+        [Route("eliminar/asignacion/{id}")]
+        public HttpResponseMessage PutEliminaAsignacion(int id)
+        {
+            return RespuestaHttp.crearRespuesta(_rc.Eliminar(id), Request);
+        }
+        #endregion
     }
 }

@@ -26,10 +26,6 @@ namespace Application.MainModule.Servicios.Equipo
         public static DetalleRecargaCombustible Buscar(int id)
         {
             return new RecargaCombustibleDataAccess().Obtener(id);
-        }
-        //public static List<DetalleRecargaCombustible> Buscar(short id)
-        //{Buscar por Empresa
-        //    return new RecargaCombustibleDataAccess().Obtener().Select(x => x.CCamioneta.);
-        //}
+        }        
     }
 }

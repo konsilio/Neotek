@@ -491,6 +491,35 @@ namespace Application.MainModule.Servicios.Seguridad
 
             return EvaluarPermiso(roles, Error.P0001, "Asignacion Vehicular");
         }
+
+        public static RespuestaDto PuedeRegistrarMantenimiento()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Mantenimiento Vehicular");
+        }
+        public static RespuestaDto PuedeBorrarMantenimiento()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Mantenimiento Vehicular");
+        }
+        public static RespuestaDto PuedeRegistrarRecargaCombustible()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Recarga de combustible Vehicular");
+        }
+        public static RespuestaDto PuedeBorrarRecargaCombustible()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Recarga de combustible Vehicular");
+        }
         #endregion
 
         private static RespuestaDto EvaluarPermiso(List<UsuarioRol> roles, string error, string format = "")
