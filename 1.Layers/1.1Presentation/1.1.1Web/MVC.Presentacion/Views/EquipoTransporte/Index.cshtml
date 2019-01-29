@@ -35,8 +35,9 @@
     </script>
 </head>
 <body>
-    @using (Html.BeginForm("Nuevo", "EquipoTransporte", FormMethod.Post))
+    @using (Html.BeginForm("Alta", "EquipoTransporte", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.IdEmpresa)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -59,11 +60,11 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-3">
                                             <b>Número de Placas:</b>
-                                            @Html.TextBoxFor(m => m.Placas, new { @class = "form-control", placeholder = "Número de Placas" })
+                                            @Html.TextBoxFor(m => m.PlacasBusq, new { @class = "form-control", placeholder = "Número de Placas" })
                                         </div>
                                         <div class="col-sm-3">
                                             <b>Palabra Clave:</b>
-                                            @Html.TextBoxFor(m => m.AliasUnidad, new { @class = "form-control", placeholder = "Palabra Clave" })
+                                            @Html.TextBoxFor(m => m.AliasUnidadBusq, new { @class = "form-control", placeholder = "Palabra Clave" })
                                         </div>
                                         <div class="col-sm-3">
                                         </div>
@@ -101,7 +102,7 @@
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Número de Identificación:*
                                             </label>
                                         </div>
@@ -116,7 +117,7 @@
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Número de Placas:*
                                             </label>
                                         </div>
@@ -131,7 +132,7 @@
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Número de Motor:*
                                             </label>
                                         </div>
@@ -148,7 +149,7 @@
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Vehículo:*
                                             </label>
                                         </div>
@@ -163,7 +164,7 @@
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Marca:*
                                             </label>
                                         </div>
@@ -178,7 +179,7 @@
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Modelo:*
                                             </label>
                                         </div>
@@ -196,7 +197,7 @@
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Color:*
                                             </label>
                                         </div>
@@ -210,7 +211,7 @@
                                 </div>  <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Cilindros:*
                                             </label>
                                         </div>
@@ -218,14 +219,14 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        @Html.TextBoxFor(m => m.cilindros, new { @class = "form-control", @placeholder = "Cilindros" })
-                                        @Html.ValidationMessageFor(m => m.cilindros, "", new { @class = "alert-danger" })
+                                        @Html.TextBoxFor(m => m.Cilindros, new { @class = "form-control", @placeholder = "Cilindros" })
+                                        @Html.ValidationMessageFor(m => m.Cilindros, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Tipo de Combustible:*
                                             </label>
                                         </div>
@@ -249,7 +250,7 @@
                                             MVCxComboBox combo = s as MVCxComboBox;
                                             combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
                                             combo.Properties.ValueType = typeof(int);
-                                            combo.SelectedIndex = 0;
+                                            combo.SelectedIndex = Model.IdTipoCombustible;
                                         };
                                     }).BindList(ViewBag.TipoCombustible).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdTipoCombustible, "", new { @class = "alert-danger" })
@@ -260,7 +261,7 @@
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Tipo de Unidad:*
                                             </label>
                                         </div>
@@ -287,15 +288,15 @@
                                             combo.Properties.Items.Insert(2, new ListEditItem("Pipa"));
                                             combo.Properties.Items.Insert(3, new ListEditItem("Utilitario"));
                                             combo.Properties.ValueType = typeof(int);
-                                            combo.SelectedIndex = 0;
+                                            combo.SelectedIndex = Model.IdTipoUnidad;
                                         };
-                                    }).GetHtml()
+                                    }).Bind(Model.IdTipoUnidad).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdTipoUnidad, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>  <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Unidad Activa:
                                             </label>
                                         </div>
@@ -312,7 +313,7 @@
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
+                                            <label>
                                                 Alias de Unidad:
                                             </label>
                                         </div>
@@ -320,7 +321,6 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-
                                         @Html.TextBoxFor(m => m.AliasUnidad, new { @class = "form-control", @placeholder = "Alias de Unidad" })
                                         @Html.ValidationMessageFor(m => m.AliasUnidad, "", new { @class = "alert-danger" })
                                     </div>
@@ -366,9 +366,9 @@
                                                         {
                                                     <tr>
                                                         <th>@item.IdEquipoTransporte</th>
-                                                        <th>@item.NumeroPlacas</th>
-                                                        <td>@item.Vehiculo</td>
+                                                        <th>@item.Placas</th>
                                                         <td>@item.AliasUnidad</td>
+                                                        <td>@item.Descripcion</td>
                                                         <td>
                                                             <a ID="lbEdit" href="@Url.Action("EditarVehiculo", "EquipoTransporte", new { id = item.IdEquipoTransporte })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">edit</i>

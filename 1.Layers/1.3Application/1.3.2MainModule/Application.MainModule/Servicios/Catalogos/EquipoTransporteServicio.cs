@@ -44,22 +44,21 @@ namespace Application.MainModule.Servicios.Catalogos
 
             return null;
         }
-
         public static string ObtenerNombre(EquipoTransporte qt)
         {
             if (qt.IdCamioneta != null)
             {
                 if (qt.Camionetas != null)
-                    return qt.Camionetas.Nombre;
+                    return qt.Camionetas.Nombre + " "+ qt.Camionetas.Numero;
                 else
-                    return new EquipoTransporteDataAccess().BuscarCamioneta(qt.IdCamioneta.Value).Nombre;
+                    return new EquipoTransporteDataAccess().BuscarCamioneta(qt.IdCamioneta.Value).Nombre + " " + qt.Camionetas.Numero;
             }
             if (qt.IdPipa != null)
             {
                 if (qt.Pipas != null)
-                    return qt.Pipas.Nombre;
+                    return qt.Pipas.Nombre + " " + qt.Camionetas.Numero;
                 else
-                    return new EquipoTransporteDataAccess().BuscarPipa(qt.IdPipa.Value).Nombre;
+                    return new EquipoTransporteDataAccess().BuscarPipa(qt.IdPipa.Value).Nombre + " " + qt.Camionetas.Numero;
             }
             //if (qt.Vehiculo != null)
             //    return qt.Vehiculo.Nombre;
@@ -68,17 +67,14 @@ namespace Application.MainModule.Servicios.Catalogos
             return null;
 
         }
-
         public static List<EquipoTransporte> BuscarEquipoTransporte()
         {
             return new EquipoTransporteDataAccess().BuscarEquipoTransporte();
         }
-
         public static List<EquipoTransporte> BuscarEquipoTransporte(short IdEmpresa)
         {
             return new EquipoTransporteDataAccess().BuscarEquipoTransporte(IdEmpresa);
         }
-
         public static List<EquipoTransporteDTO> ObtenerTransportes(List<PipaDTO> pipas, List<CamionetaDTO> camionetas, List<EstacionCarburacion> estaciones) //,List<Utilitario> utilitariso)
         {
             List<EquipoTransporteDTO> parqueVehicular = new List<EquipoTransporteDTO>();
@@ -94,7 +90,6 @@ namespace Application.MainModule.Servicios.Catalogos
             //}
             return parqueVehicular;
         }
-
         public static RespuestaDto Alta(EquipoTransporte _VehiculoDto)
         {
             return new EquipoTransporteDataAccess().Insertar(_VehiculoDto);

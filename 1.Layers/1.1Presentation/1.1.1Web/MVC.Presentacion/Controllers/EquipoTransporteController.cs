@@ -32,7 +32,6 @@ namespace MVC.Presentacion.Controllers
             {
                 if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
                 {
-                    ViewBag.Tipo = "alert-danger";
                     ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
                 }
                 else
@@ -51,44 +50,40 @@ namespace MVC.Presentacion.Controllers
         public ActionResult Alta(EquipoTransporteDTO _model, int? Id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            string _tkn = Session["StringToken"].ToString();
-
-            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
-            if (ViewBag.EsAdmin)
-                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-            else
-                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
-            //int idCliente = _model != null ? _model.IdCliente : IdCliente.Value;
-            // _model.IdTipoPersona = 0; _model.IdRegimenFiscal = 0;
-            TempData["ModelAltaCliente"] = _model;
-
-            //ViewBag.Cliente = _model.NombreRfc;
-            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
-            //Se obtienen los estados 
-            ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
-            EquipoTransporteDTO _lst = CatalogoServicio.Obtener(Id.Value, _tkn);
-            //_lst[0].IdEstadoRep = 0; _lst[0].IdPais = 0;
-            //if (model != null && model.IdCliente != 0 && model.Orden != 0)
-            //{
-            //    ViewBag.EsEdicion = true; ViewBag.Locaciones = model;
-            //    _lst[0].IdEstadoRep = ViewBag.Locaciones.IdEstadoRep; _lst[0].IdPais = ViewBag.Locaciones.IdPais;
-            //}
-            if (TempData["RespuestaDTO"] != null)
+            string _tkn = Session["StringToken"].ToString(); _model.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
+            var respuesta = CatalogoServicio.Crear(_model, _tkn);
+            TempData["RespuestaDTO"] = respuesta;
+            if (respuesta.Exito)
             {
-                if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
-                {
-                    ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-                    ViewBag.EsEdicion = false; ViewBag.Locaciones = TempData["Locaciones"];
-                    // _lst[0].IdEstadoRep = ViewBag.Locaciones.IdEstadoRep; _lst[0].IdPais = ViewBag.Locaciones.IdPais;
-                }
-                else
-                {
-                    ViewBag.Msj = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
-                    ViewBag.EsEdicion = false; ViewBag.Locaciones = null;
-                    //  _lst[0].IdEstadoRep = 0; _lst[0].IdPais = 0;
-                }
+                return RedirectToAction("Index", new { msj = respuesta.Mensaje });
             }
-            return View(_lst);//
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+            //ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            //if (ViewBag.EsAdmin)
+            //    ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            //else
+            //    ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
+
+            //EquipoTransporteDTO _lst = CatalogoServicio.Obtener(Id.Value, _tkn);
+
+            //if (TempData["RespuestaDTO"] != null)
+            //{
+            //    if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
+            //    {
+            //        ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            //        ViewBag.EsEdicion = false; ViewBag.Locaciones = TempData["Locaciones"];
+            //    }
+            //    else
+            //    {
+            //        ViewBag.Msj = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
+            //        ViewBag.EsEdicion = false; ViewBag.Locaciones = null;
+            //    }
+            //}
+            //return View(_lst);
         }
         public ActionResult EditarVehiculo(int id, EquipoTransporteDTO model)
         {
