@@ -210,5 +210,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<EquipoTransporte>().GetSingle(x => x.IdEquipoTransporte.Equals(IdEquipoTransporte));
         }
+        public CDetalleEquipoTransporte BuscarDetalle(int IdEquipoTransporte)
+        {
+            return uow.Repository<CDetalleEquipoTransporte>().GetSingle(x => x.IdEquipoTransporte.Equals(IdEquipoTransporte));
+        }
     }
 }

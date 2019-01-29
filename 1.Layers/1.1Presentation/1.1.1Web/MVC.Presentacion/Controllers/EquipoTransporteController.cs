@@ -50,7 +50,7 @@ namespace MVC.Presentacion.Controllers
         public ActionResult Alta(EquipoTransporteDTO _model, int? Id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            string _tkn = Session["StringToken"].ToString();
+            string _tkn = Session["StringToken"].ToString(); _model.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
             var respuesta = CatalogoServicio.Crear(_model, _tkn);
             TempData["RespuestaDTO"] = respuesta;
             if (respuesta.Exito)
