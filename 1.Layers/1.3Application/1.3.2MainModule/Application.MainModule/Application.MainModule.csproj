@@ -68,6 +68,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\OperadorChoferAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Cobranza\AbonosAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\EquipoTrasnporte\AsignacionUtilitarioAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\MantenimientoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\MantenimientoDetalleAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\RecargaCombustibleAdapter.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="DTOs\Cobranza\CarteraVencidaDTO.cs" />
     <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
+    <Compile Include="DTOs\EquipoTransporte\AsignacionUtilitarioDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDetalleDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\RecargaCombustibleDTO.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="Flujos\Pedidos.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenEntradaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\AsigancionUtilitariosDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CamionetaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CombustibleDataAccess.cs" />
@@ -284,6 +287,7 @@
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
     <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
     <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
+    <Compile Include="Servicios\Equipo\AsignacionUtilitarioServicio.cs" />
     <Compile Include="Servicios\Equipo\MantenimientoDetalleServicio.cs" />
     <Compile Include="Servicios\Equipo\MantenimientoServicio.cs" />
     <Compile Include="Servicios\Equipo\RecargaCombustibleServicio.cs" />

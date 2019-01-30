@@ -8,6 +8,7 @@ using System.Net.Http;
 using DS.MainModule.Results;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.EquipoTransporte;
+using Application.MainModule.DTOs.Transporte;
 
 namespace DS.MainModule.Controllers
 {
@@ -76,27 +77,21 @@ namespace DS.MainModule.Controllers
         }
         #endregion
         #region Asignacion
-        [Route("buscar/asignacion/{id}")]
-        public HttpResponseMessage GetAsigancion(short id)
+        [Route("buscar/asignacion")]
+        public HttpResponseMessage GetAsigancion()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _eqTransporte.RegistraAsignacion(id));
+            return Request.CreateResponse(HttpStatusCode.OK, _eqTransporte.BuscarAsignaciones());
         }
-        [Route("modificar/asignacion")]
-        public HttpResponseMessage PutModificarAsignacion(RecargaCombustibleDTO _model)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _rc.Modificar(_model));
-        }
-
         [Route("registrar/asignacion")]
-        public HttpResponseMessage PostRegistrarAsignacion(RecargaCombustibleDTO _model)
+        public HttpResponseMessage PostRegistrarAsignacion(TransporteDTO _model)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _rc.Crear(_model));
+            return Request.CreateResponse(HttpStatusCode.OK, _eqTransporte.RegistraAsignacion(_model));
         }
 
         [Route("eliminar/asignacion/{id}")]
-        public HttpResponseMessage PutEliminaAsignacion(int id)
+        public HttpResponseMessage PutEliminaAsignacion(TransporteDTO _modeld)
         {
-            return RespuestaHttp.crearRespuesta(_rc.Eliminar(id), Request);
+            return RespuestaHttp.crearRespuesta(_eqTransporte.EliminarAsignacion(_modeld), Request);
         }
         #endregion
     }

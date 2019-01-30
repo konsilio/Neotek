@@ -46,6 +46,7 @@ namespace Sagas.MainModule.Entidades
             this.CCombustible = new HashSet<CCombustible>();
             this.CMantenimiento = new HashSet<CMantenimiento>();
             this.CUtilitario = new HashSet<CUtilitario>();
+            this.AsignacionUtilitarios = new HashSet<AsignacionUtilitarios>();
         }
     
         public short IdEmpresa { get; set; }
@@ -156,5 +157,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<CMantenimiento> CMantenimiento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CUtilitario> CUtilitario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AsignacionUtilitarios> AsignacionUtilitarios { get; set; }
     }
 }

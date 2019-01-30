@@ -115,5 +115,6 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<CUtilitario> Utilitario { get; set; }
         public virtual DbSet<DetalleMantenimiento> DetalleMantenimiento { get; set; }
         public virtual DbSet<DetalleRecargaCombustible> DetalleRecargaCombustible { get; set; }
+        public virtual DbSet<AsignacionUtilitarios> AsignacionUtilitarios { get; set; }
     }
 }

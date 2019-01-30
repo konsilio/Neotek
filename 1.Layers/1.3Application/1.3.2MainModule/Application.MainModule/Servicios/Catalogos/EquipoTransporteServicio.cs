@@ -113,6 +113,18 @@ namespace Application.MainModule.Servicios.Catalogos
                 Activo = true,
             };
         }
+        public static AsignacionUtilitarios GenerarAsignacion(TransporteDTO transporte)
+        {
+            return new AsignacionUtilitarios()
+            {
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
+                IdChoferOperador = transporte.IdChofer,
+                IdUtilitario = transporte.IdVehiculo,
+                Activo = true,
+                FechaCreacion = DateTime.Today,
+                FechaMdidificacion = DateTime.Today
+            };
+        }
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El equipo transporte");
