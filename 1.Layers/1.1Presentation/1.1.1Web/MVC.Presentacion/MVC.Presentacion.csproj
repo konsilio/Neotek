@@ -326,6 +326,7 @@
     <Compile Include="Models\Catalogos\PuntoVentaModel.cs" />
     <Compile Include="Models\Catalogos\RolMovilVenta.cs" />
     <Compile Include="Models\Catalogos\TipoProveedorDTO.cs" />
+    <Compile Include="Models\Catalogos\TipoUnidadModel.cs" />
     <Compile Include="Models\Catalogos\UnidadAlmacenGasDTO.cs" />
     <Compile Include="Models\Catalogos\RegimenFiscalModel.cs" />
     <Compile Include="Models\Catalogos\RolCat.cs" />

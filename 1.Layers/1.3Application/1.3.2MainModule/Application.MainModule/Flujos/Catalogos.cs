@@ -908,8 +908,8 @@ namespace Application.MainModule.Flujos
             if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Camioneta)//IdCamioneta
             {
                 var camioneta = CamionetaAdapter.FromDTO(vehiculoDto);
-                var cam= CamionetaServicio.Registrar(camioneta);
-               vehiculo.IdCamioneta = cam.Id;
+                var cam = CamionetaServicio.Registrar(camioneta);
+                vehiculo.IdCamioneta = cam.Id;
             }
             if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Pipa)//IdPipa
             {
@@ -920,7 +920,8 @@ namespace Application.MainModule.Flujos
             if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Utilitario)//IdVehiculoUtilitario
             {
                 var utilitario = VehiculoUtilitarioAdapter.FromDTO(vehiculoDto);
-                VehiculoUtilitarioServicio.Registrar(utilitario);
+                var vu = VehiculoUtilitarioServicio.Registrar(utilitario);
+                vehiculo.IdVehiculoUtilitario = vu.Id;
             }
 
             return EquipoTransporteServicio.Alta(vehiculo);
@@ -933,7 +934,25 @@ namespace Application.MainModule.Flujos
 
             var vehiculo = new EquipoTransporteDataAccess().Buscar(vehiculoDto.IdEquipoTransporte);//EquipoTransporteServicio.Obtener(vehiculoDto.IdEquipoTransporte);
             if (vehiculo == null) return EquipoTransporteServicio.NoExiste();
+            if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Camioneta)
+            {
+                var Camioneta = CamionetaServicio.Obtener(vehiculoDto.IdEmpresa, CamionetaAdapter.getStr(vehiculoDto.Descripcion.Trim()), CamionetaAdapter.getNum(vehiculoDto.Descripcion.Trim()));
+                if (Camioneta == null) return CamionetaServicio.NoExiste();
+                vehiculoDto.IdCamioneta = Camioneta.IdCamioneta;
+            }
+            if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Pipa)
+            {
+                var Pipa = PipaServicio.Obtener(vehiculoDto.IdEmpresa, PipaAdapter.getStr(vehiculoDto.Descripcion.Trim()), PipaAdapter.getNum(vehiculoDto.Descripcion.Trim()));
+                if (Pipa == null) return PipaServicio.NoExiste();
+                vehiculoDto.IdPipa = Pipa.IdPipa;
+            }
 
+            if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Pipa)
+            {
+                var Util = VehiculoUtilitarioServicio.Obtener(vehiculoDto.IdEmpresa, VehiculoUtilitarioAdapter.getStr(vehiculoDto.Descripcion.Trim()), VehiculoUtilitarioAdapter.getNum(vehiculoDto.Descripcion.Trim()));
+            if (Util == null) return VehiculoUtilitarioServicio.NoExiste();
+            vehiculoDto.IdVehiculoUtilitario = Util.IdUtilitario;
+            }
             var Dtovehiculo = EquipoTransporteAdapter.FromDto(vehiculoDto, vehiculo);
             return EquipoTransporteServicio.Modificar(Dtovehiculo);
         }
@@ -1046,6 +1065,47 @@ namespace Application.MainModule.Flujos
             var Dtovehiculo = CombustibleAdapter.FromEntity(combustible);
 
             return CombustibleServicio.Eliminar(Dtovehiculo);
+        }
+
+        #endregion
+        #region TipoUnidad       
+        public List<TipoUnidadDTO> ListaTipoUnidad()
+        {
+            List<TipoUnidadDTO> lst = new List<TipoUnidadDTO>();
+            TipoUnidadDTO entidad = new TipoUnidadDTO();
+            entidad.IdTipoUnidad = TipoUnidadEqTransporteEnum.Camioneta;
+            entidad.TipoUnidad = STipoUnidad.Camioneta.ToString();
+            TipoUnidadDTO entidad1 = new TipoUnidadDTO();
+            entidad.IdTipoUnidad = TipoUnidadEqTransporteEnum.Camioneta;
+            entidad.TipoUnidad = STipoUnidad.Camioneta.ToString();
+            TipoUnidadDTO entidad2 = new TipoUnidadDTO();
+            entidad.IdTipoUnidad = TipoUnidadEqTransporteEnum.Camioneta;
+            entidad.TipoUnidad = STipoUnidad.Camioneta.ToString();
+
+            lst.Add(entidad);
+            lst.Add(entidad1);
+            lst.Add(entidad2);
+            return lst;
+        }
+        public List<TipoUnidadDTO> ListaTipoUnidad(short idempresa)
+        {
+            List<TipoUnidadDTO> lst = new List<TipoUnidadDTO>();
+            TipoUnidadDTO entidad = new TipoUnidadDTO();
+            entidad.IdTipoUnidad = TipoUnidadEqTransporteEnum.Camioneta;
+            entidad.TipoUnidad = STipoUnidad.Camioneta.ToString();
+            lst.Add(entidad);
+            TipoUnidadDTO entidad1 = new TipoUnidadDTO();
+            entidad1.IdTipoUnidad = TipoUnidadEqTransporteEnum.Pipa;
+            entidad1.TipoUnidad = STipoUnidad.Pipa.ToString();
+            lst.Add(entidad1);
+            TipoUnidadDTO entidad2 = new TipoUnidadDTO();
+            entidad2.IdTipoUnidad = TipoUnidadEqTransporteEnum.Utilitario;
+            entidad2.TipoUnidad = STipoUnidad.Utilitario.ToString();
+            lst.Add(entidad2);
+
+
+
+            return lst;
         }
 
         #endregion

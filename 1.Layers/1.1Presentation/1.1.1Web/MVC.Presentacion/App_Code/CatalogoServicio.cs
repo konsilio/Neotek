@@ -2181,6 +2181,12 @@ namespace MVC.Presentacion.App_Code
             agente.GetListaCombustibleIdE(idempresa, tkn);
             return agente._ListaCombustibles;
         }
+        public static List<TipoUnidadModel> ListaUnidadIdEmp(short idempresa, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GetListaTiposUnidad(idempresa, tkn);
+            return agente._ListaTiposUnidad;
+        }
         public static List<CombustibleModel> ListaCombustibleFiltrado(string desc, string tkn)
         {
             CombustibleModel dto = new CombustibleModel();

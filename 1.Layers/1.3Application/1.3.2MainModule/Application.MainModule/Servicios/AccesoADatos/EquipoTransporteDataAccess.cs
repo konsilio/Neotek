@@ -178,6 +178,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     uow.Repository<Sagas.MainModule.Entidades.EquipoTransporte>().Update(_pro);
+                    foreach (var item in _pro.DetalleEquipoTransporte)
+                    {
+                        uow.Repository<Sagas.MainModule.Entidades.CDetalleEquipoTransporte>().Update(item);
+                    }
                     uow.SaveChanges();
                     _respuesta.Id = _pro.IdEquipoTransporte;
                     _respuesta.Exito = true;
@@ -188,7 +192,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Format(Error.C0003, "del centro de costo"); ;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del equipo de transporte");
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
@@ -203,7 +207,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<EquipoTransporte> Buscar(short idEmpresa)
         {
             return uow.Repository<EquipoTransporte>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                        )
+                                                        && x.Activo)
                                                          .ToList();
         }
         public EquipoTransporte Buscar(int IdEquipoTransporte)

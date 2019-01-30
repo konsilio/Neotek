@@ -66,6 +66,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
+            model.Activo = true;
             var respuesta = CatalogoServicio.ModificarCombustible(model, _tkn);
             TempData["RespuestaDTO"] = respuesta;
             if (respuesta.Exito)

@@ -56,9 +56,9 @@ namespace Application.MainModule.Servicios.Catalogos
             if (qt.IdPipa != null)
             {
                 if (qt.Pipas != null)
-                    return qt.Pipas.Nombre + " " + qt.Camionetas.Numero;
+                    return qt.Pipas.Nombre + " " + qt.Pipas.Numero;
                 else
-                    return new EquipoTransporteDataAccess().BuscarPipa(qt.IdPipa.Value).Nombre + " " + qt.Camionetas.Numero;
+                    return new EquipoTransporteDataAccess().BuscarPipa(qt.IdPipa.Value).Nombre + " " + qt.Pipas.Numero;
             }
             //if (qt.Vehiculo != null)
             //    return qt.Vehiculo.Nombre;

@@ -101,6 +101,7 @@ namespace MVC.Presentacion.Agente
         public EquipoTransporteDTO _Vehiculos;
         public List<CombustibleModel> _ListaCombustibles;
         public CombustibleModel _Combustible;
+        public List<TipoUnidadModel> _ListaTiposUnidad;
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -2345,14 +2346,14 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                if (Placas != "")
+                if (Placas != ""&& Placas != null)
                 {
                     pedidos = (from x in pedidos where x.Placas == Placas select x).ToList();
                 }
 
-                if (Nombre != "")
+                if (Nombre != "" && Nombre != null)
                 {
-                    pedidos = (from x in pedidos where x.AliasUnidad == Nombre select x).ToList();
+                    pedidos = (from x in pedidos where x.Descripcion.Contains(Nombre) select x).ToList();
                 }
 
                 _ListaVehiculos = pedidos;
@@ -2621,6 +2622,39 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _ListaCombustibles = list;
+            }
+        }
+        public void GetListaTiposUnidad(short idempresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetTiposUnidad"];
+            GetListaTiposUnidadIdE(idempresa, tkn).Wait();
+        }
+        private async Task GetListaTiposUnidadIdE(short idempresa, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<TipoUnidadModel> list = new List<TipoUnidadModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + idempresa.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<TipoUnidadModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<TipoUnidadModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListaTiposUnidad = list;
             }
         }
         public void GetListaCombustibleIdE(short idempresa, string tkn)

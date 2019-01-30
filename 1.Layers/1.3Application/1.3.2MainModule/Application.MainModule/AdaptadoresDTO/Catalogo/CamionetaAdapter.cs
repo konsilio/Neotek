@@ -30,8 +30,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             {
                 //IdCamioneta = ec.IdCamioneta,
                 IdEmpresa = ec.IdEmpresa,
-                Numero = getNum(ec.AliasUnidad),
-                Nombre = getStr(ec.AliasUnidad),
+                Numero = getNum(ec.Descripcion),
+                Nombre = getStr(ec.Descripcion),
                 Activo = ec.Activo,
                 FechaRegistro = DateTime.Now,
             };
