@@ -27,5 +27,11 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarRecargasCombustible(tkn, TokenServicio.ObtenerIdEmpresa(tkn));
             return agente._ListaRecargasCombustible;
         }
+        public static List<AsignacionModel> GetAsignacion(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarAsignaciones(tkn);
+            return agente._ListaAsignaciones;
+        }
     }
 }
