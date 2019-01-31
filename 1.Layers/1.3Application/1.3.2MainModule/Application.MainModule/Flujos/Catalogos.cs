@@ -18,12 +18,12 @@ using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Pedidos;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios;
+using Application.MainModule.AdaptadoresDTO;
 
 namespace Application.MainModule.Flujos
 {
     public class Catalogos
     {
-        private object eqTipoUnidadEqTransporteEnum;
 
         #region Paises
         public List<PaisDTO> ListaPaises()
@@ -937,11 +937,11 @@ namespace Application.MainModule.Flujos
         #region Asignaciones 
         public List<TransporteDTO> BuscarAsignaciones()
         {
-            //var pv = 
-            //var asigutil = 
-            //var asignaciones = pv + asigutil;
+            var pv = new PuntoVentaDataAccess().BuscarTodos().Where(x => x.UnidadesAlmacen.IdEstacionCarburacion == null).ToList();
+            var asigutil = AsignacionUtilitarioServicio.Buscar();
+            var asignaciones = TransporteAdapter.ToDTO(pv, asigutil);
 
-            return new List<TransporteDTO>();
+            return asignaciones;
         }
         public RespuestaDto RegistraAsignacion(TransporteDTO vehiculoDto)
         {

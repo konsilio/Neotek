@@ -19,6 +19,10 @@ namespace Application.MainModule.Servicios.Equipo
         {
             return new MantenimientoDetDataAccess().Actualizar(entidad);
         }
+        public static RespuestaDto Borrar(DetalleMantenimiento entidad)
+        {
+            return new MantenimientoDetDataAccess().Borrar(entidad);
+        }
         public static List<DetalleMantenimiento> Buscar()
         {
             return new MantenimientoDetDataAccess().Obtener();

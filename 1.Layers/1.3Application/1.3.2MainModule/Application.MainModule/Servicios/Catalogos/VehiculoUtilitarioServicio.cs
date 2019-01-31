@@ -29,7 +29,14 @@ namespace Application.MainModule.Servicios.Catalogos
             else
                 return new VehiculoUtilitarioDataAccess().Obtener(empresa.IdEmpresa);
         }
-
+        public static CUtilitario Obtener(int id)
+        {
+            return new VehiculoUtilitarioDataAccess().Obtener(id);
+        }
+        public static string ObtenerNombre(int id)
+        {
+            return Obtener(id).Nombre;
+        }
         public static List<CUtilitario> Obtener(short idEmpresa)
         {
             return new VehiculoUtilitarioDataAccess().Obtener(idEmpresa).ToList();

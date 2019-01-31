@@ -67,7 +67,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
+        public RespuestaDto Borrar(DetalleMantenimiento entidad)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<DetalleMantenimiento>().Delete(entidad);
+                    uow.SaveChanges();
+                    _respuesta.Id = entidad.Id_DetalleMtto;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del punto de venta"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public DetalleMantenimiento Obtener(int id)
         {
             return uow.Repository<DetalleMantenimiento>().GetSingle(x => x.Id_DetalleMtto.Equals(id));

@@ -247,6 +247,7 @@
     <Compile Include="App_Code\RequisicionServicio.cs" />
     <Compile Include="App_Code\CatalogoServicio.cs" />
     <Compile Include="App_Code\TokenServicio.cs" />
+    <Content Include="App_Code\TransporteServicio.cs" />
     <Compile Include="App_Code\VentasServicio.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -392,6 +393,10 @@
     <Compile Include="Models\Catalogos\UnidadMedidaDTO.cs" />
     <Compile Include="Models\Seguridad\UsuarioRolModel.cs" />
     <Compile Include="Models\Transporte\AsignacionModel.cs" />
+    <Compile Include="Models\Transporte\AsignacionUtilitarioModel.cs" />
+    <Compile Include="Models\Transporte\MantenimientoDetalleModel.cs" />
+    <Compile Include="Models\Transporte\MantenimientoModel.cs" />
+    <Compile Include="Models\Transporte\RecargaCombustibleModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralCamionetaModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralModel.cs" />
     <Compile Include="Models\Ventas\MovimientosGasCilindros.cs" />

@@ -18,6 +18,11 @@ namespace Application.MainModule.Flujos
             var lista = MantenimientoServicio.Buscar(IdEmpresa);
             return MantenimientoAdapter.ToDTO(lista);
         }
+        public List<MantenimientoDTO> TodoCatalogo()
+        {
+            var lista = MantenimientoServicio.Buscar(TokenServicio.ObtenerIdEmpresa());
+            return MantenimientoAdapter.ToDTO(lista);
+        }
         public RespuestaDto CrearCatalogo(MantenimientoDTO dto)
         {
             var resp = PermisosServicio.PuedeRegistrarMantenimiento();
@@ -45,7 +50,7 @@ namespace Application.MainModule.Flujos
             emty.Activo = false;
             return MantenimientoServicio.Actuualizar(emty);
         }
-        public List<MantenimientoDetalleDTO> Todo(short IdEmpresa)
+        public List<MantenimientoDetalleDTO> Todo()
         { 
             var lista = MantenimientoDetalleServicio.Buscar();
             return MantenimientoDetalleAdapter.ToDTO(lista);
@@ -66,6 +71,15 @@ namespace Application.MainModule.Flujos
             var entidad = MantenimientoDetalleServicio.Buscar(dto.Id_DetalleMtto);
             var emty = MantenimientoDetalleAdapter.FormEmtity(entidad);
             return MantenimientoDetalleServicio.Actualizar(emty);
+        }
+        public RespuestaDto Borrar(MantenimientoDetalleDTO dto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarMantenimiento();
+            if (!resp.Exito) return resp;
+
+            var entidad = MantenimientoDetalleServicio.Buscar(dto.Id_DetalleMtto);
+            var emty = MantenimientoDetalleAdapter.FormEmtity(entidad);
+            return MantenimientoDetalleServicio.Borrar(emty);
         }
     }
 }

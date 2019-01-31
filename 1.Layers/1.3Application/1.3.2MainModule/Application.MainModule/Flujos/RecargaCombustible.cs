@@ -20,7 +20,7 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaDto Crear(RecargaCombustibleDTO dto)
         {
-            var resp = PermisosServicio.PuedeBorrarRecargaCombustible();
+            var resp = PermisosServicio.PuedeRegistrarRecargaCombustible();
             if (!resp.Exito) return resp;
 
             var newMan = RecargaCombustibleAdapter.FromDTO(dto);
@@ -28,12 +28,12 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaDto Modificar(RecargaCombustibleDTO dto)
         {
-            var resp = PermisosServicio.PuedeRegistrarMantenimiento();
+            var resp = PermisosServicio.PuedeRegistrarRecargaCombustible();
             if (!resp.Exito) return resp;
 
             var entidad = RecargaCombustibleAdapter.FromDTO(dto);
             var emty = RecargaCombustibleAdapter.FormEmtity(entidad);
-            return RecargaCombustibleServicio.Actuualizar(emty);
+            return RecargaCombustibleServicio.Actualizar(emty);
         }
         public RespuestaDto Eliminar(int id)
         {
@@ -43,7 +43,17 @@ namespace Application.MainModule.Flujos
             var entidad = RecargaCombustibleServicio.Buscar(id);
             var emty = RecargaCombustibleAdapter.FormEmtity(entidad);
             //emty.Activo = false;
-            return RecargaCombustibleServicio.Actuualizar(emty);
+            return RecargaCombustibleServicio.Actualizar(emty);
+        }
+        public RespuestaDto Eliminar(RecargaCombustibleDTO dto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarMantenimiento();
+            if (!resp.Exito) return resp;
+
+            var entidad = RecargaCombustibleServicio.Buscar(dto.Id_DetalleRecargaComb);
+            var emty = RecargaCombustibleAdapter.FormEmtity(entidad);
+            //emty.Activo = false;
+            return RecargaCombustibleServicio.Borrar(emty);
         }
     }
 }

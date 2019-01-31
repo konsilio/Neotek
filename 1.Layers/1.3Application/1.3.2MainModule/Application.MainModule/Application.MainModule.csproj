@@ -72,6 +72,7 @@
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\MantenimientoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\MantenimientoDetalleAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\RecargaCombustibleAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\EquipoTrasnporte\TransporteAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />

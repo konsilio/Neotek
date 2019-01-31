@@ -16,8 +16,7 @@ namespace DS.MainModule.Controllers
     [RoutePrefix("api/equipotransporte")]
     public class EquipoTransporteController : ApiController
     {
-        private Catalogos _eqTransporte;
-        private RecargaCombustible _rc;
+        private Catalogos _eqTransporte;        
 
         public EquipoTransporteController()
         {
@@ -52,31 +51,32 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_eqTransporte.Elimina(id), Request);
         }
+
         #region RecargaCombustible
         [Route("buscar/recargascombustible/{id}")]
         public HttpResponseMessage GetRecargasCombustible(short id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _rc.Todo(id));
+            return Request.CreateResponse(HttpStatusCode.OK, new RecargaCombustible().Todo(id));
         }
         [Route("modificar/recargacombustible")]
         public HttpResponseMessage PutModificarRecargaCombustible(RecargaCombustibleDTO _model)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _rc.Modificar(_model));
+            return Request.CreateResponse(HttpStatusCode.OK, new RecargaCombustible().Modificar(_model));
         }
 
         [Route("registrar/recargacombustible")]
         public HttpResponseMessage PostRegistrarRecargaCombustible(RecargaCombustibleDTO _model)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _rc.Crear(_model));
+            return Request.CreateResponse(HttpStatusCode.OK, new RecargaCombustible().Crear(_model));
         }
-
         [Route("eliminar/recargacombustible/{id}")]
-        public HttpResponseMessage PutEliminaRecargaCombustible(int id)
+        public HttpResponseMessage PutEliminaRecargaCombustible(RecargaCombustibleDTO _model)
         {
-            return RespuestaHttp.crearRespuesta(_rc.Eliminar(id), Request);
+            return RespuestaHttp.crearRespuesta(new RecargaCombustible().Eliminar(_model), Request);
         }
         #endregion
-        #region Asignacion
+
+        #region Asignacion       
         [Route("buscar/asignacion")]
         public HttpResponseMessage GetAsigancion()
         {
@@ -89,9 +89,52 @@ namespace DS.MainModule.Controllers
         }
 
         [Route("eliminar/asignacion/{id}")]
-        public HttpResponseMessage PutEliminaAsignacion(TransporteDTO _modeld)
+        public HttpResponseMessage PutEliminaAsignacion(TransporteDTO _model)
         {
-            return RespuestaHttp.crearRespuesta(_eqTransporte.EliminarAsignacion(_modeld), Request);
+            return RespuestaHttp.crearRespuesta(_eqTransporte.EliminarAsignacion(_model), Request);
+        }
+        #endregion
+
+        #region Mantenimiento
+        [Route("buscar/mantenimiento")]
+        public HttpResponseMessage GetMantenimiento()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, new Mantenimiento().TodoCatalogo());
+        }
+        [Route("registrar/mantenimiento")]
+        public HttpResponseMessage PostRegistrarMantenimiento(MantenimientoDTO _model)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, new Mantenimiento().CrearCatalogo(_model));
+        }
+
+        [Route("eliminar/mantenimiento/{id}")]
+        public HttpResponseMessage PutEliminaMantenimiento(MantenimientoDTO _model)
+        {
+            return RespuestaHttp.crearRespuesta(new Mantenimiento().EliminarCatalogo(_model), Request);
+        }
+        #endregion
+
+        #region MantenimientoDetalle
+        [Route("buscar/mantenimientodetalle")]
+        public HttpResponseMessage GetMantenimientoDetalle()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, new Mantenimiento().Todo());
+        }
+        [Route("registrar/mantenimientodetalle")]
+        public HttpResponseMessage PostRegistrarMantenimientoDetalle(MantenimientoDetalleDTO _model)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, new Mantenimiento().Crear(_model));
+        }
+        [Route("modificar/mantenimientodetalle")]
+        public HttpResponseMessage PutModificarMantenimientoDetalle(MantenimientoDetalleDTO _model)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, new Mantenimiento().Modificar(_model));
+        }
+
+        [Route("eliminar/mantenimientodetalle")]
+        public HttpResponseMessage PutEliminaMantenimientoDetalle(MantenimientoDetalleDTO _model)
+        {
+            return RespuestaHttp.crearRespuesta(new Mantenimiento().Borrar(_model), Request);
         }
         #endregion
     }
