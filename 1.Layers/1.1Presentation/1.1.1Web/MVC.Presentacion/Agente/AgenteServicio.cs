@@ -4029,7 +4029,7 @@ namespace MVC.Presentacion.Agente
                 _ListaAsignaciones = emp;
             }
         }
-        public void GuardarAsignacione(AsignacionModel dto, string tkn)
+        public void GuardarAsignacion(AsignacionModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarAsignacion"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
@@ -4039,7 +4039,7 @@ namespace MVC.Presentacion.Agente
         //    this.ApiRoute = ConfigurationManager.AppSettings["PutModificarMantenimientoDetalle"];
         //    LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         //}
-        public void EliminarAsignacione(AsignacionModel dto, string tkn)
+        public void EliminarAsignacion(AsignacionModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaAsignacion"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();

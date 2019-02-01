@@ -1398,6 +1398,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="KilometrajeRecorrido" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="LitrosRecargados" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="IdTipoCombustible" Type="int" Nullable="false" />
+          <Property Name="FechaRecarga" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Egreso">
           <Key>
@@ -12176,6 +12177,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CCamioneta" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCamioneta" FromRole="DetalleRecargaCombustible" ToRole="Camioneta" />
           <NavigationProperty Name="CCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCombustible" FromRole="DetalleRecargaCombustible" ToRole="CCombustible" />
           <NavigationProperty Name="CPipa" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CPipa" FromRole="DetalleRecargaCombustible" ToRole="Pipa" />
+          <Property Name="FechaRecarga" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <Association Name="FK_DetalleMantenimiento_CCamioneta">
           <End Type="Sagas.MainModuleModel.Camioneta" Role="Camioneta" Multiplicity="1" />
@@ -14466,6 +14468,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="DetalleRecargaCombustible">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.DetalleRecargaCombustible">
               <MappingFragment StoreEntitySet="DetalleRecargaCombustible">
+                <ScalarProperty Name="FechaRecarga" ColumnName="FechaRecarga" />
                 <ScalarProperty Name="IdTipoCombustible" ColumnName="IdTipoCombustible" />
                 <ScalarProperty Name="LitrosRecargados" ColumnName="LitrosRecargados" />
                 <ScalarProperty Name="KilometrajeRecorrido" ColumnName="KilometrajeRecorrido" />
