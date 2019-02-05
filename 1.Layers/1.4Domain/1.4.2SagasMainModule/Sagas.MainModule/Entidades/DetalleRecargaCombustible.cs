@@ -23,6 +23,7 @@ namespace Sagas.MainModule.Entidades
         public decimal KilometrajeRecorrido { get; set; }
         public decimal LitrosRecargados { get; set; }
         public int IdTipoCombustible { get; set; }
+        public System.DateTime FechaRecarga { get; set; }
     
         public virtual Camioneta CCamioneta { get; set; }
         public virtual CCombustible CCombustible { get; set; }

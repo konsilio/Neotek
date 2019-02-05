@@ -17,5 +17,7 @@ namespace MVC.Presentacion.Models
         public decimal KilometrajeRecorrido { get; set; }
         public decimal LitrosRecargados { get; set; }
         public int IdTipoCombustible { get; set; }
+        public string Chofer { get; set; }
+        public DateTime FechaRecarga { get; set; }
     }
 }

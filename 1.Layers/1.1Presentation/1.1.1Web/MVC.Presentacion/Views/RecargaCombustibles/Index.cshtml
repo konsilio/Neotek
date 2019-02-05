@@ -1,5 +1,4 @@
-﻿
-@model MVC.Presentacion.Models.RecargaCombustibleModel
+﻿@model MVC.Presentacion.Models.RecargaCombustibleModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,87 +29,79 @@
                             <div class="row clearfix">
                                 <div class="col-md-3">
                                     <div class="form-group">
+                                        <b>Vehiculo</b>
+                                        @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "Id_Vehiculo";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.SelectedIndex = 0;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Descripcion";
+                                       settings.Properties.ValueField = "IdVehiculo";
+                                   }).BindList(ViewBag.Vehiculos).Bind(Model.Id_Vehiculo).GetHtml()
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <b>Kilometraje Actual</b>
+                                        @Html.LabelFor(m => m.Chofer)
+                                    </div>                                   
+                                </div>                         
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <b>Kilometraje Actual</b>
+                                        @Html.TextBoxFor(m => m.KilometrajeActual , Model.KilometrajeActual.ToString(), new { @class = "form-control number" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <b>Kilometraje Recorrido</b>
+                                        @Html.TextBoxFor(m => m.KilometrajeRecorrido, Model.KilometrajeRecorrido.ToString(), new { @class = "form-control number" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <b>Litros Recargados</b>
+                                        @Html.TextBoxFor(m => m.LitrosRecargados, Model.LitrosRecargados.ToString(), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <b>Tipo de combustible</b>
+                                        @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "IdTipoCombustible";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.SelectedIndex = 0;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Descripcion";
+                                       settings.Properties.ValueField = "IdVehiculo";
+                                   }).BindList(ViewBag.CMantenimiento).Bind(Model.IdTipoCombustible).GetHtml()
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
                                         <b>Fecha de Mantenimiento</b>
-                                            @Html.DevExpress().DateEdit(settings =>
+                                        @Html.DevExpress().DateEdit(settings =>
                                         {
-                                            settings.Name = "FechaMtto";
+                                            settings.Name = "FechaRecarga";
                                             settings.Properties.UseMaskBehavior = true;
                                             settings.Properties.EditFormat = EditFormat.Custom;
                                             settings.Properties.EditFormatString = "dd/MMMM/yyyy";
                                             settings.Properties.DisplayFormatString = "dd MMMM, yyyy";
                                             settings.Date = DateTime.Now;
-                                            settings.PopupCalendarOwnerName = "FechaMtto";
+                                            settings.PopupCalendarOwnerName = "FechaRecarga";
                                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                             settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                        }).Bind(Model.).GetHtml()
+                                        }).Bind(Model.FechaRecarga).GetHtml()
                                     </div>
                                     <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                        <b>Vehiculo</b>
-                                        @Html.DevExpress().ComboBox(settings =>
-                                   {
-                                       settings.Name = "id_vehiculo";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.SelectedIndex = 0;
-                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.TextField = "Descripcion";
-                                       settings.Properties.ValueField = "IdVehiculo";
-                                   }).BindList(ViewBag.Vehiculos).Bind(Model.id_vehiculo).GetHtml()
-                                    </div>
-                                    <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <b>Tipo Mantenimiento</b>
-                                        @Html.DevExpress().ComboBox(settings =>
-                                   {
-                                       settings.Name = "Id_TipoMantenimiento";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.SelectedIndex = 0;
-                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.TextField = "Descripcion";
-                                       settings.Properties.ValueField = "IdVehiculo";
-                                   }).BindList(ViewBag.CMantenimiento).Bind(Model.Id_tipomtto).GetHtml()
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <b>Kilometraje Actual</b>
-                                        @Html.TextBoxFor(m => m.Kilometraje_Actual, Model.Kilometraje_Actual.ToString(), new { @class = "form-control number" })
-                                    </div>
-                                </div>
-                            </div>
-                            @if (ViewBag.MensajeError != null)
-                            {
-                                <div id="DivAlerta" class="container">
-                                    <div class="alert alert-danger">
-                                        <div class="alert-icon">
-                                            <i class="zmdi zmdi-block"></i>
-                                        </div>
-                                        <strong>
-                                            @ViewBag.MensajeError
-                                        </strong>
-                                    </div>
-                                </div>
-                            }
-                            <div class="row clearfix">
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <b>Kilometraje Actual</b>
-                                        @Html.TextBoxFor(m => m.NumeroOC, Model.NumeroOC.ToString(), new { @class = "form-control number" })
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <b>Kilometraje Actual</b>
-                                        @Html.TextBoxFor(m => m.DescripcionMtto, Model.DescripcionMtto.ToString(), new { @class = "form-control number" })
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
                                     <b></b>
                                     <div class="form-group">
                                         @if (ViewBag.EsEdicion == null)
@@ -128,30 +119,26 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (ViewBag.MensajeError != null)
+                            {
+                                <div id="DivAlerta" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            @ViewBag.MensajeError
+                                        </strong>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="card">
                         <div class="header">
-                            Lista de <strong>Cuentas Contables</strong>
+                            Historial de <strong>Recargas</strong>
                         </div>
                         <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-md-3">
-                                    <strong>Gasera</strong>
-                                    <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick selectpicker" data-live-search="true">
-                                        @foreach (var lst in ViewBag.Empresas)
-                                        {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <strong>Número</strong>
-                                        <input type="text" ID="txtNumeroCtaCtble" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
                                     <table class="table table-striped  filterable">

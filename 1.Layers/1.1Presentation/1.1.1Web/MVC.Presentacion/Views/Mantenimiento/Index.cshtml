@@ -23,7 +23,7 @@
                     </div>
                     <div class="card">
                         <div class="header">
-                            <b><strong></strong></b>
+                            <strong>Mantenimiento</strong>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
@@ -83,19 +83,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (ViewBag.MensajeError != null)
-                            {
-                                <div id="DivAlerta" class="container">
-                                    <div class="alert alert-danger">
-                                        <div class="alert-icon">
-                                            <i class="zmdi zmdi-block"></i>
-                                        </div>
-                                        <strong>
-                                            @ViewBag.MensajeError
-                                        </strong>
-                                    </div>
-                                </div>
-                            }
+                         
                             <div class="row clearfix">
                                 <div class="col-md-5">
                                     <div class="form-group">
@@ -127,6 +115,19 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (ViewBag.MensajeError != null)
+                            {
+                                <div id="DivAlerta" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            @ViewBag.MensajeError
+                                        </strong>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="card">
