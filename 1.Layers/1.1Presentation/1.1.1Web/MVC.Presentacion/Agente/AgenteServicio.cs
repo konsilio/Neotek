@@ -2671,6 +2671,7 @@ namespace MVC.Presentacion.Agente
             using (var client = new HttpClient())
             {
                 List<CombustibleModel> list = new List<CombustibleModel>();
+                RespuestaDTO resp = new RespuestaDTO();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
@@ -2681,11 +2682,13 @@ namespace MVC.Presentacion.Agente
                         list = await response.Content.ReadAsAsync<List<CombustibleModel>>();
                     else
                     {
+                        _RespuestaDTO = resp;
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                         client.CancelPendingRequests();
                         client.Dispose();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     list = new List<CombustibleModel>();
                     client.CancelPendingRequests();

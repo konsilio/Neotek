@@ -13,7 +13,7 @@ namespace MVC.Presentacion.Controllers
     {
         string _tkn = string.Empty;
         // GET: Combustible
-        public ActionResult Index(int? id, string msj = null)
+        public ActionResult Index(int? id, string desc = null, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
@@ -25,7 +25,6 @@ namespace MVC.Presentacion.Controllers
                 model = CatalogoServicio.ListaCombustibleID(id.Value, _tkn);
                 ViewBag.EsEdicion = true;
             }
-
             if (TempData["RespuestaDTO"] != null)
             {
                 if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
@@ -38,6 +37,12 @@ namespace MVC.Presentacion.Controllers
                 }
             }
             ViewBag.Combustibles = CatalogoServicio.ListaCombustibleIdEmp(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            if (desc != "" && desc != null)
+            {
+                model.DescripcionBusqueda = desc;           
+                ViewBag.Combustibles = CatalogoServicio.ListaCombustibleFiltrado(desc,_tkn);
+                if(ViewBag.Combustibles.Count==0) ViewBag.Msj = "No se encontraron resultados"; ViewBag.Tipo = "alert-danger";
+            }
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
             return View(model);
         }
@@ -57,7 +62,6 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
-
         public ActionResult GuardarEditar(CombustibleModel model)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -73,14 +77,12 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
-
         public ActionResult Editar(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tkn = Session["StringToken"].ToString();
             return RedirectToAction("Index", new { id = id });
         }
-
         public ActionResult Borrar(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -88,6 +90,11 @@ namespace MVC.Presentacion.Controllers
             var respuesta = CatalogoServicio.EliminiarCombustible(id, _tkn);
             TempData["RespuestaDTO"] = respuesta;
             return RedirectToAction("Index", new { msj = respuesta.Mensaje });
+        }
+        public ActionResult Buscar(CombustibleModel _model)
+        {
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            return RedirectToAction("Index", new { desc = _model.DescripcionBusqueda });
         }
         private string Validar(RespuestaDTO Resp = null)
         {

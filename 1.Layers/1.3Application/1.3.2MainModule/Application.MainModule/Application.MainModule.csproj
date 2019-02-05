@@ -56,6 +56,7 @@
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\BancoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\CamionetaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ClientesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CombustibleAdapter.cs" />
@@ -67,6 +68,8 @@
     <Compile Include="AdaptadoresDTO\Catalogo\FormaPagoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\OperadorChoferAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\PipaAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\VehiculoUtilitarioAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Cobranza\AbonosAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\AsignacionUtilitarioAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\MantenimientoAdapter.cs" />

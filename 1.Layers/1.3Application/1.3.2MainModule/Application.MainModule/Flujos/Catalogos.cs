@@ -8,6 +8,7 @@ using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,7 +90,6 @@ namespace Application.MainModule.Flujos
             empresas.Activo = false;
             return EmpresaServicio.ModificarEmpresa(empresas);
         }
-
         public RespuestaDto ActualizaEmpresaConfig(EmpresaModificaConfig empDto)
         {
             var resp = PermisosServicio.PuedeModificarEmpresa();
@@ -904,9 +904,27 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var vehiculo = EquipoTransporteAdapter.FromDTO(vehiculoDto);
-
+            vehiculo.FechaRegistro = DateTime.Now;
             if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
-                vehiculo.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+                vehiculoDto.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+
+            if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Camioneta)//IdCamioneta
+            {
+                var camioneta = CamionetaAdapter.FromDTO(vehiculoDto);
+                var cam= CamionetaServicio.Registrar(camioneta);
+               vehiculo.IdCamioneta = cam.Id;
+            }
+            if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Pipa)//IdPipa
+            {
+                var Pipa = PipaAdapter.FromDTO(vehiculoDto);
+                var pi = PipaServicio.Registrar(Pipa);
+                vehiculo.IdPipa = pi.Id;
+            }
+            if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Utilitario)//IdVehiculoUtilitario
+            {
+                var utilitario = VehiculoUtilitarioAdapter.FromDTO(vehiculoDto);
+                VehiculoUtilitarioServicio.Registrar(utilitario);
+            }
 
             return EquipoTransporteServicio.Alta(vehiculo);
         }
@@ -1016,7 +1034,7 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarParqueVehicular();
             if (!resp.Exito) return null;
 
-            return CombustibleAdapter.toDTO(CombustibleServicio.Obtener(idEmpresa,desc));
+            return CombustibleAdapter.toDTO(CombustibleServicio.Obtener(idEmpresa, desc));
         }
         public CombustibleDTO CombustibleId(int idCombustible)
         {
@@ -1059,7 +1077,7 @@ namespace Application.MainModule.Flujos
             if (combustible == null) return CombustibleServicio.NoExiste();
 
             var Dtovehiculo = CombustibleAdapter.FromEntity(combustible);
-          
+
             return CombustibleServicio.Eliminar(Dtovehiculo);
         }
 
