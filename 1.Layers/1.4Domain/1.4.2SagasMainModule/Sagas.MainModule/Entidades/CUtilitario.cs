@@ -18,6 +18,7 @@ namespace Sagas.MainModule.Entidades
         public CUtilitario()
         {
             this.EquipoTransporte = new HashSet<EquipoTransporte>();
+            this.AsignacionUtilitarios = new HashSet<AsignacionUtilitarios>();
         }
     
         public int IdUtilitario { get; set; }
@@ -30,5 +31,7 @@ namespace Sagas.MainModule.Entidades
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipoTransporte> EquipoTransporte { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AsignacionUtilitarios> AsignacionUtilitarios { get; set; }
     }
 }

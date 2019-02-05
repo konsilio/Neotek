@@ -45,6 +45,7 @@ namespace MVC.Presentacion.Agente
         public CargosModel _Cargo;
         public ReporteModel _repCartera;
         public PedidoModel _Pedido;
+        public CombustibleModel _Combustible;
 
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
@@ -100,7 +101,11 @@ namespace MVC.Presentacion.Agente
         public List<EquipoTransporteDTO> _ListaVehiculos;
         public EquipoTransporteDTO _Vehiculos;
         public List<CombustibleModel> _ListaCombustibles;
-        public CombustibleModel _Combustible;
+        public List<RecargaCombustibleModel> _ListaRecargasCombustible;
+        public List<MantenimientoModel> _ListaMantenimientos;
+        public List<MantenimientoDetalleModel> _ListaMantenimientoDetalle;
+        public List<AsignacionModel> _ListaAsignaciones;
+
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -3849,6 +3854,198 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarAbonosLst"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        #endregion
+        #region EquipoTransporte
+        public void BuscarRecargasCombustible(string tkn, short idEmpresa)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetRecargasCombustible"];
+            ListaRecargasCombistiblePorIdEmpresa(tkn, idEmpresa).Wait();
+        }
+        private async Task ListaRecargasCombistiblePorIdEmpresa(string token, short idEmpresa)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RecargaCombustibleModel> emp = new List<RecargaCombustibleModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiCatalgos,idEmpresa.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<RecargaCombustibleModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<RecargaCombustibleModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaRecargasCombustible = emp;
+            }
+        }
+        public void GuardarRecargaCombustible(RecargaCombustibleModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarRecargaCombustible"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public void ModificarRecargaCombustible(RecargaCombustibleModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificarRecargaCombustible"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void EliminarRecargaCombustible(RecargaCombustibleModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaRecargaCombustible"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+
+        public void BuscarCatalogoMantenimiento(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetMantenimiento"];
+            ListaCatalogoMantenimiento(tkn).Wait();
+        }
+        private async Task ListaCatalogoMantenimiento(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<MantenimientoModel> emp = new List<MantenimientoModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<MantenimientoModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<MantenimientoModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaMantenimientos = emp;
+            }
+        }
+        //public void GuardarCatalogoMantenimiento(MantenimientoModel dto, string tkn)
+        //{
+        //    this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarMantenimiento"];
+        //    LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        //}
+        //public void EliminarCatalogoMantenimiento(MantenimientoModel dto, string tkn)
+        //{
+        //    this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaMantenimiento"];
+        //    LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        //}
+
+        public void BuscarMantenimiento(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetMantenimientoDetalle"];
+            ListaMantenimiento(tkn).Wait();
+        }
+        private async Task ListaMantenimiento(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<MantenimientoDetalleModel> emp = new List<MantenimientoDetalleModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<MantenimientoDetalleModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<MantenimientoDetalleModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaMantenimientoDetalle = emp;
+            }
+        }
+        public void GuardarMantenimiento(MantenimientoDetalleModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarMantenimientoDetalle"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public void ModificaMantenimiento(MantenimientoDetalleModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificarMantenimientoDetalle"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void EliminarMantenimiento(MantenimientoDetalleModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaMantenimientoDetalle"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+
+        public void BuscarAsignaciones(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetAsigancion"];
+            ListaAsignaciones(tkn).Wait();
+        }
+        private async Task ListaAsignaciones(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<AsignacionModel> emp = new List<AsignacionModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<AsignacionModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<AsignacionModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaAsignaciones = emp;
+            }
+        }
+        public void GuardarAsignacion(AsignacionModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarAsignacion"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        //public void ModificaAsignacione(AsignacionModel dto, string tkn)
+        //{
+        //    this.ApiRoute = ConfigurationManager.AppSettings["PutModificarMantenimientoDetalle"];
+        //    LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        //}
+        public void EliminarAsignacion(AsignacionModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaAsignacion"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
 
