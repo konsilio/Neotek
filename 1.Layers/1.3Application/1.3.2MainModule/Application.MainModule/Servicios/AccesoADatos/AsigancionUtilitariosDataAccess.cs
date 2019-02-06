@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.UnitOfWork;
 using Exceptions.MainModule;
 using Exceptions.MainModule.Validaciones;
@@ -11,24 +12,24 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
-    public class MantenimientoDetDataAccess
+    public class AsigancionUtilitariosDataAccess
     {
         private SagasDataUow uow;
 
-        public MantenimientoDetDataAccess()
+        public AsigancionUtilitariosDataAccess()
         {
             uow = new SagasDataUow();
         }
-        public RespuestaDto Insertar(DetalleMantenimiento entidad)
+        public RespuestaDto Insertar(AsignacionUtilitarios entidad)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<DetalleMantenimiento>().Insert(entidad);
+                    uow.Repository<AsignacionUtilitarios>().Insert(entidad);
                     uow.SaveChanges();
-                    _respuesta.Id = entidad.Id_DetalleMtto;
+                    _respuesta.Id = entidad.IdAsignacionUtilitario;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
@@ -43,16 +44,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public RespuestaDto Actualizar(DetalleMantenimiento entidad)
+        public RespuestaDto Actualizar(AsignacionUtilitarios entidad)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<DetalleMantenimiento>().Update(entidad);
+                    uow.Repository<AsignacionUtilitarios>().Update(entidad);
                     uow.SaveChanges();
-                    _respuesta.Id = entidad.Id_DetalleMtto;
+                    _respuesta.Id = entidad.IdAsignacionUtilitario;
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;
                     _respuesta.ModeloValido = true;
@@ -63,41 +64,33 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     _respuesta.Exito = false;
                     _respuesta.Mensaje = string.Format(Error.C0003, "del punto de venta"); ;
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
-                }
+                }   
             }
             return _respuesta;
         }
-        public RespuestaDto Borrar(DetalleMantenimiento entidad)
+        public AsignacionUtilitarios Obtener(int IdP)
         {
-            RespuestaDto _respuesta = new RespuestaDto();
-            using (uow)
-            {
-                try
-                {
-                    uow.Repository<DetalleMantenimiento>().Delete(entidad);
-                    uow.SaveChanges();
-                    _respuesta.Id = entidad.Id_DetalleMtto;
-                    _respuesta.Exito = true;
-                    _respuesta.EsActulizacion = true;
-                    _respuesta.ModeloValido = true;
-                    _respuesta.Mensaje = Exito.OK;
-                }
-                catch (Exception ex)
-                {
-                    _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Format(Error.C0003, "del punto de venta"); ;
-                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
-                }
-            }
-            return _respuesta;
+            return uow.Repository<AsignacionUtilitarios>().GetSingle(
+                x => x.IdAsignacionUtilitario.Equals(IdP) && x.Activo
+                );
         }
-        public DetalleMantenimiento Obtener(int id)
+        public AsignacionUtilitarios Obtener(TransporteDTO dto)
         {
-            return uow.Repository<DetalleMantenimiento>().GetSingle(x => x.Id_DetalleMtto.Equals(id));
+            return uow.Repository<AsignacionUtilitarios>().GetSingle(
+                x => x.IdChoferOperador.Equals(dto.IdChofer) 
+                && x.IdUtilitario.Equals(dto.IdVehiculo)
+                && x.IdEmpresa.Equals(dto.IdEmpresa)
+                && x.Activo
+                );
         }
-        public List<DetalleMantenimiento> Obtener()
+        public List<AsignacionUtilitarios> Obtener()
         {
-            return uow.Repository<DetalleMantenimiento>().GetAll().ToList();
+            return uow.Repository<AsignacionUtilitarios>().Get(x => x.Activo).ToList();
         }
+        public List<AsignacionUtilitarios> ObtenerAsignacionUtilitarios(short idEmpresa)
+        {
+            return uow.Repository<AsignacionUtilitarios>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
+        }
+
     }
 }

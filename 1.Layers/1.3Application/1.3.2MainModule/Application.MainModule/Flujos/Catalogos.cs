@@ -17,6 +17,9 @@ using System.Threading.Tasks;
 using Application.MainModule.Servicios.Ventas;
 using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Pedidos;
+using Sagas.MainModule.ObjetosValor.Enum;
+using Application.MainModule.Servicios;
+using Application.MainModule.AdaptadoresDTO;
 
 namespace Application.MainModule.Flujos
 {
@@ -971,27 +974,57 @@ namespace Application.MainModule.Flujos
             Dtovehiculo.Activo = false;
             return EquipoTransporteServicio.Modificar(Dtovehiculo);
         }
+        #region Asignaciones 
+        public List<TransporteDTO> BuscarAsignaciones()
+        {
+            var pv = new PuntoVentaDataAccess().BuscarTodos().Where(x => x.UnidadesAlmacen.IdEstacionCarburacion == null).ToList();
+            var asigutil = AsignacionUtilitarioServicio.Buscar();
+            var asignaciones = TransporteAdapter.ToDTO(pv, asigutil);
+
+            return asignaciones;
+        }
         public RespuestaDto RegistraAsignacion(TransporteDTO vehiculoDto)
         {
             var resp = PermisosServicio.PuedeAsignarVehiculo();
             if (!resp.Exito) return resp;
 
-            var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
-            var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
+            var asig = AsignacionUtilitarioServicio.Buscar(vehiculoDto);
+            if (asig == null) AsignacionUtilitarioServicio.Existe();
 
-            return PuntoVentaServicio.Insertar(npv);
+            if (vehiculoDto.TipoVehiculo.Equals(TipoUnidadEqTransporteEnum.Utilitario))
+            {
+                var asignacion = EquipoTransporteServicio.GenerarAsignacion(vehiculoDto);
+                return AsignacionUtilitarioServicio.Crear(asignacion);
+            }
+            else
+            {
+                var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
+                var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
+                return PuntoVentaServicio.Insertar(npv);
+            }           
         }
         public RespuestaDto EliminarAsignacion(TransporteDTO vehiculoDto)
         {
             var resp = PermisosServicio.PuedeBorrarAsignacionVehicular();
             if (!resp.Exito) return resp;
 
-            var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
-            var pv = PuntoVentaServicio.Obtener(almacen);
-            var Entity = PuntoVentaAdapter.FromEntity(pv);
-
-            return PuntoVentaServicio.Eliminar(Entity);
+            if (vehiculoDto.TipoVehiculo.Equals(TipoUnidadEqTransporteEnum.Utilitario))
+            {
+                var asignacion = AsignacionUtilitarioServicio.Buscar(vehiculoDto);
+                asignacion.Activo = false;
+                return AsignacionUtilitarioServicio.Actualizar(asignacion);
+            }
+            else
+            {
+                var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
+                var pv = PuntoVentaServicio.Obtener(almacen);
+                var Entity = PuntoVentaAdapter.FromEntity(pv);
+                Entity.Activo = false;
+                return PuntoVentaServicio.Modificar(Entity);
+            }
         }
+        #endregion
+
 
 
         #endregion

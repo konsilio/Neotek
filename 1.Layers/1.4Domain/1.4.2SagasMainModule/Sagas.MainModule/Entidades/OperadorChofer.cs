@@ -23,6 +23,7 @@ namespace Sagas.MainModule.Entidades
             this.VentaCorteAnticipoEC = new HashSet<VentaCorteAnticipoEC>();
             this.VentaMovimiento = new HashSet<VentaMovimiento>();
             this.VentaPuntoDeVenta = new HashSet<VentaPuntoDeVenta>();
+            this.AsignacionUtilitarios = new HashSet<AsignacionUtilitarios>();
         }
     
         public int IdOperadorChofer { get; set; }
@@ -47,5 +48,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<VentaMovimiento> VentaMovimiento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VentaPuntoDeVenta> VentaPuntoDeVenta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AsignacionUtilitarios> AsignacionUtilitarios { get; set; }
     }
 }

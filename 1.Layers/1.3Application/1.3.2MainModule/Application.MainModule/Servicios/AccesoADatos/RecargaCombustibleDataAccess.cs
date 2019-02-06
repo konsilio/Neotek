@@ -69,6 +69,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        public RespuestaDto Borrar(DetalleRecargaCombustible entidad)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<DetalleRecargaCombustible>().Delete(entidad);
+                    uow.SaveChanges();
+                    _respuesta.Id = entidad.Id_DetalleRecargaComb;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del punto de venta"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public DetalleRecargaCombustible Obtener(int id)
         {
             return uow.Repository<DetalleRecargaCombustible>().GetSingle(x => x.Id_DetalleRecargaComb.Equals(id));

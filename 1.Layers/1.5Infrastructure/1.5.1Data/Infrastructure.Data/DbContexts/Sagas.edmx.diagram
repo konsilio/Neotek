@@ -329,6 +329,9 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CMantenimiento_Empresa" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_DetalleMantenimiento_CMantenimiento" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CUtilitario_Empresa" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AsignacionUtilitarios" Width="1.5" PointX="0.75" PointY="3.75" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AsignacionUtilitarios_CUtilitario" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AsignacionUtilitarios_Empresa" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -76,7 +76,7 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static RespuestaDto Eliminar(PuntoVenta cteLoc)
         {
-            return new PuntoVentaDataAccess().Actualizar(cteLoc);
+            return new PuntoVentaDataAccess().Eliminar(cteLoc);
         }
         public static RespuestaDto Modificar(PuntoVenta cte)
         {

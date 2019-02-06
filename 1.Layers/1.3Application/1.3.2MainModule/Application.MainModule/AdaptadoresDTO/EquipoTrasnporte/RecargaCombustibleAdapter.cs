@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporte
 {
-    public class RecargaMantenimientoAdapter
+    public class RecargaCombustibleAdapter
     {
         public static RecargaCombustibleDTO ToDTO(DetalleRecargaCombustible entidad)
         {

@@ -103,6 +103,9 @@
     <Compile Include="Entidades\AlmacenSalidaProducto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\AsignacionUtilitarios.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Banco.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>

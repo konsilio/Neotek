@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MVC.Presentacion.Models.Transporte
+namespace MVC.Presentacion.Models
 {
     public class AsignacionModel
     {
@@ -12,5 +12,6 @@ namespace MVC.Presentacion.Models.Transporte
         public string Chofer { get; set; }
         public int IdVehiculo { get; set; }
         public string Vehiculo { get; set; }
+        public short TipoVehiculo { get; set; }
     }
 }

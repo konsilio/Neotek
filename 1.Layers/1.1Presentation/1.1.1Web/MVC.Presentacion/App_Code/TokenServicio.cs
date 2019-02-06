@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace MVC.Presentacion.App_Code
 {
-    public class TokenServicio
+    public static class TokenServicio
     {
         public static List<Claim> ObtenerClaims(string token)
         {
