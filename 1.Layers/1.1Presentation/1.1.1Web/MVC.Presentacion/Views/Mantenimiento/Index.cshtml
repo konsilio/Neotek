@@ -49,15 +49,15 @@
                                     <div class="form-group">
                                         <b>Vehiculo</b>
                                         @Html.DevExpress().ComboBox(settings =>
-                                   {
-                                       settings.Name = "id_vehiculo";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.SelectedIndex = 0;
-                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.TextField = "Descripcion";
-                                       settings.Properties.ValueField = "IdVehiculo";
-                                   }).BindList(ViewBag.Vehiculos).Bind(Model.id_vehiculo).GetHtml()
+                                        {
+                                            settings.Name = "id_vehiculo";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.SelectedIndex = 0;
+                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                            settings.Properties.TextField = "Descripcion";
+                                            settings.Properties.ValueField = "IdVehiculo";
+                                        }).BindList(ViewBag.Vehiculos).Bind(Model.id_vehiculo).GetHtml()
                                     </div>
                                     <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
                                 </div>
@@ -65,15 +65,15 @@
                                     <div class="form-group">
                                         <b>Tipo Mantenimiento</b>
                                         @Html.DevExpress().ComboBox(settings =>
-                                   {
-                                       settings.Name = "Id_TipoMantenimiento";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.SelectedIndex = 0;
-                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.TextField = "Descripcion";
-                                       settings.Properties.ValueField = "IdVehiculo";
-                                   }).BindList(ViewBag.CMantenimiento).Bind(Model.Id_tipomtto).GetHtml()
+                                        {
+                                            settings.Name = "Id_TipoMantenimiento";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.SelectedIndex = 0;
+                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                            settings.Properties.TextField = "Descripcion";
+                                            settings.Properties.ValueField = "IdVehiculo";
+                                        }).BindList(ViewBag.CMantenimiento).Bind(Model.Id_tipomtto).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -169,15 +169,7 @@
                                             @foreach (var mant in ViewBag.Manteniminetos)
                                             {
                                                 <tr>
-                                                    <td>mant.Id_DetalleMtto</td>
-                                                    <td>mant.Vehiculo</td>
-                                                    <td>mant.Chofer</td>
-                                                    <td>mant.DescripcionMtto</td>
-                                                    <td>mant.FechaMtto</td>
-                                                    <td>
-
-
-                                                    </td>
+                                                  
                                                 </tr>
                                             }
                                             </tbody>

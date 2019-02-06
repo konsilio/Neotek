@@ -7,6 +7,7 @@ namespace MVC.Presentacion.Models
 {
     public class AsignacionModel
     {
+        public int IdAsignacion { get; set; }
         public short IdEmpresa { get; set; }
         public int IdChofer { get; set; }
         public string Chofer { get; set; }

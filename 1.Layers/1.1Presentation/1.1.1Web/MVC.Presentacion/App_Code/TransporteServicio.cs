@@ -22,13 +22,17 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarMantenimiento(tkn);
             return agente._ListaMantenimientoDetalle;
         }
-        private static RespuestaDTO RegistrarMantenimiento(MantenimientoDetalleModel model, string tkn)
+        public static RespuestaDTO RegistrarMantenimiento(MantenimientoDetalleModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarMantenimiento(model, tkn);
             return agente._RespuestaDTO;
         }
-        private static RespuestaDTO ModificarManteniminento(MantenimientoDetalleModel model, string tkn)
+        public static MantenimientoDetalleModel ActivarEditarMantenimiento(int id, string tkn)
+        {
+            return ListaMantenimientos(tkn).SingleOrDefault(x => x.Id_DetalleMtto.Equals(id));
+        }
+        public static RespuestaDTO ModificarManteniminento(MantenimientoDetalleModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.ModificaMantenimiento(model, tkn);
@@ -40,19 +44,19 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarRecargasCombustible(tkn, TokenServicio.ObtenerIdEmpresa(tkn));
             return agente._ListaRecargasCombustible;
         }
-        private static RespuestaDTO GuardarRecargaCombustible(RecargaCombustibleModel model, string tkn)
+        public static RespuestaDTO GuardarRecargaCombustible(RecargaCombustibleModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarRecargaCombustible(model, tkn);
             return agente._RespuestaDTO;
         }
-        private static RespuestaDTO EditarRecargaCombustible(RecargaCombustibleModel model, string tkn)
+        public static RespuestaDTO EditarRecargaCombustible(RecargaCombustibleModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.ModificarRecargaCombustible(model, tkn);
             return agente._RespuestaDTO;
         }
-        private static RespuestaDTO EliminarRecargaCombustible(RecargaCombustibleModel model, string tkn)
+        public static RespuestaDTO EliminarRecargaCombustible(RecargaCombustibleModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.EliminarRecargaCombustible(model, tkn);
@@ -64,13 +68,13 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarAsignaciones(tkn);
             return agente._ListaAsignaciones;
         }
-        private static RespuestaDTO GuardarAsignacion(AsignacionModel model, string tkn)
+        public static RespuestaDTO GuardarAsignacion(AsignacionModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarAsignacion(model, tkn);
             return agente._RespuestaDTO;
-        }     
-        private static RespuestaDTO EliminarAsignacion(AsignacionModel model, string tkn)
+        }
+        public static RespuestaDTO EliminarAsignacion(AsignacionModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.EliminarAsignacion(model, tkn);

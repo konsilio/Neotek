@@ -64,9 +64,9 @@
                                                 settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                 settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                                 settings.Properties.ValueType = typeof(int);
-                                                settings.Properties.TextField = "Nombre";
-                                                settings.Properties.ValueField = "IdVehiculo";
-                                            }).BindList(ViewBag.CuentasContables).Bind(Model.IdVehiculo).GetHtml()
+                                                settings.Properties.TextField = "DescVehiculo";
+                                                settings.Properties.ValueField = "IdEquipoTransporte";
+                                            }).BindList(ViewBag.Vehiculos).Bind(Model.IdVehiculo).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdVehiculo, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -78,7 +78,7 @@
                                         <div class="form-group">
                                             @if (ViewBag.EsEdicion == null)
                                             {
-                                                <button btn id="BtnCrear" formaction="CrearProducto" class="btn btn-primary btn-round">
+                                                <button btn id="BtnCrear" formaction="Crear" class="btn btn-primary btn-round">
                                                     <i class="zmdi zmdi-plus"></i> Agregar
                                                 </button>
                                             }
@@ -105,8 +105,7 @@
                                         </div>
                                     </div>
                                 }                          
-                                <div class="row clearfix">
-                         
+                                <div class="row clearfix">                         
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <input type="text" placeholder="Buscar" id="txtNumeroFiltro" class="form-control" />
@@ -125,14 +124,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (var prod in ViewBag.Asignaciones)
+                                                @foreach (var asign in ViewBag.Asignaciones)
                                                 {
                                                     <tr>
-                                                        <td>@prod.Id </td>
-                                                        <td>@prod.NombreChofer </td>
-                                                        <td>@prod.NombreVehiculo</td>                                                      
+                                                        <td>@asign.IdAsignacion </td>
+                                                        <td>@asign.Chofer </td>
+                                                        <td>@asign.Vehiculo</td>                                                      
                                                         <td>
-                                                            <a href="@Url.Action("EliminarProducto", "Producto" , new { Id=prod.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                            <a href="@Url.Action("Eliminar", "Asignacion" , new { Id=asign.IdAsignacion })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">delete</i>
                                                                 <span>Eliminar producto</span>
                                                             </a>
@@ -145,10 +144,10 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-md-6">
-                                        Página @(ViewBag.Productos.PageCount < ViewBag.Productos.PageNumber ? 0 : ViewBag.Productos.PageNumber) de @ViewBag.Productos.PageCount
+                                        Página @(ViewBag.Productos.PageCount < ViewBag.Asignaciones.PageNumber ? 0 : ViewBag.Asignaciones.PageNumber) de @ViewBag.Asignaciones.PageCount
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        @Html.PagedListPager((IPagedList)ViewBag.Productos, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
+                                        @Html.PagedListPager((IPagedList)ViewBag.Asignaciones, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
                                     </div>
                                 </div>
                             </div>

@@ -247,7 +247,7 @@
     <Compile Include="App_Code\RequisicionServicio.cs" />
     <Compile Include="App_Code\CatalogoServicio.cs" />
     <Compile Include="App_Code\TokenServicio.cs" />
-    <Content Include="App_Code\TransporteServicio.cs" />
+    <Compile Include="App_Code\TransporteServicio.cs" />
     <Compile Include="App_Code\VentasServicio.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -267,12 +267,14 @@
     <Compile Include="Controllers\EquipoTransporteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MantenimientoController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />
     <Compile Include="Controllers\PrecioVentaController.cs" />
     <Compile Include="Controllers\PrecioVentaOtroController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\PuntoVentaController.cs" />
+    <Compile Include="Controllers\RecargaCombustibleController.cs" />
     <Compile Include="Controllers\RemanenteController.cs" />
     <Compile Include="Controllers\RequisicionController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
@@ -397,6 +399,7 @@
     <Compile Include="Models\Transporte\MantenimientoDetalleModel.cs" />
     <Compile Include="Models\Transporte\MantenimientoModel.cs" />
     <Compile Include="Models\Transporte\RecargaCombustibleModel.cs" />
+    <Compile Include="Models\Transporte\TipoUnidadEqTransporteEnum.cs" />
     <Compile Include="Models\Ventas\CajaGeneralCamionetaModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralModel.cs" />
     <Compile Include="Models\Ventas\MovimientosGasCilindros.cs" />
@@ -11591,6 +11594,7 @@
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
     <Folder Include="Servicios\" />
+    <Folder Include="Views\RecargaCombustible\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
