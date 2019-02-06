@@ -82,7 +82,7 @@ namespace MVC.Presentacion.Controllers
                 _model[0].FechaRango2 = fecha2.Value.Date;
             }
             else
-                _model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                _model = CobranzaServicio.ObtenerListaR(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
 
             return View(_model);
         }
@@ -99,15 +99,21 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             DateTime dt = new DateTime();
             CargosModel m = new CargosModel();
-            if (model.reportedet == null)       
-            {m.IdEmpresa = ViewBag.IdEmpresa;}
-            if (idCliente != null || fecha != null ) {
+            if (model.reportedet == null)
+            { m.IdEmpresa = ViewBag.IdEmpresa; }
+            if (idCliente != null || fecha != null)
+            {
                 m.IdCliente = idCliente ?? 0;
-                if (idCliente != null  && idCliente!= 0) { ViewBag.IdCliente = idCliente; }
-                 m.FechaRango1 = fecha??dt; } 
-            
+                if (idCliente != null && idCliente != 0) { ViewBag.IdCliente = idCliente; }
+                m.FechaRango1 = fecha ?? dt;
+            }
+
             ReporteModel _model = CobranzaServicio.ObtenerListaCartera(_tkn, m);
-            if(_model.reportedet.Count>0) { _model.reportedet[0].FechaRango1 = fecha.Value; _model.reportedet[0].IdEmpresa = ViewBag.IdEmpresa; }
+            if (_model.reportedet.Count > 0)
+            {
+                if (fecha != null) {_model.reportedet[0].FechaRango1 = fecha.Value; }
+                 _model.reportedet[0].IdEmpresa = ViewBag.IdEmpresa;
+            }
             if (ViewBag.IdCliente != null && idCliente.Value != 0 && idCliente != null) { ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet[0].Nombre; }
 
             return View(_model);

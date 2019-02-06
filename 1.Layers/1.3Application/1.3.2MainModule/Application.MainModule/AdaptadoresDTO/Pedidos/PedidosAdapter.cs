@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Catalogo;
+﻿using Application.MainModule.AdaptadoresDTO.Seguridad;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
@@ -52,7 +53,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             {
                 IdPedido = p.IdPedido,
                 IdPedidoDetalle = pd[0].IdPedidoDetalle,
-                IdEmpresa = p.IdEmpresa,
+                //cliente.IdEmpresa = p.IdEmpresa,
                 IdEstatusPedido = p.IdEstatusPedido,
                 EstatusPedido = PedidosServicio.getString(PedidosServicio.GetEstatusPedido(p.IdEstatusPedido).ToString()),
                 Cantidad = p.IdCamioneta > 0 ? cant.TrimEnd(' ').TrimEnd(',') : pd[0].Cantidad.ToString().Split(',')[0] + " Kg",
@@ -62,22 +63,23 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 MotivoCancelacion = "",
                 Calle = clienteL.Calle,
                 Colonia = clienteL.Colonia,
-                Telefono1 = cliente.Telefono1,
-                IdCliente = cliente.IdCliente,
+                //cliente.Telefono1 = cliente.Telefono1,
+                //cliente.IdCliente = cliente.IdCliente,
                 Unidad = uni,
                 NombreRfc = cliente.Nombre + " " + cliente.Apellido1 + " " + cliente.Apellido2,
-                Rfc = cliente.Rfc,
+                //cliente.Rfc = cliente.Rfc,
                 IdPipa = p.IdPipa ?? 0,
                 IdCamioneta = p.IdCamioneta ?? 0,
                 IdDireccion = p.IdDireccion,
                 ReferenciaUbicacion = "",
                 FechaRegistroPedido = p.FechaRegistro,
                 FechaEntregaPedido = p.FechaPedido.Value,
-                Empresa = EmpresaServicio.Obtener(p.IdEmpresa).NombreComercial,
-                TipoPersonaFiscal = TipoPersonaServicio.TipoPersona(cliente.IdTipoPersona ?? 0).Descripcion,
-                RegimenFiscal = RegimenServicio.Regimen(cliente.IdRegimenFiscal ?? 0).Descripcion,
+                //Empresa = EmpresaServicio.Obtener(p.IdEmpresa).NombreComercial,
+                //TipoPersonaFiscal = TipoPersonaServicio.TipoPersona(cliente.IdTipoPersona ?? 0).Descripcion,
+                //RegimenFiscal = RegimenServicio.Regimen(cliente.IdRegimenFiscal ?? 0).Descripcion,
                 Pedidos = FromDtoDetalle(pd),
                 encuesta = pe.Count > 0 ? FromDto(pe) : FromInit(p.IdPedido),
+                cliente = ClientesAdapter.ToDTO(cliente),
                 //public List<PedidoModel> Unidades 
             };
             return usDTO;
@@ -129,7 +131,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             return new Pedido()
             {
                 IdCliente = pedidoDTO.IdCliente,
-                IdEmpresa = pedidoDTO.IdEmpresa,
+                IdEmpresa = pedidoDTO.cliente.IdEmpresa,
                 IdEstatusPedido = (short)pedidoDTO.IdEstatusPedido,
                 FolioVenta = pedidoDTO.FolioVenta,
                 FechaRegistro = DateTime.Now,
@@ -213,26 +215,35 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
         }
         public static List<PedidoDetalle> FromDtoDetalle(PedidoModelDto pedidoDTO)
         {
-            var factorLt = EmpresaServicio.Obtener(pedidoDTO.IdEmpresa).FactorLitrosAKilos;
+            var factorLt = EmpresaServicio.Obtener(pedidoDTO.cliente.IdEmpresa).FactorLitrosAKilos;
             List<PedidoDetalle> _lp = new PedidosDataAccess().Buscar(pedidoDTO.IdPedido);
             List<PedidoDetalle> _lst = new List<PedidoDetalle>();
             if (pedidoDTO.IdCamioneta > 0)
             {
                 var idDet = 0;
-                if (pedidoDTO.Cantidad20 != "" && pedidoDTO.Cantidad20 != null)
+                if (pedidoDTO.Cantidad20 != "" && pedidoDTO.Cantidad20 != "0" && pedidoDTO.Cantidad20 != null)
                 {
-                    idDet = _lp.Where(x => x.Cilindro20.Value.Equals(true)).FirstOrDefault().IdPedidoDetalle;
+                    if (_lp != null && _lp.Count > 0)
+                        idDet = _lp.Where(x => x.Cilindro20 != null).Count() > 0 ? _lp.Where(x => x.Cilindro20 != null).FirstOrDefault().IdPedidoDetalle : idDet;
                     _lst.Add(FromDtoDetalleP20(pedidoDTO, factorLt, idDet));
                 }
-                if (pedidoDTO.Cantidad30 != "" && pedidoDTO.Cantidad30 != null)
+                if (pedidoDTO.Cantidad30 != "" && pedidoDTO.Cantidad30 != "0" && pedidoDTO.Cantidad30 != null)
                 {
-                    //idDet = _lp.Where(x => x.Cilindro30.Value.Equals(true)).FirstOrDefault().IdPedidoDetalle;
-                    idDet = _lp.Where(x => x.Cilindro30 != null).FirstOrDefault().IdPedidoDetalle;
+                    if (_lp != null && _lp.Count > 0)
+                        idDet = _lp.Where(x => x.Cilindro30 != null).Count() > 0 ? _lp.Where(x => x.Cilindro30 != null).FirstOrDefault().IdPedidoDetalle : idDet;
                     _lst.Add(FromDtoDetalleP30(pedidoDTO, factorLt, idDet));
                 }
-                if (pedidoDTO.Cantidad45 != "" && pedidoDTO.Cantidad45 != null)
+                if (pedidoDTO.Cantidad45 != "" && pedidoDTO.Cantidad45 != "0" && pedidoDTO.Cantidad45 != null)
                 {
-                    idDet = _lp.Where(x => x.Cilindro45 != null).FirstOrDefault().IdPedidoDetalle;
+                    //if (_lp != null && _lp.Count > 0)
+                    //{
+                    //    if (_lp.Where(x => x.Cilindro45 != null).Count() > 0)
+                    //    {
+                    //        idDet =  _lp.Where(x => x.Cilindro45 != null).FirstOrDefault().IdPedidoDetalle;
+                    //    }                       
+                    //}
+                    if (_lp != null && _lp.Count > 0)
+                        idDet = _lp.Where(x => x.Cilindro45 != null).Count() > 0 ? _lp.Where(x => x.Cilindro45 != null).FirstOrDefault().IdPedidoDetalle : idDet;
                     _lst.Add(FromDtoDetalleP45(pedidoDTO, factorLt, idDet));
                 }
             }
@@ -246,7 +257,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             var _pedido = FromEntity(catCte);
             _pedido.IdPedido = Pedidodto.IdPedido;
             _pedido.IdCliente = catCte.IdCliente;
-            _pedido.IdEmpresa = Pedidodto.IdEmpresa;
+            _pedido.IdEmpresa = Pedidodto.cliente.IdEmpresa;
             _pedido.IdEstatusPedido = (short)Pedidodto.IdEstatusPedido;
             _pedido.FolioVenta = Pedidodto.FolioVenta;
             _pedido.FechaRegistro = DateTime.Now;
@@ -256,6 +267,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             _pedido.IdDireccion = Pedidodto.IdDireccion;
             _pedido.Ruta = Pedidodto.Ruta;
             _pedido.PedidoDetalle = FromDtoDetalle(Pedidodto);
+
             return _pedido;
         }
         public static Pedido FromEntity(Pedido ped)
@@ -274,6 +286,22 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 Ruta = ped.Ruta,
                 IdDireccion = ped.IdDireccion,
                 MotivoCancelacion = ped.MotivoCancelacion,
+            };
+        }
+
+        public static PedidoDetalle FromEntity(PedidoDetalle ped)
+        {
+            return new PedidoDetalle()
+            {
+                IdPedido = ped.IdPedido,
+                IdPedidoDetalle = ped.IdPedidoDetalle,
+                Cantidad = ped.Cantidad,
+                Cilindro20 = ped.Cilindro20,
+                Cilindro30 = ped.Cilindro30,
+                Cilindro45 = ped.Cilindro45,
+                TotalKilos = ped.TotalKilos,
+                TotalLitros = ped.TotalLitros,
+
             };
         }
         public static List<PedidoModelDto> FromDtoDetalle(List<PedidoDetalle> lu)
@@ -297,6 +325,14 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
         public static List<EncuestaDto> FromDto(List<RespuestaSatisfaccionPedido> lu)
         {
             List<EncuestaDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
+            if (luDTO.Count < 5)
+            {
+                for (int i = luDTO.Count + 1; i < 6; i++)
+                {
+                    //luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
+                    luDTO.Add(ToDTOInit(lu[0].IdPedido, i, i));
+                }
+            }
             return luDTO;
         }
         public static EncuestaDto ToDTO(RespuestaSatisfaccionPedido lu)
@@ -306,17 +342,16 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 IdRespuesta = lu.IdRespuesta,
                 IdPedido = lu.IdPedido,
                 IdPregunta = lu.IdPregunta,
-              //  Respuesta = lu.Respuesta,
+                //  Respuesta = lu.Respuesta,
                 Pregunta1Val1 = lu.Respuesta >= 1 ? true : false,
                 Pregunta1Val2 = lu.Respuesta >= 2 ? true : false,
                 Pregunta1Val3 = lu.Respuesta >= 3 ? true : false,
                 Pregunta1Val4 = lu.Respuesta >= 4 ? true : false,
                 Pregunta1Val5 = lu.Respuesta >= 5 ? true : false,
-        };
-                 
+            };
+
             return usDTO;
         }
-        
         public static List<EncuestaDto> FromInit(int pedido)
         {
             List<EncuestaDto> luDTO = new List<EncuestaDto>();
@@ -324,12 +359,11 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             {
                 luDTO.Add(ToDTOInit(pedido, i, i));
             }
-            
+
             return luDTO;
         }
-
-        public static EncuestaDto ToDTOInit(int pedido,int resp, int preg)
-        {         
+        public static EncuestaDto ToDTOInit(int pedido, int resp, int preg)
+        {
             EncuestaDto usDTO = new EncuestaDto()
             {
                 IdRespuesta = resp,

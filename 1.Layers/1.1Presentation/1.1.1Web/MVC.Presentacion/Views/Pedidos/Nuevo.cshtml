@@ -28,6 +28,9 @@
         if (mensaje != '') {
             $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
         }
+        $(document).ready(function () {
+            $('#btnCrearCte').prop('disabled', true);
+        });
     </script>
 </head>
 <body style="height:100%">
@@ -47,12 +50,11 @@
                             </ul>
                         </div>
                     </div>
-                    @Html.HiddenFor(m => m.IdEmpresa)
-                    @Html.HiddenFor(m => m.IdTipoPersona)
-                    @Html.HiddenFor(m => m.IdRegimenFiscal)
-                    @Html.HiddenFor(m => m.limiteCreditoMonto)
-                    @Html.HiddenFor(m => m.limiteCreditoDias)
-                    @Html.HiddenFor(m => m.IdRegimenFiscal)
+                    @Html.HiddenFor(m => m.cliente.IdEmpresa)
+                    @Html.HiddenFor(m => m.cliente.IdTipoPersona)
+                    @Html.HiddenFor(m => m.cliente.IdRegimenFiscal)
+                    @Html.HiddenFor(m => m.cliente.limiteCreditoMonto)
+                    @Html.HiddenFor(m => m.cliente.limiteCreditoDias)
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card">
@@ -65,19 +67,17 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Teléfono del cliente:</b>
-                                                    @Html.TextBoxFor(m => m.Telefono1, new { @class = "form-control", @id = "txtTel1", placeholder = "Teléfono del cliente" })
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <b>Teléfono del cliente:</b>
-                                                    @Html.TextBoxFor(m => m.Celular1, new { @class = "form-control", @id = "txtTel2", placeholder = "Teléfono del cliente" })
+                                                    @Html.TextBoxFor(m => m.cliente.Telefono1, new { @class = "form-control", @id = "txtTel1", placeholder = "Teléfono del cliente" })
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <b>RFC:</b>
-                                                    @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control", @id = "txtRfc", placeholder = "RFC del cliente" })
+                                                    @Html.TextBoxFor(m => m.cliente.Rfc, new { @class = "form-control", @id = "txtRfc", placeholder = "RFC del cliente" })
                                                 </div>
                                                 <div class="col-sm-3" style="top: 10px;">
-                                                    <div class="form-group">
-                                                        <input type="submit" id="btnBuscarC" formaction=@Url.Action("BuscarClientesPedido") formmethod="post" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
+                                                    <div class="form-group">@* formaction=@Url.Action("BuscarClientesPedido") formmethod="post"*@
+                                                        <input type="button" id="btnBuscarC" value="Buscar" formaction=@Url.Action("BuscarClientesPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                        @*<input type="button" value="Some text" onclick="window.location.href='<%=Url.Action("BuscarClientesPedido", "controllerName")%>';" />*@                                                    
+    @*<input type="button"  id="btnBuscarC" value="Buscar" onclick="@("window.location.href='@Url.Action("BuscarClientesPedido", "Pedidos")')" class="btn btn-raised btn-primary btn-round float-left"/>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -99,7 +99,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Cliente:</b>
-                                                    @Html.Action("_DatosCliente", Model.clientes)
+                                                    @Html.Action("_DatosCliente", Model.cliente)
                                                 </div>
                                                 <div class="col-sm-2" style="top: 10px;">
                                                     <div class="form-group">
@@ -113,29 +113,29 @@
                                                     <div class="container">
                                                         <div class="editor">
                                                             @Html.DevExpress().DateEdit(settings =>
-       {
-           settings.Name = "FechaEntregaPedido";
-           settings.Properties.UseMaskBehavior = true;
-           settings.Theme = "Office365";
-           settings.Properties.EditFormat = EditFormat.Custom;
-           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
-           settings.Properties.TimeSectionProperties.Visible = true;
-           settings.Properties.TimeSectionProperties.Adaptive = true;
-           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
-           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
-           settings.Date = DateTime.Now;
-           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);           
-           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-       }).GetHtml()
+                                                       {
+                                                           settings.Name = "FechaEntregaPedido";
+                                                           settings.Properties.UseMaskBehavior = true;
+                                                           settings.Theme = "Office365";
+                                                           settings.Properties.EditFormat = EditFormat.Custom;
+                                                           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                                                           settings.Properties.TimeSectionProperties.Visible = true;
+                                                           settings.Properties.TimeSectionProperties.Adaptive = true;
+                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                           settings.Date = DateTime.Now;
+                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                                       }).GetHtml()
                                                         </div>
                                                         <div class="content">
                                                             @*UseMaskBehavior = true<br />
-                                                            EditFormat = EditFormat.Custom<br />
-                                                            EditFormatString = "dd/MM/yyyy hh:mm tt"<br />
-                                                            TimeSectionProperties.Visible = true;<br />
-                                                            TimeSectionProperties.Adaptive = true;<br />
-                                                            TimeEditProperties.EditFormat = EditFormat.Custom;<br />
-                                                            TimeEditProperties.EditFormatString = "hh:mm tt";*@
+                                                                EditFormat = EditFormat.Custom<br />
+                                                                EditFormatString = "dd/MM/yyyy hh:mm tt"<br />
+                                                                TimeSectionProperties.Visible = true;<br />
+                                                                TimeSectionProperties.Adaptive = true;<br />
+                                                                TimeEditProperties.EditFormat = EditFormat.Custom;<br />
+                                                                TimeEditProperties.EditFormatString = "hh:mm tt";*@
                                                         </div>
                                                     </div>
 
@@ -173,7 +173,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Domicilio:</b>
-                                                    @Html.Action("_LocacionesCliente", Model.Locaciones)
+                                                    @Html.Action("_LocacionesCliente", Model.cliente)
                                                 </div><div class="col-sm-4">
                                                 </div>
                                                 <div class="col-sm-2">
@@ -316,21 +316,19 @@
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 id="ModalConfirmacionLabel">No se encontraron resultados</h6>
+                        <h6 id="ModalConfirmacionLabel" style="text-align:center">No se encontraron resultados</h6>
                     </div>
                     <div class="modal-body">
                         <div class="body">
                             <div class="col-sm-12">
                                 <div>
-                                    ¿Desea crear nuevo cliente?
+                                    Click en el botón <img src="~/Resources/img/ccte.png" /> para crear uno nuevo cliente.
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-raised btn-primary btn-round" onclick="Aceptar()">Aceptar</button>
-                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
-
+                    <div class="modal-footer" style="padding-right:98px">
+                        <button type="button" class="btn btn-raised btn-primary btn-round float-center" data-dismiss="modal">Aceptar</button>                       
                     </div>
                 </div>
             </div>

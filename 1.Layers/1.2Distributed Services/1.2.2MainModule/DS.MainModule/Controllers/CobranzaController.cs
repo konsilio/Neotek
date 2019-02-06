@@ -23,6 +23,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _cobranza.ListaCargos(id));
         }
+        [Route("buscar/listacrecuperada/{id}")]
+        public HttpResponseMessage GetListaCRecuperada(short id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.ListaCRecuperada(id));
+        }
         [Route("buscar/cargos/{id}")]
         public HttpResponseMessage GetPedidosId(int id)
         {

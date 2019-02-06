@@ -13,6 +13,37 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
     {
         public static ClientesDto ToDTO(Cliente us)
         {
+
+            string nom = "";
+            string apell = "";
+            string apell2 = "";
+            if (us.Nombre == "" || us.Nombre == null || us.Apellido1 == "" || us.Apellido1 == null)
+            {
+                if (us.RepresentanteLegal.Split(' ').Count() == 4)
+                {
+                    nom = us.RepresentanteLegal.Split(' ')[0] + " " + us.RepresentanteLegal.Split(' ')[1];
+                    apell = us.RepresentanteLegal.Split(' ')[2];
+                    apell2 = us.RepresentanteLegal.Split(' ')[3];
+                }
+                else if (us.RepresentanteLegal.Split(' ').Count() == 3)
+                {
+                    nom = us.RepresentanteLegal.Split(' ')[0];
+                    apell =  us.RepresentanteLegal.Split(' ')[1];
+                    apell2 = us.RepresentanteLegal.Split(' ')[2];
+                }
+                else if (us.RepresentanteLegal.Split(' ').Count() == 2)
+                {
+                    nom =  us.RepresentanteLegal.Split(' ')[0];
+                    apell = us.RepresentanteLegal.Split(' ')[1];
+                }
+            }
+            else
+            {
+                nom = us.Nombre;
+                apell = us.Apellido1;
+                apell2 = us.Apellido2;
+            }
+
             ClientesDto usDTO = new ClientesDto()
             {
                 IdCliente = us.IdCliente,
@@ -20,9 +51,9 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 IdTipoPersona = us.IdTipoPersona,
                 IdRegimenFiscal = us.IdRegimenFiscal,
                 IdCuentaContable = us.IdCuentaContable,
-                Nombre = us.Nombre,
-                Apellido1 = us.Apellido1,
-                Apellido2 = us.Apellido2,
+                Nombre = nom,//us.Nombre,
+                Apellido1 = apell,// us.Apellido1,
+                Apellido2 = apell2,//us.Apellido2,
                 DescuentoXKilo = us.DescuentoXKilo,
                 limiteCreditoMonto = us.limiteCreditoMonto,
                 limiteCreditoDias = us.limiteCreditoDias,
@@ -51,7 +82,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Empresa = us.Empresa.NombreComercial,
                 TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
                 RegimenFiscal = us.RegimenFiscal.Descripcion,
-                Cliente = us.Nombre + " " + us.Apellido1 + " " + us.Rfc,
+                Cliente = nom + " " + apell + " " + apell2 + " " + us.Rfc,//us.Nombre + " " + us.Apellido1 + " " + us.Rfc,
                 Locaciones = ClienteServicio.ObtenerLoc(us.IdCliente),
             };
             return usDTO;
@@ -92,14 +123,14 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             return usDTO;
         }
         public static List<ClienteLocacionDTO> ToDTOLoc(List<ClienteLocacion> _loc)
-        {          
+        {
             List<ClienteLocacionDTO> locDto = _loc.ToList().Select(x => ToDTOL(x)).ToList();
 
             return locDto;
         }
-      
+
         public static ClienteLocacion FromDtox(ClienteLocacionDTO cteDTO)
-        {           
+        {
             return new ClienteLocacion()
             {
                 IdCliente = cteDTO.IdCliente,
@@ -113,7 +144,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Calle = cteDTO.Calle,
                 NumExt = cteDTO.NumExt,
                 NumInt = cteDTO.NumInt,
-                formatted_address = cteDTO.formatted_address??"",//cteDTO.Calle + cteDTO.Colonia + cteDTO.NumExt,
+                formatted_address = cteDTO.formatted_address ?? "",//cteDTO.Calle + cteDTO.Colonia + cteDTO.NumExt,
                 location_lat = "1",//cteDTO.location_lat,
                 location_lng = "1",//cteDTO.location_lng,
                 place_id = "1",//cteDTO.place_id,
@@ -156,6 +187,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 DescuentoXKilo = cteDTO.DescuentoXKilo,
                 limiteCreditoMonto = cteDTO.limiteCreditoMonto,
                 limiteCreditoDias = cteDTO.limiteCreditoDias,
+                CreditoDisponibleMonto = cteDTO.CreditoDisponibleMonto,
                 Telefono1 = cteDTO.Telefono1,
                 Telefono2 = cteDTO.Telefono2,
                 Telefono3 = cteDTO.Telefono3,
@@ -339,11 +371,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             {
                 IdCliente = cte.IdCliente,
                 Orden = cte.Orden,
-                IdPais =cte.IdPais,
+                IdPais = cte.IdPais,
                 IdEstadoRep = cte.IdEstadoRep,
                 EstadoProvincia = cte.EstadoProvincia,
                 Municipio = cte.Municipio,
-                CodigoPostal =cte.CodigoPostal,
+                CodigoPostal = cte.CodigoPostal,
                 Colonia = cte.Colonia,
                 Calle = cte.Calle,
                 NumExt = cte.NumExt,

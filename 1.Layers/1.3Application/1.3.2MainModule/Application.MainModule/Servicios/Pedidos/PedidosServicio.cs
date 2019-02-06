@@ -102,6 +102,10 @@ namespace Application.MainModule.Servicios.Pedidos
         {
             return new PedidosDataAccess().Insertar(_pedidoDto);
         }
+        public static RespuestaDto Alta(List<PedidoDetalle> _pedidoDto)
+        {
+            return new PedidosDataAccess().Insertar(_pedidoDto);
+        }
         public static RespuestaDto Alta(List<RespuestaSatisfaccionPedido> _pedidoDto)
         {
             return new PedidosDataAccess().Insertar(_pedidoDto);

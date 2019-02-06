@@ -121,7 +121,10 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeConsultarCliente();
             if (!resp.Exito) return null;
-            return ClienteServicio.ListaClientes().ToList();
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return ClienteServicio.ListaClientes().ToList();
+            else
+                return ClienteServicio.ListaClientes().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
 
         public List<ClienteLocacionDTO> ListaLocaciones(int id)

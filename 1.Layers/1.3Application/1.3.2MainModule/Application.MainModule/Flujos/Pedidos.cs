@@ -27,7 +27,7 @@ namespace Application.MainModule.Flujos
                 return PedidosServicio.Obtener(idempresa).ToList();
 
             else
-                return PedidosServicio.Obtener(idempresa).Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+                return PedidosServicio.Obtener(idempresa).Where(x => x.cliente.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
         public PedidoModelDto PedidoId(int idPedido)
         {
@@ -73,10 +73,12 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeRegistrarPedido();
             if (!resp.Exito) return resp;
+            //if (pedidoDto != null)
+            //{
+                var pedido = PedidosAdapter.FromDto(pedidoDto);
+                return PedidosServicio.Alta(pedido);
+           // }
 
-            var pedido = PedidosAdapter.FromDto(pedidoDto);            
-
-            return PedidosServicio.Alta(pedido);
         }
         public RespuestaDto Modifica(PedidoModelDto pedidoDto)
         {
@@ -85,8 +87,12 @@ namespace Application.MainModule.Flujos
 
             var pedidos = new PedidosDataAccess().BuscarPedido(pedidoDto.IdPedido);
             if (pedidos == null) return PedidosServicio.NoExiste();
-
-            var pedido = PedidosAdapter.FromDto(pedidoDto, pedidos);           
+            var pedido = PedidosAdapter.FromDto(pedidoDto, pedidos);
+            if (pedido.IdCamioneta > 0)
+            {
+                var CrudDet = PedidosServicio.Alta(pedido.PedidoDetalle.ToList());
+                if (!CrudDet.Exito) return resp;
+            }
             return PedidosServicio.Modificar(pedido);
         }
         public RespuestaDto Elimina(PedidoModelDto pedidoDto)

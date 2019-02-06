@@ -16,6 +16,13 @@ namespace MVC.Presentacion.App_Code
             agente.ListaCargos(id, tkn);
             return agente._ListaCargos;
         }
+        public static List<CargosModel> ObtenerListaR(short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaCRecuperada(id, tkn);
+            return agente._ListaCargos;
+        }
+        
         public static List<CargosModel> ObtenerCargosFilter(DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string tkn)
         {
             var agente = new AgenteServicio();

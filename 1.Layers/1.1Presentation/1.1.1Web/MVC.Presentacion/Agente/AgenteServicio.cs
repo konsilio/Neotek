@@ -842,12 +842,12 @@ namespace MVC.Presentacion.Agente
                 _lstaClientes = lus;
             }
         }
-        public void BuscarListaClientesMod(int cliente, string tel1, string tel2, string rfc, string tkn)//short idEmpresa, 
+        public void BuscarListaClientesMod(int cliente, string tel1, int pedido, string rfc, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetClientes"];
-            GetListaClientesMod(cliente, tel1, tel2, rfc, tkn).Wait();
+            GetListaClientesMod(cliente, tel1, pedido, rfc, tkn).Wait();
         }
-        private async Task GetListaClientesMod(int cliente, string tel1, string tel2, string rfc, string Token)
+        private async Task GetListaClientesMod(int cliente, string tel1, int numP, string rfc, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -857,7 +857,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    if (tel1 != "" || rfc != "" || tel2 != "" || cliente != 0)
+                    if (tel1 != "" || rfc != "" || numP != 0 || cliente != 0)
                     {
                         HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
                         if (response.IsSuccessStatusCode)
@@ -881,9 +881,9 @@ namespace MVC.Presentacion.Agente
                             lus = (from x in lus where x.Rfc == rfc select x).ToList();
                         }
 
-                        if (tel2 != "" && tel2 != null)
+                        if (numP > 0)
                         {
-                            lus = (from x in lus where x.Telefono2 == tel2 select x).ToList();
+                          //  lus = (from x in lus where x.Id == tel2 select x).ToList();
                         }
 
                     }
@@ -3538,6 +3538,54 @@ namespace MVC.Presentacion.Agente
                 _ListaPedidos = pedidos;
             }
         }
+        public void ListaPedidosFiltro(short id, int idpedido, string rfc, string tel1, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPedidos"];
+            PedidosFiltro(id, idpedido, rfc, tel1, ApiCatalgos, token).Wait();
+        }
+        private async Task PedidosFiltro(short id, int idpedido, string rfc, string tel1,string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PedidoModel> pedidos = new List<PedidoModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        pedidos = await response.Content.ReadAsAsync<List<PedidoModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //ex.Message;
+                    pedidos = new List<PedidoModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); 
+                }
+                if (idpedido>0)
+                {
+                    pedidos = (from x in pedidos where x.IdPedido == idpedido select x).ToList();
+                }
+                if (rfc != "" && rfc != null)
+                {
+                    pedidos = (from x in pedidos where x.cliente.Rfc == rfc select x).ToList();
+                }
+
+                if (tel1 != "" && tel1 != null)
+                {
+                    pedidos = (from x in pedidos where x.cliente.Telefono1 == tel1 select x).ToList();
+                }
+                _ListaPedidos = pedidos;
+            }
+        }       
         public void ObtenerPedidoId(int id, string token)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetPedidoId"];
@@ -3801,6 +3849,41 @@ namespace MVC.Presentacion.Agente
                 _ListaCargos = cargos;
             }
         }
+        public void ListaCRecuperada(short id, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCRecuperada"];
+            CreditoRec(id, ApiCatalgos, token).Wait();
+        }
+        private async Task CreditoRec(short id, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CargosModel> cargos = new List<CargosModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        cargos = await response.Content.ReadAsAsync<List<CargosModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargos = new List<CargosModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListaCargos = cargos;
+            }
+        }
+        
         public void ListaCartera(CargosModel dto, string token)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutListaCartera"];

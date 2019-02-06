@@ -66,7 +66,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Format(Error.C0002, "del cargo "+ _cc[0].IdCargo);
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del cargo " + _cc[0].IdCargo);
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
@@ -127,13 +127,19 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<Abono> BuscarTodos(int idCargo)
         {
             return uow.Repository<Abono>().Get(x => x.IdCargo.Equals(idCargo)
-                                                        )
+                                                       && x.ACTIVO)
                                                          .ToList();
         }
         public List<Cargo> BuscarTodos(short idEmpresa)
         {
             return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                        )
+                                                        && x.Saldada.Equals(false))
+                                                         .ToList();
+        }
+        public List<Cargo> Buscar(short idEmpresa)
+        {
+            return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                        && x.Saldada.Equals(true))
                                                          .ToList();
         }
         public Cargo Buscar(int idCargo)

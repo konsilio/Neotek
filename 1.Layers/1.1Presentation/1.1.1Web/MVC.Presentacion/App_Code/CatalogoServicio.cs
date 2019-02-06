@@ -1494,10 +1494,10 @@ namespace MVC.Presentacion.App_Code
             return agente._lstaClientes;
         }
 
-        public static List<ClientesModel> ListaClientes(int idCliente, string tel1, string tel2, string rfc, string token)
+        public static List<ClientesModel> ListaClientes(int idCliente, string tel1, int pedido, string rfc, string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaClientesMod(idCliente, tel1, tel2, rfc, token);
+            agente.BuscarListaClientesMod(idCliente, tel1, pedido, rfc, token);
             return agente._lstaClientesMod;
         }
 

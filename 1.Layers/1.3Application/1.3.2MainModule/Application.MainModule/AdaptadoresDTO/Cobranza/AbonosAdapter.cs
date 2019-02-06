@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.AdaptadoresDTO.Cobranza
 {
-   public class AbonosAdapter
+    public class AbonosAdapter
     {
         public static AbonosDTO ToDTO(Abono _Abono)
         {
@@ -70,6 +70,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         }
         public static Cargo FromDTO(CargosDTO _dto, decimal totalAbono)
         {
+            var totAbonado = _dto.TotalAbonos + totalAbono;
             Cargo dto = new Cargo();
             dto.IdCargo = _dto.IdCargo;
             dto.IdCliente = _dto.IdCliente;
@@ -81,7 +82,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.VentaExtraordinaria = _dto.VentaExtraordinaria;
             dto.Activo = _dto.Activo;
             dto.FechaVencimiento = _dto.FechaVencimiento;
-            dto.Saldada = _dto.Saldada;
+            dto.Saldada = totAbonado >= _dto.TotalCargo ? true : false;
 
             return dto;
         }
@@ -98,7 +99,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.FechaRegistro = _dto.FechaRegistro;
             dto.TotalCargo = _dto.TotalCargo;
             dto.TotalAbonos = _dto.TotalAbonos;
-            dto.SaldoInsoluto = _dto.TotalCargo- _dto.TotalAbonos;
+            dto.SaldoInsoluto = _dto.TotalCargo - _dto.TotalAbonos;
             dto.VentaExtraordinaria = _dto.VentaExtraordinaria;
             dto.Activo = _dto.Activo;
             dto.FechaVencimiento = _dto.FechaVencimiento;
