@@ -17,6 +17,13 @@ namespace MVC.Presentacion.App_Code
             agente.ListaPedidos(id, tkn);
             return agente._ListaPedidos;
         }
+
+        public static List<PedidoModel> ObtenerPedidosFiltro(short id, string tkn, int? idpedido, string rfc = null, string tel1 = null)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaPedidosFiltro(id, idpedido.Value, rfc, tel1, tkn);
+            return agente._ListaPedidos;
+        }
         public static PedidoModel ObtenerIdPedido(int id,string tkn)
         {
             var agente = new AgenteServicio();

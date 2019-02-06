@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Pedidos
 {
-    public class PedidoModelDto : ClienteCrearDto
+    public class PedidoModelDto// : ClienteCrearDto
     {
         public int IdPedido { get; set; }
+        public int IdCliente { get; set; }
+        public short Orden { get; set; }
         public int IdPedidoDetalle { get; set; }
         public int IdEstatusPedido { get; set; }
         public string EstatusPedido { get; set; }
@@ -37,6 +39,7 @@ namespace Application.MainModule.DTOs.Pedidos
         public decimal TotalLitros { get; set; }
         public List<PedidoModelDto> Pedidos { get; set; }
         public List<ClienteCrearDto> clientes { get; set; }
+        public ClienteCrearDto cliente { get; set; }
         public List<EncuestaDto> encuesta { get; set; }
     }
 

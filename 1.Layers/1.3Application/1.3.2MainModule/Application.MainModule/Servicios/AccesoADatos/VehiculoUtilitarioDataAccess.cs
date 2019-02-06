@@ -81,5 +81,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<CUtilitario>().Get(x => x.Activo).ToList();
         }
+        public CUtilitario Obtener(short idEmpresa, string nom, string num)
+        {
+            return uow.Repository<CUtilitario>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo && x.Nombre.Equals(nom.Trim()) && x.Numero.Equals(num.Trim()));
+        }
     }
 }

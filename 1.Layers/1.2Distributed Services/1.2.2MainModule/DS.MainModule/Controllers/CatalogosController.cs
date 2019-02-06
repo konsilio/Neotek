@@ -622,6 +622,20 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.Eliminar(idcombustible), Request);
         }
         #endregion
+        #region TiposUnidad
+        [Route("consulta/tipounidad")]
+        public HttpResponseMessage GetListaTiposUnidad()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaTipoUnidad(), Request);
+        }
+        [Route("consulta/tipounidadidempresa/{idempresa}")]
+        public HttpResponseMessage GetListaTipoUnidadIdEmpresa(short idempresa)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaTipoUnidad(idempresa), Request);
+        }
+
+     
+        #endregion
 
         #region Banco
         [Route("consulta/bancos")]

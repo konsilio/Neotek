@@ -12,7 +12,7 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
-<!DOCTYPE html>
+@*<!DOCTYPE html>*@
 
 <html>
 <head>
@@ -68,30 +68,33 @@
                     calificacion.push({ IdPedido:@Model.IdPedido,IdPregunta:4,Respuesta: selected4 });
                 if (selected5 != undefined)
                     calificacion.push({IdPedido:@Model.IdPedido, IdPregunta:5,Respuesta: selected5 });
+                debugger
+                if(calificacion.length!='0')
+                {
+                    calificacion = JSON.stringify({ 'calificacion': calificacion });
 
-                calificacion = JSON.stringify({ 'calificacion': calificacion });
+                    $.ajax({
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: 'POST',
+                        url: '/Pedidos/GuardarEncuesta',
+                        data: calificacion,
+                        success: function () {
 
-                $.ajax({
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    type: 'POST',
-                    url: '/Pedidos/GuardarEncuesta',
-                    data: calificacion,
-                    success: function () {
+                        },
+                        failure: function (response) {
 
-                    },
-                    failure: function (response) {
-
-                    }
-                });
-
+                        }
+                    });
+                }
             });
         });
     </script>
     <style type="text/css">
         .ui-datepicker-calendar {
-    display: none;
-    }
+            display: none;
+        }
+
         input[type = "radio"] {
             display: none;
         }
@@ -130,12 +133,12 @@
         .CalendarWidthClass {
             width: 500px;
         }
-    </style>    
+    </style>
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("GuardarEdicionPedido", "Pedidos", FormMethod.Post))
     {
-        @Html.HiddenFor(m => m.IdEmpresa)
+        @Html.HiddenFor(m => m.cliente.IdEmpresa)
         @Html.HiddenFor(m => m.IdDireccion)
         @Html.HiddenFor(m => m.IdPedidoDetalle)
         <section class="content home">
@@ -202,7 +205,7 @@
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                                 @Html.DevExpress().DateEdit(settings =>
+                                                            @Html.DevExpress().DateEdit(settings =>
                                                             {
                                                                 settings.Name = "FechaEntregaPedido";
                                                                 settings.Properties.UseMaskBehavior = true;
@@ -218,7 +221,7 @@
                                                                 settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                                                 settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                                             }).GetHtml()
-                                                             </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -235,7 +238,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                @Model.NombreRfc - @Model.Rfc
+                                                                @Model.NombreRfc - @Model.cliente.Rfc
                                                             </div>
                                                         </div>
                                                     </div>
@@ -311,7 +314,7 @@
                                                     <div class="col-sm-2">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                @Model.Telefono1
+                                                                @Model.cliente.Telefono1
                                                             </div>
                                                         </div>
                                                     </div>
@@ -346,7 +349,7 @@
                                                             <div class="col-sm-4">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        @Model.NombreRfc - @Model.Rfc
+                                                                        @Model.NombreRfc - @Model.cliente.Rfc
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -423,7 +426,7 @@
                                                     <div class="col-sm-2">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                @Model.Telefono1
+                                                                @Model.cliente.Telefono1
                                                             </div>
                                                         </div>
                                                     </div>
@@ -508,10 +511,10 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio1" type="radio" name="estrellas1" value="Pregunta1Val5" checked="checked" /> @*checked="@Model.encuesta[0].Pregunta1Val5">*@
+                                                    <input id="radio1" type="radio" name="estrellas1" value="Pregunta1Val5" checked="@Model.encuesta[0].Pregunta1Val5" />
                                                     <label for="radio1">★</label>
                                                     <!-- -->
-                                                    <input id="radio2" type="radio" name="estrellas1" value="Pregunta1Val4" checked="checked">@*checked="@Model.encuesta[0].Pregunta1Val4"*@
+                                                    <input id="radio2" type="radio" name="estrellas1" value="Pregunta1Val4" checked="@Model.encuesta[0].Pregunta1Val4">
                                                     <!-- -->
                                                     <label for="radio2">★</label>
                                                     <!-- -->
@@ -622,23 +625,23 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio16" type="radio" name="estrellas4" value="Pregunta4Val5" checked="@Model.encuesta[2].Pregunta1Val5">
+                                                    <input id="radio16" type="radio" name="estrellas4" value="Pregunta4Val5" checked="@Model.encuesta[3].Pregunta1Val5">
                                                     <!-- -->
                                                     <label for="radio16">★</label>
                                                     <!-- -->
-                                                    <input id="radio17" type="radio" name="estrellas4" value="Pregunta4Val4" checked="@Model.encuesta[2].Pregunta1Val4">
+                                                    <input id="radio17" type="radio" name="estrellas4" value="Pregunta4Val4" checked="@Model.encuesta[3].Pregunta1Val4">
                                                     <!-- -->
                                                     <label for="radio17">★</label>
                                                     <!-- -->
-                                                    <input id="radio18" type="radio" name="estrellas4" value="Pregunta4Val3" checked="@Model.encuesta[2].Pregunta1Val3">
+                                                    <input id="radio18" type="radio" name="estrellas4" value="Pregunta4Val3" checked="@Model.encuesta[3].Pregunta1Val3">
                                                     <!--  -->
                                                     <label for="radio18">★</label>
                                                     <!--  -->
-                                                    <input id="radio19" type="radio" name="estrellas4" value="Pregunta4Val2" checked="@Model.encuesta[2].Pregunta1Val2">
+                                                    <input id="radio19" type="radio" name="estrellas4" value="Pregunta4Val2" checked="@Model.encuesta[3].Pregunta1Val2">
                                                     <!--  -->
                                                     <label for="radio19">★</label>
                                                     <!--  -->
-                                                    <input id="radio20" type="radio" name="estrellas4" value="Pregunta4Val1" checked="@Model.encuesta[2].Pregunta1Val1">
+                                                    <input id="radio20" type="radio" name="estrellas4" value="Pregunta4Val1" checked="@Model.encuesta[3].Pregunta1Val1">
                                                     <!--  -->
                                                     <label for="radio20">★</label>
                                                 </div>
@@ -667,7 +670,7 @@
                                                     </h9>
                                                 </div>
                                                 <div class="col-sm-3 clasificacion alinear">
-                                                    <input id="radio21" type="radio" name="estrellas5" value="Pregunta5Val5" checked="@Model.encuesta[4].Pregunta1Val5" />
+                                                    <input id="radio21" type="radio" name="estrellas5" value="Pregunta5Val5" checked="@(Model.encuesta[4].Pregunta1Val5)" />
                                                     <!-- -->
                                                     <label for="radio21">★</label>
                                                     <!-- -->
@@ -702,7 +705,7 @@
                         </div>
                     </div>
                     @if (ViewBag.MensajeError != null)
-                {
+                    {
                         <div class="row clearfix">
                             <div id="divMensajeError" class="container">
                                 <div class="alert alert-danger">
@@ -731,7 +734,6 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                @**@
                                                 <input type="submit" id="btnSave" value="Finalizar Edición" class="btn btn-raised btn-primary btn-round float-right" />
                                             </div>
                                         </div>

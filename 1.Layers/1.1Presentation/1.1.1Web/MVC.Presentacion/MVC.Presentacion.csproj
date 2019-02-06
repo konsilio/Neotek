@@ -327,6 +327,7 @@
     <Compile Include="Models\Catalogos\PuntoVentaModel.cs" />
     <Compile Include="Models\Catalogos\RolMovilVenta.cs" />
     <Compile Include="Models\Catalogos\TipoProveedorDTO.cs" />
+    <Compile Include="Models\Catalogos\TipoUnidadModel.cs" />
     <Compile Include="Models\Catalogos\UnidadAlmacenGasDTO.cs" />
     <Compile Include="Models\Catalogos\RegimenFiscalModel.cs" />
     <Compile Include="Models\Catalogos\RolCat.cs" />
@@ -10764,6 +10765,7 @@
     <Content Include="Resources\css\DevExpressCss.css" />
     <Content Include="Resources\css\toggleCl.css" />
     <Content Include="Resources\css\tooltip.css" />
+    <Content Include="Resources\img\ccte.png" />
     <Content Include="Resources\js\CajaGeneral.js" />
     <Content Include="Resources\js\Clientes.js" />
     <Content Include="Resources\js\Cobranza.js" />

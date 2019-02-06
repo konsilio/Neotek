@@ -1494,10 +1494,10 @@ namespace MVC.Presentacion.App_Code
             return agente._lstaClientes;
         }
 
-        public static List<ClientesModel> ListaClientes(int idCliente, string tel1, string tel2, string rfc, string token)
+        public static List<ClientesModel> ListaClientes(int idCliente, string tel1, int pedido, string rfc, string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaClientesMod(idCliente, tel1, tel2, rfc, token);
+            agente.BuscarListaClientesMod(idCliente, tel1, pedido, rfc, token);
             return agente._lstaClientesMod;
         }
 
@@ -2180,6 +2180,12 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.GetListaCombustibleIdE(idempresa, tkn);
             return agente._ListaCombustibles;
+        }
+        public static List<TipoUnidadModel> ListaUnidadIdEmp(short idempresa, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GetListaTiposUnidad(idempresa, tkn);
+            return agente._ListaTiposUnidad;
         }
         public static List<CombustibleModel> ListaCombustibleFiltrado(string desc, string tkn)
         {

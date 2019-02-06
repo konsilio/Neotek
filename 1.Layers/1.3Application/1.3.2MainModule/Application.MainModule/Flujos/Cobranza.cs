@@ -18,37 +18,40 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeConsultarCargos();
             if (!resp.Exito) return null;
-
-            if (TokenServicio.EsSuperUsuario())
-                return CobranzaServicio.Obtener(idempresa).ToList();
-
-            else
-                return CobranzaServicio.Obtener(idempresa).Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+            return CobranzaServicio.Obtener(idempresa).ToList();
+        }
+        public List<CargosDTO> ListaCRecuperada(short idempresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarCargos();
+            if (!resp.Exito) return null;
+            return CobranzaServicio.CRecuperada(idempresa).ToList();
         }
         public DataSet ReporteDetallado(int? idCliente, DateTime? fecha, short? empresa)
         {
-           
+
             List<System.Data.SqlClient.SqlParameter> lp = new List<System.Data.SqlClient.SqlParameter>();
             if (idCliente != 0)
                 lp.Add(new System.Data.SqlClient.SqlParameter("IdCliente", idCliente));
-            if (fecha.Value.Year != 1) {              
-            lp.Add(new System.Data.SqlClient.SqlParameter("Fecha", fecha));}
+            if (fecha.Value.Year != 1)
+            {
+                lp.Add(new System.Data.SqlClient.SqlParameter("Fecha", fecha));
+            }
             if (empresa != 0)
                 lp.Add(new System.Data.SqlClient.SqlParameter("IdEmpresa", empresa));
-            return new DataAccess().StoredProcedure_DataSet("SpSel_CarteraVencida", lp);         
+            return new DataAccess().StoredProcedure_DataSet("SpSel_CarteraVencida", lp);
         }
         public ReporteDTO ListaCargos(int? idCliente, DateTime? fecha, short? empresa)
         {
             var resp = PermisosServicio.PuedeConsultarCargos();
             if (!resp.Exito) return null;
-          
-            DataSet ds = ReporteDetallado(idCliente, fecha, empresa);               
+
+            DataSet ds = ReporteDetallado(idCliente, fecha, empresa);
             DataTable dtt = ds.Tables[0];
             List<CarteraVencidaDTO> repDetallado = dtt.DataTableToList<CarteraVencidaDTO>();
             DataTable dtt2 = ds.Tables[1];
             List<CarteraVencidaDTO> repDetallado2 = dtt2.DataTableToList<CarteraVencidaDTO>();
-            
-            return  CobranzaServicio.Obtener(repDetallado, repDetallado2);
+
+            return CobranzaServicio.Obtener(repDetallado, repDetallado2);
         }
         //public List<CargosDTO> ListaCargos(DataSet Reporte)
         //{

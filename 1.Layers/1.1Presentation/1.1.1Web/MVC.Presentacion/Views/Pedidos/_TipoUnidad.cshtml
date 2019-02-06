@@ -7,6 +7,7 @@
     settings.Properties.DropDownStyle = DropDownStyle.DropDown;
     settings.Properties.TextField = "TipoUnidad";
     settings.Properties.ValueField = "IntTipoUndad";
+    settings.Properties.ValueType = typeof(int);
     settings.ClientEnabled = true;
     settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChange";
 }).BindList(Model).GetHtml()

@@ -67,7 +67,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public Pipa ObtenerPipa(int IdP)
         {
             return uow.Repository<Pipa>().GetSingle(
@@ -82,6 +81,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Pipa>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
         }
-
+        public Pipa ObtenerPipa(short idEmpresa, string nom, string num)
+        {
+            return uow.Repository<Pipa>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo && x.Nombre.Equals(nom.Trim()) && x.Numero.Equals(num.Trim()));
+        }
     }
 }

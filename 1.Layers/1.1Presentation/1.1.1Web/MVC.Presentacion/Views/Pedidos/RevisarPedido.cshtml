@@ -96,9 +96,9 @@
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                            @Model.NombreRfc - @Model.Rfc
+                                                            @Model.NombreRfc - @Model.cliente.Rfc
                                                             <input type="hidden" name="NombreRfc" value="@Model.NombreRfc" />
-                                                            <input type="hidden" name="IdCliente" value="@Model.IdCliente" />
+                                                            <input type="hidden" name="IdCliente" value="@Model.cliente.IdCliente" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -196,7 +196,7 @@
                                                     <div class="col-sm-2">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                @Model.Telefono1
+                                                                @Model.cliente.Telefono1
                                                             </div>
                                                         </div>
                                                     </div>
@@ -304,7 +304,7 @@
                                                     <div class="col-sm-2">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                @Model.Telefono1
+                                                                @Model.cliente.Telefono1
                                                             </div>
                                                         </div>
                                                     </div>
@@ -370,7 +370,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
-                                                        <input type="submit" value="Regresar" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                        <input type="submit" value="Regresar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                                     </div>
                                                 </div>
                                             </div>

@@ -2,6 +2,7 @@
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,10 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         public static EquipoTransporteDTO toDTO(EquipoTransporte ec)
         {
             CDetalleEquipoTransporte det = new EquipoTransporteDataAccess().BuscarDetalle(ec.IdEquipoTransporte);
+            int TipoUnidad = 0;
+            if (ec.IdCamioneta > 0) { TipoUnidad = 1; }
+            if (ec.IdPipa > 0) { TipoUnidad = 2; }
+            if (ec.IdVehiculoUtilitario > 0) { TipoUnidad = 3; }
             return new EquipoTransporteDTO()
             {
                 IdEmpresa = ec.IdEmpresa,
@@ -24,17 +29,18 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 IdVehiculoUtilitario = ec.IdVehiculoUtilitario,
                 FechaRegistro = ec.FechaRegistro,
                 Activo = ec.Activo,
-                Descripcion = EquipoTransporteServicio.ObtenerNombre(ec)+" ",
+                Descripcion = EquipoTransporteServicio.ObtenerNombre(ec) + " ",
                 NumIdVehicular = det.NumIdVehicular,
                 Placas = det.Placas,
+                NumMotor = det.NumMotor,
                 DescVehiculo = det.DescVehiculo,
                 Marca = det.Marca,
                 Modelo = det.Modelo,
                 Color = det.Color,
                 Cilindros = det.Cilindros,
                 IdTipoCombustible = det.IdTipoCombustible,
-                //IdTipoUnidad = det.
-                AliasUnidad = det.Marca+" " + "Color" + " " + det.Color,
+                IdTipoUnidad = TipoUnidad,
+                AliasUnidad = det.Marca + " " + "Color" + " " + det.Color,
                 Id_DetalleEtransporte = det.IdEquipoTransporteDetalle,
                 EsCamioneta = det.EsCamioneta,
                 EsPipa = det.EsPipa,
@@ -67,7 +73,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return new CDetalleEquipoTransporte()
             {
-
+                IdEquipoTransporteDetalle = ec.Id_DetalleEtransporte,
+                IdEquipoTransporte = ec.IdEquipoTransporte,
                 NumIdVehicular = ec.NumIdVehicular,
                 Placas = ec.Placas,
                 NumMotor = ec.NumMotor,
@@ -90,13 +97,15 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         }
         public static EquipoTransporte FromDto(EquipoTransporteDTO Vehiculodto, EquipoTransporte catCte)
         {
-            var _unidad = FromEntity(catCte);
+                var _unidad = FromEntity(catCte);
             _unidad.IdEmpresa = Vehiculodto.IdEmpresa;
             _unidad.IdEquipoTransporte = Vehiculodto.IdEquipoTransporte;
-            _unidad.IdCamioneta = Vehiculodto.IdCamioneta;
+            _unidad.IdCamioneta = Vehiculodto.IdCamioneta ;
             _unidad.IdPipa = Vehiculodto.IdPipa;
             _unidad.IdVehiculoUtilitario = Vehiculodto.IdVehiculoUtilitario;
-            _unidad.FechaRegistro = Vehiculodto.FechaRegistro;
+            _unidad.FechaRegistro = DateTime.Now;
+            _unidad.Activo = true;
+            _unidad.DetalleEquipoTransporte = FromDTODet(Vehiculodto);
             return _unidad;
         }
         public static EquipoTransporte FromEntity(EquipoTransporte ec)

@@ -32,11 +32,23 @@ namespace Application.MainModule.DTOs
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Vehiculo")]
         public string DescVehiculo { get; set; }//Vehiculo 
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Marca")]
         public string Marca { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Modelo")]
         public string Modelo { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Color")]
         public string Color { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Cilindros")]
         public short Cilindros { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Tipo de Combustible")]
         public int IdTipoCombustible { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Tipo de Unidad")]
         public int IdTipoUnidad { get; set; }
         public bool Activo { get; set; }
         public string AliasUnidad { get; set; }
