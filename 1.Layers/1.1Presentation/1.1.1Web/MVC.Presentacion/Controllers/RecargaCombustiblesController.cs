@@ -13,7 +13,7 @@ namespace MVC.Presentacion.Controllers
     public class RecargaCombustiblesController : Controller
     {
         string tkn = string.Empty;
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, RecargaCombustibleModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
