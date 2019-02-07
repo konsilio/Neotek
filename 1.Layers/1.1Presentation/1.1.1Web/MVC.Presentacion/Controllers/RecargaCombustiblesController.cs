@@ -1,4 +1,8 @@
-﻿using System;
+﻿using MVC.Presentacion.App_Code;
+using MVC.Presentacion.Models;
+using MVC.Presentacion.Models.Seguridad;
+using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,7 +10,7 @@ using System.Web.Mvc;
 
 namespace MVC.Presentacion.Controllers
 {
-    public class RecargaCombustibleController : Controller
+    public class RecargaCombustiblesController : Controller
     {
         string tkn = string.Empty;
         public ActionResult Index(int? page)
@@ -19,11 +23,11 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View();
         }
-        public ActionResult Crear(MantenimientoDetalleModel model = null)
+        public ActionResult Crear(RecargaCombustibleModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = TransporteServicio.RegistrarMantenimiento(model, tkn);
+            var respuesta = TransporteServicio.GuardarRecargaCombustible(model, tkn);
             if (respuesta.Exito)
                 return RedirectToAction("Index");
             else
@@ -36,7 +40,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = TransporteServicio.RegistrarMantenimiento(new MantenimientoDetalleModel { Id_DetalleMtto = id ?? 0 }, tkn);
+            var respuesta = TransporteServicio.EliminarRecargaCombustible(new RecargaCombustibleModel { Id_DetalleRecargaComb = id ?? 0 }, tkn);
             if (respuesta.Exito)
                 return RedirectToAction("Index");
             else
@@ -45,15 +49,15 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public ActionResult Modificar(int? id, MantenimientoDetalleModel model = null)
+        public ActionResult Modificar(int? id, RecargaCombustibleModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             if (id != null)
-                return RedirectToAction("Index", TransporteServicio.ActivarEditarMantenimiento(id ?? 0, tkn));
+                return RedirectToAction("Index", TransporteServicio.ActivarEditarRecarga(id ?? 0, tkn));
             else
             {
-                var respuesta = TransporteServicio.ModificarManteniminento(model, tkn);
+                var respuesta = TransporteServicio.EditarRecargaCombustible(model, tkn);
                 if (respuesta.Exito)
                     return RedirectToAction("Index");
                 else

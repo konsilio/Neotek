@@ -56,6 +56,10 @@ namespace MVC.Presentacion.App_Code
             agente.ModificarRecargaCombustible(model, tkn);
             return agente._RespuestaDTO;
         }
+        public static RecargaCombustibleModel ActivarEditarRecarga(int id, string tkn)
+        {
+            return ListaRecargaCombustible(tkn).SingleOrDefault(x => x.Id_DetalleRecargaComb.Equals(id));
+        }
         public static RespuestaDTO EliminarRecargaCombustible(RecargaCombustibleModel model, string tkn)
         {
             var agente = new AgenteServicio();
