@@ -37,7 +37,7 @@ namespace MVC.Presentacion.App_Code
             return agente._ListaEstatusP;
         }
 
-        public static RespuestaDTO AltaNuevoPedido(PedidoModel model, string tkn)
+        public static RespuestaDTO AltaNuevoPedido(RegistrarPedidoModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarNuevoPedido(model, tkn);
@@ -49,7 +49,7 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarEncuesta(model, tkn);
             return agente._RespuestaDTO;
         }
-        public static RespuestaDTO ActualizarPedido(PedidoModel model, string tkn)
+        public static RespuestaDTO ActualizarPedido(RegistrarPedidoModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarEdicionPedido(model, tkn);

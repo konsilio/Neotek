@@ -57,7 +57,7 @@ namespace Application.MainModule.Flujos
 
             return PedidosServicio.ObtenerPipas(IdEmpresa).ToList();
         }
-        public RespuestaDto Registra(PedidoModelDto pedidoDto)
+        public RespuestaDto Registra(RegistraPedidoDto pedidoDto)
         {
             var resp = PermisosServicio.PuedeRegistrarPedido();
             if (!resp.Exito) return resp;
@@ -72,15 +72,12 @@ namespace Application.MainModule.Flujos
         public RespuestaDto RegistraEncuesta(List<EncuestaDto> pedidoDto)
         {
             var resp = PermisosServicio.PuedeRegistrarPedido();
-            if (!resp.Exito) return resp;
-            //if (pedidoDto != null)
-            //{
+            if (!resp.Exito) return resp;            
                 var pedido = PedidosAdapter.FromDto(pedidoDto);
                 return PedidosServicio.Alta(pedido);
-           // }
-
+           
         }
-        public RespuestaDto Modifica(PedidoModelDto pedidoDto)
+        public RespuestaDto Modifica(RegistraPedidoDto pedidoDto)
         {
             var resp = PermisosServicio.PuedeModificarPedido();
             if (!resp.Exito) return resp;

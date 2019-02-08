@@ -126,16 +126,16 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             List<PipaDTO> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
-        public static Pedido FromDto(PedidoModelDto pedidoDTO)
+        public static Pedido FromDto(RegistraPedidoDto pedidoDTO)
         {
             return new Pedido()
             {
                 IdCliente = pedidoDTO.IdCliente,
-                IdEmpresa = pedidoDTO.cliente.IdEmpresa,
+                IdEmpresa = pedidoDTO.IdEmpresa,
                 IdEstatusPedido = (short)pedidoDTO.IdEstatusPedido,
                 FolioVenta = pedidoDTO.FolioVenta,
                 FechaRegistro = DateTime.Now,
-                FechaPedido = pedidoDTO.FechaEntregaPedido,
+                FechaPedido = pedidoDTO.FechaPedido,
                 IdPipa = pedidoDTO.IdPipa,
                 IdCamioneta = pedidoDTO.IdCamioneta,
                 Ruta = pedidoDTO.Ruta,
@@ -162,7 +162,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             List<RespuestaSatisfaccionPedido> luDTO = lu.ToList().Select(x => FromDto(x)).ToList();
             return luDTO;
         }
-        public static PedidoDetalle FromDtoDetalleP45(PedidoModelDto pedidoDTO, decimal factor, int idD)
+        public static PedidoDetalle FromDtoDetalleP45(RegistraPedidoDto pedidoDTO, decimal factor, int idD)
         {
             var kg = Decimal.Parse(pedidoDTO.Cantidad45) * 45;
             return new PedidoDetalle()
@@ -175,7 +175,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 TotalLitros = kg * factor,
             };
         }
-        public static PedidoDetalle FromDtoDetalleP20(PedidoModelDto pedidoDTO, decimal factor, int idD)
+        public static PedidoDetalle FromDtoDetalleP20(RegistraPedidoDto pedidoDTO, decimal factor, int idD)
         {
             var kg = Decimal.Parse(pedidoDTO.Cantidad20) * 20;
             return new PedidoDetalle()
@@ -188,7 +188,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 TotalLitros = kg * factor,
             };
         }
-        public static PedidoDetalle FromDtoDetalleP30(PedidoModelDto pedidoDTO, decimal factor, int idD)
+        public static PedidoDetalle FromDtoDetalleP30(RegistraPedidoDto pedidoDTO, decimal factor, int idD)
         {
             var kg = Decimal.Parse(pedidoDTO.Cantidad30) * 30;
 
@@ -202,7 +202,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 TotalLitros = kg * factor,
             };
         }
-        public static PedidoDetalle FromDtoDetallePipa(PedidoModelDto pedidoDTO, decimal factor)
+        public static PedidoDetalle FromDtoDetallePipa(RegistraPedidoDto pedidoDTO, decimal factor)
         {
             return new PedidoDetalle()
             {
@@ -212,10 +212,10 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 TotalKilos = Decimal.Parse(pedidoDTO.Cantidad),
                 TotalLitros = Decimal.Parse(pedidoDTO.Cantidad) * factor,
             };
-        }
-        public static List<PedidoDetalle> FromDtoDetalle(PedidoModelDto pedidoDTO)
+        }      
+        public static List<PedidoDetalle> FromDtoDetalle(RegistraPedidoDto pedidoDTO)
         {
-            var factorLt = EmpresaServicio.Obtener(pedidoDTO.cliente.IdEmpresa).FactorLitrosAKilos;
+            var factorLt = EmpresaServicio.Obtener(pedidoDTO.IdEmpresa).FactorLitrosAKilos;
             List<PedidoDetalle> _lp = new PedidosDataAccess().Buscar(pedidoDTO.IdPedido);
             List<PedidoDetalle> _lst = new List<PedidoDetalle>();
             if (pedidoDTO.IdCamioneta > 0)
@@ -234,14 +234,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                     _lst.Add(FromDtoDetalleP30(pedidoDTO, factorLt, idDet));
                 }
                 if (pedidoDTO.Cantidad45 != "" && pedidoDTO.Cantidad45 != "0" && pedidoDTO.Cantidad45 != null)
-                {
-                    //if (_lp != null && _lp.Count > 0)
-                    //{
-                    //    if (_lp.Where(x => x.Cilindro45 != null).Count() > 0)
-                    //    {
-                    //        idDet =  _lp.Where(x => x.Cilindro45 != null).FirstOrDefault().IdPedidoDetalle;
-                    //    }                       
-                    //}
+                {                   
                     if (_lp != null && _lp.Count > 0)
                         idDet = _lp.Where(x => x.Cilindro45 != null).Count() > 0 ? _lp.Where(x => x.Cilindro45 != null).FirstOrDefault().IdPedidoDetalle : idDet;
                     _lst.Add(FromDtoDetalleP45(pedidoDTO, factorLt, idDet));
@@ -252,19 +245,19 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
 
             return _lst;
         }
-        public static Pedido FromDto(PedidoModelDto Pedidodto, Pedido catCte)
+        public static Pedido FromDto(RegistraPedidoDto Pedidodto, Pedido catCte)
         {
             var _pedido = FromEntity(catCte);
             _pedido.IdPedido = Pedidodto.IdPedido;
             _pedido.IdCliente = catCte.IdCliente;
-            _pedido.IdEmpresa = Pedidodto.cliente.IdEmpresa;
+            _pedido.IdEmpresa = Pedidodto.IdEmpresa;
             _pedido.IdEstatusPedido = (short)Pedidodto.IdEstatusPedido;
             _pedido.FolioVenta = Pedidodto.FolioVenta;
             _pedido.FechaRegistro = DateTime.Now;
-            _pedido.FechaPedido = Pedidodto.FechaEntregaPedido;
+            _pedido.FechaPedido = Pedidodto.FechaPedido;
             _pedido.IdPipa = Pedidodto.IdPipa;
             _pedido.IdCamioneta = Pedidodto.IdCamioneta;
-            _pedido.IdDireccion = Pedidodto.IdDireccion;
+            _pedido.IdDireccion = Pedidodto.Orden;
             _pedido.Ruta = Pedidodto.Ruta;
             _pedido.PedidoDetalle = FromDtoDetalle(Pedidodto);
 

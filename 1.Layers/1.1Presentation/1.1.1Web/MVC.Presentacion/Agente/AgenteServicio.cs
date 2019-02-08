@@ -3658,12 +3658,12 @@ namespace MVC.Presentacion.Agente
                 _ListaEstatusP = lus;
             }
         }
-        public void GuardarEdicionPedido(PedidoModel dto, string tkn)
+        public void GuardarEdicionPedido(RegistrarPedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-        public void GuardarNuevoPedido(PedidoModel dto, string tkn)
+        public void GuardarNuevoPedido(RegistrarPedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();

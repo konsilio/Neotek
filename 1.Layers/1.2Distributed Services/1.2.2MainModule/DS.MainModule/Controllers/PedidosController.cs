@@ -47,13 +47,13 @@ namespace DS.MainModule.Controllers
         }
 
         [Route("modificar/pedido")]
-        public HttpResponseMessage PutModificarPedidos(PedidoModelDto _model)
+        public HttpResponseMessage PutModificarPedidos(RegistraPedidoDto _model)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Modifica(_model));
         }
 
         [Route("registrar/pedido")]
-        public HttpResponseMessage PostRegistrarPedidos(PedidoModelDto _model)
+        public HttpResponseMessage PostRegistrarPedidos(RegistraPedidoDto _model)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Registra(_model));
         }

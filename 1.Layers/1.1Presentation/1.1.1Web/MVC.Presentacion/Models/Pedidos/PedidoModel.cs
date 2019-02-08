@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Pedidos
 {
-    public class PedidoModel //: ClientesModel
+    public class PedidoModel 
     {
         public int IdPedido { get; set; }
         public int IdCliente { get; set; }
@@ -40,6 +40,5 @@ namespace MVC.Presentacion.Models.Pedidos
         public List<ClientesModel> clientes { get; set; }
         public ClientesModel cliente { get; set; }
         public List<EncuestaModel> encuesta { get; set; }
-        //public List<ClienteLocacionMod> locaciones { get; set; }
     }
 }

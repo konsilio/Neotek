@@ -16,6 +16,8 @@ namespace Application.MainModule.DTOs.Catalogo
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdPais")]
         public byte IdPais { get; set; }
+
+        [StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0002)]
         public Nullable<byte> IdEstadoRep { get; set; }
 
         [StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0004)]
