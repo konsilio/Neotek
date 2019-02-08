@@ -28,12 +28,12 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 else if (us.RepresentanteLegal.Split(' ').Count() == 3)
                 {
                     nom = us.RepresentanteLegal.Split(' ')[0];
-                    apell =  us.RepresentanteLegal.Split(' ')[1];
+                    apell = us.RepresentanteLegal.Split(' ')[1];
                     apell2 = us.RepresentanteLegal.Split(' ')[2];
                 }
                 else if (us.RepresentanteLegal.Split(' ').Count() == 2)
                 {
-                    nom =  us.RepresentanteLegal.Split(' ')[0];
+                    nom = us.RepresentanteLegal.Split(' ')[0];
                     apell = us.RepresentanteLegal.Split(' ')[1];
                 }
             }
@@ -117,9 +117,10 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 place_id = _loc.place_id,
                 TipoLocacion = _loc.TipoLocacion,
                 Pais = p.PaisNombre,
-                Estado = e.Estado,
-
+                //Estado = e.Estado,
             };
+            if (e != null)
+                usDTO.Estado = e.Estado;
             return usDTO;
         }
         public static List<ClienteLocacionDTO> ToDTOLoc(List<ClienteLocacion> _loc)
