@@ -13,17 +13,19 @@ namespace MVC.Presentacion.Controllers
     public class MantenimientoController : Controller
     {
         string tkn = string.Empty;
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, MantenimientoDetalleModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.TipoMantenimientos = TransporteServicio.ListaCatMantenimiento(tkn);
-            ViewBag.Asignaciones = TransporteServicio.ListaAsignacion(tkn).ToPagedList(page ?? 1, 20);
+            ViewBag.CMantenimiento = TransporteServicio.ListaCatMantenimiento(tkn);
+            ViewBag.Mantenimientos = TransporteServicio.ListaMantenimientos(tkn).ToPagedList(page ?? 1, 20);
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-            return View();
+            if (model != null && model.Id_DetalleMtto != 0) ViewBag.EsEdicion = true;
+            return View(model);
         }
-        public ActionResult Crear(MantenimientoDetalleModel model = null)
+        [HttpPost]
+        public ActionResult Crear(MantenimientoDetalleModel model)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();

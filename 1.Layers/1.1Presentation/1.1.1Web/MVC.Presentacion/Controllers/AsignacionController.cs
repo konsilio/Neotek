@@ -10,10 +10,10 @@ using MVC.Presentacion.Models.Seguridad;
 
 namespace MVC.Presentacion.Controllers
 {
-    public class AsignacionController : HomeController
+    public class AsignacionController : Controller
     {
         string tkn = string.Empty;
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, AsignacionModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
@@ -21,7 +21,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn) ,tkn);
             ViewBag.Asignaciones = TransporteServicio.ListaAsignacion(tkn).ToPagedList(page ?? 1, 20);
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-            return View();
+            return View(model);
         }
         public ActionResult Crear(AsignacionModel model = null)
         {

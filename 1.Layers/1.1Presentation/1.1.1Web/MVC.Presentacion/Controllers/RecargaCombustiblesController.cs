@@ -18,10 +18,12 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.Asignaciones = TransporteServicio.ListaAsignacion(tkn).ToPagedList(page ?? 1, 20);
+            ViewBag.Combustibles = CatalogoServicio.ListaCombustible(tkn);
+            ViewBag.Recargas = TransporteServicio.ListaRecargaCombustible(tkn).ToPagedList(page ?? 1, 20);
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-            return View();
+            if (model != null && model.Id_DetalleRecargaComb != 0) ViewBag.EsEdicion = true;
+
+            return View(model);
         }
         public ActionResult Crear(RecargaCombustibleModel model = null)
         {

@@ -1,13 +1,22 @@
 ﻿@model MVC.Presentacion.Models.MantenimientoDetalleModel
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-</head>
-<body style="padding-top:10px;">
+@using PagedList.Mvc;
+@using PagedList;
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+
+<body">
     @using (Html.BeginForm("Crear", "Mantenimiento", FormMethod.Post))
     {
-        @Html.HiddenFor(m => m.Id_DetalleMtto)
+        
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -35,15 +44,12 @@
                                        settings.Name = "FechaMtto";
                                        settings.Properties.UseMaskBehavior = true;
                                        settings.Properties.EditFormat = EditFormat.Custom;
-                                       settings.Properties.EditFormatString = "dd/MMMM/yyyy";
-                                       settings.Properties.DisplayFormatString = "dd MMMM, yyyy";
-                                       settings.Date = DateTime.Now;
-                                       settings.PopupCalendarOwnerName = "FechaMtto";
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
+                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                        settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                    }).Bind(Model.FechaMtto).GetHtml()
                                     </div>
-                                    <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -56,24 +62,23 @@
                                             settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                             settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                             settings.Properties.TextField = "Descripcion";
-                                            settings.Properties.ValueField = "IdVehiculo";
-                                        }).BindList(ViewBag.Vehiculos).Bind(Model.id_vehiculo).GetHtml()
+                                            settings.Properties.ValueField = "IdEquipoTransporte";
+                                        }).BindList(ViewBag.Vehiculos).GetHtml()
                                     </div>
-                                    <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <b>Tipo Mantenimiento</b>
                                         @Html.DevExpress().ComboBox(settings =>
                                         {
-                                            settings.Name = "Id_TipoMantenimiento";
+                                            settings.Name = "Id_tipomtto";
                                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                             settings.SelectedIndex = 0;
                                             settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                             settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                            settings.Properties.TextField = "Descripcion";
-                                            settings.Properties.ValueField = "IdVehiculo";
-                                        }).BindList(ViewBag.CMantenimiento).Bind(Model.Id_tipomtto).GetHtml()
+                                            settings.Properties.TextField = "Mantenimiento";
+                                            settings.Properties.ValueField = "Id_Mantenimiento";
+                                        }).BindList(ViewBag.CMantenimiento).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -83,18 +88,18 @@
                                     </div>
                                 </div>
                             </div>
-                         
+
                             <div class="row clearfix">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <b>Kilometraje Actual</b>
-                                        @Html.TextBoxFor(m => m.NumeroOC, Model.NumeroOC.ToString(), new { @class = "form-control number" })
+                                        <b>Numero de OC(Solo cunado el servicio sea externo)</b>
+                                        @Html.TextBoxFor(m => m.NumeroOC, new { @class = "form-control" })
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <b>Kilometraje Actual</b>
-                                        @Html.TextBoxFor(m => m.DescripcionMtto, Model.DescripcionMtto.ToString(), new { @class = "form-control number" })
+                                        <b>Descripcion del Seervicio Realizado</b>
+                                        @Html.TextBoxFor(m => m.DescripcionMtto, new { @class = "form-control" })
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -102,15 +107,15 @@
                                     <div class="form-group">
                                         @if (ViewBag.EsEdicion == null)
                                         {
-                                        <button btn id="BtnCrear" formaction="Crear" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
-                                            <i class="zmdi zmdi-plus"></i>
-                                        </button>
+                                            <button id="BtnCrear" formaction="Crear" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                <i class="zmdi zmdi-plus"></i>
+                                            </button>
                                         }
                                         else
                                         {
-                                        <button btn id="btnUpDate" formaction="Modificar" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
-                                            <i class="zmdi zmdi-swap"></i>
-                                        </button>
+                                            <button id="btnUpDate" formaction="Modificar" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                <i class="zmdi zmdi-swap"></i>
+                                            </button>
                                         }
                                     </div>
                                 </div>
@@ -135,23 +140,6 @@
                             Lista de <strong>Cuentas Contables</strong>
                         </div>
                         <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-md-3">
-                                    <strong>Gasera</strong>
-                                    <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick selectpicker" data-live-search="true">
-                                        @foreach (var lst in ViewBag.Empresas)
-                                        {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <strong>Número</strong>
-                                        <input type="text" ID="txtNumeroCtaCtble" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
                                     <table class="table table-striped  filterable">
@@ -166,21 +154,42 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var mant in ViewBag.Manteniminetos)
+                                            @foreach (var mant in ViewBag.Mantenimientos)
                                             {
                                                 <tr>
-                                                  
+                                                    <td>mant.Id_DetalleMtto</td>
+                                                    <td>mant.Vehiculo</td>
+                                                    <td>mant.Chofer</td>
+                                                    <td>mant.DescripcionMtto</td>
+                                                    <td>mant.FechaMtto</td>
+                                                    <td>
+                                                        <a href="@Url.Action("Eliminar", "Mantenimiento" , new { Id= mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="material-icons">delete</i>
+                                                            <span>Eliminar</span>
+                                                        </a>
+                                                        <a href="@Url.Action("Modificar", "Mantenimiento" , new { Id=mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="material-icons">edit</i>
+                                                            <span>Editar</span>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             }
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-6">
+                                    Página @(ViewBag.Mantenimientos.PageCount < ViewBag.Mantenimientos.PageNumber ? 0 : ViewBag.Mantenimientos.PageNumber) de @ViewBag.Mantenimientos.PageCount
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    @Html.PagedListPager((IPagedList)ViewBag.Mantenimientos, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
     }
 </body>
-</html>
