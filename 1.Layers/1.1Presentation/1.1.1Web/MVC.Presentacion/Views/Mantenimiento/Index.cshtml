@@ -13,16 +13,17 @@
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
 
-<body">
-    @using (Html.BeginForm("Crear", "Mantenimiento", FormMethod.Post))
-    {
-        
-        <section class="content home">
-            <div class="container-fluid">
+<body>
+
+
+    <section class="content home">
+        <div class="container-fluid">
+            @using (Html.BeginForm("Crear", "Mantenimiento", FormMethod.Post))
+            {
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
-                            <h2>Cuentas Contables</h2>
+                            <h2>Mantenimiento Vehicular</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Equipo de Transporte</li>
@@ -55,30 +56,30 @@
                                     <div class="form-group">
                                         <b>Vehiculo</b>
                                         @Html.DevExpress().ComboBox(settings =>
-                                        {
-                                            settings.Name = "id_vehiculo";
-                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.SelectedIndex = 0;
-                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                            settings.Properties.TextField = "Descripcion";
-                                            settings.Properties.ValueField = "IdEquipoTransporte";
-                                        }).BindList(ViewBag.Vehiculos).GetHtml()
+                                   {
+                                       settings.Name = "id_vehiculo";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.SelectedIndex = 0;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Descripcion";
+                                       settings.Properties.ValueField = "IdEquipoTransporte";
+                                   }).BindList(ViewBag.Vehiculos).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <b>Tipo Mantenimiento</b>
                                         @Html.DevExpress().ComboBox(settings =>
-                                        {
-                                            settings.Name = "Id_tipomtto";
-                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.SelectedIndex = 0;
-                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                            settings.Properties.TextField = "Mantenimiento";
-                                            settings.Properties.ValueField = "Id_Mantenimiento";
-                                        }).BindList(ViewBag.CMantenimiento).GetHtml()
+                                   {
+                                       settings.Name = "Id_tipomtto";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.SelectedIndex = 0;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Mantenimiento";
+                                       settings.Properties.ValueField = "Id_Mantenimiento";
+                                   }).BindList(ViewBag.CMantenimiento).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -107,9 +108,11 @@
                                     <div class="form-group">
                                         @if (ViewBag.EsEdicion == null)
                                         {
-                                            <button id="BtnCrear" formaction="Crear" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                     
+                                            <input value="Crear" type="submit" class="btn btn-primary btn-icon btn-icon-mini btn-round" />
+                                            @*<button id="BtnCrear" formaction="Crear" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
                                                 <i class="zmdi zmdi-plus"></i>
-                                            </button>
+                                            </button>*@
                                         }
                                         else
                                         {
@@ -137,7 +140,7 @@
                     </div>
                     <div class="card">
                         <div class="header">
-                            Lista de <strong>Cuentas Contables</strong>
+                            Registro de <strong>Mantenimientos</strong>
                         </div>
                         <div class="body">
                             <div class="row clearfix blockquote blockquote-info btn-round">
@@ -147,7 +150,6 @@
                                             <tr>
                                                 <td><strong>Id</strong></td>
                                                 <td><strong>Vehiculo</strong></td>
-                                                <td><strong>Chofer</strong></td>
                                                 <td><strong>Servicio Realizado</strong></td>
                                                 <td><strong>Fecha Servicio</strong></td>
                                                 <td><strong>Acción</strong></td>
@@ -157,17 +159,16 @@
                                             @foreach (var mant in ViewBag.Mantenimientos)
                                             {
                                                 <tr>
-                                                    <td>mant.Id_DetalleMtto</td>
-                                                    <td>mant.Vehiculo</td>
-                                                    <td>mant.Chofer</td>
-                                                    <td>mant.DescripcionMtto</td>
-                                                    <td>mant.FechaMtto</td>
+                                                    <td>@mant.Id_DetalleMtto</td>
+                                                    <td>@mant.Vehiculo</td>                                                 
+                                                    <td>@mant.DescripcionMtto</td>
+                                                    <td>@mant.FechaMtto</td>
                                                     <td>
-                                                        <a href="@Url.Action("Eliminar", "Mantenimiento" , new { Id= mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <a href="@Url.Action("Eliminar", "Mantenimiento", new { Id = mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">delete</i>
                                                             <span>Eliminar</span>
                                                         </a>
-                                                        <a href="@Url.Action("Modificar", "Mantenimiento" , new { Id=mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <a href="@Url.Action("Modificar", "Mantenimiento", new { Id = mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">edit</i>
                                                             <span>Editar</span>
                                                         </a>
@@ -189,7 +190,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    }
+            }
+        </div>
+    </section>
 </body>

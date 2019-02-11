@@ -24,7 +24,6 @@ namespace MVC.Presentacion.Controllers
             if (model != null && model.Id_DetalleMtto != 0) ViewBag.EsEdicion = true;
             return View(model);
         }
-        [HttpPost]
         public ActionResult Crear(MantenimientoDetalleModel model)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -42,7 +41,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = TransporteServicio.RegistrarMantenimiento(new MantenimientoDetalleModel { Id_DetalleMtto = id ?? 0 }, tkn);
+            var respuesta = TransporteServicio.EliminarMantenimiento(new MantenimientoDetalleModel { Id_DetalleMtto = id ?? 0 }, tkn);
             if (respuesta.Exito)
                 return RedirectToAction("Index");
             else
