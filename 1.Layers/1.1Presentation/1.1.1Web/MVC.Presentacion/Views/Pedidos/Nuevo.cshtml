@@ -1,4 +1,4 @@
-﻿@model  MVC.Presentacion.Models.Pedidos.PedidoModel
+﻿@model  MVC.Presentacion.Models.Pedidos.RegistrarPedidoModel
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -50,11 +50,7 @@
                             </ul>
                         </div>
                     </div>
-                    @Html.HiddenFor(m => m.cliente.IdEmpresa)
-                    @Html.HiddenFor(m => m.cliente.IdTipoPersona)
-                    @Html.HiddenFor(m => m.cliente.IdRegimenFiscal)
-                    @Html.HiddenFor(m => m.cliente.limiteCreditoMonto)
-                    @Html.HiddenFor(m => m.cliente.limiteCreditoDias)
+                    @Html.HiddenFor(m => m.IdEmpresa)
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card">
@@ -67,17 +63,15 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Teléfono del cliente:</b>
-                                                    @Html.TextBoxFor(m => m.cliente.Telefono1, new { @class = "form-control", @id = "txtTel1", placeholder = "Teléfono del cliente" })
+                                                    @Html.TextBoxFor(m => m.Telefono1, new { @class = "form-control", @id = "txtTel1", placeholder = "Teléfono del cliente" })
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <b>RFC:</b>
-                                                    @Html.TextBoxFor(m => m.cliente.Rfc, new { @class = "form-control", @id = "txtRfc", placeholder = "RFC del cliente" })
+                                                    @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control", @id = "txtRfc", placeholder = "RFC del cliente" })
                                                 </div>
                                                 <div class="col-sm-3" style="top: 10px;">
-                                                    <div class="form-group">@* formaction=@Url.Action("BuscarClientesPedido") formmethod="post"*@
+                                                    <div class="form-group">
                                                         <input type="button" id="btnBuscarC" value="Buscar" formaction=@Url.Action("BuscarClientesPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
-                                                        @*<input type="button" value="Some text" onclick="window.location.href='<%=Url.Action("BuscarClientesPedido", "controllerName")%>';" />*@                                                    
-    @*<input type="button"  id="btnBuscarC" value="Buscar" onclick="@("window.location.href='@Url.Action("BuscarClientesPedido", "Pedidos")')" class="btn btn-raised btn-primary btn-round float-left"/>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,6 +81,21 @@
                             </div>
                         </div>
                     </div>
+                    @if (ViewBag.MensajeError != null)
+                    {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MensajeError</label>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card">
@@ -99,22 +108,20 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Cliente:</b>
-                                                    @Html.Action("_DatosCliente", Model.cliente)
-                                                </div>
+                                                    @Html.Partial("_DatosCliente")
+                                                </div>                                               
                                                 <div class="col-sm-2" style="top: 10px;">
                                                     <div class="form-group">
                                                         <input type="submit" id="btnCrearCte" value="Crear cliente" formaction=@Url.Action("AltaCliente") formmethod="post" class="btn btn-raised btn-primary btn-round float-center" />
                                                     </div>
                                                 </div>
-                                                @*<div class="col-sm-2">
-                                                    </div>*@
                                                 <div class="col-sm-3">
                                                     <b>Fecha:</b>
                                                     <div class="container">
                                                         <div class="editor">
                                                             @Html.DevExpress().DateEdit(settings =>
                                                        {
-                                                           settings.Name = "FechaEntregaPedido";
+                                                           settings.Name = "FechaPedido";
                                                            settings.Properties.UseMaskBehavior = true;
                                                            settings.Theme = "Office365";
                                                            settings.Properties.EditFormat = EditFormat.Custom;
@@ -128,15 +135,7 @@
                                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                                        }).GetHtml()
                                                         </div>
-                                                        <div class="content">
-                                                            @*UseMaskBehavior = true<br />
-                                                                EditFormat = EditFormat.Custom<br />
-                                                                EditFormatString = "dd/MM/yyyy hh:mm tt"<br />
-                                                                TimeSectionProperties.Visible = true;<br />
-                                                                TimeSectionProperties.Adaptive = true;<br />
-                                                                TimeEditProperties.EditFormat = EditFormat.Custom;<br />
-                                                                TimeEditProperties.EditFormatString = "hh:mm tt";*@
-                                                        </div>
+                                                        @Html.ValidationMessageFor(m => m.FechaPedido, "", new { @class = "alert-danger" })
                                                     </div>
 
                                                     @*<div class="input-group">
@@ -170,34 +169,30 @@
                                                          </div>*@
                                                 </div>
                                             </div>
+                                            @Html.ValidationMessageFor(m => m.IdCliente, "", new { @class = "alert-danger" })
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Domicilio:</b>
-                                                    @Html.Action("_LocacionesCliente", Model.cliente)
-                                                </div><div class="col-sm-4">
+                                                    @Html.Partial("_LocacionesCliente")
+                                                </div>
+
+                                                <div class="col-sm-4">
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <div class="input-group">
-
                                                     </div>
                                                 </div>
-                                                @*<div style="-webkit-box-flex: 0;-ms-flex: 0 0 16.666667%;flex: 0 0 16.666667%; max-width: 2.666667%;text-align: center;"><b>:</b></div>*@
                                                 <div class="col-sm-2" style="top: 20px;">
                                                     <div class="input-group">
-
                                                     </div>
                                                 </div>
                                             </div>
+                                            @Html.ValidationMessageFor(m => m.Orden, "", new { @class = "alert-danger" })
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Tipo unidad:</b>
-                                                    @*<select id="TipoUnidad" class="form-control show-tick">
-                                                            <option value="0">Seleccione</option>
-                                                            <option value="1">Pipa</option>
-                                                            <option value="2">Camioneta</option>
-                                                        </select>*@
-                                                    @Html.Action("_TipoUnidad")
-                                                </div>
+                                                    @Html.Partial("_TipoUnidad")
+                                                </div>                                                
                                                 <div class="col-sm-4">
                                                     <b>Estatus pedido:</b>
                                                     @Html.DevExpress().ComboBox(settings =>
@@ -222,6 +217,8 @@
                                                }).BindList(ViewBag.Estatus).GetHtml()
                                                 </div>
                                             </div>
+                                            @Html.ValidationMessageFor(m => m.TipoUnidad, "", new { @class = "alert-danger" })
+                                            @Html.ValidationMessageFor(m => m.IdEstatusPedido, "", new { @class = "alert-danger" })
                                             <div class="row clearfix selPipa" style="display:none">
                                                 <div class="col-sm-3">
                                                     <b>Unidad:</b>
@@ -231,7 +228,7 @@
                                             <div class="row clearfix selPipa" style="display:none">
                                                 <div class="col-sm-3">
                                                     <b>Cantidad:</b>
-                                                    <input name="Cantidad" type="number" class="form-control" />
+                                                    <input name="Cantidad" type="number" id="Cantidad" value="0" class="form-control" />
                                                 </div>
                                                 <div class="col-sm-1" style="top: 22px;">
                                                     <div class="form-group">
@@ -244,11 +241,12 @@
                                                     <b>Unidad:</b>
                                                     @Html.Action("_Camionetas")
                                                 </div>
+                                                @Html.ValidationMessageFor(m => m.IdCamioneta, "", new { @class = "alert-danger" })
                                             </div>
                                             <div class="row clearfix selCamioneta">
                                                 <div class="col-sm-3">
                                                     <b>Cantidad:</b>
-                                                    <input name="Cantidad45" type="number" class="form-control" />
+                                                    <input name="Cantidad45" type="number" id="Cantidad45" value="0" class="form-control" />
                                                 </div>
                                                 <div class="col-sm-2" style="top: 22px;">
                                                     <div class="form-group">
@@ -259,7 +257,7 @@
                                             <div class="row clearfix selCamioneta">
                                                 <div class="col-sm-3">
                                                     <b>Cantidad:</b>
-                                                    <input name="Cantidad30" type="number" class="form-control" />
+                                                    <input name="Cantidad30" type="number" value="0" id="Cantidad30" class="form-control" />
                                                 </div>
                                                 <div class="col-sm-2" style="top: 22px;">
                                                     <div class="form-group">
@@ -270,7 +268,7 @@
                                             <div class="row clearfix selCamioneta">
                                                 <div class="col-sm-3">
                                                     <b>Cantidad:</b>
-                                                    <input name="Cantidad20" type="number" class="form-control" />
+                                                    <input name="Cantidad20" type="number" value="0" id="Cantidad20" class="form-control" />
                                                 </div>
                                                 <div class="col-sm-2" style="top: 22px;">
                                                     <div class="form-group">
@@ -294,21 +292,6 @@
                             </div>
                         </div>
                     </div>
-                    @if (ViewBag.MensajeError != null)
-                    {
-                        <div class="row clearfix">
-                            <div id="divMensajeError" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
-                                    </div>
-                                    <strong>
-                                        <label>@ViewBag.MensajeError</label>
-                                    </strong>
-                                </div>
-                            </div>
-                        </div>
-                    }
                 </div>
             </div>
         </section>
@@ -322,13 +305,13 @@
                         <div class="body">
                             <div class="col-sm-12">
                                 <div>
-                                    Click en el botón <img src="~/Resources/img/ccte.png" /> para crear uno nuevo cliente.
+                                    Click en el botón <img src="~/Resources/img/ccte.png" /> para crear un nuevo cliente.
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer" style="padding-right:98px">
-                        <button type="button" class="btn btn-raised btn-primary btn-round float-center" data-dismiss="modal">Aceptar</button>                       
+                        <button type="button" class="btn btn-raised btn-primary btn-round float-center" data-dismiss="modal">Aceptar</button>
                     </div>
                 </div>
             </div>

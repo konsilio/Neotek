@@ -26,6 +26,40 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
             return CobranzaServicio.CRecuperada(idempresa).ToList();
         }
+        public DataSet ReporteCarteraRecuperada(int? idCliente, short? empresa, DateTime? fechaIni, DateTime? fechaFin, string ticket)
+        {
+            List<System.Data.SqlClient.SqlParameter> lp = new List<System.Data.SqlClient.SqlParameter>();
+            if (idCliente != 0)
+                lp.Add(new System.Data.SqlClient.SqlParameter("IdCliente", idCliente));
+            if (fechaIni.Value.Year != 1)
+            {
+                lp.Add(new System.Data.SqlClient.SqlParameter("FecIni", fechaIni));
+            }
+            if (fechaFin.Value.Year != 1)
+            {
+                lp.Add(new System.Data.SqlClient.SqlParameter("FecFin", fechaFin));
+            }
+            if (ticket != "")
+            {
+                lp.Add(new System.Data.SqlClient.SqlParameter("Ticket", ticket));
+            }
+            if (empresa != 0)
+                lp.Add(new System.Data.SqlClient.SqlParameter("IdEmpresa", empresa));
+            return new DataAccess().StoredProcedure_DataSet("SpSel_CarteraRecuperada", lp);
+        }
+        public List<CargosDTO> CarteraRecuperada(int? idCliente,short? empresa,DateTime? fechaIni, DateTime? fechaFin, string ticket)
+        {
+            var resp = PermisosServicio.PuedeConsultarCargos();
+            if (!resp.Exito) return null;
+
+            DataSet ds = ReporteCarteraRecuperada(idCliente, empresa, fechaIni, fechaFin, ticket);
+            DataTable dtt = ds.Tables[0];
+            List<CRecuperadaDTO> repDetallado = dtt.DataTableToList<CRecuperadaDTO>();
+            DataTable dtt2 = ds.Tables[1];
+            List<CRecuperadaTotalesDTO> repDetallado2 = dtt2.DataTableToList<CRecuperadaTotalesDTO>();
+
+            return CobranzaServicio.CRecuperada(repDetallado, repDetallado2, empresa.Value).ToList();
+        }
         public DataSet ReporteDetallado(int? idCliente, DateTime? fecha, short? empresa)
         {
 

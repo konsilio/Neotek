@@ -120,6 +120,8 @@
     <Compile Include="DTOs\Cobranza\AbonosDTO.cs" />
     <Compile Include="DTOs\Cobranza\CargosDTO.cs" />
     <Compile Include="DTOs\Cobranza\CarteraVencidaDTO.cs" />
+    <Compile Include="DTOs\Cobranza\CRecuperadaDTO.cs" />
+    <Compile Include="DTOs\Cobranza\CRecuperadaTotalesDTO.cs" />
     <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\AsignacionUtilitarioDTO.cs" />
@@ -157,6 +159,7 @@
     <Compile Include="DTOs\Pedidos\EstatusPedidoDto.cs" />
     <Compile Include="DTOs\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="DTOs\Pedidos\PedidoModelDto.cs" />
+    <Compile Include="DTOs\Pedidos\RegistraPedidoDto.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionSalidaDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\TransporteDTO.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />

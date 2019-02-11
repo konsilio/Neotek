@@ -2,22 +2,16 @@
 {
     settings.Name = "IdCliente";
     settings.Width = 180;
-    //settings.ControlStyle.CssClass = "customButtonEditSys";
     settings.SelectedIndex = 0;
     settings.Properties.DropDownWidth = 550;
     settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
     settings.Properties.CallbackPageSize = 30;
     settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
     settings.Properties.TextFormatString = "{0}";
-    //settings.Properties.ClientSideEvents.Init = "OnSelectedTypeBorrowedChanged";
-    //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedTypeBorrowedChanged";
-    // settings.Properties.ValueField = "IdCliente";
     settings.Properties.ValueType = typeof(int);
     settings.Properties.Columns.Add("Nombre", "Nombre", 130);
     settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
     settings.Properties.Columns.Add("Rfc", "RFC", 230);
-    //settings.Properties.Items.Add("Seleccione", 0);
-    //settings.Properties.Items.Add("Orden De Servicio", 2);
 }).GetHtml()
 @*@Html.DevExpress().ComboBox(settings =>
 {

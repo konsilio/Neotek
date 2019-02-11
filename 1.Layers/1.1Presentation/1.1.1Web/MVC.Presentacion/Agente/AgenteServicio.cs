@@ -45,7 +45,7 @@ namespace MVC.Presentacion.Agente
         public CargosModel _Cargo;
         public ReporteModel _repCartera;
         public PedidoModel _Pedido;
-
+        public RegistrarPedidoModel _RegPedido;
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
         public List<EmpresaDTO> _listaEmpresas;
@@ -3600,7 +3600,7 @@ namespace MVC.Presentacion.Agente
         {
             using (var client = new HttpClient())
             {
-                PedidoModel pedido = new PedidoModel();
+                RegistrarPedidoModel pedido = new RegistrarPedidoModel();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 if (!string.IsNullOrEmpty(token))
@@ -3609,7 +3609,7 @@ namespace MVC.Presentacion.Agente
                 {
                     HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        pedido = await response.Content.ReadAsAsync<PedidoModel>();
+                        pedido = await response.Content.ReadAsAsync<RegistrarPedidoModel>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -3618,11 +3618,11 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    pedido = new PedidoModel();
+                    pedido = new RegistrarPedidoModel();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                _Pedido = pedido;
+                _RegPedido = pedido;
             }
         }
         public void BuscarEstatusPedido(string tkn)
@@ -3658,12 +3658,12 @@ namespace MVC.Presentacion.Agente
                 _ListaEstatusP = lus;
             }
         }
-        public void GuardarEdicionPedido(PedidoModel dto, string tkn)
+        public void GuardarEdicionPedido(RegistrarPedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-        public void GuardarNuevoPedido(PedidoModel dto, string tkn)
+        public void GuardarNuevoPedido(RegistrarPedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
@@ -3673,7 +3673,7 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarEncuesta"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-        public void CancelarNuevoPedido(PedidoModel dto, string tkn)
+        public void CancelarNuevoPedido(RegistrarPedidoModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutCancelarPedido"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
@@ -3768,7 +3768,7 @@ namespace MVC.Presentacion.Agente
         #region Cargos
         public void ListaCargosFilter(DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string token)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCargos"];
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCargos"];//GetListaCargos//GetListaCRecuperada
             Cargos(fecha1, fecha2, Cliente, rfc, ticket, id, ApiCatalgos, token).Wait();
         }
         private async Task Cargos(DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string api, string token = null)
@@ -3783,6 +3783,7 @@ namespace MVC.Presentacion.Agente
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    // HttpResponseMessage response = await client.PutAsJsonAsync(api, _mod).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         cargos = await response.Content.ReadAsAsync<List<CargosModel>>();
                     else
@@ -3817,6 +3818,62 @@ namespace MVC.Presentacion.Agente
                 {
                     cargos = (from x in cargos where x.Ticket == ticket select x).ToList();
                 }
+                _ListaCargos = cargos;
+            }
+        }
+
+        public void ListaCargosFilter(CargosModel _mod, DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutCreditoRecuperado"];//GetListaCargos//GetListaCRecuperada
+            Cargos(_mod, fecha1, fecha2, Cliente, rfc, ticket, id, ApiCatalgos, token).Wait();
+        }
+        private async Task Cargos(CargosModel _mod, DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CargosModel> cargos = new List<CargosModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    // HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.PutAsJsonAsync(api, _mod).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        cargos = await response.Content.ReadAsAsync<List<CargosModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargos = new List<CargosModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                //if (Cliente != 0)
+                //{
+                //    cargos = (from x in cargos where x.IdCliente == Cliente select x).ToList();
+                //}
+                //if (fecha1.Day != 1 && fecha1.Month != 1 && fecha1.Year != 1)
+                //{
+                //    cargos = (from x in cargos where x.FechaRegistro.Date >= fecha1.Date select x).ToList();
+                //}
+                //if (fecha2.Day != 1 && fecha2.Month != 1 && fecha2.Year != 1)
+                //{
+                //    cargos = (from x in cargos where x.FechaRegistro.Date <= fecha2 select x).ToList();
+                //}
+                //if (rfc != null)
+                //{
+                //    cargos = (from x in cargos where x.Rfc == rfc select x).ToList();
+                //}
+                //if (ticket != null)
+                //{
+                //    cargos = (from x in cargos where x.Ticket == ticket select x).ToList();
+                //}
                 _ListaCargos = cargos;
             }
         }

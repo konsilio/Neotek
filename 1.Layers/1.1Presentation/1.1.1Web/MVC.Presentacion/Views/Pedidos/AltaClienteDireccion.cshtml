@@ -179,7 +179,7 @@
                                            settings.Properties.ValueField = "IdEstadoRep";
                                            settings.Properties.ValueType = typeof(byte?);
                                        }).BindList(ViewBag.ListaEstados).Bind(Model.cliente.Locacion.IdEstadoRep.Value).GetHtml()
-                                            @Html.ValidationMessageFor(m => m.cliente.Locacion.IdEstadoRep, "", new { @class = "alert-danger" })
+                                            @*@Html.ValidationMessageFor(m => m.cliente.Locacion.IdEstadoRep, "", new { @class = "alert-danger" })*@
                                         </div>
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">

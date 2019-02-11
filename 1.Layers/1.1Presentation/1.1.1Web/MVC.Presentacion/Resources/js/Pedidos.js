@@ -62,17 +62,29 @@
     });
 });
 function OnSelectedChange(s, e) {
-
+    debugger
     var value = s.GetValue();
     if (value == 1)//Pipa
     {
         $('.selPipa').show();
         $('.selCamioneta').hide();
+        //clear all form Camionetas        
+        IdCamioneta.SetSelectedIndex(0);
+        $("#Cantidad45").val(0);
+        $("#Cantidad30").val(0);
+        $("#Cantidad20").val(0);
+        //Cantidad45.value = 0;
+        //Cantidad30.value = 0;
+        //Cantidad20.value = 0;
     }
     if (value == 2)//Camioneta
     {
         $('.selPipa').hide();
         $('.selCamioneta').show();
+        //clear all form Pipas        
+        IdPipa.SetSelectedIndex(0);
+        // Cantidad.value = 0;
+        $("#Cantidad").val(0);
     }
 }
 //function getvalues(s, e) {
