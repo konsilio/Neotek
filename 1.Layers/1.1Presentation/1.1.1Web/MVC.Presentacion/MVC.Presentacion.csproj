@@ -50,7 +50,6 @@
     <Reference Include="DevExpress.RichEdit.v18.2.Core, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Web.ASPxThemes.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.DemoData.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Web.Mvc5.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Web.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -248,6 +247,7 @@
     <Compile Include="App_Code\RequisicionServicio.cs" />
     <Compile Include="App_Code\CatalogoServicio.cs" />
     <Compile Include="App_Code\TokenServicio.cs" />
+    <Content Include="App_Code\TransporteServicio.cs" />
     <Compile Include="App_Code\VentasServicio.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -256,12 +256,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlmacenController.cs" />
+    <Compile Include="Controllers\AsignacionController.cs" />
     <Compile Include="Controllers\CajaGeneralController.cs" />
     <Compile Include="Controllers\CentroCostoController.cs" />
     <Compile Include="Controllers\CobranzaController.cs" />
+    <Compile Include="Controllers\CombustibleController.cs" />
     <Compile Include="Controllers\CuentaContableController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
+    <Compile Include="Controllers\EquipoTransporteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
@@ -294,6 +297,7 @@
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoModel.cs" />
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoModificarDTO.cs" />
     <Compile Include="Models\Catalogos\CentroCosto\TipoCentroCostoDTO.cs" />
+    <Compile Include="Models\Catalogos\CombustibleModel.cs" />
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableCrearDTO.cs" />
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableDTO.cs" />
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableEliminarDTO.cs" />
@@ -323,6 +327,7 @@
     <Compile Include="Models\Catalogos\PuntoVentaModel.cs" />
     <Compile Include="Models\Catalogos\RolMovilVenta.cs" />
     <Compile Include="Models\Catalogos\TipoProveedorDTO.cs" />
+    <Compile Include="Models\Catalogos\TipoUnidadModel.cs" />
     <Compile Include="Models\Catalogos\UnidadAlmacenGasDTO.cs" />
     <Compile Include="Models\Catalogos\RegimenFiscalModel.cs" />
     <Compile Include="Models\Catalogos\RolCat.cs" />
@@ -361,6 +366,7 @@
     <Compile Include="Models\Pedidos\EstatusPedidoModel.cs" />
     <Compile Include="Models\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="Models\Pedidos\PedidoModel.cs" />
+    <Compile Include="Models\Pedidos\RegistrarPedidoModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
@@ -388,6 +394,11 @@
     <Compile Include="Models\Seguridad\RespuestaDTO.cs" />
     <Compile Include="Models\Catalogos\UnidadMedidaDTO.cs" />
     <Compile Include="Models\Seguridad\UsuarioRolModel.cs" />
+    <Compile Include="Models\Transporte\AsignacionModel.cs" />
+    <Compile Include="Models\Transporte\AsignacionUtilitarioModel.cs" />
+    <Compile Include="Models\Transporte\MantenimientoDetalleModel.cs" />
+    <Compile Include="Models\Transporte\MantenimientoModel.cs" />
+    <Compile Include="Models\Transporte\RecargaCombustibleModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralCamionetaModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralModel.cs" />
     <Compile Include="Models\Ventas\MovimientosGasCilindros.cs" />
@@ -10755,6 +10766,7 @@
     <Content Include="Resources\css\DevExpressCss.css" />
     <Content Include="Resources\css\toggleCl.css" />
     <Content Include="Resources\css\tooltip.css" />
+    <Content Include="Resources\img\ccte.png" />
     <Content Include="Resources\js\CajaGeneral.js" />
     <Content Include="Resources\js\Clientes.js" />
     <Content Include="Resources\js\Cobranza.js" />
@@ -11568,9 +11580,14 @@
     <Content Include="Views\Cobranza\_AbonosPartial.cshtml" />
     <Content Include="Views\Cobranza\CreditoRecuperado.cshtml" />
     <Content Include="Views\Cobranza\CarteraVencida.cshtml" />
+    <Content Include="Views\Asignacion\Index.cshtml" />
     <Content Include="Views\Empresas\_DatabaseComboBoxPartial.cshtml" />
     <Content Include="Views\Pedidos\_ComboBoxPartialPais.cshtml" />
     <Content Include="Views\Remanente\_cbPuntosventaPartial.cshtml" />
+    <Content Include="Views\EquipoTransporte\Index.cshtml" />
+    <Content Include="Views\Combustible\Index.cshtml" />
+    <Content Include="Views\Mantenimiento\Index.cshtml" />
+    <Content Include="Views\RecargaCombustibles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -23,6 +23,17 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _cobranza.ListaCargos(id));
         }
+        [Route("buscar/listacrecuperada/{id}")]
+        public HttpResponseMessage GetListaCRecuperada(short id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.ListaCRecuperada(id));
+        }
+        [Route("buscar/carterarecuperada")]
+        public HttpResponseMessage PutCarteraRecuperada(CargosDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.CarteraRecuperada(dto.IdCliente,  dto.IdEmpresa,dto.FechaRango1.Date, dto.FechaRango2.Date,dto.Ticket));
+        }
+       
         [Route("buscar/cargos/{id}")]
         public HttpResponseMessage GetPedidosId(int id)
         {

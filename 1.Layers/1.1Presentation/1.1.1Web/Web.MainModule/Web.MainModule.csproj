@@ -3905,14 +3905,12 @@
     <Compile Include="Catalogos\Servicio\ProveedorServicio.cs" />
     <Compile Include="Catalogos\Vista\CentrosCosto.aspx.cs">
       <DependentUpon>CentrosCosto.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Catalogos\Vista\CentrosCosto.aspx.designer.cs">
       <DependentUpon>CentrosCosto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Catalogos\Vista\CuentasContables.aspx.cs">
       <DependentUpon>CuentasContables.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Catalogos\Vista\CuentasContables.aspx.designer.cs">
       <DependentUpon>CuentasContables.aspx</DependentUpon>
@@ -3923,21 +3921,18 @@
     <Compile Include="Catalogos\Servicio\CuentaContableServicio.cs" />
     <Compile Include="Catalogos\Vista\Empresas.aspx.cs">
       <DependentUpon>Empresas.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Catalogos\Vista\Empresas.aspx.designer.cs">
       <DependentUpon>Empresas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Catalogos\Vista\NuevaEmpresa.aspx.cs">
       <DependentUpon>NuevaEmpresa.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Catalogos\Vista\NuevaEmpresa.aspx.designer.cs">
       <DependentUpon>NuevaEmpresa.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controles\DateTimePicker.ascx.cs">
       <DependentUpon>DateTimePicker.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controles\DateTimePicker.ascx.designer.cs">
       <DependentUpon>DateTimePicker.ascx</DependentUpon>
@@ -3960,7 +3955,6 @@
     <Compile Include="OrdenCompra\Servicio\OrdenCompraServicio.cs" />
     <Compile Include="OrdenCompra\Vistas\Compra.aspx.cs">
       <DependentUpon>Compra.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OrdenCompra\Vistas\Compra.aspx.designer.cs">
       <DependentUpon>Compra.aspx</DependentUpon>
@@ -3979,21 +3973,18 @@
     <Compile Include="Requisicion\Model\UsuarioDTO.cs" />
     <Compile Include="Catalogos\Vista\Proveedor.aspx.cs">
       <DependentUpon>Proveedor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Catalogos\Vista\Proveedor.aspx.designer.cs">
       <DependentUpon>Proveedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Compras\Vistas\Compras.aspx.cs">
       <DependentUpon>Compras.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Compras\Vistas\Compras.aspx.designer.cs">
       <DependentUpon>Compras.aspx</DependentUpon>
     </Compile>
     <Compile Include="DashBoard\Vista\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DashBoard\Vista\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
@@ -4003,14 +3994,12 @@
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="OrdenCompra\Vistas\OrdenCompra.aspx.cs">
       <DependentUpon>OrdenCompra.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OrdenCompra\Vistas\OrdenCompra.aspx.designer.cs">
       <DependentUpon>OrdenCompra.aspx</DependentUpon>
@@ -4026,7 +4015,6 @@
     <Compile Include="Requisicion\Servicio\RequisicionServicio.cs" />
     <Compile Include="Requisicion\Vistas\Requisicion.aspx.cs">
       <DependentUpon>Requisicion.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Requisicion\Vistas\Requisicion.aspx.designer.cs">
       <DependentUpon>Requisicion.aspx</DependentUpon>
@@ -4041,21 +4029,18 @@
     <Compile Include="Seguridad\Servicio\TokenServicios.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
     <Compile Include="Site.Mobile.Master.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

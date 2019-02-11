@@ -51,7 +51,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.PuntoVenta>().Update(_pro);
+                    uow.Repository<PuntoVenta>().Update(_pro);
                     uow.SaveChanges();
                     _respuesta.Id = _pro.IdPuntoVenta;
                     _respuesta.Exito = true;

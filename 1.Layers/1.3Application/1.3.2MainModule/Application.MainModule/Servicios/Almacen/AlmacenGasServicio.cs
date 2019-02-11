@@ -557,7 +557,7 @@ namespace Application.MainModule.Servicios.Almacenes
 
         public static Pipa ObtenerPipa(int pipa)
         {
-            return new AlmacenGasDataAccess().ObtenerPipa(pipa);
+            return new PipaDataAccess().ObtenerPipa(pipa);
         }
 
         public static List<AlmacenGasCalibracionFoto> ObtenerImagenes(AlmacenGasCalibracion calibracion)
@@ -823,7 +823,7 @@ namespace Application.MainModule.Servicios.Almacenes
 
         public static List<Pipa> ObtenerPipasEmpresa(short idEmpresa)
         {
-            return new AlmacenGasDataAccess().ObtenerPipas(idEmpresa);
+            return new PipaDataAccess().ObtenerPipas(idEmpresa);
         }
 
         public static int ordenReportes(List<ReporteDelDia> reportes)
@@ -1250,7 +1250,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 CantidadAnteriorGeneralLt = almacenGeneralCantidadActualLt,
                 PorcentajeAnteriorGeneral = almacenGeneralPorcent,
             };
-
             return new AplicaDescargaDto()
             {
                 AlmacenGas = AlmacenGasAdapter.FromEntity(almacenGasTotal),

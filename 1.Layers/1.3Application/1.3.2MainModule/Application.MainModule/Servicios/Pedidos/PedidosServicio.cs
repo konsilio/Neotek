@@ -20,9 +20,9 @@ namespace Application.MainModule.Servicios.Pedidos
             List<PedidoModelDto> lPedidos = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PedidosDataAccess().Buscar(idempresa));
             return lPedidos;
         }
-        public static PedidoModelDto Obtener(int idPedido)
+        public static RegistraPedidoDto Obtener(int idPedido)
         {
-            PedidoModelDto Pedido = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PedidosDataAccess().BuscarPedido(idPedido));
+            RegistraPedidoDto Pedido = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTOEdit(new PedidosDataAccess().BuscarPedido(idPedido));
             return Pedido;
         }
         public static stringEstatus GetEstatusPedido(short status)
@@ -90,15 +90,19 @@ namespace Application.MainModule.Servicios.Pedidos
         }
         public static List<CamionetaDTO> ObtenerCamionetas(short idempresa)
         {
-            List<CamionetaDTO> lCamionetas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new AlmacenGasDataAccess().ObtenerCamionetasEmpresa(idempresa));
+            List<CamionetaDTO> lCamionetas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new CamionetaDataAccess().ObtenerCamionetas(idempresa));
             return lCamionetas;
         }
         public static List<PipaDTO> ObtenerPipas(short idempresa)
         {
-            List<PipaDTO> lPipas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new AlmacenGasDataAccess().ObtenerPipas(idempresa));
+            List<PipaDTO> lPipas = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PipaDataAccess().ObtenerPipas(idempresa));
             return lPipas;
         }        
         public static RespuestaDto Alta(Pedido _pedidoDto)
+        {
+            return new PedidosDataAccess().Insertar(_pedidoDto);
+        }
+        public static RespuestaDto Alta(List<PedidoDetalle> _pedidoDto)
         {
             return new PedidosDataAccess().Insertar(_pedidoDto);
         }

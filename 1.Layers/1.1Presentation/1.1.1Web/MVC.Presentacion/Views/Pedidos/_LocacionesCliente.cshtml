@@ -1,21 +1,34 @@
-﻿@using MVC.Presentacion.Models.Catalogos
-@model List<ClienteLocacionMod>
-@Html.DevExpress().ComboBox(settings =>
+﻿@Html.DevExpress().ComboBox(settings =>
 {
+    //settings.Name = "Orden";
+    //settings.Width = 180;
+    //settings.SelectedIndex = 0;
+    //settings.Properties.DropDownWidth = 550;
+    //settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+    //settings.CallbackRouteValues = new { Controller = "Pedidos", Action = "_LocacionesCliente" };
+    //settings.Properties.CallbackPageSize = 30;
+    //settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+    //settings.Properties.TextFormatString = "{0}";
+    //settings.Properties.ValueField = "Orden";
+    //settings.Properties.ValueType = typeof(int);
+
+    //settings.Properties.Columns.Add("Calle", "Calle", 130);
+    //settings.Properties.Columns.Add("NumExt", "NumExt", 130);
+    //settings.Properties.Columns.Add("Colonia", "Colonia", 230);
     settings.Name = "Orden";
     settings.Width = 180;
-    //settings.ControlStyle.CssClass = "form-control show-tick table";    
+    //settings.ControlStyle.CssClass = "customButtonEditSys";
     settings.SelectedIndex = 0;
     settings.Properties.DropDownWidth = 550;
     settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
-    settings.CallbackRouteValues = new { Controller = "Pedidos", Action = "_LocacionesCliente" };
     settings.Properties.CallbackPageSize = 30;
     settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
     settings.Properties.TextFormatString = "{0}";
-    settings.Properties.ValueField = "Orden";
+    //settings.Properties.ClientSideEvents.Init = "OnSelectedTypeBorrowedChanged";
+    //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedTypeBorrowedChanged";
+    // settings.Properties.ValueField = "IdCliente";
     settings.Properties.ValueType = typeof(int);
-
     settings.Properties.Columns.Add("Calle", "Calle", 130);
     settings.Properties.Columns.Add("NumExt", "NumExt", 130);
-    settings.Properties.Columns.Add("Colonia", "Colonia", System.Web.UI.WebControls.Unit.Percentage(100));
-}).BindList(Model).GetHtml()
+    settings.Properties.Columns.Add("Colonia", "Colonia", 230);
+}).GetHtml()

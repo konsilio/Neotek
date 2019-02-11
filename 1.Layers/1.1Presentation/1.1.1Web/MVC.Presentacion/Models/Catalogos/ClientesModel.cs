@@ -32,7 +32,8 @@ namespace MVC.Presentacion.Models.Catalogos
         public decimal limiteCreditoMonto { get; set; }
         
         public short limiteCreditoDias { get; set; }
-        
+        public decimal CreditoDisponibleMonto { get; set; }
+
         public string Telefono1 { get; set; }
         
         public string Telefono2 { get; set; }
@@ -79,6 +80,7 @@ namespace MVC.Presentacion.Models.Catalogos
 
         public string Cliente { get; set; }
         public List<ClienteLocacionMod> Locaciones { get; set; }
+        public ClienteLocacionMod Locacion { get; set; }
         public bool VentaExtraordinaria { get; set; }
     }
 }

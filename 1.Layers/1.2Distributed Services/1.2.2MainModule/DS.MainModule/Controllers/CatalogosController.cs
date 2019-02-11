@@ -579,6 +579,64 @@ namespace DS.MainModule.Controllers
         }
         #endregion
 
+        #region Combustible
+        [Route("consulta/combustible")]
+        public HttpResponseMessage GetListaCombustible()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaCombustible(), Request);
+        }
+        [Route("consulta/combustibleidempresa/{idempresa}")]
+        public HttpResponseMessage GetListaCombustibleIdEmpresa(short idempresa)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaCombustible(idempresa), Request);
+        }
+       
+        [Route("buscar/combustiblefilter")]
+        public HttpResponseMessage PutCombustibleFilter(CombustibleDTO dto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaCombustible(dto.Id_Empresa,dto.Descripcion), Request);
+        }
+
+        [Route("consulta/combustibleid/{idcombustible}")]
+        public HttpResponseMessage GetListaCombustibleId(int idcombustible)
+        {
+            // return RespuestaHttp.crearRespuesta(_catalogos.CombustibleId(idcombustible), Request);
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.CombustibleId(idcombustible));
+        }
+
+        [Route("registra/combustible")]
+        public HttpResponseMessage PostRegistraCombustible(CombustibleDTO entidadDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.Registra(entidadDto), Request);
+        }
+
+        [Route("modifica/combustible")]
+        public HttpResponseMessage PutModificaCombustible(CombustibleDTO entidadDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.Modifica(entidadDto), Request);
+        }
+
+        [Route("elimina/combustible/{idcombustible}")]
+        public HttpResponseMessage PutEliminaCombustible(int idcombustible)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.Eliminar(idcombustible), Request);
+        }
+        #endregion
+        #region TiposUnidad
+        [Route("consulta/tipounidad")]
+        public HttpResponseMessage GetListaTiposUnidad()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaTipoUnidad(), Request);
+        }
+        [Route("consulta/tipounidadidempresa/{idempresa}")]
+        public HttpResponseMessage GetListaTipoUnidadIdEmpresa(short idempresa)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaTipoUnidad(idempresa), Request);
+        }
+
+     
+        #endregion
+
         #region Banco
         [Route("consulta/bancos")]
         public HttpResponseMessage GetListabancos()

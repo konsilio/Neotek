@@ -146,5 +146,77 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<EquipoTransporte>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                             && x.Activo).ToList();
         }
+        public RespuestaDto Insertar(EquipoTransporte _cc)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<EquipoTransporte>().Insert(_cc);
+                    uow.SaveChanges();
+                    _respuesta.Id = _cc.IdEquipoTransporte;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del vehiculo");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Actualizar(EquipoTransporte _pro)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.EquipoTransporte>().Update(_pro);
+                    foreach (var item in _pro.DetalleEquipoTransporte)
+                    {
+                        uow.Repository<Sagas.MainModule.Entidades.CDetalleEquipoTransporte>().Update(item);
+                    }
+                    uow.SaveChanges();
+                    _respuesta.Id = _pro.IdEquipoTransporte;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del equipo de transporte");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public List<EquipoTransporte> BuscarTodos(int IdEquipoTransporte)
+        {
+            return uow.Repository<EquipoTransporte>().Get(x => x.IdEquipoTransporte.Equals(IdEquipoTransporte)
+                                                        )
+                                                         .ToList();
+        }
+        public List<EquipoTransporte> Buscar(short idEmpresa)
+        {
+            return uow.Repository<EquipoTransporte>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                        && x.Activo)
+                                                         .ToList();
+        }
+        public EquipoTransporte Buscar(int IdEquipoTransporte)
+        {
+            return uow.Repository<EquipoTransporte>().GetSingle(x => x.IdEquipoTransporte.Equals(IdEquipoTransporte));
+        }
+        public CDetalleEquipoTransporte BuscarDetalle(int IdEquipoTransporte)
+        {
+            return uow.Repository<CDetalleEquipoTransporte>().GetSingle(x => x.IdEquipoTransporte.Equals(IdEquipoTransporte));
+        }
     }
 }
