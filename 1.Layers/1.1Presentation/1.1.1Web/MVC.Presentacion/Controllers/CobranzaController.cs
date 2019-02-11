@@ -141,7 +141,6 @@ namespace MVC.Presentacion.Controllers
             {
                 if (fecha != null) { _model.reportedet[0].FechaRango1 = fecha.Value; }
                 _model.reportedet[0].IdEmpresa = ViewBag.IdEmpresa;
-                if (ViewBag.IdCliente != null && idCliente.Value != 0 && idCliente != null) { ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet ?? _model.reportedet[0].Nombre; }
 
             }
             else
@@ -151,6 +150,8 @@ namespace MVC.Presentacion.Controllers
                 cm.FechaRango1 = m.FechaRango1;
                 _model.reportedet.Add(cm);
             }
+
+            if (ViewBag.IdCliente != null && idCliente.Value != 0 && idCliente != null) { ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet[0].Cliente ?? _model.reportedet[0].Nombre; }
 
             return View(_model);
         }
