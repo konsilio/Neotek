@@ -244,7 +244,7 @@ namespace Application.MainModule.Flujos
                         resp.Exito = false;
                         resp.EsInsercion = false;
                         resp.EsActulizacion = false;
-                        resp.Mensaje = "No se puede realizar la venta, favor de comunicarse con el área de crédito y cobranza";
+                        resp.Mensaje = "El cliente no tiene disponibilidad de credito, favor de comunicarse con el área de crédito y cobranza";
                         resp.Id = 0;
                         resp.Codigo = null;
                         resp.ModeloValido = false;
@@ -311,8 +311,7 @@ namespace Application.MainModule.Flujos
                             if (actualizaCredito.Exito)                                                                    
                                 respuesta = PuntoVentaServicio.InsertMobile(adapter);                            
                             else
-                                respuesta = actualizaCredito;
-                           
+                                respuesta = actualizaCredito;                           
                         }
                         else                        
                             respuesta = insertCargo;             
@@ -333,11 +332,10 @@ namespace Application.MainModule.Flujos
                 }
             }
             else                         
-                respuesta = PuntoVentaServicio.InsertMobile(adapter);
-            
+                respuesta = PuntoVentaServicio.InsertMobile(adapter);            
 
-            var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
-            respuesta = ventaPuntoDeVenta;
+            //var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
+            //respuesta = ventaPuntoDeVenta;
             if (respuesta.Exito)
             {
                 if (almacen.IdCamioneta > 0)
