@@ -1,4 +1,4 @@
-﻿@model  MVC.Presentacion.Models.Pedidos.PedidoModel
+﻿@model  MVC.Presentacion.Models.Pedidos.RegistrarPedidoModel
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Moderno" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Moderno" },
@@ -138,8 +138,8 @@
 <body style="height:100%">
     @using (Html.BeginForm("GuardarEdicionPedido", "Pedidos", FormMethod.Post))
     {
-        @Html.HiddenFor(m => m.cliente.IdEmpresa)
-        @Html.HiddenFor(m => m.IdDireccion)
+        @Html.HiddenFor(m => m.IdEmpresa)
+        @Html.HiddenFor(m => m.Orden)
         @Html.HiddenFor(m => m.IdPedidoDetalle)
         <section class="content home">
             <div class="container-fluid">
@@ -207,7 +207,7 @@
                                                         <div class="input-group">
                                                             @Html.DevExpress().DateEdit(settings =>
                                                             {
-                                                                settings.Name = "FechaEntregaPedido";
+                                                                settings.Name = "FechaPedido";
                                                                 settings.Properties.UseMaskBehavior = true;
                                                                 settings.Properties.EditFormat = EditFormat.Custom;
                                                                 settings.Theme = "Material";
@@ -238,7 +238,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                @Model.NombreRfc - @Model.cliente.Rfc
+                                                                @Model.NombreRfc - @Model.Rfc
                                                             </div>
                                                         </div>
                                                     </div>
@@ -252,7 +252,7 @@
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <div class="input-group">
-                                                            @Model.FechaRegistroPedido
+                                                            @Model.FechaPedido
                                                         </div>
                                                     </div>
                                                 </div><br />
@@ -314,7 +314,7 @@
                                                     <div class="col-sm-2">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                @Model.cliente.Telefono1
+                                                                @Model.Telefono1
                                                             </div>
                                                         </div>
                                                     </div>
@@ -349,7 +349,7 @@
                                                             <div class="col-sm-4">
                                                                 <div class="form-group">
                                                                     <div class="input-group">
-                                                                        @Model.NombreRfc - @Model.cliente.Rfc
+                                                                        @Model.NombreRfc - @Model.Rfc
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -426,7 +426,7 @@
                                                     <div class="col-sm-2">
                                                         <div class="form-group">
                                                             <div class="input-group">
-                                                                @Model.cliente.Telefono1
+                                                                @Model.Telefono1
                                                             </div>
                                                         </div>
                                                     </div>

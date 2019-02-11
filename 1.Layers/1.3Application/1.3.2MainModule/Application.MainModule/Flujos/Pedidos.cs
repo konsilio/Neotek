@@ -29,7 +29,7 @@ namespace Application.MainModule.Flujos
             else
                 return PedidosServicio.Obtener(idempresa).Where(x => x.cliente.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
-        public PedidoModelDto PedidoId(int idPedido)
+        public RegistraPedidoDto PedidoId(int idPedido)
         {
             var resp = PermisosServicio.PuedeConsultarPedido();
             if (!resp.Exito) return null;
@@ -92,7 +92,7 @@ namespace Application.MainModule.Flujos
             }
             return PedidosServicio.Modificar(pedido);
         }
-        public RespuestaDto Elimina(PedidoModelDto pedidoDto)
+        public RespuestaDto Elimina(RegistraPedidoDto pedidoDto)
         {
             var resp = PermisosServicio.PuedeEliminarPedido();
             if (!resp.Exito) return resp;

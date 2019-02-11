@@ -6,23 +6,32 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Pedidos
 {
+    [Serializable]
     public class RegistrarPedidoModel
     {
         public int IdPedido { get; set; }
-        [Display(Name = "Cliente")]
+        //[Required(ErrorMessage = Error.R0002)]
+        //[StringLength(100, MinimumLength = 1, ErrorMessage = Error.R0004)]
+        //[Display(Name = "Cliente")]
         public int IdCliente { get; set; }
         public int IdPedidoDetalle { get; set; }
         public short IdEmpresa { get; set; }
+        //[Required(ErrorMessage = Error.R0002)]
+        //[Display(Name = "EstatusPedido")]
         public int IdEstatusPedido { get; set; }
+        public string EstatusPedido { get; set; }
         public string FolioVenta { get; set; }
         public DateTime FechaRegistroPedido { get; set; }
+        //[Required(ErrorMessage = Error.R0002)]
+        //[Display(Name = "FechaPedido")]
         public DateTime FechaPedido { get; set; }
-        [Display(Name = "TipoUnidad")]
-        public int IntTipoUnidad { get; set; }
+        public int TipoUnidad { get; set; }
         public int IdPipa { get; set; }
         public int IdCamioneta { get; set; }
+        public string Unidad { get; set; }
         public int Ruta { get; set; }
-        [Display(Name = "Domicilio")]
+        //[Required(ErrorMessage = Error.R0002)]
+        //[Display(Name = "Domicilio")]
         public short Orden { get; set; }//IdDireccion
                                         //PedidoDetalle 
         public decimal TotalKilos { get; set; }
@@ -32,8 +41,12 @@ namespace MVC.Presentacion.Models.Pedidos
         public string Cantidad30 { get; set; }
         public string Cantidad45 { get; set; }
         public string MotivoCancelacion { get; set; }
-
         public string Telefono1 { get; set; }
         public string Rfc { get; set; }
+        public string Calle { get; set; }
+        public string Colonia { get; set; }
+        public string NombreRfc { get; set; }
+        public string ReferenciaUbicacion { get; set; }
+        public List<EncuestaModel> encuesta { get; set; }
     }
 }

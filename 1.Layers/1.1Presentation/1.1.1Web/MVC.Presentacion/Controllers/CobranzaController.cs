@@ -31,8 +31,21 @@ namespace MVC.Presentacion.Controllers
             if (fecha1 != null || fecha2 != null || Cliente != null || rfc != null)
             {
                 _model = CobranzaServicio.ObtenerCargosFilter(fecha1.Value, fecha2.Value, Cliente.Value, rfc, null, TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
-                _model[0].FechaRango1 = fecha1.Value.Date;
-                _model[0].FechaRango2 = fecha2.Value.Date;
+                // _model[0].FechaRango1 = fecha1.Value.Date;
+                //_model[0].FechaRango2 = fecha2.Value.Date;
+                if (_model.Count() > 0)
+                {
+                    //if (fecha1.Value.Year != 1)
+
+                    //if (fecha2.Value.Year != 1)
+
+                    //if (Cliente != null && Cliente != 0)
+                    //    _model[0].IdCliente = Cliente.Value;
+                    //if (rfc != null)
+                    //    _model[0].Ticket = rfc.ToString();
+                }
+                else
+                    ViewBag.MensajeError = "No se encontraron resultados..";
             }
             else
                 _model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
@@ -43,8 +56,6 @@ namespace MVC.Presentacion.Controllers
                 {
                     ViewBag.Tipo = "alert-danger";
                     ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-                    //TempData["RespuestaDTO"] = ViewBag.MensajeError;
-                    //ViewBag.MensajeError = TempData["RespuestaDTO"];
                 }
                 else
                 {
@@ -62,9 +73,9 @@ namespace MVC.Presentacion.Controllers
         public ActionResult BuscarCredito(CargosModel _model)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            return RedirectToAction("CreditoRecuperado", new { fecha1 = _model.FechaRango1, fecha2 = _model.FechaRango2, Cliente = _model.IdCliente, ticket = _model.Ticket });
+            return RedirectToAction("CreditoRecuperado", new { fecha1 = _model.FechaRango1, fecha2 = _model.FechaRango2, Cliente = _model.IdCliente, empresa = _model.IdEmpresa, ticket = _model.Ticket });
         }
-        public ActionResult CreditoRecuperado(DateTime? fecha1, DateTime? fecha2, int? Cliente, string ticket = null)
+        public ActionResult CreditoRecuperado(DateTime? fecha1, DateTime? fecha2, int? Cliente, short? empresa, string ticket = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
@@ -75,11 +86,28 @@ namespace MVC.Presentacion.Controllers
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
             List<CargosModel> _model = new List<CargosModel>();
-            if (fecha1 != null || fecha2 != null || Cliente != null || ticket != null)
+            if ((fecha1 != null && fecha1.Value.Year != 1) || (fecha1 != null && fecha2.Value.Year != 1) || (Cliente != null && Cliente != 0) || ticket != null)
             {
-                _model = CobranzaServicio.ObtenerCargosFilter(fecha1.Value, fecha2.Value, Cliente.Value, null, ticket, TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
-                _model[0].FechaRango1 = fecha1.Value.Date;
-                _model[0].FechaRango2 = fecha2.Value.Date;
+                CargosModel _mod = new CargosModel();
+                _mod.FechaRango1 = fecha1.Value; _mod.FechaRango2 = fecha2.Value; _mod.IdCliente = Cliente.Value; _mod.Ticket = ticket; _mod.IdEmpresa = empresa.Value;
+                _model = CobranzaServicio.ObtenerCargosFilter(_mod, fecha1.Value, fecha2.Value, Cliente.Value, null, ticket, TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                //_model[0].FechaRango1 = fecha1.Value.Date;
+                //_model[0].FechaRango2 = fecha2.Value.Date;
+                if (_model.Count() == 0)
+                {
+                    //if (fecha1.Value.Year != 1)
+
+                    //    if (fecha2.Value.Year != 1)
+
+                    //if (Cliente != null && Cliente != 0)
+                    //    _model[0].IdCliente = Cliente.Value;
+                    //if (ticket != null)
+                    //    _model[0].Ticket = ticket.ToString();
+                    _model.Add(_mod);
+                    ViewBag.MensajeError = "No se encontraron resultados..";
+                    // _model = CobranzaServicio.ObtenerListaR(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                }
+
             }
             else
                 _model = CobranzaServicio.ObtenerListaR(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
@@ -111,10 +139,18 @@ namespace MVC.Presentacion.Controllers
             ReporteModel _model = CobranzaServicio.ObtenerListaCartera(_tkn, m);
             if (_model.reportedet.Count > 0)
             {
-                if (fecha != null) {_model.reportedet[0].FechaRango1 = fecha.Value; }
-                 _model.reportedet[0].IdEmpresa = ViewBag.IdEmpresa;
+                if (fecha != null) { _model.reportedet[0].FechaRango1 = fecha.Value; }
+                _model.reportedet[0].IdEmpresa = ViewBag.IdEmpresa;
+                if (ViewBag.IdCliente != null && idCliente.Value != 0 && idCliente != null) { ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet ?? _model.reportedet[0].Nombre; }
+
             }
-            if (ViewBag.IdCliente != null && idCliente.Value != 0 && idCliente != null) { ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet[0].Nombre; }
+            else
+            {
+                ViewBag.MensajeError = "No se encontraron resultados..";
+                CargosModel cm = new CargosModel();
+                cm.FechaRango1 = m.FechaRango1;
+                _model.reportedet.Add(cm);
+            }
 
             return View(_model);
         }

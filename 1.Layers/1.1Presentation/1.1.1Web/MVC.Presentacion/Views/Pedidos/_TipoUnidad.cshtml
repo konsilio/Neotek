@@ -2,7 +2,7 @@
 {
     settings.Name = "TipoUnidad";
     settings.Width = 180;
-    settings.SelectedIndex = 0;
+    settings.SelectedIndex = 1;
     settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
     settings.Properties.DropDownStyle = DropDownStyle.DropDown;
     settings.Properties.TextField = "TipoUnidad";
@@ -10,4 +10,4 @@
     settings.Properties.ValueType = typeof(int);
     settings.ClientEnabled = true;
     settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChange";
-}).BindList(Model).GetHtml()
+}).BindList(ViewBag.Unidades).GetHtml()

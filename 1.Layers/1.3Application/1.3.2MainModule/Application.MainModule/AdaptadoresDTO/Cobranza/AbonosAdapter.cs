@@ -31,6 +31,24 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             List<AbonosDTO> lprodDTO = lAbono.ToList().Select(x => ToDTO(x)).ToList();
             return lprodDTO;
         }
+
+        public static AbonosDTO ToDTOAbono(CRecuperadaDTO _Abono)
+        {
+            AbonosDTO dto = new AbonosDTO();
+            dto.FechaRegistro = _Abono.FechaRegistro;
+            dto.FechaAbono = _Abono.FechaAbono;
+            dto.MontoAbono = _Abono.MontoAbono;
+            dto.IdFormaPago = _Abono.IdFormaPago;
+            dto.FolioBancario = _Abono.FolioBancario;
+            dto.FormaPago = _Abono.FormaPago;
+            return dto;
+        }
+
+        public static List<AbonosDTO> ToDTOAbonos(List<CRecuperadaDTO> lAbono)
+        {
+            List<AbonosDTO> lprodDTO = lAbono.ToList().Select(x => ToDTOAbono(x)).ToList();
+            return lprodDTO;
+        }
         public static Abono FromDTO(AbonosDTO pDTO)
         {
             Abono _p = new Abono();
@@ -120,6 +138,45 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             lprodDTO[0].TotalCheques = CobranzaServicio.Total(lprodDTO, "TC");
             lprodDTO[0].TotalTransferencia = CobranzaServicio.Total(lprodDTO, "TT");
 
+            return lprodDTO;
+        }
+        public static CargosDTO ToDTO(CRecuperadaDTO _dto)
+        {
+            // List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
+            CargosDTO dto = new CargosDTO();
+            //dto.IdCargo = _dto.IdCargo;
+            dto.IdCliente = _dto.IdCliente;
+            dto.Cliente = ClienteServicio.Obtener(_dto.IdCliente).RazonSocial;
+            dto.Rfc = ClienteServicio.Obtener(_dto.IdCliente).Rfc;
+            dto.IdEmpresa = _dto.IdEmpresa;
+            dto.Ticket = _dto.Ticket;
+            dto.FechaRegistro = _dto.FechaRegistro;
+            //dto.TotalCargo = _dto.TotalCargo;
+            //dto.TotalAbonos = _dto.TotalAbonos;
+            //dto.SaldoInsoluto = _dto.TotalCargo - _dto.TotalAbonos;
+            //dto.VentaExtraordinaria = _dto.VentaExtraordinaria;
+            dto.Activo = true;//_dto.Activo;
+            dto.FechaVencimiento = _dto.FechaRegistro;//_dto.FechaVencimiento;
+            dto.Saldada = true;//_dto.Saldada;
+            //dto.lstCreditoR = ToDTOAbono(_dto);
+            //dto.Abono = FromInit(_dto.IdCargo);
+            //dto.Total = lst.Sum(x => x.MontoAbono);
+            //dto.TotalEfectivo = lst.Where(y => y.IdFormaPago == 1).Sum(x => x.MontoAbono);
+            //dto.TotalCheques = lst.Where(y => y.IdFormaPago == 2).Sum(x => x.MontoAbono);
+            //dto.TotalTransferencia = lst.Where(y => y.IdFormaPago == 3).Sum(x => x.MontoAbono);
+            return dto;
+        }
+        public static List<CargosDTO> ToDTO(List<CRecuperadaDTO> lstCRecuperado, List<CRecuperadaTotalesDTO> lstTotal)
+        {
+            List<CargosDTO> lprodDTO = lstCRecuperado.ToList().Select(x => ToDTO(x)).ToList();
+            if (lprodDTO.Count() > 0)
+            {
+                lprodDTO[0].lstCreditoR = ToDTOAbonos(lstCRecuperado);
+                lprodDTO[0].Total = lstTotal[0].Total;//CobranzaServicio.Total(lprodDTO, "T");
+                lprodDTO[0].TotalEfectivo = lstTotal[0].Total_Efectivo;//CobranzaServicio.Total(lprodDTO, "TE");
+                lprodDTO[0].TotalCheques = lstTotal[0].Total_Cheques;//CobranzaServicio.Total(lprodDTO, "TC");
+                lprodDTO[0].TotalTransferencia = lstTotal[0].Total_Transferencia;//CobranzaServicio.Total(lprodDTO, "TT");
+            }
             return lprodDTO;
         }
         public static CargosDTO ToDTORep(CarteraVencidaDTO _dto)

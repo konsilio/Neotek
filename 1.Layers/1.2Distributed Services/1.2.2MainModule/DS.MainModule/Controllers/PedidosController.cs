@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.Flujos;
+using DS.MainModule.Results;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -55,7 +56,7 @@ namespace DS.MainModule.Controllers
         [Route("registrar/pedido")]
         public HttpResponseMessage PostRegistrarPedidos(RegistraPedidoDto _model)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Registra(_model));
+           return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Registra(_model));
         }
 
         [Route("registrar/encuesta")]
@@ -65,7 +66,7 @@ namespace DS.MainModule.Controllers
         }
 
         [Route("cancelar/pedido")]
-        public HttpResponseMessage PutCancelarPedidos(PedidoModelDto _model)
+        public HttpResponseMessage PutCancelarPedidos(RegistraPedidoDto _model)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Elimina(_model));
         }

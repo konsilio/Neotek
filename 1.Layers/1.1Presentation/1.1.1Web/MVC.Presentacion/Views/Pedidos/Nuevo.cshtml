@@ -121,7 +121,7 @@
                                                         <div class="editor">
                                                             @Html.DevExpress().DateEdit(settings =>
                                                        {
-                                                           settings.Name = "FechaEntregaPedido";
+                                                           settings.Name = "FechaPedido";
                                                            settings.Properties.UseMaskBehavior = true;
                                                            settings.Theme = "Office365";
                                                            settings.Properties.EditFormat = EditFormat.Custom;
@@ -191,7 +191,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Tipo unidad:</b>
-                                                    @Html.Action("_TipoUnidad")
+                                                    @Html.Partial("_TipoUnidad")
                                                 </div>                                                
                                                 <div class="col-sm-4">
                                                     <b>Estatus pedido:</b>
@@ -217,7 +217,7 @@
                                                }).BindList(ViewBag.Estatus).GetHtml()
                                                 </div>
                                             </div>
-                                            @Html.ValidationMessageFor(m => m.IntTipoUnidad, "", new { @class = "alert-danger" })
+                                            @Html.ValidationMessageFor(m => m.TipoUnidad, "", new { @class = "alert-danger" })
                                             @Html.ValidationMessageFor(m => m.IdEstatusPedido, "", new { @class = "alert-danger" })
                                             <div class="row clearfix selPipa" style="display:none">
                                                 <div class="col-sm-3">
@@ -228,7 +228,7 @@
                                             <div class="row clearfix selPipa" style="display:none">
                                                 <div class="col-sm-3">
                                                     <b>Cantidad:</b>
-                                                    <input name="Cantidad" type="number" class="form-control" />
+                                                    <input name="Cantidad" type="number" id="Cantidad" value="0" class="form-control" />
                                                 </div>
                                                 <div class="col-sm-1" style="top: 22px;">
                                                     <div class="form-group">
@@ -246,7 +246,7 @@
                                             <div class="row clearfix selCamioneta">
                                                 <div class="col-sm-3">
                                                     <b>Cantidad:</b>
-                                                    <input name="Cantidad45" type="number" class="form-control" />
+                                                    <input name="Cantidad45" type="number" id="Cantidad45" value="0" class="form-control" />
                                                 </div>
                                                 <div class="col-sm-2" style="top: 22px;">
                                                     <div class="form-group">
@@ -257,7 +257,7 @@
                                             <div class="row clearfix selCamioneta">
                                                 <div class="col-sm-3">
                                                     <b>Cantidad:</b>
-                                                    <input name="Cantidad30" type="number" class="form-control" />
+                                                    <input name="Cantidad30" type="number" value="0" id="Cantidad30" class="form-control" />
                                                 </div>
                                                 <div class="col-sm-2" style="top: 22px;">
                                                     <div class="form-group">
@@ -268,7 +268,7 @@
                                             <div class="row clearfix selCamioneta">
                                                 <div class="col-sm-3">
                                                     <b>Cantidad:</b>
-                                                    <input name="Cantidad20" type="number" class="form-control" />
+                                                    <input name="Cantidad20" type="number" value="0" id="Cantidad20" class="form-control" />
                                                 </div>
                                                 <div class="col-sm-2" style="top: 22px;">
                                                     <div class="form-group">
@@ -305,7 +305,7 @@
                         <div class="body">
                             <div class="col-sm-12">
                                 <div>
-                                    Click en el botón <img src="~/Resources/img/ccte.png" /> para crear uno nuevo cliente.
+                                    Click en el botón <img src="~/Resources/img/ccte.png" /> para crear un nuevo cliente.
                                 </div>
                             </div>
                         </div>

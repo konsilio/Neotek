@@ -63,7 +63,7 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-        public ActionResult Nuevo(RegistrarPedidoModel _model = null)
+        public ActionResult Nuevo(RegistrarPedidoModel _model = null, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
@@ -72,6 +72,7 @@ namespace MVC.Presentacion.Controllers
             //{
             //    _model = (PedidoModel)TempData["Mod"];
             //}
+            ViewBag.Unidades = AgregarTUnidades();
             if (TempData["RespuestaDTO"] != null)
             {
                 if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
@@ -83,6 +84,8 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Msj = TempData["RespuestaDTO"];
                 }
             }
+            if (msj != "" || msj != null)
+                ViewBag.MensajeError = msj;
             return View(_model);
         }
         [HttpPost]
@@ -91,19 +94,24 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             var Id = TokenServicio.ObtenerIdEmpresa(_tkn);
-            //_model.cliente.IdTipoPersona = 0;
-            //_model.cliente.IdRegimenFiscal = 0;
-            _model.IdEmpresa = Id;
-            var Respuesta = PedidosServicio.AltaNuevoPedido(_model, Session["StringToken"].ToString());
-            if (Respuesta.Exito)
+            _model.IdEmpresa = (short)Id;
+            //_model.FechaRegistroPedido = _model.FechaPedido;
+            //_model.FolioVenta = ""; _model.MotivoCancelacion = ""; _model.Telefono1 = "";
+            if (_model.IdCliente != 0 || _model.Orden != 0)
             {
-                return RedirectToAction("Index", new { msj = Respuesta.Mensaje });
+                var Respuesta = PedidosServicio.AltaNuevoPedido(_model, Session["StringToken"].ToString());
+                if (Respuesta.Exito)
+                {
+                    return RedirectToAction("Index", new { msj = Respuesta.Mensaje });
+                }
+                else
+                {
+                    TempData["RespuestaDTO"] = Respuesta;
+                    return RedirectToAction("Nuevo");
+                }
             }
             else
-            {
-                TempData["RespuestaDTO"] = Respuesta;
-                return RedirectToAction("Nuevo");
-            }
+                return RedirectToAction("Nuevo", new { msj = "Cliente es requerido, Domicilio es requerido" });
 
         }
         public ActionResult Buscar(PedidoModel _mod)
@@ -121,7 +129,7 @@ namespace MVC.Presentacion.Controllers
 
             var JsonInfo = JsonConvert.SerializeObject(lstClientes);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
-        }      
+        }
         public JsonResult BuscarClientesPedidoDireccion(string Tel1, string Tel2, string Rfc)
         {
             string _tkn = Session["StringToken"].ToString();
@@ -343,8 +351,8 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Estatus = PedidosServicio.ObtenerEstatusPedidos(_tkn).ToList();
             var model = PedidosServicio.ObtenerIdPedido(idPedido, _tkn);
             model.Cantidad = model.Cantidad.Replace("Kg", "");
-            ViewBag.Camionetas = PedidosServicio.ObtenerCamionetas(model.cliente.IdEmpresa, _tkn);
-            ViewBag.Pipas = PedidosServicio.ObtenerPipas(model.cliente.IdEmpresa, _tkn);
+            ViewBag.Camionetas = PedidosServicio.ObtenerCamionetas(model.IdEmpresa, _tkn);
+            ViewBag.Pipas = PedidosServicio.ObtenerPipas(model.IdEmpresa, _tkn);
             return View(model);
         }
         public ActionResult EditarCliente(int idPedido)
@@ -354,8 +362,8 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Estatus = PedidosServicio.ObtenerEstatusPedidos(_tkn).ToList();
             var model = PedidosServicio.ObtenerIdPedido(idPedido, _tkn);
             model.Cantidad = model.Cantidad.Replace("Kg", "");
-            ViewBag.Camionetas = PedidosServicio.ObtenerCamionetas(model.cliente.IdEmpresa, _tkn);
-            ViewBag.Pipas = PedidosServicio.ObtenerPipas(model.cliente.IdEmpresa, _tkn);
+            ViewBag.Camionetas = PedidosServicio.ObtenerCamionetas(model.IdEmpresa, _tkn);
+            ViewBag.Pipas = PedidosServicio.ObtenerPipas(model.IdEmpresa, _tkn);
             return View(model);
         }
         public ActionResult GuardarEdicionPedido(RegistrarPedidoModel _model)
@@ -389,9 +397,9 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             var _model = PedidosServicio.ObtenerIdPedido(idPedido, _tkn);
-            _model.cliente.IdTipoPersona = 0;
-            _model.cliente.IdRegimenFiscal = 0;
-            _model.Pedidos = null;
+            //_model.cliente.IdTipoPersona = 0;
+            //_model.cliente.IdRegimenFiscal = 0;
+            //_model.Pedidos = null;
             _model.MotivoCancelacion = MotivoCancela;
 
             var Respuesta = PedidosServicio.EliminarPedido(_model, Session["StringToken"].ToString());
@@ -427,7 +435,7 @@ namespace MVC.Presentacion.Controllers
             List<ClienteLocacionMod> model = new List<ClienteLocacionMod>();
             return PartialView("_ComboBoxPartialPais", model);
         }
-           
+
         public ActionResult _TipoUnidad(ClientesModel _model)
         {
             var lstClientes = AgregarTUnidades();
@@ -451,7 +459,7 @@ namespace MVC.Presentacion.Controllers
         public List<Data> AgregarTUnidades()
         {
             var list = new List<Data>();
-            list.Add(new Data(0, "Seleccione"));
+            //list.Add(new Data(0, "Seleccione"));
             list.Add(new Data(1, "Pipa"));
             list.Add(new Data(2, "Camioneta"));
 

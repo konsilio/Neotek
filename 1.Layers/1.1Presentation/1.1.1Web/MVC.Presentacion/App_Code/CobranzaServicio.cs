@@ -22,11 +22,16 @@ namespace MVC.Presentacion.App_Code
             agente.ListaCRecuperada(id, tkn);
             return agente._ListaCargos;
         }
-        
         public static List<CargosModel> ObtenerCargosFilter(DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string tkn)
         {
             var agente = new AgenteServicio();
             agente.ListaCargosFilter(fecha1, fecha2, Cliente, rfc, ticket, id, tkn);
+            return agente._ListaCargos;
+        }
+        public static List<CargosModel> ObtenerCargosFilter(CargosModel _mod, DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaCargosFilter(_mod,fecha1, fecha2, Cliente, rfc, ticket, id, tkn);
             return agente._ListaCargos;
         }
         public static ReporteModel ObtenerListaCartera( string tkn, CargosModel model)
