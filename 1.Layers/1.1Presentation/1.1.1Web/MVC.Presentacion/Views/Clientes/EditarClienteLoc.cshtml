@@ -61,18 +61,18 @@
                                         <input type="text" name="TipoLocacion" class="form-control" value="@ViewBag.Locaciones.TipoLocacion">
                                     </div>
                                 </div>
-                                <div class="col-lg-7 col-md-7 col-sm-7">
-                                    <div class="form-group">
-                                        <div>
-                                            Localización Manual
-                                            <label class="switch">
-                                                <input type="checkbox" id="payMethod">
-                                                <span class="slider round"></span>
-                                            </label>
-                                            Localización Google Maps
+                                @*<div class="col-lg-7 col-md-7 col-sm-7">
+                                        <div class="form-group">
+                                            <div>
+                                                Localización Manual
+                                                <label class="switch">
+                                                    <input type="checkbox" id="payMethod">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                                Localización Google Maps
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </div>*@
                             </div>
                             <div class="row clearfix" id="Dir">
                                 <div class="col-lg-2 col-md-2 col-sm-2">
@@ -110,6 +110,7 @@
                                                 }
                                             </select>
                                         </div>
+                                        @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                         <div class="form-group">
@@ -222,6 +223,23 @@
                                             <input type="text" name="CodigoPostal" class="form-control" value="@ViewBag.Locaciones.CodigoPostal" />
                                         </div>
                                         @Html.ValidationMessageFor(m => m.CodigoPostal, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Referencia Google Maps:*
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10">
+                                        <div class="form-group">
+                                            <input type="text" name="formatted_address" class="form-control" />
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.formatted_address, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>

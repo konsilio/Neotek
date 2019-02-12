@@ -7,21 +7,28 @@
     //if ($('#cbxCte').has('option').length > 0) {
     //    $('#btnCrearCte').prop('disabled', true);
     //} else { $('#btnCrearCte').prop('disabled', false); alert("empty")}
-    $('select').on('change', function () {
+    //$('select').on('change', function () {
 
-        var value = $('#TipoUnidad').find('option:selected').val();//get value to filter of selected
+    //    var value = $('#TipoUnidad').find('option:selected').val();//get value to filter of selected
 
-        if (value == 1)//Pipa
-        {
-            $('.selPipa').show();
-            $('.selCamioneta').hide();
-        }
-        if (value == 2)//Camioneta
-        {
-            $('.selPipa').hide();
-            $('.selCamioneta').show();
-        }
-    });
+    //    if (value == 1)//Pipa
+    //    {
+    //        $('.selPipa').show();
+    //        $('.selCamioneta').hide();
+    //    }
+    //    if (value == 2)//Camioneta
+    //    {
+    //        $('.selPipa').hide();
+    //        $('.selCamioneta').show();
+    //    }
+    //});
+   
+    //  btnCrearCte
+    //$("#btnCrearCte").click(function () {
+    //    var form = $(this).parent("form");
+    //    form.attr('action', '<%= Url.RouteUrl(new { Controller = "Pedidos", Action = "AltaCliente" }) %>');
+    //    form.attr('method', 'get');
+    //});
     $('#btnBuscarC').click(function () {
         IdCliente.ClearItems();
         Orden.ClearItems();

@@ -86,31 +86,27 @@ namespace MVC.Presentacion.Controllers
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
             List<CargosModel> _model = new List<CargosModel>();
+            CargosModel _mod = new CargosModel();
+
             if ((fecha1 != null && fecha1.Value.Year != 1) || (fecha1 != null && fecha2.Value.Year != 1) || (Cliente != null && Cliente != 0) || ticket != null)
             {
-                CargosModel _mod = new CargosModel();
                 _mod.FechaRango1 = fecha1.Value; _mod.FechaRango2 = fecha2.Value; _mod.IdCliente = Cliente.Value; _mod.Ticket = ticket; _mod.IdEmpresa = empresa.Value;
-                _model = CobranzaServicio.ObtenerCargosFilter(_mod, fecha1.Value, fecha2.Value, Cliente.Value, null, ticket, TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
-                //_model[0].FechaRango1 = fecha1.Value.Date;
-                //_model[0].FechaRango2 = fecha2.Value.Date;
+                _model = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
                 if (_model.Count() == 0)
                 {
-                    //if (fecha1.Value.Year != 1)
-
-                    //    if (fecha2.Value.Year != 1)
-
-                    //if (Cliente != null && Cliente != 0)
-                    //    _model[0].IdCliente = Cliente.Value;
-                    //if (ticket != null)
-                    //    _model[0].Ticket = ticket.ToString();
                     _model.Add(_mod);
                     ViewBag.MensajeError = "No se encontraron resultados..";
-                    // _model = CobranzaServicio.ObtenerListaR(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
                 }
-
             }
             else
-                _model = CobranzaServicio.ObtenerListaR(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                _model = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);//CobranzaServicio.ObtenerListaR(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+
+            if (_model.Count() == 0)
+            {
+                DateTime dt = new DateTime();
+                _mod.FechaRango1 = dt; _mod.FechaRango2 = dt;
+                _model.Add(_mod);
+            }
 
             return View(_model);
         }

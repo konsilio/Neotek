@@ -58,7 +58,7 @@
                                         <div class="form-group">
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div>
-                                                    <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdCliente[0].RazonSocial=="")?ViewBag.IdCliente[0].Nombre + " " +ViewBag.IdCliente[0].Apellido1 + " " +ViewBag.IdCliente[0].Apellido2:ViewBag.IdCliente[0].RazonSocial )" />
+                                                    <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdCliente[0].RazonSocial==null)?ViewBag.IdCliente[0].Nombre + " " +ViewBag.IdCliente[0].Apellido1 + " " +ViewBag.IdCliente[0].Apellido2:ViewBag.IdCliente[0].RazonSocial )" />
                                                     <input type="text" name="IdCliente" hidden="hidden" value="@ViewBag.IdCliente[0].IdCliente" readonly="readonly" class="form-control" />
                                                     <input type="text" name="Orden" hidden="hidden" value="@((ViewBag.LocacionOrden!=null)?ViewBag.LocacionOrden:0)" readonly="readonly" class="form-control" />
                                                 </div>

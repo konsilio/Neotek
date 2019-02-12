@@ -39,7 +39,7 @@ namespace Application.MainModule.Flujos
             {
                 lp.Add(new System.Data.SqlClient.SqlParameter("FecFin", fechaFin));
             }
-            if (ticket != "")
+            if (ticket != ""&& ticket !=null)
             {
                 lp.Add(new System.Data.SqlClient.SqlParameter("Ticket", ticket));
             }
