@@ -34,7 +34,7 @@
     </script>
 </head>
 <body style="height:100%">
-    @using (Html.BeginForm("Nuevo", "Pedidos", FormMethod.Post))
+    @using (Html.BeginForm(FormMethod.Post)) //"Nuevo", "Pedidos",
     {
         <section class="content home">
             <div class="container-fluid">
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                     @if (ViewBag.MensajeError != null)
-                    {
+    {
                         <div class="row clearfix">
                             <div id="divMensajeError" class="container">
                                 <div class="alert alert-danger">
@@ -108,11 +108,26 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Cliente:</b>
-                                                    @Html.Partial("_DatosCliente")
-                                                </div>                                               
+                                                    @*@Html.Partial("_DatosCliente")*@
+                                                    @Html.DevExpress().ComboBox(settings =>
+                                                    {
+                                                        settings.Name = "IdCliente";
+                                                        settings.Width = 180;
+                                                        settings.SelectedIndex = 0;
+                                                        settings.Properties.DropDownWidth = 550;
+                                                        settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                                                        settings.Properties.CallbackPageSize = 30;
+                                                       // settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                        settings.Properties.TextFormatString = "{0}";
+                                                        settings.Properties.ValueType = typeof(int);
+                                                        settings.Properties.Columns.Add("Nombre", "Nombre", 130);
+                                                        settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
+                                                        settings.Properties.Columns.Add("Rfc", "RFC", 230);
+                                                    }).GetHtml()
+                                                </div>
                                                 <div class="col-sm-2" style="top: 10px;">
                                                     <div class="form-group">
-                                                        <input type="submit" id="btnCrearCte" value="Crear cliente" formaction=@Url.Action("AltaCliente") formmethod="post" class="btn btn-raised btn-primary btn-round float-center" />
+                                                        <input type="button" id="btnCrearCte" onclick="@("window.location.href='" + @Url.Action("AltaCliente", "Pedidos") + "'");"  value="Crear cliente" class="btn btn-raised btn-primary btn-round float-center" />
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -169,11 +184,26 @@
                                                          </div>*@
                                                 </div>
                                             </div>
-                                            @Html.ValidationMessageFor(m => m.IdCliente, "", new { @class = "alert-danger" })
+                                            @*@Html.ValidationMessageFor(m => m.IdCliente, "", new { @class = "alert-danger" })*@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Domicilio:</b>
-                                                    @Html.Partial("_LocacionesCliente")
+                                                    @*@Html.Partial("_LocacionesCliente")*@
+                                                    @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "Orden";
+                                                   settings.Width = 180;
+                                                   settings.SelectedIndex = 0;
+                                                   settings.Properties.DropDownWidth = 550;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                                                   settings.Properties.CallbackPageSize = 30;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.TextFormatString = "{0}";
+                                                   settings.Properties.ValueType = typeof(int);
+                                                   settings.Properties.Columns.Add("Calle", "Calle", 130);
+                                                   settings.Properties.Columns.Add("NumExt", "NumExt", 130);
+                                                   settings.Properties.Columns.Add("Colonia", "Colonia", 230);
+                                               }).GetHtml()
                                                 </div>
 
                                                 <div class="col-sm-4">
@@ -187,12 +217,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @Html.ValidationMessageFor(m => m.Orden, "", new { @class = "alert-danger" })
+                                            @*@Html.ValidationMessageFor(m => m.Orden, "", new { @class = "alert-danger" })*@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Tipo unidad:</b>
                                                     @Html.Partial("_TipoUnidad")
-                                                </div>                                                
+                                                </div>
                                                 <div class="col-sm-4">
                                                     <b>Estatus pedido:</b>
                                                     @Html.DevExpress().ComboBox(settings =>
@@ -283,8 +313,8 @@
                                             <div class="form-group">
                                                 <input type="submit" value="Cancelar" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
-                                            <div class="form-group">
-                                                <input type="submit" id="altaPedido" value="Crear pedido" formaction=@Url.Action("CrearPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                                            <div class="form-group">@*id="altaPedido"*@
+                                                <input type="submit" value="Crear pedido" formaction=@Url.Action("CrearPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
                                             </div>
                                         </div>
                                     </div>
