@@ -103,7 +103,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 IdCliente = _loc.IdCliente,
                 Orden = _loc.Orden,
                 IdPais = _loc.IdPais,
-                IdEstadoRep = _loc.IdEstadoRep,
+                IdEstadoRep = _loc.IdEstadoRep ?? 0,
                 EstadoProvincia = _loc.EstadoProvincia,
                 Municipio = _loc.Municipio,
                 CodigoPostal = _loc.CodigoPostal,
@@ -135,7 +135,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             return new ClienteLocacion()
             {
                 IdCliente = cteDTO.IdCliente,
-                Orden = (short)(cteDTO.Orden + 1),
+                Orden = (short)(ClienteServicio.ObtenerUltimoOrdenLocacion(cteDTO.IdCliente) + 1),
                 IdPais = cteDTO.IdPais,
                 IdEstadoRep = cteDTO.IdEstadoRep,
                 EstadoProvincia = cteDTO.EstadoProvincia,
@@ -288,7 +288,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 ClienteLocacionDTO _loc = new ClienteLocacionDTO();
                 _loc.Orden = v.Orden;
                 _loc.IdPais = v.IdPais;
-                _loc.IdEstadoRep = v.IdEstadoRep;
+                _loc.IdEstadoRep = v.IdEstadoRep ?? 0;
                 _loc.EstadoProvincia = v.EstadoProvincia;
                 _loc.Municipio = v.Municipio;
                 _loc.CodigoPostal = v.CodigoPostal;

@@ -147,8 +147,8 @@ namespace MVC.Presentacion.Controllers
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
             //llenar locaciones
             ViewBag.Locaciones = CatalogoServicio.ObtenerLocaciones(id, _tkn);
-            List<ClienteLocacionMod> _lst = CatalogoServicio.ObtenerLocaciones(id, _tkn);
-            if (_lst.Count() > 0) { ViewBag.LocacionOrden = _lst.OrderByDescending(x => x.Orden).Select(x => x.Orden).First(); }
+            //List<ClienteLocacionMod> _lst = CatalogoServicio.ObtenerLocaciones(id, _tkn);
+            //if (ViewBag.Locaciones.Count() > 0) { ViewBag.LocacionOrden = ViewBag.Locaciones.OrderByDescending(x => x.Orden).Select(x => x.Orden).First(); }
             if (TempData["RespuestaDTO"] != null)
             {
                 ViewBag.MessageExito = TempData["RespuestaDTO"];
@@ -160,7 +160,7 @@ namespace MVC.Presentacion.Controllers
             }
             ViewBag.MessageError = TempData["RespuestaDTOError"];           
 
-            return View(_lst);
+            return View();
         }
         [HttpPost]
         public ActionResult GuardarLocaciones(ClienteLocacionMod _Obj)

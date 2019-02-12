@@ -33,11 +33,11 @@ namespace Application.MainModule.Servicios.Catalogos
 
         public static int BuscarRazon(ClienteDTO cliente)
         {
-            var resultado = new ClientesDataAccess().BuscarRazonSocial(cliente,TokenServicio.ObtenerIdEmpresa());
+            var resultado = new ClientesDataAccess().BuscarRazonSocial(cliente, TokenServicio.ObtenerIdEmpresa());
             if (resultado != null)
                 return resultado.IdCliente;
             else
-                return 0;           
+                return 0;
         }
 
         public static int BuscarCliente(ClienteDTO cliente)
@@ -67,7 +67,16 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<ClienteLocacionDTO> ObtenerLoc(int IdCliente)
         {
             List<ClienteLocacionDTO> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTOLoc(new ClientesDataAccess().BuscarLocacion(IdCliente));
-            return lClientes;          
+            return lClientes;
+        }
+        public static short ObtenerUltimoOrdenLocacion(int IdCliente)
+        {
+
+            List<ClienteLocacionDTO> lista = ObtenerLoc(IdCliente);
+            if (lista.Count != 0)
+                return lista.OrderByDescending(x => x.Orden).FirstOrDefault().Orden;
+            else
+                return (short)0;
         }
 
         public static RespuestaDto Eliminar(ClienteLocacion cteLoc)
@@ -84,7 +93,7 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new ClientesDataAccess().Actualizar(cte);
         }
-   
+
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El cliente");
@@ -110,7 +119,7 @@ namespace Application.MainModule.Servicios.Catalogos
         /// <returns>Restorna la respuesta de la actualización del credito</returns>
         public static RespuestaDto ModificarCredito(Cliente cliente)
         {
-           return new ClientesDataAccess().ActualizarCredito(cliente);
+            return new ClientesDataAccess().ActualizarCredito(cliente);
         }
     }
 }
