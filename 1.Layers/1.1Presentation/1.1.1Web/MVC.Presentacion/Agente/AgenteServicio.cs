@@ -3822,12 +3822,12 @@ namespace MVC.Presentacion.Agente
             }
         }
 
-        public void ListaCargosFilter(CargosModel _mod, DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string token)
+        public void ListaCargosFilter(CargosModel _mod,string token)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutCreditoRecuperado"];//GetListaCargos//GetListaCRecuperada
-            Cargos(_mod, fecha1, fecha2, Cliente, rfc, ticket, id, ApiCatalgos, token).Wait();
+            Cargos(_mod, ApiCatalgos, token).Wait();
         }
-        private async Task Cargos(CargosModel _mod, DateTime fecha1, DateTime fecha2, int Cliente, string rfc, string ticket, short id, string api, string token = null)
+        private async Task Cargos(CargosModel _mod,string api, string token = null)
         {
             using (var client = new HttpClient())
             {

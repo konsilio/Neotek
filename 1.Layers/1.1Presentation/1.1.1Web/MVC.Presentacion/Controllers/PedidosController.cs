@@ -141,6 +141,7 @@ namespace MVC.Presentacion.Controllers
             var JsonInfo = JsonConvert.SerializeObject(_lst);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
+      
         public ActionResult AltaCliente()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));

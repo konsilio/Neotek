@@ -133,11 +133,13 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         public static List<CargosDTO> ToDTO(List<Cargo> lCargo)
         {
             List<CargosDTO> lprodDTO = lCargo.ToList().Select(x => ToDTO(x)).ToList();
-            lprodDTO[0].Total = CobranzaServicio.Total(lprodDTO, "T");
-            lprodDTO[0].TotalEfectivo = CobranzaServicio.Total(lprodDTO, "TE");
-            lprodDTO[0].TotalCheques = CobranzaServicio.Total(lprodDTO, "TC");
-            lprodDTO[0].TotalTransferencia = CobranzaServicio.Total(lprodDTO, "TT");
-
+            if (lprodDTO.Count > 10)
+            {
+                lprodDTO[0].Total = CobranzaServicio.Total(lprodDTO, "T");
+                lprodDTO[0].TotalEfectivo = CobranzaServicio.Total(lprodDTO, "TE");
+                lprodDTO[0].TotalCheques = CobranzaServicio.Total(lprodDTO, "TC");
+                lprodDTO[0].TotalTransferencia = CobranzaServicio.Total(lprodDTO, "TT");
+            }
             return lprodDTO;
         }
         public static CargosDTO ToDTO(CRecuperadaDTO _dto)
