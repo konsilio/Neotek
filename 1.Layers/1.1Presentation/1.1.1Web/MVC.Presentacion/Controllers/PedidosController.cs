@@ -94,25 +94,17 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             var Id = TokenServicio.ObtenerIdEmpresa(_tkn);
-            _model.IdEmpresa = (short)Id;
-            //_model.FechaRegistroPedido = _model.FechaPedido;
-            //_model.FolioVenta = ""; _model.MotivoCancelacion = ""; _model.Telefono1 = "";
-            if (_model.IdCliente != 0 || _model.Orden != 0)
+            _model.IdEmpresa = (short)Id;         
+            var Respuesta = PedidosServicio.AltaNuevoPedido(_model, Session["StringToken"].ToString());
+            if (Respuesta.Exito)
             {
-                var Respuesta = PedidosServicio.AltaNuevoPedido(_model, Session["StringToken"].ToString());
-                if (Respuesta.Exito)
-                {
-                    return RedirectToAction("Index", new { msj = Respuesta.Mensaje });
-                }
-                else
-                {
-                    TempData["RespuestaDTO"] = Respuesta;
-                    return RedirectToAction("Nuevo");
-                }
+                return RedirectToAction("Index", new { msj = Respuesta.Mensaje });
             }
             else
-                return RedirectToAction("Nuevo", new { msj = "Cliente es requerido, Domicilio es requerido" });
-
+            {
+                TempData["RespuestaDTO"] = Respuesta;
+                return RedirectToAction("Nuevo");
+            }
         }
         public ActionResult Buscar(PedidoModel _mod)
         {
@@ -141,7 +133,7 @@ namespace MVC.Presentacion.Controllers
             var JsonInfo = JsonConvert.SerializeObject(_lst);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
-      
+
         public ActionResult AltaCliente()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
