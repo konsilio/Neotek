@@ -8,32 +8,32 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Pedidos
 {
-    [Serializable]
+
     public class RegistraPedidoDto
     {
         public int IdPedido { get; set; }
-   //     [Required(ErrorMessage = Error.R0002)]
-    //    [StringLength(100, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        //[Display(Name = "Cliente")]
+        [Required(ErrorMessage = Error.R0002)]
+        //[Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = Error.R0004)]
+        [Display(Name = "IdCliente")]
         public int IdCliente { get; set; }
         public int IdPedidoDetalle { get; set; }
         public short IdEmpresa { get; set; }
-        //[Required(ErrorMessage = Error.R0002)]
-        //[Display(Name = "EstatusPedido")]
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "IdEstatusPedido")]
         public int IdEstatusPedido { get; set; }
         public string EstatusPedido { get; set; }
         public string FolioVenta { get; set; }
         public DateTime FechaRegistroPedido { get; set; }
-     //   [Required(ErrorMessage = Error.R0002)]
-        //[Display(Name = "FechaPedido")]
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "FechaPedido")]
         public DateTime FechaPedido { get; set; }
         public int TipoUnidad { get; set; }
         public int IdPipa { get; set; }
         public int IdCamioneta { get; set; }
         public string Unidad { get; set; }
         public int Ruta { get; set; }
-        //[Required(ErrorMessage = Error.R0002)]
-        //[Display(Name = "Domicilio")]
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Orden")]
         public short Orden { get; set; }//IdDireccion
                                         //PedidoDetalle 
         public decimal TotalKilos { get; set; }

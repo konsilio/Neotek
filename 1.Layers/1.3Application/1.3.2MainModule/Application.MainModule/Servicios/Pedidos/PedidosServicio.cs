@@ -38,7 +38,6 @@ namespace Application.MainModule.Servicios.Pedidos
             if (status == 5)
                 return stringEstatus.Solollamada;
 
-
             return stringEstatus.PedidoCreado;
         }
         public static List<EstatusPedidoDto> ObtenerEstatus()

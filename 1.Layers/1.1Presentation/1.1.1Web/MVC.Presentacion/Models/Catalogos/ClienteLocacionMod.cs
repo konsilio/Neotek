@@ -7,12 +7,13 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Catalogos
 {
+ 
     public class ClienteLocacionMod
     {
         public int IdCliente { get; set; }
         public short Orden { get; set; }       
         public byte IdPais { get; set; }
-        public Nullable<byte> IdEstadoRep { get; set; }
+        public byte IdEstadoRep { get; set; }
         public string EstadoProvincia { get; set; }
         public string Municipio { get; set; }
         public string CodigoPostal { get; set; }

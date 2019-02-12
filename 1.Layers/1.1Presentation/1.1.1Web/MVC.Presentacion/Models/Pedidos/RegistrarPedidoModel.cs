@@ -6,7 +6,6 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Pedidos
 {
-    [Serializable]
     public class RegistrarPedidoModel
     {
         public int IdPedido { get; set; }
