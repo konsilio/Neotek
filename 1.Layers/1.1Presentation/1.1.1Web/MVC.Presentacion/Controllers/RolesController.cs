@@ -13,8 +13,6 @@ namespace MVC.Presentacion.Controllers
     {
         string _tok = string.Empty;
         // GET: Roles
-
-
         public ActionResult Index(short? idempresa)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -34,15 +32,15 @@ namespace MVC.Presentacion.Controllers
             List<RolRequsicion> _lstReq = CatalogoServicio.getListrequisicion(lstGral);
             List<RolMovilCompra> _lstMC = CatalogoServicio.getListmc(lstGral);
             List<RolMovilVenta> _lstMV = CatalogoServicio.getListmv(lstGral);
-
+            List<RolSistemaVenta> _lstSV = CatalogoServicio.getListsv(lstGral);
             PartialViewModel rolCat = new PartialViewModel()
             {
-                //ListaRolesCat = lstGral,
                 ListaRoles = lstGral,
                 ListaRolesCom = _lstCompra,
                 ListaRequsicion = _lstReq,
                 ListaMovilCompra = _lstMC,
                 ListaMovilVenta = _lstMV,
+                ListaSistemaVenta = _lstSV,
             };
 
             if (TempData["RespuestaDTO"] != null)
@@ -201,6 +199,25 @@ namespace MVC.Presentacion.Controllers
             _tok = Session["StringToken"].ToString();
 
             var respuesta = CatalogoServicio.ActualizaPermisosMovilVenta(objrol, _tok);
+
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
+                return RedirectToAction("Index");
+            }
+        }
+        public ActionResult GuardarPerSistemaVenta(RolDto objrol)
+        {
+            _tok = Session["StringToken"].ToString();
+
+            var respuesta = CatalogoServicio.ActualizaPermisosSistemaVenta(objrol, _tok);
 
             if (respuesta.Exito)
             {

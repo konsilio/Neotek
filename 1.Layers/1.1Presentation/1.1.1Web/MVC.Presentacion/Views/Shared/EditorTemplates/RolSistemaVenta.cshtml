@@ -1,4 +1,4 @@
-﻿@model MVC.Presentacion.Models.Catalogos.RolMovilVenta
+﻿@model MVC.Presentacion.Models.Catalogos.RolSistemaVenta
 
 @Html.HiddenFor(m => m.IdRol)
 @Html.HiddenFor(m => m.IdEmpresa)
@@ -89,20 +89,16 @@
 @Html.HiddenFor(m => m.AppTomaLecturaReporteDelDia)
 @Html.HiddenFor(m => m.AppTraspasoEstacionCarb)
 @Html.HiddenFor(m => m.AppTraspasoPipa)
-@Html.HiddenFor(m => m.CobranzaVerAbonos)
-@Html.HiddenFor(m => m.CobranzaVerCartera)
-@Html.HiddenFor(m => m.CobranzaVerCreditoRecuperado)
-@Html.HiddenFor(m => m.CobranzaGenerarAbonos)
-@Html.HiddenFor(m => m.PedidoVerPedido)
-@Html.HiddenFor(m => m.PedidoGenerarPedido)
-@Html.HiddenFor(m => m.PedidoModificarPedido)
-@Html.HiddenFor(m => m.PedidoEliminarPedido)
 <tr>
     <td>@Model.NombreRol </td>
-    <td>@Html.CheckBoxFor(m => m.AppDisposicionEfectivo)</td>
-    <td>@Html.CheckBoxFor(m => m.AppCamionetaPuntoVenta)</td>
-    <td>@Html.CheckBoxFor(m => m.AppEstacionCarbPuntoVenta)</td>
-    <td>@Html.CheckBoxFor(m => m.AppPipaPuntoVenta)</td>    
+    <td>@Html.CheckBoxFor(m => m.CobranzaVerAbonos)</td>
+    <td>@Html.CheckBoxFor(m => m.CobranzaVerCartera)</td>
+    <td>@Html.CheckBoxFor(m => m.CobranzaVerCreditoRecuperado)</td>
+    <td>@Html.CheckBoxFor(m => m.CobranzaGenerarAbonos)</td>
+    <td>@Html.CheckBoxFor(m => m.PedidoVerPedido)</td>
+    <td>@Html.CheckBoxFor(m => m.PedidoGenerarPedido)</td>
+    <td>@Html.CheckBoxFor(m => m.PedidoModificarPedido)</td>
+    <td>@Html.CheckBoxFor(m => m.PedidoEliminarPedido)</td>
     <td>
         <a ID="lbEdit" href="@Url.Action("ActualizaNombreRol", "Roles", new { id = Model.IdRol })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">edit</i>
@@ -114,3 +110,11 @@
         </a>
     </td>
 </tr>
+
+ 
+ 
+ 
+ 
+
+ 
+ 

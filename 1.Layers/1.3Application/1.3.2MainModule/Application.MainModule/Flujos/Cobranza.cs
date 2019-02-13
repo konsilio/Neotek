@@ -16,13 +16,13 @@ namespace Application.MainModule.Flujos
     {
         public List<CargosDTO> ListaCargos(short idempresa)
         {
-            var resp = PermisosServicio.PuedeConsultarCargos();
+            var resp = PermisosServicio.PuedeConsultarAbonos();
             if (!resp.Exito) return null;
             return CobranzaServicio.Obtener(idempresa).ToList();
         }
         public List<CargosDTO> ListaCRecuperada(short idempresa)
         {
-            var resp = PermisosServicio.PuedeConsultarCargos();
+            var resp = PermisosServicio.PuedeConsultarCreditoRecuperado();
             if (!resp.Exito) return null;
             return CobranzaServicio.CRecuperada(idempresa).ToList();
         }
@@ -49,7 +49,7 @@ namespace Application.MainModule.Flujos
         }
         public List<CargosDTO> CarteraRecuperada(int? idCliente,short? empresa,DateTime? fechaIni, DateTime? fechaFin, string ticket)
         {
-            var resp = PermisosServicio.PuedeConsultarCargos();
+            var resp = PermisosServicio.PuedeConsultarCreditoRecuperado();
             if (!resp.Exito) return null;
 
             DataSet ds = ReporteCarteraRecuperada(idCliente, empresa, fechaIni, fechaFin, ticket);
@@ -62,7 +62,6 @@ namespace Application.MainModule.Flujos
         }
         public DataSet ReporteDetallado(int? idCliente, DateTime? fecha, short? empresa)
         {
-
             List<System.Data.SqlClient.SqlParameter> lp = new List<System.Data.SqlClient.SqlParameter>();
             if (idCliente != 0)
                 lp.Add(new System.Data.SqlClient.SqlParameter("IdCliente", idCliente));
@@ -76,7 +75,7 @@ namespace Application.MainModule.Flujos
         }
         public ReporteDTO ListaCargos(int? idCliente, DateTime? fecha, short? empresa)
         {
-            var resp = PermisosServicio.PuedeConsultarCargos();
+            var resp = PermisosServicio.PuedeConsultarCarteraVencida();
             if (!resp.Exito) return null;
 
             DataSet ds = ReporteDetallado(idCliente, fecha, empresa);
@@ -97,7 +96,7 @@ namespace Application.MainModule.Flujos
         //}
         public CargosDTO CargoId(int idCargo)
         {
-            var resp = PermisosServicio.PuedeConsultarCargos();
+            var resp = PermisosServicio.PuedeConsultarAbonos();
             if (!resp.Exito) return null;
 
             return CobranzaServicio.Obtener(idCargo);
