@@ -112,6 +112,14 @@ namespace Sagas.MainModule.Entidades
         public bool AppCamionetaPuntoVenta { get; set; }
         public bool AppEstacionCarbPuntoVenta { get; set; }
         public bool AppPipaPuntoVenta { get; set; }
+        public bool PedidoVerPedidos { get; set; }
+        public bool PedidoGenerarPedido { get; set; }
+        public bool PedidoEliminarPedido { get; set; }
+        public bool PedidoModificarPedido { get; set; }
+        public bool CobranzaVerAbonos { get; set; }
+        public bool CobranzaVerCartera { get; set; }
+        public bool CobranzaVerCreditoRecuperado { get; set; }
+        public bool CobranzaGenerarAbonos { get; set; }
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
