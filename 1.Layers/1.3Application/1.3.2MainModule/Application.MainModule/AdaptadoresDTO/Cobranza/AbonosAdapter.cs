@@ -153,6 +153,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.IdEmpresa = _dto.IdEmpresa;
             dto.Ticket = _dto.Ticket;
             dto.FechaRegistro = _dto.FechaRegistro;
+            dto.Nombre = _dto.NombreCliente;
             //dto.TotalCargo = _dto.TotalCargo;
             //dto.TotalAbonos = _dto.TotalAbonos;
             //dto.SaldoInsoluto = _dto.TotalCargo - _dto.TotalAbonos;
