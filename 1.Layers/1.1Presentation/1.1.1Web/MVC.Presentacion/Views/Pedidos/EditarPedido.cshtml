@@ -51,6 +51,10 @@
                 }
             });
 
+            function calificationRating_ItemClick(s, e) {
+                debugger
+                $("#Calification").val(CalificationRating.GetValue());
+            }
             $("#btnSave").click(function () {
                 var calificacion = [];
                 var selected1 = $("input[name='estrellas1']:checked").val();
@@ -487,6 +491,15 @@
                             </div>
                         </div>
                     </div>
+                    @*@Html.DevExpress().RatingControl(settings =>
+                           {
+                               settings.Name = "CalificationRating";
+                               settings.ClientSideEvents.ItemClick = "calificationRating_ItemClick";
+                               settings.ReadOnly = false;
+                               settings.Theme = "Material";
+                           }).Bind(Convert.ToDecimal(Model != null ? Convert.ToInt32(5) : 0)).GetHtml()*@
+                    @*Integer.Parse((string)DataBinder.Eval(c.DataItem, "Value"))*@
+                @*@Html.ValidationMessage("Calification", "", new { @class = "text-danger" })*@
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card">
