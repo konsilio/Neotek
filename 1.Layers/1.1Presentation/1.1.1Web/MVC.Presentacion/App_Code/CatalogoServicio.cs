@@ -1206,7 +1206,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoVerPedido = lst[i].PedidoVerPedido;
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
-                _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;            
+                
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1534,6 +1535,15 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+
+                _lstc.CobranzaVerAbonos = lst[i].CobranzaVerAbonos;
+                _lstc.CobranzaVerCartera = lst[i].CobranzaVerCartera;
+                _lstc.CobranzaVerCreditoRecuperado = lst[i].CobranzaVerCreditoRecuperado;
+                _lstc.CobranzaGenerarAbonos = lst[i].CobranzaGenerarAbonos;
+                _lstc.PedidoVerPedido = lst[i].PedidoVerPedido;
+                _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
+                _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
+                _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
 
                 Roles.Add(_lstc);
             }
