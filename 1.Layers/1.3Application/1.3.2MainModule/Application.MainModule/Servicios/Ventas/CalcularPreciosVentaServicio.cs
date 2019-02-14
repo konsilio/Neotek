@@ -22,9 +22,9 @@ namespace Application.MainModule.Servicios.Ventas
             else
                 return p5000 - Magnatel;
         }
-        public static decimal ObtenerPrecioSalidaKg(decimal precioPemex, decimal utilidadEsperada)
+        public static decimal ObtenerPrecioSalidaKg(decimal precioPemex, decimal utilidadEsperada, decimal precioFlete)
         {
-            return precioPemex + utilidadEsperada;
+            return precioPemex + utilidadEsperada + precioFlete;
         }
         public static decimal ObtenerPrecioSalidaLt(decimal precioSalida, decimal factorLitrosaKilos)
         {

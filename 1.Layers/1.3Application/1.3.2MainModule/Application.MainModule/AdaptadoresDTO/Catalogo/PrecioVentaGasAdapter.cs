@@ -76,11 +76,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(PVGasDTO.IdEmpresa));
             var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
-            var IdPreVenta = PVGasDTO.IdPrecioVenta == 0 ? 1 : PrecioVentaGasServicio.ObtenerUltimoIdPrecioVenta() + 1;            
-
+            var IdPreVenta = PVGasDTO.IdPrecioVenta == 0 ? 1 : PrecioVentaGasServicio.ObtenerUltimoIdPrecioVenta() + 1;
+            var flete = PVGasDTO.PrecioFlete != null ? (decimal)PVGasDTO.PrecioFlete : 0;
             return new PrecioVenta()
             {
-                IdPrecioVenta = (short)IdPreVenta,
+                IdPrecioVenta = PVGasDTO.IdPrecioVenta,//(short)IdPreVenta,
                 IdEmpresa = PVGasDTO.IdEmpresa,
                 IdPrecioVentaEstatus = IdStatus,
                 IdCategoria = PVGasDTO.IdCategoria,
@@ -89,14 +89,14 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Categoria = PVGasDTO.Categoria,
                 Linea = PVGasDTO.Linea,
                 Producto = PVGasDTO.Producto,
-                PrecioActual = PVGasDTO.PrecioActual,
-                PrecioPemexKg = PVGasDTO.PrecioPemexKg,
-                PrecioPemexLt = PVGasDTO.PrecioPemexLt,
-                UtilidadEsperadaKg = PVGasDTO.UtilidadEsperadaKg,
-                UtilidadEsperadaLt = PVGasDTO.UtilidadEsperadaLt,
+                PrecioActual = PVGasDTO.PrecioActual??0,
+                PrecioPemexKg = PVGasDTO.PrecioPemexKg ?? 0,
+                PrecioPemexLt = PVGasDTO.PrecioPemexLt ?? 0,
+                UtilidadEsperadaKg = PVGasDTO.UtilidadEsperadaKg ?? 0,
+                UtilidadEsperadaLt = PVGasDTO.UtilidadEsperadaLt ?? 0,
                 PrecioSalida = PVGasDTO.PrecioSalida,
-                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg),//PVGasDTO.PrecioSalidaKg,
-                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt((decimal)PVGasDTO.PrecioPemexKg, factorLtaKg),
+                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg, (decimal)flete),//PVGasDTO.PrecioSalidaKg,
+                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt(((decimal)PVGasDTO.PrecioPemexKg + (decimal)flete), factorLtaKg),
                 EsGas = PVGasDTO.EsGas,
                 FechaProgramada = PVGasDTO.FechaProgramada,
                 FechaVencimiento = PVGasDTO.FechaVencimiento,
@@ -111,7 +111,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
             var IdPreVenta = new PrecioVentaDataAccess().BuscarUltimoPrecio() + 1;//PrecioVentaGasServicio.ObtenerUltimoIdPrecioVenta() + 1;
-            
+            var flete = PVGasDTO.PrecioFlete != null ? (decimal)PVGasDTO.PrecioFlete : 0;
             return new PrecioVenta()
             {
                 IdPrecioVenta = (short)IdPreVenta,
@@ -129,8 +129,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 UtilidadEsperadaKg = PVGasDTO.UtilidadEsperadaKg,
                 UtilidadEsperadaLt = PVGasDTO.UtilidadEsperadaLt,
                 PrecioSalida = PVGasDTO.PrecioSalida,
-                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg),//PVGasDTO.PrecioSalidaKg,
-                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt((decimal)PVGasDTO.PrecioPemexKg, factorLtaKg),
+                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg, (decimal)flete),//PVGasDTO.PrecioSalidaKg,
+                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt(((decimal)PVGasDTO.PrecioPemexKg + (decimal)flete), factorLtaKg),
                 EsGas = PVGasDTO.EsGas,
                 FechaProgramada = PVGasDTO.FechaProgramada,
                 FechaVencimiento = PVGasDTO.FechaVencimiento,
@@ -167,6 +167,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
             var _Categoria = ProductoServicio.ObtenerCategoria(p.IdCategoria).Nombre;
             var _Linea = ProductoServicio.ObtenerLineaProducto(p.IdProductoLinea).Linea;
+            var flete = PVGasDTO.PrecioFlete != null ? (decimal)PVGasDTO.PrecioFlete : 0;
             return new PrecioVentaDTO()
             {
                 IdEmpresa = PVGasDTO.IdEmpresa,
@@ -183,8 +184,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 UtilidadEsperadaKg = PVGasDTO.UtilidadEsperadaKg,
                 UtilidadEsperadaLt = PVGasDTO.UtilidadEsperadaLt,
                 PrecioSalida = PVGasDTO.PrecioSalida,
-                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg),//PVGasDTO.PrecioSalidaKg,
-                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt((decimal)PVGasDTO.PrecioPemexKg, factorLtaKg),
+                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg, (decimal)flete),//PVGasDTO.PrecioSalidaKg,
+                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt(((decimal)PVGasDTO.PrecioPemexKg + (decimal)flete), factorLtaKg),
+                PrecioFlete = PVGasDTO.PrecioFlete,
                 EsGas = PVGasDTO.EsGas,
                 FechaProgramada = PVGasDTO.FechaProgramada,
                 FechaVencimiento = PVGasDTO.FechaVencimiento,

@@ -13,7 +13,7 @@ namespace MVC.Presentacion.Controllers
     public class PrecioVentaController : Controller
     {
         // GET: PrecioVenta
-        public ActionResult Index()
+        public ActionResult Index(string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
@@ -32,17 +32,19 @@ namespace MVC.Presentacion.Controllers
             }
 
             ViewBag.ListaStatus = CatalogoServicio.ListaTipoFecha(_tkn);
-
-            //if (TempData["RespuestaDTO"] != null)
-            //{
-            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
-            //}
-            //if (TempData["RespuestaDTOError"] != null)
-            //{
-            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
-            //}
-            //ViewBag.MessageError = TempData["RespuestaDTOError"];
-            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+            if (TempData["RespuestaDTO"] != null)
+            {
+                if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
+                {
+                    ViewBag.Tipo = "alert-danger";
+                    ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+                }
+                else
+                {
+                    ViewBag.Tipo = "alert-success";
+                    ViewBag.Msj = msj;
+                }
+            }
             var model = new PrecioVentaModel { IdEmpresa = (short)ViewBag.IdEmpresa };
             return View(model);
         }
@@ -52,33 +54,32 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tok = Session["StringToken"].ToString();
-           
-             var respuesta = CatalogoServicio.RegistrarPrecio(_ObjModel, _tok);
-            
+
+            var respuesta = CatalogoServicio.RegistrarPrecio(_ObjModel, _tok);
+
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index");
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("Index", new { msj = respuesta.Mensaje });
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;
+                TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Index");
             }
-            
+
         }
 
         public ActionResult EditarPrecioVenta(short id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            string _tkn = Session["StringToken"].ToString();        
-                     
-                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.ListaPV = CatalogoServicio.ListaPrecioVenta(id, _tkn);
-                                 
-            return View();
+            string _tkn = Session["StringToken"].ToString();
+            ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
+            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);//ViewBag.ListaPV
+            PrecioVentaModel ent = CatalogoServicio.ListaPrecioVenta(id, _tkn).FirstOrDefault();
+
+            return View(ent);
         }
 
         public ActionResult BorrarPrecioVenta(PrecioVentaModel _Obj, short id)
@@ -87,17 +88,16 @@ namespace MVC.Presentacion.Controllers
             string _tkn = Session["StringToken"].ToString();
             _Obj = CatalogoServicio.ListaPrecioVenta(id, _tkn)[0];
             var respuesta = CatalogoServicio.EliminarPrecioVenta(_Obj, _tkn);
-         
+
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Baja Exitosa";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index");
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("Index", new { msj = respuesta.Mensaje });
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
+                TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Index");
             }
         }
@@ -107,19 +107,17 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tok = Session["StringToken"].ToString();
-           
+
             var respuesta = CatalogoServicio.ModificarPrecioVenta(_Obj, _tok);
-         
+
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index");
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("Index", new { msj = respuesta.Mensaje });
             }
-
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
+                TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Index");
             }
         }
@@ -128,7 +126,7 @@ namespace MVC.Presentacion.Controllers
         {
             string _tkn = Session["StringToken"].ToString();
             var list = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(idEmpresa)).FactorLitrosAKilos;
-            
+
             var JsonInfo = JsonConvert.SerializeObject(list);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
@@ -145,7 +143,12 @@ namespace MVC.Presentacion.Controllers
                         ModelState.AddModelError(error.Key, error.Value);
                     }
                 if (Resp.MensajesError != null)
-                    Mensaje = Resp.MensajesError[0]+" "+ Resp.MensajesError[1]!=null ? Resp.MensajesError[1]:"";
+                {
+                    if (Resp.MensajesError.Count() > 1)
+                        Mensaje = Resp.MensajesError[0] + " " + Resp.MensajesError[1] != null ? Resp.MensajesError[1] : "";
+                    else
+                        Mensaje = Resp.MensajesError[0];
+                        }
 
                 if (Mensaje == "")
                     Mensaje = Resp.Mensaje;
