@@ -6,8 +6,6 @@
 @Html.HiddenFor(m => m.Rol1)
 @Html.HiddenFor(m => m.Activo)
 @Html.HiddenFor(m => m.FechaRegistro)
-
-@*MovilCompra*@
 @Html.HiddenFor(m => m.CompraVerOCompra)
 @Html.HiddenFor(m => m.CompraGenerarOCompra)
 @Html.HiddenFor(m => m.CompraAutorizarOCompra)
@@ -68,7 +66,18 @@
 @Html.HiddenFor(m => m.CatModificarPrecioVenta)
 @Html.HiddenFor(m => m.CatEliminarPrecioVenta)
 @Html.HiddenFor(m => m.CatConsultarPrecioVenta)
-
+@Html.HiddenFor(m => m.CobranzaVerAbonos)
+@Html.HiddenFor(m => m.CobranzaVerCartera)
+@Html.HiddenFor(m => m.CobranzaVerCreditoRecuperado)
+@Html.HiddenFor(m => m.CobranzaGenerarAbonos)
+@Html.HiddenFor(m => m.PedidoVerPedido)
+@Html.HiddenFor(m => m.PedidoGenerarPedido)
+@Html.HiddenFor(m => m.PedidoModificarPedido)
+@Html.HiddenFor(m => m.PedidoEliminarPedido)
+@Html.HiddenFor(m => m.AppDisposicionEfectivo)
+@Html.HiddenFor(m => m.AppCamionetaPuntoVenta)
+@Html.HiddenFor(m => m.AppEstacionCarbPuntoVenta)
+@Html.HiddenFor(m => m.AppPipaPuntoVenta)
 <tr>
     <td>@Model.NombreRol </td>
     <td>@Html.CheckBoxFor(m => m.AppCompraVerOCompra)</td>

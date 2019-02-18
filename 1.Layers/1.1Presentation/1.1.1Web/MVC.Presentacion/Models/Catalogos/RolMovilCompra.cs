@@ -11,7 +11,6 @@ namespace MVC.Presentacion.Models.Catalogos
         public string Rol1 { get; set; }
         public string NombreRol { get; set; }
         /********************************/
-
         public bool AppCompraVerOCompra { get; set; }
         public bool AppCompraEntraGas { get; set; }
         public bool AppCompraGasIniciarDescarga { get; set; }
@@ -36,13 +35,11 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool AppCamionetaPuntoVenta { get; set; }
         public bool AppEstacionCarbPuntoVenta { get; set; }
         public bool AppPipaPuntoVenta { get; set; }
-
         /***********************************/
         public short IdEmpresa { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         /***********************************/
-
         public bool RequisicionVerRequisiciones { get; set; }
         public bool RequisicionGenerarNueva { get; set; }
         public bool RequisicionRevisarExistencia { get; set; }
@@ -103,5 +100,13 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool AlmacenActualizaExistencias { get; set; }
         public bool AlmacenVerExistencias { get; set; }
         public bool AlmacenVerMovimientos { get; set; }
+        public bool CobranzaVerAbonos { get; set; }
+        public bool CobranzaVerCartera { get; set; }
+        public bool CobranzaVerCreditoRecuperado { get; set; }
+        public bool CobranzaGenerarAbonos { get; set; }
+        public bool PedidoVerPedido { get; set; }
+        public bool PedidoGenerarPedido { get; set; }
+        public bool PedidoModificarPedido { get; set; }
+        public bool PedidoEliminarPedido { get; set; }
     }
 }

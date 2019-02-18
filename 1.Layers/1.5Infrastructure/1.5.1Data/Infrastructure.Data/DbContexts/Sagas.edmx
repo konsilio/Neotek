@@ -1830,6 +1830,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="AlmacenActualizaExistencias" Type="bit" Nullable="false" />
           <Property Name="AlmacenVerExistencias" Type="bit" Nullable="false" />
           <Property Name="AlmacenVerMovimientos" Type="bit" Nullable="false" />
+          <Property Name="PedidoVerPedidos" Type="bit" Nullable="false" />
+          <Property Name="PedidoGenerarPedido" Type="bit" Nullable="false" />
+          <Property Name="PedidoEliminarPedido" Type="bit" Nullable="false" />
+          <Property Name="PedidoModificarPedido" Type="bit" Nullable="false" />
+          <Property Name="CobranzaVerAbonos" Type="bit" Nullable="false" />
+          <Property Name="CobranzaVerCartera" Type="bit" Nullable="false" />
+          <Property Name="CobranzaVerCreditoRecuperado" Type="bit" Nullable="false" />
+          <Property Name="CobranzaGenerarAbonos" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RolAccionCatalogo">
           <Key>
@@ -6490,8 +6498,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="NombreRol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <!--"RolAccion">
-          <Property Name="IdRol" Type="Int16" Nullable="false" />-->
+          <!--"RolAccion">-->
           <Property Name="RequisicionVerRequisiciones" Type="Boolean" Nullable="false" />
           <Property Name="RequisicionGenerarNueva" Type="Boolean" Nullable="false" />
           <Property Name="RequisicionRevisarExistencia" Type="Boolean" Nullable="false" />
@@ -6501,8 +6508,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CompraAutorizarOCompra" Type="Boolean" Nullable="false" />
           <Property Name="CompraEntraProductoOCompra" Type="Boolean" Nullable="false" />
           <Property Name="CompraAtiendeServicioOCompra" Type="Boolean" Nullable="false" />
-          <!--"RolAccionCatalogo">
-          <Property Name="IdRol" Type="Int16" Nullable="false" />-->
+          <!--"RolAccionCatalogo">-->
           <Property Name="CatInsertarEmpresa" Type="Boolean" Nullable="false" />
           <Property Name="CatModificarEmpresa" Type="Boolean" Nullable="false" />
           <Property Name="CatEliminarEmpresa" Type="Boolean" Nullable="false" />
@@ -6548,10 +6554,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CatModificarEquipoTransporte" Type="Boolean" Nullable="false" />
           <Property Name="CatEliminarEquipoTransporte" Type="Boolean" Nullable="false" />
           <Property Name="CatConsultarEquipoTransporte" Type="Boolean" Nullable="false" />
-
           <Property Name="CatAsignarChoferPuntoVenta" Type="Boolean" Nullable="false" />
           <Property Name="CatAsignarEquipoTransporte" Type="Boolean" Nullable="false" />
-
           <!--"RolAccionMovil"-->
           <Property Name="AppCompraVerOCompra" Type="Boolean" Nullable="false" />
           <Property Name="AppCompraEntraGas" Type="Boolean" Nullable="false" />
@@ -6583,17 +6587,16 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="AppCamionetaPuntoVenta" Type="Boolean" Nullable="false" />
           <Property Name="AppEstacionCarbPuntoVenta" Type="Boolean" Nullable="false" />
           <Property Name="AppPipaPuntoVenta" Type="Boolean" Nullable="false" />
+          <Property Name="PedidoVerPedidos" Type="Boolean" Nullable="false" />
+          <Property Name="PedidoGenerarPedido" Type="Boolean" Nullable="false" />
+          <Property Name="PedidoEliminarPedido" Type="Boolean" Nullable="false" />
+          <Property Name="PedidoModificarPedido" Type="Boolean" Nullable="false" />
+          <Property Name="CobranzaVerAbonos" Type="Boolean" Nullable="false" />
+          <Property Name="CobranzaVerCartera" Type="Boolean" Nullable="false" />
+          <Property Name="CobranzaVerCreditoRecuperado" Type="Boolean" Nullable="false" />
+          <Property Name="CobranzaGenerarAbonos" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
-          <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />
-          <!--<NavigationProperty Name="RolAccionMovil" Relationship="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" FromRole="Rol" ToRole="RolAccionMovil" />-->
-          <!--<NavigationProperty Name="Rol" Relationship="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" FromRole="RolAccionMovil" ToRole="Rol" />-->
-          <!--<NavigationProperty Name="RolAccion" Relationship="Self.FK_RolAccion_Rol" FromRole="Rol" ToRole="RolAccion" />-->
-          <!--<NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />-->
-          <!--<NavigationProperty Name="UsuarioAC" Relationship="Self.FK_UsuarioAC_Rol" FromRole="Rol" ToRole="UsuarioAC" />-->
-          <!--<NavigationProperty Name="RolAccionCatalogo" Relationship="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol" FromRole="Rol" ToRole="RolAccionCatalogo" />          
-          <NavigationProperty Name="Rol" Relationship="Self.FK_RolAccion_Rol" FromRole="RolAccion" ToRole="Rol" />
-          <NavigationProperty Name="Rol" Relationship="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol" FromRole="RolAccionCatalogo" ToRole="Rol" />
-          -->
+          <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />       
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -6676,7 +6679,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="VentaCajaGeneral" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario" FromRole="Usuario" ToRole="VentaCajaGeneral" />
           <NavigationProperty Name="VentaCajaGeneral1" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario1" FromRole="Usuario" ToRole="VentaCajaGeneral" />
           <NavigationProperty Name="VentaCorteAnticipoEC" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario" FromRole="Usuario" ToRole="VentaCorteAnticipoEC" />
-
           <!--<NavigationProperty Name="Requisiciones" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario" FromRole="Usuario" ToRole="Requisicion" />
           <NavigationProperty Name="RequisicionAutorizacion" Relationship="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Usuario" FromRole="Usuario" ToRole="RequisicionAutorizacion" />-->
           <!--<NavigationProperty Name="UsuarioContacto" Relationship="Self.FK_UsuarioContacto_Usuario" FromRole="Usuario" ToRole="UsuarioContacto" />
@@ -12491,6 +12493,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
 
               <MappingFragment StoreEntitySet="RolAccion">
+                <ScalarProperty Name="CobranzaGenerarAbonos" ColumnName="CobranzaGenerarAbonos" />
+                <ScalarProperty Name="CobranzaVerCreditoRecuperado" ColumnName="CobranzaVerCreditoRecuperado" />
+                <ScalarProperty Name="CobranzaVerCartera" ColumnName="CobranzaVerCartera" />
+                <ScalarProperty Name="CobranzaVerAbonos" ColumnName="CobranzaVerAbonos" />
+                <ScalarProperty Name="PedidoModificarPedido" ColumnName="PedidoModificarPedido" />
+                <ScalarProperty Name="PedidoEliminarPedido" ColumnName="PedidoEliminarPedido" />
+                <ScalarProperty Name="PedidoGenerarPedido" ColumnName="PedidoGenerarPedido" />
+                <ScalarProperty Name="PedidoVerPedidos" ColumnName="PedidoVerPedidos" />
                 <ScalarProperty Name="AlmacenVerMovimientos" ColumnName="AlmacenVerMovimientos" />
                 <ScalarProperty Name="AlmacenVerExistencias" ColumnName="AlmacenVerExistencias" />
                 <ScalarProperty Name="AlmacenActualizaExistencias" ColumnName="AlmacenActualizaExistencias" />

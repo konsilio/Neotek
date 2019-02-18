@@ -40,6 +40,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public Nullable<decimal> PrecioSalida { get; set; }
         public Nullable<decimal> PrecioSalidaKg { get; set; }
         public Nullable<decimal> PrecioSalidaLt { get; set; }
+        public Nullable<decimal> PrecioFlete { get; set; }
         public bool EsGas { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]

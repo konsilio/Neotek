@@ -437,6 +437,9 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeEliminarPrecioVentaGas();
             if (!resp.Exito) return resp;
 
+            var precioventa = PrecioVentaGasServicio.Obtener(cteDto.IdPrecioVenta);
+            if (precioventa == null) return PrecioVentaGasServicio.NoExiste();
+
             var precioV = PrecioVentaGasAdapter.FromTo(cteDto);
             return PrecioVentaGasServicio.Eliminar(precioV);
         }

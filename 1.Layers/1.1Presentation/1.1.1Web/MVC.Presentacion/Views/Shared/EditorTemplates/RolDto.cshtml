@@ -11,7 +11,7 @@
 @Html.HiddenFor(m => m.Activo)
 @Html.HiddenFor(m => m.FechaRegistro)
 
-@if (tipoRol.Equals("compras"))
+@*@if (tipoRol.Equals("compras"))
 {
     @Html.HiddenFor(m => m.RequisicionVerRequisiciones)
     @Html.HiddenFor(m => m.RequisicionGenerarNueva)
@@ -84,6 +84,14 @@
     @Html.HiddenFor(m => m.CatModificarPrecioVenta)
     @Html.HiddenFor(m => m.CatEliminarPrecioVenta)
     @Html.HiddenFor(m => m.CatConsultarPrecioVenta)
+    @Html.HiddenFor(m => m.CobranzaVerAbonos)
+    @Html.HiddenFor(m => m.CobranzaVerCartera)
+    @Html.HiddenFor(m => m.CobranzaVerCreditoRecuperado)
+    @Html.HiddenFor(m => m.CobranzaGenerarAbonos)
+    @Html.HiddenFor(m => m.PedidoVerPedido)
+    @Html.HiddenFor(m => m.PedidoGenerarPedido)
+    @Html.HiddenFor(m => m.PedidoModificarPedido)
+    @Html.HiddenFor(m => m.PedidoEliminarPedido)
     <tr>
         <td>@Model.NombreRol </td>
         <td>@Html.CheckBoxFor(m => m.CompraVerOCompra)</td>
@@ -169,6 +177,14 @@
     @Html.HiddenFor(m => m.CatModificarPrecioVenta)
     @Html.HiddenFor(m => m.CatEliminarPrecioVenta)
     @Html.HiddenFor(m => m.CatConsultarPrecioVenta)
+    @Html.HiddenFor(m => m.CobranzaVerAbonos)
+    @Html.HiddenFor(m => m.CobranzaVerCartera)
+    @Html.HiddenFor(m => m.CobranzaVerCreditoRecuperado)
+    @Html.HiddenFor(m => m.CobranzaGenerarAbonos)
+    @Html.HiddenFor(m => m.PedidoVerPedido)
+    @Html.HiddenFor(m => m.PedidoGenerarPedido)
+    @Html.HiddenFor(m => m.PedidoModificarPedido)
+    @Html.HiddenFor(m => m.PedidoEliminarPedido)
     <tr>
         <td>@Model.NombreRol </td>
         <td>@Html.CheckBoxFor(m => m.AppCompraVerOCompra)</td>
@@ -203,7 +219,7 @@
             </a>
         </td>
     </tr>
-}
+}*@
 @if (tipoRol.Equals("Cat"))
 {
     @Html.HiddenFor(m => m.RequisicionVerRequisiciones)
@@ -238,6 +254,18 @@
     @Html.HiddenFor(m => m.AlmacenActualizaExistencias)
     @Html.HiddenFor(m => m.AlmacenVerExistencias)
     @Html.HiddenFor(m => m.AlmacenVerMovimientos)
+    @Html.HiddenFor(m => m.CobranzaVerAbonos)
+    @Html.HiddenFor(m => m.CobranzaVerCartera)
+    @Html.HiddenFor(m => m.CobranzaVerCreditoRecuperado)
+    @Html.HiddenFor(m => m.CobranzaGenerarAbonos)
+    @Html.HiddenFor(m => m.PedidoVerPedido)
+    @Html.HiddenFor(m => m.PedidoGenerarPedido)
+    @Html.HiddenFor(m => m.PedidoModificarPedido)
+    @Html.HiddenFor(m => m.PedidoEliminarPedido)
+    @Html.HiddenFor(m => m.AppDisposicionEfectivo)
+    @Html.HiddenFor(m => m.AppCamionetaPuntoVenta)
+    @Html.HiddenFor(m => m.AppEstacionCarbPuntoVenta)
+    @Html.HiddenFor(m => m.AppPipaPuntoVenta)
     <tr>
         <td>@Model.NombreRol </td>
         <td>@Html.CheckBoxFor(m => m.CatInsertarUsuario)</td>
@@ -300,7 +328,8 @@
         </td>
     </tr>
 }
-@if (tipoRol.Equals("requsicion"))
+
+@*@if (tipoRol.Equals("requsicion"))
 {
     <tr class="hideControl">
         <td>@Html.HiddenFor(m => m.AppCompraVerOCompra)</td>
@@ -379,8 +408,16 @@
         <td>@Html.HiddenFor(m => m.CatModificarPrecioVenta)</td>
         <td>@Html.HiddenFor(m => m.CatEliminarPrecioVenta)</td>
         <td>@Html.HiddenFor(m => m.CatConsultarPrecioVenta)</td>
+        <td>@@Html.HiddenFor(m => m.CobranzaVerAbonos)</td>
+        <td>@@Html.HiddenFor(m => m.CobranzaVerCartera)</td>
+        <td>@@Html.HiddenFor(m => m.CobranzaVerCreditoRecuperado)</td>
+        <td>@@Html.HiddenFor(m => m.CobranzaGenerarAbonos)</td>
+        <td>@@Html.HiddenFor(m => m.PedidoVerPedido)</td>
+        <td>@@Html.HiddenFor(m => m.PedidoGenerarPedido)</td>
+        <td>@@Html.HiddenFor(m => m.PedidoModificarPedido)</td>
+        <td>@@Html.HiddenFor(m => m.PedidoEliminarPedido)</td>
 </tr>
-<tr>
+    <tr>
         <td>@Model.NombreRol </td>
         <td>@Html.CheckBoxFor(m => m.RequisicionVerRequisiciones)</td>
         <td>@Html.CheckBoxFor(m => m.RequisicionGenerarNueva)</td>
@@ -398,5 +435,5 @@
             </a>
         </td>
     </tr>
-}
+}*@
 

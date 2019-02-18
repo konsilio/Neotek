@@ -337,8 +337,6 @@
     <Compile Include="DTOs\Seguridad\AutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionMobileDto.cs" />
-    <Compile Include="DTOs\Seguridad\RolCat.cs" />
-    <Compile Include="DTOs\Seguridad\RolCompras.cs" />
     <Compile Include="DTOs\Seguridad\RolDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioAplicacionDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioDTO.cs" />

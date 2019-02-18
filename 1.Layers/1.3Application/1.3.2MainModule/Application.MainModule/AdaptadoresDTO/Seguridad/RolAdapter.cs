@@ -105,18 +105,22 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 AppCamionetaPuntoVenta = rol.AppCamionetaPuntoVenta,
                 AppEstacionCarbPuntoVenta = rol.AppEstacionCarbPuntoVenta,
                 AppPipaPuntoVenta = rol.AppPipaPuntoVenta,
-            };
+                CobranzaVerAbonos = rol.CobranzaVerAbonos,
+                CobranzaVerCartera = rol.CobranzaVerCartera,
+                CobranzaVerCreditoRecuperado = rol.CobranzaVerCreditoRecuperado,
+                CobranzaGenerarAbonos = rol.CobranzaGenerarAbonos,
+                PedidoVerPedido = rol.PedidoVerPedidos,
+                PedidoGenerarPedido = rol.PedidoGenerarPedido,
+                PedidoModificarPedido = rol.PedidoModificarPedido,
+                PedidoEliminarPedido = rol.PedidoEliminarPedido,
+        };
 
             return r;
         }
-
-
         public static List<RolDto> ToDTO(List<Rol> roles)
         {
             return roles.ToList().Select(x => ToDTO(x)).ToList();
         }
-
-
         //get all roles
         public static RolDto ToDTORol(Rol us)
         {
@@ -133,13 +137,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
             return rolDTO;
         }
-
         public static List<RolDto> ToDTORoles(List<Rol> lu)
         {
             List<RolDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
-
         public static Rol FromDto(RolDto rolDTO)
         {
             return new Rol()
@@ -213,9 +215,16 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 AppCamionetaPuntoVenta = rolDTO.AppCamionetaPuntoVenta,
                 AppEstacionCarbPuntoVenta = rolDTO.AppEstacionCarbPuntoVenta,
                 AppPipaPuntoVenta = rolDTO.AppPipaPuntoVenta,
+                CobranzaVerAbonos = rolDTO.CobranzaVerAbonos,
+                CobranzaVerCartera = rolDTO.CobranzaVerCartera,
+                CobranzaVerCreditoRecuperado = rolDTO.CobranzaVerCreditoRecuperado,
+                CobranzaGenerarAbonos = rolDTO.CobranzaGenerarAbonos,
+                PedidoVerPedidos = rolDTO.PedidoVerPedido,
+                PedidoGenerarPedido = rolDTO.PedidoGenerarPedido,
+                PedidoModificarPedido = rolDTO.PedidoModificarPedido,
+                PedidoEliminarPedido = rolDTO.PedidoEliminarPedido,
             };
         }
-
         public static Rol FromDtoPermiso(RolDto rolDTO)
         {
             return new Rol()
@@ -310,6 +319,14 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 AppCamionetaPuntoVenta = rolDTO.AppCamionetaPuntoVenta,
                 AppEstacionCarbPuntoVenta = rolDTO.AppEstacionCarbPuntoVenta,
                 AppPipaPuntoVenta = rolDTO.AppPipaPuntoVenta,
+                CobranzaVerAbonos = rolDTO.CobranzaVerAbonos,
+                CobranzaVerCartera = rolDTO.CobranzaVerCartera,
+                CobranzaVerCreditoRecuperado = rolDTO.CobranzaVerCreditoRecuperado,
+                CobranzaGenerarAbonos = rolDTO.CobranzaGenerarAbonos,
+                PedidoVerPedidos = rolDTO.PedidoVerPedido,
+                PedidoGenerarPedido = rolDTO.PedidoGenerarPedido,
+                PedidoModificarPedido = rolDTO.PedidoModificarPedido,
+                PedidoEliminarPedido = rolDTO.PedidoEliminarPedido,
             };
         }
         public static Rol FromDtoNomRol(RolDto rolDTO, Rol rol)
@@ -398,6 +415,14 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 AppCamionetaPuntoVenta = rol.AppCamionetaPuntoVenta,
                 AppEstacionCarbPuntoVenta = rol.AppEstacionCarbPuntoVenta,
                 AppPipaPuntoVenta = rol.AppPipaPuntoVenta,
+                CobranzaVerAbonos = rol.CobranzaVerAbonos,
+                CobranzaVerCartera = rol.CobranzaVerCartera,
+                CobranzaVerCreditoRecuperado = rol.CobranzaVerCreditoRecuperado,
+                CobranzaGenerarAbonos = rol.CobranzaGenerarAbonos,
+                PedidoVerPedidos = rol.PedidoVerPedidos,
+                PedidoGenerarPedido = rol.PedidoGenerarPedido,
+                PedidoModificarPedido = rol.PedidoModificarPedido,
+                PedidoEliminarPedido = rol.PedidoEliminarPedido,
             };
         }
 

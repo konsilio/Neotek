@@ -409,14 +409,14 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeRegistrarPedido()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.PedidoGenerarPedido).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Pedidos");
         }
         public static RespuestaDto PuedeConsultarPedido()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.PedidoVerPedidos).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Pedidos");
         }
@@ -424,14 +424,14 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeModificarPedido()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatModificarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.PedidoModificarPedido).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Pedidos");
         }
         public static RespuestaDto PuedeEliminarPedido()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.PedidoEliminarPedido).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Pedidos");
         }
@@ -441,16 +441,30 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeRegistrarAbonos()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CobranzaGenerarAbonos).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Abonos");
         }
-        public static RespuestaDto PuedeConsultarCargos()
+        public static RespuestaDto PuedeConsultarCarteraVencida()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CobranzaVerCartera).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Cartera Vencida");
+        }
+        public static RespuestaDto PuedeConsultarAbonos()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CobranzaVerAbonos).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Abonos");
+        }
+        public static RespuestaDto PuedeConsultarCreditoRecuperado()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CobranzaVerCreditoRecuperado).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "C Recuperado");
         }
 
         #endregion

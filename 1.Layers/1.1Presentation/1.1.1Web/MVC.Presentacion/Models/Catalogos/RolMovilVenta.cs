@@ -104,5 +104,13 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool AlmacenActualizaExistencias { get; set; }
         public bool AlmacenVerExistencias { get; set; }
         public bool AlmacenVerMovimientos { get; set; }
+        public bool CobranzaVerAbonos { get; set; }
+        public bool CobranzaVerCartera { get; set; }
+        public bool CobranzaVerCreditoRecuperado { get; set; }
+        public bool CobranzaGenerarAbonos { get; set; }
+        public bool PedidoVerPedido { get; set; }
+        public bool PedidoGenerarPedido { get; set; }
+        public bool PedidoModificarPedido { get; set; }
+        public bool PedidoEliminarPedido { get; set; }
     }
 }

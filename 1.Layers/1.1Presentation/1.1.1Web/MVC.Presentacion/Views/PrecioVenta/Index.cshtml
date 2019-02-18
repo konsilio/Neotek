@@ -12,10 +12,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @{
-        ViewBag.Title = "Index";
-    }
-
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         //$(function () {
@@ -37,29 +33,27 @@
         //        });
         //    });
         //});
-
         $(document).ready(function () {
-            $("#txtUtilidad").keyup(function () {
-               debugger
-
+            $("#txtFlete").keyup(function () {
                 var precio = $("#PrecioPMX").val();
+                var flete = $("#txtFlete").val();
 
-                var utilidad = $(this).val();
+                var utilidad = $("#txtUtilidad").val();
 
-                var operacion = parseFloat(precio) + parseFloat(utilidad);
+                var operacion = parseFloat(precio) + parseFloat(utilidad) + parseFloat(flete);
 
                 $("#IdPrecioSalidaKg").val(operacion)
 
 
-                /*****factorLitrosaKilos*****/                
+                /*****factorLitrosaKilos*****/
                 var url = "/PrecioVenta/GetConfiguracionEmpresa";
                 var id = $('#ddlEmpresas').find('option:selected').val();
                 if (id == undefined) {
                     id = $('#lblIdEmpresa').text();
                 }
-             
+
                 $.getJSON(url, { idEmpresa: id }, function (data) {
-                    var factor = precio - data;
+                    var factor = (precio + flete) - data;
                     $("#IdPrecioSalidaLt").val(factor)
                 });
 
@@ -103,7 +97,7 @@
                     }
                 });
             });
-            $('select').on('change', function () {          
+            $('select').on('change', function () {
                 var from = $("#IdDe").val();
                 var To = $("#IdA").val();
                 var value = $('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
@@ -226,30 +220,6 @@
         };
     </script>
     <style type="text/css">
-        .col-sm-01 {
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 16.666667%;
-            flex: 0 0 16.666667%;
-            max-width: 2.666667%;
-            text-align: left;
-        }
-
-        .col-sm-013 {
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 16.666667%;
-            flex: 0 0 16.666667%;
-            max-width: 13.666667%;
-            text-align: right;
-        }
-
-        .col-sm-05 {
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 16.666667%;
-            flex: 0 0 16.666667%;
-            max-width: 8.666667%;
-            text-align: center;
-        }
-
         .col-sm-005 {
             -webkit-box-flex: 0;
             -ms-flex: 0 0 16.666667%;
@@ -258,6 +228,15 @@
             text-align: center;
         }
     </style>
+    <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="~/assets/js/pages/ui/notifications.js"></script>
+    <script type="text/javascript">
+        var mensaje = '@ViewBag.Msj';
+        var tipo = '@ViewBag.Tipo';
+        if (mensaje != '') {
+            $(window).on("load", showNotification(tipo, mensaje, 'top', 'center', '', ''));
+        }
+    </script>
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("Registrar", "PrecioVenta", FormMethod.Post))
@@ -295,8 +274,9 @@
                                                         {
                                                             <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
                                                         }
-                                                        else {
-                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                        else
+                                                        {
+                                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                         }
                                                     }
                                                 </select>
@@ -321,15 +301,15 @@
                             <div class="row clearfix">
                                 <div class="col-sm-005" style="text-align:center">
                                     <div class="form-group">
-                                        Precio PEMEX:
+                                        Precio compra:
                                     </div>
                                 </div>
                                 <div class="col-sm-005">
-                                    <div class="form-group">
+                                    <div class="form-group" style="top:-10px">
                                         <input name="PrecioPemexKg" id="PrecioPMX" type="text" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="col-sm-01">
+                                <div class="col-sm-1">
                                     <div class="form-group">
                                         kg.
                                     </div>
@@ -340,32 +320,44 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-005">
-                                    <div class="form-group">
+                                    <div class="form-group" style="top:-10px">
                                         <input name="UtilidadEsperadaKg" id="txtUtilidad" type="text" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="col-sm-01">
+                                <div class="col-sm-1">
                                     <div class="form-group">
                                         kg.
                                     </div>
                                 </div>
                                 <div class="col-sm-005" style="text-align:center">
                                     <div class="form-group">
+                                        Precio flete:
+                                    </div>
+                                </div>
+                                <div class="col-sm-005">
+                                    <div class="form-group" style="top:-10px">
+                                        <input name="PrecioFlete" id="txtFlete" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-005" style="text-align:center">
+                                    <div class="form-group">
                                         Precio salida:
                                     </div>
                                 </div>
                                 <div class="col-sm-005">
-                                    <div class="form-group">
+                                    <div class="form-group" style="top:-10px">
                                         <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" readonly="readonly" />
                                     </div>
                                 </div>
-                                <div class="col-sm-01">
+                                <div class="col-sm-1">
                                     <div class="form-group">
                                         kg.
                                     </div>
                                 </div>
                                 <div class="col-sm-005">
-                                    <div class="form-group">
+                                    <div class="form-group" style="top:-10px">
                                         <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" readonly="readonly" />
                                         <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
                                         <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
@@ -374,17 +366,15 @@
                                         <input type="text" name="Producto" class="form-control date" hidden="hidden" value="Gas" />
                                     </div>
                                 </div>
-                                <div class="col-sm-01">
+                                <div class="col-sm-1">
                                     <div class="form-group">
                                         Lt.
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row clearfix">
                                 <div class="col-sm-2">
                                     <b>Fecha programada:</b>
                                 </div>
-                                <div class="col-sm-3">                               
+                                <div class="col-sm-3">
                                     @Html.DevExpress().DateEdit(settings =>
                                {
                                    settings.Name = "FechaProgramada";
@@ -404,11 +394,26 @@
                             </div>
                         </div>
                     </div>
+                    @if (ViewBag.MensajeError != null)
+                    {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MensajeError</label>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <br />
                     <div class="card">
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-sm-3">                                   
+                                <div class="col-sm-3" style="top: 20px;">
                                     @Html.DevExpress().ComboBox(settings =>
                                {
                                    settings.Name = "IdTipoFecha";
@@ -443,7 +448,7 @@
                                    //settings.Attributes.Clear();
                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                    settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                
+
                                }).GetHtml()
                                 </div>
                                 <div class="col-sm-3">
@@ -472,7 +477,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Gasera</th>
-                                                    <th>Precio PEMEX(kg)</th>
+                                                    <th>Precio Compra(kg)</th>
                                                     <th>Utilidad Esperada(kg)</th>
                                                     <th>Precio Salida</th>
                                                     <th>Fecha Programada</th>
@@ -518,43 +523,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    @if (ViewBag.MensajeError != null)
-                    {
-                        <div class="row clearfix">
-                            <div id="divMensajeError" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
-                                    </div>
-                                    <strong>
-                                        <label>@ViewBag.MensajeError</label>
-                                    </strong>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    @*@if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
-                        {
-                                <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
-                                     role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                                 bottom: 20px; left: 0px; right: 0px;">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
-                                    <span data-notify="icon"></span>
-                                    <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
-                                    <a href="#" target="_blank" data-notify="url"></a>
-                                </div>
-                            }
-                            @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
-                        {
-                                <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
-                                     role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                                 bottom: 20px; left: 0px; right: 0px;">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
-                                    <span data-notify="icon"></span>
-                                    <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
-                                </div>
-                            }*@
+                    </div>                   
                 </div>
             </div>
         </section>
