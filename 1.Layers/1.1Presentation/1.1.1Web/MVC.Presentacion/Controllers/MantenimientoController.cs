@@ -20,7 +20,14 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.CMantenimiento = TransporteServicio.ListaCatMantenimiento(tkn);
             ViewBag.Mantenimientos = TransporteServicio.ListaMantenimientos(tkn).ToPagedList(page ?? 1, 20);
-            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (Respuesta.Exito)
+                    ViewBag.Msj = Respuesta.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(Respuesta);
+            }
             if (model != null && model.Id_DetalleMtto != 0) ViewBag.EsEdicion = true;
             return View(model);
         }
@@ -50,22 +57,18 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
-        public ActionResult Modificar(int? id ,MantenimientoDetalleModel model = null)
+        public ActionResult Modificar(int? id, MantenimientoDetalleModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             if (id != null)
-                return RedirectToAction("Index", TransporteServicio.ActivarEditarMantenimiento(id?? 0, tkn));
+                return RedirectToAction("Index", TransporteServicio.ActivarEditarMantenimiento(id ?? 0, tkn));
             else
             {
                 var respuesta = TransporteServicio.ModificarManteniminento(model, tkn);
-                if (respuesta.Exito)
-                    return RedirectToAction("Index");
-                else
-                {
-                    TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("Index");
-                }
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("Index");
+
             }
         }
         private string Validar(RespuestaDTO Resp = null)
