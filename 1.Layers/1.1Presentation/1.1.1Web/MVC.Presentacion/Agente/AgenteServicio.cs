@@ -101,8 +101,7 @@ namespace MVC.Presentacion.Agente
         public List<CargosModel> _ListaCargos;
         public List<RemanenteGeneralDTO> _ListaRemanenteGenaral;
         public List<EquipoTransporteDTO> _ListaVehiculos;   
-        public List<CombustibleModel> _ListaCombustibles;
-        public CombustibleModel _Combustible;
+        public List<CombustibleModel> _ListaCombustibles;      
         public List<TipoUnidadModel> _ListaTiposUnidad;
         public List<RecargaCombustibleModel> _ListaRecargasCombustible;
         public List<MantenimientoModel> _ListaMantenimientos;
