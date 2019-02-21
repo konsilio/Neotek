@@ -68,7 +68,8 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeRegistrarMantenimiento();
             if (!resp.Exito) return resp;
 
-            var entidad = MantenimientoDetalleServicio.Buscar(dto.Id_DetalleMtto);
+            //var entidad = MantenimientoDetalleServicio.Buscar(dto.Id_DetalleMtto);
+            var entidad = MantenimientoDetalleAdapter.FromDTO(dto);
             var emty = MantenimientoDetalleAdapter.FormEmtity(entidad);
             return MantenimientoDetalleServicio.Actualizar(emty);
         }

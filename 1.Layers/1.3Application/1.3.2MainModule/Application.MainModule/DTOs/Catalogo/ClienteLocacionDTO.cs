@@ -16,6 +16,7 @@ namespace Application.MainModule.DTOs.Catalogo
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdPais")]
+        
         public byte IdPais { get; set; }
 
         //[StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0002)]
@@ -54,7 +55,6 @@ namespace Application.MainModule.DTOs.Catalogo
         [StringLength(10, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Num Int")]
         public string NumInt { get; set; }
-
         public string formatted_address { get; set; }
         public string location_lat { get; set; }
         public string location_lng { get; set; }

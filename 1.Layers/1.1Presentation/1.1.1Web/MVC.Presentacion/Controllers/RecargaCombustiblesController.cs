@@ -1,33 +1,35 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models;
+using MVC.Presentacion.Models.Seguridad;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PagedList;
 using System.Web.Mvc;
-using MVC.Presentacion.Models.Seguridad;
 
 namespace MVC.Presentacion.Controllers
 {
-    public class AsignacionController : Controller
+    public class RecargaCombustiblesController : Controller
     {
         string tkn = string.Empty;
-        public ActionResult Index(int? page, AsignacionModel model = null)
+        public ActionResult Index(int? page, RecargaCombustibleModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn) ,tkn);
-            ViewBag.Asignaciones = TransporteServicio.ListaAsignacion(tkn).ToPagedList(page ?? 1, 20);
+            ViewBag.Combustibles = CatalogoServicio.ListaCombustible(tkn);
+            ViewBag.Recargas = TransporteServicio.ListaRecargaCombustible(tkn).ToPagedList(page ?? 1, 20);
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            if (model != null && model.Id_DetalleRecargaComb != 0) ViewBag.EsEdicion = true;
+
             return View(model);
         }
-        public ActionResult Crear(AsignacionModel model = null)
+        public ActionResult Crear(RecargaCombustibleModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = TransporteServicio.GuardarAsignacion(model, tkn);
+            var respuesta = TransporteServicio.GuardarRecargaCombustible(model, tkn);
             if (respuesta.Exito)
                 return RedirectToAction("Index");
             else
@@ -40,14 +42,32 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = TransporteServicio.EliminarAsignacion(new AsignacionModel { IdAsignacion = id ?? 0  }, tkn);
-            if (respuesta.Exito)            
-                return RedirectToAction("Index");            
+            var respuesta = TransporteServicio.EliminarRecargaCombustible(new RecargaCombustibleModel { Id_DetalleRecargaComb = id ?? 0 }, tkn);
+            if (respuesta.Exito)
+                return RedirectToAction("Index");
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Index");
-            }         
+            }
+        }
+        public ActionResult Modificar(int? id, RecargaCombustibleModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (id != null)
+                return RedirectToAction("Index", TransporteServicio.ActivarEditarRecarga(id ?? 0, tkn));
+            else
+            {
+                var respuesta = TransporteServicio.EditarRecargaCombustible(model, tkn);
+                if (respuesta.Exito)
+                    return RedirectToAction("Index");
+                else
+                {
+                    TempData["RespuestaDTO"] = respuesta;
+                    return RedirectToAction("Index");
+                }
+            }
         }
         private string Validar(RespuestaDTO Resp = null)
         {
@@ -56,8 +76,8 @@ namespace MVC.Presentacion.Controllers
             if (Resp != null)
             {
                 if (Resp.ModelStatesStandar != null)
-                    foreach (var error in Resp.ModelStatesStandar.ToList())                    
-                        ModelState.AddModelError(error.Key, error.Value);                    
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                        ModelState.AddModelError(error.Key, error.Value);
                 if (Resp.MensajesError != null)
                     Mensaje = Resp.MensajesError[0];
             }
@@ -65,4 +85,3 @@ namespace MVC.Presentacion.Controllers
         }
     }
 }
-

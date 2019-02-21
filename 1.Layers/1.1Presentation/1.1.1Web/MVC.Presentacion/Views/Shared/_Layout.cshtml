@@ -45,7 +45,7 @@
                     <li>
                         <div class="user-info m-b-20">
                             <div class="image">
-                                <a >
+                                <a>
                                     @if (Session["Perfil"] != null)
                                     {
                                         <img id="@Session["Perfil"].ToString().Split('|')[0]" src="@Session["Perfil"].ToString().Split('|')[0]" />
@@ -80,82 +80,85 @@
                             </div>
                         </div>
                     </li>
-                @if (Session["Perfil"] != null)
-                {
-                    <li class="menu_dark"><a href="@Url.Action("Inicio", "Home")"><i class="material-icons">dashboard</i> <span class="icon-name">Dashboard</span></a></li>
-                    <li class="menu_dark"><a href="@Url.Action("Requisiciones", "Requisicion")"><i class="material-icons">feedback </i><span class="icon-name">Requisición</span> </a></li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">monetization_on</i><span>Crédito y Cobranza</span> </a>
-                        <ul class="ml-menu">
-                            <li>@Html.ActionLink("Captura de abonos", "Index", "Cobranza")</li>
-                            <li>@Html.ActionLink("Crédito recuperado", "CreditoRecuperado", "Cobranza")</li>      
-                            <li>@Html.ActionLink("Cartera vencida", "CarteraVencida", "Cobranza")</li>                        
-                        </ul>
-                    </li>
-                    <li class="menu_dark"><a href="@Url.Action("Index", "Pedidos")"><i class="material-icons">phone </i><span class="icon-name">Call Center</span> </a></li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">drive_eta</i><span>Equipo de Transporte</span> </a>
-                        <ul class="ml-menu">
-                            <li>@Html.ActionLink("Catalógo Parque Vehícular", "Index", "EquipoTransporte")</li>
-                        </ul>
-                    </li>
-                     <li>
-                        <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
-                        <ul class="ml-menu">
-                            <li><a href="@Url.Action("Ordenes", "OrdenCompra")">Orden de Compra </a></li>
-                        </ul>
-                    </li>
-                    <li class="menu_dark"><a href="@Url.Action("DashBoard", "Remanente")"><i class="material-icons">settings_remote</i> <span class="icon-name">Remanente</span></a></li>
+                    @if (Session["Perfil"] != null)
+                    {
+                        <li class="menu_dark"><a href="@Url.Action("Inicio", "Home")"><i class="material-icons">dashboard</i> <span class="icon-name">Dashboard</span></a></li>
+                        <li class="menu_dark"><a href="@Url.Action("Requisiciones", "Requisicion")"><i class="material-icons">feedback </i><span class="icon-name">Requisición</span> </a></li>
+                        @*<li>
+                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">monetization_on</i><span>Crédito y Cobranza</span> </a>
+                            <ul class="ml-menu">
+                                <li>@Html.ActionLink("Captura de abonos", "Index", "Cobranza")</li>
+                                <li>@Html.ActionLink("Crédito recuperado", "CreditoRecuperado", "Cobranza")</li>
+                                <li>@Html.ActionLink("Cartera vencida", "CarteraVencida", "Cobranza")</li>
+                            </ul>
+                        </li>*@
+                        <li class="menu_dark"><a href="@Url.Action("Index", "Pedidos")"><i class="material-icons">phone </i><span class="icon-name">Call Center</span> </a></li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">drive_eta</i><span>Equipo de Transporte</span> </a>
+                            <ul class="ml-menu">
+                                <li>@Html.ActionLink("Parque Vehícular", "Index", "EquipoTransporte")</li>
+                                <li>@Html.ActionLink("Recarga de combustible", "Index", "RecargaCombustibles")</li>
+                                <li>@Html.ActionLink("Asignacion", "Index", "Asignacion")</li>
+                                <li>@Html.ActionLink("Mantenimiento", "Index", "Mantenimiento")</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
+                            <ul class="ml-menu">
+                                <li><a href="@Url.Action("Ordenes", "OrdenCompra")">Orden de Compra </a></li>
+                            </ul>
+                        </li>
+                        <li class="menu_dark"><a href="@Url.Action("DashBoard", "Remanente")"><i class="material-icons">settings_remote</i> <span class="icon-name">Remanente</span></a></li>
 
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">image_aspect_ratio</i><span>Almacén</span> </a>
-                        <ul class="ml-menu">
-                            <li>@Html.ActionLink("Existencias", "ActualizacionExistencias", "Almacen")</li>
-                            <li>@Html.ActionLink("Entradas-Salidas", "MovimientosAlamacen", "Almacen")</li>
-                            <li>@Html.ActionLink("Salidas de Mercancía", "SalidaMercancia", "Almacen")</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">attach_money</i><span>Ventas</span> </a>
-                        <ul class="ml-menu">
-                            @*<li><a href="ui_kit.html">Ventas</a></li>*@
-                            <li>@Html.ActionLink("Caja General", "Index", "CajaGeneral")</li>
-                            <li>@Html.ActionLink("Caja General Estación", "Estacion", "CajaGeneral")</li>
-                            @*<li>@Html.ActionLink("Caja General Pipa", "Pipa", "CajaGeneral")</li>*@
-                        </ul>
-                    </li>
-                    @*<li>
-                        <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Inventario</span> </a>
-                        <ul class="ml-menu">
-                            <li><a href=""></a></li>
-                        </ul>
-                    </li>*@
-                    <li>
-                        <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-grid"></i><span>Catálogos</span></a>
-                        <ul class="ml-menu">
-                            <li>
-                                <a href="javascript:void(0);" class="menu-toggle toggle"><i class="material-icons">content_paste</i><span>Producto</span> </a>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">image_aspect_ratio</i><span>Almacén</span> </a>
+                            <ul class="ml-menu">
+                                <li>@Html.ActionLink("Existencias", "ActualizacionExistencias", "Almacen")</li>
+                                <li>@Html.ActionLink("Entradas-Salidas", "MovimientosAlamacen", "Almacen")</li>
+                                <li>@Html.ActionLink("Salidas de Mercancía", "SalidaMercancia", "Almacen")</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">attach_money</i><span>Ventas</span> </a>
+                            <ul class="ml-menu">
+                                @*<li><a href="ui_kit.html">Ventas</a></li>*@
+                                <li>@Html.ActionLink("Caja General", "Index", "CajaGeneral")</li>
+                                <li>@Html.ActionLink("Caja General Estación", "Estacion", "CajaGeneral")</li>
+                                @*<li>@Html.ActionLink("Caja General Pipa", "Pipa", "CajaGeneral")</li>*@
+                            </ul>
+                        </li>
+                        @*<li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Inventario</span> </a>
                                 <ul class="ml-menu">
-                                    <li>@Html.ActionLink("Producto", "Producto", "Producto")</li>
-                                    <li>@Html.ActionLink("Línea", "LineaProducto", "Producto")</li>
-                                    <li>@Html.ActionLink("Unidad de Medida", "UnidadMedida", "Producto")</li>
-                                    <li>@Html.ActionLink("Categoría", "Categoria", "Producto")</li>
+                                    <li><a href=""></a></li>
                                 </ul>
-                            </li>
-                            <li>@Html.ActionLink("Centro de Costos", "CentroCosto", "CentroCosto")</li>
-                            <li>@Html.ActionLink("Cuenta Contable", "CuentaContable", "CuentaContable")</li>
-                            <li>@Html.ActionLink("Proveedor", "Proveedores", "Producto")</li>
-                            <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
-                            <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
-                            <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
-                            <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
-                            <li>@Html.ActionLink("Combustibles", "Index", "Combustible")</li>
-                            <li>@Html.ActionLink("Puntos de venta", "Index", "PuntoVenta")</li>
-                            <li>@Html.ActionLink("Precio de venta", "Index", "PrecioVenta")</li>
-                            <li>@Html.ActionLink("Precio de venta Otros", "Index", "PrecioVentaOtro")</li>
-                        </ul>
-                    </li>
-                }             
+                            </li>*@
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-grid"></i><span>Catálogos</span></a>
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="javascript:void(0);" class="menu-toggle toggle"><i class="material-icons">content_paste</i><span>Producto</span> </a>
+                                    <ul class="ml-menu">
+                                        <li>@Html.ActionLink("Producto", "Producto", "Producto")</li>
+                                        <li>@Html.ActionLink("Línea", "LineaProducto", "Producto")</li>
+                                        <li>@Html.ActionLink("Unidad de Medida", "UnidadMedida", "Producto")</li>
+                                        <li>@Html.ActionLink("Categoría", "Categoria", "Producto")</li>
+                                    </ul>
+                                </li>
+                                <li>@Html.ActionLink("Centro de Costos", "CentroCosto", "CentroCosto")</li>
+                                <li>@Html.ActionLink("Cuenta Contable", "CuentaContable", "CuentaContable")</li>
+                                <li>@Html.ActionLink("Proveedor", "Proveedores", "Producto")</li>
+                                <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
+                                <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
+                                <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                                <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
+                                <li>@Html.ActionLink("Combustibles", "Index", "Combustible")</li>
+                                <li>@Html.ActionLink("Puntos de venta", "Index", "PuntoVenta")</li>
+                                <li>@Html.ActionLink("Precio de venta", "Index", "PrecioVenta")</li>
+                                <li>@Html.ActionLink("Precio de venta Otros", "Index", "PrecioVentaOtro")</li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>

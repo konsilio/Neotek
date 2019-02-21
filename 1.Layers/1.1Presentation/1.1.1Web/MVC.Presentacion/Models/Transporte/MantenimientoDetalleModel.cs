@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC.Presentacion.Models.Catalogos;
+using System;
 
 namespace MVC.Presentacion.Models
 {
@@ -15,5 +16,6 @@ namespace MVC.Presentacion.Models
         public string DescripcionMtto { get; set; }
         public int Kilometraje_Actual { get; set; }
         public string NumeroOC { get; set; }
+        public EquipoTransporteDTO _Vehiculo {get; set;} 
     }
 }

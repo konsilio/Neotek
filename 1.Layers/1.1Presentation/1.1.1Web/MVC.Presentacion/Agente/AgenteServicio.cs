@@ -46,6 +46,9 @@ namespace MVC.Presentacion.Agente
         public ReporteModel _repCartera;
         public PedidoModel _Pedido;
         public RegistrarPedidoModel _RegPedido;
+        public CombustibleModel _Combustible;
+        public EquipoTransporteDTO _Vehiculos;
+
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
         public List<EmpresaDTO> _listaEmpresas;
@@ -97,8 +100,7 @@ namespace MVC.Presentacion.Agente
         public List<PipaModel> _ListaPipas;
         public List<CargosModel> _ListaCargos;
         public List<RemanenteGeneralDTO> _ListaRemanenteGenaral;
-        public List<EquipoTransporteDTO> _ListaVehiculos;
-        public EquipoTransporteDTO _Vehiculos;
+        public List<EquipoTransporteDTO> _ListaVehiculos;   
         public List<CombustibleModel> _ListaCombustibles;
         public CombustibleModel _Combustible;
         public List<TipoUnidadModel> _ListaTiposUnidad;
@@ -4222,8 +4224,7 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
-
-
+        
         private async Task LLamada<T>(T _dto, string token, string Tipo)
         {
             using (var client = new HttpClient())
