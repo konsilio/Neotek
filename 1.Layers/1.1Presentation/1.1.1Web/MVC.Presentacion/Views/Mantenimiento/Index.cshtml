@@ -17,15 +17,24 @@
 <script type="text/javascript">
     var mensaje = '@ViewBag.Msj';
     if (mensaje != '') {
-        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));      
     }
-</script>
+    function OnSelectedIndexChanged(s, e) {
+        var item = id_vehiculo.cphidenVehiculos[id_vehiculo.GetSelectedIndex()].split("|")
+        $("#esCamioneta").val(item[0])
+        $("#esPipa").val(item[1])
+        $("#esUtilitario").val(item[2])
+    }
+</script>https://static.xx.fbcdn.net/rsrc.php/v3/y4/r/-PAXP-deijE.gif
 <body>
     <section class="content home">
         <div class="container-fluid">
             @using (Html.BeginForm("Crear", "Mantenimiento", FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.Id_DetalleMtto)
+                @Html.HiddenFor(m => m.EsCamioneta, new { htmlAttributes = new { esCamioneta = "esCamioneta" } })
+                @Html.HiddenFor(m => m.EsPipa, new { esPipa = "esPipa" })
+                @Html.HiddenFor(m => m.EsUtilitario, new { esUtilitario = "esUtilitario" })
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
@@ -47,16 +56,15 @@
                                     <div class="form-group">
                                         <b>Fecha de Mantenimiento</b>
                                         @Html.DevExpress().DateEdit(settings =>
-                                   {
-                                       settings.Name = "FechaMtto";
-                                       settings.Properties.UseMaskBehavior = true;
-                                       settings.Properties.EditFormat = EditFormat.Custom;
-                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
-                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       
-                                   }).Bind(Model.FechaMtto).GetHtml()
+                                        {
+                                            settings.Name = "FechaMtto";
+                                            settings.Properties.UseMaskBehavior = true;
+                                            settings.Properties.EditFormat = EditFormat.Custom;
+                                            settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
+                                            settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                        }).Bind(Model.FechaMtto).GetHtml()
                                         @Html.ValidationMessageFor(m => m.FechaMtto, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -73,6 +81,21 @@
                                        settings.Properties.TextField = "Descripcion";
                                        settings.Properties.ValueField = "IdEquipoTransporte";
                                        settings.Properties.ValueType = typeof(int);
+                                       //settings.Properties.Columns.Add("EsCamioneta");
+                                       //settings.Properties.Columns.Add("EsPipa");
+                                       //settings.Properties.Columns.Add("EsUtilitario");
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
+                                       settings.Properties.TextFormatString = "{0} {1} {2}";
+                                       settings.CustomJSProperties = (sender, e) =>
+                                       {
+                                           System.Collections.ArrayList list = new System.Collections.ArrayList();
+                                           MVCxComboBox comb = sender as MVCxComboBox;
+                                           foreach (ListEditItem item in comb.Items)
+                                           {
+                                               list.Add(item.GetValue("EsCamioneta")+"|"+ item.GetValue("EsPipa") + "|" + item.GetValue("EsUtilitario"));
+                                           }
+                                           e.Properties["cphidenVehiculos"] = list;
+                                       };
                                    }).BindList(ViewBag.Vehiculos).Bind(Model.id_vehiculo).GetHtml()
                                         @Html.ValidationMessageFor(m => m.id_vehiculo, "", new { @class = "alert-danger" })
                                     </div>
@@ -81,16 +104,16 @@
                                     <div class="form-group">
                                         <b>Tipo Mantenimiento</b>
                                         @Html.DevExpress().ComboBox(settings =>
-                                   {
-                                       settings.Name = "Id_tipomtto";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.SelectedIndex = 0;
-                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.TextField = "Mantenimiento";
-                                       settings.Properties.ValueField = "Id_Mantenimiento";
-                                       settings.Properties.ValueType = typeof(int);
-                                   }).BindList(ViewBag.CMantenimiento).Bind(Model.Id_tipomtto).GetHtml()
+                                        {
+                                            settings.Name = "Id_tipomtto";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.SelectedIndex = 0;
+                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                            settings.Properties.TextField = "Mantenimiento";
+                                            settings.Properties.ValueField = "Id_Mantenimiento";
+                                            settings.Properties.ValueType = typeof(int);
+                                        }).BindList(ViewBag.CMantenimiento).Bind(Model.Id_tipomtto).GetHtml()
                                         @Html.ValidationMessageFor(m => m.Id_tipomtto, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -122,8 +145,8 @@
                                     <b></b>
                                     <div class="form-group">
                                         @if (ViewBag.EsEdicion == null)
-                                        {
-                                     
+                {
+
                                             @*<input value="Crear" type="submit" class="btn btn-primary btn-icon btn-icon-mini btn-round" />*@
                                             <button id="BtnCrear" formaction=@Url.Action("Crear") class="btn btn-primary btn-icon  btn-icon-mini btn-round">
                                                 <i class="zmdi zmdi-plus"></i>
@@ -179,7 +202,7 @@
                                             {
                                                 <tr>
                                                     <td>@mant.Id_DetalleMtto</td>
-                                                    <td>@mant.Vehiculo</td>                                                 
+                                                    <td>@mant.Vehiculo</td>
                                                     <td>@mant.DescripcionMtto</td>
                                                     <td>@mant.FechaMtto</td>
                                                     <td>

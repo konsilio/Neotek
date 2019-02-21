@@ -68,7 +68,6 @@ namespace MVC.Presentacion.Controllers
                 var respuesta = TransporteServicio.ModificarManteniminento(model, tkn);
                 TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Index");
-
             }
         }
         private string Validar(RespuestaDTO Resp = null)
