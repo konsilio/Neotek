@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Seguridad;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,21 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<Pipa> Obtener(short idEmpresa)
         {
             return new PipaDataAccess().ObtenerPipas(idEmpresa).ToList();
+        }
+        public static Pipa Obtener(short idEmpresa, string nombre, string numero)
+        {
+            return new PipaDataAccess().ObtenerPipa(idEmpresa, nombre, numero);
+        }
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "La pipa");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

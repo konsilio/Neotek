@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Catalogo
 {
-   public class ClienteLocacionDTO
+
+    public class ClienteLocacionDTO
     {
         public int IdCliente { get; set; }
         public short Orden { get; set; }
@@ -17,7 +18,10 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "IdPais")]
         
         public byte IdPais { get; set; }
-        public Nullable<byte> IdEstadoRep { get; set; }
+
+        //[StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0002)]
+        // [Display(Name = "IdPais")]
+        public byte IdEstadoRep { get; set; }
 
         [StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Estado Provincia")]
@@ -31,7 +35,7 @@ namespace Application.MainModule.DTOs.Catalogo
         [Required(ErrorMessage = Error.R0002)]
         [StringLength(20, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Codigo Postal")]
-        public string CodigoPostal { get; set; }        
+        public string CodigoPostal { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
         [StringLength(100, MinimumLength = 1, ErrorMessage = Error.R0004)]
@@ -58,7 +62,5 @@ namespace Application.MainModule.DTOs.Catalogo
         public string TipoLocacion { get; set; }
         public string Pais { get; set; }
         public string Estado { get; set; }
-        public byte IdPais2 { get; set; }
-        public Nullable<byte> IdEstadoRep2 { get; set; }
     }
 }

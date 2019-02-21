@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Seguridad;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,21 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<CUtilitario> Obtener(short idEmpresa)
         {
             return new VehiculoUtilitarioDataAccess().Obtener(idEmpresa).ToList();
+        }
+        public static CUtilitario Obtener(short idEmpresa, string nombre, string numero)
+        {
+            return new VehiculoUtilitarioDataAccess().Obtener(idEmpresa, nombre, numero);
+        }
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "El vehiculo utilitario");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

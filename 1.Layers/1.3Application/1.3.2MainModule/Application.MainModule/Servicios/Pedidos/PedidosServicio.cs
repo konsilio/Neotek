@@ -20,9 +20,9 @@ namespace Application.MainModule.Servicios.Pedidos
             List<PedidoModelDto> lPedidos = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PedidosDataAccess().Buscar(idempresa));
             return lPedidos;
         }
-        public static PedidoModelDto Obtener(int idPedido)
+        public static RegistraPedidoDto Obtener(int idPedido)
         {
-            PedidoModelDto Pedido = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PedidosDataAccess().BuscarPedido(idPedido));
+            RegistraPedidoDto Pedido = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTOEdit(new PedidosDataAccess().BuscarPedido(idPedido));
             return Pedido;
         }
         public static stringEstatus GetEstatusPedido(short status)
@@ -37,7 +37,6 @@ namespace Application.MainModule.Servicios.Pedidos
                 return stringEstatus.Cancelado;
             if (status == 5)
                 return stringEstatus.Solollamada;
-
 
             return stringEstatus.PedidoCreado;
         }
@@ -99,6 +98,10 @@ namespace Application.MainModule.Servicios.Pedidos
             return lPipas;
         }        
         public static RespuestaDto Alta(Pedido _pedidoDto)
+        {
+            return new PedidosDataAccess().Insertar(_pedidoDto);
+        }
+        public static RespuestaDto Alta(List<PedidoDetalle> _pedidoDto)
         {
             return new PedidosDataAccess().Insertar(_pedidoDto);
         }

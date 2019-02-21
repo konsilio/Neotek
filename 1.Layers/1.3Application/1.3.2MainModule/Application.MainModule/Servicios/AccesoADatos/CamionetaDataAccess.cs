@@ -77,6 +77,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Camioneta>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
         }
+        public Camioneta ObtenerCamioneta(short idEmpresa, string nom, string num)
+        {
+            return uow.Repository<Camioneta>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo && x.Nombre.Equals(nom.Trim()) && x.Numero.Equals(num.Trim()));
+        }
         public List<Camioneta> ObtenerCamionetas()
         {
             return uow.Repository<Camioneta>().Get(x => x.Activo).ToList();

@@ -47,16 +47,16 @@
                                             <div>
                                                 @if (ViewBag.EsAdmin)
                                                 {
-                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                    @foreach (var lst in ViewBag.Empresas)
+                                                    <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                        @foreach (var lst in ViewBag.Empresas)
                                                         {
-                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                         }
-                                                </select>
+                                                    </select>
                                                 }
                                                 else
                                                 {
-                                                @ViewBag.Empresas
+                                                    @ViewBag.Empresas
                                                 }
                                             </div>
                                         </div>
@@ -75,20 +75,22 @@
                                             <b>Ticket:</b>
                                             <input type="text" name="Ticket" class="form-control" placeholder="No de ticket" />
                                         </div>
-                                        <div class="col-sm-2" style="top:20px">
+                                        <div class="col-sm-2">
+                                            <b>Fecha del:</b>
                                             @Html.DevExpress().DateEdit(settings =>
                                                        {
                                                            settings.Name = "FechaRango1";
                                                            settings.Properties.UseMaskBehavior = true;
                                                            settings.Properties.EditFormat = EditFormat.Custom;
                                                            settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                                           settings.Attributes.Clear();
+                                                           settings.Properties.NullText = "dd/MM/yyyy";
                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                                            settings.Theme = "Material";
                                                        }).Bind(Model[0].FechaRango1).GetHtml()
                                         </div>
-                                        <div class="col-sm-2" style="top:20px">
+                                        <div class="col-sm-2">
+                                            <b>Fecha al:</b>
                                             @Html.DevExpress().DateEdit(settings =>
                                                        {
                                                            settings.Name = "FechaRango2";
@@ -96,7 +98,7 @@
                                                            settings.Properties.EditFormat = EditFormat.Custom;
                                                            settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
                                                            settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                                           settings.Attributes.Clear();
+                                                           settings.Properties.NullText = "dd/MM/yyyy";
                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                                            settings.Theme = "Material";
@@ -145,16 +147,19 @@
                                             {
                                                 foreach (var item in Model)
                                                 {
-                                                    foreach (var x in item.lstCreditoR)
+                                                    if (item.lstCreditoR != null)
                                                     {
-                                                        <tr>
-                                                            <td>@item.Ticket</td>
-                                                            <td>@item.FechaRegistro</td>
-                                                            <td>@x.FechaAbono</td>
-                                                            <td>@item.Cliente</td>
-                                                            <td>@x.MontoAbono</td>
-                                                            <td>@x.FormaPago</td>
-                                                        </tr>
+                                                        foreach (var x in item.lstCreditoR)
+                                                        {
+                                                            <tr>
+                                                                <td>@item.Ticket</td>
+                                                                <td>@item.FechaRegistro</td>
+                                                                <td>@x.FechaAbono</td>
+                                                                <td>@item.Nombre</td>
+                                                                <td>@x.MontoAbono</td>
+                                                                <td>@x.FormaPago</td>
+                                                            </tr>
+                                                        }
                                                     }
                                                 }
                                             }
@@ -174,22 +179,22 @@
                                         <tbody>
                                             @if (Model != null)
                                             {
-                                            <tr>
-                                                <td>Total Efectivo</td>
-                                                <td>@Model[0].TotalEfectivo</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total Cheques</td>
-                                                <td>@Model[0].TotalCheques</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total Transferencia</td>
-                                                <td>@Model[0].TotalTransferencia</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total </td>
-                                                <td>@Model[0].Total</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>Total Efectivo</td>
+                                                    <td>@Model[0].TotalEfectivo</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total Cheques</td>
+                                                    <td>@Model[0].TotalCheques</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total Transferencia</td>
+                                                    <td>@Model[0].TotalTransferencia</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Total </td>
+                                                    <td>@Model[0].Total</td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>

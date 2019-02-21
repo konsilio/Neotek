@@ -18,6 +18,8 @@
         settings.CommandColumn.ShowEditButton = true;
         settings.Theme = "Material";
         settings.SettingsCommandButton.UpdateButton.Text = "Abonar";
+        settings.SettingsCommandButton.EditButton.Text = "Abonar";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         settings.Columns.Add(c =>
         {
             c.FieldName = "IdCargo";
@@ -66,6 +68,8 @@
             c.FieldName = "Abono.FechaAbono";
             c.Caption = "Fecha Abono";
             c.ColumnType = MVCxGridViewColumnType.DateEdit;
+            c.Visible = false;
+            c.EditFormSettings.Visible = DefaultBoolean.True;
             c.SetDataItemTemplateContent(diTemplate =>
             {
                 GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
@@ -86,6 +90,8 @@
         {
             col.FieldName = "Abono.FolioBancario";
             col.Caption = "Folio";
+            col.Visible = false;
+            col.EditFormSettings.Visible = DefaultBoolean.True;
             //col.SetDataItemTemplateContent(diTemplate =>
             //{
             //    GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
@@ -100,6 +106,8 @@
             c.FieldName = "Abono.IdFormaPago";
             c.Caption = "Metodo de Pago";
             c.Settings.AllowSort = DefaultBoolean.False;
+            c.Visible = false;
+            c.EditFormSettings.Visible = DefaultBoolean.True;
             c.EditorProperties().ComboBox(p =>
             {
                 p.TextField = "Descripcion";
@@ -113,6 +121,8 @@
         {
             c.FieldName = "Abono.MontoAbono";
             c.Caption = "Cantidad";
+            c.Visible = false;
+            c.EditFormSettings.Visible = DefaultBoolean.True;
             //c.SetDataItemTemplateContent(Template =>
             //{
             //    GridViewDataItemTemplateContainer cont = Template as GridViewDataItemTemplateContainer;

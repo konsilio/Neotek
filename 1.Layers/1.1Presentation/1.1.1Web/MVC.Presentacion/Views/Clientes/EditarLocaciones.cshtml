@@ -1,6 +1,6 @@
-﻿@*@model MVC.Presentacion.Models.Catalogos.ClienteLocacionMod*@
-@using MVC.Presentacion.Models.Catalogos
-@model List<ClienteLocacionMod>
+﻿@model MVC.Presentacion.Models.Catalogos.ClienteLocacionMod
+@*@using MVC.Presentacion.Models.Catalogos
+@model List<ClienteLocacionMod>*@
 
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/Resources/js/Clientes.js"></script>
@@ -58,9 +58,9 @@
                                         <div class="form-group">
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div>
-                                                    <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdCliente[0].RazonSocial=="")?ViewBag.IdCliente[0].Nombre + " " +ViewBag.IdCliente[0].Apellido1 + " " +ViewBag.IdCliente[0].Apellido2:ViewBag.IdCliente[0].RazonSocial )" />
+                                                    <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdCliente[0].RazonSocial!=null)?ViewBag.IdCliente[0].Nombre + " " +ViewBag.IdCliente[0].Apellido1 + " " +ViewBag.IdCliente[0].Apellido2:ViewBag.IdCliente[0].RazonSocial )" />
                                                     <input type="text" name="IdCliente" hidden="hidden" value="@ViewBag.IdCliente[0].IdCliente" readonly="readonly" class="form-control" />
-                                                    <input type="text" name="Orden" hidden="hidden" value="@((ViewBag.LocacionOrden!=null)?ViewBag.LocacionOrden:0)" readonly="readonly" class="form-control" />
+                                                    @*<input type="text" name="Orden" hidden="hidden" value="@((ViewBag.LocacionOrden!=null)?ViewBag.LocacionOrden:0)" readonly="readonly" class="form-control" />*@
                                                 </div>
                                             </div>
                                         </div>
@@ -164,7 +164,7 @@
                                             <div class="form-group">
                                                 <input type="text" name="Municipio" class="form-control" />
                                             </div>
-                                            @Html.ValidationMessageFor(m => m[0].Municipio, "", new { @class = "alert-danger" })
+                                            @Html.ValidationMessageFor(m => m.Municipio, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="row clearfix">
@@ -181,7 +181,7 @@
                                             <div class="form-group">
                                                 <input type="text" name="Colonia" class="form-control" />
                                             </div>
-                                            @Html.ValidationMessageFor(m => m[0].Colonia, "", new { @class = "alert-danger" })
+                                            @Html.ValidationMessageFor(m => m.Colonia, "", new { @class = "alert-danger" })
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1">
                                             <div class="form-group">
@@ -196,7 +196,7 @@
                                             <div class="form-group">
                                                 <input type="text" name="Calle" class="form-control" />
                                             </div>
-                                            @Html.ValidationMessageFor(m => m[0].Calle, "", new { @class = "alert-danger" })
+                                            @Html.ValidationMessageFor(m => m.Calle, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="row clearfix">
@@ -213,7 +213,7 @@
                                             <div class="form-group">
                                                 <input type="text" name="NumExt" class="form-control" />
                                             </div>
-                                            @Html.ValidationMessageFor(m => m[0].NumExt, "", new { @class = "alert-danger" })
+                                            @Html.ValidationMessageFor(m => m.NumExt, "", new { @class = "alert-danger" })
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1">
                                             <div class="form-group">
@@ -242,7 +242,7 @@
                                             <div class="form-group">
                                                 <input type="text" name="CodigoPostal" class="form-control" />
                                             </div>
-                                            @Html.ValidationMessageFor(m => m[0].CodigoPostal, "", new { @class = "alert-danger" })
+                                            @Html.ValidationMessageFor(m => m.CodigoPostal, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="row clearfix">
@@ -268,7 +268,7 @@
                     }*@
 
                                             </div>
-                                            @Html.ValidationMessageFor(m => m[0].formatted_address, "", new { @class = "alert-danger" })
+                                            @Html.ValidationMessageFor(m => m.formatted_address, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -304,7 +304,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (var item in Model)
+                                                    @foreach (var item in ViewBag.Locaciones)
                                                     {
                                                         <tr>
                                                             <td>@item.Pais</td>

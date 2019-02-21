@@ -6,9 +6,11 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Pedidos
 {
-    public class PedidoModel : ClientesModel
+    public class PedidoModel 
     {
-        public int IdPedido { get; set; }        
+        public int IdPedido { get; set; }
+        public int IdCliente { get; set; }
+        public short Orden { get; set; }
         public int IdPedidoDetalle { get; set; }
         public int IdEstatusPedido { get; set; }
         public string EstatusPedido { get; set; }
@@ -20,7 +22,7 @@ namespace MVC.Presentacion.Models.Pedidos
         public string Calle { get; set; }
         public string Colonia { get; set; }
         public string Unidad { get; set; }
-        public string NombreRfc{ get; set; }
+        public string NombreRfc { get; set; }
         public int IdPipa { get; set; }
         public int IdCamioneta { get; set; }
         public string ReferenciaUbicacion { get; set; }
@@ -34,9 +36,9 @@ namespace MVC.Presentacion.Models.Pedidos
         public short IdDireccion { get; set; }
         public decimal TotalKilos { get; set; }
         public decimal TotalLitros { get; set; }
-        public List<PedidoModel> Pedidos { get; set; }     
+        public List<PedidoModel> Pedidos { get; set; }
         public List<ClientesModel> clientes { get; set; }
-        public List<EncuestaModel> encuesta { get; set; }       
-        
+        public ClientesModel cliente { get; set; }
+        public List<EncuestaModel> encuesta { get; set; }
     }
 }

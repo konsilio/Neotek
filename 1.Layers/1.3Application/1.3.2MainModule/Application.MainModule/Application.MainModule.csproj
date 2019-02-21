@@ -115,10 +115,13 @@
     <Compile Include="AdaptadoresDTO\Mobile\TipoRegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
+    <Compile Include="DTOs\Catalogo\TipoUnidadDTO.cs" />
     <Compile Include="DTOs\Catalogo\VehiculoUtilitarioDTO.cs" />
     <Compile Include="DTOs\Cobranza\AbonosDTO.cs" />
     <Compile Include="DTOs\Cobranza\CargosDTO.cs" />
     <Compile Include="DTOs\Cobranza\CarteraVencidaDTO.cs" />
+    <Compile Include="DTOs\Cobranza\CRecuperadaDTO.cs" />
+    <Compile Include="DTOs\Cobranza\CRecuperadaTotalesDTO.cs" />
     <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\AsignacionUtilitarioDTO.cs" />
@@ -156,6 +159,7 @@
     <Compile Include="DTOs\Pedidos\EstatusPedidoDto.cs" />
     <Compile Include="DTOs\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="DTOs\Pedidos\PedidoModelDto.cs" />
+    <Compile Include="DTOs\Pedidos\RegistraPedidoDto.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionSalidaDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\TransporteDTO.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />
@@ -333,8 +337,6 @@
     <Compile Include="DTOs\Seguridad\AutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionMobileDto.cs" />
-    <Compile Include="DTOs\Seguridad\RolCat.cs" />
-    <Compile Include="DTOs\Seguridad\RolCompras.cs" />
     <Compile Include="DTOs\Seguridad\RolDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioAplicacionDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioDTO.cs" />

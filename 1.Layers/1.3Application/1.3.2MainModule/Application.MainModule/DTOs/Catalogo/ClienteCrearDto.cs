@@ -53,6 +53,7 @@ namespace Application.MainModule.DTOs.Catalogo
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "limiteCreditoDias")]
         public short limiteCreditoDias { get; set; }
+        public decimal CreditoDisponibleMonto { get; set; }
 
         [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Telefono1")]
@@ -142,6 +143,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public string Domicilio { get; set; }
         public string Cliente { get; set; }
         public List<ClienteLocacionDTO> Locaciones { get; set; }
+        public ClienteLocacionDTO Locacion { get; set; }
         public bool VentaExtraordinaria { get; set; }
     }
 }

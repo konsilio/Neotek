@@ -99,9 +99,13 @@ namespace Application.MainModule.DTOs.Seguridad
         public short IdEmpresa { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
-        public List<RolDto> ListaRoles { get; set; }
-        public List<RolCat> ListaRolesCat { get; set; }
-        public List<RolCompras> ListaRolesCom { get; set; }
-
+        public bool CobranzaVerAbonos { get; set; }
+        public bool CobranzaVerCartera { get; set; }
+        public bool CobranzaVerCreditoRecuperado { get; set; }
+        public bool CobranzaGenerarAbonos { get; set; }
+        public bool PedidoVerPedido { get; set; }
+        public bool PedidoGenerarPedido { get; set; }
+        public bool PedidoModificarPedido { get; set; }
+        public bool PedidoEliminarPedido { get; set; }
     }
 }

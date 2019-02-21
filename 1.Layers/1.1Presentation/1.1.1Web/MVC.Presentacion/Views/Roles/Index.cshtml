@@ -73,30 +73,30 @@
                                     <div>
                                         @if (ViewBag.EsAdmin)
                                         {
-                                            <select id="exampleempresas" name="IdEmpresa" class="form-control z-index show-tick" data-live-search="true">
-                                                @foreach (var lst in ViewBag.Empresas)
+                                        <select id="exampleempresas" name="IdEmpresa" class="form-control z-index show-tick" data-live-search="true">
+                                            @foreach (var lst in ViewBag.Empresas)
                                                 {
                                                     if (ViewBag.IdEmpresa != 0)
                                                     {
                                                         if (lst.IdEmpresa == ViewBag.IdEmpresa)
                                                         {
-                                                            <option value="@lst.IdEmpresa" selected="selected">@lst.NombreComercial</option>
+                                                <option value="@lst.IdEmpresa" selected="selected">@lst.NombreComercial</option>
                                                         }
                                                         else
                                                         {
-                                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                     }
                                                 }
-                                            </select>
+                                        </select>
                                         }
                                         else
                                         {
-                                            @ViewBag.Empresas
+                                        @ViewBag.Empresas
                                         }
 
                                     </div>
@@ -348,7 +348,36 @@
                             <!--VENTAS tab content-->
                             <div class="tab-content">
                                 <div id="SistemaVentas" role="tabpanel" class="tab-pane">
-                                    <i>Sistema Ventas sin datos para mostrar</i>
+                                    <div class="row clearfix" id="btnMovilVenta">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="submit" id="btnGuardaPMVenta" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPerSistemaVenta") formmethod="post" class="btn btn-raised btn-primary float-right btn-round" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="blockquote-info blockquote btn-round" id="DivgvwMovilVenta">
+                                        <div class="table-responsive">
+                                            <table id="tabSisVenta" class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Rol</th>
+                                                        <th>Cobranza Ver Abonos</th>
+                                                        <th>Cobranza Ver Cartera</th>
+                                                        <th>Cobranza Ver CreditoRecuperado</th>
+                                                        <th>Cobranza Generar Abonos</th>
+                                                        <th>Pedido Ver Pedido</th>
+                                                        <th>Pedido Generar Pedido</th>
+                                                        <th>Pedido Modificar Pedido</th>
+                                                        <th>Pedido Eliminar Pedido</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @Html.EditorFor(m => m.ListaSistemaVenta)
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="MovilVentas" role="tabpanel" class="tab-pane">
                                     <div class="row clearfix" id="btnMovilVenta">
@@ -378,40 +407,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            @*<div class="tab-content">
-                                    <div id="SistemaVentas" class="tab-pane" role="tabpanel">
-                                        <i>Sistema Ventas sin datos para mostrar</i>
-                                    </div>
-                                    <div id="MovilVentas" role="tabpanel" class="tab-pane">
-                                        <div class="row clearfix" id="btnMovilVenta">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <input type="submit" id="btnGuardaPMVenta" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPerMovilVenta") formmethod="post" class="btn btn-raised btn-primary float-right btn-round" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="blockquote-info blockquote btn-round" id="MovilVentas">
-                                            <div class="table-responsive">
-                                                <table id="tabMovilVenta" class="table table-striped table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Rol</th>
-                                                            <th>App Disposicion Efectivo</th>
-                                                            <th>App Camioneta Punto Venta</th>
-                                                            <th>App Estacion Carb Punto Venta</th>
-                                                            <th>App Pipa Punto Venta</th>
-                                                            <th>Acciones</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @Html.EditorFor(m => m.ListaMovilVenta)
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>*@
+                            </div>                         
                             <!--Inventario tab content-->
                             <div class="tab-content">
                                 <div id="SistemaInventario" class="tab-pane">

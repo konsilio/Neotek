@@ -1,4 +1,4 @@
-﻿@model  MVC.Presentacion.Models.Pedidos.PedidoModel
+﻿@model  MVC.Presentacion.Models.Pedidos.RegistrarPedidoModel
 <!DOCTYPE html>
 
 <html>
@@ -80,7 +80,7 @@
                                                 </div>
                                                 <div class="col-sm-2">
                                                     <div class="form-group">
-                                                        <div class="input-group"> @Model.FechaEntregaPedido
+                                                        <div class="input-group"> @Model.FechaPedido
                                                         </div>
                                                     </div>
                                                 </div>
@@ -114,7 +114,7 @@
                                                 <div class="col-sm-2">
                                                     <div class="form-group">
                                                         <div class="input-group">
-                                                            @Model.FechaRegistroPedido
+                                                            @Model.FechaPedido
                                                         </div>
                                                     </div>
                                                 </div>                                               
@@ -370,7 +370,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
-                                                        <input type="submit" value="Regresar" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                        <input type="submit" value="Regresar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                                     </div>
                                                 </div>
                                             </div>

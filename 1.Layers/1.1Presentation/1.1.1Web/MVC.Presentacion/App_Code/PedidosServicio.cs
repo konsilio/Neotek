@@ -17,11 +17,18 @@ namespace MVC.Presentacion.App_Code
             agente.ListaPedidos(id, tkn);
             return agente._ListaPedidos;
         }
-        public static PedidoModel ObtenerIdPedido(int id,string tkn)
+
+        public static List<PedidoModel> ObtenerPedidosFiltro(short id, string tkn, int? idpedido, string rfc = null, string tel1 = null)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaPedidosFiltro(id, idpedido.Value, rfc, tel1, tkn);
+            return agente._ListaPedidos;
+        }
+        public static RegistrarPedidoModel ObtenerIdPedido(int id,string tkn)
         {
             var agente = new AgenteServicio();
             agente.ObtenerPedidoId(id,tkn);
-            return agente._Pedido;
+            return agente._RegPedido;
         }
         public static List<EstatusPedidoModel> ObtenerEstatusPedidos(string tkn)
         {
@@ -30,7 +37,7 @@ namespace MVC.Presentacion.App_Code
             return agente._ListaEstatusP;
         }
 
-        public static RespuestaDTO AltaNuevoPedido(PedidoModel model, string tkn)
+        public static RespuestaDTO AltaNuevoPedido(RegistrarPedidoModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarNuevoPedido(model, tkn);
@@ -42,13 +49,13 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarEncuesta(model, tkn);
             return agente._RespuestaDTO;
         }
-        public static RespuestaDTO ActualizarPedido(PedidoModel model, string tkn)
+        public static RespuestaDTO ActualizarPedido(RegistrarPedidoModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarEdicionPedido(model, tkn);
             return agente._RespuestaDTO;
         }
-        public static RespuestaDTO EliminarPedido(PedidoModel model, string tkn)
+        public static RespuestaDTO EliminarPedido(RegistrarPedidoModel model, string tkn)
         {
             var agente = new AgenteServicio();
             agente.CancelarNuevoPedido(model, tkn);

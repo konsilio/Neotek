@@ -328,7 +328,9 @@
     <Compile Include="Models\Catalogos\ProveedorDTO.cs" />
     <Compile Include="Models\Catalogos\PuntoVentaModel.cs" />
     <Compile Include="Models\Catalogos\RolMovilVenta.cs" />
+    <Compile Include="Models\Catalogos\RolSistemaVenta.cs" />
     <Compile Include="Models\Catalogos\TipoProveedorDTO.cs" />
+    <Compile Include="Models\Catalogos\TipoUnidadModel.cs" />
     <Compile Include="Models\Catalogos\UnidadAlmacenGasDTO.cs" />
     <Compile Include="Models\Catalogos\RegimenFiscalModel.cs" />
     <Compile Include="Models\Catalogos\RolCat.cs" />
@@ -367,6 +369,7 @@
     <Compile Include="Models\Pedidos\EstatusPedidoModel.cs" />
     <Compile Include="Models\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="Models\Pedidos\PedidoModel.cs" />
+    <Compile Include="Models\Pedidos\RegistrarPedidoModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
@@ -10767,6 +10770,7 @@
     <Content Include="Resources\css\DevExpressCss.css" />
     <Content Include="Resources\css\toggleCl.css" />
     <Content Include="Resources\css\tooltip.css" />
+    <Content Include="Resources\img\ccte.png" />
     <Content Include="Resources\js\CajaGeneral.js" />
     <Content Include="Resources\js\Clientes.js" />
     <Content Include="Resources\js\Cobranza.js" />
@@ -11414,6 +11418,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="assets\js\chosen\composer.json" />
     <Content Include="assets\js\chosen\LICENSE.md" />
+    <None Include="Properties\PublishProfiles\SaGas.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DatePickerReady.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -11525,7 +11530,6 @@
     <Content Include="Views\Shared\EditorTemplates\RolCompras.cshtml" />
     <Content Include="Views\Clientes\Index.cshtml" />
     <Content Include="Views\Clientes\Nuevo.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Roles.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolRequsicion.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolMovilCompra.cshtml" />
     <Content Include="Views\Clientes\EditarLocaciones.cshtml" />
@@ -11588,6 +11592,7 @@
     <Content Include="Views\Combustible\Index.cshtml" />
     <Content Include="Views\Mantenimiento\Index.cshtml" />
     <Content Include="Views\RecargaCombustibles\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RolSistemaVenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
