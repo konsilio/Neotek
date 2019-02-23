@@ -20,7 +20,14 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.Combustibles = CatalogoServicio.ListaCombustible(tkn);
             ViewBag.Recargas = TransporteServicio.ListaRecargaCombustible(tkn).ToPagedList(page ?? 1, 20);
-            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (Respuesta.Exito)
+                    ViewBag.Msj = Respuesta.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(Respuesta);
+            }
             if (model != null && model.Id_DetalleRecargaComb != 0) ViewBag.EsEdicion = true;
 
             return View(model);
@@ -30,26 +37,17 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = TransporteServicio.GuardarRecargaCombustible(model, tkn);
-            if (respuesta.Exito)
-                return RedirectToAction("Index");
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Index");
-            }
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Index");
+
         }
         public ActionResult Eliminar(int? id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = TransporteServicio.EliminarRecargaCombustible(new RecargaCombustibleModel { Id_DetalleRecargaComb = id ?? 0 }, tkn);
-            if (respuesta.Exito)
-                return RedirectToAction("Index");
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Index");
-            }
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Index");
         }
         public ActionResult Modificar(int? id, RecargaCombustibleModel model = null)
         {
@@ -60,13 +58,8 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 var respuesta = TransporteServicio.EditarRecargaCombustible(model, tkn);
-                if (respuesta.Exito)
-                    return RedirectToAction("Index");
-                else
-                {
-                    TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("Index");
-                }
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("Index");
             }
         }
         private string Validar(RespuestaDTO Resp = null)

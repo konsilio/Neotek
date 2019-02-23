@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.EquipoTransporte;
+using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporte
             {
                 Id_DetalleRecargaComb = entidad.Id_DetalleRecargaComb,
                 Id_Vehiculo = entidad.Id_Vehiculo,
+                Vehiculo = EquipoTransporteServicio.ObtenerNombre(entidad),
                 EsCamioneta = entidad.EsCamioneta,
                 EsPipa = entidad.EsPipa,
                 EsUtilitario = entidad.EsUtilitario,
@@ -23,6 +25,7 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporte
                 KilometrajeRecorrido = entidad.KilometrajeRecorrido,
                 LitrosRecargados = entidad.LitrosRecargados,
                 IdTipoCombustible = entidad.IdTipoCombustible,
+                FechaRecarga = entidad.FechaRecarga,
             };
         }
         public static List<RecargaCombustibleDTO> ToDTO(List<DetalleRecargaCombustible> entidad)
@@ -42,6 +45,7 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporte
                 KilometrajeRecorrido = dto.KilometrajeRecorrido,
                 LitrosRecargados = dto.LitrosRecargados,
                 IdTipoCombustible = dto.IdTipoCombustible,
+                FechaRecarga = dto.FechaRecarga,
             };
         }
         public static List<DetalleRecargaCombustible> FromDTO(List<RecargaCombustibleDTO> entidad)
@@ -61,6 +65,7 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporte
                 KilometrajeRecorrido = entidad.KilometrajeRecorrido,
                 LitrosRecargados = entidad.LitrosRecargados,
                 IdTipoCombustible = entidad.IdTipoCombustible,
+                FechaRecarga = entidad.FechaRecarga,
             };
         }
     }

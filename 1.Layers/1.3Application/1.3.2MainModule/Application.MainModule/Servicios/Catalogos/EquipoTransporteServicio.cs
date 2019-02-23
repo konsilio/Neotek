@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.DTOs.EquipoTransporte;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -49,7 +50,7 @@ namespace Application.MainModule.Servicios.Catalogos
             if (qt.IdCamioneta != null)
             {
                 if (qt.Camionetas != null)
-                    return qt.Camionetas.Nombre + " "+ qt.Camionetas.Numero;
+                    return qt.Camionetas.Nombre + " " + qt.Camionetas.Numero;
                 else
                     return new EquipoTransporteDataAccess().BuscarCamioneta(qt.IdCamioneta.Value).Nombre + " " + qt.Camionetas.Numero;
             }
@@ -60,12 +61,26 @@ namespace Application.MainModule.Servicios.Catalogos
                 else
                     return new EquipoTransporteDataAccess().BuscarPipa(qt.IdPipa.Value).Nombre + " " + qt.Pipas.Numero;
             }
-            //if (qt.Vehiculo != null)
-            //    return qt.Vehiculo.Nombre;
-            //else
-            //    return new EquipoTransporteDataAccess().BuscarVehiculo(qt.Vehiculo.Value).Nombre; 
+
+            if (qt.IdVehiculoUtilitario != null)
+            {
+                if (qt.Utilitario != null)
+                    return qt.Utilitario.Nombre;
+                else
+                    return new EquipoTransporteDataAccess().BuscarUtilitario(qt.IdVehiculoUtilitario.Value).Nombre;
+            }
             return null;
 
+        }
+        public static string ObtenerNombre(DetalleRecargaCombustible qt)
+        {
+            if (qt.EsCamioneta)
+                return new EquipoTransporteDataAccess().BuscarCamioneta(qt.Id_Vehiculo).Nombre;
+            if (qt.EsPipa)
+                return new EquipoTransporteDataAccess().BuscarPipa(qt.Id_Vehiculo).Nombre;
+            if (qt.EsUtilitario)               
+                return new EquipoTransporteDataAccess().BuscarUtilitario(qt.Id_Vehiculo).Nombre;
+            return null;
         }
         public static List<EquipoTransporte> BuscarEquipoTransporte()
         {
@@ -93,7 +108,7 @@ namespace Application.MainModule.Servicios.Catalogos
         public static RespuestaDto Alta(EquipoTransporte _VehiculoDto)
         {
             return new EquipoTransporteDataAccess().Insertar(_VehiculoDto);
-        }     
+        }
         public static RespuestaDto Modificar(EquipoTransporte _VehiculoDto)
         {
             return new EquipoTransporteDataAccess().Actualizar(_VehiculoDto);

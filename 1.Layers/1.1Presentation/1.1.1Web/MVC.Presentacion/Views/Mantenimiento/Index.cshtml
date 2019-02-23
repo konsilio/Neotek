@@ -23,18 +23,20 @@
         var item = id_vehiculo.cphidenVehiculos[id_vehiculo.GetSelectedIndex()].split("|")
         $("#esCamioneta").val(item[0])
         $("#esPipa").val(item[1])
-        $("#esUtilitario").val(item[2])
+        $("#esUtilitario").val(item[2])     
     }
-</script>https://static.xx.fbcdn.net/rsrc.php/v3/y4/r/-PAXP-deijE.gif
+</script>
 <body>
     <section class="content home">
         <div class="container-fluid">
             @using (Html.BeginForm("Crear", "Mantenimiento", FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.Id_DetalleMtto)
-                @Html.HiddenFor(m => m.EsCamioneta, new { htmlAttributes = new { esCamioneta = "esCamioneta" } })
-                @Html.HiddenFor(m => m.EsPipa, new { esPipa = "esPipa" })
-                @Html.HiddenFor(m => m.EsUtilitario, new { esUtilitario = "esUtilitario" })
+                
+                <input type="text" hidden="hidden" name="esCamioneta" id="esCamioneta"/>
+                <input type="text" hidden="hidden" name="esPipa" id="esPipa" />
+                <input type="text" hidden="hidden" name="esUtilitario" id="esUtilitario" />
+         
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
@@ -70,7 +72,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <b>Vehiculo</b>
+                                        <b>Vehiculo *</b>
                                         @Html.DevExpress().ComboBox(settings =>
                                    {
                                        settings.Name = "id_vehiculo";
@@ -81,9 +83,6 @@
                                        settings.Properties.TextField = "Descripcion";
                                        settings.Properties.ValueField = "IdEquipoTransporte";
                                        settings.Properties.ValueType = typeof(int);
-                                       //settings.Properties.Columns.Add("EsCamioneta");
-                                       //settings.Properties.Columns.Add("EsPipa");
-                                       //settings.Properties.Columns.Add("EsUtilitario");
                                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
                                        settings.Properties.TextFormatString = "{0} {1} {2}";
                                        settings.CustomJSProperties = (sender, e) =>
@@ -125,7 +124,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row clearfix">
                                 <div class="col-md-5">
                                     <div class="form-group">
@@ -145,9 +143,7 @@
                                     <b></b>
                                     <div class="form-group">
                                         @if (ViewBag.EsEdicion == null)
-                {
-
-                                            @*<input value="Crear" type="submit" class="btn btn-primary btn-icon btn-icon-mini btn-round" />*@
+                                        {
                                             <button id="BtnCrear" formaction=@Url.Action("Crear") class="btn btn-primary btn-icon  btn-icon-mini btn-round">
                                                 <i class="zmdi zmdi-plus"></i>
                                             </button>
