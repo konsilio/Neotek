@@ -36,26 +36,16 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = TransporteServicio.RegistrarMantenimiento(model, tkn);
-            if (respuesta.Exito)
-                return RedirectToAction("Index");
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Index");
-            }
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Index");
         }
         public ActionResult Eliminar(int? id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = TransporteServicio.EliminarMantenimiento(new MantenimientoDetalleModel { Id_DetalleMtto = id ?? 0 }, tkn);
-            if (respuesta.Exito)
-                return RedirectToAction("Index");
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Index");
-            }
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Index");
         }
         public ActionResult Modificar(int? id, MantenimientoDetalleModel model = null)
         {

@@ -12,11 +12,27 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
-
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+<script type="text/javascript">
+    var mensaje = '@ViewBag.Msj';
+    if (mensaje != '') {
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+    }
+    function OnSelectedIndexChanged(s, e) {
+        var item = Id_Vehiculo.cphidenVehiculos[Id_Vehiculo.GetSelectedIndex()].split("|")
+        $("#esCamioneta").val(item[0])
+        $("#esPipa").val(item[1])
+        $("#esUtilitario").val(item[2])
+    }
+</script>
 <body>
     @using (Html.BeginForm("Crear", "RecargaCombustibles", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.Id_DetalleRecargaComb)
+        <input type="text" hidden="hidden" name="esCamioneta" id="esCamioneta" />
+        <input type="text" hidden="hidden" name="esPipa" id="esPipa" />
+        <input type="text" hidden="hidden" name="esUtilitario" id="esUtilitario" />
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -40,30 +56,43 @@
                                     <div class="form-group">
                                         <strong>Vehiculo *</strong>
                                         @Html.DevExpress().ComboBox(settings =>
-                                   {
-                                       settings.Name = "Id_Vehiculo";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.SelectedIndex = 0;
-                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.TextField = "Descripcion";
-                                       settings.Properties.ValueField = "IdEquipoTransporte";
-                                       settings.Theme = "Material";
-                                   }).BindList(ViewBag.Vehiculos).GetHtml()
-                                        
+                                     {
+                                         settings.Name = "Id_Vehiculo";
+                                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                         settings.SelectedIndex = 0;
+                                         settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                         settings.Properties.TextField = "Descripcion";
+                                         settings.Properties.ValueField = "IdEquipoTransporte";
+                                         settings.Properties.ValueType = typeof(int);                                
+                                         settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
+                                         settings.Properties.TextFormatString = "{0} {1} {2}";
+                                         settings.CustomJSProperties = (sender, e) =>
+                                         {
+                                             System.Collections.ArrayList list = new System.Collections.ArrayList();
+                                             MVCxComboBox comb = sender as MVCxComboBox;
+                                             foreach (ListEditItem item in comb.Items)
+                                             {
+                                                 list.Add(item.GetValue("EsCamioneta") + "|" + item.GetValue("EsPipa") + "|" + item.GetValue("EsUtilitario"));
+                                             }
+                                             e.Properties["cphidenVehiculos"] = list;
+                                         };
+                                     }).BindList(ViewBag.Vehiculos).Bind(Model.Id_Vehiculo).GetHtml()
                                     </div>
                                     @Html.ValidationMessageFor(m => m.Id_Vehiculo, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <strong>Kilometraje Actual *</strong>
-                                        @Html.LabelFor(m => m.Chofer) 00
-                                     </div>
+                                        <strong>Chofer</strong>
+                                        <div>
+                                            @Html.LabelFor(m => m.Chofer, Model.Chofer)
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <strong>Kilometraje Actual *</strong>
-                                        @Html.TextBoxFor(m => m.KilometrajeActual , Model.KilometrajeActual.ToString(), new { @class = "form-control number" })
+                                        @Html.TextBoxFor(m => m.KilometrajeActual, Model.KilometrajeActual.ToString(), new { @class = "form-control number" })
                                         @Html.ValidationMessageFor(m => m.KilometrajeActual, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -87,15 +116,15 @@
                                     <div class="form-group">
                                         <strong>Tipo de combustible *</strong>
                                         @Html.DevExpress().ComboBox(settings =>
-                                   {
-                                       settings.Name = "IdTipoCombustible";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.SelectedIndex = 0;
-                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.TextField = "Descripcion";
-                                       settings.Properties.ValueField = "Id_Combustible";
-                                   }).BindList(ViewBag.Combustibles).Bind(Model.IdTipoCombustible).GetHtml()
+                                       {
+                                           settings.Name = "IdTipoCombustible";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           settings.SelectedIndex = 0;
+                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                           settings.Properties.TextField = "Descripcion";
+                                           settings.Properties.ValueField = "Id_Combustible";
+                                       }).BindList(ViewBag.Combustibles).Bind(Model.IdTipoCombustible).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdTipoCombustible, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -103,34 +132,34 @@
                                     <div class="form-group">
                                         <strong>Fecha de Mantenimiento *</strong>
                                         @Html.DevExpress().DateEdit(settings =>
-                                   {
-                                       settings.Name = "FechaRecarga";
-                                       settings.Properties.UseMaskBehavior = true;
-                                       settings.Properties.EditFormat = EditFormat.Custom;
-                                       settings.Properties.EditFormatString = "dd/MMMM/yyyy";
-                                       settings.Properties.DisplayFormatString = "dd MMMM, yyyy";
-                                       settings.Date = DateTime.Now;
-                                       //settings.PopupCalendarOwnerName = "FechaRecarga";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                   }).Bind(Model.FechaRecarga).GetHtml()
+                                        {
+                                            settings.Name = "FechaRecarga";
+                                            settings.Properties.UseMaskBehavior = true;
+                                            settings.Properties.EditFormat = EditFormat.Custom;
+                                            settings.Properties.EditFormatString = "dd/MMMM/yyyy";
+                                            settings.Properties.DisplayFormatString = "dd MMMM, yyyy";
+                                            settings.Date = DateTime.Now;
+                                            //settings.PopupCalendarOwnerName = "FechaRecarga";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                        }).Bind(Model.FechaRecarga).GetHtml()
                                         @Html.ValidationMessageFor(m => m.FechaRecarga, "", new { @class = "alert-danger" })
-                                    </div>                                   
+                                    </div>
                                 </div>
                                 <div class="col-md-3">
                                     <strong></strong>
                                     <div class="form-group">
                                         @if (ViewBag.EsEdicion == null)
                                         {
-                                        <button btn id="BtnCrear" formaction="Crear" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
-                                            <i class="zmdi zmdi-plus"></i>
-                                        </button>
+                                            <button id="BtnCrear" formaction=@Url.Action("Crear") class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                <i class="zmdi zmdi-plus"></i>
+                                            </button>
                                         }
                                         else
                                         {
-                                        <button btn id="btnUpDate" formaction="Modificar" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
-                                            <i class="zmdi zmdi-swap"></i>
-                                        </button>
+                                            <button id="btnUpDate" formaction=@Url.Action("Modificar") class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                <i class="zmdi zmdi-swap"></i>
+                                            </button>
                                         }
                                     </div>
                                 </div>
@@ -171,10 +200,10 @@
                                             @foreach (var mant in ViewBag.Recargas)
                                             {
                                                 <tr>
-                                                    <td>mant.Id_DetalleRecargaComb</td>
-                                                    <td>mant.Vehiculo</td>
-                                                    <td>mant.Chofer</td>
-                                                    <td>mant.FechaMtto</td>
+                                                    <td>@mant.Id_DetalleRecargaComb</td>
+                                                    <td>@mant.Vehiculo</td>
+                                                    <td>@mant.Chofer</td>
+                                                    <td>@mant.FechaRecarga</td>
                                                     <td>
                                                         <a href="@Url.Action("Eliminar", "RecargaCombustibles" , new { Id= mant.Id_DetalleRecargaComb })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">delete</i>

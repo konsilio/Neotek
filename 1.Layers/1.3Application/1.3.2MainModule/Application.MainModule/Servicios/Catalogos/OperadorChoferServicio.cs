@@ -38,7 +38,6 @@ namespace Application.MainModule.Servicios.Catalogos
                 puntoVenta = unidad.PuntosVenta.FirstOrDefault();
             else
                 puntoVenta = PuntoVentaServicio.Obtener(unidad);
-
             if (puntoVenta != null)
             {
                 if (puntoVenta.OperadorChofer != null)
@@ -46,14 +45,12 @@ namespace Application.MainModule.Servicios.Catalogos
                 else
                     return Obtener(puntoVenta.IdOperadorChofer);
             }
-
             return null;
         }
 
         public static string ObtenerNombreCompleto(UnidadAlmacenGas unidad)
         {
             var operador = Obtener(unidad);
-
             return operador != null ? UsuarioServicio.ObtenerNombreCompleto(operador) : "Nombre no disponible";
         }
     }

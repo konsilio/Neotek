@@ -69,7 +69,7 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, new RecargaCombustible().Crear(_model));
         }
-        [Route("eliminar/recargacombustible/{id}")]
+        [Route("eliminar/recargacombustible")]
         public HttpResponseMessage PutEliminaRecargaCombustible(RecargaCombustibleDTO _model)
         {
             return RespuestaHttp.crearRespuesta(new RecargaCombustible().Eliminar(_model), Request);
