@@ -15,22 +15,18 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new OperadorChoferDataAccess().Buscar(idOperadorChofer);
         }
-
         public static OperadorChofer ObtenerPorUsuario(int idUsuario)
         {
             return new OperadorChoferDataAccess().BuscarPorUsuario(idUsuario);
         }
-
         public static List<OperadorChofer> ObtenerPorEmpresa(short idEmpresa)
         {
             return new OperadorChoferDataAccess().BuscarTodos(idEmpresa);
         }
-
         public static OperadorChofer ObtenerPorUsuarioAplicacion()
         {
             return new OperadorChoferDataAccess().BuscarPorUsuario(TokenServicio.ObtenerIdUsuario());
         }
-
         public static OperadorChofer Obtener(UnidadAlmacenGas unidad)
         {
             PuntoVenta puntoVenta;
@@ -47,7 +43,6 @@ namespace Application.MainModule.Servicios.Catalogos
             }
             return null;
         }
-
         public static string ObtenerNombreCompleto(UnidadAlmacenGas unidad)
         {
             var operador = Obtener(unidad);
