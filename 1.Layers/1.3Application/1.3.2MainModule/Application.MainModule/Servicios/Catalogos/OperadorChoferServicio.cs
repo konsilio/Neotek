@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
@@ -47,6 +48,30 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             var operador = Obtener(unidad);
             return operador != null ? UsuarioServicio.ObtenerNombreCompleto(operador) : "Nombre no disponible";
+        }
+        public static string ObtenerNombreCompleto(DetalleRecargaCombustible dto)
+        {
+
+            UnidadAlmacenGas unidad = new UnidadAlmacenGas();
+            if (dto.EsCamioneta)
+                unidad = AlmacenGasServicio.ObtenerPorCamioneta(dto.Id_Vehiculo);
+            if (dto.EsPipa)
+                unidad = AlmacenGasServicio.ObtenerPorPipa(dto.Id_Vehiculo);
+            if (!dto.EsUtilitario)
+            {
+                if (unidad != null)
+                {
+                    var operador = Obtener(unidad);
+                    return operador != null ? UsuarioServicio.ObtenerNombreCompleto(operador) : "Nombre no disponible";
+                }
+                else
+                    return "Vehiculo no asignado";
+            }
+            else
+            {
+                var operador = Obtener(AsignacionUtilitarioServicio.BuscarPorUtilitario(dto.Id_Vehiculo).IdChoferOperador);
+                return operador != null ? UsuarioServicio.ObtenerNombreCompleto(operador) : "Nombre no disponible";
+            }
         }
     }
 }

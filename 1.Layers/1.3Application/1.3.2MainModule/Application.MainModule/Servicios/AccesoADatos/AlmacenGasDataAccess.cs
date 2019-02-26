@@ -911,6 +911,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 && x.Activo
             );
         }
+        public UnidadAlmacenGas BuscarAlmacenPorPipa(int id)
+        {
+            return uow.Repository<UnidadAlmacenGas>().GetSingle(
+                x => x.IdPipa.Equals(id));
+        }
+        public UnidadAlmacenGas BuscarAlmacenPorCamioneta(int id)
+        {
+            return uow.Repository<UnidadAlmacenGas>().GetSingle(
+                x => x.IdCamioneta.Equals(id));
+        }
         public UnidadAlmacenGas BuscarAlmacenPrincipal(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().GetSingle(

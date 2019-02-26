@@ -17,8 +17,9 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CUtilitario()
         {
-            this.EquipoTransporte = new HashSet<EquipoTransporte>();
             this.AsignacionUtilitarios = new HashSet<AsignacionUtilitarios>();
+            this.CDetalleEquipoTransporte = new HashSet<CDetalleEquipoTransporte>();
+            this.CCentroCosto = new HashSet<CentroCosto>();
         }
     
         public int IdUtilitario { get; set; }
@@ -30,8 +31,10 @@ namespace Sagas.MainModule.Entidades
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EquipoTransporte> EquipoTransporte { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AsignacionUtilitarios> AsignacionUtilitarios { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CDetalleEquipoTransporte> CDetalleEquipoTransporte { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CentroCosto> CCentroCosto { get; set; }
     }
 }

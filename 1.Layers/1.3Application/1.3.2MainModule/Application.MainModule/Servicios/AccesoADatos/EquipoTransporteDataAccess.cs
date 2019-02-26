@@ -140,25 +140,24 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     return null;
             }
         }
-        public List<EquipoTransporte> BuscarEquipoTransporte()
+        public List<CDetalleEquipoTransporte> BuscarEquipoTransporte()
         {
-            return uow.Repository<EquipoTransporte>().Get(x => x.Activo).ToList();
+            return uow.Repository<CDetalleEquipoTransporte>().Get().ToList();
         }
-        public List<EquipoTransporte> BuscarEquipoTransporte(short idEmpresa)
+        public List<CDetalleEquipoTransporte> BuscarEquipoTransporte(short idEmpresa)
         {
-            return uow.Repository<EquipoTransporte>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                            && x.Activo).ToList();
+            return uow.Repository<CDetalleEquipoTransporte>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
         }
-        public RespuestaDto Insertar(EquipoTransporte _cc)
+        public RespuestaDto Insertar(CDetalleEquipoTransporte _cc)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<EquipoTransporte>().Insert(_cc);
+                    uow.Repository<CDetalleEquipoTransporte>().Insert(_cc);
                     uow.SaveChanges();
-                    _respuesta.Id = _cc.IdEquipoTransporte;
+                    _respuesta.Id = _cc.IdEquipoTransporteDetalle;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
@@ -173,20 +172,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public RespuestaDto Actualizar(EquipoTransporte _pro)
+        public RespuestaDto Actualizar(CDetalleEquipoTransporte _pro)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.EquipoTransporte>().Update(_pro);
-                    foreach (var item in _pro.DetalleEquipoTransporte)
-                    {
-                        uow.Repository<Sagas.MainModule.Entidades.CDetalleEquipoTransporte>().Update(item);
-                    }
+                    uow.Repository<CDetalleEquipoTransporte>().Update(_pro);                 
                     uow.SaveChanges();
-                    _respuesta.Id = _pro.IdEquipoTransporte;
+                    _respuesta.Id = _pro.IdEquipoTransporteDetalle;
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;
                     _respuesta.ModeloValido = true;
@@ -201,25 +196,53 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public List<EquipoTransporte> BuscarTodos(int IdEquipoTransporte)
+        
+        public RespuestaDto Actualizar(CDetalleEquipoTransporte _pro, CDetalleEquipoTransporte Acturalizar)
         {
-            return uow.Repository<EquipoTransporte>().Get(x => x.IdEquipoTransporte.Equals(IdEquipoTransporte)
-                                                        )
-                                                         .ToList();
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    if (Acturalizar.CUtilitario != null)
+                        uow.Repository<CUtilitario>().Update(Acturalizar.CUtilitario);
+                    if (Acturalizar.CCamioneta != null)
+                        uow.Repository<Camioneta>().Update(Acturalizar.CCamioneta);
+                    if (Acturalizar.CPipa != null)
+                        uow.Repository<Pipa>().Update(Acturalizar.CPipa);
+
+                    uow.Repository<CDetalleEquipoTransporte>().Update(_pro);
+                    uow.SaveChanges();
+                    _respuesta.Id = _pro.IdEquipoTransporteDetalle;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del equipo de transporte");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }       
+        public List<CDetalleEquipoTransporte> BuscarTodos(int IdEquipoTransporte)
+        {
+            return uow.Repository<CDetalleEquipoTransporte>().Get(x => x.IdEquipoTransporteDetalle.Equals(IdEquipoTransporte)).ToList();
         }
-        public List<EquipoTransporte> Buscar(short idEmpresa)
+        public List<CDetalleEquipoTransporte> Buscar(short idEmpresa)
         {
-            return uow.Repository<EquipoTransporte>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                        && x.Activo)
-                                                         .ToList();
+            return uow.Repository<CDetalleEquipoTransporte>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
         }
-        public EquipoTransporte Buscar(int IdEquipoTransporte)
+        public CDetalleEquipoTransporte Buscar(int IdEquipoTransporte)
         {
-            return uow.Repository<EquipoTransporte>().GetSingle(x => x.IdEquipoTransporte.Equals(IdEquipoTransporte));
+            return uow.Repository<CDetalleEquipoTransporte>().GetSingle(x => x.IdEquipoTransporteDetalle.Equals(IdEquipoTransporte));
         }
         public CDetalleEquipoTransporte BuscarDetalle(int IdEquipoTransporte)
         {
-            return uow.Repository<CDetalleEquipoTransporte>().GetSingle(x => x.IdEquipoTransporte.Equals(IdEquipoTransporte));
+            return uow.Repository<CDetalleEquipoTransporte>().GetSingle(x => x.IdEquipoTransporteDetalle.Equals(IdEquipoTransporte));
         }
     }
 }

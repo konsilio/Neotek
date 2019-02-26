@@ -71,8 +71,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public AsignacionUtilitarios Obtener(int IdP)
         {
             return uow.Repository<AsignacionUtilitarios>().GetSingle(
-                x => x.IdAsignacionUtilitario.Equals(IdP) && x.Activo
-                );
+                x => x.IdAsignacionUtilitario.Equals(IdP) && x.Activo);
+        }
+        public AsignacionUtilitarios ObtenerPorUtilitario(int id)
+        {
+            return uow.Repository<AsignacionUtilitarios>().GetSingle(
+                x => x.IdUtilitario.Equals(id) && x.Activo);
         }
         public AsignacionUtilitarios Obtener(TransporteDTO dto)
         {

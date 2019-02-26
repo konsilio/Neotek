@@ -366,6 +366,14 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarUnidadAlamcenGas(idCAlmacenGas);
         }
+        public static UnidadAlmacenGas ObtenerPorPipa(int id)
+        {
+            return new AlmacenGasDataAccess().BuscarAlmacenPorPipa(id);
+        }
+        public static UnidadAlmacenGas ObtenerPorCamioneta(int id)
+        {
+            return new AlmacenGasDataAccess().BuscarAlmacenPorCamioneta(id);
+        }
         public static UnidadAlmacenGas ObtenerUnidadAlamcenGasActualizaAlterno(AlmacenGasDescarga descarga, Empresa empresa)
         {
             if (descarga.TanquePrestado ?? false)

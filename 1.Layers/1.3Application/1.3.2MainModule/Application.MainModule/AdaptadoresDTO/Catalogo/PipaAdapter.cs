@@ -23,7 +23,18 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaRegistro = DateTime.Now,
             };
         }
-
+        public static Pipa FromEntity(Pipa ec)
+        {
+            return new Pipa()
+            {
+                //IdCamioneta = ec.IdCamioneta,
+                IdEmpresa = ec.IdEmpresa,
+                Numero = ec.Numero,
+                Nombre = ec.Nombre,
+                Activo = ec.Activo,
+                FechaRegistro = DateTime.Now,
+            };
+        }
         public static string getNum(string cadena)
         {
             string resultString = Regex.Match(cadena, @"\d+").Value;

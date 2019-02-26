@@ -24,6 +24,18 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaRegistro = DateTime.Now,
             };
         }
+        public static Camioneta FromEntity(Camioneta ec)
+        {
+            return new Camioneta()
+            {
+                IdCamioneta = ec.IdCamioneta,
+                IdEmpresa = ec.IdEmpresa,
+                Numero = ec.Numero,
+                Nombre = ec.Nombre,
+                Activo = true,
+                FechaRegistro = DateTime.Now,
+            };
+        }
         public static Camioneta FromDTO(EquipoTransporteDTO ec)
         {
             return new Camioneta()

@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Seguridad;
-using Application.MainModule.DTOs.EquipoTransporte;
+using MVC.Presentacion.Models.Transporte;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -37,6 +37,26 @@ namespace Application.MainModule.Servicios.Catalogos
                 return new EquipoTransporteDataAccess().BuscarEstacion(uAG).Nombre;
             return null;
         }
+        public static DateTime ObtenerFechaRegistro(CDetalleEquipoTransporte entidad)
+        {
+            if (entidad.IdCamioneta != null)
+                return entidad.CCamioneta.FechaRegistro;
+            if (entidad.IdPipa != null)
+                return entidad.CPipa.FechaRegistro;
+            if (entidad.IdUtilitario != null)
+                return entidad.CUtilitario.FechaRegistro;
+            return DateTime.MinValue;
+        }
+        public static bool ObtenerActivo(CDetalleEquipoTransporte entidad)
+        {
+            if (entidad.IdCamioneta != null)
+                return entidad.CCamioneta.Activo;
+            if (entidad.IdPipa != null)
+                return entidad.CPipa.Activo;
+            if (entidad.IdUtilitario != null)
+                return entidad.CUtilitario.Activo;
+            return false;
+        }
 
         public static string ObtenerNumero(short idEmpresa, short idCAlmacenGas)
         {
@@ -45,30 +65,15 @@ namespace Application.MainModule.Servicios.Catalogos
 
             return null;
         }
-        public static string ObtenerNombre(EquipoTransporte qt)
+        public static string ObtenerNombre(CDetalleEquipoTransporte entidad)
         {
-            if (qt.IdCamioneta != null)
-            {
-                if (qt.Camionetas != null)
-                    return qt.Camionetas.Nombre + " " + qt.Camionetas.Numero;
-                else
-                    return new EquipoTransporteDataAccess().BuscarCamioneta(qt.IdCamioneta.Value).Nombre + " " + qt.Camionetas.Numero;
-            }
-            if (qt.IdPipa != null)
-            {
-                if (qt.Pipas != null)
-                    return qt.Pipas.Nombre + " " + qt.Pipas.Numero;
-                else
-                    return new EquipoTransporteDataAccess().BuscarPipa(qt.IdPipa.Value).Nombre + " " + qt.Pipas.Numero;
-            }
-
-            if (qt.IdVehiculoUtilitario != null)
-            {
-                if (qt.Utilitario != null)
-                    return qt.Utilitario.Nombre;
-                else
-                    return new EquipoTransporteDataAccess().BuscarUtilitario(qt.IdVehiculoUtilitario.Value).Nombre;
-            }
+            if (entidad.IdCamioneta != null)
+                return entidad.CCamioneta.Nombre;
+            if (entidad.IdPipa != null)
+                return entidad.CPipa.Nombre;
+            if (entidad.IdUtilitario != null)
+                return entidad.CUtilitario.Nombre;
+     
             return null;
 
         }
@@ -82,11 +87,11 @@ namespace Application.MainModule.Servicios.Catalogos
                 return new EquipoTransporteDataAccess().BuscarUtilitario(qt.Id_Vehiculo).Nombre;
             return null;
         }
-        public static List<EquipoTransporte> BuscarEquipoTransporte()
+        public static List<CDetalleEquipoTransporte> BuscarEquipoTransporte()
         {
             return new EquipoTransporteDataAccess().BuscarEquipoTransporte();
         }
-        public static List<EquipoTransporte> BuscarEquipoTransporte(short IdEmpresa)
+        public static List<CDetalleEquipoTransporte> BuscarEquipoTransporte(short IdEmpresa)
         {
             return new EquipoTransporteDataAccess().BuscarEquipoTransporte(IdEmpresa);
         }
@@ -105,14 +110,18 @@ namespace Application.MainModule.Servicios.Catalogos
             //}
             return parqueVehicular;
         }
-        public static RespuestaDto Alta(EquipoTransporte _VehiculoDto)
+        public static RespuestaDto Alta(CDetalleEquipoTransporte _VehiculoDto)
         {
             return new EquipoTransporteDataAccess().Insertar(_VehiculoDto);
         }
-        public static RespuestaDto Modificar(EquipoTransporte _VehiculoDto)
+        public static RespuestaDto Modificar(CDetalleEquipoTransporte _VehiculoDto)
         {
             return new EquipoTransporteDataAccess().Actualizar(_VehiculoDto);
         }
+        public static RespuestaDto Modificar(CDetalleEquipoTransporte _VehiculoDto, CDetalleEquipoTransporte vehiculo)
+        {
+            return new EquipoTransporteDataAccess().Actualizar(_VehiculoDto, vehiculo);
+        } 
         public static PuntoVenta GenerarAsignacion(UnidadAlmacenGas almacen, TransporteDTO transporte)
         {
             return new PuntoVenta()
@@ -122,6 +131,22 @@ namespace Application.MainModule.Servicios.Catalogos
                 IdOperadorChofer = transporte.IdChofer,
                 Activo = true,
             };
+        }
+        public static RespuestaDto BorrarVehiculoPorEdicion(CDetalleEquipoTransporte ec)
+        {
+            if (ec.IdPipa != null)
+            {
+                return PipaServicio.Borrar(ec.IdPipa.Value);
+            }
+            else if (ec.IdUtilitario != null)
+            {
+                return VehiculoUtilitarioServicio.Borrar(ec.IdUtilitario.Value);
+            }
+            else if (ec.IdCamioneta != null)
+            {
+                return CamionetaServicio.Borrar(ec.IdCamioneta.Value);
+            }
+            return new RespuestaDto();
         }
         public static AsignacionUtilitarios GenerarAsignacion(TransporteDTO transporte)
         {
@@ -145,6 +170,13 @@ namespace Application.MainModule.Servicios.Catalogos
                 Mensaje = mensaje,
                 MensajesError = new List<string>() { mensaje },
             };
+        }
+        public static byte ObtenerTipo(CDetalleEquipoTransporte ec)
+        {           
+            if (ec.IdCamioneta != null) { return TipoUnidadEqTransporteEnum.Camioneta; }
+            if (ec.IdPipa != null) { return TipoUnidadEqTransporteEnum.Pipa; }
+            if (ec.IdUtilitario != null) { return TipoUnidadEqTransporteEnum.Utilitario; }
+            return 0;
         }
     }
 }

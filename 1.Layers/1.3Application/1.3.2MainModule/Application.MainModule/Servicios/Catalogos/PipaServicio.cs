@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Respuesta;
+﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Seguridad;
 using Exceptions.MainModule.Validaciones;
@@ -21,6 +22,11 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PipaDataAccess().Actualizar(entidad);
         }
+        public static RespuestaDto Borrar(int id)
+        {
+            var pip = Obtener(id);          
+            return new PipaDataAccess().Borrar(PipaAdapter.FromEntity(pip));
+        }
         public static List<Pipa> Obtener()
         {
             var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
@@ -37,6 +43,10 @@ namespace Application.MainModule.Servicios.Catalogos
         public static Pipa Obtener(short idEmpresa, string nombre, string numero)
         {
             return new PipaDataAccess().ObtenerPipa(idEmpresa, nombre, numero);
+        }
+        public static Pipa Obtener(int id)
+        {
+            return new PipaDataAccess().ObtenerPipa(id);
         }
         public static RespuestaDto NoExiste()
         {

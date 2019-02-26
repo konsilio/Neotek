@@ -453,7 +453,6 @@ namespace Application.MainModule.Servicios.Ventas
                 }
                 ActualizarSaldos(listMov, "", CurrentSaldo);
             }
-
         }
         public static List<VentaPuntoDeVenta> ObtenerVentasPuntosVentaNoProc()
         {

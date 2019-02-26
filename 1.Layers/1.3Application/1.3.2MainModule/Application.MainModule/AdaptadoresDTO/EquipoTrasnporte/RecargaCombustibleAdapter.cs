@@ -18,6 +18,7 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporte
                 Id_DetalleRecargaComb = entidad.Id_DetalleRecargaComb,
                 Id_Vehiculo = entidad.Id_Vehiculo,
                 Vehiculo = EquipoTransporteServicio.ObtenerNombre(entidad),
+                Chofer = OperadorChoferServicio.ObtenerNombreCompleto(entidad),
                 EsCamioneta = entidad.EsCamioneta,
                 EsPipa = entidad.EsPipa,
                 EsUtilitario = entidad.EsUtilitario,
