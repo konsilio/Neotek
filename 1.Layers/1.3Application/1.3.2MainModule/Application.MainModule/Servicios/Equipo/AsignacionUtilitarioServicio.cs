@@ -29,6 +29,10 @@ namespace Application.MainModule.Servicios
         {
             return new AsigancionUtilitariosDataAccess().Obtener(id);
         }
+        public static AsignacionUtilitarios BuscarPorUtilitario(int id)
+        {
+            return new AsigancionUtilitariosDataAccess().ObtenerPorUtilitario(id);
+        }
         public static AsignacionUtilitarios Buscar(TransporteDTO dto)
         {
             return new AsigancionUtilitariosDataAccess().Obtener(dto);

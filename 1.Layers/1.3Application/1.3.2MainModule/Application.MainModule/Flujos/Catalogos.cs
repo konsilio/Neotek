@@ -904,13 +904,12 @@ namespace Application.MainModule.Flujos
 
             return EquipoTransporteServicio.Obtener(idVehiculo);
         }
-        public RespuestaDto Registra(EquipoTransporteDTO vehiculoDto)
+        public RespuestaDto RegistraEquipoTransporte(EquipoTransporteDTO vehiculoDto)
         {
             var resp = PermisosServicio.PuedeRegistrarPedido();
             if (!resp.Exito) return resp;
 
             var vehiculo = EquipoTransporteAdapter.FromDTO(vehiculoDto);
-            vehiculo.FechaRegistro = DateTime.Now;
             if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
                 vehiculoDto.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
 
@@ -930,42 +929,130 @@ namespace Application.MainModule.Flujos
             {
                 var utilitario = VehiculoUtilitarioAdapter.FromDTO(vehiculoDto);
                 var vu = VehiculoUtilitarioServicio.Registrar(utilitario);
-                vehiculo.IdVehiculoUtilitario = vu.Id;
+                vehiculo.IdUtilitario = vu.Id;
             }
 
             return EquipoTransporteServicio.Alta(vehiculo);
         }
 
-        public RespuestaDto Modifica(EquipoTransporteDTO vehiculoDto)
+        public RespuestaDto ModificaEquipoTrasnporte(EquipoTransporteDTO vehiculoDto)
         {
             var resp = PermisosServicio.PuedeModificarPedido();
             if (!resp.Exito) return resp;
 
             var vehiculo = new EquipoTransporteDataAccess().Buscar(vehiculoDto.IdEquipoTransporte);//EquipoTransporteServicio.Obtener(vehiculoDto.IdEquipoTransporte);
             if (vehiculo == null) return EquipoTransporteServicio.NoExiste();
-            if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Camioneta)
-            {
-                var Camioneta = CamionetaServicio.Obtener(vehiculoDto.IdEmpresa, CamionetaAdapter.getStr(vehiculoDto.Descripcion.Trim()), CamionetaAdapter.getNum(vehiculoDto.Descripcion.Trim()));
-                if (Camioneta == null) return CamionetaServicio.NoExiste();
-                vehiculoDto.IdCamioneta = Camioneta.IdCamioneta;
-            }
-            if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Pipa)
-            {
-                var Pipa = PipaServicio.Obtener(vehiculoDto.IdEmpresa, PipaAdapter.getStr(vehiculoDto.Descripcion.Trim()), PipaAdapter.getNum(vehiculoDto.Descripcion.Trim()));
-                if (Pipa == null) return PipaServicio.NoExiste();
-                vehiculoDto.IdPipa = Pipa.IdPipa;
-            }
 
+            vehiculoDto.IdPipa = null;
+            vehiculoDto.IdCamioneta= null;
+            vehiculoDto.IdVehiculoUtilitario= null;
+
+            RespuestaDto RespuestaGeneral = new RespuestaDto();
+            CDetalleEquipoTransporte editarVehiculo = new CDetalleEquipoTransporte();
+            if (vehiculoDto.IdTipoUnidad.Equals(TipoUnidadEqTransporteEnum.Camioneta))
+            {
+                if (vehiculo.IdCamioneta != null)
+                {
+                    var Camioneta = CamionetaServicio.Obtener(vehiculo.IdCamioneta.Value);
+                    if (Camioneta == null) return CamionetaServicio.NoExiste();
+
+                    var camionetaEntity = CamionetaAdapter.FromEntity(Camioneta);
+                    camionetaEntity.Nombre = "Camioneta No. "  +vehiculoDto.DescVehiculo;
+                    camionetaEntity.Numero = vehiculoDto.DescVehiculo;
+                    editarVehiculo.CCamioneta = camionetaEntity;
+                    vehiculoDto.IdCamioneta = Camioneta.IdCamioneta;
+
+                    var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
+                    RespuestaGeneral = EquipoTransporteServicio.Modificar(Dtovehiculo, editarVehiculo);
+                }
+                else
+                {                   
+                    var camioneta = CamionetaAdapter.FromDTO(vehiculoDto);
+                    var cam = CamionetaServicio.Registrar(camioneta);
+                    if (!cam.Exito) return cam;
+                    else
+                    {
+                        vehiculoDto.IdCamioneta = cam.Id;
+                        var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
+                        var Mod = EquipoTransporteServicio.Modificar(Dtovehiculo);
+
+                        if (Mod.Exito)                        
+                            return EquipoTransporteServicio.BorrarVehiculoPorEdicion(vehiculo);
+                        else
+                            return CamionetaServicio.Borrar(cam.Id);
+                    }     
+                }               
+            }
             if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Pipa)
             {
-                var Util = VehiculoUtilitarioServicio.Obtener(vehiculoDto.IdEmpresa, VehiculoUtilitarioAdapter.getStr(vehiculoDto.Descripcion.Trim()), VehiculoUtilitarioAdapter.getNum(vehiculoDto.Descripcion.Trim()));
-            if (Util == null) return VehiculoUtilitarioServicio.NoExiste();
-            vehiculoDto.IdVehiculoUtilitario = Util.IdUtilitario;
+                if (vehiculo.IdPipa != null)
+                {
+                    var _Pipa = PipaServicio.Obtener(vehiculo.IdPipa.Value);
+                    if (_Pipa == null) return PipaServicio.NoExiste();
+
+                    var pipaEntity = PipaAdapter.FromEntity(_Pipa);
+                    pipaEntity.Nombre = "Pipa No. " + vehiculoDto.DescVehiculo;
+                    pipaEntity.Numero = vehiculoDto.DescVehiculo;
+                    editarVehiculo.CPipa = pipaEntity;
+                    vehiculoDto.IdCamioneta = _Pipa.IdPipa;
+
+                    var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
+                    RespuestaGeneral = EquipoTransporteServicio.Modificar(Dtovehiculo, editarVehiculo);
+                }
+                else
+                {
+                    var _pipa = PipaAdapter.FromDTO(vehiculoDto);
+                    var p = PipaServicio.Registrar(_pipa);
+                    if (!p.Exito) return p;
+                    else
+                    {
+                        vehiculoDto.IdPipa = p.Id;
+                        var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
+                        var Mod = EquipoTransporteServicio.Modificar(Dtovehiculo);
+                        if (Mod.Exito)
+                            return EquipoTransporteServicio.BorrarVehiculoPorEdicion(vehiculo);
+                        else
+                            return PipaServicio.Borrar(p.Id);
+                    }
+                }
             }
-            var Dtovehiculo = EquipoTransporteAdapter.FromDto(vehiculoDto, vehiculo);
-            return EquipoTransporteServicio.Modificar(Dtovehiculo);
+            if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Utilitario)
+            {
+                if (vehiculo.IdUtilitario != null)
+                {
+                    var _utilitario = VehiculoUtilitarioServicio.Obtener(vehiculo.IdPipa.Value);
+                    if (_utilitario == null) return VehiculoUtilitarioServicio.NoExiste();
+
+                    var utilitarioEntity = VehiculoUtilitarioAdapter.FromEntity(_utilitario);
+                    utilitarioEntity.Nombre = "Utilitario No. " + vehiculoDto.DescVehiculo;
+                    utilitarioEntity.Numero = vehiculoDto.DescVehiculo;
+                    editarVehiculo.CUtilitario = utilitarioEntity;
+                    vehiculoDto.IdCamioneta = _utilitario.IdUtilitario;
+
+                    var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
+                    RespuestaGeneral = EquipoTransporteServicio.Modificar(Dtovehiculo, editarVehiculo);
+                }
+                else
+                {
+                    var utili = VehiculoUtilitarioAdapter.FromDTO(vehiculoDto);
+                    var u = VehiculoUtilitarioServicio.Registrar(utili);
+                    if (!u.Exito) return u;
+                    else
+                    {
+                        vehiculoDto.IdCamioneta = u.Id;
+                        var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
+                        var Mod = EquipoTransporteServicio.Modificar(Dtovehiculo);
+
+                        if (Mod.Exito)
+                            return EquipoTransporteServicio.BorrarVehiculoPorEdicion(vehiculo);
+                        else
+                            return VehiculoUtilitarioServicio.Borrar(u.Id);
+                    }
+                }
+            }
+            return RespuestaGeneral;
         }
-        public RespuestaDto Elimina(int id)
+        public RespuestaDto EliminaEquipoTransporte(int id)
         {
             var resp = PermisosServicio.PuedeEliminarPedido();
             if (!resp.Exito) return resp;
@@ -973,9 +1060,26 @@ namespace Application.MainModule.Flujos
             var vehiculo = new EquipoTransporteDataAccess().Buscar(id);
             if (vehiculo == null) return EquipoTransporteServicio.NoExiste();
 
-            var Dtovehiculo = EquipoTransporteAdapter.FromEntity(vehiculo);
-            Dtovehiculo.Activo = false;
-            return EquipoTransporteServicio.Modificar(Dtovehiculo);
+            RespuestaDto respuesta = new RespuestaDto();
+            if (vehiculo.CCamioneta != null)
+            {
+                var cam = CamionetaAdapter.FromEntity(vehiculo.CCamioneta);
+                cam.Activo = false;
+                respuesta = CamionetaServicio.Modificar(cam);
+            }
+            if (vehiculo.CPipa != null)
+            {
+                var pip = PipaAdapter.FromEntity(vehiculo.CPipa);
+                pip.Activo = false;
+                respuesta = PipaServicio.Modificar(pip);
+            }
+            if (vehiculo.CUtilitario != null)
+            {
+                var uti = VehiculoUtilitarioAdapter.FromEntity(vehiculo.CUtilitario);
+                uti.Activo = false;
+                respuesta = VehiculoUtilitarioServicio.Modificar(uti);
+            }
+            return respuesta;
         }
         #region Asignaciones 
         public List<TransporteDTO> BuscarAsignaciones()
@@ -1004,7 +1108,7 @@ namespace Application.MainModule.Flujos
                 var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
                 var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
                 return PuntoVentaServicio.Insertar(npv);
-            }           
+            }
         }
         public RespuestaDto EliminarAsignacion(TransporteDTO vehiculoDto)
         {
@@ -1027,14 +1131,6 @@ namespace Application.MainModule.Flujos
             }
         }
         #endregion
-         
-
-
-
-
-
-
-
         #endregion
 
         #region Tipo proveedor
@@ -1112,6 +1208,7 @@ namespace Application.MainModule.Flujos
         }
 
         #endregion
+
         #region TipoUnidad       
         public List<TipoUnidadDTO> ListaTipoUnidad()
         {

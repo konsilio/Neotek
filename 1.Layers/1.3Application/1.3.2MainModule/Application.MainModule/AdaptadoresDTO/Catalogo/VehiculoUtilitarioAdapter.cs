@@ -23,6 +23,18 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaRegistro = DateTime.Now,
             };
         }
+        public static CUtilitario FromEntity(CUtilitario ec)
+        {
+            return new CUtilitario()
+            {
+                //IdCamioneta = ec.IdCamioneta,
+                IdEmpresa = ec.IdEmpresa,
+                Numero = ec.Numero,
+                Nombre = ec.Nombre,
+                Activo = ec.Activo,
+                FechaRegistro = DateTime.Now,
+            };
+        }
 
         public static string getNum(string cadena)
         {

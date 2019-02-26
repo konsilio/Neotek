@@ -37,19 +37,19 @@ namespace DS.MainModule.Controllers
         [Route("modificar/vehiculo")]
         public HttpResponseMessage PutModificarVehiculo(EquipoTransporteDTO _model)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _eqTransporte.Modifica(_model));
+            return Request.CreateResponse(HttpStatusCode.OK, _eqTransporte.ModificaEquipoTrasnporte(_model));
         }
 
         [Route("registrar/vehiculo")]
         public HttpResponseMessage PostRegistrarVehiculo(EquipoTransporteDTO _model)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _eqTransporte.Registra(_model));
+            return Request.CreateResponse(HttpStatusCode.OK, _eqTransporte.RegistraEquipoTransporte(_model));
         }
 
         [Route("eliminar/vehiculo/{id}")]
         public HttpResponseMessage PutEliminaVehiculo(int id)
         {
-            return RespuestaHttp.crearRespuesta(_eqTransporte.Elimina(id), Request);
+            return RespuestaHttp.crearRespuesta(_eqTransporte.EliminaEquipoTransporte(id), Request);
         }
 
         #region RecargaCombustible

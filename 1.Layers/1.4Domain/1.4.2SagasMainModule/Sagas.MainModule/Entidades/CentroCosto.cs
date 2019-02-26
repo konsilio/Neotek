@@ -26,7 +26,6 @@ namespace Sagas.MainModule.Entidades
         public int IdCentroCosto { get; set; }
         public short IdEmpresa { get; set; }
         public byte IdTipoCentroCosto { get; set; }
-        public Nullable<int> IdEquipoTransporte { get; set; }
         public string Numero { get; set; }
         public string Descripcion { get; set; }
         public bool Activo { get; set; }
@@ -53,5 +52,6 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<Egreso> Egreso { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ingreso> Ingreso { get; set; }
+        public virtual CUtilitario CUtilitario { get; set; }
     }
 }

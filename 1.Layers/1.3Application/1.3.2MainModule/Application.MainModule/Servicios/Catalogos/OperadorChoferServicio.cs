@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
@@ -15,22 +16,18 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new OperadorChoferDataAccess().Buscar(idOperadorChofer);
         }
-
         public static OperadorChofer ObtenerPorUsuario(int idUsuario)
         {
             return new OperadorChoferDataAccess().BuscarPorUsuario(idUsuario);
         }
-
         public static List<OperadorChofer> ObtenerPorEmpresa(short idEmpresa)
         {
             return new OperadorChoferDataAccess().BuscarTodos(idEmpresa);
         }
-
         public static OperadorChofer ObtenerPorUsuarioAplicacion()
         {
             return new OperadorChoferDataAccess().BuscarPorUsuario(TokenServicio.ObtenerIdUsuario());
         }
-
         public static OperadorChofer Obtener(UnidadAlmacenGas unidad)
         {
             PuntoVenta puntoVenta;
@@ -47,11 +44,34 @@ namespace Application.MainModule.Servicios.Catalogos
             }
             return null;
         }
-
         public static string ObtenerNombreCompleto(UnidadAlmacenGas unidad)
         {
             var operador = Obtener(unidad);
             return operador != null ? UsuarioServicio.ObtenerNombreCompleto(operador) : "Nombre no disponible";
+        }
+        public static string ObtenerNombreCompleto(DetalleRecargaCombustible dto)
+        {
+
+            UnidadAlmacenGas unidad = new UnidadAlmacenGas();
+            if (dto.EsCamioneta)
+                unidad = AlmacenGasServicio.ObtenerPorCamioneta(dto.Id_Vehiculo);
+            if (dto.EsPipa)
+                unidad = AlmacenGasServicio.ObtenerPorPipa(dto.Id_Vehiculo);
+            if (!dto.EsUtilitario)
+            {
+                if (unidad != null)
+                {
+                    var operador = Obtener(unidad);
+                    return operador != null ? UsuarioServicio.ObtenerNombreCompleto(operador) : "Nombre no disponible";
+                }
+                else
+                    return "Vehiculo no asignado";
+            }
+            else
+            {
+                var operador = Obtener(AsignacionUtilitarioServicio.BuscarPorUtilitario(dto.Id_Vehiculo).IdChoferOperador);
+                return operador != null ? UsuarioServicio.ObtenerNombreCompleto(operador) : "Nombre no disponible";
+            }
         }
     }
 }

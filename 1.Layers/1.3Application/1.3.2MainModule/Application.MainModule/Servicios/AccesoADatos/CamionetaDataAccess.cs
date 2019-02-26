@@ -67,6 +67,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public RespuestaDto Borrar(Camioneta _pro)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Camioneta>().Delete(_pro);
+                    uow.SaveChanges();
+                    _respuesta.Id = _pro.IdCamioneta;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del punto de venta"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public Camioneta ObtenerCamioneta(int IdP)
         {
             return uow.Repository<Camioneta>().GetSingle(

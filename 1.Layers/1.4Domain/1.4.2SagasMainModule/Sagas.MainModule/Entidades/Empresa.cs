@@ -37,7 +37,6 @@ namespace Sagas.MainModule.Entidades
             this.CentrosCosto = new HashSet<CentroCosto>();
             this.CuentasContables = new HashSet<CuentaContable>();
             this.Clientes = new HashSet<Cliente>();
-            this.EquiposTransporte = new HashSet<EquipoTransporte>();
             this.PuntosVenta = new HashSet<PuntoVenta>();
             this.UnidadesAlmacenGasCilindro = new HashSet<UnidadAlmacenGasCilindro>();
             this.OperadoresChoferes = new HashSet<OperadorChofer>();
@@ -47,6 +46,7 @@ namespace Sagas.MainModule.Entidades
             this.CMantenimiento = new HashSet<CMantenimiento>();
             this.CUtilitario = new HashSet<CUtilitario>();
             this.AsignacionUtilitarios = new HashSet<AsignacionUtilitarios>();
+            this.CDetalleEquipoTransporte = new HashSet<CDetalleEquipoTransporte>();
         }
     
         public short IdEmpresa { get; set; }
@@ -140,8 +140,6 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cliente> Clientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EquipoTransporte> EquiposTransporte { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PuntoVenta> PuntosVenta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnidadAlmacenGasCilindro> UnidadesAlmacenGasCilindro { get; set; }
@@ -159,5 +157,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<CUtilitario> CUtilitario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AsignacionUtilitarios> AsignacionUtilitarios { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CDetalleEquipoTransporte> CDetalleEquipoTransporte { get; set; }
     }
 }

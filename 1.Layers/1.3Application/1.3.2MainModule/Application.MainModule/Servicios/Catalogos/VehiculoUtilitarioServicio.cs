@@ -21,6 +21,11 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new VehiculoUtilitarioDataAccess().Actualizar(entidad);
         }
+        public static RespuestaDto Borrar(int id)
+        {
+            var Util = Obtener(id);
+            return new VehiculoUtilitarioDataAccess().Borrar(Util);
+        }
         public static List<CUtilitario> Obtener()
         {
             var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());

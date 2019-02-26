@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Respuesta;
+﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Seguridad;
 using Exceptions.MainModule.Validaciones;
@@ -21,6 +22,12 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new CamionetaDataAccess().Actualizar(entidad);
         }
+        public static RespuestaDto Borrar(int id)
+        {
+            var entidad = Obtener(id);
+            entidad.Activo = false;
+            return new CamionetaDataAccess().Actualizar(CamionetaAdapter.FromEntity(entidad));
+        }
         public static List<Camioneta> Obtener()
         {
             var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
@@ -37,6 +44,10 @@ namespace Application.MainModule.Servicios.Catalogos
         public static Camioneta Obtener(short idEmpresa, string nombre, string numero)
         {
             return new CamionetaDataAccess().ObtenerCamioneta(idEmpresa, nombre, numero);
+        }
+        public static Camioneta Obtener(int id)
+        {
+            return new CamionetaDataAccess().ObtenerCamioneta(id);
         }
         public static RespuestaDto NoExiste()
         {
