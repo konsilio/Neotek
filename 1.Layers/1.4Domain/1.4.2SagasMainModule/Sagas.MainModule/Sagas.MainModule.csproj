@@ -337,6 +337,7 @@
     <Compile Include="ObjetosValor\Enum\RequisicionEstatusEnum.cs" />
     <Compile Include="ObjetosValor\Enum\OrdenCompraEstatusEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoEventoEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoMedidorGasEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoMovimientoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />

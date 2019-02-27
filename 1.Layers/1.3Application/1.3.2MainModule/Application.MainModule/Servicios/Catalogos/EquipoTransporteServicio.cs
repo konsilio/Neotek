@@ -47,6 +47,16 @@ namespace Application.MainModule.Servicios.Catalogos
                 return entidad.CUtilitario.FechaRegistro;
             return DateTime.MinValue;
         }
+        public static bool ObtenerForaneo(CDetalleEquipoTransporte entidad)
+        {
+            if (entidad.IdCamioneta != null)
+                return entidad.CCamioneta.EsForaneo;
+            if (entidad.IdPipa != null)
+                return entidad.CPipa.EsForaneo;
+            if (entidad.IdUtilitario != null)
+                return entidad.CUtilitario.EsForaneo;
+            return false;
+        }
         public static bool ObtenerActivo(CDetalleEquipoTransporte entidad)
         {
             if (entidad.IdCamioneta != null)
@@ -72,10 +82,8 @@ namespace Application.MainModule.Servicios.Catalogos
             if (entidad.IdPipa != null)
                 return entidad.CPipa.Nombre;
             if (entidad.IdUtilitario != null)
-                return entidad.CUtilitario.Nombre;
-     
+                return entidad.CUtilitario.Nombre;     
             return null;
-
         }
         public static string ObtenerNombre(DetalleRecargaCombustible qt)
         {
@@ -177,6 +185,10 @@ namespace Application.MainModule.Servicios.Catalogos
             if (ec.IdPipa != null) { return TipoUnidadEqTransporteEnum.Pipa; }
             if (ec.IdUtilitario != null) { return TipoUnidadEqTransporteEnum.Utilitario; }
             return 0;
+        }
+        public static string ObtenerAlias(CDetalleEquipoTransporte ec)
+        {
+            return ec.Marca + " " + "Color" + " " + ec.Color;
         }
     }
 }

@@ -51,8 +51,8 @@ namespace Application.MainModule.DTOs
         [Display(Name = "Tipo de Unidad")]
         public int IdTipoUnidad { get; set; }
         public bool Activo { get; set; }
+        public bool EsForaneo { get; set; }
         public string AliasUnidad { get; set; }
-
         public int Id_DetalleEtransporte { get; set; }      
         public Nullable<bool> EsCamioneta { get; set; }
         public Nullable<bool> EsPipa { get; set; }

@@ -84,6 +84,64 @@ namespace Application.MainModule.Servicios.Almacenes
             resp = new AlmacenGasDataAccess().Insertar(unidad);
             return ObtenerUnidadAlamcenGas((short)resp.Id);
         }
+        private static UnidadAlmacenGas RegistraAlmacen(Empresa empresa, )
+        {
+            RespuestaDto resp;
+            UnidadAlmacenGas unidad;
+            List<UnidadAlmacenGas> unidades = ObtenerUnidadesAlmacenGasAlternoNoActivos(empresa);
+            if (unidades != null && unidades.Count > 0)
+            {
+                unidad = AlmacenGasAdapter.FromEntity(unidades.FirstOrDefault());
+                unidad.IdAlmacenGas = ObtenerAlmacenGasTotal(empresa).IdAlmacenGas;
+                unidad.IdCamioneta = null;
+                unidad.IdEstacionCarburacion = null;
+                unidad.IdPipa = null;
+                unidad.IdEmpresa = empresa.IdEmpresa;
+                unidad.IdTipoAlmacen = TipoUnidadAlmacenGasEnum.Fijo;
+                unidad.IdTipoMedidor = TipoMedidorGasEnum.Magnetel;
+                unidad.CantidadActualKg = 0;
+                unidad.CantidadActualLt = 0;
+                unidad.CapacidadTanqueKg = 0;
+                unidad.CapacidadTanqueLt = 0;
+                unidad.EsAlterno = true;
+                unidad.EsGeneral = true;
+                unidad.PorcentajeCalibracionPlaneada = 0;
+                unidad.Numero = string.Format(AlmacenGasConst.NombreAlmacenAlterno, descarga.NumTanquePG);
+                unidad.P5000Actual = 0;
+                unidad.PorcentajeActual = 0;
+                unidad.Activo = true;
+                unidad.FechaRegistro = DateTime.Now;
+
+                resp = new AlmacenGasDataAccess().Actualizar(unidad);
+                return ObtenerUnidadAlamcenGas((short)resp.Id);
+            }
+
+            unidad = new UnidadAlmacenGas
+            {
+                IdAlmacenGas = ObtenerAlmacenGasTotal(empresa).IdAlmacenGas,
+                IdCamioneta = null,
+                IdEstacionCarburacion = null,
+                IdPipa = null,
+                IdEmpresa = empresa.IdEmpresa,
+                IdTipoAlmacen = TipoUnidadAlmacenGasEnum.Fijo,
+                IdTipoMedidor = descarga.IdTipoMedidorTractor,
+                CantidadActualKg = 0,
+                CantidadActualLt = 0,
+                CapacidadTanqueKg = 0,
+                CapacidadTanqueLt = 0,
+                EsAlterno = false,
+                EsGeneral = true,
+                PorcentajeCalibracionPlaneada = 0,
+                Numero = string.Format(AlmacenGasConst.NombreAlmacenAlterno, descarga.NumTanquePG),
+                P5000Actual = null,
+                PorcentajeActual = 0,
+                Activo = true,
+                FechaRegistro = DateTime.Now,
+            };
+
+            resp = new AlmacenGasDataAccess().Insertar(unidad);
+            return ObtenerUnidadAlamcenGas((short)resp.Id);
+        }
 
         public static RespuestaDto ActualizarCalibracionAlmacen(UnidadAlmacenGas almacenActualizar)
         {

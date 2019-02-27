@@ -203,7 +203,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             x.IdEmpresa.Equals(idEmpresa)
             );
         }
-
         public List<AlmacenGasTomaLectura> BuscarLecturas(short idCAlmacenGas, int mes, int anio)
         {
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
@@ -215,7 +214,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                 && x.DatosProcesados.Equals(noProcesados)
                                                     ).ToList();
         }
-
         public RespuestaDto Insertar(AlmacenGasAutoConsumo _autoconsumo)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -307,7 +305,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     && x.IdOrden>0
                     );
         }
-
         public RespuestaDto Actualizar(AlmacenGas _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();

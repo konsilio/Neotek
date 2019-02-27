@@ -224,7 +224,6 @@ namespace Application.MainModule.Flujos
 
                 remaGeneral.Add(rema);
             }
-
             return remaGeneral;
         }
     }

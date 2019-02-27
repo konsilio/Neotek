@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 using Application.MainModule.Servicios.Ventas;
 using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Pedidos;
-using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios;
 using Application.MainModule.AdaptadoresDTO;
 
@@ -931,7 +930,6 @@ namespace Application.MainModule.Flujos
                 var vu = VehiculoUtilitarioServicio.Registrar(utilitario);
                 vehiculo.IdUtilitario = vu.Id;
             }
-
             return EquipoTransporteServicio.Alta(vehiculo);
         }
 

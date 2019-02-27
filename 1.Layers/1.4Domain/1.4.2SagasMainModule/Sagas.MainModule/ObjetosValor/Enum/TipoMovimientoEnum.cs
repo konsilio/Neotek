@@ -30,8 +30,5 @@ namespace Sagas.MainModule.ObjetosValor.Enum
     {
         public static string E = stringMovimiento.Entrada.ToString();
         public static string S = stringMovimiento.Salida.ToString();
-      
-
-
     }
 }
