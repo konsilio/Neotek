@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 using Application.MainModule.Servicios.Ventas;
 using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Pedidos;
-using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios;
 using Application.MainModule.AdaptadoresDTO;
 
@@ -931,7 +930,6 @@ namespace Application.MainModule.Flujos
                 var vu = VehiculoUtilitarioServicio.Registrar(utilitario);
                 vehiculo.IdUtilitario = vu.Id;
             }
-
             return EquipoTransporteServicio.Alta(vehiculo);
         }
 
@@ -1007,10 +1005,16 @@ namespace Application.MainModule.Flujos
                     else
                     {
                         vehiculoDto.IdPipa = p.Id;
-                        var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
-                        var Mod = EquipoTransporteServicio.Modificar(Dtovehiculo);
-                        if (Mod.Exito)
-                            return EquipoTransporteServicio.BorrarVehiculoPorEdicion(vehiculo);
+                        var  almacen = AlmacenGasServicio.RegistraAlmacen(vehiculoDto);
+                        if (almacen.Exito)
+                        {
+                            var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
+                            var Mod = EquipoTransporteServicio.Modificar(Dtovehiculo);
+                            if (Mod.Exito)
+                                return EquipoTransporteServicio.BorrarVehiculoPorEdicion(vehiculo);
+                            else
+                                return PipaServicio.Borrar(p.Id);
+                        }
                         else
                             return PipaServicio.Borrar(p.Id);
                     }

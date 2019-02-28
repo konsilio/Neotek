@@ -20,6 +20,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Numero = getNum(ec.Descripcion),
                 Nombre = getStr(ec.Descripcion),
                 Activo = ec.Activo,
+                EsForaneo = ec.EsForaneo,
                 FechaRegistro = DateTime.Now,
             };
         }
@@ -32,6 +33,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Numero = ec.Numero,
                 Nombre = ec.Nombre,
                 Activo = ec.Activo,
+                EsForaneo = ec.EsForaneo,
                 FechaRegistro = DateTime.Now,
             };
         }
