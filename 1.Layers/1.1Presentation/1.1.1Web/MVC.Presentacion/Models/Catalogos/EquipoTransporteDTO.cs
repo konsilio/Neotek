@@ -24,7 +24,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public string NumIdVehicular { get; set; }//NumeroIdentificacion
         public string Placas { get; set; }
         public string NumMotor { get; set; }
-        public string DescVehiculo { get; set; }//Vehiculo 
+        public string DescVehiculo { get; set; }
 
         public string Marca { get; set; }
         public string Modelo { get; set; }
@@ -34,6 +34,10 @@ namespace MVC.Presentacion.Models.Catalogos
         public int IdTipoUnidad { get; set; }
         public bool Activo { get; set; }
         public string AliasUnidad { get; set; }
+
+        public decimal CapacidadLts { get; set; }
+        public decimal CapacidadKg { get; set; }
+        public short IdTipoMedidor { get; set; }
 
         public int Id_DetalleEtransporte { get; set; }
         public Nullable<bool> EsCamioneta { get; set; }

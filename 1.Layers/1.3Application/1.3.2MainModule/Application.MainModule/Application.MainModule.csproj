@@ -436,10 +436,6 @@
     <Folder Include="DTOs\IngresoGasto\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\1.1Presentation\1.1.1Web\MVC.Presentacion\MVC.Presentacion.csproj">
-      <Project>{1751630E-103C-41AD-A84C-DAE1B576F0A5}</Project>
-      <Name>MVC.Presentacion</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\1.4Domain\1.4.2SagasMainModule\Sagas.MainModule\Sagas.MainModule.csproj">
       <Project>{ff128402-ecef-4aae-a189-3a61e225b25e}</Project>
       <Name>Sagas.MainModule</Name>

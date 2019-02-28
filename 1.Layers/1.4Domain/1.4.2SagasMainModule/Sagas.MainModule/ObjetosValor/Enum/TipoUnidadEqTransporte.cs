@@ -8,9 +8,9 @@ namespace Sagas.MainModule.ObjetosValor.Enum
 {
     public static class TipoUnidadEqTransporteEnum
     {
-        public static short Camioneta = (short)TipoUnidadEqTransporte.Camioneta;
-        public static short Pipa = (short)TipoUnidadEqTransporte.Pipa;
-        public static short Utilitario = (short)TipoUnidadEqTransporte.Utilitario;
+        public static int Camioneta = (int)TipoUnidadEqTransporte.Camioneta;
+        public static int Pipa = (int)TipoUnidadEqTransporte.Pipa;
+        public static int Utilitario = (int)TipoUnidadEqTransporte.Utilitario;
     }
     public enum TipoUnidadEqTransporte
     {
