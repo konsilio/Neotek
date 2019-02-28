@@ -1005,10 +1005,16 @@ namespace Application.MainModule.Flujos
                     else
                     {
                         vehiculoDto.IdPipa = p.Id;
-                        var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
-                        var Mod = EquipoTransporteServicio.Modificar(Dtovehiculo);
-                        if (Mod.Exito)
-                            return EquipoTransporteServicio.BorrarVehiculoPorEdicion(vehiculo);
+                        var  almacen = AlmacenGasServicio.RegistraAlmacen(vehiculoDto);
+                        if (almacen.Exito)
+                        {
+                            var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
+                            var Mod = EquipoTransporteServicio.Modificar(Dtovehiculo);
+                            if (Mod.Exito)
+                                return EquipoTransporteServicio.BorrarVehiculoPorEdicion(vehiculo);
+                            else
+                                return PipaServicio.Borrar(p.Id);
+                        }
                         else
                             return PipaServicio.Borrar(p.Id);
                     }

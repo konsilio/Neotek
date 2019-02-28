@@ -50,6 +50,9 @@ namespace Application.MainModule.DTOs
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Tipo de Unidad")]
         public int IdTipoUnidad { get; set; }
+        public decimal CapacidadLts { get; set; }
+        public decimal CapacidadKg { get; set; }
+        public short IdTipoMedidor { get; set; }
         public bool Activo { get; set; }
         public bool EsForaneo { get; set; }
         public string AliasUnidad { get; set; }
