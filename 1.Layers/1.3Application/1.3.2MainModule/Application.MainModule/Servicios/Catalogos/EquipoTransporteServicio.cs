@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Seguridad;
-using MVC.Presentacion.Models.Transporte;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -179,7 +179,7 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
-        public static byte ObtenerTipo(CDetalleEquipoTransporte ec)
+        public static int ObtenerTipo(CDetalleEquipoTransporte ec)
         {           
             if (ec.IdCamioneta != null) { return TipoUnidadEqTransporteEnum.Camioneta; }
             if (ec.IdPipa != null) { return TipoUnidadEqTransporteEnum.Pipa; }

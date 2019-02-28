@@ -6,7 +6,7 @@
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Metropolis" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Metropolis" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Metropolis" },
-             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Office365" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Office365" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Office365" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Office365" }
         )
@@ -15,11 +15,9 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
-
 <!DOCTYPE html>
 <html>
 <head>
-
     <script src="~/Resources/js/Pedidos.js"></script>
     <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <script src="~/assets/js/pages/ui/notifications.js"></script>
@@ -82,7 +80,7 @@
                         </div>
                     </div>
                     @if (ViewBag.MensajeError != null)
-    {
+                    {
                         <div class="row clearfix">
                             <div id="divMensajeError" class="container">
                                 <div class="alert alert-danger">
@@ -110,24 +108,24 @@
                                                     <b>Cliente:</b>
                                                     @*@Html.Partial("_DatosCliente")*@
                                                     @Html.DevExpress().ComboBox(settings =>
-                                                    {
-                                                        settings.Name = "IdCliente";
-                                                        settings.Width = 180;
-                                                        settings.SelectedIndex = 0;
-                                                        settings.Properties.DropDownWidth = 550;
-                                                        settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
-                                                        settings.Properties.CallbackPageSize = 30;
-                                                       // settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                        settings.Properties.TextFormatString = "{0}";
-                                                        settings.Properties.ValueType = typeof(int);
-                                                        settings.Properties.Columns.Add("Nombre", "Nombre", 130);
-                                                        settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
-                                                        settings.Properties.Columns.Add("Rfc", "RFC", 230);
-                                                    }).GetHtml()
+                                               {
+                                                   settings.Name = "IdCliente";
+                                                   settings.Width = 180;
+                                                   settings.SelectedIndex = 0;
+                                                   settings.Properties.DropDownWidth = 550;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                                                   settings.Properties.CallbackPageSize = 30;
+                                                   // settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.TextFormatString = "{0}";
+                                                   settings.Properties.ValueType = typeof(int);
+                                                   settings.Properties.Columns.Add("Nombre", "Nombre", 130);
+                                                   settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
+                                                   settings.Properties.Columns.Add("Rfc", "RFC", 230);
+                                               }).GetHtml()
                                                 </div>
                                                 <div class="col-sm-2" style="top: 10px;">
                                                     <div class="form-group">
-                                                        <input type="button" id="btnCrearCte" onclick="@("window.location.href='" + @Url.Action("AltaCliente", "Pedidos") + "'");"  value="Crear cliente" class="btn btn-raised btn-primary btn-round float-center" />
+                                                        <input type="button" id="btnCrearCte" onclick="@("window.location.href='" + @Url.Action("AltaCliente", "Pedidos") + "'");" value="Crear cliente" class="btn btn-raised btn-primary btn-round float-center" />
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
@@ -313,9 +311,9 @@
                                             <div class="form-group">
                                                 <input type="submit" value="Cancelar" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
-                                            <div class="form-group">@*id="altaPedido"*@
-                                                <input type="submit" value="Crear pedido" formaction=@Url.Action("CrearPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
-                                            </div>
+                                            <div class="form-group">
+                                                @*id="altaPedido"*@
+                                            <input type="submit" value="Crear pedido" formaction=@Url.Action("CrearPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
                                         </div>
                                     </div>
                                 </div>
@@ -324,7 +322,8 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
         <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">

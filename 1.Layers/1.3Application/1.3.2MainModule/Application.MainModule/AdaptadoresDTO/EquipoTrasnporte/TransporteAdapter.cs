@@ -30,9 +30,9 @@ namespace Application.MainModule.AdaptadoresDTO
             t.IdVehiculo = pv.IdCAlmacenGas;
             t.Vehiculo = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(pv.UnidadesAlmacen);
             if (pv.UnidadesAlmacen.IdPipa != null)
-                t.TipoVehiculo = TipoUnidadEqTransporteEnum.Pipa;
+                t.TipoVehiculo = (short)TipoUnidadEqTransporteEnum.Pipa;
             if (pv.UnidadesAlmacen.IdCamioneta != null)
-                t.TipoVehiculo = TipoUnidadEqTransporteEnum.Camioneta;
+                t.TipoVehiculo = (short)TipoUnidadEqTransporteEnum.Camioneta;
             return t;
         }
         public static List<TransporteDTO> ToDTO(List<PuntoVenta> pvs)
@@ -47,7 +47,7 @@ namespace Application.MainModule.AdaptadoresDTO
             t.Chofer = ut.COperadorChofer.Usuario.Nombre;
             t.IdVehiculo = Convert.ToInt16(ut.IdUtilitario);
             t.Vehiculo = VehiculoUtilitarioServicio.ObtenerNombre(ut.IdUtilitario);
-            t.TipoVehiculo = TipoUnidadEqTransporteEnum.Utilitario;
+            t.TipoVehiculo = (short)TipoUnidadEqTransporteEnum.Utilitario;
             return t;
         }
 
