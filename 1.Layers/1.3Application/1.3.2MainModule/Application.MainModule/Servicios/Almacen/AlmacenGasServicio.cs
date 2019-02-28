@@ -109,9 +109,9 @@ namespace Application.MainModule.Servicios.Almacenes
             UnidadAlmacenGas unidad = new UnidadAlmacenGas
             {
                 IdAlmacenGas = Convert.ToInt16(newAlmacen.Id),
-                IdCamioneta = null,
+                IdCamioneta = ec.IdCamioneta,
                 IdEstacionCarburacion = null,
-                IdPipa = null,
+                IdPipa = ec.IdPipa,
                 IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
                 IdTipoAlmacen = TipoUnidadAlmacenGasEnum.Fijo,
                 IdTipoMedidor = ec.IdTipoMedidor,
