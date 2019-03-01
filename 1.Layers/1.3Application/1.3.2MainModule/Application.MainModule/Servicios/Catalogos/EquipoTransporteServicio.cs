@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.ObjetosValor.Enum;
+using Application.MainModule.Servicios.Almacenes;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -184,6 +185,18 @@ namespace Application.MainModule.Servicios.Catalogos
             if (ec.IdCamioneta != null) { return TipoUnidadEqTransporteEnum.Camioneta; }
             if (ec.IdPipa != null) { return TipoUnidadEqTransporteEnum.Pipa; }
             if (ec.IdUtilitario != null) { return TipoUnidadEqTransporteEnum.Utilitario; }
+            return 0;
+        }
+        public static decimal ObtenerCapacidadKg(CDetalleEquipoTransporte ec)
+        {
+            if (ec.IdCamioneta != null) { return AlmacenGasServicio.ObtenerPorCamioneta(ec.IdCamioneta.Value).CapacidadTanqueKg ?? 0; }
+            if (ec.IdPipa != null) { return AlmacenGasServicio.ObtenerPorPipa(ec.IdPipa.Value).CapacidadTanqueKg ?? 0; }
+            return 0;
+        }
+        public static decimal ObtenerCapacidadLt(CDetalleEquipoTransporte ec)
+        {
+            if (ec.IdCamioneta != null) { return AlmacenGasServicio.ObtenerPorCamioneta(ec.IdCamioneta.Value).CapacidadTanqueLt ?? 0; }
+            if (ec.IdPipa != null) { return AlmacenGasServicio.ObtenerPorPipa(ec.IdPipa.Value).CapacidadTanqueLt ?? 0; }
             return 0;
         }
         public static string ObtenerAlias(CDetalleEquipoTransporte ec)

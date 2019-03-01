@@ -23,6 +23,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             ViewBag.TipoCombustible = CatalogoServicio.ListaCombustibleIdEmp(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             ViewBag.TipoUnidad = CatalogoServicio.ListaUnidadIdEmp(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            ViewBag.TipoMedidor = CatalogoServicio.ListaMedidores(_tkn);
 
             EquipoTransporteDTO model = new EquipoTransporteDTO();
             if (id != 0 && id != null)
@@ -40,10 +41,8 @@ namespace MVC.Presentacion.Controllers
 
             if (TempData["RespuestaDTO"] != null)
             {
-                if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
-                {
-                    ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-                }
+                if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)                
+                    ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);                
                 else
                 {
                     ViewBag.Tipo = "alert-success";
@@ -63,14 +62,10 @@ namespace MVC.Presentacion.Controllers
             string _tkn = Session["StringToken"].ToString(); _model.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
             var respuesta = CatalogoServicio.Crear(_model, _tkn);
             TempData["RespuestaDTO"] = respuesta;
-            if (respuesta.Exito)
-            {
-                return RedirectToAction("Index", new { msj = respuesta.Mensaje });
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+            if (respuesta.Exito)            
+                return RedirectToAction("Index", new { msj = respuesta.Mensaje });            
+            else            
+                return RedirectToAction("Index");            
         }
         public ActionResult GuardarEditar(EquipoTransporteDTO model)
         {
@@ -78,14 +73,11 @@ namespace MVC.Presentacion.Controllers
             string _tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.Modificar(model, _tkn);
             TempData["RespuestaDTO"] = respuesta;
-            if (respuesta.Exito)
-            {
-                return RedirectToAction("Index", new { msj = respuesta.Mensaje });
-            }
-            else
-            {
+            if (respuesta.Exito)            
+                return RedirectToAction("Index", new { msj = respuesta.Mensaje });            
+            else            
                 return RedirectToAction("Index");
-            }
+            
         }
         public ActionResult EditarVehiculo(int id)
         {

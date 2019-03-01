@@ -18,6 +18,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             return new EquipoTransporteDTO()
             {
                 IdEmpresa = ec.IdEmpresa,
+                IdEquipoTransporte = ec.IdEquipoTransporteDetalle,
                 IdCamioneta = ec.IdCamioneta,
                 IdPipa = ec.IdPipa,
                 IdVehiculoUtilitario = ec.IdUtilitario,
@@ -37,6 +38,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 IdTipoUnidad = EquipoTransporteServicio.ObtenerTipo(ec),
                 AliasUnidad = EquipoTransporteServicio.ObtenerAlias(ec),
                 Id_DetalleEtransporte = ec.IdEquipoTransporteDetalle,
+                CapacidadKg = EquipoTransporteServicio.ObtenerCapacidadKg(ec),
+                CapacidadLts = EquipoTransporteServicio.ObtenerCapacidadLt(ec),
                 EsCamioneta = ec.IdCamioneta != null ? true : false ,
                 EsPipa = ec.IdPipa != null ? true : false,
                 EsUtilitario = ec.IdUtilitario != null ? true : false,
@@ -52,6 +55,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             return new CDetalleEquipoTransporte()
             {
                 IdEquipoTransporteDetalle = ec.Id_DetalleEtransporte,
+                IdEmpresa = ec.IdEmpresa,
                 NumIdVehicular = ec.NumIdVehicular,
                 Placas = ec.Placas,
                 NumMotor = ec.NumMotor,
@@ -75,6 +79,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return new CDetalleEquipoTransporte()
             {
+                IdEquipoTransporteDetalle = ec.IdEquipoTransporteDetalle,
                 IdEmpresa = ec.IdEmpresa,
                 IdCamioneta = ec.IdCamioneta,
                 IdPipa = ec.IdPipa,

@@ -10,7 +10,6 @@
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
 <!DOCTYPE html>
-
 <html>
 <head>
     <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
@@ -18,12 +17,12 @@
     <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <script src="~/assets/js/pages/ui/notifications.js"></script>
     <script type="text/javascript">
-
         var mensaje = '@ViewBag.Msj';
         var tipo = '@ViewBag.Tipo';
         if (mensaje != '') {
             $(window).on("load", showNotification(tipo, mensaje, 'top', 'center', '', ''));
         }
+
         function AsignarEliminar(idEquipo) {
             $("#btnEliminar").attr("data-id", idEquipo);
         }
@@ -32,7 +31,7 @@
                 var idEquipo = $("#btnEliminar").attr("data-id")
                 window.location = window.location.protocol + "//" + window.location.host + "/EquipoTransporte/BorrarVehiculo/" + idEquipo;
             });
-        });
+        });     
     </script>
 </head>
 <body>
@@ -105,233 +104,201 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <div>
-                                            <label>
-                                                Número de Identificación:*
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
+                                        <strong>Número de Identificación:*</strong>
                                         @Html.TextBoxFor(m => m.NumIdVehicular, new { @class = "form-control", @placeholder = "Número de Identificación" })
                                         @Html.ValidationMessageFor(m => m.NumIdVehicular, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <div>
-                                            <label>
-                                                Número de Placas:*
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
+                                        <strong>Número de Placas:*</strong>
                                         @Html.TextBoxFor(m => m.Placas, new { @class = "form-control", @placeholder = "Número de Placas" })
                                         @Html.ValidationMessageFor(m => m.Placas, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <div>
-                                            <label>
-                                                Número de Motor:*
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
-                                        @Html.TextBoxFor(m => m.NumMotor, new { @class = "form-control", @placeholder = "Número de Motor" })
+                                        <strong>Número de Motor:*</strong>
+                                        @Html.TextBoxFor(m => m.NumMotor, new { @class = "form-control", @placeholder = "Número de Motor", maxlength = 50 })
                                         @Html.ValidationMessageFor(m => m.NumMotor, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row clearfix">
-                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <div>
-                                            <label>
-                                                Vehículo:*
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
+                                        <strong>
+                                            Vehículo:*
+                                        </strong>
                                         @Html.TextBoxFor(m => m.DescVehiculo, new { @class = "form-control", @placeholder = "Vehículo" })
                                         @Html.ValidationMessageFor(m => m.DescVehiculo, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <div>
-                                            <label>
-                                                Marca:*
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
+                                        <strong>
+                                            Marca:*
+                                        </strong>
                                         @Html.TextBoxFor(m => m.Marca, new { @class = "form-control", @placeholder = "Marca" })
                                         @Html.ValidationMessageFor(m => m.Marca, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <div>
-                                            <label>
-                                                Modelo:*
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
+                                        <strong>
+                                            Modelo:*
+                                        </strong>
                                         @Html.TextBoxFor(m => m.Modelo, new { @class = "form-control", @placeholder = "Modelo" })
                                         @Html.ValidationMessageFor(m => m.Modelo, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row clearfix">
-                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <div>
-                                            <label>
-                                                Color:*
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
+                                        <strong>
+                                            Color:*
+                                        </strong>
                                         @Html.TextBoxFor(m => m.Color, new { @class = "form-control", @placeholder = "Color" })
                                         @Html.ValidationMessageFor(m => m.Color, "", new { @class = "alert-danger" })
                                     </div>
-                                </div>  <div class="col-lg-1 col-md-1 col-sm-1">
-                                    <div class="form-group">
-                                        <div>
-                                            <label>
-                                                Cilindros:*
-                                            </label>
-                                        </div>
-                                    </div>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
+                                        <strong>
+                                            Cilindros:*
+                                        </strong>
                                         @Html.TextBoxFor(m => m.Cilindros, new { @class = "form-control", @placeholder = "Cilindros" })
                                         @Html.ValidationMessageFor(m => m.Cilindros, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <div>
-                                            <label>
-                                                Tipo de Combustible:*
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
+                                        <strong>
+                                            Tipo de Combustible:*
+                                        </strong>
                                         @Html.DevExpress().ComboBox(settings =>
-                                    {
-                                        settings.Name = "IdTipoCombustible";
-                                        settings.Width = 180;
-                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                        settings.Theme = "Material";
-                                        settings.Properties.TextField = "TipoCombustible";
-                                        settings.Properties.ValueField = "Id_Combustible";
-                                        //settings.ClientEnabled = true;
-                                        //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
-                                        settings.PreRender = (s, e) =>
                                         {
-                                            MVCxComboBox combo = s as MVCxComboBox;
-                                            combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                            combo.Properties.ValueType = typeof(int);
-                                            combo.SelectedIndex = Model.IdTipoCombustible;
-                                        };
-                                    }).BindList(ViewBag.TipoCombustible).GetHtml()
+                                            settings.Name = "IdTipoCombustible";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                            settings.Theme = "Material";
+                                            settings.Properties.TextField = "TipoCombustible";
+                                            settings.Properties.ValueField = "Id_Combustible";
+                                            //settings.ClientEnabled = true;
+                                            //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                            settings.PreRender = (s, e) =>
+                                            {
+                                                MVCxComboBox combo = s as MVCxComboBox;
+                                                combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                                combo.Properties.ValueType = typeof(int);
+                                                combo.SelectedIndex = Model.IdTipoCombustible;
+                                            };
+                                        }).BindList(ViewBag.TipoCombustible).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdTipoCombustible, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row clearfix">
-                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <div>
-                                            <label>
-                                                Tipo de Unidad:*
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
+                                        <strong>
+                                            Tipo de Unidad:*
+                                        </strong>
                                         @Html.DevExpress().ComboBox(settings =>
                                    {
                                        settings.Name = "IdTipoUnidad";
-                                       settings.Width = 180;
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                        settings.Theme = "Material";
                                        settings.Properties.TextField = "TipoUnidad";
                                        settings.Properties.ValueField = "IdTipoUnidad";
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChange";
                                        settings.PreRender = (s, e) =>
                                        {
                                            MVCxComboBox combo = s as MVCxComboBox;
                                            combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                           //combo.Properties.Items.Insert(1, new ListEditItem("Camioneta"));
-                                           //combo.Properties.Items.Insert(2, new ListEditItem("Pipa"));
-                                           //combo.Properties.Items.Insert(3, new ListEditItem("Utilitario"));
                                            combo.Properties.ValueType = typeof(int);
                                            combo.SelectedIndex = Model.IdTipoUnidad;
                                        };
                                    }).BindList(ViewBag.TipoUnidad).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdTipoUnidad, "", new { @class = "alert-danger" })
                                     </div>
-                                </div>  <div class="col-lg-1 col-md-1 col-sm-1">
+                                </div>
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <div>
-                                            <label>
+                                            <strong>
                                                 Unidad Activa:
-                                            </label>
+                                            </strong>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
                                         <label class="switch">
                                             @Html.CheckBoxFor(m => m.Activo, new { @class = "form-control" })
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <div>
-                                            <label>
-                                                Alias de Unidad:
-                                            </label>
+                                            <strong>Es Foraneo</strong>
                                         </div>
+                                        <label class="switch">
+                                            @Html.CheckBoxFor(m => m.EsForaneo, new { @class = "form-control" })
+                                            <span class="slider round"></span>
+                                        </label>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
+                                        <strong>
+                                            Alias de Unidad:
+                                        </strong>
                                         @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", @placeholder = "Alias de Unidad" })
                                         @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row clearfix">
-                               
+                                <div class="col-md-4 capKilos" style="display:none">
+                                    <div class="form-group">
+                                        <strong>Capacidad en Kg</strong>
+                                        @Html.TextBoxFor(m => m.CapacidadKg, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group capLitos" style="display:none">
+                                        <strong>Capacidad en Lts</strong>
+                                        @Html.TextBoxFor(m => m.CapacidadLts, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 medidor" style="display:none">
+                                    <div class="form-group ">
+                                        <strong>Tipo Medidor</strong>
+                                        @Html.DevExpress().ComboBox(settings =>
+                                        {
+                                            settings.Name = "IdTipoMedidor";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                            settings.Theme = "Material";
+                                            settings.Properties.TextField = "NombreTipoMedidor";
+                                            settings.Properties.ValueField = "IdTipoMedidor";
+                                            settings.PreRender = (s, e) =>
+                                            {
+                                                MVCxComboBox combo = s as MVCxComboBox;
+                                                combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                                combo.Properties.ValueType = typeof(int);
+                                                combo.SelectedIndex = Model.IdTipoUnidad;
+                                            };
+                                        }).BindList(ViewBag.TipoMedidor).GetHtml()
+                                        @Html.ValidationMessageFor(m => m.IdTipoMedidor, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -351,7 +318,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <br />
                             <div class="col-lg-12 col-md-12 col-sm-12 blockquote blockquote-info btn-round">
                                 <div class="row clearfix">
@@ -368,35 +334,35 @@
                                             </thead>
                                             <tbody>
                                                 @if (ViewBag.Vehiculos != null)
+                                                {
+                                                    foreach (var item in ViewBag.Vehiculos)
                                                     {
-                                                        foreach (var item in ViewBag.Vehiculos)
-                                                        {
-                                                    <tr>
-                                                        <th>@item.IdEquipoTransporte</th>
-                                                        <th>@item.Placas</th>
-                                                        <td>@item.AliasUnidad</td>
-                                                        <td>@item.Descripcion</td>
-                                                        <td>
-                                                            <a ID="lbEdit" href="@Url.Action("EditarVehiculo", "EquipoTransporte", new { id = item.IdEquipoTransporte })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">edit</i>
-                                                                <span>Editar vehículo</span>
-                                                            </a>
-                                                            @if (ViewBag.EsAdmin)
-                                                                    {
+                                                        <tr>
+                                                            <th>@item.IdEquipoTransporte</th>
+                                                            <th>@item.Placas</th>
+                                                            <td>@item.AliasUnidad</td>
+                                                            <td>@item.Descripcion</td>
+                                                            <td>
+                                                                <a ID="lbEdit" href="@Url.Action("EditarVehiculo", "EquipoTransporte", new { id = item.IdEquipoTransporte })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="material-icons">edit</i>
+                                                                    <span>Editar vehículo</span>
+                                                                </a>
+                                                                @if (ViewBag.EsAdmin)
+                                                                {
                                                                     <a href="#ModalConfirmacion" data-toggle="modal" data-id="@item.IdEquipoTransporte" id="btnok" class="tip" onclick="javascript: AsignarEliminar(@item.IdEquipoTransporte)" data-target="#ModalConfirmacion" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">delete</i>
                                                                         <span>Eliminar vehículo</span>
                                                                     </a>
-                                                                    }
-                                                        </td>
-                                                    </tr>
-                                                        }
+                                                                }
+                                                            </td>
+                                                        </tr>
                                                     }
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                            </div>                           
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -571,6 +571,14 @@ namespace DS.MainModule.Controllers
         }
         #endregion
 
+        #region Medidor Gas
+        [Route("obtener/medidores")]
+        public HttpResponseMessage GetObtenerMedidores()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ObtenerMedidores(), Request);
+        }
+        #endregion
+
         #region Equipo de transporte
         [Route("consulta/equipotransporte")]
         public HttpResponseMessage GetListaEquiposTransporte()
@@ -622,6 +630,7 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.Eliminar(idcombustible), Request);
         }
         #endregion
+
         #region TiposUnidad
         [Route("consulta/tipounidad")]
         public HttpResponseMessage GetListaTiposUnidad()

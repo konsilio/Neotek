@@ -17,8 +17,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             {
                 //IdCamioneta = ec.IdCamioneta,
                 IdEmpresa = ec.IdEmpresa,
-                Numero = getNum(ec.AliasUnidad),
-                Nombre = getStr(ec.AliasUnidad),
+                Numero = getNum(ec.Descripcion),
+                Nombre = getStr(ec.Descripcion),
                 Activo = ec.Activo,
                 EsForaneo = ec.EsForaneo,
                 FechaRegistro = DateTime.Now,
@@ -45,8 +45,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         }
         public static string getStr(string cadena)
         {
-            string resultString = cadena.Split(' ')[0];
-            return resultString;
+            return string.Format("Utilitario No. {0}", cadena);
         }
     }
 }
