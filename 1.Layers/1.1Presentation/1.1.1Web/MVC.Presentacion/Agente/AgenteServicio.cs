@@ -107,6 +107,7 @@ namespace MVC.Presentacion.Agente
         public List<MantenimientoModel> _ListaMantenimientos;
         public List<MantenimientoDetalleModel> _ListaMantenimientoDetalle;
         public List<AsignacionModel> _ListaAsignaciones;
+        public List<MedidorDTO> _ListaMedidores;
 
         public AgenteServicio()
         {
@@ -2811,6 +2812,41 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
+        #region Medidores
+        public void GetListaMedidores(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetObtenerMedidores"];
+            GetListaCMedidores(tkn).Wait();
+        }
+        private async Task GetListaCMedidores(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<MedidorDTO> list = new List<MedidorDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<MedidorDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<MedidorDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaMedidores = list;
+            }
+        }
+        #endregion
         #endregion
         #region Login
         public void Acceder(AutenticacionDTO autDto)
@@ -4223,7 +4259,7 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
-        
+
         private async Task LLamada<T>(T _dto, string token, string Tipo)
         {
             using (var client = new HttpClient())
@@ -4240,7 +4276,6 @@ namespace MVC.Presentacion.Agente
                         response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
                     if (Tipo.Equals(MetodoRestConst.Put))
                         response = await client.PutAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
-
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else

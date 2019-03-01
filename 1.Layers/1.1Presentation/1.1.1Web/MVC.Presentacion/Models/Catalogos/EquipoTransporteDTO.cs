@@ -33,6 +33,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public int IdTipoCombustible { get; set; }
         public int IdTipoUnidad { get; set; }
         public bool Activo { get; set; }
+        public bool EsForaneo { get; set; }
         public string AliasUnidad { get; set; }
 
         public decimal CapacidadLts { get; set; }

@@ -44,8 +44,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         }
         public static string getStr(string cadena)
         {
-            string resultString = cadena.Split(' ')[0];
-            return resultString;
+            return string.Format("Pipa No.{0}", cadena);
+         
         }
     }
 }

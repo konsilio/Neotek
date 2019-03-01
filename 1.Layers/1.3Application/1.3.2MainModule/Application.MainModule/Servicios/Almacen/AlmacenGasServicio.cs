@@ -122,7 +122,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 EsAlterno = false,
                 EsGeneral = true,
                 PorcentajeCalibracionPlaneada = 0,
-                Numero = string.Format(AlmacenGasConst.NombreAlmacenAlterno),
+                Numero = string.Format(AlmacenGasConst.NombreAlmacenAlterno, ec.Descripcion),
                 P5000Actual = null,
                 PorcentajeActual = 0,
                 Activo = true,
