@@ -15,6 +15,7 @@
 <body>
     @using (Html.BeginForm("Crear", "Asignacion", FormMethod.Post))
     {
+        
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -40,53 +41,61 @@
                                             <div class="form-group">
                                                 <strong>Chofer</strong>
                                                 @Html.DevExpress().ComboBox(settings =>
-                                           {
-                                               settings.Name = "IdChofer";
-                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                               settings.SelectedIndex = 0;
-                                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                               settings.Properties.ValueType = typeof(int);
-                                               settings.Properties.TextField = "Nombre";
-                                               settings.Properties.ValueField = "Idusuario";
-                                           }).BindList(ViewBag.Usuarios).Bind(Model.IdChofer).GetHtml()
+                                                {
+                                                   settings.Name = "IdChofer";
+                                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                   settings.SelectedIndex = 0;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Properties.ValueType = typeof(int);
+                                                   settings.Properties.TextField = "Nombre";
+                                                   settings.Properties.ValueField = "Idusuario";
+                                                }).BindList(ViewBag.Usuarios).Bind(Model.IdChofer).GetHtml()
                                                 @Html.ValidationMessageFor(m => m.IdChofer, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <strong>Vehiculo</strong>
-                                                @Html.DevExpress().ComboBox(settings =>
-                                           {
-                                               settings.Name = "IdVehiculo";
-                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                               settings.SelectedIndex = 0;
-                                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                               settings.Properties.ValueType = typeof(int);
-                                               settings.Properties.TextField = "DescVehiculo";
-                                               settings.Properties.ValueField = "IdEquipoTransporte";
-                                           }).BindList(ViewBag.Vehiculos).Bind(Model.IdVehiculo).GetHtml()
-                                                @Html.ValidationMessageFor(m => m.IdVehiculo, "", new { @class = "alert-danger" })
+                                               @Html.DevExpress().ComboBox(settings =>
+                                          {
+                                              settings.Name = "IdVehiculo";
+                                              settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                              settings.SelectedIndex = 0;
+                                              settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                              settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                              //settings.Properties.ValueType = typeof(int);
+                                              //settings.Properties.TextField = "DescVehiculo";
+                                              //settings.Properties.ValueField = "IdEquipoTransporte";
+                                              settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChange";
+                                              settings.Properties.TextFormatString = "{0}";
+                                              settings.Properties.Columns.Add("EsCamioneta", "EsCamioneta", 130);
+                                              settings.Properties.Columns.Add("EsPipa", "EsPipa", 130);
+                                              settings.Properties.Columns.Add("Esutilitario", "Esutilitario", 230);
+                                              settings.CustomJSProperties = (sender, e) =>
+                                              {
+                                                  System.Collections.ArrayList list = new System.Collections.ArrayList();
+                                                  MVCxComboBox combo = sender as MVCxComboBox;
+                                                  foreach (ListEditItem item in combo.Items)
+                                                      list.Add(item.GetValue(item.GetValue("EsCamioneta") + "|" + item.GetValue("EsPipa") + "|" + item.GetValue("Esutilitario")));
+                                                  e.Properties["cpHiddenColumnValues"] = list;
+                                              };
+                                          }).BindList(ViewBag.Vehiculos).Bind(Model.IdVehiculo).GetHtml()
+                                               @Html.ValidationMessageFor(m => m.IdVehiculo, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
-
-                                    </div>
-                                    <div class="row clearfix">
                                         <div class="col-md-2 text-right">
                                             <strong>&nbsp; </strong>
                                             <div class="form-group">
                                                 @if (ViewBag.EsEdicion == null)
                                                 {
-                                                    <button btn id="BtnCrear" formaction="Crear" class="btn btn-primary btn-round">
-                                                        <i class="zmdi zmdi-plus"></i> Agregar
-                                                    </button>
+                                                    <button id="BtnCrear" formaction=@Url.Action("Crear") class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                        <i class="zmdi zmdi-plus"></i></button>
                                                 }
                                                 else
                                                 {
                                                     <button btn id="btnUpDate" formaction="EditarProducto" class="btn btn-primary btn-round">
-                                                        <i class="zmdi zmdi-swap"></i> Terminar Edicion
-                                                    </button>
+                                                        <i class="zmdi zmdi-swap"></i> Terminar Edicion</button>
                                                 }
                                             </div>
                                         </div>
@@ -155,7 +164,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
     }

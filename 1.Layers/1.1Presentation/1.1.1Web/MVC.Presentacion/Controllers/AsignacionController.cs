@@ -18,9 +18,16 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn) ,tkn);
+            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.Asignaciones = TransporteServicio.ListaAsignacion(tkn).ToPagedList(page ?? 1, 20);
-            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (Respuesta.Exito)
+                    ViewBag.Msj = Respuesta.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(Respuesta);
+            }
             return View(model);
         }
         public ActionResult Crear(AsignacionModel model = null)
@@ -28,26 +35,18 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = TransporteServicio.GuardarAsignacion(model, tkn);
-            if (respuesta.Exito)
-                return RedirectToAction("Index");
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Index");
-            }
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Index");
         }
+
         public ActionResult Eliminar(int? id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = TransporteServicio.EliminarAsignacion(new AsignacionModel { IdAsignacion = id ?? 0  }, tkn);
-            if (respuesta.Exito)            
-                return RedirectToAction("Index");            
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Index");
-            }         
+            var respuesta = TransporteServicio.EliminarAsignacion(new AsignacionModel { IdAsignacion = id ?? 0 }, tkn);
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Index");
+
         }
         private string Validar(RespuestaDTO Resp = null)
         {
@@ -56,8 +55,8 @@ namespace MVC.Presentacion.Controllers
             if (Resp != null)
             {
                 if (Resp.ModelStatesStandar != null)
-                    foreach (var error in Resp.ModelStatesStandar.ToList())                    
-                        ModelState.AddModelError(error.Key, error.Value);                    
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                        ModelState.AddModelError(error.Key, error.Value);
                 if (Resp.MensajesError != null)
                     Mensaje = Resp.MensajesError[0];
             }

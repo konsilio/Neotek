@@ -1129,9 +1129,20 @@ namespace Application.MainModule.Flujos
             }
             else
             {
-                var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
-                var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
-                return PuntoVentaServicio.Insertar(npv);
+                RespuestaDto _respuesta = new RespuestaDto();
+                if (vehiculoDto.TipoVehiculo.Equals(TipoUnidadEqTransporteEnum.Camioneta))
+                {
+                    var almacen = AlmacenGasServicio.ObtenerPorCamioneta(vehiculoDto.IdVehiculo);
+                    var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
+                    _respuesta = PuntoVentaServicio.Insertar(npv);
+                }
+                if (vehiculoDto.TipoVehiculo.Equals(TipoUnidadEqTransporteEnum.Pipa))
+                {
+                    var almacen = AlmacenGasServicio.ObtenerPorPipa(vehiculoDto.IdVehiculo);
+                    var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
+                    _respuesta = PuntoVentaServicio.Insertar(npv);
+                }
+                return _respuesta;
             }
         }
         public RespuestaDto EliminarAsignacion(TransporteDTO vehiculoDto)
