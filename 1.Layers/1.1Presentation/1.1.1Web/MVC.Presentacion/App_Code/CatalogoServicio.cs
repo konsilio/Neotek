@@ -2548,6 +2548,16 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
 
+        #region Medidor
+
+        public static List<MedidorDTO> ListaMedidores(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GetListaMedidores(tkn);
+            return agente._ListaMedidores;
+        }
+        #endregion
+
         public static RespuestaDTO SinPermisos()
         {
             return new RespuestaDTO()

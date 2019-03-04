@@ -19,7 +19,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-
         public RespuestaDto Insertar(TipoMedidorUnidadAlmacenGas _med)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -44,7 +43,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Actualizar(TipoMedidorUnidadAlmacenGas _med)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -69,12 +67,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public List<TipoMedidorUnidadAlmacenGas> BuscarTodos()
         {
             return uow.Repository<TipoMedidorUnidadAlmacenGas>().Get(x => x.Activo).ToList();
         }
-
         public TipoMedidorUnidadAlmacenGas Buscar(short idTipoMedidorUnidadAlmacenGas)
         {
             return uow.Repository<TipoMedidorUnidadAlmacenGas>().GetSingle(x => x.IdTipoMedidor.Equals(idTipoMedidorUnidadAlmacenGas)

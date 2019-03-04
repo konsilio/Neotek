@@ -1,19 +1,40 @@
-﻿function OnSelectedChange(s, e) {
+﻿$(document).ready(function () {
+
+    //Bloquear tamaños maximos
+    $('#NumMotor').keypress(function () {
+        if (this.value.length >= 10)
+            return false;
+    })
+    $('#Placas').keypress(function () {
+        if (this.value.length >= 8)
+            return false;
+    })
+    $('#NumIdVehicular').keypress(function () {
+        if (this.value.length >= 8)
+            return false;
+    })
+})
+
+
+function OnSelectedChange(s, e) {
     debugger
     var value = s.GetValue();
-    if (value == 1)//Pipa
+    if (value == 1)//Camioneta
     {
-        $('.selPipa').show();
-        $('.selCamioneta').hide();
-        IdCamioneta.SetSelectedIndex(0);
-      
+        $('.capKilos').show();
+        $('.capLitos').show();
+        $('.medidor').hide();
     }
-    if (value == 2)//Camioneta
+    if (value == 2)//Pipa
     {
-        $('.selPipa').hide();
-        $('.selCamioneta').show();
-        //clear all form Pipas        
-        IdPipa.SetSelectedIndex(0);
-        $("#Cantidad").val(0);
+        $('.capKilos').show();
+        $('.capLitos').show();
+        $('.medidor').show();
+    }
+    if (value == 0 || value == 3)//utilitario
+    {
+        $('.capKilos').hide();
+        $('.capLitos').hide();
+        $('.medidor').hide();      
     }
 }
