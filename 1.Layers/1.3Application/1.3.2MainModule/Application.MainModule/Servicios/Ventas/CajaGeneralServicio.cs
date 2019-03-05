@@ -612,10 +612,6 @@ namespace Application.MainModule.Servicios.Ventas
             c.P5000Actual = P5000Fin;
             c.FechaAplicacion = v.FechaAplicacion ?? DateTime.Now;
             c.FechaRegistro = DateTime.Now;
-            //c.VentaKg = 0;//definir  /*Lectura Final - Lectura Inicial (Kg)*/
-            //c.VentaLt = 0;//definir  /*Lectura Final - Lectura Inicial (Lt)*/
-
-
             return c;
         }
         public static List<AlmacenGasMovimiento> ObtenerUltimosMovimientosDeDescargasPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha)

@@ -339,6 +339,7 @@
     <Compile Include="ObjetosValor\Enum\TipoEventoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoMedidorGasEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoMovimientoEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoOperadorChoferEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoUnidadAlmacenGasEnum.cs" />

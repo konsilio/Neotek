@@ -29,9 +29,7 @@
 </script>
 <body>
     @using (Html.BeginForm("Crear", "Asignacion", FormMethod.Post))
-    {
-
-        
+    {        
         <input type="text" hidden="hidden" name="TipoVehiculo" id="TipoVehiculo" />
         <section class="content home">
             <div class="container-fluid">
@@ -141,7 +139,7 @@
                                             <table class="table table-striped table-hover filterable" name="RequisicionProductos">
                                                 <thead>
                                                     <tr>
-                                                        <td><strong>Id</strong></td>
+                                                       
                                                         <td><strong>Nombre Chofer</strong></td>
                                                         <td><strong>Vehiculo</strong></td>
                                                         <td><strong>Acción</strong></td>
@@ -150,8 +148,9 @@
                                                 <tbody>
                                                     @foreach (var asign in ViewBag.Asignaciones)
                                                     {
+                                                        @asign.IdAsignacion = asign.IdAsignacion + 1;
                                                         <tr>
-                                                            <td>@asign.IdAsignacion </td>
+                                                            <td>@asign.IdAsignacion</td>
                                                             <td>@asign.Chofer </td>
                                                             <td>@asign.Vehiculo</td>
                                                             <td>
