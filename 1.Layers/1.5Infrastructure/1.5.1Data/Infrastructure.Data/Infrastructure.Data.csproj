@@ -73,28 +73,22 @@
   <ItemGroup>
     <Compile Include="Agentes\AgenteServicio.cs" />
     <Compile Include="DbContexts\Sagas.Context1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Sagas.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="DbContexts\Sagas.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Sagas.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="DbContexts\Sagas1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Sagas.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\GenericRepository.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="DbContexts\Sagas.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Sagas1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
@@ -104,21 +98,26 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DbContexts\Sagas.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Sagas.edmx</DependentUpon>
-      <LastGenOutput>Sagas.Context1.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EntityDeploy Include="DbContexts\Sagas.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Sagas1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\1.4Domain\1.4.2SagasMainModule\Sagas.MainModule\Sagas.MainModule.csproj">
       <Project>{ff128402-ecef-4aae-a189-3a61e225b25e}</Project>
       <Name>Sagas.MainModule</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DbContexts\Sagas.Context.tt">
+      <DependentUpon>Sagas.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Sagas.Context1.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

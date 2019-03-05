@@ -12,7 +12,7 @@ namespace Sagas.MainModule.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class RelTicketCFDI
+    public partial class CFDI
     {
         public int Id_RelTF { get; set; }
         public string Id_FolioVenta { get; set; }
@@ -27,6 +27,6 @@ namespace Sagas.MainModule.Entidades
         public string URLXml { get; set; }
     
         public virtual FormaPago CFormaPago { get; set; }
-        public virtual CMetodoPago CMetodoPago { get; set; }
+        public virtual MetodoPago CMetodoPago { get; set; }
     }
 }

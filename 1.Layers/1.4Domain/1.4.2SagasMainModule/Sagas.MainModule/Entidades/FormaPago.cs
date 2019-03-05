@@ -19,7 +19,7 @@ namespace Sagas.MainModule.Entidades
         {
             this.CProveedor = new HashSet<Proveedor>();
             this.Abono = new HashSet<Abono>();
-            this.RelTicketCFDI = new HashSet<RelTicketCFDI>();
+            this.CFDI = new HashSet<CFDI>();
         }
     
         public byte IdFormaPago { get; set; }
@@ -32,6 +32,6 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Abono> Abono { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RelTicketCFDI> RelTicketCFDI { get; set; }
+        public virtual ICollection<CFDI> CFDI { get; set; }
     }
 }

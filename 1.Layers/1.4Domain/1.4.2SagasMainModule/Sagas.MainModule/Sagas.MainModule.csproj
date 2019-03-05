@@ -130,6 +130,9 @@
     <Compile Include="Entidades\CentroCosto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\CFDI.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Cliente.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -137,9 +140,6 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\CMantenimiento.cs">
-      <DependentUpon>Sagas.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entidades\CMetodoPago.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\CTipoEgreso.cs">
@@ -182,6 +182,9 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\LineaProducto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\MetodoPago.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\OperadorChofer.cs">
@@ -233,9 +236,6 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\RegimenFiscal.cs">
-      <DependentUpon>Sagas.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entidades\RelTicketCFDI.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\ReporteDelDia.cs">

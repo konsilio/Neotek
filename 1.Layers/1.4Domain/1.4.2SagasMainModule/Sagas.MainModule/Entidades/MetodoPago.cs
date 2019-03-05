@@ -12,21 +12,21 @@ namespace Sagas.MainModule.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class CMetodoPago
+    public partial class MetodoPago
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CMetodoPago()
+        public MetodoPago()
         {
-            this.RelTicketCFDI = new HashSet<RelTicketCFDI>();
+            this.RelTicketCFDI = new HashSet<CFDI>();
         }
     
         public int Id_MetodoPago { get; set; }
-        public string MetodoPago { get; set; }
+        public string MetodoPagoSAT { get; set; }
         public string Descripcion { get; set; }
         public System.DateTime FechaIniVigencia { get; set; }
         public Nullable<System.DateTime> FechaFinVigencia { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RelTicketCFDI> RelTicketCFDI { get; set; }
+        public virtual ICollection<CFDI> RelTicketCFDI { get; set; }
     }
 }
