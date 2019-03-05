@@ -138,6 +138,8 @@ namespace Application.MainModule.Servicios.Catalogos
                 IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
                 IdCAlmacenGas = almacen.IdCAlmacenGas,
                 IdOperadorChofer = transporte.IdChofer,
+                FechaRegistro = DateTime.Now,
+                FechaModificacion = DateTime.Now,                
                 Activo = true,
             };
         }

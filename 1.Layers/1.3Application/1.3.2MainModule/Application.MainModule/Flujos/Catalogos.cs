@@ -1120,18 +1120,67 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var asig = AsignacionUtilitarioServicio.Buscar(vehiculoDto);
-            if (asig == null) AsignacionUtilitarioServicio.Existe();
+            if (asig != null) return AsignacionUtilitarioServicio.Existe();
 
-            if (vehiculoDto.TipoVehiculo.Equals(TipoUnidadEqTransporteEnum.Utilitario))
+            if (vehiculoDto.TipoVehiculo.Equals((short)TipoUnidadEqTransporteEnum.Utilitario))
             {
+                var chof = OperadorChoferServicio.ObtenerPorUsuario(vehiculoDto.IdChofer);
+                if (chof == null)
+                {
+                    var newChof = OperadorChoferServicio.CrearParaUtilitario();
+                    newChof.IdUsuario = vehiculoDto.IdChofer;
+                    var respChof = OperadorChoferServicio.Insertar(newChof);
+                    if (!resp.Exito) return respChof;
+                    else
+                        vehiculoDto.IdChofer = respChof.Id;
+                }
+                else
+                    vehiculoDto.IdChofer = chof.IdOperadorChofer;
                 var asignacion = EquipoTransporteServicio.GenerarAsignacion(vehiculoDto);
                 return AsignacionUtilitarioServicio.Crear(asignacion);
             }
             else
             {
-                var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(vehiculoDto.IdVehiculo);
-                var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
-                return PuntoVentaServicio.Insertar(npv);
+                RespuestaDto _respuesta = new RespuestaDto();
+                if (vehiculoDto.TipoVehiculo.Equals((short)TipoUnidadEqTransporteEnum.Camioneta))
+                {
+                    var idCam = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).SingleOrDefault(x => x.IdEquipoTransporte.Equals(vehiculoDto.IdVehiculo)).IdCamioneta;
+                    var almacen = AlmacenGasServicio.ObtenerPorCamioneta(idCam ?? 0);
+                    var chof = OperadorChoferServicio.ObtenerPorUsuario(vehiculoDto.IdChofer);
+                    if (chof == null)
+                    {
+                        var newChof = OperadorChoferServicio.CrearParaCamioneta();
+                        newChof.IdUsuario = vehiculoDto.IdChofer;
+                        var respChof = OperadorChoferServicio.Insertar(newChof);
+                        if (!resp.Exito) return respChof;
+                        else
+                            vehiculoDto.IdChofer = respChof.Id;
+                    }
+                    else
+                        vehiculoDto.IdChofer = chof.IdOperadorChofer;
+                    var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
+                    _respuesta = PuntoVentaServicio.Insertar(npv);
+                }
+                if (vehiculoDto.TipoVehiculo.Equals((short)TipoUnidadEqTransporteEnum.Pipa))
+                {
+                    var idPip = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdEquipoTransporte.Equals(vehiculoDto.IdVehiculo)).IdPipa;
+                    var almacen = AlmacenGasServicio.ObtenerPorPipa(idPip ?? 0);
+                    var chof = OperadorChoferServicio.ObtenerPorUsuario(vehiculoDto.IdChofer);
+                    if (chof == null)
+                    {
+                        var newChof = OperadorChoferServicio.CrearParaPipa();
+                        newChof.IdUsuario = vehiculoDto.IdChofer;
+                        var respChof = OperadorChoferServicio.Insertar(newChof);
+                        if (!resp.Exito) return respChof;
+                        else                        
+                            vehiculoDto.IdChofer = respChof.Id;                        
+                    }
+                    else
+                        vehiculoDto.IdChofer = chof.IdOperadorChofer;  
+                    var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
+                    _respuesta = PuntoVentaServicio.Insertar(npv);
+                }
+                return _respuesta;
             }
         }
         public RespuestaDto EliminarAsignacion(TransporteDTO vehiculoDto)

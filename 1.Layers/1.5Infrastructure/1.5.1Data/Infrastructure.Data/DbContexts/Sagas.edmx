@@ -3163,18 +3163,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AsignacionUtilitarios_COperadorChofer">
-          <End Role="COperadorChofer" Type="Self.COperadorChofer" Multiplicity="1" />
-          <End Role="AsignacionUtilitarios" Type="Self.AsignacionUtilitarios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="COperadorChofer">
-              <PropertyRef Name="IdOperadorChofer" />
-            </Principal>
-            <Dependent Role="AsignacionUtilitarios">
-              <PropertyRef Name="IdChoferOperador" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AsignacionUtilitarios_CUtilitario">
           <End Role="CUtilitario" Type="Self.CUtilitario" Multiplicity="1" />
           <End Role="AsignacionUtilitarios" Type="Self.AsignacionUtilitarios" Multiplicity="*" />
@@ -3196,6 +3184,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="AsignacionUtilitarios">
               <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AsignacionUtilitarios_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="AsignacionUtilitarios" Type="Self.AsignacionUtilitarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="AsignacionUtilitarios">
+              <PropertyRef Name="IdChoferOperador" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5674,16 +5674,16 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AlmacenSalidaProducto" EntitySet="AlmacenSalidaProducto" />
           </AssociationSet>
-          <AssociationSet Name="FK_AsignacionUtilitarios_COperadorChofer" Association="Self.FK_AsignacionUtilitarios_COperadorChofer">
-            <End Role="COperadorChofer" EntitySet="COperadorChofer" />
-            <End Role="AsignacionUtilitarios" EntitySet="AsignacionUtilitarios" />
-          </AssociationSet>
           <AssociationSet Name="FK_AsignacionUtilitarios_CUtilitario" Association="Self.FK_AsignacionUtilitarios_CUtilitario">
             <End Role="CUtilitario" EntitySet="CUtilitario" />
             <End Role="AsignacionUtilitarios" EntitySet="AsignacionUtilitarios" />
           </AssociationSet>
           <AssociationSet Name="FK_AsignacionUtilitarios_Empresa" Association="Self.FK_AsignacionUtilitarios_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="AsignacionUtilitarios" EntitySet="AsignacionUtilitarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AsignacionUtilitarios_Usuario" Association="Self.FK_AsignacionUtilitarios_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AsignacionUtilitarios" EntitySet="AsignacionUtilitarios" />
           </AssociationSet>
           <AssociationSet Name="FK_CAlmacenGas_AlmacenGas" Association="Self.FK_CAlmacenGas_AlmacenGas">
@@ -6665,6 +6665,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="VentaCajaGeneral" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario" FromRole="Usuario" ToRole="VentaCajaGeneral" />
           <NavigationProperty Name="VentaCajaGeneral1" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario1" FromRole="Usuario" ToRole="VentaCajaGeneral" />
           <NavigationProperty Name="VentaCorteAnticipoEC" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario" FromRole="Usuario" ToRole="VentaCorteAnticipoEC" />
+          <NavigationProperty Name="AsignacionUtilitarios" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_Usuario" FromRole="Usuario" ToRole="AsignacionUtilitarios" />
           <!--<NavigationProperty Name="Requisiciones" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario" FromRole="Usuario" ToRole="Requisicion" />
           <NavigationProperty Name="RequisicionAutorizacion" Relationship="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Usuario" FromRole="Usuario" ToRole="RequisicionAutorizacion" />-->
           <!--<NavigationProperty Name="UsuarioContacto" Relationship="Self.FK_UsuarioContacto_Usuario" FromRole="Usuario" ToRole="UsuarioContacto" />
@@ -7937,10 +7938,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="EquipoTransporte" EntitySet="EquipoTransporte" />
           </AssociationSet>-->
           <EntitySet Name="AsignacionUtilitarios" EntityType="Sagas.MainModuleModel.AsignacionUtilitarios" />
-          <AssociationSet Name="FK_AsignacionUtilitarios_COperadorChofer" Association="Sagas.MainModuleModel.FK_AsignacionUtilitarios_COperadorChofer">
+          <!--<AssociationSet Name="FK_AsignacionUtilitarios_COperadorChofer" Association="Sagas.MainModuleModel.FK_AsignacionUtilitarios_COperadorChofer">
             <End Role="OperadorChofer" EntitySet="OperadorChofer" />
             <End Role="AsignacionUtilitarios" EntitySet="AsignacionUtilitarios" />
-          </AssociationSet>
+          </AssociationSet>-->
           <AssociationSet Name="FK_AsignacionUtilitarios_CUtilitario" Association="Sagas.MainModuleModel.FK_AsignacionUtilitarios_CUtilitario">
             <End Role="CUtilitario" EntitySet="Utilitario" />
             <End Role="AsignacionUtilitarios" EntitySet="AsignacionUtilitarios" />
@@ -7968,6 +7969,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_CDetalleEquipoTransporte_Empresa" Association="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CDetalleEquipoTransporte" EntitySet="DetalleEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AsignacionUtilitarios_Usuario" Association="Sagas.MainModuleModel.FK_AsignacionUtilitarios_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="AsignacionUtilitarios" EntitySet="AsignacionUtilitarios" />
           </AssociationSet>       
         </EntityContainer>
         <EntityType Name="Requisicion">
@@ -10522,7 +10527,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="VentaCorteAnticipoEC" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_COperadorChofer" FromRole="OperadorChofer" ToRole="VentaCorteAnticipoEC" />
           <NavigationProperty Name="VentaMovimiento" Relationship="Sagas.MainModuleModel.FK_VentaMovimiento_COperadorChofer" FromRole="OperadorChofer" ToRole="VentaMovimiento" />
           <NavigationProperty Name="VentaPuntoDeVenta" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_COperadorChofer" FromRole="OperadorChofer" ToRole="VentaPuntoDeVenta" />
-          <NavigationProperty Name="AsignacionUtilitarios" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_COperadorChofer" FromRole="OperadorChofer" ToRole="AsignacionUtilitarios" />
+          <!--<NavigationProperty Name="AsignacionUtilitarios" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_COperadorChofer" FromRole="OperadorChofer" ToRole="AsignacionUtilitarios" />-->
         </EntityType>
         <EntityType Name="PuntoVenta">
           <Key>
@@ -12352,11 +12357,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="FechaMdidificacion" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="COperadorChofer" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_COperadorChofer" FromRole="AsignacionUtilitarios" ToRole="OperadorChofer" />
+          <!--<NavigationProperty Name="COperadorChofer" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_COperadorChofer" FromRole="AsignacionUtilitarios" ToRole="OperadorChofer" />-->
           <NavigationProperty Name="CUtilitario" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_CUtilitario" FromRole="AsignacionUtilitarios" ToRole="CUtilitario" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_Empresa" FromRole="AsignacionUtilitarios" ToRole="Empresa" />
+          <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_Usuario" FromRole="AsignacionUtilitarios" ToRole="Usuario" />
         </EntityType>
-        <Association Name="FK_AsignacionUtilitarios_COperadorChofer">
+        <!--<Association Name="FK_AsignacionUtilitarios_COperadorChofer">
           <End Type="Sagas.MainModuleModel.OperadorChofer" Role="OperadorChofer" Multiplicity="1" />
           <End Type="Sagas.MainModuleModel.AsignacionUtilitarios" Role="AsignacionUtilitarios" Multiplicity="*" />
           <ReferentialConstraint>
@@ -12367,7 +12373,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="IdChoferOperador" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
+        </Association>-->
         <Association Name="FK_AsignacionUtilitarios_CUtilitario">
           <End Type="Sagas.MainModuleModel.CUtilitario" Role="CUtilitario" Multiplicity="1" />
           <End Type="Sagas.MainModuleModel.AsignacionUtilitarios" Role="AsignacionUtilitarios" Multiplicity="*" />
@@ -12449,6 +12455,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="CDetalleEquipoTransporte">
               <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AsignacionUtilitarios_Usuario">
+          <End Type="Sagas.MainModuleModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AsignacionUtilitarios" Role="AsignacionUtilitarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="AsignacionUtilitarios">
+              <PropertyRef Name="IdChoferOperador" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

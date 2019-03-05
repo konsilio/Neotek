@@ -1,7 +1,9 @@
-﻿using Application.MainModule.Servicios.AccesoADatos;
+﻿using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,41 @@ namespace Application.MainModule.Servicios.Catalogos
 {
     public static class OperadorChoferServicio
     {
+        public static RespuestaDto Insertar(OperadorChofer oc)
+        {
+            return new OperadorChoferDataAccess().Insertar(oc);
+        }
+        public static OperadorChofer CrearParaPipa()
+        {
+            return new OperadorChofer()
+            {
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
+                IdTipoOperadorChofer = TipoOperadorChoferEnum.Chofer,
+                Activo = true,
+                FechaRegistro = DateTime.Now,
+            };
+        }
+        public static OperadorChofer CrearParaCamioneta()
+        {
+            return new OperadorChofer()
+            {
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
+                IdTipoOperadorChofer = TipoOperadorChoferEnum.Chofer,
+                Activo = true,
+                FechaRegistro = DateTime.Now,
+            };
+        }
+        public static OperadorChofer CrearParaUtilitario()
+        {
+            return new OperadorChofer()
+            {
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
+                IdTipoOperadorChofer = TipoOperadorChoferEnum.Operador,
+                Activo = true,
+                FechaRegistro = DateTime.Now,
+            };
+        }
+
         public static OperadorChofer Obtener(int idOperadorChofer)
         {
             return new OperadorChoferDataAccess().Buscar(idOperadorChofer);

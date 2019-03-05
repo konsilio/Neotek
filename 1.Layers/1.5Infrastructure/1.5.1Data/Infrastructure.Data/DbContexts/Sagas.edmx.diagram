@@ -333,6 +333,7 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AsignacionUtilitarios_CUtilitario" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AsignacionUtilitarios_Empresa" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AsignacionUtilitarios_Usuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

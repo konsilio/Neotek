@@ -10772,6 +10772,7 @@
     <Content Include="Resources\css\toggleCl.css" />
     <Content Include="Resources\css\tooltip.css" />
     <Content Include="Resources\img\ccte.png" />
+    <Content Include="Resources\js\Asignacion.js" />
     <Content Include="Resources\js\CajaGeneral.js" />
     <Content Include="Resources\js\Clientes.js" />
     <Content Include="Resources\js\Cobranza.js" />
