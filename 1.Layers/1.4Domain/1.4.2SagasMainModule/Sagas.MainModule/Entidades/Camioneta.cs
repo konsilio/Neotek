@@ -32,6 +32,8 @@ namespace Sagas.MainModule.Entidades
         public bool Activo { get; set; }
         public bool EsForaneo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public string Serie { get; set; }
+        public Nullable<int> Folio { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnidadAlmacenGas> UnidadAlmacenGas { get; set; }

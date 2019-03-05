@@ -38,7 +38,7 @@
 
                 var operacion = parseFloat(precio) + parseFloat(utilidad) + parseFloat(flete);
 
-                $("#IdPrecioSalidaKg").val(operacion)
+                $("#IdPrecioSalidaKg").val(operacion.toFixed(2))
 
                 //$("#IDPrecioSalidaKg").val(operacion);
                 // alert($('#IdPrecioSalidaKg').val());
@@ -50,8 +50,8 @@
                 }
 
                 $.getJSON(url, { idEmpresa: id }, function (data) {
-                    var factor = (precio + flete) - data;
-                    $("#IdPrecioSalidaLt").val(factor)
+                    var factor = (parseFloat(precio) + parseFloat(flete)) - parseFloat(data);
+                    $("#IdPrecioSalidaLt").val(factor.toFixed(2))
                 });
 
                 /**********/
