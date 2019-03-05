@@ -29,6 +29,7 @@ namespace Sagas.MainModule.Entidades
             this.VentaCajaGeneral = new HashSet<VentaCajaGeneral>();
             this.VentaCajaGeneral1 = new HashSet<VentaCajaGeneral>();
             this.VentaCorteAnticipoEC = new HashSet<VentaCorteAnticipoEC>();
+            this.AsignacionUtilitarios = new HashSet<AsignacionUtilitarios>();
         }
     
         public int IdUsuario { get; set; }
@@ -92,5 +93,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<VentaCajaGeneral> VentaCajaGeneral1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VentaCorteAnticipoEC> VentaCorteAnticipoEC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AsignacionUtilitarios> AsignacionUtilitarios { get; set; }
     }
 }

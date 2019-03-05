@@ -1120,9 +1120,9 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var asig = AsignacionUtilitarioServicio.Buscar(vehiculoDto);
-            if (asig == null) AsignacionUtilitarioServicio.Existe();
+            if (asig != null) return AsignacionUtilitarioServicio.Existe();
 
-            if (vehiculoDto.TipoVehiculo.Equals(TipoUnidadEqTransporteEnum.Utilitario))
+            if (vehiculoDto.TipoVehiculo.Equals((short)TipoUnidadEqTransporteEnum.Utilitario))
             {
                 var asignacion = EquipoTransporteServicio.GenerarAsignacion(vehiculoDto);
                 return AsignacionUtilitarioServicio.Crear(asignacion);
@@ -1130,15 +1130,17 @@ namespace Application.MainModule.Flujos
             else
             {
                 RespuestaDto _respuesta = new RespuestaDto();
-                if (vehiculoDto.TipoVehiculo.Equals(TipoUnidadEqTransporteEnum.Camioneta))
+                if (vehiculoDto.TipoVehiculo.Equals((short)TipoUnidadEqTransporteEnum.Camioneta))
                 {
-                    var almacen = AlmacenGasServicio.ObtenerPorCamioneta(vehiculoDto.IdVehiculo);
+                    var idCam = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).SingleOrDefault(x => x.IdEquipoTransporte.Equals(vehiculoDto.IdVehiculo)).IdCamioneta;
+                    var almacen = AlmacenGasServicio.ObtenerPorCamioneta(idCam ?? 0);
                     var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
                     _respuesta = PuntoVentaServicio.Insertar(npv);
                 }
-                if (vehiculoDto.TipoVehiculo.Equals(TipoUnidadEqTransporteEnum.Pipa))
+                if (vehiculoDto.TipoVehiculo.Equals((short)TipoUnidadEqTransporteEnum.Pipa))
                 {
-                    var almacen = AlmacenGasServicio.ObtenerPorPipa(vehiculoDto.IdVehiculo);
+                    var idPip = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa());
+                    var almacen = AlmacenGasServicio.ObtenerPorPipa(1);
                     var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
                     _respuesta = PuntoVentaServicio.Insertar(npv);
                 }

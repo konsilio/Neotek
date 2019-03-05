@@ -34,6 +34,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+            model.IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
             var respuesta = TransporteServicio.GuardarAsignacion(model, tkn);
             TempData["RespuestaDTO"] = respuesta;
             return RedirectToAction("Index");
