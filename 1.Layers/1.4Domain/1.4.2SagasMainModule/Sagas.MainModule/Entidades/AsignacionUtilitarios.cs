@@ -22,8 +22,8 @@ namespace Sagas.MainModule.Entidades
         public bool Activo { get; set; }
         public System.DateTime FechaCreacion { get; set; }
     
-        public virtual OperadorChofer COperadorChofer { get; set; }
         public virtual CUtilitario CUtilitario { get; set; }
         public virtual Empresa Empresa { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

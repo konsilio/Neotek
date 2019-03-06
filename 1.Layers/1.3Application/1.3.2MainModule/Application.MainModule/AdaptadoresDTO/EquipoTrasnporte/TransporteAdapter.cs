@@ -44,7 +44,7 @@ namespace Application.MainModule.AdaptadoresDTO
             TransporteDTO t = new TransporteDTO();
             t.IdChofer = ut.IdChoferOperador;
             t.IdEmpresa = ut.IdEmpresa;
-            t.Chofer = ut.COperadorChofer.Usuario.Nombre;
+            t.Chofer = ut.Usuario.Nombre;
             t.IdVehiculo = Convert.ToInt16(ut.IdUtilitario);
             t.Vehiculo = VehiculoUtilitarioServicio.ObtenerNombre(ut.IdUtilitario);
             t.TipoVehiculo = (short)TipoUnidadEqTransporteEnum.Utilitario;

@@ -130,6 +130,9 @@
     <Compile Include="Entidades\CentroCosto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\CFDI.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Cliente.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -179,6 +182,9 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\LineaProducto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\MetodoPago.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\OperadorChofer.cs">
@@ -339,6 +345,7 @@
     <Compile Include="ObjetosValor\Enum\TipoEventoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoMedidorGasEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoMovimientoEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoOperadorChoferEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoUnidadAlmacenGasEnum.cs" />
