@@ -242,6 +242,7 @@
     <Compile Include="App_Code\AlmacenServicio.cs" />
     <Compile Include="App_Code\AutenticacionServicio.cs" />
     <Compile Include="App_Code\CobranzaServicio.cs" />
+    <Compile Include="App_Code\FacturacionServicio.cs" />
     <Compile Include="App_Code\OrdenCompraServicio.cs" />
     <Compile Include="App_Code\PedidosServicio.cs" />
     <Compile Include="App_Code\RequisicionServicio.cs" />
@@ -265,6 +266,7 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\EquipoTransporteController.cs" />
+    <Compile Include="Controllers\FacturacionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MantenimientoController.cs" />
@@ -346,6 +348,7 @@
     <Compile Include="Models\Cobranza\CargosModel.cs" />
     <Compile Include="Models\Cobranza\CarteraVencidaModel.cs" />
     <Compile Include="Models\Cobranza\ReporteModel.cs" />
+    <Compile Include="Models\Facturacion\FacturacionModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImagenDTO.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -11596,6 +11599,8 @@
     <Content Include="Views\Mantenimiento\Index.cshtml" />
     <Content Include="Views\RecargaCombustibles\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolSistemaVenta.cshtml" />
+    <Content Include="Views\Facturacion\Index.cshtml" />
+    <Content Include="Views\Facturacion\Facturar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

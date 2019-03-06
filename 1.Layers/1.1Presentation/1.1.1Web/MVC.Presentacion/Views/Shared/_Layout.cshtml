@@ -83,6 +83,12 @@
                     @if (Session["Perfil"] != null)
                     {
                         <li class="menu_dark"><a href="@Url.Action("Inicio", "Home")"><i class="material-icons">dashboard</i> <span class="icon-name">Dashboard</span></a></li>
+                         <li>
+                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">drive_eta</i><span>Facturación</span> </a>
+                            <ul class="ml-menu">
+                                <li>@Html.ActionLink("Autoservicio", "Index", "Facturacion")</li>                                
+                            </ul>
+                        </li>
                         <li class="menu_dark"><a href="@Url.Action("Requisiciones", "Requisicion")"><i class="material-icons">feedback </i><span class="icon-name">Requisición</span> </a></li>
                         @*<li>
                             <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">monetization_on</i><span>Crédito y Cobranza</span> </a>
