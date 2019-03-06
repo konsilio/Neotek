@@ -171,14 +171,14 @@
                                        {
                                            settings.Name = "cliente.Locacion.IdEstadoRep";
                                            settings.Width = 180;
-                                           settings.SelectedIndex = Model.cliente.Locacion.IdEstadoRep.Value;
+                                           settings.SelectedIndex = Model.cliente.Locacion.IdEstadoRep;
                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                            settings.Theme = "Material";
                                            settings.Properties.TextField = "Estado";
                                            settings.Properties.ValueField = "IdEstadoRep";
                                            settings.Properties.ValueType = typeof(byte?);
-                                       }).BindList(ViewBag.ListaEstados).Bind(Model.cliente.Locacion.IdEstadoRep.Value).GetHtml()
+                                       }).BindList(ViewBag.ListaEstados).Bind(Model.cliente.Locacion.IdEstadoRep).GetHtml()
                                             @*@Html.ValidationMessageFor(m => m.cliente.Locacion.IdEstadoRep, "", new { @class = "alert-danger" })*@
                                         </div>
                                     </div>

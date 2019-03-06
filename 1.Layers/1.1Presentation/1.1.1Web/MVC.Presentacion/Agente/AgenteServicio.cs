@@ -2,6 +2,7 @@
 using MVC.Presentacion.Models.Almacen;
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Cobranza;
+using MVC.Presentacion.Models.Facturacion;
 using MVC.Presentacion.Models.OrdenCompra;
 using MVC.Presentacion.Models.Pedidos;
 using MVC.Presentacion.Models.Requisicion;
@@ -108,7 +109,7 @@ namespace MVC.Presentacion.Agente
         public List<MantenimientoDetalleModel> _ListaMantenimientoDetalle;
         public List<AsignacionModel> _ListaAsignaciones;
         public List<MedidorDTO> _ListaMedidores;
-
+        public List<FacturacionModel> _ListainfoTicket;
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -4259,7 +4260,43 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
+        #region Faturacion
+        public void ListaCargosFilter(FacturacionModel _mod, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["Putpending...."];
+            InfoTickets(_mod, ApiCatalgos, token).Wait();
+        }
+        private async Task InfoTickets(FacturacionModel _mod, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<FacturacionModel> cargos = new List<FacturacionModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(api, _mod).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        cargos = await response.Content.ReadAsAsync<List<FacturacionModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    cargos = new List<FacturacionModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
 
+                _ListainfoTicket = cargos;
+            }
+        }
+        #endregion
         private async Task LLamada<T>(T _dto, string token, string Tipo)
         {
             using (var client = new HttpClient())
