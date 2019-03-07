@@ -37,23 +37,30 @@ namespace Application.MainModule.Servicios.Facturacion
         }
         public static Receptor datosReceptor(CFDIDTO dto)
         {
-            var _cliente = ClienteServicio.BuscarClientePorRFC("");
+            var _cliente = PuntoVentaServicio.Obtener(dto.Id_FolioVenta).CCliente;
             return new Receptor()
             {
                 Nombre = _cliente.Nombre + " " + _cliente.Apellido1 + " " + _cliente.Apellido2,
                 Rfc = _cliente.Rfc,
-                 UsoCFDI = dto.UsoCFDI
+                UsoCFDI = dto.UsoCFDI,
             };
         }
-        public static List<Concepto> DatosConceptos()
+        public static List<Concepto> DatosConceptos(CFDIDTO dto)
         {
             List<Concepto> _conceptos = new List<Concepto>();
-            _conceptos.Add(DatosConceptos(1));
+            var venta = PuntoVentaServicio.Obtener(dto.Id_FolioVenta).VentaPuntoDeVentaDetalle;
+            foreach (var detalle in venta)
+            {
+                _conceptos.Add(DatosConceptos(detalle));
+            }            
             return _conceptos;
         }
-        public static Concepto DatosConceptos(int id)
+        public static Concepto DatosConceptos(VentaPuntoDeVentaDetalle det)
         {
-            return new Concepto() { };
+            return new Concepto()
+            {
+                ClaveProdServ = det.
+            };
         }
     }
 }
