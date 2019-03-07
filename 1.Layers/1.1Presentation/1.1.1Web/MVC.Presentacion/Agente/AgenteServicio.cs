@@ -2354,15 +2354,12 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                if (Placas != ""&& Placas != null)
-                {
+                if (Placas != ""&& Placas != null)                
                     pedidos = (from x in pedidos where x.Placas == Placas select x).ToList();
-                }
 
-                if (Nombre != "" && Nombre != null)
-                {
-                    pedidos = (from x in pedidos where x.Descripcion.Contains(Nombre) select x).ToList();
-                }
+                if (Nombre != "" && Nombre != null)                
+                    pedidos = (from x in pedidos where x.AliasUnidad.Contains(Nombre) select x).ToList();
+                
 
                 _ListaVehiculos = pedidos;
             }
