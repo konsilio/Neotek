@@ -298,6 +298,9 @@
     <Compile Include="Entidades\UnidadMedida.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\UsoCFDI.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Usuario.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>

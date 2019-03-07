@@ -1364,6 +1364,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="CUsoCFDI">
+          <Key>
+            <PropertyRef Name="Id_UsoCFDI" />
+          </Key>
+          <Property Name="Id_UsoCFDI" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsoCFDISAT" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PersonaFisica" Type="bit" Nullable="false" />
+          <Property Name="PersonaMoral" Type="bit" Nullable="false" />
+          <Property Name="FechaIniVigencia" Type="datetime" />
+          <Property Name="FechaFinVigencia" Type="datetime" />
+        </EntityType>
         <EntityType Name="CUtilitario">
           <Key>
             <PropertyRef Name="IdUtilitario" />
@@ -5407,6 +5419,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="CTipoMovimiento" EntityType="Self.CTipoMovimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTipoOperadorChofer" EntityType="Self.CTipoOperadorChofer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTipoPersona" EntityType="Self.CTipoPersona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUsoCFDI" EntityType="Self.CUsoCFDI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CUtilitario" EntityType="Self.CUtilitario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleMantenimiento" EntityType="Self.DetalleMantenimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleRecargaCombustible" EntityType="Self.DetalleRecargaCombustible" Schema="dbo" store:Type="Tables" />
@@ -8049,7 +8062,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_RelTicketCFDI_CMetodoPago" Association="Sagas.MainModuleModel.FK_RelTicketCFDI_CMetodoPago">
             <End Role="MetodoPago" EntitySet="MetodoPago" />
             <End Role="CFDI" EntitySet="CFDI" />
-          </AssociationSet>       
+          </AssociationSet>
+          <EntitySet Name="UsoCFDI" EntityType="Sagas.MainModuleModel.UsoCFDI" />       
         </EntityContainer>
         <EntityType Name="Requisicion">
           <Key>
@@ -12479,6 +12493,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UsoCFDI">
+          <Key>
+            <PropertyRef Name="Id_UsoCFDI" />
+          </Key>
+          <Property Name="Id_UsoCFDI" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsoCFDISAT" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PersonaFisica" Type="Boolean" Nullable="false" />
+          <Property Name="PersonaMoral" Type="Boolean" Nullable="false" />
+          <Property Name="FechaIniVigencia" Type="DateTime" Precision="3" />
+          <Property Name="FechaFinVigencia" Type="DateTime" Precision="3" />
+        </EntityType>
         
         
         
@@ -14632,6 +14658,19 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="Id_FormaPago" ColumnName="Id_FormaPago" />
                 <ScalarProperty Name="Id_FolioVenta" ColumnName="Id_FolioVenta" />
                 <ScalarProperty Name="Id_RelTF" ColumnName="Id_RelTF" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsoCFDI">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.UsoCFDI">
+              <MappingFragment StoreEntitySet="CUsoCFDI">
+                <ScalarProperty Name="FechaFinVigencia" ColumnName="FechaFinVigencia" />
+                <ScalarProperty Name="FechaIniVigencia" ColumnName="FechaIniVigencia" />
+                <ScalarProperty Name="PersonaMoral" ColumnName="PersonaMoral" />
+                <ScalarProperty Name="PersonaFisica" ColumnName="PersonaFisica" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="UsoCFDISAT" ColumnName="UsoCFDISAT" />
+                <ScalarProperty Name="Id_UsoCFDI" ColumnName="Id_UsoCFDI" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
