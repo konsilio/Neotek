@@ -15,7 +15,7 @@ namespace Application.MainModule.Servicios
         {
             return new UsoCFDIDataAccess().Insertar(entidad);
         }
-        public static RespuestaDto Actuualizar(UsoCFDI entidad)
+        public static RespuestaDto Actualizar(UsoCFDI entidad)
         {
             return new UsoCFDIDataAccess().Actualizar(entidad);
         }

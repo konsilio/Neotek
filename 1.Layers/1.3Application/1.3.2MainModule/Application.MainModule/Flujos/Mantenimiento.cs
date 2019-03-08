@@ -38,7 +38,7 @@ namespace Application.MainModule.Flujos
 
             var entidad = MantenimientoServicio.Buscar(dto.Id_Mantenimiento);
             var emty = MantenimientoAdapter.FormEmtity(entidad);
-            return MantenimientoServicio.Actuualizar(emty);
+            return MantenimientoServicio.Actualizar(emty);
         }
         public RespuestaDto EliminarCatalogo(MantenimientoDTO dto)
         {
@@ -48,7 +48,7 @@ namespace Application.MainModule.Flujos
             var entidad = MantenimientoServicio.Buscar(dto.Id_Mantenimiento);
             var emty = MantenimientoAdapter.FormEmtity(entidad);
             emty.Activo = false;
-            return MantenimientoServicio.Actuualizar(emty);
+            return MantenimientoServicio.Actualizar(emty);
         }
         public List<MantenimientoDetalleDTO> Todo()
         { 

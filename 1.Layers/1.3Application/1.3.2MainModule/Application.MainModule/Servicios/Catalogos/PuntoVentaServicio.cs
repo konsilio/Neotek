@@ -9,13 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile.Cortes;
+using Application.MainModule.Servicios.Almacenes;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
     public static class PuntoVentaServicio
     {
         public static List<PuntoVentaDTO> Obtener()
-        {            
+        {
             List<PuntoVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PuntoVentaAdapter.ToDTO(new PuntoVentaDataAccess().BuscarTodos());
             return lPventas;
         }
@@ -25,10 +26,11 @@ namespace Application.MainModule.Servicios.Catalogos
             return new PuntoVentaDataAccess().Buscar(idPuntoVenta);
         }
 
+
         public static OperadorChoferDTO ObtenerOperador(int idUsuario)
         {
             OperadorChoferDTO lPventas = AdaptadoresDTO.Catalogo.OperadorChoferAdapter.ToOperador(new PuntoVentaDataAccess().BuscarPorUsuario(idUsuario));
-            return lPventas;         
+            return lPventas;
         }
 
         public static List<OperadorChoferDTO> ObtenerUsuariosOperador(short idEmpresa)
@@ -119,14 +121,14 @@ namespace Application.MainModule.Servicios.Catalogos
             return new PuntoVentaDataAccess().InesertarVentaGeneral(corteCajaGeneral);
         }
 
-        public static List<VentaPuntoDeVenta> ObtenerVentasContado(int idPuntoVenta,DateTime fecha)
+        public static List<VentaPuntoDeVenta> ObtenerVentasContado(int idPuntoVenta, DateTime fecha)
         {
-            return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta,fecha);
+            return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta, fecha);
         }
 
-        public static List<VentaPuntoDeVenta> ObtenerVentasCredito(int idPuntoVenta,DateTime fecha)
+        public static List<VentaPuntoDeVenta> ObtenerVentasCredito(int idPuntoVenta, DateTime fecha)
         {
-            return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta,fecha,true);
+            return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta, fecha, true);
         }
 
         public static List<VentaCorteAnticipoEC> ObtenerAnticipos(UnidadAlmacenGas unidadEstacion)
@@ -176,7 +178,7 @@ namespace Application.MainModule.Servicios.Catalogos
         /// <param name="year">Año en que se relizo la venta </param>
         /// <param name="idCAlmacenGas">Id del CAlmacenGas del que se consulta </param>
         /// <returns>Retornara un objeto de tipo VentaCorteAnticipoEC con la respuesta de este </returns>
-        public static VentaCorteAnticipoEC  buscarCorte(DateTime fecha, short idCAlmacenGas)
+        public static VentaCorteAnticipoEC buscarCorte(DateTime fecha, short idCAlmacenGas)
         {
             return new PuntoVentaDataAccess().BuscarCorte(fecha, idCAlmacenGas);
         }
@@ -200,6 +202,28 @@ namespace Application.MainModule.Servicios.Catalogos
         public static RespuestaDto RegistarReporteDia(ReporteDelDia reporteEntity)
         {
             return new PuntoVentaDataAccess().RegistrarReporteDia(reporteEntity);
+        }
+        public static string ObtenerSerie(int idPuntoVenta)
+        {
+            var almacen = Obtener(idPuntoVenta).UnidadesAlmacen;
+            if (almacen.IdPipa != null)
+                return almacen.Pipa.Serie;
+            if (almacen.IdCamioneta != null)
+                return almacen.Camioneta.Serie;
+            if (almacen.IdEstacionCarburacion != null)
+                return almacen.EstacionCarburacion.Serie;
+            return string.Empty;
+        }
+        public static string ObtenerFolio(int idPuntoVenta)
+        {
+            var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(Obtener(idPuntoVenta).IdCAlmacenGas);
+            if (almacen.IdPipa != null)
+                return almacen.Pipa.Folio != null ? (almacen.Pipa.Folio.Value + 1).ToString() : "1";
+            if (almacen.IdCamioneta != null)
+                return almacen.Camioneta.Folio != null ? (almacen.Camioneta.Folio.Value + 1).ToString() : "1";
+            if (almacen.IdEstacionCarburacion != null)
+                return almacen.EstacionCarburacion.Folio != null ? (almacen.EstacionCarburacion.Folio.Value + 1).ToString() : "1";
+            return string.Empty;
         }
     }
 }

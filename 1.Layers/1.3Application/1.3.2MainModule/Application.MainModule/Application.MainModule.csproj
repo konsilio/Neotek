@@ -80,7 +80,7 @@
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\MantenimientoDetalleAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\RecargaCombustibleAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\TransporteAdapter.cs" />
-    <Compile Include="AdaptadoresDTO\Facturacion\CDFIAdapater.cs" />
+    <Compile Include="AdaptadoresDTO\Facturacion\CDFIAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Facturacion\MetodoPagoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Facturacion\UsoCFDIAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />

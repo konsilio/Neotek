@@ -68,7 +68,6 @@ namespace Application.MainModule.Servicios.Catalogos
                 return entidad.CUtilitario.Activo;
             return false;
         }
-
         public static string ObtenerNumero(short idEmpresa, short idCAlmacenGas)
         {
             if (idEmpresa != 0)

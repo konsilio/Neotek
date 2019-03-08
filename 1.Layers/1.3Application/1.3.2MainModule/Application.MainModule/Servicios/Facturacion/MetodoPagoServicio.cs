@@ -15,7 +15,7 @@ namespace Application.MainModule.Servicios.Facturacion
         {
             return new MetodoPagoDataAccess().Insertar(entidad);
         }
-        public static RespuestaDto Actuualizar(MetodoPago entidad)
+        public static RespuestaDto Actualizar(MetodoPago entidad)
         {
             return new MetodoPagoDataAccess().Actualizar(entidad);
         }

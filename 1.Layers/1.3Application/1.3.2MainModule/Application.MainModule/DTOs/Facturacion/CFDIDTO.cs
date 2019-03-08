@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.MainModule.DTOs.Respuesta;
+using System;
 
 namespace Application.MainModule.DTOs
 {
@@ -16,5 +17,6 @@ namespace Application.MainModule.DTOs
         public string Serie { get; set; }
         public string URLPdf { get; set; }
         public string URLXml { get; set; }
+        public RespuestaDto RespuestaTimbrado { get; set; }
     }
 }
