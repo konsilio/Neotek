@@ -52,14 +52,32 @@ namespace Application.MainModule.Servicios.Facturacion
             foreach (var detalle in venta)
             {
                 _conceptos.Add(DatosConceptos(detalle));
-            }            
+            }
             return _conceptos;
         }
         public static Concepto DatosConceptos(VentaPuntoDeVentaDetalle det)
         {
+            List<ImpuestoConceptoTrasladado> _impuesto = new List<ImpuestoConceptoTrasladado>();
+            ImpuestoConceptoTrasladado iva = new ImpuestoConceptoTrasladado();
+
+            iva.Base = (float)((det.PrecioUnitarioKg ?? det.PrecioUnitarioProducto) * det.CantidadProducto);
+            iva.Impuesto = "002";
+            iva.TipoFactor = "Tasa";
+            iva.TasaOCuota = 0.16F;
+            iva.Importe = (float)((det.PrecioUnitarioKg ?? det.PrecioUnitarioProducto) * det.CantidadProducto) * iva.TasaOCuota;
+            _impuesto.Add(iva);
+
             return new Concepto()
             {
-                ClaveProdServ = det.
+                ClaveProdServ = "01010101",
+                NoIdentificacion = det.IdProducto.ToString(),
+                Cantidad = (float)det.CantidadProducto,
+                ClaveUnidad = det.UnidadMedida,
+                Unidad = "Pieza",
+                ValorUnitario = (float)(det.PrecioUnitarioKg ?? det.PrecioUnitarioProducto),
+                Descripcion = det.ProductoDescripcion,
+                Importe = (float)((det.PrecioUnitarioKg ?? det.PrecioUnitarioProducto) * det.CantidadProducto),
+                ImpuestoConceptoTrasladado = _impuesto.ToArray(),
             };
         }
     }
