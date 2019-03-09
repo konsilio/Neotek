@@ -1141,6 +1141,7 @@
           <Property Name="UrlImagen" Type="varchar" MaxLength="350" />
           <Property Name="PathImagen" Type="varchar" MaxLength="350" />
           <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="ClaveProdServ" Type="varchar" MaxLength="10" />
           <Property Name="FechaRegistro" Type="smalldatetime" />
         </EntityType>
         <!--Errores durante la generación:
@@ -3707,18 +3708,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CDetalleEquipoTransporte_CUtilitario">
-          <End Role="CUtilitario" Type="Self.CUtilitario" Multiplicity="0..1" />
-          <End Role="CDetalleEquipoTransporte" Type="Self.CDetalleEquipoTransporte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CUtilitario">
-              <PropertyRef Name="IdUtilitario" />
-            </Principal>
-            <Dependent Role="CDetalleEquipoTransporte">
-              <PropertyRef Name="IdUtilitario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CDetalleEquipoTransporte_Empresa">
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
           <End Role="CDetalleEquipoTransporte" Type="Self.CDetalleEquipoTransporte" Multiplicity="*" />
@@ -4281,18 +4270,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DetalleRecargaCombustible_CCamioneta">
-          <End Role="CCamioneta" Type="Self.CCamioneta" Multiplicity="1" />
-          <End Role="DetalleRecargaCombustible" Type="Self.DetalleRecargaCombustible" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CCamioneta">
-              <PropertyRef Name="IdCamioneta" />
-            </Principal>
-            <Dependent Role="DetalleRecargaCombustible">
-              <PropertyRef Name="Id_Vehiculo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DetalleRecargaCombustible_CCombustible">
           <End Role="CCombustible" Type="Self.CCombustible" Multiplicity="1" />
           <End Role="DetalleRecargaCombustible" Type="Self.DetalleRecargaCombustible" Multiplicity="*" />
@@ -4302,18 +4279,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="DetalleRecargaCombustible">
               <PropertyRef Name="IdTipoCombustible" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DetalleRecargaCombustible_CPipa">
-          <End Role="CPipa" Type="Self.CPipa" Multiplicity="1" />
-          <End Role="DetalleRecargaCombustible" Type="Self.DetalleRecargaCombustible" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CPipa">
-              <PropertyRef Name="IdPipa" />
-            </Principal>
-            <Dependent Role="DetalleRecargaCombustible">
-              <PropertyRef Name="Id_Vehiculo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5896,10 +5861,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CPipa" EntitySet="CPipa" />
             <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
           </AssociationSet>
-          <AssociationSet Name="FK_CDetalleEquipoTransporte_CUtilitario" Association="Self.FK_CDetalleEquipoTransporte_CUtilitario">
-            <End Role="CUtilitario" EntitySet="CUtilitario" />
-            <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
-          </AssociationSet>
           <AssociationSet Name="FK_CDetalleEquipoTransporte_Empresa" Association="Self.FK_CDetalleEquipoTransporte_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CDetalleEquipoTransporte" EntitySet="CDetalleEquipoTransporte" />
@@ -6084,16 +6045,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CPipa" EntitySet="CPipa" />
             <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
           </AssociationSet>
-          <AssociationSet Name="FK_DetalleRecargaCombustible_CCamioneta" Association="Self.FK_DetalleRecargaCombustible_CCamioneta">
-            <End Role="CCamioneta" EntitySet="CCamioneta" />
-            <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
-          </AssociationSet>
           <AssociationSet Name="FK_DetalleRecargaCombustible_CCombustible" Association="Self.FK_DetalleRecargaCombustible_CCombustible">
             <End Role="CCombustible" EntitySet="CCombustible" />
-            <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetalleRecargaCombustible_CPipa" Association="Self.FK_DetalleRecargaCombustible_CPipa">
-            <End Role="CPipa" EntitySet="CPipa" />
             <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
           </AssociationSet>
           <AssociationSet Name="FK_Egreso_CCentroCosto" Association="Self.FK_Egreso_CCentroCosto">
@@ -7962,10 +7915,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Camioneta" EntitySet="Camioneta" />
             <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
           </AssociationSet>
-          <AssociationSet Name="FK_DetalleRecargaCombustible_CCamioneta" Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCamioneta">
+          <!--<AssociationSet Name="FK_DetalleRecargaCombustible_CCamioneta" Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCamioneta">
             <End Role="Camioneta" EntitySet="Camioneta" />
             <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
-          </AssociationSet>
+          </AssociationSet>-->
           <AssociationSet Name="FK_CCombustible_Empresa" Association="Sagas.MainModuleModel.FK_CCombustible_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CCombustible" EntitySet="Combustible" />
@@ -7990,10 +7943,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Pipa" EntitySet="Pipa" />
             <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
           </AssociationSet>
-          <AssociationSet Name="FK_DetalleRecargaCombustible_CPipa" Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CPipa">
+          <!--<AssociationSet Name="FK_DetalleRecargaCombustible_CPipa" Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CPipa">
             <End Role="Pipa" EntitySet="Pipa" />
             <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
-          </AssociationSet>
+          </AssociationSet>-->
           <AssociationSet Name="FK_CUtilitario_Empresa" Association="Sagas.MainModuleModel.FK_CUtilitario_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CUtilitario" EntitySet="Utilitario" />
@@ -8221,6 +8174,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="PrecioVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProducto" FromRole="Producto" ToRole="PrecioVenta" />
           <NavigationProperty Name="AlmacenEntradaProducto" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_CProducto" FromRole="Producto" ToRole="AlmacenEntradaProducto" />
           <NavigationProperty Name="AlmacenSalidaProducto" Relationship="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_CProducto" FromRole="Producto" ToRole="AlmacenSalidaProducto" />
+          <Property Name="ClaveProdServ" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CategoriaProducto">
           <Key>
@@ -8927,7 +8881,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CCamioneta" FromRole="Camioneta" ToRole="CentroCosto" />
           <!--<NavigationProperty Name="EquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_CCamioneta" FromRole="Camioneta" ToRole="EquipoTransporte" />-->
           <NavigationProperty Name="DetalleMantenimiento" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCamioneta" FromRole="Camioneta" ToRole="DetalleMantenimiento" />
-          <NavigationProperty Name="DetalleRecargaCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCamioneta" FromRole="Camioneta" ToRole="DetalleRecargaCombustible" />
+          <!--<NavigationProperty Name="DetalleRecargaCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCamioneta" FromRole="Camioneta" ToRole="DetalleRecargaCombustible" />-->
           <NavigationProperty Name="CDetalleEquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CCamioneta" FromRole="Camioneta" ToRole="CDetalleEquipoTransporte" />
           <Property Name="Serie" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Folio" Type="Int32" />
@@ -8976,7 +8930,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CPipa" FromRole="Pipa" ToRole="CentroCosto" />
           <!--<NavigationProperty Name="EquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_CPipa" FromRole="Pipa" ToRole="EquipoTransporte" />-->
           <NavigationProperty Name="DetalleMantenimiento" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CPipa" FromRole="Pipa" ToRole="DetalleMantenimiento" />
-          <NavigationProperty Name="DetalleRecargaCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CPipa" FromRole="Pipa" ToRole="DetalleRecargaCombustible" />
+          <!--<NavigationProperty Name="DetalleRecargaCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CPipa" FromRole="Pipa" ToRole="DetalleRecargaCombustible" />-->
           <NavigationProperty Name="CDetalleEquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_CPipa" FromRole="Pipa" ToRole="CDetalleEquipoTransporte" />
           <Property Name="Serie" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Folio" Type="Int32" />          
@@ -12185,9 +12139,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="KilometrajeRecorrido" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="LitrosRecargados" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="IdTipoCombustible" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CCamioneta" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCamioneta" FromRole="DetalleRecargaCombustible" ToRole="Camioneta" />
+          <!--<NavigationProperty Name="CCamioneta" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCamioneta" FromRole="DetalleRecargaCombustible" ToRole="Camioneta" />-->
           <NavigationProperty Name="CCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCombustible" FromRole="DetalleRecargaCombustible" ToRole="CCombustible" />
-          <NavigationProperty Name="CPipa" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CPipa" FromRole="DetalleRecargaCombustible" ToRole="Pipa" />
+          <!--<NavigationProperty Name="CPipa" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CPipa" FromRole="DetalleRecargaCombustible" ToRole="Pipa" />-->
           <Property Name="FechaRecarga" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <Association Name="FK_DetalleMantenimiento_CCamioneta">
@@ -12202,7 +12156,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DetalleRecargaCombustible_CCamioneta">
+        <!--<Association Name="FK_DetalleRecargaCombustible_CCamioneta">
           <End Type="Sagas.MainModuleModel.Camioneta" Role="Camioneta" Multiplicity="1" />
           <End Type="Sagas.MainModuleModel.DetalleRecargaCombustible" Role="DetalleRecargaCombustible" Multiplicity="*" />
           <ReferentialConstraint>
@@ -12213,7 +12167,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="Id_Vehiculo" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
+        </Association>-->
         <Association Name="FK_CCombustible_Empresa">
           <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
           <End Type="Sagas.MainModuleModel.CCombustible" Role="CCombustible" Multiplicity="*" />
@@ -12288,7 +12242,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DetalleRecargaCombustible_CPipa">
+        <!--<Association Name="FK_DetalleRecargaCombustible_CPipa">
           <End Type="Sagas.MainModuleModel.Pipa" Role="Pipa" Multiplicity="1" />
           <End Type="Sagas.MainModuleModel.DetalleRecargaCombustible" Role="DetalleRecargaCombustible" Multiplicity="*" />
           <ReferentialConstraint>
@@ -12299,7 +12253,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="Id_Vehiculo" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
+        </Association>-->
         <Association Name="FK_CUtilitario_Empresa">
           <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
           <End Type="Sagas.MainModuleModel.CUtilitario" Role="CUtilitario" Multiplicity="*" />
@@ -12848,6 +12802,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Producto">
               <MappingFragment StoreEntitySet="CProducto">
+                <ScalarProperty Name="ClaveProdServ" ColumnName="ClaveProdServ" />
                 <ScalarProperty Name="IdCuentaContable" ColumnName="IdCuentaContable" />
                 <ScalarProperty Name="EsTransporteGas" ColumnName="EsTransporteGas" />
                 <ScalarProperty Name="EsGas" ColumnName="EsGas" />

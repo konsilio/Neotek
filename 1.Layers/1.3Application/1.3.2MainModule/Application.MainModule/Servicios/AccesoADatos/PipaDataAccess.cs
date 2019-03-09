@@ -97,6 +97,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 x => x.IdPipa.Equals(IdP) && x.Activo
                 );
         }
+        public Pipa BuscarPipasId(int IdP) //AMGO Se agrega medoto para buscar una pipa x id aunque este inactiva para equipo de transporte
+        {
+            return uow.Repository<Pipa>().GetSingle(
+                x => x.IdPipa.Equals(IdP)
+                );
+        }
         public List<Pipa> ObtenerPipas()
         {
             return uow.Repository<Pipa>().Get(x => x.Activo).ToList();
