@@ -19,6 +19,7 @@ using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Pedidos;
 using Application.MainModule.Servicios;
 using Application.MainModule.AdaptadoresDTO;
+using Application.MainModule.Servicios.Facturacion;
 
 namespace Application.MainModule.Flujos
 {
@@ -1355,6 +1356,22 @@ namespace Application.MainModule.Flujos
             //if (!resp.Exito) return null;
 
             return FormaPagoAdapter.ToDTO(FormaPagoServicio.Obtener());
+        }
+        #endregion
+
+        #region Metodo de pago
+        public List<MetodoPagoDTO> ListaMetodosPago()
+        {
+            var metodos = MetodoPagoServicio.Buscar();
+            return MetodoPagoAdapter.ToDTO(metodos);
+        }
+        #endregion
+
+        #region UsoCFDI
+        public List<UsoCFDIDTO> ListaUsoCFDI()
+        {
+            var usosCfdi = UsoCFDIServicio.Buscar();
+            return UsoCFDIAdapter.ToDTO(usosCfdi);
         }
         #endregion
     }

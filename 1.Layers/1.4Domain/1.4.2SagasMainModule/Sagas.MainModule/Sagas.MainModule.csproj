@@ -30,7 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -298,6 +307,9 @@
     <Compile Include="Entidades\UnidadMedida.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\UsoCFDI.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Usuario.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -340,9 +352,13 @@
     <Compile Include="ObjetosValor\Enum\EstatusPrecioVentaEnum.cs" />
     <Compile Include="ObjetosValor\Enum\IdentidadUnidadAlmacenGasEnum.cs" />
     <Compile Include="ObjetosValor\Enum\ImagenDeEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\ImpuestosEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\MonedaEnum.cs" />
     <Compile Include="ObjetosValor\Enum\RequisicionEstatusEnum.cs" />
     <Compile Include="ObjetosValor\Enum\OrdenCompraEstatusEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoComprobante.cs" />
     <Compile Include="ObjetosValor\Enum\TipoEventoEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoFactorEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoMedidorGasEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoMovimientoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoOperadorChoferEnum.cs" />
@@ -354,7 +370,9 @@
     <Compile Include="Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Entidades\Sagas.tt">

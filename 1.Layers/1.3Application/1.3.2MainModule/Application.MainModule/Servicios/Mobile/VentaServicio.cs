@@ -90,7 +90,6 @@ namespace Application.MainModule.Servicios.Mobile
             //return anticipo;
             return anticipo;
         }
-
         public static decimal CalculoOtrasVentas(List<VentaPuntoDeVenta> deContado, List<VentaPuntoDeVenta> credito)
         {
             decimal total = 0;
@@ -121,7 +120,6 @@ namespace Application.MainModule.Servicios.Mobile
             }
             return total;
         }
-
         public static int orden(List<VentaCajaGeneral> ventasCajasGral)
         {
             if (ventasCajasGral != null)
@@ -132,7 +130,6 @@ namespace Application.MainModule.Servicios.Mobile
             else
                 return 1;
         }
-
         public static int orden(List<VentaCorteAnticipoEC> anticipos)
         {
             if (anticipos != null)

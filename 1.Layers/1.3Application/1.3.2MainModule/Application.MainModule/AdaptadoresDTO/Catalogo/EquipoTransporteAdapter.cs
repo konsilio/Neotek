@@ -18,13 +18,13 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             return new EquipoTransporteDTO()
             {
                 IdEmpresa = ec.IdEmpresa,
-                IdEquipoTransporte = ec.IdEquipoTransporteDetalle,
+                IdEquipoTransporte = EquipoTransporteServicio.ObtenerId(ec),
                 IdCamioneta = ec.IdCamioneta,
                 IdPipa = ec.IdPipa,
                 IdVehiculoUtilitario = ec.IdUtilitario,
                 FechaRegistro = EquipoTransporteServicio.ObtenerFechaRegistro(ec),
                 Activo = EquipoTransporteServicio.ObtenerActivo(ec),
-                EsForaneo = EquipoTransporteServicio.ObtenerActivo(ec),
+                EsForaneo = EquipoTransporteServicio.ObtenerForaneo(ec),
                 Descripcion = EquipoTransporteServicio.ObtenerNombre(ec),
                 NumIdVehicular = ec.NumIdVehicular,
                 Placas = ec.Placas,

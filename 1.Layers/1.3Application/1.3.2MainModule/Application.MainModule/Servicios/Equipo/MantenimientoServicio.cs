@@ -15,7 +15,7 @@ namespace Application.MainModule.Servicios.Equipo
         {
             return new MantenimientoDataAccess().Insertar(entidad);
         }
-        public static RespuestaDto Actuualizar(CMantenimiento entidad)
+        public static RespuestaDto Actualizar(CMantenimiento entidad)
         {
             return new MantenimientoDataAccess().Actualizar(entidad);
         }

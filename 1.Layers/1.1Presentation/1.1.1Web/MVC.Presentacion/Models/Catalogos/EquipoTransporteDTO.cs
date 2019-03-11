@@ -40,7 +40,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public decimal CapacidadKg { get; set; }
         public short IdTipoMedidor { get; set; }
 
-        public int Id_DetalleEtransporte { get; set; }
+        public int Id_DetalleTransporte { get; set; }
         public Nullable<bool> EsCamioneta { get; set; }
         public Nullable<bool> EsPipa { get; set; }
         public Nullable<bool> EsUtilitario { get; set; }
