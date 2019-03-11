@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.EquipoTransporte;
 using Sagas.MainModule.Entidades;
+using Application.MainModule.Servicios.Equipo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporte
                 DescripcionMtto = entidad.DescripcionMtto,
                 Kilometraje_Actual = entidad.Kilometraje_Actual,
                 NumeroOC = entidad.NumeroOC,
+                Vehiculo = MantenimientoDetalleServicio.ObtenerNombre(entidad)
             };
         }
         public static List<MantenimientoDetalleDTO> ToDTO(List<DetalleMantenimiento> entidad)

@@ -29,6 +29,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             return new CUtilitario()
             {
                 //IdCamioneta = ec.IdCamioneta,
+                IdUtilitario =ec.IdUtilitario,
                 IdEmpresa = ec.IdEmpresa,
                 Numero = ec.Numero,
                 Nombre = ec.Nombre,

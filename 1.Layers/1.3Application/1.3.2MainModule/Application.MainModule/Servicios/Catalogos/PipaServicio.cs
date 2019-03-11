@@ -48,6 +48,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PipaDataAccess().ObtenerPipa(id);
         }
+        public static Pipa BuscaPipaxId(int id) //Se agrega metodo para que busque una pipa aunque este inactiva para el catalgo de transportes
+        {
+            return new PipaDataAccess().BuscarPipasId(id);
+        }
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "La pipa");
