@@ -31,5 +31,17 @@ namespace Application.MainModule.Servicios.Equipo
         {
             return new MantenimientoDetDataAccess().Obtener(id);
         }
+
+        public static string ObtenerNombre(DetalleMantenimiento qt)
+        {
+            if (qt.EsCamioneta)
+                return new EquipoTransporteDataAccess().BuscarCamioneta(qt.id_vehiculo).Nombre;
+            if (qt.EsPipa)
+                return new EquipoTransporteDataAccess().BuscarPipa(qt.id_vehiculo).Nombre;
+            if (qt.EsUtilitario)
+                return new EquipoTransporteDataAccess().BuscarUtilitario(qt.id_vehiculo).Nombre;
+            return null;
+        }
+
     }
 }
