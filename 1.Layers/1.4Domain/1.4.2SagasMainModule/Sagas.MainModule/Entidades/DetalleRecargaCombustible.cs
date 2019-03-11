@@ -25,8 +25,6 @@ namespace Sagas.MainModule.Entidades
         public int IdTipoCombustible { get; set; }
         public System.DateTime FechaRecarga { get; set; }
     
-        public virtual Camioneta CCamioneta { get; set; }
         public virtual CCombustible CCombustible { get; set; }
-        public virtual Pipa CPipa { get; set; }
     }
 }

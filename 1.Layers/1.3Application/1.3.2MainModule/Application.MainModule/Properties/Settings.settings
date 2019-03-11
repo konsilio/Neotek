@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Application.MainModule.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Application_MainModule_com_admingest_WsFactAdmingestControllerService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">https://admingest.com/sistema/wsFactAdmingest/ws?ws=1</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

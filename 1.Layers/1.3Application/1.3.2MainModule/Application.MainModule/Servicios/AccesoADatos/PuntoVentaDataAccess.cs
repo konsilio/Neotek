@@ -68,7 +68,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public List<PuntoVenta> BuscarTodos()
         {
             return uow.Repository<PuntoVenta>().Get(x => x.Activo).ToList();
@@ -89,30 +88,25 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<OperadorChofer>().GetSingle(x => x.IdOperadorChofer.Equals(idOperador)
                                                          && x.Activo);
         }
-
         public OperadorChofer BuscarPorUsuario(int idUsuario)
         {
             return uow.Repository<OperadorChofer>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
                                                          && x.Activo);
         }
-
         public List<VentaCajaGeneral> ObtenerVentasCajaGral()
         {
             return uow.Repository<VentaCajaGeneral>().GetAll().OrderBy(x => x.Orden).ToList();
         }
-
         public List<PuntoVenta> BuscarPorOperadorChofer(int OperadorChofer)
         {
             return uow.Repository<PuntoVenta>().Get(x => x.IdOperadorChofer.Equals(OperadorChofer)
                                                          && x.Activo).ToList();
         }
-
         public PuntoVenta BuscarPorUnidadAlmacenGas(short idCAlmacenGas)
         {
             return uow.Repository<PuntoVenta>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                       && x.Activo).FirstOrDefault();
         }
-
         public RespuestaDto InesertarVentaGeneral(VentaCajaGeneral corteCajaGeneral)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -138,7 +132,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public List<VentaCorteAnticipoEC> Anticipos(UnidadAlmacenGas unidadEstacion, DateTime fecha)
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(
@@ -148,14 +141,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 && x.FechaCorteAnticipo.Year.Equals(fecha.Year)
            ).ToList();
         }
-
         public List<VentaCorteAnticipoEC> Anticipos(UnidadAlmacenGas unidadEstacion)
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(
                 x => x.IdCAlmacenGas.Equals(unidadEstacion.IdCAlmacenGas)
             ).ToList();
         }
-
         public List<VentaPuntoDeVenta> BuscarVentasTipoPago(int idPuntoVenta,DateTime fecha,bool esCredito=false)
         {
                 return uow.Repository<VentaPuntoDeVenta>().Get(
@@ -165,17 +156,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     x.FechaRegistro.Year.Equals(fecha.Year) &&
                     x.VentaACredito.Equals(esCredito)
                ).ToList();
-        }
-        /// <summary>
-        /// BuscarCorte
-        /// Permite realizar la busqueda de un corte de una estacion en especifico y fecha en especifico
-        /// retornara un objeto de tipo VentaCorteAnticipoEC
-        /// </summary>
-        /// <param name="dia">Día en el que se realiza la consulta</param>
-        /// <param name="mes">Mes en que se realiza la consulta</param>
-        /// <param name="year">Año en el que se realiza la consulta </param>
-        /// <param name="idCAlmacenGas">Id del CAlmacenGas a consultar</param>
-        /// <returns>Entidad de tipo VentaCorteAnticipoEC con los datos encontrados</returns>
+        }      
         public VentaCorteAnticipoEC BuscarCorte(DateTime fecha, short idCAlmacenGas)
         {
             return uow.Repository<VentaCorteAnticipoEC>().GetSingle(

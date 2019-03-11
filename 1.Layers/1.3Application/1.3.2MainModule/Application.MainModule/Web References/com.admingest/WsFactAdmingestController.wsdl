@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:WsFactAdmingestControllerwsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="WsFactAdmingestController" targetNamespace="urn:WsFactAdmingestControllerwsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:WsFactAdmingestControllerwsdl">
+      <xsd:complexType name="WsRespCliente">
+        <xsd:all>
+          <xsd:element name="success" type="xsd:boolean" />
+          <xsd:element name="message" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="WsRespAutofacturacion">
+        <xsd:all>
+          <xsd:element name="success" type="xsd:boolean" />
+          <xsd:element name="message" type="xsd:string" />
+          <xsd:element name="idAutofacturacion" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="WsRespFacturacion">
+        <xsd:all>
+          <xsd:element name="success" type="xsd:boolean" />
+          <xsd:element name="message" type="xsd:string" />
+          <xsd:element name="urlPdf" type="xsd:string" />
+          <xsd:element name="urlXml" type="xsd:string" />
+          <xsd:element name="XML" type="xsd:string" />
+          <xsd:element name="UUID" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Comprobante">
+        <xsd:all>
+          <xsd:element name="Serie" type="xsd:string" />
+          <xsd:element name="Folio" type="xsd:string" />
+          <xsd:element name="Fecha" type="xsd:string" />
+          <xsd:element name="FormaPago" type="xsd:string" />
+          <xsd:element name="SubTotal" type="xsd:float" />
+          <xsd:element name="Descuento" type="xsd:float" />
+          <xsd:element name="Moneda" type="xsd:string" />
+          <xsd:element name="TipoCambio" type="xsd:float" />
+          <xsd:element name="Total" type="xsd:float" />
+          <xsd:element name="TipoDeComprobante" type="xsd:string" />
+          <xsd:element name="MetodoPago" type="xsd:string" />
+          <xsd:element name="LugarExpedicion" type="xsd:string" />
+          <xsd:element name="Receptor" type="tns:Receptor" />
+          <xsd:element name="Concepto" type="tns:ConceptoArray" />
+          <xsd:element name="Impuesto" type="tns:Impuesto" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Receptor">
+        <xsd:all>
+          <xsd:element name="Rfc" type="xsd:string" />
+          <xsd:element name="Nombre" type="xsd:string" />
+          <xsd:element name="UsoCFDI" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ConceptoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soap-enc:Array">
+            <xsd:attribute wsdl:arrayType="tns:Concepto[]" ref="soap-enc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Concepto">
+        <xsd:all>
+          <xsd:element name="ClaveProdServ" type="xsd:string" />
+          <xsd:element name="NoIdentificacion" type="xsd:string" />
+          <xsd:element name="Cantidad" type="xsd:float" />
+          <xsd:element name="ClaveUnidad" type="xsd:string" />
+          <xsd:element name="Unidad" type="xsd:string" />
+          <xsd:element name="Descripcion" type="xsd:string" />
+          <xsd:element name="ValorUnitario" type="xsd:float" />
+          <xsd:element name="Importe" type="xsd:float" />
+          <xsd:element name="Descuento" type="xsd:float" />
+          <xsd:element name="ImpuestoConceptoTrasladado" type="tns:ImpuestoConceptoTrasladadoArray" />
+          <xsd:element name="ImpuestoConceptoRetenido" type="tns:ImpuestoConceptoRetenidoArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ImpuestoConceptoTrasladadoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soap-enc:Array">
+            <xsd:attribute wsdl:arrayType="tns:ImpuestoConceptoTrasladado[]" ref="soap-enc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ImpuestoConceptoTrasladado">
+        <xsd:all>
+          <xsd:element name="Base" type="xsd:float" />
+          <xsd:element name="Impuesto" type="xsd:string" />
+          <xsd:element name="TipoFactor" type="xsd:string" />
+          <xsd:element name="TasaOCuota" type="xsd:float" />
+          <xsd:element name="Importe" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ImpuestoConceptoRetenidoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soap-enc:Array">
+            <xsd:attribute wsdl:arrayType="tns:ImpuestoConceptoRetenido[]" ref="soap-enc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ImpuestoConceptoRetenido">
+        <xsd:all>
+          <xsd:element name="Base" type="xsd:float" />
+          <xsd:element name="Impuesto" type="xsd:string" />
+          <xsd:element name="TipoFactor" type="xsd:string" />
+          <xsd:element name="TasaOCuota" type="xsd:float" />
+          <xsd:element name="Importe" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Impuesto">
+        <xsd:all>
+          <xsd:element name="TotalImpuestosRetenidos" type="xsd:float" />
+          <xsd:element name="TotalImpuestosTrasladados" type="xsd:float" />
+          <xsd:element name="ImpuestoRetenido" type="tns:ImpuestoRetenidoArray" />
+          <xsd:element name="ImpuestoTrasladado" type="tns:ImpuestoTrasladadoArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ImpuestoRetenidoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soap-enc:Array">
+            <xsd:attribute wsdl:arrayType="tns:ImpuestoRetenido[]" ref="soap-enc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ImpuestoRetenido">
+        <xsd:all>
+          <xsd:element name="Impuesto" type="xsd:string" />
+          <xsd:element name="Importe" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="ImpuestoTrasladadoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soap-enc:Array">
+            <xsd:attribute wsdl:arrayType="tns:ImpuestoTrasladado[]" ref="soap-enc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ImpuestoTrasladado">
+        <xsd:all>
+          <xsd:element name="Impuesto" type="xsd:string" />
+          <xsd:element name="TipoFactor" type="xsd:string" />
+          <xsd:element name="TasaOCuota" type="xsd:float" />
+          <xsd:element name="Importe" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="holaMundoRequest">
+    <wsdl:part name="nombre" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="holaMundoResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="agregarClienteAdmingestRequest">
+    <wsdl:part name="Usuario" type="xsd:string" />
+    <wsdl:part name="Contrasena" type="xsd:string" />
+    <wsdl:part name="RFC" type="xsd:string" />
+    <wsdl:part name="DatosCliente" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="agregarClienteAdmingestResponse">
+    <wsdl:part name="return" type="tns:WsRespCliente" />
+  </wsdl:message>
+  <wsdl:message name="registrarAutofacturacionAdmingestRequest">
+    <wsdl:part name="Usuario" type="xsd:string" />
+    <wsdl:part name="Contrasena" type="xsd:string" />
+    <wsdl:part name="RFC" type="xsd:string" />
+    <wsdl:part name="conceptos" type="xsd:string" />
+    <wsdl:part name="ticket" type="xsd:string" />
+    <wsdl:part name="codigo" type="xsd:string" />
+    <wsdl:part name="total" type="xsd:string" />
+    <wsdl:part name="descuento" type="xsd:string" />
+    <wsdl:part name="metodopago" type="xsd:string" />
+    <wsdl:part name="cuenta" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="registrarAutofacturacionAdmingestResponse">
+    <wsdl:part name="return" type="tns:WsRespAutofacturacion" />
+  </wsdl:message>
+  <wsdl:message name="generarFacturaAdmingestRequest">
+    <wsdl:part name="Usuario" type="xsd:string" />
+    <wsdl:part name="Contrasena" type="xsd:string" />
+    <wsdl:part name="RFC" type="xsd:string" />
+    <wsdl:part name="idautofacturacion" type="xsd:string" />
+    <wsdl:part name="RFCCliente" type="xsd:string" />
+    <wsdl:part name="idSucursal" type="xsd:string" />
+    <wsdl:part name="identificador" type="xsd:string" />
+    <wsdl:part name="UsoCFDI" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="generarFacturaAdmingestResponse">
+    <wsdl:part name="return" type="tns:WsRespFacturacion" />
+  </wsdl:message>
+  <wsdl:message name="generarFacturaEstructuraAdmingestRequest">
+    <wsdl:part name="Usuario" type="xsd:string" />
+    <wsdl:part name="Contrasena" type="xsd:string" />
+    <wsdl:part name="RFC" type="xsd:string" />
+    <wsdl:part name="Comprobante" type="tns:Comprobante" />
+  </wsdl:message>
+  <wsdl:message name="generarFacturaEstructuraAdmingestResponse">
+    <wsdl:part name="return" type="tns:WsRespFacturacion" />
+  </wsdl:message>
+  <wsdl:portType name="WsFactAdmingestControllerPortType">
+    <wsdl:operation name="holaMundo">
+      <wsdl:documentation>
+      </wsdl:documentation>
+      <wsdl:input message="tns:holaMundoRequest" />
+      <wsdl:output message="tns:holaMundoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="agregarClienteAdmingest">
+      <wsdl:documentation>
+      </wsdl:documentation>
+      <wsdl:input message="tns:agregarClienteAdmingestRequest" />
+      <wsdl:output message="tns:agregarClienteAdmingestResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="registrarAutofacturacionAdmingest">
+      <wsdl:documentation>
+      </wsdl:documentation>
+      <wsdl:input message="tns:registrarAutofacturacionAdmingestRequest" />
+      <wsdl:output message="tns:registrarAutofacturacionAdmingestResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="generarFacturaAdmingest">
+      <wsdl:documentation>
+      </wsdl:documentation>
+      <wsdl:input message="tns:generarFacturaAdmingestRequest" />
+      <wsdl:output message="tns:generarFacturaAdmingestResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="generarFacturaEstructuraAdmingest">
+      <wsdl:documentation>
+      </wsdl:documentation>
+      <wsdl:input message="tns:generarFacturaEstructuraAdmingestRequest" />
+      <wsdl:output message="tns:generarFacturaEstructuraAdmingestResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WsFactAdmingestControllerBinding" type="tns:WsFactAdmingestControllerPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="holaMundo">
+      <soap:operation soapAction="urn:WsFactAdmingestControllerwsdl#holaMundo" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:WsFactAdmingestControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:WsFactAdmingestControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="agregarClienteAdmingest">
+      <soap:operation soapAction="urn:WsFactAdmingestControllerwsdl#agregarClienteAdmingest" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:WsFactAdmingestControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:WsFactAdmingestControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registrarAutofacturacionAdmingest">
+      <soap:operation soapAction="urn:WsFactAdmingestControllerwsdl#registrarAutofacturacionAdmingest" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:WsFactAdmingestControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:WsFactAdmingestControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="generarFacturaAdmingest">
+      <soap:operation soapAction="urn:WsFactAdmingestControllerwsdl#generarFacturaAdmingest" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:WsFactAdmingestControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:WsFactAdmingestControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="generarFacturaEstructuraAdmingest">
+      <soap:operation soapAction="urn:WsFactAdmingestControllerwsdl#generarFacturaEstructuraAdmingest" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:WsFactAdmingestControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:WsFactAdmingestControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WsFactAdmingestControllerService">
+    <wsdl:port name="WsFactAdmingestControllerPort" binding="tns:WsFactAdmingestControllerBinding">
+      <soap:address location="https://admingest.com/sistema/wsFactAdmingest/ws?ws=1" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -43,7 +43,11 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -76,6 +80,9 @@
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\MantenimientoDetalleAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\RecargaCombustibleAdapter.cs" />
     <Compile Include="AdaptadoresDTO\EquipoTrasnporte\TransporteAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Facturacion\CDFIAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Facturacion\MetodoPagoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Facturacion\UsoCFDIAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
@@ -128,6 +135,9 @@
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDetalleDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\RecargaCombustibleDTO.cs" />
+    <Compile Include="DTOs\Facturacion\CFDIDTO.cs" />
+    <Compile Include="DTOs\Facturacion\MetodoPagoDTO.cs" />
+    <Compile Include="DTOs\Facturacion\UsoCFDIDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticiposEstacionDTO.cs" />
@@ -171,8 +181,14 @@
     <Compile Include="DTOs\Ventas\VentasPipaDto.cs" />
     <Compile Include="DTOs\Ventas\VPuntoVentaDetalleDTO.cs" />
     <Compile Include="Flujos\Cobranza.cs" />
+    <Compile Include="Flujos\Facturacion.cs" />
     <Compile Include="Flujos\Mantenimiento.cs" />
     <Compile Include="Flujos\RecargaCombustible.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Servicios\AccesoADatos\AbonosDataAcces.cs" />
     <Compile Include="Flujos\Pedidos.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenEntradaProductoDataAccess.cs" />
@@ -180,16 +196,19 @@
     <Compile Include="Servicios\AccesoADatos\AsigancionUtilitariosDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CamionetaDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\CFDIDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CombustibleDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\DataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EgresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\IngresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\MantenimientoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\MantenimientoDetDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\MetodoPagoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PedidosDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PipaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RecargaCombustibleDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\UsoCFDIDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\VehiculoUtilitarioDataAccess.cs" />
     <Compile Include="Servicios\Almacen\RemanenteServicio.cs" />
     <Compile Include="Servicios\Catalogos\CamionetaServicio.cs" />
@@ -299,6 +318,9 @@
     <Compile Include="Servicios\Equipo\MantenimientoDetalleServicio.cs" />
     <Compile Include="Servicios\Equipo\MantenimientoServicio.cs" />
     <Compile Include="Servicios\Equipo\RecargaCombustibleServicio.cs" />
+    <Compile Include="Servicios\Facturacion\CFDIServicio.cs" />
+    <Compile Include="Servicios\Facturacion\MetodoPagoServicio.cs" />
+    <Compile Include="Servicios\Facturacion\UsoCFDIServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\EgresoServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\IngresoServicio.cs" />
     <Compile Include="Servicios\Mobile\AutoconsumoServicio.cs" />
@@ -431,6 +453,11 @@
     <Compile Include="UnitOfWork\GenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\IGenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\SagasDataUow.cs" />
+    <Compile Include="Web References\com.admingest\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\IngresoGasto\" />
@@ -464,6 +491,43 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\com.admingest\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\com.admingest\WsFactAdmingestController.wsdl" />
+    <None Include="Web References\com.admingest\WsRespAutofacturacion.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.admingest\WsRespCliente.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\com.admingest\WsRespFacturacion.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://admingest.com/sistema/WsFactAdmingest/ws">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\com.admingest\</RelPath>
+      <UpdateFromURL>https://admingest.com/sistema/WsFactAdmingest/ws</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Application_MainModule_com_admingest_WsFactAdmingestControllerService</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

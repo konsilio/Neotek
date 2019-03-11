@@ -662,5 +662,22 @@ namespace DS.MainModule.Controllers
         }
         #endregion
 
+        #region Metodo de Pago
+        [Route("consulta/metodospago")]
+        public HttpResponseMessage GetListaMetodosPago()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaMetodosPago(), Request);
+        }
+        #endregion
+
+        #region UsoCFDI
+
+        [Route("consulta/usocfdi")]
+        public HttpResponseMessage GetListaUsoCFDI()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaUsoCFDI(), Request);
+        }
+        #endregion
+
     }
 }
