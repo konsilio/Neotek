@@ -2323,16 +2323,16 @@ namespace MVC.Presentacion.Agente
                 _ListaVehiculos = pedidos;
             }
         }
-        public void ListaVehiculosFiltrar(short id, string Placas, string Nombre, string token)
+        public void ListaVehiculosFiltrar(short id, string token)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEquiposTransporte"];
-            VehiculosFiltrar(id, Placas, Nombre, ApiCatalgos, token).Wait();
+            VehiculosFiltrar(id, ApiCatalgos, token).Wait();
         }
-        private async Task VehiculosFiltrar(short id, string Placas, string Nombre, string api, string token = null)
+        private async Task VehiculosFiltrar(short id, string api, string token = null)
         {
             using (var client = new HttpClient())
             {
-                List<EquipoTransporteDTO> pedidos = new List<EquipoTransporteDTO>();
+                List<EquipoTransporteDTO> dto = new List<EquipoTransporteDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 if (!string.IsNullOrEmpty(token))
@@ -2341,7 +2341,7 @@ namespace MVC.Presentacion.Agente
                 {
                     HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        pedidos = await response.Content.ReadAsAsync<List<EquipoTransporteDTO>>();
+                        dto = await response.Content.ReadAsAsync<List<EquipoTransporteDTO>>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -2350,18 +2350,18 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception ex)
                 {
-                    pedidos = new List<EquipoTransporteDTO>();
+                    dto = new List<EquipoTransporteDTO>();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                if (Placas != ""&& Placas != null)                
-                    pedidos = (from x in pedidos where x.Placas == Placas select x).ToList();
+                //if (Placas != ""&& Placas != null)                
+                //    pedidos = (from x in pedidos where x.Placas == Placas select x).ToList();
 
-                if (Nombre != "" && Nombre != null)                
-                    pedidos = (from x in pedidos where x.AliasUnidad.Contains(Nombre) select x).ToList();
+                //if (Nombre != "" && Nombre != null)                
+                //    pedidos = (from x in pedidos where x.AliasUnidad.Contains(Nombre) select x).ToList();
                 
 
-                _ListaVehiculos = pedidos;
+                _ListaVehiculos = dto;
             }
         }
         public void ObtenerVehiculoId(int id, string token)
@@ -4148,17 +4148,7 @@ namespace MVC.Presentacion.Agente
                 _ListaMantenimientos = emp;
             }
         }
-        //public void GuardarCatalogoMantenimiento(MantenimientoModel dto, string tkn)
-        //{
-        //    this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarMantenimiento"];
-        //    LLamada(dto, tkn, MetodoRestConst.Post).Wait();
-        //}
-        //public void EliminarCatalogoMantenimiento(MantenimientoModel dto, string tkn)
-        //{
-        //    this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaMantenimiento"];
-        //    LLamada(dto, tkn, MetodoRestConst.Put).Wait();
-        //}
-
+    
         public void BuscarMantenimiento(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetMantenimientoDetalle"];
@@ -4246,11 +4236,7 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarAsignacion"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-        //public void ModificaAsignacione(AsignacionModel dto, string tkn)
-        //{
-        //    this.ApiRoute = ConfigurationManager.AppSettings["PutModificarMantenimientoDetalle"];
-        //    LLamada(dto, tkn, MetodoRestConst.Put).Wait();
-        //}
+        
         public void EliminarAsignacion(AsignacionModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaAsignacion"];

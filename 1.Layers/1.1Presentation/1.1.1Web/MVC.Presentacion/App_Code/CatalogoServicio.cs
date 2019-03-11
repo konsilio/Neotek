@@ -2319,8 +2319,13 @@ namespace MVC.Presentacion.App_Code
         public static List<EquipoTransporteDTO> Obtener(short id, string Placas, string Nombre, string tkn)
         {
             var agente = new AgenteServicio();
-            agente.ListaVehiculosFiltrar(id, Placas, Nombre, tkn);
-            return agente._ListaVehiculos;
+            agente.ListaVehiculosFiltrar(id, tkn);
+            var _list = agente._ListaVehiculos;
+            if (Placas != ""&& Placas != null)
+                _list = (from x in _list where x.Placas == Placas select x).ToList();
+            if (Nombre != "" && Nombre != null)
+                _list = (from x in _list where x.AliasUnidad.Contains(Nombre) select x).ToList();
+            return _list;
         }
         public static RespuestaDTO Crear(EquipoTransporteDTO cc, string tkn)
         {
