@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Cobranza;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Cobranza;
 using Application.MainModule.Flujos;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,6 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _cobranza.Registra(_model));
         }
-
+   
     }
 }

@@ -68,6 +68,16 @@ namespace Application.MainModule.Servicios.Catalogos
                 return entidad.CUtilitario.Activo;
             return false;
         }
+        public static int ObtenerId(CDetalleEquipoTransporte entidad)
+        {         
+             if (entidad.IdCamioneta != null)
+                return entidad.CCamioneta.IdCamioneta;
+            if (entidad.IdPipa != null)
+                return entidad.CPipa.IdPipa;
+            if (entidad.IdUtilitario != null)
+                return entidad.CUtilitario.IdUtilitario;
+            return 0;
+        }
         public static string ObtenerNumero(short idEmpresa, short idCAlmacenGas)
         {
             if (idEmpresa != 0)

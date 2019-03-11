@@ -1,3 +1,4 @@
+using Application.MainModule.AdaptadoresDTO.Facturacion;
 using Application.MainModule.com.admingest;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Respuesta;
@@ -33,18 +34,30 @@ namespace Application.MainModule.Servicios.Facturacion
         {
             return new CFDIDataAccess().Obtener(id);
         }
-        public static WsRespFacturacion Timbrar(Comprobante _comp)
+        public static CFDI Buscar(string Id_FolioVenta)
         {
-            return new WsFactAdmingestControllerService().generarFacturaEstructuraAdmingest(ConfigurationManager.AppSettings["Usuario"], ConfigurationManager.AppSettings["Contrasena"], ConfigurationManager.AppSettings["RFC"], _comp);
+            return new CFDIDataAccess().Obtener(Id_FolioVenta);
+        }
+        public static CFDIDTO Timbrar(Comprobante _comp, CFDIDTO dto)
+        {
+            var respTimbrado = new WsFactAdmingestControllerService().generarFacturaEstructuraAdmingest(ConfigurationManager.AppSettings["Usuario"], ConfigurationManager.AppSettings["Contrasena"], ConfigurationManager.AppSettings["RFC"], _comp);
+            dto.RespuestaTimbrado = DatosRespuesta(respTimbrado);           
+            if (!dto.RespuestaTimbrado.Exito) return dto;
+
+            dto.URLPdf = respTimbrado.urlPdf;
+            dto.URLXml = respTimbrado.urlXml;
+            dto.UUID = respTimbrado.UUID;
+            dto.RespuestaTimbrado = Actualizar(CFDIAdapter.FromDTO(dto));
+            return dto;
         }
         public static Comprobante DatosComprobante(CFDIDTO dto)
         {
             var venta = PuntoVentaServicio.Obtener(dto.Id_FolioVenta);
-           
+            var cfdi = Buscar(dto.Id_FolioVenta);
             var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
             Comprobante _comp = new Comprobante();
-            _comp.Serie = PuntoVentaServicio.ObtenerSerie(venta.IdPuntoVenta);
-            _comp.Folio = PuntoVentaServicio.ObtenerFolio(venta.IdPuntoVenta);
+            _comp.Serie = cfdi != null ? cfdi.Serie : PuntoVentaServicio.ObtenerSerie(venta.IdPuntoVenta);
+            _comp.Folio = cfdi != null ? cfdi.Folio.ToString() : PuntoVentaServicio.ObtenerFolio(venta.IdPuntoVenta);
             _comp.Fecha = DateTime.Now.ToString();
             _comp.FormaPago = dto.Id_FormaPago.ToString();
             _comp.SubTotal = (float)venta.Subtotal;

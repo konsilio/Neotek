@@ -1,5 +1,4 @@
-﻿
-using Application.MainModule.AdaptadoresDTO.Facturacion;
+﻿using Application.MainModule.AdaptadoresDTO.Facturacion;
 using Application.MainModule.com.admingest;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Respuesta;
@@ -24,14 +23,15 @@ namespace Application.MainModule.Flujos
             dto.Folio = Convert.ToInt32(_comp.Folio);
             dto.Serie = _comp.Serie;
             dto.UUID = string.Empty;
+
             dto.VersionCFDI = ConfigurationManager.AppSettings["VersionCFDI"];
             dto.RespuestaTimbrado = CFDIServicio.Crear(CFDIAdapter.FromDTO(dto));
             if (!dto.RespuestaTimbrado.Exito) return dto;
-
-            var Timbrado = CFDIServicio.Timbrar(_comp);
-            dto.RespuestaTimbrado = CFDIServicio.DatosRespuesta(Timbrado);
-            return dto;
-
+            return CFDIServicio.Timbrar(_comp, dto);
+        }
+        public List<CFDIDTO> GenerarFactura(List<CFDIDTO> dtos)
+        {
+            return dtos.Select(x => GenerarFactura(x)).ToList();
         }
     }
 }

@@ -338,6 +338,7 @@
         <EntityTypeShape EntityType="Sagas.MainModuleModel.RelTicketCFDI" Width="1.5" PointX="27.625" PointY="23" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_RelTicketCFDI_CMetodoPago" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.CUsoCFDI" Width="1.5" PointX="12.375" PointY="11.75" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CUtilitario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

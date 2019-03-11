@@ -94,6 +94,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<CFDI>().GetSingle(x => x.Id_RelTF.Equals(id));
         }
+        public CFDI Obtener(string Id_FolioVenta)
+        {
+            return uow.Repository<CFDI>().GetSingle(x => x.Id_FolioVenta.Equals(Id_FolioVenta));
+        }
         public List<CFDI> Obtener()
         {
             return uow.Repository<CFDI>().GetAll().ToList();
