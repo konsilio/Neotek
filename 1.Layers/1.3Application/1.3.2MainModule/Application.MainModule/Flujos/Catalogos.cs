@@ -976,7 +976,7 @@ namespace Application.MainModule.Flujos
                     camionetaEntity.Activo = vehiculoDto.Activo;
                     editarVehiculo.CCamioneta = camionetaEntity;
                     vehiculoDto.IdCamioneta = Camioneta.IdCamioneta;
-
+                
                     var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
                     RespuestaGeneral = EquipoTransporteServicio.Modificar(Dtovehiculo, editarVehiculo);
                 }
