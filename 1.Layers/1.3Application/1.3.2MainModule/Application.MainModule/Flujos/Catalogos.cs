@@ -1015,7 +1015,7 @@ namespace Application.MainModule.Flujos
                     pipaEntity.Numero = vehiculoDto.DescVehiculo;
                     pipaEntity.Activo = vehiculoDto.Activo;
                     editarVehiculo.CPipa = pipaEntity;
-                    vehiculoDto.IdCamioneta = _Pipa.IdPipa;
+                    vehiculoDto.IdPipa = _Pipa.IdPipa;
 
                     var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
                     RespuestaGeneral = EquipoTransporteServicio.Modificar(Dtovehiculo, editarVehiculo);
@@ -1055,7 +1055,7 @@ namespace Application.MainModule.Flujos
                     utilitarioEntity.Numero = vehiculoDto.DescVehiculo;
                     utilitarioEntity.Activo = vehiculoDto.Activo;
                     editarVehiculo.CUtilitario = utilitarioEntity;
-                    vehiculoDto.IdCamioneta = _utilitario.IdUtilitario;
+                    vehiculoDto.IdVehiculoUtilitario = _utilitario.IdUtilitario;
 
                     var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
                     RespuestaGeneral = EquipoTransporteServicio.Modificar(Dtovehiculo, editarVehiculo);
