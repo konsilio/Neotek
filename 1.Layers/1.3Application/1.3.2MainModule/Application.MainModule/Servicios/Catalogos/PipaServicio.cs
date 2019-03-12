@@ -48,9 +48,9 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PipaDataAccess().ObtenerPipa(id);
         }
-        public static Pipa BuscaPipaxId(int id) //Se agrega metodo para que busque una pipa aunque este inactiva para el catalgo de transportes
+        public static Pipa Obtener(int id, bool activo)
         {
-            return new PipaDataAccess().BuscarPipasId(id);
+            return new PipaDataAccess().ObtenerPipa(id, activo);
         }
         public static RespuestaDto NoExiste()
         {

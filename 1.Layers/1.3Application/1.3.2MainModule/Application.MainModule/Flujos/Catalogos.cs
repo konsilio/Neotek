@@ -967,7 +967,7 @@ namespace Application.MainModule.Flujos
             {
                 if (vehiculo.IdCamioneta != null)
                 {
-                    var Camioneta = CamionetaServicio.BuscarxId(vehiculo.IdCamioneta.Value); //Se crean los metodos en cascada para encontras camionetas x id aunque esten inactivas.
+                    var Camioneta = CamionetaServicio.Obtener(vehiculo.IdCamioneta.Value, false);
                     if (Camioneta == null) return CamionetaServicio.NoExiste();
 
                     var camionetaEntity = CamionetaAdapter.FromEntity(Camioneta);
@@ -1007,17 +1007,15 @@ namespace Application.MainModule.Flujos
             {
                 if (vehiculo.IdPipa != null)
                 {
-                    var _Pipa = PipaServicio.BuscaPipaxId(vehiculo.IdPipa.Value);
+                    var _Pipa = PipaServicio.Obtener(vehiculo.IdPipa.Value, false);
                     if (_Pipa == null) return PipaServicio.NoExiste();
 
                     var pipaEntity = PipaAdapter.FromEntity(_Pipa);
                     pipaEntity.Nombre = string.Format("Pipa No. {0}", vehiculoDto.DescVehiculo);
                     pipaEntity.Numero = vehiculoDto.DescVehiculo;
                     pipaEntity.Activo = vehiculoDto.Activo;
-                    pipaEntity.IdPipa = _Pipa.IdPipa;
-                    editarVehiculo.CPipa = pipaEntity;                    
+                    editarVehiculo.CPipa = pipaEntity;
                     vehiculoDto.IdPipa = _Pipa.IdPipa;
-                    editarVehiculo.IdPipa = _Pipa.IdPipa;
 
                     var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
                     RespuestaGeneral = EquipoTransporteServicio.Modificar(Dtovehiculo, editarVehiculo);
@@ -1049,16 +1047,14 @@ namespace Application.MainModule.Flujos
             {
                 if (vehiculo.IdUtilitario != null)
                 {
-                    
-                    var _utilitario = VehiculoUtilitarioServicio.Obtener(vehiculo.IdUtilitario.Value);
+                    var _utilitario = VehiculoUtilitarioServicio.Obtener(vehiculo.IdPipa.Value, false);
                     if (_utilitario == null) return VehiculoUtilitarioServicio.NoExiste();
 
                     var utilitarioEntity = VehiculoUtilitarioAdapter.FromEntity(_utilitario);
                     utilitarioEntity.Nombre = string.Format("Utilitario No. {0}", vehiculoDto.DescVehiculo);
                     utilitarioEntity.Numero = vehiculoDto.DescVehiculo;
-                    editarVehiculo.CUtilitario = utilitarioEntity;
                     utilitarioEntity.Activo = vehiculoDto.Activo;
-                    
+                    editarVehiculo.CUtilitario = utilitarioEntity;
                     vehiculoDto.IdVehiculoUtilitario = _utilitario.IdUtilitario;
 
                     var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
@@ -1180,11 +1176,11 @@ namespace Application.MainModule.Flujos
                         newChof.IdUsuario = vehiculoDto.IdChofer;
                         var respChof = OperadorChoferServicio.Insertar(newChof);
                         if (!resp.Exito) return respChof;
-                        else                        
-                            vehiculoDto.IdChofer = respChof.Id;                        
+                        else
+                            vehiculoDto.IdChofer = respChof.Id;
                     }
                     else
-                        vehiculoDto.IdChofer = chof.IdOperadorChofer;  
+                        vehiculoDto.IdChofer = chof.IdOperadorChofer;
                     var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
                     _respuesta = PuntoVentaServicio.Insertar(npv);
                 }

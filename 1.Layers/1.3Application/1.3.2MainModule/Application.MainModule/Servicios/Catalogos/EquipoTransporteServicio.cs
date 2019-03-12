@@ -14,6 +14,7 @@ using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.Almacenes;
 
+
 namespace Application.MainModule.Servicios.Catalogos
 {
     public static class EquipoTransporteServicio
@@ -103,6 +104,16 @@ namespace Application.MainModule.Servicios.Catalogos
                 return new EquipoTransporteDataAccess().BuscarPipa(qt.Id_Vehiculo).Nombre;
             if (qt.EsUtilitario)               
                 return new EquipoTransporteDataAccess().BuscarUtilitario(qt.Id_Vehiculo).Nombre;
+            return null;
+        }
+        public static string ObtenerNombre(DetalleMantenimiento qt)
+        {
+            if (qt.EsCamioneta)
+                return new EquipoTransporteDataAccess().BuscarCamioneta(qt.id_vehiculo).Nombre;
+            if (qt.EsPipa)
+                return new EquipoTransporteDataAccess().BuscarPipa(qt.id_vehiculo).Nombre;
+            if (qt.EsUtilitario)
+                return new EquipoTransporteDataAccess().BuscarUtilitario(qt.id_vehiculo).Nombre;
             return null;
         }
         public static List<CDetalleEquipoTransporte> BuscarEquipoTransporte()

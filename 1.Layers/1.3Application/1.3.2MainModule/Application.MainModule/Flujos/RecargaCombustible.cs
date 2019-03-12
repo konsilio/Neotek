@@ -1,4 +1,4 @@
-﻿using Application.MainModule.AdaptadoresDTO.EquipoTrasnporte;
+﻿using Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio;
 using Application.MainModule.DTOs.EquipoTransporte;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Equipo;

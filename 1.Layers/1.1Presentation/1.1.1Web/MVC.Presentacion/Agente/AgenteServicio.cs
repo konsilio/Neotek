@@ -4192,11 +4192,40 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificarMantenimientoDetalle"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-        public void EliminarMantenimiento(MantenimientoDetalleModel dto, string tkn)
+        public void EliminarMantenimiento(int id, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaMantenimientoDetalle"];
-            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+            EliminarMantenimientoDetalle(id, tkn).Wait();
         }
+        private async Task EliminarMantenimientoDetalle(int _id, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos + _id.ToString(), "").ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _RespuestaDTO = resp;
+            }
+            }
 
         public void BuscarAsignaciones(string tkn)
         {

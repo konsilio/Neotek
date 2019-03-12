@@ -38,10 +38,10 @@ namespace MVC.Presentacion.App_Code
             agente.ModificaMantenimiento(model, tkn);
             return agente._RespuestaDTO;
         }
-        public static RespuestaDTO EliminarMantenimiento(MantenimientoDetalleModel model, string tkn)
+        public static RespuestaDTO EliminarMantenimiento(int id, string tkn)
         {
             var agente = new AgenteServicio();
-            agente.EliminarMantenimiento(model, tkn);
+            agente.EliminarMantenimiento(id, tkn);
             return agente._RespuestaDTO;
         }
 
