@@ -23,9 +23,9 @@ namespace Application.MainModule.Flujos
             dto.Folio = Convert.ToInt32(_comp.Folio);
             dto.Serie = _comp.Serie;
             dto.UUID = string.Empty;
-
             dto.VersionCFDI = ConfigurationManager.AppSettings["VersionCFDI"];
             dto.RespuestaTimbrado = CFDIServicio.Crear(CFDIAdapter.FromDTO(dto));
+
             if (!dto.RespuestaTimbrado.Exito) return dto;
             return CFDIServicio.Timbrar(_comp, dto);
         }

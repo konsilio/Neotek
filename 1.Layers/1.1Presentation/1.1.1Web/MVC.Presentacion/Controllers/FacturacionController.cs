@@ -11,24 +11,21 @@ namespace MVC.Presentacion.Controllers
 {
     public class FacturacionController : Controller
     {
-        string _tkn = string.Empty;
+        //string _tkn = string.Empty;
         // GET: Facturacion
         public ActionResult Index(DateTime? fechaVenta, int? Cliente, string rfc = null, string ticket = null, string msj = null, string type = null)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            _tkn = Session["StringToken"].ToString();
-            ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
-
-            List<FacturacionModel> _model = new List<FacturacionModel>();
+            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            //_tkn = Session["StringToken"].ToString();
+            //ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);           
             if (fechaVenta != null || Cliente != null || rfc != null || ticket != null)
             {
                 FacturacionModel _filtro = new FacturacionModel();
-                _filtro.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
+                //_filtro.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
                 _filtro.FechaVenta = fechaVenta.Value;
                 _filtro.IdCliente = Cliente.Value;
                 _filtro.Rfc = rfc;
                 _filtro.Ticket = ticket;
-                _model = FacturacionServicio.ObtenerInfoTicket(_filtro, _tkn);
 
                 if (ViewBag.Model.Count == 0)
                 {
@@ -48,31 +45,20 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Tipo = "alert-success";
                     ViewBag.Msj = msj;
                 }
-            }
-
-            if (_model.Count > 0)
-            {
-                ViewBag.Model = _model;
-            }
-            else
-            {
-                FacturacionModel _filtro = new FacturacionModel();
-                _model.Add(_filtro);
-            }
-
-            return View(_model);
+            }           
+            return View();
         }
 
         public ActionResult Buscar(List<FacturacionModel> _mod)
         {
-            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            //if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             return RedirectToAction("Index", new { fechaVenta = _mod[0].FechaVenta, Cliente = _mod[0].IdCliente, rfc = _mod[0].Rfc, ticket = _mod[0].Ticket });
 
         }
         public ActionResult Facturar(List<FacturacionModel> _mod)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            _tkn = Session["StringToken"].ToString();
+            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            //_tkn = Session["StringToken"].ToString();
             //verificar si las facturas agregadas pertenecen al mismo cliente
             var cliente = _mod[0].IdCliente;
             foreach (var id in _mod)
@@ -82,12 +68,11 @@ namespace MVC.Presentacion.Controllers
                     return RedirectToAction("Index", new { msj = "Los tickets deben pertenecer al mismo cliente.", type = "alert" });
                 }
             }
-            //ViewBag.disable = "false";
-            //ViewBag.btndisable = "";
+           
             ViewBag.Disabled = "disabled";
-            ClientesModel Cliente = CatalogoServicio.ListaClientes(36, 0, 0, "", "", _tkn).FirstOrDefault();//_mod[0].IdCliente
-            ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn).Where(x => x.IdTipoPersona == Cliente.IdTipoPersona);
-            ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal(_tkn).Where(x => x.IdRegimenFiscal == Cliente.IdRegimenFiscal); 
+            ClientesModel Cliente = CatalogoServicio.ListaClientes(36, 0, 0, "", "", "").FirstOrDefault();//_mod[0].IdCliente
+            ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona("").Where(x => x.IdTipoPersona == Cliente.IdTipoPersona);
+            ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal("").Where(x => x.IdRegimenFiscal == Cliente.IdRegimenFiscal); 
             return View(Cliente);
         }
         private string Validar(RespuestaDTO Resp = null)

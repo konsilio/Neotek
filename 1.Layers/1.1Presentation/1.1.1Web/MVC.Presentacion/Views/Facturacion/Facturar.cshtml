@@ -26,7 +26,7 @@
                 $('.btnGuardarInfoCliente').prop('disabled', false);
             });
         });
-       
+
         function OnSelectedChangeFilter(s, e) {
             if (s.GetValue() == 2) {//($('#ddlTipopersona').find('option:selected').text() == 'Moral') {
                 $('#div_hideRP').show();
@@ -50,7 +50,7 @@
     <style type="text/css">
         .hid {
             display: none;
-        }           
+        }
     </style>
 </head>
 <body style="height:100%">
@@ -86,20 +86,20 @@
                 }
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="card">
-                                            <div class="header">
-                                                <h2><strong>Fiscales</strong></h2>
-                                            </div>
-                                            <div class="body">
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            <b>Tipo Persona:*</b>
-                                                            @Html.DevExpress().ComboBox(settings =>
+                        @*<div class="card">
+            <div class="body">*@
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h2><strong>Fiscales</strong></h2>
+                                    </div>
+                                    <div class="body">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <b>Tipo Persona:*</b>
+                                                    @Html.DevExpress().ComboBox(settings =>
                                        {
                                            settings.Name = "IdTipoPersona";
                                            settings.Width = 180;
@@ -112,13 +112,13 @@
                                            settings.ClientEnabled = true;
                                            settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
                                        }).BindList(ViewBag.TipoPersona).GetHtml()
-                                                            @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            <b> Régimen Fiscal:*</b>
-                                                            @Html.DevExpress().ComboBox(settings =>
+                                                    @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <b> Régimen Fiscal:*</b>
+                                                    @Html.DevExpress().ComboBox(settings =>
                                        {
                                            settings.Name = "IdRegimenFiscal";
                                            settings.Width = 180;
@@ -130,120 +130,120 @@
                                            settings.Properties.TextField = "Descripcion";
                                            settings.Properties.ValueField = "IdRegimenFiscal";
                                        }).BindList(ViewBag.Regimen).GetHtml()
-                                                            @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
-                                                        </div>
-                                                    </div>
+                                                    @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                                 </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group" id="hide_razonS">
-                                                            Razón Social:*
-                                                            @Html.TextBoxFor(m => m.RazonSocial, new { @class = "form-control enableOnInput" })
-                                                            @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            RFC:*
-                                                            @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control enableOnInput" })
-                                                            @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group" id="hide_razonS">
+                                                    Razón Social:*
+                                                    @Html.TextBoxFor(m => m.RazonSocial, new { @class = "form-control enableOnInput" })
+                                                    @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    RFC:*
+                                                    @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control enableOnInput" })
+                                                    @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row clearfix" id="div_hideRP">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="card">
-                                            <div class="header">
-                                                <h2><strong>Representante Legal</strong></h2>
+                            </div>
+                        </div>
+                        <div class="row clearfix" id="div_hideRP">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h2><strong>Representante Legal</strong></h2>
+                                    </div>
+                                    <div class="body">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    Nombre Completo:@Html.TextBoxFor(m => m.RepresentanteLegal, new { @class = "form-control enableOnInput" })
+                                                </div>
                                             </div>
-                                            <div class="body">
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            Nombre Completo:@Html.TextBoxFor(m => m.RepresentanteLegal, new { @class = "form-control enableOnInput" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                                        <div class="form-group">
-                                                            <div>
-                                                                Teléfono:@Html.TextBoxFor(m => m.Telefono, new { @class = "form-control enableOnInput" })
-                                                            </div>
-                                                        </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div class="form-group">
+                                                    <div>
+                                                        Teléfono:@Html.TextBoxFor(m => m.Telefono, new { @class = "form-control enableOnInput" })
                                                     </div>
                                                 </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            Dirección:@Html.TextBoxFor(m => m.Domicilio, new { @class = "form-control enableOnInput" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                                        <div class="form-group">
-                                                            Celular:@Html.TextBoxFor(m => m.Celular, new { @class = "form-control enableOnInput" })
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    Dirección:@Html.TextBoxFor(m => m.Domicilio, new { @class = "form-control enableOnInput" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div class="form-group">
+                                                    Celular:@Html.TextBoxFor(m => m.Celular, new { @class = "form-control enableOnInput" })
+                                                </div>
+                                            </div>
 
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            E-mail:@Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control enableOnInput" })
-                                                        </div>
-                                                    </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    E-mail:@Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control enableOnInput" })
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row clearfix" id="div_hidePM">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            Nombres:* @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control enableOnInput" })
-                                            @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Apellido 1:*
-                                                @Html.TextBoxFor(m => m.Apellido1, new { @class = "form-control enableOnInput" })
-                                                @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Apellido 2:
-                                                @Html.TextBoxFor(m => m.Apellido2, new { @class = "form-control enableOnInput" })
-                                            </div>
-                                        </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix" id="div_hidePM">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    Nombres:* @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control enableOnInput" })
+                                    @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <div>
+                                        Apellido 1:*
+                                        @Html.TextBoxFor(m => m.Apellido1, new { @class = "form-control enableOnInput" })
+                                        @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="row clearfix" id="div_hideRP">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="card">
-                                            <div class="header">
-                                                <h2><strong>Dirección</strong></h2>
-                                            </div>
-                                            <div class="body">
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                                        <div class="form-group">
-                                                            <div>
-                                                                <label for="txtNume">
-                                                                    País:*
-                                                                </label>
-                                                            </div>
-                                                        </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <div>
+                                        Apellido 2:
+                                        @Html.TextBoxFor(m => m.Apellido2, new { @class = "form-control enableOnInput" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix" id="div_hideRP">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h2><strong>Dirección</strong></h2>
+                                    </div>
+                                    <div class="body">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label for="txtNume">
+                                                            País:*
+                                                        </label>
                                                     </div>
-                                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                                        <div class="form-group">
-                                                            @Html.DevExpress().ComboBox(settings =>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <div class="form-group">
+                                                    @Html.DevExpress().ComboBox(settings =>
                                        {
                                            settings.Name = "cliente.Locacion.IdPais";
                                            settings.Width = 180;
@@ -258,21 +258,21 @@
                                            settings.ClientEnabled = true;
                                            settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
                                        }).BindList(Model.Locaciones).Bind(Model.Locaciones[0].IdPais).GetHtml()
-                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label for="txtNume">
+                                                            Estado:*
+                                                        </label>
                                                     </div>
-                                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                                        <div class="form-group">
-                                                            <div>
-                                                                <label for="txtNume">
-                                                                    Estado:*
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                                        <div class="form-group">
-                                                            <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
-                                                            @Html.DevExpress().ComboBox(settings =>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <div class="form-group">
+                                                    <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
+                                                    @Html.DevExpress().ComboBox(settings =>
                                        {
                                            settings.Name = "Locacion.IdEstadoRep";
                                            settings.Width = 180;
@@ -285,130 +285,125 @@
                                            settings.Properties.ValueField = "IdEstadoRep";
                                            settings.Properties.ValueType = typeof(byte?);
                                        }).BindList(Model.Locaciones).Bind(Model.Locaciones[0].IdEstadoRep).GetHtml()
-                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label for="txtNume">
+                                                            Municipio:*
+                                                        </label>
                                                     </div>
-                                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                                        <div class="form-group">
-                                                            <div>
-                                                                <label for="txtNume">
-                                                                    Municipio:*
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                                        <div class="form-group">
-                                                          @Html.TextBoxFor(m => m.Locaciones[0].Municipio, new { @class = "form-control enableOnInput" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <div class="form-group">
+                                                    @Html.TextBoxFor(m => m.Locaciones[0].Municipio, new { @class = "form-control enableOnInput" })
 
-                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label for="txtNume">
+                                                            Colonia:*
+                                                        </label>
                                                     </div>
                                                 </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                                        <div class="form-group">
-                                                            <div>
-                                                                <label for="txtNume">
-                                                                    Colonia:*
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                                        <div class="form-group">
-                                                            @Html.TextBoxFor(m => m.Locaciones[0].Colonia, new { @class = "form-control enableOnInput" })
-                                                        </div>
-                                                        @Html.ValidationMessageFor(m => m.Locaciones[0].Colonia, "", new { @class = "alert-danger" })
-                                                    </div>
-                                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                                        <div class="form-group">
-                                                            <div>
-                                                                <label for="txtNume">
-                                                                    Calle:*
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-7 col-md-7 col-sm-7">
-                                                        <div class="form-group">
-                                                            @Html.TextBoxFor(m => m.Locaciones[0].Calle, new { @class = "form-control enableOnInput" })
-                                                        </div>
-                                                        @Html.ValidationMessageFor(m => m.Locaciones[0].Calle, "", new { @class = "alert-danger" })
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <div class="form-group">
+                                                    @Html.TextBoxFor(m => m.Locaciones[0].Colonia, new { @class = "form-control enableOnInput" })
+                                                </div>
+                                                @Html.ValidationMessageFor(m => m.Locaciones[0].Colonia, "", new { @class = "alert-danger" })
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label for="txtNume">
+                                                            Calle:*
+                                                        </label>
                                                     </div>
                                                 </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                                        <div class="form-group">
-                                                            <div>
-                                                                <label for="txtNume">
-                                                                    Núm Ext:*
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                                        <div class="form-group">
-                                                            @Html.TextBoxFor(m => m.Locaciones[0].NumExt, new { @class = "form-control enableOnInput" })
-                                                        </div>
-                                                        @Html.ValidationMessageFor(m => m.Locaciones[0].NumExt, "", new { @class = "alert-danger" })
-                                                    </div>
-                                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                                        <div class="form-group">
-                                                            <div>
-                                                                <label for="txtNume">
-                                                                    Núm. Int:
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                                        <div class="form-group">
-                                                            @Html.TextBoxFor(m => m.Locaciones[0].NumInt, new { @class = "form-control enableOnInput" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                                        <div class="form-group">
-                                                            <div>
-                                                                <label for="txtNume">
-                                                                    Cod. Postal:*
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                                        <div class="form-group">
-                                                            @Html.TextBoxFor(m => m.Locaciones[0].CodigoPostal, new { @class = "form-control enableOnInput" })
-                                                        </div>
-                                                        @Html.ValidationMessageFor(m => m.Locaciones[0].CodigoPostal, "", new { @class = "alert-danger" })
+                                            </div>
+                                            <div class="col-lg-7 col-md-7 col-sm-7">
+                                                <div class="form-group">
+                                                    @Html.TextBoxFor(m => m.Locaciones[0].Calle, new { @class = "form-control enableOnInput" })
+                                                </div>
+                                                @Html.ValidationMessageFor(m => m.Locaciones[0].Calle, "", new { @class = "alert-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label for="txtNume">
+                                                            Núm Ext:*
+                                                        </label>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <div class="form-group">
+                                                    @Html.TextBoxFor(m => m.Locaciones[0].NumExt, new { @class = "form-control enableOnInput" })
+                                                </div>
+                                                @Html.ValidationMessageFor(m => m.Locaciones[0].NumExt, "", new { @class = "alert-danger" })
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label for="txtNume">
+                                                            Núm. Int:
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <div class="form-group">
+                                                    @Html.TextBoxFor(m => m.Locaciones[0].NumInt, new { @class = "form-control enableOnInput" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label for="txtNume">
+                                                            Cod. Postal:*
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <div class="form-group">
+                                                    @Html.TextBoxFor(m => m.Locaciones[0].CodigoPostal, new { @class = "form-control enableOnInput" })
+                                                </div>
+                                                @Html.ValidationMessageFor(m => m.Locaciones[0].CodigoPostal, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>     
 
-                    </div>
-                </div>
-
-                <div class="body">
-                    <div class="row clearfix">
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="form-group">
-                                <input type="button" value="Editar" id="EditarInfoCliente" class="btn btn-raised btn-primary btn-round" />
+                        <div class="row clearfix">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <input type="button" value="Editar" id="EditarInfoCliente" class="btn btn-raised btn-primary btn-round" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <input type="submit" value="Guardar" id="btnGuardarInfoCliente" formaction="GuardarInfoCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <input type="submit" value="Continuar" formaction="ContinuarGenerarFactura" formmethod="post" class="btn btn-raised btn-primary btn-round" />
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="form-group">
-                                <input type="submit" value="Guardar" id="btnGuardarInfoCliente" formaction="GuardarInfoCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput"/>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="form-group">
-                                <input type="submit" value="Continuar" formaction="ContinuarGenerarFactura" formmethod="post" class="btn btn-raised btn-primary btn-round" />
-                            </div>
-                        </div>
-                    </div>
+                    </div>  
                 </div>
 
             </div>
