@@ -6965,21 +6965,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="EstadosRepublica" EntityType="Self.EstadosRepublica" />
           <EntitySet Name="Pais" EntityType="Self.Pais" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" />
-          <!--<EntitySet Name="EmpresaConfiguracion" EntityType="Self.EmpresaConfiguracion" />
-          <EntitySet Name="EmpresaContacto" EntityType="Self.EmpresaContacto" />
-          <EntitySet Name="EmpresaDireccion" EntityType="Self.EmpresaDireccion" />
-          <EntitySet Name="EmpresaFiscal" EntityType="Self.EmpresaFiscal" />
-          <EntitySet Name="EmpresaImagen" EntityType="Self.EmpresaImagen" />-->
+        
           <EntitySet Name="Rol" EntityType="Self.Rol" />
-          <!--<EntitySet Name="RolAccion" EntityType="Self.RolAccion" />-->
+      
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <!--<EntitySet Name="UsuarioACContacto" EntityType="Self.UsuarioACContacto" />
-          <EntitySet Name="UsuarioACCredencial" EntityType="Self.UsuarioACCredencial" />
-          <EntitySet Name="UsuarioACDireccion" EntityType="Self.UsuarioACDireccion" />
-          <EntitySet Name="UsuarioContacto" EntityType="Self.UsuarioContacto" />
-          <EntitySet Name="UsuarioCredencial" EntityType="Self.UsuarioCredencial" />
-          <EntitySet Name="UsuarioDireccion" EntityType="Self.UsuarioDireccion" />-->
+     
           <AssociationSet Name="FK_Empresa_EstadosRepublica" Association="Self.FK_Empresa_EstadosRepublica">
             <End Role="EstadosRepublica" EntitySet="EstadosRepublica" />
             <End Role="Empresa" EntitySet="Empresa" />
@@ -6988,42 +6979,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Pais" EntitySet="Pais" />
             <End Role="Empresa" EntitySet="Empresa" />
           </AssociationSet>
-          <!--<AssociationSet Name="FK_EmpresaConfiguracion_Empresa" Association="Self.FK_EmpresaConfiguracion_Empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="EmpresaConfiguracion" EntitySet="EmpresaConfiguracion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmpresaContacto_Empresa" Association="Self.FK_EmpresaContacto_Empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="EmpresaContacto" EntitySet="EmpresaContacto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmpresaDireccion_Empresa" Association="Self.FK_EmpresaDireccion_Empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="EmpresaDireccion" EntitySet="EmpresaDireccion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmpresaFiscal_Empresa" Association="Self.FK_EmpresaFiscal_Empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="EmpresaFiscal" EntitySet="EmpresaFiscal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmpresaImagen_Empresa" Association="Self.FK_EmpresaImagen_Empresa">
-            <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="EmpresaImagen" EntitySet="EmpresaImagen" />
-          </AssociationSet>-->
+      
           <AssociationSet Name="FK_Usuario_Empresa" Association="Self.FK_Usuario_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <!--<AssociationSet Name="FK_RolAccion_Rol" Association="Self.FK_RolAccion_Rol">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="RolAccion" EntitySet="RolAccion" />
-          </AssociationSet>-->
-          <!--<AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>-->
-          <!--<AssociationSet Name="FK_UsuarioAC_Rol" Association="Self.FK_UsuarioAC_Rol">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="UsuarioAC" EntitySet="UsuarioAC" />
-          </AssociationSet>-->
+      
           <AssociationSet Name="FK_Usuario_EstadosRepublica" Association="Sagas.MainModuleModel.FK_Usuario_EstadosRepublica">
             <End Role="EstadosRepublica" EntitySet="EstadosRepublica" />
             <End Role="Usuario" EntitySet="Usuario" />
@@ -7033,10 +6994,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           <EntitySet Name="Requisicion" EntityType="Sagas.MainModuleModel.Requisicion" />
-          <!--<EntitySet Name="RequisicionAlmacen" EntityType="Sagas.MainModuleModel.RequisicionAlmacen" />
-          <EntitySet Name="RequisicionAlmacenProducto" EntityType="Sagas.MainModuleModel.RequisicionAlmacenProducto" />
-          <EntitySet Name="RequisicionAutorizacion" EntityType="Sagas.MainModuleModel.RequisicionAutorizacion" />
-          <EntitySet Name="RequisicionAutorizacionProducto" EntityType="Sagas.MainModuleModel.RequisicionAutorizacionProducto" />-->
+      
           <EntitySet Name="RequisicionEstatus" EntityType="Sagas.MainModuleModel.RequisicionEstatus" />
           <EntitySet Name="RequisicionProducto" EntityType="Sagas.MainModuleModel.RequisicionProducto" />
           <AssociationSet Name="FK_Requisicion_RequisicionEstatus" Association="Sagas.MainModuleModel.FK_Requisicion_RequisicionEstatus">
@@ -7047,26 +7005,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Requisicion" EntitySet="Requisicion" />
           </AssociationSet>
-          <!--<AssociationSet Name="FK_RequisicionAlmacen_Requisicion" Association="Sagas.MainModuleModel.FK_RequisicionAlmacen_Requisicion">
-            <End Role="Requisicion" EntitySet="Requisicion" />
-            <End Role="RequisicionAlmacen" EntitySet="RequisicionAlmacen" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RequisicionAutorizacion_Requisicion" Association="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Requisicion">
-            <End Role="Requisicion" EntitySet="Requisicion" />
-            <End Role="RequisicionAutorizacion" EntitySet="RequisicionAutorizacion" />
-          </AssociationSet>-->
+          
           <AssociationSet Name="FK_RequisicionProducto_Requisicion" Association="Sagas.MainModuleModel.FK_RequisicionProducto_Requisicion">
             <End Role="Requisicion" EntitySet="Requisicion" />
             <End Role="RequisicionProducto" EntitySet="RequisicionProducto" />
           </AssociationSet>
-          <!--<AssociationSet Name="FK_RequisicionAlmacenProducto_RequisicionProducto" Association="Sagas.MainModuleModel.FK_RequisicionAlmacenProducto_RequisicionProducto">
-            <End Role="RequisicionProducto" EntitySet="RequisicionProducto" />
-            <End Role="RequisicionAlmacenProducto" EntitySet="RequisicionAlmacenProducto" />
-          </AssociationSet>-->
-          <!--<AssociationSet Name="FK_RequisicionAutorizacionProducto_RequisicionProducto" Association="Sagas.MainModuleModel.FK_RequisicionAutorizacionProducto_RequisicionProducto">
-            <End Role="RequisicionProducto" EntitySet="RequisicionProducto" />
-            <End Role="RequisicionAutorizacionProducto" EntitySet="RequisicionAutorizacionProducto" />
-          </AssociationSet>-->
+       
           <AssociationSet Name="FK_Requisicion_Usuario1" Association="Sagas.MainModuleModel.FK_Requisicion_Usuario1">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Requisicion" EntitySet="Requisicion" />
@@ -7081,14 +7025,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="TipoServicioOProducto" EntityType="Sagas.MainModuleModel.TipoServicioOProducto" />
           <EntitySet Name="UnidadMedida" EntityType="Sagas.MainModuleModel.UnidadMedida" />
           <EntitySet Name="Proveedor" EntityType="Sagas.MainModuleModel.Proveedor" />
-          <!--<EntitySet Name="CProveedorBancario" EntityType="Sagas.MainModuleModel.CProveedorBancario" />
-          <EntitySet Name="CProveedorContacto" EntityType="Sagas.MainModuleModel.CProveedorContacto" />
-          <EntitySet Name="CProveedorDireccion" EntityType="Sagas.MainModuleModel.CProveedorDireccion" />
-          <EntitySet Name="CProveedorFiscal" EntityType="Sagas.MainModuleModel.CProveedorFiscal" />-->
+         
           <EntitySet Name="TipoProveedor" EntityType="Sagas.MainModuleModel.TipoProveedor" />
           <EntitySet Name="OrdenCompra" EntityType="Sagas.MainModuleModel.OrdenCompra" />
           <EntitySet Name="OrdenCompraEstatus" EntityType="Sagas.MainModuleModel.OrdenCompraEstatus" />
-          <!--<EntitySet Name="OrdenCompraImporte" EntityType="Sagas.MainModuleModel.OrdenCompraImporte" />-->
           <EntitySet Name="ProductoAsociado" EntityType="Sagas.MainModuleModel.ProductoAsociado" />
           <EntitySet Name="OrdenCompraProducto" EntityType="Sagas.MainModuleModel.OrdenCompraProducto" />
           <AssociationSet Name="FK_Producto_CategoriaProducto" Association="Sagas.MainModuleModel.FK_Producto_CategoriaProducto">
@@ -7147,22 +7087,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Proveedor" EntitySet="Proveedor" />
           </AssociationSet>
-          <!--<AssociationSet Name="FK_CProveedorBancario_CProveedor" Association="Sagas.MainModuleModel.FK_CProveedorBancario_CProveedor">
-            <End Role="CProveedor" EntitySet="CProveedor" />
-            <End Role="CProveedorBancario" EntitySet="CProveedorBancario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CProveedorContacto_CProveedor" Association="Sagas.MainModuleModel.FK_CProveedorContacto_CProveedor">
-            <End Role="CProveedor" EntitySet="CProveedor" />
-            <End Role="CProveedorContacto" EntitySet="CProveedorContacto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CProveedorDireccion_CProveedor" Association="Sagas.MainModuleModel.FK_CProveedorDireccion_CProveedor">
-            <End Role="CProveedor" EntitySet="CProveedor" />
-            <End Role="CProveedorDireccion" EntitySet="CProveedorDireccion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CProveedorFiscal_CProveedor" Association="Sagas.MainModuleModel.FK_CProveedorFiscal_CProveedor">
-            <End Role="CProveedor" EntitySet="CProveedor" />
-            <End Role="CProveedorFiscal" EntitySet="CProveedorFiscal" />
-          </AssociationSet>-->
           <AssociationSet Name="FK_OrdenCompra_Proveedor" Association="Sagas.MainModuleModel.FK_OrdenCompra_Proveedor">
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="OrdenCompra" EntitySet="OrdenCompra" />
@@ -7183,23 +7107,15 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Requisicion" EntitySet="Requisicion" />
             <End Role="OrdenCompra" EntitySet="OrdenCompra" />
           </AssociationSet>
-          <!--<AssociationSet Name="FK_OrdenCompraImporte_OrdenCompra" Association="Sagas.MainModuleModel.FK_OrdenCompraImporte_OrdenCompra">
-            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
-            <End Role="OrdenCompraImporte" EntitySet="OrdenCompraImporte" />
-          </AssociationSet>-->
           <AssociationSet Name="FK_OrdenCompraProducto_OrdenCompra" Association="Sagas.MainModuleModel.FK_OrdenCompraProducto_OrdenCompra">
             <End Role="OrdenCompra" EntitySet="OrdenCompra" />
             <End Role="OrdenCompraProducto" EntitySet="OrdenCompraProducto" />
           </AssociationSet>
           <EntitySet Name="Almacen" EntityType="Sagas.MainModuleModel.Almacen" />
           <EntitySet Name="AlmacenGasDescarga" EntityType="Sagas.MainModuleModel.AlmacenGasDescarga" />
-          <!--<EntitySet Name="AlmacenEntradaGasDescargaFinalizar" EntityType="Sagas.MainModuleModel.AlmacenEntradaGasDescargaFinalizar" />
-          <EntitySet Name="AlmacenEntradaGasDescargaIniciar" EntityType="Sagas.MainModuleModel.AlmacenEntradaGasDescargaIniciar" />
-          <EntitySet Name="AlmacenEntradaGasDescargaPuerta" EntityType="Sagas.MainModuleModel.AlmacenEntradaGasDescargaPuerta" />-->
           <EntitySet Name="AlmacenGasDescargaFoto" EntityType="Sagas.MainModuleModel.AlmacenGasDescargaFoto" />
           <EntitySet Name="AlmacenGas" EntityType="Sagas.MainModuleModel.AlmacenGas" />
           <EntitySet Name="UnidadAlmacenGas" EntityType="Sagas.MainModuleModel.UnidadAlmacenGas" />
-          <!--<EntitySet Name="CAlmacenGasCalibracion" EntityType="Sagas.MainModuleModel.CAlmacenGasCalibracion" />-->
           <EntitySet Name="UnidadAlmacenGasCilindro" EntityType="Sagas.MainModuleModel.UnidadAlmacenGasCilindro" />
           <EntitySet Name="TipoUnidadAlmacenGas" EntityType="Sagas.MainModuleModel.TipoUnidadAlmacenGas" />
           <EntitySet Name="TipoMedidorUnidadAlmacenGas" EntityType="Sagas.MainModuleModel.TipoMedidorUnidadAlmacenGas" />
@@ -7255,22 +7171,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Requisicion" EntitySet="Requisicion" />
             <End Role="AlmacenGasDescarga" EntitySet="AlmacenGasDescarga" />
           </AssociationSet>
-          <!--<AssociationSet Name="FK_AlmacenEntradaGasDescargaFinalizar_AlmacenEntradaGasDescarga" Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaFinalizar_AlmacenEntradaGasDescarga">
-            <End Role="AlmacenEntradaGasDescarga" EntitySet="AlmacenEntradaGasDescarga" />
-            <End Role="AlmacenEntradaGasDescargaFinalizar" EntitySet="AlmacenEntradaGasDescargaFinalizar" />
-          </AssociationSet>-->
           <AssociationSet Name="FK_AlmacenGasDescargaFoto_AlmacenGasDescarga" Association="Sagas.MainModuleModel.FK_AlmacenGasDescargaFoto_AlmacenGasDescarga">
             <End Role="AlmacenGasDescarga" EntitySet="AlmacenGasDescarga" />
             <End Role="AlmacenGasDescargaFoto" EntitySet="AlmacenGasDescargaFoto" />
           </AssociationSet>
-          <!--<AssociationSet Name="FK_AlmacenEntradaGasDescargaIniciar_AlmacenEntradaGasDescarga" Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaIniciar_AlmacenEntradaGasDescarga">
-            <End Role="AlmacenEntradaGasDescarga" EntitySet="AlmacenEntradaGasDescarga" />
-            <End Role="AlmacenEntradaGasDescargaIniciar" EntitySet="AlmacenEntradaGasDescargaIniciar" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AlmacenEntradaGasDescargaPuerta_AlmacenEntradaGasDescarga" Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaPuerta_AlmacenEntradaGasDescarga">
-            <End Role="AlmacenEntradaGasDescarga" EntitySet="AlmacenEntradaGasDescarga" />
-            <End Role="AlmacenEntradaGasDescargaPuerta" EntitySet="AlmacenEntradaGasDescargaPuerta" />
-          </AssociationSet>-->
           <AssociationSet Name="FK_AlmacenGas_Empresa" Association="Sagas.MainModuleModel.FK_AlmacenGas_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="AlmacenGas" EntitySet="AlmacenGas" />
@@ -7299,10 +7203,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="UnidadAlmacenGas" EntitySet="UnidadAlmacenGas" />
           </AssociationSet>
-          <!--<AssociationSet Name="FK_CAlmacenGasCalibracion_CAlmacenGas" Association="Sagas.MainModuleModel.FK_CAlmacenGasCalibracion_CAlmacenGas">
-            <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
-            <End Role="CAlmacenGasCalibracion" EntitySet="CAlmacenGasCalibracion" />
-          </AssociationSet>-->
           <AssociationSet Name="FK_CamionetaCilindro_CAlmacenGasCilindro" Association="Sagas.MainModuleModel.FK_CamionetaCilindro_CAlmacenGasCilindro">
             <End Role="UnidadAlmacenGasCilindro" EntitySet="UnidadAlmacenGasCilindro" />
             <End Role="CamionetaCilindro" EntitySet="CamionetaCilindro" />
@@ -7372,10 +7272,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Rol" EntitySet="Rol" />
           </AssociationSet>
-          <!--<AssociationSet Name="UsuarioRol" Association="Sagas.MainModuleModel.UsuarioRol">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>-->
           <AssociationSet Name="FK_UsuarioRol_Rol" Association="Sagas.MainModuleModel.FK_UsuarioRol_Rol">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="UsuarioRol" EntitySet="UsuarioRol" />

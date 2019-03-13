@@ -1,6 +1,4 @@
-﻿@*@model  List<MVC.Presentacion.Models.Facturacion.FacturacionModel>*@
-@using MVC.Presentacion.Models.Facturacion
-    @model List<FacturacionModel>
+﻿@model MVC.Presentacion.Models.Facturacion.FacturacionModel
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -13,7 +11,6 @@
         )
 <html>
 <head>
-    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <script src="~/assets/js/pages/ui/notifications.js"></script>
     <script type="text/javascript">
@@ -48,15 +45,15 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <strong>Número de Ticket:*</strong>
-                                        @Html.TextBoxFor(m => m[0].Ticket, new { @class = "form-control", @placeholder = "Número de Ticket" })
-                                        @Html.ValidationMessageFor(m => m[0].Ticket, "", new { @class = "alert-danger" })
+                                        @Html.TextBoxFor(m => m.Ticket, new { @class = "form-control", @placeholder = "Número de Ticket" })
+                                        @Html.ValidationMessageFor(m => m.Ticket, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <strong>Número de Cliente:*</strong>
-                                        @Html.TextBoxFor(m => m[0].IdCliente, new { @class = "form-control", @placeholder = "Número de Cliente" })
-                                        @Html.ValidationMessageFor(m => m[0].IdCliente, "", new { @class = "alert-danger" })
+                                        @Html.TextBoxFor(m => m.IdCliente, new { @class = "form-control", @placeholder = "Número de Cliente" })
+                                        @Html.ValidationMessageFor(m => m.IdCliente, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-sm-2">
@@ -71,11 +68,11 @@
                                            settings.Properties.NullText = "dd/MM/yyyy";
                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       }).Bind(Model[0].FechaVenta).GetHtml()
+                                       }).Bind(Model.FechaVenta).GetHtml()
                                 </div>
                                 <div class="col-sm-2">
                                     <strong>Monto de venta:</strong>
-                                    @Html.TextBoxFor(m => m[0].MontoVenta, new { @class = "form-control", @placeholder = "Monto de venta" })
+                                    @Html.TextBoxFor(m => Model.MontoVenta, new { @class = "form-control", @placeholder = "Monto de venta" })
                                 </div>
                                 <div class="col-sm-1" style="top:10px">
                                         <div class="form-group">
@@ -118,9 +115,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (ViewBag.Model != null)
+                                            @if (ViewBag.Facturas != null)
                                             {
-                                                foreach (var item in ViewBag.Model)
+                                                foreach (var item in ViewBag.Facturas)
                                                 {
                                                     <tr>
                                                         <th>@item.IdCliente</th>
@@ -129,10 +126,6 @@
                                                         <td>@item.Rfc</td>                                                      
                                                         <td>
 
-                                                            @*<a ID="lbBorrar" href="@Url.Action("CancelarPedido", "Pedidos", new {  idPedido =item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">delete</i>
-                                    <span>Cancelar pedido</span>
-                                </a>*@
                                                         </td>
                                                     </tr>
                                                 }

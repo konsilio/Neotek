@@ -27,7 +27,6 @@ namespace Application.MainModule.AdaptadoresDTO.MantenimientoDetalleAdapter
                 DescripcionMtto = entidad.DescripcionMtto,
                 Kilometraje_Actual = entidad.Kilometraje_Actual,
                 NumeroOC = entidad.NumeroOC,
-                Vehiculo = MantenimientoDetalleServicio.ObtenerNombre(entidad)
             };
         }
         public static List<MantenimientoDetalleDTO> ToDTO(List<DetalleMantenimiento> entidad)
