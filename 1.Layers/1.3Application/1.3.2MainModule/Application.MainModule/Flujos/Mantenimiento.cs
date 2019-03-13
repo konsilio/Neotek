@@ -1,4 +1,5 @@
-﻿using Application.MainModule.AdaptadoresDTO.EquipoTrasnporte;
+﻿using Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio;
+using Application.MainModule.AdaptadoresDTO.MantenimientoDetalleAdapter;
 using Application.MainModule.DTOs.EquipoTransporte;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Equipo;
@@ -73,12 +74,12 @@ namespace Application.MainModule.Flujos
             var emty = MantenimientoDetalleAdapter.FormEmtity(entidad);
             return MantenimientoDetalleServicio.Actualizar(emty);
         }
-        public RespuestaDto Borrar(MantenimientoDetalleDTO dto)
+        public RespuestaDto Borrar(int Id_DetalleMtto)
         {
             var resp = PermisosServicio.PuedeRegistrarMantenimiento();
             if (!resp.Exito) return resp;
 
-            var entidad = MantenimientoDetalleServicio.Buscar(dto.Id_DetalleMtto);
+            var entidad = MantenimientoDetalleServicio.Buscar(Id_DetalleMtto);
             var emty = MantenimientoDetalleAdapter.FormEmtity(entidad);
             return MantenimientoDetalleServicio.Borrar(emty);
         }

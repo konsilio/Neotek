@@ -131,10 +131,10 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, new Mantenimiento().Modificar(_model));
         }
 
-        [Route("eliminar/mantenimientodetalle")]
-        public HttpResponseMessage PutEliminaMantenimientoDetalle(MantenimientoDetalleDTO _model)
+        [Route("eliminar/mantenimientodetalle/{id}")]
+        public HttpResponseMessage PutEliminaMantenimientoDetalle(int id)
         {
-            return RespuestaHttp.crearRespuesta(new Mantenimiento().Borrar(_model), Request);
+            return RespuestaHttp.crearRespuesta(new Mantenimiento().Borrar(id), Request);
         }
         #endregion
     }

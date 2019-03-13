@@ -43,7 +43,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = TransporteServicio.EliminarMantenimiento(new MantenimientoDetalleModel { Id_DetalleMtto = id ?? 0 }, tkn);
+            var respuesta = TransporteServicio.EliminarMantenimiento(id ?? 0, tkn);
             TempData["RespuestaDTO"] = respuesta;
             return RedirectToAction("Index");
         }

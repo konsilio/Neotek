@@ -49,10 +49,9 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new CamionetaDataAccess().ObtenerCamioneta(id);
         }
-
-        public static Camioneta BuscarxId(int id)
+        public static Camioneta Obtener(int id, bool activo)
         {
-            return new CamionetaDataAccess().ObtenerCamionetasxId(id);
+            return new CamionetaDataAccess().ObtenerCamioneta(id, activo);
         }
         public static RespuestaDto NoExiste()
         {

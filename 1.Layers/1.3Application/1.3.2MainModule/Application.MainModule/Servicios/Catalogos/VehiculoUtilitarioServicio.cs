@@ -39,6 +39,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new VehiculoUtilitarioDataAccess().Obtener(id);
         }
+        public static CUtilitario Obtener(int id, bool activo)
+        {
+            return new VehiculoUtilitarioDataAccess().Obtener(id, activo);
+        }
         public static string ObtenerNombre(int id)
         {
             return Obtener(id).Nombre;
