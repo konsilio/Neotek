@@ -14,10 +14,10 @@ namespace Infrastructure.Data.Repositorios
 
         public GenericRepository(DbContext _entities)
         {
-            entities = _entities; entities.ChangeTracker.HasChanges();
+            entities = _entities;
+            entities.ChangeTracker.HasChanges();
             _objectSet = entities.Set<T>();
         }
-
         public IEnumerable<T> Get(
                     Expression<Func<T, bool>> filter,
                     Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
