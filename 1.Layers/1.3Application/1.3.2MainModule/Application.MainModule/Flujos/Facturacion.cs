@@ -1,8 +1,12 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Facturacion;
+using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.com.admingest;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.DTOs.Ventas;
+using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Facturacion;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -32,6 +36,21 @@ namespace Application.MainModule.Flujos
         public List<CFDIDTO> GenerarFactura(List<CFDIDTO> dtos)
         {
             return dtos.Select(x => GenerarFactura(x)).ToList();
+        }
+        public List<VentaPuntoVentaDTO> BuscarPorRFC(string RFC)
+        {
+            var ventas = PuntoVentaServicio.ObtenerVentasPorRFC(RFC);
+            return CajaGeneralAdapter.ToDTOP(ventas);
+        }
+        public List<VentaPuntoVentaDTO> BuscarPorNumCliente(int id)
+        {
+            var ventas = PuntoVentaServicio.ObtenerVentasPorCliente(id);
+            return CajaGeneralAdapter.ToDTOP(ventas);
+        }
+        public VentaPuntoVentaDTO BuscarPorTicket(string ticket)
+        {
+            var venta = PuntoVentaServicio.Obtener(ticket);
+            return CajaGeneralAdapter.ToDTOP(venta);
         }
     }
 }

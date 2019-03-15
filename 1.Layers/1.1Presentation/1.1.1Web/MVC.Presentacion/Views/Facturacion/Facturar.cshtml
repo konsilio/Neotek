@@ -15,7 +15,7 @@
 
 <html>
 <head>
-    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+    @*<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>*@
     <script src="~/Resources/js/Clientes.js"></script>
     <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
     <script type="text/javascript">
@@ -100,18 +100,18 @@
                                                 <div class="form-group">
                                                     <b>Tipo Persona:*</b>
                                                     @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "IdTipoPersona";
-                                           settings.Width = 180;
-                                           settings.SelectedIndex = (int)Model.IdTipoPersona.Value;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Theme = "Material";
-                                           settings.Properties.TextField = "Descripcion";
-                                           settings.Properties.ValueField = "IdTipoPersona";
-                                           settings.ClientEnabled = true;
-                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
-                                       }).BindList(ViewBag.TipoPersona).GetHtml()
+                                                   {
+                                                       settings.Name = "IdTipoPersona";
+                                                       settings.Width = 180;
+                                                       settings.SelectedIndex = (int)Model.IdTipoPersona.Value;
+                                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                       settings.Theme = "Material";
+                                                       settings.Properties.TextField = "Descripcion";
+                                                       settings.Properties.ValueField = "IdTipoPersona";
+                                                       settings.ClientEnabled = true;
+                                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                                   }).BindList(ViewBag.TipoPersona).GetHtml()
                                                     @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
@@ -119,17 +119,17 @@
                                                 <div class="form-group">
                                                     <b> Régimen Fiscal:*</b>
                                                     @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "IdRegimenFiscal";
-                                           settings.Width = 180;
-                                           settings.SelectedIndex = (int)Model.IdRegimenFiscal.Value;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Theme = "Material";
-                                           settings.ControlStyle.CssClass = "enableOnInput";
-                                           settings.Properties.TextField = "Descripcion";
-                                           settings.Properties.ValueField = "IdRegimenFiscal";
-                                       }).BindList(ViewBag.Regimen).GetHtml()
+                                                   {
+                                                       settings.Name = "IdRegimenFiscal";
+                                                       settings.Width = 180;
+                                                       settings.SelectedIndex = (int)Model.IdRegimenFiscal.Value;
+                                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                       settings.Theme = "Material";
+                                                       settings.ControlStyle.CssClass = "enableOnInput";
+                                                       settings.Properties.TextField = "Descripcion";
+                                                       settings.Properties.ValueField = "IdRegimenFiscal";
+                                                   }).BindList(ViewBag.Regimen).GetHtml()
                                                     @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
@@ -205,7 +205,7 @@
                                     Nombres:* @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control enableOnInput" })
                                     @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
                                 </div>
-                            </div>
+                            </div> uf
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <div>
@@ -385,7 +385,6 @@
                                 </div>
                             </div>
                         </div>     
-
                         <div class="row clearfix">
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <div class="form-group">
@@ -405,7 +404,6 @@
                         </div>
                     </div>  
                 </div>
-
             </div>
         </section>
     }

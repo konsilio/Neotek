@@ -260,15 +260,11 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             {
                 totalVentas += x.CantidadProducto.Value;
             }
-            List<TanquesDto> luDTO = lu.ToList().Select(x => ToDTO(x, totalVentas)).ToList();
-
-            return luDTO;
+            //List<TanquesDto> luDTO = lu.ToList().Select(x => ToDTO(x, totalVentas)).ToList();
+            //return luDTO;
+            return lu.Select(x => ToDTO(x, totalVentas)).ToList();
         }
-        //var lecturaInicial = unidad.TomasLectura.Where(
-        //      x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
-        //      ).OrderBy(x => x.FechaRegistro).Last();
-
-        //var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacen);
+       
         public static AlmacenGasMovimientoDto ToDTO(AlmacenGasMovimiento pv)
         {
             var precioLt = CajaGeneralServicio.ObtenerPrecioLt(pv.IdEmpresa, pv.Year, pv.Mes, pv.Dia, pv.Orden);
@@ -309,8 +305,9 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         }
         public static List<AlmacenGasMovimientoDto> ToDTO(List<AlmacenGasMovimiento> lu)
         {
-            List<AlmacenGasMovimientoDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
-            return luDTO;
+            //List<AlmacenGasMovimientoDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
+            //return luDTO;
+            return lu.Select(x => ToDTO(x)).ToList();
         }
         public static VentaPuntoVentaDTO ToDTOC(VentaPuntoDeVenta pv)
         {
@@ -370,8 +367,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         }
         public static List<VentaPuntoVentaDTO> ToDTOC(List<VentaPuntoDeVenta> lu)
         {
-            List<VentaPuntoVentaDTO> luDTO = lu.ToList().Select(x => ToDTOC(x)).ToList();
-            return luDTO;
+            return lu.Select(x => ToDTOC(x)).ToList();         
         }
 
         public static VentaCorteAnticipoDTO ToDTOCE(VentaCorteAnticipoEC pv)
@@ -406,8 +402,13 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         }
         public static List<VentaCorteAnticipoDTO> ToDTOCE(List<VentaCorteAnticipoEC> lu)
         {
-            List<VentaCorteAnticipoDTO> luDTO = lu.ToList().Select(x => ToDTOCE(x)).ToList();
-            return luDTO;
+            return lu.Select(x => ToDTOCE(x)).ToList();
+             
+        }
+        public static List<VentaPuntoVentaDTO> ToDTOP(List<VentaPuntoDeVenta> dtos)
+        {
+            return dtos.Select(x => ToDTOP(x)).ToList();
+             
         }
         public static VentaPuntoVentaDTO ToDTOP(VentaPuntoDeVenta pv)
         {

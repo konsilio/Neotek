@@ -39,9 +39,17 @@
                     </div>
                     <div class="card">
                         <div class="header">
+                            <strong>Identificate</strong>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <strong>RFC:*</strong>
+                                        @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control", @placeholder = "RFC" })
+                                        @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <strong>Número de Ticket:*</strong>
@@ -56,35 +64,16 @@
                                         @Html.ValidationMessageFor(m => m.IdCliente, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-sm-2">
-                                    <strong>Fecha de venta:</strong>
-                                    @Html.DevExpress().DateEdit(settings =>
-                                       {
-                                           settings.Name = "FechaVenta";
-                                           settings.Properties.UseMaskBehavior = true;
-                                           settings.Properties.EditFormat = EditFormat.Custom;
-                                           settings.Theme = "Material";
-                                           settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                           settings.Properties.NullText = "dd/MM/yyyy";
-                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       }).Bind(Model.FechaVenta).GetHtml()
-                                </div>
-                                <div class="col-sm-2">
-                                    <strong>Monto de venta:</strong>
-                                    @Html.TextBoxFor(m => Model.MontoVenta, new { @class = "form-control", @placeholder = "Monto de venta" })
-                                </div>
                                 <div class="col-sm-1" style="top:10px">
-                                        <div class="form-group">
-                                            <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
-                                        </div>
+                                    <div class="form-group">
+                                        <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
                                     </div>
+                                </div>
                                 <div class="col-sm-1" style="top:10px">
                                     <div class="form-group">
                                         <input type="submit" name="Facturar" value="Facturar" formaction=@Url.Action("Facturar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                     </div>
                                 </div>
-
                             </div>
                             <br />
                             @if (ViewBag.MensajeError != null)
@@ -102,6 +91,7 @@
                                     </div>
                                 </div>
                             }
+
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
@@ -110,7 +100,7 @@
                                                 <th>#</th>
                                                 <th>Ticket</th>
                                                 <th>Importe</th>
-                                                <th>RFC</th>                                               
+                                                <th>RFC</th>
                                                 <th>Acción</th>
                                             </tr>
                                         </thead>
@@ -123,16 +113,13 @@
                                                         <th>@item.IdCliente</th>
                                                         <th>@item.Ticket</th>
                                                         <td>@item.Importe</td>
-                                                        <td>@item.Rfc</td>                                                      
-                                                        <td>
-
-                                                        </td>
+                                                        <td>@item.Rfc</td>
+                                                        <td></td>
                                                     </tr>
                                                 }
                                             }
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
                         </div>

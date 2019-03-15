@@ -70,6 +70,6 @@ namespace Application.MainModule.AdaptadoresDTO.Facturacion
                 URLPdf = entidad.URLPdf,
                 URLXml = entidad.URLXml,
             };
-        }
+        }      
     }
 }
