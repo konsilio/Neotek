@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace DS.MainModule.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [RoutePrefix("api/facturacion")]
     public class FacturacionController: ApiController
     {
@@ -25,6 +25,21 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostRegistrarCFDI(CFDIDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.GenerarFactura(dto));
+        }        
+        [Route("buscar/ticket/{numTicket}")]
+        public HttpResponseMessage GetTicket(string numTicket)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorTicket(numTicket));
+        }
+        [Route("buscar/tickets/{rfc}")]
+        public HttpResponseMessage GetTickets(string rfc)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorRFC(rfc));
+        }
+        [Route("buscar/ticketsporcliente/{id}")]
+        public HttpResponseMessage GetTicketsPorCliete(int id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorNumCliente(id));
         }
     }
 }

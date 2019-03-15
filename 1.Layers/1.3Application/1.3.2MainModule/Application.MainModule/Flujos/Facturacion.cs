@@ -42,12 +42,12 @@ namespace Application.MainModule.Flujos
             var ventas = PuntoVentaServicio.ObtenerVentasPorRFC(RFC);
             return CajaGeneralAdapter.ToDTOP(ventas);
         }
-        public List<VentaPuntoVentaDTO> BuscarPorNumCliente(int id)
+        public List<VentaPuntoVentaDTO> BuscarPorNumCliente(int Id)
         {
-            var ventas = PuntoVentaServicio.ObtenerVentasPorCliente(id);
+            var ventas = PuntoVentaServicio.ObtenerVentasPorCliente(Id);
             return CajaGeneralAdapter.ToDTOP(ventas);
         }
-        public VentaPuntoVentaDTO BuscarPorTicket(string ticket)
+        public VentaPuntoVentaDTO BuscarPorTicket(string ticket)    
         {
             var venta = PuntoVentaServicio.Obtener(ticket);
             return CajaGeneralAdapter.ToDTOP(venta);
