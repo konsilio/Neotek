@@ -1016,6 +1016,7 @@ namespace Application.MainModule.Flujos
                     pipaEntity.Activo = vehiculoDto.Activo;
                     editarVehiculo.CPipa = pipaEntity;
                     vehiculoDto.IdPipa = _Pipa.IdPipa;
+                    editarVehiculo.CPipa.IdPipa = _Pipa.IdPipa;
 
                     var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
                     RespuestaGeneral = EquipoTransporteServicio.Modificar(Dtovehiculo, editarVehiculo);
@@ -1047,7 +1048,8 @@ namespace Application.MainModule.Flujos
             {
                 if (vehiculo.IdUtilitario != null)
                 {
-                    var _utilitario = VehiculoUtilitarioServicio.Obtener(vehiculo.IdPipa.Value, false);
+                    //  var _utilitario = VehiculoUtilitarioServicio.Obtener(vehiculo.IdPipa.Value, false);
+                    var _utilitario = VehiculoUtilitarioServicio.Obtener(vehiculo.IdUtilitario.Value, false);
                     if (_utilitario == null) return VehiculoUtilitarioServicio.NoExiste();
 
                     var utilitarioEntity = VehiculoUtilitarioAdapter.FromEntity(_utilitario);
@@ -1122,7 +1124,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeAsignarVehiculo();
             if (!resp.Exito) return resp;
-
+            var idUtil = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).SingleOrDefault(x => x.IdEquipoTransporte.Equals(vehiculoDto.IdVehiculo)).IdVehiculoUtilitario;
             var asig = AsignacionUtilitarioServicio.Buscar(vehiculoDto);
             if (asig != null) return AsignacionUtilitarioServicio.Existe();
 
@@ -1140,7 +1142,8 @@ namespace Application.MainModule.Flujos
                 }
                 else
                     vehiculoDto.IdChofer = chof.IdOperadorChofer;
-                var asignacion = EquipoTransporteServicio.GenerarAsignacion(vehiculoDto);
+                vehiculoDto.IdVehiculo = Convert.ToInt16( idUtil);
+                var asignacion = EquipoTransporteServicio.GenerarAsignacion(vehiculoDto);                
                 return AsignacionUtilitarioServicio.Crear(asignacion);
             }
             else
@@ -1192,11 +1195,15 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeBorrarAsignacionVehicular();
             if (!resp.Exito) return resp;
 
-            if (vehiculoDto.TipoVehiculo.Equals(TipoUnidadEqTransporteEnum.Utilitario))
+            
+            if (vehiculoDto.TipoVehiculo == TipoUnidadEqTransporteEnum.Utilitario)
             {
+                vehiculoDto.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+                var IdEmp = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => (x.IdVehiculoUtilitario==vehiculoDto.IdVehiculo)).IdEmpresa;
                 var asignacion = AsignacionUtilitarioServicio.Buscar(vehiculoDto);
                 asignacion.Activo = false;
-                return AsignacionUtilitarioServicio.Actualizar(asignacion);
+
+                return AsignacionUtilitarioServicio.Actualizar(AsignacionUtilitarioAdapter.FormEmtity(asignacion));
             }
             else
             {
