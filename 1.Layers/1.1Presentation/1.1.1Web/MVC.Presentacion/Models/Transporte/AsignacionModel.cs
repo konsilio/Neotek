@@ -11,7 +11,7 @@ namespace MVC.Presentacion.Models
         public short IdEmpresa { get; set; }
         public int IdChofer { get; set; }
         public string Chofer { get; set; }
-        public int IdVehiculo { get; set; }
+        public short IdVehiculo { get; set; }
         public string Vehiculo { get; set; }
         public short TipoVehiculo { get; set; }
     }

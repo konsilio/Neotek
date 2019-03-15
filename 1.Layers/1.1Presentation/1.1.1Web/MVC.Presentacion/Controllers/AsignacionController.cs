@@ -40,11 +40,11 @@ namespace MVC.Presentacion.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Eliminar(int? id)
+        public ActionResult Eliminar(short? id, short? TV)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = TransporteServicio.EliminarAsignacion(new AsignacionModel { IdAsignacion = id ?? 0 }, tkn);
+            var respuesta = TransporteServicio.EliminarAsignacion(new AsignacionModel { IdVehiculo = id ?? 0, TipoVehiculo = TV ?? 0 }, tkn);
             TempData["RespuestaDTO"] = respuesta;
             return RedirectToAction("Index");
 
