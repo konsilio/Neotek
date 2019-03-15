@@ -45,7 +45,7 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static string ObtenerNombre(int id)
         {
-            return Obtener(id).Nombre;
+            return  Obtener(id).Nombre !=null ? Obtener(id).Nombre: string.Empty  ;
         }
         public static List<CUtilitario> Obtener(short idEmpresa)
         {

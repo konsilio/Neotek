@@ -47,6 +47,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public RespuestaDto Actualizar(AsignacionUtilitarios entidad)
         {
             RespuestaDto _respuesta = new RespuestaDto();
+
             using (uow)
             {
                 try
@@ -81,8 +82,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public AsignacionUtilitarios Obtener(TransporteDTO dto)
         {
             return uow.Repository<AsignacionUtilitarios>().GetSingle(
-                x => x.IdChoferOperador.Equals(dto.IdChofer) 
-                && x.IdUtilitario.Equals(dto.IdVehiculo)
+                x => //x.IdChoferOperador.Equals(dto.IdChofer) 
+                 x.IdUtilitario.Equals(dto.IdVehiculo)
                 && x.IdEmpresa.Equals(dto.IdEmpresa)
                 && x.Activo
                 );

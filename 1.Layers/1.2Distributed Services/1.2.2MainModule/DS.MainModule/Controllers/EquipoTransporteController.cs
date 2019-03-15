@@ -88,7 +88,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _eqTransporte.RegistraAsignacion(_model));
         }
 
-        [Route("eliminar/asignacion/{id}")]
+        [Route("eliminar/asignacion")]
         public HttpResponseMessage PutEliminaAsignacion(TransporteDTO _model)
         {
             return RespuestaHttp.crearRespuesta(_eqTransporte.EliminarAsignacion(_model), Request);
