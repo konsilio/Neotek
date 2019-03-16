@@ -110,10 +110,13 @@ namespace MVC.Presentacion.Agente
         public List<AsignacionModel> _ListaAsignaciones;
         public List<MedidorDTO> _ListaMedidores;
         public List<FacturacionModel> _ListainfoTicket;
+        public List<VentaPuntoVentaDTO> _ListaVenta;
+
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
         }
+
         #region Catalogos
         #region roles
         public void BuscarRolesRequisicion(string tkn)

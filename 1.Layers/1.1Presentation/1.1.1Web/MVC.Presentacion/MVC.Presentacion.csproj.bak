@@ -11601,6 +11601,8 @@
     <Content Include="Views\Shared\EditorTemplates\RolSistemaVenta.cshtml" />
     <Content Include="Views\Facturacion\Index.cshtml" />
     <Content Include="Views\Facturacion\Facturar.cshtml" />
+    <Content Include="Views\Facturacion\DatosCFDI.cshtml" />
+    <Content Include="Views\Facturacion\ArchivosCFDI.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

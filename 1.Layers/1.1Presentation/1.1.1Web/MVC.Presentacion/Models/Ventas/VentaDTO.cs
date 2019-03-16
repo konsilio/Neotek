@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Application.MainModule.DTOs.Ventas
+namespace MVC.Presentacion.Models.Ventas
 {
-   public class VentaPuntoVentaDTO
+    public class VentaPuntoVentaDTO
     {
         public short IdEmpresa { get; set; }
         public short Year { get; set; }
@@ -42,7 +41,7 @@ namespace Application.MainModule.DTOs.Ventas
         public decimal VentaTotalCredito { get; set; }
         public decimal VentaTotalContado { get; set; }
         public decimal OtrasVentas { get; set; }
-        public Nullable<int>  IdCamioneta { get; set; }
+        public Nullable<int> IdCamioneta { get; set; }
         public Nullable<int> IdPipa { get; set; }
         public string Tipo { get; set; }
     }

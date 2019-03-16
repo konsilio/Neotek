@@ -209,7 +209,7 @@
     
     <add key="GetAsigancion" value="api/equipotransporte/buscar/asignacion" />
     <add key="PostRegistrarAsignacion" value="api/equipotransporte/registrar/asignacion" />
-    <add key="PutEliminaAsignacion" value="api/equipotransporte/eliminar/asignacion/" />
+    <add key="PutEliminaAsignacion" value="api/equipotransporte/eliminar/asignacion" />
     
     <add key="GetMantenimiento" value="api/equipotransporte/buscar/mantenimiento" />
     <add key="PostRegistrarMantenimiento" value="api/equipotransporte/registrar/mantenimiento" />
