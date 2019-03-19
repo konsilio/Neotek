@@ -1199,7 +1199,7 @@ namespace Application.MainModule.Flujos
             if (vehiculoDto.TipoVehiculo == TipoUnidadEqTransporteEnum.Utilitario)
             {
                 vehiculoDto.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
-                var IdEmp = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => (x.IdVehiculoUtilitario==vehiculoDto.IdVehiculo)).IdEmpresa;
+               // var IdEmp = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => (x.IdVehiculoUtilitario==vehiculoDto.IdVehiculo)).IdEmpresa;
                 var asignacion = AsignacionUtilitarioServicio.Buscar(vehiculoDto);
                 asignacion.Activo = false;
 
