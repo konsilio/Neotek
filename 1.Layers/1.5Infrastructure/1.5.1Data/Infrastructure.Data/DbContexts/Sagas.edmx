@@ -4246,18 +4246,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DetalleMantenimiento_CCamioneta">
-          <End Role="CCamioneta" Type="Self.CCamioneta" Multiplicity="1" />
-          <End Role="DetalleMantenimiento" Type="Self.DetalleMantenimiento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CCamioneta">
-              <PropertyRef Name="IdCamioneta" />
-            </Principal>
-            <Dependent Role="DetalleMantenimiento">
-              <PropertyRef Name="id_vehiculo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DetalleMantenimiento_CMantenimiento">
           <End Role="CMantenimiento" Type="Self.CMantenimiento" Multiplicity="1" />
           <End Role="DetalleMantenimiento" Type="Self.DetalleMantenimiento" Multiplicity="*" />
@@ -4267,18 +4255,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="DetalleMantenimiento">
               <PropertyRef Name="Id_tipomtto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DetalleMantenimiento_CPipa">
-          <End Role="CPipa" Type="Self.CPipa" Multiplicity="1" />
-          <End Role="DetalleMantenimiento" Type="Self.DetalleMantenimiento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CPipa">
-              <PropertyRef Name="IdPipa" />
-            </Principal>
-            <Dependent Role="DetalleMantenimiento">
-              <PropertyRef Name="id_vehiculo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6046,16 +6022,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CUtilitario" EntitySet="CUtilitario" />
           </AssociationSet>
-          <AssociationSet Name="FK_DetalleMantenimiento_CCamioneta" Association="Self.FK_DetalleMantenimiento_CCamioneta">
-            <End Role="CCamioneta" EntitySet="CCamioneta" />
-            <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
-          </AssociationSet>
           <AssociationSet Name="FK_DetalleMantenimiento_CMantenimiento" Association="Self.FK_DetalleMantenimiento_CMantenimiento">
             <End Role="CMantenimiento" EntitySet="CMantenimiento" />
-            <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetalleMantenimiento_CPipa" Association="Self.FK_DetalleMantenimiento_CPipa">
-            <End Role="CPipa" EntitySet="CPipa" />
             <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
           </AssociationSet>
           <AssociationSet Name="FK_DetalleRecargaCombustible_CCombustible" Association="Self.FK_DetalleRecargaCombustible_CCombustible">
