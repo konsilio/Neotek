@@ -49,6 +49,7 @@ namespace MVC.Presentacion.Agente
         public RegistrarPedidoModel _RegPedido;
         public CombustibleModel _Combustible;
         public EquipoTransporteDTO _Vehiculos;
+        public VentaPuntoVentaDTO _VentaDTO;
 
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
@@ -4276,25 +4277,25 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Faturacion
-        public void ListaCargosFilter(FacturacionModel _mod, string token)
+        public void ListaTickets(FacturacionModel _mod)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["Putpending...."];
-            InfoTickets(_mod, ApiCatalgos, token).Wait();
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetTickets"];
+            BuscarTickets(_mod, ApiCatalgos).Wait();
         }
-        private async Task InfoTickets(FacturacionModel _mod, string api, string token = null)
+        private async Task BuscarTickets(FacturacionModel _mod, string api, string token = null)
         {
             using (var client = new HttpClient())
             {
-                List<FacturacionModel> cargos = new List<FacturacionModel>();
+                List<VentaPuntoVentaDTO> ventas = new List<VentaPuntoVentaDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 if (!string.IsNullOrEmpty(token))
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.PutAsJsonAsync(api, _mod).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(api, _mod)).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        cargos = await response.Content.ReadAsAsync<List<FacturacionModel>>();
+                        ventas = await response.Content.ReadAsAsync<List<VentaPuntoVentaDTO>>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -4303,12 +4304,45 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    cargos = new List<FacturacionModel>();
+                    ventas = new List<VentaPuntoVentaDTO>();
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-
-                _ListainfoTicket = cargos;
+                _ListaVenta = ventas;
+            }
+        }
+        public void ListaTicket(string ticket)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetTicket"];
+            BuscarTicket(ticket, ApiCatalgos).Wait();
+        }
+        private async Task BuscarTicket(string ticket, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                VentaPuntoVentaDTO venta = new VentaPuntoVentaDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(api, ticket)).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        venta = await response.Content.ReadAsAsync<VentaPuntoVentaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    venta = new VentaPuntoVentaDTO();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _VentaDTO = venta;
             }
         }
         #endregion

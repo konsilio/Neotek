@@ -47,10 +47,19 @@ namespace Application.MainModule.Flujos
             var ventas = PuntoVentaServicio.ObtenerVentasPorCliente(Id);
             return CajaGeneralAdapter.ToDTOP(ventas);
         }
-        public VentaPuntoVentaDTO BuscarPorTicket(string ticket)    
+        public VentaPuntoVentaDTO BuscarPorTicket(string ticket)
         {
             var venta = PuntoVentaServicio.Obtener(ticket);
             return CajaGeneralAdapter.ToDTOP(venta);
+        }
+        public List<VentaPuntoVentaDTO> Buscar(FacturacionDTO model)
+        {
+            List<VentaPuntoVentaDTO> _list = new List<VentaPuntoVentaDTO>();
+            if (model.IdCliente > 0)            
+                _list.AddRange(BuscarPorNumCliente(model.IdCliente));            
+            if (!model.RFC.Equals(string.Empty))            
+                _list.AddRange(BuscarPorRFC(model.RFC));
+            return _list.Distinct(new VentaPuntoVentaComparer()).ToList();
         }
     }
 }

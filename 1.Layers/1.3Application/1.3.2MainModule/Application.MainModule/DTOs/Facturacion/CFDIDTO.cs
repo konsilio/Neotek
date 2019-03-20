@@ -7,7 +7,6 @@ namespace Application.MainModule.DTOs
     {
         public int Id_RelTF { get; set; }
         public string Id_FolioVenta { get; set; }
-        public string RFC { get; set; }
         public byte Id_FormaPago { get; set; }
         public int Id_MetodoPago { get; set; }
         public string UsoCFDI { get; set; }

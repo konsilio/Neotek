@@ -13,47 +13,20 @@ namespace MVC.Presentacion.Controllers
     {
         //string _tkn = string.Empty;
         // GET: Facturacion
-        public ActionResult Index(DateTime? fechaVenta, int? Cliente, string rfc = null, string ticket = null, string msj = null, string type = null)
-        {
-            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            //_tkn = Session["StringToken"].ToString();
-            //ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);           
-            if (fechaVenta != null || Cliente != null || rfc != null || ticket != null)
-            {
-                FacturacionModel _filtro = new FacturacionModel();
-                //_filtro.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
-                _filtro.FechaVenta = fechaVenta.Value;
-                _filtro.IdCliente = Cliente.Value;
-                _filtro.Rfc = rfc;
-                _filtro.Ticket = ticket;
-
-                if (ViewBag.Model.Count == 0)
-                {
-                    ViewBag.MensajeError = "No se encontraron resultados de la venta..";
-                }
-            }
-
-            if (TempData["RespuestaDTO"] != null)
-            {
-                if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
-                {
-                    ViewBag.Tipo = "alert-danger";
-                    ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-                }
-                else
-                {
-                    ViewBag.Tipo = "alert-success";
-                    ViewBag.Msj = msj;
-                }
-            }           
+        public ActionResult Index()
+        {                   
+            
             return View();
         }
 
-        public ActionResult Buscar(List<FacturacionModel> _mod)
+        public ActionResult Buscar(FacturacionModel _mod)
         {
-            //if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
-            return RedirectToAction("Index", new { fechaVenta = _mod[0].FechaVenta, Cliente = _mod[0].IdCliente, rfc = _mod[0].Rfc, ticket = _mod[0].Ticket });
+            if (!_mod.Ticket.Equals(string.Empty))            
+                FacturacionServicio.ObtenerTicket(_mod.Ticket);
+            else            
+                FacturacionServicio.ObtenerTickets(_mod);
 
+            return View();
         }
         public ActionResult Facturar(List<FacturacionModel> _mod)
         {

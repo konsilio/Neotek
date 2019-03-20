@@ -9,12 +9,9 @@ namespace MVC.Presentacion.Models.Facturacion
     public class FacturacionModel
     {    
         public int IdCliente { get; set; }
-        public string Rfc { get; set; }     
+        public string RFC { get; set; }     
         public short IdEmpresa { get; set; }
         public string Ticket { get; set; }
-        public System.DateTime FechaVenta { get; set; }
-        public decimal MontoVenta { get; set; }
-        public decimal Importe { get; set; }
-        public ClientesModel DatoFiscal  { get; set; }
+        public System.DateTime FechaVenta { get; set; }     
     }
 }

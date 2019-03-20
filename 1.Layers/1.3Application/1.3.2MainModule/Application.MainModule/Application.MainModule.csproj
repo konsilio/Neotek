@@ -136,6 +136,7 @@
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\RecargaCombustibleDTO.cs" />
     <Compile Include="DTOs\Facturacion\CFDIDTO.cs" />
+    <Compile Include="DTOs\Facturacion\FacturacionDTO.cs" />
     <Compile Include="DTOs\Facturacion\MetodoPagoDTO.cs" />
     <Compile Include="DTOs\Facturacion\UsoCFDIDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />

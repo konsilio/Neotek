@@ -31,15 +31,10 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorTicket(numTicket));
         }
-        [Route("buscar/tickets/{rfc}")]
-        public HttpResponseMessage GetTickets(string rfc)
+        [Route("buscar/tickets")]
+        public HttpResponseMessage GetTickets(FacturacionDTO model)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorRFC(rfc));
-        }
-        [Route("buscar/ticketsporcliente/{id}")]
-        public HttpResponseMessage GetTicketsPorCliete(int id)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorNumCliente(id));
-        }
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.Buscar(model));
+        }       
     }
 }

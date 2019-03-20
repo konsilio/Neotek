@@ -46,4 +46,16 @@ namespace Application.MainModule.DTOs.Ventas
         public Nullable<int> IdPipa { get; set; }
         public string Tipo { get; set; }
     }
+
+    public class VentaPuntoVentaComparer : IEqualityComparer<VentaPuntoVentaDTO>
+    {
+        public bool Equals(VentaPuntoVentaDTO x, VentaPuntoVentaDTO y)
+        {
+            return x.FolioVenta == y.FolioVenta;
+        }
+        public int GetHashCode(VentaPuntoVentaDTO obj)
+        {
+            return obj.FolioVenta.GetHashCode();
+        }
+    }
 }
