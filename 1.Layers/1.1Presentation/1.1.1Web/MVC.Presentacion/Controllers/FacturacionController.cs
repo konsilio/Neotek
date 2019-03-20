@@ -2,6 +2,7 @@
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Facturacion;
 using MVC.Presentacion.Models.Seguridad;
+using MVC.Presentacion.Models.Ventas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,19 +15,29 @@ namespace MVC.Presentacion.Controllers
         //string _tkn = string.Empty;
         // GET: Facturacion
         public ActionResult Index()
-        {                   
+        {
+            if (TempData["ListaTickets"] != null) ViewBag.Tickets = (List<VentaPuntoVentaDTO>)TempData["LisaTickets"];           
+        
             
             return View();
         }
 
         public ActionResult Buscar(FacturacionModel _mod)
         {
-            if (!_mod.Ticket.Equals(string.Empty))            
-                FacturacionServicio.ObtenerTicket(_mod.Ticket);
-            else            
-                FacturacionServicio.ObtenerTickets(_mod);
+            //Inicializamos la lista de tickets validando si ya existe
+            //y agregar las nuevas busquedas
+            List<VentaPuntoVentaDTO> tickets = new List<VentaPuntoVentaDTO>();
+            if (TempData["ListaTickets"] == null)
+                TempData["LisaTickets"] = tickets;
+            else
+                tickets = (List<VentaPuntoVentaDTO>)TempData["LisaTickets"];
 
-            return View();
+            if (!_mod.Ticket.Equals(string.Empty))
+                tickets.Add(FacturacionServicio.ObtenerTicket(_mod.Ticket));
+            else
+                tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));
+
+            return RedirectToAction("Index");
         }
         public ActionResult Facturar(List<FacturacionModel> _mod)
         {
@@ -41,11 +52,11 @@ namespace MVC.Presentacion.Controllers
                     return RedirectToAction("Index", new { msj = "Los tickets deben pertenecer al mismo cliente.", type = "alert" });
                 }
             }
-           
+
             ViewBag.Disabled = "disabled";
             ClientesModel Cliente = CatalogoServicio.ListaClientes(36, 0, 0, "", "", "").FirstOrDefault();//_mod[0].IdCliente
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona("").Where(x => x.IdTipoPersona == Cliente.IdTipoPersona);
-            ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal("").Where(x => x.IdRegimenFiscal == Cliente.IdRegimenFiscal); 
+            ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal("").Where(x => x.IdRegimenFiscal == Cliente.IdRegimenFiscal);
             return View(Cliente);
         }
         private string Validar(RespuestaDTO Resp = null)
