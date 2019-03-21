@@ -18,6 +18,7 @@ namespace MVC.Presentacion.App_Code
         {
             AgenteServicio _agente = new AgenteServicio();
             _agente.ListaTicket(ticket);
+            _agente._VentaDTO.seleccionar = true;
             return _agente._VentaDTO;
         }
     }

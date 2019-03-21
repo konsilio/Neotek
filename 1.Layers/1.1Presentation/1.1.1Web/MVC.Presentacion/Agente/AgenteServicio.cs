@@ -4279,10 +4279,18 @@ namespace MVC.Presentacion.Agente
         #region Faturacion
         public void ListaTickets(FacturacionModel _mod)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetTickets"];
-            BuscarTickets(_mod, ApiCatalgos).Wait();
+            if (_mod.IdCliente > 0)
+            {
+                this.ApiCatalgos = ConfigurationManager.AppSettings["GetTicketsByCliente"];
+                BuscarTickets(_mod.IdCliente.ToString(), ApiCatalgos).Wait();
+            }
+            else
+            {
+                this.ApiCatalgos = ConfigurationManager.AppSettings["GetTicketsByRFC"];
+                BuscarTickets(_mod.RFC, ApiCatalgos).Wait();
+            }
         }
-        private async Task BuscarTickets(FacturacionModel _mod, string api, string token = null)
+        private async Task BuscarTickets(string filtro, string api, string token = null)
         {
             using (var client = new HttpClient())
             {
@@ -4293,7 +4301,7 @@ namespace MVC.Presentacion.Agente
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(string.Concat(api, _mod)).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(api, filtro)).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         ventas = await response.Content.ReadAsAsync<List<VentaPuntoVentaDTO>>();
                     else

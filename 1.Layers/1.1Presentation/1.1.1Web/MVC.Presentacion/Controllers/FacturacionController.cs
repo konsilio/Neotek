@@ -14,12 +14,10 @@ namespace MVC.Presentacion.Controllers
     {
         //string _tkn = string.Empty;
         // GET: Facturacion
-        public ActionResult Index()
+        public ActionResult Index(FacturacionModel model = null)
         {
-            if (TempData["ListaTickets"] != null) ViewBag.Tickets = (List<VentaPuntoVentaDTO>)TempData["LisaTickets"];           
-        
-            
-            return View();
+            if (TempData["ListaTickets"] != null) model.Tickets = (List<VentaPuntoVentaDTO>)TempData["ListaTickets"];       
+            return View(model);
         }
 
         public ActionResult Buscar(FacturacionModel _mod)
@@ -28,15 +26,15 @@ namespace MVC.Presentacion.Controllers
             //y agregar las nuevas busquedas
             List<VentaPuntoVentaDTO> tickets = new List<VentaPuntoVentaDTO>();
             if (TempData["ListaTickets"] == null)
-                TempData["LisaTickets"] = tickets;
+                TempData["ListaTickets"] = tickets;
             else
-                tickets = (List<VentaPuntoVentaDTO>)TempData["LisaTickets"];
+                tickets = (List<VentaPuntoVentaDTO>)TempData["ListaTickets"];
 
-            if (!_mod.Ticket.Equals(string.Empty))
+           if (!string.IsNullOrEmpty(_mod.Ticket))
                 tickets.Add(FacturacionServicio.ObtenerTicket(_mod.Ticket));
             else
                 tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));
-
+            TempData["ListaTickets"] = tickets;
             return RedirectToAction("Index");
         }
         public ActionResult Facturar(List<FacturacionModel> _mod)

@@ -16,6 +16,11 @@ namespace DS.MainModule.Controllers
     {
         private Facturacion _facturacion;
 
+        public FacturacionController()
+        {
+            _facturacion = new Facturacion();
+        }
+
         [Route("registrar/factruas")]
         public HttpResponseMessage PostRegistrarCFDILst(List<CFDIDTO> list)
         {
@@ -31,10 +36,15 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorTicket(numTicket));
         }
-        [Route("buscar/tickets")]
-        public HttpResponseMessage GetTickets(FacturacionDTO model)
+        [Route("buscar/tickets/cliente/{id}")]
+        public HttpResponseMessage GetTicketsByCliente(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.Buscar(model));
-        }       
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorNumCliente(id));
+        }
+        [Route("buscar/tickets/rfc/{rfc}")]
+        public HttpResponseMessage GetTicketsByRFC(string rfc)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorRFC(rfc));
+        }
     }
-}
+}   

@@ -1,4 +1,5 @@
 ﻿using MVC.Presentacion.Models.Catalogos;
+using MVC.Presentacion.Models.Ventas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace MVC.Presentacion.Models.Facturacion
         public string RFC { get; set; }     
         public short IdEmpresa { get; set; }
         public string Ticket { get; set; }
-        public System.DateTime FechaVenta { get; set; }     
+        public DateTime FechaVenta { get; set; }     
+        public List<VentaPuntoVentaDTO> Tickets { get; set; }
     }
 }

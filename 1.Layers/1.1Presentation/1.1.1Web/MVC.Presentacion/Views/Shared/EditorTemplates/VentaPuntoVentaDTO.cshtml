@@ -1,0 +1,9 @@
+﻿@model MVC.Presentacion.Models.Ventas.VentaPuntoVentaDTO
+@Html.HiddenFor(x => x.FolioVenta)
+<tr>
+    <th>@Model.IdCliente</th>
+    <th>@Model.FolioVenta</th>
+    <td>@Model.Total</td>
+    <td>@Model.RFC</td>
+    <td class="text-center">@Html.CheckBoxFor(x => x.seleccionar, new { @style = "width: 20px; height: 20px;" })</td>
+</tr>

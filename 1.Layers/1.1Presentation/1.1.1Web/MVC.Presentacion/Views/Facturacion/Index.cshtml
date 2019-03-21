@@ -46,8 +46,8 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <strong>RFC:*</strong>
-                                        @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control", @placeholder = "RFC" })
-                                        @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
+                                        @Html.TextBoxFor(m => m.RFC, new { @class = "form-control", @placeholder = "RFC" })
+                                        @Html.ValidationMessageFor(m => m.RFC, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -101,23 +101,11 @@
                                                 <th>Ticket</th>
                                                 <th>Importe</th>
                                                 <th>RFC</th>
-                                                <th>Acción</th>
+                                                <th>Seleccionar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (ViewBag.Facturas != null)
-                                            {
-                                                foreach (var item in ViewBag.Facturas)
-                                                {
-                                                    <tr>
-                                                        <th>@item.IdCliente</th>
-                                                        <th>@item.Ticket</th>
-                                                        <td>@item.Importe</td>
-                                                        <td>@item.Rfc</td>
-                                                        <td></td>
-                                                    </tr>
-                                                }
-                                            }
+                                           @Html.EditorFor(x => x.Tickets)
                                         </tbody>
                                     </table>
                                 </div>

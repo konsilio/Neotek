@@ -422,8 +422,8 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 IdPuntoVenta = pv.IdPuntoVenta,
                 IdCliente = pv.IdCliente,
                 IdOperadorChofer = pv.IdOperadorChofer,
-                IdTipoVenta = pv.IdTipoVenta,
-                IdFactura = pv.IdFactura,
+                IdTipoVenta = pv.IdTipoVenta ?? 0,
+                IdFactura = pv.IdFactura ?? 0,
                 FolioOperacionDia = pv.FolioOperacionDia,
                 FolioVenta = pv.FolioVenta,
                 RequiereFactura = pv.RequiereFactura,
@@ -442,11 +442,20 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 OperadorChofer = pv.OperadorChofer,
                 DatosProcesados = pv.DatosProcesados,
                 FechaRegistro = pv.FechaRegistro,
-                VentaTotal = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal,
-                VentaTotalCredito = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito,
-                VentaTotalContado = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalContado,
-                OtrasVentas = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).OtrasVentas,
             };
+            var _cg = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia);
+            if (_cg != null)
+            {
+                usDTO.VentaTotal = _cg.VentaTotal;
+                usDTO.VentaTotalCredito = _cg.VentaTotalCredito;
+                usDTO.VentaTotalContado = _cg.VentaTotalContado;
+                usDTO.OtrasVentas = _cg.OtrasVentas;
+            }
+            //usDTO.VentaTotal = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal;
+            //usDTO.VentaTotalCredito = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito;
+            //usDTO.VentaTotalContado = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalContado;
+            //usDTO.OtrasVentas = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).OtrasVentas;
+
             return usDTO;
         }
         public static RegistrarVentasMovimientosDTO ToDTO(VentaCorteAnticipoEC v)
