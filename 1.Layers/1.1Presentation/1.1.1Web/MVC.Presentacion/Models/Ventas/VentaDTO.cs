@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace MVC.Presentacion.Models.Ventas
-{
+{    
     public class VentaPuntoVentaDTO
     {
         public short IdEmpresa { get; set; }

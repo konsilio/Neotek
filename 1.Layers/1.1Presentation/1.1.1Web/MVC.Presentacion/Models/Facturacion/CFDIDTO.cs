@@ -1,7 +1,9 @@
-﻿using Application.MainModule.DTOs.Respuesta;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace Application.MainModule.DTOs
+namespace MVC.Presentacion.Models.Facturacion
 {
     public class CFDIDTO
     {
@@ -18,6 +20,5 @@ namespace Application.MainModule.DTOs
         public string URLPdf { get; set; }
         public string URLXml { get; set; }
         public string Respuesta { get; set; }
-        public RespuestaDto RespuestaTimbrado { get; set; }
     }
 }

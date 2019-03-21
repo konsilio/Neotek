@@ -1,5 +1,4 @@
-﻿
-using MVC.Presentacion.Agente;
+﻿using MVC.Presentacion.Agente;
 using MVC.Presentacion.Models.Facturacion;
 using MVC.Presentacion.Models.Ventas;
 using System.Collections.Generic;
@@ -21,5 +20,28 @@ namespace MVC.Presentacion.App_Code
             _agente._VentaDTO.seleccionar = true;
             return _agente._VentaDTO;
         }
+
+        public static List<CFDIDTO> ObtenerCFDIs(FacturacionModel model)
+        {
+            AgenteServicio _agente = new AgenteServicio();
+            if (string.IsNullOrEmpty(model.Ticket))
+            {
+                _agente.ListaCFDIs(model);
+                return _agente._ListaCFDIs;
+            }
+            else
+            {
+                _agente.BuscarCFDI(model.Ticket);
+                return new List<CFDIDTO>() { _agente._CFDIDTO };
+            }           
+        }
+        public static CFDIDTO ObtenerCFDI(string ticket)
+        {
+            AgenteServicio _agente = new AgenteServicio();
+            _agente.BuscarCFDI(ticket);           
+            return _agente._CFDIDTO;
+        }
+
+
     }
 }

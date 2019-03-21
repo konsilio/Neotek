@@ -26,10 +26,7 @@ namespace Application.MainModule.Servicios.Facturacion
         {
             return new CFDIDataAccess().Actualizar(entidad);
         }
-        public static List<CFDI> Buscar()
-        {
-            return new CFDIDataAccess().Obtener();
-        }
+               
         public static CFDI Buscar(int id)
         {
             return new CFDIDataAccess().Obtener(id);
@@ -38,12 +35,34 @@ namespace Application.MainModule.Servicios.Facturacion
         {
             return new CFDIDataAccess().Obtener(Id_FolioVenta);
         }
+        public static List<CFDI> Buscar()
+        {
+            return new CFDIDataAccess().Obtener();
+        }
+        public static List<CFDI> BuscarPorCliente(int id)
+        {
+            var CFDIs = new CFDIDataAccess().Obtener();            
+            var ventas = PuntoVentaServicio.ObtenerVentasPorCliente(id);
+
+            return CFDIs.Where(x => ventas.Any(v => v.FolioVenta.Equals(x.Id_FolioVenta))).ToList();
+        }
+        public static List<CFDI> BuscarPorRFC(string rfc)
+        {
+            var CFDIs = new CFDIDataAccess().Obtener();
+            var ventas = PuntoVentaServicio.ObtenerVentasPorRFC(rfc);
+
+            return CFDIs.Where(x => ventas.Any(v => v.FolioVenta.Equals(x.Id_FolioVenta))).ToList();
+        }
+       
         public static CFDIDTO Timbrar(Comprobante _comp, CFDIDTO dto)
         {
             var respTimbrado = new WsFactAdmingestControllerService().generarFacturaEstructuraAdmingest(ConfigurationManager.AppSettings["Usuario"], ConfigurationManager.AppSettings["Contrasena"], ConfigurationManager.AppSettings["RFC"], _comp);
-            dto.RespuestaTimbrado = DatosRespuesta(respTimbrado);           
-            if (!dto.RespuestaTimbrado.Exito) return dto;
-
+            dto.RespuestaTimbrado = DatosRespuesta(respTimbrado);
+            if (!dto.RespuestaTimbrado.Exito)
+            {
+                dto.Respuesta = dto.RespuestaTimbrado.Mensaje;
+                return dto;
+            }
             dto.URLPdf = respTimbrado.urlPdf;
             dto.URLXml = respTimbrado.urlXml;
             dto.UUID = respTimbrado.UUID;
@@ -119,6 +138,7 @@ namespace Application.MainModule.Servicios.Facturacion
             iva.Importe = (float)((det.PrecioUnitarioKg ?? det.PrecioUnitarioProducto) * det.CantidadProducto) * iva.TasaOCuota;
             return iva;
         }
+
         public static RespuestaDto DatosRespuesta(WsRespFacturacion wsResp)
         {
             RespuestaDto _resp = new RespuestaDto();

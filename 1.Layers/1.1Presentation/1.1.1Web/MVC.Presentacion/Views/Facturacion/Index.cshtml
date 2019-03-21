@@ -37,6 +37,21 @@
                             </ul>
                         </div>
                     </div>
+                    @if (ViewBag.MensajeError != null)
+                    {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MensajeError</label>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <div class="card">
                         <div class="header">
                             <strong>Identificate</strong>
@@ -64,40 +79,24 @@
                                         @Html.ValidationMessageFor(m => m.IdCliente, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-sm-1" style="top:10px">
-                                    <div class="form-group">
-                                        <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
-                                    </div>
+                                <div class="col-md-2" style="top:10px">
+
+                                    <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
+
                                 </div>
-                                <div class="col-sm-1" style="top:10px">
-                                    <div class="form-group">
-                                        <input type="submit" name="Facturar" value="Facturar" formaction=@Url.Action("Facturar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
-                                    </div>
+                                <div class="col-md-2" style="top:10px">
+                                    <button id="btnUpDate" formaction=@Url.Action("Facturar") class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                        Facturar
+                                    </button>
                                 </div>
                             </div>
                             <br />
-                            @if (ViewBag.MensajeError != null)
-                            {
-                                <div class="row clearfix">
-                                    <div id="divMensajeError" class="container">
-                                        <div class="alert alert-danger">
-                                            <div class="alert-icon">
-                                                <i class="zmdi zmdi-block"></i>
-                                            </div>
-                                            <strong>
-                                                <label>@ViewBag.MensajeError</label>
-                                            </strong>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
+
                                                 <th>Ticket</th>
                                                 <th>Importe</th>
                                                 <th>RFC</th>
@@ -105,7 +104,49 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           @Html.EditorFor(x => x.Tickets)
+                                            @Html.EditorFor(x => x.Tickets)
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">Tus <strong>Facturas</strong></div>
+                        <div class="body">
+                            <div class="row clearfix blockquote blockquote-info btn-round">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Ticket</th>
+                                                <th>UUID</th>
+                                                <th>Descargar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.CFDIs != null)
+                                            {
+                                                foreach (var item in ViewBag.CFDIs)
+                                                {
+                                                    <tr>
+                                                        <th>@item.Id_RelTF</th>
+                                                        <th>@item.Id_FolioVenta</th>
+                                                        <th>@item.UUID</th>
+                                                        <th>
+                                                            <a ID="lbPDF" href="@item.URLPdf" class="tip" target="_blank" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">picture_as_pdf</i>
+                                                                <span>PDF</span>
+                                                            </a>
+                                                            <a ID="lbXML" href="@item.URLXml" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">file_download</i>
+                                                                <span>XML</span>
+                                                            </a>
+                                                        </th>
+                                                    </tr>
+                                                }
+                                            }
                                         </tbody>
                                     </table>
                                 </div>

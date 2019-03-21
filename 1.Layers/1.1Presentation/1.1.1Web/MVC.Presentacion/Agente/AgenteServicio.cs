@@ -50,6 +50,7 @@ namespace MVC.Presentacion.Agente
         public CombustibleModel _Combustible;
         public EquipoTransporteDTO _Vehiculos;
         public VentaPuntoVentaDTO _VentaDTO;
+        public CFDIDTO _CFDIDTO;
 
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
@@ -112,6 +113,7 @@ namespace MVC.Presentacion.Agente
         public List<MedidorDTO> _ListaMedidores;
         public List<FacturacionModel> _ListainfoTicket;
         public List<VentaPuntoVentaDTO> _ListaVenta;
+        public List<CFDIDTO> _ListaCFDIs;
 
         public AgenteServicio()
         {
@@ -4118,7 +4120,6 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaRecargaCombustible"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void BuscarCatalogoMantenimiento(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetMantenimiento"];
@@ -4353,6 +4354,86 @@ namespace MVC.Presentacion.Agente
                 _VentaDTO = venta;
             }
         }
+
+
+
+        public void ListaCFDIs(FacturacionModel _mod)
+        {
+            if (_mod.IdCliente > 0)
+            {
+                this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDIByCliente"];
+                BuscarCFDIs(_mod.IdCliente.ToString(), ApiCatalgos).Wait();
+            }
+            else
+            {
+                this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDIByRFC"];
+                BuscarCFDIs(_mod.RFC, ApiCatalgos).Wait();
+            }
+        }
+        private async Task BuscarCFDIs(string filtro, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CFDIDTO> CFDIs = new List<CFDIDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(api, filtro)).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        CFDIs = await response.Content.ReadAsAsync<List<CFDIDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    CFDIs = new List<CFDIDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListaCFDIs = CFDIs;
+            }
+        }
+        public void BuscarCFDI(string ticket)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDI"];
+            BusquedaCFDI(ticket, ApiCatalgos).Wait();
+        }
+        private async Task BusquedaCFDI(string ticket, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                CFDIDTO dto = new CFDIDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(api, ticket)).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        dto = await response.Content.ReadAsAsync<CFDIDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    dto = new CFDIDTO();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _CFDIDTO = dto;
+            }
+        }
+
         #endregion
         private async Task LLamada<T>(T _dto, string token, string Tipo)
         {

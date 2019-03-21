@@ -16,7 +16,18 @@ namespace MVC.Presentacion.Controllers
         // GET: Facturacion
         public ActionResult Index(FacturacionModel model = null)
         {
-            if (TempData["ListaTickets"] != null) model.Tickets = (List<VentaPuntoVentaDTO>)TempData["ListaTickets"];       
+            if (TempData["ListaTickets"] != null) model.Tickets = (List<VentaPuntoVentaDTO>)TempData["ListaTickets"];
+            if(model.IdCliente !=  0 || model.RFC != null || model.Ticket != null)
+                ViewBag.CFDIs = FacturacionServicio.ObtenerCFDIs(model);
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (Respuesta.Exito)
+                    ViewBag.Msj = Respuesta.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(Respuesta);
+            }
+
             return View(model);
         }
 
@@ -24,33 +35,28 @@ namespace MVC.Presentacion.Controllers
         {
             //Inicializamos la lista de tickets validando si ya existe
             //y agregar las nuevas busquedas
-            List<VentaPuntoVentaDTO> tickets = new List<VentaPuntoVentaDTO>();
-            if (TempData["ListaTickets"] == null)
-                TempData["ListaTickets"] = tickets;
-            else
-                tickets = (List<VentaPuntoVentaDTO>)TempData["ListaTickets"];
+            if (_mod.Tickets == null)
+                _mod.Tickets = new List<VentaPuntoVentaDTO>();
 
            if (!string.IsNullOrEmpty(_mod.Ticket))
-                tickets.Add(FacturacionServicio.ObtenerTicket(_mod.Ticket));
+                _mod.Tickets.Add(FacturacionServicio.ObtenerTicket(_mod.Ticket));
             else
-                tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));
-            TempData["ListaTickets"] = tickets;
-            return RedirectToAction("Index");
+                _mod.Tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));
+            TempData["ListaTickets"] = _mod.Tickets;
+            return RedirectToAction("Index", _mod);
         }
-        public ActionResult Facturar(List<FacturacionModel> _mod)
+        public ActionResult Facturar(FacturacionModel _mod)
         {
-            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            //_tkn = Session["StringToken"].ToString();
             //verificar si las facturas agregadas pertenecen al mismo cliente
-            var cliente = _mod[0].IdCliente;
-            foreach (var id in _mod)
+            var cliente = _mod.Tickets[0].IdCliente;
+            foreach (var tick in _mod.Tickets.Where(x => x.seleccionar).ToList())
             {
-                if (id.IdCliente != cliente)
+                if (tick.IdCliente != cliente)
                 {
-                    return RedirectToAction("Index", new { msj = "Los tickets deben pertenecer al mismo cliente.", type = "alert" });
+                    TempData["RespuestaDTO"] = new RespuestaDTO() { Exito = false, MensajesError = new List<string>() { "Los tickets no pertenecer al mismo cliente." } };
+                    return RedirectToAction("Index", _mod);
                 }
             }
-
             ViewBag.Disabled = "disabled";
             ClientesModel Cliente = CatalogoServicio.ListaClientes(36, 0, 0, "", "", "").FirstOrDefault();//_mod[0].IdCliente
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona("").Where(x => x.IdTipoPersona == Cliente.IdTipoPersona);

@@ -37,6 +37,21 @@ namespace Application.MainModule.Flujos
         {
             return dtos.Select(x => GenerarFactura(x)).ToList();
         }
+        public List<CFDIDTO> BuscarFacturasPorRFC(string RFC)
+        {
+            var cfdis = CFDIServicio.BuscarPorRFC(RFC);
+            return CFDIAdapter.ToDTO(cfdis);
+        }
+        public List<CFDIDTO> BuscarFacturasPorCliente(int id)
+        {
+            var cfdis = CFDIServicio.BuscarPorCliente(id);
+            return CFDIAdapter.ToDTO(cfdis);
+        }
+        public CFDIDTO BuscarFacturasPorTicket(string folio)
+        {
+            var cfdis = CFDIServicio.Buscar(folio);
+            return CFDIAdapter.ToDTO(cfdis);
+        }
         public List<VentaPuntoVentaDTO> BuscarPorRFC(string RFC)
         {
             var ventas = PuntoVentaServicio.ObtenerVentasPorRFC(RFC);
