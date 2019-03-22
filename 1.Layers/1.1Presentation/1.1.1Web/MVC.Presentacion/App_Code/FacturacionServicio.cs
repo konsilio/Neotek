@@ -41,7 +41,5 @@ namespace MVC.Presentacion.App_Code
             _agente.BuscarCFDI(ticket);           
             return _agente._CFDIDTO;
         }
-
-
     }
 }

@@ -14,6 +14,7 @@ namespace MVC.Presentacion.Models.Facturacion
         public short IdEmpresa { get; set; }
         public string Ticket { get; set; }
         public DateTime FechaVenta { get; set; }     
+        public ClientesDto Cliente { get; set;}
         public List<VentaPuntoVentaDTO> Tickets { get; set; }
     }
 }

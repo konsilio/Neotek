@@ -153,13 +153,19 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Clientes
-
+        [AllowAnonymous]
         [Route("clientes/tipopersona")]
         public HttpResponseMessage GetTiposPersona()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.TiposPersona());
         }
-
+        [AllowAnonymous]
+        [Route("cliente/buscar/{id}")]
+        public HttpResponseMessage GetCliente(int id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ObtenerCliente(id));
+        }
+        [AllowAnonymous]
         [Route("clientes/regimenfiscal")]
         public HttpResponseMessage GetRegimenFiscal()
         {

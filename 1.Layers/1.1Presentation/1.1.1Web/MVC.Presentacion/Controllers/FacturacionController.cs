@@ -48,19 +48,19 @@ namespace MVC.Presentacion.Controllers
         public ActionResult Facturar(FacturacionModel _mod)
         {
             //verificar si las facturas agregadas pertenecen al mismo cliente
-            var cliente = _mod.Tickets[0].IdCliente;
+            var idCliente = _mod.Tickets[0].IdCliente;
             foreach (var tick in _mod.Tickets.Where(x => x.seleccionar).ToList())
             {
-                if (tick.IdCliente != cliente)
+                if (tick.IdCliente != idCliente)
                 {
                     TempData["RespuestaDTO"] = new RespuestaDTO() { Exito = false, MensajesError = new List<string>() { "Los tickets no pertenecer al mismo cliente." } };
                     return RedirectToAction("Index", _mod);
                 }
             }
             ViewBag.Disabled = "disabled";
-            ClientesModel Cliente = CatalogoServicio.ListaClientes(36, 0, 0, "", "", "").FirstOrDefault();//_mod[0].IdCliente
-            ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona("").Where(x => x.IdTipoPersona == Cliente.IdTipoPersona);
-            ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal("").Where(x => x.IdRegimenFiscal == Cliente.IdRegimenFiscal);
+            var Cliente = CatalogoServicio.ObtenerCliente(idCliente);
+            ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona();
+            ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal();
             return View(Cliente);
         }
         private string Validar(RespuestaDTO Resp = null)
