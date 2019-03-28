@@ -55,8 +55,8 @@
 <body style="height:100%">
     @using (Html.BeginForm())
     {
-        @Html.HiddenFor(m => m.Cliente.IdEmpresa)
-        @Html.HiddenFor(m => m.Cliente.Rfc)
+        @Html.HiddenFor(m => m.Cliente)
+        @Html.HiddenFor(m => m.Tickets)
         <section class="content home">
             <div class="container-fluid">
                 <div class="row clearfix">

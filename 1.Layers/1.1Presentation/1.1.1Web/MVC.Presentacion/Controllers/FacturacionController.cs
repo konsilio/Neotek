@@ -39,6 +39,8 @@ namespace MVC.Presentacion.Controllers
                 _mod.Tickets.Add(FacturacionServicio.ObtenerTicket(_mod.Ticket));
             else
                 _mod.Tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));
+
+
             TempData["ListaTickets"] = _mod.Tickets;
             return RedirectToAction("Index", _mod);
         }
