@@ -1,9 +1,7 @@
 ﻿using MVC.Presentacion.App_Code;
-using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Facturacion;
 using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -17,7 +15,7 @@ namespace MVC.Presentacion.Controllers
         public ActionResult Index(FacturacionModel model = null)
         {
             if (TempData["ListaTickets"] != null) model.Tickets = (List<VentaPuntoVentaDTO>)TempData["ListaTickets"];
-            if(model.IdCliente !=  0 || model.RFC != null || model.Ticket != null)
+            if (model.IdCliente != 0 || model.RFC != null || model.Ticket != null)
                 ViewBag.CFDIs = FacturacionServicio.ObtenerCFDIs(model);
             if (TempData["RespuestaDTO"] != null)
             {
@@ -27,7 +25,6 @@ namespace MVC.Presentacion.Controllers
                 else
                     ViewBag.MensajeError = Validar(Respuesta);
             }
-
             return View(model);
         }
 
@@ -38,7 +35,7 @@ namespace MVC.Presentacion.Controllers
             if (_mod.Tickets == null)
                 _mod.Tickets = new List<VentaPuntoVentaDTO>();
 
-           if (!string.IsNullOrEmpty(_mod.Ticket))
+            if (!string.IsNullOrEmpty(_mod.Ticket))
                 _mod.Tickets.Add(FacturacionServicio.ObtenerTicket(_mod.Ticket));
             else
                 _mod.Tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));
@@ -56,13 +53,26 @@ namespace MVC.Presentacion.Controllers
                     TempData["RespuestaDTO"] = new RespuestaDTO() { Exito = false, MensajesError = new List<string>() { "Los tickets no pertenecer al mismo cliente." } };
                     return RedirectToAction("Index", _mod);
                 }
-            }
-            ViewBag.Disabled = "disabled";
+            }                    
             var Cliente = CatalogoServicio.ObtenerCliente(idCliente);
+            _mod.Cliente = Cliente;
+            TempData["FacturacionModel"] = _mod;
+            ViewBag.Paises = CatalogoServicio.GetPaises();
+            ViewBag.Estados = CatalogoServicio.GetEstados();
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona();
             ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal();
-            return View(Cliente);
+            if (Cliente.Locaciones != null || Cliente.Locaciones.Count > 0)
+                Cliente.Locacion = Cliente.Locaciones[0];
+            return View(_mod);
         }
+        public ActionResult ContinuarGenerarFactura(FacturacionModel _mod)
+        {
+
+            _mod.Tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));
+            
+            return RedirectToAction("Index", _mod);
+        }
+
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;

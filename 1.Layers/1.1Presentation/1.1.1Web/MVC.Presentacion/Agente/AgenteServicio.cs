@@ -11,12 +11,10 @@ using MVC.Presentacion.Models.Ventas;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace MVC.Presentacion.Agente
 {
@@ -1572,7 +1570,7 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Paises
-        public void BuscarPaises(string tkn)
+        public void BuscarPaises(string tkn = null)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPaises"];
             ListaPaises(this.ApiCatalgos, tkn).Wait();
@@ -1586,7 +1584,7 @@ namespace MVC.Presentacion.Agente
             Paises.Add(rol);
             return Paises;
         }
-        private async Task ListaPaises(string api, string token)
+        private async Task ListaPaises(string api, string token = null)
         {
             using (var client = new HttpClient())
             {
@@ -1594,7 +1592,8 @@ namespace MVC.Presentacion.Agente
 
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                if (token != null)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
@@ -1631,20 +1630,21 @@ namespace MVC.Presentacion.Agente
             return Edos;
 
         }
-        public void BuscarEstados(string tkn)
+        public void BuscarEstados(string tkn = null)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEstadosR"];
             ListaEstados(this.ApiCatalgos, tkn).Wait();
         }
 
-        private async Task ListaEstados(string api, string token)
+        private async Task ListaEstados(string api, string token = null)
         {
             using (var client = new HttpClient())
             {
                 List<EstadosRepModel> emp = new List<EstadosRepModel>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                if (token != null)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
                     //HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
@@ -2061,7 +2061,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     emp = new List<ProveedorDTO>();
                     client.CancelPendingRequests();
@@ -2357,7 +2357,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     pedidos = new List<EquipoTransporteDTO>();
                     client.CancelPendingRequests();
@@ -2391,7 +2391,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     dto = new List<EquipoTransporteDTO>();
                     client.CancelPendingRequests();
@@ -2765,7 +2765,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     list = new List<CombustibleModel>();
                     client.CancelPendingRequests();
@@ -3174,7 +3174,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     emp = new List<OrdenCompraDTO>();
                     client.CancelPendingRequests();
@@ -3207,7 +3207,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     emp = new EntradaMercanciaModel();
                     client.CancelPendingRequests();
@@ -3430,7 +3430,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     emp = new OrdenCompraComplementoGasDTO();
                     client.CancelPendingRequests();
@@ -3465,7 +3465,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     emp = new List<AlmacenDTO>();
                     client.CancelPendingRequests();
@@ -3574,7 +3574,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     emp = new List<RemanenteGeneralDTO>();
                     client.CancelPendingRequests();
@@ -3611,7 +3611,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //ex.Message;
                     pedidos = new List<PedidoModel>();
@@ -3646,7 +3646,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //ex.Message;
                     pedidos = new List<PedidoModel>();
@@ -4472,6 +4472,7 @@ namespace MVC.Presentacion.Agente
         }
 
         #endregion
+
         private async Task LLamada<T>(T _dto, string token, string Tipo)
         {
             using (var client = new HttpClient())

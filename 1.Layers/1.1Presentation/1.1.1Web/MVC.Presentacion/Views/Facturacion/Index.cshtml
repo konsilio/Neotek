@@ -24,6 +24,7 @@
 <body>
     @using (Html.BeginForm("Buscar", "Facturacion", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.Cliente)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">

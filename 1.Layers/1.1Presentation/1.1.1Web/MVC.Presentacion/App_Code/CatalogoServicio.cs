@@ -19,7 +19,7 @@ namespace MVC.Presentacion.App_Code
     {
 
         #region Paises
-        public static List<PaisModel> GetPaises(string tkn)
+        public static List<PaisModel> GetPaises(string tkn = null)
         {
             var agente = new AgenteServicio();
             agente.BuscarPaises(tkn);
@@ -28,7 +28,7 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Estados
-        public static List<EstadosRepModel> GetEstados(string tkn)
+        public static List<EstadosRepModel> GetEstados(string tkn = null)
         {
             var agente = new AgenteServicio();
             agente.BuscarEstados(tkn);
@@ -1791,7 +1791,7 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Clientes
-        public static ClienteDTO ObtenerCliente(int id)
+        public static ClientesDto ObtenerCliente(int id)
         {
             var agente = new AgenteServicio();
             agente.BuscarCliente(id);

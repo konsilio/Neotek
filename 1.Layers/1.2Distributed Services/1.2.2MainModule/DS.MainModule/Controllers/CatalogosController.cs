@@ -27,6 +27,7 @@ namespace DS.MainModule.Controllers
         }
 
         #region Paises
+        [AllowAnonymous]
         [Route("paises")]
         public HttpResponseMessage GetListaPaises()
         {
@@ -35,6 +36,7 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Estados Republica
+        [AllowAnonymous]
         [Route("estadosr")]
         public HttpResponseMessage GetListaEstados()
         {
