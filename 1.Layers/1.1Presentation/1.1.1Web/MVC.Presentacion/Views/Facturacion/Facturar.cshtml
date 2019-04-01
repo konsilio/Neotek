@@ -25,20 +25,27 @@
                 $('.btnGuardarInfoCliente').prop('disabled', false);
             });
         });
-
+        function OnSelectedChangeCountry(s, e) {
+            if (s.GetValue() !== 1) {
+                $('#ddlEdo').hide();
+                $('#txtEdoP').show();
+            }
+            else {
+                $('#ddlEdo').show();
+                $('#txtEdoP').hide();
+            }
+        };        
         function OnSelectedChangeFilter(s, e) {
             if (s.GetValue() == 2) {//($('#ddlTipopersona').find('option:selected').text() == 'Moral') {
                 $('#div_hideRP').show();
                 $('#div_hidePM').hide();
                 $('#hide_razonS').show();
             }
-
             if (s.GetValue() == 1) {// ($('#ddlTipopersona').find('option:selected').text() == 'Física') {
                 $('#div_hideRP').hide();
                 $('#hide_razonS').hide();
                 $('#div_hidePM').show();
             }
-
             if (s.GetValue() == 0) {//($('#ddlTipopersona').find('option:selected').text() == 'Seleccione') {
                 $('#div_hidePM').show();
                 $('#div_hideRP').show();
@@ -56,7 +63,6 @@
     @using (Html.BeginForm())
     {
         @Html.HiddenFor(m => m.Cliente)
-        @Html.HiddenFor(m => m.Tickets)
         <section class="content home">
             <div class="container-fluid">
                 <div class="row clearfix">
@@ -257,7 +263,7 @@
                                            settings.Properties.ValueField = "IdPais";
                                            settings.Properties.ValueType = typeof(byte);
                                            settings.ClientEnabled = true;
-                                           //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
                                        }).BindList(ViewBag.Paises).GetHtml()
                                                 </div>
                                             </div>
@@ -273,7 +279,8 @@
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
                                                     <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
-                                                    @Html.DevExpress().ComboBox(settings =>
+                                                    <div id="ddlEdo">
+                                                        @Html.DevExpress().ComboBox(settings =>
                                        {
                                            settings.Name = "Locacion.IdEstadoRep";
                                            settings.Width = Unit.Percentage(100);
@@ -284,8 +291,9 @@
                                            settings.ControlStyle.CssClass = "enableOnInput";
                                            settings.Properties.TextField = "Estado";
                                            settings.Properties.ValueField = "IdEstadoRep";
-                                           settings.Properties.ValueType = typeof(byte?);
+                                           settings.Properties.ValueType = typeof(int);
                                        }).BindList(ViewBag.Estados).GetHtml()
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-1 col-md-1 col-sm-1">

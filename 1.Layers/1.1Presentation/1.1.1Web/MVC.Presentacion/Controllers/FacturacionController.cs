@@ -30,17 +30,16 @@ namespace MVC.Presentacion.Controllers
 
         public ActionResult Buscar(FacturacionModel _mod)
         {
-            //Inicializamos la lista de tickets validando si ya existe
-            //y agregar las nuevas busquedas
             if (_mod.Tickets == null)
                 _mod.Tickets = new List<VentaPuntoVentaDTO>();
 
+            var NuevaBusqueda = new List<VentaPuntoVentaDTO>();
             if (!string.IsNullOrEmpty(_mod.Ticket))
-                _mod.Tickets.Add(FacturacionServicio.ObtenerTicket(_mod.Ticket));
+                NuevaBusqueda.Add(FacturacionServicio.ObtenerTicket(_mod.Ticket));
             else
-                _mod.Tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));
+                NuevaBusqueda.AddRange(FacturacionServicio.ObtenerTickets(_mod));
 
-
+            _mod.Tickets = FacturacionServicio.DescartarRepetidos(NuevaBusqueda, _mod.Tickets);
             TempData["ListaTickets"] = _mod.Tickets;
             return RedirectToAction("Index", _mod);
         }
@@ -70,8 +69,7 @@ namespace MVC.Presentacion.Controllers
         public ActionResult ContinuarGenerarFactura(FacturacionModel _mod)
         {
 
-            _mod.Tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));
-            
+            _mod.Tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));            
             return RedirectToAction("Index", _mod);
         }
 

@@ -41,7 +41,7 @@ namespace MVC.Presentacion.App_Code
             _agente.BuscarCFDI(ticket);           
             return _agente._CFDIDTO;
         }
-        public List<VentaPuntoVentaDTO> DescartarRepetidos(List<VentaPuntoVentaDTO> nueva, List<VentaPuntoVentaDTO> actual)
+        public static List<VentaPuntoVentaDTO> DescartarRepetidos(List<VentaPuntoVentaDTO> nueva, List<VentaPuntoVentaDTO> actual)
         {
             foreach (var vn in nueva)
                 if (!actual.Exists(x => x.FolioVenta.Equals(vn.FolioVenta)))                
