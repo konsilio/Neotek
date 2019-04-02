@@ -24,7 +24,6 @@ namespace MVC.Presentacion.Controllers
             ViewBag.TipoCombustible = CatalogoServicio.ListaCombustibleIdEmp(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             ViewBag.TipoUnidad = CatalogoServicio.ListaUnidadIdEmp(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             ViewBag.TipoMedidor = CatalogoServicio.ListaMedidores(_tkn);
-
             EquipoTransporteDTO model = new EquipoTransporteDTO();
             if (id != 0 && id != null)
             {

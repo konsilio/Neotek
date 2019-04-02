@@ -184,6 +184,9 @@
     <Compile Include="Entidades\FormaPago.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\HistoricoVentas.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\ImagenDe.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>

@@ -20,19 +20,15 @@ namespace Application.MainModule.Servicios.Catalogos
             List<PuntoVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PuntoVentaAdapter.ToDTO(new PuntoVentaDataAccess().BuscarTodos());
             return lPventas;
         }
-
         public static PuntoVenta Obtener(int idPuntoVenta)
         {
             return new PuntoVentaDataAccess().Buscar(idPuntoVenta);
         }
-
-
         public static OperadorChoferDTO ObtenerOperador(int idUsuario)
         {
             OperadorChoferDTO lPventas = AdaptadoresDTO.Catalogo.OperadorChoferAdapter.ToOperador(new PuntoVentaDataAccess().BuscarPorUsuario(idUsuario));
             return lPventas;
         }
-
         public static List<OperadorChoferDTO> ObtenerUsuariosOperador(short idEmpresa)
         {
             List<OperadorChoferDTO> lPventas = AdaptadoresDTO.Catalogo.OperadorChoferAdapter.ToUsuariosOpe(new OperadorChoferDataAccess().BuscarTodos(idEmpresa));
@@ -42,7 +38,6 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarTodos(IdEmpresa);
         }
-
         public static PuntoVenta Obtener(OperadorChofer opCh)
         {
             if (opCh != null)
@@ -52,7 +47,6 @@ namespace Application.MainModule.Servicios.Catalogos
 
             return BuscarPorOperadorChofer(opCh.IdOperadorChofer).FirstOrDefault();
         }
-
         public static PuntoVenta Obtener(UnidadAlmacenGas unidadAlmacen)
         {
             return new PuntoVentaDataAccess().BuscarPorUnidadAlmacenGas(unidadAlmacen.IdCAlmacenGas);
@@ -61,7 +55,6 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarPorUnidadAlmacenGas(unidadAlmacen);
         }
-
         public static List<PuntoVenta> BuscarPorOperadorChofer(int idOperadorChofer)
         {
             return new PuntoVentaDataAccess().BuscarPorOperadorChofer(idOperadorChofer);
@@ -95,65 +88,61 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
-
         public static List<VentaCajaGeneral> ObtenerVentasCajaGral()
         {
             return new PuntoVentaDataAccess().ObtenerVentasCajaGral();
         }
-
         public static VentaPuntoDeVenta EvaluarFolio(string folioVenta)
         {
             return new PuntoVentaDataAccess().EvaluarFolio(folioVenta);
         }
-
         public static RespuestaDto InsertMobile(VentaPuntoDeVenta venta)
         {
             return new PuntoVentaDataAccess().InsertarMobile(venta);
         }
-
         public static List<PrecioVenta> ObtenerPreciosVenta(short idEmpresa)
         {
             return new PuntoVentaDataAccess().PreciosVenta(idEmpresa);
         }
-
         public static RespuestaDto InsertMobil(VentaCajaGeneral corteCajaGeneral)
         {
             return new PuntoVentaDataAccess().InesertarVentaGeneral(corteCajaGeneral);
         }
-
         public static List<VentaPuntoDeVenta> ObtenerVentasContado(int idPuntoVenta, DateTime fecha)
         {
             return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta, fecha);
         }
-
         public static List<VentaPuntoDeVenta> ObtenerVentasCredito(int idPuntoVenta, DateTime fecha)
         {
             return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta, fecha, true);
         }
-
         public static List<VentaCorteAnticipoEC> ObtenerAnticipos(UnidadAlmacenGas unidadEstacion)
         {
             return new PuntoVentaDataAccess().Anticipos(unidadEstacion);
         }
-
         public static List<VentaCorteAnticipoEC> ObtenerAnticipos(UnidadAlmacenGas unidadEstacion, DateTime fecha)
         {
             return new PuntoVentaDataAccess().Anticipos(unidadEstacion, fecha);
         }
-
         public static List<VentaCorteAnticipoEC> ObtenerCortesAnticipos()
         {
             return new PuntoVentaDataAccess().ObtenerCortesAnticipos();
         }
-
         public static object ActualizarVentasCorte(VentaPuntoDeVenta item)
         {
             return new PuntoVentaDataAccess().ActualizarVentas(item);
         }
-
         public static VentaPuntoDeVenta Obtener(string tiketVenta)
         {
             return new PuntoVentaDataAccess().ObtenerVenta(tiketVenta);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorRFC(string rfc)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasPorRFC(rfc);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(int id)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasPorCliente(id);
         }
         /// <summary>
         /// Permite realizar el registro del cargo de una venta 
@@ -182,7 +171,6 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarCorte(fecha, idCAlmacenGas);
         }
-
         public static List<VentaCorteAnticipoEC> ObtenerAnticipos(PuntoVenta puntoVenta, DateTime fecha)
         {
             if (puntoVenta != null)
@@ -190,7 +178,6 @@ namespace Application.MainModule.Servicios.Catalogos
             else
                 return null;
         }
-
         public static VentaCorteAnticipoEC ObtenerCortes(PuntoVenta puntoVenta, DateTime fecha)
         {
             if (puntoVenta != null)
@@ -198,7 +185,6 @@ namespace Application.MainModule.Servicios.Catalogos
             else
                 return null;
         }
-
         public static RespuestaDto RegistarReporteDia(ReporteDelDia reporteEntity)
         {
             return new PuntoVentaDataAccess().RegistrarReporteDia(reporteEntity);

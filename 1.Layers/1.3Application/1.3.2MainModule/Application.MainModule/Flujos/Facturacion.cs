@@ -1,8 +1,12 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Facturacion;
+using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.com.admingest;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.DTOs.Ventas;
+using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Facturacion;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -32,6 +36,45 @@ namespace Application.MainModule.Flujos
         public List<CFDIDTO> GenerarFactura(List<CFDIDTO> dtos)
         {
             return dtos.Select(x => GenerarFactura(x)).ToList();
+        }
+        public List<CFDIDTO> BuscarFacturasPorRFC(string RFC)
+        {
+            var cfdis = CFDIServicio.BuscarPorRFC(RFC);
+            return CFDIAdapter.ToDTO(cfdis);
+        }
+        public List<CFDIDTO> BuscarFacturasPorCliente(int id)
+        {
+            var cfdis = CFDIServicio.BuscarPorCliente(id);
+            return CFDIAdapter.ToDTO(cfdis);
+        }
+        public CFDIDTO BuscarFacturasPorTicket(string folio)
+        {
+            var cfdis = CFDIServicio.Buscar(folio);
+            return CFDIAdapter.ToDTO(cfdis);
+        }
+        public List<VentaPuntoVentaDTO> BuscarPorRFC(string RFC)
+        {
+            var ventas = PuntoVentaServicio.ObtenerVentasPorRFC(RFC);
+            return CajaGeneralAdapter.ToDTOP(ventas);
+        }
+        public List<VentaPuntoVentaDTO> BuscarPorNumCliente(int Id)
+        {
+            var ventas = PuntoVentaServicio.ObtenerVentasPorCliente(Id);
+            return CajaGeneralAdapter.ToDTOP(ventas);
+        }
+        public VentaPuntoVentaDTO BuscarPorTicket(string ticket)
+        {
+            var venta = PuntoVentaServicio.Obtener(ticket);
+            return CajaGeneralAdapter.ToDTOP(venta);
+        }
+        public List<VentaPuntoVentaDTO> Buscar(FacturacionDTO model)
+        {
+            List<VentaPuntoVentaDTO> _list = new List<VentaPuntoVentaDTO>();
+            if (model.IdCliente > 0)            
+                _list.AddRange(BuscarPorNumCliente(model.IdCliente));            
+            if (!model.RFC.Equals(string.Empty))            
+                _list.AddRange(BuscarPorRFC(model.RFC));
+            return _list.Distinct(new VentaPuntoVentaComparer()).ToList();
         }
     }
 }

@@ -2,7 +2,7 @@
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Facturacion;
 using MVC.Presentacion.Models.Seguridad;
-using System;
+using MVC.Presentacion.Models.Ventas;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -13,67 +13,79 @@ namespace MVC.Presentacion.Controllers
     {
         //string _tkn = string.Empty;
         // GET: Facturacion
-        public ActionResult Index(DateTime? fechaVenta, int? Cliente, string rfc = null, string ticket = null, string msj = null, string type = null)
+        public ActionResult Index(FacturacionModel model = null)
         {
-            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            //_tkn = Session["StringToken"].ToString();
-            //ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);           
-            if (fechaVenta != null || Cliente != null || rfc != null || ticket != null)
-            {
-                FacturacionModel _filtro = new FacturacionModel();
-                //_filtro.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
-                _filtro.FechaVenta = fechaVenta.Value;
-                _filtro.IdCliente = Cliente.Value;
-                _filtro.Rfc = rfc;
-                _filtro.Ticket = ticket;
-
-                if (ViewBag.Model.Count == 0)
-                {
-                    ViewBag.MensajeError = "No se encontraron resultados de la venta..";
-                }
-            }
-
+            if (TempData["ListaTickets"] != null) model.Tickets = (List<VentaPuntoVentaDTO>)TempData["ListaTickets"];
+            if (model.IdCliente != 0 || model.RFC != null || model.Ticket != null)
+                ViewBag.CFDIs = FacturacionServicio.ObtenerCFDIs(model);
             if (TempData["RespuestaDTO"] != null)
             {
-                if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
-                {
-                    ViewBag.Tipo = "alert-danger";
-                    ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-                }
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (Respuesta.Exito)
+                    ViewBag.Msj = Respuesta.Mensaje;
                 else
-                {
-                    ViewBag.Tipo = "alert-success";
-                    ViewBag.Msj = msj;
-                }
-            }           
-            return View();
+                    ViewBag.MensajeError = Validar(Respuesta);
+            }
+            return View(model);
         }
-
-        public ActionResult Buscar(List<FacturacionModel> _mod)
+        public ActionResult Buscar(FacturacionModel _mod)
         {
-            //if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
-            return RedirectToAction("Index", new { fechaVenta = _mod[0].FechaVenta, Cliente = _mod[0].IdCliente, rfc = _mod[0].Rfc, ticket = _mod[0].Ticket });
+            if (_mod.Tickets == null)
+                _mod.Tickets = new List<VentaPuntoVentaDTO>();
+            var NuevaBusqueda = new List<VentaPuntoVentaDTO>();
 
+            if (!string.IsNullOrEmpty(_mod.Ticket))
+                NuevaBusqueda.Add(FacturacionServicio.ObtenerTicket(_mod.Ticket));
+            else
+                NuevaBusqueda.AddRange(FacturacionServicio.ObtenerTickets(_mod));
+
+            _mod.Tickets = FacturacionServicio.DescartarRepetidos(NuevaBusqueda, _mod.Tickets);
+            TempData["ListaTickets"] = _mod.Tickets;
+            return RedirectToAction("Index", _mod);
         }
-        public ActionResult Facturar(List<FacturacionModel> _mod)
+        public ActionResult Facturar(FacturacionModel _mod)
         {
-            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            //_tkn = Session["StringToken"].ToString();
             //verificar si las facturas agregadas pertenecen al mismo cliente
-            var cliente = _mod[0].IdCliente;
-            foreach (var id in _mod)
+            var idCliente = _mod.Tickets[0].IdCliente;
+            foreach (var tick in _mod.Tickets.Where(x => x.seleccionar).ToList())
             {
-                if (id.IdCliente != cliente)
+                if (tick.IdCliente != idCliente)
                 {
-                    return RedirectToAction("Index", new { msj = "Los tickets deben pertenecer al mismo cliente.", type = "alert" });
+                    TempData["RespuestaDTO"] = new RespuestaDTO() { Exito = false, MensajesError = new List<string>() { "Los tickets no pertenecer al mismo cliente." } };
+                    return RedirectToAction("Index", _mod);
                 }
             }
-           
-            ViewBag.Disabled = "disabled";
-            ClientesModel Cliente = CatalogoServicio.ListaClientes(36, 0, 0, "", "", "").FirstOrDefault();//_mod[0].IdCliente
-            ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona("").Where(x => x.IdTipoPersona == Cliente.IdTipoPersona);
-            ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal("").Where(x => x.IdRegimenFiscal == Cliente.IdRegimenFiscal); 
+            ClientesModel Cliente = CatalogoServicio.ObtenerCliente(idCliente);
+            TempData["FacturacionModel"] = _mod;
+            ViewBag.Paises = CatalogoServicio.GetPaises();
+            ViewBag.Estados = CatalogoServicio.GetEstados();
+            ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona();
+            ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal();
+            if (Cliente.Locaciones != null || Cliente.Locaciones.Count > 0)
+                Cliente.Locacion = Cliente.Locaciones[0];
             return View(Cliente);
+        }
+        public ActionResult GuardaEdicionCliente(ClientesModel _Obj)
+        {
+            var fac = (FacturacionModel)TempData["FacturacionModel"];
+            TempData["FacturacionModel"] = fac;
+            return RedirectToAction("Facturar");
+        }
+        public ActionResult GuardarNuevoCliente(ClientesModel _ojUs)
+        {
+            var respuesta = CatalogoServicio.CrearCliente(_ojUs);
+            TempData["RespuestaDTO"] = respuesta.Mensaje;
+
+            var fac = (FacturacionModel)TempData["FacturacionModel"];
+            TempData["FacturacionModel"] = fac;
+          
+            return RedirectToAction("Facturar");
+        }
+        public ActionResult ContinuarGenerarFactura(ClientesModel _mod)
+        {
+            var FacturacionModel = (FacturacionModel)TempData["FacturacionModel"];
+            FacturacionModel.Cliente = _mod;
+            return RedirectToAction("Index", _mod);
         }
         private string Validar(RespuestaDTO Resp = null)
         {

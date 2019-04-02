@@ -20,9 +20,7 @@
                 $('#div_hideRP').show();
                 $('#hide_razonS').show();
             }
-
         });
-
     });
     $('#Dir').hide();
     $("#payMethod").change(function () {

@@ -120,6 +120,11 @@ namespace Application.MainModule.Flujos
             else
                 return ClienteServicio.ListaClientes().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
+        public ClientesDto ObtenerCliente(int id)
+        {
+            var _c = ClienteServicio.Obtener(id);
+            return ClientesAdapter.ToDTO(_c);
+        }
         public List<ClientesDto> ListaClientes()
         {
             var resp = PermisosServicio.PuedeConsultarCliente();
@@ -149,11 +154,34 @@ namespace Application.MainModule.Flujos
 
             return ClienteServicio.AltaCliente(cliente);
         }
+        public RespuestaDto RegistraClienteAutoConsumo(ClienteCrearDto cteDto)
+        {
+            //var resp = PermisosServicio.PuedeRegistrarCliente();
+            //if (!resp.Exito) return resp;
 
+            var cliente = ClientesAdapter.FromDtoMod(cteDto);
+
+            if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
+                cliente.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+
+            return ClienteServicio.AltaCliente(cliente);
+        }
         public RespuestaDto ModificaCliente(ClienteCrearDto cteDto)
         {
             var resp = PermisosServicio.PuedeModificarCliente();
             if (!resp.Exito) return resp;
+
+            var clientes = ClienteServicio.Obtener(cteDto.IdCliente);
+            if (clientes == null) return ClienteServicio.NoExiste();
+
+            var cte = ClientesAdapter.FromDtoEditar(cteDto, clientes);
+            cte.FechaRegistro = cte.FechaRegistro;
+            return ClienteServicio.Modificar(cte);
+        }
+        public RespuestaDto ModificaClienteAutoServicio(ClienteCrearDto cteDto)
+        {
+            //var resp = PermisosServicio.PuedeModificarCliente();
+            //if (!resp.Exito) return resp;
 
             var clientes = ClienteServicio.Obtener(cteDto.IdCliente);
             if (clientes == null) return ClienteServicio.NoExiste();
@@ -976,7 +1004,7 @@ namespace Application.MainModule.Flujos
                     camionetaEntity.Activo = vehiculoDto.Activo;
                     editarVehiculo.CCamioneta = camionetaEntity;
                     vehiculoDto.IdCamioneta = Camioneta.IdCamioneta;
-                
+
                     var Dtovehiculo = EquipoTransporteAdapter.FromEntity(EquipoTransporteAdapter.FromDTO(vehiculoDto));
                     RespuestaGeneral = EquipoTransporteServicio.Modificar(Dtovehiculo, editarVehiculo);
                 }
@@ -1142,8 +1170,8 @@ namespace Application.MainModule.Flujos
                 }
                 else
                     vehiculoDto.IdChofer = chof.IdOperadorChofer;
-                vehiculoDto.IdVehiculo = Convert.ToInt16( idUtil);
-                var asignacion = EquipoTransporteServicio.GenerarAsignacion(vehiculoDto);                
+                vehiculoDto.IdVehiculo = Convert.ToInt16(idUtil);
+                var asignacion = EquipoTransporteServicio.GenerarAsignacion(vehiculoDto);
                 return AsignacionUtilitarioServicio.Crear(asignacion);
             }
             else
@@ -1195,7 +1223,7 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeBorrarAsignacionVehicular();
             if (!resp.Exito) return resp;
 
-            
+
             if (vehiculoDto.TipoVehiculo == TipoUnidadEqTransporteEnum.Utilitario)
             {
                 vehiculoDto.IdEmpresa = TokenServicio.ObtenerIdEmpresa();

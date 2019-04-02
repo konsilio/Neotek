@@ -26,7 +26,6 @@ namespace Application.MainModule.Servicios.Ventas
             List<CajaGeneralDTO> lPventas = CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().BuscarTodos());
             return lPventas;
         }
-
         public static List<VPuntoVentaDetalleDTO> ObtenerVentas(short empresa, short year, byte month, byte dia, short? orden)
         {
             List<VentaPuntoDeVentaDetalle> _lst = BuscarPuntoVentaDetalle(empresa, year, month, dia, orden.Value).ToList();
@@ -44,7 +43,6 @@ namespace Application.MainModule.Servicios.Ventas
             }
             return lventafinal;
         }
-
         //Camioneta Reporte del dia
         public static List<ReporteDiaDTO> ObtenerRepCamionetas(short unidad, DateTime fecha)
         {
@@ -83,7 +81,6 @@ namespace Application.MainModule.Servicios.Ventas
             List<ReporteDiaDTO> lRventas = CajaGeneralAdapter.ToDtoC(lstDto, importes, almacen, tanques);
             return lRventas;
         }
-
         //Pipa Reporte del dia
         public static VPuntoVentaDetalleDTO ObtenerRepPipas(short? unidad, DateTime fecha)
         {
@@ -110,7 +107,6 @@ namespace Application.MainModule.Servicios.Ventas
 
             return ent;
         }
-
         /*OBTENER  Lt y Kg vendidos del punto de venta por la cve del reporte tbl VentaPuntoDeVentaDetalle*/
         public static List<AlmacenGasMovimientoDto> ObtenerPVDetalle(short unidad, short empresa, short year, byte month, byte dia, short orden, string Folio)
         {
@@ -128,7 +124,6 @@ namespace Application.MainModule.Servicios.Ventas
             List<VentasPipaDto> ldetalles = CajaGeneralAdapter.ToDTO(lst, LecturasInicial.P5000.Value, LecturasFinal.P5000.Value, Ltvendidos, PrecioLt);//AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(empresa, year, month, dia, orden));
             return ldetalles;
         }
-
         public static List<CajaGeneralDTO> ObtenerIdEmp(short IdEmpresa)
         {
             List<CajaGeneralDTO> lPventas = CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(IdEmpresa));
@@ -143,18 +138,15 @@ namespace Application.MainModule.Servicios.Ventas
             List<VentaPuntoVentaDTO> lPventas = CajaGeneralAdapter.ToDTOC(new CajaGeneralDataAccess().BuscarPorCve(cve));
             return lPventas;
         }
-
         public static List<VentaCorteAnticipoDTO> ObtenerCE(string cve)
         {
             List<VentaCorteAnticipoDTO> lPventas = CajaGeneralAdapter.ToDTOCE(new CajaGeneralDataAccess().BuscarPorCveEC(cve));
             return lPventas;
         }
-
         public static RespuestaDto Actualizar(VentaCajaGeneral pv)
         {
             return new CajaGeneralDataAccess().Actualizar(pv);
-        }
-        //
+        }        
         public static List<VentaPuntoDeVenta> ObtenerVentas()
         {
             return new CajaGeneralDataAccess().BuscarTodosPV();
@@ -236,7 +228,6 @@ namespace Application.MainModule.Servicios.Ventas
             VentaPuntoDeVenta Updt = new VentaPuntoDeVenta();
             // List<VentaPuntoDeVenta> lst = vm.GroupBy(x => x.IdPuntoVenta).SelectMany(gr => gr).ToList(); //VentaspuntosDeVentaAgrupados- por punto de venta
             var lst1 = vm.GroupBy(x => x.IdPuntoVenta).ToList(); //VentaspuntosDeVentaAgrupados- por punto de venta
-
             foreach (var y in lst1)
             {
                 var lst = y.GroupBy(x => x.FechaAplicacion.Value.ToShortDateString()).ToList(); //VentaspuntosDeVentaAgrupados- por fecha
@@ -643,7 +634,6 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, year, month, dia, orden.Value).ToList();
         }
-
         public static decimal ObtenerPrecioLt(short? empresa, short year, byte month, byte dia, short? orden)
         {
             List<VentaPuntoDeVentaDetalle> lst = new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, year, month, dia, orden.Value).ToList();
@@ -653,6 +643,5 @@ namespace Application.MainModule.Servicios.Ventas
             else
                 return 0;
         }
-
     }
 }

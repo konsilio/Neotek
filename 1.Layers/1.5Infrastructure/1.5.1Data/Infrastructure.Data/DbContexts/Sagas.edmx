@@ -1515,6 +1515,19 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="UrlLogotipoMenu" Type="varchar" MaxLength="350" />
           <Property Name="UrlLogotipoLogin" Type="varchar" MaxLength="350" />
         </EntityType>
+        <EntityType Name="HistoricoVentas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Mes" Type="int" Nullable="false" />
+          <Property Name="Anio" Type="int" Nullable="false" />
+          <Property Name="MontoVenta" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EsPipa" Type="bit" Nullable="false" />
+          <Property Name="EsCamioneta" Type="bit" Nullable="false" />
+          <Property Name="EsLocal" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" />
+        </EntityType>
         <EntityType Name="ImagenDe">
           <Key>
             <PropertyRef Name="IdImagenDe" />
@@ -5371,6 +5384,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="EmpresaDireccion" EntityType="Self.EmpresaDireccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaFiscal" EntityType="Self.EmpresaFiscal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaImagen" EntityType="Self.EmpresaImagen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistoricoVentas" EntityType="Self.HistoricoVentas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImagenDe" EntityType="Self.ImagenDe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingreso" EntityType="Self.Ingreso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrdenCompra" EntityType="Self.OrdenCompra" Schema="dbo" store:Type="Tables" />
@@ -7880,7 +7894,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="MetodoPago" EntitySet="MetodoPago" />
             <End Role="CFDI" EntitySet="CFDI" />
           </AssociationSet>
-          <EntitySet Name="UsoCFDI" EntityType="Sagas.MainModuleModel.UsoCFDI" />       
+          <EntitySet Name="UsoCFDI" EntityType="Sagas.MainModuleModel.UsoCFDI" />
+          <EntitySet Name="HistoricoVentas" EntityType="Sagas.MainModuleModel.HistoricoVentas" />       
         </EntityContainer>
         <EntityType Name="Requisicion">
           <Key>
@@ -12320,6 +12335,19 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="PersonaMoral" Type="Boolean" Nullable="false" />
           <Property Name="FechaIniVigencia" Type="DateTime" Precision="3" />
           <Property Name="FechaFinVigencia" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="HistoricoVentas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Mes" Type="Int32" Nullable="false" />
+          <Property Name="Anio" Type="Int32" Nullable="false" />
+          <Property Name="MontoVenta" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EsPipa" Type="Boolean" Nullable="false" />
+          <Property Name="EsCamioneta" Type="Boolean" Nullable="false" />
+          <Property Name="EsLocal" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="0" />
         </EntityType> 
       </Schema>
     </edmx:ConceptualModels>
@@ -14485,6 +14513,20 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="UsoCFDISAT" ColumnName="UsoCFDISAT" />
                 <ScalarProperty Name="Id_UsoCFDI" ColumnName="Id_UsoCFDI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistoricoVentas">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.HistoricoVentas">
+              <MappingFragment StoreEntitySet="HistoricoVentas">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="EsLocal" ColumnName="EsLocal" />
+                <ScalarProperty Name="EsCamioneta" ColumnName="EsCamioneta" />
+                <ScalarProperty Name="EsPipa" ColumnName="EsPipa" />
+                <ScalarProperty Name="MontoVenta" ColumnName="MontoVenta" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

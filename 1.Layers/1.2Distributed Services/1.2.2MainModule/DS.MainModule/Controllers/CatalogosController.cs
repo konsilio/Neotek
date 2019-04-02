@@ -27,6 +27,7 @@ namespace DS.MainModule.Controllers
         }
 
         #region Paises
+        [AllowAnonymous]
         [Route("paises")]
         public HttpResponseMessage GetListaPaises()
         {
@@ -35,10 +36,20 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Estados Republica
+        [AllowAnonymous]
         [Route("estadosr")]
         public HttpResponseMessage GetListaEstados()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEstados());
+        }
+        #endregion
+
+        #region RegimenFiscal
+        [AllowAnonymous]
+        [Route("clientes/regimenfiscal")]
+        public HttpResponseMessage GetRegimenFiscal()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.RegimenFiscal());
         }
         #endregion
 
@@ -153,31 +164,28 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Clientes
-
+        [AllowAnonymous]
         [Route("clientes/tipopersona")]
         public HttpResponseMessage GetTiposPersona()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.TiposPersona());
         }
-
-        [Route("clientes/regimenfiscal")]
-        public HttpResponseMessage GetRegimenFiscal()
+        [AllowAnonymous]
+        [Route("cliente/buscar/{id}")]
+        public HttpResponseMessage GetCliente(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.RegimenFiscal());
-        }
-
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ObtenerCliente(id));
+        }       
         [Route("clientes/listaclientes/{idEmpresa}")]
         public HttpResponseMessage GetListaClientes(short idEmpresa)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaClientes(idEmpresa));
         }
-
         [Route("clientes/listaclientes")]
         public HttpResponseMessage GetListaClientes()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaClientes());
         }
-
         [Route("clientes/listaclientesloc/{idCliente}")]
         public HttpResponseMessage GetListaLocacion(int idCliente)
         {
@@ -188,36 +196,44 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_catalogos.RegistraCliente(clienteDto), Request);
         }
-
+        [AllowAnonymous]
+        [Route("registra/cliente/autoconsumo")]
+        public HttpResponseMessage PostRegistraClienteAutoConsumo(ClienteCrearDto clienteDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraClienteAutoConsumo(clienteDto), Request);
+        }
         [Route("modifica/cliente")]
         public HttpResponseMessage PutModificaCliente(ClienteCrearDto clienteDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ModificaCliente(clienteDto), Request);
         }
-
+        [AllowAnonymous]
+        [Route("modifica/cliente/autoconsumo")]
+        public HttpResponseMessage PutModificaClienteAutoServicio(ClienteCrearDto clienteDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaClienteAutoServicio(clienteDto), Request);
+        }
         [Route("elimina/cliente/{idCliente}")]
         public HttpResponseMessage PutEliminaCliente(int idCliente)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaCliente(idCliente), Request);
-        }
-        
+        }        
         [Route("modifica/clientelocacion")]
         public HttpResponseMessage PutModificaClienteLoc(ClienteLocacionDTO cteLoc)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ActualizaClienteLocacion(cteLoc), Request);
         }
-
         [Route("registra/clientelocacion")]
         public HttpResponseMessage PostRegistraClienteLoc(ClienteLocacionDTO cteLoc)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.RegistraClienteLocacion(cteLoc), Request);
         }
-
         [Route("elimina/clientelocacion")]
         public HttpResponseMessage PutEliminaClienteLocacion(ClienteLocacionDTO cteLoc)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaClienteLocacion(cteLoc), Request);
         }
+
         //[Route("consulta/clientes")]
         //public HttpResponseMessage GetCategoriasProducto()
         //{
