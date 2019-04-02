@@ -18,8 +18,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             return new EquipoTransporteDTO()
             {
                 IdEmpresa = ec.IdEmpresa,
-                //IdEquipoTransporte = EquipoTransporteServicio.ObtenerId(ec),
-                IdEquipoTransporte = ec.IdEquipoTransporteDetalle,//Se asigna este id ya que es el id primary de la tabla de detalle transporte
+                IdEquipoTransporte = EquipoTransporteServicio.ObtenerId(ec),
+                //IdEquipoTransporte = ec.IdEquipoTransporteDetalle,//Se asigna este id ya que es el id primary de la tabla de detalle transporte
                 IdCamioneta = ec.IdCamioneta,
                 IdPipa = ec.IdPipa,
                 IdVehiculoUtilitario = ec.IdUtilitario,

@@ -108,12 +108,14 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static string ObtenerNombre(DetalleMantenimiento qt)
         {
+            var eq = new EquipoTransporteDataAccess();
             if (qt.EsCamioneta)
                 return new EquipoTransporteDataAccess().BuscarCamioneta(qt.id_vehiculo).Nombre;
             if (qt.EsPipa)
                 return new EquipoTransporteDataAccess().BuscarPipa(qt.id_vehiculo).Nombre;
             if (qt.EsUtilitario)
-                return new EquipoTransporteDataAccess().BuscarUtilitario(qt.id_vehiculo).Nombre;
+                //return new EquipoTransporteDataAccess().BuscarUtilitario(qt.id_vehiculo).Nombre;
+                return eq.BuscarUtilitario(qt.id_vehiculo).Nombre;
             return null;
         }
         public static List<CDetalleEquipoTransporte> BuscarEquipoTransporte()
@@ -224,6 +226,14 @@ namespace Application.MainModule.Servicios.Catalogos
         public static string ObtenerAlias(CDetalleEquipoTransporte ec)
         {
             return ec.Marca + " " + "Color" + " " + ec.Color;
+        }
+
+        public static int ObtenerIdVehiculo(CDetalleEquipoTransporte ec)
+        {
+            if (ec.IdCamioneta != null) { return ec.IdCamioneta.Value; }
+            if (ec.IdPipa != null) { return ec.IdPipa.Value; }
+            if (ec.IdUtilitario != null) { return ec.IdUtilitario.Value; }
+            return 0;
         }
     }
 }
