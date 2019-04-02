@@ -1898,6 +1898,18 @@ namespace MVC.Presentacion.App_Code
         {
             return ObtenerLocaciones(IdCliente, tkn);
         }
+        public static RespuestaDTO CrearCliente(ClientesModel model)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarNuevoCliente(model);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarCliente(ClientesModel dto)
+        {
+            var agente = new AgenteServicio();
+            agente.EditarCliente(dto);
+            return agente._RespuestaDTO;
+        }
         #endregion
 
         #region Puntos de Venta

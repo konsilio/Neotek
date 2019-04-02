@@ -28,13 +28,12 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
         public ActionResult Buscar(FacturacionModel _mod)
         {
             if (_mod.Tickets == null)
                 _mod.Tickets = new List<VentaPuntoVentaDTO>();
-
             var NuevaBusqueda = new List<VentaPuntoVentaDTO>();
+
             if (!string.IsNullOrEmpty(_mod.Ticket))
                 NuevaBusqueda.Add(FacturacionServicio.ObtenerTicket(_mod.Ticket));
             else
@@ -62,30 +61,32 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Estados = CatalogoServicio.GetEstados();
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona();
             ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal();
-            
             if (Cliente.Locaciones != null || Cliente.Locaciones.Count > 0)
                 Cliente.Locacion = Cliente.Locaciones[0];
             return View(Cliente);
         }
-        public ActionResult GuardaEdicionCliente(ClientesDto _Obj)
+        public ActionResult GuardaEdicionCliente(ClientesModel _Obj)
         {
-            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            //_tok = Session["StringToken"].ToString();
             var fac = (FacturacionModel)TempData["FacturacionModel"];
             TempData["FacturacionModel"] = fac;
-           // var respuesta = CatalogoServicio.ModificarCliente(_Obj, _tok);
-            //TempData["RespuestaDTO"] = respuesta.Mensaje;
             return RedirectToAction("Facturar");
-
         }
+        public ActionResult GuardarNuevoCliente(ClientesModel _ojUs)
+        {
+            var respuesta = CatalogoServicio.CrearCliente(_ojUs);
+            TempData["RespuestaDTO"] = respuesta.Mensaje;
 
+            var fac = (FacturacionModel)TempData["FacturacionModel"];
+            TempData["FacturacionModel"] = fac;
+          
+            return RedirectToAction("Facturar");
+        }
         public ActionResult ContinuarGenerarFactura(ClientesModel _mod)
         {
             var FacturacionModel = (FacturacionModel)TempData["FacturacionModel"];
             FacturacionModel.Cliente = _mod;
             return RedirectToAction("Index", _mod);
         }
-
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;

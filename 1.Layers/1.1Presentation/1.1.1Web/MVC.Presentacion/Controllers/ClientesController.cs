@@ -54,7 +54,6 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = ViewBag.MessageError;
             }
             ViewBag.MessageError = TempData["RespuestaDTOError"];
-
             return View();
         }
         [HttpPost]

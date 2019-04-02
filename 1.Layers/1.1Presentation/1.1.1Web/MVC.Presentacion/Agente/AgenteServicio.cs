@@ -993,7 +993,7 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaClientes"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
-        }
+        }       
         public void EliminarCliente(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminaClientes"];
@@ -1043,6 +1043,17 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaClienteLocacion"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+
+        public void GuardarNuevoCliente(ClientesModel dto)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraClientesAutoConsumo"];
+            LLamadaAnonima(dto, MetodoRestConst.Post).Wait();
+        }
+        public void EditarCliente(ClientesModel dto)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaClientesAutoConsumo"];
+            LLamadaAnonima(dto, MetodoRestConst.Put).Wait();
         }
         #endregion
         #region Puntos de Venta
@@ -4482,6 +4493,40 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    if (Tipo.Equals(MetodoRestConst.Post))
+                        response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (Tipo.Equals(MetodoRestConst.Put))
+                        response = await client.PutAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _RespuestaDTO = resp;
+            }
+        }
+        private async Task LLamadaAnonima<T>(T _dto, string Tipo)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
                     HttpResponseMessage response = new HttpResponseMessage();

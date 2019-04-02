@@ -118,5 +118,6 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<MetodoPago> MetodoPago { get; set; }
         public virtual DbSet<CFDI> CFDI { get; set; }
         public virtual DbSet<UsoCFDI> UsoCFDI { get; set; }
+        public virtual DbSet<HistoricoVentas> HistoricoVentas { get; set; }
     }
 }

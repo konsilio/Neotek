@@ -16,7 +16,7 @@
 <head>
     @*<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>*@
     <script src="~/Resources/js/Facturacion.js"></script>
-    <script src="~/Resources/js/Clientes.js"></script>
+    @*<script src="~/Resources/js/Clientes.js"></script>*@
     <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
     <script type="text/javascript">
         $(document).ready(function () {
@@ -120,7 +120,7 @@
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="form-group">
                                                     <strong>RFC:*</strong>
-                                                    @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control enableOnInput"})                           
+                                                    @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control enableOnInput" })
                                                     @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
@@ -377,7 +377,14 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <div class="form-group">
-                                    <input type="submit" value="Guardar" id="btnGuardarInfoCliente" formaction="GuardarInfoCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
+                                    @if (ViewBag.EsEdicion)
+                                    {
+                                        <input type="submit" value="Guardar" id="btnGuardarInfoCliente" formaction="GuardarInfoCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" value="Guardar" id="btnGuardarInfoCliente" formaction="GuardarInfoCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
+                                    }
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4">
