@@ -228,7 +228,6 @@ namespace Application.MainModule.Servicios.Ventas
             VentaPuntoDeVenta Updt = new VentaPuntoDeVenta();
             // List<VentaPuntoDeVenta> lst = vm.GroupBy(x => x.IdPuntoVenta).SelectMany(gr => gr).ToList(); //VentaspuntosDeVentaAgrupados- por punto de venta
             var lst1 = vm.GroupBy(x => x.IdPuntoVenta).ToList(); //VentaspuntosDeVentaAgrupados- por punto de venta
-
             foreach (var y in lst1)
             {
                 var lst = y.GroupBy(x => x.FechaAplicacion.Value.ToShortDateString()).ToList(); //VentaspuntosDeVentaAgrupados- por fecha
@@ -635,7 +634,6 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, year, month, dia, orden.Value).ToList();
         }
-
         public static decimal ObtenerPrecioLt(short? empresa, short year, byte month, byte dia, short? orden)
         {
             List<VentaPuntoDeVentaDetalle> lst = new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, year, month, dia, orden.Value).ToList();
@@ -645,6 +643,5 @@ namespace Application.MainModule.Servicios.Ventas
             else
                 return 0;
         }
-
     }
 }

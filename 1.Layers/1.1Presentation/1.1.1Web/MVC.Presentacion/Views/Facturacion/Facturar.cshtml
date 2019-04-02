@@ -1,5 +1,5 @@
 ﻿@using System.Web.UI.WebControls;
-@model MVC.Presentacion.Models.Facturacion.FacturacionModel
+@model MVC.Presentacion.Models.Catalogos.ClientesModel
 
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
@@ -15,6 +15,7 @@
 <html>
 <head>
     @*<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>*@
+    <script src="~/Resources/js/Facturacion.js"></script>
     <script src="~/Resources/js/Clientes.js"></script>
     <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
     <script type="text/javascript">
@@ -25,33 +26,7 @@
                 $('.btnGuardarInfoCliente').prop('disabled', false);
             });
         });
-        function OnSelectedChangeCountry(s, e) {
-            if (s.GetValue() !== 1) {
-                $('#ddlEdo').hide();
-                $('#txtEdoP').show();
-            }
-            else {
-                $('#ddlEdo').show();
-                $('#txtEdoP').hide();
-            }
-        };        
-        function OnSelectedChangeFilter(s, e) {
-            if (s.GetValue() == 2) {//($('#ddlTipopersona').find('option:selected').text() == 'Moral') {
-                $('#div_hideRP').show();
-                $('#div_hidePM').hide();
-                $('#hide_razonS').show();
-            }
-            if (s.GetValue() == 1) {// ($('#ddlTipopersona').find('option:selected').text() == 'Física') {
-                $('#div_hideRP').hide();
-                $('#hide_razonS').hide();
-                $('#div_hidePM').show();
-            }
-            if (s.GetValue() == 0) {//($('#ddlTipopersona').find('option:selected').text() == 'Seleccione') {
-                $('#div_hidePM').show();
-                $('#div_hideRP').show();
-                $('#hide_razonS').show();
-            }
-        }
+
     </script>
     <style type="text/css">
         .hid {
@@ -59,10 +34,10 @@
         }
     </style>
 </head>
-<body style="height:100%">
+<body>
     @using (Html.BeginForm())
     {
-        @Html.HiddenFor(m => m.Cliente)
+        @*@Html.HiddenFor(m => m.Rfc)*@
         <section class="content home">
             <div class="container-fluid">
                 <div class="row clearfix">
@@ -107,7 +82,7 @@
                                                {
                                                    settings.Name = "IdTipoPersona";
                                                    settings.Width = Unit.Percentage(100);
-                                                   settings.SelectedIndex = Model.Cliente.IdTipoPersona.Value;
+                                                   settings.SelectedIndex = Model.IdTipoPersona.Value;
                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                                    settings.Theme = "Material";
@@ -118,7 +93,7 @@
                                                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
                                                    settings.Properties.ClientSideEvents.Init = "OnSelectedChangeFilter";
                                                }).BindList(ViewBag.TipoPersona).GetHtml()
-                                                    @Html.ValidationMessageFor(m => m.Cliente.IdTipoPersona, "", new { @class = "alert-danger" })
+                                                    @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -128,7 +103,7 @@
                                                {
                                                    settings.Name = "IdRegimenFiscal";
                                                    settings.Width = Unit.Percentage(100);
-                                                   settings.SelectedIndex = Model.Cliente.IdRegimenFiscal.Value;
+                                                   settings.SelectedIndex = Model.IdRegimenFiscal.Value;
                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                                    settings.Theme = "Material";
@@ -137,7 +112,7 @@
                                                    settings.Properties.ValueField = "IdRegimenFiscal";
                                                    settings.Properties.ValueType = typeof(int);
                                                }).BindList(ViewBag.Regimen).GetHtml()
-                                                    @Html.ValidationMessageFor(m => m.Cliente.IdRegimenFiscal, "", new { @class = "alert-danger" })
+                                                    @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
                                         </div>
@@ -145,15 +120,15 @@
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="form-group">
                                                     <strong>RFC:*</strong>
-                                                    @Html.TextBoxFor(m => m.Cliente.Rfc, new { @class = "form-control enableOnInput" })
-                                                    @Html.ValidationMessageFor(m => m.Cliente.Rfc, "", new { @class = "alert-danger" })
+                                                    @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control enableOnInput"})                           
+                                                    @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="form-group" id="hide_razonS">
                                                     <strong> Razón Social:*</strong>
-                                                    @Html.TextBoxFor(m => m.Cliente.RazonSocial, new { @class = "form-control enableOnInput" })
-                                                    @Html.ValidationMessageFor(m => m.Cliente.RazonSocial, "", new { @class = "alert-danger" })
+                                                    @Html.TextBoxFor(m => m.RazonSocial, new { @class = "form-control enableOnInput" })
+                                                    @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
                                         </div>
@@ -171,13 +146,13 @@
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="form-group">
-                                                    Nombre Completo:@Html.TextBoxFor(m => m.Cliente.RepresentanteLegal, new { @class = "form-control enableOnInput" })
+                                                    Nombre Completo:@Html.TextBoxFor(m => m.RepresentanteLegal, new { @class = "form-control enableOnInput" })
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <div>
-                                                        Teléfono:@Html.TextBoxFor(m => m.Cliente.Telefono, new { @class = "form-control enableOnInput" })
+                                                        Teléfono:@Html.TextBoxFor(m => m.Telefono, new { @class = "form-control enableOnInput" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -185,12 +160,12 @@
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="form-group">
-                                                    Dirección:@Html.TextBoxFor(m => m.Cliente.Domicilio, new { @class = "form-control enableOnInput" })
+                                                    Dirección:@Html.TextBoxFor(m => m.Domicilio, new { @class = "form-control enableOnInput" })
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div class="form-group">
-                                                    Celular:@Html.TextBoxFor(m => m.Cliente.Celular, new { @class = "form-control enableOnInput" })
+                                                    Celular:@Html.TextBoxFor(m => m.Celular, new { @class = "form-control enableOnInput" })
                                                 </div>
                                             </div>
 
@@ -198,7 +173,7 @@
                                         <div class="row clearfix">
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <div class="form-group">
-                                                    E-mail:@Html.TextBoxFor(m => m.Cliente.CorreoElectronico, new { @class = "form-control enableOnInput" })
+                                                    E-mail:@Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control enableOnInput" })
                                                 </div>
                                             </div>
                                         </div>
@@ -209,16 +184,16 @@
                         <div class="row clearfix" id="div_hidePM">
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <div class="form-group">
-                                    Nombres:* @Html.TextBoxFor(m => m.Cliente.Nombre, new { @class = "form-control enableOnInput" })
-                                    @Html.ValidationMessageFor(m => m.Cliente.Nombre, "", new { @class = "alert-danger" })
+                                    Nombres:* @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control enableOnInput" })
+                                    @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <div>
                                         Apellido Paterno:*
-                                        @Html.TextBoxFor(m => m.Cliente.Apellido1, new { @class = "form-control enableOnInput" })
-                                        @Html.ValidationMessageFor(m => m.Cliente.Apellido1, "", new { @class = "alert-danger" })
+                                        @Html.TextBoxFor(m => m.Apellido1, new { @class = "form-control enableOnInput" })
+                                        @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +201,7 @@
                                 <div class="form-group">
                                     <div>
                                         Apellido Materno:
-                                        @Html.TextBoxFor(m => m.Cliente.Apellido2, new { @class = "form-control enableOnInput" })
+                                        @Html.TextBoxFor(m => m.Apellido2, new { @class = "form-control enableOnInput" })
                                     </div>
                                 </div>
                             </div>
@@ -254,7 +229,7 @@
                                        {
                                            settings.Name = "cliente.Locacion.IdPais";
                                            settings.Width = Unit.Percentage(100);
-                                           settings.SelectedIndex = Model.Cliente.Locacion.IdPais;
+                                           settings.SelectedIndex = Model.Locacion.IdPais;
                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                            settings.Theme = "Material";
@@ -284,7 +259,7 @@
                                        {
                                            settings.Name = "Locacion.IdEstadoRep";
                                            settings.Width = Unit.Percentage(100);
-                                           settings.SelectedIndex = Model.Cliente.Locacion.IdEstadoRep;
+                                           settings.SelectedIndex = Model.Locacion.IdEstadoRep;
                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                            settings.Theme = "Material";
@@ -307,7 +282,7 @@
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
-                                                    @Html.TextBoxFor(m => m.Cliente.Locacion.Municipio, new { @class = "form-control enableOnInput" })
+                                                    @Html.TextBoxFor(m => m.Locacion.Municipio, new { @class = "form-control enableOnInput" })
 
                                                 </div>
                                             </div>
@@ -324,9 +299,9 @@
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
-                                                    @Html.TextBoxFor(m => m.Cliente.Locacion.Colonia, new { @class = "form-control enableOnInput" })
+                                                    @Html.TextBoxFor(m => m.Locacion.Colonia, new { @class = "form-control enableOnInput" })
                                                 </div>
-                                                @Html.ValidationMessageFor(m => m.Cliente.Locacion.Colonia, "", new { @class = "alert-danger" })
+                                                @Html.ValidationMessageFor(m => m.Locacion.Colonia, "", new { @class = "alert-danger" })
                                             </div>
                                             <div class="col-lg-1 col-md-1 col-sm-1">
                                                 <div class="form-group">
@@ -339,9 +314,9 @@
                                             </div>
                                             <div class="col-lg-7 col-md-7 col-sm-7">
                                                 <div class="form-group">
-                                                    @Html.TextBoxFor(m => m.Cliente.Locacion.Calle, new { @class = "form-control enableOnInput" })
+                                                    @Html.TextBoxFor(m => m.Locacion.Calle, new { @class = "form-control enableOnInput" })
                                                 </div>
-                                                @Html.ValidationMessageFor(m => m.Cliente.Locacion.Calle, "", new { @class = "alert-danger" })
+                                                @Html.ValidationMessageFor(m => m.Locacion.Calle, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
                                         <div class="row clearfix">
@@ -356,22 +331,22 @@
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
-                                                    @Html.TextBoxFor(m => m.Cliente.Locacion.NumExt, new { @class = "form-control enableOnInput" })
+                                                    @Html.TextBoxFor(m => m.Locacion.NumExt, new { @class = "form-control enableOnInput" })
                                                 </div>
-                                                @Html.ValidationMessageFor(m => m.Cliente.Locacion.NumExt, "", new { @class = "alert-danger" })
+                                                @Html.ValidationMessageFor(m => m.Locacion.NumExt, "", new { @class = "alert-danger" })
                                             </div>
                                             <div class="col-lg-1 col-md-1 col-sm-1">
                                                 <div class="form-group">
                                                     <div>
                                                         <label for="txtNume">
-                                                            Núm.Cliente. Int:
+                                                            Núm. Int:
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
-                                                    @Html.TextBoxFor(m => m.Cliente.Locacion.NumInt, new { @class = "form-control enableOnInput" })
+                                                    @Html.TextBoxFor(m => m.Locacion.NumInt, new { @class = "form-control enableOnInput" })
                                                 </div>
                                             </div>
                                             <div class="col-lg-1 col-md-1 col-sm-1">
@@ -385,9 +360,9 @@
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
-                                                    @Html.TextBoxFor(m => m.Cliente.Locacion.CodigoPostal, new { @class = "form-control enableOnInput" })
+                                                    @Html.TextBoxFor(m => m.Locacion.CodigoPostal, new { @class = "form-control enableOnInput" })
                                                 </div>
-                                                @Html.ValidationMessageFor(m => m.Cliente.Locacion.CodigoPostal, "", new { @class = "alert-danger" })
+                                                @Html.ValidationMessageFor(m => m.Locacion.CodigoPostal, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
                                     </div>

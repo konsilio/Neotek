@@ -1,4 +1,5 @@
 ﻿using MVC.Presentacion.App_Code;
+using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Facturacion;
 using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
@@ -54,22 +55,34 @@ namespace MVC.Presentacion.Controllers
                     TempData["RespuestaDTO"] = new RespuestaDTO() { Exito = false, MensajesError = new List<string>() { "Los tickets no pertenecer al mismo cliente." } };
                     return RedirectToAction("Index", _mod);
                 }
-            }                    
-            var Cliente = CatalogoServicio.ObtenerCliente(idCliente);
-            _mod.Cliente = Cliente;
+            }
+            ClientesModel Cliente = CatalogoServicio.ObtenerCliente(idCliente);
             TempData["FacturacionModel"] = _mod;
             ViewBag.Paises = CatalogoServicio.GetPaises();
             ViewBag.Estados = CatalogoServicio.GetEstados();
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona();
             ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal();
+            
             if (Cliente.Locaciones != null || Cliente.Locaciones.Count > 0)
                 Cliente.Locacion = Cliente.Locaciones[0];
-            return View(_mod);
+            return View(Cliente);
         }
-        public ActionResult ContinuarGenerarFactura(FacturacionModel _mod)
+        public ActionResult GuardaEdicionCliente(ClientesDto _Obj)
         {
+            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            //_tok = Session["StringToken"].ToString();
+            var fac = (FacturacionModel)TempData["FacturacionModel"];
+            TempData["FacturacionModel"] = fac;
+           // var respuesta = CatalogoServicio.ModificarCliente(_Obj, _tok);
+            //TempData["RespuestaDTO"] = respuesta.Mensaje;
+            return RedirectToAction("Facturar");
 
-            _mod.Tickets.AddRange(FacturacionServicio.ObtenerTickets(_mod));            
+        }
+
+        public ActionResult ContinuarGenerarFactura(ClientesModel _mod)
+        {
+            var FacturacionModel = (FacturacionModel)TempData["FacturacionModel"];
+            FacturacionModel.Cliente = _mod;
             return RedirectToAction("Index", _mod);
         }
 

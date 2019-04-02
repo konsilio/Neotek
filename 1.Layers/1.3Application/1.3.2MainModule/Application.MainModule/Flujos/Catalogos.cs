@@ -154,11 +154,34 @@ namespace Application.MainModule.Flujos
 
             return ClienteServicio.AltaCliente(cliente);
         }
+        public RespuestaDto RegistraClienteAutoConsumo(ClienteCrearDto cteDto)
+        {
+            //var resp = PermisosServicio.PuedeRegistrarCliente();
+            //if (!resp.Exito) return resp;
 
+            var cliente = ClientesAdapter.FromDtoMod(cteDto);
+
+            if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
+                cliente.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+
+            return ClienteServicio.AltaCliente(cliente);
+        }
         public RespuestaDto ModificaCliente(ClienteCrearDto cteDto)
         {
             var resp = PermisosServicio.PuedeModificarCliente();
             if (!resp.Exito) return resp;
+
+            var clientes = ClienteServicio.Obtener(cteDto.IdCliente);
+            if (clientes == null) return ClienteServicio.NoExiste();
+
+            var cte = ClientesAdapter.FromDtoEditar(cteDto, clientes);
+            cte.FechaRegistro = cte.FechaRegistro;
+            return ClienteServicio.Modificar(cte);
+        }
+        public RespuestaDto ModificaClienteAutoServicio(ClienteCrearDto cteDto)
+        {
+            //var resp = PermisosServicio.PuedeModificarCliente();
+            //if (!resp.Exito) return resp;
 
             var clientes = ClienteServicio.Obtener(cteDto.IdCliente);
             if (clientes == null) return ClienteServicio.NoExiste();

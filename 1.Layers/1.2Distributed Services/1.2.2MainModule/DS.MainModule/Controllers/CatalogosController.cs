@@ -44,6 +44,15 @@ namespace DS.MainModule.Controllers
         }
         #endregion
 
+        #region RegimenFiscal
+        [AllowAnonymous]
+        [Route("clientes/regimenfiscal")]
+        public HttpResponseMessage GetRegimenFiscal()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.RegimenFiscal());
+        }
+        #endregion
+
         #region Empresas
 
         // [Route("registra/empresa")]
@@ -167,12 +176,7 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ObtenerCliente(id));
         }
-        [AllowAnonymous]
-        [Route("clientes/regimenfiscal")]
-        public HttpResponseMessage GetRegimenFiscal()
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.RegimenFiscal());
-        }
+        
 
         [Route("clientes/listaclientes/{idEmpresa}")]
         public HttpResponseMessage GetListaClientes(short idEmpresa)
@@ -196,11 +200,22 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_catalogos.RegistraCliente(clienteDto), Request);
         }
-
+        [AllowAnonymous]
+        [Route("registra/cliente/autoconsumo")]
+        public HttpResponseMessage PostRegistraClienteAutoConsumo(ClienteCrearDto clienteDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraClienteAutoConsumo(clienteDto), Request);
+        }
         [Route("modifica/cliente")]
         public HttpResponseMessage PutModificaCliente(ClienteCrearDto clienteDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ModificaCliente(clienteDto), Request);
+        }
+        [AllowAnonymous]
+        [Route("modifica/cliente/autoconsumo")]
+        public HttpResponseMessage PutModificaClienteAutoServicio(ClienteCrearDto clienteDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaClienteAutoServicio(clienteDto), Request);
         }
 
         [Route("elimina/cliente/{idCliente}")]
