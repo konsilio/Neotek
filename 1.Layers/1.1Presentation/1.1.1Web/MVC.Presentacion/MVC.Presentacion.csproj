@@ -269,6 +269,7 @@
     <Compile Include="Controllers\FacturacionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\HistoricoController.cs" />
     <Compile Include="Controllers\MantenimientoController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />
@@ -404,6 +405,7 @@
     <Compile Include="Models\Seguridad\UsuarioRolModel.cs" />
     <Compile Include="Models\Transporte\AsignacionModel.cs" />
     <Compile Include="Models\Transporte\AsignacionUtilitarioModel.cs" />
+    <Compile Include="Models\Transporte\HistoricoModel.cs" />
     <Compile Include="Models\Transporte\MantenimientoDetalleModel.cs" />
     <Compile Include="Models\Transporte\MantenimientoModel.cs" />
     <Compile Include="Models\Transporte\RecargaCombustibleModel.cs" />
@@ -11605,6 +11607,7 @@
     <Content Include="Views\Facturacion\Facturar.cshtml" />
     <Content Include="Views\Facturacion\DatosCFDI.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\VentaPuntoVentaDTO.cshtml" />
+    <Content Include="Views\Historico\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
