@@ -49,6 +49,7 @@
           <xsd:element name="Rfc" type="xsd:string" />
           <xsd:element name="Nombre" type="xsd:string" />
           <xsd:element name="UsoCFDI" type="xsd:string" />
+          <xsd:element name="CorreoElectronico" type="xsd:string" />
         </xsd:all>
       </xsd:complexType>
       <xsd:complexType name="ConceptoArray">

@@ -96,6 +96,7 @@ namespace Application.MainModule.Servicios.Facturacion
                 Nombre = _cliente.Nombre + " " + _cliente.Apellido1 + " " + _cliente.Apellido2,
                 Rfc = _cliente.Rfc,
                 UsoCFDI = dto.UsoCFDI,
+                CorreoElectronico = _cliente.CorreoElectronico,
             };
         }
         public static List<Concepto> DatosConceptos(CFDIDTO dto)

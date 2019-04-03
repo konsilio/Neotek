@@ -55,21 +55,27 @@ namespace MVC.Presentacion.Controllers
                     return RedirectToAction("Index", _mod);
                 }
             }
+            ViewBag.EsGenerico = "false";
             ClientesModel Cliente = CatalogoServicio.ObtenerCliente(idCliente);
+            if (Cliente.Rfc.Equals("XAXX010101000"))
+            {
+                ViewBag.EsGenerico = "true";
+                Cliente = new ClientesModel();
+            }                          
             TempData["FacturacionModel"] = _mod;
             ViewBag.Paises = CatalogoServicio.GetPaises();
             ViewBag.Estados = CatalogoServicio.GetEstados();
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona();
             ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal();
-            if (Cliente.Locaciones != null || Cliente.Locaciones.Count > 0)
+            if (Cliente.Locaciones != null  && Cliente.Locaciones.Count > 0)
                 Cliente.Locacion = Cliente.Locaciones[0];
             return View(Cliente);
         }
         public ActionResult GuardaEdicionCliente(ClientesModel _Obj)
         {
-            var fac = (FacturacionModel)TempData["FacturacionModel"];
+            FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
             TempData["FacturacionModel"] = fac;
-            return RedirectToAction("Facturar");
+            return RedirectToAction("Facturar", fac);
         }
         public ActionResult GuardarNuevoCliente(ClientesModel _ojUs)
         {

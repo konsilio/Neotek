@@ -23,7 +23,7 @@ namespace Application.MainModule.com.admingest {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="WsFactAdmingestControllerBinding", Namespace="urn:WsFactAdmingestControllerwsdl")]
@@ -310,8 +310,8 @@ namespace Application.MainModule.com.admingest {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -322,7 +322,7 @@ namespace Application.MainModule.com.admingest {
         
         private string messageField;
         
-        /// <comentarios/>
+        /// <remarks/>
         public bool success {
             get {
                 return this.successField;
@@ -332,7 +332,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string message {
             get {
                 return this.messageField;
@@ -343,8 +343,8 @@ namespace Application.MainModule.com.admingest {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -359,7 +359,7 @@ namespace Application.MainModule.com.admingest {
         
         private float importeField;
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Impuesto {
             get {
                 return this.impuestoField;
@@ -369,7 +369,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string TipoFactor {
             get {
                 return this.tipoFactorField;
@@ -379,7 +379,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float TasaOCuota {
             get {
                 return this.tasaOCuotaField;
@@ -389,7 +389,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Importe {
             get {
                 return this.importeField;
@@ -400,8 +400,8 @@ namespace Application.MainModule.com.admingest {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -412,7 +412,7 @@ namespace Application.MainModule.com.admingest {
         
         private float importeField;
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Impuesto {
             get {
                 return this.impuestoField;
@@ -422,7 +422,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Importe {
             get {
                 return this.importeField;
@@ -433,8 +433,8 @@ namespace Application.MainModule.com.admingest {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -449,7 +449,7 @@ namespace Application.MainModule.com.admingest {
         
         private ImpuestoTrasladado[] impuestoTrasladadoField;
         
-        /// <comentarios/>
+        /// <remarks/>
         public float TotalImpuestosRetenidos {
             get {
                 return this.totalImpuestosRetenidosField;
@@ -459,7 +459,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float TotalImpuestosTrasladados {
             get {
                 return this.totalImpuestosTrasladadosField;
@@ -469,7 +469,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public ImpuestoRetenido[] ImpuestoRetenido {
             get {
                 return this.impuestoRetenidoField;
@@ -479,7 +479,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public ImpuestoTrasladado[] ImpuestoTrasladado {
             get {
                 return this.impuestoTrasladadoField;
@@ -490,8 +490,8 @@ namespace Application.MainModule.com.admingest {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -508,7 +508,7 @@ namespace Application.MainModule.com.admingest {
         
         private float importeField;
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Base {
             get {
                 return this.baseField;
@@ -518,7 +518,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Impuesto {
             get {
                 return this.impuestoField;
@@ -528,7 +528,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string TipoFactor {
             get {
                 return this.tipoFactorField;
@@ -538,7 +538,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float TasaOCuota {
             get {
                 return this.tasaOCuotaField;
@@ -548,7 +548,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Importe {
             get {
                 return this.importeField;
@@ -559,8 +559,8 @@ namespace Application.MainModule.com.admingest {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -577,7 +577,7 @@ namespace Application.MainModule.com.admingest {
         
         private float importeField;
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Base {
             get {
                 return this.baseField;
@@ -587,7 +587,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Impuesto {
             get {
                 return this.impuestoField;
@@ -597,7 +597,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string TipoFactor {
             get {
                 return this.tipoFactorField;
@@ -607,7 +607,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float TasaOCuota {
             get {
                 return this.tasaOCuotaField;
@@ -617,7 +617,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Importe {
             get {
                 return this.importeField;
@@ -628,8 +628,8 @@ namespace Application.MainModule.com.admingest {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -658,7 +658,7 @@ namespace Application.MainModule.com.admingest {
         
         private ImpuestoConceptoRetenido[] impuestoConceptoRetenidoField;
         
-        /// <comentarios/>
+        /// <remarks/>
         public string ClaveProdServ {
             get {
                 return this.claveProdServField;
@@ -668,7 +668,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string NoIdentificacion {
             get {
                 return this.noIdentificacionField;
@@ -678,7 +678,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Cantidad {
             get {
                 return this.cantidadField;
@@ -688,7 +688,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string ClaveUnidad {
             get {
                 return this.claveUnidadField;
@@ -698,7 +698,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Unidad {
             get {
                 return this.unidadField;
@@ -708,7 +708,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Descripcion {
             get {
                 return this.descripcionField;
@@ -718,7 +718,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float ValorUnitario {
             get {
                 return this.valorUnitarioField;
@@ -728,7 +728,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Importe {
             get {
                 return this.importeField;
@@ -738,7 +738,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Descuento {
             get {
                 return this.descuentoField;
@@ -748,7 +748,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public ImpuestoConceptoTrasladado[] ImpuestoConceptoTrasladado {
             get {
                 return this.impuestoConceptoTrasladadoField;
@@ -758,7 +758,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public ImpuestoConceptoRetenido[] ImpuestoConceptoRetenido {
             get {
                 return this.impuestoConceptoRetenidoField;
@@ -769,8 +769,8 @@ namespace Application.MainModule.com.admingest {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -783,7 +783,9 @@ namespace Application.MainModule.com.admingest {
         
         private string usoCFDIField;
         
-        /// <comentarios/>
+        private string correoElectronicoField;
+        
+        /// <remarks/>
         public string Rfc {
             get {
                 return this.rfcField;
@@ -793,7 +795,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Nombre {
             get {
                 return this.nombreField;
@@ -803,7 +805,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string UsoCFDI {
             get {
                 return this.usoCFDIField;
@@ -812,10 +814,20 @@ namespace Application.MainModule.com.admingest {
                 this.usoCFDIField = value;
             }
         }
+        
+        /// <remarks/>
+        public string CorreoElectronico {
+            get {
+                return this.correoElectronicoField;
+            }
+            set {
+                this.correoElectronicoField = value;
+            }
+        }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -852,7 +864,7 @@ namespace Application.MainModule.com.admingest {
         
         private Impuesto impuestoField;
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Serie {
             get {
                 return this.serieField;
@@ -862,7 +874,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Folio {
             get {
                 return this.folioField;
@@ -872,7 +884,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Fecha {
             get {
                 return this.fechaField;
@@ -882,7 +894,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string FormaPago {
             get {
                 return this.formaPagoField;
@@ -892,7 +904,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float SubTotal {
             get {
                 return this.subTotalField;
@@ -902,7 +914,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Descuento {
             get {
                 return this.descuentoField;
@@ -912,7 +924,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string Moneda {
             get {
                 return this.monedaField;
@@ -922,7 +934,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float TipoCambio {
             get {
                 return this.tipoCambioField;
@@ -932,7 +944,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public float Total {
             get {
                 return this.totalField;
@@ -942,7 +954,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string TipoDeComprobante {
             get {
                 return this.tipoDeComprobanteField;
@@ -952,7 +964,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string MetodoPago {
             get {
                 return this.metodoPagoField;
@@ -962,7 +974,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string LugarExpedicion {
             get {
                 return this.lugarExpedicionField;
@@ -972,7 +984,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public Receptor Receptor {
             get {
                 return this.receptorField;
@@ -982,7 +994,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public Concepto[] Concepto {
             get {
                 return this.conceptoField;
@@ -992,7 +1004,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public Impuesto Impuesto {
             get {
                 return this.impuestoField;
@@ -1003,8 +1015,8 @@ namespace Application.MainModule.com.admingest {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1023,7 +1035,7 @@ namespace Application.MainModule.com.admingest {
         
         private string uUIDField;
         
-        /// <comentarios/>
+        /// <remarks/>
         public bool success {
             get {
                 return this.successField;
@@ -1033,7 +1045,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string message {
             get {
                 return this.messageField;
@@ -1043,7 +1055,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string urlPdf {
             get {
                 return this.urlPdfField;
@@ -1053,7 +1065,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string urlXml {
             get {
                 return this.urlXmlField;
@@ -1063,7 +1075,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string XML {
             get {
                 return this.xMLField;
@@ -1073,7 +1085,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string UUID {
             get {
                 return this.uUIDField;
@@ -1084,8 +1096,8 @@ namespace Application.MainModule.com.admingest {
         }
     }
     
-    /// <comentarios/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1098,7 +1110,7 @@ namespace Application.MainModule.com.admingest {
         
         private string idAutofacturacionField;
         
-        /// <comentarios/>
+        /// <remarks/>
         public bool success {
             get {
                 return this.successField;
@@ -1108,7 +1120,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string message {
             get {
                 return this.messageField;
@@ -1118,7 +1130,7 @@ namespace Application.MainModule.com.admingest {
             }
         }
         
-        /// <comentarios/>
+        /// <remarks/>
         public string idAutofacturacion {
             get {
                 return this.idAutofacturacionField;
@@ -1130,11 +1142,11 @@ namespace Application.MainModule.com.admingest {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     public delegate void holaMundoCompletedEventHandler(object sender, holaMundoCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class holaMundoCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1156,11 +1168,11 @@ namespace Application.MainModule.com.admingest {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     public delegate void agregarClienteAdmingestCompletedEventHandler(object sender, agregarClienteAdmingestCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class agregarClienteAdmingestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1182,11 +1194,11 @@ namespace Application.MainModule.com.admingest {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     public delegate void registrarAutofacturacionAdmingestCompletedEventHandler(object sender, registrarAutofacturacionAdmingestCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class registrarAutofacturacionAdmingestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1208,11 +1220,11 @@ namespace Application.MainModule.com.admingest {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     public delegate void generarFacturaAdmingestCompletedEventHandler(object sender, generarFacturaAdmingestCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class generarFacturaAdmingestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1234,11 +1246,11 @@ namespace Application.MainModule.com.admingest {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     public delegate void generarFacturaEstructuraAdmingestCompletedEventHandler(object sender, generarFacturaEstructuraAdmingestCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.3062.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class generarFacturaEstructuraAdmingestCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {

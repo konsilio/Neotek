@@ -11606,7 +11606,6 @@
     <Content Include="Views\Shared\EditorTemplates\RolSistemaVenta.cshtml" />
     <Content Include="Views\Facturacion\Index.cshtml" />
     <Content Include="Views\Facturacion\Facturar.cshtml" />
-    <Content Include="Views\Facturacion\DatosCFDI.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\VentaPuntoVentaDTO.cshtml" />
     <Content Include="Views\Historico\Index.cshtml" />
   </ItemGroup>
