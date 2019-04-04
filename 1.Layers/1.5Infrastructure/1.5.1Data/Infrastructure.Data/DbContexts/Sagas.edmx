@@ -1886,6 +1886,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CobranzaVerCartera" Type="bit" Nullable="false" />
           <Property Name="CobranzaVerCreditoRecuperado" Type="bit" Nullable="false" />
           <Property Name="CobranzaGenerarAbonos" Type="bit" Nullable="false" />
+          <Property Name="HistoricoVentas" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RolAccionCatalogo">
           <Key>
@@ -6596,7 +6597,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CobranzaVerCreditoRecuperado" Type="Boolean" Nullable="false" />
           <Property Name="CobranzaGenerarAbonos" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
-          <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />       
+          <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />
+          <Property Name="HistoricoVentas" Type="Boolean" Nullable="false" />       
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -12459,6 +12461,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
 
               <MappingFragment StoreEntitySet="RolAccion">
+                <ScalarProperty Name="HistoricoVentas" ColumnName="HistoricoVentas" />
                 <ScalarProperty Name="CobranzaGenerarAbonos" ColumnName="CobranzaGenerarAbonos" />
                 <ScalarProperty Name="CobranzaVerCreditoRecuperado" ColumnName="CobranzaVerCreditoRecuperado" />
                 <ScalarProperty Name="CobranzaVerCartera" ColumnName="CobranzaVerCartera" />
