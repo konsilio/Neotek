@@ -84,7 +84,7 @@ namespace MVC.Presentacion.Controllers
 
             var fac = (FacturacionModel)TempData["FacturacionModel"];
             TempData["FacturacionModel"] = fac;
-          
+
             return RedirectToAction("Facturar");
         }
         public ActionResult ContinuarGenerarFactura(ClientesModel _mod)
@@ -100,17 +100,14 @@ namespace MVC.Presentacion.Controllers
             if (Resp != null)
             {
                 if (Resp.ModelStatesStandar != null)
-                    foreach (var error in Resp.ModelStatesStandar.ToList())
-                    {
+                    foreach (var error in Resp.ModelStatesStandar.ToList())                    
                         ModelState.AddModelError(error.Key, error.Value);
-                    }
-                if (Resp.MensajesError != null)
-                {
+                    
+                if (Resp.MensajesError != null)                
                     if (Resp.MensajesError.Count > 1)
                         Mensaje = Resp.MensajesError[0] + " " + Resp.MensajesError[1];
                     else
-                        Mensaje = Resp.MensajesError[0];
-                }
+                        Mensaje = Resp.MensajesError[0];                
             }
             return Mensaje;
         }

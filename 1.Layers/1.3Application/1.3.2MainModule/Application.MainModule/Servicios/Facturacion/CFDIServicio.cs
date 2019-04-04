@@ -52,8 +52,7 @@ namespace Application.MainModule.Servicios.Facturacion
             var ventas = PuntoVentaServicio.ObtenerVentasPorRFC(rfc);
 
             return CFDIs.Where(x => ventas.Any(v => v.FolioVenta.Equals(x.Id_FolioVenta))).ToList();
-        }
-       
+        }       
         public static CFDIDTO Timbrar(Comprobante _comp, CFDIDTO dto)
         {
             var respTimbrado = new WsFactAdmingestControllerService().generarFacturaEstructuraAdmingest(ConfigurationManager.AppSettings["Usuario"], ConfigurationManager.AppSettings["Contrasena"], ConfigurationManager.AppSettings["RFC"], _comp);
@@ -139,7 +138,6 @@ namespace Application.MainModule.Servicios.Facturacion
             iva.Importe = (float)((det.PrecioUnitarioKg ?? det.PrecioUnitarioProducto) * det.CantidadProducto) * iva.TasaOCuota;
             return iva;
         }
-
         public static RespuestaDto DatosRespuesta(WsRespFacturacion wsResp)
         {
             RespuestaDto _resp = new RespuestaDto();
@@ -147,6 +145,13 @@ namespace Application.MainModule.Servicios.Facturacion
             _resp.Mensaje = wsResp.message;
             return _resp;
         }
-       
+        public static List<VentaPuntoDeVenta> DescartarFacturados(List<VentaPuntoDeVenta> ventas, List<CFDIDTO> Facturas)
+        {
+            List<VentaPuntoDeVenta> list = new List<VentaPuntoDeVenta>();
+            foreach (var v in ventas)            
+                if (!Facturas.Exists(x => x.Id_FolioVenta.Equals(v.FolioVenta)))                
+                    list.Add(v);
+            return list;
+        }        
     }
 }

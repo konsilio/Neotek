@@ -37,6 +37,7 @@ namespace Application.MainModule.Flujos
         {
             return dtos.Select(x => GenerarFactura(x)).ToList();
         }
+
         public List<CFDIDTO> BuscarFacturasPorRFC(string RFC)
         {
             var cfdis = CFDIServicio.BuscarPorRFC(RFC);
@@ -55,25 +56,34 @@ namespace Application.MainModule.Flujos
         public List<VentaPuntoVentaDTO> BuscarPorRFC(string RFC)
         {
             var ventas = PuntoVentaServicio.ObtenerVentasPorRFC(RFC);
+            var _cfdi = BuscarFacturasPorRFC(RFC);
+            ventas = CFDIServicio.DescartarFacturados(ventas, _cfdi);
             return CajaGeneralAdapter.ToDTOP(ventas);
         }
         public List<VentaPuntoVentaDTO> BuscarPorNumCliente(int Id)
         {
             var ventas = PuntoVentaServicio.ObtenerVentasPorCliente(Id);
+            var _cfdi = BuscarFacturasPorCliente(Id);
+            ventas = CFDIServicio.DescartarFacturados(ventas, _cfdi);
             return CajaGeneralAdapter.ToDTOP(ventas);
         }
         public VentaPuntoVentaDTO BuscarPorTicket(string ticket)
         {
             var venta = PuntoVentaServicio.Obtener(ticket);
-            return CajaGeneralAdapter.ToDTOP(venta);
+            var cfdi = BuscarFacturasPorTicket(ticket);
+            if (cfdi == null)
+                return CajaGeneralAdapter.ToDTOP(venta);
+            else
+                return null;
         }
         public List<VentaPuntoVentaDTO> Buscar(FacturacionDTO model)
         {
             List<VentaPuntoVentaDTO> _list = new List<VentaPuntoVentaDTO>();
-            if (model.IdCliente > 0)            
-                _list.AddRange(BuscarPorNumCliente(model.IdCliente));            
-            if (!model.RFC.Equals(string.Empty))            
+            if (model.IdCliente > 0)
+                _list.AddRange(BuscarPorNumCliente(model.IdCliente));
+            if (!model.RFC.Equals(string.Empty))
                 _list.AddRange(BuscarPorRFC(model.RFC));
+
             return _list.Distinct(new VentaPuntoVentaComparer()).ToList();
         }
     }
