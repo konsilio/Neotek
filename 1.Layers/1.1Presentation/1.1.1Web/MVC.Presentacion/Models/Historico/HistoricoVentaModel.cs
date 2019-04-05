@@ -15,5 +15,6 @@ namespace MVC.Presentacion.Models.Historico
         public bool EsCamioneta { get; set; }
         public bool EsLocal { get; set; }
         public Nullable<DateTime> FechaRegistro { get; set; }
+        public string Url { get; set; }
     }
 }

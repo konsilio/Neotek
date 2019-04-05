@@ -1,4 +1,4 @@
-﻿@model MVC.Presentacion.Models.MantenimientoDetalleModel
+﻿@model MVC.Presentacion.Models.Historico.HistoricoVentaModel
 @using PagedList.Mvc;
 @using PagedList;
 @Html.DevExpress().GetStyleSheets(
@@ -15,28 +15,41 @@
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
 <script type="text/javascript">
-    var mensaje = '@ViewBag.Msj';
-    if (mensaje != '') {
-        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
-    }
-    function OnSelectedIndexChanged(s, e) {
-        var item = id_vehiculo.cphidenVehiculos[id_vehiculo.GetSelectedIndex()].split("|")
-        $("#esCamioneta").val(item[0])
-        $("#esPipa").val(item[1])
-        $("#esUtilitario").val(item[2])
-    }
+    //$(document).ready(function () {
+
+    //    $("#idUrl").change(function (event) {
+
+    //        var reader = new FileReader();
+    //        reader.readAsDataURL(event.srcElement.files[0]);
+
+    //        reader.onload = function () {
+    //            var fileContent = reader.result;
+    //            console.log(fileContent);
+    //        }
+
+    //        $("#Url").val($("idUrl").val());
+    //    });
+    //});
+    window.addEventListener("load", function() {
+        document.getElementById("idUrl").onchange = function(event) {
+            var reader = new FileReader();
+            reader.readAsDataURL(event.srcElement.files[0]);
+            var me = this;
+            reader.onload = function () {
+                var fileContent = reader.result;
+                console.log(reader);
+                $("#Url").val(reader);
+            }
+        }
+    });
+
 </script>
 <body>
     <section class="content home">
         <div class="container-fluid">
-            @using (Html.BeginForm("Crear", "Mantenimiento", FormMethod.Post))
+            @using (Html.BeginForm("Crear", "Historico", FormMethod.Post))
             {
-                @Html.HiddenFor(m => m.Id_DetalleMtto)
-
-                <input type="text" hidden="hidden" name="esCamioneta" id="esCamioneta" />
-                <input type="text" hidden="hidden" name="esPipa" id="esPipa" />
-                <input type="text" hidden="hidden" name="esUtilitario" id="esUtilitario" />
-
+                
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
@@ -57,22 +70,23 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <b>Archivo a Cargar:</b>
-                                        @Html.TextBoxFor(m => m.NumeroOC, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.NumeroOC, "", new { @class = "alert-danger" })
+                                        @Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Url, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
 
                                 <div class="col-md-2">
                                     <div class="form-group">
 
-                                        <input type="file" name="name" #fileInput />
-                                        <button id="BtnRuta" onclick=fileInput.Click() class="btn btn-primary  btn-round">Seleccionar Ruta</button>
+                                        <label class="btn btn-default btn btn-primary btn-round">
+                                            Seleccionar Ruta <input type="file" id="idUrl" >
+                                        </label>                                    
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
 
-                                        <button id="BtnCargar" formaction=@Url.Action("Crear") class="btn btn-primary btn-round">Pre-Cargar</button>
+                                        @*<button id="BtnCargar" formaction=@Url.Action("Crear") class="btn btn-primary btn-round">Pre-Cargar</button>*@
                                     </div>
                                 </div>
 
@@ -115,7 +129,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var mant in ViewBag.Mantenimientos)
+                                            @*@foreach (var mant in ViewBag.Mantenimientos)
                                             {
                                                 <tr>
                                                     <td>@mant.Id_DetalleMtto</td>
@@ -129,18 +143,18 @@
 
 
                                                 </tr>
-                                            }
+                                            }*@
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="row clearfix">
-                                <div class="col-md-6">
+                                @*<div class="col-md-6">
                                     Página @(ViewBag.Mantenimientos.PageCount < ViewBag.Mantenimientos.PageNumber ? 0 : ViewBag.Mantenimientos.PageNumber) de @ViewBag.Mantenimientos.PageCount
                                 </div>
                                 <div class="col-md-6 text-right">
                                     @Html.PagedListPager((IPagedList)ViewBag.Mantenimientos, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>
