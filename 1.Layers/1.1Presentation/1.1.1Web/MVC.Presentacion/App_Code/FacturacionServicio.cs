@@ -20,7 +20,6 @@ namespace MVC.Presentacion.App_Code
             _agente._VentaDTO.seleccionar = true;
             return _agente._VentaDTO;
         }
-
         public static List<CFDIDTO> ObtenerCFDIs(FacturacionModel model)
         {
             AgenteServicio _agente = new AgenteServicio();

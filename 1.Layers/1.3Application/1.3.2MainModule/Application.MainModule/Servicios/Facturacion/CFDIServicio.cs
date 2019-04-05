@@ -25,8 +25,7 @@ namespace Application.MainModule.Servicios.Facturacion
         public static RespuestaDto Actualizar(CFDI entidad)
         {
             return new CFDIDataAccess().Actualizar(entidad);
-        }
-               
+        }               
         public static CFDI Buscar(int id)
         {
             return new CFDIDataAccess().Obtener(id);

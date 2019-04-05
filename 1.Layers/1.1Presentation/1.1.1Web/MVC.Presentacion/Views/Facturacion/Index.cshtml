@@ -24,7 +24,6 @@
 <body>
     @using (Html.BeginForm("Buscar", "Facturacion", FormMethod.Post))
     {
-        @Html.HiddenFor(m => m.Cliente)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -81,12 +80,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2" style="top:10px">
-
                                     <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
-
                                 </div>
                                 <div class="col-md-2" style="top:10px">
-                                    <button id="btnUpDate" formaction=@Url.Action("Facturar") class="btn btn-primary btn-icon-mini btn-round">
+                                    <button id="btnUpDate" formaction=@Url.Action("DatosCliente") class="btn btn-primary btn-icon-mini btn-round">
                                         Facturar
                                     </button>
                                 </div>

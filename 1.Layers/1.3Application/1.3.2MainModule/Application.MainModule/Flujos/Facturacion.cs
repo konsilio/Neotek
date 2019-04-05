@@ -37,7 +37,6 @@ namespace Application.MainModule.Flujos
         {
             return dtos.Select(x => GenerarFactura(x)).ToList();
         }
-
         public List<CFDIDTO> BuscarFacturasPorRFC(string RFC)
         {
             var cfdis = CFDIServicio.BuscarPorRFC(RFC);

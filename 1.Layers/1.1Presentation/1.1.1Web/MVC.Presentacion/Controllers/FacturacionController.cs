@@ -43,8 +43,17 @@ namespace MVC.Presentacion.Controllers
             TempData["ListaTickets"] = _mod.Tickets;
             return RedirectToAction("Index", _mod);
         }
-        public ActionResult Facturar(FacturacionModel _mod)
+
+        public ActionResult DatosCliente(FacturacionModel _mod)
         {
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (Respuesta.Exito)
+                    ViewBag.Msj = Respuesta.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(Respuesta);
+            }
             //verificar si las facturas agregadas pertenecen al mismo cliente
             var idCliente = _mod.Tickets[0].IdCliente;
             foreach (var tick in _mod.Tickets.Where(x => x.seleccionar).ToList())
@@ -61,37 +70,63 @@ namespace MVC.Presentacion.Controllers
             {
                 ViewBag.EsGenerico = "true";
                 Cliente = new ClientesModel();
-            }                          
+            }
             TempData["FacturacionModel"] = _mod;
+            TempData["List<VentaPuntoVentaDTO>"] = _mod.Tickets;
             ViewBag.Paises = CatalogoServicio.GetPaises();
             ViewBag.Estados = CatalogoServicio.GetEstados();
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona();
             ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal();
-            if (Cliente.Locaciones != null  && Cliente.Locaciones.Count > 0)
-                Cliente.Locacion = Cliente.Locaciones[0];
-            return View(Cliente);
+            //if (Cliente.Locaciones != null  && Cliente.Locaciones.Count > 0)
+            //    Cliente.Locacion = Cliente.Locaciones[0];
+            return View("Facturar",Cliente);
+        }
+        public ActionResult Facturar(FacturacionModel _mod)
+        {
+            FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
+            List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["List<VentaPuntoVentaDTO>"];
+            fac.Tickets = tiks;
+            TempData["FacturacionModel"] = fac;
+            TempData["List<VentaPuntoVentaDTO>"] = tiks;
+
+            return RedirectToAction("Index", _mod);
         }
         public ActionResult GuardaEdicionCliente(ClientesModel _Obj)
         {
+            var respuesta = CatalogoServicio.ModificarCliente(_Obj);
+            TempData["RespuestaDTO"] = respuesta;
+
             FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
+            List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["List<VentaPuntoVentaDTO>"];
             TempData["FacturacionModel"] = fac;
+            TempData["List<VentaPuntoVentaDTO>"] = tiks;
+
             return RedirectToAction("Facturar", fac);
         }
         public ActionResult GuardarNuevoCliente(ClientesModel _ojUs)
         {
             var respuesta = CatalogoServicio.CrearCliente(_ojUs);
-            TempData["RespuestaDTO"] = respuesta.Mensaje;
+            TempData["RespuestaDTO"] = respuesta;
 
-            var fac = (FacturacionModel)TempData["FacturacionModel"];
+            FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
+            List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["List<VentaPuntoVentaDTO>"];
+            fac.Tickets = tiks;
             TempData["FacturacionModel"] = fac;
+            TempData["List<VentaPuntoVentaDTO>"] = tiks;
 
-            return RedirectToAction("Facturar");
+            return RedirectToAction("Facturar", fac);
         }
-        public ActionResult ContinuarGenerarFactura(ClientesModel _mod)
+        public ActionResult ContinuarGenerarFactura()
         {
-            var FacturacionModel = (FacturacionModel)TempData["FacturacionModel"];
-            FacturacionModel.Cliente = _mod;
-            return RedirectToAction("Index", _mod);
+            FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
+            List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["List<VentaPuntoVentaDTO>"];
+            TempData["FacturacionModel"] = fac;
+            TempData["List<VentaPuntoVentaDTO>"] = tiks;
+
+            ViewBag.ListaUsosCFDI = CatalogoServicio.ObtenerUsoCFDI();
+            ViewBag.ListaFormasPago = CatalogoServicio.ListaFormaPago();
+
+            return View("DatosCFDI", fac);
         }
         private string Validar(RespuestaDTO Resp = null)
         {

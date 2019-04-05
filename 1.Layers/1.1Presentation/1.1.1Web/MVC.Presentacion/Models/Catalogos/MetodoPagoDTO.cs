@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application.MainModule.DTOs
+namespace MVC.Presentacion.Models
 {
     public class MetodoPagoDTO
     {

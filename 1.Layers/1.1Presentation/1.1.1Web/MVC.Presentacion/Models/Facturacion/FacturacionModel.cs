@@ -13,8 +13,9 @@ namespace MVC.Presentacion.Models.Facturacion
         public string RFC { get; set; }     
         public short IdEmpresa { get; set; }
         public string Ticket { get; set; }
+        public short IdUsoCFDI { get; set; }
+        public short IdFormaPago { get; set; }
         public DateTime FechaVenta { get; set; }     
-        public ClientesModel Cliente { get; set;}
         public List<VentaPuntoVentaDTO> Tickets { get; set; }
     }
 }
