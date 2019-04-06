@@ -3,8 +3,10 @@ using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Facturacion;
 using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MVC.Presentacion.Controllers
@@ -77,8 +79,8 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Estados = CatalogoServicio.GetEstados();
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona();
             ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal();
-            //if (Cliente.Locaciones != null  && Cliente.Locaciones.Count > 0)
-            //    Cliente.Locacion = Cliente.Locaciones[0];
+            if (Cliente.Locaciones != null && Cliente.Locaciones.Count > 0)
+                Cliente.Locacion = Cliente.Locaciones[0];
             return View("Facturar",Cliente);
         }
         public ActionResult Facturar(FacturacionModel _mod)
@@ -128,6 +130,7 @@ namespace MVC.Presentacion.Controllers
 
             return View("DatosCFDI", fac);
         }
+       
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;

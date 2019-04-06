@@ -27,7 +27,7 @@
     {
         @Html.HiddenFor(m => m.IdCliente)
         @Html.HiddenFor(m => m.RFC)
-        @Html.HiddenFor(m => m.IdEmpresa)
+        //@Html.HiddenFor(m => m.IdEmpresa)
         <section class="content home">
             <div class="container-fluid">
                 <div class="row clearfix">
@@ -100,7 +100,7 @@
                                                 }).BindList(ViewBag.ListaFormasPago).GetHtml()
                                                     @Html.ValidationMessageFor(m => m.IdFormaPago, "", new { @class = "alert-danger" })
                                                 </div>
-                                            </div>
+                                            </div>                                           
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-lg-4 col-md-4 col-sm-4">
