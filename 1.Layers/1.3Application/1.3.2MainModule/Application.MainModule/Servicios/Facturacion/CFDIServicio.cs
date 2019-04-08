@@ -69,9 +69,9 @@ namespace Application.MainModule.Servicios.Facturacion
         }
         public static Comprobante DatosComprobante(CFDIDTO dto)
         {
-            var venta = PuntoVentaServicio.Obtener(dto.Id_FolioVenta);
+            var venta = PuntoVentaServicio.Obtener(dto.Id_FolioVenta);            
             var cfdi = Buscar(dto.Id_FolioVenta);
-            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
+            var empresa = EmpresaServicio.Obtener(venta.IdEmpresa);
             Comprobante _comp = new Comprobante();
             _comp.Serie = cfdi != null ? cfdi.Serie : PuntoVentaServicio.ObtenerSerie(venta.IdPuntoVenta);
             _comp.Folio = cfdi != null ? cfdi.Folio.ToString() : PuntoVentaServicio.ObtenerFolio(venta.IdPuntoVenta);

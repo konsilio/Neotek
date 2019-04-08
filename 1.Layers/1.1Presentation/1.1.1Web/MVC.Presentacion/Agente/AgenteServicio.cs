@@ -1048,16 +1048,15 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaClienteLocacion"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void GuardarNuevoCliente(ClientesModel dto)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraClientesAutoConsumo"];
-            LLamadaAnonima(dto, MetodoRestConst.Post).Wait();
+            LLamada(dto, string.Empty, MetodoRestConst.Post, true).Wait();
         }
         public void EditarCliente(ClientesModel dto)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaClientesAutoConsumo"];
-            LLamadaAnonima(dto, MetodoRestConst.Put).Wait();
+            LLamada(dto, string.Empty, MetodoRestConst.Put, true).Wait();
         }
         #endregion
         #region Puntos de Venta
@@ -1769,8 +1768,8 @@ namespace MVC.Presentacion.Agente
                 List<FormaPagoDTO> list = new List<FormaPagoDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
-                if(Token != null)
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                if (Token != null)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
@@ -4480,9 +4479,6 @@ namespace MVC.Presentacion.Agente
                 _VentaDTO = venta;
             }
         }
-
-
-
         public void ListaCFDIs(FacturacionModel _mod)
         {
             if (_mod.IdCliente > 0)
@@ -4559,10 +4555,15 @@ namespace MVC.Presentacion.Agente
                 _CFDIDTO = dto;
             }
         }
+        public void PostRegistrarCFDILst(List<CFDIDTO> ticket)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarCFDILst"];
+            LLamada(ticket, string.Empty, MetodoRestConst.Post, true).Wait();
+        }
 
         #endregion
 
-        private async Task LLamada<T>(T _dto, string token, string Tipo)
+        private async Task LLamada<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
         {
             using (var client = new HttpClient())
             {
@@ -4570,7 +4571,9 @@ namespace MVC.Presentacion.Agente
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                if (!EsAnonimo)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+
                 try
                 {
                     HttpResponseMessage response = new HttpResponseMessage();
@@ -4596,40 +4599,7 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-        private async Task LLamadaAnonima<T>(T _dto, string Tipo)
-        {
-            using (var client = new HttpClient())
-            {
-                RespuestaDTO resp = new RespuestaDTO();
-                client.BaseAddress = new Uri(UrlBase);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-                try
-                {
-                    HttpResponseMessage response = new HttpResponseMessage();
-                    if (Tipo.Equals(MetodoRestConst.Post))
-                        response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
-                    if (Tipo.Equals(MetodoRestConst.Put))
-                        response = await client.PutAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
-                    if (response.IsSuccessStatusCode)
-                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
-                    else
-                    {
-                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
-                        client.CancelPendingRequests();
-                        client.Dispose();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    resp.Mensaje = ex.Message;
-                    client.CancelPendingRequests();
-                    client.Dispose();
-                }
-                _RespuestaDTO = resp;
-            }
-        }
+
     }
     public static class MetodoRestConst
     {

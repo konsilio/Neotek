@@ -46,7 +46,6 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorRFC(rfc));
         }
-
         [Route("buscar/cfdi/rfc/{rfc}")]
         public HttpResponseMessage GetCFDIByRFC(string rfc)
         {

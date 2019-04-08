@@ -51,9 +51,10 @@ namespace MVC.Presentacion.App_Code
         }
         public static RespuestaDTO GenerarFacturas(FacturacionModel model)
         {
-
-
-            return new RespuestaDTO();
+            AgenteServicio _agente = new AgenteServicio();
+            var cfdis = AdaptarFacturaModelo(model);
+            _agente.PostRegistrarCFDILst(cfdis);
+            return _agente._RespuestaDTO;
         }
         private static List<CFDIDTO> AdaptarFacturaModelo(FacturacionModel model)
         {
@@ -64,7 +65,6 @@ namespace MVC.Presentacion.App_Code
                 cfdi.Id_FolioVenta = ticket.FolioVenta;
                 cfdi.Id_MetodoPago = model.IdFormaPago;
                 cfdi.Id_FormaPago = (byte)model.IdFormaPago;
-
                 cfdis.Add(cfdi);
             }
             return cfdis;

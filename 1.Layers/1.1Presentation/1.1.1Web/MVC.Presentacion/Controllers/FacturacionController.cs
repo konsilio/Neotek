@@ -91,6 +91,8 @@ namespace MVC.Presentacion.Controllers
             TempData["FacturacionModel"] = fac;
             TempData["List<VentaPuntoVentaDTO>"] = tiks;
 
+            TempData["RespuestaDTO"] = FacturacionServicio.GenerarFacturas(fac);    
+
             return RedirectToAction("Index", _mod);
         }
         public ActionResult GuardaEdicionCliente(ClientesModel _Obj)
@@ -123,7 +125,7 @@ namespace MVC.Presentacion.Controllers
             FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
             List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["List<VentaPuntoVentaDTO>"];
             TempData["FacturacionModel"] = fac;
-            TempData["List<VentaPuntoVentaDTO>"] = tiks;
+            TempData["List<VentaPuntoVentaDTO>"] = tiks;            
 
             ViewBag.ListaUsosCFDI = CatalogoServicio.ObtenerUsoCFDI();
             ViewBag.ListaFormasPago = CatalogoServicio.ListaFormaPago();
