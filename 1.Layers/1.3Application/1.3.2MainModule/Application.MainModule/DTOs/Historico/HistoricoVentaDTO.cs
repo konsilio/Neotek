@@ -39,8 +39,7 @@ namespace Application.MainModule.DTOs
         [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "EsLocal")]
         public bool EsLocal { get; set; }
-
-        [Required(ErrorMessage = Error.S0001)]
+     
         [Display(Name = "Fecha Registro")]
         public Nullable<DateTime> FechaRegistro { get; set; }
     }

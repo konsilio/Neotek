@@ -38,7 +38,7 @@ namespace Application.MainModule.AdaptadoresDTO.Historico
                 EsPipa = dto.EsPipa,
                 EsCamioneta = dto.EsCamioneta,
                 EsLocal = dto.EsLocal,
-                FechaRegistro = dto.FechaRegistro
+                FechaRegistro = dto.FechaRegistro ?? DateTime.Now // si el valor llega nulo asigana fecha actual
             };
         }
         public static List<HistoricoVentas> FromDTO(List<HistoricoVentaDTO> entidad)

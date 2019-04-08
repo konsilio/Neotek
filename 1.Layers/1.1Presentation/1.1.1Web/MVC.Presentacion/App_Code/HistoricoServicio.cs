@@ -8,34 +8,33 @@ using System.Web;
 
 namespace MVC.Presentacion.App_Code
 {
-    public class HistoricoServicio
+    public static class HistoricoServicio
     {
-        private AgenteServicio agenteServico;
-        public HistoricoServicio()
+       
+        public static List<HistoricoVentaModel> GetListaHistoricos(string tkn)
         {
-             agenteServico = new AgenteServicio();
-        }
-
-        public List<HistoricoVentaModel> GetListaHistoricos(string tkn)
-        {
+           AgenteServicio agenteServico = new AgenteServicio();
             agenteServico.GetListaHistoricos(tkn);
             return agenteServico._ListHistoricoVenta;
         }
 
-        public RespuestaDTO EliminarHistorico(HistoricoVentaModel dto, string tkn)
+        public static RespuestaDTO EliminarHistorico(HistoricoVentaModel dto, string tkn)
         {
-            agenteServico.EliminarHistorico(dto,tkn);
+            AgenteServicio agenteServico = new AgenteServicio();
+            agenteServico.EliminarHistorico(dto, tkn);
             return agenteServico._RespuestaDTO;
         }
 
-        public RespuestaDTO ActualizarHistorico(HistoricoVentaModel dto, string tkn)
+        public static RespuestaDTO ActualizarHistorico(HistoricoVentaModel dto, string tkn)
         {
-            agenteServico.ActualizarHistorico(dto,tkn);
+            AgenteServicio agenteServico = new AgenteServicio();
+            agenteServico.ActualizarHistorico(dto, tkn);
             return agenteServico._RespuestaDTO;
         }
 
-        public RespuestaDTO GuardarNuevoHistorico(List<HistoricoVentaModel> ListaHistorico, string tkn)
+        public static RespuestaDTO GuardarNuevoHistorico(List<HistoricoVentaModel> ListaHistorico, string tkn)
         {
+            AgenteServicio agenteServico = new AgenteServicio();
             agenteServico.GuardarNuevoHistorico(ListaHistorico, tkn);
             return agenteServico._RespuestaDTO;
         }

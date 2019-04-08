@@ -47,7 +47,7 @@
 <body>
     <section class="content home">
         <div class="container-fluid">
-            @using (Html.BeginForm("Crear", "Historico", FormMethod.Post))
+            @using (Html.BeginForm("Crear", "Historico", FormMethod.Post , new { enctype = "multipart/form-data" }))
             {
                 
                 <div class="block-header">
@@ -78,14 +78,15 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
 
-                                        <label class="btn btn-default btn btn-primary btn-round">
+                                        @*<label class="btn btn-default btn btn-primary btn-round">
                                             Seleccionar Ruta <input type="file" id="idUrl" >
-                                        </label>                                    
+                                        </label>*@                                        
+                                            <input type="file" id="dataFile" name="upload" />                                                                                              
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="form-group">
-
+                                    <div class="form-group">                                    
+                                            <input type="submit" value="Upload" class="btn btn-default" />                                        
                                         @*<button id="BtnCargar" formaction=@Url.Action("Crear") class="btn btn-primary btn-round">Pre-Cargar</button>*@
                                     </div>
                                 </div>
@@ -113,6 +114,7 @@
                             Validacion de <strong>Informacion</strong>
                         </div>
                         <div class="body">
+
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
                                     <table class="table table-striped  filterable">
