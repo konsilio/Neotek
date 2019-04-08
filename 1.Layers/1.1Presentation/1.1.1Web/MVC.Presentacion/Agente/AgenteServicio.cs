@@ -4566,6 +4566,7 @@ namespace MVC.Presentacion.Agente
         public void GuardarNuevoHistorico(List<HistoricoVentaModel> dto, string tkn)
         {
             ApiHistoricos = ConfigurationManager.AppSettings["PostHistoricoVentas"];
+            ApiRoute = ApiHistoricos;
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
 
