@@ -1,4 +1,4 @@
-﻿@model MVC.Presentacion.Models.MantenimientoDetalleModel
+﻿@model MVC.Presentacion.Models.Historico.HistoricoVentaModel
 @using PagedList.Mvc;
 @using PagedList;
 @Html.DevExpress().GetStyleSheets(
@@ -15,27 +15,40 @@
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
 <script type="text/javascript">
-    var mensaje = '@ViewBag.Msj';
-    if (mensaje != '') {
-        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));      
-    }
-    function OnSelectedIndexChanged(s, e) {
-        var item = id_vehiculo.cphidenVehiculos[id_vehiculo.GetSelectedIndex()].split("|")
-        $("#esCamioneta").val(item[0])
-        $("#esPipa").val(item[1])
-        $("#esUtilitario").val(item[2])     
-    }
+    //$(document).ready(function () {
+
+    //    $("#idUrl").change(function (event) {
+
+    //        var reader = new FileReader();
+    //        reader.readAsDataURL(event.srcElement.files[0]);
+
+    //        reader.onload = function () {
+    //            var fileContent = reader.result;
+    //            console.log(fileContent);
+    //        }
+
+    //        $("#Url").val($("idUrl").val());
+    //    });
+    //});
+    window.addEventListener("load", function () {
+        document.getElementById("idUrl").onchange = function (event) {
+            var reader = new FileReader();
+            reader.readAsDataURL(event.srcElement.files[0]);
+            var me = this;
+            reader.onload = function () {
+                var fileContent = reader.result;
+                console.log(reader);
+                $("#Url").val(reader);
+            }
+        }
+    });
+
 </script>
 <body>
     <section class="content home">
         <div class="container-fluid">
-            @using (Html.BeginForm("Crear", "Mantenimiento", FormMethod.Post))
+            @using (Html.BeginForm("Crear", "Historico", FormMethod.Post , new { enctype = "multipart/form-data" }))
             {
-                @Html.HiddenFor(m => m.Id_DetalleMtto)
-
-                <input type="text" hidden="hidden" name="esCamioneta" id="esCamioneta"/>
-                <input type="text" hidden="hidden" name="esPipa" id="esPipa" />
-                <input type="text" hidden="hidden" name="esUtilitario" id="esUtilitario" />
 
                 <div class="block-header">
                     <div class="row clearfix">
@@ -54,88 +67,35 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <b>Ruta Archivo a cargar:</b>
-                                        @Html.DevExpress().DateEdit(settings =>
-                                   {
-                                       settings.Name = "FechaMtto";
-                                       settings.Properties.UseMaskBehavior = true;
-                                       settings.Properties.EditFormat = EditFormat.Custom;
-                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
-                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                   }).Bind(Model.FechaMtto).GetHtml()
-                                        @Html.ValidationMessageFor(m => m.FechaMtto, "", new { @class = "alert-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        
-                                        <input type="submit" name="SelectRuta" value="Select Ruta" class="btn btn-raised btn-primary btn-round float-left">
-                                   
-                                        </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <b>Tipo Mantenimiento</b>
-                                        @Html.DevExpress().ComboBox(settings =>
-                                   {
-                                       settings.Name = "Id_tipomtto";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.SelectedIndex = 0;
-                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.TextField = "Mantenimiento";
-                                       settings.Properties.ValueField = "Id_Mantenimiento";
-                                       settings.Properties.ValueType = typeof(int);
-                                   }).BindList(ViewBag.CMantenimiento).Bind(Model.Id_tipomtto).GetHtml()
-                                        @Html.ValidationMessageFor(m => m.Id_tipomtto, "", new { @class = "alert-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <b>Kilometraje Actual</b>
-                                        @Html.TextBoxFor(m => m.Kilometraje_Actual, Model.Kilometraje_Actual.ToString(), new { @class = "form-control number" })
-                                        @Html.ValidationMessageFor(m => m.Kilometraje_Actual, "", new { @class = "alert-danger" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row clearfix">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <b>Numero de OC(Solo cunado el servicio sea externo)</b>
-                                        @Html.TextBoxFor(m => m.NumeroOC, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.NumeroOC, "", new { @class = "alert-danger" })
+                                        <b>Archivo a Cargar:</b>
+                                        @Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Url, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <b>Descripcion del Seervicio Realizado</b>
-                                        @Html.TextBoxFor(m => m.DescripcionMtto, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.DescripcionMtto, "", new { @class = "alert-danger" })
+
+                                        @*<label class="btn btn-default btn btn-primary btn-round">
+                                                Seleccionar Ruta <input type="file" id="idUrl" >
+                                            </label>*@
+                                        <input type="file" id="dataFile" name="upload" />
+                                        <input type="submit" value="Upload" class="btn btn-primary btn-round" />
+
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <b></b>
-                                    <div class="form-group">
-                                        @if (ViewBag.EsEdicion == null)
-                                        {
-                                            <button id="BtnCrear" formaction=@Url.Action("Crear") class="btn btn-primary btn-icon  btn-icon-mini btn-round">
-                                                <i class="zmdi zmdi-plus"></i>
-                                            </button>
-                                        }
-                                        else
-                                        {
-                                            <button id="btnUpDate" formaction=@Url.Action("Modificar") class="btn btn-primary btn-icon  btn-icon-mini btn-round">
-                                                <i class="zmdi zmdi-swap"></i>
-                                            </button>
-                                        }
+                                    <div class="form-group">                                  
+                                        <input type="file" id="dataFile" name="preCarga" />
+                                        <input type="submit" value="Pre-Cargar" formaction=@Url.Action("PreCarga") class="btn btn-primary btn-round" />
                                     </div>
                                 </div>
+
+
                             </div>
-                            
+
                             @if (ViewBag.MensajeError != null)
                             {
                                 <div id="DivAlerta" class="container">
@@ -153,52 +113,80 @@
                     </div>
                     <div class="card">
                         <div class="header">
-                            Registro de <strong>Mantenimientos</strong>
+                            Validacion de <strong>Informacion</strong>
                         </div>
                         <div class="body">
+
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
                                     <table class="table table-striped  filterable">
                                         <thead>
                                             <tr>
-                                                <td><strong>Id</strong></td>
-                                                <td><strong>Vehiculo</strong></td>
-                                                <td><strong>Servicio Realizado</strong></td>
-                                                <td><strong>Fecha Servicio</strong></td>
-                                                <td><strong>Acción</strong></td>
+                                                <td><strong></strong></td>
+                                                <td><strong>Mes</strong></td>
+                                                <td><strong>Año</strong></td>
+                                                <td><strong>Monto Venta</strong></td>
+                                                <td><strong>Pipa</strong></td>
+                                                <td><strong>Camioneta</strong></td>
+                                                <td><strong>Local</strong></td>
+                                                <td><strong>Foranea</strong></td>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @foreach (var mant in ViewBag.Mantenimientos)
-                                            {
-                                                <tr>
-                                                    <td>@mant.Id_DetalleMtto</td>
-                                                    <td>@mant.Vehiculo</td>
-                                                    <td>@mant.DescripcionMtto</td>
-                                                    <td>@mant.FechaMtto</td>
-                                                    <td>
-                                                        <a href="@Url.Action("Eliminar", "Mantenimiento", new { Id = mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="material-icons">delete</i>
-                                                            <span>Eliminar</span>
-                                                        </a>
-                                                        <a href="@Url.Action("Modificar", "Mantenimiento", new { Id = mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="material-icons">edit</i>
-                                                            <span>Editar</span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
+                                        @if (ViewBag.HistoricoVentas != null)
+                                        {
+
+                                            <tbody>
+
+                                                @foreach (var hist in ViewBag.HistoricoVentas)
+                                                {
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>@hist.Mes</td>
+                                                        <td>@hist.Anio</td>
+                                                        <td>$@hist.MontoVenta</td>
+                                                        @if (@hist.EsPipa)
+                                                        {
+                                                            <td>1</td>                                                           
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>0</td>                                                           
+                                                        }
+                                                        @if (@hist.EsCamioneta)
+                                                        {
+                                                            <td>1</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>0</td>
+                                                        }                                                     
+                                                        @if (@hist.EsLocal)
+                                                        {
+                                                            <td>1</td>
+                                                            <td>0</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>0</td>
+                                                            <td>1</td>
+                                                        }
+                                                    </tr>
+                                                }
+
+
+                                            </tbody>
+                                        }
+
                                     </table>
                                 </div>
                             </div>
                             <div class="row clearfix">
-                                <div class="col-md-6">
-                                    Página @(ViewBag.Mantenimientos.PageCount < ViewBag.Mantenimientos.PageNumber ? 0 : ViewBag.Mantenimientos.PageNumber) de @ViewBag.Mantenimientos.PageCount
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    @Html.PagedListPager((IPagedList)ViewBag.Mantenimientos, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
-                                </div>
+                                @*<div class="col-md-6">
+                                        Página @(ViewBag.Mantenimientos.PageCount < ViewBag.Mantenimientos.PageNumber ? 0 : ViewBag.Mantenimientos.PageNumber) de @ViewBag.Mantenimientos.PageCount
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        @Html.PagedListPager((IPagedList)ViewBag.Mantenimientos, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
+                                    </div>*@
                             </div>
                         </div>
                     </div>

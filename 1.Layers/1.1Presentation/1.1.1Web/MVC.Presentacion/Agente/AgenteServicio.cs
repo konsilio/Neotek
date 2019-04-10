@@ -8,6 +8,7 @@ using MVC.Presentacion.Models.Pedidos;
 using MVC.Presentacion.Models.Requisicion;
 using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
+using MVC.Presentacion.Models.Historico;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -23,6 +24,7 @@ namespace MVC.Presentacion.Agente
         private static string UrlBase;
         private string ApiLogin;
         private string ApiCatalgos;
+        private string ApiHistoricos;
         private string ApiRequisicion;
         private string ApiOrdenCompra;
         private string ApiRoute = string.Empty;
@@ -52,6 +54,8 @@ namespace MVC.Presentacion.Agente
         public ClientesDto _ClienteDTO;
         public ClientesModel _ClienteModel;
         //public ClienteModel _ClienteModel;
+        public HistoricoVentaModel _HistoricoVentaDTO;
+
 
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
@@ -115,6 +119,7 @@ namespace MVC.Presentacion.Agente
         public List<FacturacionModel> _ListainfoTicket;
         public List<VentaPuntoVentaDTO> _ListaVenta;
         public List<CFDIDTO> _ListaCFDIs;
+        public List<HistoricoVentaModel> _ListHistoricoVenta;
         public List<UsoCFDIDTO> _ListaUsoCFDI;
         public List<MetodoPagoDTO> _ListaMetodPago;
 
@@ -4562,7 +4567,105 @@ namespace MVC.Presentacion.Agente
         }
 
         #endregion
+        #region HistoricoVentas
+        public void GetListaHistoricos(string token)
+        {
+            ApiHistoricos = ConfigurationManager.AppSettings["GetHistoricoVentas"];
+            Historicos(ApiHistoricos, token).Wait();
+        }
+        private async Task Historicos(string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<HistoricoVentaModel> historico = new List<HistoricoVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        historico = await response.Content.ReadAsAsync<List<HistoricoVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    //ex.Message;
+                    historico = new List<HistoricoVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                
+                _ListHistoricoVenta= historico;
+            }
+        }
 
+        public void GetHistoricoById(int id, string token)
+        {
+            ApiHistoricos = ConfigurationManager.AppSettings["GetHistoricoById"];
+
+        }
+        public async Task HistoricoId(int id, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                HistoricoVentaModel historico = new HistoricoVentaModel();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        historico = await response.Content.ReadAsAsync<HistoricoVentaModel>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    //ex.Message;
+                    historico = new HistoricoVentaModel();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+                _HistoricoVentaDTO = historico;
+            }
+            
+        }
+        public void GuardarNuevoHistorico(List<HistoricoVentaModel> dto, string tkn)
+        {
+            ApiHistoricos = ConfigurationManager.AppSettings["PostHistoricoVentas"];
+            ApiRoute = ApiHistoricos;
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+
+        public void EliminarHistorico(HistoricoVentaModel dto, string tkn)
+        {
+            ApiHistoricos = ConfigurationManager.AppSettings["DeleteHistorico"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+
+        public void ActualizarHistorico(HistoricoVentaModel dto, string tkn)
+        {
+            ApiHistoricos = ConfigurationManager.AppSettings["PutHistorico"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+
+
+
+        #endregion
+
+        private async Task LLamada<T>(T _dto, string token, string Tipo)
         private async Task LLamada<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
         {
             using (var client = new HttpClient())
