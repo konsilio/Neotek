@@ -30,8 +30,8 @@
     //        $("#Url").val($("idUrl").val());
     //    });
     //});
-    window.addEventListener("load", function() {
-        document.getElementById("idUrl").onchange = function(event) {
+    window.addEventListener("load", function () {
+        document.getElementById("idUrl").onchange = function (event) {
             var reader = new FileReader();
             reader.readAsDataURL(event.srcElement.files[0]);
             var me = this;
@@ -49,7 +49,7 @@
         <div class="container-fluid">
             @using (Html.BeginForm("Crear", "Historico", FormMethod.Post , new { enctype = "multipart/form-data" }))
             {
-                
+
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
@@ -79,15 +79,17 @@
                                     <div class="form-group">
 
                                         @*<label class="btn btn-default btn btn-primary btn-round">
-                                            Seleccionar Ruta <input type="file" id="idUrl" >
-                                        </label>*@                                        
-                                            <input type="file" id="dataFile" name="upload" />                                                                                              
+                                                Seleccionar Ruta <input type="file" id="idUrl" >
+                                            </label>*@
+                                        <input type="file" id="dataFile" name="upload" />
+                                        <input type="submit" value="Upload" class="btn btn-primary btn-round" />
+
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="form-group">                                    
-                                            <input type="submit" value="Upload" class="btn btn-default" />                                        
-                                        @*<button id="BtnCargar" formaction=@Url.Action("Crear") class="btn btn-primary btn-round">Pre-Cargar</button>*@
+                                    <div class="form-group">                                  
+                                        <input type="file" id="dataFile" name="preCarga" />
+                                        <input type="submit" value="Pre-Cargar" formaction=@Url.Action("PreCarga") class="btn btn-primary btn-round" />
                                     </div>
                                 </div>
 
@@ -120,7 +122,7 @@
                                     <table class="table table-striped  filterable">
                                         <thead>
                                             <tr>
-                                                <td><strong>Id</strong></td>
+                                                <td><strong></strong></td>
                                                 <td><strong>Mes</strong></td>
                                                 <td><strong>Año</strong></td>
                                                 <td><strong>Monto Venta</strong></td>
@@ -130,33 +132,61 @@
                                                 <td><strong>Foranea</strong></td>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            @*@foreach (var mant in ViewBag.Mantenimientos)
-                                            {
-                                                <tr>
-                                                    <td>@mant.Id_DetalleMtto</td>
-                                                    <td>@mant.Vehiculo</td>
-                                                    <td>@mant.DescripcionMtto</td>
-                                                    <td>@mant.FechaMtto</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                        @if (ViewBag.HistoricoVentas != null)
+                                        {
+
+                                            <tbody>
+
+                                                @foreach (var hist in ViewBag.HistoricoVentas)
+                                                {
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>@hist.Mes</td>
+                                                        <td>@hist.Anio</td>
+                                                        <td>$@hist.MontoVenta</td>
+                                                        @if (@hist.EsPipa)
+                                                        {
+                                                            <td>1</td>                                                           
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>0</td>                                                           
+                                                        }
+                                                        @if (@hist.EsCamioneta)
+                                                        {
+                                                            <td>1</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>0</td>
+                                                        }                                                     
+                                                        @if (@hist.EsLocal)
+                                                        {
+                                                            <td>1</td>
+                                                            <td>0</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>0</td>
+                                                            <td>1</td>
+                                                        }
+                                                    </tr>
+                                                }
 
 
-                                                </tr>
-                                            }*@
-                                        </tbody>
+                                            </tbody>
+                                        }
+
                                     </table>
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 @*<div class="col-md-6">
-                                    Página @(ViewBag.Mantenimientos.PageCount < ViewBag.Mantenimientos.PageNumber ? 0 : ViewBag.Mantenimientos.PageNumber) de @ViewBag.Mantenimientos.PageCount
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    @Html.PagedListPager((IPagedList)ViewBag.Mantenimientos, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
-                                </div>*@
+                                        Página @(ViewBag.Mantenimientos.PageCount < ViewBag.Mantenimientos.PageNumber ? 0 : ViewBag.Mantenimientos.PageNumber) de @ViewBag.Mantenimientos.PageCount
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        @Html.PagedListPager((IPagedList)ViewBag.Mantenimientos, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
+                                    </div>*@
                             </div>
                         </div>
                     </div>

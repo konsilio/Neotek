@@ -4491,7 +4491,7 @@ namespace MVC.Presentacion.Agente
         #region HistoricoVentas
         public void GetListaHistoricos(string token)
         {
-            ApiHistoricos = ConfigurationManager.AppSettings["GetHistoricos"];
+            ApiHistoricos = ConfigurationManager.AppSettings["GetHistoricoVentas"];
             Historicos(ApiHistoricos, token).Wait();
         }
         private async Task Historicos(string api, string token = null)

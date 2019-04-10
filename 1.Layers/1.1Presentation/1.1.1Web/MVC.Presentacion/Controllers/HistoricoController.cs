@@ -18,6 +18,8 @@ namespace MVC.Presentacion.Controllers
     public class HistoricoController : Controller
     {
         string tkn = string.Empty;
+        public List<HistoricoVentaModel> listPreCarga = new List<HistoricoVentaModel>();
+
         public ActionResult Index(int? page, HistoricoVentaModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -31,13 +33,17 @@ namespace MVC.Presentacion.Controllers
                 else
                     ViewBag.MensajeError = Validar(Respuesta);
             }
-
+            listPreCarga = (List<HistoricoVentaModel>)TempData["HistoricoVentas"];
+            TempData["HistoricoVentas"] = listPreCarga;
+            ViewBag.HistoricoVentas = listPreCarga;
             return View(model);
         }
         public ActionResult Crear(HttpPostedFileBase upload)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+            
+            listPreCarga = (List<HistoricoVentaModel>)TempData["HistoricoVentas"];
 
             if (ModelState.IsValid)
             {
@@ -65,7 +71,8 @@ namespace MVC.Presentacion.Controllers
                         return View();
                     }
 
-                    DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                 
+                        DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
                     {
                         ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
                         {
@@ -77,33 +84,100 @@ namespace MVC.Presentacion.Controllers
                     foreach (DataTable table in result.Tables)
                     {
                         foreach (DataRow row in table.Rows)
-                        {                                               
+                        {
                             listaHistorico.Add(new HistoricoVentaModel
-                            {                     
+                            {
                                 Mes = Convert.ToInt16(row.ItemArray[0]),
                                 Anio = Convert.ToInt16(row.ItemArray[1]),
-                                MontoVenta = Convert.ToDecimal(row.ItemArray[2]),
+                                MontoVenta = Convert.ToDouble(row.ItemArray[2]),
                                 EsPipa = Convert.ToBoolean(row.ItemArray[3]),
                                 EsCamioneta = Convert.ToBoolean(row.ItemArray[4]),
-                                EsLocal = Convert.ToBoolean(row.ItemArray[5])                                
+                                EsLocal = Convert.ToBoolean(row.ItemArray[5])
                             });
                         }
                     }
                     reader.Close();
 
-                   var respuesta = HistoricoServicio.GuardarNuevoHistorico(listaHistorico, tkn);
-                   TempData["RespuestaDTO"] = respuesta;
-                    return View();
+                 
+                        var respuesta = HistoricoServicio.GuardarNuevoHistorico(listaHistorico, tkn);
+                        TempData["RespuestaDTO"] = respuesta;
+                                                             
                 }
                 else
                 {
                     ModelState.AddModelError("File", "Please Upload Your file");
+
+                    if(listPreCarga != null || listPreCarga.Count > 0)
+                    {
+                        var respuesta = HistoricoServicio.GuardarNuevoHistorico(listPreCarga, tkn);
+                        TempData["RespuestaDTO"] = respuesta;
+                        listPreCarga = null;
+                     
+                    }
                 }
             }
-            return View();
-            //return RedirectToAction("Index");
-        }
 
+            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+        }   
+        public ActionResult PreCarga (HttpPostedFileBase preCarga)
+        {
+            if (preCarga != null && preCarga.ContentLength > 0)
+            {
+                // ExcelDataReader works with the binary Excel file, so it needs a FileStream
+                // to get started. This is how we avoid dependencies on ACE or Interop:
+                Stream stream = preCarga.InputStream;
+
+                // We return the interface, so that
+                IExcelDataReader reader = null;
+
+                if (preCarga.FileName.EndsWith(".xls"))
+                {
+                    reader = ExcelReaderFactory.CreateBinaryReader(stream);
+                }
+                else if (preCarga.FileName.EndsWith(".xlsx"))
+                {
+                    reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                }
+                else
+                {
+                    ModelState.AddModelError("File", "This file format is not supported");
+                    return View();
+                }
+
+                DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                {
+                    ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                    {
+                        UseHeaderRow = true
+                    }
+                });
+
+                List<HistoricoVentaModel> listaHistorico = new List<HistoricoVentaModel>();
+                foreach (DataTable table in result.Tables)
+                {
+                    foreach (DataRow row in table.Rows)
+                    {
+                        listaHistorico.Add(new HistoricoVentaModel
+                        {
+                            Mes = Convert.ToInt16(row.ItemArray[0]),
+                            Anio = Convert.ToInt16(row.ItemArray[1]),
+                            MontoVenta = Convert.ToDouble(row.ItemArray[2]),
+                            EsPipa = Convert.ToBoolean(row.ItemArray[3]),
+                            EsCamioneta = Convert.ToBoolean(row.ItemArray[4]),
+                            EsLocal = Convert.ToBoolean(row.ItemArray[5])
+                        });
+                    }
+                }
+                reader.Close();                
+                TempData["HistoricoVentas"] = listaHistorico;                
+            }
+            else
+            {
+                ModelState.AddModelError("File", "Please Upload Your file");
+            }
+            return RedirectToAction("Index");
+        }
 
         public ActionResult Eliminar(int? id)
         {
@@ -114,6 +188,25 @@ namespace MVC.Presentacion.Controllers
         {
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Obtener()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+
+            try
+            {
+                var respuesta = HistoricoServicio.GetListaHistoricos(tkn);
+                ViewBag.HistoricosVentas = respuesta;
+                return View(respuesta);
+            }
+            catch (Exception ex)
+            {          
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return RedirectToAction("Index");
+            }
+
         }
 
         private string Validar(RespuestaDTO Resp = null)

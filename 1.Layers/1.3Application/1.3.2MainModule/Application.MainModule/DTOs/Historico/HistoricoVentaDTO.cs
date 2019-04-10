@@ -26,7 +26,7 @@ namespace Application.MainModule.DTOs
 
         [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "MontoVenta")]
-        public decimal MontoVenta { get; set; }
+        public double MontoVenta { get; set; }
 
         [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "EsPipa")]
