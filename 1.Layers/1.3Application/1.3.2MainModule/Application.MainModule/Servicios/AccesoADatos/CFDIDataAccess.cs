@@ -92,7 +92,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public CFDI Obtener(int id)
         {
-            return uow.Repository<CFDI>().GetSingle(x => x.Id_RelTF.Equals(id));
+            return uow.Repository<CFDI>().GetSingle(x => x.Id_RelTF.Equals(id) && x.UUID.Trim() != (string.Empty));
         }
         public CFDI Obtener(string Id_FolioVenta)
         {
@@ -100,7 +100,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<CFDI> Obtener()
         {
-            return uow.Repository<CFDI>().GetAll().ToList();
+            return uow.Repository<CFDI>().Get(x => x.UUID.Trim() != (string.Empty)).ToList();
         }
     }
 }

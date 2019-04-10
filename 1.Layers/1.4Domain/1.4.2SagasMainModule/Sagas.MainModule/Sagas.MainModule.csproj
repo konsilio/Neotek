@@ -346,7 +346,9 @@
     <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />
     <Compile Include="ObjetosValor\Constantes\AlmacenGasConst.cs" />
     <Compile Include="ObjetosValor\Constantes\AlmacenConst.cs" />
+    <Compile Include="ObjetosValor\Constantes\FacturacionConst.cs" />
     <Compile Include="ObjetosValor\Constantes\IngresoGastoConst.cs" />
+    <Compile Include="ObjetosValor\Constantes\MetodoPagoConst.cs" />
     <Compile Include="ObjetosValor\Constantes\NotificacionPushConst.cs" />
     <Compile Include="ObjetosValor\Constantes\TipoEventoConst.cs" />
     <Compile Include="ObjetosValor\Enum\CalibracionDestinoEnum.cs" />

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+
 
 namespace MVC.Presentacion.Models.Facturacion
 {
@@ -11,6 +9,7 @@ namespace MVC.Presentacion.Models.Facturacion
         public string Id_FolioVenta { get; set; }
         public byte Id_FormaPago { get; set; }
         public int Id_MetodoPago { get; set; }
+        public short IdUsoCFDI { get; set; }
         public string UsoCFDI { get; set; }
         public string VersionCFDI { get; set; }
         public DateTime FechaTimbrado { get; set; }

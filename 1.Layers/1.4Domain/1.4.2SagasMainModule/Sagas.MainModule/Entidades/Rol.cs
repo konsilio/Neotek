@@ -120,6 +120,7 @@ namespace Sagas.MainModule.Entidades
         public bool CobranzaVerCartera { get; set; }
         public bool CobranzaVerCreditoRecuperado { get; set; }
         public bool CobranzaGenerarAbonos { get; set; }
+        public bool HistoricoVentas { get; set; }
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

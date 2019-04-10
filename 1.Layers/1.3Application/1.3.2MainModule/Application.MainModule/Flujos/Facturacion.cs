@@ -7,6 +7,7 @@ using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Facturacion;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Constantes;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,12 +19,20 @@ namespace Application.MainModule.Flujos
 {
     public class Facturacion
     {
+        public RespuestaDto GenerarFacturaGlobal(CFDIDTO dto)
+        {
+            var _comp = CFDIServicio.DatosComprobante(dto);
+            _comp.Receptor = CFDIServicio.DatosReceptor();
+
+            return CFDIServicio.Timbrar(_comp, dto).RespuestaTimbrado;
+        }
         public CFDIDTO GenerarFactura(CFDIDTO dto)
         {
             var _comp = CFDIServicio.DatosComprobante(dto);
             _comp.Receptor = CFDIServicio.DatosReceptor(dto);
             _comp.Concepto = CFDIServicio.DatosConceptos(dto).ToArray();
 
+            dto.Id_MetodoPago = Convert.ToInt32(_comp.MetodoPago.Equals(MetodoPagoConst.Pago_en_parcialidades_o_diferido) ? MetodoPagoConst.IDPPD : MetodoPagoConst.IDPUE);
             dto.Folio = Convert.ToInt32(_comp.Folio);
             dto.Serie = _comp.Serie;
             dto.UUID = string.Empty;
@@ -31,11 +40,13 @@ namespace Application.MainModule.Flujos
             dto.RespuestaTimbrado = CFDIServicio.Crear(CFDIAdapter.FromDTO(dto));
 
             if (!dto.RespuestaTimbrado.Exito) return dto;
+            else dto.Id_RelTF = dto.RespuestaTimbrado.Id;
             return CFDIServicio.Timbrar(_comp, dto);
         }
-        public List<CFDIDTO> GenerarFactura(List<CFDIDTO> dtos)
+        public RespuestaDto GenerarFactura(List<CFDIDTO> dtos)
         {
-            return dtos.Select(x => GenerarFactura(x)).ToList();
+            var respuestas = dtos.Select(x => GenerarFactura(x)).ToList();
+            return CFDIServicio.DatosRespuesta(respuestas);
         }
         public List<CFDIDTO> BuscarFacturasPorRFC(string RFC)
         {

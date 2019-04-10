@@ -121,5 +121,9 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new ClientesDataAccess().ActualizarCredito(cliente);
         }
+        public static Cliente ObtenerPublicoEnGeneral()
+        {
+            return BuscarClientePorRFC("XAXX010101000");
+        }
     }
 }

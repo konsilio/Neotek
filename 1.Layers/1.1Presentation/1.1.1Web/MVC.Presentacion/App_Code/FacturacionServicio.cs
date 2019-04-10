@@ -63,8 +63,9 @@ namespace MVC.Presentacion.App_Code
             {
                 CFDIDTO cfdi = new CFDIDTO();
                 cfdi.Id_FolioVenta = ticket.FolioVenta;
-                cfdi.Id_MetodoPago = model.IdFormaPago;
+                cfdi.Id_MetodoPago = 0;
                 cfdi.Id_FormaPago = (byte)model.IdFormaPago;
+                cfdi.IdUsoCFDI = model.IdUsoCFDI;
                 cfdis.Add(cfdi);
             }
             return cfdis;

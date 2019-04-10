@@ -87,6 +87,8 @@ namespace MVC.Presentacion.Controllers
         {
             FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
             List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["List<VentaPuntoVentaDTO>"];
+            fac.IdUsoCFDI = _mod.IdUsoCFDI;
+            fac.IdFormaPago = _mod.IdFormaPago;
             fac.Tickets = tiks;
             TempData["FacturacionModel"] = fac;
             TempData["List<VentaPuntoVentaDTO>"] = tiks;

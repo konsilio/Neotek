@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile.Cortes;
 using Application.MainModule.Servicios.Almacenes;
+using Application.MainModule.AdaptadoresDTO.Catalogo;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -210,6 +211,29 @@ namespace Application.MainModule.Servicios.Catalogos
             if (almacen.IdEstacionCarburacion != null)
                 return almacen.EstacionCarburacion.Folio != null ? (almacen.EstacionCarburacion.Folio.Value + 1).ToString() : "1";
             return string.Empty;
+        }
+        public static RespuestaDto ActualizarFolio(int idPuntoVenta)
+        {
+            var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(Obtener(idPuntoVenta).IdCAlmacenGas);
+            if (almacen.IdPipa != null)
+            {
+                var pipa = PipaAdapter.FromEntity(almacen.Pipa);
+                pipa.Folio++;
+                return PipaServicio.Modificar(pipa);
+            }
+            if (almacen.IdCamioneta != null)
+            {
+                var camioneta = CamionetaAdapter.FromEntity(almacen.Camioneta);
+                camioneta.Folio++;
+                return CamionetaServicio.Modificar(camioneta);
+            }
+            if (almacen.IdEstacionCarburacion != null)
+            {
+                var estacion = EstacionCarburacionAdapter.FromEmtity(almacen.EstacionCarburacion);
+                estacion.Folio++;
+                return EstacionCarburacionServicio.Modificar(estacion);
+            }
+            return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.NoExiste, "El punto de venta" )};
         }
     }
 }

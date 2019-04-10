@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs;
+using Application.MainModule.Servicios;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -40,9 +41,8 @@ namespace Application.MainModule.AdaptadoresDTO.Facturacion
                 Id_FolioVenta = dto.Id_FolioVenta,
                 Id_FormaPago = dto.Id_FormaPago,
                 Id_MetodoPago = dto.Id_MetodoPago,
-                //UsoCFDI = entidad. ,
                 VersionCFDI = dto.VersionCFDI,
-                FechaTimbrado = dto.FechaTimbrado,
+                FechaTimbrado = DateTime.Now, //dto.FechaTimbrado,
                 UUID = dto.UUID,
                 Folio = dto.Folio,
                 Serie = dto.Serie,
