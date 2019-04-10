@@ -22,7 +22,7 @@ namespace Application.MainModule.Flujos
         public RespuestaDto GenerarFacturaGlobal(CFDIDTO dto)
         {
             var _comp = CFDIServicio.DatosComprobante(dto);
-            _comp.Receptor = CFDIServicio.DatosReceptor();
+            _comp.Receptor = CFDIServicio.DatosReceptor(dto);
 
             return CFDIServicio.Timbrar(_comp, dto).RespuestaTimbrado;
         }

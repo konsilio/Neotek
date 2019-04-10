@@ -4665,7 +4665,6 @@ namespace MVC.Presentacion.Agente
 
         #endregion
 
-        private async Task LLamada<T>(T _dto, string token, string Tipo)
         private async Task LLamada<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
         {
             using (var client = new HttpClient())

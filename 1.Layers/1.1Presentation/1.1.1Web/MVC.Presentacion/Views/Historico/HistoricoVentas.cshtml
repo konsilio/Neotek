@@ -1,0 +1,89 @@
+﻿@model MVC.Presentacion.Models.Historico.HistoricoVentaModel
+@using PagedList.Mvc;
+@using PagedList;
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+
+
+<body>
+    <section class="content home">
+        <div class="container-fluid">
+            @using (Html.BeginForm("Crear", "Historico", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Histórico de ventas</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Equipo de Transporte</li>
+                                <li class="breadcrumb-item">Histórico de ventas</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            <strong>Mantenimiento</strong>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <b>Archivo a Cargar:</b>
+                                        @*@Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Url, "", new { @class = "alert-danger" })*@
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+
+                                        @*<label class="btn btn-default btn btn-primary btn-round">
+                                                Seleccionar Ruta <input type="file" id="idUrl" >
+                                            </label>*@
+                                        <input type="file" id="dataFile" name="upload" />
+                                        <input type="submit" value="Upload" class="btn btn-primary btn-round" />
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <input type="file" id="dataFile" name="preCarga" />
+                                        <input type="submit" value="Pre-Cargar" formaction=@Url.Action("PreCarga") class="btn btn-primary btn-round" />
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            @if (ViewBag.MensajeError != null)
+                            {
+                                <div id="DivAlerta" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            @ViewBag.MensajeError
+                                        </strong>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</body>
+

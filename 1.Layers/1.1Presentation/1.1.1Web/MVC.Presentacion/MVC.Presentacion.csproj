@@ -11616,6 +11616,7 @@
     <Content Include="Views\Shared\EditorTemplates\VentaPuntoVentaDTO.cshtml" />
     <Content Include="Views\Historico\Index.cshtml" />
     <Content Include="Views\Facturacion\DatosCFDI.cshtml" />
+    <Content Include="Views\Historico\HistoricoVentas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
