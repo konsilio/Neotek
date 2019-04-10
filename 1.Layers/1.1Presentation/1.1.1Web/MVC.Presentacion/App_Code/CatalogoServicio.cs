@@ -12,6 +12,7 @@ using System.Web;
 using Utilities.MainModule;
 //using System.Web.Script.Serialization;
 using System.Web.Mvc;
+using MVC.Presentacion.Models;
 
 namespace MVC.Presentacion.App_Code
 {
@@ -1791,11 +1792,11 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Clientes
-        public static ClientesDto ObtenerCliente(int id)
+        public static ClientesModel ObtenerCliente(int id)
         {
             var agente = new AgenteServicio();
             agente.BuscarCliente(id);
-            return agente._ClienteDTO;
+            return agente._ClienteModel;
         }
         public static List<TipoPersonaModel> ObtenerTiposPersona(string token = null)
         {
@@ -2499,7 +2500,7 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Forma de Pago
-        public static List<FormaPagoDTO> ListaFormaPago(string tkn)
+        public static List<FormaPagoDTO> ListaFormaPago(string tkn = null)
         {
             var agente = new AgenteServicio();
             agente.ListaFormaPago(tkn);
@@ -2572,6 +2573,24 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.GetListaMedidores(tkn);
             return agente._ListaMedidores;
+        }
+        #endregion
+
+        #region Uso CFDI
+        public static List<UsoCFDIDTO> ObtenerUsoCFDI()
+        {
+            var agente = new AgenteServicio();
+            agente.ListaUsoCFDI();
+            return agente._ListaUsoCFDI;
+        }
+        #endregion
+
+        #region Metodo de Pago
+        public static List<MetodoPagoDTO> ObtenerMetodoPago()
+        {
+            var agente = new AgenteServicio();
+            agente.ListaMetodosPago();
+            return agente._ListaMetodPago;
         }
         #endregion
 

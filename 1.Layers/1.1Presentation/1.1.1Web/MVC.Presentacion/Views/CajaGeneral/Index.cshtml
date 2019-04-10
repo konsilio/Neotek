@@ -197,17 +197,7 @@
                                }).BindList(ViewBag.CboxEntidad).GetHtml()
                                 </div>
                                 <div class="col-sm-3">
-                                    <strong>Concepto:</strong>
-                                    @*<select id="cbxconcepto" class="form-control show-tick">
-                                            <option value="0">Seleccione</option>
-                                            @if (ViewBag.CboxConcepto != null)
-                                            {
-                                                foreach (var lst in ViewBag.CboxConcepto)
-                                                {
-                                                    <option value="@lst">@lst</option>
-                                                }
-                                            }
-                                        </select>*@
+                                    <strong>Concepto:</strong>                                 
                                     @Html.DevExpress().ComboBox(settings =>
                                {
                                    settings.Name = "cbxconcepto";
@@ -229,7 +219,7 @@
                                 <div class="col-sm-12">
                                     <input type="submit" value="Liquidar" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
 
-                                    @*<input type="submit" id="btnConsultar" value="Consultar" formaction=@Url.Action("Consultar") formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />*@
+                      
                                 </div>
                             </div>
                             <br />

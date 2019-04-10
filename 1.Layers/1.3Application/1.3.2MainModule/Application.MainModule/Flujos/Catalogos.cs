@@ -917,7 +917,6 @@ namespace Application.MainModule.Flujos
         {
             return EquipoTransporteAdapter.toDTO(EquipoTransporteServicio.BuscarEquipoTransporte());
         }
-
         public List<EquipoTransporteDTO> ListaEquiposdeTransporte(short idempresa)
         {
             var resp = PermisosServicio.PuedeConsultarParqueVehicular();

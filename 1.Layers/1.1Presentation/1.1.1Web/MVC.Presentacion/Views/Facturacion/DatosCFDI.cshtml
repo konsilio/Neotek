@@ -1,1 +1,127 @@
-﻿
+﻿@model MVC.Presentacion.Models.Facturacion.FacturacionModel
+@using System.Web.UI.WebControls;
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+<html>
+<head>    
+    <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="~/assets/js/pages/ui/notifications.js"></script>
+    <script type="text/javascript">
+        var mensaje = '@ViewBag.Msj';
+        var tipo = '@ViewBag.Tipo';
+        if (mensaje != '') {
+            $(window).on("load", showNotification(tipo, mensaje, 'top', 'center', '', ''));
+        }
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm("Facturar", "Facturacion", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.IdCliente)
+        @Html.HiddenFor(m => m.RFC)
+        //@Html.HiddenFor(m => m.IdEmpresa)
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Facturación</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Facturación</li>
+                            <li class="breadcrumb-item">Autoservicio</li>
+                        </ul>
+                    </div>
+                </div>
+                @if (ViewBag.MessageError != null)
+                {
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MessageError</label>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h2>información <strong>Fiscal</strong> Adicional</h2>
+                                    </div>
+                                    <div class="body">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <strong>Uso de CFDI:*</strong>
+                                                    @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdUsoCFDI";
+                                                   settings.Width = Unit.Percentage(100);
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Theme = "Material";
+                                                   settings.Properties.TextField = "Descripcion";
+                                                   settings.Properties.ValueField = "Id_UsoCFDI";
+                                                   settings.ClientEnabled = true;
+                                                   settings.Properties.ValueType = typeof(int);
+                                               }).BindList(ViewBag.ListaUsosCFDI).GetHtml()
+                                                    @Html.ValidationMessageFor(m => m.IdUsoCFDI, "", new { @class = "alert-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    <strong>Forma de pago:*</strong>
+                                                    @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdFormaPago";
+                                                   settings.Width = Unit.Percentage(100);
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Theme = "Material";
+                                                   settings.Properties.TextField = "Descripcion";
+                                                   settings.Properties.ValueField = "IdFormaPago";
+                                                   settings.ClientEnabled = true;
+                                                   settings.Properties.ValueType = typeof(int);
+                                                }).BindList(ViewBag.ListaFormasPago).GetHtml()
+                                                    @Html.ValidationMessageFor(m => m.IdFormaPago, "", new { @class = "alert-danger" })
+                                                </div>
+                                            </div>                                           
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-raised btn-primary btn-round" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div class="form-group">
+                                                    <input type="submit" value="Regresar" id="DatosCliente" formaction="GuardaEdicionCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+</body>
+</html>

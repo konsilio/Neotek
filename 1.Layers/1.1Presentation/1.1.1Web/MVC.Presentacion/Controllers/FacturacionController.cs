@@ -3,8 +3,10 @@ using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Facturacion;
 using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MVC.Presentacion.Controllers
@@ -43,8 +45,17 @@ namespace MVC.Presentacion.Controllers
             TempData["ListaTickets"] = _mod.Tickets;
             return RedirectToAction("Index", _mod);
         }
-        public ActionResult Facturar(FacturacionModel _mod)
+
+        public ActionResult DatosCliente(FacturacionModel _mod)
         {
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (Respuesta.Exito)
+                    ViewBag.Msj = Respuesta.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(Respuesta);
+            }
             //verificar si las facturas agregadas pertenecen al mismo cliente
             var idCliente = _mod.Tickets[0].IdCliente;
             foreach (var tick in _mod.Tickets.Where(x => x.seleccionar).ToList())
@@ -55,38 +66,75 @@ namespace MVC.Presentacion.Controllers
                     return RedirectToAction("Index", _mod);
                 }
             }
+            ViewBag.EsGenerico = "false";
             ClientesModel Cliente = CatalogoServicio.ObtenerCliente(idCliente);
+            if (Cliente.Rfc.Equals("XAXX010101000"))
+            {
+                ViewBag.EsGenerico = "true";
+                Cliente = new ClientesModel();
+            }
             TempData["FacturacionModel"] = _mod;
+            TempData["List<VentaPuntoVentaDTO>"] = _mod.Tickets;
             ViewBag.Paises = CatalogoServicio.GetPaises();
             ViewBag.Estados = CatalogoServicio.GetEstados();
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona();
             ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal();
-            if (Cliente.Locaciones != null || Cliente.Locaciones.Count > 0)
+            if (Cliente.Locaciones != null && Cliente.Locaciones.Count > 0)
                 Cliente.Locacion = Cliente.Locaciones[0];
-            return View(Cliente);
+            return View("Facturar",Cliente);
+        }
+        public ActionResult Facturar(FacturacionModel _mod)
+        {
+            FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
+            List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["List<VentaPuntoVentaDTO>"];
+            fac.IdUsoCFDI = _mod.IdUsoCFDI;
+            fac.IdFormaPago = _mod.IdFormaPago;
+            fac.Tickets = tiks;
+            TempData["FacturacionModel"] = fac;
+            TempData["List<VentaPuntoVentaDTO>"] = tiks;
+
+            TempData["RespuestaDTO"] = FacturacionServicio.GenerarFacturas(fac);    
+
+            return RedirectToAction("Index", _mod);
         }
         public ActionResult GuardaEdicionCliente(ClientesModel _Obj)
         {
-            var fac = (FacturacionModel)TempData["FacturacionModel"];
+            var respuesta = CatalogoServicio.ModificarCliente(_Obj);
+            TempData["RespuestaDTO"] = respuesta;
+
+            FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
+            List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["List<VentaPuntoVentaDTO>"];
             TempData["FacturacionModel"] = fac;
-            return RedirectToAction("Facturar");
+            TempData["List<VentaPuntoVentaDTO>"] = tiks;
+
+            return RedirectToAction("Facturar", fac);
         }
         public ActionResult GuardarNuevoCliente(ClientesModel _ojUs)
         {
             var respuesta = CatalogoServicio.CrearCliente(_ojUs);
-            TempData["RespuestaDTO"] = respuesta.Mensaje;
+            TempData["RespuestaDTO"] = respuesta;
 
-            var fac = (FacturacionModel)TempData["FacturacionModel"];
+            FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
+            List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["List<VentaPuntoVentaDTO>"];
+            fac.Tickets = tiks;
             TempData["FacturacionModel"] = fac;
-          
-            return RedirectToAction("Facturar");
+            TempData["List<VentaPuntoVentaDTO>"] = tiks;
+
+            return RedirectToAction("Facturar", fac);
         }
-        public ActionResult ContinuarGenerarFactura(ClientesModel _mod)
+        public ActionResult ContinuarGenerarFactura()
         {
-            var FacturacionModel = (FacturacionModel)TempData["FacturacionModel"];
-            FacturacionModel.Cliente = _mod;
-            return RedirectToAction("Index", _mod);
+            FacturacionModel fac = (FacturacionModel)TempData["FacturacionModel"];
+            List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["List<VentaPuntoVentaDTO>"];
+            TempData["FacturacionModel"] = fac;
+            TempData["List<VentaPuntoVentaDTO>"] = tiks;            
+
+            ViewBag.ListaUsosCFDI = CatalogoServicio.ObtenerUsoCFDI();
+            ViewBag.ListaFormasPago = CatalogoServicio.ListaFormaPago();
+
+            return View("DatosCFDI", fac);
         }
+       
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;
@@ -94,17 +142,14 @@ namespace MVC.Presentacion.Controllers
             if (Resp != null)
             {
                 if (Resp.ModelStatesStandar != null)
-                    foreach (var error in Resp.ModelStatesStandar.ToList())
-                    {
+                    foreach (var error in Resp.ModelStatesStandar.ToList())                    
                         ModelState.AddModelError(error.Key, error.Value);
-                    }
-                if (Resp.MensajesError != null)
-                {
+                    
+                if (Resp.MensajesError != null)                
                     if (Resp.MensajesError.Count > 1)
                         Mensaje = Resp.MensajesError[0] + " " + Resp.MensajesError[1];
                     else
-                        Mensaje = Resp.MensajesError[0];
-                }
+                        Mensaje = Resp.MensajesError[0];                
             }
             return Mensaje;
         }

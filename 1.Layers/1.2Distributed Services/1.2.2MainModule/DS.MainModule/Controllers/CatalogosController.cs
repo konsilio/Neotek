@@ -671,6 +671,7 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Fomra de pago
+        [AllowAnonymous]
         [Route("consulta/formaspago")]
         public HttpResponseMessage GetListaFormasPago()
         {
@@ -679,6 +680,7 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Metodo de Pago
+        [AllowAnonymous]
         [Route("consulta/metodospago")]
         public HttpResponseMessage GetListaMetodosPago()
         {
@@ -687,7 +689,7 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region UsoCFDI
-
+        [AllowAnonymous]
         [Route("consulta/usocfdi")]
         public HttpResponseMessage GetListaUsoCFDI()
         {

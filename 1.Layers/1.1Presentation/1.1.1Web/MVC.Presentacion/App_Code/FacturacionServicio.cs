@@ -1,5 +1,6 @@
 ﻿using MVC.Presentacion.Agente;
 using MVC.Presentacion.Models.Facturacion;
+using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
 using System.Collections.Generic;
 
@@ -20,7 +21,6 @@ namespace MVC.Presentacion.App_Code
             _agente._VentaDTO.seleccionar = true;
             return _agente._VentaDTO;
         }
-
         public static List<CFDIDTO> ObtenerCFDIs(FacturacionModel model)
         {
             AgenteServicio _agente = new AgenteServicio();
@@ -48,6 +48,27 @@ namespace MVC.Presentacion.App_Code
                     actual.Add(vn);              
             
             return actual;
+        }
+        public static RespuestaDTO GenerarFacturas(FacturacionModel model)
+        {
+            AgenteServicio _agente = new AgenteServicio();
+            var cfdis = AdaptarFacturaModelo(model);
+            _agente.PostRegistrarCFDILst(cfdis);
+            return _agente._RespuestaDTO;
+        }
+        private static List<CFDIDTO> AdaptarFacturaModelo(FacturacionModel model)
+        {
+            List<CFDIDTO> cfdis = new List<CFDIDTO>();
+            foreach (var ticket in model.Tickets)
+            {
+                CFDIDTO cfdi = new CFDIDTO();
+                cfdi.Id_FolioVenta = ticket.FolioVenta;
+                cfdi.Id_MetodoPago = 0;
+                cfdi.Id_FormaPago = (byte)model.IdFormaPago;
+                cfdi.IdUsoCFDI = model.IdUsoCFDI;
+                cfdis.Add(cfdi);
+            }
+            return cfdis;
         }
     }
 }

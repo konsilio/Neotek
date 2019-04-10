@@ -35,12 +35,26 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Nombre = ec.Nombre,
                 Numero = ec.Numero,
                 FechaRegistro = ec.FechaRegistro,
-                Activo = ec.Activo
+                Activo = ec.Activo,
             };
         }
         public static List<EstacionCarburacion> FromDTO(List<EstacionCarburacionDTO> ecs)
         {
             return ecs.Select(x => FromDTO(x)).ToList();
+        }
+        public static EstacionCarburacion FromEmtity(EstacionCarburacion ec)
+        {
+            return new EstacionCarburacion()
+            {
+                IdEmpresa = ec.IdEmpresa,
+                IdEstacionCarburacion = ec.IdEstacionCarburacion,
+                Nombre = ec.Nombre,
+                Numero = ec.Numero,
+                FechaRegistro = ec.FechaRegistro,
+                Activo = ec.Activo,
+                Serie = ec.Serie,
+                Folio = ec.Folio,
+            };
         }
     }
 }

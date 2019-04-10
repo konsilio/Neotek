@@ -302,6 +302,7 @@
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoModel.cs" />
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoModificarDTO.cs" />
     <Compile Include="Models\Catalogos\CentroCosto\TipoCentroCostoDTO.cs" />
+    <Compile Include="Models\Catalogos\ClienteModel.cs" />
     <Compile Include="Models\Catalogos\CombustibleModel.cs" />
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableCrearDTO.cs" />
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableDTO.cs" />
@@ -323,6 +324,7 @@
     <Compile Include="Models\Catalogos\EmpresaDTO.cs" />
     <Compile Include="Models\Catalogos\EstadosRepModel.cs" />
     <Compile Include="Models\Catalogos\MedidorDTO.cs" />
+    <Compile Include="Models\Catalogos\MetodoPagoDTO.cs" />
     <Compile Include="Models\Catalogos\OperadorChoferModel.cs" />
     <Compile Include="Models\Catalogos\PaisModel.cs" />
     <Compile Include="Models\Catalogos\PartialViewModel.cs" />
@@ -343,6 +345,7 @@
     <Compile Include="Models\Catalogos\RolMovilCompra.cs" />
     <Compile Include="Models\Catalogos\RolRequsicion.cs" />
     <Compile Include="Models\Catalogos\TipoPersonaModel.cs" />
+    <Compile Include="Models\Catalogos\UsoCFDIDTO.cs" />
     <Compile Include="Models\Catalogos\UsuarioDTO.cs" />
     <Compile Include="Models\Catalogos\UsuariosModel.cs" />
     <Compile Include="Models\Cobranza\AbonosModel.cs" />
@@ -11606,9 +11609,9 @@
     <Content Include="Views\Shared\EditorTemplates\RolSistemaVenta.cshtml" />
     <Content Include="Views\Facturacion\Index.cshtml" />
     <Content Include="Views\Facturacion\Facturar.cshtml" />
-    <Content Include="Views\Facturacion\DatosCFDI.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\VentaPuntoVentaDTO.cshtml" />
     <Content Include="Views\Historico\Index.cshtml" />
+    <Content Include="Views\Facturacion\DatosCFDI.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

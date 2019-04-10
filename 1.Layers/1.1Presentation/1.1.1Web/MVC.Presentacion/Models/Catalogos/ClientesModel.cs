@@ -9,7 +9,6 @@ namespace MVC.Presentacion.Models.Catalogos
 {
     public class ClientesModel
     {  
-
         public int IdCliente { get; set; }
         public short Orden { get; set; }              
         public short IdEmpresa { get; set; }        
