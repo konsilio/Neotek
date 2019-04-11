@@ -1523,7 +1523,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Mes" Type="int" Nullable="false" />
           <Property Name="Anio" Type="int" Nullable="false" />
-          <Property Name="MontoVenta" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="MontoVenta" Type="float" Nullable="false" />
           <Property Name="EsPipa" Type="bit" Nullable="false" />
           <Property Name="EsCamioneta" Type="bit" Nullable="false" />
           <Property Name="EsLocal" Type="bit" Nullable="false" />
@@ -12347,7 +12347,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Mes" Type="Int32" Nullable="false" />
           <Property Name="Anio" Type="Int32" Nullable="false" />
-          <Property Name="MontoVenta" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="MontoVenta" Type="Double" Nullable="false" />
           <Property Name="EsPipa" Type="Boolean" Nullable="false" />
           <Property Name="EsCamioneta" Type="Boolean" Nullable="false" />
           <Property Name="EsLocal" Type="Boolean" Nullable="false" />

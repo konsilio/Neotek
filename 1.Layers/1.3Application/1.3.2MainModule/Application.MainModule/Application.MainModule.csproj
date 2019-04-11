@@ -83,6 +83,7 @@
     <Compile Include="AdaptadoresDTO\Facturacion\CDFIAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Facturacion\MetodoPagoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Facturacion\UsoCFDIAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Historico\HistoricoVentasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
@@ -139,6 +140,8 @@
     <Compile Include="DTOs\Facturacion\FacturacionDTO.cs" />
     <Compile Include="DTOs\Facturacion\MetodoPagoDTO.cs" />
     <Compile Include="DTOs\Facturacion\UsoCFDIDTO.cs" />
+    <Compile Include="DTOs\Historico\HistoricoConsultaDTO.cs" />
+    <Compile Include="DTOs\Historico\HistoricoVentaDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticiposEstacionDTO.cs" />
@@ -183,6 +186,7 @@
     <Compile Include="DTOs\Ventas\VPuntoVentaDetalleDTO.cs" />
     <Compile Include="Flujos\Cobranza.cs" />
     <Compile Include="Flujos\Facturacion.cs" />
+    <Compile Include="Flujos\Historicos.cs" />
     <Compile Include="Flujos\Mantenimiento.cs" />
     <Compile Include="Flujos\RecargaCombustible.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -201,6 +205,7 @@
     <Compile Include="Servicios\AccesoADatos\CombustibleDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\DataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EgresoDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\HistoricoDataAcces.cs" />
     <Compile Include="Servicios\AccesoADatos\IngresoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\MantenimientoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\MantenimientoDetDataAccess.cs" />
@@ -322,6 +327,7 @@
     <Compile Include="Servicios\Facturacion\CFDIServicio.cs" />
     <Compile Include="Servicios\Facturacion\MetodoPagoServicio.cs" />
     <Compile Include="Servicios\Facturacion\UsoCFDIServicio.cs" />
+    <Compile Include="Servicios\Historico\HistoricoVentaServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\EgresoServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\IngresoServicio.cs" />
     <Compile Include="Servicios\Mobile\AutoconsumoServicio.cs" />
