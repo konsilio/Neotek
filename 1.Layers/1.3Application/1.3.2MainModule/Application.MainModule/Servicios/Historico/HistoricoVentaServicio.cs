@@ -188,7 +188,7 @@ namespace Application.MainModule.Servicios.Historico
         private static string KeysLabesColorsCamVSPip(HistoricoConsultaDTO dto)
         {
             string keys = "ykeys: ['a', 'b'],";
-            string labels = "labels: ['Local', 'Foranea'],";
+            string labels = "labels: ['Camioneta', 'Pipa'],";
             string barColors = "barColors: ['#757575', '#26c6da'],";
 
             return keys + labels + barColors;
@@ -237,7 +237,7 @@ namespace Application.MainModule.Servicios.Historico
                 }
                 json += "},";
             }
-            //Eliminar la ultima coma (,)
+            json = json.TrimEnd(',');
             return string.Concat(json, "],");
         }
         private static string JsonCamionetasVSPipas(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
@@ -322,7 +322,7 @@ namespace Application.MainModule.Servicios.Historico
                     }
                 }
             }
-
+            json = json.TrimEnd(',');
             return string.Concat(json, "],");
         }
         private static string JsonLocalesVSForaneos(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
@@ -407,6 +407,7 @@ namespace Application.MainModule.Servicios.Historico
                     }
                 }
             }
+            json = json.TrimEnd(',');
             return string.Concat(json, "],");
         }
     }
