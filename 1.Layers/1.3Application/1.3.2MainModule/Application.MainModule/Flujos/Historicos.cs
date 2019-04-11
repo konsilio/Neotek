@@ -50,5 +50,14 @@ namespace Application.MainModule.Flujos
          
             return HistoricoVentaServicio.Actualizar(emty);
         }
+        public static string GenerarJsonConsulta(HistoricoConsultaDTO dto)
+        {
+            //Traer los registros segun los parametros de años y meses
+            var Ventas = HistoricoVentaServicio.BuscarPorFiltros(dto);
+            //transformar segun tipo de consulta
+
+
+            return "";
+        }
     }
 }

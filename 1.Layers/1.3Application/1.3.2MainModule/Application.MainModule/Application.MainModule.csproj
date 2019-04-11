@@ -140,6 +140,7 @@
     <Compile Include="DTOs\Facturacion\FacturacionDTO.cs" />
     <Compile Include="DTOs\Facturacion\MetodoPagoDTO.cs" />
     <Compile Include="DTOs\Facturacion\UsoCFDIDTO.cs" />
+    <Compile Include="DTOs\Historico\HistoricoConsultaDTO.cs" />
     <Compile Include="DTOs\Historico\HistoricoVentaDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
