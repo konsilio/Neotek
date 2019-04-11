@@ -215,5 +215,10 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+        public ActionResult FacturacionGlobal()
+        {
+
+            return View();
+        }
     }
 }
