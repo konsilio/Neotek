@@ -85,5 +85,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<HistoricoVentas>().GetAll().ToList();
         }
+        public List<HistoricoVentas> ObtenerPorMes(int Anio, int mes)
+        {
+            return uow.Repository<HistoricoVentas>().Get(x => x.Anio.Equals(Anio) && x.Mes.Equals(mes)).ToList();
+        }
     }
 }

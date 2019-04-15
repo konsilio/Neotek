@@ -52,6 +52,8 @@ namespace MVC.Presentacion.Agente
         public VentaPuntoVentaDTO _VentaDTO;
         public CFDIDTO _CFDIDTO;
         public ClientesDto _ClienteDTO;
+        public ClientesModel _ClienteModel;
+        //public ClienteModel _ClienteModel;
         public HistoricoVentaModel _HistoricoVentaDTO;
 
 
@@ -118,6 +120,8 @@ namespace MVC.Presentacion.Agente
         public List<VentaPuntoVentaDTO> _ListaVenta;
         public List<CFDIDTO> _ListaCFDIs;
         public List<HistoricoVentaModel> _ListHistoricoVenta;
+        public List<UsoCFDIDTO> _ListaUsoCFDI;
+        public List<MetodoPagoDTO> _ListaMetodPago;
 
         public AgenteServicio()
         {
@@ -809,7 +813,7 @@ namespace MVC.Presentacion.Agente
         {
             using (var client = new HttpClient())
             {
-                ClientesDto c = new ClientesDto();
+                ClientesModel c = new ClientesModel();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 if (!string.IsNullOrEmpty(token))
@@ -818,7 +822,7 @@ namespace MVC.Presentacion.Agente
                 {
                     HttpResponseMessage response = await client.GetAsync(string.Concat(ApiCatalgos, id.ToString())).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        c = await response.Content.ReadAsAsync<ClientesDto>();
+                        c = await response.Content.ReadAsAsync<ClientesModel>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -827,11 +831,11 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    c = new ClientesDto();
+                    c = new ClientesModel();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                _ClienteDTO = c;
+                _ClienteModel = c;
             }
         }
         public void BuscarListaClientes(int id, int TipoPersona, int regimen, string rfc, string nombre, string tkn)//short idEmpresa, 
@@ -998,7 +1002,7 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaClientes"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
-        }       
+        }
         public void EliminarCliente(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminaClientes"];
@@ -1049,16 +1053,15 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaClienteLocacion"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void GuardarNuevoCliente(ClientesModel dto)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraClientesAutoConsumo"];
-            LLamadaAnonima(dto, MetodoRestConst.Post).Wait();
+            LLamada(dto, string.Empty, MetodoRestConst.Post, true).Wait();
         }
         public void EditarCliente(ClientesModel dto)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaClientesAutoConsumo"];
-            LLamadaAnonima(dto, MetodoRestConst.Put).Wait();
+            LLamada(dto, string.Empty, MetodoRestConst.Put, true).Wait();
         }
         #endregion
         #region Puntos de Venta
@@ -1758,19 +1761,20 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Forma de Pago
-        public void ListaFormaPago(string tkn)
+        public void ListaFormaPago(string tkn = null)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaFormasPago"];
             GetListaFormaPago(tkn).Wait();
         }
-        private async Task GetListaFormaPago(string Token)
+        private async Task GetListaFormaPago(string Token = null)
         {
             using (var client = new HttpClient())
             {
                 List<FormaPagoDTO> list = new List<FormaPagoDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                if (Token != null)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
@@ -2904,6 +2908,79 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
+        #region Uso CFDI
+        public void ListaUsoCFDI(string tkn = null)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsoCFDI"];
+            GetListaUsoCFDI(tkn).Wait();
+        }
+        private async Task GetListaUsoCFDI(string Token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<UsoCFDIDTO> list = new List<UsoCFDIDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (Token != null)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<UsoCFDIDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<UsoCFDIDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaUsoCFDI = list;
+            }
+        }
+        #endregion
+        #region Metodo de Pago
+        public void ListaMetodosPago(string tkn = null)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaMetodosPago"];
+            GetListaMetodosPago(tkn).Wait();
+        }
+        private async Task GetListaMetodosPago(string Token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<MetodoPagoDTO> list = new List<MetodoPagoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (Token != null)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<MetodoPagoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<MetodoPagoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaMetodPago = list;
+            }
+        }
+        #endregion
+
         #endregion
         #region Login
         public void Acceder(AutenticacionDTO autDto)
@@ -4407,9 +4484,6 @@ namespace MVC.Presentacion.Agente
                 _VentaDTO = venta;
             }
         }
-
-
-
         public void ListaCFDIs(FacturacionModel _mod)
         {
             if (_mod.IdCliente > 0)
@@ -4485,6 +4559,11 @@ namespace MVC.Presentacion.Agente
                 }
                 _CFDIDTO = dto;
             }
+        }
+        public void PostRegistrarCFDILst(List<CFDIDTO> ticket)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarCFDILst"];
+            LLamada(ticket, string.Empty, MetodoRestConst.Post, true).Wait();
         }
 
         #endregion
@@ -4586,7 +4665,7 @@ namespace MVC.Presentacion.Agente
 
         #endregion
 
-        private async Task LLamada<T>(T _dto, string token, string Tipo)
+        private async Task LLamada<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
         {
             using (var client = new HttpClient())
             {
@@ -4594,7 +4673,9 @@ namespace MVC.Presentacion.Agente
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                if (!EsAnonimo)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+
                 try
                 {
                     HttpResponseMessage response = new HttpResponseMessage();
@@ -4620,40 +4701,7 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-        private async Task LLamadaAnonima<T>(T _dto, string Tipo)
-        {
-            using (var client = new HttpClient())
-            {
-                RespuestaDTO resp = new RespuestaDTO();
-                client.BaseAddress = new Uri(UrlBase);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-                try
-                {
-                    HttpResponseMessage response = new HttpResponseMessage();
-                    if (Tipo.Equals(MetodoRestConst.Post))
-                        response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
-                    if (Tipo.Equals(MetodoRestConst.Put))
-                        response = await client.PutAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
-                    if (response.IsSuccessStatusCode)
-                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
-                    else
-                    {
-                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
-                        client.CancelPendingRequests();
-                        client.Dispose();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    resp.Mensaje = ex.Message;
-                    client.CancelPendingRequests();
-                    client.Dispose();
-                }
-                _RespuestaDTO = resp;
-            }
-        }
+
     }
     public static class MetodoRestConst
     {

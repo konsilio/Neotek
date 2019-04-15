@@ -21,9 +21,9 @@ namespace Application.MainModule.Servicios.Catalogos
             //    return new FormaPagoDataAccess().ListaProductos(empresa.IdEmpresa);
         }
 
-        public static FormaPago Obtener(byte idFormaPago)
+        public static FormaPago Obtener(byte id)
         {           
-            return new FormaPagoDataAccess().Buscar(idFormaPago);           
+            return new FormaPagoDataAccess().Buscar(id);           
         }
     }
 }

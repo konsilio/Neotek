@@ -1,6 +1,6 @@
-﻿@using System.Web.UI.WebControls;
-@model MVC.Presentacion.Models.Catalogos.ClientesModel
+﻿@model MVC.Presentacion.Models.Catalogos.ClientesModel
 
+@using System.Web.UI.WebControls;
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -14,10 +14,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @*<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>*@
     <script src="~/Resources/js/Facturacion.js"></script>
-    @*<script src="~/Resources/js/Clientes.js"></script>*@
-    <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('.enableOnInput').prop('disabled', true);
@@ -25,8 +23,11 @@
                 $('.enableOnInput').prop('disabled', false);
                 $('.btnGuardarInfoCliente').prop('disabled', false);
             });
+            if (@ViewBag.EsGenerico) {
+                $('.enableOnInput').prop('disabled', false);
+            $('.btnGuardarInfoCliente').prop('disabled', false);
+        }
         });
-
     </script>
     <style type="text/css">
         .hid {
@@ -35,9 +36,12 @@
     </style>
 </head>
 <body>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("ContinuarGenerarFactura", "Facturacion", FormMethod.Post))
     {
-        @*@Html.HiddenFor(m => m.Rfc)*@
+        @Html.HiddenFor(m => m.IdCliente)
+        @Html.HiddenFor(m => m.Usuario)
+        @Html.HiddenFor(m => m.IdEmpresa)
+        
         <section class="content home">
             <div class="container-fluid">
                 <div class="row clearfix">
@@ -82,7 +86,7 @@
                                                {
                                                    settings.Name = "IdTipoPersona";
                                                    settings.Width = Unit.Percentage(100);
-                                                   settings.SelectedIndex = Model.IdTipoPersona.Value;
+                                                   settings.SelectedIndex = Model.IdTipoPersona ?? 0;
                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                                    settings.Theme = "Material";
@@ -103,7 +107,7 @@
                                                {
                                                    settings.Name = "IdRegimenFiscal";
                                                    settings.Width = Unit.Percentage(100);
-                                                   settings.SelectedIndex = Model.IdRegimenFiscal.Value;
+                                                   settings.SelectedIndex = Model.IdRegimenFiscal ?? 0;
                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                                    settings.Theme = "Material";
@@ -117,14 +121,22 @@
                                             </div>
                                         </div>
                                         <div class="row clearfix">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <strong>RFC:*</strong>
-                                                    @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control enableOnInput" })
+                                                    @*@Html.TextBox("Rfc1", Model.Rfc, new { @class = "form-control enableOnInput" })*@
+                                                    @Html.TextBoxFor(m => m.Rfc, Model.Rfc, new { @class = "form-control enableOnInput" })
                                                     @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <strong> E-mail: *</strong>
+                                                    @Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control enableOnInput" })
+                                                    @Html.ValidationMessageFor(m => m.CorreoElectronico, "", new { @class = "alert-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <div class="form-group" id="hide_razonS">
                                                     <strong> Razón Social:*</strong>
                                                     @Html.TextBoxFor(m => m.RazonSocial, new { @class = "form-control enableOnInput" })
@@ -136,77 +148,73 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row clearfix" id="div_hideRP">
+                        <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="card">
                                     <div class="header">
-                                        <h2><strong>Representante Legal</strong></h2>
+                                        <h2><strong>Informacion</strong> General</h2>
                                     </div>
                                     <div class="body">
-                                        <div class="row clearfix">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div id="div_hideRP">
+                                            <div class="row clearfix">
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        Nombre Completo:@Html.TextBoxFor(m => m.RepresentanteLegal, new { @class = "form-control enableOnInput" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <div class="form-group">
+                                                        <div>
+                                                            Teléfono:@Html.TextBoxFor(m => m.Telefono, new { @class = "form-control enableOnInput" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <div class="form-group">
+                                                        Dirección:@Html.TextBoxFor(m => m.Domicilio, new { @class = "form-control enableOnInput" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <div class="form-group">
+                                                        Celular:@Html.TextBoxFor(m => m.Celular, new { @class = "form-control enableOnInput" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row clearfix" id="div_hidePM">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div class="form-group">
-                                                    Nombre Completo:@Html.TextBoxFor(m => m.RepresentanteLegal, new { @class = "form-control enableOnInput" })
+                                                    Nombres:* @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control enableOnInput" })
+                                                    @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div class="form-group">
                                                     <div>
-                                                        Teléfono:@Html.TextBoxFor(m => m.Telefono, new { @class = "form-control enableOnInput" })
+                                                        Apellido Paterno:*
+                                                        @Html.TextBoxFor(m => m.Apellido1, new { @class = "form-control enableOnInput" })
+                                                        @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    Dirección:@Html.TextBoxFor(m => m.Domicilio, new { @class = "form-control enableOnInput" })
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div class="form-group">
-                                                    Celular:@Html.TextBoxFor(m => m.Celular, new { @class = "form-control enableOnInput" })
+                                                    <div>
+                                                        Apellido Materno:
+                                                        @Html.TextBoxFor(m => m.Apellido2, new { @class = "form-control enableOnInput" })
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                                <div class="form-group">
-                                                    E-mail:@Html.TextBoxFor(m => m.CorreoElectronico, new { @class = "form-control enableOnInput" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row clearfix" id="div_hidePM">
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <div class="form-group">
-                                    Nombres:* @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control enableOnInput" })
-                                    @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <div class="form-group">
-                                    <div>
-                                        Apellido Paterno:*
-                                        @Html.TextBoxFor(m => m.Apellido1, new { @class = "form-control enableOnInput" })
-                                        @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <div class="form-group">
-                                    <div>
-                                        Apellido Materno:
-                                        @Html.TextBoxFor(m => m.Apellido2, new { @class = "form-control enableOnInput" })
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row clearfix" id="div_hideRP">
+                        @*<div class="row clearfix" id="div_hideRP">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="card">
                                     <div class="header">
@@ -226,20 +234,21 @@
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
                                                     @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "cliente.Locacion.IdPais";
-                                           settings.Width = Unit.Percentage(100);
-                                           settings.SelectedIndex = Model.Locacion.IdPais;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Theme = "Material";
-                                           settings.ControlStyle.CssClass = "enableOnInput";
-                                           settings.Properties.TextField = "Pais";
-                                           settings.Properties.ValueField = "IdPais";
-                                           settings.Properties.ValueType = typeof(byte);
-                                           settings.ClientEnabled = true;
-                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
-                                       }).BindList(ViewBag.Paises).GetHtml()
+                                               {
+                                                   settings.Name = "cliente.Locacion.IdPais";
+                                                   settings.Width = Unit.Percentage(100);
+                                                   if (Model.Locacion != null)
+                                                       settings.SelectedIndex = Model.Locacion.IdPais;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Theme = "Material";
+                                                   settings.ControlStyle.CssClass = "enableOnInput";
+                                                   settings.Properties.TextField = "Pais";
+                                                   settings.Properties.ValueField = "IdPais";
+                                                   settings.Properties.ValueType = typeof(byte);
+                                                   settings.ClientEnabled = true;
+                                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                               }).BindList(ViewBag.Paises).GetHtml()
                                                 </div>
                                             </div>
                                             <div class="col-lg-1 col-md-1 col-sm-1">
@@ -256,18 +265,19 @@
                                                     <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
                                                     <div id="ddlEdo">
                                                         @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "Locacion.IdEstadoRep";
-                                           settings.Width = Unit.Percentage(100);
-                                           settings.SelectedIndex = Model.Locacion.IdEstadoRep;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Theme = "Material";
-                                           settings.ControlStyle.CssClass = "enableOnInput";
-                                           settings.Properties.TextField = "Estado";
-                                           settings.Properties.ValueField = "IdEstadoRep";
-                                           settings.Properties.ValueType = typeof(int);
-                                       }).BindList(ViewBag.Estados).GetHtml()
+                                                   {
+                                                       settings.Name = "Locacion.IdEstadoRep";
+                                                       settings.Width = Unit.Percentage(100);
+                                                       if (Model.Locacion != null)
+                                                           settings.SelectedIndex = Model.Locacion.IdEstadoRep;
+                                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                       settings.Theme = "Material";
+                                                       settings.ControlStyle.CssClass = "enableOnInput";
+                                                       settings.Properties.TextField = "Estado";
+                                                       settings.Properties.ValueField = "IdEstadoRep";
+                                                       settings.Properties.ValueType = typeof(int);
+                                                   }).BindList(ViewBag.Estados).GetHtml()
                                                     </div>
                                                 </div>
                                             </div>
@@ -368,25 +378,29 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="row clearfix">
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <div class="form-group">
-                                    <input type="button" value="Editar" id="EditarInfoCliente" class="btn btn-raised btn-primary btn-round" />
+                            @if (!Model.IdCliente.Equals(0))
+                            {
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <input type="button" value="Editar" id="EditarInfoCliente" class="btn btn-raised btn-primary btn-round" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <div class="form-group">
-                                    @if (ViewBag.EsEdicion)
-                                    {
-                                        <input type="submit" value="Guardar" id="btnGuardarInfoCliente" formaction="GuardarInfoCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
-                                    }
-                                    else
-                                    {
-                                        <input type="submit" value="Guardar" id="btnGuardarInfoCliente" formaction="GuardarInfoCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
-                                    }
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <input type="submit" value="Guardar" id="btnGuardarInfoCliente" formaction="GuardaEdicionCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <input type="submit" value="Guardar" id="btnGuardarInfoCliente" formaction="GuardarNuevoCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
+                                    </div>
+                                </div>
+                            }
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <input type="submit" value="Continuar" formaction="ContinuarGenerarFactura" formmethod="post" class="btn btn-raised btn-primary btn-round" />
