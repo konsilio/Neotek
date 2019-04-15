@@ -1,4 +1,4 @@
-﻿using Application.MainModule.DTOs.Ventas;
+﻿using MVC.Presentacion.Models.Ventas;
 using System;
 using System.Collections.Generic;
 using System.Linq;

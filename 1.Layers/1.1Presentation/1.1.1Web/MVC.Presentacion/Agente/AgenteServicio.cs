@@ -4496,8 +4496,42 @@ namespace MVC.Presentacion.Agente
                 this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDIByRFC"];
                 BuscarCFDIs(_mod.RFC, ApiCatalgos).Wait();
             }
-        }
+        }       
         private async Task BuscarCFDIs(string filtro, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CFDIDTO> CFDIs = new List<CFDIDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(api, filtro)).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        CFDIs = await response.Content.ReadAsAsync<List<CFDIDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    CFDIs = new List<CFDIDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListaCFDIs = CFDIs;
+            }
+        }
+        public void ListaCFDIs(FacturacionGlobalModel _mod, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDIByCliente"];
+            BuscarCFDIs(_mod.IdCliente.ToString(), ApiCatalgos, token).Wait();
+        }
+        private async Task BuscarCFDIs(FacturacionGlobalModel filtro, string api, string token = null)
         {
             using (var client = new HttpClient())
             {
@@ -4600,8 +4634,8 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                
-                _ListHistoricoVenta= historico;
+
+                _ListHistoricoVenta = historico;
             }
         }
 
@@ -4640,7 +4674,7 @@ namespace MVC.Presentacion.Agente
 
                 _HistoricoVentaDTO = historico;
             }
-            
+
         }
         public void GuardarNuevoHistorico(List<HistoricoVentaModel> dto, string tkn)
         {

@@ -1,8 +1,10 @@
 ﻿using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using MVC.Presentacion.App_Code;
+using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Cobranza;
 using MVC.Presentacion.Models.Seguridad;
+using MVC.Presentacion.Models.Ventas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -194,6 +196,34 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
+        public ActionResult FacturacionGlobal(FacturacionGlobalModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            if (TempData["ListaTickets"] != null) model.Tickets = (List<VentaPuntoVentaDTO>)TempData["ListaTickets"];
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (Respuesta.Exito)
+                    ViewBag.Msj = Respuesta.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(Respuesta);
+            }
+            ViewBag.CFDIs = FacturacionServicio.ObtenerCFDIs(model, _tkn);
+            return View(model);
+        }
+        public ActionResult BuscarTikets(FacturacionGlobalModel model = null)
+        {
+
+
+            return RedirectToAction("FacturacionGlobal");
+        }
+        public ActionResult BorrarTicket(string Folio)
+        {
+
+
+            return RedirectToAction("FacturacionGlobal");
+        }
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;
@@ -202,9 +232,7 @@ namespace MVC.Presentacion.Controllers
             {
                 if (Resp.ModelStatesStandar != null)
                     foreach (var error in Resp.ModelStatesStandar.ToList())
-                    {
                         ModelState.AddModelError(error.Key, error.Value);
-                    }
                 if (Resp.MensajesError != null)
                 {
                     if (Resp.MensajesError.Count > 1)
@@ -214,11 +242,6 @@ namespace MVC.Presentacion.Controllers
                 }
             }
             return Mensaje;
-        }
-        public ActionResult FacturacionGlobal()
-        {
-
-            return View();
         }
     }
 }

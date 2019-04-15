@@ -1,4 +1,5 @@
 ﻿using MVC.Presentacion.Agente;
+using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Facturacion;
 using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
@@ -33,20 +34,27 @@ namespace MVC.Presentacion.App_Code
             {
                 _agente.BuscarCFDI(model.Ticket);
                 return new List<CFDIDTO>() { _agente._CFDIDTO };
-            }           
+            }
+        }
+        public static List<CFDIDTO> ObtenerCFDIs(FacturacionGlobalModel model, string token)
+        {
+            AgenteServicio _agente = new AgenteServicio();
+            _agente.ListaCFDIs(model, token);
+            return _agente._ListaCFDIs;
+
         }
         public static CFDIDTO ObtenerCFDI(string ticket)
         {
             AgenteServicio _agente = new AgenteServicio();
-            _agente.BuscarCFDI(ticket);           
+            _agente.BuscarCFDI(ticket);
             return _agente._CFDIDTO;
         }
         public static List<VentaPuntoVentaDTO> DescartarRepetidos(List<VentaPuntoVentaDTO> nueva, List<VentaPuntoVentaDTO> actual)
         {
             foreach (var vn in nueva)
-                if (!actual.Exists(x => x.FolioVenta.Equals(vn.FolioVenta)))                
-                    actual.Add(vn);              
-            
+                if (!actual.Exists(x => x.FolioVenta.Equals(vn.FolioVenta)))
+                    actual.Add(vn);
+
             return actual;
         }
         public static RespuestaDTO GenerarFacturas(FacturacionModel model)
