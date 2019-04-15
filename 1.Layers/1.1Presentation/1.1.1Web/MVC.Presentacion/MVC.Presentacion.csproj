@@ -358,6 +358,8 @@
     <Compile Include="Models\Facturacion\CFDIDTO.cs" />
     <Compile Include="Models\Facturacion\FacturacionModel.cs" />
     <Compile Include="Models\Historico\HistoricoVentaModel.cs" />
+    <Compile Include="Models\Historico\HistoricoVentasConsulta.cs" />
+    <Compile Include="Models\Historico\YearsDTO.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ImagenDTO.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -11617,6 +11619,7 @@
     <Content Include="Views\Historico\Index.cshtml" />
     <Content Include="Views\Facturacion\DatosCFDI.cshtml" />
     <Content Include="Views\Historico\HistoricoVentas.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\YearsDTO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

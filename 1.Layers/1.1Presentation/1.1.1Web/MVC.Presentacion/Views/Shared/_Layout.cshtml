@@ -137,11 +137,9 @@
                         </li>
                         <li>
                             <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">receipt</i><span>Historico Ventas</span> </a>
-                            <ul class="ml-menu">
-                                @*<li><a href="ui_kit.html">Ventas</a></li>*@
+                            <ul class="ml-menu">                       
                                 <li>@Html.ActionLink("Carga Informacion", "Index", "Historico")</li>
-                                <li>@Html.ActionLink("Historico Ventas", "HistoricoVentas", "Historico")</li>
-                                @*<li>@Html.ActionLink("Caja General Pipa", "Pipa", "CajaGeneral")</li>*@
+                                <li>@Html.ActionLink("Historico Ventas", "HistoricoVentas", "Historico")</li>                             
                             </ul>
                         </li>
                         @*<li>
@@ -190,4 +188,7 @@
 <script src="~/assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
 <script src="~/assets/plugins/momentjs/moment.js"></script>
 <script src="~/assets/bundles/mainscripts.bundle.js"></script>
+<script src="~/assets/bundles/morrisscripts.bundle.js"></script> 
+<script src="~/assets/js/pages/charts/morris.js"></script>
+
 @Styles.Render("~/Content/css")

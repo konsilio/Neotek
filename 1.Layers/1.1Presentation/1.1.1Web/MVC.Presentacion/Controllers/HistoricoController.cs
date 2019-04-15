@@ -38,6 +38,21 @@ namespace MVC.Presentacion.Controllers
             ViewBag.HistoricoVentas = listPreCarga;
             return View(model);
         }
+        public ActionResult HistoricoVentas(int? page, HistoricoVentasConsulta model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (Respuesta.Exito)
+                    ViewBag.Msj = Respuesta.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(Respuesta);
+            }
+            return View(model);
+        }
         public ActionResult Crear(HttpPostedFileBase upload)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -177,6 +192,10 @@ namespace MVC.Presentacion.Controllers
                 ModelState.AddModelError("File", "Please Upload Your file");
             }
             return RedirectToAction("Index");
+        }
+        public ActionResult ObtenerJsonGrf()
+        {
+            return View();
         }
 
         public ActionResult Eliminar(int? id)

@@ -1,4 +1,4 @@
-﻿@model MVC.Presentacion.Models.Historico.HistoricoVentaModel
+﻿@model MVC.Presentacion.Models.Historico.HistoricoVentasConsulta
 @using PagedList.Mvc;
 @using PagedList;
 @Html.DevExpress().GetStyleSheets(
@@ -13,7 +13,11 @@
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
 
-
+<script>
+ $(function () {      
+    Morris.Bar(@ViewBag.Json);
+});
+</script>
 <body>
     <section class="content home">
         <div class="container-fluid">
@@ -31,56 +35,165 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="header">
-                            <strong>Mantenimiento</strong>
+
+                    <div class="row  ">
+                        <div class="col-lg-10 col-md-10 col-sm-14 " style="margin-right:-3%;"></div>
+                        <input type="submit" value="Pre-Generar" class="btn btn-primary btn-round " />
+                    </div>
+                    <div class="row">
+                        <div class="card col-lg-3 col-md-3 col-sm-5">
+                            <div class="header">
+                                <strong>Años</strong>
+                            </div>
+                            <div class="body">
+                                <ul>
+                                    <li>2019</li>
+                                    <li>2017</li>
+                                    <li>2018</li>
+                                    <li>2020</li>
+                                    <li>2012</li>
+                                    <li>2016</li>
+
+                                </ul>
+                                @if (ViewBag.MensajeError != null)
+                                {
+                                    <div id="DivAlerta" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                @ViewBag.MensajeError
+                                            </strong>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
                         </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <b>Archivo a Cargar:</b>
-                                        @*@Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Url, "", new { @class = "alert-danger" })*@
-                                    </div>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <div class="form-group">
-
-                                        @*<label class="btn btn-default btn btn-primary btn-round">
-                                                Seleccionar Ruta <input type="file" id="idUrl" >
-                                            </label>*@
-                                        <input type="file" id="dataFile" name="upload" />
-                                        <input type="submit" value="Upload" class="btn btn-primary btn-round" />
-
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <input type="file" id="dataFile" name="preCarga" />
-                                        <input type="submit" value="Pre-Cargar" formaction=@Url.Action("PreCarga") class="btn btn-primary btn-round" />
-                                    </div>
-                                </div>
-
-
+                        <div class="card col-lg-3 col-md-3 col-sm-5">
+                            <div class="header">
+                                <strong>Meses</strong>
                             </div>
 
-                            @if (ViewBag.MensajeError != null)
-                            {
-                                <div id="DivAlerta" class="container">
-                                    <div class="alert alert-danger">
-                                        <div class="alert-icon">
-                                            <i class="zmdi zmdi-block"></i>
+                            <div class="body">
+                                <ul>
+                                    <li>Enero</li>
+                                    <li>Febrero</li>
+                                    <li>Marzo</li>
+                                    <li>Abril</li>
+                                    <li>Mayo</li>
+                                    <li>Junio</li>
+                                    <li>Julio</li>
+                                    <li>Agosto</li>
+                                    <li>Septiembre</li>
+                                    <li>Octubre</li>
+                                    <li>Noviembre</li>
+                                    <li>Diciembre</li>
+                                </ul>
+
+                                @if (ViewBag.MensajeError != null)
+                                {
+                                    <div id="DivAlerta" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                @ViewBag.MensajeError
+                                            </strong>
                                         </div>
-                                        <strong>
-                                            @ViewBag.MensajeError
-                                        </strong>
                                     </div>
-                                </div>
-                            }
+                                }
+
+                            </div>
                         </div>
+                        <div class="card col-lg-5 col-md-5 col-sm-9">
+                            <div class="header">
+                                <strong>Tipos de Reporte</strong>
+                            </div>
+                            <div class="body">
+                                <div class="form-group">
+                                    @Html.DevExpress().ComboBox(settings =>
+                                        {
+                                            settings.Name = "IdTipoReporte";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                            settings.Theme = "Material";
+                                            settings.Properties.TextField = "TipoCombustible";
+                                            settings.Properties.ValueField = "Id_Combustible";
+                                            //settings.ClientEnabled = true;
+                                            //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                            settings.PreRender = (s, e) =>
+                                            {
+                                                MVCxComboBox combo = s as MVCxComboBox;
+                                                combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                                combo.Properties.ValueType = typeof(int);
+                                                combo.SelectedIndex = 1;
+                                            };
+                                        }).BindList(ViewBag.TipoCombustible).GetHtml()
+                                    @*@Html.ValidationMessageFor(m => m.IdTipoCombustible, "", new { @class = "alert-danger" })*@
+                                </div>
+
+
+
+                                @if (ViewBag.MensajeError != null)
+                                {
+                                    <div id="DivAlerta" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                @ViewBag.MensajeError
+                                            </strong>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
                     </div>
+
+                    <div class="card">
+                        <div class="header">
+                            Validacion de <strong>Informacion</strong>
+                        </div>
+                        <div class="body">
+
+                            <div class="row clearfix blockquote blockquote-info btn-round">
+                                <div class="table-responsive">
+                                    <table class="table table-striped  filterable">
+                                        <thead>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>julio-16</strong></td>
+                                                <td><strong>julio-17</strong></td>
+                                                <td><strong>julio-18</strong></td>
+                                                <td><strong>julio-19</strong></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Ventas</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Promedio Venta</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dias Venta</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div>
+                                <div id="m_bar_chart"></div>
+                            </div>
+                        </div>
+                        <input type="submit" value="Exportar a Excel" class="btn btn-primary btn-round" />
+                    </div>
+
                 </div>
             }
         </div>

@@ -52,12 +52,11 @@ namespace Application.MainModule.Flujos
         }
         public static string GenerarJsonConsulta(HistoricoConsultaDTO dto)
         {
-            //Traer los registros segun los parametros de años y meses
+            //Traer los registros segun los parametros de años y meses 
             var Ventas = HistoricoVentaServicio.BuscarPorFiltros(dto);
             //transformar segun tipo de consulta
-
-
-            return "";
+            
+            return HistoricoVentaServicio.TransformarAJason(Ventas,dto);
         }
     }
 }
