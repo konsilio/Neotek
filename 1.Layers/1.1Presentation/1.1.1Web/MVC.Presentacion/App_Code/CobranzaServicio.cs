@@ -1,4 +1,6 @@
-﻿using MVC.Presentacion.Agente;
+﻿using Application.MainModule.DTOs.Ventas;
+using MVC.Presentacion.Agente;
+using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Cobranza;
 using MVC.Presentacion.Models.Seguridad;
 using System;
@@ -82,6 +84,14 @@ namespace MVC.Presentacion.App_Code
             lst.Add(model);
             return lst;
         }
+        public static List<VentaPuntoVentaDTO> ObtenerTickets(FacturacionGlobalModel model)
+        {
+            AgenteServicio _agente = new AgenteServicio();
+            _agente.ListaTickets(model);
+            return _agente._ListaVenta;
+        }
+
+
         //public static RespuestaDTO EliminarCargo(CargosModel model, string tkn)
         //{
         //    var agente = new AgenteServicio();

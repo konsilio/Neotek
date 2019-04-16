@@ -218,6 +218,12 @@ namespace MVC.Presentacion.Controllers
 
             return RedirectToAction("FacturacionGlobal");
         }
+        public ActionResult AgregarTikets(FacturacionGlobalModel model = null)
+        {
+
+
+            return RedirectToAction("FacturacionGlobal");
+        }
         public ActionResult BorrarTicket(string Folio)
         {
 

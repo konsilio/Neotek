@@ -4421,6 +4421,13 @@ namespace MVC.Presentacion.Agente
                 BuscarTickets(_mod.RFC, ApiCatalgos).Wait();
             }
         }
+        public void ListaTickets(FacturacionGlobalModel _mod,string token)
+        {
+            
+                this.ApiCatalgos = ConfigurationManager.AppSettings["GetTicketsByCliente"];
+                BuscarTickets(_mod, ApiCatalgos, token).Wait();
+            
+        }
         private async Task BuscarTickets(string filtro, string api, string token = null)
         {
             using (var client = new HttpClient())
