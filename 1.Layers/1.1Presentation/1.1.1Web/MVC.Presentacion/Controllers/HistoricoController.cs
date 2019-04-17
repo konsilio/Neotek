@@ -43,6 +43,9 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
 
+            List<YearsDTO> listYears = ObtenerAños();
+    
+            model.Years = listYears;
             if (TempData["RespuestaDTO"] != null)
             {
                 var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
@@ -193,9 +196,20 @@ namespace MVC.Presentacion.Controllers
             }
             return RedirectToAction("Index");
         }
-        public ActionResult ObtenerJsonGrf()
+
+        public ActionResult ObtenerJsonGrf(HistoricoVentasConsulta modelo = null)
         {
-            return View();
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var otroGato = modelo;            
+            var respuesta = HistoricoServicio.GetJson(modelo,tkn);
+            
+            return RedirectToAction("HistoricoVentas",modelo) ;
+        }
+        public List<YearsDTO> ObtenerAños()
+        {
+            var respuesta = HistoricoServicio.GetYears(tkn);
+            return respuesta;
         }
 
         public ActionResult Eliminar(int? id)

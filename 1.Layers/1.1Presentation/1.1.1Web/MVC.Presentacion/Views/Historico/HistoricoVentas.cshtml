@@ -38,7 +38,7 @@
 
                     <div class="row  ">
                         <div class="col-lg-10 col-md-10 col-sm-14 " style="margin-right:-3%;"></div>
-                        <input type="submit" value="Pre-Generar" class="btn btn-primary btn-round " />
+                        <input type="submit" formaction=@Url.Action("ObtenerJsonGrf") formmethod="post"  value="Pre-Generar" class="btn btn-primary btn-round " />
                     </div>
                     <div class="row">
                         <div class="card col-lg-3 col-md-3 col-sm-5">
@@ -46,15 +46,11 @@
                                 <strong>Años</strong>
                             </div>
                             <div class="body">
-                                <ul>
-                                    <li>2019</li>
-                                    <li>2017</li>
-                                    <li>2018</li>
-                                    <li>2020</li>
-                                    <li>2012</li>
-                                    <li>2016</li>
 
+                                <ul>
+                                  @Html.EditorFor(m => m.Years)                                    
                                 </ul>
+                                                     
                                 @if (ViewBag.MensajeError != null)
                                 {
                                     <div id="DivAlerta" class="container">
@@ -76,19 +72,19 @@
                             </div>
 
                             <div class="body">
-                                <ul>
-                                    <li>Enero</li>
-                                    <li>Febrero</li>
-                                    <li>Marzo</li>
-                                    <li>Abril</li>
-                                    <li>Mayo</li>
-                                    <li>Junio</li>
-                                    <li>Julio</li>
-                                    <li>Agosto</li>
-                                    <li>Septiembre</li>
-                                    <li>Octubre</li>
-                                    <li>Noviembre</li>
-                                    <li>Diciembre</li>
+                                <ul style="list-style:none">
+                                    <li>@Html.CheckBoxFor(x => x.Enero, new { @style = "width: 20px; height: 20px;" }) Enero</li>
+                                    <li>@Html.CheckBoxFor(x => x.Febrero, new { @style = "width: 20px; height: 20px;" }) Febrero</li>
+                                    <li>@Html.CheckBoxFor(x => x.Marzo, new { @style = "width: 20px; height: 20px;" }) Marzo</li>
+                                    <li>@Html.CheckBoxFor(x => x.Abril, new { @style = "width: 20px; height: 20px;" }) Abril</li>
+                                    <li>@Html.CheckBoxFor(x => x.Mayo, new { @style = "width: 20px; height: 20px;" }) Mayo</li>
+                                    <li>@Html.CheckBoxFor(x => x.Junio, new { @style = "width: 20px; height: 20px;" }) Junio</li>
+                                    <li>@Html.CheckBoxFor(x => x.Julio, new { @style = "width: 20px; height: 20px;" }) Julio</li>
+                                    <li>@Html.CheckBoxFor(x => x.Agosto, new { @style = "width: 20px; height: 20px;" }) Agosto</li>
+                                    <li>@Html.CheckBoxFor(x => x.Septiembre, new { @style = "width: 20px; height: 20px;" }) Septiembre</li>
+                                    <li>@Html.CheckBoxFor(x => x.Octubre, new { @style = "width: 20px; height: 20px;" }) Octubre</li>
+                                    <li>@Html.CheckBoxFor(x => x.Noviembre, new { @style = "width: 20px; height: 20px;" }) Noviembre</li>
+                                    <li>@Html.CheckBoxFor(x => x.Diciembre, new { @style = "width: 20px; height: 20px;" }) Diciembre</li>
                                 </ul>
 
                                 @if (ViewBag.MensajeError != null)
@@ -114,24 +110,28 @@
                             <div class="body">
                                 <div class="form-group">
                                     @Html.DevExpress().ComboBox(settings =>
-                                        {
-                                            settings.Name = "IdTipoReporte";
-                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                            settings.Theme = "Material";
-                                            settings.Properties.TextField = "TipoCombustible";
-                                            settings.Properties.ValueField = "Id_Combustible";
-                                            //settings.ClientEnabled = true;
-                                            //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
-                                            settings.PreRender = (s, e) =>
-                                            {
-                                                MVCxComboBox combo = s as MVCxComboBox;
-                                                combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                                combo.Properties.ValueType = typeof(int);
-                                                combo.SelectedIndex = 1;
-                                            };
-                                        }).BindList(ViewBag.TipoCombustible).GetHtml()
+                               {
+                                   settings.Name = "IdTipoReporte";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Theme = "Material";
+                                   settings.Properties.TextField = "TipoReporte";
+                                   settings.Properties.ValueField = "id_Reporte";
+
+                                   //settings.ClientEnabled = true;
+                                   //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                       combo.Properties.Items.Add("Venta anual x mes, General",1);
+                                       combo.Properties.Items.Add("Venta anual x mes, Pipa vs Camioneta",2);
+                                       combo.Properties.Items.Add("Venta anual x mes, Camioneta Local vs Foranea",3);
+                                       combo.Properties.ValueType = typeof(int);
+                                       combo.SelectedIndex = 0;
+                                   };
+                               }).GetHtml()
                                     @*@Html.ValidationMessageFor(m => m.IdTipoCombustible, "", new { @class = "alert-danger" })*@
                                 </div>
 

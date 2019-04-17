@@ -1,7 +1,5 @@
-﻿@model MVC.Presentacion.Models.Historico.HistoricoVentasConsulta
-@Html.HiddenFor(x => x.Years)
+﻿@model MVC.Presentacion.Models.Historico.YearsDTO
+    @Html.HiddenFor(m => m.Year)
+<li style="list-style:none">@Html.CheckBoxFor(x => x.Seleccionar, new { @style = "width: 20px; height: 20px;" }) @Model.Year</li>
 
-<tr>
-
-</tr>
 

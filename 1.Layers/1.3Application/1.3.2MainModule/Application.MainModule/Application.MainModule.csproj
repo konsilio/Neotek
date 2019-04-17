@@ -84,6 +84,7 @@
     <Compile Include="AdaptadoresDTO\Facturacion\MetodoPagoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Facturacion\UsoCFDIAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Historico\HistoricoVentasAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Historico\YearsAdapater.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="DTOs\Facturacion\UsoCFDIDTO.cs" />
     <Compile Include="DTOs\Historico\HistoricoConsultaDTO.cs" />
     <Compile Include="DTOs\Historico\HistoricoVentaDTO.cs" />
+    <Compile Include="DTOs\Historico\YearDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticiposEstacionDTO.cs" />

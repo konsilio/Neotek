@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MVC.Presentacion.Models.Historico
+namespace Application.MainModule.DTOs
 {
-    public class YearsDTO
+    public class YearDTO
     {
         public int Year { get; set; }
         public bool Seleccionar { get; set; }

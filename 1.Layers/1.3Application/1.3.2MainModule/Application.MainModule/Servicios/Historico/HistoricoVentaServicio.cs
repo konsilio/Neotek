@@ -34,6 +34,10 @@ namespace Application.MainModule.Servicios.Historico
         {
             return new HistoricoDataAcces().Obtener();
         }
+        public static List<int> ObtenerElementosDistintos(short id)
+        {
+            return new HistoricoDataAcces().ObtenerElementosDistintos();
+        }
         public static List<HistoricoVentas> BuscarPorMes(int anio, int mes)
         {
             return new HistoricoDataAcces().ObtenerPorMes(anio, mes);
@@ -41,10 +45,10 @@ namespace Application.MainModule.Servicios.Historico
         public static List<HistoricoVentas> BuscarPorFiltros(HistoricoConsultaDTO dto)
         {
             List<HistoricoVentas> Lista = new List<HistoricoVentas>();
-            foreach (string item in dto.Years)
+            foreach (YearDTO item in dto.Years)
             {
-                int y;
-                if (int.TryParse(item, out y))
+                int y = item.Year;
+                if (item.Seleccionar)
                 {
                     if (dto.Enero)
                         Lista.AddRange(BuscarPorMes(y, 1));
@@ -201,15 +205,16 @@ namespace Application.MainModule.Servicios.Historico
 
             return keys + labels + barColors;
         }
+
         private static string JsonGeneral(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
         {
             string json = "data: [ {";
-            foreach (string year in dto.Years)
+            foreach (YearDTO year in dto.Years)
             {
-                int y;
-                if (int.TryParse(year, out y))
+                int y = year.Year;
+                if (year.Seleccionar)
                 {
-                    json += string.Concat("y: '" , year , "',");
+                    json += string.Concat("y: '", year.Year, "',");
                     if (dto.Enero)
                         json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(1)).Sum(t => t.MontoVenta).ToString(), ", ");
                     if (dto.Febrero)
@@ -243,10 +248,10 @@ namespace Application.MainModule.Servicios.Historico
         private static string JsonCamionetasVSPipas(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
         {
             string json = "data: [ ";
-            foreach (string year in dto.Years)
+            foreach (YearDTO year in dto.Years)
             {
                 int y;
-                if (int.TryParse(year, out y))
+                if (int.TryParse(year.ToString(), out y))
                 {
                     if (dto.Enero)
                     {
@@ -328,10 +333,10 @@ namespace Application.MainModule.Servicios.Historico
         private static string JsonLocalesVSForaneos(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
         {
             string json = "data: [ ";
-            foreach (string year in dto.Years)
+            foreach (YearDTO year in dto.Years)
             {
                 int y;
-                if (int.TryParse(year, out y))
+                if (int.TryParse(year.ToString(), out y))
                 {
                     if (dto.Enero)
                     {

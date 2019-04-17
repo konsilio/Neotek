@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs
 {
-    public class HistoricoConsultaDTO
+    public  class HistoricoConsultaDTO
     {
         public bool Enero { get; set; }
         public bool Febrero { get; set; }
@@ -20,7 +20,7 @@ namespace Application.MainModule.DTOs
         public bool Octubre { get; set; }
         public bool Noviembre { get; set; }
         public bool Diciembre { get; set; }
-        public List<string> Years { get; set; }
+        public List<YearDTO> Years { get; set; }
         public int IdTipoReporte { get; set; }
     }
 }
