@@ -24,11 +24,11 @@ namespace Utilities.MainModule
         public static int diasHabilesEntreDosFechas(DateTime fechaMenor, DateTime fechaMayor)
         {
             int contador = 0;
-            DateTime fechaContador = fechaMenor;            
+            DateTime fechaContador = fechaMenor;
             do
             {
-                if (!fechaContador.DayOfWeek.Equals(DayOfWeek.Saturday) 
-                    && !fechaContador.DayOfWeek.Equals(DayOfWeek.Sunday) 
+                if (!fechaContador.DayOfWeek.Equals(DayOfWeek.Saturday)
+                    && !fechaContador.DayOfWeek.Equals(DayOfWeek.Sunday)
                     && !DiasFestivos.ContainsValue(fechaContador))
                     contador++;
 
@@ -42,6 +42,17 @@ namespace Utilities.MainModule
         {
             TimeSpan resultado = fechaMayor.Subtract(fechaMenor);
             return resultado.TotalMinutes;
+        }
+        public static bool validaFechaInicialFinal(DateTime Inicial, DateTime Fianl)
+        {
+            if (Inicial < Fianl) return true;
+            return false;
+        }
+        public static bool validaFechaDentroDelMes(DateTime Fecha)
+        {
+            if (Fecha.Month.Equals(DateTime.Now.Month) && Fecha.Year.Equals(DateTime.Now.Year))
+                return true;
+            return false;
         }
     }
 }

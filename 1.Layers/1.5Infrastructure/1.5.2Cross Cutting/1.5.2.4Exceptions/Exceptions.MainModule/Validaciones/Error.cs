@@ -60,5 +60,8 @@ namespace Exceptions.MainModule.Validaciones
 
         public const string A0001 = "No se logró hacer el registro {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
         public const string A0002 = "La cantidad a entregar supera las existencias en almacén";
+
+        public const string F0001 = "La fecha inicio es mayor que la fecha final";
+        public const string F0002 = "Las fecha deben estar dentro del mes en curso";
     }
 }

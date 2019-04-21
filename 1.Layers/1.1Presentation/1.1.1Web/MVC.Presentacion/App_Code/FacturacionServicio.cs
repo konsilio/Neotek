@@ -36,13 +36,13 @@ namespace MVC.Presentacion.App_Code
                 return new List<CFDIDTO>() { _agente._CFDIDTO };
             }
         }
-        public static List<CFDIDTO> ObtenerCFDIs(FacturacionGlobalModel model, string token)
+        public static List<CFDIDTO> ObtenerCFDIs(string token)
         {
             AgenteServicio _agente = new AgenteServicio();
-            _agente.ListaCFDIs(model, token);
+            _agente.ListaCFDIs(token);
             return _agente._ListaCFDIs;
 
-        }
+        }        
         public static CFDIDTO ObtenerCFDI(string ticket)
         {
             AgenteServicio _agente = new AgenteServicio();

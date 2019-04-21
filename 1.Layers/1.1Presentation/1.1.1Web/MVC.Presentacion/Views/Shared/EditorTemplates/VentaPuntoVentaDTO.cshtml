@@ -3,9 +3,10 @@
 @Html.HiddenFor(x => x.IdCliente)
 @Html.HiddenFor(x => x.Total)
 @Html.HiddenFor(x => x.RFC)
+@Html.HiddenFor(x => x.VentaTotal)
 
 <tr>  
-    <th>@Model.FolioVenta</th>
+    <td><strong>@Model.FolioVenta</strong></td>
     <td>@Model.Total</td>
     <td>@Model.RFC</td>
     <td class="text-center">@Html.CheckBoxFor(x => x.seleccionar, new { @style = "width: 20px; height: 20px;" })</td>

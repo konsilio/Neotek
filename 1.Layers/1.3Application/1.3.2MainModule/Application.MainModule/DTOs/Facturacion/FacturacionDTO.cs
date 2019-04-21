@@ -12,6 +12,8 @@ namespace Application.MainModule.DTOs
         public string RFC { get; set; }
         public short IdEmpresa { get; set; }
         public string Ticket { get; set; }
-        public System.DateTime FechaVenta { get; set; }
+        public DateTime FechaVenta { get; set; }
+        public DateTime FechaIni { get; set; }
+        public DateTime FechaFinal { get; set; }
     }
 }

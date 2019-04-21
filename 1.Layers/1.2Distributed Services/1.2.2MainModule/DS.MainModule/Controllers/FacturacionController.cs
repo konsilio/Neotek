@@ -36,6 +36,12 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorTicket(numTicket));
         }
+        [Authorize]
+        [Route("buscar/tickets")]
+        public HttpResponseMessage PostTicket(FacturacionDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.Buscar(dto));
+        }
         [Route("buscar/tickets/cliente/{id}")]
         public HttpResponseMessage GetTicketsByCliente(int id)
         {
@@ -50,6 +56,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetCFDIByRFC(string rfc)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarFacturasPorRFC(rfc));
+        }
+        [Route("buscar/cfdis")]
+        public HttpResponseMessage GetCFDIs()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarFacturasPorRFC());
         }
         [Route("buscar/cfdi/cliente/{id}")]
         public HttpResponseMessage GetCFDIByCliente(int id)

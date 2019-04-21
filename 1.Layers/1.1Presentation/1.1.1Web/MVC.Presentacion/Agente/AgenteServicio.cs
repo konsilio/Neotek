@@ -53,7 +53,6 @@ namespace MVC.Presentacion.Agente
         public CFDIDTO _CFDIDTO;
         public ClientesDto _ClienteDTO;
         public ClientesModel _ClienteModel;
-        //public ClienteModel _ClienteModel;
         public HistoricoVentaModel _HistoricoVentaDTO;
 
 
@@ -4421,13 +4420,6 @@ namespace MVC.Presentacion.Agente
                 BuscarTickets(_mod.RFC, ApiCatalgos).Wait();
             }
         }
-        public void ListaTickets(FacturacionGlobalModel _mod,string token)
-        {
-            
-                this.ApiCatalgos = ConfigurationManager.AppSettings["GetTicketsByCliente"];
-                BuscarTickets(_mod, ApiCatalgos, token).Wait();
-            
-        }
         private async Task BuscarTickets(string filtro, string api, string token = null)
         {
             using (var client = new HttpClient())
@@ -4440,6 +4432,40 @@ namespace MVC.Presentacion.Agente
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync(string.Concat(api, filtro)).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        ventas = await response.Content.ReadAsAsync<List<VentaPuntoVentaDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    ventas = new List<VentaPuntoVentaDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListaVenta = ventas;
+            }
+        }
+        public void ListaTickets(FacturacionGlobalModel _mod, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostTicket"];
+            BuscarTickets(_mod, ApiCatalgos, token).Wait();
+        }
+        private async Task BuscarTickets(FacturacionGlobalModel mod, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<VentaPuntoVentaDTO> ventas = new List<VentaPuntoVentaDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRoute, mod).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         ventas = await response.Content.ReadAsAsync<List<VentaPuntoVentaDTO>>();
                     else
@@ -4503,7 +4529,7 @@ namespace MVC.Presentacion.Agente
                 this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDIByRFC"];
                 BuscarCFDIs(_mod.RFC, ApiCatalgos).Wait();
             }
-        }       
+        }
         private async Task BuscarCFDIs(string filtro, string api, string token = null)
         {
             using (var client = new HttpClient())
@@ -4533,10 +4559,39 @@ namespace MVC.Presentacion.Agente
                 _ListaCFDIs = CFDIs;
             }
         }
-        public void ListaCFDIs(FacturacionGlobalModel _mod, string token)
+        public void ListaCFDIs(string token)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDIByCliente"];
-            BuscarCFDIs(_mod.IdCliente.ToString(), ApiCatalgos, token).Wait();
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDIs"];
+            BuscarCFDIs(ApiCatalgos, token).Wait();
+        }
+        private async Task BuscarCFDIs(string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CFDIDTO> CFDIs = new List<CFDIDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        CFDIs = await response.Content.ReadAsAsync<List<CFDIDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    CFDIs = new List<CFDIDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListaCFDIs = CFDIs;
+            }
         }
         private async Task BuscarCFDIs(FacturacionGlobalModel filtro, string api, string token = null)
         {

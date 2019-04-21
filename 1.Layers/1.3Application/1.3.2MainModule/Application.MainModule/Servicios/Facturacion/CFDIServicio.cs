@@ -6,6 +6,7 @@ using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Seguridad;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
 using Sagas.MainModule.ObjetosValor.Enum;
@@ -15,6 +16,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities.MainModule;
 
 namespace Application.MainModule.Servicios.Facturacion
 {
@@ -109,6 +111,17 @@ namespace Application.MainModule.Servicios.Facturacion
                 CorreoElectronico = _cliente.CorreoElectronico,
             };
         }
+        public static Receptor DatosReceptor()
+        {//Datos para factura global
+            var _cliente = ClienteServicio.ObtenerPublicoEnGeneral();
+            return new Receptor()
+            {
+                Nombre = _cliente.Nombre + " " + _cliente.Apellido1 + " " + _cliente.Apellido2,
+                Rfc = _cliente.Rfc,
+                UsoCFDI = UsoCFDIServicio.Buscar(1).UsoCFDISAT,
+                CorreoElectronico = _cliente.CorreoElectronico,
+            };
+        }
         public static List<Concepto> DatosConceptos(CFDIDTO dto)
         {
             List<Concepto> _conceptos = new List<Concepto>();
@@ -171,7 +184,7 @@ namespace Application.MainModule.Servicios.Facturacion
                     return _resp;
                 }
             }
-            _resp.Mensaje = _resp.Mensaje.TrimEnd(',');           
+            _resp.Mensaje = _resp.Mensaje.TrimEnd(',');
             return _resp;
         }
         public static List<VentaPuntoDeVenta> DescartarFacturados(List<VentaPuntoDeVenta> ventas, List<CFDIDTO> Facturas)
@@ -181,6 +194,40 @@ namespace Application.MainModule.Servicios.Facturacion
                 if (!Facturas.Exists(x => x.Id_FolioVenta.Equals(v.FolioVenta) && x.UUID.Trim() != string.Empty))
                     list.Add(v);
             return list;
+        }
+        public static RespuestaDto ValidarRangoBusqueda(FacturacionDTO dto)
+        {
+            if (!FechasFunciones.validaFechaInicialFinal(dto.FechaIni, dto.FechaFinal))
+                return ErrorFechasRango();
+            if (!FechasFunciones.validaFechaDentroDelMes(dto.FechaIni) || !FechasFunciones.validaFechaDentroDelMes(dto.FechaFinal))
+                return ErrorFechasMesInvalido();
+            return FechasCorrectas();
+
+        }
+        private static RespuestaDto FechasCorrectas()
+        {
+            return new RespuestaDto()
+            {
+                Exito = true
+            };
+        }
+        private static RespuestaDto ErrorFechasMesInvalido()
+        {
+            return new RespuestaDto()
+            {
+                Exito = false,
+                Mensaje = Error.F0002,
+                MensajesError = new List<string>()
+            };
+        }
+        private static RespuestaDto ErrorFechasRango()
+        {
+            return new RespuestaDto()
+            {
+                Exito = false,
+                Mensaje = Error.F0002,
+                MensajesError = new List<string>()
+            };
         }
     }
 }
