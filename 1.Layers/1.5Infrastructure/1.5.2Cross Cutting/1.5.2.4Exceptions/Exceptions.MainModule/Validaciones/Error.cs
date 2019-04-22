@@ -63,5 +63,6 @@ namespace Exceptions.MainModule.Validaciones
 
         public const string F0001 = "La fecha inicio es mayor que la fecha final";
         public const string F0002 = "Las fecha deben estar dentro del mes en curso";
+        public const string F0003 = "Lagunos registros tuvieron algun error, no se puede completar la tarea";
     }
 }

@@ -66,6 +66,33 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public RespuestaDto Actualizar(List<CFDI> entidades)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    foreach (var entidad in entidades)
+                    {
+                        uow.Repository<CFDI>().Update(entidad);
+                    }
+                    uow.SaveChanges();
+                    _respuesta.Id = entidades[0].Id_RelTF;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del punto de venta"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public RespuestaDto Borrar(CFDI entidad)
         {
             RespuestaDto _respuesta = new RespuestaDto();

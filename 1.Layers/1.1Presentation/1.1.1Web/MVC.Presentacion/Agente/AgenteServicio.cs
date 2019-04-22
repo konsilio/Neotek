@@ -4661,6 +4661,11 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarCFDILst"];
             LLamada(ticket, string.Empty, MetodoRestConst.Post, true).Wait();
         }
+        public void PostRegistrarCFDIGlobal(FacturacionGlobalModel model, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarCFDIGlobal"];
+            LLamada(model, token, MetodoRestConst.Post, false).Wait();
+        }
 
         #endregion
         #region HistoricoVentas

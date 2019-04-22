@@ -247,14 +247,13 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult Facturar(FacturacionGlobalModel _mod)
         {
-            List<VentaPuntoVentaDTO> tiks = (List<VentaPuntoVentaDTO>)TempData["TiketsAgregados"];
-           
-            TempData["FacturacionModel"] = fac;
-            TempData["List<VentaPuntoVentaDTO>"] = tiks;
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            _mod.Tickets = (List<VentaPuntoVentaDTO>)TempData["TiketsAgregados"];
+            TempData["TiketsAgregados"] = _mod.Tickets;
 
-            TempData["RespuestaDTO"] = FacturacionServicio.GenerarFacturas(fac);
-
-            return RedirectToAction("Index", _mod);
+            TempData["RespuestaDTO"] = FacturacionServicio.GenerarFacturasGlobal(_mod, _tkn);
+            return RedirectToAction("FacturacionGlobal", _mod);
         }
         private string Validar(RespuestaDTO Resp = null)
         {

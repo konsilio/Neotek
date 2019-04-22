@@ -19,13 +19,24 @@ namespace Application.MainModule.Flujos
 {
     public class Facturacion
     {
-        public RespuestaDto GenerarFacturaGlobal(CFDIDTO dto)
+        public RespuestaDto GenerarFacturaGlobal(FacturacionDTO dtoGlob)
         {
-            var _comp = CFDIServicio.DatosComprobante(dto);
-            _comp.Receptor = CFDIServicio.DatosReceptor(dto);
-            _comp.Concepto = CFDIServicio.DatosConceptos(dto).ToArray();
+            CFDIDTO dto = new CFDIDTO();
+            var _comp = CFDIServicio.DatosComprobante(dtoGlob);
+            _comp.Receptor = CFDIServicio.DatosReceptor();
+            _comp.Concepto = CFDIServicio.DatosConceptos(dtoGlob).ToArray();
 
-            return CFDIServicio.Timbrar(_comp, dto).RespuestaTimbrado;
+            dto.Id_FormaPago = 27;
+            dto.Id_MetodoPago = Convert.ToInt32(MetodoPagoConst.IDPUE);
+            dto.Folio = CFDIServicio.FolioFacturaGeneral();
+            dto.Serie = "G";
+            dto.UUID = string.Empty;
+            dto.VersionCFDI = ConfigurationManager.AppSettings["VersionCFDI"];
+            dto.RespuestaTimbrado = CFDIServicio.Crear(CFDIAdapter.FromDTO(dto), dtoGlob.Tickets);
+
+            if (!dto.RespuestaTimbrado.Exito) return dto.RespuestaTimbrado;            
+
+            return CFDIServicio.Timbrar(_comp, dto, dtoGlob.Tickets).RespuestaTimbrado;
         }
         public CFDIDTO GenerarFactura(CFDIDTO dto)
         {

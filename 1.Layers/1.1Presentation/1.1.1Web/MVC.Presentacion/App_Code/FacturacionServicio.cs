@@ -64,6 +64,12 @@ namespace MVC.Presentacion.App_Code
             _agente.PostRegistrarCFDILst(cfdis);
             return _agente._RespuestaDTO;
         }
+        public static RespuestaDTO GenerarFacturasGlobal(FacturacionGlobalModel model, string token)
+        {
+            AgenteServicio _agente = new AgenteServicio();           
+            _agente.PostRegistrarCFDIGlobal(model, token);
+            return _agente._RespuestaDTO;
+        }
         private static List<CFDIDTO> AdaptarFacturaModelo(FacturacionModel model)
         {
             List<CFDIDTO> cfdis = new List<CFDIDTO>();

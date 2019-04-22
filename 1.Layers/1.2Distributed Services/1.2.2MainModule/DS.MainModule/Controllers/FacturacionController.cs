@@ -20,7 +20,6 @@ namespace DS.MainModule.Controllers
         {
             _facturacion = new Facturacion();
         }
-
         [Route("registrar/factruas")]
         public HttpResponseMessage PostRegistrarCFDILst(List<CFDIDTO> list)
         {
@@ -30,7 +29,13 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostRegistrarCFDI(CFDIDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.GenerarFactura(dto));
-        }        
+        }
+        [Authorize]
+        [Route("registrar/factrua/global")]
+        public HttpResponseMessage PostRegistrarCFDIGlobal(FacturacionDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.GenerarFacturaGlobal(dto));
+        }
         [Route("buscar/ticket/{numTicket}")]
         public HttpResponseMessage GetTicket(string numTicket)
         {
