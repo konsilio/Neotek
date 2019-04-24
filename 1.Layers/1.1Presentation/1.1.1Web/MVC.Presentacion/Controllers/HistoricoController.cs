@@ -154,66 +154,58 @@ namespace MVC.Presentacion.Controllers
         {
             if (preCarga != null && preCarga.ContentLength > 0)
             {
-                try
+                // ExcelDataReader works with the binary Excel file, so it needs a FileStream
+                // to get started. This is how we avoid dependencies on ACE or Interop:
+                Stream stream = preCarga.InputStream;
+
+                // We return the interface, so that
+                IExcelDataReader reader = null;
+
+                if (preCarga.FileName.EndsWith(".xls"))
                 {
-                    // ExcelDataReader works with the binary Excel file, so it needs a FileStream
-                    // to get started. This is how we avoid dependencies on ACE or Interop:
-                    Stream stream = preCarga.InputStream;
+                    reader = ExcelReaderFactory.CreateBinaryReader(stream);
+                }
+                else if (preCarga.FileName.EndsWith(".xlsx"))
+                {
+                    reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                }
+                else
+                {
+                    ModelState.AddModelError("File", "This file format is not supported");
+                    return View();
+                }
 
-                    // We return the interface, so that
-                    IExcelDataReader reader = null;
-
-                    if (preCarga.FileName.EndsWith(".xls"))
-                    
-                        reader = ExcelReaderFactory.CreateBinaryReader(stream);
-                    
-                    else if (preCarga.FileName.EndsWith(".xlsx"))
+                DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                {
+                    ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
                     {
-                        reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+                        UseHeaderRow = true
                     }
-                    else
-                    {
-                        ModelState.AddModelError("File", "This file format is not supported");
-                        return View();
-                    }
+                });
 
-                    DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                List<HistoricoVentaModel> listaHistorico = new List<HistoricoVentaModel>();
+                foreach (DataTable table in result.Tables)
+                {
+                    foreach (DataRow row in table.Rows)
                     {
-                        ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = true }
-                    });
-
-                    List<HistoricoVentaModel> listaHistorico = new List<HistoricoVentaModel>();
-                    foreach (DataTable table in result.Tables)
-                    {
-                        foreach (DataRow row in table.Rows)
+                        listaHistorico.Add(new HistoricoVentaModel
                         {
-                            listaHistorico.Add(new HistoricoVentaModel
-                            {
-                                Mes = Convert.ToInt16(row.ItemArray[0]),
-                                Anio = Convert.ToInt16(row.ItemArray[1]),
-                                MontoVenta = Convert.ToDouble(row.ItemArray[2]),
-                                EsPipa = Convert.ToBoolean(row.ItemArray[3]),
-                                EsCamioneta = Convert.ToBoolean(row.ItemArray[4]),
-                                EsLocal = Convert.ToBoolean(row.ItemArray[5])
-                            });
-                        }
+                            Mes = Convert.ToInt16(row.ItemArray[0]),
+                            Anio = Convert.ToInt16(row.ItemArray[1]),
+                            MontoVenta = Convert.ToDouble(row.ItemArray[2]),
+                            EsPipa = Convert.ToBoolean(row.ItemArray[3]),
+                            EsCamioneta = Convert.ToBoolean(row.ItemArray[4]),
+                            EsLocal = Convert.ToBoolean(row.ItemArray[5])
+                        });
                     }
-                    reader.Close();
-                    TempData["HistoricoVentas"] = listaHistorico;
                 }
-                catch (Exception ex)
-                {
-                    TempData["RespuestaDTO"] = new RespuestaDTO()
-                    {
-                        Exito = false,
-                        Mensaje = ex.Message,
-                        MensajesError = new List<string>() { ex.Message }
-                    };
-                }
+                reader.Close();
+                TempData["HistoricoVentas"] = listaHistorico;
             }
-            else            
+            else
+            {
                 ModelState.AddModelError("File", "Please Upload Your file");
-            
+            }
             return RedirectToAction("Index");
         }
         public ActionResult ObtenerJsonGrf(HistoricoVentasConsulta modelo = null)
@@ -303,7 +295,8 @@ namespace MVC.Presentacion.Controllers
                 //set the title
                 lineChart.Title.Text = "Venta General";
             }
-            else  {
+            else
+            {
 
                 if (modelo.IdTipoReporte == 2)
                 {
@@ -313,7 +306,7 @@ namespace MVC.Presentacion.Controllers
                 {
                     pahtFile = "C:\\Users\\NEOTECK3319\\Desktop\\Archivos\\VentasLocalvsForaneas.xlsx";
                 }
-                
+
 
                 var rangeLabel = worksheet.Cells["B1:M1"];
                 var rowsMes = 2;
@@ -321,7 +314,8 @@ namespace MVC.Presentacion.Controllers
                 var rowPipa = 2;
                 var tempa = "";
                 var rows = 2;
-                var cont = 1;
+                var cont = 0;
+                List<string> rangelabe = new List<string>();
 
                
 
@@ -329,12 +323,11 @@ namespace MVC.Presentacion.Controllers
                 {
                     char[] charArray = datos[r].ToString().ToCharArray();
                     var m = datos[r].ToString().Split('{');
-                 
+
 
 
                     foreach (var item in m)
-                    {
-
+                    {                      
                         var rowCamio = 1;
 
                         if (item != "")
@@ -355,23 +348,22 @@ namespace MVC.Presentacion.Controllers
                                         {
                                             var range1 = worksheet.Cells["B" + rowsaños.ToString() + ":K" + rowsaños.ToString()];
                                             worksheet.Cells[rowsaños, 1].Value = mes[i] + "-" + años[2] + años[3];
+                                            rangelabe.Add(mes[i] + "-" + años[2] + años[3]);
                                             lineChart.Series.Add(range1, rangeLabel);
-                                            lineChart.Series[i].Header = worksheet.Cells["A" + rowsaños.ToString()].Value.ToString();
                                             rowsaños++;
                                         }
 
                                         if (tempa != "")
                                         {
                                             rows = 2;
-                                            cont++;
+                                            cont += 2;
                                             rowPipa = 2;
                                         }
-                                                                                   
                                     }
 
                                     if (r >= 3)
                                     {
-                                        rowCamio += cont; 
+                                        rowCamio += cont;
                                         //rowPipa++; 
                                     }
 
@@ -395,10 +387,11 @@ namespace MVC.Presentacion.Controllers
                                     {
                                         var doubleValue = Double.Parse(sumaCamioneta.Substring(1, tamSuma.Length - 2));
                                         worksheet.Cells[rowCamio, rowPipa].Value = doubleValue;
-                                    } else
+                                    }
+                                    else
                                     {
                                         var doubleValue = Double.Parse(sumaCamioneta.Substring(1, tamSuma.Length - 2));
-                                        worksheet.Cells[rowCamio,rowPipa ].Value = doubleValue;
+                                        worksheet.Cells[rowCamio, rowPipa].Value = doubleValue;
                                     }
 
                                     sumaCamioneta = "";
@@ -426,15 +419,24 @@ namespace MVC.Presentacion.Controllers
 
                                 }
                                 rowCamio++;
-                            }                              
-                            rowsMes++;
+                            }
+
                             rowPipa++;
-                          
-                        }                        
+
+
+                        }
                     }
 
-                }               
-                rowsaños ++;
+                   
+                }
+
+                for (int e = 0; e < rangelabe.Count(); e++)
+                {
+                    lineChart.Series[e].Header = worksheet.Cells["A" + rowsMes.ToString()].Value.ToString();
+                    rowsMes++;
+                }
+                rangelabe = null;
+                rowsaños++;
                 //rowPipa = 2;
                 //set the title
                 if (modelo.IdTipoReporte == 2)
@@ -446,16 +448,16 @@ namespace MVC.Presentacion.Controllers
                     lineChart.Title.Text = "LocalvsForanea";
                 }
 
-            } 
+            }
 
             //position of the legend
             lineChart.Legend.Position = eLegendPosition.Right;
 
             //size of the chart
-            lineChart.SetSize(600, 700);
+            lineChart.SetSize(700, 600);
 
             //add the chart at cell B6
-            lineChart.SetPosition(5, 0, 1, 0);
+            lineChart.SetPosition(1, 0, 8, 0);
 
             FileInfo infor = new FileInfo(pahtFile);
             sLDocument.SaveAs(infor);
