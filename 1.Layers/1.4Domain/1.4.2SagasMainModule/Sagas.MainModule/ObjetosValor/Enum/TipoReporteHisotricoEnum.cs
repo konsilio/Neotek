@@ -17,7 +17,8 @@ namespace Sagas.MainModule.ObjetosValor.Enum
       
         General = 1,
         CamionetaVSPipa = 2,
-        LocalesVSForeaneos = 3,
+        LocalesVSForeaneos = 3
         
     }
+
 }

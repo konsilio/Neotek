@@ -23,6 +23,11 @@ namespace Application.MainModule.Flujos
             var lista = HistoricoVentaServicio.Buscar(TokenServicio.ObtenerIdEmpresa());
             return HistoricoVentasAdapter.ToDTO(lista);
         }
+        public List<YearDTO> ObtenerElementosDistintos()
+        {
+            var lista = HistoricoVentaServicio.ObtenerElementosDistintos(TokenServicio.ObtenerIdEmpresa());
+            return YearsAdapater.ToDTO(lista);
+        }
         public RespuestaDto CrearCatalogo(List<HistoricoVentaDTO> dto)
         {
             var resp = PermisosServicio.HistoricoVentas();
@@ -50,14 +55,19 @@ namespace Application.MainModule.Flujos
          
             return HistoricoVentaServicio.Actualizar(emty);
         }
-        public static string GenerarJsonConsulta(HistoricoConsultaDTO dto)
+        public string GenerarJsonConsulta(HistoricoConsultaDTO dto)
         {
-            //Traer los registros segun los parametros de años y meses
+            //Traer los registros segun los parametros de años y meses 
             var Ventas = HistoricoVentaServicio.BuscarPorFiltros(dto);
             //transformar segun tipo de consulta
-
-
-            return "";
+            
+            return HistoricoVentaServicio.TransformarAJason(Ventas,dto);
+        }
+        public List<YearDTO> VentasConsultas( HistoricoConsultaDTO dto2)
+        {
+           
+            var Ventas = HistoricoVentaServicio.BuscarPorFiltros(dto2);
+            return HistoricoVentaServicio.VentasTotales(Ventas, dto2);
         }
     }
 }

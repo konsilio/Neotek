@@ -54,6 +54,7 @@ namespace MVC.Presentacion.Agente
         public ClientesDto _ClienteDTO;
         public ClientesModel _ClienteModel;
         public HistoricoVentaModel _HistoricoVentaDTO;
+        public string _json;
 
 
         public List<ClienteLocacionMod> _cteLocacion;
@@ -119,8 +120,11 @@ namespace MVC.Presentacion.Agente
         public List<VentaPuntoVentaDTO> _ListaVenta;
         public List<CFDIDTO> _ListaCFDIs;
         public List<HistoricoVentaModel> _ListHistoricoVenta;
+        public List<YearsDTO> _ListYears;
         public List<UsoCFDIDTO> _ListaUsoCFDI;
         public List<MetodoPagoDTO> _ListaMetodPago;
+        public List<YearsVentasTotalesDTO> _yearVentasTortales;
+        public string _Json;
 
         public AgenteServicio()
         {
@@ -4754,6 +4758,128 @@ namespace MVC.Presentacion.Agente
         {
             ApiHistoricos = ConfigurationManager.AppSettings["DeleteHistorico"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+
+        public void ObtenerElementosDistintos(string tkn)
+        {
+            ApiHistoricos = ConfigurationManager.AppSettings["GetYears"];
+            Years(ApiHistoricos, tkn).Wait();
+        }
+        private async Task Years(string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<YearsDTO> Year = new List<YearsDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        Year = await response.Content.ReadAsAsync<List<YearsDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Year = new List<YearsDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+                _ListYears = Year;
+            }
+        }
+
+        public void GetVentasTotales(HistoricoVentasConsulta dto, string tkn)
+
+        {
+            ApiHistoricos = ConfigurationManager.AppSettings["GetYearsTotales"];
+            ApiRoute = ApiHistoricos;
+            GetVentas(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public async Task GetVentas<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
+        {
+            using (var client = new HttpClient())
+            {
+                List<YearsDTO> resp = new List<YearsDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                if (!EsAnonimo)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    if (Tipo.Equals(MetodoRestConst.Post))
+                        response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (Tipo.Equals(MetodoRestConst.Put))
+                        response = await client.PutAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<List<YearsDTO>>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<List<YearsDTO>>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListYears = resp;
+            }
+        }
+
+        public void GetJson(HistoricoVentasConsulta dto, string tkn)
+        {
+            ApiHistoricos = ConfigurationManager.AppSettings["GetJsonConsulta"];
+            ApiRoute = ApiHistoricos;
+            GetJson(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public async Task GetJson<T>(T _dto,string token, string Tipo, bool EsAnonimo = false)
+        {
+            using (var client = new HttpClient())
+            {
+                string resp = "";
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                if (!EsAnonimo)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    if (Tipo.Equals(MetodoRestConst.Post))
+                        response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (Tipo.Equals(MetodoRestConst.Put))
+                        response = await client.PutAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<string>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<string>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _json = resp;
+            }
         }
 
         public void ActualizarHistorico(HistoricoVentaModel dto, string tkn)

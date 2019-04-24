@@ -30,24 +30,12 @@
     //        $("#Url").val($("idUrl").val());
     //    });
     //});
-    window.addEventListener("load", function () {
-        document.getElementById("idUrl").onchange = function (event) {
-            var reader = new FileReader();
-            reader.readAsDataURL(event.srcElement.files[0]);
-            var me = this;
-            reader.onload = function () {
-                var fileContent = reader.result;
-                console.log(reader);
-                $("#Url").val(reader);
-            }
-        }
-    });
 
 </script>
 <body>
     <section class="content home">
         <div class="container-fluid">
-            @using (Html.BeginForm("Crear", "Historico", FormMethod.Post , new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Crear", "Historico", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
 
                 <div class="block-header">
@@ -87,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="form-group">                                  
+                                    <div class="form-group">
                                         <input type="file" id="dataFile" name="preCarga" />
                                         <input type="submit" value="Pre-Cargar" formaction=@Url.Action("PreCarga") class="btn btn-primary btn-round" />
                                     </div>
@@ -146,11 +134,11 @@
                                                         <td>$@hist.MontoVenta</td>
                                                         @if (@hist.EsPipa)
                                                         {
-                                                            <td>1</td>                                                           
+                                                            <td>1</td>
                                                         }
                                                         else
                                                         {
-                                                            <td>0</td>                                                           
+                                                            <td>0</td>
                                                         }
                                                         @if (@hist.EsCamioneta)
                                                         {
@@ -159,7 +147,7 @@
                                                         else
                                                         {
                                                             <td>0</td>
-                                                        }                                                     
+                                                        }
                                                         @if (@hist.EsLocal)
                                                         {
                                                             <td>1</td>
@@ -180,14 +168,18 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                @*<div class="col-md-6">
-                                        Página @(ViewBag.Mantenimientos.PageCount < ViewBag.Mantenimientos.PageNumber ? 0 : ViewBag.Mantenimientos.PageNumber) de @ViewBag.Mantenimientos.PageCount
+                            @*@if (ViewBag.HistoricoVentas != null)
+                            {
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        Página @(ViewBag.HistoricoVentas.PageCount < ViewBag.HistoricoVentas.PageNumber ? 0 : ViewBag.HistoricoVentas.PageNumber) de @ViewBag.HistoricoVentas.PageCount
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        @Html.PagedListPager((IPagedList)ViewBag.Mantenimientos, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
-                                    </div>*@
-                            </div>
+                                        @Html.PagedListPager((IPagedList)ViewBag.HistoricoVentas, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
+                                    </div>
+                                </div>
+                            }*@
+
                         </div>
                     </div>
                 </div>

@@ -49,7 +49,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
           
         }
-
         public RespuestaDto Actualizar(HistoricoVentas entidad)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -84,6 +83,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<HistoricoVentas> Obtener()
         {
             return uow.Repository<HistoricoVentas>().GetAll().ToList();
+        }
+        public List<int> ObtenerElementosDistintos()
+        {
+            return uow.Repository<HistoricoVentas>().GetAll().OrderBy(m => m.Anio).Select(m => m.Anio).Distinct().ToList();
+        }
+        public string Json()
+        {
+            return "";
         }
         public List<HistoricoVentas> ObtenerPorMes(int Anio, int mes)
         {

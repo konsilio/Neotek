@@ -55,5 +55,24 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _historico.EliminarCatalogo(historico));
         }
+
+        [Route("consultar/years")]
+        [HttpGet]
+        public HttpResponseMessage GetYears(YearDTO years)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _historico.ObtenerElementosDistintos());
+        }
+        [Route("consultar/json")]
+        [HttpPost]
+        public HttpResponseMessage GetJson(HistoricoConsultaDTO json)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _historico.GenerarJsonConsulta(json));
+        }
+        [Route("consultar/yearstotales")]
+        [HttpPost]
+        public HttpResponseMessage GetVentasTotales(HistoricoConsultaDTO dto2)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _historico.VentasConsultas(dto2));
+        }
     }
 }
