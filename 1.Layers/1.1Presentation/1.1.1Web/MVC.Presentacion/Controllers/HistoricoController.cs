@@ -295,30 +295,37 @@ namespace MVC.Presentacion.Controllers
                 //set the title
                 lineChart.Title.Text = "Venta General";
             }
-            else if (modelo.IdTipoReporte == 2)
-            {
-                pahtFile = "C:\\Users\\NEOTECK3319\\Desktop\\Archivos\\VentasPipasvsCamionetas.xlsx";
+            else  {
+
+                if (modelo.IdTipoReporte == 2)
+                {
+                    pahtFile = "C:\\Users\\NEOTECK3319\\Desktop\\Archivos\\VentasPipasvsCamionetas.xlsx";
+                }
+                else
+                {
+                    pahtFile = "C:\\Users\\NEOTECK3319\\Desktop\\Archivos\\VentasLocalvsForaneas.xlsx";
+                }
+                
 
                 var rangeLabel = worksheet.Cells["B1:M1"];
-                var rows = 2;
                 var rowsMes = 2;
-                var rowPipa = 2;
                 var rowsaños = 2;
+                var rowPipa = 2;
                 var tempa = "";
-                
+                var rows = 2;
+                var cont = 1;
+
+               
+
                 for (int r = 0; r < datos.Count; r++)
                 {
                     char[] charArray = datos[r].ToString().ToCharArray();
                     var m = datos[r].ToString().Split('{');
-                  
-                    //create the ranges for the chart
-                    var range1 = worksheet.Cells["B" + rows.ToString() + ":K" + rows.ToString()];
-                    //add the ranges to the chart
-                    lineChart.Series.Add(range1, rangeLabel);
-                   
+                 
 
                     foreach (var item in m)
                     {
+
                         var rowCamio = 1;
 
                         if (item != "")
@@ -330,25 +337,40 @@ namespace MVC.Presentacion.Controllers
                                 if (valores.ToList()[0].Contains("y"))
                                 {
                                     //El mes y el año
-                                    
-                                    var meses = valores[1].ToString().Split(' ').ToList()[1];
-                                    char[] tamañoMes = meses.ToCharArray();
-                                    worksheet.Cells[1, rows].Value = meses.Substring(1, tamañoMes.Length - 1);
                                     var año = valores[1].ToString().Split(' ').ToList()[2];
                                     char[] años = año.ToCharArray();
-                                   
 
-                                   if (tempa == "" || tempa != año)
+                                    if (tempa == "" || tempa != año)
                                     {
                                         for (int i = 0; i < mes.Count; i++)
                                         {
-
+                                            var range1 = worksheet.Cells["B" + rowsaños.ToString() + ":K" + rowsaños.ToString()];
                                             worksheet.Cells[rowsaños, 1].Value = mes[i] + "-" + años[2] + años[3];
-                                            lineChart.Series[r].Header = worksheet.Cells["A" + rowsaños.ToString()].Value.ToString();
+                                            lineChart.Series.Add(range1, rangeLabel);
+                                            lineChart.Series[i].Header = worksheet.Cells["A" + rowsaños.ToString()].Value.ToString();
                                             rowsaños++;
                                         }
+
+                                        if (tempa != "")
+                                        {
+                                            rows = 2;
+                                            cont++;
+                                            rowPipa = 2;
+                                        }
+                                                                                   
                                     }
 
+                                    if (r >= 3)
+                                    {
+                                        rowCamio += cont; 
+                                        //rowPipa++; 
+                                    }
+
+                                    var meses = valores[1].ToString().Split(' ').ToList()[1];
+                                    char[] tamañoMes = meses.ToCharArray();
+                                    worksheet.Cells[1, rows].Value = meses.Substring(1, tamañoMes.Length - 1);
+
+                                    rows++;
                                     tempa = año;
                                     //rowCamio++;
                                 }
@@ -362,10 +384,12 @@ namespace MVC.Presentacion.Controllers
 
                                     if(tamSuma[1] == '0')
                                     {
-                                        worksheet.Cells[rowCamio, rowPipa].Value = sumaCamioneta.Substring(1, tamSuma.Length - 2);
+                                        var doubleValue = Double.Parse(sumaCamioneta.Substring(1, tamSuma.Length - 2));
+                                        worksheet.Cells[rowCamio, rowPipa].Value = doubleValue;
                                     } else
                                     {
-                                        worksheet.Cells[rowCamio,rowPipa ].Value = sumaCamioneta.Substring(1, tamSuma.Length - 5);
+                                        var doubleValue = Double.Parse(sumaCamioneta.Substring(1, tamSuma.Length - 2));
+                                        worksheet.Cells[rowCamio,rowPipa ].Value = doubleValue;
                                     }
                                    
                                     sumaCamioneta = "";
@@ -380,148 +404,40 @@ namespace MVC.Presentacion.Controllers
                                     char[] tamSumaPi = sumaPipa.ToCharArray();
                                     if (tamSumaPi[1] == '0')
                                     {
-                                        worksheet.Cells[rowCamio, rowPipa].Value = sumaPipa.Substring(1, tamSumaPi.Length - 2);
+                                        var doubleValue = Double.Parse(sumaPipa.Substring(1, tamSumaPi.Length - 5));
+                                        worksheet.Cells[rowCamio, rowPipa].Value = doubleValue;
                                     }
                                     else
                                     {
-                                        worksheet.Cells[rowCamio, rowPipa].Value = sumaPipa.Substring(1, tamSumaPi.Length - 5);
+                                        var doubleValue = Double.Parse(sumaPipa.Substring(1, tamSumaPi.Length - 5));
+
+                                        worksheet.Cells[rowCamio, rowPipa].Value = doubleValue;
                                     }
                                     sumaPipa = "";
                                     
                                 }
                                 rowCamio++;
-                             
                             }                              
                             rowsMes++;
                             rowPipa++;
-                            rows++;
-                        }
-                      
-
+                          
+                        }                        
                     }
-                    
 
-                }
-                rows = 2;
+                }               
                 rowsaños ++;
-                rowPipa = 2;
+                //rowPipa = 2;
                 //set the title
-                lineChart.Title.Text = "PipasvsCamionetas";
-            } else {
-                pahtFile = "C:\\Users\\NEOTECK3319\\Desktop\\Archivos\\VentasLocalvsForaneas.xlsx";
-
-                var rangeLabel = worksheet.Cells["B1:M1"];
-                var rows = 2;
-                var rowsMes = 2;
-                var rowPipa = 2;
-                var rowsaños = 2;
-                var tempa = "";
-
-                for (int r = 0; r < datos.Count; r++)
+                if (modelo.IdTipoReporte == 2)
                 {
-                    char[] charArray = datos[r].ToString().ToCharArray();
-                    var m = datos[r].ToString().Split('{');
-
-                    //create the ranges for the chart
-                    var range1 = worksheet.Cells["B" + rows.ToString() + ":K" + rows.ToString()];
-                    //add the ranges to the chart
-                    lineChart.Series.Add(range1, rangeLabel);
-
-
-                    foreach (var item in m)
-                    {
-                        var rowCamio = 1;
-
-                        if (item != "")
-                        {
-                            var p = m[1].Split(',');
-                            foreach (var prop in p)
-                            {
-                                var valores = prop.ToString().Split(':');
-                                if (valores.ToList()[0].Contains("y"))
-                                {
-                                    //El mes y el año
-
-                                    var meses = valores[1].ToString().Split(' ').ToList()[1];
-                                    char[] tamañoMes = meses.ToCharArray();
-                                    worksheet.Cells[1, rows].Value = meses.Substring(1, tamañoMes.Length - 1);
-                                    var año = valores[1].ToString().Split(' ').ToList()[2];
-                                    char[] años = año.ToCharArray();
-
-
-                                    if (tempa == "" || tempa != año)
-                                    {
-                                        for (int i = 0; i < mes.Count; i++)
-                                        {
-
-                                            worksheet.Cells[rowsaños, 1].Value = mes[i] + "-" + años[2] + años[3];
-                                            lineChart.Series[r].Header = worksheet.Cells["A" + rowsaños.ToString()].Value.ToString();
-                                            rowsaños++;
-                                        }
-                                    }
-
-                                    tempa = año;
-                                    //rowCamio++;
-                                }
-
-                                if (valores.ToList()[0].Contains("a"))
-                                {
-                                    //Ventas de Cmaionetas
-                                    var sumaCamioneta = valores[1].ToString().Split(' ').ToList()[1];
-                                    char[] tamSuma = sumaCamioneta.ToCharArray();
-
-
-                                    if (tamSuma[1] == '0')
-                                    {
-                                        worksheet.Cells[rowCamio, rowPipa].Value = sumaCamioneta.Substring(1, tamSuma.Length - 2);
-                                    }
-                                    else
-                                    {
-                                        worksheet.Cells[rowCamio, rowPipa].Value = sumaCamioneta.Substring(1, tamSuma.Length - 5);
-                                    }
-
-                                    sumaCamioneta = "";
-                                    //rowPipa++;    
-                                }
-
-                                if (valores.ToList()[0].Contains("b"))
-                                {
-                                    //Ventas de Pipas
-
-                                    var sumaPipa = valores[1].ToString().Split(' ').ToList()[1];
-                                    char[] tamSumaPi = sumaPipa.ToCharArray();
-                                    if (tamSumaPi[1] == '0')
-                                    {
-                                        worksheet.Cells[rowCamio, rowPipa].Value = sumaPipa.Substring(1, tamSumaPi.Length - 2);
-                                    }
-                                    else
-                                    {
-                                        worksheet.Cells[rowCamio, rowPipa].Value = sumaPipa.Substring(1, tamSumaPi.Length - 5);
-                                    }
-                                    sumaPipa = "";
-
-                                }
-                                rowCamio++;
-
-                            }
-                            rowsMes++;
-                            rowPipa++;
-                            rows++;
-                        }
-
-
-                    }
-
-
+                    lineChart.Title.Text = "PipasvsCamionetas";
                 }
-                rows = 2;
-                rowsaños++;
-                rowPipa = 2;
-                //set the title
-                lineChart.Title.Text = "LocalvsForanea";
-            }
+                else
+                {
+                    lineChart.Title.Text = "LocalvsForanea";
+                }
 
-
+            } 
 
             //position of the legend
             lineChart.Legend.Position = eLegendPosition.Right;
