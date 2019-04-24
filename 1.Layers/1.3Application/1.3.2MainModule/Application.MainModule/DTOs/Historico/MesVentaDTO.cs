@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs
 {
-    public class YearDTO
+    public class MesVentaDto
     {
-        public int Year { get; set; }
-        public bool Seleccionar { get; set; }
-        public  List<MesVentaDto> MesesVenta { get; set; }
+        public string mes { get; set; }
+        public double montoTotal { get; set; }
     }
 }

@@ -55,6 +55,7 @@ namespace MVC.Presentacion.Agente
         public ClientesModel _ClienteModel;
         //public ClienteModel _ClienteModel;
         public HistoricoVentaModel _HistoricoVentaDTO;
+        public string _json;
 
 
         public List<ClienteLocacionMod> _cteLocacion;
@@ -123,6 +124,7 @@ namespace MVC.Presentacion.Agente
         public List<YearsDTO> _ListYears;
         public List<UsoCFDIDTO> _ListaUsoCFDI;
         public List<MetodoPagoDTO> _ListaMetodPago;
+        public List<YearsVentasTotalesDTO> _yearVentasTortales;
         public string _Json;
 
         public AgenteServicio()
@@ -4694,12 +4696,89 @@ namespace MVC.Presentacion.Agente
             }
         }
 
+        public void GetVentasTotales(HistoricoVentasConsulta dto, string tkn)
+
+        {
+            ApiHistoricos = ConfigurationManager.AppSettings["GetYearsTotales"];
+            ApiRoute = ApiHistoricos;
+            GetVentas(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public async Task GetVentas<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
+        {
+            using (var client = new HttpClient())
+            {
+                List<YearsDTO> resp = new List<YearsDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                if (!EsAnonimo)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    if (Tipo.Equals(MetodoRestConst.Post))
+                        response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (Tipo.Equals(MetodoRestConst.Put))
+                        response = await client.PutAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<List<YearsDTO>>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<List<YearsDTO>>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListYears = resp;
+            }
+        }
 
         public void GetJson(HistoricoVentasConsulta dto, string tkn)
         {
             ApiHistoricos = ConfigurationManager.AppSettings["GetJsonConsulta"];
             ApiRoute = ApiHistoricos;
-            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+            GetJson(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public async Task GetJson<T>(T _dto,string token, string Tipo, bool EsAnonimo = false)
+        {
+            using (var client = new HttpClient())
+            {
+                string resp = "";
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                if (!EsAnonimo)
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    if (Tipo.Equals(MetodoRestConst.Post))
+                        response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (Tipo.Equals(MetodoRestConst.Put))
+                        response = await client.PutAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<string>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<string>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _json = resp;
+            }
         }
 
         public void ActualizarHistorico(HistoricoVentaModel dto, string tkn)

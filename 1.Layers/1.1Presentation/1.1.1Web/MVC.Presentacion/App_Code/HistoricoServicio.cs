@@ -26,11 +26,18 @@ namespace MVC.Presentacion.App_Code
             return agenteServico._ListYears;
         }
 
-        public static RespuestaDTO GetJson(HistoricoVentasConsulta modelo , string tkn)
+        public static string GetJson(HistoricoVentasConsulta modelo , string tkn)
         {
             AgenteServicio agenteServico = new AgenteServicio();
             agenteServico.GetJson(modelo,tkn);
-            return agenteServico._RespuestaDTO;
+            return agenteServico._json;
+        }
+
+        public static List<YearsDTO> GetVentasTotalesxMes(HistoricoVentasConsulta modelo, string tkn)
+        {
+            AgenteServicio agenteServico = new AgenteServicio();
+            agenteServico.GetVentasTotales(modelo, tkn);
+            return agenteServico._ListYears;
         }
 
         public static RespuestaDTO EliminarHistorico(HistoricoVentaModel dto, string tkn)

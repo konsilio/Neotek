@@ -143,7 +143,9 @@
     <Compile Include="DTOs\Facturacion\UsoCFDIDTO.cs" />
     <Compile Include="DTOs\Historico\HistoricoConsultaDTO.cs" />
     <Compile Include="DTOs\Historico\HistoricoVentaDTO.cs" />
+    <Compile Include="DTOs\Historico\MesVentaDTO.cs" />
     <Compile Include="DTOs\Historico\YearDTO.cs" />
+    <Compile Include="DTOs\Historico\YearsVentasTotalesDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticiposEstacionDTO.cs" />

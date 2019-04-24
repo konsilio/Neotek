@@ -298,10 +298,8 @@ function MorrisBarChart() {
 }
 
  SagasBar = (json) => {
-     Sagas.Bar({
-         element: 'm_bar',
-         // new Json
-         json
-     })
+     Sagas.Bar(
+       JSON.parse(json)
+     );
     }
 // Extra chart

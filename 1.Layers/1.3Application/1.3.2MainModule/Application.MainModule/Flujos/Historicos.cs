@@ -63,5 +63,11 @@ namespace Application.MainModule.Flujos
             
             return HistoricoVentaServicio.TransformarAJason(Ventas,dto);
         }
+        public List<YearDTO> VentasConsultas( HistoricoConsultaDTO dto2)
+        {
+           
+            var Ventas = HistoricoVentaServicio.BuscarPorFiltros(dto2);
+            return HistoricoVentaServicio.VentasTotales(Ventas, dto2);
+        }
     }
 }

@@ -14,9 +14,10 @@
         )
 
 <script>
- $(function () {      
-    Morris.Bar(@ViewBag.Json);
-});
+    $(document).ready(function () {
+                Morris.Bar(@Html.Raw(ViewBag.json));
+        });
+
 </script>
 <body>
     <section class="content home">
@@ -38,7 +39,7 @@
 
                     <div class="row  ">
                         <div class="col-lg-10 col-md-10 col-sm-14 " style="margin-right:-3%;"></div>
-                        <input type="submit" formaction=@Url.Action("ObtenerJsonGrf") formmethod="post"  value="Pre-Generar" class="btn btn-primary btn-round " />
+                        <input type="submit" formaction=@Url.Action("ObtenerJsonGrf") formmethod="post" value="Pre-Generar" class="btn btn-primary btn-round " />
                     </div>
                     <div class="row">
                         <div class="card col-lg-3 col-md-3 col-sm-5">
@@ -48,9 +49,9 @@
                             <div class="body">
 
                                 <ul>
-                                  @Html.EditorFor(m => m.Years)                                    
+                                    @Html.EditorFor(m => m.Years)
                                 </ul>
-                                                     
+
                                 @if (ViewBag.MensajeError != null)
                                 {
                                     <div id="DivAlerta" class="container">
@@ -125,11 +126,11 @@
                                    {
                                        MVCxComboBox combo = s as MVCxComboBox;
                                        combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                       combo.Properties.Items.Add("Venta anual x mes, General",1);
-                                       combo.Properties.Items.Add("Venta anual x mes, Pipa vs Camioneta",2);
-                                       combo.Properties.Items.Add("Venta anual x mes, Camioneta Local vs Foranea",3);
+                                       combo.Properties.Items.Add("Venta anual x mes, General", 1);
+                                       combo.Properties.Items.Add("Venta anual x mes, Pipa vs Camioneta", 2);
+                                       combo.Properties.Items.Add("Venta anual x mes, Camioneta Local vs Foranea", 3);
                                        combo.Properties.ValueType = typeof(int);
-                                       combo.SelectedIndex = 0;
+                                       combo.SelectedIndex = Model.IdTipoReporte;
                                    };
                                }).GetHtml()
                                     @*@Html.ValidationMessageFor(m => m.IdTipoCombustible, "", new { @class = "alert-danger" })*@
@@ -161,7 +162,7 @@
                         </div>
                         <div class="body">
 
-                            <div class="row clearfix blockquote blockquote-info btn-round">
+                            @*<div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
                                     <table class="table table-striped  filterable">
                                         <thead>
@@ -186,12 +187,16 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div>*@
                             <div>
                                 <div id="m_bar_chart"></div>
                             </div>
                         </div>
-                        <input type="submit" value="Exportar a Excel" class="btn btn-primary btn-round" />
+                        @if (ViewBag.json != null)
+                        {
+                            <input type="submit" formaction=@Url.Action("GenerarExcel") value="Exportar a Excel" class="btn btn-primary btn-round" />
+                        }
+                       
                     </div>
 
                 </div>
@@ -199,4 +204,3 @@
         </div>
     </section>
 </body>
-

@@ -9,5 +9,6 @@ namespace MVC.Presentacion.Models.Historico
     {
         public int Year { get; set; }
         public bool Seleccionar { get; set; }
+        public List<MesVentaDto> MesesVenta { get; set; }
     }
 }
