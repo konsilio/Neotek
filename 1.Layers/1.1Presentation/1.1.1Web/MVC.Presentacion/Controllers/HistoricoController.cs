@@ -154,58 +154,66 @@ namespace MVC.Presentacion.Controllers
         {
             if (preCarga != null && preCarga.ContentLength > 0)
             {
-                // ExcelDataReader works with the binary Excel file, so it needs a FileStream
-                // to get started. This is how we avoid dependencies on ACE or Interop:
-                Stream stream = preCarga.InputStream;
+                try
+                {
+                    // ExcelDataReader works with the binary Excel file, so it needs a FileStream
+                    // to get started. This is how we avoid dependencies on ACE or Interop:
+                    Stream stream = preCarga.InputStream;
 
-                // We return the interface, so that
-                IExcelDataReader reader = null;
+                    // We return the interface, so that
+                    IExcelDataReader reader = null;
 
-                if (preCarga.FileName.EndsWith(".xls"))
-                {
-                    reader = ExcelReaderFactory.CreateBinaryReader(stream);
-                }
-                else if (preCarga.FileName.EndsWith(".xlsx"))
-                {
-                    reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-                }
-                else
-                {
-                    ModelState.AddModelError("File", "This file format is not supported");
-                    return View();
-                }
-
-                DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
-                {
-                    ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                    if (preCarga.FileName.EndsWith(".xls"))
+                    
+                        reader = ExcelReaderFactory.CreateBinaryReader(stream);
+                    
+                    else if (preCarga.FileName.EndsWith(".xlsx"))
                     {
-                        UseHeaderRow = true
+                        reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
                     }
-                });
-
-                List<HistoricoVentaModel> listaHistorico = new List<HistoricoVentaModel>();
-                foreach (DataTable table in result.Tables)
-                {
-                    foreach (DataRow row in table.Rows)
+                    else
                     {
-                        listaHistorico.Add(new HistoricoVentaModel
+                        ModelState.AddModelError("File", "This file format is not supported");
+                        return View();
+                    }
+
+                    DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                    {
+                        ConfigureDataTable = (_) => new ExcelDataTableConfiguration() { UseHeaderRow = true }
+                    });
+
+                    List<HistoricoVentaModel> listaHistorico = new List<HistoricoVentaModel>();
+                    foreach (DataTable table in result.Tables)
+                    {
+                        foreach (DataRow row in table.Rows)
                         {
-                            Mes = Convert.ToInt16(row.ItemArray[0]),
-                            Anio = Convert.ToInt16(row.ItemArray[1]),
-                            MontoVenta = Convert.ToDouble(row.ItemArray[2]),
-                            EsPipa = Convert.ToBoolean(row.ItemArray[3]),
-                            EsCamioneta = Convert.ToBoolean(row.ItemArray[4]),
-                            EsLocal = Convert.ToBoolean(row.ItemArray[5])
-                        });
+                            listaHistorico.Add(new HistoricoVentaModel
+                            {
+                                Mes = Convert.ToInt16(row.ItemArray[0]),
+                                Anio = Convert.ToInt16(row.ItemArray[1]),
+                                MontoVenta = Convert.ToDouble(row.ItemArray[2]),
+                                EsPipa = Convert.ToBoolean(row.ItemArray[3]),
+                                EsCamioneta = Convert.ToBoolean(row.ItemArray[4]),
+                                EsLocal = Convert.ToBoolean(row.ItemArray[5])
+                            });
+                        }
                     }
+                    reader.Close();
+                    TempData["HistoricoVentas"] = listaHistorico;
                 }
-                reader.Close();
-                TempData["HistoricoVentas"] = listaHistorico;
+                catch (Exception ex)
+                {
+                    TempData["RespuestaDTO"] = new RespuestaDTO()
+                    {
+                        Exito = false,
+                        Mensaje = ex.Message,
+                        MensajesError = new List<string>() { ex.Message }
+                    };
+                }
             }
-            else
-            {
+            else            
                 ModelState.AddModelError("File", "Please Upload Your file");
-            }
+            
             return RedirectToAction("Index");
         }
         public ActionResult ObtenerJsonGrf(HistoricoVentasConsulta modelo = null)
@@ -323,6 +331,7 @@ namespace MVC.Presentacion.Controllers
                     var m = datos[r].ToString().Split('{');
                  
 
+
                     foreach (var item in m)
                     {
 
@@ -374,7 +383,7 @@ namespace MVC.Presentacion.Controllers
                                     tempa = año;
                                     //rowCamio++;
                                 }
-                               
+
                                 if (valores.ToList()[0].Contains("a"))
                                 {
                                     //Ventas de Cmaionetas
@@ -382,7 +391,7 @@ namespace MVC.Presentacion.Controllers
                                     char[] tamSuma = sumaCamioneta.ToCharArray();
 
 
-                                    if(tamSuma[1] == '0')
+                                    if (tamSuma[1] == '0')
                                     {
                                         var doubleValue = Double.Parse(sumaCamioneta.Substring(1, tamSuma.Length - 2));
                                         worksheet.Cells[rowCamio, rowPipa].Value = doubleValue;
@@ -391,7 +400,7 @@ namespace MVC.Presentacion.Controllers
                                         var doubleValue = Double.Parse(sumaCamioneta.Substring(1, tamSuma.Length - 2));
                                         worksheet.Cells[rowCamio,rowPipa ].Value = doubleValue;
                                     }
-                                   
+
                                     sumaCamioneta = "";
                                     //rowPipa++;    
                                 }
@@ -399,7 +408,7 @@ namespace MVC.Presentacion.Controllers
                                 if (valores.ToList()[0].Contains("b"))
                                 {
                                     //Ventas de Pipas
-                                    
+
                                     var sumaPipa = valores[1].ToString().Split(' ').ToList()[1];
                                     char[] tamSumaPi = sumaPipa.ToCharArray();
                                     if (tamSumaPi[1] == '0')
@@ -414,7 +423,7 @@ namespace MVC.Presentacion.Controllers
                                         worksheet.Cells[rowCamio, rowPipa].Value = doubleValue;
                                     }
                                     sumaPipa = "";
-                                    
+
                                 }
                                 rowCamio++;
                             }                              
