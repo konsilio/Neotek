@@ -210,7 +210,7 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Ticket</th>
+                                                <th>Fecha de Timbrado</th>
                                                 <th>UUID</th>
                                                 <th>Descargar</th>
                                             </tr>
@@ -222,7 +222,7 @@
                                                 {
                                                     <tr>
                                                         <th>@item.Id_RelTF</th>
-                                                        <th>@item.Id_FolioVenta</th>
+                                                        <th>@item.FechaTimbrado.ToShortDateString()</th>
                                                         <th>@item.UUID</th>
                                                         <th>
                                                             <a ID="lbPDF" href="@item.URLPdf" class="tip" target="_blank" role="button" aria-haspopup="true" aria-expanded="false">

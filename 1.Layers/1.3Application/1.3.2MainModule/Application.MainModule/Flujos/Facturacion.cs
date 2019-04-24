@@ -70,7 +70,14 @@ namespace Application.MainModule.Flujos
             //Validar Permiso
 
             var cfdis = CFDIServicio.BuscarPorRFC("XAXX010101000");
-            return CFDIAdapter.ToDTO(cfdis);
+            List<CFDI> l = new List<CFDI>();
+            foreach (var c in cfdis)
+            {
+                if (l.Where(x => x.UUID.Equals(c.UUID)).Count().Equals(0))                
+                    l.Add(c);                
+            }
+
+            return CFDIAdapter.ToDTO(l);
         }
         public List<CFDIDTO> BuscarFacturasPorCliente(int id)
         {
