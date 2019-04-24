@@ -53,7 +53,6 @@ namespace MVC.Presentacion.Agente
         public CFDIDTO _CFDIDTO;
         public ClientesDto _ClienteDTO;
         public ClientesModel _ClienteModel;
-        //public ClienteModel _ClienteModel;
         public HistoricoVentaModel _HistoricoVentaDTO;
 
 
@@ -4450,6 +4449,40 @@ namespace MVC.Presentacion.Agente
                 _ListaVenta = ventas;
             }
         }
+        public void ListaTickets(FacturacionGlobalModel _mod, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostTicket"];
+            BuscarTickets(_mod, ApiCatalgos, token).Wait();
+        }
+        private async Task BuscarTickets(FacturacionGlobalModel mod, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<VentaPuntoVentaDTO> ventas = new List<VentaPuntoVentaDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRoute, mod).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        ventas = await response.Content.ReadAsAsync<List<VentaPuntoVentaDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    ventas = new List<VentaPuntoVentaDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListaVenta = ventas;
+            }
+        }
         public void ListaTicket(string ticket)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetTicket"];
@@ -4526,6 +4559,69 @@ namespace MVC.Presentacion.Agente
                 _ListaCFDIs = CFDIs;
             }
         }
+        public void ListaCFDIs(string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDIs"];
+            BuscarCFDIs(ApiCatalgos, token).Wait();
+        }
+        private async Task BuscarCFDIs(string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CFDIDTO> CFDIs = new List<CFDIDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        CFDIs = await response.Content.ReadAsAsync<List<CFDIDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    CFDIs = new List<CFDIDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListaCFDIs = CFDIs;
+            }
+        }
+        private async Task BuscarCFDIs(FacturacionGlobalModel filtro, string api, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CFDIDTO> CFDIs = new List<CFDIDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(api, filtro)).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        CFDIs = await response.Content.ReadAsAsync<List<CFDIDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    CFDIs = new List<CFDIDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _ListaCFDIs = CFDIs;
+            }
+        }
         public void BuscarCFDI(string ticket)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDI"];
@@ -4565,6 +4661,11 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarCFDILst"];
             LLamada(ticket, string.Empty, MetodoRestConst.Post, true).Wait();
         }
+        public void PostRegistrarCFDIGlobal(FacturacionGlobalModel model, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarCFDIGlobal"];
+            LLamada(model, token, MetodoRestConst.Post, false).Wait();
+        }
 
         #endregion
         #region HistoricoVentas
@@ -4600,8 +4701,8 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                
-                _ListHistoricoVenta= historico;
+
+                _ListHistoricoVenta = historico;
             }
         }
 
@@ -4640,7 +4741,7 @@ namespace MVC.Presentacion.Agente
 
                 _HistoricoVentaDTO = historico;
             }
-            
+
         }
         public void GuardarNuevoHistorico(List<HistoricoVentaModel> dto, string tkn)
         {

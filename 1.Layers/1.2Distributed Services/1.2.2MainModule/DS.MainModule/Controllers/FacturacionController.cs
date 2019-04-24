@@ -20,7 +20,6 @@ namespace DS.MainModule.Controllers
         {
             _facturacion = new Facturacion();
         }
-
         [Route("registrar/factruas")]
         public HttpResponseMessage PostRegistrarCFDILst(List<CFDIDTO> list)
         {
@@ -30,11 +29,23 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostRegistrarCFDI(CFDIDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.GenerarFactura(dto));
-        }        
+        }
+        [Authorize]
+        [Route("registrar/factrua/global")]
+        public HttpResponseMessage PostRegistrarCFDIGlobal(FacturacionDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.GenerarFacturaGlobal(dto));
+        }
         [Route("buscar/ticket/{numTicket}")]
         public HttpResponseMessage GetTicket(string numTicket)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarPorTicket(numTicket));
+        }
+        [Authorize]
+        [Route("buscar/tickets")]
+        public HttpResponseMessage PostTicket(FacturacionDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.Buscar(dto));
         }
         [Route("buscar/tickets/cliente/{id}")]
         public HttpResponseMessage GetTicketsByCliente(int id)
@@ -50,6 +61,12 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetCFDIByRFC(string rfc)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarFacturasPorRFC(rfc));
+        }
+        [Authorize]
+        [Route("buscar/cfdis")]
+        public HttpResponseMessage GetCFDIs()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarFacturasPorRFC());
         }
         [Route("buscar/cfdi/cliente/{id}")]
         public HttpResponseMessage GetCFDIByCliente(int id)
