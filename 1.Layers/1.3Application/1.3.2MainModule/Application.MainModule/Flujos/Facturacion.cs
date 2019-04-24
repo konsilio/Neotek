@@ -19,12 +19,24 @@ namespace Application.MainModule.Flujos
 {
     public class Facturacion
     {
-        public RespuestaDto GenerarFacturaGlobal(CFDIDTO dto)
+        public RespuestaDto GenerarFacturaGlobal(FacturacionDTO dtoGlob)
         {
-            var _comp = CFDIServicio.DatosComprobante(dto);
-            _comp.Receptor = CFDIServicio.DatosReceptor(dto);
+            CFDIDTO dto = new CFDIDTO();
+            var _comp = CFDIServicio.DatosComprobante(dtoGlob);
+            _comp.Receptor = CFDIServicio.DatosReceptor();
+            _comp.Concepto = CFDIServicio.DatosConceptos(dtoGlob).ToArray();
 
-            return CFDIServicio.Timbrar(_comp, dto).RespuestaTimbrado;
+            dto.Id_FormaPago = 27;
+            dto.Id_MetodoPago = Convert.ToInt32(MetodoPagoConst.IDPUE);
+            dto.Folio = CFDIServicio.FolioFacturaGeneral();
+            dto.Serie = "G";
+            dto.UUID = string.Empty;
+            dto.VersionCFDI = ConfigurationManager.AppSettings["VersionCFDI"];
+            dto.RespuestaTimbrado = CFDIServicio.Crear(CFDIAdapter.FromDTO(dto), dtoGlob.Tickets);
+
+            if (!dto.RespuestaTimbrado.Exito) return dto.RespuestaTimbrado;            
+
+            return CFDIServicio.Timbrar(_comp, dto, dtoGlob.Tickets).RespuestaTimbrado;
         }
         public CFDIDTO GenerarFactura(CFDIDTO dto)
         {
@@ -52,6 +64,20 @@ namespace Application.MainModule.Flujos
         {
             var cfdis = CFDIServicio.BuscarPorRFC(RFC);
             return CFDIAdapter.ToDTO(cfdis);
+        }
+        public List<CFDIDTO> BuscarFacturasPorRFC()
+        {
+            //Validar Permiso
+
+            var cfdis = CFDIServicio.BuscarPorRFC("XAXX010101000");
+            List<CFDI> l = new List<CFDI>();
+            foreach (var c in cfdis)
+            {
+                if (l.Where(x => x.UUID.Equals(c.UUID)).Count().Equals(0))                
+                    l.Add(c);                
+            }
+
+            return CFDIAdapter.ToDTO(l);
         }
         public List<CFDIDTO> BuscarFacturasPorCliente(int id)
         {
@@ -88,13 +114,14 @@ namespace Application.MainModule.Flujos
         }
         public List<VentaPuntoVentaDTO> Buscar(FacturacionDTO model)
         {
-            List<VentaPuntoVentaDTO> _list = new List<VentaPuntoVentaDTO>();
-            if (model.IdCliente > 0)
-                _list.AddRange(BuscarPorNumCliente(model.IdCliente));
-            if (!model.RFC.Equals(string.Empty))
-                _list.AddRange(BuscarPorRFC(model.RFC));
+            //Validar permisos
 
-            return _list.Distinct(new VentaPuntoVentaComparer()).ToList();
+            //Descomentar en produccion 
+            //var validacion = CFDIServicio.ValidarRangoBusqueda(model);
+            //if (!validacion.Exito) return new List<VentaPuntoVentaDTO>(); //validacion;  
+
+            var ventas = PuntoVentaServicio.ObtenerVentasPorCliente(model.IdCliente, model.FechaIni, model.FechaFinal);
+            return CajaGeneralAdapter.ToDTOP(ventas);
         }
     }
 }

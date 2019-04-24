@@ -1,8 +1,10 @@
 ﻿using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using MVC.Presentacion.App_Code;
+using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Cobranza;
 using MVC.Presentacion.Models.Seguridad;
+using MVC.Presentacion.Models.Ventas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -194,6 +196,65 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
+        public ActionResult FacturacionGlobal(FacturacionGlobalModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            if (TempData["BusquedaTickets"] != null) model.Tickets = (List<VentaPuntoVentaDTO>)TempData["BusquedaTickets"];
+            if (TempData["TiketsAgregados"] != null)
+            {
+                ViewBag.TiketsAgregados = (List<VentaPuntoVentaDTO>)TempData["TiketsAgregados"];
+                TempData["TiketsAgregados"] = ViewBag.TiketsAgregados;
+            }
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (Respuesta.Exito)
+                    ViewBag.Msj = Respuesta.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(Respuesta);
+            }
+            ViewBag.CFDIs = FacturacionServicio.ObtenerCFDIs(_tkn);
+            return View(model);
+        }
+        public ActionResult BuscarTikets(FacturacionGlobalModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            TempData["BusquedaTickets"] = CobranzaServicio.ObtenerTickets(model, _tkn);
+            model.Tickets = (List<VentaPuntoVentaDTO>)TempData["BusquedaTickets"];
+
+            return RedirectToAction("FacturacionGlobal", model);
+        }
+        public ActionResult AgregarTikets(FacturacionGlobalModel model = null)
+        {
+            if(Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+
+            TempData["TiketsAgregados"] = model.Tickets.Where(x => x.seleccionar).ToList(); 
+            return RedirectToAction("FacturacionGlobal", model);
+        }
+        public ActionResult BorrarTicket(string Folio)
+        {
+            if(Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+
+            var TiketsAgregados = (List<VentaPuntoVentaDTO>)TempData["TiketsAgregados"];
+            TempData["TiketsAgregados"] = TiketsAgregados.Where(x => !x.FolioVenta.Equals(Folio)).ToList();
+
+
+            return RedirectToAction("FacturacionGlobal");
+        }
+        public ActionResult Facturar(FacturacionGlobalModel _mod)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            _mod.Tickets = (List<VentaPuntoVentaDTO>)TempData["TiketsAgregados"];
+            TempData["TiketsAgregados"] = _mod.Tickets;
+
+            TempData["RespuestaDTO"] = FacturacionServicio.GenerarFacturasGlobal(_mod, _tkn);
+            return RedirectToAction("FacturacionGlobal", _mod);
+        }
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;
@@ -202,9 +263,7 @@ namespace MVC.Presentacion.Controllers
             {
                 if (Resp.ModelStatesStandar != null)
                     foreach (var error in Resp.ModelStatesStandar.ToList())
-                    {
                         ModelState.AddModelError(error.Key, error.Value);
-                    }
                 if (Resp.MensajesError != null)
                 {
                     if (Resp.MensajesError.Count > 1)

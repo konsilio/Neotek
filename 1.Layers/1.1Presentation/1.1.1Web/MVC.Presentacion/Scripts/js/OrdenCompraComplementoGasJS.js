@@ -10,14 +10,6 @@
     });
     $("#btnGuardarDatosPorteador").click(function () {        
         $("form").attr("action", "/OrdenCompra/GuardarDatosPorteador");
-        //var url = "/OrdenCompra/GuardarDatosPorteador";
-        
-        //$.getJSON(url, function (data) {
-        //    debugger
-        //    if (data == "[]") {
-
-        //    }
-        //});
     });
 //kilos finales
     var ObtenerLitrosDesdeKilos = function (kilogramos, factor) {
@@ -125,19 +117,6 @@
         });
     }
     function OnBatchEditEndEditing(s, e) {
-        //var precioindex = s.GetColumnByField("Precio").index;
-        //var cantidadindex = s.GetColumnByField("CantidadAComprar").index;
-        //var descuentoindex = s.GetColumnByField("Descuento").index;
-        //var ivaindex = s.GetColumnByField("IVA").index;
-        //var iepsindex = s.GetColumnByField("IEPS").index;
-
-        //var precio = e.rowValues[precioindex].value;
-        //var cantidad = e.rowValues[cantidadindex].value;
-        //var descuento = ((precio * cantidad) * (e.rowValues[descuentoindex].value / 100));
-        //var subtotal = (precio * cantidad) - (descuento);
-        //var iva = ((subtotal) * (e.rowValues[ivaindex].value / 100));
-        //var ieps = ((subtotal) * (e.rowValues[iepsindex].value / 100));
-        //var total = subtotal + iva + ieps;
         s.batchEditApi.SetCellValue(e.visibleIndex, null, true);
     }
     function OnBeginGridCallback(s, e) {
@@ -145,18 +124,6 @@
     }
 
     $("#iva").hide();
-    //$("#btnGuardarDatosPapeleta").click(function () {
-    //    debugger
-    //    $("form").attr("action", "/OrdenCompra/GuardarDatosPapeleta");
-    //});
-    //var rowindex = 0;
-    //$('#ProductosComplementoGas_DXMainTable tbody tr').each(function () {
-    //   // debugger
-    //  //  rowindex++;
-    //    var hiderow = $(this).find("td").eq(1);//get value of column entidad
-    //    hiderow.hide();          
-    //   // $('#table tbody tr:eq(' + rowindex + ')').find("td").eq(1).hide();
-    //});
 });
 
 //kilos finales
@@ -267,20 +234,7 @@ function AttachEditorValueChangedEvent() {
         var editor = ASPxClientControl.GetControlCollection().GetByName(name);
     });
 }
-function OnBatchEditEndEditing(s, e) {
-    //var precioindex = s.GetColumnByField("Precio").index;
-    //var cantidadindex = s.GetColumnByField("CantidadAComprar").index;
-    //var descuentoindex = s.GetColumnByField("Descuento").index;
-    //var ivaindex = s.GetColumnByField("IVA").index;
-    //var iepsindex = s.GetColumnByField("IEPS").index;
-
-    //var precio = e.rowValues[precioindex].value;
-    //var cantidad = e.rowValues[cantidadindex].value;
-    //var descuento = ((precio * cantidad) * (e.rowValues[descuentoindex].value / 100));
-    //var subtotal = (precio * cantidad) - (descuento);
-    //var iva = ((subtotal) * (e.rowValues[ivaindex].value / 100));
-    //var ieps = ((subtotal) * (e.rowValues[iepsindex].value / 100));
-    //var total = subtotal + iva + ieps;
+function OnBatchEditEndEditing(s, e) {   
     s.batchEditApi.SetCellValue(e.visibleIndex, null, true);
 }
 function OnBeginGridCallback(s, e) {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.MainModule.DTOs.Ventas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,9 @@ namespace Application.MainModule.DTOs
         public string RFC { get; set; }
         public short IdEmpresa { get; set; }
         public string Ticket { get; set; }
-        public System.DateTime FechaVenta { get; set; }
+        public DateTime FechaVenta { get; set; }
+        public DateTime FechaIni { get; set; }
+        public DateTime FechaFinal { get; set; }
+        public List<VentaPuntoVentaDTO> Tickets { get; set; }
     }
 }

@@ -145,6 +145,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarVentasPorCliente(id);
         }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(int id,DateTime fi, DateTime ff)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasPorCliente(id).Where(x => (x.FechaRegistro > fi) && (x.FechaRegistro < ff)).ToList();
+        }
         /// <summary>
         /// Permite realizar el registro del cargo de una venta 
         /// que es de tipo extraordinaria, se envia como parametro
