@@ -4526,7 +4526,7 @@ namespace MVC.Presentacion.Agente
             if (_mod.IdCliente > 0)
             {
                 this.ApiCatalgos = ConfigurationManager.AppSettings["GetCFDIByCliente"];
-                BuscarCFDIs(_mod.IdCliente.ToString(), ApiCatalgos).Wait();
+                BuscarCFDIs(_mod.IdCliente.ToString(), ApiCatalgos, null).Wait();
             }
             else
             {
