@@ -242,7 +242,9 @@ namespace MVC.Presentacion.Controllers
             ExcelBarChart lineChart = worksheet.Drawings.AddChart("BarChart", eChartType.ColumnClustered) as ExcelBarChart;
             if (modelo.IdTipoReporte == 1)
             {
-                pahtFile = "C:\\Users\\NEOTECK3319\\Desktop\\Archivos\\VentasGenerales.xlsx";
+                pahtFile = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) +"\\VentasGenerales.xlsx";
+              
+
 
                 var rangeLabel = worksheet.Cells["B1:M1"];
                 var rows = 2;
@@ -300,11 +302,11 @@ namespace MVC.Presentacion.Controllers
 
                 if (modelo.IdTipoReporte == 2)
                 {
-                    pahtFile = "C:\\Users\\NEOTECK3319\\Desktop\\Archivos\\VentasPipasvsCamionetas.xlsx";
+                    pahtFile = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\PipasvsCamionetas.xlsx";
                 }
                 else
                 {
-                    pahtFile = "C:\\Users\\NEOTECK3319\\Desktop\\Archivos\\VentasLocalvsForaneas.xlsx";
+                    pahtFile = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\VentasLocalvsForaneas.xlsx";
                 }
 
 

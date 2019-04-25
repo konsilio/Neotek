@@ -353,6 +353,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <None Include="Properties\PublishProfiles\ApiWS.pubxml" />
+    <None Include="Properties\PublishProfiles\SagasWS.pubxml" />
     <None Include="Properties\PublishProfiles\WebApi.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\cldr.js" />
