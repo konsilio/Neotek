@@ -234,7 +234,6 @@ namespace MVC.Presentacion.Controllers
 
             var worksheet = sLDocument.Workbook.Worksheets.Add("Ventas Generales");
             var datos = (List<object>)TempData["data"];
-
             var mes = (List<string>)TempData["meses"];
             List<YearsDTO> Montototal = HistoricoServicio.GetVentasTotalesxMes(modelo, tkn);
             string pahtFile = "";
@@ -466,10 +465,13 @@ namespace MVC.Presentacion.Controllers
             MemoryStream memoryStream = new MemoryStream();
             sLDocument.SaveAs(memoryStream);
             memoryStream.Position = 0;
-
+            TempData["data"] = datos;
+            TempData["meses"] = mes;
 
             return new FileStreamResult(memoryStream, "application/vnd.ms-excel") { FileDownloadName = pahtFile };
-            //return RedirectToAction("HistoricoVentas", modelo);
+            // Descraga(pahtFile, memoryStream);
+
+           // return RedirectToAction("HistoricoVentas", modelo);
 
         }
         public List<YearsDTO> ObtenerAños()
@@ -478,6 +480,11 @@ namespace MVC.Presentacion.Controllers
             return respuesta;
         }
 
+        //public ActionResult Descraga(string File, MemoryStream ms)
+        //{
+        //    return new FileStreamResult(ms, "application/vnd.ms-excel") { FileDownloadName = File };
+
+        //}
         
         public ActionResult Eliminar(int? id)
         {
