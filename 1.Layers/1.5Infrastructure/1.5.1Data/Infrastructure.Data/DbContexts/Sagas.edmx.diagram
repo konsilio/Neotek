@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0b2cd14df01a433ca042ada055bcf2a6" Name="Diagram1" ZoomLevel="78">
+      <Diagram DiagramId="0b2cd14df01a433ca042ada055bcf2a6" Name="Diagram1" ZoomLevel="38">
         <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCentral" Width="1.5" PointX="0.75" PointY="27.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCentralDireccion" Width="1.5" PointX="6" PointY="27.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCentralFiscal" Width="1.5" PointX="3" PointY="22.875" IsExpanded="true" />
@@ -337,6 +337,9 @@
         <EntityTypeShape EntityType="Sagas.MainModuleModel.CMetodoPago" Width="1.5" PointX="25.375" PointY="23.625" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.RelTicketCFDI" Width="1.5" PointX="27.625" PointY="23" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_RelTicketCFDI_CMetodoPago" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CUsoCFDI" Width="1.5" PointX="12.375" PointY="11.75" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CUtilitario" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.HistoricoVentas" Width="1.5" PointX="12.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,6 +12,7 @@ using System.Web;
 using Utilities.MainModule;
 //using System.Web.Script.Serialization;
 using System.Web.Mvc;
+using MVC.Presentacion.Models;
 
 namespace MVC.Presentacion.App_Code
 {
@@ -19,7 +20,7 @@ namespace MVC.Presentacion.App_Code
     {
 
         #region Paises
-        public static List<PaisModel> GetPaises(string tkn)
+        public static List<PaisModel> GetPaises(string tkn = null)
         {
             var agente = new AgenteServicio();
             agente.BuscarPaises(tkn);
@@ -28,7 +29,7 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Estados
-        public static List<EstadosRepModel> GetEstados(string tkn)
+        public static List<EstadosRepModel> GetEstados(string tkn = null)
         {
             var agente = new AgenteServicio();
             agente.BuscarEstados(tkn);
@@ -1791,19 +1792,24 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Clientes
-        public static List<TipoPersonaModel> ObtenerTiposPersona(string token)
+        public static ClientesModel ObtenerCliente(int id)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarCliente(id);
+            return agente._ClienteModel;
+        }
+        public static List<TipoPersonaModel> ObtenerTiposPersona(string token = null)
         {
             var agente = new AgenteServicio();
             agente.BuscarTiposPersona(token);
             return agente._lstaTipoPersona;
         }
-        public static List<RegimenFiscalModel> ObtenerRegimenFiscal(string token)
+        public static List<RegimenFiscalModel> ObtenerRegimenFiscal(string token = null)
         {
             var agente = new AgenteServicio();
             agente.BuscarRegimenFiscal(token);
             return agente._lstaRegimenFiscal;
         }
-
         public static List<ClientesDto> ListaClientes(int id, int? TipoPersona, int? regimen, string rfc, string nombre, string token)
         {
             var agente = new AgenteServicio();
@@ -1816,14 +1822,12 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarListaClientes(idEmpresa, token);
             return agente._lstaClientes;
         }
-
         public static List<ClientesModel> ListaClientes(int idCliente, string tel1, int pedido, string rfc, string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarListaClientesMod(idCliente, tel1, pedido, rfc, token);
             return agente._lstaClientesMod;
         }
-
         public static List<ClienteLocacionMod> ObtenerLocaciones(int id, string token)
         {
             var agente = new AgenteServicio();
@@ -1836,21 +1840,18 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarNuevoCliente(cc, tkn);
             return agente._RespuestaDTO;
         }
-
         public static RespuestaDTO ModificarCliente(ClientesDto cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.EditarCliente(cc, tkn);
             return agente._RespuestaDTO;
         }
-
         public static RespuestaDTO EliminarCliente(int id, string tkn)
         {
             var agente = new AgenteServicio();
             agente.EliminarCliente(id, tkn);
             return agente._RespuestaDTO;
         }
-
         public static RespuestaDTO RegistraLocaciones(ClienteLocacionMod cc, string tkn)
         {
             var agente = new AgenteServicio();
@@ -1897,6 +1898,18 @@ namespace MVC.Presentacion.App_Code
         public static List<ClienteLocacionMod> ObtenerModelList(int IdCliente, string tkn)
         {
             return ObtenerLocaciones(IdCliente, tkn);
+        }
+        public static RespuestaDTO CrearCliente(ClientesModel model)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarNuevoCliente(model);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarCliente(ClientesModel dto)
+        {
+            var agente = new AgenteServicio();
+            agente.EditarCliente(dto);
+            return agente._RespuestaDTO;
         }
         #endregion
 
@@ -2319,8 +2332,13 @@ namespace MVC.Presentacion.App_Code
         public static List<EquipoTransporteDTO> Obtener(short id, string Placas, string Nombre, string tkn)
         {
             var agente = new AgenteServicio();
-            agente.ListaVehiculosFiltrar(id, Placas, Nombre, tkn);
-            return agente._ListaVehiculos;
+            agente.ListaVehiculosFiltrar(id, tkn);
+            var _list = agente._ListaVehiculos;
+            if (Placas != ""&& Placas != null)
+                _list = (from x in _list where x.Placas == Placas select x).ToList();
+            if (Nombre != "" && Nombre != null)
+                _list = (from x in _list where x.AliasUnidad.Contains(Nombre) select x).ToList();
+            return _list;
         }
         public static RespuestaDTO Crear(EquipoTransporteDTO cc, string tkn)
         {
@@ -2482,7 +2500,7 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Forma de Pago
-        public static List<FormaPagoDTO> ListaFormaPago(string tkn)
+        public static List<FormaPagoDTO> ListaFormaPago(string tkn = null)
         {
             var agente = new AgenteServicio();
             agente.ListaFormaPago(tkn);
@@ -2555,6 +2573,24 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.GetListaMedidores(tkn);
             return agente._ListaMedidores;
+        }
+        #endregion
+
+        #region Uso CFDI
+        public static List<UsoCFDIDTO> ObtenerUsoCFDI()
+        {
+            var agente = new AgenteServicio();
+            agente.ListaUsoCFDI();
+            return agente._ListaUsoCFDI;
+        }
+        #endregion
+
+        #region Metodo de Pago
+        public static List<MetodoPagoDTO> ObtenerMetodoPago()
+        {
+            var agente = new AgenteServicio();
+            agente.ListaMetodosPago();
+            return agente._ListaMetodPago;
         }
         #endregion
 

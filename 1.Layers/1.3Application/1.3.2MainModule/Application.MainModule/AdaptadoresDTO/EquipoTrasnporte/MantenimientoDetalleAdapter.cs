@@ -1,12 +1,14 @@
 ﻿using Application.MainModule.DTOs.EquipoTransporte;
+using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
+using Application.MainModule.Servicios.Equipo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporte
+namespace Application.MainModule.AdaptadoresDTO.MantenimientoDetalleAdapter
 {
     public class MantenimientoDetalleAdapter
     {
@@ -17,6 +19,7 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporte
                 Id_DetalleMtto = entidad.Id_DetalleMtto,
                 FechaMtto = entidad.FechaMtto,
                 id_vehiculo = entidad.id_vehiculo,
+                Vehiculo = EquipoTransporteServicio.ObtenerNombre(entidad),
                 EsCamioneta = entidad.EsCamioneta,
                 EsPipa = entidad.EsPipa,
                 EsUtilitario = entidad.EsUtilitario,

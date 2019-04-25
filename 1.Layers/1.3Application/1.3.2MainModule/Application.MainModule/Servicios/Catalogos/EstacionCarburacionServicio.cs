@@ -1,4 +1,5 @@
-﻿using Application.MainModule.Servicios.AccesoADatos;
+﻿using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.Servicios.AccesoADatos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,10 @@ namespace Application.MainModule.Servicios.Catalogos
         public static EstacionCarburacion Obtener(int idEstacion)
         {
             return new EstacionCarburacionDataAccess().Buscar(idEstacion);
+        }
+        public static RespuestaDto Modificar(EstacionCarburacion entidad)
+        {
+            return new EstacionCarburacionDataAccess().Actualizar(entidad);
         }
         public static List<EstacionCarburacion> ObtenerTodas()
         {

@@ -49,6 +49,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new CamionetaDataAccess().ObtenerCamioneta(id);
         }
+        public static Camioneta Obtener(int id, bool activo)
+        {
+            return new CamionetaDataAccess().ObtenerCamioneta(id, activo);
+        }
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "La camioneta");

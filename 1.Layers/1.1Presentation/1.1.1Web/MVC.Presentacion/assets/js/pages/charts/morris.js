@@ -296,4 +296,10 @@ function MorrisBarChart() {
         resize: true
     });
 }
+
+ SagasBar = (json) => {
+     Sagas.Bar(
+       JSON.parse(json)
+     );
+    }
 // Extra chart

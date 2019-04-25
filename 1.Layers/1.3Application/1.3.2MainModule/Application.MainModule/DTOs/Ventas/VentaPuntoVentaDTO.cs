@@ -37,15 +37,25 @@ namespace Application.MainModule.DTOs.Ventas
         public string Descripcion { get; set; }
         public string Concepto { get; set; }
         public bool DatosProcesados { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-        /***************************/
+        public DateTime FechaRegistro { get; set; }
         public decimal VentaTotal { get; set; }
         public decimal VentaTotalCredito { get; set; }
         public decimal VentaTotalContado { get; set; }
         public decimal OtrasVentas { get; set; }
-
         public Nullable<int>  IdCamioneta { get; set; }
         public Nullable<int> IdPipa { get; set; }
         public string Tipo { get; set; }
+    }
+
+    public class VentaPuntoVentaComparer : IEqualityComparer<VentaPuntoVentaDTO>
+    {
+        public bool Equals(VentaPuntoVentaDTO x, VentaPuntoVentaDTO y)
+        {
+            return x.FolioVenta == y.FolioVenta;
+        }
+        public int GetHashCode(VentaPuntoVentaDTO obj)
+        {
+            return obj.FolioVenta.GetHashCode();
+        }
     }
 }

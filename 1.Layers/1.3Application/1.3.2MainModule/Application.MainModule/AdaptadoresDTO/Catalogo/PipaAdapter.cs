@@ -34,7 +34,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Nombre = ec.Nombre,
                 Activo = ec.Activo,
                 EsForaneo = ec.EsForaneo,
-                FechaRegistro = DateTime.Now,
+                FechaRegistro = ec.FechaRegistro,
+                Serie = ec.Serie,
+                Folio = ec.Folio,
             };
         }
         public static string getNum(string cadena)

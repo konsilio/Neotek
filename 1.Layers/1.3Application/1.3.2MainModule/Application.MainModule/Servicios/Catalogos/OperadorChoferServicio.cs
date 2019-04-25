@@ -106,8 +106,8 @@ namespace Application.MainModule.Servicios.Catalogos
             }
             else
             {
-                var operador = Obtener(AsignacionUtilitarioServicio.BuscarPorUtilitario(dto.Id_Vehiculo).IdChoferOperador);
-                return operador != null ? UsuarioServicio.ObtenerNombreCompleto(operador) : "Nombre no disponible";
+                var operador = AsignacionUtilitarioServicio.BuscarPorUtilitario(dto.Id_Vehiculo);
+                return operador != null ? UsuarioServicio.ObtenerNombreCompleto(Obtener(operador.IdChoferOperador)) : "Nombre no disponible";
             }
         }
     }

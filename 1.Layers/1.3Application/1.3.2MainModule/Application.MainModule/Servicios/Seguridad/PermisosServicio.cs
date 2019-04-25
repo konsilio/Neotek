@@ -1,7 +1,8 @@
 ﻿using Application.MainModule.DTOs.Respuesta;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
-using System;
+using Application.MainModule.Servicios.Historico;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,7 +44,7 @@ namespace Application.MainModule.Servicios.Seguridad
             var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarUsuario).ToList();
 
             return EvaluarPermiso(roles, Error.P0003, "Usuario");
-        }
+        } 
         #endregion
 
         #region Empresa
@@ -534,6 +535,18 @@ namespace Application.MainModule.Servicios.Seguridad
 
             return EvaluarPermiso(roles, Error.P0001, "Recarga de combustible Vehicular");
         }
+        #endregion
+
+        #region HistoricoVentas
+
+        public static RespuestaDto HistoricoVentas()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.HistoricoVentas).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Usuario");
+        }
+
         #endregion
 
         private static RespuestaDto EvaluarPermiso(List<UsuarioRol> roles, string error, string format = "")

@@ -1,0 +1,206 @@
+﻿@model MVC.Presentacion.Models.Historico.HistoricoVentasConsulta
+@using PagedList.Mvc;
+@using PagedList;
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+
+<script>
+    $(document).ready(function () {
+                Morris.Bar(@Html.Raw(ViewBag.json));
+        });
+
+</script>
+<body>
+    <section class="content home">
+        <div class="container-fluid">
+            @using (Html.BeginForm("Crear", "Historico", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Histórico de ventas</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Equipo de Transporte</li>
+                                <li class="breadcrumb-item">Histórico de ventas</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row  ">
+                        <div class="col-lg-10 col-md-10 col-sm-14 " style="margin-right:-3%;"></div>
+                        <input type="submit" formaction=@Url.Action("ObtenerJsonGrf") formmethod="post" value="Pre-Generar" class="btn btn-primary btn-round " />
+                    </div>
+                    <div class="row">
+                        <div class="card col-lg-3 col-md-3 col-sm-5">
+                            <div class="header">
+                                <strong>Años</strong>
+                            </div>
+                            <div class="body">
+
+                                <ul>
+                                    @Html.EditorFor(m => m.Years)
+                                </ul>
+
+                                @if (ViewBag.MensajeError != null)
+                                {
+                                    <div id="DivAlerta" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                @ViewBag.MensajeError
+                                            </strong>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="card col-lg-3 col-md-3 col-sm-5">
+                            <div class="header">
+                                <strong>Meses</strong>
+                            </div>
+
+                            <div class="body">
+                                <ul style="list-style:none">
+                                    <li>@Html.CheckBoxFor(x => x.Enero, new { @style = "width: 20px; height: 20px;" }) Enero</li>
+                                    <li>@Html.CheckBoxFor(x => x.Febrero, new { @style = "width: 20px; height: 20px;" }) Febrero</li>
+                                    <li>@Html.CheckBoxFor(x => x.Marzo, new { @style = "width: 20px; height: 20px;" }) Marzo</li>
+                                    <li>@Html.CheckBoxFor(x => x.Abril, new { @style = "width: 20px; height: 20px;" }) Abril</li>
+                                    <li>@Html.CheckBoxFor(x => x.Mayo, new { @style = "width: 20px; height: 20px;" }) Mayo</li>
+                                    <li>@Html.CheckBoxFor(x => x.Junio, new { @style = "width: 20px; height: 20px;" }) Junio</li>
+                                    <li>@Html.CheckBoxFor(x => x.Julio, new { @style = "width: 20px; height: 20px;" }) Julio</li>
+                                    <li>@Html.CheckBoxFor(x => x.Agosto, new { @style = "width: 20px; height: 20px;" }) Agosto</li>
+                                    <li>@Html.CheckBoxFor(x => x.Septiembre, new { @style = "width: 20px; height: 20px;" }) Septiembre</li>
+                                    <li>@Html.CheckBoxFor(x => x.Octubre, new { @style = "width: 20px; height: 20px;" }) Octubre</li>
+                                    <li>@Html.CheckBoxFor(x => x.Noviembre, new { @style = "width: 20px; height: 20px;" }) Noviembre</li>
+                                    <li>@Html.CheckBoxFor(x => x.Diciembre, new { @style = "width: 20px; height: 20px;" }) Diciembre</li>
+                                </ul>
+
+                                @if (ViewBag.MensajeError != null)
+                                {
+                                    <div id="DivAlerta" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                @ViewBag.MensajeError
+                                            </strong>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                        <div class="card col-lg-5 col-md-5 col-sm-9">
+                            <div class="header">
+                                <strong>Tipos de Reporte</strong>
+                            </div>
+                            <div class="body">
+                                <div class="form-group">
+                                    @Html.DevExpress().ComboBox(settings =>
+                               {
+                                   settings.Name = "IdTipoReporte";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Theme = "Material";
+                                   settings.Properties.TextField = "TipoReporte";
+                                   settings.Properties.ValueField = "id_Reporte";
+
+                                   //settings.ClientEnabled = true;
+                                   //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                       combo.Properties.Items.Add("Venta anual x mes, General", 1);
+                                       combo.Properties.Items.Add("Venta anual x mes, Pipa vs Camioneta", 2);
+                                       combo.Properties.Items.Add("Venta anual x mes, Camioneta Local vs Foranea", 3);
+                                       combo.Properties.ValueType = typeof(int);
+                                       combo.SelectedIndex = Model.IdTipoReporte;
+                                   };
+                               }).GetHtml()
+                                    @*@Html.ValidationMessageFor(m => m.IdTipoCombustible, "", new { @class = "alert-danger" })*@
+                                </div>
+
+
+
+                                @if (ViewBag.MensajeError != null)
+                                {
+                                    <div id="DivAlerta" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                @ViewBag.MensajeError
+                                            </strong>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+                        <div class="header">
+                            Validacion de <strong>Informacion</strong>
+                        </div>
+                        <div class="body">
+
+                            @*<div class="row clearfix blockquote blockquote-info btn-round">
+                                <div class="table-responsive">
+                                    <table class="table table-striped  filterable">
+                                        <thead>
+                                            <tr>
+                                                <td></td>
+                                                <td><strong>julio-16</strong></td>
+                                                <td><strong>julio-17</strong></td>
+                                                <td><strong>julio-18</strong></td>
+                                                <td><strong>julio-19</strong></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Ventas</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Promedio Venta</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dias Venta</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>*@
+                            <div>
+                                <div id="m_bar_chart"></div>
+                            </div>
+                        </div>
+                        @if (ViewBag.json != null)
+                        {
+                            <input type="submit" formaction=@Url.Action("GenerarExcel") value="Exportar a Excel" class="btn btn-primary btn-round" />
+                        }
+                       
+                    </div>
+
+                </div>
+            }
+        </div>
+    </section>
+</body>

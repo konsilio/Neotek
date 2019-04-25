@@ -39,7 +39,7 @@
     {
         @Html.HiddenFor(m => m.IdEmpresa)
         @Html.HiddenFor(m => m.IdEquipoTransporte)
-        @Html.HiddenFor(m => m.Id_DetalleEtransporte)
+    
         @Html.HiddenFor(m => m.IdVehiculoUtilitario)
         @Html.HiddenFor(m => m.IdCamioneta)
         @Html.HiddenFor(m => m.IdPipa)
@@ -343,7 +343,7 @@
                                                             <td>@item.AliasUnidad</td>
                                                             <td>@item.Descripcion</td>
                                                             <td>
-                                                                <a ID="lbEdit" href="@Url.Action("EditarVehiculo", "EquipoTransporte", new { id = item.IdEquipoTransporte })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <a ID="lbEdit" href="@Url.Action("EditarVehiculo", "EquipoTransporte", new { id = item })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                     <i class="material-icons">edit</i>
                                                                     <span>Editar vehículo</span>
                                                                 </a>

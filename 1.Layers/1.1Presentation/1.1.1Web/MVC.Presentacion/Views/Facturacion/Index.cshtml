@@ -1,6 +1,4 @@
-﻿@*@model  List<MVC.Presentacion.Models.Facturacion.FacturacionModel>*@
-@using MVC.Presentacion.Models.Facturacion
-    @model List<FacturacionModel>
+﻿@model MVC.Presentacion.Models.Facturacion.FacturacionModel
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -13,7 +11,6 @@
         )
 <html>
 <head>
-    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <script src="~/assets/js/pages/ui/notifications.js"></script>
     <script type="text/javascript">
@@ -40,71 +37,80 @@
                             </ul>
                         </div>
                     </div>
+                    @if (ViewBag.MensajeError != null)
+                    {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MensajeError</label>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <div class="card">
                         <div class="header">
+                            <strong>Identificate</strong>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-md-2">
                                     <div class="form-group">
+                                        <strong>RFC:*</strong>
+                                        @Html.TextBoxFor(m => m.RFC, new { @class = "form-control", @placeholder = "RFC" })
+                                        @Html.ValidationMessageFor(m => m.RFC, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
                                         <strong>Número de Ticket:*</strong>
-                                        @Html.TextBoxFor(m => m[0].Ticket, new { @class = "form-control", @placeholder = "Número de Ticket" })
-                                        @Html.ValidationMessageFor(m => m[0].Ticket, "", new { @class = "alert-danger" })
+                                        @Html.TextBoxFor(m => m.Ticket, new { @class = "form-control", @placeholder = "Número de Ticket" })
+                                        @Html.ValidationMessageFor(m => m.Ticket, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <strong>Número de Cliente:*</strong>
-                                        @Html.TextBoxFor(m => m[0].IdCliente, new { @class = "form-control", @placeholder = "Número de Cliente" })
-                                        @Html.ValidationMessageFor(m => m[0].IdCliente, "", new { @class = "alert-danger" })
+                                        @Html.TextBoxFor(m => m.IdCliente, new { @class = "form-control", @placeholder = "Número de Cliente" })
+                                        @Html.ValidationMessageFor(m => m.IdCliente, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-sm-2">
-                                    <strong>Fecha de venta:</strong>
-                                    @Html.DevExpress().DateEdit(settings =>
-                                       {
-                                           settings.Name = "FechaVenta";
-                                           settings.Properties.UseMaskBehavior = true;
-                                           settings.Properties.EditFormat = EditFormat.Custom;
-                                           settings.Theme = "Material";
-                                           settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                           settings.Properties.NullText = "dd/MM/yyyy";
-                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       }).Bind(Model[0].FechaVenta).GetHtml()
+                                <div class="col-md-2" style="top:10px">
+                                    <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
                                 </div>
-                                <div class="col-sm-2">
-                                    <strong>Monto de venta:</strong>
-                                    @Html.TextBoxFor(m => m[0].MontoVenta, new { @class = "form-control", @placeholder = "Monto de venta" })
+                                <div class="col-md-2" style="top:10px">
+                                    <button id="btnUpDate" formaction=@Url.Action("DatosCliente") class="btn btn-primary btn-icon-mini btn-round">
+                                        Facturar
+                                    </button>
                                 </div>
-                                <div class="col-sm-1" style="top:10px">
-                                        <div class="form-group">
-                                            <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
-                                        </div>
-                                    </div>
-                                <div class="col-sm-1" style="top:10px">
-                                    <div class="form-group">
-                                        <input type="submit" name="Facturar" value="Facturar" formaction=@Url.Action("Facturar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
-                                    </div>
-                                </div>
-
                             </div>
                             <br />
-                            @if (ViewBag.MensajeError != null)
-                            {
-                                <div class="row clearfix">
-                                    <div id="divMensajeError" class="container">
-                                        <div class="alert alert-danger">
-                                            <div class="alert-icon">
-                                                <i class="zmdi zmdi-block"></i>
-                                            </div>
-                                            <strong>
-                                                <label>@ViewBag.MensajeError</label>
-                                            </strong>
-                                        </div>
-                                    </div>
+                            <div class="row clearfix blockquote blockquote-info btn-round">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Ticket</th>
+                                                <th>Importe</th>
+                                                <th>RFC</th>
+                                                <th>Seleccionar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @Html.EditorFor(x => x.Tickets)
+                                        </tbody>
+                                    </table>
                                 </div>
-                            }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">Tus <strong>Facturas</strong></div>
+                        <div class="body">
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
@@ -112,34 +118,34 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Ticket</th>
-                                                <th>Importe</th>
-                                                <th>RFC</th>                                               
-                                                <th>Acción</th>
+                                                <th>UUID</th>
+                                                <th>Descargar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (ViewBag.Model != null)
+                                            @if (ViewBag.CFDIs != null)
                                             {
-                                                foreach (var item in ViewBag.Model)
+                                                foreach (var item in ViewBag.CFDIs)
                                                 {
                                                     <tr>
-                                                        <th>@item.IdCliente</th>
-                                                        <th>@item.Ticket</th>
-                                                        <td>@item.Importe</td>
-                                                        <td>@item.Rfc</td>                                                      
-                                                        <td>
-
-                                                            @*<a ID="lbBorrar" href="@Url.Action("CancelarPedido", "Pedidos", new {  idPedido =item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <i class="material-icons">delete</i>
-                                    <span>Cancelar pedido</span>
-                                </a>*@
-                                                        </td>
+                                                        <th>@item.Id_RelTF</th>
+                                                        <th>@item.Id_FolioVenta</th>
+                                                        <th>@item.UUID</th>
+                                                        <th>
+                                                            <a ID="lbPDF" href="@item.URLPdf" class="tip" target="_blank" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">picture_as_pdf</i>
+                                                                <span>PDF</span>
+                                                            </a>
+                                                            <a ID="lbXML" href="@item.URLXml" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">file_download</i>
+                                                                <span>XML</span>
+                                                            </a>
+                                                        </th>
                                                     </tr>
                                                 }
                                             }
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
                         </div>

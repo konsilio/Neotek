@@ -18,13 +18,14 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             return new EquipoTransporteDTO()
             {
                 IdEmpresa = ec.IdEmpresa,
-                IdEquipoTransporte = ec.IdEquipoTransporteDetalle,
+                IdEquipoTransporte = EquipoTransporteServicio.ObtenerId(ec),
+                //IdEquipoTransporte = ec.IdEquipoTransporteDetalle,//Se asigna este id ya que es el id primary de la tabla de detalle transporte
                 IdCamioneta = ec.IdCamioneta,
                 IdPipa = ec.IdPipa,
                 IdVehiculoUtilitario = ec.IdUtilitario,
                 FechaRegistro = EquipoTransporteServicio.ObtenerFechaRegistro(ec),
                 Activo = EquipoTransporteServicio.ObtenerActivo(ec),
-                EsForaneo = EquipoTransporteServicio.ObtenerActivo(ec),
+                EsForaneo = EquipoTransporteServicio.ObtenerForaneo(ec),
                 Descripcion = EquipoTransporteServicio.ObtenerNombre(ec),
                 NumIdVehicular = ec.NumIdVehicular,
                 Placas = ec.Placas,
@@ -54,7 +55,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return new CDetalleEquipoTransporte()
             {
-                IdEquipoTransporteDetalle = ec.Id_DetalleEtransporte,
+                //IdEquipoTransporteDetalle = ec.Id_DetalleEtransporte,
+                IdEquipoTransporteDetalle = ec.IdEquipoTransporte,//Se asigna este id ya que es el id primary de la tabla de detalle transporte
                 IdEmpresa = ec.IdEmpresa,
                 NumIdVehicular = ec.NumIdVehicular,
                 Placas = ec.Placas,

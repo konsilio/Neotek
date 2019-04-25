@@ -14,6 +14,7 @@ using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.Almacenes;
 
+
 namespace Application.MainModule.Servicios.Catalogos
 {
     public static class EquipoTransporteServicio
@@ -68,7 +69,16 @@ namespace Application.MainModule.Servicios.Catalogos
                 return entidad.CUtilitario.Activo;
             return false;
         }
-
+        public static int ObtenerId(CDetalleEquipoTransporte entidad)
+        {         
+             if (entidad.IdCamioneta != null)
+                return entidad.CCamioneta.IdCamioneta;
+            if (entidad.IdPipa != null)
+                return entidad.CPipa.IdPipa;
+            if (entidad.IdUtilitario != null)
+                return entidad.CUtilitario.IdUtilitario;
+            return 0;
+        }
         public static string ObtenerNumero(short idEmpresa, short idCAlmacenGas)
         {
             if (idEmpresa != 0)
@@ -94,6 +104,18 @@ namespace Application.MainModule.Servicios.Catalogos
                 return new EquipoTransporteDataAccess().BuscarPipa(qt.Id_Vehiculo).Nombre;
             if (qt.EsUtilitario)               
                 return new EquipoTransporteDataAccess().BuscarUtilitario(qt.Id_Vehiculo).Nombre;
+            return null;
+        }
+        public static string ObtenerNombre(DetalleMantenimiento qt)
+        {
+            var eq = new EquipoTransporteDataAccess();
+            if (qt.EsCamioneta)
+                return new EquipoTransporteDataAccess().BuscarCamioneta(qt.id_vehiculo).Nombre;
+            if (qt.EsPipa)
+                return new EquipoTransporteDataAccess().BuscarPipa(qt.id_vehiculo).Nombre;
+            if (qt.EsUtilitario)
+                //return new EquipoTransporteDataAccess().BuscarUtilitario(qt.id_vehiculo).Nombre;
+                return eq.BuscarUtilitario(qt.id_vehiculo).Nombre;
             return null;
         }
         public static List<CDetalleEquipoTransporte> BuscarEquipoTransporte()
@@ -204,6 +226,14 @@ namespace Application.MainModule.Servicios.Catalogos
         public static string ObtenerAlias(CDetalleEquipoTransporte ec)
         {
             return ec.Marca + " " + "Color" + " " + ec.Color;
+        }
+
+        public static int ObtenerIdVehiculo(CDetalleEquipoTransporte ec)
+        {
+            if (ec.IdCamioneta != null) { return ec.IdCamioneta.Value; }
+            if (ec.IdPipa != null) { return ec.IdPipa.Value; }
+            if (ec.IdUtilitario != null) { return ec.IdUtilitario.Value; }
+            return 0;
         }
     }
 }

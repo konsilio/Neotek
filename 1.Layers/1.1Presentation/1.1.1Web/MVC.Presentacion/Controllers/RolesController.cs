@@ -43,15 +43,12 @@ namespace MVC.Presentacion.Controllers
                 ListaSistemaVenta = _lstSV,
             };
 
-            if (TempData["RespuestaDTO"] != null)
-            {
+            if (TempData["RespuestaDTO"] != null)            
                 ViewBag.MessageExito = TempData["RespuestaDTO"];
-            }
-            if (TempData["RespuestaDTOError"] != null)
-            {
+            
+            if (TempData["RespuestaDTOError"] != null)            
                 ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
-                TempData["RespuestaDTOError"] = ViewBag.MessageError;
-            }
+                TempData["RespuestaDTOError"] = ViewBag.MessageError;            
             ViewBag.MessageError = TempData["RespuestaDTOError"];
 
             return View(rolCat);

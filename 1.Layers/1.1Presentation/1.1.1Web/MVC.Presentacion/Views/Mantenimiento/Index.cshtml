@@ -32,11 +32,11 @@
             @using (Html.BeginForm("Crear", "Mantenimiento", FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.Id_DetalleMtto)
-                
+
                 <input type="text" hidden="hidden" name="esCamioneta" id="esCamioneta"/>
                 <input type="text" hidden="hidden" name="esPipa" id="esPipa" />
                 <input type="text" hidden="hidden" name="esUtilitario" id="esUtilitario" />
-         
+
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
@@ -58,15 +58,15 @@
                                     <div class="form-group">
                                         <b>Fecha de Mantenimiento</b>
                                         @Html.DevExpress().DateEdit(settings =>
-                                        {
-                                            settings.Name = "FechaMtto";
-                                            settings.Properties.UseMaskBehavior = true;
-                                            settings.Properties.EditFormat = EditFormat.Custom;
-                                            settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
-                                            settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
-                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                        }).Bind(Model.FechaMtto).GetHtml()
+                                   {
+                                       settings.Name = "FechaMtto";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
+                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                   }).Bind(Model.FechaMtto).GetHtml()
                                         @Html.ValidationMessageFor(m => m.FechaMtto, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                            MVCxComboBox comb = sender as MVCxComboBox;
                                            foreach (ListEditItem item in comb.Items)
                                            {
-                                               list.Add(item.GetValue("EsCamioneta")+"|"+ item.GetValue("EsPipa") + "|" + item.GetValue("EsUtilitario"));
+                                               list.Add(item.GetValue("EsCamioneta") + "|" + item.GetValue("EsPipa") + "|" + item.GetValue("EsUtilitario"));
                                            }
                                            e.Properties["cphidenVehiculos"] = list;
                                        };
@@ -103,16 +103,16 @@
                                     <div class="form-group">
                                         <b>Tipo Mantenimiento</b>
                                         @Html.DevExpress().ComboBox(settings =>
-                                        {
-                                            settings.Name = "Id_tipomtto";
-                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.SelectedIndex = 0;
-                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                            settings.Properties.TextField = "Mantenimiento";
-                                            settings.Properties.ValueField = "Id_Mantenimiento";
-                                            settings.Properties.ValueType = typeof(int);
-                                        }).BindList(ViewBag.CMantenimiento).Bind(Model.Id_tipomtto).GetHtml()
+                                   {
+                                       settings.Name = "Id_tipomtto";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.SelectedIndex = 0;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Mantenimiento";
+                                       settings.Properties.ValueField = "Id_Mantenimiento";
+                                       settings.Properties.ValueType = typeof(int);
+                                   }).BindList(ViewBag.CMantenimiento).Bind(Model.Id_tipomtto).GetHtml()
                                         @Html.ValidationMessageFor(m => m.Id_tipomtto, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -157,6 +157,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             @if (ViewBag.MensajeError != null)
                             {
                                 <div id="DivAlerta" class="container">

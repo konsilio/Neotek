@@ -35,7 +35,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Nombre = ec.Nombre,
                 Activo = true,
                 EsForaneo = ec.EsForaneo,
-                FechaRegistro = DateTime.Now,
+                FechaRegistro = ec.FechaRegistro,
+                Serie = ec.Serie,
+                Folio = ec.Folio,
             };
         }
         public static Camioneta FromDTO(EquipoTransporteDTO ec)

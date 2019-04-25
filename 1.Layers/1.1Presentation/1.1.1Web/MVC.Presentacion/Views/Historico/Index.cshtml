@@ -1,0 +1,190 @@
+﻿@model MVC.Presentacion.Models.Historico.HistoricoVentaModel
+@using PagedList.Mvc;
+@using PagedList;
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+
+<script type="text/javascript">
+    var mensaje = '@ViewBag.Msj';
+    var tipo = '@ViewBag.Tipo';
+    if (mensaje != '') {
+        $(window).on("load", showNotification(tipo, mensaje, 'top', 'center', '', ''));
+    }
+    //$(document).ready(function () {
+
+    //    $("#idUrl").change(function (event) {
+
+    //        var reader = new FileReader();
+    //        reader.readAsDataURL(event.srcElement.files[0]);
+
+    //        reader.onload = function () {
+    //            var fileContent = reader.result;
+    //            console.log(fileContent);
+    //        }
+
+    //        $("#Url").val($("idUrl").val());
+    //    });
+    //});
+
+</script>
+
+<body>
+    <section class="content home">
+        <div class="container-fluid">
+            @using (Html.BeginForm("Crear", "Historico", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Histórico de ventas</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Equipo de Transporte</li>
+                                <li class="breadcrumb-item">Histórico de ventas</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            <strong>Selección</strong> de archivo
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-5">
+                                    <strong>Archivo a Cargar:</strong>
+                                    <div class="form-group">
+                                        <input type="file" id="dataFile" value="Pre-Cargar" name="preCarga" />
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Url, "", new { @class = "alert-danger" })
+                                </div>
+                                <div class="col-md-5">
+                                    <strong> &nbsp; </strong>
+                                    <div class="form-group">
+                                        <input type="submit" value="Pre-Cargar" formaction=@Url.Action("PreCarga") class="btn btn-default btn btn-primary btn-round" />
+                                    </div>
+                                
+                                </div>
+
+                                <div class="col-md-2">
+                                    <strong> &nbsp; </strong>
+                                    <div class="form-group">
+                                        <input type="submit" value="Subir" class="btn btn-primary btn-round" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (ViewBag.MensajeError != null)
+                            {
+                                <div id="DivAlerta" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            @ViewBag.MensajeError
+                                        </strong>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            Validacion de <strong>Informacion</strong>
+                        </div>
+                        <div class="body">
+
+                            <div class="row clearfix blockquote blockquote-info btn-round">
+                                <div class="table-responsive">
+                                    <table class="table table-striped  filterable">
+                                        <thead>
+                                            <tr>
+                                                <td><strong></strong></td>
+                                                <td><strong>Mes</strong></td>
+                                                <td><strong>Año</strong></td>
+                                                <td><strong>Monto Venta</strong></td>
+                                                <td><strong>Pipa</strong></td>
+                                                <td><strong>Camioneta</strong></td>
+                                                <td><strong>Local</strong></td>
+                                                <td><strong>Foranea</strong></td>
+                                            </tr>
+                                        </thead>
+                                        @if (ViewBag.HistoricoVentas != null)
+                                        {
+
+                                            <tbody>
+
+                                                @foreach (var hist in ViewBag.HistoricoVentas)
+                                                {
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>@hist.Mes</td>
+                                                        <td>@hist.Anio</td>
+                                                        <td>$@hist.MontoVenta</td>
+                                                        @if (@hist.EsPipa)
+                                                        {
+                                                            <td>1</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>0</td>
+                                                        }
+                                                        @if (@hist.EsCamioneta)
+                                                        {
+                                                            <td>1</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>0</td>
+                                                        }
+                                                        @if (@hist.EsLocal)
+                                                        {
+                                                            <td>1</td>
+                                                            <td>0</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>0</td>
+                                                            <td>1</td>
+                                                        }
+                                                    </tr>
+                                                }
+
+
+                                            </tbody>
+                                        }
+
+                                    </table>
+                                </div>
+                            </div>
+                            @*@if (ViewBag.HistoricoVentas != null)
+                                {
+                                    <div class="row clearfix">
+                                        <div class="col-md-6">
+                                            Página @(ViewBag.HistoricoVentas.PageCount < ViewBag.HistoricoVentas.PageNumber ? 0 : ViewBag.HistoricoVentas.PageNumber) de @ViewBag.HistoricoVentas.PageCount
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            @Html.PagedListPager((IPagedList)ViewBag.HistoricoVentas, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
+                                        </div>
+                                    </div>
+                                }*@
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</body>

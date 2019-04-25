@@ -20,7 +20,6 @@ namespace Sagas.MainModule.Entidades
             this.UnidadAlmacenGas = new HashSet<UnidadAlmacenGas>();
             this.CentroCosto = new HashSet<CentroCosto>();
             this.DetalleMantenimiento = new HashSet<DetalleMantenimiento>();
-            this.DetalleRecargaCombustible = new HashSet<DetalleRecargaCombustible>();
             this.CDetalleEquipoTransporte = new HashSet<CDetalleEquipoTransporte>();
         }
     
@@ -30,9 +29,9 @@ namespace Sagas.MainModule.Entidades
         public string Nombre { get; set; }
         public bool Activo { get; set; }
         public bool EsForaneo { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
         public string Serie { get; set; }
         public Nullable<int> Folio { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnidadAlmacenGas> UnidadAlmacenGas { get; set; }
@@ -41,8 +40,6 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<CentroCosto> CentroCosto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleMantenimiento> DetalleMantenimiento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetalleRecargaCombustible> DetalleRecargaCombustible { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CDetalleEquipoTransporte> CDetalleEquipoTransporte { get; set; }
     }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporte
+namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio
 {
     public class RecargaCombustibleAdapter
     {

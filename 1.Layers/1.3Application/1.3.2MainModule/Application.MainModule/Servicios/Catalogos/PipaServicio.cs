@@ -48,6 +48,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PipaDataAccess().ObtenerPipa(id);
         }
+        public static Pipa Obtener(int id, bool activo)
+        {
+            return new PipaDataAccess().ObtenerPipa(id, activo);
+        }
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "La pipa");

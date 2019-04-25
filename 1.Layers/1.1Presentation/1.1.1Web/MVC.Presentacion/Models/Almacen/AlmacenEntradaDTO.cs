@@ -20,7 +20,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public string UrlDocEntrada { get; set; }
         public string PathDocEntrada { get; set; }
         public string Observaciones_ { get; set; }
-        public System.DateTime FechaEntrada { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
+        public DateTime FechaEntrada { get; set; }
+        public DateTime FechaRegistro { get; set; }
     }
 }
