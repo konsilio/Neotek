@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using Echovoice.JSON;
 using OfficeOpenXml.Drawing.Chart;
 using OfficeOpenXml;
+using System.Net;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -237,15 +238,13 @@ namespace MVC.Presentacion.Controllers
             var mes = (List<string>)TempData["meses"];
             List<YearsDTO> Montototal = HistoricoServicio.GetVentasTotalesxMes(modelo, tkn);
             string pahtFile = "";
-
+ 
             //create a new piechart of type Line
             ExcelBarChart lineChart = worksheet.Drawings.AddChart("BarChart", eChartType.ColumnClustered) as ExcelBarChart;
             if (modelo.IdTipoReporte == 1)
             {
-                pahtFile = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) +"\\VentasGenerales.xlsx";
-              
 
-
+                pahtFile = "VentasGeneral.xlsx";
                 var rangeLabel = worksheet.Cells["B1:M1"];
                 var rows = 2;
                 var rowsMes = 2;
@@ -302,11 +301,11 @@ namespace MVC.Presentacion.Controllers
 
                 if (modelo.IdTipoReporte == 2)
                 {
-                    pahtFile = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\PipasvsCamionetas.xlsx";
+                    pahtFile = "PipasvsCamionetas.xlsx";
                 }
                 else
                 {
-                    pahtFile = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\VentasLocalvsForaneas.xlsx";
+                    pahtFile = "VentasLocalvsForaneas.xlsx";
                 }
 
 
@@ -319,7 +318,7 @@ namespace MVC.Presentacion.Controllers
                 var cont = 0;
                 List<string> rangelabe = new List<string>();
 
-               
+
 
                 for (int r = 0; r < datos.Count; r++)
                 {
@@ -329,7 +328,7 @@ namespace MVC.Presentacion.Controllers
 
 
                     foreach (var item in m)
-                    {                      
+                    {
                         var rowCamio = 1;
 
                         if (item != "")
@@ -413,6 +412,7 @@ namespace MVC.Presentacion.Controllers
                                     }
                                     else
                                     {
+
                                         var doubleValue = Double.Parse(sumaPipa.Substring(1, tamSumaPi.Length - 5));
 
                                         worksheet.Cells[rowCamio, rowPipa].Value = doubleValue;
@@ -429,7 +429,7 @@ namespace MVC.Presentacion.Controllers
                         }
                     }
 
-                   
+
                 }
 
                 for (int e = 0; e < rangelabe.Count(); e++)
@@ -461,16 +461,24 @@ namespace MVC.Presentacion.Controllers
             //add the chart at cell B6
             lineChart.SetPosition(1, 0, 8, 0);
 
-            FileInfo infor = new FileInfo(pahtFile);
-            sLDocument.SaveAs(infor);
+            //  FileInfo infor = new FileInfo(pahtFile);
 
-            return RedirectToAction("HistoricoVentas", modelo);
+            MemoryStream memoryStream = new MemoryStream();
+            sLDocument.SaveAs(memoryStream);
+            memoryStream.Position = 0;
+
+
+            return new FileStreamResult(memoryStream, "application/vnd.ms-excel") { FileDownloadName = pahtFile };
+            //return RedirectToAction("HistoricoVentas", modelo);
+
         }
         public List<YearsDTO> ObtenerAños()
         {
             var respuesta = HistoricoServicio.GetYears(tkn);
             return respuesta;
         }
+
+        
         public ActionResult Eliminar(int? id)
         {
 
