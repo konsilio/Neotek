@@ -104,6 +104,8 @@ namespace Application.MainModule.Servicios.Facturacion
         }
         public static CFDIDTO Timbrar(Comprobante _comp, CFDIDTO dto, List<VentaPuntoVentaDTO> Tickets)
         {
+            _comp.Folio = dto.Folio.ToString();
+            _comp.Serie = dto.Serie;
             var respTimbrado = new WsFactAdmingestControllerService().generarFacturaEstructuraAdmingest(ConfigurationManager.AppSettings["Usuario"], ConfigurationManager.AppSettings["Contrasena"], ConfigurationManager.AppSettings["RFC"], _comp);
             dto.RespuestaTimbrado = DatosRespuesta(respTimbrado);
             if (!dto.RespuestaTimbrado.Exito)
@@ -118,7 +120,11 @@ namespace Application.MainModule.Servicios.Facturacion
             List<CFDI> cfdis = new List<CFDI>();
             foreach (var t in Tickets)
             {
-                cfdis.Add(CFDIAdapter.FormEmtity(CFDIServicio.Buscar(t.FolioVenta)));
+                var c = CFDIAdapter.FormEmtity(CFDIServicio.Buscar(t.FolioVenta));
+                c.URLPdf = dto.URLPdf;
+                c.URLXml = dto.URLXml;
+                c.UUID = dto.UUID;
+                cfdis.Add(c);
             }
             dto.RespuestaTimbrado = Actualizar(cfdis);
             return dto;
@@ -225,7 +231,7 @@ namespace Application.MainModule.Servicios.Facturacion
             return new Concepto()
             {
                 ClaveProdServ = _p.ClaveProdServ,
-                NoIdentificacion = det.IdProducto.ToString(),
+                NoIdentificacion = det.VentaPuntoDeVenta.FolioVenta,
                 Cantidad = (float)det.CantidadProducto,
                 ClaveUnidad = _p.UnidadMedida.ClaveSat,
                 Unidad = _p.UnidadMedida.Descripcion,

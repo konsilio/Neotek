@@ -73,7 +73,7 @@ namespace Application.MainModule.Flujos
             List<CFDI> l = new List<CFDI>();
             foreach (var c in cfdis)
             {
-                if (l.Where(x => x.UUID.Equals(c.UUID)).Count().Equals(0))                
+                if (l.Where(x => x.UUID.Equals(c.UUID) && x.Serie.Equals("G")).Count().Equals(0))                
                     l.Add(c);                
             }
 

@@ -210,7 +210,10 @@ namespace MVC.Presentacion.Controllers
             {
                 var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
                 if (Respuesta.Exito)
+                {
                     ViewBag.Msj = Respuesta.Mensaje;
+                    TempData["TiketsAgregados"] = null;
+                }
                 else
                     ViewBag.MensajeError = Validar(Respuesta);
             }
