@@ -26,7 +26,8 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static EquipoTransporteDTO Obtener(int idVehiculo)
         {
-            EquipoTransporteDTO Vehiculo = AdaptadoresDTO.Catalogo.EquipoTransporteAdapter.toDTO(new EquipoTransporteDataAccess().Buscar(idVehiculo));
+            var entidad = new EquipoTransporteDataAccess().Buscar(TokenServicio.ObtenerIdEmpresa());
+            EquipoTransporteDTO Vehiculo = AdaptadoresDTO.Catalogo.EquipoTransporteAdapter.toDTO(entidad.SingleOrDefault(x => x.IdEquipoTransporteDetalle.Equals(idVehiculo)));
             return Vehiculo;
         }
         public static string ObtenerNombre(UnidadAlmacenGas uAG)

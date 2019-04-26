@@ -11452,6 +11452,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="assets\js\chosen\composer.json" />
     <Content Include="assets\js\chosen\LICENSE.md" />
+    <None Include="Properties\PublishProfiles\Presentacion.pubxml" />
     <None Include="Properties\PublishProfiles\SaGas.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DatePickerReady.js" />
