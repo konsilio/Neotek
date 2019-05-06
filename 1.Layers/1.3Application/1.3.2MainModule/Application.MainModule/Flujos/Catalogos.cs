@@ -1422,9 +1422,11 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarCliente();
             if (!resp.Exito) return resp;
 
-            var entidad = EgresoAdapter.FromDTO(dto);
+            var entidad = EgresoServicio.Buscar(dto.IdEgreso);
+            var entity = EgresoAdapter.FormEmtity(entidad, dto);
 
-            return EgresoServicio.Actualizar(entidad);
+
+            return EgresoServicio.Actualizar(entity);
         }
         public RespuestaDto BorrarEgrereo(int id)
         {
