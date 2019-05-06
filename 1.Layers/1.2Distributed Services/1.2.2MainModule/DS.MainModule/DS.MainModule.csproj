@@ -285,6 +285,7 @@
     <Compile Include="Controllers\HistoricoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />
+    <Compile Include="Controllers\ReportesController.cs" />
     <Compile Include="Controllers\RequisicionController.cs" />
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SeguridadController.cs" />
@@ -400,6 +401,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="LogosEmpresa\" />
+    <Folder Include="Views\Reportes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

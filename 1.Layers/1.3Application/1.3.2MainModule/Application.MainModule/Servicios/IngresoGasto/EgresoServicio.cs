@@ -29,7 +29,6 @@ namespace Application.MainModule.Servicios.IngresoGasto
         {
             return new EgresoDataAccess().Buscar(id);
         }
-
         public static List<Egreso> BuscarTodos(short IdEmpresa)
         {
             return new EgresoDataAccess().BuscarTodos(IdEmpresa);
@@ -37,6 +36,10 @@ namespace Application.MainModule.Servicios.IngresoGasto
         public static List<Egreso> BuscarTodos(DateTime FechaInicio, DateTime FechaFin)
         {
             return new EgresoDataAccess().BuscarTodos(FechaInicio, FechaFin);
+        }
+        public static List<Egreso> BuscarTodos(DateTime periodo)
+        {
+            return new EgresoDataAccess().BuscarTodos(periodo);
         }
         public static List<Egreso> BuscarPorCentroCosto(int IdCentroCosto)
         {

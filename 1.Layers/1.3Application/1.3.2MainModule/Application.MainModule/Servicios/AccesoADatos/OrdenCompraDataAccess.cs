@@ -53,8 +53,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                   || x.IdEmpresa.Equals(idEmpresa)
                                                                   && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)
                                                                   ).ToList();*/
-        }
- 
+        } 
         public OrdenCompra Buscar(int idOrdenCompr)
         {
             return uow.Repository<OrdenCompra>().GetSingle(x => x.IdOrdenCompra.Equals(idOrdenCompr));
@@ -155,8 +154,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
-
         public RespuestaDto Actualizar(AlmacenGasDescarga oc)
         {
             RespuestaDto _respuesta = new RespuestaDto();

@@ -262,7 +262,6 @@ namespace Application.MainModule.Servicios.Compras
         {
             return ComplementoGasAdapter.ToRequisicion(dto, req);
         }
-
         public static ComplementoGasDTO CargarDatosPapeleta(ComplementoGasDTO dto)
         {
             return ComplementoGasAdapter.ToPapeleta(dto);

@@ -86,5 +86,21 @@ namespace Application.MainModule.AdaptadoresDTO.IngresoEgreso
                 Activo = dto.Activo,
             };
         }
+        public static RepCuentaPorPagarDTO ToRepo(Egreso entidad)
+        {
+            return new RepCuentaPorPagarDTO()
+            {
+                IdCuenta = entidad.IdEgreso,
+                Descripcion = entidad.Descripcion,
+                CunentaContable = entidad.CCuentaContable.Descripcion,
+                SaldoPagado = Convert.ToDouble(entidad.Monto),
+                SaldoPasivo = Convert.ToDouble(entidad.Monto),
+                SaldoInsoluto = 0,                
+            };
+        }
+        public static List<RepCuentaPorPagarDTO> ToRepo(List<Egreso> entidad)
+        {
+            return entidad.Select(x => ToRepo(x)).ToList();
+        }
     }
 }
