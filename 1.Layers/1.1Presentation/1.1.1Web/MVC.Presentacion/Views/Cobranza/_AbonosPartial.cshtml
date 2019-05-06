@@ -92,14 +92,7 @@
             col.Caption = "Folio";
             col.Visible = false;
             col.EditFormSettings.Visible = DefaultBoolean.True;
-            //col.SetDataItemTemplateContent(diTemplate =>
-            //{
-            //    GridViewDataItemTemplateContainer container = diTemplate as GridViewDataItemTemplateContainer;
-            //    Html.DevExpress().TextBox(txtSettings =>
-            //    {
-            //        txtSettings.Name = string.Format("txtFolioBancario_{0}", diTemplate.VisibleIndex);
-            //    }).Render();
-            //});
+         
         });
         settings.Columns.Add(c =>
         {
@@ -123,14 +116,7 @@
             c.Caption = "Cantidad";
             c.Visible = false;
             c.EditFormSettings.Visible = DefaultBoolean.True;
-            //c.SetDataItemTemplateContent(Template =>
-            //{
-            //    GridViewDataItemTemplateContainer cont = Template as GridViewDataItemTemplateContainer;
-            //    Html.DevExpress().TextBox(txtSettings =>
-            //    {
-            //        txtSettings.Name = string.Format("txtAbono_{0}", Template.ItemIndex.ToString());
-            //    }).Render();
-            //});
+      
         });
     }
 ).Bind(Model).GetHtml()

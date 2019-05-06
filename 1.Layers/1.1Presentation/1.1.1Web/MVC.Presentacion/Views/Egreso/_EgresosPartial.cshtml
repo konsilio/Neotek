@@ -1,0 +1,53 @@
+﻿@*@model List<MVC.Presentacion.Models.EgresoDTO>*@
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "Egresos";
+        settings.KeyFieldName = "IdEgreso";
+        settings.CallbackRouteValues = new { Controller = "Egreso", Action = "Idex" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.Theme = "Material";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdEgreso";
+            c.Caption = "ID";
+            //c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.True;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descripcion";
+            c.Caption = "Descripción";
+            //c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.True;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Monto";
+            c.Caption = "Monto";
+            //c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Settings.ShowEditorInBatchEditMode = false;
+            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            c.ReadOnly = true;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Modificar", new { id = d.KeyValue }) + "><i class='material-icons'>edit</i> <span class='icon-name'></span></a>"));
+            });
+        });
+    }
+).Bind(ViewBag.Egresos).GetHtml()

@@ -85,6 +85,7 @@
     <Compile Include="AdaptadoresDTO\Facturacion\UsoCFDIAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Historico\HistoricoVentasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Historico\YearsAdapater.cs" />
+    <Compile Include="AdaptadoresDTO\IngresoEgreso\EgresoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="DTOs\Historico\MesVentaDTO.cs" />
     <Compile Include="DTOs\Historico\YearDTO.cs" />
     <Compile Include="DTOs\Historico\YearsVentasTotalesDTO.cs" />
+    <Compile Include="DTOs\IngresoGasto\EgresoDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
     <Compile Include="DTOs\Mobile\AnticiposEstacionDTO.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="DTOs\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="DTOs\Pedidos\PedidoModelDto.cs" />
     <Compile Include="DTOs\Pedidos\RegistraPedidoDto.cs" />
+    <Compile Include="DTOs\Reportes\RepCuentaPorPagarDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionSalidaDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\TransporteDTO.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />
@@ -193,6 +196,7 @@
     <Compile Include="Flujos\Historicos.cs" />
     <Compile Include="Flujos\Mantenimiento.cs" />
     <Compile Include="Flujos\RecargaCombustible.cs" />
+    <Compile Include="Flujos\Reportes.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -224,6 +228,7 @@
     <Compile Include="Servicios\Catalogos\CamionetaServicio.cs" />
     <Compile Include="Servicios\Catalogos\CombustibleServicio.cs" />
     <Compile Include="Servicios\Catalogos\PipaServicio.cs" />
+    <Compile Include="Servicios\Catalogos\ReporteServicio.cs" />
     <Compile Include="Servicios\Catalogos\VehiculoUtilitarioServicio.cs" />
     <Compile Include="Servicios\Cobranza\CobranzaServicio.cs" />
     <Compile Include="Servicios\Compras\CalcularPagoServicio.cs" />
@@ -470,9 +475,7 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTOs\IngresoGasto\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\1.4Domain\1.4.2SagasMainModule\Sagas.MainModule\Sagas.MainModule.csproj">
       <Project>{ff128402-ecef-4aae-a189-3a61e225b25e}</Project>

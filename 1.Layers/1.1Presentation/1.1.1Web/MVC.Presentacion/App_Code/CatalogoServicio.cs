@@ -2594,6 +2594,39 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
 
+        #region Egreso
+        public static List<EgresoDTO> ListaEgresos(string Token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaEgreso(Token);
+            return agente._ListaEgreso;
+        }
+        public static RespuestaDTO CrearEgreso(EgresoDTO dto, string tkn)
+        {
+            if (dto.IdEmpresa.Equals(0)) dto.IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
+            var agente = new AgenteServicio();
+            agente.GuardarEgreso(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarEgreso(EgresoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EditarEgreso(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO EliminiarEgreso(int id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarEgreso(id, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static EgresoDTO ActivarEditarEgreso(int id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ObteneEgresoId(id, tkn);
+            return agente._EgresoDTO;
+        }
+        #endregion
         public static RespuestaDTO SinPermisos()
         {
             return new RespuestaDTO()

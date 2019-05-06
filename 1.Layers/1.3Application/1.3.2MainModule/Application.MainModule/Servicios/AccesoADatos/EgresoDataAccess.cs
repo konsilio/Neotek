@@ -66,6 +66,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public Egreso Buscar(int id)
+        {
+            return uow.Repository<Egreso>().GetSingle(x => x.IdEgreso.Equals(id));
+        }
         public List<Egreso> BuscarTodos()
         {
             return uow.Repository<Egreso>().GetAll().ToList();
@@ -82,10 +86,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Egreso>().Get(x => x.IdCuentaContable.Equals(id)).ToList();
         }
-        public Egreso BuscarPorTipoEgreso(short id)
-        {
-            return uow.Repository<Egreso>().GetSingle(x => x.IdTipoEgreso.Equals(id));
-        }
+        //public Egreso BuscarPorTipoEgreso(short id)
+        //{
+        //    return uow.Repository<Egreso>().GetSingle(x => x.IdTipoEgreso.Equals(id));
+        //}
         public Egreso BuscarPorExterno(bool esExterno)
         {
             return uow.Repository<Egreso>().GetSingle(x => x.EsExterno.Equals(esExterno));

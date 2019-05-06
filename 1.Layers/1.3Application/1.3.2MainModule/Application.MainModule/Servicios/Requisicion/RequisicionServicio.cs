@@ -22,6 +22,10 @@ namespace Application.MainModule.Servicios.Requisiciones
         {
             return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas().Where(x => x.IdEmpresa.Equals(_IdEmpresa) && !x.Solicitante.EsAdministracionCentral).ToList());
         }
+        public static List<RequisicionDTO> BuscarRequisicionPorPeriodo(short _IdEmpresa, DateTime periodo)
+        {
+            return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas(_IdEmpresa, periodo));
+        }
         public static RequisicionRevisionDTO BuscarRequisicion(int _idrequi)
         {
             return RequisicionAdapter.ToRevDTO(new RequisicionDataAccess().BuscarPorIdRequisicion(_idrequi));
@@ -56,7 +60,7 @@ namespace Application.MainModule.Servicios.Requisiciones
         }
         public static RespuestaDto CancelarRequisicion(Requisicion _req)
         {
-            return new RequisicionDataAccess().Actualizar(_req);   
+            return new RequisicionDataAccess().Actualizar(_req);
         }
         public static RequisicionProducto BuscarRequisiconProductoPorId(int idProd, int idReq)
         {
@@ -111,7 +115,7 @@ namespace Application.MainModule.Servicios.Requisiciones
             if (_productos.Where(x => x.AutorizaEntrega.Equals(true)).Count().Equals(_productos.Count))
                 _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_entrega;
             if (_productos.Where(x => x.AutorizaCompra.Equals(true)).Count().Equals(_productos.Count))
-                _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_compra;           
+                _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_compra;
             return _requisicion;
         }
     }

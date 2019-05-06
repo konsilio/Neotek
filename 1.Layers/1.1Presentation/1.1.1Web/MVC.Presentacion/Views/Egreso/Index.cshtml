@@ -1,0 +1,197 @@
+﻿@model MVC.Presentacion.Models.EgresoDTO
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+<link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+<script type="text/javascript">
+    var mensaje = '@ViewBag.Msj';
+    if (mensaje != '') {
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+    }
+
+</script>
+<body>
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+            <p>Espere por favor</p>
+        </div>
+    </div>
+
+    <section class="content home">
+        <div class="container-fluid">
+            @using (Html.BeginForm("Crear", "Egreso", FormMethod.Post))
+            {
+                <div class="block-header">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <h2>Proveedores</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Catalgo</li>
+                                <li class="breadcrumb-item">Egreso</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="divPrincipal">
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          
+                            <div class="card">
+                                <div class="header">
+                                    <h2><strong>Proveedor</strong></h2>
+                                </div>
+                                <div class="body">
+                                    <div class="row clearfix">
+                                        <div class="col-md-10">
+                                            Descripcion
+                                            <div class="form-group">
+                                                @Html.TextBoxFor(m => m.Descripcion, Model.Descripcion, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "alert-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <b></b>
+                                            <div class="form-group">
+                                                @if (ViewBag.EsEdicion == null)
+                                                {
+                                                    <button id="BtnCrear" formaction=@Url.Action("Crear") class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                        <i class="zmdi zmdi-plus"></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button id="btnUpDate" formaction=@Url.Action("Modificar") class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                        <i class="zmdi zmdi-swap"></i>
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div>
+                                                    <strong>Gasto mensual</strong>
+                                                </div>
+                                                <label class="switch">
+                                                    @Html.CheckBoxFor(m => m.GastoMensual, new { @class = "form-control" })
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.GastoMensual, "", new { @class = "alert-danger" })
+                                        </div>
+                                        <div class="col-md-4">
+                                            Monto
+                                            <div class="form-group">
+                                                @Html.TextBoxFor(m => m.Monto, Model.Monto.ToString(), new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div>
+                                                    <strong>Activo</strong>
+                                                </div>
+                                                <label class="switch">
+                                                    @Html.CheckBoxFor(m => m.Activo, new { @class = "form-control" })
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Activo, "", new { @class = "alert-danger" })
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <div>
+                                                    <strong>Es Fiscal</strong>
+                                                </div>
+                                                <label class="switch">
+                                                    @Html.CheckBoxFor(m => m.EsFiscal, new { @class = "form-control" })
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.EsFiscal, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-4">
+                                            <b>Centro de Costo</b>
+                                            <div class="form-group">
+                                                @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdCentroCosto";
+                                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                   settings.SelectedIndex = 0;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Properties.TextField = "Descripcion";
+                                                   settings.Properties.ValueField = "IdCentroCosto";
+                                                   settings.Properties.ValueType = typeof(int);
+                                               }).BindList(ViewBag.CentroCostos).Bind(Model.IdCentroCosto).GetHtml()
+                                                @Html.ValidationMessageFor(m => m.IdCentroCosto, "", new { @class = "alert-danger" })
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <b>Centro de Costo</b>
+                                            <div class="form-group">
+                                                @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdCuentaContable";
+                                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                   settings.SelectedIndex = 0;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Properties.TextField = "Descripcion";
+                                                   settings.Properties.ValueField = "IdCuentaContable";
+                                                   settings.Properties.ValueType = typeof(int);
+                                               }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
+                                                @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (ViewBag.MensajeError != null)
+                {
+                        <div id="DivAlerta" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    @ViewBag.MensajeError
+                                </strong>
+                            </div>
+                        </div>
+                    }
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="card">
+                                <div class="body">
+                                    <div class="row clearfix blockquote blockquote-info btn-round">
+                                        <div class="table-responsive">
+                                            @Html.Partial("_EgresosPartial")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</body>

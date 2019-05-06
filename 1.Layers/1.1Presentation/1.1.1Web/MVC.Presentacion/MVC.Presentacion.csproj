@@ -277,6 +277,7 @@
     <Compile Include="Controllers\CombustibleController.cs" />
     <Compile Include="Controllers\CuentaContableController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\EgresoController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\EquipoTransporteController.cs" />
     <Compile Include="Controllers\FacturacionController.cs" />
@@ -325,6 +326,7 @@
     <Compile Include="Models\Catalogos\ClienteLocacionMod.cs" />
     <Compile Include="Models\Catalogos\ClientesDto.cs" />
     <Compile Include="Models\Catalogos\ClientesModel.cs" />
+    <Compile Include="Models\Catalogos\EgresoDTO.cs" />
     <Compile Include="Models\Catalogos\Empresa.cs" />
     <Compile Include="Models\Catalogos\EmpresaConfiguracion.cs" />
     <Compile Include="Models\Catalogos\EmpresaModel.cs" />
@@ -11636,6 +11638,8 @@
     <Content Include="Views\Historico\HistoricoVentas.cshtml" />
     <Content Include="Views\Cobranza\FacturacionGlobal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\YearsDTO.cshtml" />
+    <Content Include="Views\Egreso\Index.cshtml" />
+    <Content Include="Views\Egreso\_EgresosPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

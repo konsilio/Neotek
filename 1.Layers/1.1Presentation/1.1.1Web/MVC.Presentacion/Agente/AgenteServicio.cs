@@ -54,6 +54,7 @@ namespace MVC.Presentacion.Agente
         public ClientesDto _ClienteDTO;
         public ClientesModel _ClienteModel;
         public HistoricoVentaModel _HistoricoVentaDTO;
+        public EgresoDTO _EgresoDTO;
         public string _json;
 
 
@@ -124,6 +125,7 @@ namespace MVC.Presentacion.Agente
         public List<UsoCFDIDTO> _ListaUsoCFDI;
         public List<MetodoPagoDTO> _ListaMetodPago;
         public List<YearsVentasTotalesDTO> _yearVentasTortales;
+        public List<EgresoDTO> _ListaEgreso;
         public string _Json;
 
         public AgenteServicio()
@@ -2982,6 +2984,92 @@ namespace MVC.Presentacion.Agente
                 _ListaMetodPago = list;
             }
         }
+        #endregion
+        #region Egreso
+        public void BuscarListaEgreso(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetEgresos"];
+            GetListaEgreso(tkn).Wait();
+        }
+        private async Task GetListaEgreso(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<EgresoDTO> list = new List<EgresoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<EgresoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<EgresoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaEgreso = list;
+            }
+        }       
+       
+        public void ObteneEgresoId(int id, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetEgreso"];
+            EgresoID(ApiCatalgos, id, token).Wait();
+        }
+        private async Task EgresoID(string api, int id, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                EgresoDTO entidad = new EgresoDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        entidad = await response.Content.ReadAsAsync<EgresoDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    entidad = new EgresoDTO();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _EgresoDTO = entidad;
+            }
+        }
+        public void GuardarEgreso(EgresoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraEgreso"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public void EditarEgreso(EgresoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaEgreso"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void EliminarEgreso(int id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminaEgreso"];
+            EliminarVehiculoSeleccionado(id, tkn).Wait();
+        }
+
         #endregion
 
         #endregion
