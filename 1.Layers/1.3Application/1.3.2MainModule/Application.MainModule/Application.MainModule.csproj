@@ -180,6 +180,7 @@
     <Compile Include="DTOs\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="DTOs\Pedidos\PedidoModelDto.cs" />
     <Compile Include="DTOs\Pedidos\RegistraPedidoDto.cs" />
+    <Compile Include="DTOs\Reportes\CuentasPorPagarDTO.cs" />
     <Compile Include="DTOs\Reportes\RepCuentaPorPagarDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionSalidaDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\TransporteDTO.cs" />

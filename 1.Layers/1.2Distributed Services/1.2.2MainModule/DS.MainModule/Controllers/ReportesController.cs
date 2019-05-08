@@ -1,4 +1,5 @@
-﻿using Application.MainModule.Flujos;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.Flujos;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -17,10 +18,10 @@ namespace DS.MainModule.Controllers
         {
             _repo = new Reportes();
         }
-        [Route("cuentasxpagar/{periodo}")]
-        public HttpResponseMessage GetRepoCuentasPorPagar(DateTime periodo)
+        [Route("cuentasxpagar")]
+        public HttpResponseMessage PostRepoCuentasPorPagar(CuentasPorPagarDTO dto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCuentasPorPagar(periodo));
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCuentasPorPagar(dto.Periodo));
         }
     }
 }

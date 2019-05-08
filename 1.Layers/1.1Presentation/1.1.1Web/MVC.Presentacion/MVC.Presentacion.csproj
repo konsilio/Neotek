@@ -258,6 +258,7 @@
     <Compile Include="App_Code\HistoricoServicio.cs" />
     <Compile Include="App_Code\OrdenCompraServicio.cs" />
     <Compile Include="App_Code\PedidosServicio.cs" />
+    <Compile Include="App_Code\ReporteServicio.cs" />
     <Compile Include="App_Code\RequisicionServicio.cs" />
     <Compile Include="App_Code\CatalogoServicio.cs" />
     <Compile Include="App_Code\TokenServicio.cs" />
@@ -11644,6 +11645,7 @@
     <Content Include="Views\Egreso\Index.cshtml" />
     <Content Include="Views\Egreso\_EgresosPartial.cshtml" />
     <Content Include="Views\Reportes\CuentasXPagar.cshtml" />
+    <Content Include="Views\Reportes\_CuentasPorPagarPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

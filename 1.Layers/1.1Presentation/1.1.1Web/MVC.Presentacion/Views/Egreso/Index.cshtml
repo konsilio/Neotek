@@ -30,7 +30,7 @@
 
     <section class="content home">
         <div class="container-fluid">
-            @using (Html.BeginForm("Crear", "Egreso", FormMethod.Post))
+          @using (Html.BeginForm("Crear", "Egreso", FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.IdEgreso)
                 @Html.HiddenFor(m => m.IdEmpresa)

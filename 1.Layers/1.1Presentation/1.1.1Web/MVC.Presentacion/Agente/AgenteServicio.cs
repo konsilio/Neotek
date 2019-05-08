@@ -126,6 +126,8 @@ namespace MVC.Presentacion.Agente
         public List<MetodoPagoDTO> _ListaMetodPago;
         public List<YearsVentasTotalesDTO> _yearVentasTortales;
         public List<EgresoDTO> _ListaEgreso;
+        public List<CuentasPorPagarDTO> _ListaCuentasPorPagar;
+
         public string _Json;
 
         public AgenteServicio()
@@ -3018,8 +3020,8 @@ namespace MVC.Presentacion.Agente
                 }
                 _ListaEgreso = list;
             }
-        }       
-       
+        }
+
         public void ObteneEgresoId(int id, string token)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetEgreso"];
@@ -4934,7 +4936,7 @@ namespace MVC.Presentacion.Agente
             ApiRoute = ApiHistoricos;
             GetJson(dto, tkn, MetodoRestConst.Post).Wait();
         }
-        public async Task GetJson<T>(T _dto,string token, string Tipo, bool EsAnonimo = false)
+        public async Task GetJson<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
         {
             using (var client = new HttpClient())
             {
@@ -4977,6 +4979,45 @@ namespace MVC.Presentacion.Agente
         }
 
 
+
+        #endregion
+        #region Reportes
+        #region CuentasPorPagar
+        public void BuscaCuentasPorPagar(CuentasPorPagarModel model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRepoCuentasPorPagar"];
+            ListaCuentasPorPagar(model, this.ApiCatalgos, tkn).Wait();
+        }
+
+        private async Task ListaCuentasPorPagar(CuentasPorPagarModel model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CuentasPorPagarDTO> list = new List<CuentasPorPagarDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {                   
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<CuentasPorPagarDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<CuentasPorPagarDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaCuentasPorPagar = list;
+            }
+        }
+        #endregion
 
         #endregion
 

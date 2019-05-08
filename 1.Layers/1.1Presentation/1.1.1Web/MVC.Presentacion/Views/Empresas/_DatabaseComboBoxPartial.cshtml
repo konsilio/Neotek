@@ -2,13 +2,6 @@
 @model  EmpresaModel
 @Html.DevExpress().ComboBox(settings =>//m => m.IdPais, cb =>
 {
-    //cb.Properties.ClientInstanceName = "IdPais";
-    //cb.CallbackRouteValues = new { Controller = "Empresas", Action = "DatabaseComboBoxPartial" };
-    //cb.Properties.CallbackPageSize = 25;
-    //cb.Properties.DropDownStyle = DropDownStyle.DropDownList;
-
-    //cb.Properties.ClientSideEvents.ValueChanged = "onComboBoxSelectedIndexChanged";
-    //cb.Properties.ValueType = typeof(String);
     settings.Name = "IdPais";
     settings.Width = 180;
     settings.SelectedIndex = 0;
