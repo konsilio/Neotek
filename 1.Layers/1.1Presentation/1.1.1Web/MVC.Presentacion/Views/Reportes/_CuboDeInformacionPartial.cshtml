@@ -1,0 +1,47 @@
+﻿@using MVC.Presentacion.Models
+@{
+    ViewBag.Title = "Reportes";
+    Layout = null;
+    ViewData["DataSource"] = Model;
+}
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "CuentasPorPagar";
+        settings.KeyFieldName = "IdCuenta";
+        settings.CallbackRouteValues = new { Controller = "Reportes", Action = "GetGridView", Tipo = ViewData["Reporte"] };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsText.EmptyDataRow = "No se encontraron registros";
+        settings.SettingsText.GroupPanel = "Desliza los campos para hacer una agrupación ";
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.Theme = "Material";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFooter = true;
+        //if (ViewData["Reporte"] != null && ViewData["Reporte"].Equals(TiposReporteConst.CuentasXCobrar))
+        //{
+        //    settings.Columns.Add(c =>
+        //    {
+        //        c.FieldName = "SaldoInsoluto";
+        //        c.Caption = "SaldoInsolutoXXXX";
+        //        //c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //        c.Settings.AllowSort = DefaultBoolean.True;
+        //        c.EditFormSettings.Visible = DefaultBoolean.False;
+        //        c.Index = 2;
+        //    });
+        //}
+
+        settings.GroupSummary.Add(new ASPxSummaryItem
+        {
+            FieldName = "CunentaContable",
+            SummaryType = DevExpress.Data.SummaryItemType.Count,
+            DisplayFormat = "Total={0}"
+        });
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total");
+    }
+).Bind(Model).GetHtml()
+

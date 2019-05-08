@@ -2,6 +2,7 @@
 using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.AdaptadoresDTO.Seguridad;
+using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
@@ -225,6 +226,32 @@ namespace Application.MainModule.Flujos
                 remaGeneral.Add(rema);
             }
             return remaGeneral;
+        }
+        public List<RepInventarioPorPuntoVentaDTO> BuscarInvetarioPorPuntoDeVenta(List<Pipa> pipas, List<EstacionCarburacion> estaciones)
+        {
+            List<RepInventarioPorPuntoVentaDTO> repo = new List<RepInventarioPorPuntoVentaDTO>();
+            int i = 0;
+            foreach (var p in pipas)
+            {
+                var lecturas = AlmacenGasServicio.ObtenerLecturas(p.UnidadAlmacenGas.ToList()[0].IdAlmacenGas.Value);
+                foreach (var item in lecturas)
+                {
+                    RepInventarioPorPuntoVentaDTO r = new RepInventarioPorPuntoVentaDTO();
+                    r.ID = i;
+                    r.NombreVehiculo = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(item.UnidadAlmacenGas);
+                    //r.LecturaInicial = item. ;
+
+
+                    r.Fecha = item.FechaRegistro;
+                    repo.Add(r);
+                }
+            }
+            foreach (var e in estaciones)
+            {
+                //repo
+            }
+
+            return repo;
         }
     }
 }

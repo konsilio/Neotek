@@ -16,16 +16,21 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             if (model != null && !model.Periodo.Equals(DateTime.MinValue))
-                ViewBag.CuentasPorPagarDTO = ReporteServicio.BuscarCuentasPorPagar(model, tkn);
+            {
+                ViewData["Periodo"] = model.Periodo;
+                ViewData["Reporte"] = TiposReporteConst.CuentasXCobrar;
+                ViewData["DataSource"] = ReporteServicio.BuscarCuentasPorPagar(model, tkn);
+            }
             return View(model);
         }
-        public ActionResult GetGridView(CuentasPorPagarModel model)
+        public ActionResult GetGridView(string Tipo)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            //CuentasPorPagarModel model = new CuentasPorPagarModel()
-            //{ Periodo = periodo };
-            return View(ReporteServicio.BuscarCuentasPorPagar(model, tkn));
+            ViewData["Reporte"] = Tipo;
+            if (Tipo.Equals(TiposReporteConst.CuentasXCobrar))
+                return View("_CuboDeInformacionPartial", (List<CuentasPorPagarDTO>)ViewData["DataSource"]);
+            return View("_CuboDeInformacionPartial", (List<CuentasPorPagarDTO>)ViewData["DataSource"]);
         }
     }
 }

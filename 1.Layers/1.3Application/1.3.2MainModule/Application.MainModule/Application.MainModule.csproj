@@ -181,7 +181,9 @@
     <Compile Include="DTOs\Pedidos\PedidoModelDto.cs" />
     <Compile Include="DTOs\Pedidos\RegistraPedidoDto.cs" />
     <Compile Include="DTOs\Reportes\CuentasPorPagarDTO.cs" />
+    <Compile Include="DTOs\Reportes\InventarioPorPuntoVentaDTO.cs" />
     <Compile Include="DTOs\Reportes\RepCuentaPorPagarDTO.cs" />
+    <Compile Include="DTOs\Reportes\RepInventarioPorPuntoVentaDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionSalidaDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\TransporteDTO.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />

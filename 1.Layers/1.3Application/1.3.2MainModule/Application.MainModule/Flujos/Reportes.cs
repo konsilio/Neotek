@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
 using Application.MainModule.DTOs;
+using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.IngresoGasto;
 using Application.MainModule.Servicios.Requisiciones;
 using Application.MainModule.Servicios.Seguridad;
@@ -19,10 +20,14 @@ namespace Application.MainModule.Flujos
             var requi = EgresoServicio.BuscarTodos(periodo);
             return EgresoAdapter.ToRepo(requi);
         }
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
+        public List<RepInventarioPorPuntoVentaDTO> RepInventarioPorPuntoVenta(InventarioPorPuntoVentaDTO dto)
+        {
+            var pipas = PipaServicio.Obtener(dto.Pipas);
+            var estaciones = EstacionCarburacionServicio.Obtener(dto.Estaciones);
+
+
+            return new List<RepInventarioPorPuntoVentaDTO>();
+        }
         //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
         //{
         //    return new List<CargosDTO>();
