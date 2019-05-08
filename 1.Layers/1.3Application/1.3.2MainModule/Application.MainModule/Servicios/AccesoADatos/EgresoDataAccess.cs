@@ -86,17 +86,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Egreso>().Get(x => x.IdCuentaContable.Equals(id)).ToList();
         }
-        //public Egreso BuscarPorTipoEgreso(short id)
-        //{
-        //    return uow.Repository<Egreso>().GetSingle(x => x.IdTipoEgreso.Equals(id));
-        //}
         public Egreso BuscarPorExterno(bool esExterno)
         {
             return uow.Repository<Egreso>().GetSingle(x => x.EsExterno.Equals(esExterno));
         }
         public List<Egreso> BuscarTodos(DateTime fi, DateTime ff)
         {
-            return uow.Repository<Egreso>().Get(x => x.FechaRegistro > fi && x.FechaRegistro < ff ).ToList();
+            return uow.Repository<Egreso>().Get(x => x.FechaRegistro > fi && x.FechaRegistro < ff).ToList();
+        }
+        public List<Egreso> BuscarTodos(DateTime periodo)
+        {
+            return uow.Repository<Egreso>().Get(x => x.FechaRegistro.Month.Equals(periodo.Month) && x.FechaRegistro.Year.Equals(periodo.Year)).ToList();
         }
     }
 }

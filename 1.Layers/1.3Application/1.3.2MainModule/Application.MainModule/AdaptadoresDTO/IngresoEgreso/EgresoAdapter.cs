@@ -22,7 +22,9 @@ namespace Application.MainModule.AdaptadoresDTO.IngresoEgreso
                 Monto = entidad.Monto,
                 Descripcion = entidad.Descripcion,
                 EsExterno = entidad.EsExterno,
-                Activo = entidad.Activo,
+                GastoMensual = entidad.GastoMensual,
+                EsFiscal = entidad.EsFiscal,
+                Activo = entidad.Activo,                
             };
         }
         public static List<EgresoDTO> ToDTO(List<Egreso> entidad)
@@ -41,6 +43,8 @@ namespace Application.MainModule.AdaptadoresDTO.IngresoEgreso
                 Monto = dto.Monto,
                 Descripcion = dto.Descripcion,
                 EsExterno = dto.EsExterno,
+                GastoMensual = dto.GastoMensual,
+                EsFiscal = dto.EsFiscal,
                 Activo = dto.Activo,
             };
         }
@@ -60,22 +64,43 @@ namespace Application.MainModule.AdaptadoresDTO.IngresoEgreso
                 Monto = entidad.Monto,
                 Descripcion = entidad.Descripcion,
                 EsExterno = entidad.EsExterno,
+                GastoMensual = entidad.GastoMensual,
+                EsFiscal = entidad.EsFiscal,
                 Activo = entidad.Activo,
             };
         }
         public static Egreso FormEmtity(Egreso entidad, EgresoDTO dto)
         {
-
-            entidad.IdEgreso = dto.IdEgreso;
-            entidad.IdEmpresa = dto.IdEmpresa;
-            entidad.FechaRegistro = dto.FechaRegistro;
-            entidad.IdCentroCosto = dto.IdCentroCosto;
-            entidad.IdCuentaContable = dto.IdCuentaContable;
-            entidad.Monto = dto.Monto;
-            entidad.Descripcion = dto.Descripcion;
-            entidad.EsExterno = dto.EsExterno;
-            entidad.Activo = dto.Activo;
-            return entidad;
+            return new Egreso()
+            {
+                IdEgreso = entidad.IdEgreso,
+                IdEmpresa = entidad.IdEmpresa,
+                FechaRegistro = entidad.FechaRegistro,
+                IdCentroCosto = dto.IdCentroCosto,
+                IdCuentaContable = dto.IdCuentaContable,
+                Monto = dto.Monto,
+                Descripcion = dto.Descripcion,
+                EsExterno = dto.EsExterno,
+                GastoMensual = dto.GastoMensual,
+                EsFiscal = dto.EsFiscal,
+                Activo = dto.Activo,
+            };
+        }
+        public static RepCuentaPorPagarDTO ToRepo(Egreso entidad)
+        {
+            return new RepCuentaPorPagarDTO()
+            {
+                IdCuenta = entidad.IdEgreso,
+                Descripcion = entidad.Descripcion,
+                CunentaContable = entidad.CCuentaContable.Descripcion,
+                SaldoPagado = Convert.ToDouble(entidad.Monto),
+                SaldoPasivo = Convert.ToDouble(entidad.Monto),
+                SaldoInsoluto = 0,                
+            };
+        }
+        public static List<RepCuentaPorPagarDTO> ToRepo(List<Egreso> entidad)
+        {
+            return entidad.Select(x => ToRepo(x)).ToList();
         }
     }
 }
