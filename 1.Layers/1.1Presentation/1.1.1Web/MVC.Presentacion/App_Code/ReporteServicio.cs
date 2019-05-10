@@ -15,5 +15,11 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscaCuentasPorPagar(model, token);
             return respuestaReq._ListaCuentasPorPagar;
         }
+        public static List<InventarioPorPuntoVentaDTO> BuscarInventarioPorPuntoVenta(InventarioPorPuntoVentaModel model, string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscaInventarioPorPuntoVenta(model, token);
+            return respuestaReq._ListaInventarioPuntoVenta;
+        }
     }
 }

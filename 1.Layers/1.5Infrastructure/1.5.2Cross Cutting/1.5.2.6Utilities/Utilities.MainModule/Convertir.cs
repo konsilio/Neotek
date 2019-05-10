@@ -19,7 +19,6 @@ namespace Utilities.MainModule
             else
                 return string.Concat(HttpRuntime.AppDomainAppPath, path.Replace("~/", string.Empty).Replace("/", "\\"));
         }
-
         public static string PhysicalPathToVirtualPath(string physicalPath)
         {
             if (!physicalPath.StartsWith(HttpContext.Current.Request.PhysicalApplicationPath))
@@ -30,7 +29,6 @@ namespace Utilities.MainModule
             return "~/" + physicalPath.Substring(HttpContext.Current.Request.PhysicalApplicationPath.Length)
                   .Replace("\\", "/");
         }
-
         public static string PhysicalPathToUrlPath(string physicalPath)
         {
             if (physicalPath == null)
@@ -56,7 +54,6 @@ namespace Utilities.MainModule
 
             return newUri.AbsoluteUri;
         }
-
         public static string GetUrlBasePath()
         {
             string basePartUrl;
@@ -81,7 +78,6 @@ namespace Utilities.MainModule
 
             return newUri.AbsoluteUri;
         }
-
         /// <summary>
         /// Método que se encarga de construir la URL base de los servicios con sólo el nombre del HOST
         /// </summary>
@@ -102,7 +98,6 @@ namespace Utilities.MainModule
 
             return newUri.AbsoluteUri;
         }
-
         public static List<T> DataTableToList<T>(this DataTable table) where T : class, new()
         {
             try
@@ -135,6 +130,10 @@ namespace Utilities.MainModule
             {
                 return null;
             }
+        }
+        public static int ConcatenarNumeros(int num1, int num2)
+        {
+            return Convert.ToInt32(string.Concat(num1.ToString(), num2.ToString()));
         }
     }
 }

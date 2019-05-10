@@ -12,7 +12,15 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+<script type="text/javascript">
+    var mensaje = '@ViewBag.Msj';
+    if (mensaje != '') {
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+    }
 
+</script>
 <script>
     $(document).ready(function () {
                 Morris.Bar(@Html.Raw(ViewBag.json));
@@ -47,7 +55,6 @@
                                 <strong>Años</strong>
                             </div>
                             <div class="body">
-
                                 <ul>
                                     @Html.EditorFor(m => m.Years)
                                 </ul>
@@ -71,7 +78,6 @@
                             <div class="header">
                                 <strong>Meses</strong>
                             </div>
-
                             <div class="body">
                                 <ul style="list-style:none">
                                     <li>@Html.CheckBoxFor(x => x.Enero, new { @style = "width: 20px; height: 20px;" }) Enero</li>
@@ -119,7 +125,6 @@
                                    settings.Theme = "Material";
                                    settings.Properties.TextField = "TipoReporte";
                                    settings.Properties.ValueField = "id_Reporte";
-
                                    //settings.ClientEnabled = true;
                                    //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
                                    settings.PreRender = (s, e) =>
@@ -153,41 +158,12 @@
                                 }
                             </div>
                         </div>
-
                     </div>
-
                     <div class="card">
                         <div class="header">
                             Validacion de <strong>Informacion</strong>
                         </div>
-                        <div class="body">
-
-                            @*<div class="row clearfix blockquote blockquote-info btn-round">
-                                <div class="table-responsive">
-                                    <table class="table table-striped  filterable">
-                                        <thead>
-                                            <tr>
-                                                <td></td>
-                                                <td><strong>julio-16</strong></td>
-                                                <td><strong>julio-17</strong></td>
-                                                <td><strong>julio-18</strong></td>
-                                                <td><strong>julio-19</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Ventas</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Promedio Venta</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Dias Venta</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>*@
+                        <div class="body">                     
                             <div>
                                 <div id="m_bar_chart"></div>
                             </div>
@@ -195,10 +171,8 @@
                         @if (ViewBag.json != null)
                         {
                             <input type="submit" formaction=@Url.Action("GenerarExcel") value="Exportar a Excel" class="btn btn-primary btn-round" />
-                        }
-                       
+                        }                       
                     </div>
-
                 </div>
             }
         </div>

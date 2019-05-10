@@ -22,19 +22,19 @@
         settings.Settings.ShowFilterRow = true;
         settings.Settings.ShowGroupPanel = true;
         settings.Settings.ShowFooter = true;
-        //if (ViewData["Reporte"] != null && ViewData["Reporte"].Equals(TiposReporteConst.CuentasXCobrar))
+        //if (ViewData["Reporte"] != null && ViewData["Reporte"].Equals(TiposReporteConst.InventarioPorPuntoVenta))
         //{
-        //    settings.Columns.Add(c =>
+        //    settings.CustomUnboundColumnData = (s, e) =>
         //    {
-        //        c.FieldName = "SaldoInsoluto";
-        //        c.Caption = "SaldoInsolutoXXXX";
-        //        //c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
-        //        c.Settings.AllowSort = DefaultBoolean.True;
-        //        c.EditFormSettings.Visible = DefaultBoolean.False;
-        //        c.Index = 2;
-        //    });
-        //}
+        //        if (e.Column.FieldName == "FullName")
+        //        {
+        //            string firstName = (e.GetListSourceFieldValue("FirstName")).ToString();
+        //            string lastName = (e.GetListSourceFieldValue("LastName")).ToString();
+        //            e.Value = firstName + " " + lastName;
 
+        //        };
+        //    };
+        //}
         settings.GroupSummary.Add(new ASPxSummaryItem
         {
             FieldName = "CunentaContable",

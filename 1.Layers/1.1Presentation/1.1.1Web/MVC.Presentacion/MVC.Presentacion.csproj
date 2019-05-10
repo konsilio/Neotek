@@ -405,6 +405,8 @@
     <Compile Include="Models\Pedidos\RegistrarPedidoModel.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarDTO.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarModel.cs" />
+    <Compile Include="Models\Reporte\InventarioPorPuntoVenta\InventarioPorPuntoVentaDTO.cs" />
+    <Compile Include="Models\Reporte\InventarioPorPuntoVenta\InventarioPorPuntoVentaModel.cs" />
     <Compile Include="Models\Reporte\TiposReporteConst.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionModel.cs" />
@@ -11647,6 +11649,9 @@
     <Content Include="Views\Egreso\_EgresosPartial.cshtml" />
     <Content Include="Views\Reportes\CuentasXPagar.cshtml" />
     <Content Include="Views\Reportes\_CuboDeInformacionPartial.cshtml" />
+    <Content Include="Views\Reportes\InventarioXPuntoVenta.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PipaModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EstacionCarburacionDTO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculosGenerales.cs" />
     <Compile Include="Convertir.cs" />
     <Compile Include="DatosPlantilla.cs" />
     <Compile Include="FechasFunciones.cs" />

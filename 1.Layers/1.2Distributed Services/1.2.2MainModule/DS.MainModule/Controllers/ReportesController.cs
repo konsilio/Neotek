@@ -23,5 +23,10 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCuentasPorPagar(dto.Periodo));
         }
+        [Route("inventarioxpuntoventa")]
+        public HttpResponseMessage PostInventarioPorPuntoVenta(InventarioPorPuntoVentaDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepInventarioPorPuntoVenta(dto));
+        }
     }
 }

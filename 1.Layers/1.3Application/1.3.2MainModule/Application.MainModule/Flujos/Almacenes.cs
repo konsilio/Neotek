@@ -15,9 +15,11 @@ using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Ventas;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Utilities.MainModule;
 
 namespace Application.MainModule.Flujos
 {
@@ -230,25 +232,67 @@ namespace Application.MainModule.Flujos
         public List<RepInventarioPorPuntoVentaDTO> BuscarInvetarioPorPuntoDeVenta(List<Pipa> pipas, List<EstacionCarburacion> estaciones)
         {
             List<RepInventarioPorPuntoVentaDTO> repo = new List<RepInventarioPorPuntoVentaDTO>();
-            int i = 0;
+           
             foreach (var p in pipas)
             {
                 var lecturas = AlmacenGasServicio.ObtenerLecturas(p.UnidadAlmacenGas.ToList()[0].IdAlmacenGas.Value);
                 foreach (var item in lecturas)
                 {
-                    RepInventarioPorPuntoVentaDTO r = new RepInventarioPorPuntoVentaDTO();
-                    r.ID = i;
-                    r.NombreVehiculo = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(item.UnidadAlmacenGas);
-                    //r.LecturaInicial = item. ;
-
-
-                    r.Fecha = item.FechaRegistro;
-                    repo.Add(r);
+                    if (item.IdTipoEvento.Equals(TipoEventoEnum.Inicial))
+                    {
+                        RepInventarioPorPuntoVentaDTO r = new RepInventarioPorPuntoVentaDTO();
+                        r.ID = Convertir.ConcatenarNumeros(item.IdCAlmacenGas, item.IdOrden);
+                        r.NombreVehiculo = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(item.UnidadAlmacenGas);
+                        r.LecturaInicial = item.P5000 ?? 0;
+                        r.ImagenLI = item.Fotografias.Count.Equals(0) ? string.Empty :  item.Fotografias.SingleOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
+                        r.Fecha = item.FechaRegistro;
+                        repo.Add(r);
+                    }
+                }
+                foreach (var item in lecturas)
+                {
+                    if (item.IdTipoEvento.Equals(TipoEventoEnum.Final))
+                    {                       
+                        if (repo.Exists(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
+                        {
+                            var li = repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaInicial;
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaFinal = item.P5000 ?? 0;
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).ImagenLF = item.Fotografias.SingleOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).Diferencia = CalculosGenerales.DiferenciaEntreDosNumero(li ,item.P5000 ?? 0);
+                        }
+                    }
                 }
             }
             foreach (var e in estaciones)
             {
-                //repo
+                var lecturas = AlmacenGasServicio.ObtenerLecturas(e.UnidadAlmacenGas.ToList()[0].IdAlmacenGas.Value);
+                foreach (var item in lecturas)
+                {
+                    if (item.IdTipoEvento.Equals(TipoEventoEnum.Inicial))
+                    {
+                        RepInventarioPorPuntoVentaDTO r = new RepInventarioPorPuntoVentaDTO();
+                        r.ID = Convertir.ConcatenarNumeros(item.IdCAlmacenGas, item.IdOrden);
+                        r.NombreVehiculo = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(item.UnidadAlmacenGas);
+                        r.LecturaInicial = item.P5000 ?? 0;
+                        r.ImagenLI = item.Fotografias.SingleOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
+                        r.Fecha = item.FechaRegistro;
+                        repo.Add(r);
+                    }
+                }
+                foreach (var item in lecturas)
+                {
+                    if (item.IdTipoEvento.Equals(TipoEventoEnum.Final))
+                    {
+
+                        if (repo.Exists(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
+                        {
+                            var li = repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaInicial;
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaFinal = item.P5000 ?? 0;
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).ImagenLF = item.Fotografias.SingleOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).Diferencia = CalculosGenerales.DiferenciaEntreDosNumero(li, item.P5000 ?? 0);
+                        }
+                    }
+                }
             }
 
             return repo;

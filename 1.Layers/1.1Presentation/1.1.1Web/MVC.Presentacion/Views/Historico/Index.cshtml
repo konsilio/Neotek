@@ -168,19 +168,7 @@
 
                                     </table>
                                 </div>
-                            </div>
-                            @*@if (ViewBag.HistoricoVentas != null)
-                                {
-                                    <div class="row clearfix">
-                                        <div class="col-md-6">
-                                            Página @(ViewBag.HistoricoVentas.PageCount < ViewBag.HistoricoVentas.PageNumber ? 0 : ViewBag.HistoricoVentas.PageNumber) de @ViewBag.HistoricoVentas.PageCount
-                                        </div>
-                                        <div class="col-md-6 text-right">
-                                            @Html.PagedListPager((IPagedList)ViewBag.HistoricoVentas, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
-                                        </div>
-                                    </div>
-                                }*@
-
+                            </div>      
                         </div>
                     </div>
                 </div>

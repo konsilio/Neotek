@@ -55,8 +55,8 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
-                List<YearsDTO> listYears = ObtenerAños();
-                model.Years = listYears;
+                //List<YearsDTO> listYears = ObtenerAños();
+                model.Years = ObtenerAños();
             }
             ViewBag.json = TempData["json"];
             if (TempData["RespuestaDTO"] != null)

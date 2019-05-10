@@ -127,6 +127,7 @@ namespace MVC.Presentacion.Agente
         public List<YearsVentasTotalesDTO> _yearVentasTortales;
         public List<EgresoDTO> _ListaEgreso;
         public List<CuentasPorPagarDTO> _ListaCuentasPorPagar;
+        public List<InventarioPorPuntoVentaDTO> _ListaInventarioPuntoVenta; 
 
         public string _Json;
 
@@ -4988,7 +4989,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["PostRepoCuentasPorPagar"];
             ListaCuentasPorPagar(model, this.ApiCatalgos, tkn).Wait();
         }
-
         private async Task ListaCuentasPorPagar(CuentasPorPagarModel model, string api, string token)
         {
             using (var client = new HttpClient())
@@ -5015,6 +5015,42 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _ListaCuentasPorPagar = list;
+            }
+        }
+        #endregion
+        #region Inventario por punto de venta
+        public void BuscaInventarioPorPuntoVenta(InventarioPorPuntoVentaModel model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostInventarioPorPuntoVenta"];
+            PostCuentasPorPagar(model, this.ApiCatalgos, tkn).Wait();
+        }
+
+        private async Task PostCuentasPorPagar(InventarioPorPuntoVentaModel model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<InventarioPorPuntoVentaDTO> list = new List<InventarioPorPuntoVentaDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<InventarioPorPuntoVentaDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<InventarioPorPuntoVentaDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaInventarioPuntoVenta = list;
             }
         }
         #endregion

@@ -346,7 +346,6 @@ namespace Application.MainModule.Flujos
             }
             return respuesta;
         }
-
         public void verificaInventarioCilindros(VentaDTO venta)
         {
             var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
@@ -368,7 +367,6 @@ namespace Application.MainModule.Flujos
                 }
             }
         }
-
         public int Orden(List<VentaPuntoDeVenta> ventas, DateTime fechaVenta)
         {
             var busqueda = ventas.FindAll(x => x.FechaRegistro.Day.Equals(
@@ -631,7 +629,6 @@ namespace Application.MainModule.Flujos
             return respuesta;
 
         }
-
         /// <summary>
         /// Permite determinar si actualmente se cuentas con la lectura incial y 
         /// final en el almacen del día de hoy, en caso de no contar con ellas 
@@ -666,7 +663,6 @@ namespace Application.MainModule.Flujos
             }
             return respuesta;
         }
-
         /// <summary>
         /// Retorna si actualmente se cuenta conuna lectura inicial registrada en 
         /// la estación, pipa o camioneta para arrancar su día  
@@ -763,7 +759,6 @@ namespace Application.MainModule.Flujos
             }
             return _respuesta;
         }
-
         public List<UnidadAlmacenGas> estacionesInicio(List<AlmacenGasAutoConsumo> autoconsumos, bool estaciones = true, bool pipas = false, bool camionetas = false)
         {
             List<UnidadAlmacenGas> list = new List<UnidadAlmacenGas>();
@@ -893,7 +888,6 @@ namespace Application.MainModule.Flujos
 
              return AnticiposCortesAdapter.ToDTO(ventas, anticiposDia,almacen, esAnticipos);*/
         }
-
         /// <summary>
         /// Permite realizar la busqueda de los datos para los cortes o anticipos de la sección de mobile
         /// se retornara un objeto DatosBusquedaCortesDTO con los datos encontrados en este. Se requieren como 
@@ -1175,7 +1169,6 @@ namespace Application.MainModule.Flujos
             adapter.Id = cliente.IdCliente;
             return adapter;
         }
-
         public RespuestaDto Calibracion(CalibracionDto dto, bool esFinal)
         {
             var resp = CalibracionServicio.EvaluarClaveOperacion(dto);

@@ -38,6 +38,7 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             List<EstacionCarburacion> lista = new List<EstacionCarburacion>();
             foreach (var item in estaciones)
+                if(item.Activo && Obtener(item.IdEstacionCarburacion) != null)
                 lista.Add(Obtener(item.IdEstacionCarburacion));
             return lista;
         }

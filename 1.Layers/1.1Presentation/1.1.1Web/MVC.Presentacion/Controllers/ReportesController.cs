@@ -23,6 +23,23 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
+        public ActionResult InventarioXPuntoVenta(InventarioPorPuntoVentaModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (model == null)            
+                model = new InventarioPorPuntoVentaModel();           
+            model.Pipas = PedidosServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(x => { x.Activo = false; return x;}).ToList();
+            model.Estaciones = CatalogoServicio.GetListaEstacionCarburacion(tkn).Select(x => { x.Activo = false; return x; }).ToList();
+            if (model != null && !model.Fecha.Equals(DateTime.MinValue))
+            {
+                ViewData["Periodo"] = model.Fecha;
+                ViewData["Reporte"] = TiposReporteConst.InventarioPorPuntoVenta;
+                ViewData["DataSource"] = ReporteServicio.BuscarInventarioPorPuntoVenta(model, tkn);
+            }
+            return View(model);
+        }
+
         public ActionResult GetGridView(string Tipo)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -30,7 +47,10 @@ namespace MVC.Presentacion.Controllers
             ViewData["Reporte"] = Tipo;
             if (Tipo.Equals(TiposReporteConst.CuentasXCobrar))
                 return View("_CuboDeInformacionPartial", (List<CuentasPorPagarDTO>)ViewData["DataSource"]);
-            return View("_CuboDeInformacionPartial", (List<CuentasPorPagarDTO>)ViewData["DataSource"]);
+            if (Tipo.Equals(TiposReporteConst.InventarioPorPuntoVenta))
+                return View("_CuboDeInformacionPartial", (List<InventarioPorPuntoVentaDTO>)ViewData["DataSource"]);
+
+            return View("_CuboDeInformacionPartial");
         }
     }
 }

@@ -24,50 +24,7 @@ namespace Application.MainModule.Flujos
         {
             var pipas = PipaServicio.Obtener(dto.Pipas);
             var estaciones = EstacionCarburacionServicio.Obtener(dto.Estaciones);
-
-
-            return new List<RepInventarioPorPuntoVentaDTO>();
+            return new Almacenes().BuscarInvetarioPorPuntoDeVenta(pipas, estaciones);
         }
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
-        //public List<CargosDTO> RepCuentasPorPagar(DateTime periodo)
-        //{
-        //    return new List<CargosDTO>();
-        //}
-
     }
 }
