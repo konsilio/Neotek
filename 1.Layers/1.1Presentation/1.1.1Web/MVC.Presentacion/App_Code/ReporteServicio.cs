@@ -21,5 +21,11 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscaInventarioPorPuntoVenta(model, token);
             return respuestaReq._ListaInventarioPuntoVenta;
         }
+        public static List<HistoricoPrecioVentaDTO> BuscarHistoricoPrecioVenta(HistoricoPrecioVentaModel model, string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscarHistoricoPrecioVenta(model, token);
+            return respuestaReq._ListaHistoricoPrecioVenta;
+        }
     }
 }

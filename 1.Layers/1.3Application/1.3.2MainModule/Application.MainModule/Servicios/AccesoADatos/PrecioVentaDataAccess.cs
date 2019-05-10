@@ -30,6 +30,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.Activo)
                                                          .ToList();
         }
+        public List<PrecioVenta> BuscarTodos(short idEmpresa, DateTime fi, DateTime ff)
+        {
+            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                         && (x.FechaRegistro > fi
+                                                         && x.FechaRegistro < ff))
+                                                         .ToList();
+        }
         public PrecioVenta BuscarPrecioVentaVigente(short idEmpresa)
         {
             return uow.Repository<PrecioVenta>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
@@ -45,7 +52,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<PrecioVentaEstatus>().GetSingle(x => x.IdPrecioVentaEstatus.Equals(IdPrecioVentaEstatus)
                                                          && x.Activo);
         }
-
         public List<PrecioVentaEstatus> Buscar()
         {
             return uow.Repository<PrecioVentaEstatus>().Get(x => x.Activo).ToList();
@@ -54,7 +60,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return BuscarUltimoRegistroInsertado().LastOrDefault();
         }
-
         public List<PrecioVenta> BuscarUltimoRegistroInsertado()
         {
             return uow.Repository<PrecioVenta>().Get().ToList();

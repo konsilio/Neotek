@@ -1,4 +1,5 @@
-﻿using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
+﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
 using Application.MainModule.DTOs;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.IngresoGasto;
@@ -25,6 +26,11 @@ namespace Application.MainModule.Flujos
             var pipas = PipaServicio.Obtener(dto.Pipas);
             var estaciones = EstacionCarburacionServicio.Obtener(dto.Estaciones);
             return new Almacenes().BuscarInvetarioPorPuntoDeVenta(pipas, estaciones);
+        }
+        public List<RepHistorioPrecioDTO> RepHistorioPrecios(HistoricoPrecioDTO dto)
+        {
+            var precios = PrecioVentaGasServicio.ObtenerListaPreciosVentaIdEmp(TokenServicio.ObtenerIdEmpresa(), dto.FechaInicial, dto.FechaFinal);
+            return PrecioVentaGasAdapter.ToRepo(precios, dto);
         }
     }
 }

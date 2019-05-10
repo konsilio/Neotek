@@ -28,5 +28,10 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepInventarioPorPuntoVenta(dto));
         }
+        [Route("historicoprecios")]
+        public HttpResponseMessage PostHistorioPrecios(HistoricoPrecioDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepHistorioPrecios(dto));
+        }
     }
 }

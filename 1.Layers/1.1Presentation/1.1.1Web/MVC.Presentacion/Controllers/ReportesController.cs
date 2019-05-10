@@ -39,7 +39,20 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
+        public ActionResult HistoricoPrevioVenta(HistoricoPrecioVentaModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (model == null)
+                model = new HistoricoPrecioVentaModel();           
+            if (model != null && !model.FechaFinal.Equals(DateTime.MinValue) && !model.FechaInicial.Equals(DateTime.MinValue))
+            {
+                //ViewData["Periodo"] = model.Fecha;
+                ViewData["Reporte"] = TiposReporteConst.HistoricoPrecioVenta;
+                ViewData["DataSource"] = ReporteServicio.BuscarHistoricoPrecioVenta(model, tkn);
+            }
+            return View(model);
+        }
         public ActionResult GetGridView(string Tipo)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -49,6 +62,8 @@ namespace MVC.Presentacion.Controllers
                 return View("_CuboDeInformacionPartial", (List<CuentasPorPagarDTO>)ViewData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.InventarioPorPuntoVenta))
                 return View("_CuboDeInformacionPartial", (List<InventarioPorPuntoVentaDTO>)ViewData["DataSource"]);
+            if (Tipo.Equals(TiposReporteConst.HistoricoPrecioVenta))
+                return View("_CuboDeInformacionPartial", (List<HistoricoPrecioVentaDTO>)ViewData["DataSource"]);
 
             return View("_CuboDeInformacionPartial");
         }

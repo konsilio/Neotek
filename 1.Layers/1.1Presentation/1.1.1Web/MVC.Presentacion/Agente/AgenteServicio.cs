@@ -127,7 +127,8 @@ namespace MVC.Presentacion.Agente
         public List<YearsVentasTotalesDTO> _yearVentasTortales;
         public List<EgresoDTO> _ListaEgreso;
         public List<CuentasPorPagarDTO> _ListaCuentasPorPagar;
-        public List<InventarioPorPuntoVentaDTO> _ListaInventarioPuntoVenta; 
+        public List<InventarioPorPuntoVentaDTO> _ListaInventarioPuntoVenta;
+        public List<HistoricoPrecioVentaDTO> _ListaHistoricoPrecioVenta;
 
         public string _Json;
 
@@ -5054,7 +5055,41 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
-
+        #region Historio Precio Venta
+        public void BuscarHistoricoPrecioVenta(HistoricoPrecioVentaModel model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostHistorioPrecios"];
+            PostHitoricoPrecioVenta(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task PostHitoricoPrecioVenta(HistoricoPrecioVentaModel model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<HistoricoPrecioVentaDTO> list = new List<HistoricoPrecioVentaDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<HistoricoPrecioVentaDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<HistoricoPrecioVentaDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaHistoricoPrecioVenta = list;
+            }
+        }
+        #endregion
         #endregion
 
         private async Task LLamada<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
