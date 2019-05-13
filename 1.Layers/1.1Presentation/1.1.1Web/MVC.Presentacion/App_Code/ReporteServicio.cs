@@ -27,5 +27,17 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscarHistoricoPrecioVenta(model, token);
             return respuestaReq._ListaHistoricoPrecioVenta;
         }
+        public static List<CallCenterDTO> BuscarCallCenter(CallCenterModel model, string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscarCallCenter(model, token);
+            return respuestaReq._ListaCallCenter;
+        }
+        public static List<RequisicionRepDTO> BuscarRequisicion(RequisicionModel model, string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscarRequisicion(model, token);
+            return respuestaReq._ListaRequisicion;
+        }
     }
 }

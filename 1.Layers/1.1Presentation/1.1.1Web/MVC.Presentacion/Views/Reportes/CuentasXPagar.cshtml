@@ -69,13 +69,13 @@
                             <div class="row clearfix">
                                 <div class="blockquote blockquote-info btn-round">
                                     <div class="table-responsive">
-                                        @if (ViewData["DataSource"] != null)
+                                        @if (TempData["DataSource"] != null)
                                         {
-                                            @Html.Partial("_CuboDeInformacionPartial", (List<CuentasPorPagarDTO>)ViewData["DataSource"])
+                                            @Html.Partial("_CuboDeInformacionPartial", (List<CuentasPorPagarDTO>)TempData["DataSource"])
                                         }
                                         else
                                         {
-                                            @Html.Partial("_CuboDeInformacionPartial")
+                                            @Html.Partial("_CuboDeInformacionPartial", new List<CuentasPorPagarDTO>())
                                         }
                                     </div>
                                 </div>

@@ -403,12 +403,16 @@
     <Compile Include="Models\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="Models\Pedidos\PedidoModel.cs" />
     <Compile Include="Models\Pedidos\RegistrarPedidoModel.cs" />
+    <Compile Include="Models\Reporte\CallCenter\CallCenterDTO.cs" />
+    <Compile Include="Models\Reporte\CallCenter\CallCenterModel.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarDTO.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarModel.cs" />
     <Compile Include="Models\Reporte\HistoricoPrecioVenta\HisotricoPrecioVentaDTO.cs" />
     <Compile Include="Models\Reporte\HistoricoPrecioVenta\HistoricoPrecioVentaModel.cs" />
     <Compile Include="Models\Reporte\InventarioPorPuntoVenta\InventarioPorPuntoVentaDTO.cs" />
     <Compile Include="Models\Reporte\InventarioPorPuntoVenta\InventarioPorPuntoVentaModel.cs" />
+    <Compile Include="Models\Reporte\Requisicion\RequisicionModel.cs" />
+    <Compile Include="Models\Reporte\Requisicion\RequisicionRepDTO.cs" />
     <Compile Include="Models\Reporte\TiposReporteConst.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionModel.cs" />
@@ -11655,6 +11659,8 @@
     <Content Include="Views\Shared\EditorTemplates\PipaModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EstacionCarburacionDTO.cshtml" />
     <Content Include="Views\Reportes\HistoricoPrecioVenta.cshtml" />
+    <Content Include="Views\Reportes\CallCenter.cshtml" />
+    <Content Include="Views\Reportes\Requisicion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

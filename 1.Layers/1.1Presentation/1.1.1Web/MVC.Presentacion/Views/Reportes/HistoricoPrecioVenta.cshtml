@@ -29,7 +29,7 @@
     </div>
     <section class="content home">
         <div class="container-fluid">
-            @using (Html.BeginForm("HistoricoPrevioVenta", "Reportes", FormMethod.Post))
+            @using (Html.BeginForm("HistoricoPrecioVenta", "Reportes", FormMethod.Post))
             {
                 <div class="block-header">
                     <div class="row clearfix">
@@ -49,29 +49,37 @@
                                     <strong>Al dia</strong>
                                     <div class="form-group">
                                         @Html.DevExpress().DateEdit(settings =>
-                                   {
-                                       settings.Name = "Fecha";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       //settings.Properties.PickerType = DatePickerType.Months;
-                                       settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
-                                       settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
-                                       settings.Date = DateTime.Today;
-                                   }).Bind(Model.Fecha).GetHtml()
+                                           {
+                                               settings.Name = "FechaInicial";
+                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);                                               
+                                               settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                               settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                               settings.Date = DateTime.Today;
+                                           }).Bind(Model.FechaInicial).GetHtml()
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Al dia</strong>
+                                    <div class="form-group">
+                                        @Html.DevExpress().DateEdit(settings =>
+                                           {
+                                               settings.Name = "FechaFinal";
+                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                               settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                               settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                               settings.Date = DateTime.Today;
+                                           }).Bind(Model.FechaFinal).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <strong>Estaciones</strong>
                                     <div class="form-group">
                                         <ul>
-                                            @Html.EditorFor(m => m.Pipas)
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <strong>Estaciones</strong>
-                                    <div class="form-group">
-                                        <ul>
-                                            @Html.EditorFor(m => m.Estaciones)
+                                            <li style="list-style:none">@Html.CheckBoxFor(x => x.LitroGas, new { @style = "width: 20px; height: 20px;" }) Kilo de gas</li>
+                                            <li style="list-style:none">@Html.CheckBoxFor(x => x.Clilindro10K, new { @style = "width: 20px; height: 20px;" }) Cilindro de 10 kg.</li>
+                                            <li style="list-style:none">@Html.CheckBoxFor(x => x.Clilindro20K, new { @style = "width: 20px; height: 20px;" }) Cilindro de 20 kg.</li>
+                                            <li style="list-style:none">@Html.CheckBoxFor(x => x.Clilindro30K, new { @style = "width: 20px; height: 20px;" }) Cilindro de 30 kg.</li>
+                                            <li style="list-style:none">@Html.CheckBoxFor(x => x.Clilindro45K, new { @style = "width: 20px; height: 20px;" }) Cilindro de 45 kg.</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -82,18 +90,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                <div class="blockquote blockquote-info btn-round">
-                                    <div class="table-responsive">
-                                        @if (ViewData["DataSource"] != null)
-                                        {
-                                            @Html.Partial("_CuboDeInformacionPartial", (List<HistoricoPrecioVentaDTO>)ViewData["DataSource"])
-                                        }
-                                        else
-                                        {
-                                            @Html.Partial("_CuboDeInformacionPartial", new List<HistoricoPrecioVentaDTO>())
-                                        }
-                                    </div>
+                            <div class="row clearfix blockquote blockquote-info btn-round">
+                                <div class="table-responsive">
+                                    @if (TempData["DataSource"] != null)
+                                    {
+                                        @Html.Partial("_CuboDeInformacionPartial", (List<HistoricoPrecioVentaDTO>)TempData["DataSource"])
+                                    }
+                                    else
+                                    {
+                                        @Html.Partial("_CuboDeInformacionPartial", new List<HistoricoPrecioVentaDTO>())
+                                    }
                                 </div>
                             </div>
                         </div>

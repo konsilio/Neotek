@@ -1,5 +1,5 @@
 ﻿@using MVC.Presentacion.Models;
-@model  InventarioPorPuntoVentaModel
+@model  RequisicionModel
 @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -29,7 +29,7 @@
     </div>
     <section class="content home">
         <div class="container-fluid">
-            @using (Html.BeginForm("InventarioXPuntoVenta", "Reportes", FormMethod.Post))
+            @using (Html.BeginForm("Requisicion", "Reportes", FormMethod.Post))
             {
                 <div class="block-header">
                     <div class="row clearfix">
@@ -38,7 +38,7 @@
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Reportes</li>
-                                <li class="breadcrumb-item">Inventario por Punto de Venta</li>
+                                <li class="breadcrumb-item">Historio de precio de Venta</li>
                             </ul>
                         </div>
                     </div>
@@ -49,30 +49,26 @@
                                     <strong>Al dia</strong>
                                     <div class="form-group">
                                         @Html.DevExpress().DateEdit(settings =>
-                                   {
-                                       settings.Name = "Fecha";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       //settings.Properties.PickerType = DatePickerType.Months;
-                                       settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
-                                       settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
-                                       settings.Date = DateTime.Today;
-                                   }).Bind(Model.Fecha).GetHtml()
+                                        {
+                                            settings.Name = "FechaInicio";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                            settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                            settings.Date = DateTime.Today;
+                                        }).Bind(Model.FechaInicio).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <strong>Estaciones</strong>
+                                    <strong>Al dia</strong>
                                     <div class="form-group">
-                                        <ul>
-                                            @Html.EditorFor(m => m.Pipas)
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <strong>Estaciones</strong>
-                                    <div class="form-group">
-                                        <ul>
-                                            @Html.EditorFor(m => m.Estaciones)
-                                        </ul>
+                                        @Html.DevExpress().DateEdit(settings =>
+                                        {
+                                            settings.Name = "FechaFinal";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                            settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                            settings.Date = DateTime.Today;
+                                        }).Bind(Model.FechaFinal).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -82,18 +78,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                <div class="blockquote blockquote-info btn-round">
-                                    <div class="table-responsive">
-                                        @if (TempData["DataSource"] != null)
-                                        {
-                                            @Html.Partial("_CuboDeInformacionPartial", (List<InventarioPorPuntoVentaDTO>)TempData["DataSource"])
-                                        }
-                                        else
-                                        {
-                                            @Html.Partial("_CuboDeInformacionPartial", new List<InventarioPorPuntoVentaDTO>())
-                                        }
-                                    </div>
+                            <div class="row clearfix blockquote blockquote-info btn-round">
+                                <div class="table-responsive">
+                                    @if (TempData["DataSource"] != null)
+                                    {
+                                        @Html.Partial("_CuboDeInformacionPartial", (List<RequisicionRepDTO>)TempData["DataSource"])
+                                    }
+                                    else
+                                    {
+                                        @Html.Partial("_CuboDeInformacionPartial", new List<RequisicionRepDTO>())
+                                    }
                                 </div>
                             </div>
                         </div>

@@ -10,5 +10,7 @@ namespace MVC.Presentacion.Models
         public static string CuentasXCobrar = "CuentasXCobrar";
         public static string InventarioPorPuntoVenta = "InventarioPorPuntoVenta";
         public static string HistoricoPrecioVenta = "HistoricoPrecioVenta";
+        public static string CallCenter = "CallCenter";
+        public static string Requisicion = "Requisicion";
     }
 }

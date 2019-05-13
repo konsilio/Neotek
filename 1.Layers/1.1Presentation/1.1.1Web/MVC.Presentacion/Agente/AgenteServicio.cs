@@ -55,6 +55,7 @@ namespace MVC.Presentacion.Agente
         public ClientesModel _ClienteModel;
         public HistoricoVentaModel _HistoricoVentaDTO;
         public EgresoDTO _EgresoDTO;
+
         public string _json;
 
 
@@ -129,6 +130,8 @@ namespace MVC.Presentacion.Agente
         public List<CuentasPorPagarDTO> _ListaCuentasPorPagar;
         public List<InventarioPorPuntoVentaDTO> _ListaInventarioPuntoVenta;
         public List<HistoricoPrecioVentaDTO> _ListaHistoricoPrecioVenta;
+        public List<CallCenterDTO> _ListaCallCenter;
+        public List<RequisicionRepDTO> _ListaRequisicion;
 
         public string _Json;
 
@@ -5089,6 +5092,77 @@ namespace MVC.Presentacion.Agente
                 _ListaHistoricoPrecioVenta = list;
             }
         }
+        #endregion
+        #region Call Center
+        public void BuscarCallCenter(CallCenterModel model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostCallCenter"];
+            PostCallCenter(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task PostCallCenter(CallCenterModel model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CallCenterDTO> list = new List<CallCenterDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<CallCenterDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<CallCenterDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaCallCenter = list;
+            }
+        }
+        #endregion
+        #region Requisicion
+        public void BuscarRequisicion(Models.RequisicionModel model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRequisicion"];
+            PostRequisicion(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task PostRequisicion(Models.RequisicionModel model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RequisicionRepDTO> list = new List<RequisicionRepDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<RequisicionRepDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<RequisicionRepDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaRequisicion = list;
+            }
+        }
+
         #endregion
         #endregion
 

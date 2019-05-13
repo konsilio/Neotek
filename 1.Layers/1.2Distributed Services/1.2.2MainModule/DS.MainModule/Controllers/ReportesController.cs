@@ -33,5 +33,20 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepHistorioPrecios(dto));
         }
+        [Route("callcenter")]
+        public HttpResponseMessage PostCallCenter(CallCenterDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCallCenter(dto));
+        }
+        [Route("requisicion")]
+        public HttpResponseMessage PostRequisicion(RequisicionModelDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepRequisicion(dto));
+        }
+        [Route("ordencompra")]
+        public HttpResponseMessage PostOrdenCompra(OrdenCompraModelDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepOrdenCompra(dto));
+        }
     }
 }

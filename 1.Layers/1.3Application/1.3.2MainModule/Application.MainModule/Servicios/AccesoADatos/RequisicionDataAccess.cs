@@ -47,6 +47,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Requisicion>().Get(x => x.IdEmpresa.Equals(IdEmpresa) && x.FechaRegistro.Month.Equals(p.Month) && x.FechaRegistro.Year.Equals(p.Year)).ToList();
         }
+        public List<Requisicion> BuscarTodas(short IdEmpresa, DateTime fi, DateTime ff)
+        {
+            return uow.Repository<Requisicion>().Get(x => x.IdEmpresa.Equals(IdEmpresa) && x.FechaRegistro > fi && x.FechaRegistro < ff).ToList();
+        }
         public List<Requisicion> BuscarTodas(bool EsExterno)
         {
             return uow.Repository<Requisicion>().Get(x => x.EsExterno.Equals(EsExterno)).ToList();

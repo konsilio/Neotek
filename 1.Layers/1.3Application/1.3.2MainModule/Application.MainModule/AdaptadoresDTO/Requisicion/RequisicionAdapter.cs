@@ -1,4 +1,6 @@
-﻿using Application.MainModule.DTOs.Requisicion;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Requisicion;
+using Application.MainModule.Servicios.Requisiciones;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
@@ -233,6 +235,18 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
             _endidad.Productos = FromEntity(_productos);
             return _endidad;
         }
+        public static RepRequisicionDTO ToRepDTO(Requisicion entidad, List<RequisicionProducto> entidadp)
+        {
+            return new RepRequisicionDTO()
+            {
+                NumRequisicon = entidad.NumeroRequisicion,
+                Departamento = entidadp[0].CentroCosto.Descripcion,
+                Requisicion = RequisicionServicio.ListaProductos(entidadp),
+                Estatus = entidad.RequisicionEstatus.Estatus,
+                Fecha = entidad.FechaRegistro,               
+            };
+        }
+
         #endregion
     }
 }

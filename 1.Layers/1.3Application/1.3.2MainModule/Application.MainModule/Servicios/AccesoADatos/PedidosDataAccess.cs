@@ -23,6 +23,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa)).ToList();
         }
+        public List<Pedido> Buscar(short idempresa, DateTime periodo)
+        {
+            return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa) && (x.FechaRegistro.Month.Equals(periodo.Month) && x.FechaRegistro.Year.Equals(periodo.Year))).ToList();
+        }
         public List<PedidoDetalle> Buscar(int idPedido)
         {
             return uow.Repository<PedidoDetalle>().Get(x => x.IdPedido.Equals(idPedido)).ToList();
@@ -30,6 +34,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<RespuestaSatisfaccionPedido> BuscarEnc(int idPedido)
         {
             return uow.Repository<RespuestaSatisfaccionPedido>().Get(x => x.IdPedido.Equals(idPedido)).ToList();
+        }
+        public List<PedidoEstatus> BuscarEstatus()
+        {
+            return uow.Repository<PedidoEstatus>().GetAll().ToList(); 
         }
         public Pedido BuscarPedido(int idPedido)
         {

@@ -2,17 +2,16 @@
 @{
     ViewBag.Title = "Reportes";
     Layout = null;
-    ViewData["DataSource"] = Model;
+    TempData["DataSource"] = Model;
 }
 @Html.DevExpress().GridView(
     settings =>
     {
-        settings.Name = "CuentasPorPagar";
-        settings.KeyFieldName = "IdCuenta";
-        settings.CallbackRouteValues = new { Controller = "Reportes", Action = "GetGridView", Tipo = ViewData["Reporte"] };
+        settings.Name = "Cubo";
+        settings.CallbackRouteValues = new { Controller = "Reportes", Action = "GetGridView", Tipo = ViewData["Reporte"]};
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsText.EmptyDataRow = "No se encontraron registros";
-        settings.SettingsText.GroupPanel = "Desliza los campos para hacer una agrupación ";
+        settings.SettingsText.GroupPanel = "Desliza los campos aquí para hacer una agrupación ";
         settings.CommandColumn.Visible = false;
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = false;
@@ -31,7 +30,6 @@
         //            string firstName = (e.GetListSourceFieldValue("FirstName")).ToString();
         //            string lastName = (e.GetListSourceFieldValue("LastName")).ToString();
         //            e.Value = firstName + " " + lastName;
-
         //        };
         //    };
         //}

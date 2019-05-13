@@ -40,6 +40,15 @@ namespace Application.MainModule.Servicios.Catalogos
                 return new EquipoTransporteDataAccess().BuscarEstacion(uAG).Nombre;
             return null;
         }
+        public static string ObtenerNombre(Pedido entidad)
+        {
+            if (entidad.IdCamioneta != null && entidad.IdCamioneta != 0)
+                return new EquipoTransporteDataAccess().BuscarCamioneta(entidad.IdCamioneta.Value).Nombre;
+            if (entidad.IdPipa != null && entidad.IdPipa != 0)
+                return new EquipoTransporteDataAccess().BuscarPipa(entidad.IdPipa.Value).Nombre;
+           
+            return null;
+        }
         public static DateTime ObtenerFechaRegistro(CDetalleEquipoTransporte entidad)
         {
             if (entidad.IdCamioneta != null)

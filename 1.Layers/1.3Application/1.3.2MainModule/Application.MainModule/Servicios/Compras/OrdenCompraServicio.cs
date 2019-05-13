@@ -93,6 +93,10 @@ namespace Application.MainModule.Servicios.Compras
             else
                 return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
+        public static List<OrdenCompra> BuscarTodo(short idEmpresa, DateTime fi, DateTime ff)
+        {
+            return new OrdenCompraDataAccess().BuscarTodos(idEmpresa, fi, ff);
+        }
         public static OrdenCompra Buscar(int idOrdenCompra)
         {
             return new OrdenCompraDataAccess().Buscar(idOrdenCompra);
@@ -370,6 +374,25 @@ namespace Application.MainModule.Servicios.Compras
                 SaldoInsoluto = oc.Total ?? 0,
                 FechaRegistro = Convert.ToDateTime(DateTime.Now.ToShortDateString())
             };
+        }
+        public static string ListaProductos(List<OrdenCompraProducto> Lista)
+        {
+            string respuesta = string.Empty;
+            foreach (var item in Lista)
+            {
+                if (respuesta.Equals(string.Empty))
+                    respuesta = item.Descripcion;
+                else
+                    respuesta += string.Concat(", ", item.Descripcion);
+            }
+            return respuesta;
+        }
+        public static string DeterminarEstatusPago(List<OrdenCompraPago> pagos = null)
+        {
+            if (pagos == null && pagos.Count == 0 && pagos.Exists(x => x.SaldoInsoluto != 0))
+                return "Por Pagar";
+            else
+                return "Pagado";
         }
     }
 }

@@ -63,6 +63,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<OrdenCompra>().Get(x => x.Activo).ToList();
         }
+        public List<OrdenCompra> BuscarTodos(short idEmpresa, DateTime fInicio, DateTime fFinal)
+        {
+            return uow.Repository<OrdenCompra>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.FechaRegistro > fInicio && x.FechaRegistro < fFinal).ToList();
+        }
         public RespuestaDto InsertarNuevo(OrdenCompra oc)
         {
             RespuestaDto _respuesta = new RespuestaDto();

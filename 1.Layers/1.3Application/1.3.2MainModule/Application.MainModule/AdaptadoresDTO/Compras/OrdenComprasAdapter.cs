@@ -4,6 +4,8 @@ using System.Linq;
 using Application.MainModule.DTOs.Compras;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.DTOs;
+using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Compras;
 
 namespace Application.MainModule.AdaptadoresDTO.Compras
 {
@@ -161,5 +163,22 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
         {
             return est.Select(x => ToDTO(x)).ToList();
         }
+        public static RepOrdenCompraDTO ToRepDTO(OrdenCompra entidad)
+        {
+            return new RepOrdenCompraDTO()
+            {
+                NumOrdenCompra = entidad.NumOrdenCompra,
+                Departamento = CentroCostoServicio.Obtener(entidad.IdCentroCosto).Descripcion,
+                NumRequisicion = entidad.Requisicion.NumeroRequisicion,
+                Requerimiento = OrdenCompraServicio.ListaProductos(entidad.Productos.ToList()),
+                Pagado = OrdenCompraServicio.DeterminarEstatusPago(entidad.OrdenCompraPago.ToList()),
+                Estatus = entidad.OrdenCompraEstatus.Descripcion,
+                Fecha = entidad.FechaRegistro,
+            };
+        }
+        public static List<RepOrdenCompraDTO> ToRepDTO(List<OrdenCompra> entidades)
+        {
+            return entidades.Select(x => ToRepDTO(x)).ToList();
+        } 
     }
 }
