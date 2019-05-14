@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Almacen;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
@@ -134,7 +135,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
         }
         public static AlmacenDTO ToDTO(Almacen entidad)
         {
-            var prod = ProductoServicio.ObtenerProducto(entidad.IdProduto);
+            //var prod = ProductoServicio.ObtenerProducto(entidad.IdProduto);
             return new AlmacenDTO()
             {
                 IdAlmacen = entidad.IdAlmacen,
@@ -144,16 +145,31 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 Ubicacion = entidad.Ubicacion,
                 FechaRegistro = entidad.FechaRegistro,
                 FechaActualizacion = entidad.FechaActualizacion,
-                Descripcion = prod.Descripcion,
-                IdCategoria = prod.IdCategoria,
-                Categoria = prod.Categoria.Descripcion,
-                IdProductoLinea = prod.IdProductoLinea,
-                ProductoLinea = prod.LineaProducto.Descripcion
+                Descripcion = entidad.Producto.Descripcion,
+                IdCategoria = entidad.Producto.IdCategoria,
+                Categoria = entidad.Producto.Categoria.Descripcion,
+                IdProductoLinea = entidad.Producto.IdProductoLinea,
+                ProductoLinea = entidad.Producto.LineaProducto.Descripcion
             };
         }
         public static List<AlmacenDTO> ToDTO(List<Almacen> entidad)
         {
             return entidad.Select(x => ToDTO(x)).ToList();
+        }
+        public static RepInventarioXConceptorDTO ToRepDTO(Almacen entidad)
+        {         
+            return new RepInventarioXConceptorDTO()
+            {
+                IdREgristro = entidad.IdAlmacen,
+                Descirpcion = entidad.Producto.Descripcion,
+                Existencias = entidad.Cantidad,
+                Categoria = entidad.Producto.Categoria.Descripcion,
+                FechaActualizacion = entidad.FechaActualizacion,
+            };
+        }
+        public static List<RepInventarioXConceptorDTO> ToRepDTO(List<Almacen> entidad)
+        {
+            return entidad.Select(x => ToRepDTO(x)).ToList();
         }
     }
 }

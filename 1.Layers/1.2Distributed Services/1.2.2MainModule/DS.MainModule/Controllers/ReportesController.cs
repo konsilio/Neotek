@@ -53,5 +53,10 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepRendimientoVehicular(dto));
         }
+        [Route("inventarioxconcepto")]
+        public HttpResponseMessage PostInventarioPorConcepto(InventarioXConceptoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepInventarioPorConcepto(dto));
+        }
     }
 }

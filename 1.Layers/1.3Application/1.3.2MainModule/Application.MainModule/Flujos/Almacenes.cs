@@ -102,7 +102,6 @@ namespace Application.MainModule.Flujos
         public List<AlmacenDTO> ProductosAlmacen(short idEmpresa)
         {
             //Validar Permisos
-
             var prods = ProductoAlmacenServicio.BuscarAlmacen(idEmpresa);
             return AlmacenProductoAdapter.ToDTO(prods);
         }

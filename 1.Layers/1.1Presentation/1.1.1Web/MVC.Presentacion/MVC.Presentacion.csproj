@@ -409,8 +409,10 @@
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarModel.cs" />
     <Compile Include="Models\Reporte\HistoricoPrecioVenta\HisotricoPrecioVentaDTO.cs" />
     <Compile Include="Models\Reporte\HistoricoPrecioVenta\HistoricoPrecioVentaModel.cs" />
+    <Compile Include="Models\Reporte\InventarioConcepto\InventarioXConceptoModel.cs" />
     <Compile Include="Models\Reporte\InventarioPorPuntoVenta\InventarioPorPuntoVentaDTO.cs" />
     <Compile Include="Models\Reporte\InventarioPorPuntoVenta\InventarioPorPuntoVentaModel.cs" />
+    <Compile Include="Models\Reporte\InventarioConcepto\InventarioXConceptoDTO.cs" />
     <Compile Include="Models\Reporte\OrdenCompra\OrdenCompraModel.cs" />
     <Compile Include="Models\Reporte\OrdenCompra\OrdenCompraRepDTO.cs" />
     <Compile Include="Models\Reporte\RendimientoVehicular\RendimientoVehicularDTO.cs" />
@@ -11667,6 +11669,7 @@
     <Content Include="Views\Reportes\Requisicion.cshtml" />
     <Content Include="Views\Reportes\OrdenCompraRep.cshtml" />
     <Content Include="Views\Reportes\RendimientoVehicular.cshtml" />
+    <Content Include="Views\Reportes\InventarioXConcepto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

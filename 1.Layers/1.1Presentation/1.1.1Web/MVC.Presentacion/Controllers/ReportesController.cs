@@ -109,6 +109,19 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
+        public ActionResult InventarioXConcepto(InventarioXConceptoModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
+            if (model != null && !model.FechaFinal.Equals(DateTime.MinValue) && !model.FechaInicio.Equals(DateTime.MinValue))
+            {
+                ViewData["Reporte"] = TiposReporteConst.RendimientoVehicular;
+                TempData["DataSource"] = ReporteServicio.BuscarInventarioConcepto(model, tkn);
+            }
+            return View(model);
+        }
         public ActionResult GetGridView(string Tipo)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -127,6 +140,8 @@ namespace MVC.Presentacion.Controllers
             if (Tipo.Equals(TiposReporteConst.OrdenCompra))
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<OrdenCompraRepDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.RendimientoVehicular))
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<RendimientoVehicularDTO>)TempData["DataSource"]);
+            if(Tipo.Equals(TiposReporteConst.InventarioXConcepto))
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<RendimientoVehicularDTO>)TempData["DataSource"]);
             return View(TiposReporteConst.CuboInformacionGeneral);
         }

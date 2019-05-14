@@ -51,5 +51,11 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscarRendimientoVehicular(model, token);
             return respuestaReq._ListaRendimientoVehicular;
         }
+        public static List<InventarioXConceptoDTO> BuscarInventarioConcepto(InventarioXConceptoModel model, string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscarInventarioPorConcepto(model, token);
+            return respuestaReq._ListaInventarioConcepto;
+        }
     }
 }

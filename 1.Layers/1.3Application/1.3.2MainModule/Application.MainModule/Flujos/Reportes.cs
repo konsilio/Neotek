@@ -1,10 +1,13 @@
-﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+﻿using Application.MainModule.AdaptadoresDTO.Almacenes;
+using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio;
 using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
 using Application.MainModule.AdaptadoresDTO.Pedidos;
 using Application.MainModule.AdaptadoresDTO.Requisiciones;
+using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Equipo;
@@ -58,6 +61,11 @@ namespace Application.MainModule.Flujos
         {
             var recargas = RecargaCombustibleServicio.Buscar(dto.FechaInicio, dto.FechaFinal);
             return RecargaCombustibleAdapter.FormRepDTO(recargas);
+        }
+        public List<RepInventarioXConceptorDTO> RepInventarioPorConcepto(InventarioXConceptoDTO dto)
+        {
+            var alamacenes = ProductoAlmacenServicio.BuscarAlmacen(dto.FechaInicio, dto.FechaFinal);
+            return AlmacenProductoAdapter.ToRepDTO(alamacenes);
         }
     }
 }

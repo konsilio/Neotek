@@ -224,6 +224,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Producto>().Get(x => x.Activo.Equals(true)).ToList();
         }
+        public List<Producto> ListaProductos(DateTime fi, DateTime ff)
+        {
+            return uow.Repository<Producto>().Get(x => x.Activo.Equals(true)
+            && x.FechaRegistro > fi && x.FechaRegistro < ff).ToList();
+        }
         public List<Producto> ListaProductos(short idEmpresa)
         {
             return uow.Repository<Producto>().Get(x => x.IdEmpresa.Equals(idEmpresa)

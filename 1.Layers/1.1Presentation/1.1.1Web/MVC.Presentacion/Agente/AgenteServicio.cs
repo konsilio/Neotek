@@ -134,6 +134,8 @@ namespace MVC.Presentacion.Agente
         public List<RequisicionRepDTO> _ListaRequisicion;
         public List<OrdenCompraRepDTO> _ListaOrdenCompra;
         public List<RendimientoVehicularDTO> _ListaRendimientoVehicular;
+        public List<InventarioXConceptoDTO> _ListaInventarioConcepto;
+
 
         public string _Json;
 
@@ -5236,6 +5238,42 @@ namespace MVC.Presentacion.Agente
                 _ListaRendimientoVehicular = list;
             }
         }
+        #endregion
+        #region Inventario Por Concepto
+        public void BuscarInventarioPorConcepto(InventarioXConceptoModel model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostInventarioPorConcepto"];
+            PostInventarioConcepto(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task PostInventarioConcepto(InventarioXConceptoModel model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<InventarioXConceptoDTO> list = new List<InventarioXConceptoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<InventarioXConceptoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<InventarioXConceptoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaInventarioConcepto = list;
+            }
+        }
+
         #endregion
         #endregion
 

@@ -23,6 +23,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Almacen>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
         }
+        public List<Almacen> ListaProductosAlmacen(DateTime fi, DateTime ff)
+        {
+            return uow.Repository<Almacen>().Get(x => x.FechaRegistro > fi && x.FechaRegistro < ff).ToList();
+        }
         public List<Almacen> ListaProductosAlmacenTodos()
         {
             return uow.Repository<Almacen>().GetAll().ToList();
