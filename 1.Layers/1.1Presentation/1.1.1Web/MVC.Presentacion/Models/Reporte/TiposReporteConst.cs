@@ -14,6 +14,8 @@ namespace MVC.Presentacion.Models
         public static string CallCenter = "CallCenter";
         public static string Requisicion = "Requisicion";
         public static string OrdenCompra = "OrdenCompra";
-      
+        public static string RendimientoVehicular = "RendimientoVehicular";
+
+
     }
 }

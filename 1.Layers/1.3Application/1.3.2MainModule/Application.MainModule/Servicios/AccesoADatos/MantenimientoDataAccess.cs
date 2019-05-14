@@ -93,16 +93,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
-        public CMantenimiento Obtener(int id)
-        {
-            return uow.Repository<CMantenimiento>().GetSingle(
-                x => x.Id_Mantenimiento.Equals(id) && x.Activo
-                );
-        }
         public List<CMantenimiento> Obtener()
         {
             return uow.Repository<CMantenimiento>().Get(x => x.Activo).ToList();
+        }
+        public CMantenimiento Obtener(int id)
+        {
+            return uow.Repository<CMantenimiento>().GetSingle(x => x.Id_Mantenimiento.Equals(id));
         }
         public List<CMantenimiento> Obtener(short idEmpresa)
         {

@@ -97,6 +97,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<DetalleRecargaCombustible>().GetSingle(x => x.Id_DetalleRecargaComb.Equals(id));
         }
+        public List<DetalleRecargaCombustible> ObtenerPorVehiculo(int id)
+        {
+            return uow.Repository<DetalleRecargaCombustible>().Get(x => x.Id_Vehiculo.Equals(id)).ToList();
+        }
+        public List<DetalleRecargaCombustible> Obtener(DateTime fi, DateTime ff)
+        {
+            return uow.Repository<DetalleRecargaCombustible>().Get(x => x.FechaRecarga > fi && x.FechaRecarga < ff).ToList();
+        }
         public List<DetalleRecargaCombustible> Obtener()
         {
             return uow.Repository<DetalleRecargaCombustible>().GetAll().ToList();

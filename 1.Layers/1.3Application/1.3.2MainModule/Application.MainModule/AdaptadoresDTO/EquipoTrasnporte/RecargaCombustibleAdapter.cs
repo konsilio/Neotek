@@ -1,5 +1,7 @@
-﻿using Application.MainModule.DTOs.EquipoTransporte;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.EquipoTransporte;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Equipo;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -68,6 +70,24 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio
                 IdTipoCombustible = entidad.IdTipoCombustible,
                 FechaRecarga = entidad.FechaRecarga,
             };
+        }
+        public static RepRendimientoVehicularDTO FormRepDTO(DetalleRecargaCombustible entidad)
+        {
+            return new RepRendimientoVehicularDTO()
+            {
+                IdRegistro = entidad.Id_DetalleRecargaComb,
+                Vehiculo = EquipoTransporteServicio.ObtenerNombre(entidad),
+                KmInicial = CalculosEquipoTrasporte.ObtenerKilometrajeInicial(entidad),
+                KmFinal = entidad.KilometrajeActual,
+                KmRecorridos = entidad.KilometrajeRecorrido,
+                LitrosCargados = entidad.LitrosRecargados,
+                Rendimiento = EquipoTransporteServicio.ObtenerRendimento(entidad),
+                Fecha = entidad.FechaRecarga,
+            };
+        }
+        public static List<RepRendimientoVehicularDTO> FormRepDTO(List<DetalleRecargaCombustible> entidades)
+        {
+            return entidades.Select(x => FormRepDTO(x)).ToList();
         }
     }
 }

@@ -381,18 +381,18 @@ namespace Application.MainModule.Servicios.Compras
             foreach (var item in Lista)
             {
                 if (respuesta.Equals(string.Empty))
-                    respuesta = item.Descripcion;
+                    respuesta = item.Producto;
                 else
-                    respuesta += string.Concat(", ", item.Descripcion);
+                    respuesta += string.Concat(", ", item.Producto);
             }
             return respuesta;
         }
         public static string DeterminarEstatusPago(List<OrdenCompraPago> pagos = null)
         {
             if (pagos == null && pagos.Count == 0 && pagos.Exists(x => x.SaldoInsoluto != 0))
-                return "Por Pagar";
-            else
                 return "Pagado";
+            else
+                return "Por Pagar";
         }
     }
 }

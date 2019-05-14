@@ -48,5 +48,10 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepOrdenCompra(dto));
         }
+        [Route("rendimientovehicular")]
+        public HttpResponseMessage PostRendimientoVehicular(RendimientoVehicularDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepRendimientoVehicular(dto));
+        }
     }
 }

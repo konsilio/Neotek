@@ -45,5 +45,11 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscarOrdenCompra(model, token);
             return respuestaReq._ListaOrdenCompra;
         }
+        public static List<RendimientoVehicularDTO> BuscarRendimientoVehicular(RendimientoVehicularModel model, string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscarRendimientoVehicular(model, token);
+            return respuestaReq._ListaRendimientoVehicular;
+        }
     }
 }

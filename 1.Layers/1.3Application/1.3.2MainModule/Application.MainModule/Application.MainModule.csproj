@@ -135,6 +135,7 @@
     <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\AsignacionUtilitarioDTO.cs" />
+    <Compile Include="Servicios\Equipo\CalculosEquipoTrasporte.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDetalleDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\RecargaCombustibleDTO.cs" />
@@ -190,6 +191,8 @@
     <Compile Include="DTOs\Reportes\InventarioPuntoVenta\RepInventarioPorPuntoVentaDTO.cs" />
     <Compile Include="DTOs\Reportes\OrdenCompra\OrdenCompraModelDTO.cs" />
     <Compile Include="DTOs\Reportes\OrdenCompra\RepOrdenCompraDTO.cs" />
+    <Compile Include="DTOs\Reportes\RendimientoVehicular\RendimientoVehicularDTO.cs" />
+    <Compile Include="DTOs\Reportes\RendimientoVehicular\RepRendimientoVehicularDTO.cs" />
     <Compile Include="DTOs\Reportes\Requisicion\RepRequisicionDTO.cs" />
     <Compile Include="DTOs\Reportes\Requisicion\RequisicionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionSalidaDTO.cs" />

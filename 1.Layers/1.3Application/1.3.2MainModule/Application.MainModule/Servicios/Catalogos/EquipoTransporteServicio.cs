@@ -13,7 +13,7 @@ using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.Almacenes;
-
+using Application.MainModule.Servicios.Equipo;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -237,13 +237,20 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return ec.Marca + " " + "Color" + " " + ec.Color;
         }
-
         public static int ObtenerIdVehiculo(CDetalleEquipoTransporte ec)
         {
             if (ec.IdCamioneta != null) { return ec.IdCamioneta.Value; }
             if (ec.IdPipa != null) { return ec.IdPipa.Value; }
             if (ec.IdUtilitario != null) { return ec.IdUtilitario.Value; }
             return 0;
+        }        
+        public static decimal ObtenerRendimento(DetalleRecargaCombustible entidad)
+        {
+            var recargaAnterior =  RecargaCombustibleServicio.BuscarAnterior(entidad);
+            if (recargaAnterior != null)
+                return CalculosEquipoTrasporte.CalcularRendimientoVehicular(entidad);
+            else
+                return 0;
         }
     }
 }

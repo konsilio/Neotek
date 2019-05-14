@@ -413,6 +413,8 @@
     <Compile Include="Models\Reporte\InventarioPorPuntoVenta\InventarioPorPuntoVentaModel.cs" />
     <Compile Include="Models\Reporte\OrdenCompra\OrdenCompraModel.cs" />
     <Compile Include="Models\Reporte\OrdenCompra\OrdenCompraRepDTO.cs" />
+    <Compile Include="Models\Reporte\RendimientoVehicular\RendimientoVehicularDTO.cs" />
+    <Compile Include="Models\Reporte\RendimientoVehicular\RendimientoVehicularModel.cs" />
     <Compile Include="Models\Reporte\Requisicion\RequisicionModel.cs" />
     <Compile Include="Models\Reporte\Requisicion\RequisicionRepDTO.cs" />
     <Compile Include="Models\Reporte\TiposReporteConst.cs" />
@@ -11664,6 +11666,7 @@
     <Content Include="Views\Reportes\CallCenter.cshtml" />
     <Content Include="Views\Reportes\Requisicion.cshtml" />
     <Content Include="Views\Reportes\OrdenCompraRep.cshtml" />
+    <Content Include="Views\Reportes\RendimientoVehicular.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

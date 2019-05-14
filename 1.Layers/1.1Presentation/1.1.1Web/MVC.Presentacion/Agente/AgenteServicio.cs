@@ -133,6 +133,7 @@ namespace MVC.Presentacion.Agente
         public List<CallCenterDTO> _ListaCallCenter;
         public List<RequisicionRepDTO> _ListaRequisicion;
         public List<OrdenCompraRepDTO> _ListaOrdenCompra;
+        public List<RendimientoVehicularDTO> _ListaRendimientoVehicular;
 
         public string _Json;
 
@@ -5200,6 +5201,41 @@ namespace MVC.Presentacion.Agente
             }
         }
 
+        #endregion
+        #region RendimientoVehicular
+        public void BuscarRendimientoVehicular(RendimientoVehicularModel model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRendimientoVehicular"];
+            PostRendimientoVehicular(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task PostRendimientoVehicular(RendimientoVehicularModel model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RendimientoVehicularDTO> list = new List<RendimientoVehicularDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<RendimientoVehicularDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<RendimientoVehicularDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaRendimientoVehicular = list;
+            }
+        }
         #endregion
         #endregion
 

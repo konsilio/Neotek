@@ -22,7 +22,7 @@ namespace Application.MainModule.Servicios.Equipo
         public static List<CMantenimiento> Buscar()
         {
             return new MantenimientoDataAccess().Obtener();
-        }
+        }        
         public static CMantenimiento Buscar(int id)
         {
             return new MantenimientoDataAccess().Obtener(id);

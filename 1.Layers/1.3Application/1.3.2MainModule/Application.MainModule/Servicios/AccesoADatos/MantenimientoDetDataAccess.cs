@@ -99,5 +99,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<DetalleMantenimiento>().GetAll().ToList();
         }
+        public List<DetalleMantenimiento> Obtener(DateTime fi, DateTime ff)
+        {
+            return uow.Repository<DetalleMantenimiento>().Get(x => x.FechaMtto > fi && x.FechaMtto < ff).ToList();
+        }
     }
 }
