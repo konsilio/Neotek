@@ -132,6 +132,7 @@ namespace MVC.Presentacion.Agente
         public List<HistoricoPrecioVentaDTO> _ListaHistoricoPrecioVenta;
         public List<CallCenterDTO> _ListaCallCenter;
         public List<RequisicionRepDTO> _ListaRequisicion;
+        public List<OrdenCompraRepDTO> _ListaOrdenCompra;
 
         public string _Json;
 
@@ -5160,6 +5161,42 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _ListaRequisicion = list;
+            }
+        }
+
+        #endregion
+        #region OrdenCompra
+        public void BuscarOrdenCompra(Models.OrdenCompraModel model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostOrdenCompra"];
+            PostOrdenCompra(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task PostOrdenCompra(Models.OrdenCompraModel model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<OrdenCompraRepDTO> list = new List<OrdenCompraRepDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<OrdenCompraRepDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<OrdenCompraRepDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaOrdenCompra = list;
             }
         }
 

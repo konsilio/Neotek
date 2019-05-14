@@ -15,6 +15,8 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
             if (model != null && !model.Periodo.Equals(DateTime.MinValue))
             {
                 ViewData["Periodo"] = model.Periodo;
@@ -27,6 +29,8 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
             if (model == null)            
                 model = new InventarioPorPuntoVentaModel();           
             model.Pipas = PedidosServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(x => { x.Activo = false; return x;}).ToList();
@@ -43,6 +47,8 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
             if (model == null)
                 model = new HistoricoPrecioVentaModel();
             ViewData["Reporte"] = TiposReporteConst.HistoricoPrecioVenta;
@@ -55,6 +61,8 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
             if (model != null && !model.Periodo.Equals(DateTime.MinValue))
             {               
                 ViewData["Reporte"] = TiposReporteConst.CallCenter;
@@ -66,10 +74,25 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
             if (model != null && !model.FechaFinal.Equals(DateTime.MinValue) && !model.FechaInicio.Equals(DateTime.MinValue))
             {
                 ViewData["Reporte"] = TiposReporteConst.Requisicion;
                 TempData["DataSource"] = ReporteServicio.BuscarRequisicion(model, tkn);
+            }
+            return View(model);
+        }
+        public ActionResult OrdenCompraRep(OrdenCompraModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
+            if (model != null && !model.FechaFinal.Equals(DateTime.MinValue) && !model.FechaInicio.Equals(DateTime.MinValue))
+            {
+                ViewData["Reporte"] = TiposReporteConst.OrdenCompra;
+                TempData["DataSource"] = ReporteServicio.BuscarOrdenCompra(model, tkn);
             }
             return View(model);
         }
@@ -79,17 +102,18 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();           
             ViewData["Reporte"] = Tipo;
             if (Tipo.Equals(TiposReporteConst.CuentasXCobrar))
-                return View("_CuboDeInformacionPartial", (List<CuentasPorPagarDTO>)TempData["DataSource"]);
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<CuentasPorPagarDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.InventarioPorPuntoVenta))
-                return View("_CuboDeInformacionPartial", (List<InventarioPorPuntoVentaDTO>)TempData["DataSource"]);
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<InventarioPorPuntoVentaDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.HistoricoPrecioVenta))
-                return View("_CuboDeInformacionPartial", (List<HistoricoPrecioVentaDTO>)TempData["DataSource"]);
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<HistoricoPrecioVentaDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.CallCenter))
-                return View("_CuboDeInformacionPartial", (List<CallCenterDTO>)TempData["DataSource"]);
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<CallCenterDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.Requisicion))
-                return View("_CuboDeInformacionPartial", (List<RequisicionRepDTO>)TempData["DataSource"]);
-
-            return View("_CuboDeInformacionPartial");
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<RequisicionRepDTO>)TempData["DataSource"]);
+            if (Tipo.Equals(TiposReporteConst.OrdenCompra))
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<OrdenCompraRepDTO>)TempData["DataSource"]);
+            return View(TiposReporteConst.CuboInformacionGeneral);
         }
     }
 }

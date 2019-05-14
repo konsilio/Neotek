@@ -411,6 +411,8 @@
     <Compile Include="Models\Reporte\HistoricoPrecioVenta\HistoricoPrecioVentaModel.cs" />
     <Compile Include="Models\Reporte\InventarioPorPuntoVenta\InventarioPorPuntoVentaDTO.cs" />
     <Compile Include="Models\Reporte\InventarioPorPuntoVenta\InventarioPorPuntoVentaModel.cs" />
+    <Compile Include="Models\Reporte\OrdenCompra\OrdenCompraModel.cs" />
+    <Compile Include="Models\Reporte\OrdenCompra\OrdenCompraRepDTO.cs" />
     <Compile Include="Models\Reporte\Requisicion\RequisicionModel.cs" />
     <Compile Include="Models\Reporte\Requisicion\RequisicionRepDTO.cs" />
     <Compile Include="Models\Reporte\TiposReporteConst.cs" />
@@ -11661,6 +11663,7 @@
     <Content Include="Views\Reportes\HistoricoPrecioVenta.cshtml" />
     <Content Include="Views\Reportes\CallCenter.cshtml" />
     <Content Include="Views\Reportes\Requisicion.cshtml" />
+    <Content Include="Views\Reportes\OrdenCompraRep.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

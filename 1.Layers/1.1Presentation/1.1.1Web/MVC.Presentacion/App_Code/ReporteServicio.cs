@@ -39,5 +39,11 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscarRequisicion(model, token);
             return respuestaReq._ListaRequisicion;
         }
+        public static List<OrdenCompraRepDTO> BuscarOrdenCompra(OrdenCompraModel model, string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscarOrdenCompra(model, token);
+            return respuestaReq._ListaOrdenCompra;
+        }
     }
 }

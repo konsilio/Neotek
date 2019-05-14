@@ -1,5 +1,5 @@
 ﻿@using MVC.Presentacion.Models;
-@model  CallCenterModel
+@model  OrdenCompraModel
 @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -29,7 +29,7 @@
     </div>
     <section class="content home">
         <div class="container-fluid">
-            @using (Html.BeginForm("CallCenter", "Reportes", FormMethod.Post))
+            @using (Html.BeginForm("OrdenCompraRep", "Reportes", FormMethod.Post))
             {
                 <div class="block-header">
                     <div class="row clearfix">
@@ -38,7 +38,7 @@
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Reportes</li>
-                                <li class="breadcrumb-item">Call Center</li>
+                                <li class="breadcrumb-item">Orden de compra</li>
                             </ul>
                         </div>
                     </div>
@@ -48,17 +48,27 @@
                                 <div class="col-md-3">
                                     <strong>Al dia</strong>
                                     <div class="form-group">
-
                                         @Html.DevExpress().DateEdit(settings =>
-                                      {
-                                          settings.Name = "Periodo";
-                                          settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                          settings.Properties.PickerType = DatePickerType.Months;
-                                          settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
-                                          settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
-                                          settings.Date = DateTime.Today;
-                                      }).Bind(Model.Periodo).GetHtml()
-
+                                        {
+                                            settings.Name = "FechaInicio";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                            settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                            settings.Date = DateTime.Today;
+                                        }).Bind(Model.FechaInicio).GetHtml()
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Al dia</strong>
+                                    <div class="form-group">
+                                        @Html.DevExpress().DateEdit(settings =>
+                                        {
+                                            settings.Name = "FechaFinal";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                            settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                            settings.Date = DateTime.Today;
+                                        }).Bind(Model.FechaFinal).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -72,11 +82,11 @@
                                 <div class="table-responsive">
                                     @if (TempData["DataSource"] != null)
                                     {
-                                        @Html.Partial("_CuboDeInformacionPartial", (List<CallCenterDTO>)TempData["DataSource"])
+                                        @Html.Partial("_CuboDeInformacionPartial", (List<OrdenCompraRepDTO>)TempData["DataSource"])
                                     }
                                     else
                                     {
-                                        @Html.Partial("_CuboDeInformacionPartial", new List<CallCenterDTO>())
+                                        @Html.Partial("_CuboDeInformacionPartial", new List<OrdenCompraRepDTO>())
                                     }
                                 </div>
                             </div>
