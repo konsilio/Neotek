@@ -52,22 +52,20 @@ namespace Application.MainModule.Flujos
 
             var entidad = HistoricoVentaServicio.Buscar(dto.Id);
             var emty = HistoricoVentasAdapter.FormEmtity(entidad);
-         
+
             return HistoricoVentaServicio.Actualizar(emty);
         }
         public string GenerarJsonConsulta(HistoricoConsultaDTO dto)
         {
             //Traer los registros segun los parametros de años y meses 
             var Ventas = HistoricoVentaServicio.BuscarPorFiltros(dto);
-            //transformar segun tipo de consulta
-            
-            return HistoricoVentaServicio.TransformarAJason(Ventas,dto);
+            //transformar segun tipo de consulta            
+            return HistoricoVentaServicio.TransformarAJason(Ventas, dto);
         }
-        public List<YearDTO> VentasConsultas( HistoricoConsultaDTO dto2)
+        public List<YearDTO> VentasConsultas(HistoricoConsultaDTO dto)
         {
-           
-            var Ventas = HistoricoVentaServicio.BuscarPorFiltros(dto2);
-            return HistoricoVentaServicio.VentasTotales(Ventas, dto2);
+            var Ventas = HistoricoVentaServicio.BuscarPorFiltros(dto);
+            return HistoricoVentaServicio.VentasTotales(Ventas, dto);
         }
     }
 }

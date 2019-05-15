@@ -22,8 +22,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-
-
         public RespuestaDto Insertar(List<HistoricoVentas> Lista)
         {
             try

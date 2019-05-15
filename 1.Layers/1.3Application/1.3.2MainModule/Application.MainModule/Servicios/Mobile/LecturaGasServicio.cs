@@ -83,10 +83,6 @@ namespace Application.MainModule.Servicios.Mobile
                     camionetaCilindroActualizar.IdEmpresa = camionetaCilindro.IdEmpresa;
                     camionetaCilindroActualizar.IdCilindro = camionetaCilindro.IdCilindro;
                     camionetaCilindroActualizar.Cantidad = cilindro.Cantidad;
-                    //camionetaCilindroActualizar.Camioneta = camionetaCilindro.Camioneta;
-                    //camionetaCilindroActualizar.Empresa = camionetaCilindro.Empresa;
-                    //camionetaCilindroActualizar.UnidadAlmacenGasCilindro = camionetaCilindro.UnidadAlmacenGasCilindro;
-
                     var actualizar = AlmacenGasServicio.ActualizaCilindro(camionetaCilindroActualizar);
                 }
                 
