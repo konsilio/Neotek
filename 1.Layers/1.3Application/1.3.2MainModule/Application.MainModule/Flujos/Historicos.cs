@@ -23,9 +23,9 @@ namespace Application.MainModule.Flujos
             var lista = HistoricoVentaServicio.Buscar(TokenServicio.ObtenerIdEmpresa());
             return HistoricoVentasAdapter.ToDTO(lista);
         }
-        public List<YearDTO> ObtenerElementosDistintos()
+        public List<YearDTO> ObtenerAnios()
         {
-            var lista = HistoricoVentaServicio.ObtenerElementosDistintos(TokenServicio.ObtenerIdEmpresa());
+            var lista = HistoricoVentaServicio.ObtenerYears();
             return YearsAdapater.ToDTO(lista);
         }
         public RespuestaDto CrearCatalogo(List<HistoricoVentaDTO> dto)
@@ -65,7 +65,6 @@ namespace Application.MainModule.Flujos
         public List<YearDTO> VentasConsultas(HistoricoConsultaDTO dto)
         {
             var hVentas = HistoricoVentaServicio.BuscarPorFiltros(dto);
-            var ventas = 
             return HistoricoVentaServicio.VentasTotales(hVentas, dto);
         }
     }

@@ -1,5 +1,5 @@
-﻿@model MVC.Presentacion.Models.HistoricoVentasConsulta
-
+﻿@using MVC.Presentacion.Models;
+@model  HistoricoVentasConsulta
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -22,14 +22,14 @@
 </script>
 <script>
     $(document).ready(function () {
-                Morris.Bar(@Html.Raw(ViewBag.json));
-        });
+        Morris.Bar(@Html.Raw(ViewBag.json));
+    });
 
 </script>
 <body>
     <section class="content home">
         <div class="container-fluid">
-            @using (Html.BeginForm("Crear", "Historico", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("HistoricoVsVentas", "Reportes", FormMethod.Post))
             {
 
                 <div class="block-header">
@@ -37,7 +37,7 @@
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             <h2>Histórico de ventas</h2>
                             <ul class="breadcrumb padding-0">
-                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>    
+                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Histórico</li>
                                 <li class="breadcrumb-item">Historioc de ventas</li>
                             </ul>
@@ -124,8 +124,6 @@
                                    settings.Theme = "Material";
                                    settings.Properties.TextField = "TipoReporte";
                                    settings.Properties.ValueField = "id_Reporte";
-                                   //settings.ClientEnabled = true;
-                                   //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
                                    settings.PreRender = (s, e) =>
                                    {
                                        MVCxComboBox combo = s as MVCxComboBox;
@@ -137,7 +135,7 @@
                                        combo.SelectedIndex = Model.IdTipoReporte;
                                    };
                                }).GetHtml()
-                                 
+
                                 </div>
                                 @if (ViewBag.MensajeError != null)
                                 {
@@ -154,12 +152,25 @@
                                 }
                             </div>
                         </div>
+
+                        <div class="row clearfix blockquote blockquote-info btn-round">
+                            <div class="table-responsive">
+                                @if (TempData["DataSource"] != null)
+                                {
+                                    @Html.Partial("_CuboDeInformacionPartial", (List<HistoricoVentaModel>)TempData["DataSource"])
+                                }
+                                else
+                                {
+                                    @Html.Partial("_CuboDeInformacionPartial", new List<HistoricoVentaModel>())
+                                }
+                            </div>
+                        </div>
                     </div>
                     <div class="card">
                         <div class="header">
                             Validacion de <strong>Informacion</strong>
                         </div>
-                        <div class="body">                     
+                        <div class="body">
                             <div>
                                 <div id="m_bar_chart"></div>
                             </div>
@@ -167,7 +178,7 @@
                         @if (ViewBag.json != null)
                         {
                             <input type="submit" formaction=@Url.Action("GenerarExcel") value="Exportar a Excel" class="btn btn-primary btn-round" />
-                        }                       
+                        }
                     </div>
                 </div>
             }

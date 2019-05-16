@@ -378,5 +378,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdCliente.Equals(id)).ToList();
         }
+        public List<VentaPuntoDeVenta> BuscarVentasPorEmpresa(short IdEmpresa)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdEmpresa.Equals(IdEmpresa)).ToList();
+        }
+        public List<VentaPuntoDeVenta> BuscarVentasPorPeriodo(short IdEmpresa, DateTime p)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdEmpresa.Equals(IdEmpresa) 
+                                                            && x.FechaRegistro.Month.Equals(p.Month)
+                                                            && x.FechaRegistro.Year.Equals(p.Year)).ToList();
+        }
     }
 }

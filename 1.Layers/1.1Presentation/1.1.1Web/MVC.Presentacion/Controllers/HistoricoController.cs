@@ -1,7 +1,6 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Seguridad;
-using MVC.Presentacion.Models.Historico;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -479,13 +478,6 @@ namespace MVC.Presentacion.Controllers
             var respuesta = HistoricoServicio.GetYears(tkn);
             return respuesta;
         }
-
-        //public ActionResult Descraga(string File, MemoryStream ms)
-        //{
-        //    return new FileStreamResult(ms, "application/vnd.ms-excel") { FileDownloadName = File };
-
-        //}
-        
         public ActionResult Eliminar(int? id)
         {
 
@@ -512,7 +504,6 @@ namespace MVC.Presentacion.Controllers
                 System.Diagnostics.Debug.WriteLine(ex.Message);
                 return RedirectToAction("Index");
             }
-
         }
         private string Validar(RespuestaDTO Resp = null)
         {

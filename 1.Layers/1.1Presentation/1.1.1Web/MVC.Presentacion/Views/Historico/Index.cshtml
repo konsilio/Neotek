@@ -1,6 +1,5 @@
-﻿@model MVC.Presentacion.Models.Historico.HistoricoVentaModel
-@using PagedList.Mvc;
-@using PagedList;
+﻿@model MVC.Presentacion.Models.HistoricoVentaModel
+
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -21,22 +20,6 @@
     if (mensaje != '') {
         $(window).on("load", showNotification(tipo, mensaje, 'top', 'center', '', ''));
     }
-    //$(document).ready(function () {
-
-    //    $("#idUrl").change(function (event) {
-
-    //        var reader = new FileReader();
-    //        reader.readAsDataURL(event.srcElement.files[0]);
-
-    //        reader.onload = function () {
-    //            var fileContent = reader.result;
-    //            console.log(fileContent);
-    //        }
-
-    //        $("#Url").val($("idUrl").val());
-    //    });
-    //});
-
 </script>
 
 <body>

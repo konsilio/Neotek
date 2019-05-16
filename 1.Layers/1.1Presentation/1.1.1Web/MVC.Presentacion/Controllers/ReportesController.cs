@@ -31,9 +31,9 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             if (TempData["DataSource"] != null)
                 TempData["DataSource"] = null;
-            if (model == null)            
-                model = new InventarioPorPuntoVentaModel();           
-            model.Pipas = PedidosServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(x => { x.Activo = false; return x;}).ToList();
+            if (model == null)
+                model = new InventarioPorPuntoVentaModel();
+            model.Pipas = PedidosServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(x => { x.Activo = false; return x; }).ToList();
             model.Estaciones = CatalogoServicio.GetListaEstacionCarburacion(tkn).Select(x => { x.Activo = false; return x; }).ToList();
             if (model != null && !model.Fecha.Equals(DateTime.MinValue))
             {
@@ -52,9 +52,9 @@ namespace MVC.Presentacion.Controllers
             if (model == null)
                 model = new HistoricoPrecioVentaModel();
             ViewData["Reporte"] = TiposReporteConst.HistoricoPrecioVenta;
-            if (model != null && !model.FechaFinal.Equals(DateTime.MinValue) && !model.FechaInicial.Equals(DateTime.MinValue))                         
+            if (model != null && !model.FechaFinal.Equals(DateTime.MinValue) && !model.FechaInicial.Equals(DateTime.MinValue))
                 TempData["DataSource"] = ReporteServicio.BuscarHistoricoPrecioVenta(model, tkn);
-            
+
             return View(model);
         }
         public ActionResult CallCenter(CallCenterModel model = null)
@@ -64,7 +64,7 @@ namespace MVC.Presentacion.Controllers
             if (TempData["DataSource"] != null)
                 TempData["DataSource"] = null;
             if (model != null && !model.Periodo.Equals(DateTime.MinValue))
-            {               
+            {
                 ViewData["Reporte"] = TiposReporteConst.CallCenter;
                 TempData["DataSource"] = ReporteServicio.BuscarCallCenter(model, tkn);
             }
@@ -122,10 +122,22 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
+        public ActionResult HistoricoVsVentas(HistoricoVentasConsulta model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
+
+            ViewData["Reporte"] = TiposReporteConst.RendimientoVehicular;
+            TempData["DataSource"] = ReporteServicio.BuscarHistoricoVSVentas(model, tkn);
+            return View(model);
+        }
+
         public ActionResult GetGridView(string Tipo)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            tkn = Session["StringToken"].ToString();           
+            tkn = Session["StringToken"].ToString();
             ViewData["Reporte"] = Tipo;
             if (Tipo.Equals(TiposReporteConst.CuentasXCobrar))
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<CuentasPorPagarDTO>)TempData["DataSource"]);
@@ -141,7 +153,7 @@ namespace MVC.Presentacion.Controllers
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<OrdenCompraRepDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.RendimientoVehicular))
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<RendimientoVehicularDTO>)TempData["DataSource"]);
-            if(Tipo.Equals(TiposReporteConst.InventarioXConcepto))
+            if (Tipo.Equals(TiposReporteConst.InventarioXConcepto))
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<RendimientoVehicularDTO>)TempData["DataSource"]);
             return View(TiposReporteConst.CuboInformacionGeneral);
         }

@@ -145,6 +145,14 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarVentasPorCliente(id);
         }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(short id)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasPorEmpresa(id);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorPeriodo(short id, DateTime Periodo)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasPorPeriodo(id, Periodo);
+        }
         public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(int id,DateTime fi, DateTime ff)
         {
             return new PuntoVentaDataAccess().BuscarVentasPorCliente(id).Where(x => (x.FechaRegistro > fi) && (x.FechaRegistro < ff)).ToList();

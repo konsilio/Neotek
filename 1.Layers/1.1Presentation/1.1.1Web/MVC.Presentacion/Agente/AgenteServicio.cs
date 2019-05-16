@@ -8,7 +8,6 @@ using MVC.Presentacion.Models.Pedidos;
 using MVC.Presentacion.Models.Requisicion;
 using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
-using MVC.Presentacion.Models.Historico;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -4864,15 +4863,14 @@ namespace MVC.Presentacion.Agente
             ApiHistoricos = ConfigurationManager.AppSettings["GetYears"];
             Years(ApiHistoricos, tkn).Wait();
         }
-        private async Task Years(string api, string token = null)
+        private async Task Years(string api, string token)
         {
             using (var client = new HttpClient())
             {
                 List<YearsDTO> Year = new List<YearsDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
-                if (!string.IsNullOrEmpty(token))
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
@@ -5006,7 +5004,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
-                {                   
+                {
                     HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         list = await response.Content.ReadAsAsync<List<CuentasPorPagarDTO>>();

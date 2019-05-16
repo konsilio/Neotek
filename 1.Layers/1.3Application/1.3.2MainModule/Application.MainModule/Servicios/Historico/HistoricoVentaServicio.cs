@@ -1,6 +1,9 @@
-﻿using Application.MainModule.DTOs;
+﻿using Application.MainModule.AdaptadoresDTO.Historico;
+using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
 
@@ -13,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.Historico
 {
-    class HistoricoVentaServicio
+    public static class HistoricoVentaServicio
     {
         public static RespuestaDto Crear(List<HistoricoVentas> Lista)
         {
@@ -35,17 +38,27 @@ namespace Application.MainModule.Servicios.Historico
         {
             return new HistoricoDataAcces().Obtener();
         }
-        public static List<int> ObtenerElementosDistintos(short id)
+        public static List<int> ObtenerYears()
         {
-            return new HistoricoDataAcces().ObtenerElementosDistintos();
+            return new HistoricoDataAcces().ObtenerYears();
         }
         public static List<HistoricoVentas> BuscarPorMes(int anio, int mes)
         {
-            return new HistoricoDataAcces().ObtenerPorMes(anio, mes);
+            List<HistoricoVentas> lista = new List<HistoricoVentas>();
+            lista.AddRange(new HistoricoDataAcces().ObtenerPorMes(anio, mes));
+            if (anio.Equals(DateTime.Now.Year))
+            {
+                var ventas = PuntoVentaServicio.ObtenerVentasPorPeriodo(TokenServicio.ObtenerIdEmpresa(), new DateTime(anio, mes, 1));
+                lista.AddRange(HistoricoVentasAdapter.FromPV(ventas));
+            }
+            return lista;
         }
         public static List<HistoricoVentas> BuscarPorFiltros(HistoricoConsultaDTO dto)
         {
             List<HistoricoVentas> Lista = new List<HistoricoVentas>();
+            if (!dto.Years.Exists(x => x.Year.Equals(DateTime.Now.Year)))            
+                dto.Years.Add(new YearDTO() { Year = DateTime.Now.Year, Seleccionar = true });
+            
             foreach (YearDTO item in dto.Years)
             {
                 int y = item.Year;
@@ -76,7 +89,7 @@ namespace Application.MainModule.Servicios.Historico
                     if (dto.Diciembre)
                         Lista.AddRange(BuscarPorMes(y, 12));
                 }
-            }
+            }            
             return Lista;
         }
         public static string TransformarAJason(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)

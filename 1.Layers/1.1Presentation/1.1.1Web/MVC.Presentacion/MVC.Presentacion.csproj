@@ -11670,6 +11670,7 @@
     <Content Include="Views\Reportes\OrdenCompraRep.cshtml" />
     <Content Include="Views\Reportes\RendimientoVehicular.cshtml" />
     <Content Include="Views\Reportes\InventarioXConcepto.cshtml" />
+    <Content Include="Views\Reportes\HistoricoVsVentas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

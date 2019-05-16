@@ -17,7 +17,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         private SagasDataUow uow;
         public RespuestaDto _respuesta = new RespuestaDto();
-
         public HistoricoDataAcces()
         {
             uow = new SagasDataUow();
@@ -71,7 +70,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public HistoricoVentas Obtener(int id)
         {
             return uow.Repository<HistoricoVentas>().GetSingle(
@@ -82,7 +80,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<HistoricoVentas>().GetAll().ToList();
         }
-        public List<int> ObtenerElementosDistintos()
+        public List<int> ObtenerYears()
         {
             return uow.Repository<HistoricoVentas>().GetAll().OrderBy(m => m.Anio).Select(m => m.Anio).Distinct().ToList();
         }
