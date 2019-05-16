@@ -33,7 +33,6 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
 
             return CajaGeneralServicio.ObtenerPVDetalle(unidad, empresa, year, month, dia, orden.Value, Folio).ToList();
-
         }
         public List<VentasPipaDto> MovimientosGas(short unidad, short empresa, short year, byte month, byte dia, short? orden,DateTime fecha, string Folio)
         {
@@ -41,7 +40,6 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
 
             return CajaGeneralServicio.ObtenerVentasPipas(unidad, empresa, year, month, dia, orden.Value, fecha, Folio).ToList();
-
         }
        
         public List<VPuntoVentaDetalleDTO> MovimientosGasCilindro(short? empresa, short year, byte month, byte dia, short? orden)
@@ -50,7 +48,6 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
 
             return CajaGeneralServicio.ObtenerVentas(empresa.Value, year, month, dia, orden.Value).ToList();
-
         }
 
         public List<CajaGeneralDTO> CajaGeneralIdEmpresa(short IdEmpresa)
