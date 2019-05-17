@@ -187,7 +187,7 @@ namespace Application.MainModule.Servicios.Historico
             {
                 keys += "'j',";
                 labels += "'Octubre', ";
-                barColors += "''], ";
+                barColors += "'#757575', ";
             }
             if (dto.Noviembre)
             {
@@ -201,6 +201,9 @@ namespace Application.MainModule.Servicios.Historico
                 labels += "'Diciembre',";
                 barColors += "'#03A9F4',";
             }
+            keys = keys.TrimEnd(',');
+            labels = labels.TrimEnd(',');
+            barColors = barColors.TrimEnd(',');
             keys += "],";
             labels += "],";
             barColors += "],";
@@ -233,42 +236,41 @@ namespace Application.MainModule.Servicios.Historico
                     json += "{";
                     json += string.Concat("y: ", "'", year.Year, "'", ",");
                     if (dto.Enero)
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(1)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(1)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Febrero)
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(2)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(2)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Marzo)
-                        json += string.Concat("c: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(3)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("c: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(3)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Abril)
-                        json += string.Concat("d: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(4)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("d: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(4)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Mayo)
-                        json += string.Concat("e: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(5)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("e: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(5)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Junio)
-                        json += string.Concat("f: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(6)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("f: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(6)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Julio)
-                        json += string.Concat("g: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(7)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("g: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(7)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Agosto)
-                        json += string.Concat("h: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(8)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("h: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(8)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Septiembre)
-                        json += string.Concat("i: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(9)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("i: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(9)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Octubre)
-                        json += string.Concat("j: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(10)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("j: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(10)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Noviembre)
-                        json += string.Concat("k: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(11)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("k: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(11)).Sum(t => t.MontoVenta).ToString(), "',");
                     if (dto.Diciembre)
-                        json += string.Concat("l: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(12)).Sum(t => t.MontoVenta).ToString(), "', ");
-
+                        json += string.Concat("l: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(12)).Sum(t => t.MontoVenta).ToString(), "',");
+                    json = json.TrimEnd(',');
                     json += "},";
                 }
-
             }
             json = json.TrimEnd(',');
             return string.Concat(json, "],");
         }
-        public static List<YearDTO> VentasTotales(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto2)
+        public static List<YearDTO> VentasTotales(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
         {
             List<YearDTO> year = new List<YearDTO>();
             
-            foreach (YearDTO year2 in dto2.Years)
+            foreach (YearDTO year2 in dto.Years)
             {
                 YearDTO ynew = new YearDTO();
                 ynew = year2;
@@ -277,29 +279,29 @@ namespace Application.MainModule.Servicios.Historico
                 {
                     ynew.MesesVenta = new List<MesVentaDto>();
                     MesVentaDto mes = new MesVentaDto();
-                    if (dto2.Enero)
+                    if (dto.Enero)
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Enero", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(1)).Sum(t => t.MontoVenta) });
-                    if (dto2.Febrero)
+                    if (dto.Febrero)
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Febrero", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(2)).Sum(t => t.MontoVenta) });
-                    if (dto2.Marzo)
+                    if (dto.Marzo)
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Marzo", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(3)).Sum(t => t.MontoVenta) });
-                    if (dto2.Abril)
+                    if (dto.Abril)
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Abril", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(4)).Sum(t => t.MontoVenta) });
-                    if (dto2.Mayo)                     
+                    if (dto.Mayo)                     
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Mayo", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(5)).Sum(t => t.MontoVenta) });
-                    if (dto2.Junio)
+                    if (dto.Junio)
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Junio", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(6)).Sum(t => t.MontoVenta) });
-                    if (dto2.Julio)
+                    if (dto.Julio)
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Julio", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(7)).Sum(t => t.MontoVenta) });
-                    if (dto2.Agosto)
+                    if (dto.Agosto)
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Agosto", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(8)).Sum(t => t.MontoVenta) });
-                    if (dto2.Septiembre)
+                    if (dto.Septiembre)
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Septiembre", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(9)).Sum(t => t.MontoVenta) });
-                    if (dto2.Octubre)
+                    if (dto.Octubre)
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Octubre", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(10)).Sum(t => t.MontoVenta) });
-                    if (dto2.Noviembre)
+                    if (dto.Noviembre)
                        ynew.MesesVenta.Add(new MesVentaDto() { mes = "Noviembre", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(11)).Sum(t => t.MontoVenta) });
-                    if (dto2.Diciembre)
+                    if (dto.Diciembre)
                         ynew.MesesVenta.Add(new MesVentaDto() { mes = "Diciembre", montoTotal = ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(12)).Sum(t => t.MontoVenta) });
                 }
                 year.Add(ynew);

@@ -57,11 +57,11 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscarInventarioPorConcepto(model, token);
             return respuestaReq._ListaInventarioConcepto;
         }
-        public static List<HistoricoVentaModel> BuscarHistoricoVSVentas(HistoricoVentasConsulta model, string tkn)
+        public static List<YearsDTO> BuscarHistoricoVSVentas(HistoricoVentasConsulta model, string tkn)
         {
             AgenteServicio agenteServico = new AgenteServicio();
-            agenteServico.GetListaHistoricos(tkn);
-            return agenteServico._ListHistoricoVenta;
+            agenteServico.GetVentasTotales(model, tkn);
+            return agenteServico._ListYears;
         }
     }
 }

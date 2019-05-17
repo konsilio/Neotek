@@ -4807,7 +4807,6 @@ namespace MVC.Presentacion.Agente
                 _ListHistoricoVenta = historico;
             }
         }
-
         public void GetHistoricoById(int id, string token)
         {
             ApiHistoricos = ConfigurationManager.AppSettings["GetHistoricoById"];
@@ -4851,13 +4850,11 @@ namespace MVC.Presentacion.Agente
             ApiRoute = ApiHistoricos;
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-
         public void EliminarHistorico(HistoricoVentaModel dto, string tkn)
         {
             ApiHistoricos = ConfigurationManager.AppSettings["DeleteHistorico"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
         public void ObtenerElementosDistintos(string tkn)
         {
             ApiHistoricos = ConfigurationManager.AppSettings["GetYears"];
@@ -4893,7 +4890,6 @@ namespace MVC.Presentacion.Agente
                 _ListYears = Year;
             }
         }
-
         public void GetVentasTotales(HistoricoVentasConsulta dto, string tkn)
 
         {
@@ -4936,7 +4932,6 @@ namespace MVC.Presentacion.Agente
                 _ListYears = resp;
             }
         }
-
         public void GetJson(HistoricoVentasConsulta dto, string tkn)
         {
             ApiHistoricos = ConfigurationManager.AppSettings["GetJsonConsulta"];
@@ -4978,7 +4973,6 @@ namespace MVC.Presentacion.Agente
                 _json = resp;
             }
         }
-
         public void ActualizarHistorico(HistoricoVentaModel dto, string tkn)
         {
             ApiHistoricos = ConfigurationManager.AppSettings["PutHistorico"];

@@ -84,10 +84,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<HistoricoVentas>().GetAll().OrderBy(m => m.Anio).Select(m => m.Anio).Distinct().ToList();
         }
-        public string Json()
-        {
-            return "";
-        }
         public List<HistoricoVentas> ObtenerPorMes(int Anio, int mes)
         {
             return uow.Repository<HistoricoVentas>().Get(x => x.Anio.Equals(Anio) && x.Mes.Equals(mes)).ToList();

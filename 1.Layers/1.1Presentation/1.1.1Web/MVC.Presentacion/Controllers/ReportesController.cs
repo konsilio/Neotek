@@ -128,9 +128,14 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             if (TempData["DataSource"] != null)
                 TempData["DataSource"] = null;
-
-            ViewData["Reporte"] = TiposReporteConst.RendimientoVehicular;
-            TempData["DataSource"] = ReporteServicio.BuscarHistoricoVSVentas(model, tkn);
+            if (TempData["year"] != null) model.Years = (List<YearsDTO>)TempData["year"];        
+            if (model.Years == null) TempData["year"] = model.Years = HistoricoServicio.GetYears(tkn);
+            if (model != null && model.Years.Exists(x => x.Seleccionar))
+            {
+                ViewData["Reporte"] = TiposReporteConst.HistoricoVsVentas;
+                TempData["DataSource"] = ReporteServicio.BuscarHistoricoVSVentas(model, tkn);
+                TempData["json"] = HistoricoServicio.GetJson(model, tkn);
+            }          
             return View(model);
         }
 
@@ -154,7 +159,9 @@ namespace MVC.Presentacion.Controllers
             if (Tipo.Equals(TiposReporteConst.RendimientoVehicular))
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<RendimientoVehicularDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.InventarioXConcepto))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<RendimientoVehicularDTO>)TempData["DataSource"]);
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<InventarioXConceptoDTO>)TempData["DataSource"]);
+            if (Tipo.Equals(TiposReporteConst.HistoricoVsVentas))
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<YearsDTO>)TempData["DataSource"]);
             return View(TiposReporteConst.CuboInformacionGeneral);
         }
     }

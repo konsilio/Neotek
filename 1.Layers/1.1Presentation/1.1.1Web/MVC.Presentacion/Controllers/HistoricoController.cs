@@ -55,7 +55,7 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 //List<YearsDTO> listYears = ObtenerAños();
-                model.Years = ObtenerAños();
+                model.Years = HistoricoServicio.GetYears(tkn);
             }
             ViewBag.json = TempData["json"];
             if (TempData["RespuestaDTO"] != null)
@@ -473,11 +473,11 @@ namespace MVC.Presentacion.Controllers
            // return RedirectToAction("HistoricoVentas", modelo);
 
         }
-        public List<YearsDTO> ObtenerAños()
-        {
-            var respuesta = HistoricoServicio.GetYears(tkn);
-            return respuesta;
-        }
+        //public List<YearsDTO> ObtenerAños()
+        //{
+        //    var respuesta = HistoricoServicio.GetYears(tkn);
+        //    return respuesta;
+        //}
         public ActionResult Eliminar(int? id)
         {
 
