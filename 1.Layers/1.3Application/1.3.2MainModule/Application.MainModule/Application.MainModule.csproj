@@ -135,6 +135,8 @@
     <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\AsignacionUtilitarioDTO.cs" />
+    <Compile Include="DTOs\Reportes\CajaGeneral\CajaGeneralDTO.cs" />
+    <Compile Include="DTOs\Reportes\CajaGeneral\RepCorteCajaDTO.cs" />
     <Compile Include="DTOs\Reportes\InventarioConcepto\InventarioXConceptoDTO.cs" />
     <Compile Include="DTOs\Reportes\InventarioConcepto\RepInventarioXConceptorDTO.cs" />
     <Compile Include="Servicios\Equipo\CalculosEquipoTrasporte.cs" />

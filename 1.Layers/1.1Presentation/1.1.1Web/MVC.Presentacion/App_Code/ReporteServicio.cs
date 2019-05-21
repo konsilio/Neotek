@@ -63,5 +63,11 @@ namespace MVC.Presentacion.App_Code
             agenteServico.GetVentasTotales(model, tkn);
             return agenteServico._ListYears;
         }
+        public static List<CorteCajaDTO> BuscarCorteCaja(CorteCajaModel model, string tkn)
+        {
+            AgenteServicio agenteServico = new AgenteServicio();
+            agenteServico.BuscarRepoCorteCaja(model, tkn);
+            return agenteServico._ListaCorteCaja;
+        }
     }
 }

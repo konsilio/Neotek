@@ -58,5 +58,10 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepInventarioPorConcepto(dto));
         }
+        [Route("cortecaja")]
+        public HttpResponseMessage PostCorteCaja(CajaGeneralDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCorteCaja(dto));
+        }
     }
 }

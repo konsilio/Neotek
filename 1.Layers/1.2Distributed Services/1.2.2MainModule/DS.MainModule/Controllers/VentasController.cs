@@ -53,17 +53,17 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGasCilindro(Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, Dto.Orden));
         }
       
-        [Route("buscar/listacajageneralcamioneta/{cve}")]
-        public HttpResponseMessage GetListaCajaGralCamioneta(string cve)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralCamioneta(cve));
-        }
+        //[Route("buscar/listacajageneralcamioneta/{cve}")]
+        //public HttpResponseMessage GetListaCajaGralCamioneta(string cve)
+        //{
+        //    return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralCamioneta(cve));
+        //}
 
-        [Route("buscar/listacajageneralestacion/{cve}")]
-        public HttpResponseMessage GetListaCajaGeneralEstacion(string cve)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralEstacion(cve));
-        }
+        //[Route("buscar/listacajageneralestacion/{cve}")]
+        //public HttpResponseMessage GetListaCajaGeneralEstacion(string cve)
+        //{
+        //    return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralEstacion(cve));
+        //}
 
         [Route("Modifica/liquidarcajageneral")]
         public HttpResponseMessage PutLiquidarReporte(VentaPuntoVentaDTO vpvDto)

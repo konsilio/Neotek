@@ -136,14 +136,12 @@ namespace Application.MainModule.Flujos
             else
                 return ClienteServicio.ListaClientes().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
-
         public List<ClienteLocacionDTO> ListaLocaciones(int id)
         {
             var resp = PermisosServicio.PuedeConsultarCliente();
             if (!resp.Exito) return null;
             return ClienteServicio.ObtenerLoc(id).ToList();
         }
-
         public RespuestaDto RegistraCliente(ClienteCrearDto cteDto)
         {
             var resp = PermisosServicio.PuedeRegistrarCliente();
@@ -192,7 +190,6 @@ namespace Application.MainModule.Flujos
             cte.FechaRegistro = cte.FechaRegistro;
             return ClienteServicio.Modificar(cte);
         }
-
         public RespuestaDto EliminaCliente(int id)
         {
             var resp = PermisosServicio.PuedeEliminarCliente();
@@ -205,7 +202,6 @@ namespace Application.MainModule.Flujos
             clientes.Activo = false;
             return ClienteServicio.Modificar(clientes);
         }
-
         public RespuestaDto RegistraClienteLocacion(ClienteLocacionDTO cteDto)
         {
             var resp = PermisosServicio.PuedeRegistrarCliente();
@@ -216,7 +212,6 @@ namespace Application.MainModule.Flujos
 
             return ClienteServicio.AltaClienteL(cliente);
         }
-
         public RespuestaDto ActualizaClienteLocacion(ClienteLocacionDTO cteDto)
         {
             var resp = PermisosServicio.PuedeModificarCliente();
@@ -228,7 +223,6 @@ namespace Application.MainModule.Flujos
             var cte = ClientesAdapter.FromDto(cteDto, clientes);
             return ClienteServicio.ModificarCL(cte);
         }
-
         public RespuestaDto EliminaClienteLocacion(ClienteLocacionDTO cteDto)
         {
             var resp = PermisosServicio.PuedeEliminarCliente();

@@ -346,6 +346,7 @@
     <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />
     <Compile Include="ObjetosValor\Constantes\AlmacenGasConst.cs" />
     <Compile Include="ObjetosValor\Constantes\AlmacenConst.cs" />
+    <Compile Include="ObjetosValor\Constantes\CajaGeneralConst.cs" />
     <Compile Include="ObjetosValor\Constantes\EstatusPedidoConst.cs" />
     <Compile Include="ObjetosValor\Constantes\FacturacionConst.cs" />
     <Compile Include="ObjetosValor\Constantes\IngresoGastoConst.cs" />

@@ -6,15 +6,19 @@ using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
 using Application.MainModule.AdaptadoresDTO.Pedidos;
 using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.AdaptadoresDTO.Seguridad;
+using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.DTOs;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Cobranza;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Equipo;
 using Application.MainModule.Servicios.IngresoGasto;
 using Application.MainModule.Servicios.Pedidos;
 using Application.MainModule.Servicios.Requisiciones;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.Servicios.Ventas;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +70,21 @@ namespace Application.MainModule.Flujos
         {
             var alamacenes = ProductoAlmacenServicio.BuscarAlmacen(dto.FechaInicio, dto.FechaFinal);
             return AlmacenProductoAdapter.ToRepDTO(alamacenes);
+        }
+        public List<RepCorteCajaDTO> RepCorteCaja(CajaGeneralDTO dto)
+        {
+            var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
+            var VEstacione = CajaGeneralServicio.ObtenerTotalVentasEstaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
+            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
+            var VFacturasCredito = CobranzaServicio.Obtener(dto.Fecha) ?? new List<Abono>();
+            var VBonificaciones = CajaGeneralServicio.ObtenerTotalBonificaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
+
+            List<RepCorteCajaDTO> respuesta = new List<RepCorteCajaDTO>();
+            respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstacione, Estaciones));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCredito(VFacturasCredito));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones)); 
+            return respuesta;
         }
     }
 }

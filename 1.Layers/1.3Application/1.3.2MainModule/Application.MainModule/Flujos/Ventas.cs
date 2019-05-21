@@ -4,6 +4,7 @@ using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Ventas;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,18 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
             return CajaGeneralServicio.ObtenerPV(cveReporte).ToList();
+        }
+        public List<VentaPuntoDeVenta> CajaGeneralCamioneta(DateTime fecha)
+        {
+            var resp = PermisosServicio.PuedeConsultarCajaGeneral();
+            if (!resp.Exito) return null;
+            return CajaGeneralServicio.ObtenerTotalVentasCamioneta(fecha).ToList();
+        }       
+        public List<VentaPuntoDeVenta> CajaGeneralEstacion(DateTime fecha)
+        {
+            var resp = PermisosServicio.PuedeConsultarCajaGeneral();
+            if (!resp.Exito) return null;
+            return CajaGeneralServicio.ObtenerTotalVentasEstaciones(fecha).ToList();
         }
         public List<VentaCorteAnticipoDTO> CajaGeneralEstacion(string cveReporte)
         {

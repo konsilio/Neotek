@@ -18,12 +18,15 @@ namespace Application.MainModule.Servicios.Cobranza
             List<CargosDTO> lPedidos = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().BuscarTodos(idempresa));
             return lPedidos;
         }
+        public static List<Abono> Obtener(DateTime f)
+        {
+            return new AbonosDataAcces().BuscarTodos(f);           
+        }
         public static List<CargosDTO> CRecuperada(short idempresa)
         {
             List<CargosDTO> lPedidos = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().Buscar(idempresa));
             return lPedidos;
         }
-
         public static List<CargosDTO> CRecuperada(List<CRecuperadaDTO> lstCRecuperado, List<CRecuperadaTotalesDTO> lstTotal,short idempresa)
         {
             List<CargosDTO> lPedidos = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(lstCRecuperado, lstTotal);

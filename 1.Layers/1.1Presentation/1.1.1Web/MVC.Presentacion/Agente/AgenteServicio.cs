@@ -134,6 +134,7 @@ namespace MVC.Presentacion.Agente
         public List<OrdenCompraRepDTO> _ListaOrdenCompra;
         public List<RendimientoVehicularDTO> _ListaRendimientoVehicular;
         public List<InventarioXConceptoDTO> _ListaInventarioConcepto;
+        public List<CorteCajaDTO> _ListaCorteCaja;
 
 
         public string _Json;
@@ -941,18 +942,17 @@ namespace MVC.Presentacion.Agente
                             client.Dispose();
                         }
                         if (cliente != 0)
-                        {
-                            lus = (from x in lus where x.IdCliente == cliente select x).ToList();
-                        }
-                        if (tel1 != "" && tel1 != null)
-                        {
-                            lus = (from x in lus where x.Telefono1 == tel1 select x).ToList();
-                        }
+                            lus = (from x in lus where x.IdCliente.Equals(cliente) select x).ToList();
 
-                        if (rfc != "" && rfc != null)
-                        {
-                            lus = (from x in lus where x.Rfc == rfc select x).ToList();
-                        }
+                        if (tel1 != "" && tel1 != null)                        
+                            lus = (from x in lus
+                                   where x.Telefono1.Equals(tel1)
+                                      || x.Celular.Equals(tel1)
+                                      || x.Celular1.Equals(tel1)
+                                   select x).ToList();                       
+
+                        if (rfc != "" && rfc != null)                        
+                            lus = (from x in lus where x.Rfc.Equals(rfc) select x).ToList();                        
 
                         if (numP > 0)
                         {
@@ -3858,7 +3858,7 @@ namespace MVC.Presentacion.Agente
 
                 if (tel1 != "" && tel1 != null)
                 {
-                    pedidos = (from x in pedidos where x.cliente.Telefono1 == tel1 select x).ToList();
+                    pedidos = (from x in pedidos where x.cliente.Telefono1 == tel1 || x.cliente.Celular1.Equals(tel1) || x.cliente.Celular.Equals(tel1) select x).ToList();
                 }
                 _ListaPedidos = pedidos;
             }
@@ -4978,9 +4978,6 @@ namespace MVC.Presentacion.Agente
             ApiHistoricos = ConfigurationManager.AppSettings["PutHistorico"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-
-
-
         #endregion
         #region Reportes
         #region CuentasPorPagar
@@ -5127,7 +5124,7 @@ namespace MVC.Presentacion.Agente
         #region Requisicion
         public void BuscarRequisicion(Models.RequisicionModel model, string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRequisicion"];
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRepoRequisicion"];
             PostRequisicion(model, this.ApiCatalgos, tkn).Wait();
         }
         private async Task PostRequisicion(Models.RequisicionModel model, string api, string token)
@@ -5265,7 +5262,41 @@ namespace MVC.Presentacion.Agente
                 _ListaInventarioConcepto = list;
             }
         }
-
+        #endregion
+        #region Corte de Caja
+        public void BuscarRepoCorteCaja(CorteCajaModel model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostCorteCaja"];
+            PostCorteCaja(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task PostCorteCaja(CorteCajaModel model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CorteCajaDTO> list = new List<CorteCajaDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<CorteCajaDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<CorteCajaDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaCorteCaja = list;
+            }
+        }
         #endregion
         #endregion
 
