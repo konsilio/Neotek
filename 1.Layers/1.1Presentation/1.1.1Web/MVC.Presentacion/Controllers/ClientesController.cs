@@ -40,7 +40,7 @@ namespace MVC.Presentacion.Controllers
 
             return View();
         }
-        public ActionResult Nuevo()
+        public ActionResult Nuevo(ClientesModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
@@ -54,15 +54,15 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = ViewBag.MessageError;
             }
             ViewBag.MessageError = TempData["RespuestaDTOError"];
-            return View();
+            return View(model);
         }
         [HttpPost]
-        public ActionResult GuardarCliente(ClientesModel _ojUs)
+        public ActionResult GuardarCliente(ClientesModel model)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
             
-            var respuesta = CatalogoServicio.CrearCliente(_ojUs, _tok);
+            var respuesta = CatalogoServicio.CrearCliente(model, _tok);
             
             if (respuesta.Exito)
             {
@@ -74,7 +74,7 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Nuevo");
+                return RedirectToAction("Nuevo", model);
             }
      
         }
