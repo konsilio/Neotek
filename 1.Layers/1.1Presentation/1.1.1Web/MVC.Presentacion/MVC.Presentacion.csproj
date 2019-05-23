@@ -409,6 +409,8 @@
     <Compile Include="Models\Reporte\CorteCaja\CorteCajaModel.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarDTO.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarModel.cs" />
+    <Compile Include="Models\Reporte\GastoPorVehiculo\GastoVehiculoDTO.cs" />
+    <Compile Include="Models\Reporte\GastoPorVehiculo\GastoVehiculoModel.cs" />
     <Compile Include="Models\Reporte\HistoricoPrecioVenta\HisotricoPrecioVentaDTO.cs" />
     <Compile Include="Models\Reporte\HistoricoPrecioVenta\HistoricoPrecioVentaModel.cs" />
     <Compile Include="Models\Reporte\InventarioConcepto\InventarioXConceptoModel.cs" />
@@ -11674,6 +11676,7 @@
     <Content Include="Views\Reportes\InventarioXConcepto.cshtml" />
     <Content Include="Views\Reportes\HistoricoVsVentas.cshtml" />
     <Content Include="Views\Reportes\CorteCaja.cshtml" />
+    <Content Include="Views\Reportes\GastoVehicular.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

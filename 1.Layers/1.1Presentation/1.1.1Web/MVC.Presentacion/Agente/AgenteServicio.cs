@@ -135,6 +135,7 @@ namespace MVC.Presentacion.Agente
         public List<RendimientoVehicularDTO> _ListaRendimientoVehicular;
         public List<InventarioXConceptoDTO> _ListaInventarioConcepto;
         public List<CorteCajaDTO> _ListaCorteCaja;
+        public List<GastoVehiculoDTO> _ListaGastoVehicular;
 
 
         public string _Json;
@@ -5295,6 +5296,41 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _ListaCorteCaja = list;
+            }
+        }
+        #endregion
+        #region Gasto por vehiculo
+        public void BuscarRepoGastoVehicular(GastoVehiculoModel model, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGastoXVehiculo"];
+            PostGastoXVehiculo(model, tkn).Wait();
+        }
+        private async Task PostGastoXVehiculo(GastoVehiculoModel model, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<GastoVehiculoDTO> list = new List<GastoVehiculoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRoute, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<GastoVehiculoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<GastoVehiculoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaGastoVehicular = list;
             }
         }
         #endregion

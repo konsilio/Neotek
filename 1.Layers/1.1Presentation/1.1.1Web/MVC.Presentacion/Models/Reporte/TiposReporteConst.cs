@@ -18,8 +18,6 @@ namespace MVC.Presentacion.Models
         public static string InventarioXConcepto = "InventarioPorConcepto";
         public static string HistoricoVsVentas = "Histrico_VS_Ventas";
         public static string CorteCaja = "CorteCaja";
-
-
-
+        public static string GastoVehicular = "GastoXVehiculo";
     }
 }

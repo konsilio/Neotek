@@ -69,5 +69,11 @@ namespace MVC.Presentacion.App_Code
             agenteServico.BuscarRepoCorteCaja(model, tkn);
             return agenteServico._ListaCorteCaja;
         }
+        public static List<GastoVehiculoDTO> BuscarGastoVehicular(GastoVehiculoModel model, string tkn)
+        {
+            AgenteServicio agenteServico = new AgenteServicio();
+            agenteServico.BuscarRepoGastoVehicular(model, tkn);
+            return agenteServico._ListaGastoVehicular;
+        }
     }
 }

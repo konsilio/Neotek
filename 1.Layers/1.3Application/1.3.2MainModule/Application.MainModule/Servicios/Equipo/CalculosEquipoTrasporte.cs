@@ -18,10 +18,28 @@ namespace Application.MainModule.Servicios.Equipo
         {
             return entidad.KilometrajeRecorrido / entidad.LitrosRecargados;
         }
-        public static decimal CalcularCostoMantenimientos(List<DetalleMantenimiento> mantenimientos, GastoVehicularDTO dto)
+        public static decimal CalcularCostoMantenimientosPipa(List<DetalleMantenimiento> mantenimientos, GastoVehicularDTO dto, Pipa p)
         {
-            return mantenimientos.Where(x => x.FechaMtto > dto.FechaInicio
-                                    && x.FechaMtto < dto.FechaInicio)
+            return mantenimientos.Where(x => x.EsPipa 
+                                        && x.id_vehiculo.Equals(p.IdPipa) 
+                                        && x.FechaMtto > dto.FechaInicio
+                                        && x.FechaMtto < dto.FechaFin)
+                                    .Sum(recarga => recarga.Monto) ?? 0;
+        }
+        public static decimal CalcularCostoMantenimientosCamioneta(List<DetalleMantenimiento> mantenimientos, GastoVehicularDTO dto, Camioneta c)
+        {
+            return mantenimientos.Where(x => x.EsCamioneta
+                                        && x.id_vehiculo.Equals(c.IdCamioneta)
+                                        && x.FechaMtto > dto.FechaInicio
+                                        && x.FechaMtto < dto.FechaFin)
+                                    .Sum(recarga => recarga.Monto) ?? 0;
+        }
+        public static decimal CalcularCostoMantenimientosUtilitario(List<DetalleMantenimiento> mantenimientos, GastoVehicularDTO dto, CUtilitario c)
+        {
+            return mantenimientos.Where(x => x.EsUtilitario
+                                        && x.id_vehiculo.Equals(c.IdUtilitario)
+                                        && x.FechaMtto > dto.FechaInicio
+                                        && x.FechaMtto < dto.FechaFin)
                                     .Sum(recarga => recarga.Monto) ?? 0;
         }
         public static decimal CalcularCostoMantenimientosUtilitario(CUtilitario entidad, GastoVehicularDTO dto)
@@ -36,7 +54,7 @@ namespace Application.MainModule.Servicios.Equipo
             return recargas.Where(x => x.EsPipa
                                     && x.Id_Vehiculo.Equals(p.IdPipa)
                                     && x.FechaRecarga > dto.FechaInicio
-                                    && x.FechaRecarga < dto.FechaInicio)
+                                    && x.FechaRecarga < dto.FechaFin)
                                 .Sum(recarga => recarga.Monto) ?? 0;
         }
        
@@ -45,7 +63,7 @@ namespace Application.MainModule.Servicios.Equipo
             return recargas.Where(x => x.EsCamioneta
                                     && x.Id_Vehiculo.Equals(p.IdCamioneta)
                                     && x.FechaRecarga > dto.FechaInicio
-                                    && x.FechaRecarga < dto.FechaInicio)
+                                    && x.FechaRecarga < dto.FechaFin)
                                 .Sum(recarga => recarga.Monto) ?? 0;
         }        
         public static decimal CalacuarCostoRecargasCombustibleUtilitario(List<DetalleRecargaCombustible> recargas, GastoVehicularDTO dto, CUtilitario p)
@@ -53,7 +71,7 @@ namespace Application.MainModule.Servicios.Equipo
             return recargas.Where(x => x.EsUtilitario
                                     && x.Id_Vehiculo.Equals(p.IdUtilitario)
                                     && x.FechaRecarga > dto.FechaInicio
-                                    && x.FechaRecarga < dto.FechaInicio)
+                                    && x.FechaRecarga < dto.FechaFin)
                                 .Sum(recarga => recarga.Monto) ?? 0;
         }       
     }

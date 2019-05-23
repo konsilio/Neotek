@@ -98,8 +98,17 @@ namespace Application.MainModule.Flujos
             respuesta.AddRange(TransporteAdapter.ToRepoCamionetas(Camionetas, RecCombustible, dto));
             respuesta.AddRange(TransporteAdapter.ToRepoUtilitario(Utilitarios, RecCombustible, dto));
 
-            return respuesta;
+            return respuesta.Where(x => !x.Total.Equals(0)).ToList();
         }
-        
+        #region Dash Board
+        public string DashAdministracionVentaVSRema()
+        {
+            var ventas = PuntoVentaServicio.ObtenerVentasPorPeriodo(TokenServicio.ObtenerIdEmpresa(), DateTime.Now);
+
+            return string.Empty;
+        }
+
+        #endregion
+
     }
 }

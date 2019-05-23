@@ -1,5 +1,4 @@
 ﻿using Application.MainModule.DTOs;
-using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Transporte;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
@@ -66,7 +65,7 @@ namespace Application.MainModule.AdaptadoresDTO
 
             respDTO.Vehiculo = p.Nombre;
             respDTO.Combustible = Convert.ToDouble(CalculosEquipoTrasporte.CalacuarCostoRecargasCombustiblePipa(recargas, dto, p));
-            respDTO.Mantenimiento = Convert.ToDouble(CalculosEquipoTrasporte.CalcularCostoMantenimientos(p.DetalleMantenimiento.ToList(), dto));
+            respDTO.Mantenimiento = Convert.ToDouble(CalculosEquipoTrasporte.CalcularCostoMantenimientosPipa(p.DetalleMantenimiento.ToList(), dto, p));
             respDTO.Otros = 0; //Falta buscar en "Egresos" por "Centro de Costo"  y por "Rango de Fecha" 
             respDTO.Total = respDTO.Mantenimiento + respDTO.Combustible;
             return respDTO;
@@ -75,13 +74,13 @@ namespace Application.MainModule.AdaptadoresDTO
         {
             return entidades.Select(x => ToRepoCamionetas(x, recargas, dto)).ToList();
         }
-        public static RepGastoVehicularDTO ToRepoCamionetas(Camioneta p, List<DetalleRecargaCombustible> recargas, GastoVehicularDTO dto)
+        public static RepGastoVehicularDTO ToRepoCamionetas(Camioneta c, List<DetalleRecargaCombustible> recargas, GastoVehicularDTO dto)
         {
             RepGastoVehicularDTO respDTO = new RepGastoVehicularDTO();
 
-            respDTO.Vehiculo = p.Nombre;
-            respDTO.Combustible = Convert.ToDouble(CalculosEquipoTrasporte.CalacuarCostoRecargasCombustibleCamioneta(recargas, dto, p));
-            respDTO.Mantenimiento = Convert.ToDouble(CalculosEquipoTrasporte.CalcularCostoMantenimientos(p.DetalleMantenimiento.ToList(), dto));
+            respDTO.Vehiculo = c.Nombre;
+            respDTO.Combustible = Convert.ToDouble(CalculosEquipoTrasporte.CalacuarCostoRecargasCombustibleCamioneta(recargas, dto, c));
+            respDTO.Mantenimiento = Convert.ToDouble(CalculosEquipoTrasporte.CalcularCostoMantenimientosCamioneta(c.DetalleMantenimiento.ToList(), dto, c));
             respDTO.Otros = 0; //Falta buscar en "Egresos" por "Centro de Costo"  y por "Rango de Fecha" 
             respDTO.Total = respDTO.Mantenimiento + respDTO.Combustible;
             return respDTO;
@@ -90,14 +89,14 @@ namespace Application.MainModule.AdaptadoresDTO
         {
             return entidades.Select(x => ToRepoUtilitario(x, recargas, dto)).ToList();
         }
-        public static RepGastoVehicularDTO ToRepoUtilitario(CUtilitario p, List<DetalleRecargaCombustible> recargas, GastoVehicularDTO dto)
+        public static RepGastoVehicularDTO ToRepoUtilitario(CUtilitario u, List<DetalleRecargaCombustible> recargas, GastoVehicularDTO dto)
         {
             RepGastoVehicularDTO respDTO = new RepGastoVehicularDTO();
-            respDTO.Vehiculo = p.Nombre;
-            respDTO.Combustible = Convert.ToDouble(CalculosEquipoTrasporte.CalacuarCostoRecargasCombustibleUtilitario(recargas, dto, p));
-            respDTO.Mantenimiento = Convert.ToDouble(CalculosEquipoTrasporte.CalcularCostoMantenimientosUtilitario(p, dto));
+            respDTO.Vehiculo = u.Nombre;
+            respDTO.Combustible = Convert.ToDouble(CalculosEquipoTrasporte.CalacuarCostoRecargasCombustibleUtilitario(recargas, dto, u));
+            respDTO.Mantenimiento = Convert.ToDouble(CalculosEquipoTrasporte.CalcularCostoMantenimientosUtilitario(u, dto));
             respDTO.Otros = 0; //Falta buscar en "Egresos" por "Centro de Costo"  y por "Rango de Fecha" 
-            respDTO.Total = respDTO.Mantenimiento + respDTO.Combustible;
+            respDTO.Total = respDTO.Mantenimiento + respDTO.Combustible + respDTO.Otros;
             return respDTO;
         }
     }

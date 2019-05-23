@@ -151,6 +151,19 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
+        public ActionResult GastoVehicular(GastoVehiculoModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
+            if (model != null && !model.FechaFin.Equals(DateTime.MinValue) && !model.FechaInicio.Equals(DateTime.MinValue))
+            {
+                ViewData["Reporte"] = TiposReporteConst.GastoVehicular;
+                TempData["DataSource"] = ReporteServicio.BuscarGastoVehicular(model, tkn);
+            }
+            return View(model);
+        }
 
         //Cubo de inforamcion
         public ActionResult GetGridView(string Tipo)
@@ -178,6 +191,8 @@ namespace MVC.Presentacion.Controllers
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<YearsDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.CorteCaja))
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<CorteCajaDTO>)TempData["DataSource"]);
+            if (Tipo.Equals(TiposReporteConst.GastoVehicular))
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<GastoVehiculoDTO>)TempData["DataSource"]);
             return View(TiposReporteConst.CuboInformacionGeneral);
         }
     }

@@ -63,7 +63,8 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCorteCaja(dto));
         }
-        public HttpResponseMessage PostCorteCaja(GastoVehicularDTO dto)
+        [Route("gastoxvehiculo")]
+        public HttpResponseMessage PostGastoXVehiculo(GastoVehicularDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepGastoXVehiculo(dto));
         }
