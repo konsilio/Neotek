@@ -15,7 +15,7 @@ namespace Sagas.MainModule.Entidades
     public partial class DetalleMantenimiento
     {
         public int Id_DetalleMtto { get; set; }
-        public DateTime FechaMtto { get; set; }
+        public System.DateTime FechaMtto { get; set; }
         public int id_vehiculo { get; set; }
         public bool EsCamioneta { get; set; }
         public bool EsPipa { get; set; }
@@ -24,6 +24,7 @@ namespace Sagas.MainModule.Entidades
         public string DescripcionMtto { get; set; }
         public int Kilometraje_Actual { get; set; }
         public string NumeroOC { get; set; }
+        public Nullable<decimal> Monto { get; set; }
     
         public virtual Camioneta CCamioneta { get; set; }
         public virtual CMantenimiento CMantenimiento { get; set; }

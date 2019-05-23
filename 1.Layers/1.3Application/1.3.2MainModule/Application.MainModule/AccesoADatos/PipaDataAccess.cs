@@ -100,8 +100,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public Pipa ObtenerPipa(int IdP, bool Activo)
         {
             return uow.Repository<Pipa>().GetSingle(
-                x => x.IdPipa.Equals(IdP)
-                );
+                x => x.IdPipa.Equals(IdP));
         }
         public List<Pipa> ObtenerPipas()
         {

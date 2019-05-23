@@ -1,4 +1,5 @@
-﻿using Application.MainModule.AdaptadoresDTO.Almacenes;
+﻿using Application.MainModule.AdaptadoresDTO;
+using Application.MainModule.AdaptadoresDTO.Almacenes;
 using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio;
@@ -86,5 +87,19 @@ namespace Application.MainModule.Flujos
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones)); 
             return respuesta;
         }
+        public List<RepGastoVehicularDTO> RepGastoXVehiculo(GastoVehicularDTO dto)
+        {
+            var Pipas = PipaServicio.Obtener();
+            var Camionetas = CamionetaServicio.Obtener();
+            var Utilitarios = VehiculoUtilitarioServicio.Obtener();
+            var RecCombustible = RecargaCombustibleServicio.Buscar(dto.FechaInicio, dto.FechaFin);
+            List<RepGastoVehicularDTO> respuesta = new List<RepGastoVehicularDTO>();
+            respuesta.AddRange(TransporteAdapter.ToRepoPipas(Pipas, RecCombustible, dto));
+            respuesta.AddRange(TransporteAdapter.ToRepoCamionetas(Camionetas, RecCombustible, dto));
+            respuesta.AddRange(TransporteAdapter.ToRepoUtilitario(Utilitarios, RecCombustible, dto));
+
+            return respuesta;
+        }
+        
     }
 }

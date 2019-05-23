@@ -56,7 +56,7 @@
                             <div class="row clearfix">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <b>Fecha de Mantenimiento</b>
+                                        <strong>Fecha del Mantenimiento*</strong>
                                         @Html.DevExpress().DateEdit(settings =>
                                    {
                                        settings.Name = "FechaMtto";
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <b>Vehiculo *</b>
+                                        <strong>Vehiculo*</strong>
                                         @Html.DevExpress().ComboBox(settings =>
                                    {
                                        settings.Name = "id_vehiculo";
@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <b>Tipo Mantenimiento</b>
+                                        <strong>Tipo de Mantenimiento*</strong>
                                         @Html.DevExpress().ComboBox(settings =>
                                    {
                                        settings.Name = "Id_tipomtto";
@@ -118,8 +118,15 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <b>Kilometraje Actual</b>
-                                        @Html.TextBoxFor(m => m.Kilometraje_Actual, Model.Kilometraje_Actual.ToString(), new { @class = "form-control number" })
+                                        <strong>Kilometraje Actual*</strong>
+                                        @Html.DevExpress().TextBox(settings =>
+                                        {
+                                            settings.Name = "Kilometraje_Actual";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.MaskSettings.Mask = "<0..999999>";
+                                            settings.Properties.MaskSettings.ErrorText = "Kilometraje Actual";
+                                            settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                                        }).GetHtml()
                                         @Html.ValidationMessageFor(m => m.Kilometraje_Actual, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -127,16 +134,31 @@
                             <div class="row clearfix">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <b>Numero de OC(Solo cunado el servicio sea externo)</b>
+                                        <strong>Numero de OC</strong>
                                         @Html.TextBoxFor(m => m.NumeroOC, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.NumeroOC, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <b>Descripcion del Seervicio Realizado</b>
+                                        <b>Descripcion del Servicio*</b>
                                         @Html.TextBoxFor(m => m.DescripcionMtto, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.DescripcionMtto, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <strong>Costo Mantenimiento*</strong>
+                                        @Html.DevExpress().TextBox(settings =>
+                                   {
+                                       settings.Name = "Monto";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.DisplayFormatString = "f2";
+                                       settings.Properties.MaskSettings.ErrorText = "Monto";
+                                       settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                                   }).GetHtml()
+                                        @* @Html.TextBoxFor(m => m.Monto, Model.Monto.ToString(), new { @class = "form-control number" })*@
+                                        @Html.ValidationMessageFor(m => m.Monto, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-2">
