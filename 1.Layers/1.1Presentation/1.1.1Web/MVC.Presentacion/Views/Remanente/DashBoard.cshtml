@@ -10,43 +10,7 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
-@*@section AdditionalResources {
-    <style type="text/css">
-        .dateContainer {
-            display: table;
-            width: 100%;
-            padding-bottom: 24px;
-        }
 
-        .dateEditor {
-            max-width: 350px;
-            padding-bottom: 10px;
-        }
-
-        .description {
-            line-height: 22px;
-        }
-
-        @@media (min-width:800px) {
-            .dateContainer {
-                padding-bottom: 30px;
-            }
-
-                .dateContainer > div {
-                    display: table-cell;
-                }
-
-            .dateEditor {
-                padding-right: 100px;
-                width: 150px;
-            }
-
-            .description {
-                vertical-align: top;
-            }
-        }
-    </style>
-}*@
 <script language="JavaScript" type="text/javascript">
     function ChangeTipo(s, e) {
         var sel = s.GetValue();

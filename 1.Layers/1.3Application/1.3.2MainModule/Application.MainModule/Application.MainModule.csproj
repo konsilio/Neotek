@@ -357,6 +357,7 @@
     <Compile Include="Servicios\Facturacion\MetodoPagoServicio.cs" />
     <Compile Include="Servicios\Facturacion\UsoCFDIServicio.cs" />
     <Compile Include="Servicios\Historico\HistoricoVentaServicio.cs" />
+    <Compile Include="Servicios\Historico\JsonServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\EgresoServicio.cs" />
     <Compile Include="Servicios\IngresoGasto\IngresoServicio.cs" />
     <Compile Include="Servicios\Mobile\AutoconsumoServicio.cs" />
