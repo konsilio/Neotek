@@ -3747,7 +3747,7 @@ namespace MVC.Presentacion.Agente
         }
         public void BuscarRemanenteGeneral(RemanenteModel model, string tkn)
         {
-            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetRemanenteGeneral"];
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRemanenteGeneral"];
             ListaRemanenteGeneral(model, tkn).Wait();
         }
         private async Task ListaRemanenteGeneral(RemanenteModel model, string token)
@@ -3760,7 +3760,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, model)).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRoute, model).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<RemanenteGeneralDTO>>();
                     else

@@ -18,8 +18,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-            if (TempData["RemanenteDTO"] != null) { }
-                           
+            if (TempData["RemanenteDTO"] != null) { ViewBag.RemaGeneral = (List<RemanenteGeneralDTO>)TempData["RemanenteDTO"]; }                           
             return View(model);
         }
         public ActionResult Buscar(RemanenteModel model = null)
@@ -27,7 +26,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             TempData["RemanenteDTO"] = AlmacenServicio.BuscarRemanente(model, tkn);
-            return View("DashBoard");
+            return RedirectToAction("DashBoard");
         }
 
         public ActionResult cbPuntosventaPartial(RemanenteModel model = null)

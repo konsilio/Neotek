@@ -2803,7 +2803,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 var lecturas = ObtenerLecturas(almacen.IdCAlmacenGas);
                 foreach (var lect in lecturas)
                 {
-                    if (lect.FechaAplicacion.Equals(fecha) && lect.ClaveOperacion.Contains("LF"))
+                    if (lect.FechaAplicacion.ToShortDateString().Equals(fecha.ToShortDateString()) && lect.ClaveOperacion.Contains("LF"))
                     {
                         if (lect.Porcentaje != null)
                             Ifkg += CalcularAlmacenServicio.ObtenerKgLectura(lect.UnidadAlmacenGas.CapacidadTanqueLt ?? 0, lect.Porcentaje ?? 0, almacen.EsGeneral ? 1 : (decimal)0.54);

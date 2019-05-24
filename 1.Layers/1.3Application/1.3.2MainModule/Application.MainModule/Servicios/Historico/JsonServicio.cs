@@ -337,12 +337,37 @@ namespace Application.MainModule.Servicios
         {
             string json = "{ data: [ ";
             json += string.Concat("{ y: '1/05',");
-            json += string.Concat(" a:" , "3608", ",");
-            json += string.Concat(" a:", "750", "}");
-
+            json += string.Concat(" a:", "3608", ",");
+            json += string.Concat(" a:", "750", "},");
+            json += string.Concat("{ y: '2/05',");
+            json += string.Concat(" a:", "4863", ",");
+            json += string.Concat(" a:", "1200", "},");
+            json += string.Concat("{ y: '3/05',");
+            json += string.Concat(" a:", "6101", ",");
+            json += string.Concat(" a:", "1800", "},");
+            json += string.Concat("{ y: '4/05',");
+            json += string.Concat(" a:", "7189", ",");
+            json += string.Concat(" a:", "2560", "},");
             return json;
         }
-        public static string EstructuraJson()
+        public static string EstructuraJsonArea()
+        {
+            string estruc = "element: 'm_area_chart',";
+            estruc += "xkey: 'y',";
+            estruc += "pointSize: 3,";
+            estruc += "fillOpacity: 0,";
+            estruc += "pointStrokeColors: ['#222222', '#cccccc'],";
+            estruc += "behaveLikeLine: true,";
+            estruc += "hideHover: 'auto',";
+            estruc += "gridLineColor: '#e0e0e0',";
+            estruc += "lineWidth: 2,";
+            estruc += "lineColors: ['#222222', '#cccccc']";
+            estruc += "resize: 'true' }";
+
+
+            return estruc;
+        }
+        public static string EstructuraJsonBar()
         {
             string estruc = "element: 'm_bar_chart',";
             estruc += "xkey: 'y',";

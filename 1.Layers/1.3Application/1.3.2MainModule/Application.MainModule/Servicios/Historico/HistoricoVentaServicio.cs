@@ -110,7 +110,7 @@ namespace Application.MainModule.Servicios.Historico
                 json += JsonServicio.JsonLocalesVSForaneos(ventas, dto);
                 json += JsonServicio.KeysLabesColorsLocVSFor(dto);
             }
-            json += JsonServicio.EstructuraJson();
+            json += JsonServicio.EstructuraJsonBar();
             return json;
         }
         public static List<YearDTO> VentasTotales(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
