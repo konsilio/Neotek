@@ -1,7 +1,11 @@
 ﻿@{
     ViewBag.Title = "Inicio -";
 }
-
+<script>
+    $(document).ready(function () {
+        Morris.Area(@Html.Raw(ViewBag.VentasRema));
+    });
+</script>
 <section class="content home">
     <div class="container-fluid">
         <div class="block-header">
@@ -25,13 +29,57 @@
             </div>
         </div>
         <div class="row clearfix">
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">battery_full</i></i></p>
+                        <span>Ventas de Camionetas</span>
+                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="2078" data-speed="2000" data-fresh-interval="700">2078</span></h3>
+                        <small class="text-muted">Kilogramos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">local_shipping</i></p>
+                        <span>Ventas de Pipas</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="865" data-speed="2000" data-fresh-interval="700">865</h3>
+                        <small class="text-muted">Kilogramos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-red">local_gas_station</i></p>
+                        <span>Ventas de Estaciones</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="3502" data-speed="2000" data-fresh-interval="700">3502</h3>
+                        <small class="text-muted">Kilogramos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-green">functions</i></p>
+                        <span>Total de venta</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="78" data-speed="2000" data-fresh-interval="700">78</h3>
+                        <small class="text-muted">Kilogramos</small>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="header">
-                        <h2>Cubo de <strong>información</strong></h2>
+                        <h2>DashBoard: <strong>Información general</strong></h2>
                     </div>
-                    <div class="body">
-                        Lo sentimos, de momento no tenemos información para mostrar.
+                    <div class="body m-b-10">
+                        <div id="m_area_Remanente">
+
+                        </div>
                     </div>
                 </div>
             </div>

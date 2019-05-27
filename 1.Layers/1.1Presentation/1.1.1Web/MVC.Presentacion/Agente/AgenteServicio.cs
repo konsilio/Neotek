@@ -23,13 +23,11 @@ namespace MVC.Presentacion.Agente
         private static string UrlBase;
         private string ApiLogin;
         private string ApiCatalgos;
-        private string ApiHistoricos;
         private string ApiRequisicion;
         private string ApiOrdenCompra;
         private string ApiRoute = string.Empty;
 
         public RespuestaDTO _RespuestaDTO;
-
         public RespuestaAutenticacionDto _respuestaAutenticacion;
         public RespuestaRequisicionDTO _respuestaRequisicion;
         public OrdenCompraDTO _ordeCompraDTO;
@@ -54,8 +52,7 @@ namespace MVC.Presentacion.Agente
         public ClientesModel _ClienteModel;
         public HistoricoVentaModel _HistoricoVentaDTO;
         public EgresoDTO _EgresoDTO;
-
-        public string _json;
+        public string _Json;
 
 
         public List<ClienteLocacionMod> _cteLocacion;
@@ -138,7 +135,7 @@ namespace MVC.Presentacion.Agente
         public List<GastoVehiculoDTO> _ListaGastoVehicular;
 
 
-        public string _Json;
+
 
         public AgenteServicio()
         {
@@ -945,15 +942,15 @@ namespace MVC.Presentacion.Agente
                         if (cliente != 0)
                             lus = (from x in lus where x.IdCliente.Equals(cliente) select x).ToList();
 
-                        if (tel1 != "" && tel1 != null)                        
+                        if (tel1 != "" && tel1 != null)
                             lus = (from x in lus
                                    where x.Telefono1.Equals(tel1)
                                       || x.Celular.Equals(tel1)
                                       || x.Celular1.Equals(tel1)
-                                   select x).ToList();                       
+                                   select x).ToList();
 
-                        if (rfc != "" && rfc != null)                        
-                            lus = (from x in lus where x.Rfc.Equals(rfc) select x).ToList();                        
+                        if (rfc != "" && rfc != null)
+                            lus = (from x in lus where x.Rfc.Equals(rfc) select x).ToList();
 
                         if (numP > 0)
                         {
@@ -4774,8 +4771,8 @@ namespace MVC.Presentacion.Agente
         #region HistoricoVentas
         public void GetListaHistoricos(string token)
         {
-            ApiHistoricos = ConfigurationManager.AppSettings["GetHistoricoVentas"];
-            Historicos(ApiHistoricos, token).Wait();
+            ApiRoute = ConfigurationManager.AppSettings["GetHistoricoVentas"];
+            Historicos(ApiRoute, token).Wait();
         }
         private async Task Historicos(string api, string token = null)
         {
@@ -4810,8 +4807,7 @@ namespace MVC.Presentacion.Agente
         }
         public void GetHistoricoById(int id, string token)
         {
-            ApiHistoricos = ConfigurationManager.AppSettings["GetHistoricoById"];
-
+            ApiRoute = ConfigurationManager.AppSettings["GetHistoricoById"];
         }
         public async Task HistoricoId(int id, string api, string token = null)
         {
@@ -4847,19 +4843,18 @@ namespace MVC.Presentacion.Agente
         }
         public void GuardarNuevoHistorico(List<HistoricoVentaModel> dto, string tkn)
         {
-            ApiHistoricos = ConfigurationManager.AppSettings["PostHistoricoVentas"];
-            ApiRoute = ApiHistoricos;
+            ApiRoute = ConfigurationManager.AppSettings["PostHistoricoVentas"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         public void EliminarHistorico(HistoricoVentaModel dto, string tkn)
         {
-            ApiHistoricos = ConfigurationManager.AppSettings["DeleteHistorico"];
+            ApiRoute = ConfigurationManager.AppSettings["DeleteHistorico"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         public void ObtenerElementosDistintos(string tkn)
         {
-            ApiHistoricos = ConfigurationManager.AppSettings["GetYears"];
-            Years(ApiHistoricos, tkn).Wait();
+            ApiRoute = ConfigurationManager.AppSettings["GetYears"];
+            Years(ApiRoute, tkn).Wait();
         }
         private async Task Years(string api, string token)
         {
@@ -4894,8 +4889,7 @@ namespace MVC.Presentacion.Agente
         public void GetVentasTotales(HistoricoVentasConsulta dto, string tkn)
 
         {
-            ApiHistoricos = ConfigurationManager.AppSettings["GetYearsTotales"];
-            ApiRoute = ApiHistoricos;
+            ApiRoute = ConfigurationManager.AppSettings["GetYearsTotales"];
             GetVentas(dto, tkn, MetodoRestConst.Post).Wait();
         }
         public async Task GetVentas<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
@@ -4935,8 +4929,7 @@ namespace MVC.Presentacion.Agente
         }
         public void GetJson(HistoricoVentasConsulta dto, string tkn)
         {
-            ApiHistoricos = ConfigurationManager.AppSettings["GetJsonConsulta"];
-            ApiRoute = ApiHistoricos;
+            ApiRoute = ConfigurationManager.AppSettings["GetJsonConsulta"];
             GetJson(dto, tkn, MetodoRestConst.Post).Wait();
         }
         public async Task GetJson<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
@@ -4957,6 +4950,9 @@ namespace MVC.Presentacion.Agente
                         response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
                     if (Tipo.Equals(MetodoRestConst.Put))
                         response = await client.PutAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (Tipo.Equals(MetodoRestConst.Get))
+                        response = await client.GetAsync(ApiRoute).ConfigureAwait(false);
+
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<string>();
                     else
@@ -4971,12 +4967,47 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _json = resp;
+                _Json = resp;
+            }
+        }
+        public void DashBoardRemanenteJson(string tkn)
+        {
+            ApiRoute = ConfigurationManager.AppSettings["GetDashRemanente"];
+            GetJson(tkn).Wait();
+        }
+        public async Task GetJson(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                string resp = "";
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    response = await client.GetAsync(ApiRoute).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<string>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<string>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _Json = resp;
             }
         }
         public void ActualizarHistorico(HistoricoVentaModel dto, string tkn)
         {
-            ApiHistoricos = ConfigurationManager.AppSettings["PutHistorico"];
+            ApiRoute = ConfigurationManager.AppSettings["PutHistorico"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion

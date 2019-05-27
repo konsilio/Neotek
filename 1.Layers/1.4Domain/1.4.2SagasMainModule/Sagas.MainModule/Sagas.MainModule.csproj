@@ -372,6 +372,7 @@
     <Compile Include="ObjetosValor\Enum\TipoOperadorChoferEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoRemanenteEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoReporteHisotricoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoUnidadAlmacenGasEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoUnidadEqTransporte.cs" />

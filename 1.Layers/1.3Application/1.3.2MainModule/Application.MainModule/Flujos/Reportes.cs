@@ -9,6 +9,8 @@ using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Cobranza;
@@ -20,6 +22,7 @@ using Application.MainModule.Servicios.Requisiciones;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Ventas;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,7 +87,7 @@ namespace Application.MainModule.Flujos
             respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstacione, Estaciones));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCredito(VFacturasCredito));
-            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones)); 
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones));
             return respuesta;
         }
         public List<RepGastoVehicularDTO> RepGastoXVehiculo(GastoVehicularDTO dto)
@@ -103,11 +106,33 @@ namespace Application.MainModule.Flujos
         #region Dash Board
         public string DashAdministracionVentaVSRema()
         {
-            var ventas = PuntoVentaServicio.ObtenerVentasPorPeriodo(TokenServicio.ObtenerIdEmpresa(), DateTime.Now);
+            RemanenteDTO dto = new RemanenteDTO()
+            {
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
+                IdTipo = TipoRemanenteEnum.General,
+                Fecha = new DateTime(2018, 12, 01),
+                IdPuntoVenta = 0
+            };
+            var remanente = new Almacenes().ConsultarRemanenteGeneral(dto);
 
-            return string.Empty;
+
+            string json = JsonServicio.JsonGeneralRemanente(remanente);
+            json += JsonServicio.EstructuraJsonArea();
+
+            return json;
         }
-
+        public RemanenteGeneralDTO DashAdministracionVentas()
+        {
+            RemanenteDTO dto = new RemanenteDTO()
+            {
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
+                IdTipo = TipoRemanenteEnum.General,
+                Fecha = new DateTime(2018, 12, 01),
+                IdPuntoVenta = 0
+            };
+            var remanente = new Almacenes().ConsultarRemanenteGeneral(dto);
+            return remanente.OrderByDescending(x => x.dia).ToList().FirstOrDefault();
+        }
         #endregion
 
     }

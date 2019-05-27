@@ -27,7 +27,7 @@ namespace MVC.Presentacion.App_Code
         {
             AgenteServicio agenteServico = new AgenteServicio();
             agenteServico.GetJson(modelo,tkn);
-            return agenteServico._json;
+            return agenteServico._Json;
         }
         public static List<YearsDTO> GetVentasTotalesxMes(HistoricoVentasConsulta modelo, string tkn)
         {

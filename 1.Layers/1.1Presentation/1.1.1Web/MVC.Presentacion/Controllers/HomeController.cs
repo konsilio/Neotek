@@ -18,6 +18,7 @@ namespace MVC.Presentacion.Controllers
         {
             Session["StringToken"] = null;
             Session["Perfil"] = null;
+            
             return View(AutenticacionServicio.InitIndex(model));
         }
         public ActionResult IndexError(LoginModel model)
@@ -37,6 +38,7 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult Inicio(LoginModel login)
         {
+
             if (Session["StringToken"] == null)
             {
                 Session["Perfil"] = null;
@@ -45,13 +47,18 @@ namespace MVC.Presentacion.Controllers
                 {
                     Session["StringToken"] = respuesta.token;
                     Session["Perfil"] = respuesta.Mensaje;
+                    ViewBag.VentasRema = DashBoard.DashBoardRemanente(respuesta.token);
                     return View();
                 }
                 else
                     return View("Index", AutenticacionServicio.InitIndex(respuesta));
             }
             else
+            {
+
+                ViewBag.VentasRema = DashBoard.DashBoardRemanente(Session["StringToken"].ToString());
                 return View();
+            }
         }
 
         public ActionResult Requisicion()

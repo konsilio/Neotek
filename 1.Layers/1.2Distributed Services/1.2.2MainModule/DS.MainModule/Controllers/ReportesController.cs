@@ -11,8 +11,8 @@ namespace DS.MainModule.Controllers
     [Authorize]
     [RoutePrefix("api/reportes")]
     public class ReportesController : ApiController
-    {      
-        
+    {
+
         private Reportes _repo;
         public ReportesController()
         {
@@ -67,6 +67,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostGastoXVehiculo(GastoVehicularDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepGastoXVehiculo(dto));
+        }
+        [Route("dashboard/remanente")]
+        public HttpResponseMessage GetDashRemanente()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.DashAdministracionVentaVSRema());
         }
     }
 }

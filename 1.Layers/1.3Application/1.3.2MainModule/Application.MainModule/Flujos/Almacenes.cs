@@ -178,15 +178,12 @@ namespace Application.MainModule.Flujos
             var descargas = AlmacenGasServicio.ObtenerDescargasTodas();
             var pventas = PuntoVentaServicio.ObtenerIdEmp(dto.IdEmpresa);
             int Dias = dto.Fecha.Month.Equals(DateTime.Now.Month) && dto.Fecha.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month);
-
-            var InvInicial = Math.Round(CalcularAlmacenServicio.ObtenerKgLectura(lectura.UnidadAlmacenGas.CapacidadTanqueLt ?? 0, lectura.Porcentaje ?? 0, (decimal)0.54), 4);
-            var AcumCompras = Math.Round(descargas.Where(c => c.FechaRegistro < dto.Fecha).Sum(x => x.MasaKg) ?? 0, 4);
+          
             for (int i = 0; i < Dias; i++)
-            {
-                dto.Fecha = dto.Fecha.AddDays(1);
+            {             
                 RemanenteGeneralDTO rema = new RemanenteGeneralDTO();
-                rema.InventarioInicial = InvInicial;
-                rema.AcumuladoCompras = AcumCompras;
+                rema.InventarioInicial = Math.Round(CalcularAlmacenServicio.ObtenerKgLectura(lectura.UnidadAlmacenGas.CapacidadTanqueLt ?? 0, lectura.Porcentaje ?? 0, (decimal)0.54), 4);
+                rema.AcumuladoCompras = Math.Round(descargas.Where(c => c.FechaRegistro < dto.Fecha).Sum(x => x.MasaKg) ?? 0, 4);
                 foreach (var pventa in pventas)
                 {
                     if (pventa.UnidadesAlmacen.IdCamioneta != null)
@@ -221,11 +218,13 @@ namespace Application.MainModule.Flujos
                 rema.InventarioFisico = Math.Round(AlmacenGasServicio.ObtenerKgInventarioFisico(dto.Fecha, dto.IdEmpresa), 4);
                 rema.GasSobrante = Math.Round(CalcularAlmacenServicio.ObtenerGasSobrante(rema.InventarioLibro, rema.InventarioFisico), 4);
                 rema.RemanenteDecimal = Math.Round(CalcularAlmacenServicio.ObtenerRemaPorcentaje(rema.Ventas, rema.GasSobrante), 4);
+                               
                 rema.dia = dto.Fecha.Day;               
                 rema.Mes = dto.Fecha.Month;
                 rema.Anio = dto.Fecha.Year;
-
                 remaGeneral.Add(rema);
+
+                dto.Fecha = dto.Fecha.AddDays(1);
             }
             return remaGeneral;
         }

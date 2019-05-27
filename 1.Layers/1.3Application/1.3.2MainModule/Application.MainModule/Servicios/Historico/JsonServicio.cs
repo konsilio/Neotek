@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Almacen;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -158,6 +159,18 @@ namespace Application.MainModule.Servicios
                     json = json.TrimEnd(',');
                     json += "},";
                 }
+            }
+            json = json.TrimEnd(',');
+            return string.Concat(json, "],");
+        }
+        public static string JsonGeneralRemanente(List<RemanenteGeneralDTO> rema)
+        {
+            string json = "{ data: [ ";
+            foreach (RemanenteGeneralDTO r in rema)
+            {
+                json += string.Concat("{ y: ", "'", r.dia.ToString(), "'", ",");
+                json += string.Concat("a: ", r.InventarioFisico.ToString(), ",");
+                json += string.Concat("b: ", r.InventarioLibro.ToString(), "},");
             }
             json = json.TrimEnd(',');
             return string.Concat(json, "],");
@@ -352,16 +365,18 @@ namespace Application.MainModule.Servicios
         }
         public static string EstructuraJsonArea()
         {
-            string estruc = "element: 'm_area_chart',";
+            string estruc = "element: 'm_area_Remanente',";
             estruc += "xkey: 'y',";
+            estruc += "ykeys: ['a', 'b'],";
+            estruc += "labels: ['Rema', 'Venta'],";
             estruc += "pointSize: 3,";
             estruc += "fillOpacity: 0,";
             estruc += "pointStrokeColors: ['#222222', '#cccccc'],";
-            estruc += "behaveLikeLine: true,";
+            estruc += "behaveLikeLine: 'true',";
             estruc += "hideHover: 'auto',";
             estruc += "gridLineColor: '#e0e0e0',";
             estruc += "lineWidth: 2,";
-            estruc += "lineColors: ['#222222', '#cccccc']";
+            estruc += "lineColors: ['#222222', '#cccccc'],";
             estruc += "resize: 'true' }";
 
 
