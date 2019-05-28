@@ -97,15 +97,6 @@ namespace Application.MainModule.Servicios
             barColors += "],";
             return keys + labels + barColors;
         }
-        public static string KeysLabelsColorDashVentaRema()
-        {
-            string keys = "ykeys: ['a', 'b'],";
-            string labels = "labels: ['Kg Venta', 'Kg Remanente'],";
-            string barColors = "barColors: ['#FF5722', '#FFC107'],";
-
-            return keys + labels + barColors;
-
-        }
         public static string KeysLabesColorsCamVSPip(HistoricoConsultaDTO dto)
         {
             string keys = "ykeys: ['a', 'b'],";
@@ -165,15 +156,22 @@ namespace Application.MainModule.Servicios
         }
         public static string JsonGeneralRemanente(List<RemanenteGeneralDTO> rema)
         {
-            string json = "{ data: [ ";
+            string json = " { type: 'line',";
+            json += " data: { label :[";
             foreach (RemanenteGeneralDTO r in rema)
-            {
-                json += string.Concat("{ y: ", "'", r.dia.ToString(), "'", ",");
-                json += string.Concat("a: ", r.InventarioFisico.ToString(), ",");
-                json += string.Concat("b: ", r.InventarioLibro.ToString(), "},");
-            }
+                json += string.Concat('"', r.dia.ToString(), '"', ",");
             json = json.TrimEnd(',');
-            return string.Concat(json, "],");
+            json += "], datasets: [{ data: [ ";
+            foreach (RemanenteGeneralDTO r in rema)
+                json += string.Concat( r.RemanenteDecimal.ToString(), ",");
+            json = json.TrimEnd(',');
+            json += string.Concat("],", EstructuraJsonDataSetAAreaChart("Remanente"),"}");
+            json += ", data: [";
+            foreach (RemanenteGeneralDTO r in rema)
+                json += string.Concat(r.InventarioFisico.ToString(), ",");
+            json = json.TrimEnd(',');
+            json += string.Concat("],", EstructuraJsonDataSetBAreaChart("Venta"), "}]");
+            return string.Concat(json, ",options: { responsive: true, legend: false } }");
         }
         public static string JsonCamionetasVSPipas(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
         {
@@ -346,27 +344,10 @@ namespace Application.MainModule.Servicios
             json = json.TrimEnd(',');
             return string.Concat(json, "],");
         }
-        public static string JsonVentaRema()
-        {
-            string json = "{ data: [ ";
-            json += string.Concat("{ y: '1/05',");
-            json += string.Concat(" a:", "3608", ",");
-            json += string.Concat(" a:", "750", "},");
-            json += string.Concat("{ y: '2/05',");
-            json += string.Concat(" a:", "4863", ",");
-            json += string.Concat(" a:", "1200", "},");
-            json += string.Concat("{ y: '3/05',");
-            json += string.Concat(" a:", "6101", ",");
-            json += string.Concat(" a:", "1800", "},");
-            json += string.Concat("{ y: '4/05',");
-            json += string.Concat(" a:", "7189", ",");
-            json += string.Concat(" a:", "2560", "},");
-            return json;
-        }
         public static string EstructuraJsonArea()
         {
             string estruc = "element: 'm_area_Remanente',";
-            estruc += "xkey: 'y',";
+            estruc += "xkey: 'day',";
             estruc += "ykeys: ['a', 'b'],";
             estruc += "labels: ['Rema', 'Venta'],";
             estruc += "pointSize: 3,";
@@ -378,8 +359,26 @@ namespace Application.MainModule.Servicios
             estruc += "lineWidth: 2,";
             estruc += "lineColors: ['#222222', '#cccccc'],";
             estruc += "resize: 'true' }";
-
-
+            return estruc;
+        }
+        public static string EstructuraJsonDataSetAAreaChart(string Label)
+        {
+            string estruc = string.Concat(" label: ", '"', Label, '"', ",");
+            estruc += "borderColor: 'rgba(241,95,121, 0.2)',";
+            estruc += "backgroundColor: 'rgba(241,95,121, 0.5)',";
+            estruc += "pointBorderColor: 'rgba(241,95,121, 0.3)',";
+            estruc += "pointBackgroundColor: 'rgba(241,95,121, 0.2)',";
+            estruc += "pointBorderWidth: 1";
+            return estruc;
+        }
+        public static string EstructuraJsonDataSetBAreaChart(string Label)
+        {
+            string estruc = string.Concat("label: ", '"', Label, '"', ",");
+            estruc += "borderColor: 'rgba(140,147,154, 0.2)',";
+            estruc += "backgroundColor: 'rgba(140,147,154, 0.2)',";
+            estruc += "pointBorderColor: 'rgba(140,147,154, 0)',";
+            estruc += "pointBackgroundColor: 'rgba(140,147,154, 0.9)',";
+            estruc += "pointBorderWidth: 1";
             return estruc;
         }
         public static string EstructuraJsonBar()

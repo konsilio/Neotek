@@ -38,7 +38,6 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult Inicio(LoginModel login)
         {
-
             if (Session["StringToken"] == null)
             {
                 Session["Perfil"] = null;
@@ -46,19 +45,18 @@ namespace MVC.Presentacion.Controllers
                 if (respuesta.Exito)
                 {
                     Session["StringToken"] = respuesta.token;
-                    Session["Perfil"] = respuesta.Mensaje;
-                    ViewBag.VentasRema = DashBoard.DashBoardRemanente(respuesta.token);
-                    return View();
+                    Session["Perfil"] = respuesta.Mensaje;                   
+                    ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());                        
                 }
                 else
                     return View("Index", AutenticacionServicio.InitIndex(respuesta));
             }
             else
-            {
-
-                ViewBag.VentasRema = DashBoard.DashBoardRemanente(Session["StringToken"].ToString());
-                return View();
+            {    
+                //if(EsAdmin)        
+                ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());     
             }
+            return View();
         }
 
         public ActionResult Requisicion()

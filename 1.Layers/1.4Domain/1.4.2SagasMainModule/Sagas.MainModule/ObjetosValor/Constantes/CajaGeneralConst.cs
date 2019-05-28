@@ -15,6 +15,7 @@ namespace Sagas.MainModule.ObjetosValor.Constantes
         public const string NombreRepoVentaCobranzaOficina = "COBRANZA OFICINAS";
         public const string NombreRepoOtros = "OTROS INGRESOS";
         public const string NombreRepoVentaCobranza = "COBRANZA";
+        public const string NombreRepoVentaPipas = "VENTAS DE PIPAS";
 
     }
 }

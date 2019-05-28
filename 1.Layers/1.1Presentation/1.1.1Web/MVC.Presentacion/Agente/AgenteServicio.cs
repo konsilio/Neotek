@@ -52,6 +52,7 @@ namespace MVC.Presentacion.Agente
         public ClientesModel _ClienteModel;
         public HistoricoVentaModel _HistoricoVentaDTO;
         public EgresoDTO _EgresoDTO;
+        public AdministracionDTO _AdministracionDTO;
         public string _Json;
 
 
@@ -4973,13 +4974,13 @@ namespace MVC.Presentacion.Agente
         public void DashBoardRemanenteJson(string tkn)
         {
             ApiRoute = ConfigurationManager.AppSettings["GetDashRemanente"];
-            GetJson(tkn).Wait();
+            GetDashRemanente(tkn).Wait();
         }
-        public async Task GetJson(string token)
+        public async Task GetDashRemanente(string token)
         {
             using (var client = new HttpClient())
             {
-                string resp = "";
+                AdministracionDTO resp = new AdministracionDTO();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -4989,10 +4990,10 @@ namespace MVC.Presentacion.Agente
                     HttpResponseMessage response = new HttpResponseMessage();
                     response = await client.GetAsync(ApiRoute).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        resp = await response.Content.ReadAsAsync<string>();
+                        resp = await response.Content.ReadAsAsync<AdministracionDTO>();
                     else
                     {
-                        resp = await response.Content.ReadAsAsync<string>();
+                        resp = await response.Content.ReadAsAsync<AdministracionDTO>();
                         client.CancelPendingRequests();
                         client.Dispose();
                     }
@@ -5002,7 +5003,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _Json = resp;
+                _AdministracionDTO = resp;
             }
         }
         public void ActualizarHistorico(HistoricoVentaModel dto, string tkn)

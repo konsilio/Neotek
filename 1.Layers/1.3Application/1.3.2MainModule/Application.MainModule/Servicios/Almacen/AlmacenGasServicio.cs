@@ -2817,5 +2817,16 @@ namespace Application.MainModule.Servicios.Almacenes
             }
             return Ifkg;
         }
+        public static RemanenteDTO BusquedaGeneralPeriodoActual()
+        {
+            return new RemanenteDTO()
+            {
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
+                IdTipo = TipoRemanenteEnum.General,
+                Fecha = new DateTime(2018, 12, 1),//Comentar esta linea en produccion
+                //Fecha = DateTime.Now, //Comentar esta line en Desarollo
+                IdPuntoVenta = 0
+            };
+        }
     }
 }

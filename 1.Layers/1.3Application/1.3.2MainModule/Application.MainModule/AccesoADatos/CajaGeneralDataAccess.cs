@@ -127,6 +127,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                              && x.FechaRegistro.Year.Equals(fecha.Year)
                                                              && x.FechaRegistro <= fecha).ToList();
         }
+        public List<VentaPuntoDeVenta> BuscarTotalVentasPipas(DateTime fecha)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdPipa != null
+                                                             && x.FechaRegistro.Month.Equals(fecha.Month)
+                                                             && x.FechaRegistro.Year.Equals(fecha.Year)
+                                                             && x.FechaRegistro <= fecha).ToList();
+        }
         public List<VentaPuntoDeVenta> BuscarTotalBonificaciones(DateTime fecha)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.Descuento > 0

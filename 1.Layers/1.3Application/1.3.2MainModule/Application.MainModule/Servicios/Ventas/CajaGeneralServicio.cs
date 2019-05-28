@@ -142,6 +142,10 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarTotalVentasCamionetas(f);
         }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasPipas(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasPipas(f);
+        }
         public static List<VentaPuntoDeVenta> ObtenerTotalBonificaciones(DateTime f)
         {
             return new CajaGeneralDataAccess().BuscarTotalBonificaciones(f);

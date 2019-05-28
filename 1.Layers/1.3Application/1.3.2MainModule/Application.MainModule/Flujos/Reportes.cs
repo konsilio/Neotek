@@ -78,14 +78,16 @@ namespace Application.MainModule.Flujos
         public List<RepCorteCajaDTO> RepCorteCaja(CajaGeneralDTO dto)
         {
             var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
-            var VEstacione = CajaGeneralServicio.ObtenerTotalVentasEstaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
+            var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
+            var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VFacturasCredito = CobranzaServicio.Obtener(dto.Fecha) ?? new List<Abono>();
             var VBonificaciones = CajaGeneralServicio.ObtenerTotalBonificaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
 
             List<RepCorteCajaDTO> respuesta = new List<RepCorteCajaDTO>();
-            respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstacione, Estaciones));
+            respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaPipas(VPipas));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCredito(VFacturasCredito));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones));
             return respuesta;
@@ -104,34 +106,28 @@ namespace Application.MainModule.Flujos
             return respuesta.Where(x => !x.Total.Equals(0)).ToList();
         }
         #region Dash Board
-        public string DashAdministracionVentaVSRema()
+        public AdministracionDTO DashAdministracionVentaVSRema()
         {
-            RemanenteDTO dto = new RemanenteDTO()
-            {
-                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
-                IdTipo = TipoRemanenteEnum.General,
-                Fecha = new DateTime(2018, 12, 01),
-                IdPuntoVenta = 0
-            };
-            var remanente = new Almacenes().ConsultarRemanenteGeneral(dto);
+            AdministracionDTO dto = new AdministracionDTO();
 
-
+            var remaDTO = AlmacenGasServicio.BusquedaGeneralPeriodoActual();
+            var remanente = new Almacenes().ConsultarRemanenteGeneral(remaDTO);
             string json = JsonServicio.JsonGeneralRemanente(remanente);
             json += JsonServicio.EstructuraJsonArea();
 
-            return json;
-        }
-        public RemanenteGeneralDTO DashAdministracionVentas()
-        {
-            RemanenteDTO dto = new RemanenteDTO()
-            {
-                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
-                IdTipo = TipoRemanenteEnum.General,
-                Fecha = new DateTime(2018, 12, 01),
-                IdPuntoVenta = 0
-            };
-            var remanente = new Almacenes().ConsultarRemanenteGeneral(dto);
-            return remanente.OrderByDescending(x => x.dia).ToList().FirstOrDefault();
+            remaDTO = AlmacenGasServicio.BusquedaGeneralPeriodoActual();
+            var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
+            var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
+            var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
+            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
+
+            dto.TotalEstaciones = (decimal)CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones).Sum(x => x.TotalVenta);
+            dto.TotalCamionetas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros).TotalVenta;
+            dto.TotalPipas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaPipas(VPipas).TotalVenta;
+            dto.TotalVetna = dto.TotalEstaciones + dto.TotalCamionetas + dto.TotalPipas;
+            dto.Json = json;
+
+            return dto;
         }
         #endregion
 

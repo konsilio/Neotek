@@ -27,7 +27,6 @@ namespace Application.MainModule.Flujos
             else
                 return CajaGeneralServicio.Obtener().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
-
         public List<AlmacenGasMovimientoDto> MovimientosGas(short unidad, short empresa, short year, byte month, byte dia, short? orden, string Folio)
         {           
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
@@ -41,8 +40,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
 
             return CajaGeneralServicio.ObtenerVentasPipas(unidad, empresa, year, month, dia, orden.Value, fecha, Folio).ToList();
-        }
-       
+        }       
         public List<VPuntoVentaDetalleDTO> MovimientosGasCilindro(short? empresa, short year, byte month, byte dia, short? orden)
         {
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
@@ -50,14 +48,12 @@ namespace Application.MainModule.Flujos
 
             return CajaGeneralServicio.ObtenerVentas(empresa.Value, year, month, dia, orden.Value).ToList();
         }
-
         public List<CajaGeneralDTO> CajaGeneralIdEmpresa(short IdEmpresa)
         {
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
             return CajaGeneralServicio.ObtenerIdEmp(IdEmpresa).ToList();
         }
-
         public List<VentaPuntoVentaDTO> CajaGeneralCamioneta(string cveReporte)
         {
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
@@ -83,7 +79,6 @@ namespace Application.MainModule.Flujos
 
             return CajaGeneralServicio.ObtenerCE(cveReporte).ToList();
         }
-
         public RespuestaDto GuardarReporteLiquidado(VentaPuntoVentaDTO Dto)
         {
             var resp = PermisosServicio.PuedeModificarCajaGeneral();

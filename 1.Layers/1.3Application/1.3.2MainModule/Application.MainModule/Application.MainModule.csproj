@@ -137,6 +137,7 @@
     <Compile Include="DTOs\EquipoTransporte\AsignacionUtilitarioDTO.cs" />
     <Compile Include="DTOs\Reportes\CajaGeneral\CajaGeneralDTO.cs" />
     <Compile Include="DTOs\Reportes\CajaGeneral\RepCorteCajaDTO.cs" />
+    <Compile Include="DTOs\Reportes\DashBoard\AdministracionDTO.cs" />
     <Compile Include="DTOs\Reportes\GastoVehicular\GastoVehicularDTO.cs" />
     <Compile Include="DTOs\Reportes\GastoVehicular\RepGastoVehicularDTO.cs" />
     <Compile Include="DTOs\Reportes\InventarioConcepto\InventarioXConceptoDTO.cs" />

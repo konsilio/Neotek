@@ -254,7 +254,7 @@
     <Compile Include="App_Code\AlmacenServicio.cs" />
     <Compile Include="App_Code\AutenticacionServicio.cs" />
     <Compile Include="App_Code\CobranzaServicio.cs" />
-    <Compile Include="App_Code\DashBoard.cs" />
+    <Compile Include="App_Code\DashBoardServicio.cs" />
     <Compile Include="App_Code\FacturacionServicio.cs" />
     <Compile Include="App_Code\HistoricoServicio.cs" />
     <Compile Include="App_Code\OrdenCompraServicio.cs" />
@@ -410,6 +410,7 @@
     <Compile Include="Models\Reporte\CorteCaja\CorteCajaModel.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarDTO.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarModel.cs" />
+    <Compile Include="Models\Reporte\DashBoard\AdministracionDTO.cs" />
     <Compile Include="Models\Reporte\GastoPorVehiculo\GastoVehiculoDTO.cs" />
     <Compile Include="Models\Reporte\GastoPorVehiculo\GastoVehiculoModel.cs" />
     <Compile Include="Models\Reporte\HistoricoPrecioVenta\HisotricoPrecioVentaDTO.cs" />

@@ -1004,6 +1004,16 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 Unidad = "Kg",
             };
         }
+        public static DTOs.RepCorteCajaDTO ToRepoCorteCajaPipas(List<VentaPuntoDeVenta> entidadVenta)
+        {
+            return new DTOs.RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoVentaPipas,
+                Cantidad = Convert.ToDouble(entidadVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadKg))),
+                TotalVenta = Convert.ToDouble(entidadVenta.Sum(x => x.Total)),
+                Unidad = "Kg",
+            };
+        }
         public static DTOs.RepCorteCajaDTO ToRepoCorteCajaCredito(List<Abono> entidadVenta)
         {
             return new DTOs.RepCorteCajaDTO()
