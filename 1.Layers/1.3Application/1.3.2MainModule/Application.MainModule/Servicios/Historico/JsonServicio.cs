@@ -173,6 +173,25 @@ namespace Application.MainModule.Servicios
             json += string.Concat("],", EstructuraJsonDataSetBAreaChart("Venta"), "}]");
             return string.Concat(json, "} ,options: { responsive: true, legend: false } }");
         }
+        public static string JsonCallCenter(List<PedidoDashDTO> lista)
+        {
+            string json = " { type: 'line',";
+            json += " data: { labels :[";
+            foreach (var dto in lista)
+                json += string.Concat('"', dto.Dia.ToString(), '"', ",");
+            json = json.TrimEnd(',');
+            json += "], datasets: [{ data: [ ";
+            foreach (var dto in lista)
+                json += string.Concat(dto.TotalVentas.ToString(), ",");
+            json = json.TrimEnd(',');
+            json += string.Concat("],", EstructuraJsonDataSetAAreaChart("Generaron venta"), "}");
+            json += ", { data: [";
+            foreach (var dto in lista)
+                json += string.Concat(dto.TotalLlamadas.ToString(), ",");
+            json = json.TrimEnd(',');
+            json += string.Concat("],", EstructuraJsonDataSetBAreaChart("Total de llamadas"), "}]");
+            return string.Concat(json, "} ,options: { responsive: true, legend: false } }");
+        }
         public static string JsonCamionetasVSPipas(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
         {
             string json = "{ data: [ ";

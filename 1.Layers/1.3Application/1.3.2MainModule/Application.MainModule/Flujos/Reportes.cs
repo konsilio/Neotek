@@ -129,6 +129,12 @@ namespace Application.MainModule.Flujos
 
             return dto;
         }
+        public string DashCallCenter()
+        {
+            var Pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), DateTime.Now);
+            var Dash = PedidosServicio.GenerarListDash(Pedidos, DateTime.Now);
+            return JsonServicio.JsonCallCenter(Dash);
+        }
         #endregion
 
     }

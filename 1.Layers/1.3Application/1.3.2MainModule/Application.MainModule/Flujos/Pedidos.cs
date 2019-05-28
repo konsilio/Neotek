@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Pedidos;
+using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.DTOs.Respuesta;
@@ -105,5 +106,6 @@ namespace Application.MainModule.Flujos
             pedido.MotivoCancelacion = pedidoDto.MotivoCancelacion;
             return PedidosServicio.Modificar(pedido);
         }
+       
     }
 }

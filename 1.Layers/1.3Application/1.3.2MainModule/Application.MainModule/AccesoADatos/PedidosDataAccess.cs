@@ -25,7 +25,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Pedido> Buscar(short idempresa, DateTime periodo)
         {
-            return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa) && (x.FechaRegistro.Month.Equals(periodo.Month) && x.FechaRegistro.Year.Equals(periodo.Year))).ToList();
+            return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa) 
+                                                && (x.FechaRegistro.Month.Equals(periodo.Month) 
+                                                && x.FechaRegistro.Year.Equals(periodo.Year))).ToList();
         }
         public List<PedidoDetalle> Buscar(int idPedido)
         {

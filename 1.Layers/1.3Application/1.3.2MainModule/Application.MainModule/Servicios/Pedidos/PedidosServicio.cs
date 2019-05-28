@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Pedidos;
+using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.DTOs.Respuesta;
@@ -71,6 +72,22 @@ namespace Application.MainModule.Servicios.Pedidos
         public static List<Pedido> Obtener(short idEmpresa, DateTime periodo)
         {
             return new PedidosDataAccess().Buscar(idEmpresa, periodo);
+        }
+        public static List<PedidoDashDTO> GenerarListDash(List<Pedido> lista, DateTime Periodo)
+        {
+            List<PedidoDashDTO> listDTO = new List<DTOs.PedidoDashDTO>();
+            int Dias = Periodo.Month.Equals(DateTime.Now.Month) && Periodo.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(Periodo.Year, Periodo.Month);
+            for (int i = 1; i < Dias; i++)
+            {
+                PedidoDashDTO dto = new PedidoDashDTO();
+                dto.Dia = i;
+                dto.TotalLlamadas = lista.Where(x => x.FechaRegistro.Day.Equals(i)).Count();
+                dto.TotalVentas = lista.Where(x => x.FechaRegistro.Day.Equals(i)
+                && (!x.IdEstatusPedido.Equals(EstatusPedidoEnum.Cancelado)
+                    && !x.IdEstatusPedido.Equals(EstatusPedidoEnum.Solollamada))).Count();
+                listDTO.Add(dto);
+            }
+            return listDTO;
         }
     }
 }

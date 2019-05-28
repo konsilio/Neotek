@@ -458,6 +458,6 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
         public static List<RepCallCenterDTO> FromDTO(List<Pedido> entidades)
         {
             return entidades.Select(x => FromDTO(x)).ToList();
-        }
+        }   
     }
 }
