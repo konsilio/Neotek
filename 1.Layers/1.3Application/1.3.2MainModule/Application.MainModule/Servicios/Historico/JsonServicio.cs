@@ -157,21 +157,21 @@ namespace Application.MainModule.Servicios
         public static string JsonGeneralRemanente(List<RemanenteGeneralDTO> rema)
         {
             string json = " { type: 'line',";
-            json += " data: { label :[";
+            json += " data: { labels :[";
             foreach (RemanenteGeneralDTO r in rema)
                 json += string.Concat('"', r.dia.ToString(), '"', ",");
             json = json.TrimEnd(',');
             json += "], datasets: [{ data: [ ";
             foreach (RemanenteGeneralDTO r in rema)
-                json += string.Concat( r.RemanenteDecimal.ToString(), ",");
-            json = json.TrimEnd(',');
-            json += string.Concat("],", EstructuraJsonDataSetAAreaChart("Remanente"),"}");
-            json += ", data: [";
-            foreach (RemanenteGeneralDTO r in rema)
                 json += string.Concat(r.InventarioFisico.ToString(), ",");
             json = json.TrimEnd(',');
+            json += string.Concat("],", EstructuraJsonDataSetAAreaChart("Remanente"),"}");
+            json += ", { data: [";
+            foreach (RemanenteGeneralDTO r in rema)
+                json += string.Concat(r.InventarioLibro.ToString(), ",");
+            json = json.TrimEnd(',');
             json += string.Concat("],", EstructuraJsonDataSetBAreaChart("Venta"), "}]");
-            return string.Concat(json, ",options: { responsive: true, legend: false } }");
+            return string.Concat(json, "} ,options: { responsive: true, legend: false } }");
         }
         public static string JsonCamionetasVSPipas(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
         {

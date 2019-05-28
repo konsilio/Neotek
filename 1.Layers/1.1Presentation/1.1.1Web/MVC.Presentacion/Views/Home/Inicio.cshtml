@@ -1,9 +1,12 @@
 ﻿@{
     ViewBag.Title = "Inicio -";
 }
+
 <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, @Html.Raw(ViewBag.VentasRema.Json));
+    window.onload = function() {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, @Html.Raw(ViewBag.VentasRema.Json));
+    }
 </script>
 <section class="content home">
     <div class="container-fluid">
@@ -76,12 +79,10 @@
                         <h2>DashBoard: <strong>Información general</strong></h2>
                     </div>
                     <div class="body m-b-10">
-                        <canvas id="myChart" style="width: 100%; height: 100%" ></canvas>
+                        <canvas id="myChart" style="width: 100%; height: 250px" ></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-

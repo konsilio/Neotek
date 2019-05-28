@@ -113,7 +113,7 @@ namespace Application.MainModule.Flujos
             var remaDTO = AlmacenGasServicio.BusquedaGeneralPeriodoActual();
             var remanente = new Almacenes().ConsultarRemanenteGeneral(remaDTO);
             string json = JsonServicio.JsonGeneralRemanente(remanente);
-            json += JsonServicio.EstructuraJsonArea();
+            //json += JsonServicio.EstructuraJsonArea();
 
             remaDTO = AlmacenGasServicio.BusquedaGeneralPeriodoActual();
             var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
