@@ -46,7 +46,8 @@ namespace MVC.Presentacion.Controllers
                 {
                     Session["StringToken"] = respuesta.token;
                     Session["Perfil"] = respuesta.Mensaje;                   
-                    ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());                        
+                    ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
+                    ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
                 }
                 else
                     return View("Index", AutenticacionServicio.InitIndex(respuesta));
@@ -54,7 +55,9 @@ namespace MVC.Presentacion.Controllers
             else
             {    
                 //if(EsAdmin)        
-                ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());     
+                ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
+                //if(EsCallCenter)
+                ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
             }
             return View();
         }

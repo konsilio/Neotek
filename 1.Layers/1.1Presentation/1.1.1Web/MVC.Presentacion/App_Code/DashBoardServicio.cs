@@ -15,5 +15,11 @@ namespace MVC.Presentacion.App_Code
             agente.DashBoardRemanenteJson(token);
             return agente._AdministracionDTO;
         }
+        public static string DashBoardCallCenter(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.GetJsonCallCenter(token);
+            return agente._Json;
+        }
     }
 }

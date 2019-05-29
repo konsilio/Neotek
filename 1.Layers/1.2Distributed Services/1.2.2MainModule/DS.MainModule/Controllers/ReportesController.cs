@@ -72,6 +72,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetDashRemanente()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.DashAdministracionVentaVSRema());
+        }       
+        [Route("dashboard/callcenter")]
+        public HttpResponseMessage GetDashCallCenter()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.DashCallCenter());
         }
     }
 }

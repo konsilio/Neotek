@@ -4933,11 +4933,16 @@ namespace MVC.Presentacion.Agente
             ApiRoute = ConfigurationManager.AppSettings["GetJsonConsulta"];
             GetJson(dto, tkn, MetodoRestConst.Post).Wait();
         }
+        public void GetJsonCallCenter(string tkn)
+        {
+            ApiRoute = ConfigurationManager.AppSettings["GetDashCallCenter"];
+            GetJson(tkn).Wait();
+        }
         public async Task GetJson<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)
         {
             using (var client = new HttpClient())
             {
-                string resp = "";
+                string resp = string.Empty;
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -4954,6 +4959,36 @@ namespace MVC.Presentacion.Agente
                     if (Tipo.Equals(MetodoRestConst.Get))
                         response = await client.GetAsync(ApiRoute).ConfigureAwait(false);
 
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<string>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<string>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _Json = resp;
+            }
+        }
+        public async Task GetJson(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                string resp = string.Empty;
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    response = await client.GetAsync(ApiRoute).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<string>();
                     else

@@ -131,8 +131,8 @@ namespace Application.MainModule.Flujos
         }
         public string DashCallCenter()
         {
-            var Pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), DateTime.Now);
-            var Dash = PedidosServicio.GenerarListDash(Pedidos, DateTime.Now);
+            var Pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), new DateTime(2019, 2, 28));
+            var Dash = PedidosServicio.GenerarListDash(Pedidos, new DateTime(2019, 2, 28));
             return JsonServicio.JsonCallCenter(Dash);
         }
         #endregion

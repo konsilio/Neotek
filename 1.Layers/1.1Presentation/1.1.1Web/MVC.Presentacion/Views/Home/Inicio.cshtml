@@ -6,6 +6,9 @@
     window.onload = function() {
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, @Html.Raw(ViewBag.VentasRema.Json));
+
+        var ctx = document.getElementById('CallCenter').getContext('2d');
+        var myChart = new Chart(ctx, @Html.Raw(ViewBag.CallCenter));
     }
 </script>
 <section class="content home">
@@ -71,7 +74,7 @@
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
         <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="card">
@@ -79,7 +82,121 @@
                         <h2>DashBoard: <strong>Información general</strong></h2>
                     </div>
                     <div class="body m-b-10">
-                        <canvas id="myChart" style="width: 100%; height: 250px" ></canvas>
+                        <canvas id="myChart" style="width: 100%; height: 250px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Call Center:</strong> Información general</h2>
+                    </div>
+                    <div class="body m-b-10">
+                        <canvas id="CallCenter" style="width: 100%; height: 250px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Anden:</strong> Información general</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">pie_chart_outlined</i></i></p>
+                        <span>Total de producto</span>
+                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="140180" data-speed="2000" data-fresh-interval="700">140180</span></h3>
+                        <small class="text-muted">Kilogramos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">queue_play_next</i></p>
+                        <span>Siguiente orden de compra</span>
+                        <h3 class="m-b-10 ">OC000011062019</h3>
+                        <small class="text-muted">Autorizada</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <span>Nivel de almacen principal</span>
+                        <input type="text" class="knob" value="35%" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
+                        <div>
+                            <small class="text-muted">15630 Kilogramos</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                   
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <address>
+                                    <strong>Ultimas 5 ventas</strong>
+                                    <br><strong>Nota importante:</strong>
+                                    <br>Las ventas aqui presentadas
+                                    <br>podrian no ser las ultimas en tiempo real.
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table m-b-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Pto Venta</th>
+                                        <th>Kilos</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>P3</td>
+                                        <td>250</td>
+                                        <td>$2300</td>
+                                    </tr>
+                                    <tr>
+                                        <td>C17</td>
+                                        <td>45</td>
+                                        <td>$810</td>
+                                    </tr>
+                                    <tr>
+                                        <td>C3</td>
+                                        <td>30</td>
+                                        <td>$630</td>
+                                    </tr>
+                                    <tr>
+                                        <td>P2</td>
+                                        <td>150</td>
+                                        <td>$1600</td>
+                                    </tr>
+                                    <tr>
+                                        <td>P10</td>
+                                        <td>175</td>
+                                        <td>$1920</td>
+                                    </tr>
+                                    <tr>
+                                        <td>C5</td>
+                                        <td>45</td>
+                                        <td>$630</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
