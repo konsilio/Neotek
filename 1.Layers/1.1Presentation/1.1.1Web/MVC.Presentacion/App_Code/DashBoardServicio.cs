@@ -21,5 +21,11 @@ namespace MVC.Presentacion.App_Code
             agente.GetJsonCallCenter(token);
             return agente._Json;
         }
+        public static AndenDTO DashBoardAnden(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.DashAnden(token);
+            return agente._AndenDTO;
+        }
     }
 }

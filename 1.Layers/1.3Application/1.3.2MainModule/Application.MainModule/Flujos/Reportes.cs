@@ -22,6 +22,7 @@ using Application.MainModule.Servicios.Requisiciones;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Ventas;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Constantes;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
@@ -134,6 +135,20 @@ namespace Application.MainModule.Flujos
             var Pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), new DateTime(2019, 2, 28));
             var Dash = PedidosServicio.GenerarListDash(Pedidos, new DateTime(2019, 2, 28));
             return JsonServicio.JsonCallCenter(Dash);
+        }
+        public AndenDTO DashAnden()
+        {
+            var oc = OrdenCompraServicio.BuscarUltimaOCGas(TokenServicio.ObtenerIdEmpresa());
+            var alm = AlmacenGasServicio.ObtenerAlmacenPrincipal(TokenServicio.ObtenerIdEmpresa());
+            var respuesta = new AndenDTO()
+            {
+                TotalProduto = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa()).Sum(x => x.CantidadActualKg),
+                NivelAlmacen = Convert.ToInt32(alm.PorcentajeActual),
+                KilosAlmacen = alm.CantidadActualKg,
+                OrdenCompra = oc == null ? OrdenCompraConst.SinOCProxima : oc.NumOrdenCompra,
+                Ventas = PuntoVentaServicio.ObtenerVentasTOPDTO(6, new DateTime(2018, 12, 11))
+            };
+            return respuesta;
         }
         #endregion
 

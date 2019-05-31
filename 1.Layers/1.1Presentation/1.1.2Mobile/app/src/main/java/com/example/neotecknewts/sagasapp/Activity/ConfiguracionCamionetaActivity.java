@@ -107,18 +107,26 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
     public void VerificarForm() {
         boolean error = false;
         lista_errores = new ArrayList<>();
-        if(EsLecturaInicialCamioneta) {
+        boolean flag = true;
+        if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta) {
             //TextView textView;
             for (int x = 0; x < adapter.getItemCount(); x++) {
                 View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
                 EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
                 //textView = view.findViewById(R.id.TVLecturaAlmacenActivityTitulo);
                 if (!editText.getText().toString().equals("") && editText.getText()!=null) {
-                    if (Integer.parseInt(editText.getText().toString()) <= 0) {
+                    if (Integer.parseInt(editText.getText().toString()) <= -1) {
                         lista_errores.add("El valor para el cilindo del renglon "+
                                 String.valueOf(x+1)+" es requerido");
                         error = true;
                         break;
+                    }else{
+                        if(Integer.parseInt(editText.getText().toString()) == 0){
+                            flag = false;
+
+                        }else {
+                            flag=true;
+                        }
                     }
                 } else {
                     lista_errores.add("El valor para el cilindo del renglon " +
@@ -128,7 +136,10 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
                 }
             }
         }
-        if (error) {
+        if (error || !flag) {
+            if(!flag){
+                lista_errores.add("Todos los campos están en 0");
+            }
             DialogoError(lista_errores);
         } else {
             if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta) {

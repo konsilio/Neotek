@@ -157,6 +157,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 x.VentaACredito.Equals(esCredito)
            ).ToList();
         }
+        public List<VentaPuntoDeVenta> BuscarVentasTOP(int top, DateTime fecha)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x =>            
+                x.FechaRegistro.Day.Equals(fecha.Day) &&
+                x.FechaRegistro.Month.Equals(fecha.Month) &&
+                x.FechaRegistro.Year.Equals(fecha.Year)        
+           ).Take(top).ToList();
+        }
+        
         public VentaCorteAnticipoEC BuscarCorte(DateTime fecha, short idCAlmacenGas)
         {
             return uow.Repository<VentaCorteAnticipoEC>().GetSingle(

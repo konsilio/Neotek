@@ -411,6 +411,7 @@
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarDTO.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarModel.cs" />
     <Compile Include="Models\Reporte\DashBoard\AdministracionDTO.cs" />
+    <Compile Include="Models\Reporte\DashBoard\AndenDTO.cs" />
     <Compile Include="Models\Reporte\GastoPorVehiculo\GastoVehiculoDTO.cs" />
     <Compile Include="Models\Reporte\GastoPorVehiculo\GastoVehiculoModel.cs" />
     <Compile Include="Models\Reporte\HistoricoPrecioVenta\HisotricoPrecioVentaDTO.cs" />

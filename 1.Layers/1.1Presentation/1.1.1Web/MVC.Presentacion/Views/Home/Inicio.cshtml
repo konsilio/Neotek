@@ -114,7 +114,7 @@
                     <div class="body">
                         <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">pie_chart_outlined</i></i></p>
                         <span>Total de producto</span>
-                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="140180" data-speed="2000" data-fresh-interval="700">140180</span></h3>
+                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.Anden.TotalProduto" data-speed="2000" data-fresh-interval="700">140180</span></h3>
                         <small class="text-muted">Kilogramos</small>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
                     <div class="body">
                         <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">queue_play_next</i></p>
                         <span>Siguiente orden de compra</span>
-                        <h3 class="m-b-10 ">OC000011062019</h3>
+                        <h3 class="m-b-10 ">@ViewBag.Anden.OrdenCompra</h3>
                         <small class="text-muted">Autorizada</small>
                     </div>
                 </div>
@@ -133,16 +133,16 @@
                 <div class="card text-center">
                     <div class="body">
                         <span>Nivel de almacen principal</span>
-                        <input type="text" class="knob" value="35%" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
+                        <input type="text" class="knob" value="@ViewBag.Anden.NivelAlmacen" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
                         <div>
-                            <small class="text-muted">15630 Kilogramos</small>
+                            <small class="text-muted">@ViewBag.Anden.KilosAlmacen</small>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="card text-center">
-                   
+
                     <div class="body">
                         <div class="row">
                             <div class="col-md-12">
@@ -164,36 +164,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>P3</td>
-                                        <td>250</td>
-                                        <td>$2300</td>
-                                    </tr>
-                                    <tr>
-                                        <td>C17</td>
-                                        <td>45</td>
-                                        <td>$810</td>
-                                    </tr>
-                                    <tr>
-                                        <td>C3</td>
-                                        <td>30</td>
-                                        <td>$630</td>
-                                    </tr>
-                                    <tr>
-                                        <td>P2</td>
-                                        <td>150</td>
-                                        <td>$1600</td>
-                                    </tr>
-                                    <tr>
-                                        <td>P10</td>
-                                        <td>175</td>
-                                        <td>$1920</td>
-                                    </tr>
-                                    <tr>
-                                        <td>C5</td>
-                                        <td>45</td>
-                                        <td>$630</td>
-                                    </tr>
+                                    @if (ViewBag.Anden.Ventas != null)
+                                    {
+                                        foreach (var item in ViewBag.Anden.Ventas)
+                                        {
+                                            <tr>
+                                                <th>@item.PuntoVenta</th>
+                                                <th>@item.VentaTotal</th>
+                                                <th>@item.Total</th>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
                             </table>
                         </div>

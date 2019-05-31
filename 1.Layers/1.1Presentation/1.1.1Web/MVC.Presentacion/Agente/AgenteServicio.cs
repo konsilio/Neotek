@@ -53,6 +53,7 @@ namespace MVC.Presentacion.Agente
         public HistoricoVentaModel _HistoricoVentaDTO;
         public EgresoDTO _EgresoDTO;
         public AdministracionDTO _AdministracionDTO;
+        public AndenDTO _AndenDTO;
         public string _Json;
 
 
@@ -5039,6 +5040,41 @@ namespace MVC.Presentacion.Agente
                     client.Dispose();
                 }
                 _AdministracionDTO = resp;
+            }
+        }
+        public void DashAnden(string tkn)
+        {
+            ApiRoute = ConfigurationManager.AppSettings["GetDashAnden"];
+            GetDashAnden(tkn).Wait();
+        }
+        public async Task GetDashAnden(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                AndenDTO resp = new AndenDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    response = await client.GetAsync(ApiRoute).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<AndenDTO>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<AndenDTO>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _AndenDTO = resp;
             }
         }
         public void ActualizarHistorico(HistoricoVentaModel dto, string tkn)

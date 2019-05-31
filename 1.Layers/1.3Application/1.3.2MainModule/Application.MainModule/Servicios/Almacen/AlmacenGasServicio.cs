@@ -134,12 +134,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenDataAccess().ActualizaAlmacen(almacenActualizar);
         }
-
         public static CamionetaCilindro BuscarCamionetaCilindro(int idCamioneta, int idCilindro, short idEmpresa)
         {
             return new AlmacenGasDataAccess().BuscarCamionetaCilindro(idCamioneta, idCilindro, idEmpresa);
         }
-
         /// <summary>
         /// ActualizaCilindro
         /// Permite actualizar los cilindros de la camioneta 
@@ -154,7 +152,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().ObtenerRecargaInicial(IdCAlmacenGasEntrada);
         }
-
         public static RespuestaDto InsertarAutoconsumo(AlmacenGasAutoConsumo adapter)
         {
             return new AlmacenGasDataAccess().Insertar(adapter);
@@ -287,7 +284,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 reporte = ReporteAdapter.ToDtoPipa(resp, almacen, lectInicial, lectFinal);
             return reporte;
         }
-
         /// <summary>
         /// Permite realizar la busqueda de un reporte del día en caso de existir con 
         /// los parametros que se envian 
@@ -300,7 +296,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarReporte(fecha, idCAlmacenGas, idEmpresa);
         }
-
         public static List<UnidadAlmacenGas> ObtenerAlmacenGeneral(short idEmpresa, bool incluyeAlterno = false)
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa, true, incluyeAlterno);
@@ -527,12 +522,10 @@ namespace Application.MainModule.Servicios.Almacenes
             }
             return new AlmacenGasDataAccess().ObtenerUnidadesAlmacenGasAlterno(empresa.IdEmpresa);
         }
-
         public static RespuestaDto ActualizaCilindroCamioneta(CamionetaCilindro cilindro)
         {
             return new AlmacenDataAccess().Actualizar(cilindro);
         }
-
         private static List<UnidadAlmacenGas> ObtenerUnidadesAlmacenGasAlternoNoActivos(Empresa empresa)
         {
             if (empresa.UnidadesAlmacenGas != null & empresa.UnidadesAlmacenGas.Count > 0)
@@ -596,23 +589,19 @@ namespace Application.MainModule.Servicios.Almacenes
             if (AutoConsumo.Fotografias != null && AutoConsumo.Fotografias.Count > 0)
                 return AutoConsumo.Fotografias.ToList();
             return new AlmacenGasDataAccess().BuscarImagenesAutoConsumo(AutoConsumo.IdEmpresa, AutoConsumo.Year, AutoConsumo.Mes, AutoConsumo.Dia, AutoConsumo.Orden);
-        }
-
+        }        
         public static List<Camioneta> ObtenerCamionetasEmpresa(short idEmpresa)
         {
             return new AlmacenGasDataAccess().ObtenerCamionetasEmpresa(idEmpresa);
         }
-
         public static Camioneta ObtenerCamioneta(int camioneta)
         {
             return new AlmacenGasDataAccess().ObtenerCamioneta(camioneta);
         }
-
         public static Pipa ObtenerPipa(int pipa)
         {
             return new PipaDataAccess().ObtenerPipa(pipa);
         }
-
         public static List<AlmacenGasCalibracionFoto> ObtenerImagenes(AlmacenGasCalibracion calibracion)
         {
             if (calibracion.Fotografias != null && calibracion.Fotografias.Count > 0)
@@ -807,7 +796,6 @@ namespace Application.MainModule.Servicios.Almacenes
             #endregion
             return reporteDTO;
         }
-
         public static ReporteDiaDTO CrearReporteMobil(VPuntoVentaDetalleDTO reporte, UnidadAlmacenGas almacen)
         {
             string nombreAlmacen = "";
@@ -857,7 +845,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().ObtenerLectura(fecha, idCAlmacenGas);
         }
-
         /// <summary>
         /// BuscarLectura
         /// Permite realizar la busqeuda de una lectura con los parametros enviados.
@@ -873,12 +860,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarLectura(idCAlmacenGas, fecha, inicial);
         }
-
         public static List<Pipa> ObtenerPipasEmpresa(short idEmpresa)
         {
             return new PipaDataAccess().ObtenerPipas(idEmpresa);
         }
-
         public static int ordenReportes(List<ReporteDelDia> reportes)
         {
             if (reportes != null)

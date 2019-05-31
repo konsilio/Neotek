@@ -352,6 +352,7 @@
     <Compile Include="ObjetosValor\Constantes\IngresoGastoConst.cs" />
     <Compile Include="ObjetosValor\Constantes\MetodoPagoConst.cs" />
     <Compile Include="ObjetosValor\Constantes\NotificacionPushConst.cs" />
+    <Compile Include="ObjetosValor\Constantes\OrdenCompraConst.cs" />
     <Compile Include="ObjetosValor\Constantes\TipoEventoConst.cs" />
     <Compile Include="ObjetosValor\Constantes\TipoVehiculoConst.cs" />
     <Compile Include="ObjetosValor\Enum\CalibracionDestinoEnum.cs" />

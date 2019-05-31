@@ -78,5 +78,10 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.DashCallCenter());
         }
+        [Route("dashboard/anden")]
+        public HttpResponseMessage GetDashAnden()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.DashAnden());
+        }
     }
 }
