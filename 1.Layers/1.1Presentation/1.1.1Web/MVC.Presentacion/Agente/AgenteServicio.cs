@@ -54,8 +54,8 @@ namespace MVC.Presentacion.Agente
         public EgresoDTO _EgresoDTO;
         public AdministracionDTO _AdministracionDTO;
         public AndenDTO _AndenDTO;
+        public CarteraDTO _CarteraDTO;
         public string _Json;
-
 
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
@@ -135,9 +135,6 @@ namespace MVC.Presentacion.Agente
         public List<InventarioXConceptoDTO> _ListaInventarioConcepto;
         public List<CorteCajaDTO> _ListaCorteCaja;
         public List<GastoVehiculoDTO> _ListaGastoVehicular;
-
-
-
 
         public AgenteServicio()
         {
@@ -5069,7 +5066,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     client.CancelPendingRequests();
                     client.Dispose();
@@ -5081,6 +5078,76 @@ namespace MVC.Presentacion.Agente
         {
             ApiRoute = ConfigurationManager.AppSettings["PutHistorico"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void DashCajaGeneral(string tkn)
+        {
+            ApiRoute = ConfigurationManager.AppSettings["GetCajaGeneral"];
+            GetDashCajaGeneral(tkn).Wait();
+        }
+        public async Task GetDashCajaGeneral(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                AdministracionDTO resp = new AdministracionDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    response = await client.GetAsync(ApiRoute).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<AdministracionDTO>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<AdministracionDTO>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _AdministracionDTO = resp;
+            }
+        }
+        public void DashCartera(string tkn)
+        {
+            ApiRoute = ConfigurationManager.AppSettings["GetCartera"];
+            GetDashCartera(tkn).Wait();
+        }
+        public async Task GetDashCartera(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                CarteraDTO resp = new CarteraDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    response = await client.GetAsync(ApiRoute).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<CarteraDTO>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<CarteraDTO>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _CarteraDTO = resp;
+            }
         }
         #endregion
         #region Reportes

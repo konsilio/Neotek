@@ -164,8 +164,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 x.FechaRegistro.Month.Equals(fecha.Month) &&
                 x.FechaRegistro.Year.Equals(fecha.Year)        
            ).Take(top).ToList();
-        }
-        
+        }        
         public VentaCorteAnticipoEC BuscarCorte(DateTime fecha, short idCAlmacenGas)
         {
             return uow.Repository<VentaCorteAnticipoEC>().GetSingle(

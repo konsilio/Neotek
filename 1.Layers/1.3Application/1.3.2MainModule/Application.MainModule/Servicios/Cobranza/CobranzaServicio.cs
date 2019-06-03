@@ -20,14 +20,14 @@ namespace Application.MainModule.Servicios.Cobranza
         }
         public static List<Abono> Obtener(DateTime f)
         {
-            return new AbonosDataAcces().BuscarTodos(f);           
+            return new AbonosDataAcces().BuscarTodos(f);
         }
         public static List<CargosDTO> CRecuperada(short idempresa)
         {
-            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().Buscar(idempresa));
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().BuscarTodos(idempresa));
             //return lPedidos;
         }
-        public static List<CargosDTO> CRecuperada(List<CRecuperadaDTO> lstCRecuperado, List<CRecuperadaTotalesDTO> lstTotal,short idempresa)
+        public static List<CargosDTO> CRecuperada(List<CRecuperadaDTO> lstCRecuperado, List<CRecuperadaTotalesDTO> lstTotal, short idempresa)
         {
             return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(lstCRecuperado, lstTotal);
             //return lPedidos;
@@ -45,6 +45,46 @@ namespace Application.MainModule.Servicios.Cobranza
         {
             return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(CVencida(idEmpresa));
         }
+        public static List<Cargo> TopDeudores(short idEmpresa)
+        {
+            List<Cargo> resuesta = new List<Cargo>();
+            var clientes = CVencida(idEmpresa).Select(x => x.IdCliente).Distinct();
+            foreach (int id in clientes)
+            {
+                var cargos = new AbonosDataAcces().Buscar(idEmpresa, id);
+                if (cargos != null)
+                {
+                    Cargo c = cargos[0];
+                    c.TotalCargo = cargos.Sum(x => x.TotalCargo);
+                    resuesta.Add(c);
+                }
+            }
+            return resuesta.OrderBy(x => ((TimeSpan)(x.FechaVencimiento - DateTime.Now)).Days).ToList();
+        }
+        public static List<CargosDTO> TopDeudores(short idEmpresa, int top)
+        {
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(TopDeudores(idEmpresa)).Take(top).ToList();
+        }
+        public static List<Cargo> TopDeudoresValiosos(short idEmpresa)
+        {
+            List<Cargo> resuesta = new List<Cargo>();
+            var clientes = CVencida(idEmpresa).Select(x => x.IdCliente).Distinct();
+            foreach (int id in clientes)
+            {
+                var cargos = new AbonosDataAcces().Buscar(idEmpresa, id);
+                if (cargos != null)
+                {
+                    Cargo c = cargos[0];
+                    c.TotalCargo = cargos.Sum(x => x.TotalCargo);
+                    resuesta.Add(c);
+                }
+            }
+            return resuesta.OrderByDescending(x => x.TotalCargo).ToList();
+        }
+        public static List<CargosDTO> TopDeudoresValiosos(short idEmpresa, int top)
+        {
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(TopDeudoresValiosos(idEmpresa)).Take(top).ToList();
+        }
         public static CargosDTO Obtener(int idCargo)
         {
             CargosDTO Pedido = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().Buscar(idCargo));
@@ -54,8 +94,8 @@ namespace Application.MainModule.Servicios.Cobranza
         {
             decimal result = 0;
 
-            if(type =="T")
-             foreach(var x in lst)
+            if (type == "T")
+                foreach (var x in lst)
                 {
                     foreach (var s in x.lstCreditoR)
                     {
@@ -65,7 +105,7 @@ namespace Application.MainModule.Servicios.Cobranza
             if (type == "TE")
                 foreach (var x in lst)
                 {
-                    foreach (var s in x.lstCreditoR.Where(t=>t.IdFormaPago == 1))
+                    foreach (var s in x.lstCreditoR.Where(t => t.IdFormaPago == 1))
                     {
                         result += s.MontoAbono;
                     }

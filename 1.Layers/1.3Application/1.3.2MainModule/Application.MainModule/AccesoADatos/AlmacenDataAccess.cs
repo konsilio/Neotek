@@ -122,9 +122,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
-
-
         public RespuestaDto ActualizarAlmacenSalidas(List<Almacen> _alm, List<AlmacenSalidaProducto> _entrada, Requisicion _requisicion, List<RequisicionProducto> _productos)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -232,12 +229,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public List<EstacionCarburacion> ObtenerEstaciones(short idEmpresa)
         {
             return uow.Repository<EstacionCarburacion>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
         }
-
         /// <summary>
         /// Actualizar
         /// Permite actualizar una entidad de cilindros en una camioneta
@@ -275,13 +270,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public AlmacenGasAutoConsumo BuscarAutoconsumo(UnidadAlmacenGas almacen, DateTime fecha)
         {
             return uow.Repository<AlmacenGasAutoConsumo>().GetSingle(x => x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.Year.Equals(fecha.Year) &&
             x.IdCAlmacenGasEntrada.Equals(almacen.IdCAlmacenGas));
         }
-
         public RespuestaDto ActualizaAlmacen(UnidadAlmacenGas almacenActualizar)
         {
             RespuestaDto _respuesta = new RespuestaDto();

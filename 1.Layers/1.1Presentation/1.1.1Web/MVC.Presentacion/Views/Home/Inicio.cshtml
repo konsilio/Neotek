@@ -37,7 +37,7 @@
             <div class="col-lg-3 col-md-6">
                 <div class="card text-center">
                     <div class="body">
-                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">battery_full</i></i></p>
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">battery_full</i></p>
                         <span>Ventas de Camionetas</span>
                         <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalCamionetas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalCamionetas</span></h3>
                         <small class="text-muted">Kilogramos</small>
@@ -109,17 +109,17 @@
             </div>
         </div>
         <div class="row clearfix">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="card text-center">
                     <div class="body">
-                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">pie_chart_outlined</i></i></p>
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">pie_chart_outlined</i></p>
                         <span>Total de producto</span>
                         <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.Anden.TotalProduto" data-speed="2000" data-fresh-interval="700">140180</span></h3>
                         <small class="text-muted">Kilogramos</small>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="card text-center">
                     <div class="body">
                         <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">queue_play_next</i></p>
@@ -129,7 +129,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="card text-center">
                     <div class="body">
                         <span>Nivel de almacen principal</span>
@@ -140,7 +140,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12">
                 <div class="card text-center">
                     <div class="body">
                         <div class="row">
@@ -182,13 +184,13 @@
             </div>
         </div>
         <div class="row clearfix">
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-12 col-md-12">
                 <div class="card text-center">
                     <div class="body">
                         <div class="row">
                             <div class="col-md-12">
                                 <address>
-                                    <strong>Cartera Recuperada</strong>                                   
+                                    <strong>Cartera Recuperada</strong>
                                 </address>
                             </div>
                         </div>
@@ -197,19 +199,107 @@
                                 <thead>
                                     <tr>
                                         <th>Ticket</th>
-                                        <th>Kilos</th>
-                                        <th>Total</th>
+                                        <th>Fecha abono</th>
+                                        <th>Cliente</th>
+                                        <th>Importe</th>
+                                        <th>forma de pago</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (ViewBag.Anden.Ventas != null)
+                                    @if (ViewBag.Cartera.CarteraRecuperada != null)
                                     {
-                                        foreach (var item in ViewBag.Anden.Ventas)
+                                        foreach (var item in ViewBag.Cartera.CarteraRecuperada)
                                         {
+                                            foreach (var abono in item.lstCreditoR)
+                                            {
+                                                <tr>
+                                                    <th>@item.Ticket</th>
+                                                    <th>@abono.FechaAbono</th>
+                                                    <th>@item.Cliente
+                                                    <th>@abono.MontoAbono</th>
+                                                    <th>@abono.FormaPago</th>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12">
+                <div class="card text-center">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <address>
+                                    <strong>Cartera Vencida</strong>
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table m-b-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket</th>
+                                        <th>Cliente</th>
+                                        <th>Importe</th>
+                                        <th>Dias de Adeudo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Cartera.CarteraVencida != null)
+                                    {
+                                        foreach (var item in ViewBag.Cartera.CarteraVencida)
+                                        {
+
                                             <tr>
                                                 <th>@item.Ticket</th>
-                                                <th>@item.VentaTotal</th>
-                                                <th>@item.Total</th>
+                                                <th>@item.Cliente
+                                                <th>@item.SaldoInsoluto</th>
+                                        <th>@item.Dias1a7</th>
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <address>
+                                    <strong>Top 5 Deudores mas longevos</strong>
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table m-b-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Deuda</th>
+                                        <th>Dias de vencido</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Cartera.TopDeudoresL != null)
+                                    {
+                                        foreach (var item in ViewBag.Cartera.TopDeudoresL)
+                                        {
+                                            <tr>
+                                                <th>@item.Cliente</th>
+                                                <th>@item.SaldoInsoluto</th>
+                                                <th>@item.Dias1a7</th>
                                             </tr>
                                         }
                                     }
@@ -225,7 +315,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <address>
-                                    <strong>Top 5 Deudores mas longevo</strong>
+                                    <strong>Top 5 Deudores mas valiosos</strong>
                                 </address>
                             </div>
                         </div>
@@ -239,9 +329,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (ViewBag.Deudores.Ventas != null)
+                                    @if (ViewBag.Cartera.TopDeudoresV != null)
                                     {
-                                        foreach (var item in ViewBag.Anden.Ventas)
+                                        foreach (var item in ViewBag.Cartera.TopDeudoresV)
                                         {
                                             <tr>
                                                 <th>@item.Cliente</th>
@@ -253,6 +343,49 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">battery_full</i></p>
+                        <span>Ventas de Camionetas</span>
+                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalCamionetas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalCamionetas</span></h3>
+                        <small class="text-muted">Pesos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">local_shipping</i></p>
+                        <span>Ventas de Pipas</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.Caja.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</h3>
+                        <small class="text-muted">Pesos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-red">local_gas_station</i></p>
+                        <span>Ventas de Estaciones</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.Caja.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</h3>
+                        <small class="text-muted">Pesos</small>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-green">functions</i></p>
+                        <span>Total de venta</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.Caja.TotalVetna" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalVetna</h3>
+                        <small class="text-muted">Pesos</small>
                     </div>
                 </div>
             </div>

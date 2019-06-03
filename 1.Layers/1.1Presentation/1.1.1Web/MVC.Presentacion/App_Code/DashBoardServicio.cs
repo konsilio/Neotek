@@ -27,5 +27,17 @@ namespace MVC.Presentacion.App_Code
             agente.DashAnden(token);
             return agente._AndenDTO;
         }
+        public static CarteraDTO DashBoardCartera(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.DashCartera(token);
+            return agente._CarteraDTO;
+        }
+        public static AdministracionDTO DashBoardCajaGeneral(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.DashCajaGeneral(token);
+            return agente._AdministracionDTO;
+        }
     }
 }

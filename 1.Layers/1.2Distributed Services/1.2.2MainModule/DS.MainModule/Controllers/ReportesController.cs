@@ -83,5 +83,15 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.DashAnden());
         }
+        [Route("dashboard/cartera")]
+        public HttpResponseMessage GetCartera()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.DashCartera());
+        }
+        [Route("dashboard/cajageneral")]
+        public HttpResponseMessage GetCajaGeneral()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.DashCaja());
+        }
     }
 }

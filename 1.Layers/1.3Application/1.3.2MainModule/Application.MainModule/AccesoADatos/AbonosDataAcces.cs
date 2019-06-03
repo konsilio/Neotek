@@ -139,18 +139,24 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<Cargo> BuscarTodos(short idEmpresa)
         {
             return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                        && x.Saldada.Equals(false))
+                                                        && x.Saldada)
                                                          .ToList();
+        }
+        public List<Cargo> Buscar(short idEmpresa, int idCliente)
+        {
+            return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                        && !x.Saldada
+                                                        && x.IdCliente.Equals(idCliente)).OrderBy(x => ((TimeSpan)(x.FechaVencimiento - DateTime.Now)).Days).ToList();
         }
         public List<Cargo> Buscar(short idEmpresa)
         {
             return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                        && x.Saldada.Equals(true))
-                                                         .ToList();
+                                                        && !x.Saldada
+                                                        ).OrderBy(x => x.TotalCargo).ToList();
         }
         public List<Cargo> BuscarVencidos(short idEmpresa)
         {
-            return uow.Repository<Cargo>().Get(x => x.Saldada).OrderBy(x => ((TimeSpan)(x.FechaVencimiento - DateTime.Now)).Days).ToList();
+            return uow.Repository<Cargo>().Get(x => !x.Saldada).OrderBy(x => ((TimeSpan)(x.FechaVencimiento - DateTime.Now)).Days).ToList();
         }
         public Cargo Buscar(int idCargo)
         {

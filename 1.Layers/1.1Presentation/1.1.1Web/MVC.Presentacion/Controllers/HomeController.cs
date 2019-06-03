@@ -49,6 +49,8 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
                     ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
                     ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());
+                    ViewBag.Cartera = DashBoardServicio.DashBoardCartera(Session["StringToken"].ToString());                  
+                    ViewBag.Caja = DashBoardServicio.DashBoardCajaGeneral(Session["StringToken"].ToString());
                 }
                 else
                     return View("Index", AutenticacionServicio.InitIndex(respuesta));
@@ -61,10 +63,13 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
                 //if(EsAnden)
                 ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());
+                //if(EsAnden)
+                ViewBag.Cartera = DashBoardServicio.DashBoardCartera(Session["StringToken"].ToString());
+                //if(EsCajaGeneral)
+                ViewBag.Caja = DashBoardServicio.DashBoardCajaGeneral(Session["StringToken"].ToString());
             }
             return View();
         }
-
         public ActionResult Requisicion()
         {
             return View();
