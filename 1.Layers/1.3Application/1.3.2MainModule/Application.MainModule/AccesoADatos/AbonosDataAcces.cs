@@ -148,6 +148,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                         && x.Saldada.Equals(true))
                                                          .ToList();
         }
+        public List<Cargo> BuscarVencidos(short idEmpresa)
+        {
+            return uow.Repository<Cargo>().Get(x => x.Saldada).OrderBy(x => ((TimeSpan)(x.FechaVencimiento - DateTime.Now)).Days).ToList();
+        }
         public Cargo Buscar(int idCargo)
         {
             return uow.Repository<Cargo>().GetSingle(x => x.IdCargo.Equals(idCargo));

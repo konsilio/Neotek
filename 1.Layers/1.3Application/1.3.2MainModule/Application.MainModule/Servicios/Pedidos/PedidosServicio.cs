@@ -75,7 +75,7 @@ namespace Application.MainModule.Servicios.Pedidos
         }
         public static List<PedidoDashDTO> GenerarListDash(List<Pedido> lista, DateTime Periodo)
         {
-            List<PedidoDashDTO> listDTO = new List<DTOs.PedidoDashDTO>();
+            List<PedidoDashDTO> listDTO = new List<PedidoDashDTO>();
             int Dias = Periodo.Month.Equals(DateTime.Now.Month) && Periodo.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(Periodo.Year, Periodo.Month);
             for (int i = 1; i < Dias; i++)
             {

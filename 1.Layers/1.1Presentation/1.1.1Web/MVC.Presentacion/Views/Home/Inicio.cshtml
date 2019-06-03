@@ -142,7 +142,6 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="card text-center">
-
                     <div class="body">
                         <div class="row">
                             <div class="col-md-12">
@@ -172,6 +171,82 @@
                                                 <th>@item.PuntoVenta</th>
                                                 <th>@item.VentaTotal</th>
                                                 <th>@item.Total</th>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <address>
+                                    <strong>Cartera Recuperada</strong>                                   
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table m-b-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket</th>
+                                        <th>Kilos</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Anden.Ventas != null)
+                                    {
+                                        foreach (var item in ViewBag.Anden.Ventas)
+                                        {
+                                            <tr>
+                                                <th>@item.Ticket</th>
+                                                <th>@item.VentaTotal</th>
+                                                <th>@item.Total</th>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <address>
+                                    <strong>Top 5 Deudores mas longevo</strong>
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table m-b-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Deuda</th>
+                                        <th>Dias de vencido</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Deudores.Ventas != null)
+                                    {
+                                        foreach (var item in ViewBag.Anden.Ventas)
+                                        {
+                                            <tr>
+                                                <th>@item.Cliente</th>
+                                                <th>@item.SaldoInsoluto</th>
+                                                <th>@item.Dias1a7</th>
                                             </tr>
                                         }
                                     }

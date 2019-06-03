@@ -140,6 +140,7 @@
     <Compile Include="DTOs\Reportes\CajaGeneral\RepCorteCajaDTO.cs" />
     <Compile Include="DTOs\Reportes\DashBoard\AdministracionDTO.cs" />
     <Compile Include="DTOs\Reportes\DashBoard\AndenDTO.cs" />
+    <Compile Include="DTOs\Reportes\DashBoard\CarteraDTO.cs" />
     <Compile Include="DTOs\Reportes\GastoVehicular\GastoVehicularDTO.cs" />
     <Compile Include="DTOs\Reportes\GastoVehicular\RepGastoVehicularDTO.cs" />
     <Compile Include="DTOs\Reportes\InventarioConcepto\InventarioXConceptoDTO.cs" />

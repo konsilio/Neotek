@@ -15,8 +15,8 @@ namespace Application.MainModule.Servicios.Cobranza
     {
         public static List<CargosDTO> Obtener(short idempresa)
         {
-            List<CargosDTO> lPedidos = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().BuscarTodos(idempresa));
-            return lPedidos;
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().BuscarTodos(idempresa));
+            //return lPedidos;
         }
         public static List<Abono> Obtener(DateTime f)
         {
@@ -24,18 +24,26 @@ namespace Application.MainModule.Servicios.Cobranza
         }
         public static List<CargosDTO> CRecuperada(short idempresa)
         {
-            List<CargosDTO> lPedidos = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().Buscar(idempresa));
-            return lPedidos;
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().Buscar(idempresa));
+            //return lPedidos;
         }
         public static List<CargosDTO> CRecuperada(List<CRecuperadaDTO> lstCRecuperado, List<CRecuperadaTotalesDTO> lstTotal,short idempresa)
         {
-            List<CargosDTO> lPedidos = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(lstCRecuperado, lstTotal);
-            return lPedidos;
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(lstCRecuperado, lstTotal);
+            //return lPedidos;
         }
         public static ReporteDTO Obtener(List<CarteraVencidaDTO> lCargoV, List<CarteraVencidaDTO> lCargoT)
         {
-            ReporteDTO lPedidos = AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTORep(lCargoV, lCargoT);
-            return lPedidos;
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTORep(lCargoV, lCargoT);
+            //return lPedidos;
+        }
+        public static List<Cargo> CVencida(short idEmpresa)
+        {
+            return new AbonosDataAcces().BuscarVencidos(idEmpresa);
+        }
+        public static List<CargosDTO> CarteraVencida(short idEmpresa)
+        {
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(CVencida(idEmpresa));
         }
         public static CargosDTO Obtener(int idCargo)
         {

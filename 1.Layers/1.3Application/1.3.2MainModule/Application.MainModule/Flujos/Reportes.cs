@@ -5,11 +5,9 @@ using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio;
 using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
 using Application.MainModule.AdaptadoresDTO.Pedidos;
-using Application.MainModule.AdaptadoresDTO.Requisiciones;
-using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.DTOs;
-using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Cobranza;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
@@ -150,6 +148,21 @@ namespace Application.MainModule.Flujos
             };
             return respuesta;
         }
+        public CarteraDTO DashCartera()
+        {
+            var CarterRec = CobranzaServicio.CRecuperada(TokenServicio.ObtenerIdEmpresa());
+            var carterVencida = CobranzaServicio.CarteraVencida(TokenServicio.ObtenerIdEmpresa()).Take(5).ToList();
+            var respuesta = new CarteraDTO()
+            {
+                CarteraRecuperada =CarterRec,
+                CarteraVencida = carterVencida
+            };
+            return respuesta;
+        }
+        //public List<CargosDTO> CarteraVencida()
+        //{
+        //    return CobranzaServicio.CarteraVencida((short)2);
+        //}
         #endregion
 
     }
