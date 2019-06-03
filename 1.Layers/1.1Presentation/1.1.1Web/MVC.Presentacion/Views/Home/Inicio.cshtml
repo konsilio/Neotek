@@ -2,6 +2,15 @@
     ViewBag.Title = "Inicio -";
 }
 
+<script>
+    window.onload = function() {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, @Html.Raw(ViewBag.VentasRema.Json));
+
+        var ctx = document.getElementById('CallCenter').getContext('2d');
+        var myChart = new Chart(ctx, @Html.Raw(ViewBag.CallCenter));
+    }
+</script>
 <section class="content home">
     <div class="container-fluid">
         <div class="block-header">
@@ -25,18 +34,361 @@
             </div>
         </div>
         <div class="row clearfix">
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">battery_full</i></p>
+                        <span>Ventas de Camionetas</span>
+                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalCamionetas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalCamionetas</span></h3>
+                        <small class="text-muted">Kilogramos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">local_shipping</i></p>
+                        <span>Ventas de Pipas</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</h3>
+                        <small class="text-muted">Kilogramos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-red">local_gas_station</i></p>
+                        <span>Ventas de Estaciones</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</h3>
+                        <small class="text-muted">Kilogramos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-green">functions</i></p>
+                        <span>Total de venta</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalVetna" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalVetna</h3>
+                        <small class="text-muted">Kilogramos</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="header">
-                        <h2>Cubo de <strong>información</strong></h2>
+                        <h2>DashBoard: <strong>Información general</strong></h2>
                     </div>
+                    <div class="body m-b-10">
+                        <canvas id="myChart" style="width: 100%; height: 250px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Call Center:</strong> Información general</h2>
+                    </div>
+                    <div class="body m-b-10">
+                        <canvas id="CallCenter" style="width: 100%; height: 250px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Anden:</strong> Información general</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-4 col-md-6">
+                <div class="card text-center">
                     <div class="body">
-                        Lo sentimos, de momento no tenemos información para mostrar.
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">pie_chart_outlined</i></p>
+                        <span>Total de producto</span>
+                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.Anden.TotalProduto" data-speed="2000" data-fresh-interval="700">140180</span></h3>
+                        <small class="text-muted">Kilogramos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">queue_play_next</i></p>
+                        <span>Siguiente orden de compra</span>
+                        <h3 class="m-b-10 ">@ViewBag.Anden.OrdenCompra</h3>
+                        <small class="text-muted">Autorizada</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <span>Nivel de almacen principal</span>
+                        <input type="text" class="knob" value="@ViewBag.Anden.NivelAlmacen" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
+                        <div>
+                            <small class="text-muted">@ViewBag.Anden.KilosAlmacen</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12">
+                <div class="card text-center">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <address>
+                                    <strong>Ultimas 5 ventas</strong>
+                                    <br><strong>Nota importante:</strong>
+                                    <br>Las ventas aqui presentadas
+                                    <br>podrian no ser las ultimas en tiempo real.
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table m-b-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Pto Venta</th>
+                                        <th>Kilos</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Anden.Ventas != null)
+                                    {
+                                        foreach (var item in ViewBag.Anden.Ventas)
+                                        {
+                                            <tr>
+                                                <th>@item.PuntoVenta</th>
+                                                <th>@item.VentaTotal</th>
+                                                <th>@item.Total</th>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12">
+                <div class="card text-center">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <address>
+                                    <strong>Cartera Recuperada</strong>
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table m-b-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket</th>
+                                        <th>Fecha abono</th>
+                                        <th>Cliente</th>
+                                        <th>Importe</th>
+                                        <th>forma de pago</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Cartera.CarteraRecuperada != null)
+                                    {
+                                        foreach (var item in ViewBag.Cartera.CarteraRecuperada)
+                                        {
+                                            foreach (var abono in item.lstCreditoR)
+                                            {
+                                                <tr>
+                                                    <th>@item.Ticket</th>
+                                                    <th>@abono.FechaAbono</th>
+                                                    <th>@item.Cliente
+                                                    <th>@abono.MontoAbono</th>
+                                                    <th>@abono.FormaPago</th>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12">
+                <div class="card text-center">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <address>
+                                    <strong>Cartera Vencida</strong>
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table m-b-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket</th>
+                                        <th>Cliente</th>
+                                        <th>Importe</th>
+                                        <th>Dias de Adeudo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Cartera.CarteraVencida != null)
+                                    {
+                                        foreach (var item in ViewBag.Cartera.CarteraVencida)
+                                        {
+
+                                            <tr>
+                                                <th>@item.Ticket</th>
+                                                <th>@item.Cliente
+                                                <th>@item.SaldoInsoluto</th>
+                                        <th>@item.Dias1a7</th>
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-6 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <address>
+                                    <strong>Top 5 Deudores mas longevos</strong>
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table m-b-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Deuda</th>
+                                        <th>Dias de vencido</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Cartera.TopDeudoresL != null)
+                                    {
+                                        foreach (var item in ViewBag.Cartera.TopDeudoresL)
+                                        {
+                                            <tr>
+                                                <th>@item.Cliente</th>
+                                                <th>@item.SaldoInsoluto</th>
+                                                <th>@item.Dias1a7</th>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <address>
+                                    <strong>Top 5 Deudores mas valiosos</strong>
+                                </address>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table m-b-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Deuda</th>
+                                        <th>Dias de vencido</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Cartera.TopDeudoresV != null)
+                                    {
+                                        foreach (var item in ViewBag.Cartera.TopDeudoresV)
+                                        {
+                                            <tr>
+                                                <th>@item.Cliente</th>
+                                                <th>@item.SaldoInsoluto</th>
+                                                <th>@item.Dias1a7</th>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">battery_full</i></p>
+                        <span>Ventas de Camionetas</span>
+                        <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalCamionetas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalCamionetas</span></h3>
+                        <small class="text-muted">Pesos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">local_shipping</i></p>
+                        <span>Ventas de Pipas</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.Caja.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</h3>
+                        <small class="text-muted">Pesos</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-red">local_gas_station</i></p>
+                        <span>Ventas de Estaciones</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.Caja.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</h3>
+                        <small class="text-muted">Pesos</small>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card text-center">
+                    <div class="body">
+                        <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-green">functions</i></p>
+                        <span>Total de venta</span>
+                        <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.Caja.TotalVetna" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalVetna</h3>
+                        <small class="text-muted">Pesos</small>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-

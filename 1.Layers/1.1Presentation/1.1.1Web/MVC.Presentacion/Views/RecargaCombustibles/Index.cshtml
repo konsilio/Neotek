@@ -38,11 +38,11 @@
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
-                            <h2>Cuentas Contables</h2>
+                            <h2>Recarga de Combustible</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Equipo de Transporte</li>
-                                <li class="breadcrumb-item">Recarga de combustible</li>
+                                <li class="breadcrumb-item">Recargas</li>
                             </ul>
                         </div>
                     </div>
@@ -54,30 +54,30 @@
                             <div class="row clearfix">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <strong>Vehiculo *</strong>
+                                        <strong>Vehiculo*</strong>
                                         @Html.DevExpress().ComboBox(settings =>
-                                     {
-                                         settings.Name = "Id_Vehiculo";
-                                         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                         settings.SelectedIndex = 0;
-                                         settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                         settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                         settings.Properties.TextField = "Descripcion";
-                                         settings.Properties.ValueField = "IdEquipoTransporte";
-                                         settings.Properties.ValueType = typeof(int);                                
-                                         settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
-                                         settings.Properties.TextFormatString = "{0} {1} {2}";
-                                         settings.CustomJSProperties = (sender, e) =>
-                                         {
-                                             System.Collections.ArrayList list = new System.Collections.ArrayList();
-                                             MVCxComboBox comb = sender as MVCxComboBox;
-                                             foreach (ListEditItem item in comb.Items)
-                                             {
-                                                 list.Add(item.GetValue("EsCamioneta") + "|" + item.GetValue("EsPipa") + "|" + item.GetValue("EsUtilitario"));
-                                             }
-                                             e.Properties["cphidenVehiculos"] = list;
-                                         };
-                                     }).BindList(ViewBag.Vehiculos).Bind(Model.Id_Vehiculo).GetHtml()
+                                   {
+                                       settings.Name = "Id_Vehiculo";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.SelectedIndex = 0;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Descripcion";
+                                       settings.Properties.ValueField = "IdEquipoTransporte";
+                                       settings.Properties.ValueType = typeof(int);
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
+                                       settings.Properties.TextFormatString = "{0} {1} {2}";
+                                       settings.CustomJSProperties = (sender, e) =>
+                                       {
+                                           System.Collections.ArrayList list = new System.Collections.ArrayList();
+                                           MVCxComboBox comb = sender as MVCxComboBox;
+                                           foreach (ListEditItem item in comb.Items)
+                                           {
+                                               list.Add(item.GetValue("EsCamioneta") + "|" + item.GetValue("EsPipa") + "|" + item.GetValue("EsUtilitario"));
+                                           }
+                                           e.Properties["cphidenVehiculos"] = list;
+                                       };
+                                   }).BindList(ViewBag.Vehiculos).Bind(Model.Id_Vehiculo).GetHtml()
                                     </div>
                                     @Html.ValidationMessageFor(m => m.Id_Vehiculo, "", new { @class = "alert-danger" })
                                 </div>
@@ -91,35 +91,73 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <strong>Kilometraje Actual *</strong>
-                                        @Html.TextBoxFor(m => m.KilometrajeActual, Model.KilometrajeActual.ToString(), new { @class = "form-control number" })
+                                        <strong>Kilometraje Actual*</strong>
+                                        @Html.DevExpress().TextBox(settings =>
+                                        {
+                                            settings.Name = "KilometrajeActual";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.MaskSettings.Mask = "<0..9999999>";
+                                            settings.Properties.MaskSettings.ErrorText = "Kilometraje Actual";
+                                            settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                                        }).GetHtml()
+                                        @*@Html.TextBoxFor(m => m.KilometrajeActual, Model.KilometrajeActual.ToString(), new { @class = "form-control number" })*@
                                         @Html.ValidationMessageFor(m => m.KilometrajeActual, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <strong>Kilometraje Recorrido *</strong>
-                                        @Html.TextBoxFor(m => m.KilometrajeRecorrido, Model.KilometrajeRecorrido.ToString(), new { @class = "form-control number" })
+                                        <strong>Kilometraje Recorrido*</strong>
+                                        @Html.DevExpress().TextBox(settings =>
+                                        {
+                                            settings.Name = "KilometrajeRecorrido";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.MaskSettings.Mask = "<0..999999>";
+                                            settings.Properties.MaskSettings.ErrorText = "Kilometraje Recorrido";
+                                            settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                                        }).GetHtml()
+                                        @*@Html.TextBoxFor(m => m.KilometrajeRecorrido, Model.KilometrajeRecorrido.ToString(), new { @class = "form-control number" })*@
                                         @Html.ValidationMessageFor(m => m.KilometrajeRecorrido, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
                             <div class="row clearfix">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <strong>Litros Recargados *</strong>
-                                        @Html.TextBoxFor(m => m.LitrosRecargados, Model.LitrosRecargados.ToString(), new { @class = "form-control number" })
+                                        <strong>Litros Recargados*</strong>
+                                        @Html.DevExpress().TextBox(settings =>
+                                        {
+                                            settings.Name = "LitrosRecargados";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.Properties.MaskSettings.Mask = "<0..999999>";
+                                            settings.Properties.MaskSettings.ErrorText = "Litros Recargados";
+                                            settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                                        }).GetHtml()
                                         @Html.ValidationMessageFor(m => m.LitrosRecargados, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <strong>Tipo de combustible *</strong>
+                                        <strong>Costo de Recarga* ($)</strong>
+                                        @Html.DevExpress().TextBox(settings =>
+                                   {
+                                       settings.Name = "Monto";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.DisplayFormatString = "f2";
+                                       settings.Properties.MaskSettings.ErrorText = "Monto";
+                                       settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                                   }).GetHtml()
+                                        @* @Html.TextBoxFor(m => m.Monto, Model.Monto.ToString(), new { @class = "form-control number" })*@
+                                        @Html.ValidationMessageFor(m => m.Monto, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <strong>Tipo de combustible*</strong>
                                         @Html.DevExpress().ComboBox(settings =>
                                        {
                                            settings.Name = "IdTipoCombustible";
                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                           settings.SelectedIndex = 0;
+                                           //settings.SelectedIndex = 0;
                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                            settings.Properties.TextField = "Descripcion";
@@ -128,9 +166,9 @@
                                         @Html.ValidationMessageFor(m => m.IdTipoCombustible, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <strong>Fecha de Mantenimiento *</strong>
+                                        <strong>Fecha de Recarga*</strong>
                                         @Html.DevExpress().DateEdit(settings =>
                                         {
                                             settings.Name = "FechaRecarga";
@@ -146,7 +184,7 @@
                                         @Html.ValidationMessageFor(m => m.FechaRecarga, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-1">
                                     <strong></strong>
                                     <div class="form-group">
                                         @if (ViewBag.EsEdicion == null)

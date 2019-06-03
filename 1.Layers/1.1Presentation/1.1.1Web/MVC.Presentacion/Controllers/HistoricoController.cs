@@ -1,7 +1,6 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models;
 using MVC.Presentacion.Models.Seguridad;
-using MVC.Presentacion.Models.Historico;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -55,8 +54,8 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
-                List<YearsDTO> listYears = ObtenerAños();
-                model.Years = listYears;
+                //List<YearsDTO> listYears = ObtenerAños();
+                model.Years = HistoricoServicio.GetYears(tkn);
             }
             ViewBag.json = TempData["json"];
             if (TempData["RespuestaDTO"] != null)
@@ -474,18 +473,11 @@ namespace MVC.Presentacion.Controllers
            // return RedirectToAction("HistoricoVentas", modelo);
 
         }
-        public List<YearsDTO> ObtenerAños()
-        {
-            var respuesta = HistoricoServicio.GetYears(tkn);
-            return respuesta;
-        }
-
-        //public ActionResult Descraga(string File, MemoryStream ms)
+        //public List<YearsDTO> ObtenerAños()
         //{
-        //    return new FileStreamResult(ms, "application/vnd.ms-excel") { FileDownloadName = File };
-
+        //    var respuesta = HistoricoServicio.GetYears(tkn);
+        //    return respuesta;
         //}
-        
         public ActionResult Eliminar(int? id)
         {
 
@@ -512,7 +504,6 @@ namespace MVC.Presentacion.Controllers
                 System.Diagnostics.Debug.WriteLine(ex.Message);
                 return RedirectToAction("Index");
             }
-
         }
         private string Validar(RespuestaDTO Resp = null)
         {

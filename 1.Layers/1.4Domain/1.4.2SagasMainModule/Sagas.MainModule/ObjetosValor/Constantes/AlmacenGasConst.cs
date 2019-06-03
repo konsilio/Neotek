@@ -29,6 +29,14 @@ namespace Sagas.MainModule.ObjetosValor.Constantes
         public const string Salida = "Salida";
         public const string LecturaInicial = "Lectura Inicial";
         public const string LecturaFinal = "Lectura Final";
-        public const string EmpresaNueva = "Empresa Nueva";        
+        public const string EmpresaNueva = "Empresa Nueva";
+
+        //Cilindros
+        public const string PXKg = "Precio por Kg.";
+        public const string C10 = "Cilindro de 10 kg";
+        public const string C20 = "Cilindro de 20 kg";
+        public const string C30 = "Cilindro de 30 kg";
+        public const string C45 = "Cilindro de 45 kg";
+
     }
 }

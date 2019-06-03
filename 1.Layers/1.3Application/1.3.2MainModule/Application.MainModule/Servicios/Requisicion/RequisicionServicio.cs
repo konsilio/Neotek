@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Requisiciones;
+using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
@@ -25,6 +26,10 @@ namespace Application.MainModule.Servicios.Requisiciones
         public static List<RequisicionDTO> BuscarRequisicionPorPeriodo(short _IdEmpresa, DateTime periodo)
         {
             return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas(_IdEmpresa, periodo));
+        }
+        public static List<Requisicion> BuscarRequisicionPorPeriodo(short _IdEmpresa, DateTime fi, DateTime ff)
+        {
+            return new RequisicionDataAccess().BuscarTodas(_IdEmpresa, fi, ff);
         }
         public static RequisicionRevisionDTO BuscarRequisicion(int _idrequi)
         {
@@ -117,6 +122,34 @@ namespace Application.MainModule.Servicios.Requisiciones
             if (_productos.Where(x => x.AutorizaCompra.Equals(true)).Count().Equals(_productos.Count))
                 _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_compra;
             return _requisicion;
+        }
+        public static string ListaProductos(List<RequisicionProducto> Lista)
+        {
+            string respuesta = string.Empty;
+            foreach (var item in Lista)
+            {
+                if (respuesta.Equals(string.Empty))
+                    respuesta = item.Producto.Descripcion;
+                else
+                    respuesta += string.Concat(", ", item.Producto.Descripcion);
+            }
+            return respuesta;
+        }
+        public static List<RepRequisicionDTO> ConvertirReporte(List<Requisicion> lista)
+        {
+            List<RepRequisicionDTO> respuesta = new List<RepRequisicionDTO>();
+            foreach (var req in lista)
+            {
+                if (req.Productos.Count != 0)
+                {
+                    var porCentroCosto = req.Productos.Select(x => x.IdCentroCosto).Distinct().ToList();
+                    foreach (var idcc in porCentroCosto)
+                    {
+                        respuesta.Add(RequisicionAdapter.ToRepDTO(req, req.Productos.Where(x => x.IdCentroCosto.Equals(idcc)).ToList()));
+                    }   
+                }
+            }
+            return respuesta;
         }
     }
 }

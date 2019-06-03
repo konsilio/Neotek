@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Seguridad;
@@ -24,7 +25,7 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static RespuestaDto Borrar(int id)
         {
-            var pip = Obtener(id);          
+            var pip = Obtener(id);
             return new PipaDataAccess().Borrar(PipaAdapter.FromEntity(pip));
         }
         public static List<Pipa> Obtener()
@@ -47,6 +48,14 @@ namespace Application.MainModule.Servicios.Catalogos
         public static Pipa Obtener(int id)
         {
             return new PipaDataAccess().ObtenerPipa(id);
+        }
+        public static List<Pipa> Obtener(List<PipaDTO> pipas)
+        {
+            List<Pipa> lista = new List<Pipa>();
+            foreach (var item in pipas)
+                if (item.Activo && Obtener(item.IdPipa) != null)
+                    lista.Add(Obtener(item.IdPipa));
+            return lista;
         }
         public static Pipa Obtener(int id, bool activo)
         {

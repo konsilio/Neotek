@@ -1,0 +1,45 @@
+﻿@using MVC.Presentacion.Models
+@{
+    ViewBag.Title = "Reportes";
+    Layout = null;
+    TempData["DataSource"] = Model;
+}
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "Cubo";
+        settings.CallbackRouteValues = new { Controller = "Reportes", Action = "GetGridView", Tipo = ViewData["Reporte"]};
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsText.EmptyDataRow = "No se encontraron registros";
+        settings.SettingsText.GroupPanel = "Desliza los campos aquí para hacer una agrupación ";
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.Theme = "Material";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFooter = true;
+        //if (ViewData["Reporte"] != null && ViewData["Reporte"].Equals(TiposReporteConst.InventarioPorPuntoVenta))
+        //{
+        //    settings.CustomUnboundColumnData = (s, e) =>
+        //    {
+        //        if (e.Column.FieldName == "FullName")
+        //        {
+        //            string firstName = (e.GetListSourceFieldValue("FirstName")).ToString();
+        //            string lastName = (e.GetListSourceFieldValue("LastName")).ToString();
+        //            e.Value = firstName + " " + lastName;
+        //        };
+        //    };
+        //}
+        settings.GroupSummary.Add(new ASPxSummaryItem
+        {
+            FieldName = "CunentaContable",
+            SummaryType = DevExpress.Data.SummaryItemType.Count,
+            DisplayFormat = "Total={0}"
+        });
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total");
+    }
+).Bind(Model).GetHtml()
+

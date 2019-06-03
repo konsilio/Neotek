@@ -43,8 +43,16 @@ namespace Application.MainModule.Servicios.Catalogos
 
         public static List<PrecioVentaDTO> ObtenerPreciosVentaIdEmp(short IdEmpresa)
         {
-            List<PrecioVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PrecioVentaGasAdapter.ToDTO(new PrecioVentaDataAccess().BuscarTodos(IdEmpresa));
-            return lPventas;
+            var ventas = ObtenerListaPreciosVentaIdEmp(IdEmpresa);
+            return AdaptadoresDTO.Catalogo.PrecioVentaGasAdapter.ToDTO(ventas);
+        }
+        public static List<PrecioVenta> ObtenerListaPreciosVentaIdEmp(short IdEmpresa)
+        {
+            return new PrecioVentaDataAccess().BuscarTodos(IdEmpresa);
+        }
+        public static List<PrecioVenta> ObtenerListaPreciosVentaIdEmp(short IdEmpresa, DateTime fi, DateTime ff)
+        {
+            return new PrecioVentaDataAccess().BuscarTodos(IdEmpresa, fi, ff);
         }
         public static PrecioVenta ObtenerPrecioVigente(short idEmpresa)
         {

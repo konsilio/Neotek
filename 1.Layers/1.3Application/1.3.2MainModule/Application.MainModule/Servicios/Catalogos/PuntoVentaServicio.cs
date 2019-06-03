@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile.Cortes;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.DTOs.Ventas;
+using Application.MainModule.AdaptadoresDTO.Ventas;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -60,7 +62,6 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarPorOperadorChofer(idOperadorChofer);
         }
-
         public static PuntoVenta ObtenerPorUsuarioAplicacion()
         {
             var operadorChofer = OperadorChoferServicio.ObtenerPorUsuarioAplicacion();
@@ -113,6 +114,15 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta, fecha);
         }
+        public static List<VentaPuntoDeVenta> ObtenerVentasTOP(int TOP, DateTime fecha)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasTOP(TOP, fecha);          
+        }
+        public static List<VentaPuntoVentaDTO> ObtenerVentasTOPDTO(int TOP, DateTime fecha)
+        {
+            var vts = ObtenerVentasTOP(TOP, fecha);
+            return CajaGeneralAdapter.ToDTOP(vts);
+        }
         public static List<VentaPuntoDeVenta> ObtenerVentasCredito(int idPuntoVenta, DateTime fecha)
         {
             return new PuntoVentaDataAccess().BuscarVentasTipoPago(idPuntoVenta, fecha, true);
@@ -144,6 +154,14 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(int id)
         {
             return new PuntoVentaDataAccess().BuscarVentasPorCliente(id);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(short id)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasPorEmpresa(id);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorPeriodo(short id, DateTime Periodo)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasPorPeriodo(id, Periodo);
         }
         public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(int id,DateTime fi, DateTime ff)
         {

@@ -16,6 +16,7 @@ namespace MVC.Presentacion.Models
         public string DescripcionMtto { get; set; }
         public int Kilometraje_Actual { get; set; }
         public string NumeroOC { get; set; }
-        public EquipoTransporteDTO _Vehiculo {get; set;} 
+        public EquipoTransporteDTO _Vehiculo {get; set;}
+        public decimal Monto { get; set; }
     }
 }

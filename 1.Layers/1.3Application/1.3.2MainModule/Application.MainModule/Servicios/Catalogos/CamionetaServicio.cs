@@ -4,6 +4,7 @@ using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Seguridad;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Constantes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,18 @@ namespace Application.MainModule.Servicios.Catalogos
                 Mensaje = mensaje,
                 MensajesError = new List<string>() { mensaje },
             };
+        }
+        public static string TipoCilindro(int identificador)
+        {
+            if (identificador.Equals(10))
+                return AlmacenGasConst.C10;
+            if (identificador.Equals(20))
+                return AlmacenGasConst.C20;
+            if (identificador.Equals(30))
+                return AlmacenGasConst.C30;
+            if (identificador.Equals(45))
+                return AlmacenGasConst.C45;
+            return AlmacenGasConst.PXKg;
         }
     }
 }

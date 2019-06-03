@@ -45,7 +45,6 @@ namespace MVC.Presentacion.Controllers
             TempData["ListaTickets"] = _mod.Tickets;
             return RedirectToAction("Index", _mod);
         }
-
         public ActionResult DatosCliente(FacturacionModel _mod)
         {
             if (TempData["RespuestaDTO"] != null)

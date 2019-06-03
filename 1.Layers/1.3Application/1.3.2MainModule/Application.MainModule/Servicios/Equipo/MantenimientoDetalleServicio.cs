@@ -27,6 +27,10 @@ namespace Application.MainModule.Servicios.Equipo
         {
             return new MantenimientoDetDataAccess().Obtener();
         }
+        public static List<DetalleMantenimiento> Buscar(DateTime fi, DateTime ff)
+        {
+            return new MantenimientoDetDataAccess().Obtener(fi, ff);
+        }
         public static DetalleMantenimiento Buscar(int id)
         {
             return new MantenimientoDetDataAccess().Obtener(id);

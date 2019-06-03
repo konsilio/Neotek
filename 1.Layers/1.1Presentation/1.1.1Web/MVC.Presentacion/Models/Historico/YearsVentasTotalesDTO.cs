@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MVC.Presentacion.Models.Historico
+namespace MVC.Presentacion.Models
 {
     public class YearsVentasTotalesDTO
     {

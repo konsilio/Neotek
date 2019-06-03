@@ -58,21 +58,21 @@ namespace DS.MainModule.Controllers
 
         [Route("consultar/years")]
         [HttpGet]
-        public HttpResponseMessage GetYears(YearDTO years)
+        public HttpResponseMessage GetYears()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _historico.ObtenerElementosDistintos());
+            return Request.CreateResponse(HttpStatusCode.OK, _historico.ObtenerAnios());
         }
         [Route("consultar/json")]
         [HttpPost]
-        public HttpResponseMessage GetJson(HistoricoConsultaDTO json)
+        public HttpResponseMessage GetJson(HistoricoConsultaDTO dto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _historico.GenerarJsonConsulta(json));
+            return Request.CreateResponse(HttpStatusCode.OK, _historico.GenerarJsonConsulta(dto));
         }
         [Route("consultar/yearstotales")]
         [HttpPost]
-        public HttpResponseMessage GetVentasTotales(HistoricoConsultaDTO dto2)
+        public HttpResponseMessage GetVentasTotales(HistoricoConsultaDTO dto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _historico.VentasConsultas(dto2));
+            return Request.CreateResponse(HttpStatusCode.OK, _historico.VentasConsultas(dto));
         }
     }
 }

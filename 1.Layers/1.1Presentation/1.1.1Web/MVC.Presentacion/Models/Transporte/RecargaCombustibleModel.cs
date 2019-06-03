@@ -20,5 +20,6 @@ namespace MVC.Presentacion.Models
         public string Vehiculo { get; set; }
         public string Chofer { get; set; }
         public DateTime FechaRecarga { get; set; }
+        public decimal Monto { get; set; }
     }
 }

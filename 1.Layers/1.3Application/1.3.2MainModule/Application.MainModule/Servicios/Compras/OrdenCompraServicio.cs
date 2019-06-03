@@ -48,7 +48,7 @@ namespace Application.MainModule.Servicios.Compras
             foreach (var _prod in ocInicial.Productos)
             {
                 var p = Catalogos.ProductoServicio.ObtenerProducto(_prod.IdProducto);
-                    if (!nlist.Exists(x => x.IdProveedor.Equals(_prod.IdProveedor)))
+                if (!nlist.Exists(x => x.IdProveedor.Equals(_prod.IdProveedor)))
                 {
                     OrdenCompra nOC = new OrdenCompra();
                     nOC.IdProveedor = _prod.IdProveedor;
@@ -92,6 +92,10 @@ namespace Application.MainModule.Servicios.Compras
                 return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
             else
                 return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+        }
+        public static List<OrdenCompra> BuscarTodo(short idEmpresa, DateTime fi, DateTime ff)
+        {
+            return new OrdenCompraDataAccess().BuscarTodos(idEmpresa, fi, ff);
         }
         public static OrdenCompra Buscar(int idOrdenCompra)
         {
@@ -251,6 +255,21 @@ namespace Application.MainModule.Servicios.Compras
 
             return listaOCs.LastOrDefault();
         }
+        public static OrdenCompra BuscarUltimaOCGas(short id)
+        {
+            var empresa = EmpresaServicio.Obtener(id);
+            if (empresa.OrdenesCompra != null && empresa.OrdenesCompra.Count > 0)
+                return empresa.OrdenesCompra.LastOrDefault(x => x.EsActivoVenta
+                                                             && x.EsGas
+                                                             && x.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_exitosa));
+
+            var listaOCs = new OrdenCompraDataAccess().Buscar(empresa.IdEmpresa, OrdenCompraEstatusEnum.Compra_exitosa, true, true, false);
+
+            if (listaOCs == null || listaOCs.Count <= 0)
+                return null;
+
+            return listaOCs.LastOrDefault();
+        }
         public static OrdenCompraDTO AgregarDatosRequisicion(OrdenCompraDTO dto)
         {
             var datosreq = Requisiciones.RequisicionServicio.BuscarRequisicionPorId(dto.IdRequisicion);
@@ -306,7 +325,7 @@ namespace Application.MainModule.Servicios.Compras
             return oc;
         }
         public static OrdenCompra CompletarDatosPorteador(ComplementoGasDTO dto, OrdenCompra oc)
-        {           
+        {
             oc.IdCentroCosto = oc.IdCentroCosto;
             oc.IdCuentaContable = oc.IdCuentaContable;
             oc.IdProveedor = oc.IdProveedor;
@@ -346,7 +365,7 @@ namespace Application.MainModule.Servicios.Compras
             foreach (var Entity in Entitys)
             {
                 var prod = Prods.FirstOrDefault(x => x.IdProducto.Equals(Entity.IdProducto));
-                Entity.IdCentroCosto = prod.IdCentroCosto;            
+                Entity.IdCentroCosto = prod.IdCentroCosto;
                 Entity.Precio = prod.Precio;
                 Entity.Descuento = prod.Descuento;
                 Entity.IVA = prod.IVA;
@@ -371,5 +390,24 @@ namespace Application.MainModule.Servicios.Compras
                 FechaRegistro = Convert.ToDateTime(DateTime.Now.ToShortDateString())
             };
         }
+        public static string ListaProductos(List<OrdenCompraProducto> Lista)
+        {
+            string respuesta = string.Empty;
+            foreach (var item in Lista)
+            {
+                if (respuesta.Equals(string.Empty))
+                    respuesta = item.Producto;
+                else
+                    respuesta += string.Concat(", ", item.Producto);
+            }
+            return respuesta;
+        }
+        public static string DeterminarEstatusPago(List<OrdenCompraPago> pagos = null)
+        {
+            if (pagos == null && pagos.Count == 0 && pagos.Exists(x => x.SaldoInsoluto != 0))
+                return "Pagado";
+            else
+                return "Por Pagar";
+        }        
     }
 }

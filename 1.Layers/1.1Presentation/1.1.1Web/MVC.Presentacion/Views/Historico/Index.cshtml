@@ -1,6 +1,5 @@
-﻿@model MVC.Presentacion.Models.Historico.HistoricoVentaModel
-@using PagedList.Mvc;
-@using PagedList;
+﻿@model MVC.Presentacion.Models.HistoricoVentaModel
+
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -21,22 +20,6 @@
     if (mensaje != '') {
         $(window).on("load", showNotification(tipo, mensaje, 'top', 'center', '', ''));
     }
-    //$(document).ready(function () {
-
-    //    $("#idUrl").change(function (event) {
-
-    //        var reader = new FileReader();
-    //        reader.readAsDataURL(event.srcElement.files[0]);
-
-    //        reader.onload = function () {
-    //            var fileContent = reader.result;
-    //            console.log(fileContent);
-    //        }
-
-    //        $("#Url").val($("idUrl").val());
-    //    });
-    //});
-
 </script>
 
 <body>
@@ -168,19 +151,7 @@
 
                                     </table>
                                 </div>
-                            </div>
-                            @*@if (ViewBag.HistoricoVentas != null)
-                                {
-                                    <div class="row clearfix">
-                                        <div class="col-md-6">
-                                            Página @(ViewBag.HistoricoVentas.PageCount < ViewBag.HistoricoVentas.PageNumber ? 0 : ViewBag.HistoricoVentas.PageNumber) de @ViewBag.HistoricoVentas.PageCount
-                                        </div>
-                                        <div class="col-md-6 text-right">
-                                            @Html.PagedListPager((IPagedList)ViewBag.HistoricoVentas, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
-                                        </div>
-                                    </div>
-                                }*@
-
+                            </div>      
                         </div>
                     </div>
                 </div>

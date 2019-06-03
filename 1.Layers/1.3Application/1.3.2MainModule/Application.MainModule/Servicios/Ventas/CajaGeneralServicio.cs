@@ -138,6 +138,30 @@ namespace Application.MainModule.Servicios.Ventas
             List<VentaPuntoVentaDTO> lPventas = CajaGeneralAdapter.ToDTOC(new CajaGeneralDataAccess().BuscarPorCve(cve));
             return lPventas;
         }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasCamioneta(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetas(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasPipas(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasPipas(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalBonificaciones(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalBonificaciones(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasACredito(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasACredito(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(EstacionCarburacion entidad ,DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f);
+        }
         public static List<VentaCorteAnticipoDTO> ObtenerCE(string cve)
         {
             List<VentaCorteAnticipoDTO> lPventas = CajaGeneralAdapter.ToDTOCE(new CajaGeneralDataAccess().BuscarPorCveEC(cve));

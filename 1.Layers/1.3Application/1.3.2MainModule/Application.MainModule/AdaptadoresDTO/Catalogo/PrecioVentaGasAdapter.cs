@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Catalogo;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Ventas;
@@ -52,7 +53,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             List<PrecioVentaDTO> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
-
         public static PrecioVentaEstatusDTO ToDTOs(PrecioVentaEstatus pv)
         {
 
@@ -70,7 +70,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             List<PrecioVentaEstatusDTO> luDTO = lu.ToList().Select(x => ToDTOs(x)).ToList();
             return luDTO;
         }
-
         public static PrecioVenta FromTo(PrecioVentaDTO PVGasDTO)
         {
             var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(PVGasDTO.IdEmpresa));
@@ -89,14 +88,14 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Categoria = PVGasDTO.Categoria,
                 Linea = PVGasDTO.Linea,
                 Producto = PVGasDTO.Producto,
-                PrecioActual = PVGasDTO.PrecioActual??0,
+                PrecioActual = PVGasDTO.PrecioActual ?? 0,
                 PrecioPemexKg = PVGasDTO.PrecioPemexKg ?? 0,
                 PrecioPemexLt = PVGasDTO.PrecioPemexLt ?? 0,
                 UtilidadEsperadaKg = PVGasDTO.UtilidadEsperadaKg ?? 0,
                 UtilidadEsperadaLt = PVGasDTO.UtilidadEsperadaLt ?? 0,
                 PrecioSalida = PVGasDTO.PrecioSalida,
-                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg, (decimal)flete),//PVGasDTO.PrecioSalidaKg,
-                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt(((decimal)PVGasDTO.PrecioPemexKg + (decimal)flete), factorLtaKg),
+                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg, flete),//PVGasDTO.PrecioSalidaKg,
+                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt(((decimal)PVGasDTO.PrecioPemexKg + flete), factorLtaKg),
                 EsGas = PVGasDTO.EsGas,
                 FechaProgramada = PVGasDTO.FechaProgramada,
                 FechaVencimiento = PVGasDTO.FechaVencimiento,
@@ -139,7 +138,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
 
             };
         }
-
         public static List<PrecioVenta> FromDTO(PrecioVentaDTO entidad)
         {
             var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(entidad.IdEmpresa));
@@ -154,13 +152,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
 
             return _lst.Select(x => FromTO(x)).ToList();
         }
-
         public static PrecioVentaDTO EmpresaProds(PrecioVentaDTO entidad, Producto p)
         {
             entidad = ToDTOtest(entidad, p);
             return entidad;
         }
-
         public static PrecioVentaDTO ToDTOtest(PrecioVentaDTO PVGasDTO, Producto p)
         {
             var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
@@ -195,7 +191,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             };
 
         }
-
         public static PrecioVenta FromDtoEditar(PrecioVentaDTO Ctedto, PrecioVenta catCte)
         {
             var catPrecioVenta = FromEntity(catCte);
@@ -220,7 +215,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
 
             return catPrecioVenta;
         }
-
         public static PrecioVenta FromEntity(PrecioVenta pv)
         {
             return new PrecioVenta()
@@ -249,7 +243,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
 
             };
         }
-        public static PrecioVentaDTO ToDTO(PrecioVenta pv,Producto producto)
+        public static PrecioVentaDTO ToDTO(PrecioVenta pv, Producto producto)
         {
             var nombreEmp = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial;
 
@@ -283,6 +277,30 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 IdUnidadMedida = producto.IdUnidadMedida,
             };
             return usDTO;
+        }
+        public static List<RepHistorioPrecioDTO> ToRepo(List<PrecioVenta> entidades, HistoricoPrecioDTO dto)
+        {
+            int id = 0;
+            List<RepHistorioPrecioDTO> list = new List<RepHistorioPrecioDTO>();
+            foreach (var item in entidades)
+            {
+                if (dto.LitroGas) list.Add(ToRepo(item, 1, id++));
+                if (dto.Clilindro10K) list.Add(ToRepo(item, 10, id++));
+                if (dto.Clilindro20K) list.Add(ToRepo(item, 20, id++));
+                if (dto.Clilindro30K) list.Add(ToRepo(item, 30, id++));
+                if (dto.Clilindro45K) list.Add(ToRepo(item, 45, id++));
+            }
+            return list;
+        }
+        public static RepHistorioPrecioDTO ToRepo(PrecioVenta entidad, int Multiplio, int id)
+        {
+            return new RepHistorioPrecioDTO()
+            {
+                ID = id,
+                Fecha = entidad.FechaRegistro,
+                Producto = CamionetaServicio.TipoCilindro(Multiplio),
+                Precio = (double)(entidad.PrecioSalidaKg * Multiplio),
+            };
         }
     }
 }

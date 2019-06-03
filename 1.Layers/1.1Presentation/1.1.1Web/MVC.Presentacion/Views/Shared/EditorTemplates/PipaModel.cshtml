@@ -1,0 +1,5 @@
+﻿@model MVC.Presentacion.Models.Catalogos.PipaModel
+    @Html.HiddenFor(m => m.IdPipa)
+<li style="list-style:none">@Html.CheckBoxFor(x => x.Activo, new { @style = "width: 20px; height: 20px;" }) @Model.Nombre</li>
+
+
