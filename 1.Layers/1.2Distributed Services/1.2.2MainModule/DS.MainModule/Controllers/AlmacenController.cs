@@ -63,12 +63,12 @@ namespace DS.MainModule.Controllers
         { 
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.AplicarDescargas());
         }
-        [Route("buscar/remananete/general")]
-        public HttpResponseMessage GetRemanenteGeneral(RemanenteDTO dto)
+        [Route("buscar/remanente/general")]
+        public HttpResponseMessage PostRemanenteGeneral(RemanenteDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanenteGeneral(dto));
         }
-        [Route("buscar/remananete/puntoventa")]
+        [Route("buscar/remanente/puntoventa")]
         public HttpResponseMessage GetRemanentePorPV(RemanenteDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanenteGeneral(dto));

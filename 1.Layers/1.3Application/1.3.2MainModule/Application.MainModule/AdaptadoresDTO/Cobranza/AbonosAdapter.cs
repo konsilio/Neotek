@@ -124,6 +124,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.Saldada = _dto.Saldada;
             dto.lstCreditoR = ToDTO(lst);
             dto.Abono = FromInit(_dto.IdCargo);
+            dto.Dias1a7 = ((TimeSpan)(DateTime.Now - _dto.FechaVencimiento)).Days;
             //dto.Total = lst.Sum(x => x.MontoAbono);
             //dto.TotalEfectivo = lst.Where(y => y.IdFormaPago == 1).Sum(x => x.MontoAbono);
             //dto.TotalCheques = lst.Where(y => y.IdFormaPago == 2).Sum(x => x.MontoAbono);

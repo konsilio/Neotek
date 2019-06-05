@@ -22,7 +22,4 @@ namespace Sagas.MainModule.ObjetosValor.Enum
         Cancelado = 4,
         Solollamada = 5,
     }
-
-    public enum stringEstatus { PedidoCreado, EnRuta, Surtido, Cancelado, Solollamada };
-        
 }

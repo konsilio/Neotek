@@ -187,7 +187,6 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Salida", model);
             }
         }
-
         [ValidateInput(false)]
         public ActionResult SalidaRequisicionesPartial()
         {

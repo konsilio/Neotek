@@ -24,6 +24,7 @@ namespace Sagas.MainModule.Entidades
         public decimal LitrosRecargados { get; set; }
         public int IdTipoCombustible { get; set; }
         public System.DateTime FechaRecarga { get; set; }
+        public Nullable<decimal> Monto { get; set; }
     
         public virtual CCombustible CCombustible { get; set; }
     }

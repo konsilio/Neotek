@@ -13,17 +13,21 @@ namespace Application.MainModule.Servicios.IngresoGasto
 {
     public static class EgresoServicio
     {
-        public static RespuestaDto RegistrarEgreso(Egreso entidad)
+        public static RespuestaDto Registrar(Egreso entidad)
         {
             return new EgresoDataAccess().Insertar(entidad);
         }
-        public static RespuestaDto ActualizarEgreso(Egreso entidad)
+        public static RespuestaDto Actualizar(Egreso entidad)
         {
             return new EgresoDataAccess().Actualizar(entidad);
         }
         public static List<Egreso> BuscarTodos()
         {
             return new EgresoDataAccess().BuscarTodos();
+        }
+        public static Egreso Buscar(int id)
+        {
+            return new EgresoDataAccess().Buscar(id);
         }
         public static List<Egreso> BuscarTodos(short IdEmpresa)
         {
@@ -32,6 +36,10 @@ namespace Application.MainModule.Servicios.IngresoGasto
         public static List<Egreso> BuscarTodos(DateTime FechaInicio, DateTime FechaFin)
         {
             return new EgresoDataAccess().BuscarTodos(FechaInicio, FechaFin);
+        }
+        public static List<Egreso> BuscarTodos(DateTime periodo)
+        {
+            return new EgresoDataAccess().BuscarTodos(periodo);
         }
         public static List<Egreso> BuscarPorCentroCosto(int IdCentroCosto)
         {
@@ -48,7 +56,6 @@ namespace Application.MainModule.Servicios.IngresoGasto
                 IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
                 IdCentroCosto = Compra.IdCentroCosto,
                 IdCuentaContable = Compra.IdCuentaContable,
-                IdTipoEgreso = 1,
                 Monto = Compra.Total ?? 0,
                 Descripcion = IngresoGastoConst.EgresoCompra,
                 FechaRegistro = DateTime.Now,

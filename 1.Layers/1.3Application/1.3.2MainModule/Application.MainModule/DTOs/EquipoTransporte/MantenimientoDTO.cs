@@ -12,6 +12,6 @@ namespace Application.MainModule.DTOs.EquipoTransporte
         public string Mantenimiento { get; set; }
         public string Descripcion { get; set; }
         public bool Activo { get; set; }
-        public short Id_Empresa { get; set; }
+        public short Id_Empresa { get; set; }       
     }
 }

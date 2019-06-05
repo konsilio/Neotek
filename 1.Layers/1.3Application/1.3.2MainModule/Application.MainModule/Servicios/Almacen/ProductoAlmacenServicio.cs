@@ -95,7 +95,11 @@ namespace Application.MainModule.Servicios.Almacenes
                     return new AlmacenDataAccess().ListaProductosAlmacen(idEmpresa);
             else
                 return new AlmacenDataAccess().ListaProductosAlmacen(TokenServicio.ObtenerIdEmpresa());
-        }       
+        }
+        public static List<Almacen> BuscarAlmacen(DateTime fi, DateTime ff)
+        {
+            return new AlmacenDataAccess().ListaProductosAlmacen(fi, ff);
+        }
         public static List<AlmacenEntradaProducto> BuscarEntradasTodo(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
@@ -150,7 +154,7 @@ namespace Application.MainModule.Servicios.Almacenes
                     NombreEmpresa = _Entrada.Almacen.Empresa.NombreComercial,
                     Referencia = _Entrada.Observaciones_,
                     Descripcion = _Entrada.Productos.Descripcion,
-                    CantidadAnterior  =_Entrada.CantidadAnterior,
+                    CantidadAnterior = _Entrada.CantidadAnterior,
                     Cantidad = _Entrada.Cantidad,
                     CantidadFinal = _Entrada.CantidadFinal,
                     FechaRegistro = _Entrada.FechaRegistro,

@@ -1,0 +1,150 @@
+﻿@using MVC.Presentacion.Models;
+@model  HistoricoVentasConsulta
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+<script type="text/javascript">
+    var mensaje = '@ViewBag.Msj';
+    if (mensaje != '') {
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        Morris.Bar(@Html.Raw(TempData["json"]));
+    });
+</script>
+<body>
+    <section class="content home">
+        <div class="container-fluid">
+            @using (Html.BeginForm("HistoricoVsVentas", "Reportes", FormMethod.Post))
+            {
+                <div class="block-header">
+                    
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Cubo de informacion</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Histórico</li>
+                                <li class="breadcrumb-item">Historioc de ventas</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            Filtros
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-2">
+                                    <strong>Años</strong>
+                                    <ul>
+                                        @Html.EditorFor(m => m.Years)
+                                    </ul>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Meses</strong>
+                                    <ul style="list-style:none">
+                                        <li>@Html.CheckBoxFor(x => x.Enero, new { @style = "width: 20px; height: 20px;" }) Enero</li>
+                                        <li>@Html.CheckBoxFor(x => x.Febrero, new { @style = "width: 20px; height: 20px;" }) Febrero</li>
+                                        <li>@Html.CheckBoxFor(x => x.Marzo, new { @style = "width: 20px; height: 20px;" }) Marzo</li>
+                                        <li>@Html.CheckBoxFor(x => x.Abril, new { @style = "width: 20px; height: 20px;" }) Abril</li>
+                                        <li>@Html.CheckBoxFor(x => x.Mayo, new { @style = "width: 20px; height: 20px;" }) Mayo</li>
+                                        <li>@Html.CheckBoxFor(x => x.Junio, new { @style = "width: 20px; height: 20px;" }) Junio</li>
+                                        <li>@Html.CheckBoxFor(x => x.Julio, new { @style = "width: 20px; height: 20px;" }) Julio</li>
+                                        <li>@Html.CheckBoxFor(x => x.Agosto, new { @style = "width: 20px; height: 20px;" }) Agosto</li>
+                                        <li>@Html.CheckBoxFor(x => x.Septiembre, new { @style = "width: 20px; height: 20px;" }) Septiembre</li>
+                                        <li>@Html.CheckBoxFor(x => x.Octubre, new { @style = "width: 20px; height: 20px;" }) Octubre</li>
+                                        <li>@Html.CheckBoxFor(x => x.Noviembre, new { @style = "width: 20px; height: 20px;" }) Noviembre</li>
+                                        <li>@Html.CheckBoxFor(x => x.Diciembre, new { @style = "width: 20px; height: 20px;" }) Diciembre</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.DevExpress().ComboBox(settings =>
+                                           {
+                                               settings.Name = "IdTipoReporte";
+                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                               settings.Theme = "Material";
+                                               settings.Properties.TextField = "TipoReporte";
+                                               settings.Properties.ValueField = "id_Reporte";
+                                               settings.PreRender = (s, e) =>
+                                               {
+                                                   MVCxComboBox combo = s as MVCxComboBox;
+                                                   combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                                   combo.Properties.Items.Add("Venta anual x mes, General", 1);
+                                                   combo.Properties.Items.Add("Venta anual x mes, Pipa vs Camioneta", 2);
+                                                   combo.Properties.Items.Add("Venta anual x mes, Camioneta Local vs Foranea", 3);
+                                                   combo.Properties.ValueType = typeof(int);
+                                                   combo.SelectedIndex = Model.IdTipoReporte;
+                                               };
+                                           }).GetHtml()
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="submit" formaction=@Url.Action("HistoricoVsVentas") formmethod="post" value="Generar" class="btn btn-primary btn-round " />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (ViewBag.MensajeError != null)
+                    {
+                        <div id="DivAlerta" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    @ViewBag.MensajeError
+                                </strong>
+                            </div>
+                        </div>
+                    }
+                    <div class="card">
+                        <div class="header">
+                            Información <strong>detallada</strong>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="table-responsive">
+                                    @if (TempData["DataSource"] != null)
+                                    {
+                                    @Html.Partial("_CuboDeInformacionPartial", (List<YearsDTO>)TempData["DataSource"])
+                                    }
+                                    else
+                                    {
+                                    @Html.Partial("_CuboDeInformacionPartial", new List<YearsDTO>())
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            Validacion de <strong>Informacion</strong>
+                        </div>
+                        <div class="body">
+                            <div>
+                                <div id="m_bar_chart"></div>
+                            </div>
+                        </div>                      
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</body>

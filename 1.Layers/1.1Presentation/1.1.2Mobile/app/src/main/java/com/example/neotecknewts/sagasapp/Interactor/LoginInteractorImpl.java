@@ -98,56 +98,66 @@ public class LoginInteractorImpl implements LoginInteractor {
             @Override
             public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
                 UsuarioDTO data = response.body();
-                if (response.isSuccessful()) {
-                    //UsuarioDTO data = response.body();
-                    Log.w(TAG,"Sucess");
-                    loginPresenter.onSuccessLogin(data);
 
-                }
-                else {
-                    //UsuarioDTO data = response.body();
-                    switch (response.code()) {
-                        case 404:
-                            Log.w(TAG,"not found");
-                            //loginPresenter.onError(data.getMensaje());
-                            break;
-                        case 500:
-                            Log.w(TAG, "server broken");
-                            //loginPresenter.onError(data.getMensaje());
-                            break;
-                        case 400:
-                            Log.w(TAG,"Bad request");
-                            break;
-                        default:
-                            Log.w(TAG, "desconocido: "+response.code());
-                            //loginPresenter.onError(data.getMensaje());
-                            break;
-                    }
-
-                    if(data!=null){
-                        loginPresenter.onError(data.getMensaje());
-                    }else {
-                        JSONObject respuesta = null;
-                        try {
-                            respuesta = new JSONObject(response.errorBody().string());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                try{
+                    Log.d("Jimy", data.getMensaje());
+                    if (response.isSuccessful()) {
+                        //UsuarioDTO data = response.body();
+                        Log.w(TAG,"Sucess");
+                        if(data.isExito()){
+                            loginPresenter.onSuccessLogin(data);
+                        } else {
+                            loginPresenter.onError(data.getMensaje());
                         }
-                        if(respuesta!=null){
-                            try {
-                                Log.w("Error body",respuesta.toString());
-                                loginPresenter.onError(respuesta.getString("Mensaje"));
+                    }
+                    else {
+                        //UsuarioDTO data = response.body();
+                        switch (response.code()) {
+                            case 404:
+                                Log.w(TAG,"not found");
+                                // loginPresenter.onError(data.getMensaje());
+                                break;
+                            case 500:
+                                Log.w(TAG, "server broken");
+                                // loginPresenter.onError(data.getMensaje());
+                                break;
+                            case 400:
+                                Log.w(TAG,"Bad request");
+                                // loginPresenter.onError(data.getMensaje());
+                                break;
+                            default:
+                                Log.w(TAG, "desconocido: "+response.code());
+                                // loginPresenter.onError(data.getMensaje());
+                                break;
+                        }
 
+                        if(data!=null){
+                            loginPresenter.onError(data.getMensaje());
+                        }else {
+                            JSONObject respuesta = null;
+                            try {
+                                respuesta = new JSONObject(response.errorBody().string());
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
+                            if(respuesta!=null){
+                                try {
+                                    Log.w("Error body",respuesta.toString());
+                                    loginPresenter.onError(respuesta.getString("Mensaje"));
 
-                        }else {
-                            loginPresenter.onError(response.message());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }else {
+                                loginPresenter.onError(response.message());
+                            }
                         }
                     }
+                }catch(Exception error) {
+                    loginPresenter.onError("Usuario y/o contraseña incorrectos");
                 }
 
             }

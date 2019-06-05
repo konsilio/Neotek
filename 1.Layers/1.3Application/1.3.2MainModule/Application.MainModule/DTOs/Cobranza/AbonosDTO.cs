@@ -11,8 +11,8 @@ namespace Application.MainModule.DTOs.Cobranza
     {
         public int IdAbono { get; set; }
         public int IdCargo { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-        public System.DateTime FechaAbono { get; set; }
+        public DateTime FechaRegistro { get; set; }
+        public DateTime FechaAbono { get; set; }
         public decimal MontoAbono { get; set; }
         public byte IdFormaPago { get; set; }
         public string FolioBancario { get; set; }

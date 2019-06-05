@@ -32,7 +32,6 @@ namespace Application.MainModule.Servicios.Mobile
         {
             var adapter = AlmacenLecturaAdapter.FromDTO(liadto);
             var al = AlmacenGasServicio.ObtenerLecturas(liadto.IdCAlmacenGas);
-
             adapter.IdOrden = Orden(al);
             adapter.Fotografias = AlmacenLecturaAdapter.FromDTO(liadto.Imagenes,adapter.IdCAlmacenGas,adapter.IdOrden);
             adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final: TipoEventoEnum.Inicial;
@@ -40,8 +39,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.EsEncargadoPuerta = false;
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
-            var almacen = AlmacenGasServicio.ObtenerAlmacen(liadto.IdCAlmacenGas);
-            
+            var almacen = AlmacenGasServicio.ObtenerAlmacen(liadto.IdCAlmacenGas);            
             return AlmacenGasServicio.InsertarLectura(adapter);
         }
 
@@ -69,7 +67,6 @@ namespace Application.MainModule.Servicios.Mobile
             var adapter = AlmacenLecturaAdapter.FromDTO(lcdto,idOrden);
 
             adapter = EvaluarEsEncargadoPuerta(adapter, lcdto);
-
             adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;            
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
@@ -86,10 +83,6 @@ namespace Application.MainModule.Servicios.Mobile
                     camionetaCilindroActualizar.IdEmpresa = camionetaCilindro.IdEmpresa;
                     camionetaCilindroActualizar.IdCilindro = camionetaCilindro.IdCilindro;
                     camionetaCilindroActualizar.Cantidad = cilindro.Cantidad;
-                    //camionetaCilindroActualizar.Camioneta = camionetaCilindro.Camioneta;
-                    //camionetaCilindroActualizar.Empresa = camionetaCilindro.Empresa;
-                    //camionetaCilindroActualizar.UnidadAlmacenGasCilindro = camionetaCilindro.UnidadAlmacenGasCilindro;
-
                     var actualizar = AlmacenGasServicio.ActualizaCilindro(camionetaCilindroActualizar);
                 }
                 

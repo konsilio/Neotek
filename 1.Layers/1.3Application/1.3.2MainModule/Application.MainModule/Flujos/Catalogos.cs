@@ -20,6 +20,8 @@ using Application.MainModule.Servicios.Pedidos;
 using Application.MainModule.Servicios;
 using Application.MainModule.AdaptadoresDTO;
 using Application.MainModule.Servicios.Facturacion;
+using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
+using Application.MainModule.Servicios.IngresoGasto;
 
 namespace Application.MainModule.Flujos
 {
@@ -134,14 +136,12 @@ namespace Application.MainModule.Flujos
             else
                 return ClienteServicio.ListaClientes().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
-
         public List<ClienteLocacionDTO> ListaLocaciones(int id)
         {
             var resp = PermisosServicio.PuedeConsultarCliente();
             if (!resp.Exito) return null;
             return ClienteServicio.ObtenerLoc(id).ToList();
         }
-
         public RespuestaDto RegistraCliente(ClienteCrearDto cteDto)
         {
             var resp = PermisosServicio.PuedeRegistrarCliente();
@@ -190,7 +190,6 @@ namespace Application.MainModule.Flujos
             cte.FechaRegistro = cte.FechaRegistro;
             return ClienteServicio.Modificar(cte);
         }
-
         public RespuestaDto EliminaCliente(int id)
         {
             var resp = PermisosServicio.PuedeEliminarCliente();
@@ -203,7 +202,6 @@ namespace Application.MainModule.Flujos
             clientes.Activo = false;
             return ClienteServicio.Modificar(clientes);
         }
-
         public RespuestaDto RegistraClienteLocacion(ClienteLocacionDTO cteDto)
         {
             var resp = PermisosServicio.PuedeRegistrarCliente();
@@ -214,7 +212,6 @@ namespace Application.MainModule.Flujos
 
             return ClienteServicio.AltaClienteL(cliente);
         }
-
         public RespuestaDto ActualizaClienteLocacion(ClienteLocacionDTO cteDto)
         {
             var resp = PermisosServicio.PuedeModificarCliente();
@@ -226,7 +223,6 @@ namespace Application.MainModule.Flujos
             var cte = ClientesAdapter.FromDto(cteDto, clientes);
             return ClienteServicio.ModificarCL(cte);
         }
-
         public RespuestaDto EliminaClienteLocacion(ClienteLocacionDTO cteDto)
         {
             var resp = PermisosServicio.PuedeEliminarCliente();
@@ -671,7 +667,6 @@ namespace Application.MainModule.Flujos
 
             return ProductoServicio.RegistrarProducto(ProductoAdapter.FromDto(pDto));
         }
-
         public RespuestaDto ModificaProducto(ProductoModificarDto pDto)
         {
             var resp = PermisosServicio.PuedeModificarProducto();
@@ -686,7 +681,6 @@ namespace Application.MainModule.Flujos
             var producto = ProductoAdapter.FromDto(pDto, prod);
             return ProductoServicio.ModificarProducto(producto);
         }
-
         public RespuestaDto EliminaProducto(ProductoEliminarDto pDto)
         {
             var resp = PermisosServicio.PuedeEliminarProducto();
@@ -1402,6 +1396,48 @@ namespace Application.MainModule.Flujos
         {
             var usosCfdi = UsoCFDIServicio.Buscar();
             return UsoCFDIAdapter.ToDTO(usosCfdi);
+        }
+        #endregion
+
+        #region Egreso
+        public RespuestaDto CrearEgrereo(EgresoDTO dto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarCliente();
+            if (!resp.Exito) return resp;
+
+            dto.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+            var entidad = EgresoAdapter.FromDTO(dto);
+            entidad.FechaRegistro = DateTime.Now;
+
+            return EgresoServicio.Registrar(entidad);          
+        }
+        public RespuestaDto ModificarEgrereo(EgresoDTO dto)
+        {
+            var resp = PermisosServicio.PuedeModificarCliente();
+            if (!resp.Exito) return resp;
+
+            var entidad = EgresoServicio.Buscar(dto.IdEgreso);
+            var entity = EgresoAdapter.FormEmtity(entidad, dto);
+
+
+            return EgresoServicio.Actualizar(entity);
+        }
+        public RespuestaDto BorrarEgrereo(int id)
+        {
+            var entidad = EgresoServicio.Buscar(id);
+
+            var Emtity = EgresoAdapter.FormEmtity(entidad);
+            Emtity.Activo = false;
+
+            return EgresoServicio.Actualizar(entidad);
+        }
+        public EgresoDTO BuscarEgreso(int id)
+        {
+            return EgresoAdapter.ToDTO(EgresoServicio.Buscar(id));
+        }
+        public List<EgresoDTO> BuscarEgresos()
+        {
+            return EgresoAdapter.ToDTO(EgresoServicio.BuscarTodos(TokenServicio.ObtenerIdEmpresa()));
         }
         #endregion
     }

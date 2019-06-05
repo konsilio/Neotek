@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.AdaptadoresDTO.Historico
 {
-    class HistoricoVentasAdapter
+    public static class HistoricoVentasAdapter
     {
         public static HistoricoVentaDTO ToDTO(HistoricoVentas entidad)
         {
@@ -61,5 +61,23 @@ namespace Application.MainModule.AdaptadoresDTO.Historico
                 FechaRegistro = entidad.FechaRegistro
             };
         }
+        public static HistoricoVentas FromPV(VentaPuntoDeVenta entidad)
+        {
+            return new HistoricoVentas()
+            {
+                Mes = entidad.Mes,
+                Anio = entidad.Year,
+                MontoVenta = Convert.ToDouble(entidad.Total),
+                EsPipa = entidad.CPuntoVenta.UnidadesAlmacen.IdPipa != null ? true : false,
+                EsCamioneta = entidad.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null ? true : false,
+                EsLocal = true,
+                FechaRegistro = entidad.FechaRegistro
+            };
+        }
+        public static List<HistoricoVentas> FromPV(List<VentaPuntoDeVenta> entidad)
+        {
+            return entidad.Select(x => FromPV(x)).ToList();
+        }
+
     }
 }

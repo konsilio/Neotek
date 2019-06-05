@@ -17,15 +17,16 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            ViewBag.Empresas = CatalogoServicio.Empresas(tkn);        
+            ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+            if (TempData["RemanenteDTO"] != null) { ViewBag.RemaGeneral = (List<RemanenteGeneralDTO>)TempData["RemanenteDTO"]; }                           
             return View(model);
         }
         public ActionResult Buscar(RemanenteModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-
-            return View();
+            TempData["RemanenteDTO"] = AlmacenServicio.BuscarRemanente(model, tkn);
+            return RedirectToAction("DashBoard");
         }
 
         public ActionResult cbPuntosventaPartial(RemanenteModel model = null)

@@ -301,5 +301,10 @@ function MorrisBarChart() {
      Sagas.Bar(
        JSON.parse(json)
      );
-    }
+ }
+ SagasBar = (json) => {
+     Sagas.Area(
+       JSON.parse(json)
+     );
+ }
 // Extra chart

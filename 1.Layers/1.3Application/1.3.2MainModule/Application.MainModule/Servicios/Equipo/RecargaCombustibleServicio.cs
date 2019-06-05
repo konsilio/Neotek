@@ -27,9 +27,18 @@ namespace Application.MainModule.Servicios.Equipo
         {
             return new RecargaCombustibleDataAccess().Obtener();
         }
+        public static List<DetalleRecargaCombustible> Buscar(DateTime fi, DateTime ff)
+        {
+            return new RecargaCombustibleDataAccess().Obtener(fi, ff);
+        }
         public static DetalleRecargaCombustible Buscar(int id)
         {
             return new RecargaCombustibleDataAccess().Obtener(id);
-        }        
+        }
+        public static DetalleRecargaCombustible BuscarAnterior(DetalleRecargaCombustible entidad)
+        {
+            var recargas = new RecargaCombustibleDataAccess().ObtenerPorVehiculo(entidad.Id_Vehiculo);
+            return recargas.OrderByDescending(x => x.FechaRecarga).FirstOrDefault(y => y.FechaRecarga < entidad.FechaRecarga);
+        }
     }
 }

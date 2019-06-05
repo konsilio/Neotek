@@ -2,11 +2,13 @@
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.Servicios.Historico;
- using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -561,6 +563,6 @@ namespace Application.MainModule.Servicios.Seguridad
                 };
             }
             return new RespuestaDto() { Exito = true };
-        }
+        }      
     }
 }

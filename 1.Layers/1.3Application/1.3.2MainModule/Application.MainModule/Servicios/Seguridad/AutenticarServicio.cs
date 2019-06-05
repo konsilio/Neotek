@@ -42,7 +42,7 @@ namespace Application.MainModule.Servicios.Seguridad
                     new Claim(TokenEtiquetasEnum.EsAdminCentral, usuario.AdminCentral ? "true": "false"),
                     new Claim(TokenEtiquetasEnum.EsSuperUsuario, usuario.SuperUsuario ? "true": "false"),
                 };
-               
+
                 var min = Math.Truncate(FechasFunciones.ObtenerMinutosEntreDosFechas(DateTime.Now, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59)));
                 var us = UsuarioServicio.Obtener(usuario.IdUsuario);
                 return new RespuestaAutenticacionDto()
@@ -61,18 +61,32 @@ namespace Application.MainModule.Servicios.Seguridad
                     Mensaje = Error.S0003,
                     token = string.Empty
                 };
-        } 
-        
+        }
+
         public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(AutenticacionDto autDto)
         {
             var aut = AutenticarUsuario(autDto);
             var usuario = new UsuarioDataAccess().Buscar(aut.IdUsuario);
-            List<MenuDto> menu= aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : new List<MenuDto>();
-            if (usuario.OperadoresChoferes!=null && usuario.OperadoresChoferes.Count != 0 && !menu.Any())
-            {
-                aut.Mensaje = "No se ha realizado lectura inicial";
-                aut.Exito = false; 
-            }
+            List<MenuDto> menu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : new List<MenuDto>();
+            //if (usuario != null)
+            //{
+                if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count != 0 && !menu.Any())
+                {
+                    aut.Mensaje = "No se ha realizado lectura inicial";
+                    aut.Exito = false;
+                }
+            //}
+            //else
+            //{
+            //    return new RespuestaAutenticacionMobileDto()
+            //    {
+            //        IdUsuario = 0,
+            //        Exito = false,
+            //        Mensaje = Error.S0003,
+            //        token = string.Empty,
+            //        listMenu = new List<MenuDto>(),
+            //    };
+            //}
             return new RespuestaAutenticacionMobileDto()
             {
                 IdUsuario = aut.IdUsuario,
@@ -80,8 +94,8 @@ namespace Application.MainModule.Servicios.Seguridad
                 Mensaje = aut.Mensaje,
                 token = aut.token,
                 listMenu = menu,
-            };        
-        }       
+            };
+        }
 
         private static UsuarioAplicacionDto AutenticarUsuarioDeEmpresa(AutenticacionDto autDto)
         {
@@ -94,7 +108,7 @@ namespace Application.MainModule.Servicios.Seguridad
                     SuperUsuario = usuario.EsSuperAdmin,
                     IdEmpresa = usuario.IdEmpresa,
                     IdUsuario = usuario.IdUsuario,
-                    UrlImg = usuario.Empresa.UrlLogotipo180px,      
+                    UrlImg = usuario.Empresa.UrlLogotipo180px,
                 };
 
                 if (usuario.EsAdministracionCentral)

@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Seguridad;
+using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.Servicios.AccesoADatos;
@@ -6,6 +7,7 @@ using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Pedidos;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Constantes;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
@@ -53,9 +55,8 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             {
                 IdPedido = p.IdPedido,
                 IdPedidoDetalle = pd[0].IdPedidoDetalle,
-                //cliente.IdEmpresa = p.IdEmpresa,
                 IdEstatusPedido = p.IdEstatusPedido,
-                EstatusPedido = PedidosServicio.getString(PedidosServicio.GetEstatusPedido(p.IdEstatusPedido).ToString()),
+                EstatusPedido = EstatusPedidoConst.ObtenerString(p.IdEstatusPedido),
                 Cantidad = p.IdCamioneta > 0 ? cant.TrimEnd(' ').TrimEnd(',') : pd[0].Cantidad.ToString().Split(',')[0] + " Kg",
                 Cantidad20 = cant20,
                 Cantidad30 = cant30,
@@ -63,24 +64,17 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 MotivoCancelacion = "",
                 Calle = clienteL.Calle,
                 Colonia = clienteL.Colonia,
-                //cliente.Telefono1 = cliente.Telefono1,
-                //cliente.IdCliente = cliente.IdCliente,
                 Unidad = uni,
                 NombreRfc = cliente.Nombre + " " + cliente.Apellido1 + " " + cliente.Apellido2,
-                //cliente.Rfc = cliente.Rfc,
                 IdPipa = p.IdPipa ?? 0,
                 IdCamioneta = p.IdCamioneta ?? 0,
                 IdDireccion = p.IdDireccion,
                 ReferenciaUbicacion = "",
                 FechaRegistroPedido = p.FechaRegistro,
                 FechaEntregaPedido = p.FechaPedido.Value,
-                //Empresa = EmpresaServicio.Obtener(p.IdEmpresa).NombreComercial,
-                //TipoPersonaFiscal = TipoPersonaServicio.TipoPersona(cliente.IdTipoPersona ?? 0).Descripcion,
-                //RegimenFiscal = RegimenServicio.Regimen(cliente.IdRegimenFiscal ?? 0).Descripcion,
                 Pedidos = FromDtoDetalle(pd),
                 encuesta = pe.Count > 0 ? FromDto(pe) : FromInit(p.IdPedido),
                 cliente = ClientesAdapter.ToDTO(cliente),
-                //public List<PedidoModel> Unidades 
             };
             return usDTO;
         }
@@ -127,7 +121,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 IdCliente = cliente.IdCliente,
                 IdPedidoDetalle = pd[0].IdPedidoDetalle,
                 IdEstatusPedido = p.IdEstatusPedido,
-                EstatusPedido = PedidosServicio.getString(PedidosServicio.GetEstatusPedido(p.IdEstatusPedido).ToString()),
+                EstatusPedido = EstatusPedidoConst.ObtenerString(p.IdEstatusPedido),
                 FolioVenta = p.FolioVenta,
                 FechaRegistroPedido = p.FechaRegistro,
                 FechaPedido = p.FechaPedido.Value,
@@ -347,7 +341,6 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 MotivoCancelacion = ped.MotivoCancelacion,
             };
         }
-
         public static PedidoDetalle FromEntity(PedidoDetalle ped)
         {
             return new PedidoDetalle()
@@ -437,5 +430,34 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
 
             return usDTO;
         }
+        public static EstatusPedidoDto ToDTO(PedidoEstatus entidad)
+        {
+            return new EstatusPedidoDto()
+            {
+                IdEstatusPedido = entidad.IdPedidoEstatus,
+                Descripcion = entidad.Descripcion,
+            };
+        }
+        public static List<EstatusPedidoDto> ToDTO(List<PedidoEstatus> lu)
+        {
+            return lu.ToList().Select(x => ToDTO(x)).ToList();
+        }
+        public static RepCallCenterDTO FromDTO(Pedido entidad)
+        {
+            return new RepCallCenterDTO()
+            {
+                IdPedido = entidad.IdPedido,
+                RFC = ClienteServicio.Obtener(entidad.IdCliente).Rfc,
+                Estatus = EstatusPedidoConst.ObtenerString(entidad.IdEstatusPedido),
+                Fecha = entidad.FechaRegistro,
+                Cantidad = entidad.PedidoDetalle.Count() > 0 ? entidad.PedidoDetalle.Sum(x => x.Cantidad ?? 0) : 0,
+                AtendidoPor = entidad.PedidoDetalle.Count() > 0 ? EquipoTransporteServicio.ObtenerNombre(entidad) : "N/A",
+                Pedido = entidad.IdCamioneta != null ? TipoVehiculoConst.Camioneta : TipoVehiculoConst.Pipa,
+            };
+        }
+        public static List<RepCallCenterDTO> FromDTO(List<Pedido> entidades)
+        {
+            return entidades.Select(x => FromDTO(x)).ToList();
+        }   
     }
 }

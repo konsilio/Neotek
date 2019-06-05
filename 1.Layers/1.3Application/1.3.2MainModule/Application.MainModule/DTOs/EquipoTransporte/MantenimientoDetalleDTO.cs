@@ -27,5 +27,8 @@ namespace Application.MainModule.DTOs.EquipoTransporte
         [Display(Name = "Kilometraje_Actual")]
         public int Kilometraje_Actual { get; set; }
         public string NumeroOC { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Monto")]
+        public decimal Monto { get; set; }
     }
 }

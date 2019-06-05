@@ -20,12 +20,13 @@ namespace Sagas.MainModule.Entidades
         public int IdCentroCosto { get; set; }
         public int IdCuentaContable { get; set; }
         public decimal Monto { get; set; }
-        public short IdTipoEgreso { get; set; }
         public string Descripcion { get; set; }
         public bool EsExterno { get; set; }
+        public bool Activo { get; set; }
+        public bool GastoMensual { get; set; }
+        public bool EsFiscal { get; set; }
     
         public virtual CentroCosto CCentroCosto { get; set; }
         public virtual CuentaContable CCuentaContable { get; set; }
-        public virtual CTipoEgreso CTipoEgreso { get; set; }
     }
 }

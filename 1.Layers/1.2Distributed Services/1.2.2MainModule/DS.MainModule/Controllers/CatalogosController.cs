@@ -1,10 +1,10 @@
-﻿using Application.MainModule.DTOs.Catalogo;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Flujos;
 using DS.MainModule.Helpers.MetodosExtension;
 using DS.MainModule.Results;
 using Exceptions.MainModule.Validaciones;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Net;
@@ -694,6 +694,37 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaUsoCFDI()
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ListaUsoCFDI(), Request);
+        }
+        #endregion
+
+        #region Egreso
+        [Route("registra/egreso")]
+        public HttpResponseMessage PostRegistraEgreso(EgresoDTO cuentaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.CrearEgrereo(cuentaDto), Request);
+        }
+
+        [Route("modifica/egreso")]
+        public HttpResponseMessage PutModificaEgreso(EgresoDTO cuentaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificarEgrereo(cuentaDto), Request);
+        }
+
+        [Route("elimina/egreso/{id}")]
+        public HttpResponseMessage PutEliminaEgreso(int id)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.BorrarEgrereo(id), Request);
+        }
+
+        [Route("consulta/egresos")]
+        public HttpResponseMessage GetEgresos()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.BuscarEgresos(), Request);
+        }
+        [Route("consulta/egreso/{id}")]
+        public HttpResponseMessage GetEgreso(int id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BuscarEgreso(id));
         }
         #endregion
 

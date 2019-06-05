@@ -88,6 +88,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new ProductoDataAccess().ListaProductos(idEmpresa).Where(x => x.EsActivoVenta == true & x.EsGas == true & x.Activo == true).ToList();
         }
+        public static List<Producto> Obtener(DateTime fi, DateTime ff)
+        {
+            return new ProductoDataAccess().ListaProductos( fi, ff);
+        }
 
         public static List<Producto> Obtener(Empresa empresa)
         {

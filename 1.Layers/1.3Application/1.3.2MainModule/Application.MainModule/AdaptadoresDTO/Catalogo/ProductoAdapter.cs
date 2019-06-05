@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Catalogo;
 using Sagas.MainModule.Entidades;
+using Application.MainModule.DTOs;
 
 namespace Application.MainModule.AdaptadoresDTO.Seguridad
 {
@@ -196,8 +197,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 FechaRegistro = DateTime.Now,
                 Activo = true,
             };
-        }
-        
+        }        
         public static Producto FromDto(ProductoModificarDto proDto, Producto pro)
         {
             var producto = FromEntity(pro);
@@ -217,7 +217,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             producto.Maximo = proDto.Maximo;
             return producto;
         }
-
         public static ProductoDTO ToDTO(Producto _prod)
         {
             ProductoDTO prodDTO = new ProductoDTO();
@@ -303,11 +302,10 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 EsTransporteGas = prodAnterior.EsTransporteGas,                                
             };
         }
-
         public static List<Producto> FromEntity(List<Producto> lProdDTO)
         {
             return lProdDTO.ToList().Select(x => FromEntity(x)).ToList();
-        }
+        }       
         #endregion
     }
 }
