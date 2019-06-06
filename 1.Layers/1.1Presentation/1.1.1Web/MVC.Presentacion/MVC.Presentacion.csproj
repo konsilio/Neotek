@@ -353,11 +353,11 @@
     <Compile Include="Models\Catalogos\PuntoVentaModel.cs" />
     <Compile Include="Models\Catalogos\RolMovilVenta.cs" />
     <Compile Include="Models\Catalogos\RolSistemaVenta.cs" />
+    <Compile Include="Models\Catalogos\RolTransporte.cs" />
     <Compile Include="Models\Catalogos\TipoProveedorDTO.cs" />
     <Compile Include="Models\Catalogos\TipoUnidadModel.cs" />
     <Compile Include="Models\Catalogos\UnidadAlmacenGasDTO.cs" />
     <Compile Include="Models\Catalogos\RegimenFiscalModel.cs" />
-    <Compile Include="Models\Catalogos\RolCat.cs" />
     <Compile Include="Models\Catalogos\RolCompras.cs" />
     <Compile Include="Models\Catalogos\RolDto.cs" />
     <Compile Include="Models\Catalogos\RolMovilCompra.cs" />
@@ -11681,6 +11681,7 @@
     <Content Include="Views\Reportes\HistoricoVsVentas.cshtml" />
     <Content Include="Views\Reportes\CorteCaja.cshtml" />
     <Content Include="Views\Reportes\GastoVehicular.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RolTransporte.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

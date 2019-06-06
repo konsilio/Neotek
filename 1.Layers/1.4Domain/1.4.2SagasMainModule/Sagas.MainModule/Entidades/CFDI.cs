@@ -14,6 +14,12 @@ namespace Sagas.MainModule.Entidades
     
     public partial class CFDI
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CFDI()
+        {
+            this.Abono = new HashSet<Abono>();
+        }
+    
         public int Id_RelTF { get; set; }
         public string Id_FolioVenta { get; set; }
         public byte Id_FormaPago { get; set; }
@@ -28,5 +34,7 @@ namespace Sagas.MainModule.Entidades
     
         public virtual FormaPago CFormaPago { get; set; }
         public virtual MetodoPago CMetodoPago { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Abono> Abono { get; set; }
     }
 }

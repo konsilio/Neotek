@@ -30,7 +30,7 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaDto CrearCatalogo(List<HistoricoVentaDTO> dto)
         {
-            var resp = PermisosServicio.HistoricoVentas();
+            var resp = PermisosServicio.HistoricoPuedeCargarInformacion();
             if (!resp.Exito) return resp;
 
             var newMan = HistoricoVentasAdapter.FromDTO(dto);

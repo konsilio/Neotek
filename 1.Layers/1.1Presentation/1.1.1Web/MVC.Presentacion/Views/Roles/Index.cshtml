@@ -73,30 +73,30 @@
                                     <div>
                                         @if (ViewBag.EsAdmin)
                                         {
-                                        <select id="exampleempresas" name="IdEmpresa" class="form-control z-index show-tick" data-live-search="true">
-                                            @foreach (var lst in ViewBag.Empresas)
+                                            <select id="exampleempresas" name="IdEmpresa" class="form-control z-index show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
                                                 {
                                                     if (ViewBag.IdEmpresa != 0)
                                                     {
                                                         if (lst.IdEmpresa == ViewBag.IdEmpresa)
                                                         {
-                                                <option value="@lst.IdEmpresa" selected="selected">@lst.NombreComercial</option>
+                                            <option value="@lst.IdEmpresa" selected="selected">@lst.NombreComercial</option>
                                                         }
                                                         else
                                                         {
-                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                         }
                                                     }
                                                     else
                                                     {
-                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                     }
                                                 }
-                                        </select>
+                                            </select>
                                         }
                                         else
                                         {
-                                        @ViewBag.Empresas
+                                            @ViewBag.Empresas
                                         }
 
                                     </div>
@@ -141,7 +141,7 @@
                                 @*active show*@
                                 <li class="nav-item" id="homeRequisicion"><a class="nav-link" id="homeRequisicion" data-toggle="tab" href="#window_Requsicion"><i class="zmdi zmdi-apps"></i> Requisición </a></li>
                                 <li class="nav-item"><a class="nav-link" id="homeCompra" data-toggle="tab" href="#window_Compra"> <i class="zmdi zmdi-money-box"></i> Compra </a></li>
-                                <li class="nav-item"><a class="nav-link" id="homeInventario" data-toggle="tab" href="#window_Inventario"><i class="zmdi zmdi-file"></i> Inventario </a></li>
+                                <li class="nav-item"><a class="nav-link" id="homeInventario" data-toggle="tab" href="#window_Inventario"><i class="zmdi zmdi-local-taxi"></i> Transporte </a></li>
                                 <li class="nav-item"><a class="nav-link" id="homeVentas" data-toggle="tab" href="#window_Ventas"><i class="zmdi zmdi-money"></i> Ventas </a></li>
                                 <li class="nav-item"><a class="nav-link" id="homeCatalogos" data-toggle="tab" href="#window_Catalogos"><i class="zmdi zmdi-settings-square"></i> Catálogos </a></li>
                             </ul>
@@ -290,6 +290,8 @@
                                                         <th>Almacén Actualiza Existencias</th>
                                                         <th>Almacén Ver Existencias</th>
                                                         <th>Almacén Ver Movimientos</th>
+                                                        <th>Almacén Registrar Existencias</th>
+                                                        <th>Almacén Ver Productos</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -363,12 +365,17 @@
                                                         <th>Rol</th>
                                                         <th>Cobranza Ver Abonos</th>
                                                         <th>Cobranza Ver Cartera</th>
-                                                        <th>Cobranza Ver CreditoRecuperado</th>
+                                                        <th>Cobranza Ver Credito Recuperado</th>
                                                         <th>Cobranza Generar Abonos</th>
+                                                        <th>Cobranza Consultar Factura Global</th>
+                                                        <th>Cobranza Generar Factura Global</th>
                                                         <th>Pedido Ver Pedido</th>
                                                         <th>Pedido Generar Pedido</th>
                                                         <th>Pedido Modificar Pedido</th>
                                                         <th>Pedido Eliminar Pedido</th>
+                                                        <th>Consultar Remanente</th>
+                                                        <th>Facturas Ver Factura</th>
+                                                        <th>Facturas Facturar</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -407,11 +414,41 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>                         
+                            </div>
                             <!--Inventario tab content-->
                             <div class="tab-content">
                                 <div id="SistemaInventario" class="tab-pane">
-                                    <i>Sistema Inventario sin datos para mostrar</i>
+                                    <div class="row clearfix">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="submit" id="btnGuardaPTransporte" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPerTransporte") formmethod="post" class="btn btn-raised btn-primary float-right btn-round" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="blockquote-info blockquote btn-round" id="DivgvwSistemaTrans">
+                                        <div class="table-responsive">
+                                            <table id="tabSisTrans" class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Rol</th>
+                                                        <th>Registrar Parque Vehícular</th>
+                                                        <th>Consultar ParqueVehicular</th>
+                                                        <th>Asignar Vehículo</th>
+                                                        <th>Consultar Asignar Vehículo</th>
+                                                        <th>Borrar Asignacion Vehícular</th>
+                                                        <th>Registrar Mantenimiento</th>
+                                                        <th>Borrar Mantenimiento</th>
+                                                        <th>Registrar Recarga Combustible</th>
+                                                        <th>Borrar Recarga Combustible</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @Html.EditorFor(m => m.ListaTransporte)
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="MovilInventario" class="tab-pane">
                                     <i>Móvil Inventario sin datos para mostrar</i>

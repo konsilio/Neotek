@@ -17,6 +17,7 @@
           <Property Name="IdFormaPago" Type="tinyint" Nullable="false" />
           <Property Name="FolioBancario" Type="varchar" MaxLength="25" />
           <Property Name="ACTIVO" Type="bit" Nullable="false" />
+          <Property Name="Id_RelTF" Type="int" />
         </EntityType>
         <EntityType Name="Almacen">
           <Key>
@@ -1882,7 +1883,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CompraCancelaOCompra" Type="bit" Nullable="false" />
           <Property Name="AlmacenActualizaExistencias" Type="bit" Nullable="false" />
           <Property Name="AlmacenVerExistencias" Type="bit" Nullable="false" />
+          <Property Name="AlmacenRegistrarAlmacen" Type="bit" Nullable="false" />
           <Property Name="AlmacenVerMovimientos" Type="bit" Nullable="false" />
+          <Property Name="AlmacenVerProductos" Type="bit" Nullable="false" />
           <Property Name="PedidoVerPedidos" Type="bit" Nullable="false" />
           <Property Name="PedidoGenerarPedido" Type="bit" Nullable="false" />
           <Property Name="PedidoEliminarPedido" Type="bit" Nullable="false" />
@@ -1892,6 +1895,21 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CobranzaVerCreditoRecuperado" Type="bit" Nullable="false" />
           <Property Name="CobranzaGenerarAbonos" Type="bit" Nullable="false" />
           <Property Name="HistoricoVentas" Type="bit" Nullable="false" />
+          <Property Name="FacturasVerFacturas" Type="bit" Nullable="false" />
+          <Property Name="FacturasFacturar" Type="bit" Nullable="false" />
+          <Property Name="ETRegistrarParqueVehicular" Type="bit" Nullable="false" />
+          <Property Name="ETConsultarParqueVehicular" Type="bit" Nullable="false" />
+          <Property Name="ETAsignarVehiculo" Type="bit" Nullable="false" />
+          <Property Name="ETConsultarAsignarVehiculo" Type="bit" Nullable="false" />
+          <Property Name="ETBorrarAsignacionVehicular" Type="bit" Nullable="false" />
+          <Property Name="ETRegistrarMantenimiento" Type="bit" Nullable="false" />
+          <Property Name="ETBorrarMantenimiento" Type="bit" Nullable="false" />
+          <Property Name="ETRegistrarRecargaCombustible" Type="bit" Nullable="false" />
+          <Property Name="ETBorrarRecargaCombustible" Type="bit" Nullable="false" />
+          <Property Name="CobranzaConsultarFactura" Type="bit" Nullable="false" />
+          <Property Name="CobranzaFacturar" Type="bit" Nullable="false" />
+          <Property Name="ConsultarRemanenteGeneral" Type="bit" Nullable="false" />
+          <Property Name="HVCargaInformacion" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RolAccionCatalogo">
           <Key>
@@ -2294,6 +2312,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="Abono">
               <PropertyRef Name="IdFormaPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Abono_RelTicketCFDI">
+          <End Role="RelTicketCFDI" Type="Self.RelTicketCFDI" Multiplicity="0..1" />
+          <End Role="Abono" Type="Self.Abono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RelTicketCFDI">
+              <PropertyRef Name="Id_RelTF" />
+            </Principal>
+            <Dependent Role="Abono">
+              <PropertyRef Name="Id_RelTF" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5434,6 +5464,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CFormaPago" EntitySet="CFormaPago" />
             <End Role="Abono" EntitySet="Abono" />
           </AssociationSet>
+          <AssociationSet Name="FK_Abono_RelTicketCFDI" Association="Self.FK_Abono_RelTicketCFDI">
+            <End Role="RelTicketCFDI" EntitySet="RelTicketCFDI" />
+            <End Role="Abono" EntitySet="Abono" />
+          </AssociationSet>
           <AssociationSet Name="FK_Almacen_CProducto" Association="Self.FK_Almacen_CProducto">
             <End Role="CProducto" EntitySet="CProducto" />
             <End Role="Almacen" EntitySet="Almacen" />
@@ -6584,10 +6618,27 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CobranzaVerAbonos" Type="Boolean" Nullable="false" />
           <Property Name="CobranzaVerCartera" Type="Boolean" Nullable="false" />
           <Property Name="CobranzaVerCreditoRecuperado" Type="Boolean" Nullable="false" />
-          <Property Name="CobranzaGenerarAbonos" Type="Boolean" Nullable="false" />
+          <Property Name="CobranzaGenerarAbonos" Type="Boolean" Nullable="false" />         
+          <Property Name="HistoricoVentas" Type="Boolean" Nullable="false" />
+          <Property Name="FacturasVerFacturas" Type="Boolean" Nullable="false" />
+          <Property Name="FacturasFacturar" Type="Boolean" Nullable="false" />
+          <Property Name="ETRegistrarParqueVehicular" Type="Boolean" Nullable="false" />
+          <Property Name="ETConsultarParqueVehicular" Type="Boolean" Nullable="false" />
+          <Property Name="ETAsignarVehiculo" Type="Boolean" Nullable="false" />
+          <Property Name="ETConsultarAsignarVehiculo" Type="Boolean" Nullable="false" />
+          <Property Name="ETBorrarAsignacionVehicular" Type="Boolean" Nullable="false" />
+          <Property Name="ETRegistrarMantenimiento" Type="Boolean" Nullable="false" />
+          <Property Name="ETBorrarMantenimiento" Type="Boolean" Nullable="false" />
+          <Property Name="ETRegistrarRecargaCombustible" Type="Boolean" Nullable="false" />
+          <Property Name="ETBorrarRecargaCombustible" Type="Boolean" Nullable="false" />
+          <Property Name="CobranzaConsultarFactura" Type="Boolean" Nullable="false" />
+          <Property Name="CobranzaFacturar" Type="Boolean" Nullable="false" />          
+          <Property Name="ConsultarRemanenteGeneral" Type="Boolean" Nullable="false" />
+          <Property Name="HVCargaInformacion" Type="Boolean" Nullable="false" />         
+          <Property Name="AlmacenRegistrarAlmacen" Type="Boolean" Nullable="false" />
+          <Property Name="AlmacenVerProductos" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
           <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />
-          <Property Name="HistoricoVentas" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -7801,6 +7852,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </AssociationSet>
           <EntitySet Name="UsoCFDI" EntityType="Sagas.MainModuleModel.UsoCFDI" />
           <EntitySet Name="HistoricoVentas" EntityType="Sagas.MainModuleModel.HistoricoVentas" />
+          <AssociationSet Name="FK_Abono_RelTicketCFDI" Association="Sagas.MainModuleModel.FK_Abono_RelTicketCFDI">
+            <End Role="CFDI" EntitySet="CFDI" />
+            <End Role="Abono" EntitySet="Abono" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Requisicion">
           <Key>
@@ -11565,6 +11620,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Cargo" Relationship="Sagas.MainModuleModel.FK_Abono_Cargo1" FromRole="Abono" ToRole="Cargo" />
           <NavigationProperty Name="CFormaPago" Relationship="Sagas.MainModuleModel.FK_Abono_CFormaPago" FromRole="Abono" ToRole="FormaPago" />
           <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
+          <Property Name="Id_RelTF" Type="Int32" />
+          <NavigationProperty Name="RelTicketCFDI" Relationship="Sagas.MainModuleModel.FK_Abono_RelTicketCFDI" FromRole="Abono" ToRole="CFDI" />
         </EntityType>
         <EntityType Name="Cargo">
           <Key>
@@ -12178,6 +12235,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="URLXml" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CFormaPago" Relationship="Sagas.MainModuleModel.FK_RelTicketCFDI_CFormaPago" FromRole="CFDI" ToRole="FormaPago" />
           <NavigationProperty Name="CMetodoPago" Relationship="Sagas.MainModuleModel.FK_RelTicketCFDI_CMetodoPago" FromRole="CFDI" ToRole="MetodoPago" />
+          <NavigationProperty Name="Abono" Relationship="Sagas.MainModuleModel.FK_Abono_RelTicketCFDI" FromRole="CFDI" ToRole="Abono" />
         </EntityType>
         <Association Name="FK_RelTicketCFDI_CFormaPago">
           <End Type="Sagas.MainModuleModel.FormaPago" Role="FormaPago" Multiplicity="1" />
@@ -12228,6 +12286,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="EsLocal" Type="Boolean" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Precision="0" />
         </EntityType>
+        <Association Name="FK_Abono_RelTicketCFDI">
+          <End Type="Sagas.MainModuleModel.CFDI" Role="CFDI" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.Abono" Role="Abono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CFDI">
+              <PropertyRef Name="Id_RelTF" />
+            </Principal>
+            <Dependent Role="Abono">
+              <PropertyRef Name="Id_RelTF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12332,6 +12402,23 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
               </MappingFragment>
               <MappingFragment StoreEntitySet="RolAccion">
+                <ScalarProperty Name="AlmacenVerProductos" ColumnName="AlmacenVerProductos" />
+                <ScalarProperty Name="AlmacenRegistrarAlmacen" ColumnName="AlmacenRegistrarAlmacen" />
+                <ScalarProperty Name="HVCargaInformacion" ColumnName="HVCargaInformacion" />
+                <ScalarProperty Name="ConsultarRemanenteGeneral" ColumnName="ConsultarRemanenteGeneral" />
+                <ScalarProperty Name="CobranzaFacturar" ColumnName="CobranzaFacturar" />
+                <ScalarProperty Name="CobranzaConsultarFactura" ColumnName="CobranzaConsultarFactura" />
+                <ScalarProperty Name="ETBorrarRecargaCombustible" ColumnName="ETBorrarRecargaCombustible" />
+                <ScalarProperty Name="ETRegistrarRecargaCombustible" ColumnName="ETRegistrarRecargaCombustible" />
+                <ScalarProperty Name="ETBorrarMantenimiento" ColumnName="ETBorrarMantenimiento" />
+                <ScalarProperty Name="ETRegistrarMantenimiento" ColumnName="ETRegistrarMantenimiento" />
+                <ScalarProperty Name="ETBorrarAsignacionVehicular" ColumnName="ETBorrarAsignacionVehicular" />
+                <ScalarProperty Name="ETConsultarAsignarVehiculo" ColumnName="ETConsultarAsignarVehiculo" />
+                <ScalarProperty Name="ETAsignarVehiculo" ColumnName="ETAsignarVehiculo" />
+                <ScalarProperty Name="ETConsultarParqueVehicular" ColumnName="ETConsultarParqueVehicular" />
+                <ScalarProperty Name="ETRegistrarParqueVehicular" ColumnName="ETRegistrarParqueVehicular" />
+                <ScalarProperty Name="FacturasFacturar" ColumnName="FacturasFacturar" />
+                <ScalarProperty Name="FacturasVerFacturas" ColumnName="FacturasVerFacturas" />
                 <ScalarProperty Name="HistoricoVentas" ColumnName="HistoricoVentas" />
                 <ScalarProperty Name="CobranzaGenerarAbonos" ColumnName="CobranzaGenerarAbonos" />
                 <ScalarProperty Name="CobranzaVerCreditoRecuperado" ColumnName="CobranzaVerCreditoRecuperado" />
@@ -14058,6 +14145,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Abono">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Abono">
               <MappingFragment StoreEntitySet="Abono">
+                <ScalarProperty Name="Id_RelTF" ColumnName="Id_RelTF" />
                 <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
                 <ScalarProperty Name="FolioBancario" ColumnName="FolioBancario" />
                 <ScalarProperty Name="IdFormaPago" ColumnName="IdFormaPago" />

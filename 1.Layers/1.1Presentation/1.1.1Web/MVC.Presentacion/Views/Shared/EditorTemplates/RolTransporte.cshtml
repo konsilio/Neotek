@@ -1,28 +1,30 @@
-﻿@model MVC.Presentacion.Models.Catalogos.RolSistemaVenta
-
+﻿@model MVC.Presentacion.Models.Catalogos.RolTransporte
 @Html.HiddenFor(m => m.IdRol)
 @Html.HiddenFor(m => m.IdEmpresa)
 @Html.HiddenFor(m => m.NombreRol)
 @Html.HiddenFor(m => m.Rol1)
 @Html.HiddenFor(m => m.Activo)
 @Html.HiddenFor(m => m.FechaRegistro)
-
-@*MovilCompra*@
-@Html.HiddenFor(m => m.CompraVerOCompra)
-@Html.HiddenFor(m => m.CompraGenerarOCompra)
-@Html.HiddenFor(m => m.CompraAutorizarOCompra)
-@Html.HiddenFor(m => m.CompraEntraProductoOCompra)
-@Html.HiddenFor(m => m.CompraAtiendeServicioOCompra)
-@Html.HiddenFor(m => m.CompraCancelaOCompra)
-@Html.HiddenFor(m => m.AlmacenActualizaExistencias)
-@Html.HiddenFor(m => m.AlmacenVerExistencias)
-@Html.HiddenFor(m => m.AlmacenVerMovimientos)
-@Html.HiddenFor(m => m.AlmacenRegistrarAlmacen)
-@Html.HiddenFor(m => m.AlmacenVerProductos)
-@Html.HiddenFor(m => m.RequisicionVerRequisiciones)
-@Html.HiddenFor(m => m.RequisicionGenerarNueva)
-@Html.HiddenFor(m => m.RequisicionRevisarExistencia)
-@Html.HiddenFor(m => m.RequisicionAutorizar)
+@Html.HiddenFor(m => m.AppCompraVerOCompra)
+@Html.HiddenFor(m => m.AppCompraEntraGas)
+@Html.HiddenFor(m => m.AppCompraGasIniciarDescarga)
+@Html.HiddenFor(m => m.AppCompraGasFinalizarDescarga)
+@Html.HiddenFor(m => m.AppAutoconsumoInventarioGral)
+@Html.HiddenFor(m => m.AppAutoconsumoEstacionCarb)
+@Html.HiddenFor(m => m.AppAutoconsumoPipa)
+@Html.HiddenFor(m => m.AppCalibracionEstacionCarb)
+@Html.HiddenFor(m => m.AppCalibracionPipa)
+@Html.HiddenFor(m => m.AppCalibracionCamionetaCilindro)
+@Html.HiddenFor(m => m.AppRecargaEstacionCarb)
+@Html.HiddenFor(m => m.AppRecargaPipa)
+@Html.HiddenFor(m => m.AppRecargaCamionetaCilindro)
+@Html.HiddenFor(m => m.AppTomaLecturaAlmacenPral)
+@Html.HiddenFor(m => m.AppTomaLecturaEstacionCarb)
+@Html.HiddenFor(m => m.AppTomaLecturaPipa)
+@Html.HiddenFor(m => m.AppTomaLecturaCamionetaCilindro)
+@Html.HiddenFor(m => m.AppTomaLecturaReporteDelDia)
+@Html.HiddenFor(m => m.AppTraspasoEstacionCarb)
+@Html.HiddenFor(m => m.AppTraspasoPipa)
 @Html.HiddenFor(m => m.CatInsertarUsuario)
 @Html.HiddenFor(m => m.CatModificarUsuario)
 @Html.HiddenFor(m => m.CatEliminarUsuario)
@@ -54,6 +56,17 @@
 @Html.HiddenFor(m => m.CatModificarEquipoTransporte)
 @Html.HiddenFor(m => m.CatEliminarEquipoTransporte)
 @Html.HiddenFor(m => m.CatConsultarEquipoTransporte)
+@Html.HiddenFor(m => m.CompraVerOCompra)
+@Html.HiddenFor(m => m.CompraGenerarOCompra)
+@Html.HiddenFor(m => m.CompraAutorizarOCompra)
+@Html.HiddenFor(m => m.CompraEntraProductoOCompra)
+@Html.HiddenFor(m => m.CompraAtiendeServicioOCompra)
+@Html.HiddenFor(m => m.CompraCancelaOCompra)
+@Html.HiddenFor(m => m.AlmacenActualizaExistencias)
+@Html.HiddenFor(m => m.AlmacenVerExistencias)
+@Html.HiddenFor(m => m.AlmacenVerMovimientos)
+@Html.HiddenFor(m => m.AlmacenRegistrarAlmacen)
+@Html.HiddenFor(m => m.AlmacenVerProductos)
 @Html.HiddenFor(m => m.CatInsertarEmpresa)
 @Html.HiddenFor(m => m.CatModificarEmpresa)
 @Html.HiddenFor(m => m.CatEliminarEmpresa)
@@ -70,57 +83,39 @@
 @Html.HiddenFor(m => m.CatModificarPrecioVenta)
 @Html.HiddenFor(m => m.CatEliminarPrecioVenta)
 @Html.HiddenFor(m => m.CatConsultarPrecioVenta)
-
-@Html.HiddenFor(m => m.AppCompraVerOCompra)
-@Html.HiddenFor(m => m.AppCompraEntraGas)
-@Html.HiddenFor(m => m.AppCompraGasIniciarDescarga)
-@Html.HiddenFor(m => m.AppCompraGasFinalizarDescarga)
-@Html.HiddenFor(m => m.AppAutoconsumoInventarioGral)
-@Html.HiddenFor(m => m.AppAutoconsumoEstacionCarb)
-@Html.HiddenFor(m => m.AppAutoconsumoPipa)
-@Html.HiddenFor(m => m.AppCalibracionEstacionCarb)
-@Html.HiddenFor(m => m.AppCalibracionPipa)
-@Html.HiddenFor(m => m.AppCalibracionCamionetaCilindro)
-@Html.HiddenFor(m => m.AppRecargaEstacionCarb)
-@Html.HiddenFor(m => m.AppRecargaPipa)
-@Html.HiddenFor(m => m.AppRecargaCamionetaCilindro)
-@Html.HiddenFor(m => m.AppTomaLecturaAlmacenPral)
-@Html.HiddenFor(m => m.AppTomaLecturaEstacionCarb)
-@Html.HiddenFor(m => m.AppTomaLecturaPipa)
-@Html.HiddenFor(m => m.AppTomaLecturaCamionetaCilindro)
-@Html.HiddenFor(m => m.AppTomaLecturaReporteDelDia)
-@Html.HiddenFor(m => m.AppTraspasoEstacionCarb)
-@Html.HiddenFor(m => m.AppTraspasoPipa)
+@Html.HiddenFor(m => m.CobranzaVerAbonos)
+@Html.HiddenFor(m => m.CobranzaVerCartera)
+@Html.HiddenFor(m => m.CobranzaVerCreditoRecuperado)
+@Html.HiddenFor(m => m.CobranzaGenerarAbonos)
+@Html.HiddenFor(m => m.PedidoVerPedido)
+@Html.HiddenFor(m => m.PedidoGenerarPedido)
+@Html.HiddenFor(m => m.PedidoModificarPedido)
+@Html.HiddenFor(m => m.PedidoEliminarPedido)
 @Html.HiddenFor(m => m.AppDisposicionEfectivo)
 @Html.HiddenFor(m => m.AppCamionetaPuntoVenta)
 @Html.HiddenFor(m => m.AppEstacionCarbPuntoVenta)
 @Html.HiddenFor(m => m.AppPipaPuntoVenta)
-@Html.HiddenFor(m => m.ETRegistrarParqueVehicular)
-@Html.HiddenFor(m => m.ETConsultarParqueVehicular)
-@Html.HiddenFor(m => m.ETAsignarVehiculo)
-@Html.HiddenFor(m => m.ETConsultarAsignarVehiculo)
-@Html.HiddenFor(m => m.ETBorrarAsignacionVehicular)
-@Html.HiddenFor(m => m.ETRegistrarMantenimiento)
-@Html.HiddenFor(m => m.ETBorrarMantenimiento)
-@Html.HiddenFor(m => m.ETRegistrarRecargaCombustible)
-@Html.HiddenFor(m => m.ETBorrarRecargaCombustible)
- 
+@Html.HiddenFor(m => m.ConsultarRemanenteGeneral)
+@Html.HiddenFor(m => m.CobranzaConsultarFactura)
+@Html.HiddenFor(m => m.CobranzaFacturar)
+@Html.HiddenFor(m => m.RequisicionVerRequisiciones)
+@Html.HiddenFor(m => m.RequisicionGenerarNueva)
+@Html.HiddenFor(m => m.RequisicionRevisarExistencia)
+@Html.HiddenFor(m => m.RequisicionAutorizar)
+@Html.HiddenFor(m => m.FacturasVerFacturas)
+@Html.HiddenFor(m => m.FacturasFacturar)
 <tr>
     <td>@Model.NombreRol </td>
-    <td>@Html.CheckBoxFor(m => m.CobranzaVerAbonos)</td>
-    <td>@Html.CheckBoxFor(m => m.CobranzaVerCartera)</td>
-    <td>@Html.CheckBoxFor(m => m.CobranzaVerCreditoRecuperado)</td>
-    <td>@Html.CheckBoxFor(m => m.CobranzaGenerarAbonos)</td>
-    <td>@Html.CheckBoxFor(m => m.CobranzaConsultarFactura)</td>
-    <td>@Html.CheckBoxFor(m => m.CobranzaFacturar)</td>
-    <td>@Html.CheckBoxFor(m => m.PedidoVerPedido)</td>
-    <td>@Html.CheckBoxFor(m => m.PedidoGenerarPedido)</td>
-    <td>@Html.CheckBoxFor(m => m.PedidoModificarPedido)</td>
-    <td>@Html.CheckBoxFor(m => m.PedidoEliminarPedido)</td>
-    <td>@Html.CheckBoxFor(m => m.ConsultarRemanenteGeneral)</td>
-    <td>@Html.CheckBoxFor(m => m.FacturasVerFacturas)</td>
-    <td>@Html.CheckBoxFor(m => m.FacturasFacturar)</td>
-<td>
+    <td>@Html.CheckBoxFor(m => m.ETRegistrarParqueVehicular)</td>
+    <td>@Html.CheckBoxFor(m => m.ETConsultarParqueVehicular)</td>
+    <td>@Html.CheckBoxFor(m => m.ETAsignarVehiculo)</td>
+    <td>@Html.CheckBoxFor(m => m.ETConsultarAsignarVehiculo)</td>
+    <td>@Html.CheckBoxFor(m => m.ETBorrarAsignacionVehicular)</td>
+    <td>@Html.CheckBoxFor(m => m.ETRegistrarMantenimiento)</td>
+    <td>@Html.CheckBoxFor(m => m.ETBorrarMantenimiento)</td>
+    <td>@Html.CheckBoxFor(m => m.ETRegistrarRecargaCombustible)</td>
+    <td>@Html.CheckBoxFor(m => m.ETBorrarRecargaCombustible)</td>
+    <td>
         <a ID="lbEdit" href="@Url.Action("ActualizaNombreRol", "Roles", new { id = Model.IdRol })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">edit</i>
             <span>Editar nombre rol</span>
@@ -131,11 +126,3 @@
         </a>
     </td>
 </tr>
-
- 
- 
- 
- 
-
- 
- 
