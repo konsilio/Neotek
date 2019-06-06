@@ -100,12 +100,17 @@ public class LoginInteractorImpl implements LoginInteractor {
                 UsuarioDTO data = response.body();
 
                 try{
-                    Log.d("Jimy", data.getMensaje());
+                    Log.d("Jimy", data.toString());
                     if (response.isSuccessful()) {
                         //UsuarioDTO data = response.body();
                         Log.w(TAG,"Sucess");
                         if(data.isExito()){
-                            loginPresenter.onSuccessLogin(data);
+                            if(data.getLengthListMenu()  > 0){
+                                loginPresenter.onSuccessLogin(data);
+                            }
+                            else {
+                                loginPresenter.onError(data.getMensaje());
+                            }
                         } else {
                             loginPresenter.onError(data.getMensaje());
                         }
@@ -157,7 +162,7 @@ public class LoginInteractorImpl implements LoginInteractor {
                         }
                     }
                 }catch(Exception error) {
-                    loginPresenter.onError("Usuario y/o contraseña incorrectos");
+                    loginPresenter.onError("Usuario y/o contraseña incorrectos - try");
                 }
 
             }
