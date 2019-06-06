@@ -24,6 +24,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.IdFormaPago = _Abono.IdFormaPago;
             dto.FolioBancario = _Abono.FolioBancario;
             dto.FormaPago = FormaPagoServicio.Obtener(_Abono.IdFormaPago).Descripcion;
+            dto.Id_RelTF = _Abono.Id_RelTF ?? 0;
             return dto;
         }
         public static List<AbonosDTO> ToDTO(List<Abono> lAbono)
@@ -61,6 +62,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             _p.IdFormaPago = pDTO.IdFormaPago;
             _p.FolioBancario = pDTO.FolioBancario;
             _p.ACTIVO = true;
+            _p.Id_RelTF = pDTO.Id_RelTF;
 
             return _p;
         }
@@ -80,6 +82,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
                 MontoAbono = pAnterior.MontoAbono,
                 IdFormaPago = pAnterior.IdFormaPago,
                 FolioBancario = pAnterior.FolioBancario,
+                Id_RelTF = pAnterior.Id_RelTF,
             };
         }
         static List<Abono> FromEntity(List<Abono> lPDTO)
@@ -233,6 +236,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.MontoAbono = 0;
             dto.IdFormaPago = 1;
             dto.FolioBancario = "";
+            dto.Id_RelTF = 0;
             return dto;
         }
     }

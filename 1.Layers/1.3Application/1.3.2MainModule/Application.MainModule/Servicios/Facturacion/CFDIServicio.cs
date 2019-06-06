@@ -6,6 +6,7 @@ using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Cobranza;
 using Application.MainModule.Servicios.Seguridad;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
@@ -261,6 +262,40 @@ namespace Application.MainModule.Servicios.Facturacion
                 Importe = (float)det.Total,
                 ImpuestoConceptoTrasladado = _impuesto.ToArray(),
             };
+        }
+        public static Complemento DatosPago(Abono abono, CFDIDTO cfdi)
+        {
+            Complemento _complemento = new Complemento();
+            List<Pago> pagos = new List<Pago>();
+            Pago p = new Pago();
+
+            p.FechaPago = abono.FechaAbono.ToString("yyyy - MM - dd hh: mm:ss");
+            p.FormaDePagoP = abono.IdFormaPago < 10 ? string.Concat("0", abono.IdFormaPago.ToString()) : abono.IdFormaPago.ToString();
+            p.MonedaP = MonedaEnum.PesoMexicano;
+            p.Monto = float.Parse(abono.MontoAbono.ToString());
+            p.DoctoRelacionado = DocumentoRelacionado(abono, cfdi).ToArray();
+            pagos.Add(p);
+
+            _complemento.Pago = pagos.ToArray();
+            return _complemento;
+        }
+        public static List<DoctoRelacionado> DocumentoRelacionado(Abono abono, CFDIDTO cfdi)
+        {
+            List<DoctoRelacionado> respuesta = new List<DoctoRelacionado>();
+            DoctoRelacionado dr = new DoctoRelacionado();
+
+            dr.IdDocumento = cfdi.UUID;
+            dr.Serie = cfdi.Serie;
+            dr.Folio = cfdi.Folio.ToString();
+            dr.MonedaDR = MonedaEnum.PesoMexicano;
+            dr.MetodoDePagoDR = cfdi.Id_MetodoPago.Equals(0) ? MetodoPagoConst.Pago_en_una_sola_exhibición : MetodoPagoServicio.Buscar(cfdi.Id_MetodoPago).MetodoPagoSAT;
+            dr.NumParcialidad = CobranzaServicio.CalcularNumAbono(abono);
+            dr.ImpSaldoAnt = float.Parse(CobranzaServicio.CalcularNumSaldoAnteriorAbono(abono).ToString());
+            dr.ImpPagado = float.Parse(abono.MontoAbono.ToString());
+            dr.ImpSaldoInsoluto = float.Parse(CobranzaServicio.CalcularNumSaldoInsolutoAbono(abono).ToString());
+
+            respuesta.Add(dr);
+            return respuesta;
         }
         public static ImpuestoConceptoTrasladado GenerarImpiestoIVA(VentaPuntoDeVentaDetalle det)
         {

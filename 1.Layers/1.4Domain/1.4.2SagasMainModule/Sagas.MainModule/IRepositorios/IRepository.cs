@@ -5,7 +5,8 @@ using System.Linq.Expressions;
 
 
 namespace Sagas.MainModule.IRepositorios
-{    public interface IRepository<T> where T : class
+{
+    public interface IRepository<T> where T : class
     {
         IEnumerable<T> Get(Expression<Func<T, bool>> filter = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
@@ -19,6 +20,6 @@ namespace Sagas.MainModule.IRepositorios
         void Delete(object id);
         void Delete(T entity);
         void Update(T entity);
-        void Save();      
+        void Save();
     }
 }

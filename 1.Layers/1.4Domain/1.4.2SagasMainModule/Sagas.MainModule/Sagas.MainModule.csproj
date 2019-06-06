@@ -118,6 +118,9 @@
     <Compile Include="Entidades\Banco.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Bitacora.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Camioneta.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -335,15 +338,7 @@
     <Compile Include="Entidades\VentaPuntoDeVentaDetalle.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="IRepositorios\IEmpresaRepositorio.cs" />
-    <Compile Include="IRepositorios\IEstadosRepRepositorio.cs" />
-    <Compile Include="IRepositorios\IPaisRepositorio.cs" />
     <Compile Include="IRepositorios\IRepository.cs" />
-    <Compile Include="IRepositorios\IRequisicionEstatusRepositorio.cs" />
-    <Compile Include="IRepositorios\IRequisicionProductoRepositorio.cs" />
-    <Compile Include="IRepositorios\IRequisicionRepositorio.cs" />
-    <Compile Include="IRepositorios\IRolRepositorio.cs" />
-    <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />
     <Compile Include="ObjetosValor\Constantes\AlmacenGasConst.cs" />
     <Compile Include="ObjetosValor\Constantes\AlmacenConst.cs" />
     <Compile Include="ObjetosValor\Constantes\CajaGeneralConst.cs" />

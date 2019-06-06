@@ -12,20 +12,14 @@ namespace Sagas.MainModule.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class Abono
+    public partial class Bitacora
     {
-        public int IdAbono { get; set; }
-        public int IdCargo { get; set; }
+        public int Id { get; set; }
+        public Nullable<int> IdUsuario { get; set; }
+        public string Descripcion { get; set; }
+        public string Accion { get; set; }
         public System.DateTime FechaRegistro { get; set; }
-        public System.DateTime FechaAbono { get; set; }
-        public decimal MontoAbono { get; set; }
-        public byte IdFormaPago { get; set; }
-        public string FolioBancario { get; set; }
-        public bool ACTIVO { get; set; }
-        public Nullable<int> Id_RelTF { get; set; }
     
-        public virtual Cargo Cargo { get; set; }
-        public virtual FormaPago CFormaPago { get; set; }
-        public virtual CFDI RelTicketCFDI { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

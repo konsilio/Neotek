@@ -103,7 +103,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.Cargo>().Update(_pro);
+                    uow.Repository<Cargo>().Update(_pro);
                     uow.SaveChanges();
                     _respuesta.Id = _pro.IdCargo;
                     _respuesta.Exito = true;
@@ -123,6 +123,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<Abono> BuscarTodos()
         {
             return uow.Repository<Abono>().GetAll().ToList();
+        }
+        public Abono BuscarAbono(int id)
+        {
+            return uow.Repository<Abono>().GetSingle(x => x.IdAbono.Equals(id));
         }
         public List<Abono> BuscarTodos(DateTime f)
         {

@@ -22,6 +22,14 @@ namespace Application.MainModule.Servicios.Cobranza
         {
             return new AbonosDataAcces().BuscarTodos(f);
         }
+        public static Abono ObtenerAbono(int id)
+        {
+            return new AbonosDataAcces().BuscarAbono(id);
+        }
+        public static RespuestaDto ActualizarAbono(Abono entidad)
+        {
+            return new AbonosDataAcces().Actualizar(entidad);
+        }
         public static List<CargosDTO> CRecuperada(short idempresa)
         {
             return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().BuscarTodos(idempresa));
@@ -151,6 +159,42 @@ namespace Application.MainModule.Servicios.Cobranza
                 Mensaje = mensaje,
                 MensajesError = new List<string>() { mensaje },
             };
+        }
+        public static int CalcularNumAbono(Abono abono)
+        {
+            int consecutivo = 1;
+            foreach (var item in abono.Cargo.Abono.OrderBy(x => x.FechaAbono))
+            {
+                if (item.IdAbono.Equals(abono.IdAbono))
+                    return consecutivo;
+                else
+                    consecutivo++;
+            }
+            return 0;
+        }
+        public static decimal CalcularNumSaldoAnteriorAbono(Abono abono)
+        {
+            decimal saldo = abono.Cargo.TotalCargo;
+            foreach (var item in abono.Cargo.Abono.OrderBy(x => x.FechaAbono))
+            {
+                if (item.IdAbono.Equals(abono.IdAbono))
+                    return saldo;
+                else
+                    saldo = saldo - item.MontoAbono;
+            }
+            return 0;
+        }
+        public static decimal CalcularNumSaldoInsolutoAbono(Abono abono)
+        {
+            decimal saldo = abono.Cargo.TotalCargo;
+            foreach (var item in abono.Cargo.Abono.OrderBy(x => x.FechaAbono))
+            {
+                if (item.IdAbono.Equals(abono.IdAbono))
+                    return saldo - item.MontoAbono;
+                else
+                    saldo = saldo - item.MontoAbono;
+            }
+            return 0;
         }
     }
 }

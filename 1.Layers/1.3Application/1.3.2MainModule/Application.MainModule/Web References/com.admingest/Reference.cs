@@ -27,6 +27,8 @@ namespace Application.MainModule.com.admingest {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="WsFactAdmingestControllerBinding", Namespace="urn:WsFactAdmingestControllerwsdl")]
+    [System.Xml.Serialization.SoapIncludeAttribute(typeof(DoctoRelacionado))]
+    [System.Xml.Serialization.SoapIncludeAttribute(typeof(Pago))]
     [System.Xml.Serialization.SoapIncludeAttribute(typeof(ImpuestoTrasladado))]
     [System.Xml.Serialization.SoapIncludeAttribute(typeof(ImpuestoRetenido))]
     [System.Xml.Serialization.SoapIncludeAttribute(typeof(ImpuestoConceptoRetenido))]
@@ -339,6 +341,357 @@ namespace Application.MainModule.com.admingest {
             }
             set {
                 this.messageField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.SoapTypeAttribute(Namespace="urn:WsFactAdmingestControllerwsdl")]
+    public partial class DoctoRelacionado {
+        
+        private string idDocumentoField;
+        
+        private string serieField;
+        
+        private string folioField;
+        
+        private string monedaDRField;
+        
+        private string tipoCambioDRField;
+        
+        private string metodoDePagoDRField;
+        
+        private int numParcialidadField;
+        
+        private float impSaldoAntField;
+        
+        private float impPagadoField;
+        
+        private float impSaldoInsolutoField;
+        
+        /// <remarks/>
+        public string IdDocumento {
+            get {
+                return this.idDocumentoField;
+            }
+            set {
+                this.idDocumentoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Serie {
+            get {
+                return this.serieField;
+            }
+            set {
+                this.serieField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Folio {
+            get {
+                return this.folioField;
+            }
+            set {
+                this.folioField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MonedaDR {
+            get {
+                return this.monedaDRField;
+            }
+            set {
+                this.monedaDRField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TipoCambioDR {
+            get {
+                return this.tipoCambioDRField;
+            }
+            set {
+                this.tipoCambioDRField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MetodoDePagoDR {
+            get {
+                return this.metodoDePagoDRField;
+            }
+            set {
+                this.metodoDePagoDRField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public int NumParcialidad {
+            get {
+                return this.numParcialidadField;
+            }
+            set {
+                this.numParcialidadField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public float ImpSaldoAnt {
+            get {
+                return this.impSaldoAntField;
+            }
+            set {
+                this.impSaldoAntField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public float ImpPagado {
+            get {
+                return this.impPagadoField;
+            }
+            set {
+                this.impPagadoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public float ImpSaldoInsoluto {
+            get {
+                return this.impSaldoInsolutoField;
+            }
+            set {
+                this.impSaldoInsolutoField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.SoapTypeAttribute(Namespace="urn:WsFactAdmingestControllerwsdl")]
+    public partial class Pago {
+        
+        private string fechaPagoField;
+        
+        private string formaDePagoPField;
+        
+        private string monedaPField;
+        
+        private string tipoCambioPField;
+        
+        private float montoField;
+        
+        private string numOperacionField;
+        
+        private string rfcEmisorCtaOrdField;
+        
+        private string nomBancoOrdExtField;
+        
+        private string ctaOrdenanteField;
+        
+        private string rfcEmisorCtaBenField;
+        
+        private string ctaBeneficiarioField;
+        
+        private string tipoCadPagoField;
+        
+        private string certPagoField;
+        
+        private string cadPagoField;
+        
+        private string selloPagoField;
+        
+        private DoctoRelacionado[] doctoRelacionadoField;
+        
+        /// <remarks/>
+        public string FechaPago {
+            get {
+                return this.fechaPagoField;
+            }
+            set {
+                this.fechaPagoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string FormaDePagoP {
+            get {
+                return this.formaDePagoPField;
+            }
+            set {
+                this.formaDePagoPField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string MonedaP {
+            get {
+                return this.monedaPField;
+            }
+            set {
+                this.monedaPField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TipoCambioP {
+            get {
+                return this.tipoCambioPField;
+            }
+            set {
+                this.tipoCambioPField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public float Monto {
+            get {
+                return this.montoField;
+            }
+            set {
+                this.montoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string NumOperacion {
+            get {
+                return this.numOperacionField;
+            }
+            set {
+                this.numOperacionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string RfcEmisorCtaOrd {
+            get {
+                return this.rfcEmisorCtaOrdField;
+            }
+            set {
+                this.rfcEmisorCtaOrdField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string NomBancoOrdExt {
+            get {
+                return this.nomBancoOrdExtField;
+            }
+            set {
+                this.nomBancoOrdExtField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CtaOrdenante {
+            get {
+                return this.ctaOrdenanteField;
+            }
+            set {
+                this.ctaOrdenanteField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string RfcEmisorCtaBen {
+            get {
+                return this.rfcEmisorCtaBenField;
+            }
+            set {
+                this.rfcEmisorCtaBenField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CtaBeneficiario {
+            get {
+                return this.ctaBeneficiarioField;
+            }
+            set {
+                this.ctaBeneficiarioField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string TipoCadPago {
+            get {
+                return this.tipoCadPagoField;
+            }
+            set {
+                this.tipoCadPagoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CertPago {
+            get {
+                return this.certPagoField;
+            }
+            set {
+                this.certPagoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CadPago {
+            get {
+                return this.cadPagoField;
+            }
+            set {
+                this.cadPagoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SelloPago {
+            get {
+                return this.selloPagoField;
+            }
+            set {
+                this.selloPagoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public DoctoRelacionado[] DoctoRelacionado {
+            get {
+                return this.doctoRelacionadoField;
+            }
+            set {
+                this.doctoRelacionadoField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.3221.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.SoapTypeAttribute(Namespace="urn:WsFactAdmingestControllerwsdl")]
+    public partial class Complemento {
+        
+        private Pago[] pagoField;
+        
+        /// <remarks/>
+        public Pago[] Pago {
+            get {
+                return this.pagoField;
+            }
+            set {
+                this.pagoField = value;
             }
         }
     }
@@ -864,6 +1217,8 @@ namespace Application.MainModule.com.admingest {
         
         private Impuesto impuestoField;
         
+        private Complemento complementoField;
+        
         /// <remarks/>
         public string Serie {
             get {
@@ -1011,6 +1366,16 @@ namespace Application.MainModule.com.admingest {
             }
             set {
                 this.impuestoField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public Complemento Complemento {
+            get {
+                return this.complementoField;
+            }
+            set {
+                this.complementoField = value;
             }
         }
     }

@@ -42,6 +42,7 @@
           <xsd:element name="Receptor" type="tns:Receptor" />
           <xsd:element name="Concepto" type="tns:ConceptoArray" />
           <xsd:element name="Impuesto" type="tns:Impuesto" />
+          <xsd:element name="Complemento" type="tns:Complemento" />
         </xsd:all>
       </xsd:complexType>
       <xsd:complexType name="Receptor">
@@ -140,6 +141,59 @@
           <xsd:element name="TipoFactor" type="xsd:string" />
           <xsd:element name="TasaOCuota" type="xsd:float" />
           <xsd:element name="Importe" type="xsd:float" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="Complemento">
+        <xsd:all>
+          <xsd:element name="Pago" type="tns:PagoArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="PagoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soap-enc:Array">
+            <xsd:attribute wsdl:arrayType="tns:Pago[]" ref="soap-enc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Pago">
+        <xsd:all>
+          <xsd:element name="FechaPago" type="xsd:string" />
+          <xsd:element name="FormaDePagoP" type="xsd:string" />
+          <xsd:element name="MonedaP" type="xsd:string" />
+          <xsd:element name="TipoCambioP" type="xsd:string" />
+          <xsd:element name="Monto" type="xsd:float" />
+          <xsd:element name="NumOperacion" type="xsd:string" />
+          <xsd:element name="RfcEmisorCtaOrd" type="xsd:string" />
+          <xsd:element name="NomBancoOrdExt" type="xsd:string" />
+          <xsd:element name="CtaOrdenante" type="xsd:string" />
+          <xsd:element name="RfcEmisorCtaBen" type="xsd:string" />
+          <xsd:element name="CtaBeneficiario" type="xsd:string" />
+          <xsd:element name="TipoCadPago" type="xsd:string" />
+          <xsd:element name="CertPago" type="xsd:string" />
+          <xsd:element name="CadPago" type="xsd:string" />
+          <xsd:element name="SelloPago" type="xsd:string" />
+          <xsd:element name="DoctoRelacionado" type="tns:DoctoRelacionadoArray" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="DoctoRelacionadoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soap-enc:Array">
+            <xsd:attribute wsdl:arrayType="tns:DoctoRelacionado[]" ref="soap-enc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="DoctoRelacionado">
+        <xsd:all>
+          <xsd:element name="IdDocumento" type="xsd:string" />
+          <xsd:element name="Serie" type="xsd:string" />
+          <xsd:element name="Folio" type="xsd:string" />
+          <xsd:element name="MonedaDR" type="xsd:string" />
+          <xsd:element name="TipoCambioDR" type="xsd:string" />
+          <xsd:element name="MetodoDePagoDR" type="xsd:string" />
+          <xsd:element name="NumParcialidad" type="xsd:int" />
+          <xsd:element name="ImpSaldoAnt" type="xsd:float" />
+          <xsd:element name="ImpPagado" type="xsd:float" />
+          <xsd:element name="ImpSaldoInsoluto" type="xsd:float" />
         </xsd:all>
       </xsd:complexType>
     </xsd:schema>
