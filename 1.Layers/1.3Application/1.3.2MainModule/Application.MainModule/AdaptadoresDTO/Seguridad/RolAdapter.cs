@@ -113,8 +113,23 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 PedidoGenerarPedido = rol.PedidoGenerarPedido,
                 PedidoModificarPedido = rol.PedidoModificarPedido,
                 PedidoEliminarPedido = rol.PedidoEliminarPedido,
-        };
-
+                AlmacenRegistrarAlmacen = rol.AlmacenRegistrarAlmacen,
+                AlmacenVerProductos = rol.AlmacenVerProductos,
+                ConsultarRemanenteGeneral = rol.ConsultarRemanenteGeneral,
+                ETRegistrarParqueVehicular = rol.ETRegistrarParqueVehicular,
+                ETConsultarParqueVehicular = rol.ETConsultarParqueVehicular,
+                ETAsignarVehiculo = rol.ETAsignarVehiculo,
+                ETConsultarAsignarVehiculo = rol.ETConsultarAsignarVehiculo,
+                ETBorrarAsignacionVehicular = rol.ETBorrarAsignacionVehicular,
+                ETRegistrarMantenimiento = rol.ETRegistrarMantenimiento,
+                ETBorrarMantenimiento = rol.ETBorrarMantenimiento,
+                ETRegistrarRecargaCombustible = rol.ETRegistrarRecargaCombustible,
+                ETBorrarRecargaCombustible = rol.ETBorrarRecargaCombustible,
+                CobranzaConsultarFactura = rol.CobranzaConsultarFactura,
+                CobranzaFacturar = rol.CobranzaFacturar,
+                FacturasVerFacturas = rol.FacturasVerFacturas,
+                FacturasFacturar = rol.FacturasFacturar
+            };
             return r;
         }
         public static List<RolDto> ToDTO(List<Rol> roles)
@@ -223,6 +238,22 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 PedidoGenerarPedido = rolDTO.PedidoGenerarPedido,
                 PedidoModificarPedido = rolDTO.PedidoModificarPedido,
                 PedidoEliminarPedido = rolDTO.PedidoEliminarPedido,
+                AlmacenRegistrarAlmacen = rolDTO.AlmacenRegistrarAlmacen,
+                AlmacenVerProductos = rolDTO.AlmacenVerProductos,
+                ConsultarRemanenteGeneral = rolDTO.ConsultarRemanenteGeneral,
+                ETRegistrarParqueVehicular = rolDTO.ETRegistrarParqueVehicular,
+                ETConsultarParqueVehicular = rolDTO.ETConsultarParqueVehicular,
+                ETAsignarVehiculo = rolDTO.ETAsignarVehiculo,
+                ETConsultarAsignarVehiculo = rolDTO.ETConsultarAsignarVehiculo,
+                ETBorrarAsignacionVehicular = rolDTO.ETBorrarAsignacionVehicular,
+                ETRegistrarMantenimiento = rolDTO.ETRegistrarMantenimiento,
+                ETBorrarMantenimiento = rolDTO.ETBorrarMantenimiento,
+                ETRegistrarRecargaCombustible = rolDTO.ETRegistrarRecargaCombustible,
+                ETBorrarRecargaCombustible = rolDTO.ETBorrarRecargaCombustible,
+                CobranzaConsultarFactura = rolDTO.CobranzaConsultarFactura,
+                CobranzaFacturar = rolDTO.CobranzaFacturar,
+                FacturasVerFacturas = rolDTO.FacturasVerFacturas,
+                FacturasFacturar = rolDTO.FacturasFacturar
             };
         }
         public static Rol FromDtoPermiso(RolDto rolDTO)
@@ -327,6 +358,22 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 PedidoGenerarPedido = rolDTO.PedidoGenerarPedido,
                 PedidoModificarPedido = rolDTO.PedidoModificarPedido,
                 PedidoEliminarPedido = rolDTO.PedidoEliminarPedido,
+                AlmacenRegistrarAlmacen = rolDTO.AlmacenRegistrarAlmacen,
+                AlmacenVerProductos = rolDTO.AlmacenVerProductos,
+                ConsultarRemanenteGeneral = rolDTO.ConsultarRemanenteGeneral,
+                ETRegistrarParqueVehicular = rolDTO.ETRegistrarParqueVehicular,
+                ETConsultarParqueVehicular = rolDTO.ETConsultarParqueVehicular,
+                ETAsignarVehiculo = rolDTO.ETAsignarVehiculo,
+                ETConsultarAsignarVehiculo = rolDTO.ETConsultarAsignarVehiculo,
+                ETBorrarAsignacionVehicular = rolDTO.ETBorrarAsignacionVehicular,
+                ETRegistrarMantenimiento = rolDTO.ETRegistrarMantenimiento,
+                ETBorrarMantenimiento = rolDTO.ETBorrarMantenimiento,
+                ETRegistrarRecargaCombustible = rolDTO.ETRegistrarRecargaCombustible,
+                ETBorrarRecargaCombustible = rolDTO.ETBorrarRecargaCombustible,
+                CobranzaConsultarFactura = rolDTO.CobranzaConsultarFactura,
+                CobranzaFacturar = rolDTO.CobranzaFacturar,
+                FacturasVerFacturas = rolDTO.FacturasVerFacturas,
+                FacturasFacturar = rolDTO.FacturasFacturar
             };
         }
         public static Rol FromDtoNomRol(RolDto rolDTO, Rol rol)
@@ -423,6 +470,22 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 PedidoGenerarPedido = rol.PedidoGenerarPedido,
                 PedidoModificarPedido = rol.PedidoModificarPedido,
                 PedidoEliminarPedido = rol.PedidoEliminarPedido,
+                AlmacenRegistrarAlmacen = rol.AlmacenRegistrarAlmacen,
+                AlmacenVerProductos = rol.AlmacenVerProductos,
+                ConsultarRemanenteGeneral = rol.ConsultarRemanenteGeneral,
+                ETRegistrarParqueVehicular = rol.ETRegistrarParqueVehicular,
+                ETConsultarParqueVehicular = rol.ETConsultarParqueVehicular,
+                ETAsignarVehiculo = rol.ETAsignarVehiculo,
+                ETConsultarAsignarVehiculo = rol.ETConsultarAsignarVehiculo,
+                ETBorrarAsignacionVehicular = rol.ETBorrarAsignacionVehicular,
+                ETRegistrarMantenimiento = rol.ETRegistrarMantenimiento,
+                ETBorrarMantenimiento = rol.ETBorrarMantenimiento,
+                ETRegistrarRecargaCombustible = rol.ETRegistrarRecargaCombustible,
+                ETBorrarRecargaCombustible = rol.ETBorrarRecargaCombustible,
+                CobranzaConsultarFactura = rol.CobranzaConsultarFactura,
+                CobranzaFacturar = rol.CobranzaFacturar,
+                FacturasVerFacturas = rol.FacturasVerFacturas,
+                FacturasFacturar = rol.FacturasFacturar
             };
         }
 

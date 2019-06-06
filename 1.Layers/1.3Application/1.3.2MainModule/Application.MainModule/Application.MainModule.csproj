@@ -145,6 +145,7 @@
     <Compile Include="DTOs\Reportes\GastoVehicular\RepGastoVehicularDTO.cs" />
     <Compile Include="DTOs\Reportes\InventarioConcepto\InventarioXConceptoDTO.cs" />
     <Compile Include="DTOs\Reportes\InventarioConcepto\RepInventarioXConceptorDTO.cs" />
+    <Compile Include="DTOs\Seguridad\MenuDto.cs" />
     <Compile Include="Servicios\Equipo\CalculosEquipoTrasporte.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDetalleDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDTO.cs" />

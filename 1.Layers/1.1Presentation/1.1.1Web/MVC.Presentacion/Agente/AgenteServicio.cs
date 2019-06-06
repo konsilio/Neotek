@@ -77,7 +77,6 @@ namespace MVC.Presentacion.Agente
         public List<LineaProductoDTO> _listaLineasProducto;
         public List<UnidadMedidaDTO> _listaUnidadesMedida;
         public List<RolDto> _lstaAllRoles;
-        public List<RolCat> _lstaRolesCat;
         public List<RolMovilCompra> _lstaRolesMovilCom;
         public List<RolCompras> _lstaRolesCom;
         public List<RolRequsicion> _lstaRolesReq;

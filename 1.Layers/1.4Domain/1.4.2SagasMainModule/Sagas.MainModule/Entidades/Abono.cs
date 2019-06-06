@@ -22,8 +22,10 @@ namespace Sagas.MainModule.Entidades
         public byte IdFormaPago { get; set; }
         public string FolioBancario { get; set; }
         public bool ACTIVO { get; set; }
+        public Nullable<int> Id_RelTF { get; set; }
     
         public virtual Cargo Cargo { get; set; }
         public virtual FormaPago CFormaPago { get; set; }
+        public virtual CFDI RelTicketCFDI { get; set; }
     }
 }

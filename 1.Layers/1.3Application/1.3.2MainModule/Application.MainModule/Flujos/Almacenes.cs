@@ -101,13 +101,16 @@ namespace Application.MainModule.Flujos
         }
         public List<AlmacenDTO> ProductosAlmacen(short idEmpresa)
         {
-            //Validar Permisos
+            var permiso = PermisosServicio.PuedeConsultarProductoAlmacen();
+            if (!permiso.Exito) return null;
             var prods = ProductoAlmacenServicio.BuscarAlmacen(idEmpresa);
             return AlmacenProductoAdapter.ToDTO(prods);
         }
         public RespuestaDto ActualizarAlmacen(AlmacenDTO dto)
         {
-            //Validar permisos
+            var permiso = PermisosServicio.PuedeModificarAlmacen();
+            if (!permiso.Exito) return null;
+            
             var almacen = ProductoAlmacenServicio.ObtenerAlmacen(dto.IdProducto, dto.IdEmpresa);
             var entity = ProductoAlmacenServicio.AlmacenEntity(almacen);
             var prod = ProductoServicio.ObtenerProducto(dto.IdProducto);
@@ -150,7 +153,8 @@ namespace Application.MainModule.Flujos
         }
         public List<RegistroDTO> RegistroAlmacen(short idEmpresa)
         {
-            //Validar Permisos
+            var permiso = PermisosServicio.PuedeRegistrarAlmacen();
+            if (!permiso.Exito) return null;
 
             var Entradas = ProductoAlmacenServicio.BuscarEntradasTodo(idEmpresa);
             var Salidas = ProductoAlmacenServicio.BuscarSalidaTodo(idEmpresa);
@@ -168,6 +172,8 @@ namespace Application.MainModule.Flujos
         }
         public List<RemanenteGeneralDTO> ConsultarRemanenteGeneral(RemanenteDTO dto)
         {
+            var permiso = PermisosServicio.PuedeConsultarRemanenteGral();
+            if (!permiso.Exito) return null;
             List<RemanenteGeneralDTO> remaGeneral = new List<RemanenteGeneralDTO>();
             //if (TokenServicio.ObtenerEsAdministracionCentral())
             //{
