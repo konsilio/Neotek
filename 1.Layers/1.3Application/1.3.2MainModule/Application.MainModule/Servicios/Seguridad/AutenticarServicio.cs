@@ -10,7 +10,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.Servicios.Mobile;
-using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -30,9 +29,10 @@ namespace Application.MainModule.Servicios.Seguridad
             // Validamos si es un usuario de la administración central
             // y buscamos la existencia del usuario, validando su contraseña
             usuario = AutenticarUsuarioDeEmpresa(autDto);
-
+            List<MenuDto> listMnu = new List<MenuDto>();
             if (usuario.autenticado)
             {
+                List<MenuDto> menu = RolServicio.CrearMenu(usuario.IdUsuario);
                 var claims = new[]
                 {
                     new Claim(TokenEtiquetasEnum.Autenticado, usuario.autenticado.ToString()),
@@ -50,7 +50,8 @@ namespace Application.MainModule.Servicios.Seguridad
                     IdUsuario = usuario.IdUsuario,
                     Exito = true,
                     Mensaje = string.Concat(us.Empresa.UrlLogotipo180px, "|", us.Nombre, " ", us.Apellido1, "|", us.NombreUsuario),
-                    token = TokenGenerator.GenerateTokenJwt(claims, autDto.Password, Convert.ToInt32(min).ToString())
+                    token = TokenGenerator.GenerateTokenJwt(claims, autDto.Password, Convert.ToInt32(min).ToString()),
+                    LstRoles = menu
                 };
             }
             else
@@ -60,6 +61,7 @@ namespace Application.MainModule.Servicios.Seguridad
                     Exito = false,
                     Mensaje = Error.S0003,
                     token = string.Empty
+                   
                 };
         }
 
@@ -67,7 +69,7 @@ namespace Application.MainModule.Servicios.Seguridad
         {
             var aut = AutenticarUsuario(autDto);
             var usuario = new UsuarioDataAccess().Buscar(aut.IdUsuario);
-            List<MenuDto> menu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : new List<MenuDto>();
+            List<Application.MainModule.DTOs.Mobile.MenuDto> menu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : new List<Application.MainModule.DTOs.Mobile.MenuDto>();
             //if (usuario != null)
             //{
                 if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count != 0 && !menu.Any())

@@ -85,10 +85,11 @@ namespace Application.MainModule.Servicios.Seguridad
                     };
                 }
             }
-            else {
+            else
+            {
                 return new RespuestaDto()
                 {
-                    Exito = true,                   
+                    Exito = true,
                 };
             }
             //return new RespuestaDto();
@@ -115,5 +116,17 @@ namespace Application.MainModule.Servicios.Seguridad
                 MensajesError = new List<string>() { mensaje },
             };
         }
+
+        public static List<MenuDto> CrearMenu(int idUsuario)
+        {
+            List<MenuDto> lista = new List<MenuDto>();
+            var usuario = new UsuarioDataAccess().Buscar(idUsuario);
+            foreach(var rol in usuario.Roles)
+            {
+
+            }
+            return lista;
+        }
+
     }
 }
