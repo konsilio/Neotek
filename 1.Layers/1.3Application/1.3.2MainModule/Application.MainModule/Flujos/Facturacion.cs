@@ -12,6 +12,7 @@ using Application.MainModule.Servicios.Facturacion;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -81,9 +82,9 @@ namespace Application.MainModule.Flujos
             if (!dto.RespuestaTimbrado.Exito)
                 return dto.RespuestaTimbrado;
 
-            var _comp = CFDIServicio.DatosComprobante(dto);
-            _comp.Receptor = CFDIServicio.DatosReceptor(dto);
-            _comp.Concepto = CFDIServicio.DatosConceptos(dto).ToArray();
+            var _comp = CFDIServicio.DatosComprobantePago(dto);   
+            _comp.Receptor = CFDIServicio.DatosReceptor(dto);            
+            _comp.Concepto = CFDIServicio.DatosConceptosPago().ToArray();
             _comp.Complemento = CFDIServicio.DatosPago(abono, dto);
 
             dto.Id_MetodoPago = Convert.ToInt32(_comp.MetodoPago.Equals(MetodoPagoConst.Pago_en_parcialidades_o_diferido) ? MetodoPagoConst.IDPPD : MetodoPagoConst.IDPUE);
