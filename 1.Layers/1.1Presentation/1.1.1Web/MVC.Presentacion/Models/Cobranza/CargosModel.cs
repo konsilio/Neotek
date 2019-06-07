@@ -42,5 +42,7 @@ namespace MVC.Presentacion.Models.Cobranza
         public decimal Dias32a61 { get; set; }
         public decimal Dias62a91 { get; set; }
         public decimal Mas91 { get; set; }
+        public string URL_CFDI { get; set; }
+        public string URL_XML { get; set; }
     }
 }

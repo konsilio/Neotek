@@ -1,4 +1,5 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
+@model  UsuarioDTO
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -9,8 +10,6 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
-@model  UsuarioDTO
-
 @{
     ViewBag.Title = "Index";
 }
@@ -32,16 +31,15 @@
             form.attr('method', 'post');
         });
     });
-
 </script>
 
 <!-- Page Loader -->
-<div class="page-loader-wrapper">
+@*<div class="page-loader-wrapper">
     <div class="loader">
         <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
         <p>Espere por favor</p>
     </div>
-</div>
+</div>*@
 @using (Html.BeginForm("Nuevo", "Usuarios", FormMethod.Post))
 {
     <section class="content home">
