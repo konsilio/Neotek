@@ -10,5 +10,6 @@ namespace MVC.Presentacion.Models.Seguridad
         public bool Exito { get; set; }
         public string Mensaje { get; set; }
         public string token { get; set; }
+        public MenuDto LstRoles { get; set; }
     }
 }

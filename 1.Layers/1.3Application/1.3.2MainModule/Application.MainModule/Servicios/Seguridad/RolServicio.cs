@@ -117,16 +117,237 @@ namespace Application.MainModule.Servicios.Seguridad
             };
         }
 
-        public static List<MenuDto> CrearMenu(int idUsuario)
+        public static MenuDto CrearMenu(int idUsuario)
         {
-            List<MenuDto> lista = new List<MenuDto>();
+            //List<MenuDto> lista = new List<MenuDto>();
+            MenuDto lista = new MenuDto();
             var usuario = new UsuarioDataAccess().Buscar(idUsuario);
-            foreach(var rol in usuario.Roles)
+            if (usuario.EsSuperAdmin)
             {
+                lista = setTrue();
+            }
+            else
+            {
+                foreach (var rol in usuario.Roles)
+                {
+                    if (rol.FacturasFacturar || rol.FacturasVerFacturas)
+                    {
+                        lista.Facturacion = true;
+                    }
+                    if (rol.RequisicionVerRequisiciones || rol.RequisicionAutorizar || rol.RequisicionGenerarNueva || rol.RequisicionRevisarExistencia)
+                    {
+                        lista.Requisicion = true;
+                    }
+                    if (rol.CobranzaVerAbonos || rol.CobranzaVerCreditoRecuperado || rol.CobranzaVerCartera || rol.CobranzaVerCreditoRecuperado || rol.CobranzaConsultarFactura || rol.CobranzaFacturar)
+                    {
+                        lista.CreditoCobranza = true;
+                        if (rol.CobranzaVerAbonos)
+                            lista.CreditoCobranza = true;
 
+                        if (rol.CobranzaVerCreditoRecuperado)
+                            lista.CCRecuperado = true;
+
+                        if (rol.CobranzaVerCartera)
+                            lista.CCVencida = true;
+
+                        if (rol.CobranzaVerCreditoRecuperado)
+                            lista.CCRecuperado = true;
+
+                        if (rol.CobranzaConsultarFactura || rol.CobranzaFacturar)
+                            lista.CCFacturaGlobal = true;
+
+                    }
+                    if (rol.PedidoVerPedidos || rol.PedidoGenerarPedido || rol.PedidoEliminarPedido || rol.PedidoModificarPedido)
+                    {
+                        lista.CallCenter = true;
+
+                        if (rol.PedidoVerPedidos)
+                            lista.CCVencida = true;
+
+                        if (rol.PedidoGenerarPedido)
+                            lista.CCRecuperado = true;
+
+                        if (rol.PedidoEliminarPedido)
+                            lista.CCFacturaGlobal = true;
+
+                        if (rol.PedidoModificarPedido)
+                            lista.CCRecuperado = true;
+                    }
+                    if (rol.CatInsertarCuentaContable || rol.CatConsultarPuntoVenta || rol.CatConsultarPrecioVentaGas || rol.PedidoModificarPedido
+                        || rol.RequisicionGenerarNueva || rol.CompraGenerarOCompra || rol.ETRegistrarParqueVehicular || rol.CatLiquidarCajaGeneral)
+                    {
+                        lista.Reportes = true;
+
+                        if (rol.CatInsertarCuentaContable)
+                            lista.ReporteCuentasXPagar = true;
+
+                        if (rol.CatConsultarPuntoVenta)
+                            lista.ReportePuntoVenta = true;
+
+                        if (rol.CatConsultarPrecioVentaGas)
+                            lista.ReportePrecioVenta = true;
+
+                        if (rol.PedidoModificarPedido)
+                            lista.ReporteCallCenter = true;
+
+                        if (rol.RequisicionGenerarNueva)
+                            lista.ReporteRequisicion = true;
+
+                        if (rol.CompraGenerarOCompra)
+                            lista.ReporteOrdenCompra = true;
+
+                        if (rol.ETRegistrarParqueVehicular)
+                            lista.ReporteRendimientoVehicular = true;
+
+                        if (rol.CatLiquidarCajaGeneral)
+                            lista.ReporteCorteCaja = true;
+                    }
+                    if (rol.ETRegistrarParqueVehicular || rol.ETConsultarParqueVehicular || rol.ETAsignarVehiculo || rol.ETConsultarAsignarVehiculo
+                        || rol.ETBorrarAsignacionVehicular || rol.ETRegistrarMantenimiento || rol.ETBorrarMantenimiento || rol.ETRegistrarRecargaCombustible)
+                    {
+                        lista.EquipooTransporte = true;
+                        if (rol.ETRegistrarParqueVehicular || rol.ETConsultarParqueVehicular)
+                            lista.ETParqueVehicular = true;
+
+                        if (rol.ETAsignarVehiculo || rol.ETConsultarAsignarVehiculo || rol.ETBorrarAsignacionVehicular)
+                            lista.ETAsignacion = true;
+
+                        if (rol.ETRegistrarMantenimiento || rol.ETBorrarMantenimiento)
+                            lista.ETMantenimiento = true;
+
+                        if (rol.ETRegistrarRecargaCombustible)
+                            lista.ETRecargaC = true;
+                    }
+
+
+                    if (rol.CompraGenerarOCompra || rol.CompraAutorizarOCompra || rol.CompraVerOCompra)
+                    {
+                        lista.CompraOrdenCompra = true;
+                    }
+
+                    if (rol.ConsultarRemanenteGeneral)
+                    {
+                        lista.Remanente = true;
+                    }
+                    if (rol.AlmacenActualizaExistencias || rol.AlmacenRegistrarAlmacen || rol.AlmacenVerProductos)
+                    {
+                        lista.Almacen = true;
+                    }
+                    if (rol.CatConsultarCajaGeneral || rol.CatLiquidarCajaGeneral)
+                    {
+                        lista.Ventas = true;
+                    }
+
+                    if (rol.HistoricoVentas || rol.HVCargaInformacion)
+                    {
+                        lista.Ventas = true;
+                    }
+                    ///CAtalogos
+                    if (rol.CatInsertarProducto || rol.CatModificarProducto || rol.CatEliminarProducto || rol.CatConsultarProducto  //Productos
+                      || rol.CatInsertarCentroCosto || rol.CatModificarCentroCosto || rol.CatEliminarCentroCosto || rol.CatConsultarCentroCosto //CentroCosto
+                      || rol.CatInsertarCuentaContable || rol.CatModificarCuentaContable || rol.CatEliminarCuentaContable || rol.CatConsultarCuentaContable //CuentaContable
+                      || rol.CatInsertarProveedor || rol.CatModificarProveedor || rol.CatEliminarProveedor || rol.CatConsultarProveedor //Proveedor
+                      || rol.CatInsertarEmpresa || rol.CatModificarEmpresa || rol.CatEliminarEmpresa //Gaseras
+                      || rol.CatInsertarUsuario || rol.CatModificarUsuario || rol.CatEliminarUsuario //Usuario
+                      || rol.CatInsertarRol || rol.CatModificarRol || rol.CatEliminarRol  //Rol
+                      || rol.CatConsultarCliente || rol.CatInsertarCliente || rol.CatModificarCliente || rol.CatEliminarCliente //Cliente
+                      || rol.CatConsultarPuntoVenta || rol.CatEliminarPuntoVenta //PuntoVenta 
+                      || rol.CatConsultarPrecioVentaGas || rol.CatInsertarPrecioVentaGas || rol.CatModificarPrecioVentaGas || rol.CatEliminarPrecioVentaGas//PuntoVenta
+                    )
+                    {
+                        lista.Catalogos = true;
+
+                        if (rol.CatInsertarProducto || rol.CatModificarProducto || rol.CatEliminarProducto || rol.CatConsultarProducto)
+                            lista.CatProducto = true;
+
+                        if (rol.CatInsertarCentroCosto || rol.CatModificarCentroCosto || rol.CatEliminarCentroCosto || rol.CatConsultarCentroCosto)
+                            lista.CatCentroCosto = true;
+
+                        if (rol.CatInsertarCuentaContable || rol.CatModificarCuentaContable || rol.CatEliminarCuentaContable || rol.CatConsultarCuentaContable)
+                            lista.CatCuentaContable = true;
+
+                        if (rol.CatInsertarProveedor || rol.CatModificarProveedor || rol.CatEliminarProveedor || rol.CatConsultarProveedor)
+                            lista.CatProveedor = true;
+
+                        if (rol.CatInsertarEmpresa || rol.CatModificarEmpresa || rol.CatEliminarEmpresa)
+                            lista.CatGaseras = true;
+
+                        if (rol.CatInsertarUsuario || rol.CatModificarUsuario || rol.CatEliminarUsuario)
+                            lista.CatUsuarios = true;
+
+                        if (rol.CatInsertarRol || rol.CatModificarRol || rol.CatEliminarRol)
+                            lista.CatRoles = true;
+
+                        if (rol.CatConsultarCliente || rol.CatInsertarCliente || rol.CatModificarCliente || rol.CatEliminarCliente)
+                            lista.CatClientes = true;
+
+                        if (rol.CatConsultarPuntoVenta || rol.CatEliminarPuntoVenta)
+                            lista.CatPuntosVenta = true;
+
+                        if (rol.CatConsultarPrecioVentaGas || rol.CatInsertarPrecioVentaGas || rol.CatModificarPrecioVentaGas || rol.CatEliminarPrecioVentaGas)
+                            lista.CatPrecioVenta = true;
+                    }
+                }
             }
             return lista;
         }
 
+        private static MenuDto setTrue()
+        {
+            MenuDto lista = new MenuDto();
+
+            lista.Facturacion = true;
+            lista.Requisicion = true;
+            lista.CCAbonos = true;
+            lista.CreditoCobranza = true;
+            lista.CCRecuperado = true;
+            lista.CCVencida = true;
+            lista.CCFacturaGlobal = true;
+            lista.CallCenter = true;
+            lista.Reportes = true;
+            lista.ReporteCuentasXPagar = true;
+            lista.ReportePuntoVenta = true;
+            lista.ReportePrecioVenta = true;
+            lista.ReporteCallCenter = true;
+            lista.ReporteRequisicion = true;
+            lista.ReporteOrdenCompra = true;
+            lista.ReporteRendimientoVehicular = true;
+            lista.ReporteInvConcepto = true;
+            lista.ReporteHistVentas = true;
+            lista.ReporteCorteCaja = true;
+            lista.ReporteGastoVehiculo = true;
+            lista.EquipooTransporte = true;
+            lista.ETParqueVehicular = true;
+            lista.ETRecargaC = true;
+            lista.ETAsignacion = true;
+            lista.ETMantenimiento = true;
+            lista.CompraOrdenCompra = true;
+            lista.Remanente = true;
+            lista.Almacen = true;
+            lista.AlmacenExistencia = true;
+            lista.AlmacenES = true;
+            lista.AlmacenSalidaMercancia = true;
+            lista.Ventas = true;
+            lista.VentasCajaGeneral = true;
+            lista.VentasCajaGeneralEst = true;
+            lista.HVCargaInfo = true;
+            lista.HistoricoVentas = true;
+            lista.Catalogos = true;
+            lista.CatProducto = true;
+            lista.CatCentroCosto = true;
+            lista.CatCuentaContable = true;
+            lista.CatProveedor = true;
+            lista.CatGaseras = true;
+            lista.CatEgresos = true;
+            lista.CatUsuarios = true;
+            lista.CatRoles = true;
+            lista.CatClientes = true;
+            lista.CatCombustibles = true;
+            lista.CatPuntosVenta = true;
+            lista.CatPrecioVenta = true;
+            lista.CatPrecioVentaO = true;
+
+            return lista;
+        }
     }
 }

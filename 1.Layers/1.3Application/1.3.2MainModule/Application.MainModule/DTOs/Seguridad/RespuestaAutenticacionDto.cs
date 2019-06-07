@@ -8,6 +8,6 @@ namespace Application.MainModule.DTOs.Seguridad
         //public string token { get; set; }
         public int IdUsuario { get; set; }
         public string token { get; set; }
-        public List<MenuDto> LstRoles { get; set; }
+        public MenuDto LstRoles { get; set; }
     }
 }

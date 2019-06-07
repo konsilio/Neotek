@@ -49,14 +49,7 @@ namespace Application.MainModule.Servicios.Seguridad
         } 
         #endregion
 
-        #region Empresa
-        public static RespuestaDto PuedeConsultarEmpresa()
-        {
-            var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarUsuario).ToList();
-
-            return EvaluarPermiso(roles, Error.P0001, "Empresa");
-        }
+        #region Empresa     
         public static RespuestaDto PuedeRegistrarEmpresa()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
@@ -239,14 +232,7 @@ namespace Application.MainModule.Servicios.Seguridad
 
             return EvaluarPermiso(roles, Error.P0001, "CajaGeneral");
         }
-        public static RespuestaDto PuedeRegistrarCajaGeneral()
-        {
-            var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarUsuario).ToList();
-
-            return EvaluarPermiso(roles, Error.P0001, "CajaGeneral");
-        }
-
+      
         public static RespuestaDto PuedeModificarCajaGeneral()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
@@ -255,13 +241,6 @@ namespace Application.MainModule.Servicios.Seguridad
             return EvaluarPermiso(roles, Error.P0002, "CajaGeneral");
         }
 
-        public static RespuestaDto PuedeEliminarCajaGeneral()
-        {
-            var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarUsuario).ToList();
-
-            return EvaluarPermiso(roles, Error.P0003, "CajaGeneral");
-        }
 
         #endregion
 
@@ -503,7 +482,7 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeRegistrarParqueVehicular()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ETRegistrarParqueVehicular).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Almacen");
         }
