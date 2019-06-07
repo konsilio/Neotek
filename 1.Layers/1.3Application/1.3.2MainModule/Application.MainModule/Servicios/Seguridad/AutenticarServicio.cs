@@ -32,7 +32,7 @@ namespace Application.MainModule.Servicios.Seguridad
             List<MenuDto> listMnu = new List<MenuDto>();
             if (usuario.autenticado)
             {
-                List<MenuDto> menu = RolServicio.CrearMenu(usuario.IdUsuario);
+                MenuDto menu = RolServicio.CrearMenu(usuario.IdUsuario);
                 var claims = new[]
                 {
                     new Claim(TokenEtiquetasEnum.Autenticado, usuario.autenticado.ToString()),

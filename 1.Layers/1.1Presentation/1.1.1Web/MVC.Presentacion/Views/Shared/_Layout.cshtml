@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using MVC.Presentacion.Models.Seguridad
+@{
+    MenuDto rol = Session["Roles"] as MenuDto;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -85,105 +89,214 @@
                     @if (Session["Perfil"] != null)
                     {
                         <li class="menu_dark"><a href="@Url.Action("Inicio", "Home")"><i class="material-icons">dashboard</i> <span class="icon-name">Dashboard</span></a></li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">layers</i><span>Facturación</span> </a>
-                            <ul class="ml-menu">
-                                <li>@Html.ActionLink("Autoservicio", "Index", "Facturacion")</li>
-                            </ul>
-                        </li>
-                        <li class="menu_dark"><a href="@Url.Action("Requisiciones", "Requisicion")"><i class="material-icons">feedback </i><span class="icon-name">Requisición</span> </a></li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">monetization_on</i><span>Crédito y Cobranza</span> </a>
-                            <ul class="ml-menu">
-                                <li>@Html.ActionLink("Captura de abonos", "Index", "Cobranza")</li>
-                                <li>@Html.ActionLink("Crédito recuperado", "CreditoRecuperado", "Cobranza")</li>
-                                <li>@Html.ActionLink("Cartera vencida", "CarteraVencida", "Cobranza")</li>
-                                <li>@Html.ActionLink("Factura global", "FacturacionGlobal", "Cobranza")</li>
-                            </ul>
-                        </li>
-                        <li class="menu_dark"><a href="@Url.Action("Index", "Pedidos")"><i class="material-icons"> phone </i><span class="icon-name">Call Center</span> </a></li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">poll</i><span>Reportes</span></a>
-                            <ul class="ml-menu">
-                                <li>@Html.ActionLink("Cuentas por pagar", "CuentasXPagar", "Reportes")</li>
-                                <li>@Html.ActionLink("Inv. Punto de venta", "InventarioXPuntoVenta", "Reportes")</li>
-                                <li>@Html.ActionLink("Hst. Precio de venta", "HistoricoPrecioVenta", "Reportes")</li>
-                                <li>@Html.ActionLink("Call Center", "CallCenter", "Reportes")</li>
-                                <li>@Html.ActionLink("Requisición", "Requisicion", "Reportes")</li>
-                                <li>@Html.ActionLink("Ordenes de Compra", "OrdenCompraRep", "Reportes")</li>
-                                <li>@Html.ActionLink("Rendimiento Vehicular", "RendimientoVehicular", "Reportes")</li>
-                                <li>@Html.ActionLink("Inv. Concepto", "InventarioXConcepto", "Reportes")</li>
-                                <li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>
-                                <li>@Html.ActionLink("Corte de Caja", "CorteCaja", "Reportes")</li>
-                                <li>@Html.ActionLink("Gasto Por Vehiculo", "GastoVehicular", "Reportes")</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">drive_eta</i><span>Equipo de Transporte</span> </a>
-                            <ul class="ml-menu">
-                                <li>@Html.ActionLink("Parque Vehícular", "Index", "EquipoTransporte")</li>
-                                <li>@Html.ActionLink("Recarga de combustible", "Index", "RecargaCombustibles")</li>
-                                <li>@Html.ActionLink("Asignacion", "Index", "Asignacion")</li>
-                                <li>@Html.ActionLink("Mantenimiento", "Index", "Mantenimiento")</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
-                            <ul class="ml-menu">
-                                <li><a href="@Url.Action("Ordenes", "OrdenCompra")">Orden de Compra </a></li>
-                            </ul>
-                        </li>
-                        <li class="menu_dark"><a href="@Url.Action("DashBoard", "Remanente")"><i class="material-icons">settings_remote</i> <span class="icon-name">Remanente</span></a></li>
+                        //var rol = ViewBag.Roles;
+                        if (rol.Requisicion)
+                        {
+                            <li class="menu_dark"><a href="@Url.Action("Requisiciones", "Requisicion")"><i class="material-icons">feedback </i><span class="icon-name">Requisición</span> </a></li>
+                        }
+                        if (rol.CompraOrdenCompra)
+                        {
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
+                                <ul class="ml-menu">
+                                    <li><a href="@Url.Action("Ordenes", "OrdenCompra")">Orden de Compra </a></li>
+                                </ul>
+                            </li>
+                        }
+                        if (rol.Ventas)
+                        {
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">attach_money</i><span>Ventas</span> </a>
+                                <ul class="ml-menu">
+                                    <li>@Html.ActionLink("Caja General", "Index", "CajaGeneral")</li>
+                                    <li>@Html.ActionLink("Caja General Estación", "Estacion", "CajaGeneral")</li>
+                                </ul>
+                            </li>
+                        }
+                        if (rol.HistoricoVentas)
+                        {
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">receipt</i><span>Historico Ventas</span> </a>
+                                <ul class="ml-menu">
+                                    <li>@Html.ActionLink("Carga Informacion", "Index", "Historico")</li>
+                                    <li>@Html.ActionLink("Historico Ventas", "HistoricoVentas", "Historico")</li>
+                                </ul>
+                            </li>
+                        }
+                        if (rol.CreditoCobranza)
+                        {
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">monetization_on</i><span>Crédito y Cobranza</span> </a>
+                                <ul class="ml-menu">
+                                    <li>@Html.ActionLink("Captura de abonos", "Index", "Cobranza")</li>
+                                    @if (rol.CCRecuperado)
+                                    {
+                                        <li>@Html.ActionLink("Crédito recuperado", "CreditoRecuperado", "Cobranza")</li>
+                                    }
+                                    @if (rol.CCVencida)
+                                    {
+                                        <li>@Html.ActionLink("Cartera vencida", "CarteraVencida", "Cobranza")</li>
+                                    }
+                                    @if (rol.CCFacturaGlobal)
+                                    {
+                                        <li>@Html.ActionLink("Factura global", "FacturacionGlobal", "Cobranza")</li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        if (rol.Facturacion)
+                        {
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">layers</i><span>Facturación</span> </a>
+                                <ul class="ml-menu">
+                                    <li>@Html.ActionLink("Autoservicio", "Index", "Facturacion")</li>
+                                </ul>
+                            </li>
+                        }
 
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">image_aspect_ratio</i><span>Almacén</span> </a>
-                            <ul class="ml-menu">
-                                <li>@Html.ActionLink("Existencias", "ActualizacionExistencias", "Almacen")</li>
-                                <li>@Html.ActionLink("Entradas-Salidas", "MovimientosAlamacen", "Almacen")</li>
-                                <li>@Html.ActionLink("Salidas de Mercancía", "SalidaMercancia", "Almacen")</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">attach_money</i><span>Ventas</span> </a>
-                            <ul class="ml-menu">
-                                <li>@Html.ActionLink("Caja General", "Index", "CajaGeneral")</li>
-                                <li>@Html.ActionLink("Caja General Estación", "Estacion", "CajaGeneral")</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">receipt</i><span>Historico Ventas</span> </a>
-                            <ul class="ml-menu">
-                                <li>@Html.ActionLink("Carga Informacion", "Index", "Historico")</li>
-                                <li>@Html.ActionLink("Historico Ventas", "HistoricoVentas", "Historico")</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-grid"></i><span>Catálogos</span></a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="javascript:void(0);" class="menu-toggle toggle"><i class="material-icons">content_paste</i><span>Producto</span> </a>
-                                    <ul class="ml-menu">
-                                        <li>@Html.ActionLink("Producto", "Producto", "Producto")</li>
-                                        <li>@Html.ActionLink("Línea", "LineaProducto", "Producto")</li>
-                                        <li>@Html.ActionLink("Unidad de Medida", "UnidadMedida", "Producto")</li>
-                                        <li>@Html.ActionLink("Categoría", "Categoria", "Producto")</li>
-                                    </ul>
-                                </li>
-                                <li>@Html.ActionLink("Centro de Costos", "CentroCosto", "CentroCosto")</li>
-                                <li>@Html.ActionLink("Cuenta Contable", "CuentaContable", "CuentaContable")</li>
-                                <li>@Html.ActionLink("Proveedor", "Proveedores", "Producto")</li>
-                                <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
-                                <li>@Html.ActionLink("Egresos", "Index", "Egreso")</li>
-                                <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
-                                <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
-                                <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
-                                <li>@Html.ActionLink("Combustibles", "Index", "Combustible")</li>
-                                <li>@Html.ActionLink("Puntos de venta", "Index", "PuntoVenta")</li>
-                                <li>@Html.ActionLink("Precio de venta", "Index", "PrecioVenta")</li>
-                                <li>@Html.ActionLink("Precio de venta Otros", "Index", "PrecioVentaOtro")</li>
-                            </ul>
-                        </li>
+                        if (rol.Remanente)
+                        {
+                            <li class="menu_dark"><a href="@Url.Action("DashBoard", "Remanente")"><i class="material-icons">settings_remote</i> <span class="icon-name">Remanente</span></a></li>
+                        }
 
+                        if (rol.CallCenter)
+                        {
+                            <li class="menu_dark"><a href="@Url.Action("Index", "Pedidos")"><i class="material-icons"> phone </i><span class="icon-name">Call Center</span> </a></li> }
+                        if (rol.Almacen)
+                        {
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">image_aspect_ratio</i><span>Almacén</span> </a>
+                                <ul class="ml-menu">
+                                    <li>@Html.ActionLink("Existencias", "ActualizacionExistencias", "Almacen")</li>
+                                    <li>@Html.ActionLink("Entradas-Salidas", "MovimientosAlamacen", "Almacen")</li>
+                                    <li>@Html.ActionLink("Salidas de Mercancía", "SalidaMercancia", "Almacen")</li>
+                                </ul>
+                            </li>
+                        }
+                        if (rol.EquipooTransporte)
+                        {
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">drive_eta</i><span>Equipo de Transporte</span> </a>
+                                <ul class="ml-menu">
+                                    <li>@Html.ActionLink("Parque Vehícular", "Index", "EquipoTransporte")</li>
+                                    @if (rol.ETRecargaC)
+                                    {
+                                        <li>@Html.ActionLink("Recarga de combustible", "Index", "RecargaCombustibles")</li>}
+                                    @if (rol.ETAsignacion)
+                                    {
+                                        <li>@Html.ActionLink("Asignacion", "Index", "Asignacion")</li>}
+                                    @if (rol.ETMantenimiento)
+                                    {
+                                        <li>@Html.ActionLink("Mantenimiento", "Index", "Mantenimiento")</li>}
+                                </ul>
+                            </li>
+                        }
+                        if (rol.Reportes)
+                        {
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">poll</i><span>Reportes</span></a>
+                                <ul class="ml-menu">
+                                    @if (rol.ReporteCuentasXPagar)
+                                    {
+                                    <li>@Html.ActionLink("Cuentas por pagar", "CuentasXPagar", "Reportes")</li>}
+                                    @if (rol.ReportePuntoVenta)
+                                    {
+                                    <li>@Html.ActionLink("Inv. Punto de venta", "InventarioXPuntoVenta", "Reportes")</li>}
+                                    @if (rol.ReportePrecioVenta)
+                                    {
+                                    <li>@Html.ActionLink("Hst. Precio de venta", "HistoricoPrecioVenta", "Reportes")</li>}
+                                    @if (rol.ReporteCallCenter)
+                                    {
+                                    <li>@Html.ActionLink("Call Center", "CallCenter", "Reportes")</li>}
+                                    @if (rol.ReporteRequisicion)
+                                    {
+                                    <li>@Html.ActionLink("Requisición", "Requisicion", "Reportes")</li>}
+                                    @if (rol.ReporteOrdenCompra)
+                                    {
+                                    <li>@Html.ActionLink("Ordenes de Compra", "OrdenCompraRep", "Reportes")</li>}
+                                    @if (rol.ReporteRendimientoVehicular)
+                                    {
+                                    <li>@Html.ActionLink("Rendimiento Vehicular", "RendimientoVehicular", "Reportes")</li>}
+                                    @if (rol.ReporteInvConcepto)
+                                    {
+                                    <li>@Html.ActionLink("Inv. Concepto", "InventarioXConcepto", "Reportes")</li>}
+                                    @if (rol.ReporteHistVentas)
+                                    {
+                                    <li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>}
+                                    @if (rol.ReporteCorteCaja)
+                                    {
+                                    <li>@Html.ActionLink("Corte de Caja", "CorteCaja", "Reportes")</li>}
+                                    @if (rol.ReporteGastoVehiculo)
+                                    {
+                                    <li>@Html.ActionLink("Gasto Por Vehiculo", "GastoVehicular", "Reportes")</li>}
+                                </ul>
+                            </li>
+                        }                       
+
+                        if (rol.Catalogos)
+                        {
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-grid"></i><span>Catálogos</span></a>
+                                <ul class="ml-menu">
+                                    @if (rol.CatProducto)
+                                    {
+                                    <li>
+                                        <a href="javascript:void(0);" class="menu-toggle toggle"><i class="material-icons">content_paste</i><span>Producto</span> </a>
+                                        <ul class="ml-menu">
+                                            <li>@Html.ActionLink("Producto", "Producto", "Producto")</li>
+                                            <li>@Html.ActionLink("Línea", "LineaProducto", "Producto")</li>
+                                            <li>@Html.ActionLink("Unidad de Medida", "UnidadMedida", "Producto")</li>
+                                            <li>@Html.ActionLink("Categoría", "Categoria", "Producto")</li>
+                                        </ul>
+                                    </li>
+                                    }
+                                    @if (rol.CatCentroCosto)
+                                    {
+                                    <li>@Html.ActionLink("Centro de Costos", "CentroCosto", "CentroCosto")</li>
+                                    }
+                                    @if (rol.CatCuentaContable)
+                                    {
+                                    <li>@Html.ActionLink("Cuenta Contable", "CuentaContable", "CuentaContable")</li>
+                                    }
+                                    @if (rol.CatProveedor)
+                                    {
+                                    <li>@Html.ActionLink("Proveedor", "Proveedores", "Producto")</li>
+                                    }
+                                    @if (rol.CatGaseras)
+                                    {
+                                    <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
+                                    }
+                                    @if (rol.CatEgresos)
+                                    {
+                                    <li>@Html.ActionLink("Egresos", "Index", "Egreso")</li>
+                                    }
+                                    @if (rol.CatUsuarios)
+                                    {
+                                    <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
+                                    }
+                                    @if (rol.CatRoles)
+                                    {
+                                    <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                                    }
+                                    @if (rol.CatClientes)
+                                    {
+                                    <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
+                                    }
+                                    @if (rol.CatCombustibles)
+                                    {
+                                    <li>@Html.ActionLink("Combustibles", "Index", "Combustible")</li>}
+                                    @if (rol.CatPuntosVenta)
+                                    {
+                                    <li>@Html.ActionLink("Puntos de venta", "Index", "PuntoVenta")</li>}
+                                    @if (rol.CatPrecioVenta)
+                                    {
+                                    <li>@Html.ActionLink("Precio de venta", "Index", "PrecioVenta")</li>}
+                                    @if (rol.CatPrecioVenta)
+                                    {
+                                    <li>@Html.ActionLink("Precio de venta Otros", "Index", "PrecioVentaOtro")</li>}
+                                </ul>
+                            </li>
+                        }
                     }
                 </ul>
             </div>

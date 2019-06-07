@@ -34,7 +34,7 @@ namespace Application.MainModule.Flujos
     {
         public List<RepCuentaPorPagarDTO> RepCuentasPorPagar(DateTime periodo)
         {
-            var resp = PermisosServicio.PuedeEliminarCuentaContable();
+            var resp = PermisosServicio.PuedeConsultarCuentaContable();
             if (!resp.Exito) return null; 
             var requi = EgresoServicio.BuscarTodos(periodo);
             return EgresoAdapter.ToRepo(requi);
@@ -84,7 +84,6 @@ namespace Application.MainModule.Flujos
         }
         public List<RepInventarioXConceptorDTO> RepInventarioPorConcepto(InventarioXConceptoDTO dto)
         {
-
             var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
             if (!resp.Exito) return null;
             var alamacenes = ProductoAlmacenServicio.BuscarAlmacen(dto.FechaInicio, dto.FechaFinal);

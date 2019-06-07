@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Application.MainModule.DTOs.Seguridad
+namespace MVC.Presentacion.Models.Seguridad
 {
     public class MenuDto
     {
@@ -14,7 +13,7 @@ namespace Application.MainModule.DTOs.Seguridad
         public bool CreditoCobranza { get; set; }
         public bool CCRecuperado { get; set; }
         public bool CCVencida { get; set; }
-        public bool CCFacturaGlobal{ get; set; }
+        public bool CCFacturaGlobal { get; set; }
         public bool CallCenter { get; set; }
         public bool Reportes { get; set; }
         public bool ReporteCuentasXPagar { get; set; }
@@ -58,7 +57,5 @@ namespace Application.MainModule.DTOs.Seguridad
         public bool CatPuntosVenta { get; set; }
         public bool CatPrecioVenta { get; set; }
         public bool CatPrecioVentaO { get; set; }
-
-
     }
 }

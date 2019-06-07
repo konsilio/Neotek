@@ -451,6 +451,7 @@
     <Compile Include="Models\Requisicion\RespuestaRequisicionDTO.cs" />
     <Compile Include="Models\Seguridad\AutenticacionDTO.cs" />
     <Compile Include="Models\Seguridad\LoginModel.cs" />
+    <Compile Include="Models\Seguridad\MenuDto.cs" />
     <Compile Include="Models\Seguridad\RespuestaAutenticacionDto.cs" />
     <Compile Include="Models\Seguridad\RespuestaDTO.cs" />
     <Compile Include="Models\Catalogos\UnidadMedidaDTO.cs" />
