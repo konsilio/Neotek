@@ -79,7 +79,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.BuscarFacturasPorTicket(numTicket));
         }
         [Route("registrar/factrua/pago/{id}")]
-        public HttpResponseMessage PostTimbrarPago(int id)
+        public HttpResponseMessage GetTimbrarPago(int id)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _facturacion.GenerarFacturaAbono(id));
         }

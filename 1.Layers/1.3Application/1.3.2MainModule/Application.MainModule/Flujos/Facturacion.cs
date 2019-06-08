@@ -65,8 +65,8 @@ namespace Application.MainModule.Flujos
             return new CFDIDTO()
             {
                 Id_FolioVenta = entidad.Ticket,
-                Id_FormaPago = 99,
-                Id_MetodoPago = Convert.ToInt32(MetodoPagoConst.Pago_en_parcialidades_o_diferido),
+                Id_FormaPago = (byte)99,
+                Id_MetodoPago = Convert.ToInt32(MetodoPagoConst.IDPPD),
                 IdUsoCFDI = 2
             };
         }
@@ -76,10 +76,10 @@ namespace Application.MainModule.Flujos
             if (abono == null) return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.NoExiste, "el abono") };
 
             var dto = BuscarFacturasPorTicket(abono.Cargo.Ticket);
-            if (dto == null)
+            if (dto == null || dto.Respuesta == "Null")
                 dto = GenerarFactura(GenerarFacturaPPD(abono.Cargo));
 
-            if (!dto.RespuestaTimbrado.Exito)
+            if (dto.Id_RelTF == 0 && !dto.RespuestaTimbrado.Exito)
                 return dto.RespuestaTimbrado;
 
             var _comp = CFDIServicio.DatosComprobantePago(dto);   
@@ -138,7 +138,12 @@ namespace Application.MainModule.Flujos
         public CFDIDTO BuscarFacturasPorTicket(string folio)
         {
             var cfdis = CFDIServicio.Buscar(folio);
-            return CFDIAdapter.ToDTO(cfdis);
+            if (cfdis != null)
+                return CFDIAdapter.ToDTO(cfdis);
+            else
+                return new CFDIDTO() { Respuesta="Null" };
+            
+           
         }
         public List<VentaPuntoVentaDTO> BuscarPorRFC(string RFC)
         {

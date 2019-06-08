@@ -15,7 +15,7 @@ namespace Application.MainModule.Servicios.Cobranza
     {
         public static List<CargosDTO> Obtener(short idempresa)
         {
-            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().BuscarTodos(idempresa));
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().Buscar(idempresa));
             //return lPedidos;
         }
         public static List<Abono> Obtener(DateTime f)

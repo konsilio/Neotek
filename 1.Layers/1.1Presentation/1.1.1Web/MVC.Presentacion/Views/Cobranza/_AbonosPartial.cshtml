@@ -85,7 +85,7 @@
         settings.Columns.Add(col =>
         {
             col.FieldName = "Abono.FolioBancario";
-            col.Caption = "Folio";
+            col.Caption = "Folio Bancario";
             col.Visible = false;
             col.EditFormSettings.Visible = DefaultBoolean.True;
 
@@ -118,16 +118,17 @@
         settings.Columns.Add(c =>
         {
             c.Caption = "Acción";
+            c.EditFormSettings.Visible = DefaultBoolean.False;
             c.SetDataItemTemplateContent(x =>
             {
-                if (!x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI").ToString().Equals(string.Empty))
+                if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") != null && !x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI").ToString().Equals(string.Empty))
                 {
                     ViewContext.Writer.Write(string.Format("<a href=" + x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI").ToString() + " class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>picture_as_pdf</i><span>PDF</span></a>"));
                 }
-                if (!x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString().Equals(string.Empty))
+                if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") != null && !x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString().Equals(string.Empty))
                 {
                     ViewContext.Writer.Write(string.Format("<a href=" + x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString() + "class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>file_download</i></a>"));
-                }
+                }               
             });
         });
 

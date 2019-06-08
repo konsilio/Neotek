@@ -504,7 +504,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _mobile.BuscarClientePorRFC(rfc));
         }
         [Route("cliente/lista-clientes/{criterio}")]
-        public HttpResponseMessage GetListaClientes(String criterio)
+        public HttpResponseMessage GetListaClientes(string criterio)
         {
             return RespuestaHttp.crearRespuesta(_mobile.BuscadorClientes(criterio), Request);
         }

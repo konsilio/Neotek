@@ -4765,6 +4765,11 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarCFDIGlobal"];
             LLamada(model, token, MetodoRestConst.Post, false).Wait();
         }
+        public void FacturarPago(int id, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["GetTimbrarPago"];
+            LLamada(id, token, MetodoRestConst.Get, false).Wait();
+        }
 
         #endregion
         #region HistoricoVentas
@@ -5520,6 +5525,8 @@ namespace MVC.Presentacion.Agente
                 try
                 {
                     HttpResponseMessage response = new HttpResponseMessage();
+                    if(Tipo.Equals(MetodoRestConst.Get))
+                        response = await client.GetAsync(string.Concat(ApiRoute, _dto.ToString())).ConfigureAwait(false);
                     if (Tipo.Equals(MetodoRestConst.Post))
                         response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
                     if (Tipo.Equals(MetodoRestConst.Put))

@@ -142,8 +142,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Cargo> BuscarTodos(short idEmpresa)
         {
-            return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                        && x.Saldada)
+            return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa))
                                                          .ToList();
         }
         public List<Cargo> Buscar(short idEmpresa, int idCliente)

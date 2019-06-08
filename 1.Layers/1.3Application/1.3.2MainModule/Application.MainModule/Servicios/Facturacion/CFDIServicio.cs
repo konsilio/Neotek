@@ -179,8 +179,8 @@ namespace Application.MainModule.Servicios.Facturacion
             {
                 Nombre = _cliente.Nombre + " " + _cliente.Apellido1 + " " + _cliente.Apellido2,
                 Rfc = _cliente.Rfc,
-                UsoCFDI = UsoCFDIServicio.Buscar(dto.IdUsoCFDI).UsoCFDISAT,
-                CorreoElectronico = _cliente.CorreoElectronico,
+                UsoCFDI = "P01",
+                CorreoElectronico = _cliente.CorreoElectronico ?? "jaime.santillan@neoteck.com.mx",
             };
         }
         public static Receptor DatosReceptor()

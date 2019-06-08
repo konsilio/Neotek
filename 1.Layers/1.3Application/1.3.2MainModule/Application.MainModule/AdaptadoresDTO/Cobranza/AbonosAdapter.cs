@@ -69,7 +69,8 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             _p.IdFormaPago = pDTO.IdFormaPago;
             _p.FolioBancario = pDTO.FolioBancario;
             _p.ACTIVO = true;
-            _p.Id_RelTF = pDTO.Id_RelTF;
+            if (!pDTO.Id_RelTF.Equals(0))
+                _p.Id_RelTF = pDTO.Id_RelTF;
 
             return _p;
         }
@@ -185,6 +186,8 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             //dto.TotalEfectivo = lst.Where(y => y.IdFormaPago == 1).Sum(x => x.MontoAbono);
             //dto.TotalCheques = lst.Where(y => y.IdFormaPago == 2).Sum(x => x.MontoAbono);
             //dto.TotalTransferencia = lst.Where(y => y.IdFormaPago == 3).Sum(x => x.MontoAbono);
+            dto.URL_CFDI = _dto.Url_PDF;
+            dto.URL_XML = _dto.Url_XML;
             return dto;
         }
         public static List<CargosDTO> ToDTO(List<CRecuperadaDTO> lstCRecuperado, List<CRecuperadaTotalesDTO> lstTotal)
