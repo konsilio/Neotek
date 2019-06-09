@@ -17,5 +17,8 @@ namespace Application.MainModule.DTOs.Cobranza
         public byte IdFormaPago { get; set; }
         public string FolioBancario { get; set; }
         public string FormaPago { get; set; }
+        public int Id_RelTF { get; set; }
+        public string URLPdf { get; set; }
+        public string URLXml { get; set; }
     }
 }

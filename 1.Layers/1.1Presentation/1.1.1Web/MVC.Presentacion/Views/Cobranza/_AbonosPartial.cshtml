@@ -6,12 +6,8 @@
         settings.Name = "Abonos";
         settings.KeyFieldName = "IdCargo";
         settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "_AbonosPartial" };
-
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
-        //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Cobranza", Action = "EditingAddNew" };
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Cobranza", Action = "EditingUpdate" };
-        //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Cobranza", Action = "EditingDelete" };
-
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = false;
@@ -89,10 +85,10 @@
         settings.Columns.Add(col =>
         {
             col.FieldName = "Abono.FolioBancario";
-            col.Caption = "Folio";
+            col.Caption = "Folio Bancario";
             col.Visible = false;
             col.EditFormSettings.Visible = DefaultBoolean.True;
-         
+
         });
         settings.Columns.Add(c =>
         {
@@ -116,8 +112,25 @@
             c.Caption = "Cantidad";
             c.Visible = false;
             c.EditFormSettings.Visible = DefaultBoolean.True;
-      
+
         });
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.SetDataItemTemplateContent(x =>
+            {
+                if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") != null && !x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI").ToString().Equals(string.Empty))
+                {
+                    ViewContext.Writer.Write(string.Format("<a href=" + x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI").ToString() + " class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>picture_as_pdf</i><span>PDF</span></a>"));
+                }
+                if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") != null && !x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString().Equals(string.Empty))
+                {
+                    ViewContext.Writer.Write(string.Format("<a href=" + x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString() + "class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>file_download</i></a>"));
+                }               
+            });
+        });
+
     }
 ).Bind(Model).GetHtml()
-

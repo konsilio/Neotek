@@ -46,7 +46,6 @@ namespace MVC.Presentacion.Controllers
 
             return View();
         }
-
         public ActionResult Liquidar(int? page, int? pagePipa)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -95,7 +94,6 @@ namespace MVC.Presentacion.Controllers
             }
             return RedirectToAction("Liquidar", new { page, pagePipa });
         }
-
         public ActionResult Consultar(CajaGeneralModel _model, int? page)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -106,7 +104,6 @@ namespace MVC.Presentacion.Controllers
 
             return View("Index");
         }
-
         public ActionResult GuardarLiquidar(CajaGeneralCamionetaModel _ObjModel)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -127,7 +124,6 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Liquidar");
             }
         }
-
         public ActionResult Estacion()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -148,7 +144,6 @@ namespace MVC.Presentacion.Controllers
             ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View();
         }
-
         public ActionResult BuscarEstacion(VentaCorteAnticipoModel _model, int? page)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -164,7 +159,6 @@ namespace MVC.Presentacion.Controllers
             return RedirectToAction("Estacion");
 
         }
-
         public ActionResult GuardarLiquidaEstacion(VentaCorteAnticipoModel _ObjModel)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -185,7 +179,6 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Estacion");
             }
         }
-
         public ActionResult Pipa(int? page)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -217,7 +210,6 @@ namespace MVC.Presentacion.Controllers
 
             return View();
         }
-
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;

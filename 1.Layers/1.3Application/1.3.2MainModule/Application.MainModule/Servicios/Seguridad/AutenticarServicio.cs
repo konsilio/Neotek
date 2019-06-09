@@ -69,26 +69,26 @@ namespace Application.MainModule.Servicios.Seguridad
         {
             var aut = AutenticarUsuario(autDto);
             var usuario = new UsuarioDataAccess().Buscar(aut.IdUsuario);
-            List<Application.MainModule.DTOs.Mobile.MenuDto> menu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : new List<Application.MainModule.DTOs.Mobile.MenuDto>();
-            //if (usuario != null)
-            //{
+            List<MenuDto> menu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : new List<MenuDto>();
+            if (usuario != null)
+            {
                 if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count != 0 && !menu.Any())
                 {
                     aut.Mensaje = "No se ha realizado lectura inicial";
-                    aut.Exito = false;
+                    //aut.Exito = false;
                 }
-            //}
-            //else
-            //{
-            //    return new RespuestaAutenticacionMobileDto()
-            //    {
-            //        IdUsuario = 0,
-            //        Exito = false,
-            //        Mensaje = Error.S0003,
-            //        token = string.Empty,
-            //        listMenu = new List<MenuDto>(),
-            //    };
-            //}
+            }
+            else
+            {
+                return new RespuestaAutenticacionMobileDto()
+                {
+                    IdUsuario = 0,
+                    Exito = true,
+                    Mensaje = Error.S0003,
+                    token = string.Empty,
+                    listMenu = new List<MenuDto>(),
+                };
+            }
             return new RespuestaAutenticacionMobileDto()
             {
                 IdUsuario = aut.IdUsuario,

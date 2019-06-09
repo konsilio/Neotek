@@ -31,7 +31,7 @@ namespace Application.MainModule.Flujos
         public RespuestaAutenticacionMobileDto AutenticacionMobile(LoginFbDTO autenticacionDto)
         {
             var responce = AutenticarServicio.AutenticarUsuarioMobile(autenticacionDto);
-            if (!responce.Exito)
+            if (responce.IdUsuario.Equals(0))
                 return responce;
             var usuario = UsuarioServicio.Obtener(responce.IdUsuario);
             usuario = UsuarioAdapter.FromEntity(usuario);

@@ -124,79 +124,6 @@ namespace Application.MainModule.Flujos
             return respuesta.Where(x => !x.Total.Equals(0)).ToList();
         }
         #region Dash Board (Pruebas)
-        //public AdministracionDTO DashAdministracionVentaVSRema()
-        //{
-        //    AdministracionDTO dto = new AdministracionDTO();
-
-        //    var remaDTO = AlmacenGasServicio.BusquedaGeneralPeriodoActual();
-        //    var remanente = new Almacenes().ConsultarRemanenteGeneral(remaDTO);
-
-        //    var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
-        //    var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
-        //    var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
-        //    var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
-
-        //    dto.TotalEstaciones = (decimal)CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones).Sum(x => x.Cantidad);
-        //    dto.TotalCamionetas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros).Cantidad;
-        //    dto.TotalPipas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaPipas(VPipas).Cantidad;
-        //    dto.TotalVetna = dto.TotalEstaciones + dto.TotalCamionetas + dto.TotalPipas;
-        //    dto.Json = JsonServicio.JsonGeneralRemanente(remanente);
-
-        //    return dto;
-        //}
-        //public string DashCallCenter()
-        //{
-        //    var Pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), new DateTime(2019, 2, 28));
-        //    var Dash = PedidosServicio.GenerarListDash(Pedidos, new DateTime(2019, 2, 28));
-        //    return JsonServicio.JsonCallCenter(Dash);
-        //}
-        //public AndenDTO DashAnden()
-        //{
-        //    var oc = OrdenCompraServicio.BuscarUltimaOCGas(TokenServicio.ObtenerIdEmpresa());
-        //    var alm = AlmacenGasServicio.ObtenerAlmacenPrincipal(TokenServicio.ObtenerIdEmpresa());
-        //    var respuesta = new AndenDTO()
-        //    {
-        //        TotalProduto = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa()).Sum(x => x.CantidadActualKg),
-        //        NivelAlmacen = Convert.ToInt32(alm.PorcentajeActual),
-        //        KilosAlmacen = alm.CantidadActualKg,
-        //        OrdenCompra = oc == null ? OrdenCompraConst.SinOCProxima : oc.NumOrdenCompra,
-        //        Ventas = PuntoVentaServicio.ObtenerVentasTOPDTO(5, new DateTime(2018, 12, 11))
-        //    };
-        //    return respuesta;
-        //}
-        //public CarteraDTO DashCartera()
-        //{
-        //    var CarterRec = CobranzaServicio.CRecuperada(TokenServicio.ObtenerIdEmpresa());
-        //    var CarterVencida = CobranzaServicio.CarteraVencida(TokenServicio.ObtenerIdEmpresa());
-        //    var DeudoresLongevos = CobranzaServicio.TopDeudores(TokenServicio.ObtenerIdEmpresa(), 5);
-        //    var DeudoresValioso = CobranzaServicio.TopDeudoresValiosos(TokenServicio.ObtenerIdEmpresa(), 5);
-        //    var respuesta = new CarteraDTO()
-        //    {
-        //        CarteraRecuperada = CarterRec,
-        //        CarteraVencida = CarterVencida,
-        //        TopDeudoresL = DeudoresLongevos,
-        //        TopDeudoresV = DeudoresValioso,
-        //    };
-        //    return respuesta;
-        //}
-        //public AdministracionDTO DashCaja()
-        //{
-        //    AdministracionDTO dto = new AdministracionDTO();
-
-        //    var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
-        //    var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
-        //    var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
-        //    var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
-
-        //    dto.TotalEstaciones = (decimal)CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones).Sum(x => x.TotalVenta);
-        //    dto.TotalCamionetas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros).TotalVenta;
-        //    dto.TotalPipas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaPipas(VPipas).TotalVenta;
-        //    dto.TotalVetna = dto.TotalEstaciones + dto.TotalCamionetas + dto.TotalPipas;
-
-        //    return dto;
-        //}
-        #endregion
-        #region Dash Board (Produccion)
         public AdministracionDTO DashAdministracionVentaVSRema()
         {
             AdministracionDTO dto = new AdministracionDTO();
@@ -205,9 +132,9 @@ namespace Application.MainModule.Flujos
             var remanente = new Almacenes().ConsultarRemanenteGeneral(remaDTO);
 
             var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
-            var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
-            var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
-            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+            var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
+            var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
+            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
 
             dto.TotalEstaciones = (decimal)CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones).Sum(x => x.Cantidad);
             dto.TotalCamionetas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros).Cantidad;
@@ -219,8 +146,8 @@ namespace Application.MainModule.Flujos
         }
         public string DashCallCenter()
         {
-            var Pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), DateTime.Now);
-            var Dash = PedidosServicio.GenerarListDash(Pedidos, DateTime.Now);
+            var Pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), new DateTime(2019, 2, 28));
+            var Dash = PedidosServicio.GenerarListDash(Pedidos, new DateTime(2019, 2, 28));
             return JsonServicio.JsonCallCenter(Dash);
         }
         public AndenDTO DashAnden()
@@ -233,7 +160,7 @@ namespace Application.MainModule.Flujos
                 NivelAlmacen = Convert.ToInt32(alm.PorcentajeActual),
                 KilosAlmacen = alm.CantidadActualKg,
                 OrdenCompra = oc == null ? OrdenCompraConst.SinOCProxima : oc.NumOrdenCompra,
-                Ventas = PuntoVentaServicio.ObtenerVentasTOPDTO(5, DateTime.Now)
+                Ventas = PuntoVentaServicio.ObtenerVentasTOPDTO(5, new DateTime(2018, 12, 11))
             };
             return respuesta;
         }
@@ -257,9 +184,9 @@ namespace Application.MainModule.Flujos
             AdministracionDTO dto = new AdministracionDTO();
 
             var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
-            var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
-            var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
-            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+            var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
+            var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
+            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(new DateTime(2018, 12, 31)) ?? new List<VentaPuntoDeVenta>();
 
             dto.TotalEstaciones = (decimal)CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones).Sum(x => x.TotalVenta);
             dto.TotalCamionetas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros).TotalVenta;
@@ -268,6 +195,79 @@ namespace Application.MainModule.Flujos
 
             return dto;
         }
+        #endregion
+        #region Dash Board (Produccion)
+        //public AdministracionDTO DashAdministracionVentaVSRema()
+        //{
+        //    AdministracionDTO dto = new AdministracionDTO();
+
+        //    var remaDTO = AlmacenGasServicio.BusquedaGeneralPeriodoActual();
+        //    var remanente = new Almacenes().ConsultarRemanenteGeneral(remaDTO);
+
+        //    var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
+        //    var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+        //    var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+        //    var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+
+        //    dto.TotalEstaciones = (decimal)CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones).Sum(x => x.Cantidad);
+        //    dto.TotalCamionetas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros).Cantidad;
+        //    dto.TotalPipas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaPipas(VPipas).Cantidad;
+        //    dto.TotalVetna = dto.TotalEstaciones + dto.TotalCamionetas + dto.TotalPipas;
+        //    dto.Json = JsonServicio.JsonGeneralRemanente(remanente);
+
+        //    return dto;
+        //}
+        //public string DashCallCenter()
+        //{
+        //    var Pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), DateTime.Now);
+        //    var Dash = PedidosServicio.GenerarListDash(Pedidos, DateTime.Now);
+        //    return JsonServicio.JsonCallCenter(Dash);
+        //}
+        //public AndenDTO DashAnden()
+        //{
+        //    var oc = OrdenCompraServicio.BuscarUltimaOCGas(TokenServicio.ObtenerIdEmpresa());
+        //    var alm = AlmacenGasServicio.ObtenerAlmacenPrincipal(TokenServicio.ObtenerIdEmpresa());
+        //    var respuesta = new AndenDTO()
+        //    {
+        //        TotalProduto = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa()).Sum(x => x.CantidadActualKg),
+        //        NivelAlmacen = Convert.ToInt32(alm.PorcentajeActual),
+        //        KilosAlmacen = alm.CantidadActualKg,
+        //        OrdenCompra = oc == null ? OrdenCompraConst.SinOCProxima : oc.NumOrdenCompra,
+        //        Ventas = PuntoVentaServicio.ObtenerVentasTOPDTO(5, DateTime.Now)
+        //    };
+        //    return respuesta;
+        //}
+        //public CarteraDTO DashCartera()
+        //{
+        //    var CarterRec = CobranzaServicio.CRecuperada(TokenServicio.ObtenerIdEmpresa());
+        //    var CarterVencida = CobranzaServicio.CarteraVencida(TokenServicio.ObtenerIdEmpresa());
+        //    var DeudoresLongevos = CobranzaServicio.TopDeudores(TokenServicio.ObtenerIdEmpresa(), 5);
+        //    var DeudoresValioso = CobranzaServicio.TopDeudoresValiosos(TokenServicio.ObtenerIdEmpresa(), 5);
+        //    var respuesta = new CarteraDTO()
+        //    {
+        //        CarteraRecuperada = CarterRec,
+        //        CarteraVencida = CarterVencida,
+        //        TopDeudoresL = DeudoresLongevos,
+        //        TopDeudoresV = DeudoresValioso,
+        //    };
+        //    return respuesta;
+        //}
+        //public AdministracionDTO DashCaja()
+        //{
+        //    AdministracionDTO dto = new AdministracionDTO();
+
+        //    var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
+        //    var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+        //    var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+        //    var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+
+        //    dto.TotalEstaciones = (decimal)CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones).Sum(x => x.TotalVenta);
+        //    dto.TotalCamionetas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros).TotalVenta;
+        //    dto.TotalPipas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaPipas(VPipas).TotalVenta;
+        //    dto.TotalVetna = dto.TotalEstaciones + dto.TotalCamionetas + dto.TotalPipas;
+
+        //    return dto;
+        //}
         #endregion
     }
 }

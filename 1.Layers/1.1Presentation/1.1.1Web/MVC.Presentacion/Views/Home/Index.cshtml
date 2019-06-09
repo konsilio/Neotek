@@ -1,5 +1,16 @@
 ﻿@using MVC.Presentacion.Models.Seguridad
 @model  LoginModel
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 
 @{
     ViewBag.Title = "Iniciar sesión";
@@ -66,10 +77,33 @@
                                 </div>
                                 <div class="from">
                                     <div class="form-group">
+
+                                        @*@Html.DevExpress().ComboBox(settings =>
+                                                    {
+                                                        settings.Name = "IdEmpresa";
+                                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                        settings.SelectedIndex = 0;
+                                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                        settings.Properties.ValueType = typeof(int);
+                                                        settings.Properties.TextField = "NombreComercial";
+                                                        settings.Properties.ValueField = "IdEmpresa";
+                                                    }).BindList(ViewBag.Empresas).Bind(Model.IdEmpresa).GetHtml()
+                                        @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })*@
+
+
+
                                         <select name="IdEmpresa" id="empresas" class="form-control selectpicker" data-live-search="true">
                                             @foreach (var lst in Model.Empresas)
                                             {
-                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                if (lst.IdEmpresa.Equals(2))
+                                                {
+                                                    <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
                                             }
                                         </select>
                                     </div>

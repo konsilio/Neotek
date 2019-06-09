@@ -54,27 +54,27 @@
                     }
                     <div class="card">
                         <div class="header">
-                            <strong>Identificate</strong>
+                            <strong>Busqueda de cliente</strong>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <strong>RFC:*</strong>
+                                        <strong>RFC:</strong>
                                         @Html.TextBoxFor(m => m.RFC, new { @class = "form-control", @placeholder = "RFC" })
                                         @Html.ValidationMessageFor(m => m.RFC, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <strong>Número de Ticket:*</strong>
+                                        <strong>Número de Ticket:</strong>
                                         @Html.TextBoxFor(m => m.Ticket, new { @class = "form-control", @placeholder = "Número de Ticket" })
                                         @Html.ValidationMessageFor(m => m.Ticket, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <strong>Número de Cliente:*</strong>
+                                        <strong>Número de Cliente:</strong>
                                         @Html.TextBoxFor(m => m.IdCliente, new { @class = "form-control", @placeholder = "Número de Cliente" })
                                         @Html.ValidationMessageFor(m => m.IdCliente, "", new { @class = "alert-danger" })
                                     </div>

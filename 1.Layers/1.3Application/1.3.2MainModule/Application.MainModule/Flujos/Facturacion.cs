@@ -1,14 +1,19 @@
-﻿using Application.MainModule.AdaptadoresDTO.Facturacion;
+﻿using Application.MainModule.AdaptadoresDTO.Cobranza;
+using Application.MainModule.AdaptadoresDTO.Facturacion;
 using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.com.admingest;
 using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Cobranza;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Cobranza;
 using Application.MainModule.Servicios.Facturacion;
 using Application.MainModule.Servicios.Seguridad;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -37,7 +42,7 @@ namespace Application.MainModule.Flujos
             dto.VersionCFDI = ConfigurationManager.AppSettings["VersionCFDI"];
             dto.RespuestaTimbrado = CFDIServicio.Crear(CFDIAdapter.FromDTO(dto), dtoGlob.Tickets);
 
-            if (!dto.RespuestaTimbrado.Exito) return dto.RespuestaTimbrado;            
+            if (!dto.RespuestaTimbrado.Exito) return dto.RespuestaTimbrado;
 
             return CFDIServicio.Timbrar(_comp, dto, dtoGlob.Tickets).RespuestaTimbrado;
         }
@@ -58,6 +63,52 @@ namespace Application.MainModule.Flujos
             else dto.Id_RelTF = dto.RespuestaTimbrado.Id;
             return CFDIServicio.Timbrar(_comp, dto);
         }
+        public CFDIDTO GenerarFacturaPPD(Cargo entidad)
+        {
+            return new CFDIDTO()
+            {
+                Id_FolioVenta = entidad.Ticket,
+                Id_FormaPago = (byte)99,
+                Id_MetodoPago = Convert.ToInt32(MetodoPagoConst.IDPPD),
+                IdUsoCFDI = 2
+            };
+        }
+        public RespuestaDto GenerarFacturaAbono(int id)
+        {
+            var abono = CobranzaServicio.ObtenerAbono(id);
+            if (abono == null) return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.NoExiste, "el abono") };
+
+            var dto = BuscarFacturasPorTicket(abono.Cargo.Ticket);
+            if (dto == null || dto.Respuesta == "Null")
+                dto = GenerarFactura(GenerarFacturaPPD(abono.Cargo));
+
+            if (dto.Id_RelTF == 0 && !dto.RespuestaTimbrado.Exito)
+                return dto.RespuestaTimbrado;
+
+            var _comp = CFDIServicio.DatosComprobantePago(dto);   
+            _comp.Receptor = CFDIServicio.DatosReceptor(dto);            
+            _comp.Concepto = CFDIServicio.DatosConceptosPago().ToArray();
+            _comp.Complemento = CFDIServicio.DatosPago(abono, dto);
+
+            dto.Id_MetodoPago = Convert.ToInt32(_comp.MetodoPago.Equals(MetodoPagoConst.Pago_en_parcialidades_o_diferido) ? MetodoPagoConst.IDPPD : MetodoPagoConst.IDPUE);
+            dto.Folio = Convert.ToInt32(_comp.Folio);
+            dto.Serie = _comp.Serie;
+            dto.UUID = string.Empty;
+            dto.URLPdf = string.Empty;
+            dto.URLXml = string.Empty;
+            dto.VersionCFDI = ConfigurationManager.AppSettings["VersionCFDI"];
+            dto.RespuestaTimbrado = CFDIServicio.Crear(CFDIAdapter.FromDTO(dto));
+
+            if (!dto.RespuestaTimbrado.Exito) return dto.RespuestaTimbrado;
+            else dto.Id_RelTF = dto.RespuestaTimbrado.Id;
+
+            var tim = CFDIServicio.Timbrar(_comp, dto);
+            if (!tim.RespuestaTimbrado.Exito)
+                return tim.RespuestaTimbrado;
+            abono.Id_RelTF = dto.Id_RelTF;
+                        
+            return CobranzaServicio.ActualizarAbono(AbonosAdapter.FromEntity(abono));
+        }
         public RespuestaDto GenerarFactura(List<CFDIDTO> dtos)
         {
             var respuestas = dtos.Select(x => GenerarFactura(x)).ToList();
@@ -76,8 +127,8 @@ namespace Application.MainModule.Flujos
             List<CFDI> l = new List<CFDI>();
             foreach (var c in cfdis)
             {
-                if (l.Where(x => x.UUID.Equals(c.UUID) && x.Serie.Equals("G")).Count().Equals(0))                
-                    l.Add(c);                
+                if (l.Where(x => x.UUID.Equals(c.UUID) && x.Serie.Equals("G")).Count().Equals(0))
+                    l.Add(c);
             }
 
             return CFDIAdapter.ToDTO(l);
@@ -90,7 +141,12 @@ namespace Application.MainModule.Flujos
         public CFDIDTO BuscarFacturasPorTicket(string folio)
         {
             var cfdis = CFDIServicio.Buscar(folio);
-            return CFDIAdapter.ToDTO(cfdis);
+            if (cfdis != null)
+                return CFDIAdapter.ToDTO(cfdis);
+            else
+                return new CFDIDTO() { Respuesta="Null" };
+            
+           
         }
         public List<VentaPuntoVentaDTO> BuscarPorRFC(string RFC)
         {
@@ -126,5 +182,6 @@ namespace Application.MainModule.Flujos
             var ventas = PuntoVentaServicio.ObtenerVentasPorCliente(model.IdCliente, model.FechaIni, model.FechaFinal);
             return CajaGeneralAdapter.ToDTOP(ventas);
         }
+
     }
 }

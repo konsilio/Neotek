@@ -728,6 +728,21 @@
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaCreacion" Type="date" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Bitacora">
+          <Key>
+            <PropertyRef Name="Id" />
+            
+            
+            
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Accion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="FechaRegistro" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="CAlmacenGas">
           <Key>
             <PropertyRef Name="IdCAlmacenGas" />
@@ -3293,6 +3308,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Bitacora_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Bitacora" Type="Self.Bitacora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Bitacora">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CAlmacenGas_AlmacenGas">
           <End Role="AlmacenGas" Type="Self.AlmacenGas" Multiplicity="0..1" />
           <End Role="CAlmacenGas" Type="Self.CAlmacenGas" Multiplicity="*" />
@@ -5448,6 +5475,15 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="VentaPuntoDeVenta" EntityType="Self.VentaPuntoDeVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaPuntoDeVentaDetalle" EntityType="Self.VentaPuntoDeVentaDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaPuntoDeVentaEfectivo" EntityType="Self.VentaPuntoDeVentaEfectivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bitacora" EntityType="Self.Bitacora" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Bitacora].[Id] AS [Id], 
+    [Bitacora].[IdUsuario] AS [IdUsuario], 
+    [Bitacora].[Descripcion] AS [Descripcion], 
+    [Bitacora].[Accion] AS [Accion], 
+    [Bitacora].[FechaRegistro] AS [FechaRegistro]
+    FROM [dbo].[Bitacora] AS [Bitacora]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="CProductoAsociado" EntityType="Self.CProductoAsociado" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [CProductoAsociado].[IdProducto] AS [IdProducto], 
@@ -5739,6 +5775,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_AsignacionUtilitarios_Usuario" Association="Self.FK_AsignacionUtilitarios_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AsignacionUtilitarios" EntitySet="AsignacionUtilitarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bitacora_Usuario" Association="Self.FK_Bitacora_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Bitacora" EntitySet="Bitacora" />
           </AssociationSet>
           <AssociationSet Name="FK_CAlmacenGas_AlmacenGas" Association="Self.FK_CAlmacenGas_AlmacenGas">
             <End Role="AlmacenGas" EntitySet="AlmacenGas" />
@@ -6639,6 +6679,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="AlmacenVerProductos" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
           <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />
+          <Property Name="HistoricoVentas" Type="Boolean" Nullable="false" />
+          <Property Name="FacturasVerFacturas" Type="Boolean" />
+          <Property Name="FacturasFacturar" Type="Boolean" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -6722,14 +6765,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="VentaCajaGeneral1" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario1" FromRole="Usuario" ToRole="VentaCajaGeneral" />
           <NavigationProperty Name="VentaCorteAnticipoEC" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario" FromRole="Usuario" ToRole="VentaCorteAnticipoEC" />
           <NavigationProperty Name="AsignacionUtilitarios" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_Usuario" FromRole="Usuario" ToRole="AsignacionUtilitarios" />
-          <!--<NavigationProperty Name="Requisiciones" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario" FromRole="Usuario" ToRole="Requisicion" />
-          <NavigationProperty Name="RequisicionAutorizacion" Relationship="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Usuario" FromRole="Usuario" ToRole="RequisicionAutorizacion" />-->
-          <!--<NavigationProperty Name="UsuarioContacto" Relationship="Self.FK_UsuarioContacto_Usuario" FromRole="Usuario" ToRole="UsuarioContacto" />
-          <NavigationProperty Name="UsuarioCredencial" Relationship="Self.FK_UsuarioCredencial_Usuario" FromRole="Usuario" ToRole="UsuarioCredencial" />
-          <NavigationProperty Name="UsuarioDireccion" Relationship="Self.FK_UsuarioDireccion_Usuario" FromRole="Usuario" ToRole="UsuarioDireccion" />          
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_UsuarioContacto_Usuario" FromRole="UsuarioContacto" ToRole="Usuario" />          
-          <NavigationProperty Name="Usuario1" Relationship="Self.FK_UsuarioCredencial_Usuario" FromRole="UsuarioCredencial" ToRole="Usuario" />          
-          <NavigationProperty Name="Usuario" Relationship="Self.FK_UsuarioDireccion_Usuario" FromRole="UsuarioDireccion" ToRole="Usuario" />-->
+          <NavigationProperty Name="Bitacora" Relationship="Sagas.MainModuleModel.FK_Bitacora_Usuario" FromRole="Usuario" ToRole="Bitacora" />
         </EntityType>
         <Association Name="FK_Empresa_EstadosRepublica">
           <End Role="EstadosRepublica" Type="Self.EstadosRepublica" Multiplicity="0..1" />
@@ -7852,6 +7888,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </AssociationSet>
           <EntitySet Name="UsoCFDI" EntityType="Sagas.MainModuleModel.UsoCFDI" />
           <EntitySet Name="HistoricoVentas" EntityType="Sagas.MainModuleModel.HistoricoVentas" />
+          <EntitySet Name="Bitacora" EntityType="Sagas.MainModuleModel.Bitacora" />
+          <AssociationSet Name="FK_Bitacora_Usuario" Association="Sagas.MainModuleModel.FK_Bitacora_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Bitacora" EntitySet="Bitacora" />
+          </AssociationSet>
           <AssociationSet Name="FK_Abono_RelTicketCFDI" Association="Sagas.MainModuleModel.FK_Abono_RelTicketCFDI">
             <End Role="CFDI" EntitySet="CFDI" />
             <End Role="Abono" EntitySet="Abono" />
@@ -12286,6 +12327,32 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="EsLocal" Type="Boolean" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="Bitacora">
+          <Key>
+            <PropertyRef Name="Id" />
+            <!--<PropertyRef Name="Descripcion" />
+            <PropertyRef Name="Accion" />
+            <PropertyRef Name="FechaRegistro" />-->
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Accion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_Bitacora_Usuario" FromRole="Bitacora" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Bitacora_Usuario">
+          <End Type="Sagas.MainModuleModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.Bitacora" Role="Bitacora" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Bitacora">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Abono_RelTicketCFDI">
           <End Type="Sagas.MainModuleModel.CFDI" Role="CFDI" Multiplicity="0..1" />
           <End Type="Sagas.MainModuleModel.Abono" Role="Abono" Multiplicity="*" />
@@ -14425,6 +14492,17 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="MontoVenta" ColumnName="MontoVenta" />
                 <ScalarProperty Name="Anio" ColumnName="Anio" />
                 <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bitacora">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.Bitacora">
+              <MappingFragment StoreEntitySet="Bitacora">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Accion" ColumnName="Accion" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -6,6 +6,7 @@ using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Cobranza;
 using Application.MainModule.Servicios.Seguridad;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
@@ -178,8 +179,8 @@ namespace Application.MainModule.Servicios.Facturacion
             {
                 Nombre = _cliente.Nombre + " " + _cliente.Apellido1 + " " + _cliente.Apellido2,
                 Rfc = _cliente.Rfc,
-                UsoCFDI = UsoCFDIServicio.Buscar(dto.IdUsoCFDI).UsoCFDISAT,
-                CorreoElectronico = _cliente.CorreoElectronico,
+                UsoCFDI = "P01",
+                CorreoElectronico = _cliente.CorreoElectronico ?? "jaime.santillan@neoteck.com.mx",
             };
         }
         public static Receptor DatosReceptor()
@@ -240,7 +241,7 @@ namespace Application.MainModule.Servicios.Facturacion
                 Importe = (float)((det.PrecioUnitarioKg ?? det.PrecioUnitarioProducto) * det.CantidadProducto),
                 ImpuestoConceptoTrasladado = _impuesto.ToArray(),
             };
-        }
+        }       
         public static Concepto DatosConceptos(VentaPuntoDeVenta det)
         {
             //En caso de que la factura global donde el total de la venta es el concepto
@@ -261,7 +262,7 @@ namespace Application.MainModule.Servicios.Facturacion
                 Importe = (float)det.Total,
                 ImpuestoConceptoTrasladado = _impuesto.ToArray(),
             };
-        }
+        }     
         public static ImpuestoConceptoTrasladado GenerarImpiestoIVA(VentaPuntoDeVentaDetalle det)
         {
             ImpuestoConceptoTrasladado iva = new ImpuestoConceptoTrasladado();
@@ -272,6 +273,98 @@ namespace Application.MainModule.Servicios.Facturacion
             iva.Importe = (float)((det.PrecioUnitarioKg ?? det.PrecioUnitarioProducto) * det.CantidadProducto) * iva.TasaOCuota;
             return iva;
         }
+        #region Pago
+        public static Comprobante DatosComprobantePago(CFDIDTO dto)
+        {
+            var venta = PuntoVentaServicio.Obtener(dto.Id_FolioVenta);
+            var cfdi = Buscar(dto.Id_FolioVenta);
+            var empresa = EmpresaServicio.Obtener(venta.IdEmpresa);
+            Comprobante _comp = new Comprobante();
+            _comp.Serie = cfdi != null ? cfdi.Serie : PuntoVentaServicio.ObtenerSerie(venta.IdPuntoVenta);
+            _comp.Folio = cfdi != null ? cfdi.Folio.ToString() : PuntoVentaServicio.ObtenerFolio(venta.IdPuntoVenta);
+            _comp.Fecha = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            _comp.FormaPago = dto.Id_FormaPago < 10 ? string.Concat("0", dto.Id_FormaPago.ToString()) : dto.Id_FormaPago.ToString();
+
+            _comp.TipoDeComprobante = TipoComprobanteEnum.Pago;
+            _comp.Moneda = MonedaEnum.SinMondea;
+            _comp.SubTotal = 0;
+            _comp.Total = 0;
+
+            _comp.MetodoPago = dto.Id_MetodoPago.Equals(0) ? MetodoPagoConst.Pago_en_una_sola_exhibición : MetodoPagoServicio.Buscar(dto.Id_MetodoPago).MetodoPagoSAT;
+            _comp.LugarExpedicion = empresa.CodigoPostal;
+
+            return _comp;
+        }
+        public static Complemento DatosPago(Abono abono, CFDIDTO cfdi)
+        {
+            Complemento _complemento = new Complemento();
+            List<Pago> pagos = new List<Pago>();
+            Pago p = new Pago();
+
+            p.FechaPago = abono.FechaAbono.ToString("yyyy - MM - dd hh: mm:ss");
+            p.FormaDePagoP = abono.IdFormaPago < 10 ? string.Concat("0", abono.IdFormaPago.ToString()) : abono.IdFormaPago.ToString();
+            p.MonedaP = MonedaEnum.PesoMexicano;
+            p.Monto = float.Parse(abono.MontoAbono.ToString());
+            p.DoctoRelacionado = DocumentoRelacionado(abono, cfdi).ToArray();
+            pagos.Add(p);
+
+            _complemento.Pago = pagos.ToArray();
+            return _complemento;
+        }
+        public static List<DoctoRelacionado> DocumentoRelacionado(Abono abono, CFDIDTO cfdi)
+        {
+            List<DoctoRelacionado> respuesta = new List<DoctoRelacionado>();
+            DoctoRelacionado dr = new DoctoRelacionado();
+
+            dr.IdDocumento = cfdi.UUID;
+            dr.Serie = cfdi.Serie;
+            dr.Folio = cfdi.Folio.ToString();
+            dr.MonedaDR = MonedaEnum.PesoMexicano;
+            dr.MetodoDePagoDR = cfdi.Id_MetodoPago.Equals(0) ? MetodoPagoConst.Pago_en_una_sola_exhibición : MetodoPagoServicio.Buscar(cfdi.Id_MetodoPago).MetodoPagoSAT;
+            dr.NumParcialidad = CobranzaServicio.CalcularNumAbono(abono);
+            dr.ImpSaldoAnt = float.Parse(CobranzaServicio.CalcularNumSaldoAnteriorAbono(abono).ToString());
+            dr.ImpPagado = float.Parse(abono.MontoAbono.ToString());
+            dr.ImpSaldoInsoluto = float.Parse(CobranzaServicio.CalcularNumSaldoInsolutoAbono(abono).ToString());
+
+            respuesta.Add(dr);
+            return respuesta;
+        }
+        public static List<Concepto> DatosConceptosPago()
+        {
+            List<Concepto> _conceptos = new List<Concepto>();
+            _conceptos.Add(DatosConcepto());
+            return _conceptos;
+        }
+        public static Concepto DatosConcepto()
+        {
+            List<ImpuestoConceptoTrasladado> _impuesto = new List<ImpuestoConceptoTrasladado>();
+
+            var iva = GenerarImpiestoIVA();
+            _impuesto.Add(iva);
+            return new Concepto()
+            {
+                ClaveProdServ = "84111506",
+                NoIdentificacion = string.Empty,
+                Cantidad = 1,
+                ClaveUnidad = "ACT",
+                Unidad = string.Empty,
+                ValorUnitario = 0,
+                Descripcion = "Pago",
+                Importe = 0,
+                ImpuestoConceptoTrasladado = _impuesto.ToArray(),
+            };
+        }
+        public static ImpuestoConceptoTrasladado GenerarImpiestoIVA()
+        {
+            ImpuestoConceptoTrasladado iva = new ImpuestoConceptoTrasladado();
+            iva.Base = 0;
+            iva.Impuesto = ImpuestosEnum.IVA;
+            iva.TipoFactor = TipoFactorEnum.Tasa;
+            iva.TasaOCuota = 0.16F;
+            iva.Importe = 0;
+            return iva;
+        }
+        #endregion
         public static ImpuestoConceptoTrasladado GenerarImpiestoIVA(VentaPuntoDeVenta det)
         {
             ImpuestoConceptoTrasladado iva = new ImpuestoConceptoTrasladado();

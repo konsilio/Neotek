@@ -48,16 +48,15 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         public static ClienteDTO ToDTO(Cliente cliente)
         {
-
             return new ClienteDTO()
             {
                 IdCliente = cliente.IdCliente,
-                Nombre = cliente.Nombre,
-                RazonSocial = (cliente.RazonSocial != null) ? cliente.RazonSocial : null,
-                Apellido1 = cliente.Apellido1,
-                Apellido2 = cliente.Apellido2,
-                TelefonoFijo = cliente.Telefono,
-                Celular = cliente.Celular,
+                Nombre = cliente.Nombre != null ? cliente.Nombre : string.Empty,
+                RazonSocial = (cliente.RazonSocial != null) ? cliente.RazonSocial : string.Empty,
+                Apellido1 = cliente.Apellido1 != null ? cliente.Apellido1 : string.Empty,
+                Apellido2 = cliente.Apellido2 != null ? cliente.Apellido2 : string.Empty,
+                TelefonoFijo = cliente.Telefono != null ? cliente.Telefono : string.Empty,
+                Celular = cliente.Celular != null ? cliente.Celular : string.Empty,
                 IdTipoRegimen = cliente.IdRegimenFiscal.Value,
                 IdTipoPersona = cliente.IdTipoPersona.Value,
                 RFC = cliente.Rfc.Trim(),

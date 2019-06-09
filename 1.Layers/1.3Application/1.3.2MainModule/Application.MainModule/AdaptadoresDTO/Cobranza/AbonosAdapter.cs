@@ -2,6 +2,7 @@
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Cobranza;
+using Application.MainModule.Servicios.Facturacion;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         public static AbonosDTO ToDTO(Abono _Abono)
         {
             AbonosDTO dto = new AbonosDTO();
+            var venta = CFDIServicio.Buscar(_Abono.Id_RelTF ?? 0);
             dto.IdAbono = _Abono.IdAbono;
             dto.IdCargo = _Abono.IdCargo;
             dto.FechaRegistro = _Abono.FechaRegistro;
@@ -24,6 +26,12 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.IdFormaPago = _Abono.IdFormaPago;
             dto.FolioBancario = _Abono.FolioBancario;
             dto.FormaPago = FormaPagoServicio.Obtener(_Abono.IdFormaPago).Descripcion;
+            dto.Id_RelTF = _Abono.Id_RelTF ?? 0;
+            if (venta != null)
+            {
+                dto.URLXml = venta.URLXml;
+                dto.URLPdf = venta.URLPdf;
+            }
             return dto;
         }
         public static List<AbonosDTO> ToDTO(List<Abono> lAbono)
@@ -61,6 +69,8 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             _p.IdFormaPago = pDTO.IdFormaPago;
             _p.FolioBancario = pDTO.FolioBancario;
             _p.ACTIVO = true;
+            if (!pDTO.Id_RelTF.Equals(0))
+                _p.Id_RelTF = pDTO.Id_RelTF;
 
             return _p;
         }
@@ -80,6 +90,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
                 MontoAbono = pAnterior.MontoAbono,
                 IdFormaPago = pAnterior.IdFormaPago,
                 FolioBancario = pAnterior.FolioBancario,
+                Id_RelTF = pAnterior.Id_RelTF,
             };
         }
         static List<Abono> FromEntity(List<Abono> lPDTO)
@@ -107,6 +118,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         public static CargosDTO ToDTO(Cargo _dto)
         {
             List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
+            var venta = CFDIServicio.Buscar(_dto.Ticket);
             CargosDTO dto = new CargosDTO();
             dto.IdCargo = _dto.IdCargo;
             dto.IdCliente = _dto.IdCliente;
@@ -129,6 +141,12 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             //dto.TotalEfectivo = lst.Where(y => y.IdFormaPago == 1).Sum(x => x.MontoAbono);
             //dto.TotalCheques = lst.Where(y => y.IdFormaPago == 2).Sum(x => x.MontoAbono);
             //dto.TotalTransferencia = lst.Where(y => y.IdFormaPago == 3).Sum(x => x.MontoAbono);
+            if (venta != null)
+            {
+                dto.URL_XML = venta.URLXml;
+                dto.URL_CFDI = venta.URLPdf;
+            }
+
             return dto;
         }
         public static List<CargosDTO> ToDTO(List<Cargo> lCargo)
@@ -168,6 +186,8 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             //dto.TotalEfectivo = lst.Where(y => y.IdFormaPago == 1).Sum(x => x.MontoAbono);
             //dto.TotalCheques = lst.Where(y => y.IdFormaPago == 2).Sum(x => x.MontoAbono);
             //dto.TotalTransferencia = lst.Where(y => y.IdFormaPago == 3).Sum(x => x.MontoAbono);
+            dto.URL_CFDI = _dto.Url_PDF;
+            dto.URL_XML = _dto.Url_XML;
             return dto;
         }
         public static List<CargosDTO> ToDTO(List<CRecuperadaDTO> lstCRecuperado, List<CRecuperadaTotalesDTO> lstTotal)
@@ -233,6 +253,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.MontoAbono = 0;
             dto.IdFormaPago = 1;
             dto.FolioBancario = "";
+            dto.Id_RelTF = 0;
             return dto;
         }
     }

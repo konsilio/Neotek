@@ -109,8 +109,29 @@ namespace MVC.Presentacion.Controllers
                 _mod.FechaRango1 = dt; _mod.FechaRango2 = dt;
                 _model.Add(_mod);
             }
+            if (TempData["RespuestaDTO"] != null)
+            {
+                if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
+                {
+                    ViewBag.Tipo = "alert-danger";
+                    ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+                }
+                else
+                {
+                    ViewBag.Tipo = "alert-success";
+                    ViewBag.Msj = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
+                }
+            }
 
             return View(_model);
+        }
+        public ActionResult FacturarAbono(int id)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+
+            TempData["RespuestaDTO"] = FacturacionServicio.GenerarFacturasAbono(id, _tkn);
+            return RedirectToAction("CreditoRecuperado");
         }
         public ActionResult CarteraVencida(int? idCliente, DateTime? fecha, ReporteModel model)
         {
