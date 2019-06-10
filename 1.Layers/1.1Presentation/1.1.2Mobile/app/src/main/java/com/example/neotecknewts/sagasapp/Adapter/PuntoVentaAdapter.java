@@ -32,7 +32,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public ExistenciasDTO existencia;
     public boolean Mostrar;
 
-    public PuntoVentaAdapter(List<ExistenciasDTO>  items,boolean EsVentaCamioneta,Context context){
+    public PuntoVentaAdapter(List<ExistenciasDTO> items, boolean EsVentaCamioneta, Context context){
         this.items = items;
         this.EsVentaCamioneta = EsVentaCamioneta;
         this.context = context;

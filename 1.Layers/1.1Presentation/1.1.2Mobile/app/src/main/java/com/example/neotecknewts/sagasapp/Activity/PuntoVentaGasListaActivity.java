@@ -10,6 +10,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -154,9 +155,9 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         SWFormularioVentaCamionetaYPipaCredito.setVisibility(
                 ventaDTO.isTieneCredito()? View.VISIBLE:View.GONE
         );
-        SWFormularioVentaCamionetaYPipaCredito.setVisibility(
-                ventaDTO.isTieneCredito()? View.VISIBLE:View.GONE
-        );
+//        SWFormularioVentaCamionetaYPipaCredito.setVisibility(
+//                ventaDTO.isTieneCredito()? View.VISIBLE:View.GONE
+//        );
 
         SWFormularioVentaCamionetaYPipaCredito.setChecked(
                 ventaDTO.isCredito()
@@ -196,6 +197,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
         presenter.getPrecioVenta(session.getToken());
         if(EsVentaCamioneta) {
+            Log.d("Jimmy","EsVentaCamioneta true ");
             presenter.getCamionetaCilindros(
                     esGasLP,
                     esCilindroGas,
@@ -203,6 +205,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                     session.getToken()
             );
         }else{
+            Log.d("Jimmy","EsVentaCamioneta false");
             presenter.getCamionetaCilindros(
                     esGasLP,
                     esCilindroGas,
@@ -389,6 +392,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      * la venta {@link VentaDTO} en el apartado de detalle de venta {@link ConceptoDTO}
      */
     private void SetearLitrosDespachados() {
+        Log.d("Jimmy","SetearLitrosDespachados");
         if(adapter.cantidad.getText()!=null && adapter.cantidad.getText().toString().length()>0) {
             if (Double.valueOf(adapter.cantidad.getText().toString()) > 0) {
                 double total, subtotal, iva, precio, desc;
