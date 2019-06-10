@@ -97,44 +97,26 @@ public class LoginInteractorImpl implements LoginInteractor {
         call.enqueue(new Callback<UsuarioDTO>() {
             @Override
             public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
-                UsuarioDTO data = response.body();
-
                 try{
-                    Log.d("Jimy", data.toString());
+                    UsuarioDTO data = response.body();
+                    Log.d("Jimy", response.code()+"");
+                    Log.d("Jimy", response.isSuccessful()+"");
                     if (response.isSuccessful()) {
-                        //UsuarioDTO data = response.body();
+                        Log.d("Jimy", data.toString());
                         Log.w(TAG,"Sucess");
-                        if(data.isExito()){
+                        if(data.getIdUsuario()!= 0){
                             if(data.getLengthListMenu()  > 0){
                                 loginPresenter.onSuccessLogin(data);
-                            }
-                            else {
+                            } else {
                                 loginPresenter.onError(data.getMensaje());
                             }
-                        } else {
+                        }else {
                             loginPresenter.onError(data.getMensaje());
                         }
                     }
                     else {
                         //UsuarioDTO data = response.body();
-                        switch (response.code()) {
-                            case 404:
-                                Log.w(TAG,"not found");
-                                // loginPresenter.onError(data.getMensaje());
-                                break;
-                            case 500:
-                                Log.w(TAG, "server broken");
-                                // loginPresenter.onError(data.getMensaje());
-                                break;
-                            case 400:
-                                Log.w(TAG,"Bad request");
-                                // loginPresenter.onError(data.getMensaje());
-                                break;
-                            default:
-                                Log.w(TAG, "desconocido: "+response.code());
-                                // loginPresenter.onError(data.getMensaje());
-                                break;
-                        }
+                        Log.w(TAG,response.errorBody().string());
 
                         if(data!=null){
                             loginPresenter.onError(data.getMensaje());

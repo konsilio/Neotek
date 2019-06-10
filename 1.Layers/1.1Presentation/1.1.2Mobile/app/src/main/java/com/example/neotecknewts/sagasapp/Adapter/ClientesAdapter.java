@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Adapter;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,10 @@ import java.util.List;
 public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ClienteDTO> items;
     private VentaDTO ventaDTO;
-    private boolean EsVentaCarburacion,
-            EsVentaCamioneta,
-            EsVentaPipa;
+    private boolean EsVentaCarburacion, EsVentaCamioneta, EsVentaPipa;
     public boolean esGasLP;
-    public ClientesAdapter(List<ClienteDTO> items,boolean EsVentaCarburacion,
-                           boolean EsVentaCamioneta,
-                           boolean EsVentaPipa,VentaDTO ventaDTO){
+
+    public ClientesAdapter(List<ClienteDTO> items,boolean EsVentaCarburacion, boolean EsVentaCamioneta, boolean EsVentaPipa,VentaDTO ventaDTO){
         this.items = items;
         this.ventaDTO = ventaDTO;
         this.EsVentaCamioneta = EsVentaCamioneta;
