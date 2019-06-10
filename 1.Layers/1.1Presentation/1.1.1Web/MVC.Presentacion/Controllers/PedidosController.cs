@@ -117,15 +117,15 @@ namespace MVC.Presentacion.Controllers
         public JsonResult BuscarClientesPedido(string Tel1, string Rfc)
         {
             string _tkn = Session["StringToken"].ToString();
-            var lstClientes = CatalogoServicio.ListaClientes(0, Tel1, 0, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.Clientes(Tel1, Rfc, _tkn).ToList();
 
             var JsonInfo = JsonConvert.SerializeObject(lstClientes);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult BuscarClientesPedidoDireccion(string Tel1, string Tel2, string Rfc)
+        public JsonResult BuscarClientesPedidoDireccion(string Tel1, string Rfc)
         {
             string _tkn = Session["StringToken"].ToString();
-            var lstClientes = CatalogoServicio.ListaClientes(0, Tel1, 0, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.Clientes(Tel1, Rfc, _tkn).ToList();
 
             List<ClienteLocacionMod> _lst = new List<ClienteLocacionMod>();
             if (lstClientes.Count() > 0)

@@ -9,7 +9,7 @@ namespace Exceptions.MainModule.Validaciones
     public static class Error
     {
         public const string NoExiste = "{0} no existe. Revise la información que esta solicitando.";
-        public const string SiExiste = "{0} ya existe. Revise la información que esta solicitando.";
+        public const string SiExiste = "{0} ya existe. Revise la información.";
         public const string ContieneRol = "{0} contiene el Rol {1}. Por lo que no puede asignarse de nuevo.";
         public const string EstatusIncorrecto = "El estatus de {0} no corresponde al proceso que desea realizar";
         public const string PagoExistente = "Ya no puedes solicitar un pago para {0}, ya se realizdo uno";

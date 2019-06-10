@@ -38,6 +38,29 @@
                 $('#hide_razonS').show();
             }
         }
+        $(document).ready(function () {
+            $('.credit').hide()
+            $("#cliente_VentaExtraordinaria").change(function () {
+
+                // check if checkbox is being checked
+                // taken from /a/23007488 by Alexandru Chichinete
+                if ($("#cliente_VentaExtraordinaria").is(":checked")) {
+                   // alert("IsCheck");
+                    // enable form submit
+                    $('.credit').show()
+                }
+                else
+                    $('.credit').hide()
+            });
+            //$("#onfire").click(function () {
+            //    debugger
+            //    if ($("#cliente_VentaExtraordinaria").is(":checked")) {
+            //        alert("IsCheck");
+            //        // enable form submit
+            //    }
+            ////    $('.credit').show();
+            //});
+        });
     </script>
 </head>
 <body style="height:100%">
@@ -69,17 +92,17 @@
                                     <div>
                                         @if (ViewBag.EsAdmin)
                                         {
-                                            <select name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                @foreach (var lst in ViewBag.Empresas)
+                                        <select name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                            @foreach (var lst in ViewBag.Empresas)
                                                 {
-                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                 }
-                                            </select>
+                                        </select>
                                         }
                                         else
                                         {
-                                            @ViewBag.Empresas
-                                            <label name="cliente.IdEmpresa" value="@ViewBag.IdEmpresa" hidden></label>
+                                        @ViewBag.Empresas
+                                        <label name="cliente.IdEmpresa" value="@ViewBag.IdEmpresa" hidden></label>
                                         }
                                     </div>
                                 </div>
@@ -268,39 +291,6 @@
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:12.666667%">
-                                        <div class="form-group">
-                                            Límite de crédito:
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            Monto $ <input name="cliente.limiteCreditoMonto" class="form-control" type="number" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            <div>
-                                                Días <input name="cliente.limiteCreditoDias" class="form-control" type="number" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            <div>
-                                                Credito disponible:
-                                                <input name="cliente.CreditoDisponibleMonto" class="form-control" type="text" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            <div>
-                                                Descuento %:
-                                                <input name="cliente.DescuentoXKilo" class="form-control" type="number" />
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
                                         <div class="form-group">
                                             <div>
@@ -312,10 +302,44 @@
                                         <div class="form-group">
                                             <label class="switch">
                                                 @Html.CheckBoxFor(m => m.cliente.VentaExtraordinaria, new { @class = "form-control" })
-                                                <span class="slider round"></span>
+                                                <span class="slider round" id="onfire"></span>
                                             </label>
                                         </div>
                                     </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:12.666667%">
+                                        <div class="form-group">
+                                            Límite de crédito:
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            Monto $ <input name="cliente.limiteCreditoMonto" class="form-control" type="number" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Días <input name="cliente.limiteCreditoDias" class="form-control" type="number" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Credito disponible:
+                                                <input name="cliente.CreditoDisponibleMonto" class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Descuento %:
+                                                <input name="cliente.DescuentoXKilo" class="form-control" type="number" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>

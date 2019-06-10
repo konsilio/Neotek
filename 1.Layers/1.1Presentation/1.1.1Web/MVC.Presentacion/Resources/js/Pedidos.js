@@ -41,7 +41,7 @@
             var x = data;
 
             if (data != "[]") {
-                $('#btnCrearCte').prop('disabled', true);
+              //  $('#btnCrearCte').prop('disabled', true);
                 $.each(JSON.parse(data), function (key, val) {
                     //IdCliente.AddItem(val.Nombre, val.IdCliente)
                     IdCliente.AddItem([val.Nombre, val.Apellido1, val.Rfc], val.IdCliente)
@@ -50,7 +50,7 @@
             }
             else {
                 $('#ModalConfirmacion').modal('show');
-                $('#btnCrearCte').prop('disabled', false);
+               // $('#btnCrearCte').prop('disabled', false);
             }
         });
 
@@ -101,7 +101,7 @@ function OnSelectedChange(s, e) {
 //    }   
 //}
 var Aceptar = function () {
-    $('#btnCrearCte').prop('disabled', true)
+  //  $('#btnCrearCte').prop('disabled', true)
 };
 //var Cancelar = function () {
 //    $('#btnCrearCte').prop('disabled', false)
