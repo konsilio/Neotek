@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.Layout;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +38,7 @@ import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
 import com.example.neotecknewts.sagasapp.Util.Tabla;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,12 +74,16 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
     List<ExistenciasDTO> ExistenciasDTO;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punto_venta_gas_lista);
         Bundle extras = getIntent().getExtras();
         //region Extras (Parametros entre acticitys)
+
+
         if(extras!=null){
             ventaDTO = (VentaDTO) extras.getSerializable("ventaDTO");
             EsVentaCamioneta = extras.getBoolean("EsVentaCamioneta",false);
@@ -86,6 +93,8 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             esCilindroGas = extras.getBoolean("esCilindroGas");
             esCilindro = extras.getBoolean("esCilindro");
         }
+
+
         //endregion
         //region Session
         session = new Session(this);
