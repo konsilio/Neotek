@@ -69,7 +69,7 @@ namespace Application.MainModule.Servicios.Seguridad
         {
             var aut = AutenticarUsuario(autDto);
             var usuario = new UsuarioDataAccess().Buscar(aut.IdUsuario);
-            List<MenuDto> menu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : new List<MenuDto>();
+            List<DTOs.Mobile.MenuDto> menu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : new List<DTOs.Mobile.MenuDto>();
             if (usuario != null)
             {
                 if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count != 0 && !menu.Any())
@@ -86,7 +86,7 @@ namespace Application.MainModule.Servicios.Seguridad
                     Exito = true,
                     Mensaje = Error.S0003,
                     token = string.Empty,
-                    listMenu = new List<MenuDto>(),
+                    listMenu = new List<DTOs.Mobile.MenuDto>(),
                 };
             }
             return new RespuestaAutenticacionMobileDto()
