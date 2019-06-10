@@ -156,4 +156,23 @@ public class ClienteDTO extends RespuestaDTO implements Serializable {
     public void setLimiteCredito(double limiteCredito) {
         LimiteCredito = limiteCredito;
     }
+
+    @Override
+    public String toString() {
+        return "ClienteDTO{" +
+                "IdCliente=" + IdCliente +
+                ", IdTipoPersona=" + IdTipoPersona +
+                ", IdTipoRegimen=" + IdTipoRegimen +
+                ", Nombre='" + Nombre + '\'' +
+                ", Apellido_uno='" + Apellido_uno + '\'' +
+                ", Apellido_dos='" + Apellido_dos + '\'' +
+                ", Celular='" + Celular + '\'' +
+                ", Telefono_fijo='" + Telefono_fijo + '\'' +
+                ", RFC='" + RFC + '\'' +
+                ", RazonSocial='" + RazonSocial + '\'' +
+                ", Credito=" + Credito +
+                ", Factura=" + Factura +
+                ", LimiteCredito=" + LimiteCredito +
+                '}';
+    }
 }

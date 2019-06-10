@@ -30,6 +30,10 @@ public class UsuarioDTO {
         return listMenu;
     }
 
+    public int getLengthListMenu() {
+        return this.listMenu.length;
+    }
+
     public void setListMenu(MenuDTO[] listMenu) {
         this.listMenu = listMenu;
     }
@@ -64,6 +68,17 @@ public class UsuarioDTO {
 
     public void setMensaje(String mensaje) {
         Mensaje = mensaje;
+    }
+
+    @Override
+    public String toString() {
+        return "UsuarioDTO{" +
+                "IdUsuario=" + IdUsuario +
+                ", Exito=" + Exito +
+                ", token='" + token + '\'' +
+                ", Mensaje='" + Mensaje + '\'' +
+                ", IdAlmacen=" + IdAlmacen +
+                '}';
     }
 
     @SerializedName("IdCAlmacenGas")
