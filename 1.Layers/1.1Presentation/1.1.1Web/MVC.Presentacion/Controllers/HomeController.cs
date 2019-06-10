@@ -45,7 +45,8 @@ namespace MVC.Presentacion.Controllers
                 if (respuesta.Exito)
                 {
                     Session["StringToken"] = respuesta.token;
-                    Session["Perfil"] = respuesta.Mensaje;                   
+                    Session["Perfil"] = respuesta.Mensaje;
+                    Session["Roles"] = respuesta.LstRoles;
                     ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
                     ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
                     ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());

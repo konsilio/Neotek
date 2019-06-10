@@ -21,4 +21,11 @@ public class DatosClientesDTO extends RespuestaDTO implements Serializable {
     public void setList(List<ClienteDTO> list) {
         this.list = list;
     }
+
+    @Override
+    public String toString() {
+        return "DatosClientesDTO{" +
+                "list=" + list +
+                '}';
+    }
 }

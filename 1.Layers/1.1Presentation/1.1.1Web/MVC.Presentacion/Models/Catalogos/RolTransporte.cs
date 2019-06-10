@@ -5,16 +5,54 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Catalogos
 {
-    public class RolCat
+    public class RolTransporte
     {
         public short IdRol { get; set; }
         public string Rol1 { get; set; }
-        public string NombreRol { get; set; }
+        public string NombreRol { get; set; }/****************/
+        public bool CobranzaVerAbonos { get; set; }
+        public bool CobranzaVerCartera { get; set; }
+        public bool CobranzaVerCreditoRecuperado { get; set; }
+        public bool CobranzaGenerarAbonos { get; set; }
+        public bool PedidoVerPedido { get; set; }
+        public bool PedidoGenerarPedido { get; set; }
+        public bool PedidoModificarPedido { get; set; }
+        public bool PedidoEliminarPedido { get; set; }/****************/
+        public bool AppCompraVerOCompra { get; set; }
+        public bool AppCompraEntraGas { get; set; }
+        public bool AppCompraGasIniciarDescarga { get; set; }
+        public bool AppCompraGasFinalizarDescarga { get; set; }
+        public bool AppAutoconsumoInventarioGral { get; set; }
+        public bool AppAutoconsumoEstacionCarb { get; set; }
+        public bool AppAutoconsumoPipa { get; set; }
+        public bool AppCalibracionEstacionCarb { get; set; }
+        public bool AppCalibracionPipa { get; set; }
+        public bool AppCalibracionCamionetaCilindro { get; set; }
+        public bool AppRecargaEstacionCarb { get; set; }
+        public bool AppRecargaPipa { get; set; }
+        public bool AppRecargaCamionetaCilindro { get; set; }
+        public bool AppTomaLecturaAlmacenPral { get; set; }
+        public bool AppTomaLecturaEstacionCarb { get; set; }
+        public bool AppTomaLecturaPipa { get; set; }
+        public bool AppTomaLecturaCamionetaCilindro { get; set; }
+        public bool AppTomaLecturaReporteDelDia { get; set; }
+        public bool AppTraspasoEstacionCarb { get; set; }
+        public bool AppTraspasoPipa { get; set; }
+        public bool AppDisposicionEfectivo { get; set; }
+        public bool AppCamionetaPuntoVenta { get; set; }
+        public bool AppEstacionCarbPuntoVenta { get; set; }
+        public bool AppPipaPuntoVenta { get; set; }
+
         /***********************************/
         public short IdEmpresa { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         /***********************************/
+
+        public bool RequisicionVerRequisiciones { get; set; }
+        public bool RequisicionGenerarNueva { get; set; }
+        public bool RequisicionRevisarExistencia { get; set; }
+        public bool RequisicionAutorizar { get; set; }
         public bool CatInsertarUsuario { get; set; }
         public bool CatModificarUsuario { get; set; }
         public bool CatEliminarUsuario { get; set; }
@@ -62,8 +100,6 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool CatModificarPrecioVenta { get; set; }
         public bool CatEliminarPrecioVenta { get; set; }
         public bool CatConsultarPrecioVenta { get; set; }
-
-        /***********************************/
         public bool CompraVerOCompra { get; set; }
         public bool CompraGenerarOCompra { get; set; }
         public bool CompraAutorizarOCompra { get; set; }
@@ -73,33 +109,21 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool AlmacenActualizaExistencias { get; set; }
         public bool AlmacenVerExistencias { get; set; }
         public bool AlmacenVerMovimientos { get; set; }
-        public bool RequisicionVerRequisiciones { get; set; }
-        public bool RequisicionGenerarNueva { get; set; }
-        public bool RequisicionRevisarExistencia { get; set; }
-        public bool RequisicionAutorizar { get; set; }
-        public bool AppCompraVerOCompra { get; set; }
-        public bool AppCompraEntraGas { get; set; }
-        public bool AppCompraGasIniciarDescarga { get; set; }
-        public bool AppCompraGasFinalizarDescarga { get; set; }
-        public bool AppAutoconsumoInventarioGral { get; set; }
-        public bool AppAutoconsumoEstacionCarb { get; set; }
-        public bool AppAutoconsumoPipa { get; set; }
-        public bool AppCalibracionEstacionCarb { get; set; }
-        public bool AppCalibracionPipa { get; set; }
-        public bool AppCalibracionCamionetaCilindro { get; set; }
-        public bool AppRecargaEstacionCarb { get; set; }
-        public bool AppRecargaPipa { get; set; }
-        public bool AppRecargaCamionetaCilindro { get; set; }
-        public bool AppTomaLecturaAlmacenPral { get; set; }
-        public bool AppTomaLecturaEstacionCarb { get; set; }
-        public bool AppTomaLecturaPipa { get; set; }
-        public bool AppTomaLecturaCamionetaCilindro { get; set; }
-        public bool AppTomaLecturaReporteDelDia { get; set; }
-        public bool AppTraspasoEstacionCarb { get; set; }
-        public bool AppTraspasoPipa { get; set; }
-        public bool AppDisposicionEfectivo { get; set; }
-        public bool AppCamionetaPuntoVenta { get; set; }
-        public bool AppEstacionCarbPuntoVenta { get; set; }
-        public bool AppPipaPuntoVenta { get; set; }
+        public bool AlmacenRegistrarAlmacen { get; set; }
+        public bool AlmacenVerProductos { get; set; }
+        public bool ConsultarRemanenteGeneral { get; set; }
+        public bool ETRegistrarParqueVehicular { get; set; }
+        public bool ETConsultarParqueVehicular { get; set; }
+        public bool ETAsignarVehiculo { get; set; }
+        public bool ETConsultarAsignarVehiculo { get; set; }
+        public bool ETBorrarAsignacionVehicular { get; set; }
+        public bool ETRegistrarMantenimiento { get; set; }
+        public bool ETBorrarMantenimiento { get; set; }
+        public bool ETRegistrarRecargaCombustible { get; set; }
+        public bool ETBorrarRecargaCombustible { get; set; }
+        public bool CobranzaConsultarFactura { get; set; }
+        public bool CobranzaFacturar { get; set; }
+        public bool FacturasVerFacturas { get; set; }
+        public bool FacturasFacturar { get; set; }
     }
 }

@@ -34,47 +34,65 @@ namespace Application.MainModule.Flujos
     {
         public List<RepCuentaPorPagarDTO> RepCuentasPorPagar(DateTime periodo)
         {
+            var resp = PermisosServicio.PuedeConsultarCuentaContable();
+            if (!resp.Exito) return null; 
             var requi = EgresoServicio.BuscarTodos(periodo);
             return EgresoAdapter.ToRepo(requi);
         }
         public List<RepInventarioPorPuntoVentaDTO> RepInventarioPorPuntoVenta(InventarioPorPuntoVentaDTO dto)
         {
+            var resp = PermisosServicio.PuedeConsultarPuntoVenta();
+            if (!resp.Exito) return null;
             var pipas = PipaServicio.Obtener(dto.Pipas);
             var estaciones = EstacionCarburacionServicio.Obtener(dto.Estaciones);
             return new Almacenes().BuscarInvetarioPorPuntoDeVenta(pipas, estaciones);
         }
         public List<RepHistorioPrecioDTO> RepHistorioPrecios(HistoricoPrecioDTO dto)
         {
+            var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
+            if (!resp.Exito) return null;
             var precios = PrecioVentaGasServicio.ObtenerListaPreciosVentaIdEmp(TokenServicio.ObtenerIdEmpresa(), dto.FechaInicial, dto.FechaFinal);
             return PrecioVentaGasAdapter.ToRepo(precios, dto);
         }
         public List<RepCallCenterDTO> RepCallCenter(CallCenterDTO dto)
         {
+            var resp = PermisosServicio.PuedeConsultarPedido();
+            if (!resp.Exito) return null;
             var pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), dto.Periodo);
             return PedidosAdapter.FromDTO(pedidos);
         }
         public List<RepRequisicionDTO> RepRequisicion(RequisicionModelDTO dto)
         {
+           var resp = PermisosServicio.PuedeGenerarRequisicion();
+            if (!resp.Exito) return null;
             var requisicones = RequisicionServicio.BuscarRequisicionPorPeriodo(TokenServicio.ObtenerIdEmpresa(), dto.FechaInicio, dto.FechaFinal);
             return RequisicionServicio.ConvertirReporte(requisicones);
         }
         public List<RepOrdenCompraDTO> RepOrdenCompra(OrdenCompraModelDTO dto)
         {
+            var resp = PermisosServicio.PuedeRegistrarOrdenCompra();
+            if (!resp.Exito) return null;
             var ordenes = OrdenCompraServicio.BuscarTodo(TokenServicio.ObtenerIdEmpresa(), dto.FechaInicio, dto.FechaFinal);
             return OrdenComprasAdapter.ToRepDTO(ordenes);
         }
         public List<RepRendimientoVehicularDTO> RepRendimientoVehicular(RendimientoVehicularDTO dto)
         {
+            var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
+            if (!resp.Exito) return null;
             var recargas = RecargaCombustibleServicio.Buscar(dto.FechaInicio, dto.FechaFinal);
             return RecargaCombustibleAdapter.FormRepDTO(recargas);
         }
         public List<RepInventarioXConceptorDTO> RepInventarioPorConcepto(InventarioXConceptoDTO dto)
         {
+            var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
+            if (!resp.Exito) return null;
             var alamacenes = ProductoAlmacenServicio.BuscarAlmacen(dto.FechaInicio, dto.FechaFinal);
             return AlmacenProductoAdapter.ToRepDTO(alamacenes);
         }
         public List<RepCorteCajaDTO> RepCorteCaja(CajaGeneralDTO dto)
         {
+            var resp = PermisosServicio.PuedeModificarCajaGeneral();
+            if (!resp.Exito) return null;            
             var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
             var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
@@ -92,6 +110,8 @@ namespace Application.MainModule.Flujos
         }
         public List<RepGastoVehicularDTO> RepGastoXVehiculo(GastoVehicularDTO dto)
         {
+            var resp = PermisosServicio.PuedeConsultarParqueVehicular();
+            if (!resp.Exito) return null;
             var Pipas = PipaServicio.Obtener();
             var Camionetas = CamionetaServicio.Obtener();
             var Utilitarios = VehiculoUtilitarioServicio.Obtener();

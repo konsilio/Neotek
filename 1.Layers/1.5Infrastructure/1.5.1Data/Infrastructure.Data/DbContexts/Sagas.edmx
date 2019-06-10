@@ -1898,7 +1898,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CompraCancelaOCompra" Type="bit" Nullable="false" />
           <Property Name="AlmacenActualizaExistencias" Type="bit" Nullable="false" />
           <Property Name="AlmacenVerExistencias" Type="bit" Nullable="false" />
+          <Property Name="AlmacenRegistrarAlmacen" Type="bit" Nullable="false" />
           <Property Name="AlmacenVerMovimientos" Type="bit" Nullable="false" />
+          <Property Name="AlmacenVerProductos" Type="bit" Nullable="false" />
           <Property Name="PedidoVerPedidos" Type="bit" Nullable="false" />
           <Property Name="PedidoGenerarPedido" Type="bit" Nullable="false" />
           <Property Name="PedidoEliminarPedido" Type="bit" Nullable="false" />
@@ -1908,8 +1910,21 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CobranzaVerCreditoRecuperado" Type="bit" Nullable="false" />
           <Property Name="CobranzaGenerarAbonos" Type="bit" Nullable="false" />
           <Property Name="HistoricoVentas" Type="bit" Nullable="false" />
-          <Property Name="FacturasVerFacturas" Type="bit" />
-          <Property Name="FacturasFacturar" Type="bit" />
+          <Property Name="FacturasVerFacturas" Type="bit" Nullable="false" />
+          <Property Name="FacturasFacturar" Type="bit" Nullable="false" />
+          <Property Name="ETRegistrarParqueVehicular" Type="bit" Nullable="false" />
+          <Property Name="ETConsultarParqueVehicular" Type="bit" Nullable="false" />
+          <Property Name="ETAsignarVehiculo" Type="bit" Nullable="false" />
+          <Property Name="ETConsultarAsignarVehiculo" Type="bit" Nullable="false" />
+          <Property Name="ETBorrarAsignacionVehicular" Type="bit" Nullable="false" />
+          <Property Name="ETRegistrarMantenimiento" Type="bit" Nullable="false" />
+          <Property Name="ETBorrarMantenimiento" Type="bit" Nullable="false" />
+          <Property Name="ETRegistrarRecargaCombustible" Type="bit" Nullable="false" />
+          <Property Name="ETBorrarRecargaCombustible" Type="bit" Nullable="false" />
+          <Property Name="CobranzaConsultarFactura" Type="bit" Nullable="false" />
+          <Property Name="CobranzaFacturar" Type="bit" Nullable="false" />
+          <Property Name="ConsultarRemanenteGeneral" Type="bit" Nullable="false" />
+          <Property Name="HVCargaInformacion" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RolAccionCatalogo">
           <Key>
@@ -6643,12 +6658,31 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CobranzaVerAbonos" Type="Boolean" Nullable="false" />
           <Property Name="CobranzaVerCartera" Type="Boolean" Nullable="false" />
           <Property Name="CobranzaVerCreditoRecuperado" Type="Boolean" Nullable="false" />
-          <Property Name="CobranzaGenerarAbonos" Type="Boolean" Nullable="false" />
+          <Property Name="CobranzaGenerarAbonos" Type="Boolean" Nullable="false" />         
+          <Property Name="HistoricoVentas" Type="Boolean" Nullable="false" />
+          <Property Name="FacturasVerFacturas" Type="Boolean" Nullable="false" />
+          <Property Name="FacturasFacturar" Type="Boolean" Nullable="false" />
+          <Property Name="ETRegistrarParqueVehicular" Type="Boolean" Nullable="false" />
+          <Property Name="ETConsultarParqueVehicular" Type="Boolean" Nullable="false" />
+          <Property Name="ETAsignarVehiculo" Type="Boolean" Nullable="false" />
+          <Property Name="ETConsultarAsignarVehiculo" Type="Boolean" Nullable="false" />
+          <Property Name="ETBorrarAsignacionVehicular" Type="Boolean" Nullable="false" />
+          <Property Name="ETRegistrarMantenimiento" Type="Boolean" Nullable="false" />
+          <Property Name="ETBorrarMantenimiento" Type="Boolean" Nullable="false" />
+          <Property Name="ETRegistrarRecargaCombustible" Type="Boolean" Nullable="false" />
+          <Property Name="ETBorrarRecargaCombustible" Type="Boolean" Nullable="false" />
+          <Property Name="CobranzaConsultarFactura" Type="Boolean" Nullable="false" />
+          <Property Name="CobranzaFacturar" Type="Boolean" Nullable="false" />          
+          <Property Name="ConsultarRemanenteGeneral" Type="Boolean" Nullable="false" />
+          <Property Name="HVCargaInformacion" Type="Boolean" Nullable="false" />         
+          <Property Name="AlmacenRegistrarAlmacen" Type="Boolean" Nullable="false" />
+          <Property Name="AlmacenVerProductos" Type="Boolean" Nullable="false" />
+          <!--<Property Name="HistoricoVentas" Type="Boolean" Nullable="false" />
+          <Property Name="FacturasVerFacturas" Type="Boolean" />
+          <Property Name="FacturasFacturar" Type="Boolean" />-->
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
           <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />
-          <Property Name="HistoricoVentas" Type="Boolean" Nullable="false" />
-          <Property Name="FacturasVerFacturas" Type="Boolean" />
-          <Property Name="FacturasFacturar" Type="Boolean" />
+
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -12436,6 +12470,21 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
               </MappingFragment>
               <MappingFragment StoreEntitySet="RolAccion">
+                <ScalarProperty Name="AlmacenVerProductos" ColumnName="AlmacenVerProductos" />
+                <ScalarProperty Name="AlmacenRegistrarAlmacen" ColumnName="AlmacenRegistrarAlmacen" />
+                <ScalarProperty Name="HVCargaInformacion" ColumnName="HVCargaInformacion" />
+                <ScalarProperty Name="ConsultarRemanenteGeneral" ColumnName="ConsultarRemanenteGeneral" />
+                <ScalarProperty Name="CobranzaFacturar" ColumnName="CobranzaFacturar" />
+                <ScalarProperty Name="CobranzaConsultarFactura" ColumnName="CobranzaConsultarFactura" />
+                <ScalarProperty Name="ETBorrarRecargaCombustible" ColumnName="ETBorrarRecargaCombustible" />
+                <ScalarProperty Name="ETRegistrarRecargaCombustible" ColumnName="ETRegistrarRecargaCombustible" />
+                <ScalarProperty Name="ETBorrarMantenimiento" ColumnName="ETBorrarMantenimiento" />
+                <ScalarProperty Name="ETRegistrarMantenimiento" ColumnName="ETRegistrarMantenimiento" />
+                <ScalarProperty Name="ETBorrarAsignacionVehicular" ColumnName="ETBorrarAsignacionVehicular" />
+                <ScalarProperty Name="ETConsultarAsignarVehiculo" ColumnName="ETConsultarAsignarVehiculo" />
+                <ScalarProperty Name="ETAsignarVehiculo" ColumnName="ETAsignarVehiculo" />
+                <ScalarProperty Name="ETConsultarParqueVehicular" ColumnName="ETConsultarParqueVehicular" />
+                <ScalarProperty Name="ETRegistrarParqueVehicular" ColumnName="ETRegistrarParqueVehicular" />
                 <ScalarProperty Name="FacturasFacturar" ColumnName="FacturasFacturar" />
                 <ScalarProperty Name="FacturasVerFacturas" ColumnName="FacturasVerFacturas" />
                 <ScalarProperty Name="HistoricoVentas" ColumnName="HistoricoVentas" />

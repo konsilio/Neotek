@@ -11,7 +11,7 @@ var Busqueda = function () {
     if (typeof id === "undefined")
         id = 0;
     var str = '';
-    $.getJSON(url, { numRequisicon: clave, idEmpresa: id }, function (data) {
+    $.getJSON(url, { numrequisicion: clave, idEmpresa: id }, function (data) {
         $("#contenido").empty();
         $.each(JSON.parse(data), function (index, value) {
             if (value.IdRequisicionEstatus == 1) {

@@ -23,12 +23,27 @@
                 $('.enableOnInput').prop('disabled', false);
                 $('.btnGuardarInfoCliente').prop('disabled', false);
             });
-        
-            if (@ViewBag.EsGenerico)
-            {
-                $('.enableOnInput').prop('disabled', false);
-                $('.btnGuardarInfoCliente').prop('disabled', false);
-            });
+        });
+       
+        function OnSelectedChangeFilter(s, e) {
+            if (s.GetValue() == 2) {//($('#ddlTipopersona').find('option:selected').text() == 'Moral') {
+                $('#div_hideRP').show();
+                $('#div_hidePM').hide();
+                $('#hide_razonS').show();
+            }
+
+            if (s.GetValue() == 1) {// ($('#ddlTipopersona').find('option:selected').text() == 'Física') {
+                $('#div_hideRP').hide();
+                $('#hide_razonS').hide();
+                $('#div_hidePM').show();
+            }
+
+            if (s.GetValue() == 0) {//($('#ddlTipopersona').find('option:selected').text() == 'Seleccione') {
+                $('#div_hidePM').show();
+                $('#div_hideRP').show();
+                $('#hide_razonS').show();
+            }
+        }
     </script>
     <style type="text/css">
         .hid {
@@ -296,10 +311,9 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                                    <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.Locacion.Municipio, new { @class = "form-control enableOnInput" })
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <div class="form-group">
+                                                          @Html.TextBoxFor(m => m.Locaciones[0].Municipio, new { @class = "form-control enableOnInput" })
 
                                                     </div>
                                                 </div>
@@ -416,6 +430,27 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="body">
+                    <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <input type="button" value="Editar" id="EditarInfoCliente" class="btn btn-raised btn-primary btn-round" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <input type="submit" value="Guardar" id="btnGuardarInfoCliente" formaction="GuardarInfoCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <input type="submit" value="Continuar" formaction="ContinuarGenerarFactura" formmethod="post" class="btn btn-raised btn-primary btn-round" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
     }

@@ -11,6 +11,7 @@ using Application.MainModule.Servicios.Compras;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
+using Application.MainModule.Servicios.Seguridad;
 
 namespace Application.MainModule.Flujos
 {
@@ -18,13 +19,16 @@ namespace Application.MainModule.Flujos
     {
         public RespuestaDto InsertRequisicionNueva(RequisicionDTO _req)
         {
+            RespuestaDto resp = new RespuestaDto();
+            resp = PermisosServicio.PuedeGenerarRequisicion();
+            if (!resp.Exito) return resp;
             if (_req.Productos == null || _req.Productos.Count.Equals(0))
                 return new RespuestaDto() { Exito = false, MensajesError = new List<string>() { string.Format(Error.R0006, "Productos") } };
             var _requisicion = RequisicionAdapter.FromDTO(_req);
             _requisicion = CalcularOrdenCompraServicio.CalcularAlmacenProcutos(_requisicion);
             var ListaRequisiciones = RequisicionServicio.IdentificarRequisicones(_requisicion);
             ListaRequisiciones = FolioServicio.GenerarNumeroRequisicion(ListaRequisiciones);
-            RespuestaDto resp = new RespuestaDto();
+
             foreach (var item in ListaRequisiciones)
             {
                 var respuesta = RequisicionServicio.GuardarRequisicionNueva(item);
@@ -46,22 +50,32 @@ namespace Application.MainModule.Flujos
         }
         public List<RequisicionDTO> BuscarRequisicionesPorEmpresa(short idEmpresa)
         {
+            RespuestaDto resp = new RespuestaDto();
+            resp = PermisosServicio.PuedeConsultarRequisicion();
             return RequisicionServicio.BuscarRequisicionPorIdEmpresa(idEmpresa);
         }
         public RequisicionRevisionDTO BuscarRequisicion(int idRequisicion)
         {
+            RespuestaDto resp = new RespuestaDto();
+            resp = PermisosServicio.PuedeConsultarRequisicion();
             return RequisicionServicio.BuscarRequisicion(idRequisicion);
         }
         public RequisicionAutorizacionDTO BuscarRequisicionAuto(int numRequisicon)
         {
+            RespuestaDto resp = new RespuestaDto();
+            resp = PermisosServicio.PuedeConsultarRequisicion();
             return RequisicionServicio.BuscarRequisicionAuto(numRequisicon);
         }
         public RespuestaDto ActualizarRequisicionRevision(RequisicionRevPutDTO _req)
         {
+            RespuestaDto resp = new RespuestaDto();
+            resp = PermisosServicio.PuedeGenerarRequisicion();
             return RequisicionServicio.UpdateRequisicionRevision(_req);
         }
         public RespuestaDto ActualizarRequisicionAutorizacion(RequisicionAutPutDTO _req)
         {
+            RespuestaDto resp = new RespuestaDto();
+            resp = PermisosServicio.PuedeAutorizarRequisicion();            
             var ReqAnterior = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
             var newReq = RequisicionAdapter.FromEntity(ReqAnterior);
             newReq.IdUsuarioAutorizacion = _req.IdUsuarioAutorizacion;
@@ -88,6 +102,8 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
         {
+            RespuestaDto resp = new RespuestaDto();
+            resp = PermisosServicio.PuedeGenerarRequisicion();
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
             var entity = RequisicionAdapter.FromEntity(entidad);
             entity.IdRequisicionEstatus = RequisicionEstatusEnum.Cerrada;

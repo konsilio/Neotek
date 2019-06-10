@@ -121,8 +121,23 @@ namespace Sagas.MainModule.Entidades
         public bool CobranzaVerCreditoRecuperado { get; set; }
         public bool CobranzaGenerarAbonos { get; set; }
         public bool HistoricoVentas { get; set; }
-        public Nullable<bool> FacturasVerFacturas { get; set; }
-        public Nullable<bool> FacturasFacturar { get; set; }
+        public bool FacturasVerFacturas { get; set; }
+        public bool FacturasFacturar { get; set; }
+        public bool ETRegistrarParqueVehicular { get; set; }
+        public bool ETConsultarParqueVehicular { get; set; }
+        public bool ETAsignarVehiculo { get; set; }
+        public bool ETConsultarAsignarVehiculo { get; set; }
+        public bool ETBorrarAsignacionVehicular { get; set; }
+        public bool ETRegistrarMantenimiento { get; set; }
+        public bool ETBorrarMantenimiento { get; set; }
+        public bool ETRegistrarRecargaCombustible { get; set; }
+        public bool ETBorrarRecargaCombustible { get; set; }
+        public bool CobranzaConsultarFactura { get; set; }
+        public bool CobranzaFacturar { get; set; }
+        public bool ConsultarRemanenteGeneral { get; set; }
+        public bool HVCargaInformacion { get; set; }
+        public bool AlmacenRegistrarAlmacen { get; set; }
+        public bool AlmacenVerProductos { get; set; }
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

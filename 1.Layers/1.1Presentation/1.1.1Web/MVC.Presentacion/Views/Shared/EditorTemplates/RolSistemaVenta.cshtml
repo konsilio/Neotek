@@ -17,6 +17,8 @@
 @Html.HiddenFor(m => m.AlmacenActualizaExistencias)
 @Html.HiddenFor(m => m.AlmacenVerExistencias)
 @Html.HiddenFor(m => m.AlmacenVerMovimientos)
+@Html.HiddenFor(m => m.AlmacenRegistrarAlmacen)
+@Html.HiddenFor(m => m.AlmacenVerProductos)
 @Html.HiddenFor(m => m.RequisicionVerRequisiciones)
 @Html.HiddenFor(m => m.RequisicionGenerarNueva)
 @Html.HiddenFor(m => m.RequisicionRevisarExistencia)
@@ -93,6 +95,15 @@
 @Html.HiddenFor(m => m.AppCamionetaPuntoVenta)
 @Html.HiddenFor(m => m.AppEstacionCarbPuntoVenta)
 @Html.HiddenFor(m => m.AppPipaPuntoVenta)
+@Html.HiddenFor(m => m.ETRegistrarParqueVehicular)
+@Html.HiddenFor(m => m.ETConsultarParqueVehicular)
+@Html.HiddenFor(m => m.ETAsignarVehiculo)
+@Html.HiddenFor(m => m.ETConsultarAsignarVehiculo)
+@Html.HiddenFor(m => m.ETBorrarAsignacionVehicular)
+@Html.HiddenFor(m => m.ETRegistrarMantenimiento)
+@Html.HiddenFor(m => m.ETBorrarMantenimiento)
+@Html.HiddenFor(m => m.ETRegistrarRecargaCombustible)
+@Html.HiddenFor(m => m.ETBorrarRecargaCombustible)
  
 <tr>
     <td>@Model.NombreRol </td>
@@ -100,11 +111,16 @@
     <td>@Html.CheckBoxFor(m => m.CobranzaVerCartera)</td>
     <td>@Html.CheckBoxFor(m => m.CobranzaVerCreditoRecuperado)</td>
     <td>@Html.CheckBoxFor(m => m.CobranzaGenerarAbonos)</td>
+    <td>@Html.CheckBoxFor(m => m.CobranzaConsultarFactura)</td>
+    <td>@Html.CheckBoxFor(m => m.CobranzaFacturar)</td>
     <td>@Html.CheckBoxFor(m => m.PedidoVerPedido)</td>
     <td>@Html.CheckBoxFor(m => m.PedidoGenerarPedido)</td>
     <td>@Html.CheckBoxFor(m => m.PedidoModificarPedido)</td>
     <td>@Html.CheckBoxFor(m => m.PedidoEliminarPedido)</td>
-    <td>
+    <td>@Html.CheckBoxFor(m => m.ConsultarRemanenteGeneral)</td>
+    <td>@Html.CheckBoxFor(m => m.FacturasVerFacturas)</td>
+    <td>@Html.CheckBoxFor(m => m.FacturasFacturar)</td>
+<td>
         <a ID="lbEdit" href="@Url.Action("ActualizaNombreRol", "Roles", new { id = Model.IdRol })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">edit</i>
             <span>Editar nombre rol</span>

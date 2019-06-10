@@ -325,7 +325,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         numberPickerProcentaje.setMinValue(0);
 
         numberPickerDecimal.setMinValue(0);
-        numberPickerDecimal.setMaxValue(9);
+        numberPickerDecimal.setMaxValue(99);
 
 
         //se agrega el listener para revisar que se cambio el valor

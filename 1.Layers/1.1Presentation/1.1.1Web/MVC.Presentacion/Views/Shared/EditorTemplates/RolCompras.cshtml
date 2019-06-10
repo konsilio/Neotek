@@ -91,6 +91,31 @@
 @Html.HiddenFor(m => m.AppCamionetaPuntoVenta)
 @Html.HiddenFor(m => m.AppEstacionCarbPuntoVenta)
 @Html.HiddenFor(m => m.AppPipaPuntoVenta)
+@Html.HiddenFor(m => m.ConsultarRemanenteGeneral)
+@Html.HiddenFor(m => m.ETRegistrarParqueVehicular)
+@Html.HiddenFor(m => m.ETConsultarParqueVehicular)
+@Html.HiddenFor(m => m.ETAsignarVehiculo)
+@Html.HiddenFor(m => m.ETConsultarAsignarVehiculo)
+@Html.HiddenFor(m => m.ETBorrarAsignacionVehicular)
+@Html.HiddenFor(m => m.ETRegistrarMantenimiento)
+@Html.HiddenFor(m => m.ETBorrarMantenimiento)
+@Html.HiddenFor(m => m.ETRegistrarRecargaCombustible)
+@Html.HiddenFor(m => m.ETBorrarRecargaCombustible)
+@Html.HiddenFor(m => m.CobranzaConsultarFactura)
+@Html.HiddenFor(m => m.CobranzaFacturar)
+@Html.HiddenFor(m => m.ETRegistrarParqueVehicular)
+@Html.HiddenFor(m => m.ETConsultarParqueVehicular)
+@Html.HiddenFor(m => m.ETAsignarVehiculo)
+@Html.HiddenFor(m => m.ETConsultarAsignarVehiculo)
+@Html.HiddenFor(m => m.ETBorrarAsignacionVehicular)
+@Html.HiddenFor(m => m.ETRegistrarMantenimiento)
+@Html.HiddenFor(m => m.ETBorrarMantenimiento)
+@Html.HiddenFor(m => m.ETRegistrarRecargaCombustible)
+@Html.HiddenFor(m => m.ETBorrarRecargaCombustible)
+@Html.HiddenFor(m => m.CobranzaConsultarFactura)
+@Html.HiddenFor(m => m.CobranzaFacturar)
+@Html.HiddenFor(m => m.FacturasVerFacturas)
+@Html.HiddenFor(m => m.FacturasFacturar)
 <tr>
     <td>@Model.NombreRol </td>
     <td>@Html.CheckBoxFor(m => m.CompraVerOCompra)</td>
@@ -102,7 +127,8 @@
     <td>@Html.CheckBoxFor(m => m.AlmacenActualizaExistencias)</td>
     <td>@Html.CheckBoxFor(m => m.AlmacenVerExistencias)</td>
     <td>@Html.CheckBoxFor(m => m.AlmacenVerMovimientos)</td>
-  
+    <td>@Html.CheckBoxFor(m => m.AlmacenRegistrarAlmacen)</td>
+    <td>@Html.CheckBoxFor(m => m.AlmacenVerProductos)</td>
     <td>
         <a ID="lbEdit" href="@Url.Action("ActualizaNombreRol", "Roles", new { id = Model.IdRol })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">edit</i>

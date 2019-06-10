@@ -35,6 +35,7 @@ public class BuscarClienteInteractorImpl implements BuscarClienteInteractor {
         );
         Log.w("Url base",ApiClient.BASE_URL);
 
+
         call.enqueue(new Callback<DatosClientesDTO>() {
             @Override
             public void onResponse(Call<DatosClientesDTO> call, Response<DatosClientesDTO> response) {

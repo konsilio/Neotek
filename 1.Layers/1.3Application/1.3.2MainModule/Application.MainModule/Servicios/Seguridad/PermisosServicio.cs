@@ -49,14 +49,7 @@ namespace Application.MainModule.Servicios.Seguridad
         } 
         #endregion
 
-        #region Empresa
-        public static RespuestaDto PuedeConsultarEmpresa()
-        {
-            var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarUsuario).ToList();
-
-            return EvaluarPermiso(roles, Error.P0001, "Empresa");
-        }
+        #region Empresa     
         public static RespuestaDto PuedeRegistrarEmpresa()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
@@ -203,38 +196,51 @@ namespace Application.MainModule.Servicios.Seguridad
 
         #endregion
 
+        #region Requisicion
+
+        public static RespuestaDto PuedeConsultarRequisicion()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.RequisicionVerRequisiciones).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Requisicion");
+        }
+        public static RespuestaDto PuedeGenerarRequisicion()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.RequisicionGenerarNueva).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Requisicion");
+        }
+
+        public static RespuestaDto PuedeAutorizarRequisicion()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.RequisicionAutorizar).ToList();
+
+            return EvaluarPermiso(roles, Error.P0002, "Requisicion");
+        }     
+
+        #endregion
+
         #region CajaGeneral
 
         public static RespuestaDto PuedeConsultarCajaGeneral()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarCliente).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarCajaGeneral).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "CajaGeneral");
         }
-        public static RespuestaDto PuedeRegistrarCajaGeneral()
-        {
-            var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarUsuario).ToList();
-
-            return EvaluarPermiso(roles, Error.P0001, "CajaGeneral");
-        }
-
+      
         public static RespuestaDto PuedeModificarCajaGeneral()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatModificarUsuario).ToList();
-
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatLiquidarCajaGeneral).ToList();
+            
             return EvaluarPermiso(roles, Error.P0002, "CajaGeneral");
         }
 
-        public static RespuestaDto PuedeEliminarCajaGeneral()
-        {
-            var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarUsuario).ToList();
-
-            return EvaluarPermiso(roles, Error.P0003, "CajaGeneral");
-        }
 
         #endregion
 
@@ -476,35 +482,35 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeRegistrarParqueVehicular()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ETRegistrarParqueVehicular).ToList();
 
-            return EvaluarPermiso(roles, Error.P0001, "EquipoTransporte");
+            return EvaluarPermiso(roles, Error.P0001, "Almacen");
         }
         public static RespuestaDto PuedeConsultarParqueVehicular()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ETConsultarParqueVehicular).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "EquipoTransporte");
         }
         public static RespuestaDto PuedeAsignarVehiculo()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ETAsignarVehiculo).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Asignacion Vehicular");
         }
         public static RespuestaDto PuedeConsultarAsignacionVehicular()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ETConsultarAsignarVehiculo).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Asignacion Vehicular");
         }
         public static RespuestaDto PuedeBorrarAsignacionVehicular()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ETBorrarAsignacionVehicular).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Asignacion Vehicular");
         }
@@ -512,30 +518,85 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeRegistrarMantenimiento()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ETRegistrarMantenimiento).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Mantenimiento Vehicular");
         }
         public static RespuestaDto PuedeBorrarMantenimiento()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ETBorrarMantenimiento).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Mantenimiento Vehicular");
         }
         public static RespuestaDto PuedeRegistrarRecargaCombustible()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ETRegistrarRecargaCombustible).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Recarga de combustible Vehicular");
         }
         public static RespuestaDto PuedeBorrarRecargaCombustible()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarEmpresa).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ETBorrarRecargaCombustible).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Recarga de combustible Vehicular");
+        }
+        #endregion
+
+        #region Almacén
+        public static RespuestaDto PuedeModificarAlmacen()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.AlmacenActualizaExistencias).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "AlmacenExistencias");
+        }
+        public static RespuestaDto PuedeRegistrarAlmacen()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.AlmacenRegistrarAlmacen).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "AlmacenExistencias");
+        }
+
+        public static RespuestaDto PuedeConsultarProductoAlmacen()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.AlmacenVerProductos).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "AlmacenExistencias");
+        }
+        #endregion
+
+        #region Facturacion       
+
+        public static RespuestaDto PuedeConsultarFacturaGlobal()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CobranzaConsultarFactura).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Facturacion");
+        }
+
+        public static RespuestaDto PuedeGenerarFacturaGlobal()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CobranzaFacturar).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Facturacion");
+        }
+        #endregion
+
+        #region Remanente    
+
+        public static RespuestaDto PuedeConsultarRemanenteGral()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.ConsultarRemanenteGeneral).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Remanente");
         }
         #endregion
 
@@ -545,6 +606,14 @@ namespace Application.MainModule.Servicios.Seguridad
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
             var roles = usuario.UsuarioRoles.Where(x => x.Role.HistoricoVentas).ToList();
+
+            return EvaluarPermiso(roles, Error.P0001, "Usuario");
+        }
+
+        public static RespuestaDto HistoricoPuedeCargarInformacion()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.HVCargaInformacion).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Usuario");
         }

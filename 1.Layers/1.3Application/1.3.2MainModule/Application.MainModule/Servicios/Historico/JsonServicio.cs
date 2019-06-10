@@ -3,6 +3,7 @@ using Application.MainModule.DTOs.Almacen;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -159,26 +160,33 @@ namespace Application.MainModule.Servicios
             string json = " { type: 'line',";
             json += " data: { labels :[";
             foreach (RemanenteGeneralDTO r in rema)
-                json += string.Concat('"', r.dia.ToString(), '"', ",");
+                json += string.Concat('"', "Día ", r.dia.ToString(), '"', ",");
             json = json.TrimEnd(',');
             json += "], datasets: [{ data: [ ";
             foreach (RemanenteGeneralDTO r in rema)
                 json += string.Concat(r.InventarioFisico.ToString(), ",");
             json = json.TrimEnd(',');
-            json += string.Concat("],", EstructuraJsonDataSetAAreaChart("Remanente"),"}");
+            json += string.Concat("],", EstructuraJsonDataSetAAreaChart("Remanente"), "}");
             json += ", { data: [";
             foreach (RemanenteGeneralDTO r in rema)
                 json += string.Concat(r.InventarioLibro.ToString(), ",");
             json = json.TrimEnd(',');
-            json += string.Concat("],", EstructuraJsonDataSetBAreaChart("Venta"), "}]");
-            return string.Concat(json, "} ,options: { responsive: true, legend: false } }");
+            json += string.Concat("],", EstructuraJsonDataSetBAreaChart("Gas en almacenes"), "}]");
+            json += JsonOpcionsKilos();
+            return json;
+        }
+        public static string JsonOpcionsKilos()
+        {
+            string json = "} ,options: { responsive: true, legend: false,";
+            json += "scales:{ yAxes:[{ scaleLabel: { display: true, labelString: 'Kilos'} }],";
+            return json += "xAxes:[{ scaleLabel: { display: true, labelString: 'Días del mes'} }] } } }";
         }
         public static string JsonCallCenter(List<PedidoDashDTO> lista)
         {
             string json = " { type: 'line',";
             json += " data: { labels :[";
             foreach (var dto in lista)
-                json += string.Concat('"', dto.Dia.ToString(), '"', ",");
+                json += string.Concat('"', "Día " ,dto.Dia.ToString(), '"', ",");
             json = json.TrimEnd(',');
             json += "], datasets: [{ data: [ ";
             foreach (var dto in lista)
@@ -190,7 +198,13 @@ namespace Application.MainModule.Servicios
                 json += string.Concat(dto.TotalLlamadas.ToString(), ",");
             json = json.TrimEnd(',');
             json += string.Concat("],", EstructuraJsonDataSetBAreaChart("Total de llamadas"), "}]");
-            return string.Concat(json, "} ,options: { responsive: true, legend: false } }");
+            return string.Concat(json, JsonOpcionsLlamadas());
+        }
+        public static string JsonOpcionsLlamadas()
+        {
+            string json = "} ,options: { responsive: true, legend: false,";
+            json += "scales:{ yAxes:[{ scaleLabel: { display: true, labelString: 'Llamadas'} }],";
+            return json += "xAxes:[{ scaleLabel: { display: true, labelString: 'Días del mes'} }] } } }";
         }
         public static string JsonCamionetasVSPipas(List<HistoricoVentas> ventas, HistoricoConsultaDTO dto)
         {

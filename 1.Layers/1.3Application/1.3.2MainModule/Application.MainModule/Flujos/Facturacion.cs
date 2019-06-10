@@ -9,6 +9,7 @@ using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Cobranza;
 using Application.MainModule.Servicios.Facturacion;
+using Application.MainModule.Servicios.Seguridad;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
@@ -26,6 +27,8 @@ namespace Application.MainModule.Flujos
     {
         public RespuestaDto GenerarFacturaGlobal(FacturacionDTO dtoGlob)
         {
+            var resp = PermisosServicio.PuedeGenerarFacturaGlobal();
+            if (!resp.Exito) return null;
             CFDIDTO dto = new CFDIDTO();
             var _comp = CFDIServicio.DatosComprobante(dtoGlob);
             _comp.Receptor = CFDIServicio.DatosReceptor();
@@ -118,8 +121,8 @@ namespace Application.MainModule.Flujos
         }
         public List<CFDIDTO> BuscarFacturasPorRFC()
         {
-            //Validar Permiso
-
+            var resp = PermisosServicio.PuedeConsultarFacturaGlobal();
+            if (!resp.Exito) return null;
             var cfdis = CFDIServicio.BuscarPorRFC("XAXX010101000");
             List<CFDI> l = new List<CFDI>();
             foreach (var c in cfdis)

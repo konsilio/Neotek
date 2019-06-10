@@ -25,6 +25,8 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool AlmacenActualizaExistencias { get; set; }
         public bool AlmacenVerExistencias { get; set; }
         public bool AlmacenVerMovimientos { get; set; }
+        public bool AlmacenRegistrarAlmacen { get; set; }
+        public bool AlmacenVerProductos { get; set; }
         public bool CatInsertarUsuario { get; set; }
         public bool CatModificarUsuario { get; set; }
         public bool CatEliminarUsuario { get; set; }
@@ -107,11 +109,26 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool PedidoGenerarPedido { get; set; }
         public bool PedidoModificarPedido { get; set; }
         public bool PedidoEliminarPedido { get; set; }
+        public bool ConsultarRemanenteGeneral { get; set; }
+        public bool ETRegistrarParqueVehicular { get; set; }
+        public bool ETConsultarParqueVehicular { get; set; }
+        public bool ETAsignarVehiculo { get; set; }
+        public bool ETConsultarAsignarVehiculo { get; set; }
+        public bool ETBorrarAsignacionVehicular { get; set; }
+        public bool ETRegistrarMantenimiento { get; set; }
+        public bool ETBorrarMantenimiento { get; set; }
+        public bool ETRegistrarRecargaCombustible { get; set; }
+        public bool ETBorrarRecargaCombustible { get; set; }
+        public bool CobranzaConsultarFactura { get; set; }
+        public bool CobranzaFacturar { get; set; }
+        public bool FacturasVerFacturas { get; set; }
+        public bool FacturasFacturar { get; set; }
         public List<RolDto> ListaRoles { get; set; }        
         public List<RolCompras> ListaRolesCom { get; set; }
         public List<RolRequsicion> ListaRequsicion { get; set; }
         public List<RolMovilCompra> ListaMovilCompra { get; set; }
         public List<RolMovilVenta> ListaMovilVenta { get; set; }
         public List<RolSistemaVenta> ListaSistemaVenta { get; set; }
+        public List<RolTransporte> ListaTransporte { get; set; }
     }
 }

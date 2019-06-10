@@ -425,6 +425,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
                 /**/
 
                 _lstc.AppCompraVerOCompra = lst[i].AppCompraVerOCompra;
@@ -460,6 +462,20 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
                 _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
 
                 Roles.Add(_lstc);
             }
@@ -566,6 +582,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
 
                 _lstc.CobranzaVerAbonos = lst[i].CobranzaVerAbonos;
                 _lstc.CobranzaVerCartera = lst[i].CobranzaVerCartera;
@@ -575,6 +593,20 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
                 _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -678,7 +710,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
-
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
                 _lstc.CobranzaVerAbonos = lst[i].CobranzaVerAbonos;
                 _lstc.CobranzaVerCartera = lst[i].CobranzaVerCartera;
                 _lstc.CobranzaVerCreditoRecuperado = lst[i].CobranzaVerCreditoRecuperado;
@@ -687,6 +720,20 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
                 _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -799,6 +846,20 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
                 _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -824,8 +885,9 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
                 /*******/
-
                 _lstc.AppCompraVerOCompra = lst[i].AppCompraVerOCompra;
                 _lstc.AppCompraEntraGas = lst[i].AppCompraEntraGas;
                 _lstc.AppCompraGasIniciarDescarga = lst[i].AppCompraGasIniciarDescarga;
@@ -912,9 +974,153 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
                 _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
                 Roles.Add(_lstc);
             }
             return Roles;
+        }
+        public static List<RolDto> PermisosTransporte(List<RolTransporte> lst)
+        {
+            List<RolDto> Roles = new List<RolDto>();
+            for (int i = 0; i <= lst.Count() - 1; i++)
+            {
+                RolDto _lstc = new RolDto();
+                _lstc.Activo = lst[i].Activo;
+                _lstc.IdRol = lst[i].IdRol;
+                _lstc.Rol1 = lst[i].Rol1;
+                _lstc.NombreRol = lst[i].NombreRol;
+                _lstc.IdEmpresa = lst[i].IdEmpresa;
+
+                _lstc.RequisicionVerRequisiciones = lst[i].RequisicionVerRequisiciones;
+                _lstc.RequisicionGenerarNueva = lst[i].RequisicionGenerarNueva;
+                _lstc.RequisicionRevisarExistencia = lst[i].RequisicionRevisarExistencia;
+                _lstc.RequisicionAutorizar = lst[i].RequisicionAutorizar;
+                /*//////////////////*/
+                _lstc.CatInsertarUsuario = lst[i].CatInsertarUsuario;
+                _lstc.CatModificarUsuario = lst[i].CatModificarUsuario;
+                _lstc.CatEliminarUsuario = lst[i].CatEliminarUsuario;
+                _lstc.CatConsultarUsuario = lst[i].CatConsultarUsuario;
+                _lstc.CatInsertarProveedor = lst[i].CatInsertarProveedor;
+                _lstc.CatModificarProveedor = lst[i].CatModificarProveedor;
+                _lstc.CatEliminarProveedor = lst[i].CatEliminarProveedor;
+                _lstc.CatConsultarProveedor = lst[i].CatConsultarProveedor;
+                _lstc.CatInsertarProducto = lst[i].CatInsertarProducto;
+                _lstc.CatModificarProducto = lst[i].CatModificarProducto;
+                _lstc.CatEliminarProducto = lst[i].CatEliminarProducto;
+                _lstc.CatConsultarProducto = lst[i].CatConsultarProducto;
+                _lstc.CatInsertarCentroCosto = lst[i].CatInsertarCentroCosto;
+                _lstc.CatModificarCentroCosto = lst[i].CatModificarCentroCosto;
+                _lstc.CatEliminarCentroCosto = lst[i].CatEliminarCentroCosto;
+                _lstc.CatConsultarCentroCosto = lst[i].CatConsultarCentroCosto;
+                _lstc.CatInsertarCuentaContable = lst[i].CatInsertarCuentaContable;
+                _lstc.CatModificarCuentaContable = lst[i].CatModificarCuentaContable;
+                _lstc.CatEliminarCuentaContable = lst[i].CatEliminarCuentaContable;
+                _lstc.CatConsultarCuentaContable = lst[i].CatConsultarCuentaContable;
+                _lstc.CatInsertarCliente = lst[i].CatInsertarCliente;
+                _lstc.CatModificarCliente = lst[i].CatModificarCliente;
+                _lstc.CatEliminarCliente = lst[i].CatEliminarCliente;
+                _lstc.CatConsultarCliente = lst[i].CatConsultarCliente;
+                _lstc.CatAsignarChoferPuntoVenta = lst[i].CatAsignarChoferPuntoVenta;
+                _lstc.CatEliminarPuntoVenta = lst[i].CatEliminarPuntoVenta;
+                _lstc.CatConsultarPuntoVenta = lst[i].CatConsultarPuntoVenta;
+                _lstc.CatAsignarEquipoTransporte = lst[i].CatAsignarEquipoTransporte;
+                _lstc.CatModificarEquipoTransporte = lst[i].CatModificarEquipoTransporte;
+                _lstc.CatEliminarEquipoTransporte = lst[i].CatEliminarEquipoTransporte;
+                _lstc.CatConsultarEquipoTransporte = lst[i].CatConsultarEquipoTransporte;
+                _lstc.CatInsertarEmpresa = lst[i].CatInsertarEmpresa;
+                _lstc.CatModificarEmpresa = lst[i].CatModificarEmpresa;
+                _lstc.CatEliminarEmpresa = lst[i].CatEliminarEmpresa;
+                _lstc.CatConsultarEmpresa = lst[i].CatConsultarEmpresa;
+                _lstc.CatInsertarRol = lst[i].CatInsertarRol;
+                _lstc.CatModificarRol = lst[i].CatModificarRol;
+                _lstc.CatEliminarRol = lst[i].CatEliminarRol;
+                _lstc.CatConsultarRol = lst[i].CatConsultarRol;
+                _lstc.CatInsertarPrecioVentaGas = lst[i].CatInsertarPrecioVentaGas;
+                _lstc.CatModificarPrecioVentaGas = lst[i].CatModificarPrecioVentaGas;
+                _lstc.CatEliminarPrecioVentaGas = lst[i].CatEliminarPrecioVentaGas;
+                _lstc.CatConsultarPrecioVentaGas = lst[i].CatConsultarPrecioVentaGas;
+                _lstc.CatInsertarPrecioVenta = lst[i].CatInsertarPrecioVenta;
+                _lstc.CatModificarPrecioVenta = lst[i].CatModificarPrecioVenta;
+                _lstc.CatEliminarPrecioVenta = lst[i].CatEliminarPrecioVenta;
+                _lstc.CatConsultarPrecioVenta = lst[i].CatConsultarPrecioVenta;
+                /**/
+                _lstc.CompraVerOCompra = lst[i].CompraVerOCompra;
+                _lstc.CompraGenerarOCompra = lst[i].CompraGenerarOCompra;
+                _lstc.CompraAutorizarOCompra = lst[i].CompraAutorizarOCompra;
+                _lstc.CompraEntraProductoOCompra = lst[i].CompraEntraProductoOCompra;
+                _lstc.CompraAtiendeServicioOCompra = lst[i].CompraAtiendeServicioOCompra;
+                _lstc.CompraCancelaOCompra = lst[i].CompraCancelaOCompra;
+                _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
+                _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
+                _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
+                /**/
+                _lstc.AppCompraVerOCompra = lst[i].AppCompraVerOCompra;
+                _lstc.AppCompraEntraGas = lst[i].AppCompraEntraGas;
+                _lstc.AppCompraGasIniciarDescarga = lst[i].AppCompraGasIniciarDescarga;
+                _lstc.AppCompraGasFinalizarDescarga = lst[i].AppCompraGasFinalizarDescarga;
+                _lstc.AppAutoconsumoInventarioGral = lst[i].AppAutoconsumoInventarioGral;
+                _lstc.AppAutoconsumoEstacionCarb = lst[i].AppAutoconsumoEstacionCarb;
+                _lstc.AppAutoconsumoPipa = lst[i].AppAutoconsumoPipa;
+                _lstc.AppCalibracionEstacionCarb = lst[i].AppCalibracionEstacionCarb;
+                _lstc.AppCalibracionPipa = lst[i].AppCalibracionPipa;
+                _lstc.AppCalibracionCamionetaCilindro = lst[i].AppCalibracionCamionetaCilindro;
+                _lstc.AppRecargaEstacionCarb = lst[i].AppRecargaEstacionCarb;
+                _lstc.AppRecargaPipa = lst[i].AppRecargaPipa;
+                _lstc.AppRecargaCamionetaCilindro = lst[i].AppRecargaCamionetaCilindro;
+                _lstc.AppTomaLecturaAlmacenPral = lst[i].AppTomaLecturaAlmacenPral;
+                _lstc.AppTomaLecturaEstacionCarb = lst[i].AppTomaLecturaEstacionCarb;
+                _lstc.AppTomaLecturaPipa = lst[i].AppTomaLecturaPipa;
+                _lstc.AppTomaLecturaCamionetaCilindro = lst[i].AppTomaLecturaCamionetaCilindro;
+                _lstc.AppTomaLecturaReporteDelDia = lst[i].AppTomaLecturaReporteDelDia;
+                _lstc.AppTraspasoEstacionCarb = lst[i].AppTraspasoEstacionCarb;
+                _lstc.AppTraspasoPipa = lst[i].AppTraspasoPipa;
+                _lstc.AppDisposicionEfectivo = lst[i].AppDisposicionEfectivo;
+                _lstc.AppCamionetaPuntoVenta = lst[i].AppCamionetaPuntoVenta;
+                _lstc.AppEstacionCarbPuntoVenta = lst[i].AppEstacionCarbPuntoVenta;
+                _lstc.AppPipaPuntoVenta = lst[i].AppPipaPuntoVenta;
+
+                _lstc.CobranzaVerAbonos = lst[i].CobranzaVerAbonos;
+                _lstc.CobranzaVerCartera = lst[i].CobranzaVerCartera;
+                _lstc.CobranzaVerCreditoRecuperado = lst[i].CobranzaVerCreditoRecuperado;
+                _lstc.CobranzaGenerarAbonos = lst[i].CobranzaGenerarAbonos;
+                _lstc.PedidoVerPedido = lst[i].PedidoVerPedido;
+                _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
+                _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
+                _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                Roles.Add(_lstc);
+            }
+
+            return Roles;
+
         }
         public static List<RolDto> TODto(List<RolDto> lst)
         {
@@ -987,6 +1193,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
                 /*******/
 
                 _lstc.AppCompraVerOCompra = lst[i].AppCompraVerOCompra;
@@ -1027,6 +1235,11 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
                 _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1086,6 +1299,15 @@ namespace MVC.Presentacion.App_Code
             List<RolDto> Roles = new List<RolDto>();
             Roles = (PermisosSistemaVenta(cc.ListaSistemaVenta));
             _roles.AddRange(Roles);
+            return _roles;
+        }
+        public static List<RolDto> AddPermisosTransporte(RolDto cc, List<RolDto> _roles)
+        {
+            List<RolDto> Roles = new List<RolDto>();
+            Roles = (PermisosTransporte(cc.ListaTransporte));
+
+            _roles.AddRange(Roles);
+
             return _roles;
         }
         public static List<RolDto> ObtenerTodosRoles(string token)
@@ -1199,6 +1421,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
 
                 _lstc.CobranzaVerAbonos = lst[i].CobranzaVerAbonos;
                 _lstc.CobranzaVerCartera = lst[i].CobranzaVerCartera;
@@ -1207,8 +1431,21 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoVerPedido = lst[i].PedidoVerPedido;
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
-                _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;            
-                
+                _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1312,6 +1549,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
 
                 _lstc.CobranzaVerAbonos = lst[i].CobranzaVerAbonos;
                 _lstc.CobranzaVerCartera = lst[i].CobranzaVerCartera;
@@ -1321,6 +1560,20 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
                 _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1424,7 +1677,9 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
-                
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
+
                 _lstc.CobranzaVerAbonos = lst[i].CobranzaVerAbonos;
                 _lstc.CobranzaVerCartera = lst[i].CobranzaVerCartera;
                 _lstc.CobranzaVerCreditoRecuperado = lst[i].CobranzaVerCreditoRecuperado;
@@ -1433,6 +1688,20 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
                 _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1536,6 +1805,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
 
                 _lstc.CobranzaVerAbonos = lst[i].CobranzaVerAbonos;
                 _lstc.CobranzaVerCartera = lst[i].CobranzaVerCartera;
@@ -1545,7 +1816,20 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
                 _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
-
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1649,6 +1933,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
                 _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
                 _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
 
                 _lstc.CobranzaVerAbonos = lst[i].CobranzaVerAbonos;
                 _lstc.CobranzaVerCartera = lst[i].CobranzaVerCartera;
@@ -1658,6 +1944,148 @@ namespace MVC.Presentacion.App_Code
                 _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
                 _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
                 _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                Roles.Add(_lstc);
+            }
+            return Roles;
+        }
+        public static List<RolTransporte> getListTr(List<RolDto> lst)
+        {
+            List<RolTransporte> Roles = new List<RolTransporte>();
+            for (int i = 0; i <= lst.Count() - 1; i++)
+            {
+                RolTransporte _lstc = new RolTransporte();
+                _lstc.Activo = lst[i].Activo;
+                _lstc.IdRol = lst[i].IdRol;
+                _lstc.Rol1 = lst[i].Rol1;
+                _lstc.NombreRol = lst[i].NombreRol;
+                _lstc.IdEmpresa = lst[i].IdEmpresa;
+
+                _lstc.AppCompraVerOCompra = lst[i].AppCompraVerOCompra;
+                _lstc.AppCompraEntraGas = lst[i].AppCompraEntraGas;
+                _lstc.AppCompraGasIniciarDescarga = lst[i].AppCompraGasIniciarDescarga;
+                _lstc.AppCompraGasFinalizarDescarga = lst[i].AppCompraGasFinalizarDescarga;
+                _lstc.AppAutoconsumoInventarioGral = lst[i].AppAutoconsumoInventarioGral;
+                _lstc.AppAutoconsumoEstacionCarb = lst[i].AppAutoconsumoEstacionCarb;
+                _lstc.AppAutoconsumoPipa = lst[i].AppAutoconsumoPipa;
+                _lstc.AppCalibracionEstacionCarb = lst[i].AppCalibracionEstacionCarb;
+                _lstc.AppCalibracionPipa = lst[i].AppCalibracionPipa;
+                _lstc.AppCalibracionCamionetaCilindro = lst[i].AppCalibracionCamionetaCilindro;
+                _lstc.AppRecargaEstacionCarb = lst[i].AppRecargaEstacionCarb;
+                _lstc.AppRecargaPipa = lst[i].AppRecargaPipa;
+                _lstc.AppRecargaCamionetaCilindro = lst[i].AppRecargaCamionetaCilindro;
+                _lstc.AppTomaLecturaAlmacenPral = lst[i].AppTomaLecturaAlmacenPral;
+                _lstc.AppTomaLecturaEstacionCarb = lst[i].AppTomaLecturaEstacionCarb;
+                _lstc.AppTomaLecturaPipa = lst[i].AppTomaLecturaPipa;
+                _lstc.AppTomaLecturaCamionetaCilindro = lst[i].AppTomaLecturaCamionetaCilindro;
+                _lstc.AppTomaLecturaReporteDelDia = lst[i].AppTomaLecturaReporteDelDia;
+                _lstc.AppTraspasoEstacionCarb = lst[i].AppTraspasoEstacionCarb;
+                _lstc.AppTraspasoPipa = lst[i].AppTraspasoPipa;
+                _lstc.AppDisposicionEfectivo = lst[i].AppDisposicionEfectivo;
+                _lstc.AppCamionetaPuntoVenta = lst[i].AppCamionetaPuntoVenta;
+                _lstc.AppEstacionCarbPuntoVenta = lst[i].AppEstacionCarbPuntoVenta;
+                _lstc.AppPipaPuntoVenta = lst[i].AppPipaPuntoVenta;
+                /*********/
+                _lstc.RequisicionVerRequisiciones = lst[i].RequisicionVerRequisiciones;
+                _lstc.RequisicionGenerarNueva = lst[i].RequisicionGenerarNueva;
+                _lstc.RequisicionRevisarExistencia = lst[i].RequisicionRevisarExistencia;
+                _lstc.RequisicionAutorizar = lst[i].RequisicionAutorizar;
+                /*//////////////////*/
+                _lstc.CatInsertarUsuario = lst[i].CatInsertarUsuario;
+                _lstc.CatModificarUsuario = lst[i].CatModificarUsuario;
+                _lstc.CatEliminarUsuario = lst[i].CatEliminarUsuario;
+                _lstc.CatConsultarUsuario = lst[i].CatConsultarUsuario;
+                _lstc.CatInsertarProveedor = lst[i].CatInsertarProveedor;
+                _lstc.CatModificarProveedor = lst[i].CatModificarProveedor;
+                _lstc.CatEliminarProveedor = lst[i].CatEliminarProveedor;
+                _lstc.CatConsultarProveedor = lst[i].CatConsultarProveedor;
+                _lstc.CatInsertarProducto = lst[i].CatInsertarProducto;
+                _lstc.CatModificarProducto = lst[i].CatModificarProducto;
+                _lstc.CatEliminarProducto = lst[i].CatEliminarProducto;
+                _lstc.CatConsultarProducto = lst[i].CatConsultarProducto;
+                _lstc.CatInsertarCentroCosto = lst[i].CatInsertarCentroCosto;
+                _lstc.CatModificarCentroCosto = lst[i].CatModificarCentroCosto;
+                _lstc.CatEliminarCentroCosto = lst[i].CatEliminarCentroCosto;
+                _lstc.CatConsultarCentroCosto = lst[i].CatConsultarCentroCosto;
+                _lstc.CatInsertarCuentaContable = lst[i].CatInsertarCuentaContable;
+                _lstc.CatModificarCuentaContable = lst[i].CatModificarCuentaContable;
+                _lstc.CatEliminarCuentaContable = lst[i].CatEliminarCuentaContable;
+                _lstc.CatConsultarCuentaContable = lst[i].CatConsultarCuentaContable;
+                _lstc.CatInsertarCliente = lst[i].CatInsertarCliente;
+                _lstc.CatModificarCliente = lst[i].CatModificarCliente;
+                _lstc.CatEliminarCliente = lst[i].CatEliminarCliente;
+                _lstc.CatConsultarCliente = lst[i].CatConsultarCliente;
+                _lstc.CatAsignarChoferPuntoVenta = lst[i].CatAsignarChoferPuntoVenta;
+                _lstc.CatEliminarPuntoVenta = lst[i].CatEliminarPuntoVenta;
+                _lstc.CatConsultarPuntoVenta = lst[i].CatConsultarPuntoVenta;
+                _lstc.CatAsignarEquipoTransporte = lst[i].CatAsignarEquipoTransporte;
+                _lstc.CatModificarEquipoTransporte = lst[i].CatModificarEquipoTransporte;
+                _lstc.CatEliminarEquipoTransporte = lst[i].CatEliminarEquipoTransporte;
+                _lstc.CatConsultarEquipoTransporte = lst[i].CatConsultarEquipoTransporte;
+                _lstc.CatInsertarEmpresa = lst[i].CatInsertarEmpresa;
+                _lstc.CatModificarEmpresa = lst[i].CatModificarEmpresa;
+                _lstc.CatEliminarEmpresa = lst[i].CatEliminarEmpresa;
+                _lstc.CatConsultarEmpresa = lst[i].CatConsultarEmpresa;
+                _lstc.CatInsertarRol = lst[i].CatInsertarRol;
+                _lstc.CatModificarRol = lst[i].CatModificarRol;
+                _lstc.CatEliminarRol = lst[i].CatEliminarRol;
+                _lstc.CatConsultarRol = lst[i].CatConsultarRol;
+                _lstc.CatInsertarPrecioVentaGas = lst[i].CatInsertarPrecioVentaGas;
+                _lstc.CatModificarPrecioVentaGas = lst[i].CatModificarPrecioVentaGas;
+                _lstc.CatEliminarPrecioVentaGas = lst[i].CatEliminarPrecioVentaGas;
+                _lstc.CatConsultarPrecioVentaGas = lst[i].CatConsultarPrecioVentaGas;
+                _lstc.CatInsertarPrecioVenta = lst[i].CatInsertarPrecioVenta;
+                _lstc.CatModificarPrecioVenta = lst[i].CatModificarPrecioVenta;
+                _lstc.CatEliminarPrecioVenta = lst[i].CatEliminarPrecioVenta;
+                _lstc.CatConsultarPrecioVenta = lst[i].CatConsultarPrecioVenta;
+                /**/
+                _lstc.CompraVerOCompra = lst[i].CompraVerOCompra;
+                _lstc.CompraGenerarOCompra = lst[i].CompraGenerarOCompra;
+                _lstc.CompraAutorizarOCompra = lst[i].CompraAutorizarOCompra;
+                _lstc.CompraEntraProductoOCompra = lst[i].CompraEntraProductoOCompra;
+                _lstc.CompraAtiendeServicioOCompra = lst[i].CompraAtiendeServicioOCompra;
+                _lstc.CompraCancelaOCompra = lst[i].CompraCancelaOCompra;
+                _lstc.AlmacenActualizaExistencias = lst[i].AlmacenActualizaExistencias;
+                _lstc.AlmacenVerExistencias = lst[i].AlmacenVerExistencias;
+                _lstc.AlmacenVerMovimientos = lst[i].AlmacenVerMovimientos;
+                _lstc.AlmacenRegistrarAlmacen = lst[i].AlmacenRegistrarAlmacen;
+                _lstc.AlmacenVerProductos = lst[i].AlmacenVerProductos;
+
+                _lstc.CobranzaVerAbonos = lst[i].CobranzaVerAbonos;
+                _lstc.CobranzaVerCartera = lst[i].CobranzaVerCartera;
+                _lstc.CobranzaVerCreditoRecuperado = lst[i].CobranzaVerCreditoRecuperado;
+                _lstc.CobranzaGenerarAbonos = lst[i].CobranzaGenerarAbonos;
+                _lstc.PedidoVerPedido = lst[i].PedidoVerPedido;
+                _lstc.PedidoGenerarPedido = lst[i].PedidoGenerarPedido;
+                _lstc.PedidoModificarPedido = lst[i].PedidoModificarPedido;
+                _lstc.PedidoEliminarPedido = lst[i].PedidoEliminarPedido;
+                _lstc.ConsultarRemanenteGeneral = lst[i].ConsultarRemanenteGeneral;
+                _lstc.ETRegistrarParqueVehicular = lst[i].ETRegistrarParqueVehicular;
+                _lstc.ETConsultarParqueVehicular = lst[i].ETConsultarParqueVehicular;
+                _lstc.ETAsignarVehiculo = lst[i].ETAsignarVehiculo;
+                _lstc.ETConsultarAsignarVehiculo = lst[i].ETConsultarAsignarVehiculo;
+                _lstc.ETBorrarAsignacionVehicular = lst[i].ETBorrarAsignacionVehicular;
+                _lstc.ETRegistrarMantenimiento = lst[i].ETRegistrarMantenimiento;
+                _lstc.ETBorrarMantenimiento = lst[i].ETBorrarMantenimiento;
+                _lstc.ETRegistrarRecargaCombustible = lst[i].ETRegistrarRecargaCombustible;
+                _lstc.ETBorrarRecargaCombustible = lst[i].ETBorrarRecargaCombustible;
+                _lstc.CobranzaConsultarFactura = lst[i].CobranzaConsultarFactura;
+                _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
+                _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
+                _lstc.FacturasFacturar = lst[i].FacturasFacturar;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1777,6 +2205,20 @@ namespace MVC.Presentacion.App_Code
             if (cc.ListaMovilCompra != null)
             {
                 AddPermisosMovilCom(cc, xroles);
+                agente.GuardarPermisos(xroles, tkn);
+            }
+
+            return agente._RespuestaDTO;
+
+        }
+        public static RespuestaDTO ActualizaPermisosTransporte(RolDto cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            List<RolDto> xroles = new List<RolDto>();
+
+            if (cc.ListaTransporte != null)
+            {
+                AddPermisosTransporte(cc, xroles);
                 agente.GuardarPermisos(xroles, tkn);
             }
 
@@ -2334,7 +2776,7 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.ListaVehiculosFiltrar(id, tkn);
             var _list = agente._ListaVehiculos;
-            if (Placas != ""&& Placas != null)
+            if (Placas != "" && Placas != null)
                 _list = (from x in _list where x.Placas == Placas select x).ToList();
             if (Nombre != "" && Nombre != null)
                 _list = (from x in _list where x.AliasUnidad.Contains(Nombre) select x).ToList();
@@ -2516,7 +2958,7 @@ namespace MVC.Presentacion.App_Code
             agente.GetListaCombustible(tkn);
             return agente._ListaCombustibles;
         }
-        public static List<CombustibleModel> ListaCombustibleIdEmp(short idempresa,string tkn)
+        public static List<CombustibleModel> ListaCombustibleIdEmp(short idempresa, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GetListaCombustibleIdE(idempresa, tkn);
