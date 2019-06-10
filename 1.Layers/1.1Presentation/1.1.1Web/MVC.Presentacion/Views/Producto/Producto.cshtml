@@ -245,12 +245,12 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 Mínimo
-                                                @Html.TextBoxFor(m => m.Minimos, new { @class = "form-control", @placeholder = "Minimo", type = "number", @Value = "0" })
+                                                @Html.TextBoxFor(m => m.Minimos, Model.Minimos.ToString() , new { @class = "form-control", @placeholder = "Minimo", type = "number", @Value = "0" })
                                                 @Html.ValidationMessageFor(m => m.Minimos, "", new { @class = "alert-danger" })
                                             </div>
                                             <div class="col-md-6">
                                                 Máximo
-                                                @Html.TextBoxFor(m => m.Maximo, new { @class = "form-control", @placeholder = "Maximo", type = "number", @Value = "0" })
+                                                @Html.TextBoxFor(m => m.Maximo, Model.Maximo.ToString(), new { @class = "form-control", @placeholder = "Maximo", type = "number", @Value = "0" })
                                                 @Html.ValidationMessageFor(m => m.Maximo, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
