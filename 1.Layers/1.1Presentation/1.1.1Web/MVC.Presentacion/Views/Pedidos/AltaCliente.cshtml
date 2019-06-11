@@ -38,6 +38,17 @@
                 $('#hide_razonS').show();
             }
         }
+        $(document).ready(function () {
+            $('.credit').hide()
+            $("#cliente_VentaExtraordinaria").change(function () {
+                if ($("#cliente_VentaExtraordinaria").is(":checked")) {
+                    $('.credit').show()
+                }
+                else
+                    $('.credit').hide()
+            });
+
+        });
     </script>
 </head>
 <body style="height:100%">
@@ -69,17 +80,17 @@
                                     <div>
                                         @if (ViewBag.EsAdmin)
                                         {
-                                            <select name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                @foreach (var lst in ViewBag.Empresas)
+                                        <select name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                            @foreach (var lst in ViewBag.Empresas)
                                                 {
-                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                 }
-                                            </select>
+                                        </select>
                                         }
                                         else
                                         {
-                                            @ViewBag.Empresas
-                                            <label name="cliente.IdEmpresa" value="@ViewBag.IdEmpresa" hidden></label>
+                                        @ViewBag.Empresas
+                                        <label name="cliente.IdEmpresa" value="@ViewBag.IdEmpresa" hidden></label>
                                         }
                                     </div>
                                 </div>
@@ -88,6 +99,21 @@
 
                     </div>
                 </div>
+                @if (ViewBag.MensajeError != null)
+                {
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MensajeError</label>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                }
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
@@ -164,7 +190,6 @@
                                     <div class="col-lg-8 col-md-8 col-sm-8">
                                         <div class="form-group" id="hide_razonS">
                                             Razón Social:*
-                                            @*<input type="text" name="RazonSocial" id="txtRS" class="form-control" />*@
                                             @Html.TextBoxFor(m => m.cliente.RazonSocial, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(m => m.cliente.RazonSocial, "", new { @class = "alert-danger" })
                                         </div>
@@ -172,7 +197,6 @@
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             RFC:*
-                                            @*<input type="text" name="Rfc" id="txtRfc" class="form-control" />*@
                                             @Html.TextBoxFor(m => m.cliente.Rfc, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(m => m.cliente.Rfc, "", new { @class = "alert-danger" })
                                         </div>
@@ -189,14 +213,12 @@
                                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                                         <div class="form-group">
                                                             Nombre Completo:@Html.TextBoxFor(m => m.cliente.RepresentanteLegal, new { @class = "form-control" })
-                                                            @*<input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" />*@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                                         <div class="form-group">
                                                             <div>
                                                                 Teléfono:@Html.TextBoxFor(m => m.cliente.Telefono, new { @class = "form-control", @id = "txtTel" })
-                                                                @*<input type="text" name="Telefono" id="txtTel" class="form-control" />*@
                                                             </div>
                                                         </div>
                                                     </div>
@@ -205,14 +227,12 @@
                                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                                         <div class="form-group">
                                                             Dirección:@Html.TextBoxFor(m => m.cliente.Domicilio, new { @class = "form-control", @id = "txtNomCom" })
-                                                            @*<input type="text" name="Domicilio" id="txtNomCom" class="form-control" />*@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                                         <div class="form-group">
                                                             Celular:@Html.TextBoxFor(m => m.cliente.Celular, new { @class = "form-control", @id = "txtTel" })
-                                                            @*<input type="text" name="Celular" id="txtTel" class="form-control" />*@
-                                                        </div>
+                                                         </div>
                                                     </div>
 
                                                 </div>
@@ -220,7 +240,6 @@
                                                     <div class="col-lg-6 col-md-6 col-sm-6">
                                                         <div class="form-group">
                                                             E-mail:@Html.TextBoxFor(m => m.cliente.CorreoElectronico, new { @class = "form-control", @id = "txtEmail" })
-                                                            @*<input type="text" name="CorreoElectronico" id="txtEmail" class="form-control" />*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -240,8 +259,7 @@
                                             <div>
                                                 Apellido 1:*
                                                 @Html.TextBoxFor(m => m.cliente.Apellido1, new { @class = "form-control" })
-                                                @*<input type="text" name="Apellido1" class="form-control" />*@
-                                                @Html.ValidationMessageFor(m => m.cliente.Apellido1, "", new { @class = "alert-danger" })
+                                                 @Html.ValidationMessageFor(m => m.cliente.Apellido1, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
                                     </div>
@@ -250,7 +268,6 @@
                                             <div>
                                                 Apellido 2:
                                                 @Html.TextBoxFor(m => m.cliente.Apellido2, new { @class = "form-control" })
-                                                @*<input type="text" name="Apellido2" class="form-control" />*@
                                             </div>
                                         </div>
                                     </div>
@@ -268,39 +285,6 @@
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:12.666667%">
-                                        <div class="form-group">
-                                            Límite de crédito:
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            Monto $ <input name="cliente.limiteCreditoMonto" class="form-control" type="number" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            <div>
-                                                Días <input name="cliente.limiteCreditoDias" class="form-control" type="number" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            <div>
-                                                Credito disponible:
-                                                <input name="cliente.CreditoDisponibleMonto" class="form-control" type="text" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            <div>
-                                                Descuento %:
-                                                <input name="cliente.DescuentoXKilo" class="form-control" type="number" />
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
                                         <div class="form-group">
                                             <div>
@@ -312,10 +296,44 @@
                                         <div class="form-group">
                                             <label class="switch">
                                                 @Html.CheckBoxFor(m => m.cliente.VentaExtraordinaria, new { @class = "form-control" })
-                                                <span class="slider round"></span>
+                                                <span class="slider round" id="onfire"></span>
                                             </label>
                                         </div>
                                     </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:12.666667%">
+                                        <div class="form-group">
+                                            Límite de crédito:
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            Monto $ <input name="cliente.limiteCreditoMonto" class="form-control" type="number" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Días <input name="cliente.limiteCreditoDias" class="form-control" type="number" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Credito disponible:
+                                                <input name="cliente.CreditoDisponibleMonto" class="form-control" type="text" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                        <div class="form-group">
+                                            <div>
+                                                Descuento %:
+                                                <input name="cliente.DescuentoXKilo" class="form-control" type="number" />
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -476,21 +494,6 @@
                         </div>
                     </div>
                 </div>
-                @if (ViewBag.MessageError != null)
-                {
-                    <div class="row clearfix">
-                        <div id="divMensajeError" class="container">
-                            <div class="alert alert-danger">
-                                <div class="alert-icon">
-                                    <i class="zmdi zmdi-block"></i>
-                                </div>
-                                <strong>
-                                    <label>@ViewBag.MessageError</label>
-                                </strong>
-                            </div>
-                        </div>
-                    </div>
-                }
             </div>
         </section>
     }

@@ -12,7 +12,7 @@ using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
-   public class ClientesDataAccess
+    public class ClientesDataAccess
     {
         private SagasDataUow uow;
 
@@ -23,7 +23,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<Cliente> Buscar()
         {
-            return uow.Repository<Cliente>().Get(x => x.Activo).ToList();                                                          
+            return uow.Repository<Cliente>().Get(x => x.Activo).ToList();
         }
 
         public Cliente Buscar(int idCliente)
@@ -41,16 +41,38 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<ClienteLocacion>().GetSingle(x => x.IdCliente.Equals(idCliente) && x.Orden.Equals(idOrden));
         }
 
-        public Cliente BuscarRazonSocial(ClienteDTO cliente,short idEmpresa)
+        public Cliente BuscarRazonSocial(ClienteDTO cliente, short idEmpresa)
         {
             var consulta = uow.Repository<Cliente>().GetSingle(
                 x =>
-                (x.RazonSocial!=null && x.RazonSocial.Trim().ToLower().Equals(cliente.RazonSocial) && x.RazonSocial.Any()) &&
+                (x.RazonSocial != null && x.RazonSocial.Trim().ToLower().Equals(cliente.RazonSocial) && x.RazonSocial.Any()) &&
                 x.IdTipoPersona.Equals(cliente.IdTipoPersona) &&
                 x.IdRegimenFiscal.Equals(cliente.IdTipoRegimen) &&
                 x.IdEmpresa.Equals(idEmpresa)
                );
-         
+
+            return (consulta != null) ? consulta : null;
+        }
+        public List<Cliente> BuscarRfcTel(DTOs.Catalogo.ClientesDto cliente, short idEmpresa)
+        {
+            List<Cliente> consulta = new List<Cliente>();
+            if (cliente.Rfc != null)
+            {
+                consulta = uow.Repository<Cliente>().Get(
+                                             x =>
+                                             (x.Rfc.Trim().Equals(cliente.Rfc)) &&
+                                             x.IdEmpresa.Equals(idEmpresa)
+                                            ).ToList();
+            }
+            if (cliente.Telefono1 != null)
+            {
+                consulta = uow.Repository<Cliente>().Get(
+                                     x =>
+                                      (x.Telefono1.Trim().Equals(cliente.Telefono1)) &&
+                                     x.IdEmpresa.Equals(idEmpresa)
+                                    ).ToList();
+            }
+
             return (consulta != null) ? consulta : null;
         }
 
@@ -65,14 +87,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 x.Telefono.Equals(cliente.TelefonoFijo) &&
                 x.Celular.Equals(cliente.Celular)
                 && !x.Telefono.Equals(null)
-                && !x.Celular.Equals(null) 
+                && !x.Celular.Equals(null)
                 && !x.Nombre.Equals(null)
                 && !x.Apellido2.Equals(null)
                 );
             return respuesta;
         }
 
-        public List<Cliente> BuscadorClientes(string criterio,short idEmpresa)
+        public List<Cliente> BuscadorClientes(string criterio, short idEmpresa)
         {
             return uow.Repository<Cliente>().Get(
                 x => ((x.Telefono.Contains(criterio)
@@ -127,7 +149,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    var clienteCredito =  uow.Repository<Cliente>().GetSingle(x=>x.IdCliente.Equals(cliente.IdCliente));
+                    var clienteCredito = uow.Repository<Cliente>().GetSingle(x => x.IdCliente.Equals(cliente.IdCliente));
                     clienteCredito.CreditoDisponibleMonto = cliente.CreditoDisponibleMonto;
                     uow.Repository<Cliente>().Update(clienteCredito);
                     uow.SaveChanges();
@@ -246,14 +268,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             try
             {
-                return uow.Repository<Cliente>().GetSingle(x => x.Rfc.Equals(rfc));
+                var consulta = uow.Repository<Cliente>().GetSingle(x => x.Rfc!=null && x.Rfc.Equals(rfc));
+                
+                return consulta;
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
-           
+
         }
     }
 }

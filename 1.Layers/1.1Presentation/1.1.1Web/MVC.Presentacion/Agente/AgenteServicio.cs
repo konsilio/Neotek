@@ -968,6 +968,44 @@ namespace MVC.Presentacion.Agente
 
             }
         }
+
+        public void BuscarClientesRfcTel(ClientesDto mod, string tkn)//short idEmpresa, 
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutClientesRfcTel"];
+            PutClientesRfcTel(mod, tkn).Wait();
+        }
+        private async Task PutClientesRfcTel(ClientesDto dto, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ClientesDto> lus = new List<ClientesDto>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {                    
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, dto).ConfigureAwait(false);
+
+                    if (response.IsSuccessStatusCode)
+                            lus = await response.Content.ReadAsAsync<List<ClientesDto>>();
+                        else
+                        {
+                            client.CancelPendingRequests();
+                            client.Dispose();
+                        }  
+
+                }
+                catch (Exception)
+                {
+                    lus = new List<ClientesDto>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _lstaClientes = lus;
+
+            }
+        }
+
         public void BuscarListaLocaciones(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaLocacion"];

@@ -117,15 +117,15 @@ namespace MVC.Presentacion.Controllers
         public JsonResult BuscarClientesPedido(string Tel1, string Rfc)
         {
             string _tkn = Session["StringToken"].ToString();
-            var lstClientes = CatalogoServicio.ListaClientes(0, Tel1, 0, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.Clientes(Tel1, Rfc, _tkn).ToList();
 
             var JsonInfo = JsonConvert.SerializeObject(lstClientes);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult BuscarClientesPedidoDireccion(string Tel1, string Tel2, string Rfc)
+        public JsonResult BuscarClientesPedidoDireccion(string Tel1, string Rfc)
         {
             string _tkn = Session["StringToken"].ToString();
-            var lstClientes = CatalogoServicio.ListaClientes(0, Tel1, 0, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.Clientes(Tel1, Rfc, _tkn).ToList();
 
             List<ClienteLocacionMod> _lst = new List<ClienteLocacionMod>();
             if (lstClientes.Count() > 0)
@@ -134,7 +134,7 @@ namespace MVC.Presentacion.Controllers
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult AltaCliente()
+        public ActionResult AltaCliente(PedidoModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
@@ -154,8 +154,13 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTO"] = ViewBag.MensajeError;
             }
             ViewBag.MensajeError = TempData["RespuestaDTO"];
+            if (TempData["ErrorModel"] != null)
+            {
+                model = (PedidoModel)TempData["ErrorModel"];
+            }
+            
 
-            return View();
+            return View(model);
         }
         public ActionResult AltaClienteDireccion(PedidoModel _model, int? IdCliente, int? id, short? idOrden, string msj = null, string msjValid = null)
         {
@@ -201,7 +206,9 @@ namespace MVC.Presentacion.Controllers
                 }
                 else
                 {
-                    ViewBag.MensajeError = Validar(respuesta);
+                    TempData["RespuestaDTO"] = respuesta;
+                    TempData["ErrorModel"] = _model;
+                    return RedirectToAction("AltaCliente");
                 }
                 clm.IdPais = 0; clm.IdEstadoRep = 0;
                 _model.cliente.Locacion = clm;

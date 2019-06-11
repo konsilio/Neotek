@@ -39,6 +39,16 @@ namespace Application.MainModule.Servicios.Catalogos
             else
                 return 0;
         }
+        public static List<ClientesDto> BuscarRfcyTel(ClientesDto cliente)
+        {
+            if (cliente.Telefono1 == "1")
+                cliente.Telefono1 = null;
+            if (cliente.Rfc == "1")
+                cliente.Rfc = null;
+            List<ClientesDto> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTO(new ClientesDataAccess().BuscarRfcTel(cliente, TokenServicio.ObtenerIdEmpresa()));
+              return lClientes;
+          
+        }
 
         public static int BuscarCliente(ClienteDTO cliente)
         {
@@ -97,6 +107,18 @@ namespace Application.MainModule.Servicios.Catalogos
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El cliente");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
+        }
+
+        public static RespuestaDto YaExiste()
+        {
+            string mensaje = string.Format(Error.SiExiste, "El RFC");
 
             return new RespuestaDto()
             {

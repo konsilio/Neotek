@@ -59,11 +59,11 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "Telefono1")]
         public string Telefono1 { get; set; }
 
-        [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
+        //[StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Telefono2")]
         public string Telefono2 { get; set; }
 
-        [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
+        //[StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Telefono3")]
         public string Telefono3 { get; set; }
 
