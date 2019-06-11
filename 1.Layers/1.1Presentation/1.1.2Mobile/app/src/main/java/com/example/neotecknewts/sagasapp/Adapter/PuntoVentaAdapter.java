@@ -76,6 +76,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
         EditText editText = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityCantidad;
+        EditText PrecioLitro = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityPrecioporLitro;
 
         if(esVentaGas) {
             editText.addTextChangedListener(new TextWatcher() {
@@ -191,14 +192,20 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ETPuntoVentaGasListActivityPrecioporLitro = view.findViewById(
                     R.id.ETPuntoVentaGasListActivityPrecioporLitro);
 
+
             ETPuntoVentaGasListActivityPrecioporLitro = (EditText)view.findViewById(R.id.ETPuntoVentaGasListActivityPrecioporLitro);
             ETPuntoVentaGasListActivityPrecioporLitro.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int position) {
+
                     if(esVentaGas) {
-                        if(!ETPuntoVentaGasListActivityPrecioporLitro.getText().toString().isEmpty() && ETPuntoVentaGasListActivityPrecioporLitro.getText()!=null){
-                            PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
-                            Descuento.setText(String.valueOf(0));
+                        if(!ETPuntoVentaGasListActivityPrecioporLitro.getText().toString().isEmpty() &&
+                                ETPuntoVentaGasListActivityPrecioporLitro.getText()!=null) {
+
+                            Descuento.setText(
+                                    String.valueOf(0)
+                            );
+
                             double sub = precioVentaDTO.getPrecioSalidaLt() *
                                     Double.parseDouble(ETPuntoVentaGasListActivityPrecioporLitro.getText().toString());
                             Subtotal.setText(new DecimalFormat("#.##").format(sub));
@@ -206,7 +213,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
                             Total.setText(new DecimalFormat("#.##").format(sub + iva));
                             cantidad = ETPuntoVentaGasListActivityCantidad;
-
+                            existencia = items.get(position);
                         }
                     }
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +38,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("jimmy","oncreate");
         setContentView(R.layout.activity_configuracion_camioneta);
         Bundle bundle = getIntent().getExtras();
         cilindrosDTOS = new ArrayList<>();
