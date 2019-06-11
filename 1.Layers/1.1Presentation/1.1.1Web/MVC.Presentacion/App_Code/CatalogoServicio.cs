@@ -2387,47 +2387,7 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.EditarCliente(dto);
             return agente._RespuestaDTO;
-        }
-        public static PedidoModel ClientePedido(PedidoModel dto)
-        {
-            PedidoModel mod = new PedidoModel();
-            mod.cliente = new ClientesModel();
-            mod.cliente.IdEmpresa = dto.cliente.IdEmpresa;
-            mod.cliente.IdTipoPersona = dto.cliente.IdTipoPersona;
-            mod.cliente.IdRegimenFiscal = dto.cliente.IdRegimenFiscal;
-            mod.cliente.IdCuentaContable = dto.cliente.IdCuentaContable;
-            mod.cliente.Nombre = dto.cliente.Nombre;
-            mod.cliente.Apellido1 = dto.cliente.Apellido1;
-            mod.cliente.Apellido2 = dto.cliente.Apellido2;
-            mod.cliente.DescuentoXKilo = dto.cliente.DescuentoXKilo;
-            mod.cliente.limiteCreditoMonto = dto.cliente.limiteCreditoMonto;
-            mod.cliente.limiteCreditoDias = dto.cliente.limiteCreditoDias;
-            mod.cliente.CreditoDisponibleMonto = dto.cliente.CreditoDisponibleMonto;
-            mod.cliente.Telefono1 = dto.cliente.Telefono1;
-            mod.cliente.Telefono2 = dto.cliente.Telefono2;
-            mod.cliente.Telefono3 = dto.cliente.Telefono3;
-            mod.cliente.Celular1 = dto.cliente.Celular1;
-            mod.cliente.Celular2 = dto.cliente.Celular2;
-            mod.cliente.Celular3 = dto.cliente.Celular3;
-            mod.cliente.Email1 = dto.cliente.Email1;
-            mod.cliente.Email2 = dto.cliente.Email2;
-            mod.cliente.Email3 = dto.cliente.Email3;
-            mod.cliente.SitioWeb1 = dto.cliente.SitioWeb1;
-            mod.cliente.SitioWeb2 = dto.cliente.SitioWeb2;
-            mod.cliente.SitioWeb3 = dto.cliente.SitioWeb3;
-            mod.cliente.Usuario = dto.cliente.Usuario;
-            mod.cliente.Password = dto.cliente.Password;
-            mod.cliente.AccesoPortal = dto.cliente.AccesoPortal;
-            mod.cliente.Rfc = dto.cliente.Rfc;
-            mod.cliente.RazonSocial = dto.cliente.RazonSocial;
-            mod.cliente.RepresentanteLegal = dto.cliente.RepresentanteLegal;
-            mod.cliente.Telefono = dto.cliente.Telefono;
-            mod.cliente.Celular = dto.cliente.Celular;
-            mod.cliente.CorreoElectronico = dto.cliente.CorreoElectronico;
-            mod.cliente.Domicilio = dto.cliente.Domicilio;
-            return mod;
-
-        }
+        }       
         #endregion
 
         #region Puntos de Venta

@@ -25,7 +25,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsAdmin)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn, "").ToPagedList(Pagina, 20).OrderByDescending(x => x.FechaAplicacion);//.OrderByDescending(y => y.Orden).ToList();
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn, "").OrderByDescending(x => x.FechaAplicacion).ToPagedList(Pagina, 20);//.OrderByDescending(y => y.Orden).ToList();
             }
             else
             {
