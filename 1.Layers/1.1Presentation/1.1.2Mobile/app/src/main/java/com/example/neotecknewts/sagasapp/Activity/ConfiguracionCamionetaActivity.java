@@ -109,7 +109,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
     public void VerificarForm() {
         boolean error = false;
         lista_errores = new ArrayList<>();
-        boolean flag = true;
+        boolean flag = false;
         if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta) {
             //TextView textView;
             for (int x = 0; x < adapter.getItemCount(); x++) {
@@ -123,12 +123,17 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
                         error = true;
                         break;
                     }else{
-                        if(Integer.parseInt(editText.getText().toString()) == 0){
-                            flag = false;
+                        if(flag) {
 
-                        }else {
-                            flag=true;
+                        }else{
+                            if(Integer.parseInt(editText.getText().toString())==0){
+                                flag = false;
+                            }else {
+                                flag = true;
+                            }
                         }
+
+
                     }
                 } else {
                     lista_errores.add("El valor para el cilindo del renglon " +
