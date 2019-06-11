@@ -120,7 +120,7 @@
             </div>
         </div>
         <div class="row clearfix">
-            if (rol.CatProducto)
+            @if (rol.CatProducto)
             {
             <div class="col-lg-4 col-md-6">
                 <div class="card text-center">
@@ -133,7 +133,7 @@
                 </div>
             </div>
             }
-            if (rol.CatProducto || rol.CompraOrdenCompra || rol.Almacen)
+            @if (rol.CatProducto || rol.CompraOrdenCompra || rol.Almacen)
             {
             <div class="col-lg-4 col-md-6">
                 <div class="card text-center">
@@ -146,7 +146,7 @@
                 </div>
             </div>
             }
-            if (rol.Almacen)
+            @if (rol.Almacen)
             {
             <div class="col-lg-4 col-md-6">
                 <div class="card text-center">

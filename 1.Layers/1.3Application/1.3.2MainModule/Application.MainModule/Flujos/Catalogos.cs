@@ -156,7 +156,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var ExisteRfc = ClienteServicio.BuscarClientePorRFC(cteDto.Rfc);
-            if (ExisteRfc != null) return EmpresaServicio.NoExiste();
+            if (ExisteRfc != null) return ClienteServicio.YaExiste();
 
             var cliente = ClientesAdapter.FromDtoMod(cteDto);
 

@@ -22,7 +22,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string R0001 = "Error al guardar la requisición";
         public const string R0002 = "El campo '{0}' es obligatorio.";
         public const string R0003 = "El campo '{0}' el valor debe ser mayor a 0.";
-        public const string R0004 = "El campo '{0}' requiere un mínimo de {1} caracteres y un máximo de {2}.";
+        public const string R0004 = "El campo '{0}' requiere un mínimo de {2} caracteres y un máximo de {1}.";
         public const string R0005 = "El campo '{0}' debe ser numerico y/o mayor a 0";
         public const string R0006 = "La lista de '{0}' debe contener al menos un elemento";
         public const string R0007 = "Debes agregar al menos un producto";

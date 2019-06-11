@@ -55,17 +55,24 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Cliente> BuscarRfcTel(DTOs.Catalogo.ClientesDto cliente, short idEmpresa)
         {
+            List<Cliente> consulta = new List<Cliente>();
+            if (cliente.Rfc != null)
+            {
+                consulta = uow.Repository<Cliente>().Get(
+                                             x =>
+                                             (x.Rfc.Trim().Equals(cliente.Rfc)) &&
+                                             x.IdEmpresa.Equals(idEmpresa)
+                                            ).ToList();
+            }
+            if (cliente.Telefono1 != null)
+            {
+                consulta = uow.Repository<Cliente>().Get(
+                                     x =>
+                                      (x.Telefono1.Trim().Equals(cliente.Telefono1)) &&
+                                     x.IdEmpresa.Equals(idEmpresa)
+                                    ).ToList();
+            }
 
-            var consulta = uow.Repository<Cliente>().Get(
-                             x =>
-                             (x.Rfc.Trim().Equals(cliente.Rfc)) &&
-                             (x.Telefono1.Trim().Equals(cliente.Telefono1)) &&
-                             x.IdEmpresa.Equals(idEmpresa)
-                            ).ToList();
-            //var consulta = uow.Repository<Cliente>().Get(
-            //                   x =>
-            //                   x.IdEmpresa.Equals(idEmpresa)
-            //                  ).Where(s=>s.Rfc== cliente.Rfc || s.Telefono1== cliente.Telefono1).ToList();
             return (consulta != null) ? consulta : null;
         }
 
@@ -261,7 +268,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             try
             {
-                return uow.Repository<Cliente>().GetSingle(x => x.Rfc.Equals(rfc));
+                var consulta = uow.Repository<Cliente>().GetSingle(x => x.Rfc!=null && x.Rfc.Equals(rfc));
+                
+                return consulta;
             }
             catch (Exception ex)
             {
