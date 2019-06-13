@@ -6677,11 +6677,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="HVCargaInformacion" Type="Boolean" Nullable="false" />         
           <Property Name="AlmacenRegistrarAlmacen" Type="Boolean" Nullable="false" />
           <Property Name="AlmacenVerProductos" Type="Boolean" Nullable="false" />
+          <!--<Property Name="HistoricoVentas" Type="Boolean" Nullable="false" />
+          <Property Name="FacturasVerFacturas" Type="Boolean" />
+          <Property Name="FacturasFacturar" Type="Boolean" />-->
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
           <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />
-          <Property Name="HistoricoVentas" Type="Boolean" Nullable="false" />
-          <Property Name="FacturasVerFacturas" Type="Boolean" />
-          <Property Name="FacturasFacturar" Type="Boolean" />
+
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>

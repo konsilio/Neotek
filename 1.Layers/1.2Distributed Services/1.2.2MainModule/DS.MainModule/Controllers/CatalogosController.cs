@@ -175,7 +175,13 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetCliente(int id)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ObtenerCliente(id));
-        }       
+        }
+        [Route("buscar/clientesfilterrfc")]
+        public HttpResponseMessage PutClientesRfcTel(ClientesDto dto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ClientesRfc(dto), Request);
+        }
+       
         [Route("clientes/listaclientes/{idEmpresa}")]
         public HttpResponseMessage GetListaClientes(short idEmpresa)
         {
@@ -186,6 +192,8 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaClientes());
         }
+        
+
         [Route("clientes/listaclientesloc/{idCliente}")]
         public HttpResponseMessage GetListaLocacion(int idCliente)
         {

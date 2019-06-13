@@ -46,7 +46,7 @@ namespace MVC.Presentacion.App_Code
                 Empresas = CatalogoServicio.Empresas(_tok)
             };
         }
-        public static RequisicionesModel FiltrarRequisicones(RequisicionesModel model)
+        public static RequisicionesModel Filtrarrequisiciones(RequisicionesModel model)
         {
             List<RequisicionDTO> newList = model.Requisiciones;
             #region Por estatus
@@ -185,7 +185,7 @@ namespace MVC.Presentacion.App_Code
         {
             dto.FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString());
             var respuestaReq = new AgenteServicio();
-            respuestaReq.GuardarRequisicon(dto, tkn);
+            respuestaReq.GuardarRequisicion(dto, tkn);
             return respuestaReq._RespuestaDTO;
         }
         public static RespuestaDTO CancelarRequisicion(RequisicionCancelaDTO dto, string tkn)

@@ -968,6 +968,44 @@ namespace MVC.Presentacion.Agente
 
             }
         }
+
+        public void BuscarClientesRfcTel(ClientesDto mod, string tkn)//short idEmpresa, 
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutClientesRfcTel"];
+            PutClientesRfcTel(mod, tkn).Wait();
+        }
+        private async Task PutClientesRfcTel(ClientesDto dto, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ClientesDto> lus = new List<ClientesDto>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {                    
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, dto).ConfigureAwait(false);
+
+                    if (response.IsSuccessStatusCode)
+                            lus = await response.Content.ReadAsAsync<List<ClientesDto>>();
+                        else
+                        {
+                            client.CancelPendingRequests();
+                            client.Dispose();
+                        }  
+
+                }
+                catch (Exception)
+                {
+                    lus = new List<ClientesDto>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _lstaClientes = lus;
+
+            }
+        }
+
         public void BuscarListaLocaciones(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaLocacion"];
@@ -3182,7 +3220,7 @@ namespace MVC.Presentacion.Agente
                 _listaRequisicion = emp;
             }
         }
-        public void GuardarRequisicon(RequisicionDTO dto, string token)
+        public void GuardarRequisicion(RequisicionDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRequisicion"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
@@ -3672,9 +3710,9 @@ namespace MVC.Presentacion.Agente
         public void BuscarRegistroAlmacen(int id, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["GetRegistroAlmacen"];
-            GetRequisiconAlmacen(id, tkn).Wait();
+            GetRequisicionAlmacen(id, tkn).Wait();
         }
-        private async Task GetRequisiconAlmacen(int id, string Token)
+        private async Task GetRequisicionAlmacen(int id, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -3704,7 +3742,7 @@ namespace MVC.Presentacion.Agente
         }
         public void BuscarRequsicionSalida(int id, string tkn)
         {
-            this.ApiRoute = ConfigurationManager.AppSettings["GetRequisiconAlmacen"];
+            this.ApiRoute = ConfigurationManager.AppSettings["GetrequisicionAlmacen"];
             GetListaRegistroSalida(id, tkn).Wait();
         }
         private async Task GetListaRegistroSalida(int id, string Token)

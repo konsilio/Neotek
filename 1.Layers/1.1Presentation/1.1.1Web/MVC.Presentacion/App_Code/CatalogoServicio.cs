@@ -13,6 +13,7 @@ using Utilities.MainModule;
 //using System.Web.Script.Serialization;
 using System.Web.Mvc;
 using MVC.Presentacion.Models;
+using MVC.Presentacion.Models.Pedidos;
 
 namespace MVC.Presentacion.App_Code
 {
@@ -2270,6 +2271,40 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarListaClientesMod(idCliente, tel1, pedido, rfc, token);
             return agente._lstaClientesMod;
         }
+        public static List<ClientesDto> Clientes(string tel1, string rfc, string token)
+        {
+            var agente = new AgenteServicio();
+            ClientesDto mod = new ClientesDto();
+            mod.Telefono1 = tel1 != "" ? tel1 : "1";
+            mod.Rfc = rfc != "" ? rfc : "1";
+            mod.IdEmpresa = TokenServicio.ObtenerIdEmpresa(token);
+            mod.IdTipoPersona = 1;
+            mod.IdRegimenFiscal = 1;
+            mod.limiteCreditoMonto = 1;
+            mod.limiteCreditoDias = 1;
+            mod.Nombre = "1";
+            mod.Apellido1 = "1";
+            mod.Apellido2 = "1";
+            mod.Celular1 = "1";
+            mod.Celular2 = "1";
+            mod.Celular3 = "1";
+            mod.Email1 = "1";
+            mod.Email2 = "1";
+            mod.Email3 = "1";
+            mod.SitioWeb1 = "1";
+            mod.SitioWeb2 = "1";
+            mod.SitioWeb3 = "1";
+            mod.Usuario = "1";
+            mod.Password = "1";
+            mod.RazonSocial = "1";
+            mod.RepresentanteLegal = "1";
+            mod.Telefono = "1";
+            mod.Celular = "1";
+            mod.CorreoElectronico = "1";
+            mod.Domicilio = "1";
+            agente.BuscarClientesRfcTel(mod, token);
+            return agente._lstaClientes;
+        }
         public static List<ClienteLocacionMod> ObtenerLocaciones(int id, string token)
         {
             var agente = new AgenteServicio();
@@ -2352,7 +2387,7 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.EditarCliente(dto);
             return agente._RespuestaDTO;
-        }
+        }       
         #endregion
 
         #region Puntos de Venta
