@@ -38,4 +38,13 @@ public class CilindrosDTO implements Serializable {
     public void setIdCilindro(int idCilindro) {
         IdCilindro = idCilindro;
     }
+
+    @Override
+    public String toString() {
+        return "CilindrosDTO{" +
+                "IdCilindro=" + IdCilindro +
+                ", CapacidadKg='" + CapacidadKg + '\'' +
+                ", Cantidad=" + Cantidad +
+                '}';
+    }
 }
