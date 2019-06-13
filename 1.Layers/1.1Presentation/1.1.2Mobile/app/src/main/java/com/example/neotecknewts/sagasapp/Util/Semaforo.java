@@ -118,6 +118,7 @@ public class Semaforo {
                     +" calibraciones de  pendientes");
         if(sagasSql.GetLecturasIniciales().getCount()>0 )
            lecturas_iniciales = sagasSql.GetLecturasIniciales().getCount();
+        Log.d("mensaje","Lecturas");
         if(sagasSql.GetLecturasIncialesPipas().getCount()>0)
             lecturas_iniciales = lecturas_iniciales +sagasSql.GetLecturasIniciales().getCount();
         if(sagasSql.GetLecturasIncialesCamioneta().getCount()>0)
@@ -166,25 +167,26 @@ public class Semaforo {
 
     public void sincronizar(String token){
         Lisener lisener = new Lisener(sagasSql,token);
-//        lisener.CrearRunable(Lisener.Proceso.Papeleta);
-//        lisener.CrearRunable(Lisener.Proceso.IniciarDescarga);
-//        lisener.CrearRunable(Lisener.Proceso.FinalizarDescarga);
-//        lisener.CrearRunable(Lisener.Proceso.LecturaInicial);
-//        lisener.CrearRunable(Lisener.Proceso.LecturaFinal);
-//        lisener.CrearRunable(Lisener.Proceso.LecturaInicialAlmacen);
-//        lisener.CrearRunable(Lisener.Proceso.LecturaFinalAlmacen);
-//        lisener.CrearRunable(Lisener.Proceso.LecturaInicialCamioneta);
-//        lisener.CrearRunable(Lisener.Proceso.LecturaFinalCamioneta);
-//        lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
-//        lisener.CrearRunable(Lisener.Proceso.Calibracion);
-//        lisener.CrearRunable(Lisener.Proceso.RecargaEstacion);
-//        lisener.CrearRunable(Lisener.Proceso.RecargaPipa);
-//        lisener.CrearRunable(Lisener.Proceso.RecargaCamioneta);
-//        lisener.CrearRunable(Lisener.Proceso.Traspaso);
-//        lisener.CrearRunable(Lisener.Proceso.Anticipo);
-//        lisener.CrearRunable(Lisener.Proceso.CorteDeCaja);
-//        lisener.CrearRunable(Lisener.Proceso.Venta);
+        lisener.CrearRunable(Lisener.Proceso.Papeleta);
+        lisener.CrearRunable(Lisener.Proceso.IniciarDescarga);
+        lisener.CrearRunable(Lisener.Proceso.FinalizarDescarga);
+        lisener.CrearRunable(Lisener.Proceso.LecturaInicial);
+        lisener.CrearRunable(Lisener.Proceso.LecturaFinal);
+        lisener.CrearRunable(Lisener.Proceso.LecturaFinalAlmacen);
+        lisener.CrearRunable(Lisener.Proceso.LecturaInicialCamioneta);
+        lisener.CrearRunable(Lisener.Proceso.LecturaFinalCamioneta);
+        lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
+        lisener.CrearRunable(Lisener.Proceso.Calibracion);
+        lisener.CrearRunable(Lisener.Proceso.RecargaEstacion);
+        lisener.CrearRunable(Lisener.Proceso.RecargaPipa);
+        lisener.CrearRunable(Lisener.Proceso.RecargaCamioneta);
+        lisener.CrearRunable(Lisener.Proceso.LecturaInicialAlmacen);
+        lisener.CrearRunable(Lisener.Proceso.Traspaso);
+        lisener.CrearRunable(Lisener.Proceso.Anticipo);
+        lisener.CrearRunable(Lisener.Proceso.CorteDeCaja);
+        lisener.CrearRunable(Lisener.Proceso.Venta);
         //progressDialog.hide();
+        Log.d("msj","Sincronizacion");
     }
     //endregion
 }

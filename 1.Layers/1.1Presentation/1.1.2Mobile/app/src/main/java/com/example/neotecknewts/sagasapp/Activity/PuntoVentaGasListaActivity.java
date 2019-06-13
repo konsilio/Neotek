@@ -45,19 +45,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class PuntoVentaGasListaActivity extends AppCompatActivity implements PuntoVentaGasListaView{
+
+public class PuntoVentaGasListaActivity extends AppCompatActivity implements PuntoVentaGasListaView {
     RecyclerView RVPuntoVentaGasActivityListaGas;
     //TextView TVPuntoVentaGasListaActivityNombre;
-    Button BtnPuntoVetaGasListActivityOpciones,BtnPuntoVentaGasListaActivityGasListaAgregar,
+    Button BtnPuntoVetaGasListActivityOpciones, BtnPuntoVentaGasListaActivityGasListaAgregar,
             BtnPuntoVentaGasListActivityPagar;
     TableLayout TLPuntoVentaGasListaActivityConcepto;
     ScrollView SVPuntoVentaGasListActivitiyConcepto;
     //Variables del formulario de venta de camioneta y pipa
     ConstraintLayout CLFormularioVentaCamionetaYPipaContenedor;
-    Switch SWFormularioVentaCamionetaYPipaCredito,SWFormularioVentaCamionetaYPipaFactura;
-    Button BtnFormularioVentaCamionetaYPipaCancelar,BtnFormularioVentaCamionetaYPipaPagar;
-    TextView TVFormularioVentaCamionetaYPipaPrecio,TVFormularioVentaCamionetaYPipaDescuento,
-            TVFormularioVentaCamionetaYPipaSubtotal,TVFormularioVentaCamionetaYPipaIva,
+    Switch SWFormularioVentaCamionetaYPipaCredito, SWFormularioVentaCamionetaYPipaFactura;
+    Button BtnFormularioVentaCamionetaYPipaCancelar, BtnFormularioVentaCamionetaYPipaPagar;
+    TextView TVFormularioVentaCamionetaYPipaPrecio, TVFormularioVentaCamionetaYPipaDescuento,
+            TVFormularioVentaCamionetaYPipaSubtotal, TVFormularioVentaCamionetaYPipaIva,
             TVFormularioVentaCamionetaYPipaTotal;
     //Variables del formulario de venta de camioneta y pipa
     PuntoVentaGasListaPresenter presenter;
@@ -67,13 +68,12 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
     VentaDTO ventaDTO;
     PuntoVentaAdapter adapter;
-    boolean  EsVentaCamioneta,EsVentaCarburacion,EsVentaPipa;
-    boolean esGasLP,esCilindroGas,esCilindro;
+    boolean EsVentaCamioneta, EsVentaCarburacion, EsVentaPipa;
+    boolean esGasLP, esCilindroGas, esCilindro;
     Tabla tabla;
     PrecioVentaDTO precioVentaDTO;
 
     List<ExistenciasDTO> ExistenciasDTO;
-
 
 
     @Override
@@ -84,12 +84,12 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         //region Extras (Parametros entre acticitys)
 
 
-        if(extras!=null){
+        if (extras != null) {
             ventaDTO = (VentaDTO) extras.getSerializable("ventaDTO");
-            EsVentaCamioneta = extras.getBoolean("EsVentaCamioneta",false);
-            EsVentaCarburacion = extras.getBoolean("EsVentaCarburacion",false);
-            EsVentaPipa = extras.getBoolean("EsVentaPipa",false);
-            esGasLP = extras.getBoolean("esGasLP",false);
+            EsVentaCamioneta = extras.getBoolean("EsVentaCamioneta", false);
+            EsVentaCarburacion = extras.getBoolean("EsVentaCarburacion", false);
+            EsVentaPipa = extras.getBoolean("EsVentaPipa", false);
+            esGasLP = extras.getBoolean("esGasLP", false);
             esCilindroGas = extras.getBoolean("esCilindroGas");
             esCilindro = extras.getBoolean("esCilindro");
         }
@@ -101,14 +101,14 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         //endregion
         //region Formulario del layout de veta de cilindros
         BtnPuntoVetaGasListActivityOpciones = findViewById(R.id.BtnPuntoVetaGasListActivityOpciones);
-        BtnPuntoVetaGasListActivityOpciones.setVisibility(EsVentaCamioneta? View.VISIBLE:View.GONE);
+        BtnPuntoVetaGasListActivityOpciones.setVisibility(EsVentaCamioneta ? View.VISIBLE : View.GONE);
         BtnPuntoVentaGasListaActivityGasListaAgregar = findViewById(R.id.
                 BtnPuntoVentaGasListaActivityGasListaAgregar);
         BtnPuntoVentaGasListaActivityGasListaAgregar.setVisibility(
-                EsVentaCamioneta? View.VISIBLE:View.GONE);
+                EsVentaCamioneta ? View.VISIBLE : View.GONE);
         BtnPuntoVentaGasListActivityPagar = findViewById(R.id.BtnPuntoVentaGasListActivityPagar);
         BtnPuntoVentaGasListActivityPagar.setVisibility(
-                EsVentaCamioneta? View.VISIBLE:View.GONE);
+                EsVentaCamioneta ? View.VISIBLE : View.GONE);
         RVPuntoVentaGasActivityListaGas = findViewById(R.id.RVPuntoVentaGasActivityListaGas);
         //TVPuntoVentaGasListaActivityNombre = findViewById(R.id.TVPuntoVentaGasListaActivityNombre);
         TLPuntoVentaGasListaActivityConcepto = findViewById(R.id.
@@ -116,34 +116,53 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         SVPuntoVentaGasListActivitiyConcepto = findViewById(R.id.
                 SVPuntoVentaGasListActivitiyConcepto);
         SVPuntoVentaGasListActivitiyConcepto.setVisibility(EsVentaCamioneta ?
-                View.VISIBLE:View.GONE);
-        BtnPuntoVetaGasListActivityOpciones.setOnClickListener(V->{
+                View.VISIBLE : View.GONE);
+        BtnPuntoVetaGasListActivityOpciones.setOnClickListener(V -> {
             Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                     VentaGasActivity.class);
-            intent.putExtra("ventaDTO",ventaDTO);
-            intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
-            intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
-            intent.putExtra("EsVentaPipa",EsVentaPipa);
+            intent.putExtra("ventaDTO", ventaDTO);
+            intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa", EsVentaPipa);
             startActivity(intent);
         });
 
-        BtnPuntoVentaGasListaActivityGasListaAgregar.setOnClickListener(v->{
-            if(esCilindroGas) VentaCilindroGas();
-            else if(esCilindro) VentaCilindro();
-            else if(esGasLP) VentaGaslp();
+        BtnPuntoVentaGasListaActivityGasListaAgregar.setOnClickListener(v -> {
+            if (esCilindroGas) VentaCilindroGas();
+            else if (esCilindro) VentaCilindro();
+            else if (esGasLP) VentaGaslp();
             LimpiarLista();
         });
 
-        BtnPuntoVentaGasListActivityPagar.setOnClickListener(v->{
-            if(ventaDTO.getConcepto().size()>0) {
+        BtnPuntoVentaGasListActivityPagar.setOnClickListener(v -> {
+            if (ventaDTO.getConcepto().size() > 0) {
+
                 Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                         PuntoVentaPagarActivity.class);
                 intent.putExtra("ventaDTO", ventaDTO);
-                intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
-                intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
-                intent.putExtra("EsVentaPipa",EsVentaPipa);
+
+                //adapter.ETPuntoVentaGasListActivityPrecioporLitro =  ;
+
+                intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+                intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+                intent.putExtra("EsVentaPipa", EsVentaPipa);
                 startActivity(intent);
-            }else{
+
+                adapter.ETPuntoVentaGasListActivityPrecioporLitro.addTextChangedListener( new TextWatcher(){
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        adapter.ETPuntoVentaGasListActivityPrecioporLitro.setText(new DecimalFormat("#.##").format(ventaDTO));
+                    }
+                });
+            } else {
                 AlertDialog.Builder builder = new
                         AlertDialog.Builder(this);
                 builder.setTitle(R.string.error_titulo);
@@ -157,12 +176,12 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         //region Formulario de venta de pipas y estaciones
         CLFormularioVentaCamionetaYPipaContenedor = findViewById(R.id.
                 CLFormularioVentaCamionetaYPipaContenedor);
-        CLFormularioVentaCamionetaYPipaContenedor.setVisibility(EsVentaCamioneta? View.GONE:
+        CLFormularioVentaCamionetaYPipaContenedor.setVisibility(EsVentaCamioneta ? View.GONE :
                 View.VISIBLE);
         SWFormularioVentaCamionetaYPipaCredito = findViewById(R.id.
                 SWFormularioVentaCamionetaYPipaCredito);
         SWFormularioVentaCamionetaYPipaCredito.setVisibility(
-                ventaDTO.isTieneCredito()? View.VISIBLE:View.GONE
+                ventaDTO.isTieneCredito() ? View.VISIBLE : View.GONE
         );
 //        SWFormularioVentaCamionetaYPipaCredito.setVisibility(
 //                ventaDTO.isTieneCredito()? View.VISIBLE:View.GONE
@@ -188,16 +207,16 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 TVFormularioVentaCamionetaYPipaDescuento);
         TVFormularioVentaCamionetaYPipaSubtotal = findViewById(R.id.
                 TVFormularioVentaCamionetaYPipaSubtotal);
-        TVFormularioVentaCamionetaYPipaIva  = findViewById(R.id.TVFormularioVentaCamionetaYPipaIva);
+        TVFormularioVentaCamionetaYPipaIva = findViewById(R.id.TVFormularioVentaCamionetaYPipaIva);
         TVFormularioVentaCamionetaYPipaTotal = findViewById(R.id.
                 TVFormularioVentaCamionetaYPipaTotal);
-        BtnFormularioVentaCamionetaYPipaCancelar.setOnClickListener(V->{
+        BtnFormularioVentaCamionetaYPipaCancelar.setOnClickListener(V -> {
             Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                     MenuActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
-        BtnFormularioVentaCamionetaYPipaPagar.setOnClickListener(V->{
+        BtnFormularioVentaCamionetaYPipaPagar.setOnClickListener(V -> {
             SetearLitrosDespachados();
         });
         //endregion
@@ -205,16 +224,16 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         presenter = new PuntoVentaGasListaPresenterImpl(this);
 
         presenter.getPrecioVenta(session.getToken());
-        if(EsVentaCamioneta) {
-            Log.d("Jimmy","EsVentaCamioneta true ");
+        if (EsVentaCamioneta) {
+            Log.d("Jimmy", "EsVentaCamioneta true ");
             presenter.getCamionetaCilindros(
                     esGasLP,
                     esCilindroGas,
                     esCilindro,
                     session.getToken()
             );
-        }else{
-            Log.d("Jimmy","EsVentaCamioneta false");
+        } else {
+            Log.d("Jimmy", "EsVentaCamioneta false");
             presenter.getCamionetaCilindros(
                     esGasLP,
                     esCilindroGas,
@@ -237,33 +256,35 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 ventaDTO.isFactura()
         );*/
     }
+
     //region Metodos sobreescritos de la interfaz
     @Override
     public void mostrarConsepto(List<ConceptoDTO> list) {
-        tabla = new Tabla(this,TLPuntoVentaGasListaActivityConcepto);
-        if(list!=null && list.size()>0){
+        tabla = new Tabla(this, TLPuntoVentaGasListaActivityConcepto);
+        if (list != null && list.size() > 0) {
             tabla.Cabecera(R.array.condepto_venta);
             ArrayList<String[]> datos = new ArrayList<>();
             NumberFormat format = NumberFormat.getCurrencyInstance();
-            for (ConceptoDTO concepto:list){
+            for (ConceptoDTO concepto : list) {
                 datos.add(new String[]{
                         concepto.getConcepto(),
                         String.valueOf(concepto.getCantidad()),
                         format.format(concepto.getPUnitario()),
+                        format.format(10.0),
                         format.format(concepto.getDescuento()),
                         format.format(concepto.getSubtotal())
                 });
             }
             tabla.agregarFila(datos);
 
-        }else{
+        } else {
             tabla.Cabecera(R.array.condepto_venta);
         }
     }
 
     @Override
     public void onHideProgress() {
-        if(progressDialog!=null && progressDialog.isShowing()){
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.hide();
             progressDialog.dismiss();
         }
@@ -279,10 +300,10 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
     @Override
     public void onError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
-        builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
+        builder.setPositiveButton(R.string.message_acept, ((dialog, which) -> dialog.dismiss()));
         builder.create();
         builder.show();
 
@@ -290,7 +311,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
     @Override
     public void onSuccessListExistencia(List<ExistenciasDTO> data) {
-        if(data!=null){
+        if (data != null) {
             data_get = data;
             /*adapter = new PuntoVentaAdapter(data,EsVentaCamioneta,this);
             if(!EsVentaCamioneta){
@@ -313,11 +334,12 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      * en caso de que el web api este disponible y el resultado en el
      * parametro de {@link PrecioVentaDTO} tenga valores lo guarda en
      * una variable de esta actividad
+     *
      * @param data Respuesta del web api al consultar el precio de venta
      */
     @Override
     public void onSuccessPrecioVenta(PrecioVentaDTO data) {
-        if(data!=null){
+        if (data != null) {
             precioVentaDTO = data;
 
             /*if(esGasLP ||EsVentaPipa||EsVentaCarburacion){
@@ -350,37 +372,34 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      * venta (Veta de gas lp, venta de cilindros y venta de cilindros con gas) se
      * retornaran valores diferentes en el objeto {@link ExistenciasDTO} que
      * se tiene como parametro
+     *
      * @param respuesta Respuesta del web api a mostrar en la lista de venta de gas o cilindros
-     *             segun sea el caso
+     *                  segun sea el caso
      */
     @Override
     public void onSuccessDatosCamioneta(List<ExistenciasDTO> respuesta) {
         ExistenciasDTO = respuesta;
-        if(ExistenciasDTO!=null){
-            adapter = new PuntoVentaAdapter(ExistenciasDTO,EsVentaCamioneta,this);
-            if(!EsVentaCamioneta){
+        if (ExistenciasDTO != null) {
+            adapter = new PuntoVentaAdapter(ExistenciasDTO, EsVentaCamioneta, this);
+            if (!EsVentaCamioneta) {
                 adapter.esVentaGas = true;
                 adapter.PrecioLitro = TVFormularioVentaCamionetaYPipaPrecio;
                 adapter.Descuento = TVFormularioVentaCamionetaYPipaDescuento;
                 adapter.Subtotal = TVFormularioVentaCamionetaYPipaSubtotal;
                 adapter.Iva = TVFormularioVentaCamionetaYPipaIva;
-                adapter.Total =TVFormularioVentaCamionetaYPipaTotal;
+                adapter.Total = TVFormularioVentaCamionetaYPipaTotal;
                 adapter.precioVentaDTO = precioVentaDTO;
             }
-            if(esGasLP && EsVentaCamioneta){
+            if (esGasLP && EsVentaCamioneta) {
                 adapter.esVentaGas = true;
                 adapter.PrecioLitro = TVFormularioVentaCamionetaYPipaPrecio;
                 adapter.Descuento = TVFormularioVentaCamionetaYPipaDescuento;
                 adapter.Subtotal = TVFormularioVentaCamionetaYPipaSubtotal;
                 adapter.Iva = TVFormularioVentaCamionetaYPipaIva;
-                adapter.Total =TVFormularioVentaCamionetaYPipaTotal;
+                adapter.Total = TVFormularioVentaCamionetaYPipaTotal;
                 adapter.precioVentaDTO = precioVentaDTO;
             }
-            if(esCilindro){
-                adapter.Mostrar = false;
-            }else{
-                adapter.Mostrar = true;
-            }
+            adapter.Mostrar = !esCilindro;
             //region Seteo de la lista del reciclerview
             LinearLayoutManager linearLayout = new LinearLayoutManager(
                     PuntoVentaGasListaActivity.this);
@@ -395,14 +414,18 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     //endregion
 
     //region Metodos privados de la vista
+
     /**
      * SetearLitrosDespachados
      * Permite colocar los datos de litros despachados en esta vista en
      * la venta {@link VentaDTO} en el apartado de detalle de venta {@link ConceptoDTO}
      */
     private void SetearLitrosDespachados() {
-        Log.d("Jimmy","SetearLitrosDespachados");
-        if(adapter.cantidad.getText()!=null && adapter.cantidad.getText().toString().length()>0) {
+        Log.d("Jimmy", "SetearLitrosDespachados");
+
+
+        if (adapter.cantidad.getText() != null && adapter.cantidad.getText().toString().length() > 0 && adapter.PrecioLitro.getText() != null
+                || adapter.ETPuntoVentaGasListActivityPrecioporLitro.getText().toString().length()==0 || adapter.ETPuntoVentaGasListActivityPrecioporLitro.getText().toString()=="0" ) {
             if (Double.valueOf(adapter.cantidad.getText().toString()) > 0) {
                 double total, subtotal, iva, precio, desc;
                 ventaDTO.setCredito(SWFormularioVentaCamionetaYPipaCredito.isChecked());
@@ -411,6 +434,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 conceptoDTO.setConcepto("Litros de gas");
                 conceptoDTO.setCantidad(Double.valueOf(adapter.cantidad.getText().toString()));
                 conceptoDTO.setPUnitario(adapter.existencia.getPrecioUnitario());
+                conceptoDTO.setPrecioUnitarioLt(Double.valueOf(adapter.PrecioLitro.getText().toString()));
                 conceptoDTO.setDescuento(adapter.existencia.getDescuento());
                 conceptoDTO.setSubtotal(Double.valueOf(adapter.Subtotal.getText().toString()));
                 conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
@@ -420,7 +444,10 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 conceptoDTO.setMes(calendar.get(Calendar.MONTH) + 1);
                 conceptoDTO.setDia(calendar.get(Calendar.DAY_OF_WEEK));
                 conceptoDTO.setPrecioUnitarioProducto(adapter.existencia.getPrecioUnitario());
+
                 conceptoDTO.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
+
+                Log.d("precio", "PrecioVentaDTO");
                 conceptoDTO.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
                 conceptoDTO.setIdProducto(precioVentaDTO.getIdProducto());
                 conceptoDTO.setIdLinea(precioVentaDTO.getIdProductoLinea());
@@ -430,12 +457,18 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         precioVentaDTO.getPrecioSalidaKg() *
                                 Double.parseDouble(adapter.cantidad.getText().toString())
                 );
+
                 conceptoDTO.setCantidadLt(
                         precioVentaDTO.getPrecioSalidaLt() *
                                 Double.parseDouble(adapter.cantidad.getText().toString())
                 );
+
+
+                //conceptoDTO.setPrecioUnitarioLt(Double.parseDouble(adapter.ETPuntoVentaGasListActivityPrecioporLitro.getText().toString()));
                 conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
-                conceptoDTO.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+                /**se asigna a precio unitario el PrecioVentaDTO**/
+                conceptoDTO.setPUnitario(precioVentaDTO.getPrecioSalidaLt());
+                //conceptoDTO.setPUnitario(0);
                 conceptoDTO.setIdTipoGas(0);
                 ventaDTO.getConcepto().add(conceptoDTO);
                 Intent intent = new Intent(PuntoVentaGasListaActivity.this,
@@ -445,18 +478,40 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
                 intent.putExtra("EsVentaPipa", EsVentaPipa);
                 startActivity(intent);
+
+                this.onError("No hay datos en la venta");
+
             }
         }
+
+        this.onError("No hay datos en la venta");
+
+       /* if(adapter.PrecioporLitro!=null ){
+            Intent intent = new Intent(PuntoVentaGasListaActivity.this,
+                    PuntoVentaPagarActivity.class);
+        }*/
+
+       /* AlertDialog.Builder builder = new
+                AlertDialog.Builder(this);
+        builder.setTitle(R.string.error_titulo);
+        builder.setMessage(R.string.No_venta);
+        builder.setPositiveButton(R.string.message_acept,
+                ((dialog, which) -> dialog.dismiss()));
+        builder.create().show();
+
+*/
     }
+
 
     /**
      * Permite realizar la actualizacion de la tabla actual de conceptos
      * en caso de que se agregue otra venta
+     *
      * @param conceptoDTO Objeto con el cocepto de venta a agregar
      */
-    private void actualizarConceptos(ConceptoDTO conceptoDTO){
+    private void actualizarConceptos(ConceptoDTO conceptoDTO) {
         double precio = conceptoDTO.getPUnitario();
-        if(conceptoDTO.getDescuento()>0){
+        if (conceptoDTO.getDescuento() > 0) {
             precio = conceptoDTO.getPUnitario() - conceptoDTO.getDescuento();
         }
         precio = precio * conceptoDTO.getCantidad();
@@ -467,7 +522,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         //
         ArrayList<String[]> datos = new ArrayList<>();
         NumberFormat formato = NumberFormat.getCurrencyInstance();
-        for (ConceptoDTO concepto:ventaDTO.getConcepto()){
+        for (ConceptoDTO concepto : ventaDTO.getConcepto()) {
             datos.add(new String[]{
                     concepto.getConcepto(),
                     String.valueOf(concepto.getCantidad()),
@@ -494,13 +549,13 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
                     findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
             TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
-            Calendar  calendar = Calendar.getInstance();
+            Calendar calendar = Calendar.getInstance();
             if (editText.getText().toString().trim().length() > 0) {
                 double cantidadVenta = Double.valueOf(editText.getText().toString());
                 double cantidadActual = adapter.getCilindro(x).getExistencias();
 
-                if(cantidadActual>0) {
-                    if (cantidadActual>=cantidadVenta) {
+                if (cantidadActual > 0) {
+                    if (cantidadActual >= cantidadVenta) {
                         ConceptoDTO cilindros = new ConceptoDTO();
 
                         cilindros.setIdEmpresa(session.getIdEmpresa());
@@ -550,8 +605,8 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         Gas.setDescuentoUnitarioLt(0);
                         double capacidadLt = 0;
                         double capacidadKg = 0;
-                        for (ExistenciasDTO item: data_get){
-                            if(item.getId()==adapter.getCilindro(x).getId()) {
+                        for (ExistenciasDTO item : data_get) {
+                            if (item.getId() == adapter.getCilindro(x).getId()) {
                                 capacidadLt = item.getCapacidadLt();
                                 capacidadKg = item.getCapacidadKg();
                             }
@@ -573,36 +628,36 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
                         Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
                         conceptos.add(Gas);
-                    }else{
+                    } else {
                         AlertDialog.Builder builder = new
-                                AlertDialog.Builder(this,R.style.AlertDialog);
+                                AlertDialog.Builder(this, R.style.AlertDialog);
                         builder.setTitle(R.string.mensjae_error_campos);
-                        builder.setMessage("No hay existencias suficientes de "+TVTipo.getText()+
-                                " actualmente cuentas con "+cantidadActual
+                        builder.setMessage("No hay existencias suficientes de " + TVTipo.getText() +
+                                " actualmente cuentas con " + cantidadActual
 
                         );
-                        builder.setPositiveButton(R.string.message_acept,(dialog, which) ->
-                        dialog.dismiss());
+                        builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
+                                dialog.dismiss());
                         builder.create().show();
                         break;
                     }
 
-                }else{
-                    AlertDialog.Builder  alert =
-                            new AlertDialog.Builder(this,R.style.AlertDialog);
+                } else {
+                    AlertDialog.Builder alert =
+                            new AlertDialog.Builder(this, R.style.AlertDialog);
                     alert.setTitle(R.string.title_alert_message);
-                    alert.setMessage("No hay existencias suficientes del cilindro de "+
-                    adapter.getCilindro(x).getNombre().replace(",0000"," KG"));
-                    alert.setPositiveButton(R.string.message_acept,(dialog, which) ->{
-                                editText.setText("");
-                                dialog.dismiss();
-                            });
+                    alert.setMessage("No hay existencias suficientes del cilindro de " +
+                            adapter.getCilindro(x).getNombre().replace(",0000", " KG"));
+                    alert.setPositiveButton(R.string.message_acept, (dialog, which) -> {
+                        editText.setText("");
+                        dialog.dismiss();
+                    });
 
                     alert.create().show();
                 }
             }
         }
-        for (int x=0;x<conceptos.size();x++){
+        for (int x = 0; x < conceptos.size(); x++) {
             actualizarConceptos(conceptos.get(x));
         }
     }
@@ -622,10 +677,10 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             //EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
             //        findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
             //TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
-            Calendar  calendar = Calendar.getInstance();
-            if(adapter.getCilindro(x).getCantidad()!=null) {
+            Calendar calendar = Calendar.getInstance();
+            if (adapter.getCilindro(x).getCantidad() != null) {
                 if (adapter.getCilindro(x).getCantidad().length() > 0
-                        ) {
+                ) {
                     //if (editText.getText().toString().trim().length() > 0) {
                     int cantidad = Integer.parseInt(adapter.getCilindro(x).getCantidad());
                     if (cantidad > 0) {
@@ -665,7 +720,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 }
             }
         }
-        for (int x=0;x<conceptos.size();x++){
+        for (int x = 0; x < conceptos.size(); x++) {
             actualizarConceptos(conceptos.get(x));
         }
     }
@@ -684,12 +739,12 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
                     findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
             TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
-            Calendar  calendar = Calendar.getInstance();
-            if(!editText.getText().toString().isEmpty()) {
+            Calendar calendar = Calendar.getInstance();
+            if (!editText.getText().toString().isEmpty()) {
                 double cantidadVenta = Double.valueOf(editText.getText().toString());
                 double cantidadActual = adapter.getCilindro(x).getExistencias();
-                if (editText.getText().toString().trim().length() > 0 && cantidadVenta>0 ) {
-                    if(cantidadVenta<=cantidadActual) {
+                if (editText.getText().toString().trim().length() > 0 && cantidadVenta > 0) {
+                    if (cantidadVenta <= cantidadActual) {
                         //Costo del gas
                         ConceptoDTO Gas = new ConceptoDTO();
                         Gas.setIdEmpresa(session.getIdEmpresa());
@@ -709,16 +764,16 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         Gas.setCantidad(
                                 cantidadVenta
                         );
-                        if(EsVentaCamioneta && esGasLP){
+                        if (EsVentaCamioneta && esGasLP) {
                             double cap = ExistenciasDTO.get(x).getCapacidadKg();
                             Gas.setCantidadKg(
                                     cap * cantidadVenta *
-                                    precioVentaDTO.getPrecioSalidaKg()
+                                            precioVentaDTO.getPrecioSalidaKg()
 
                             );
                             Gas.setCantidadLt(
                                     cap * cantidadVenta *
-                                    precioVentaDTO.getPrecioSalidaLt()
+                                            precioVentaDTO.getPrecioSalidaLt()
                             );
 
                             Gas.setSubtotal(
@@ -727,7 +782,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                             Gas.setConcepto(TVTipo.getText().toString());
                             Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
                             Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
-                        }else{
+                        } else {
                             Gas.setCantidadKg(
                                     precioVentaDTO.getPrecioSalidaKg() * cantidadVenta
                             );
@@ -742,28 +797,26 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
 
                         conceptos.add(Gas);
-                    }
-                    else
-                    {
+                    } else {
                         AlertDialog.Builder builder =
-                                new AlertDialog.Builder(this,R.style.AlertDialog);
+                                new AlertDialog.Builder(this, R.style.AlertDialog);
                         builder.setTitle(R.string.mensjae_error_campos);
-                        builder.setMessage("La cantidad sobrepasa la existencia actual que es "+
-                        cantidadActual+" Lt");
-                        builder.setPositiveButton(R.string.message_acept,(dialog, which) ->
+                        builder.setMessage("La cantidad sobrepasa la existencia actual que es " +
+                                cantidadActual + " Lt");
+                        builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
                                 dialog.dismiss());
                         builder.create().show();
                     }
                 }
             }
         }
-        for (int x=0;x<conceptos.size();x++){
+        for (int x = 0; x < conceptos.size(); x++) {
             actualizarConceptos(conceptos.get(x));
         }
     }
 
-    public void LimpiarLista(){
-        for (int x = 0; x <data_get.size()-1; x++) {
+    public void LimpiarLista() {
+        for (int x = 0; x < data_get.size() - 1; x++) {
             View view = RVPuntoVentaGasActivityListaGas.getLayoutManager().getChildAt(x);
             CardView CVEstacionesCarburacionItem = view.findViewById(R.id.CVEstacionesCarburacionItem);
             EditText editText = CVEstacionesCarburacionItem.findViewById(R.id.Grid).
