@@ -93,6 +93,7 @@ public class Lisener{
     public void CrearRunable(Proceso proceso){
 //        final Runnable myTask = () -> {
             switch (proceso){
+
                 case Papeleta:
                     completo = Papeletas();
                     break;
@@ -136,6 +137,7 @@ public class Lisener{
                     completo = RecargaPipa();
                     break;
                 case Venta:
+                    Log.d("VentaProceso", "esta completo");
                     completo = PuntoVenta();
                     break;
                 case Autoconsumo:
@@ -891,8 +893,10 @@ public class Lisener{
 
     //region Punto de venta
     private boolean PuntoVenta() {
-        if(ServicioDisponible()){
+        Log.w("pv",ServicioDisponible()+"");
+        if(!ServicioDisponible()){
             Log.w("Iniciando","Revisando las ventas "+ new Date());
+
             Cursor cursor = sagasSql.GetVentas();
             VentaDTO ventaDTO;
             boolean esCamioneta,
@@ -1069,6 +1073,7 @@ public class Lisener{
                                 esPipa) {
 
         Log.w("Registro","Registrando en servicio de ventas: "+ventaDTO.getFolioVenta());
+        Log.d("registrarVenta","Registrado");
         
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaPuntoVenta> call = restClient.pagar(
@@ -2418,7 +2423,7 @@ public class Lisener{
             public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
                 RespuestaServicioDisponibleDTO data = response.body();
                 EstaDisponible = response.isSuccessful() && data.isExito();
-                Log.w("Servicio","El servicio esta disponible");
+                Log.w("ServicioExito","El servicio esta disponible " + response.code()+"");
             }
 
             @Override

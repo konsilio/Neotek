@@ -73,6 +73,7 @@ public class Semaforo {
             ban = true;
         }
         if(sagasSql.GetVentas().getCount()>0){
+            Log.d("Ventas","si entra");
             ban = true;
         }
         if(sagasSql.GetAutoconsumos().getCount()>0)
