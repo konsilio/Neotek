@@ -30,9 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoVentaOtrosView{
+
+
     Spinner SPuntoVentaOtrosCategoria,SPuntoVentaOtrosLinea,SPuntoVentaOtrosActivityProducto;
     EditText ETProductoVentaOtrosConcepto,ETPuntoVentaOtrosActivityPrecio,
-            ETPuntoVentaOtrosActivityCantidad;
+            ETPuntoVentaOtrosActivityCantidad, ETPuntoVentaOtrosActivityPrecioporLitro;
     Button BtnPuntoVentaOtrosActivityOpciones,BtnPuntoVentaOtrosActivityAgregar,
             BtnPuntoVentaOtrosActivityPagar;
     TableLayout TLPuntoVentaOtrosActivityConcepto;
@@ -47,8 +49,11 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
     int idCategoria,idLinea,idProducto;
 
     Session session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d("oncreate","si entra");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punto_venta_otros);
         Bundle extras = getIntent().getExtras();
@@ -65,12 +70,14 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
         ETProductoVentaOtrosConcepto = findViewById(R.id.ETProductoVentaOtrosConcepto);
         ETPuntoVentaOtrosActivityPrecio = findViewById(R.id.ETPuntoVentaOtrosActivityPrecio);
         ETPuntoVentaOtrosActivityCantidad = findViewById(R.id.ETPuntoVentaOtrosActivityCantidad);
+        ETPuntoVentaOtrosActivityPrecioporLitro = findViewById(R.id.ETPuntoVentaGasListActivityPrecioporLitro);
         BtnPuntoVentaOtrosActivityOpciones = findViewById(R.id.BtnPuntoVentaOtrosActivityOpciones);
         BtnPuntoVentaOtrosActivityAgregar = findViewById(R.id.BtnPuntoVentaOtrosActivityAgregar);
         BtnPuntoVentaOtrosActivityPagar = findViewById(R.id.BtnPuntoVentaOtrosActivityPagar);
         TLPuntoVentaOtrosActivityConcepto = findViewById(R.id.TLPuntoVentaOtrosActivityConcepto);
 
         BtnPuntoVentaOtrosActivityOpciones.setOnClickListener(v->{
+
             Intent intent = new Intent(PuntoVentaOtrosActivity.this,
                     VentaGasActivity.class);
             intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
@@ -83,13 +90,16 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
             startActivity(intent);
         });
         BtnPuntoVentaOtrosActivityAgregar.setOnClickListener(v->{
+
             ConceptoDTO conceptoDTO = new ConceptoDTO();
             int cantidad = Integer.parseInt(ETPuntoVentaOtrosActivityCantidad.getText().toString());
+            int precioLtr= Integer.parseInt(ETPuntoVentaOtrosActivityPrecioporLitro.getText().toString());
             double punitario = Double.parseDouble(ETPuntoVentaOtrosActivityPrecio.getText().toString());
 
             conceptoDTO.setCantidad(cantidad);
+            conceptoDTO.setPUnitario(precioLtr);
             conceptoDTO.setSubtotal(cantidad*punitario);
-            conceptoDTO.setPUnitario(punitario);
+            //conceptoDTO.setPUnitario(punitario);
             conceptoDTO.setDescuento(0);
             conceptoDTO.setIdTipoGas(0);
             conceptoDTO.setConcepto(ETProductoVentaOtrosConcepto.getText().toString());
@@ -221,7 +231,7 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
      * e identificar si es un campo de otro, se toma como parametro la posicion seleccionada
      * del select de categorias para extraer su nombre y buscar en el objeto
      * el id que le corresponde y gudardarlo en una variable global.
-     * @param posicion {@link Integer} que reprecenta la posicion del select a obtener
+     * @param posicion {@link } que reprecenta la posicion del select a obtener
      *                                el nombre de al categoria
      */
     private void cambioCategoria(int posicion) {
@@ -252,7 +262,7 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
      * para buscar el id de la linea que le corresponde, despues actualizara con id de la categoria
      * el select de productos
      *
-     * @param posicion {@link Integer} que reprecenta la posicion del select a obtener el nombre de
+     * @param posicion {@link} que reprecenta la posicion del select a obtener el nombre de
      *                                linea
      */
     private void cambioLinea(int posicion){
@@ -387,6 +397,7 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
 
     @Override
     public void mostrarConcepto(List<ConceptoDTO> list) {
+        Log.d("mostrarconcepto","entro");
         Tabla tabla = new Tabla(this,TLPuntoVentaOtrosActivityConcepto);
         if(list!=null && list.size()>0){
             tabla.Cabecera(R.array.condepto_venta);
@@ -397,9 +408,12 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
                         concepto.getConcepto(),
                         String.valueOf(concepto.getCantidad()),
                         format.format(concepto.getPUnitario()),
+                        format.format(concepto.getDescuentoUnitarioLt()),
                         format.format(concepto.getDescuento()),
                         format.format(concepto.getSubtotal())
+
                 });
+                Log.d("Preciounitario",concepto.getCantidad()+"");
             }
             tabla.agregarFila(datos);
         }else{

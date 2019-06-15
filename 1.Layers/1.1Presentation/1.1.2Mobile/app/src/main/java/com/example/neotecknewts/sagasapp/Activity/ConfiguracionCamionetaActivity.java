@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +38,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("jimmy","oncreate");
         setContentView(R.layout.activity_configuracion_camioneta);
         Bundle bundle = getIntent().getExtras();
         cilindrosDTOS = new ArrayList<>();
@@ -107,7 +109,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
     public void VerificarForm() {
         boolean error = false;
         lista_errores = new ArrayList<>();
-        boolean flag = true;
+        boolean flag = false;
         if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta) {
             //TextView textView;
             for (int x = 0; x < adapter.getItemCount(); x++) {
@@ -121,12 +123,17 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
                         error = true;
                         break;
                     }else{
-                        if(Integer.parseInt(editText.getText().toString()) == 0){
-                            flag = false;
+                        if(flag) {
 
-                        }else {
-                            flag=true;
+                        }else{
+                            if(Integer.parseInt(editText.getText().toString())==0){
+                                flag = false;
+                            }else {
+                                flag = true;
+                            }
                         }
+
+
                     }
                 } else {
                     lista_errores.add("El valor para el cilindo del renglon " +

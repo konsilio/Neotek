@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Adapter;
 
 import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +32,12 @@ public class CamionetasAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position){
+        Log.d("position", position+"");
         ((CamionetasHolder) viewHolder).ETConfiguracionCamionetasCantidad.setText(
                 String.valueOf(items.get(position).getCantidad())
         );
         String cantidad  = items.get(position).getCilindroKg().substring(
-                items.get(position).getCilindroKg().indexOf(",")
+                items.get(position).getCilindroKg().indexOf(".")
         );
         cantidad = items.get(position).getCilindroKg().replace(cantidad,"");
         ((CamionetasHolder) viewHolder).TVCamposCamionetasTipoCilindro.setText(

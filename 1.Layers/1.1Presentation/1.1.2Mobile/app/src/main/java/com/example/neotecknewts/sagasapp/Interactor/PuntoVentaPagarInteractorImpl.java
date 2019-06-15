@@ -168,6 +168,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                             break;
                     }
                     presenter.onErrorPuntoVenta("No se ha podido identificar el punto de venta");
+                    Log.d("Proceso","sincronizarpuntoventa");
                 }
 
             }
@@ -182,7 +183,6 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
 
     @Override
     public void verificarVentaExtraforanea(int idCliente, String token) {
-
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaVentaExtraforaneaDTO> call = restClient.getTieneVentaExtraforanea(
