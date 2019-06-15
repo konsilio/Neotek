@@ -124,11 +124,11 @@
                                             <div class="blockquote blockquote-info btn-round">
                                                 @if (ViewBag.EsNueva)
                                                 {
-                                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize", @placeholder = "Se requiere en...", @rows = "4" })
+                                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize", @placeholder = "Motivo de compra...", @rows = "4" })
                                                 }
                                                 else
                                                 {
-                                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize", @placeholder = "Se requiere en...", @disabled = "disabled", @rows = "4" })
+                                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize", @placeholder = "Motivo de compra...", @disabled = "disabled", @rows = "4" })
                                                 }
                                             </div>
                                             @Html.ValidationMessageFor(m => m.MotivoRequisicion, "", new { @class = "alert-danger" })
