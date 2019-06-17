@@ -37,6 +37,7 @@
         app:zoomage_restrictBounds="false"
         app:zoomage_zoomable="true" />
 
+
     <LinearLayout
         android:id="@+id/layout_photo_button"
         android:layout_width="match_parent"

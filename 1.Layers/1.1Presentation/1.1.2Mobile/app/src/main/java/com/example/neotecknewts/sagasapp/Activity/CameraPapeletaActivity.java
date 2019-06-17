@@ -70,6 +70,8 @@ public class CameraPapeletaActivity extends AppCompatActivity {
         imageViewFoto = (ImageView) findViewById(R.id.image_view_foto);
         textViewTitulo = (TextView) findViewById(R.id.textTitulo);
         textViewMensaje = (TextView) findViewById(R.id.textIndicaciones);
+        imageViewFoto.setImageResource(R.drawable.ic_go_back_dark);
+
 
         textViewTitulo.setText(R.string.title_foto_papeleta);
         NombreFoto = "FotoPapeleta|"+new Date();
@@ -80,12 +82,15 @@ public class CameraPapeletaActivity extends AppCompatActivity {
             layoutNitidez.setVisibility(View.VISIBLE);
             textViewMensaje.setVisibility(View.GONE);
 
+
         }else{
             textViewMensaje.setVisibility(View.VISIBLE);
             layoutTitle.setVisibility(View.VISIBLE);
             layoutCameraButton.setVisibility(View.VISIBLE);
             layoutNitidez.setVisibility(View.GONE);
+            Log.d("foto","fototomada");
         }
+
 
         final Button buttonFoto = (Button) findViewById(R.id.button_foto);
         buttonFoto.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +144,8 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
         intent.putExtra("Papeleta",papeletaDTO);
+
+
         intent.putExtra("EsPapeleta",true);
         intent.putExtra("EsDescargaIniciar",false);
         intent.putExtra("EsDescargaFinalizar",false);
@@ -147,6 +154,10 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
 
     private void openCameraIntent() {
+        ImageView imageView;
+        ImageView image;
+
+        //image.setImageResource(R.drawable.ic_go_back_dark);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ContentValues values = new ContentValues();
@@ -159,6 +170,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, CAMERA_REQUEST);
 
+
         /*Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(pictureIntent, CAMERA_REQUEST);*/
 
@@ -168,6 +180,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             try {
+                /*obtiene la imagen de la foto*/
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                         getContentResolver(), imageUri);
                 imageViewFoto.setImageBitmap(bitmap);
@@ -188,6 +201,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     private boolean permissions(List<String> listPermissionsNeeded) {
 
         if (!listPermissionsNeeded.isEmpty()) {
+
             ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray
                     (new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
             return true;

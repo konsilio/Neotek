@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.StrictMode;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
@@ -36,6 +37,7 @@ import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -894,7 +896,7 @@ public class Lisener{
     //region Punto de venta
     private boolean PuntoVenta() {
         Log.w("pv",ServicioDisponible()+"");
-        if(!ServicioDisponible()){
+        if(ServicioDisponible()){
             Log.w("Iniciando","Revisando las ventas "+ new Date());
 
             Cursor cursor = sagasSql.GetVentas();
@@ -902,8 +904,7 @@ public class Lisener{
             boolean esCamioneta,
                     esEstacion,
                     esPipa;
-            if(cursor.moveToFirst()){
-                while (!cursor.isAfterLast()){
+                while (cursor.moveToNext()){
                     ventaDTO = new VentaDTO();
                     /*coloco los valores de la venta*/
                     ventaDTO.setFolioVenta(cursor.getString(cursor.getColumnIndex("FolioVenta")));
@@ -1058,13 +1059,15 @@ public class Lisener{
                             concepto.moveToNext();
                         }
                     }
+                    Log.w("Registro","Registrando en servicio de ventas");
+
                     if(registrarVenta(ventaDTO,esCamioneta,esEstacion,esPipa)){
                         sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
                         sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
                     }
                     cursor.moveToNext();
                 }
-            }
+
         }
         return (sagasSql.GetVentas().getCount()==0);
     }
@@ -1073,8 +1076,7 @@ public class Lisener{
                                 esPipa) {
 
         Log.w("Registro","Registrando en servicio de ventas: "+ventaDTO.getFolioVenta());
-        Log.d("registrarVenta","Registrado");
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaPuntoVenta> call = restClient.pagar(
                 ventaDTO,
@@ -1084,26 +1086,33 @@ public class Lisener{
                 token,
                 "application/json"
         );
-        call.enqueue(new Callback<RespuestaPuntoVenta>() {
-            @Override
-            public void onResponse(Call<RespuestaPuntoVenta> call,
-                                   Response<RespuestaPuntoVenta> response) {
-                _registrado = call.isExecuted() && response.isSuccessful();
-                Log.e("Corte"+ventaDTO.getFolioVenta(),
-                        String.valueOf(response.isSuccessful()));
-            }
 
-            @Override
-            public void onFailure(Call<RespuestaPuntoVenta> call, Throwable t) {
-                _registrado = false;
-            }
-        });
+//        call.enqueue(new Callback<RespuestaPuntoVenta>() {
+//            @Override
+//            public void onResponse(Call<RespuestaPuntoVenta> call,
+//                                   Response<RespuestaPuntoVenta> response) {
+//                _registrado = call.isExecuted() && response.isSuccessful();
+//                Log.e("Corte"+ventaDTO.getFolioVenta(),
+//                        String.valueOf(response.isSuccessful()));
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RespuestaPuntoVenta> call, Throwable t) {
+//                _registrado = false;
+//            }
+//        });
+        Log.w("Registro","Registro en servicio venta"+ventaDTO.getFolioVenta()+": "+
+                _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         /*if(_registrado){
             sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
             sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
         }*/
-        Log.w("Registro","Registro en servicio venta"+ventaDTO.getFolioVenta()+": "+
-                _registrado);
+
         return _registrado;
     }
     //endregion
@@ -2414,24 +2423,16 @@ public class Lisener{
     //region Estatus servicio
     private boolean ServicioDisponible(){
         Log.v("Servicio","Verifica el estatus del servicio");
-        
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         RestClient restClientS = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
                 "application/json");
-        callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
-            @Override
-            public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
-                RespuestaServicioDisponibleDTO data = response.body();
-                EstaDisponible = response.isSuccessful() && data.isExito();
-                Log.w("ServicioExito","El servicio esta disponible " + response.code()+"");
-            }
-
-            @Override
-            public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
-                EstaDisponible = false;
-                Log.w("Servicio","El servicio no esta disponible");
-            }
-        });
+        try {
+            EstaDisponible = callS.execute().code() ==200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return EstaDisponible;
     }
     //endregion

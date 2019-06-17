@@ -143,6 +143,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             alertDialog.setPositiveButton("Sincronizar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
                             progressSincronizar = new ProgressDialog(MenuActivity.this,R.style.AlertDialog);
                             progressSincronizar.setIndeterminate(true);
                             progressSincronizar.setMessage(getString( R.string.message_cargando));
@@ -150,7 +151,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                             progressSincronizar.show();
                             //semaforo.sincronizar(session.getToken(),progressSincronizar);
                             semaforo.sincronizar(session.getToken());
-                            dialogInterface.dismiss();
+                            progressSincronizar.hide();
                         }
                     }
             );
