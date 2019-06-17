@@ -103,7 +103,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.Cargo>().Update(_pro);
+                    uow.Repository<Cargo>().Update(_pro);
                     uow.SaveChanges();
                     _respuesta.Id = _pro.IdCargo;
                     _respuesta.Exito = true;
@@ -124,6 +124,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Abono>().GetAll().ToList();
         }
+        public Abono BuscarAbono(int id)
+        {
+            return uow.Repository<Abono>().GetSingle(x => x.IdAbono.Equals(id));
+        }
         public List<Abono> BuscarTodos(DateTime f)
         {
             return uow.Repository<Abono>().Get(x => x.FechaAbono.Month.Equals(f.Month) &&
@@ -138,8 +142,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Cargo> BuscarTodos(short idEmpresa)
         {
-            return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                        && x.Saldada)
+            return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa))
                                                          .ToList();
         }
         public List<Cargo> Buscar(short idEmpresa, int idCliente)

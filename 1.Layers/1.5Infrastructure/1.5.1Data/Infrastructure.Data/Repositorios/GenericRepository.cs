@@ -45,69 +45,46 @@ namespace Infrastructure.Data.Repositorios
                 return query.ToList();
             }
         }
-
         public IEnumerable<T> GetAll()
         {
             return _objectSet.AsEnumerable();
         }
-
-        //public IEnumerable<T> GetList(Func<T, bool> where = null)
-        //{
-        //    if (where != null)
-        //    {
-        //        return _objectSet.Where(where);
-        //    }
-        //    return _objectSet.AsEnumerable();
-        //}
-
         public T GetSingleByID(object id)
         {
-
             return _objectSet.Find(id);
-
         }
-
         public T GetSingle(Func<T, bool> where)
         {
             return _objectSet.FirstOrDefault(where);
         }
-
         public int Count()
         {
             return _objectSet.Count();
         }
-
         public void Attach(T entity)
         {
             _objectSet.Attach(entity);
         }
-
         public void Insert(T entity)
         {
             _objectSet.Add(entity);
         }
-
         public void Delete(object id)
         {
             T entity = _objectSet.Find(id);
             _objectSet.Remove(entity);
         }
-
         public void Delete(T entity)
         {
-            if (entities.Entry(entity).State == EntityState.Detached)
-            {
-                _objectSet.Attach(entity);
-            }
+            if (entities.Entry(entity).State == EntityState.Detached)            
+                _objectSet.Attach(entity);            
             _objectSet.Remove(entity);
         }
-
         public void Update(T entity)
         {
             _objectSet.Attach(entity);
             entities.Entry(entity).State = EntityState.Modified;
         }
-
         public void Save()
         {
             entities.SaveChanges();

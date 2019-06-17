@@ -264,13 +264,13 @@ namespace MVC.Presentacion.Controllers
             var JsonInfo = JsonConvert.SerializeObject(unidad);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult BuscarPorNumeroRequisicion(string numRequisicon, short idEmpresa)
+        public JsonResult BuscarPorNumeroRequisicion(string numrequisicion, short idEmpresa)
         {
             tkn = Session["StringToken"].ToString();
             if (idEmpresa.Equals(0))
                 idEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
             var list = RequisicionServicio.BuscarRequisiciones(idEmpresa, tkn)
-                .Where(req => req.NumeroRequisicion.Contains(numRequisicon))
+                .Where(req => req.NumeroRequisicion.Contains(numrequisicion))
                 .OrderByDescending(x => x.IdRequisicion).ToList();
             var JsonInfo = JsonConvert.SerializeObject(list);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);

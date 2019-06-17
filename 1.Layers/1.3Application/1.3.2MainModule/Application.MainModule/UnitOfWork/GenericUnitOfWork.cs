@@ -11,12 +11,10 @@ namespace Application.MainModule.UnitOfWork
     {
         public DbContext entities;
         public Dictionary<Type, object> repositories = new Dictionary<Type, object>();
-
         public GenericUnitOfWork()
         {
             entities = new TContext();
         }
-
         public IRepository<T> Repository<T>() where T : class
         {
             // Validation: Valida la existencia de la entidad dentro del repositorio.
@@ -29,7 +27,6 @@ namespace Application.MainModule.UnitOfWork
             repositories.Add(typeof(T), repo);
             return repo;
         }
-
         public IRepository<T> RepositoryWithoutValidation<T>() where T : class
         {
             // Validation out: No realiza la validación de existencia de la entidad en el repositorio
@@ -37,19 +34,15 @@ namespace Application.MainModule.UnitOfWork
             repositories.Add(typeof(T), repo);
             return repo;
         }
-
         public void SaveChanges()
         {
             entities.SaveChanges();
         }
-
         public int Save()
         {
             return entities.SaveChanges();
         }
-
         private bool disposed = false;
-
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -61,7 +54,6 @@ namespace Application.MainModule.UnitOfWork
             }
             this.disposed = true;
         }
-
         public void Dispose()
         {
             Dispose(true);

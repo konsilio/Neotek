@@ -48,7 +48,7 @@ namespace Application.MainModule.Servicios.Mobile
 
             if (usuario.Roles != null)
             {
-                bool hayLectura = true,esEstacion = true;
+                bool hayLectura = true, esEstacion = true;
                 
                 if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count!=0)
                 {
@@ -57,23 +57,32 @@ namespace Application.MainModule.Servicios.Mobile
                     var operador = OperadorChoferServicio.Obtener(operadorDTO.IdOperadorChofer);
                     //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
                     var puntoVenta = PuntoVentaServicio.Obtener(operador);
-                    var unidadAlmacen = puntoVenta.UnidadesAlmacen;
-                    if (unidadAlmacen.IdEstacionCarburacion > 0 && unidadAlmacen.IdEstacionCarburacion != 0)
-                        esEstacion = true;
-                    else
-                        esEstacion = false;
-                    var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
-                    if (ultimaLectura != null)
-                        hayLectura = true;
-                    else
-                        hayLectura = false;
+                    
+                    if (puntoVenta != null)
+                    {
+                        var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+                        if (unidadAlmacen.IdEstacionCarburacion != null && unidadAlmacen.IdEstacionCarburacion != 0)
+                            esEstacion = true;
+                        else
+                            esEstacion = false;
+                        var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
+                        if (ultimaLectura != null)
+                            hayLectura = true;
+                        else
+                            hayLectura = false;
+                        if (unidadAlmacen.EsGeneral)
+                        {
+                            hayLectura = true;
+                            esChofer = false;
+                        }
+                        
+                    }
                     
                 }
                 else
                 {
                     hayLectura = true;
                 }
-
                     
                 foreach (Rol rol in usuario.Roles)
                 {

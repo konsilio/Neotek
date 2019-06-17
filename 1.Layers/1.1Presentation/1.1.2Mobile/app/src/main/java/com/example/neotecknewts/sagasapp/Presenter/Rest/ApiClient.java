@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     public static final String BASE_URL = "http://sagasapi.ddns.net:7012/api/"; //QA
-//    public static final String BASE_URL = "http://sagasapi.ddns.net:7011/api/";//DEV
+    //public static final String BASE_URL = "http://sagasapi.ddns.net:7011/api/";//DEV
 
     private static Retrofit retrofit = null;
 

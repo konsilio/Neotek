@@ -23,8 +23,8 @@ namespace MVC.Presentacion.Models.Catalogos
         public string UnidadMedida { get; set; }
         public short? IdUnidadMedida2 { get; set; }
         public string Descripcion { get; set; }
-        public decimal? Minimos { get; set; }
-        public decimal? Maximo { get; set; }
+        public decimal Minimos { get; set; }
+        public decimal Maximo { get; set; }
         public string UrlImagen { get; set; }
         public string PathImagen { get; set; }
         public bool Activo { get; set; }

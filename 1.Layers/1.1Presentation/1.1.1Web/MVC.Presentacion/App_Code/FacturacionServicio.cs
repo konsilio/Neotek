@@ -84,5 +84,11 @@ namespace MVC.Presentacion.App_Code
             }
             return cfdis;
         }
+        public static RespuestaDTO GenerarFacturasAbono(int id, string token)
+        {
+            AgenteServicio _agente = new AgenteServicio();
+            _agente.FacturarPago(id, token);
+            return _agente._RespuestaDTO;
+        }
     }
 }

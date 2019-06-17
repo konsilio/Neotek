@@ -140,6 +140,7 @@
                                                 <th>Cliente</th>
                                                 <th>Importe</th>
                                                 <th>Forma Pago</th>
+                                                <th>Accion</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -158,6 +159,20 @@
                                                                 <td>@item.Nombre</td>
                                                                 <td>@x.MontoAbono</td>
                                                                 <td>@x.FormaPago</td>
+                                                                <th>     
+                                                                    <a href="@Url.Action("FacturarAbono", "Cobranza", new { id = x.IdAbono })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="material-icons">local_atm</i>
+                                                                        <span>Facturar</span>
+                                                                    </a>                                                               
+                                                                    <a ID="lbPDF" href="@item.URL_CFDI" class="tip" target="_blank" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="material-icons">picture_as_pdf</i>
+                                                                        <span>PDF</span>
+                                                                    </a>
+                                                                    <a ID="lbXML" href="@item.URL_XML" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                        <i class="material-icons">file_download</i>
+                                                                        <span>XML</span>
+                                                                    </a>
+                                                                </th>
                                                             </tr>
                                                         }
                                                     }

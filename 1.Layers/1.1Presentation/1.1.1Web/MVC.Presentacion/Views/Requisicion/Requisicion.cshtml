@@ -20,7 +20,7 @@
 <div class="page-loader-wrapper">
     <div class="loader">
         <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="50" height="50" alt="Alpino"></div>
-        <p>Procesando</p>
+        <p>Espere por favor, procesando...</p>
     </div>
 </div>
 <body>
@@ -55,12 +55,18 @@
                                                 </div>
                                                 @if (ViewBag.EsAdmin)
                                                 {
-                                                    <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                        @foreach (var lst in ViewBag.Empresas)
-                                                        {
-                                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                        }
-                                                    </select>
+                                                    @Html.DevExpress().ComboBox(settings =>
+                                                    {
+                                                        settings.Name = "IdEmpresa";
+                                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                        settings.SelectedIndex = 0;
+                                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                        settings.Properties.ValueType = typeof(int);
+                                                        settings.Properties.TextField = "NombreComercial";
+                                                        settings.Properties.ValueField = "IdEmpresa";
+                                                    }).BindList(ViewBag.Empresas).Bind(Model.IdEmpresa).GetHtml()
+                                                    @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                                                 }
                                                 else
                                                 {
@@ -69,65 +75,60 @@
                                                 @Html.HiddenFor(m => m.IdEmpresa)
                                             </div>
                                         </div>
-                                        @*<div class="col-sm-6">
-                                            <div id="divServ">
-                                                <div class="form-group">
-                                                    @Html.CheckBoxFor(m => m.EsExterno, new { id = "cbEsExterno", @style = "width: 20px; height: 20px;" })
-                                                    <label for="cbServicioTransporte" class="z-index:8">
-                                                        ¿Requisición Externa?
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>*@
+
                                     </div>
                                     <div class="row clearfix z-index" id="divCamposRequi">
                                         <div class="col-lg-3">
                                             <b>Fecha requerida:</b>
 
                                             @Html.DevExpress().DateEdit(settings =>
-                                   {
-                                       settings.Name = "FechaRequerida";
-                                       settings.Properties.UseMaskBehavior = true;
-                                       //settings.Properties.NullText = "dd/MM/yyyy";
-                                       settings.Properties.EditFormat = EditFormat.Custom;
-                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
-                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
-                                       //settings.Properties.TimeSectionProperties.Visible = true;
-                                       //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
-                                       //settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "HH:mm";
-                                       //settings.PopupCalendarOwnerName = "FechaRequerida";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       settings.Theme = "Material";
-                                   }).Bind(Model.FechaRequerida).GetHtml()
-                                            @*<div class="input-group">
-                                                    <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-                                                    @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
-                                                </div>*@
+                                       {
+                                           settings.Name = "FechaRequerida";
+                                           settings.Properties.UseMaskBehavior = true;
+                                           settings.Properties.EditFormat = EditFormat.Custom;
+                                           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
+                                           settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                           settings.Theme = "Material";
+                                       }).Bind(Model.FechaRequerida).GetHtml()
+
                                             @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
                                             @Html.HiddenFor(m => m.FechaRequerida)
                                         </div>
                                         <div class="col-lg-3">
                                             <b>Solicitante:</b>
-                                            <select id="ddlSoliciante" name="IdUsuarioSolicitante" class="form-control show-tick" @EnabledAdminCentral data-live-search="true">
+                                            @Html.DevExpress().ComboBox(settings =>
+                                                    {
+                                                        settings.Name = "IdUsuarioSolicitante";
+                                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                        settings.SelectedIndex = 0;
+                                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                        settings.Properties.ValueType = typeof(int);
+                                                        settings.Properties.TextField = "Nombre";
+                                                        settings.Properties.ValueField = "IdUsuario";
+                                                    }).BindList(ViewBag.Usuarios).Bind(Model.IdUsuarioSolicitante).GetHtml()
+                                            @Html.ValidationMessageFor(m => m.IdUsuarioSolicitante, "", new { @class = "alert-danger" })
+                                            @*<select id="ddlSoliciante" name="IdUsuarioSolicitante" class="form-control show-tick" @EnabledAdminCentral data-live-search="true">
                                                 @foreach (var lst in ViewBag.Usuarios)
                                                 {
                                                     <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1</option>
                                                 }
-                                            </select>
+                                            </select>*@
                                             @Html.HiddenFor(m => m.IdUsuarioSolicitante)
                                             @Html.ValidationMessageFor(m => m.IdUsuarioSolicitante, "", new { @class = "alert-danger" })
                                         </div>
                                         <div class="col-lg-3">
-                                            <b>Motivo de compra:</b>
+                                            <b>Establecer motivo de compra:</b>
                                             <div class="blockquote blockquote-info btn-round">
                                                 @if (ViewBag.EsNueva)
                                                 {
-                                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize", @placeholder = "Se requiere en...", @rows = "4" })
+                                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize", @placeholder = "Motivo de compra...", @rows = "4" })
                                                 }
                                                 else
                                                 {
-                                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize", @placeholder = "Se requiere en...", @disabled = "disabled", @rows = "4" })
+                                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize", @placeholder = "Motivo de compra...", @disabled = "disabled", @rows = "4" })
                                                 }
                                             </div>
                                             @Html.ValidationMessageFor(m => m.MotivoRequisicion, "", new { @class = "alert-danger" })
@@ -301,11 +302,11 @@
                                                                 <td>@prodReq.Aplicacion</td>
                                                                 <td>@prodReq.CentroCosto</td>
                                                                 <td>
-                                                                    <a href="@Url.Action(" Editar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                    <a href="@Url.Action("Editar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">edit</i>
                                                                         <span>Editar</span>
                                                                     </a>
-                                                                    <a href="@Url.Action(" Borrar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                    <a href="@Url.Action("Borrar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">delete</i>
                                                                         <span>Eliminar</span>
                                                                     </a>
@@ -324,7 +325,7 @@
                                     }
                                     <div class="row clearfix">
                                         <div class="col-lg-4 col-md-8 text-center">
-                                            <a href="@Url.Action(" Requisiciones", "Requisicion" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
+                                            <a href="@Url.Action("Requisiciones", "Requisicion" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
                                                 Regresar
                                             </a>
                                         </div>

@@ -3220,7 +3220,7 @@ namespace MVC.Presentacion.Agente
                 _listaRequisicion = emp;
             }
         }
-        public void GuardarRequisicon(RequisicionDTO dto, string token)
+        public void GuardarRequisicion(RequisicionDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRequisicion"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
@@ -3710,9 +3710,9 @@ namespace MVC.Presentacion.Agente
         public void BuscarRegistroAlmacen(int id, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["GetRegistroAlmacen"];
-            GetRequisiconAlmacen(id, tkn).Wait();
+            GetRequisicionAlmacen(id, tkn).Wait();
         }
-        private async Task GetRequisiconAlmacen(int id, string Token)
+        private async Task GetRequisicionAlmacen(int id, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -3742,7 +3742,7 @@ namespace MVC.Presentacion.Agente
         }
         public void BuscarRequsicionSalida(int id, string tkn)
         {
-            this.ApiRoute = ConfigurationManager.AppSettings["GetRequisiconAlmacen"];
+            this.ApiRoute = ConfigurationManager.AppSettings["GetrequisicionAlmacen"];
             GetListaRegistroSalida(id, tkn).Wait();
         }
         private async Task GetListaRegistroSalida(int id, string Token)
@@ -4802,6 +4802,11 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistrarCFDIGlobal"];
             LLamada(model, token, MetodoRestConst.Post, false).Wait();
         }
+        public void FacturarPago(int id, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["GetTimbrarPago"];
+            LLamada(id, token, MetodoRestConst.Get, false).Wait();
+        }
 
         #endregion
         #region HistoricoVentas
@@ -5557,6 +5562,8 @@ namespace MVC.Presentacion.Agente
                 try
                 {
                     HttpResponseMessage response = new HttpResponseMessage();
+                    if(Tipo.Equals(MetodoRestConst.Get))
+                        response = await client.GetAsync(string.Concat(ApiRoute, _dto.ToString())).ConfigureAwait(false);
                     if (Tipo.Equals(MetodoRestConst.Post))
                         response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
                     if (Tipo.Equals(MetodoRestConst.Put))

@@ -9,6 +9,7 @@ using System.Web.Routing;
 using System.Timers;
 using System.Configuration;
 using Application.MainModule.Servicios;
+using System.Globalization;
 
 namespace DS.MainModule
 {
@@ -23,6 +24,12 @@ namespace DS.MainModule
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             this.Timer();
+        }
+        protected void Application_AcquireRequestState(object sender, EventArgs e)
+        {
+            CultureInfo culture = new CultureInfo("es-MX");
+            System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
         }
 
         public void EjecutaServicios(object source, ElapsedEventArgs e)

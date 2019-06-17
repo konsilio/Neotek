@@ -24,7 +24,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeConsultarCreditoRecuperado();
             if (!resp.Exito) return null;
-            return CobranzaServicio.CRecuperada(idempresa).ToList();
+            return CobranzaServicio.CRecuperada(TokenServicio.ObtenerIdEmpresa()).ToList();
         }
         public DataSet ReporteCarteraRecuperada(int? idCliente, short? empresa, DateTime? fechaIni, DateTime? fechaFin, string ticket)
         {

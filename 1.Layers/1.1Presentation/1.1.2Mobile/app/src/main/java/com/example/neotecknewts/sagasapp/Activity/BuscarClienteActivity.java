@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -37,6 +38,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("Jimmy","onCreate");
         setContentView(R.layout.activity_buscar_cliente);
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
@@ -60,8 +62,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
             startActivity(intent);
         });*/
         BtnBuscarClienteActivitySi.setOnClickListener(V->{
-            Intent intent = new Intent(BuscarClienteActivity.this,
-                    RegistroClienteActivity.class);
+            Intent intent = new Intent(BuscarClienteActivity.this, RegistroClienteActivity.class);
             ventaDTO.setSinNumero(true);
             ventaDTO.setRFC("");
             ventaDTO.setRazonSocial("");
@@ -111,8 +112,10 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
 
     @Override
     public void onSuccessList(DatosClientesDTO dtos) {
+
         if(dtos!=null && dtos.getList().size()>0){
             list = dtos.getList();
+
             ClientesAdapter adapter = new ClientesAdapter(list,
                     EsVentaCarburacion,
                     EsVentaCamioneta,

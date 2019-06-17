@@ -111,6 +111,10 @@
       <Project>{ff128402-ecef-4aae-a189-3a61e225b25e}</Project>
       <Name>Sagas.MainModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\1.5.2Cross Cutting\1.5.2.1Logging\Logging.MainModule\Logging.MainModule.csproj">
+      <Project>{9467CC3E-9F06-4A7D-A845-B88939008EDF}</Project>
+      <Name>Logging.MainModule</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="DbContexts\Sagas.Context.tt">

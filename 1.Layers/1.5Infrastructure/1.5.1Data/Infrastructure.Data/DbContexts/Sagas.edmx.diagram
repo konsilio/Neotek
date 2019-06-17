@@ -340,6 +340,8 @@
         <EntityTypeShape EntityType="Sagas.MainModuleModel.CUsoCFDI" Width="1.5" PointX="12.375" PointY="11.75" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CUtilitario" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.HistoricoVentas" Width="1.5" PointX="12.375" PointY="11.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Bitacora" Width="1.5" PointX="10.5" PointY="63.75" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Bitacora_Usuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
