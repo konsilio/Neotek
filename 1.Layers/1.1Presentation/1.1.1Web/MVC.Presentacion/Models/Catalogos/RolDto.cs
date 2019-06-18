@@ -123,6 +123,8 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool CobranzaFacturar { get; set; }
         public bool FacturasVerFacturas { get; set; }
         public bool FacturasFacturar { get; set; }
+        public bool HVCargaInformacion { get; set; }
+        public bool HistoricoVentas { get; set; }
         public List<RolDto> ListaRoles { get; set; }        
         public List<RolCompras> ListaRolesCom { get; set; }
         public List<RolRequsicion> ListaRequsicion { get; set; }

@@ -477,7 +477,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
-
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
 
@@ -608,6 +609,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -735,6 +738,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -861,6 +866,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -989,6 +996,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1117,6 +1126,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
 
@@ -1241,6 +1252,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1447,6 +1460,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1575,6 +1590,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1703,6 +1720,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1831,6 +1850,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1959,6 +1980,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -2087,6 +2110,8 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
                 Roles.Add(_lstc);
             }
             return Roles;

@@ -122,12 +122,12 @@ namespace Application.MainModule.Servicios.Seguridad
             //List<MenuDto> lista = new List<MenuDto>();
             MenuDto lista = new MenuDto();
             var usuario = new UsuarioDataAccess().Buscar(idUsuario);
-            if (usuario.EsSuperAdmin)
-            {
-                lista = setTrue();
-            }
-            else
-            {
+            //if (usuario.EsSuperAdmin)
+            //{
+            //    lista = setTrue();
+            //}
+            //else
+            //{
                 foreach (var rol in usuario.Roles)
                 {
                     if (rol.FacturasFacturar || rol.FacturasVerFacturas)
@@ -288,7 +288,7 @@ namespace Application.MainModule.Servicios.Seguridad
                             lista.CatPrecioVenta = true;
                     }
                 }
-            }
+            //}
             return lista;
         }
 
