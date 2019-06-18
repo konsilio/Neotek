@@ -156,7 +156,9 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var ExisteRfc = ClienteServicio.BuscarClientePorRFC(cteDto.Rfc);
-            if (ExisteRfc != null) return ClienteServicio.YaExiste();
+            if (ExisteRfc != null)
+                if (!ExisteRfc.Rfc.Equals(ClienteServicio.ObtenerPublicoEnGeneral().Rfc))                
+                    return ClienteServicio.YaExiste();
 
             var cliente = ClientesAdapter.FromDtoMod(cteDto);
 
@@ -956,6 +958,7 @@ namespace Application.MainModule.Flujos
                     var almacen = AlmacenGasServicio.RegistraAlmacen(vehiculoDto);
                     if (!almacen.Exito)
                         return CamionetaServicio.Borrar(cam.Id);
+                   
                 }
             }
             if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Pipa)//IdPipa

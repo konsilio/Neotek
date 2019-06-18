@@ -821,6 +821,11 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetCliente"];
             GetCliente(id).Wait();
         }
+        public void BuscarCliente(int id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCliente"];
+            GetCliente(id, tkn).Wait();
+        }
         private async Task GetCliente(int id, string token = null)
         {
             using (var client = new HttpClient())

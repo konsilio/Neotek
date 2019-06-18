@@ -20,19 +20,7 @@
     if (message != '') {
         $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
     }
-    //$(function () {
-    //    $('select').on('change', function () {
-    //        if ($('#ddlPais').val() !== "1") {
-    //            $('#ddlEdo').parent().hide();
-    //            $('#txtEdoP').show();
-    //        }
-
-    //        if ($('#ddlPais').find('option:selected').val() == "1" || $('#ddlPais').find('option:selected').val() == "0") {
-    //            $('#ddlEdo').parent().show();
-    //            $('#txtEdoP').hide();
-    //        }
-    //    });
-    //});
+   
     function OnSelectedChangeCountry(s, e) {
         debugger
         var value = s.GetValue();
@@ -287,15 +275,17 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <div class="form-group">
                                             <div>
-                                                <label for="txtNume">
+                                                @*<label for="txtNume">Por solicitud del cliente se renombra para referencia visual del domicilio 
                                                     Referencia Google Maps:*
+                                                </label>*@
+                                                <label for="txtNume">
+                                                    Referencia:*
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-10">
                                         <div class="form-group">
-                                            @*<input type="text" name="formatted_address" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.formatted_address:" ")" />*@
                                             @Html.TextBoxFor(m => m.cliente.Locacion.formatted_address, new { @class = "form-control" })
                                         </div>
                                         @Html.ValidationMessageFor(m => m.cliente.Locacion.formatted_address, "", new { @class = "alert-danger" })
@@ -405,11 +395,9 @@
                                         <div class="form-group">
                                             @if (Model.cliente != null)
                                             {
-                                                if (Model.cliente.Locaciones.Count > 0)
-                                                { }
-                                                else
+                                                if (Model.cliente.Locaciones.Count > 0)                                              
                                                 {
-                                                    <input type="submit" value="Finalizar" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-round btn-primary float-right" />
+                                                    <input type="submit" value="Finalizar" formaction=@Url.Action("Nuevo", new { id = Model.IdCliente }) class="btn btn-raised btn-round btn-primary float-right" />
                                                 }
                                             }
                                         </div>
