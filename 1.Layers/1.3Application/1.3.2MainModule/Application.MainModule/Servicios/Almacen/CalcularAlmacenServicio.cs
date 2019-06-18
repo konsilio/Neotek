@@ -39,11 +39,27 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static decimal ObtenerRema(decimal kilosVenta, decimal kilosSobrante)
         {
-            return kilosVenta / kilosSobrante;
+            try
+            {
+                return kilosVenta / kilosSobrante;
+            }
+            catch (Exception)            {
+
+                return 0;
+            }
+
         }
         public static decimal ObtenerRemaPorcentaje(decimal gasSobrante, decimal gasVentas)
         {
-            return gasSobrante / gasVentas;
+            try
+            {
+                return gasSobrante / gasVentas;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+
         }
     }
 }

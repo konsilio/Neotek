@@ -2266,6 +2266,12 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarCliente(id);
             return agente._ClienteModel;
         }
+        public static ClientesModel ObtenerCliente(int id, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarCliente(id, token);
+            return agente._ClienteModel;
+        }
         public static List<TipoPersonaModel> ObtenerTiposPersona(string token = null)
         {
             var agente = new AgenteServicio();

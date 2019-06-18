@@ -63,29 +63,27 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-        public ActionResult Nuevo(RegistrarPedidoModel _model = null, string msj = null)
+        public ActionResult Nuevo(int? id, RegistrarPedidoModel _model = null, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             ViewBag.Estatus = PedidosServicio.ObtenerEstatusPedidos(_tkn).ToList();
-            //if (TempData["Mod"] != null)
-            //{
-            //    _model = (PedidoModel)TempData["Mod"];
-            //}
+
             ViewBag.Unidades = AgregarTUnidades();
             if (TempData["RespuestaDTO"] != null)
             {
                 if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
-                {
                     ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-                }
                 else
-                {
                     ViewBag.Msj = TempData["RespuestaDTO"];
-                }
             }
             if (msj != "" || msj != null)
                 ViewBag.MensajeError = msj;
+            if (id != null && id != 0)
+            {
+                var cliente = CatalogoServicio.ObtenerCliente(id.Value, _tkn);
+                _model.Rfc = cliente.Rfc;
+            }
             return View(_model);
         }
         [HttpPost]
@@ -94,7 +92,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             var Id = TokenServicio.ObtenerIdEmpresa(_tkn);
-            _model.IdEmpresa = (short)Id;         
+            _model.IdEmpresa = (short)Id;
             var Respuesta = PedidosServicio.AltaNuevoPedido(_model, Session["StringToken"].ToString());
             if (Respuesta.Exito)
             {
@@ -117,7 +115,7 @@ namespace MVC.Presentacion.Controllers
         public JsonResult BuscarClientesPedido(string Tel1, string Rfc)
         {
             string _tkn = Session["StringToken"].ToString();
-            var lstClientes = CatalogoServicio.Clientes(Tel1, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.Clientes(Tel1, Rfc, _tkn);
 
             var JsonInfo = JsonConvert.SerializeObject(lstClientes);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
@@ -125,7 +123,7 @@ namespace MVC.Presentacion.Controllers
         public JsonResult BuscarClientesPedidoDireccion(string Tel1, string Rfc)
         {
             string _tkn = Session["StringToken"].ToString();
-            var lstClientes = CatalogoServicio.Clientes(Tel1, Rfc, _tkn).ToList();
+            var lstClientes = CatalogoServicio.Clientes(Tel1, Rfc, _tkn);
 
             List<ClienteLocacionMod> _lst = new List<ClienteLocacionMod>();
             if (lstClientes.Count() > 0)
@@ -136,7 +134,7 @@ namespace MVC.Presentacion.Controllers
 
         public ActionResult AltaCliente(PedidoModel model = null)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
@@ -155,11 +153,9 @@ namespace MVC.Presentacion.Controllers
             }
             ViewBag.MensajeError = TempData["RespuestaDTO"];
             if (TempData["ErrorModel"] != null)
-            {
                 model = (PedidoModel)TempData["ErrorModel"];
-            }
-            
-
+            else
+                model.cliente = PedidosServicio.ClienteGenerico(_tkn);
             return View(model);
         }
         public ActionResult AltaClienteDireccion(PedidoModel _model, int? IdCliente, int? id, short? idOrden, string msj = null, string msjValid = null)
@@ -279,7 +275,7 @@ namespace MVC.Presentacion.Controllers
         [HttpPost]
         public ActionResult GuardarCliente(ClientesModel _model)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             _tkn = Session["StringToken"].ToString();
 
             var respuesta = CatalogoServicio.CrearCliente(_model, _tkn);
@@ -289,7 +285,6 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
                 return RedirectToAction("Nuevo");
             }
-
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
@@ -299,7 +294,7 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult GuardarLocaciones(PedidoModel _Obj)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             _tkn = Session["StringToken"].ToString();
 
             if (_Obj.cliente.Locacion.IdPais != (byte)1 && _Obj.cliente.Locacion.IdEstadoRep == (byte)0)
@@ -344,7 +339,7 @@ namespace MVC.Presentacion.Controllers
             msj = null;
             return View(model);
         }
-        public ActionResult EditarPedido(int idPedido)//
+        public ActionResult EditarPedido(int idPedido)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tkn = Session["StringToken"].ToString();
@@ -422,6 +417,7 @@ namespace MVC.Presentacion.Controllers
                     if (Resp.MensajesError.Count > 1)
                         Mensaje = Resp.MensajesError[0] + " " + Resp.MensajesError[1];
                     else
+                        if (Resp.MensajesError.Count > 0)
                         Mensaje = Resp.MensajesError[0];
                 }
             }
