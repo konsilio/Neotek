@@ -122,12 +122,12 @@ namespace Application.MainModule.Servicios.Seguridad
             //List<MenuDto> lista = new List<MenuDto>();
             MenuDto lista = new MenuDto();
             var usuario = new UsuarioDataAccess().Buscar(idUsuario);
-            //if (usuario.EsSuperAdmin)
-            //{
-            //    lista = setTrue();
-            //}
-            //else
-            //{
+            if (usuario.EsSuperAdmin)
+            {
+                lista = setTrue();
+            }
+            else
+            {
                 foreach (var rol in usuario.Roles)
                 {
                     if (rol.FacturasFacturar || rol.FacturasVerFacturas)
@@ -174,7 +174,7 @@ namespace Application.MainModule.Servicios.Seguridad
                             lista.CCRecuperado = true;
                     }
                     if (rol.CatInsertarCuentaContable || rol.CatConsultarPuntoVenta || rol.CatConsultarPrecioVentaGas || rol.PedidoModificarPedido
-                        || rol.RequisicionGenerarNueva || rol.CompraGenerarOCompra || rol.ETRegistrarParqueVehicular || rol.CatLiquidarCajaGeneral)
+                        || rol.RequisicionGenerarNueva || rol.CompraGenerarOCompra || rol.ETRegistrarParqueVehicular || rol.CatLiquidarCajaGeneral || rol.CatConsultarCajaGeneral)
                     {
                         lista.Reportes = true;
 
@@ -199,7 +199,7 @@ namespace Application.MainModule.Servicios.Seguridad
                         if (rol.ETRegistrarParqueVehicular)
                             lista.ReporteRendimientoVehicular = true;
 
-                        if (rol.CatLiquidarCajaGeneral)
+                        if (rol.CatLiquidarCajaGeneral || rol.CatConsultarCajaGeneral)
                             lista.ReporteCorteCaja = true;
                     }
                     if (rol.ETRegistrarParqueVehicular || rol.ETConsultarParqueVehicular || rol.ETAsignarVehiculo || rol.ETConsultarAsignarVehiculo
@@ -235,7 +235,7 @@ namespace Application.MainModule.Servicios.Seguridad
                     }
                     if (rol.CatConsultarCajaGeneral || rol.CatLiquidarCajaGeneral)
                     {
-                        lista.Ventas = true;
+                        lista.VentasCajaGeneral = true;
                     }
 
                     if (rol.HistoricoVentas || rol.HVCargaInformacion)
@@ -288,7 +288,7 @@ namespace Application.MainModule.Servicios.Seguridad
                             lista.CatPrecioVenta = true;
                     }
                 }
-            //}
+            }
             return lista;
         }
 
