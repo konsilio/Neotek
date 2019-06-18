@@ -82,7 +82,6 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
         }
         lecturaCamionetaPresenter = new LecturaCamionetaPresenterImpl(this);
         BtnLecturaCamionetaActivityAceptar.setOnClickListener(v -> verificarForm());
-        //list_camionetas = new String[]{"Seleccione","Camioneta Ford","Camioneta Chevy"};
         list_quien = new String[]{"Seleccione","Encargado de Puerta","Encargado del Andén"};
         /*SLecturaCamionetaActivityListaCamioneta.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_camionetas));*/
@@ -90,29 +89,24 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
                 R.layout.custom_spinner,list_quien));
         SLecturaCamionetaActivityListaCamioneta.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("mensaje","mensaje");
-                if(position>=0 && DatosTomaLecturaDto.getAlmacenes()!=null) {
-                    Log.d("mensaje","mensajeif");
-                 for (AlmacenDTO almacenDTO:DatosTomaLecturaDto.getAlmacenes()) {
-                     if(almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
-                         Log.d("mensaje","mensajesegundoif");
-                         lecturaCamionetaDTO.setIdCamioneta(almacenDTO.getIdAlmacenGas());
-                         lecturaCamionetaDTO.setNombreCamioneta(SLecturaCamionetaActivityListaCamioneta
-                                 .getItemAtPosition(position).toString());
-                         cilindrosDTOS = almacenDTO.getCilindros();
-                           Log.d("mensaje",cilindrosDTOS.toString());
-                     }
-                 }
-                }
-            }
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(position>=0 && DatosTomaLecturaDto.getAlmacenes()!=null) {
+                            for (AlmacenDTO almacenDTO:DatosTomaLecturaDto.getAlmacenes()) {
+                                if(almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
+                                    lecturaCamionetaDTO.setIdCamioneta(almacenDTO.getIdAlmacenGas());
+                                    lecturaCamionetaDTO.setNombreCamioneta(SLecturaCamionetaActivityListaCamioneta.getItemAtPosition(position).toString());
+                                    cilindrosDTOS = almacenDTO.getCilindros();
+                                }
+                            }
+                        }
+                    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                lecturaCamionetaDTO.setIdCamioneta(0);
-                lecturaCamionetaDTO.setNombreCamioneta("");
-            }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        lecturaCamionetaDTO.setIdCamioneta(0);
+                        lecturaCamionetaDTO.setNombreCamioneta("");
+                    }
         });
 
         SLecturaCamionetaActivityListaQuien.setOnItemSelectedListener(

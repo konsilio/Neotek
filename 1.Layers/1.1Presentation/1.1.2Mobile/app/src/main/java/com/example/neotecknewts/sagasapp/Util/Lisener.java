@@ -3,7 +3,6 @@ package com.example.neotecknewts.sagasapp.Util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.StrictMode;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
@@ -37,7 +36,6 @@ import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -94,69 +92,67 @@ public class Lisener{
     //endregion
     public void CrearRunable(Proceso proceso){
 //        final Runnable myTask = () -> {
-            switch (proceso){
-
-                case Papeleta:
-                    completo = Papeletas();
-                    break;
-                case IniciarDescarga:
-                    completo = IniciarDescargas();
-                    break;
-                case FinalizarDescarga:
-                    completo = FinalizarDescarga();
-                    break;
-                case LecturaInicial:
-                    completo = LecturaIniciarEstacion();
-                    break;
-                case LecturaFinal:
-                    completo = LecturaFinalizarEstacion();
-                    break;
-                case LecturaInicialPipas:
-                    completo = LecturaInicialPipa();
-                    break;
-                case LecturaFinalPipas:
-                    completo = LecturaFinalPipa();
-                    break;
-                case LecturaInicialAlmacen:
-                    completo = LecturaInicialAlmacen();
-                    break;
-                case LecturaFinalAlmacen:
-                    completo = LecturaFinalAlmacen();
-                    break;
-                case LecturaInicialCamioneta:
-                    completo = LecturaInicialCamioneta();
-                    break;
-                case LecturaFinalCamioneta:
-                    completo = LecturaFinalCamioneta();
-                    break;
-                case RecargaCamioneta:
-                    completo = RecargaCamioneta();
-                    break;
-                case RecargaEstacion:
-                    completo = RecargaEstacion();
-                    break;
-                case RecargaPipa:
-                    completo = RecargaPipa();
-                    break;
-                case Venta:
-                    Log.d("VentaProceso", "esta completo");
-                    completo = PuntoVenta();
-                    break;
-                case Autoconsumo:
-                    this.completo = Autoconsumo();
-                    break;
-                case Calibracion:
-                    completo = Calibracion();
-                    break;
-                case Traspaso:
-                    completo = Traspaso();
-                    break;
-                case Anticipo:
-                    completo = Anticipo();
-                    break;
-                case CorteDeCaja:
-                    completo = Corte();
-            }
+        switch (proceso){
+            case Papeleta:
+                completo = Papeletas();
+                break;
+            case IniciarDescarga:
+                completo = IniciarDescargas();
+                break;
+            case FinalizarDescarga:
+                completo = FinalizarDescarga();
+                break;
+            case LecturaInicial:
+                completo = LecturaIniciarEstacion();
+                break;
+            case LecturaFinal:
+                completo = LecturaFinalizarEstacion();
+                break;
+            case LecturaInicialPipas:
+                completo = LecturaInicialPipa();
+                break;
+            case LecturaFinalPipas:
+                completo = LecturaFinalPipa();
+                break;
+            case LecturaInicialAlmacen:
+                completo = LecturaInicialAlmacen();
+                break;
+            case LecturaFinalAlmacen:
+                completo = LecturaFinalAlmacen();
+                break;
+            case LecturaInicialCamioneta:
+                completo = LecturaInicialCamioneta();
+                break;
+            case LecturaFinalCamioneta:
+                completo = LecturaFinalCamioneta();
+                break;
+            case RecargaCamioneta:
+                completo = RecargaCamioneta();
+                break;
+            case RecargaEstacion:
+                completo = RecargaEstacion();
+                break;
+            case RecargaPipa:
+                completo = RecargaPipa();
+                break;
+            case Venta:
+                completo = PuntoVenta();
+                break;
+            case Autoconsumo:
+                this.completo = Autoconsumo();
+                break;
+            case Calibracion:
+                completo = Calibracion();
+                break;
+            case Traspaso:
+                completo = Traspaso();
+                break;
+            case Anticipo:
+                completo = Anticipo();
+                break;
+            case CorteDeCaja:
+                completo = Corte();
+        }
 //        };
 
 //        ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
@@ -255,13 +251,13 @@ public class Lisener{
                         corteDTO = new CorteDTO();
                         corteDTO.setClaveOperacion(
                                 cursor.getString(
-                                    cursor.getColumnIndex("ClaveOperacion")
+                                        cursor.getColumnIndex("ClaveOperacion")
                                 )
                         );
                         corteDTO.setFecha(
                                 cursor.getString(
-                                                cursor.getColumnIndex("Fecha")
-                                        )
+                                        cursor.getColumnIndex("Fecha")
+                                )
                         );
 
                         corteDTO.setIdEstacion(
@@ -425,7 +421,7 @@ public class Lisener{
     }
 
     private boolean Registrar(AnticiposDTO anticiposDTO, String token) {
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
 
 
@@ -470,8 +466,8 @@ public class Lisener{
 
                                 /*format.parse(
                                     (*/ cursor.getString(
-                                            cursor.getColumnIndex("Fecha")
-                                    )/*)
+                                        cursor.getColumnIndex("Fecha")
+                                )/*)
                                 )*/
                         );
                         traspasoDTO.setCantidadDeFotos(
@@ -560,7 +556,7 @@ public class Lisener{
     private  boolean Registrar(TraspasoDTO dto,String tipo,boolean esFinal){
         if(ServicioDisponible()){
             Log.w("Iniciando",new Date()+"Envio del traspaso: "+dto.getClaveOperacion());
-            
+
 
             RestClient restClient = ApiClient.getClient().create(RestClient.class);
             Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
@@ -635,18 +631,18 @@ public class Lisener{
                     );
                     dto.setFechaRegistro(
                             cursor.getString(
-                                cursor.getColumnIndex("FechaRegistro")
+                                    cursor.getColumnIndex("FechaRegistro")
                             )
                     );
                     dto.setFechaAplicacion(
                             cursor.getString(
-                                cursor.getColumnIndex("FechaAplicacion")
+                                    cursor.getColumnIndex("FechaAplicacion")
                             )
                     );
 
                     dto.setP5000(
                             cursor.getInt(
-                            cursor.getColumnIndex("P5000")
+                                    cursor.getColumnIndex("P5000")
                             )
                     );
 
@@ -673,15 +669,15 @@ public class Lisener{
                     while (!imagenes.isAfterLast()){
                         try {
                             dto.getImagenes().add(
-                                imagenes.getString(
-                                        imagenes.getColumnIndex("Imagen")
-                                )
+                                    imagenes.getString(
+                                            imagenes.getColumnIndex("Imagen")
+                                    )
                             );
 
                             dto.getImagenesUri().add(new URI(
-                               imagenes.getString(
-                                       imagenes.getColumnIndex("Url")
-                               )
+                                    imagenes.getString(
+                                            imagenes.getColumnIndex("Url")
+                                    )
                             ));
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
@@ -690,9 +686,9 @@ public class Lisener{
                     }
                     boolean esFinal = (
                             cursor.getInt(
-                              cursor.getColumnIndex("EsFinal")
+                                    cursor.getColumnIndex("EsFinal")
                             )>0
-                            );
+                    );
                     String tipo = cursor.getString(
                             cursor.getColumnIndex("Tipo")
                     );
@@ -722,7 +718,7 @@ public class Lisener{
      */
     private boolean Registrar(CalibracionDTO dto,String token,boolean esFinal, String tipo){
         Log.w("Registro","Registrando en servicio "+dto.getClaveOperacion());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaTraspasoDTO> call = null;
 
@@ -732,7 +728,7 @@ public class Lisener{
                 esFinal,
                 token,
                 "application/json"
-                );
+        );
         call.enqueue(new Callback<RespuestaTraspasoDTO>() {
             @Override
             public void onResponse(Call<RespuestaTraspasoDTO> call,
@@ -886,7 +882,7 @@ public class Lisener{
             @Override
             public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
                 Log.e("error", t.toString());
-               _registrado = false;
+                _registrado = false;
             }
         });
         return _registrado;
@@ -895,16 +891,15 @@ public class Lisener{
 
     //region Punto de venta
     private boolean PuntoVenta() {
-        Log.w("pv",ServicioDisponible()+"");
         if(ServicioDisponible()){
             Log.w("Iniciando","Revisando las ventas "+ new Date());
-
             Cursor cursor = sagasSql.GetVentas();
             VentaDTO ventaDTO;
             boolean esCamioneta,
                     esEstacion,
                     esPipa;
-                while (cursor.moveToNext()){
+            if(cursor.moveToFirst()){
+                while (!cursor.isAfterLast()){
                     ventaDTO = new VentaDTO();
                     /*coloco los valores de la venta*/
                     ventaDTO.setFolioVenta(cursor.getString(cursor.getColumnIndex("FolioVenta")));
@@ -1059,21 +1054,19 @@ public class Lisener{
                             concepto.moveToNext();
                         }
                     }
-                    Log.w("Registro","Registrando en servicio de ventas");
-
                     if(registrarVenta(ventaDTO,esCamioneta,esEstacion,esPipa)){
                         sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
                         sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
                     }
                     cursor.moveToNext();
                 }
-
+            }
         }
         return (sagasSql.GetVentas().getCount()==0);
     }
 
     private boolean registrarVenta(VentaDTO ventaDTO,boolean esCamioneta,boolean esEstacion,boolean
-                                esPipa) {
+            esPipa) {
 
         Log.w("Registro","Registrando en servicio de ventas: "+ventaDTO.getFolioVenta());
 
@@ -1086,34 +1079,26 @@ public class Lisener{
                 token,
                 "application/json"
         );
+        call.enqueue(new Callback<RespuestaPuntoVenta>() {
+            @Override
+            public void onResponse(Call<RespuestaPuntoVenta> call,
+                                   Response<RespuestaPuntoVenta> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+                Log.e("Corte"+ventaDTO.getFolioVenta(),
+                        String.valueOf(response.isSuccessful()));
+            }
 
-//        call.enqueue(new Callback<RespuestaPuntoVenta>() {
-//            @Override
-//            public void onResponse(Call<RespuestaPuntoVenta> call,
-//                                   Response<RespuestaPuntoVenta> response) {
-//                _registrado = call.isExecuted() && response.isSuccessful();
-//                Log.e("Corte"+ventaDTO.getFolioVenta(),
-//                        String.valueOf(response.isSuccessful()));
-//            }
-//
-//            @Override
-//            public void onFailure(Call<RespuestaPuntoVenta> call, Throwable t) {
-//                _registrado = false;
-//            }
-//        });
-        Log.w("Registro","Registro en servicio venta"+ventaDTO.getFolioVenta()+": "+
-                _registrado);
-        try {
-            return call.execute().code() == 200;
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
+            @Override
+            public void onFailure(Call<RespuestaPuntoVenta> call, Throwable t) {
+                _registrado = false;
+            }
+        });
         /*if(_registrado){
             sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
             sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
         }*/
-
+        Log.w("Registro","Registro en servicio venta"+ventaDTO.getFolioVenta()+": "+
+                _registrado);
         return _registrado;
     }
     //endregion
@@ -1168,7 +1153,7 @@ public class Lisener{
                         try {
                             recargaDTO.getImagenes().add(
                                     imagenes.getString(
-                                      imagenes.getColumnIndex("Imagen")
+                                            imagenes.getColumnIndex("Imagen")
                                     )
                             );
 
@@ -1206,7 +1191,7 @@ public class Lisener{
      */
     private boolean RegistrarRecarga(RecargaDTO recargaDTO,String tipo,boolean esInicial) {
         Log.w("Registro","Registrando en servicio "+recargaDTO.getClaveOperacion());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaRecargaDTO> call = null;
         if(esInicial) {
@@ -1313,7 +1298,7 @@ public class Lisener{
      */
     private boolean RegistrarRecargaCamioneta(RecargaDTO recargaDTO){
         Log.w("Registro","Registrando en servicio "+recargaDTO.getClaveOperacion());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaRecargaDTO> call = restClient.postRecarga(
                 recargaDTO,token,"application/json");
@@ -1394,7 +1379,7 @@ public class Lisener{
 
     private boolean RegistrarLecturaInicialCamioneta(LecturaCamionetaDTO lecturaDTO){
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialCamioneta(lecturaDTO,
                 token,"application/json");
@@ -1474,7 +1459,7 @@ public class Lisener{
 
     private boolean RegistrarLecturaFinalCamioneta(LecturaCamionetaDTO lecturaDTO){
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalCamioneta(lecturaDTO,
                 token,"application/json");
@@ -1564,7 +1549,7 @@ public class Lisener{
      */
     private boolean RegistrarLecturaFinalAlmacen(LecturaAlmacenDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalAlmacen(lecturaDTO,
                 token,"application/json");
@@ -1654,7 +1639,7 @@ public class Lisener{
      */
     private boolean RegistrarLecturaInicialAlmacen(LecturaAlmacenDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialAlmacen(lecturaDTO,
                 token,"application/json");
@@ -1764,7 +1749,7 @@ public class Lisener{
      */
     private boolean RegistrarLecturaInicialPipa(LecturaPipaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialPipa(lecturaDTO,
                 token,"application/json");
@@ -1868,7 +1853,7 @@ public class Lisener{
      */
     private boolean RegistrarLecturaFinalPipa(LecturaPipaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalPipa(lecturaDTO,
                 token,"application/json");
@@ -1978,7 +1963,7 @@ public class Lisener{
      */
     private boolean RegistrarLecturaFinal(LecturaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinal(lecturaDTO,token,
                 "application/json");
@@ -2089,7 +2074,7 @@ public class Lisener{
      */
     private boolean RegistrarLecturaInicial(LecturaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(lecturaDTO,token,
                 "application/json");
@@ -2108,7 +2093,7 @@ public class Lisener{
             }
         });
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
-            _registrado);
+                _registrado);
         return _registrado;
     }
     //endregion
@@ -2161,10 +2146,10 @@ public class Lisener{
                     while (!cantidad.isAfterLast()) {
                         String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         //try {
-                          //  lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    cantidad.getString(cantidad.getColumnIndex("Imagen"))
-                            );
+                        //  lecturaDTO.getImagenesURI().add(new URI(iuri));
+                        lecturaDTO.getImagenes().add(
+                                cantidad.getString(cantidad.getColumnIndex("Imagen"))
+                        );
                         //} catch (URISyntaxException e) {
                         //    e.printStackTrace();
                         //}
@@ -2186,7 +2171,7 @@ public class Lisener{
 
     private boolean RegistrarLecturaFinalizarDescarga(FinalizarDescargaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaFinalizarDescargaDTO> call = restClient.postFinalizarDescarga(lecturaDTO,token,
                 "application/json");
@@ -2257,11 +2242,11 @@ public class Lisener{
                     while (!cantidad.isAfterLast()) {
                         String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         //try {
-                          //  lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    cantidad.getString(cantidad.getColumnIndex("Imagen"))
-                            //iuri
-                            );
+                        //  lecturaDTO.getImagenesURI().add(new URI(iuri));
+                        lecturaDTO.getImagenes().add(
+                                cantidad.getString(cantidad.getColumnIndex("Imagen"))
+                                //iuri
+                        );
                         //} catch (URISyntaxException e) {
                         //    e.printStackTrace();
                         //}
@@ -2283,7 +2268,7 @@ public class Lisener{
 
     private boolean RegistrarLecturaDescarga(IniciarDescargaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(lecturaDTO,token,
                 "application/json");
@@ -2372,10 +2357,10 @@ public class Lisener{
                     while (!cantidad.isAfterLast()) {
                         //String iuri = cantidad.getString(cantidad.getColumnIndex("Imagen"));
                         //try {
-                            //lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    cantidad.getString(cantidad.getColumnIndex("Url"))
-                            );
+                        //lecturaDTO.getImagenesURI().add(new URI(iuri));
+                        lecturaDTO.getImagenes().add(
+                                cantidad.getString(cantidad.getColumnIndex("Url"))
+                        );
                         //} catch (URISyntaxException e) {
                         //    e.printStackTrace();
                         //}
@@ -2397,7 +2382,7 @@ public class Lisener{
 
     private boolean RegistrarPapeleta(PrecargaPapeletaDTO lecturaDTO){
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
-        
+
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(lecturaDTO,token,
                 "application/json");
@@ -2424,17 +2409,24 @@ public class Lisener{
     //region Estatus servicio
     private boolean ServicioDisponible(){
         Log.v("Servicio","Verifica el estatus del servicio");
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+
         RestClient restClientS = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
                 "application/json");
-        try {
-            EstaDisponible = callS.execute().code() ==200;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                RespuestaServicioDisponibleDTO data = response.body();
+                EstaDisponible = response.isSuccessful() && data.isExito();
+                Log.w("Servicio","El servicio esta disponible");
+            }
 
+            @Override
+            public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
+                EstaDisponible = false;
+                Log.w("Servicio","El servicio no esta disponible");
+            }
+        });
         return EstaDisponible;
     }
     //endregion

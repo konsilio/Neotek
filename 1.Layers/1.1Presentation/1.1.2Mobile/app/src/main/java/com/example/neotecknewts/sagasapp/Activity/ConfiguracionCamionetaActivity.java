@@ -38,7 +38,6 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("jimmy","oncreate");
         setContentView(R.layout.activity_configuracion_camioneta);
         Bundle bundle = getIntent().getExtras();
         cilindrosDTOS = new ArrayList<>();

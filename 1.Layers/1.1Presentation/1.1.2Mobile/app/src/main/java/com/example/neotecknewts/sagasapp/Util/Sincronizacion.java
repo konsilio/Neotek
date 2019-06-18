@@ -30,7 +30,7 @@ public class Sincronizacion {
         this.progressDialog = new ProgressDialog(activity,R.style.AlertDialog);
         this.session = new Session(this.context);
     }
-//    region Sincronizar
+    //    region Sincronizar
     public void Sincronizar(){
         progressDialog.setTitle(R.string.app_name);
         progressDialog.setMessage(context.getString(R.string.message_cargando));
@@ -58,7 +58,7 @@ public class Sincronizacion {
         this.dialog.setTitle("Listo");
         StringBuilder detalleDialogos = new StringBuilder();
         for (String mensaje:
-             mensajes) {
+                mensajes) {
             detalleDialogos.append(mensaje).append("\n");
         }
         this.dialog.setMessage(detalleDialogos.toString());
@@ -77,3 +77,4 @@ public class Sincronizacion {
         return false;
     }
 }
+
