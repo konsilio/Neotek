@@ -125,6 +125,8 @@ namespace Application.MainModule.DTOs.Seguridad
         public bool FacturasFacturar { get; set; }
         public bool HVCargaInformacion { get; set; }
         public bool HistoricoVentas { get; set; }
+        public bool CatLiquidarCajaGeneral { get; set; }
+        public bool CatConsultarCajaGeneral { get; set; }
 
     }
 }
