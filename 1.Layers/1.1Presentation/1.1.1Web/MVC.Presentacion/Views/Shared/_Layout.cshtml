@@ -218,16 +218,16 @@
                                     @if (rol.ReporteRendimientoVehicular)
                                     {
                                     <li>@Html.ActionLink("Rendimiento Vehicular", "RendimientoVehicular", "Reportes")</li>}
-                                    @if (rol.ReporteInvConcepto)
+                                    @if (rol.ReporteRendimientoVehicular)
                                     {
                                     <li>@Html.ActionLink("Inv. Concepto", "InventarioXConcepto", "Reportes")</li>}
-                                    @if (rol.ReporteHistVentas)
+                                    @if (rol.ReporteCallCenter)
                                     {
                                     <li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>}
-                                    @if (rol.ReporteCorteCaja)
+                                    @if (rol.Ventas) //ReporteCorteCaja
                                     {
                                     <li>@Html.ActionLink("Corte de Caja", "CorteCaja", "Reportes")</li>}
-                                    @if (rol.ReporteGastoVehiculo)
+                                    @if (rol.Ventas) //ReporteGastoVehiculo
                                     {
                                     <li>@Html.ActionLink("Gasto Por Vehiculo", "GastoVehicular", "Reportes")</li>}
                                 </ul>
