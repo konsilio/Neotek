@@ -26,6 +26,10 @@
         if (mensaje != '') {
             $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
         }
+        var idCliente = '@Model.IdCliente';
+        if (idCliente > 0) {
+            $('#btnBuscarC').click();
+        }
       
     </script>
 </head>
@@ -62,8 +66,8 @@
                                                     @Html.TextBoxFor(m => m.Telefono1, new { @class = "form-control", @id = "txtTel1", placeholder = "Teléfono del cliente" })
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <b>RFC:</b>
-                                                    @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control", @id = "txtRfc", placeholder = "RFC del cliente" })
+                                                    <b>Nombre o Apellido:</b>
+                                                    @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control", @id = "txtRfc", placeholder = "Nombre " })
                                                 </div>
                                                 <div class="col-sm-3" style="top: 10px;">
                                                     <div class="form-group">
