@@ -442,7 +442,7 @@ namespace Application.MainModule.Servicios.Ventas
                     List<VentaPuntoDeVentaDetalle> detventas = ObtenerDetallesVentasNoProc(x.IdEmpresa, x.Year, x.Mes, x.Dia, x.Orden);
                     AlmacenGasTomaLectura agtl = AlmacenGasServicio.BuscarLecturaPorFecha(new PuntoVentaDataAccess().Buscar(x.IdPuntoVenta).IdCAlmacenGas, 1, x.FechaAplicacion.Value);
                     AlmacenGasTomaLectura agtl2 = AlmacenGasServicio.BuscarLecturaPorFecha(new PuntoVentaDataAccess().Buscar(x.IdPuntoVenta).IdCAlmacenGas, 2, x.FechaAplicacion.Value);
-                    CargarMovimientos(x, detventas, agtl != null ? agtl.P5000.Value : 0, agtl2 != null ? agtl2.P5000.Value : 0);
+                    CargarMovimientos(x, detventas, (agtl != null && agtl.P5000 != null) ? agtl.P5000.Value : 0, (agtl2 != null && agtl2.P5000 != null) ? agtl2.P5000.Value : 0);
                 }
             }
         }

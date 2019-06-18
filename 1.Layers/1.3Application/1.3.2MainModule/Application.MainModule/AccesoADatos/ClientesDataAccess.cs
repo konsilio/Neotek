@@ -58,17 +58,54 @@ namespace Application.MainModule.Servicios.AccesoADatos
             List<Cliente> consulta = new List<Cliente>();
             if (cliente.Rfc != null)
             {
-                consulta = uow.Repository<Cliente>().Get(
-                                             x =>
-                                             (x.Rfc.Trim().Equals(cliente.Rfc)) &&
-                                             x.IdEmpresa.Equals(idEmpresa)
-                                            ).ToList();
+                if (cliente.Rfc.Split(' ').Count().Equals(1))
+                {
+                    consulta = uow.Repository<Cliente>().Get(
+                                                 x => x.Nombre.Contains(cliente.Rfc) ||
+                                                 x.Apellido1.Contains(cliente.Rfc) ||
+                                                 x.Apellido2.Contains(cliente.Rfc)).ToList();
+                }
+                else
+                {
+                    if (cliente.Rfc.Split(' ').Count().Equals(2))
+                    {
+                        var n = cliente.Rfc.Split(' ')[0];
+                        var ap = cliente.Rfc.Split(' ')[1];
+                        consulta = uow.Repository<Cliente>().Get(x =>
+                                    x.Nombre.Contains(n)
+                                    || x.Apellido1.Contains(ap)).ToList();
+                    }
+                    if (cliente.Rfc.Split(' ').Count().Equals(3))
+                    {
+                        var n = cliente.Rfc.Split(' ')[0];
+                        var ap = cliente.Rfc.Split(' ')[1];
+                        var am = cliente.Rfc.Split(' ')[2];
+                        consulta = uow.Repository<Cliente>().Get(x =>
+                                    x.Nombre.Contains(n)
+                                    || x.Apellido1.Contains(ap)
+                                    || x.Apellido2.Contains(am)).ToList();
+                    }
+                    if (cliente.Rfc.Split(' ').Count().Equals(4))
+                    {
+                        var n = string.Concat(cliente.Rfc.Split(' ')[0], " ", cliente.Rfc.Split(' ')[1]);
+                        var ap = cliente.Rfc.Split(' ')[2];
+                        var am = cliente.Rfc.Split(' ')[3];
+                        consulta = uow.Repository<Cliente>().Get(x =>
+                                    x.Nombre.Contains(n)
+                                    || x.Apellido1.Contains(ap)
+                                    || x.Apellido2.Contains(am)).ToList();
+                    }                   
+                }
             }
             if (cliente.Telefono1 != null)
             {
                 consulta = uow.Repository<Cliente>().Get(
                                      x =>
-                                      (x.Telefono1.Trim().Equals(cliente.Telefono1)) &&
+                                      (x.Telefono1.Trim().Equals(cliente.Telefono1)
+                                      || x.Telefono.Trim().Equals(cliente.Telefono1)
+                                      || x.Telefono.Trim().Equals(cliente.Celular)
+                                      || x.Telefono.Trim().Equals(cliente.Celular1)
+                                      ) &&
                                      x.IdEmpresa.Equals(idEmpresa)
                                     ).ToList();
             }
@@ -268,8 +305,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             try
             {
-                var consulta = uow.Repository<Cliente>().GetSingle(x => x.Rfc!=null && x.Rfc.Equals(rfc));
-                
+                var consulta = uow.Repository<Cliente>().GetSingle(x => x.Rfc != null
+                                                    && x.Rfc.Equals(rfc));
                 return consulta;
             }
             catch (Exception ex)

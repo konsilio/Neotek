@@ -295,7 +295,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     && x.FechaAplicacion.Month.Equals(fecha.Month)
                     && x.FechaAplicacion.Year.Equals(fecha.Year)
                     && x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
-                    && x.IdOrden>0
+                    && x.IdOrden > 0
                     );
         }
         public RespuestaDto Actualizar(AlmacenGas _alm)
