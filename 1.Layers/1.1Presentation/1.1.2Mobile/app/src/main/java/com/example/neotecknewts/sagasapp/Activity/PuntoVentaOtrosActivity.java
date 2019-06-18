@@ -53,10 +53,10 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.d("oncreate","si entra");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punto_venta_otros);
         Bundle extras = getIntent().getExtras();
+
         if(extras!= null){
             ventaDTO = (VentaDTO) extras.getSerializable("ventaDTO");
             EsVentaCamioneta = extras.getBoolean("EsVentaCamioneta",false);
@@ -220,6 +220,7 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
                 idCategoria = 0;
             }
         });
+
         presenter.getList(session.getToken());
         mostrarConcepto(ventaDTO.getConcepto());
 

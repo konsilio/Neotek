@@ -321,4 +321,38 @@ public class PrecioVentaDTO extends RespuestaDTO implements Serializable {
     public void setUnidadMedida(String unidadMedida) {
         UnidadMedida = unidadMedida;
     }
+
+    @Override
+    public String toString() {
+        return "PrecioVentaDTO{" +
+                "IdPrecioVenta=" + IdPrecioVenta +
+                ", IdEmpresa=" + IdEmpresa +
+                ", IdPrecioVentaEstatus=" + IdPrecioVentaEstatus +
+                ", IdCategoria=" + IdCategoria +
+                ", IdProductoLinea=" + IdProductoLinea +
+                ", IdProducto=" + IdProducto +
+                ", Categoria='" + Categoria + '\'' +
+                ", Linea='" + Linea + '\'' +
+                ", Producto='" + Producto + '\'' +
+                ", PrecioActual=" + PrecioActual +
+                ", PrecioPemexKg=" + PrecioPemexKg +
+                ", PrecioPemexLt=" + PrecioPemexLt +
+                ", UtilidadEsperadaKg=" + UtilidadEsperadaKg +
+                ", UtilidadEsperadaLt=" + UtilidadEsperadaLt +
+                ", PrecioSalida=" + PrecioSalida +
+                ", PrecioSalidaKg=" + PrecioSalidaKg +
+                ", PrecioSalidaLt=" + PrecioSalidaLt +
+                ", EsGas=" + EsGas +
+                ", FechaProgramada=" + FechaProgramada +
+                ", FechaRegistro=" + FechaRegistro +
+                ", FechaVencimiento=" + FechaVencimiento +
+                ", Activo=" + Activo +
+                ", PrecioVentaEstatus='" + PrecioVentaEstatus + '\'' +
+                ", CategoriaProducto='" + CategoriaProducto + '\'' +
+                ", LineaProducto='" + LineaProducto + '\'' +
+                ", Empresa='" + Empresa + '\'' +
+                ", IdUnidadMedida=" + IdUnidadMedida +
+                ", UnidadMedida='" + UnidadMedida + '\'' +
+                '}';
+    }
 }

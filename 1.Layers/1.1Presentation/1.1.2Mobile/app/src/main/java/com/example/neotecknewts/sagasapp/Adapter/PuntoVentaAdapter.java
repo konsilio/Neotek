@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private final List<ExistenciasDTO> items;
     public PrecioVentaDTO precioVentaDTO;
     private boolean EsVentaCamioneta;
@@ -32,7 +33,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public TextView Total, Descuento, Subtotal, Iva, PrecioLitro;
     public boolean esVentaGas;
     public EditText cantidad;
-    public EditText PrecioporLitro;
+    public EditText Litro;
     public ExistenciasDTO existencia;
     public boolean Mostrar;
 
@@ -48,11 +49,10 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-
         View view = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.punto_venta_item, parent, false
         );
+
         ExistenciasHolder holder = new ExistenciasHolder(view);
         return holder;
 
@@ -79,93 +79,117 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         );
 
 
-        EditText editText = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityCantidad;
-        EditText PrecioLitro = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityPrecioporLitro;
+        EditText editTextCantidad = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityCantidad;
+        EditText editTextPrecioLitro = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityPrecioporLitro;
+
+        if(precioVentaDTO != null) {
+            if (EsVentaCamioneta){
+                editTextPrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaKg()));
+            }else {
+                editTextPrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
+
+            }
+        }
 
         if (esVentaGas) {
-            editText.addTextChangedListener(new TextWatcher() {
-
-                public void operaciones() {
-                    if (esVentaGas) {
-                        if (!editText.getText().toString().isEmpty() && editText.getText() != null) {
-                            PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
-                            Descuento.setText(String.valueOf(0));
-                            double sub = precioVentaDTO.getPrecioSalidaLt() *
-                                    Double.parseDouble(editText.getText().toString());
-                            Subtotal.setText(new DecimalFormat("#.##").format(sub));
-                            double iva = sub * 0.16;
-                            Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
-                            Total.setText(new DecimalFormat("#.##").format(sub + iva));
-                            cantidad = editText;
-                            PrecioporLitro = PrecioLitro;
-                            existencia = items.get(position);
-                        }
-                    }
-                }
-
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                    if(esVentaGas) {
-//                        if(!editText.getText().toString().isEmpty() && editText.getText()!=null) {
-//
-//                            Descuento.setText(
-//                                    String.valueOf(0)
-//                                    );
-//
-//                            double sub = precioVentaDTO.getPrecioSalidaLt() *
-//                                    Double.parseDouble(editText.getText().toString());
-//                            Subtotal.setText(new DecimalFormat("#.##").format(sub));
-//                            double iva = sub * 0.16;
-//                            Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
-//                            Total.setText(new DecimalFormat("#.##").format(sub + iva));
-//                            cantidad = editText;
-//                            existencia = items.get(position);
-//                        }
-//                    }
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                    if(esVentaGas) {
-//                        if(!editText.getText().toString().isEmpty() && editText.getText()!=null) {
-//                            PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
-//                            Descuento.setText(String.valueOf(0));
-//                            double sub = precioVentaDTO.getPrecioSalidaLt() *
-//                                    Double.parseDouble(editText.getText().toString());
-//                            Subtotal.setText(new DecimalFormat("#.##").format(sub));
-//                            double iva = sub * 0.16;
-//                            Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
-//                            Total.setText(new DecimalFormat("#.##").format(sub + iva));
-//                            cantidad = editText;
-//                            existencia = items.get(position);
-//                        }
-//                    }
-                }
-
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    this.operaciones();
-
-                }
-
-            });
-        } else {
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-            editText.addTextChangedListener(new TextWatcher() {
+            editTextPrecioLitro.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    items.get(position).setCantidad(editText.getText().toString());
+
                 }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    items.get(position).setCantidad(editText.getText().toString());
+
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    items.get(position).setCantidad(editText.getText().toString());
+
+                    if (!editTextCantidad.getText().toString().isEmpty() && editTextCantidad.getText() != null) {
+                        double precioPorLitro;
+                        if(!editTextPrecioLitro.getText().toString().isEmpty() ) {
+                            precioPorLitro = Double.parseDouble(editTextPrecioLitro.getText().toString());
+                            PrecioLitro.setText(new DecimalFormat("#.##").format(Double.parseDouble(editTextPrecioLitro.getText().toString())));
+                        }
+                        else {
+                            precioPorLitro = precioVentaDTO.getPrecioSalidaLt();
+                            PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
+                        }
+                        Log.d("precioltr", precioPorLitro+"");
+
+
+                        Descuento.setText(String.valueOf(0));
+                        double cantidadSeleccionada = Double.parseDouble(editTextCantidad.getText().toString());
+                        Log.d("Cntidadselec", cantidadSeleccionada+"");
+                        double sub = precioPorLitro * cantidadSeleccionada;
+                        Subtotal.setText(new DecimalFormat("#.##").format(sub));
+                        double iva = sub * 0.16;
+                        Iva.setText(new DecimalFormat("#.##").format(iva));
+                        Total.setText(new DecimalFormat("#.##").format(sub + iva));
+                        precioVentaDTO.setPrecioSalidaLt(Double.parseDouble(PrecioLitro.getText().toString()));
+                        cantidad = editTextCantidad;
+                        Litro = editTextPrecioLitro;
+                        existencia = items.get(position);
+                    }
+
+                }
+            });
+            editTextCantidad.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                }
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    if (esVentaGas) {
+                        if (!editTextCantidad.getText().toString().isEmpty() && editTextCantidad.getText() != null) {
+                            double precioPorLitro;
+                            if(!editTextPrecioLitro.getText().toString().isEmpty() ) {
+                                precioPorLitro = Double.parseDouble(editTextPrecioLitro.getText().toString());
+                                PrecioLitro.setText(new DecimalFormat("#.##").format(Double.parseDouble(editTextPrecioLitro.getText().toString())));
+                            }
+                            else {
+                                precioPorLitro = precioVentaDTO.getPrecioSalidaLt();
+                                PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
+                            }
+                            Log.d("precioltr", precioPorLitro+"");
+
+
+                            Descuento.setText(String.valueOf(0));
+                            double cantidadSeleccionada = Double.parseDouble(editTextCantidad.getText().toString());
+                            Log.d("Cntidadselec", cantidadSeleccionada+"");
+                            double sub = precioPorLitro * cantidadSeleccionada;
+                            Subtotal.setText(new DecimalFormat("#.##").format(sub));
+                            double iva = sub * 0.16;
+                            Iva.setText(new DecimalFormat("#.##").format(iva));
+                            Total.setText(new DecimalFormat("#.##").format(sub + iva));
+                            precioVentaDTO.setPrecioSalidaLt(Double.parseDouble(PrecioLitro.getText().toString()));
+                            cantidad = editTextCantidad;
+                            Litro = editTextPrecioLitro;
+                            existencia = items.get(position);
+                        }
+                    }
+                }
+            });
+        } else {
+            editTextCantidad.setInputType(InputType.TYPE_CLASS_NUMBER);
+            editTextCantidad.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                    items.get(position).setCantidad(editText.getText().toString());
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                    items.get(position).setCantidad(editText.getText().toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    items.get(position).setCantidad(editTextCantidad.getText().toString());
                 }
 
 
@@ -202,7 +226,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ETPuntoVentaGasListActivityPrecioporLitro = view.findViewById(
                     R.id.ETPuntoVentaGasListActivityPrecioporLitro);
 
-            ETPuntoVentaGasListActivityPrecioporLitro.addTextChangedListener(new TextWatcher() {
+            /*ETPuntoVentaGasListActivityPrecioporLitro.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -230,16 +254,11 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         Iva.setText(new DecimalFormat("#.##").format(sub * 0.16));
                         Total.setText(new DecimalFormat("#.##").format(sub + iva));
                         precioVentaDTO.setPrecioSalidaLt(Double.parseDouble(ETPuntoVentaGasListActivityPrecioporLitro.getText().toString()));
-                        //cantidad = ETPuntoVentaGasListActivityCantidad;
+                        cantidad = ETPuntoVentaGasListActivityCantidad;
                         Log.d("precio", "preciolitro");
-                        if (true) {
-
-                        }
                     }
-
-
                 }
-            });
+            })*/;
         }
 
     }

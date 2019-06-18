@@ -63,14 +63,13 @@
                 app:layout_row="3"
                 tools:ignore="Autofill,LabelFor"
                 tools:targetApi="P"
-                android:hint="13.66"
                 />
 
             <TextView
                 android:id="@+id/PuntoVentaGasListActivityTituloPrecioporLitro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Precio por Litro"
+                android:text="Precio Unitario"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 app:layout_column="2"

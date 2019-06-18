@@ -1107,6 +1107,7 @@ public class Lisener{
             return call.execute().code() == 200;
         } catch (IOException e) {
             e.printStackTrace();
+
         }
         /*if(_registrado){
             sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
@@ -2433,6 +2434,7 @@ public class Lisener{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return EstaDisponible;
     }
     //endregion

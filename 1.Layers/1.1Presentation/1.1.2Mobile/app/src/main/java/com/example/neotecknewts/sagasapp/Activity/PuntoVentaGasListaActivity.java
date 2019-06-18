@@ -131,7 +131,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             if (esCilindroGas) VentaCilindroGas();
             else if (esCilindro) VentaCilindro();
             else if (esGasLP) VentaGaslp();
-            LimpiarLista();
+       //    LimpiarLista();
         });
 
         BtnPuntoVentaGasListActivityPagar.setOnClickListener(v -> {
@@ -148,20 +148,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 intent.putExtra("EsVentaPipa", EsVentaPipa);
                 startActivity(intent);
 
-                adapter.ETPuntoVentaGasListActivityPrecioporLitro.addTextChangedListener( new TextWatcher(){
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-                        adapter.ETPuntoVentaGasListActivityPrecioporLitro.setText(new DecimalFormat("#.##").format(ventaDTO));
-                    }
-                });
             } else {
                 AlertDialog.Builder builder = new
                         AlertDialog.Builder(this);
@@ -424,8 +410,14 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         Log.d("Jimmy", "SetearLitrosDespachados");
 
 
-        if (adapter.cantidad.getText() != null && adapter.cantidad.getText().toString().length() > 0 && adapter.PrecioLitro.getText() != null
-                || adapter.ETPuntoVentaGasListActivityPrecioporLitro.getText().toString().length()==0 || adapter.ETPuntoVentaGasListActivityPrecioporLitro.getText().toString()=="0" ) {
+        if (adapter.PrecioLitro.getText().toString().isEmpty() ||
+                adapter.PrecioLitro.getText().toString() == "0" ||
+                adapter.cantidad.getText().toString().isEmpty() ||
+                adapter.cantidad.getText().toString() == "0") {
+
+            this.onError("No hay datos en la venta");
+
+        }else{
             if (Double.valueOf(adapter.cantidad.getText().toString()) > 0) {
                 double total, subtotal, iva, precio, desc;
                 ventaDTO.setCredito(SWFormularioVentaCamionetaYPipaCredito.isChecked());
@@ -479,12 +471,11 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 intent.putExtra("EsVentaPipa", EsVentaPipa);
                 startActivity(intent);
 
-                this.onError("No hay datos en la venta");
-
             }
+
         }
 
-        this.onError("No hay datos en la venta");
+
 
        /* if(adapter.PrecioporLitro!=null ){
             Intent intent = new Intent(PuntoVentaGasListaActivity.this,
