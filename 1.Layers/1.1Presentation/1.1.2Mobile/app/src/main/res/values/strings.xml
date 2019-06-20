@@ -7,8 +7,8 @@
     <string name="title_registro_papeleta">Registro de papeleta</string>
     <string name="title_medidor_almacen">Medidor almacén</string>
     <string name="title_medidor_tractor">Medidor tractor</string>
-    <string name="title_foto_magnatel_almacen">Foto Magnatel - Almacén Principal</string>
-    <string name="title_foto_magnatel_tractor">Foto Magnatel - Tractor</string>
+    <string name="title_foto_magnatel_almacen">Foto Magnetel - Almacén Principal</string>
+    <string name="title_foto_magnatel_tractor">Foto Magnetel - Tractor</string>
     <string name="title_foto_rotogate_tractor">Foto Rotogate - Tractor</string>
     <string name="title_foto_rotogate_almacen">Foto Rotogate - Almacén Principal</string>
     <string name="title_foto_papeleta">Foto Papeleta</string>
@@ -97,7 +97,7 @@
     </string-array>
 
     <string-array name="tipos_medidor">
-        <item>Magnatel</item>
+        <item>Magnetel</item>
         <item>Rotogate</item>
     </string-array>
     <string name="message_goback_diabled">En caso de que hayas llenado datos estos se perderán, ¿Realmente deseas continuar?</string>
@@ -153,7 +153,7 @@
     <string name="selecciona_medidor_porcentual_salida">Selecciona el tipo de medidor porcentual:</string>
     <string name="selecciona_estacion_destino">Selecciona la Estación de Carburación:</string>
     <string name="selecciona_medidor_porcentual_estacion">Selecciona el tipo de medidor porcentual:</string>
-    <string name="Estacion">Estación</string>
+    <string name="Estacion">Registro de Clientes</string>
     <string name="Recarga_pipa">Recarga pipa </string>
     <string name="selecciona_la_pipa_a_recargar">Selecciona la pipa a recargar</string>
     <string name="Autoconsumo_estacion">Autoconsumo Estación de Carb.</string>

@@ -113,7 +113,8 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             PrecioLitro.setText(new DecimalFormat("#.##").format(Double.parseDouble(editTextPrecioLitro.getText().toString())));
                         }
                         else {
-                            precioPorLitro = precioVentaDTO.getPrecioSalidaLt();
+                            precioPorLitro = precioVentaDTO.getPrecioSalidaKg();
+                            precioPorLitro = precioPorLitro / 1.16 ;
                             PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                         }
                         Log.d("precioltr", precioPorLitro+"");
@@ -122,7 +123,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         Descuento.setText(String.valueOf(0));
                         double cantidadSeleccionada = Double.parseDouble(editTextCantidad.getText().toString());
                         Log.d("Cntidadselec", cantidadSeleccionada+"");
-                        double sub = precioPorLitro * cantidadSeleccionada;
+                        double sub = precioPorLitro * cantidadSeleccionada ;
                         Subtotal.setText(new DecimalFormat("#.##").format(sub));
                         double iva = sub * 0.16;
                         Iva.setText(new DecimalFormat("#.##").format(iva));

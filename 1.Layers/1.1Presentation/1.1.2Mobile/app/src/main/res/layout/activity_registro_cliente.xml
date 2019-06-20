@@ -101,6 +101,7 @@
                     android:hint="@string/rfc"
                     android:importantForAutofill="no"
                     android:inputType="text"
+                    android:text="XAXX010101000"
                     android:singleLine="true"
                     android:textSize="18sp"
                     android:maxLength="13"

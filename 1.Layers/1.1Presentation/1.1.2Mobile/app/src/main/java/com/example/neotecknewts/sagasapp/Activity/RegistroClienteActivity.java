@@ -124,11 +124,12 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(datos!=null) {
                     if(position>=0) {
-                        if(tipoPersonaDTO_Seleccionada.getRegimenes().size()>0
-                                ) {
-                            for (RegimenesDTO regimenDTO : tipoPersonaDTO_Seleccionada.getRegimenes()) {
-                                if (regimenDTO.getDescripcion().equals(parent.getItemAtPosition(position).toString())) {
-                                    clienteDTO.setIdTipoRegimen(regimenDTO.getIdRegimenFiscal());
+                        if(tipoPersonaDTO_Seleccionada != null) {
+                            if(tipoPersonaDTO_Seleccionada.getRegimenes().size()>0) {
+                                for (RegimenesDTO regimenDTO : tipoPersonaDTO_Seleccionada.getRegimenes()) {
+                                    if (regimenDTO.getDescripcion().equals(parent.getItemAtPosition(position).toString())) {
+                                        clienteDTO.setIdTipoRegimen(regimenDTO.getIdRegimenFiscal());
+                                    }
                                 }
                             }
                         }
@@ -295,7 +296,11 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             mensajes.add("El primer apellido es un valor requerido");
         }
 
-        if(ETRegistroClienteActivityCelular.getText().toString().isEmpty()||
+        if(ETRegistroClienteActivityCelular.getText().toString().isEmpty() && ETRegistroClienteActivityTelefonoFijo.getText().toString().isEmpty()){
+            error = true;
+            mensajes.add("Es necesario ingresar un teléfono");
+        }
+        /*if(ETRegistroClienteActivityCelular.getText().toString().isEmpty()||
                 ETRegistroClienteActivityCelular.getText().length()<=0){
             error = true;
             mensajes.add("Es necesario un teléfono de celular");
@@ -305,7 +310,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
                 ETRegistroClienteActivityTelefonoFijo.getText().length()<=0){
             error = true;
             mensajes.add("Es necesario un número de teléfono fijo");
-        }
+        }*/
         
         if(error){
             mostrarDialogoErrores(mensajes);
