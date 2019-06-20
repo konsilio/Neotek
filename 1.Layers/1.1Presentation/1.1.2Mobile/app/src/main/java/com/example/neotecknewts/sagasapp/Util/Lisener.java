@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.StrictMode;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
@@ -36,6 +37,7 @@ import com.example.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.example.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -93,6 +95,7 @@ public class Lisener{
     public void CrearRunable(Proceso proceso){
 //        final Runnable myTask = () -> {
         switch (proceso){
+
             case Papeleta:
                 completo = Papeletas();
                 break;
@@ -136,6 +139,7 @@ public class Lisener{
                 completo = RecargaPipa();
                 break;
             case Venta:
+                Log.d("VentaProceso", "esta completo");
                 completo = PuntoVenta();
                 break;
             case Autoconsumo:
@@ -246,7 +250,7 @@ public class Lisener{
             @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             if(cursor.moveToFirst()){
                 CorteDTO corteDTO;
-                while (!cursor.isAfterLast()){
+                while (!cursor.moveToNext()){
                     try {
                         corteDTO = new CorteDTO();
                         corteDTO.setClaveOperacion(
@@ -329,7 +333,7 @@ public class Lisener{
 
         Call<RespuestaCorteDto> call = restClient.
                 postCorte(corteDTO,token,"application/json");
-        call.enqueue(new Callback<RespuestaCorteDto>() {
+        /*call.enqueue(new Callback<RespuestaCorteDto>() {
             @Override
             public void onResponse(Call<RespuestaCorteDto> call,
                                    Response<RespuestaCorteDto> response) {
@@ -347,7 +351,13 @@ public class Lisener{
             public void onFailure(Call<RespuestaCorteDto> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         return _registrado;
     }
     //endregion
@@ -360,7 +370,7 @@ public class Lisener{
             @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             if(cursor.moveToFirst()){
                 AnticiposDTO anticiposDTO;
-                while (!cursor.isAfterLast()){
+                while (!cursor.moveToNext()){
                     anticiposDTO = new AnticiposDTO();
                     try{
                         anticiposDTO.setTotal(cursor.getDouble(
@@ -413,7 +423,7 @@ public class Lisener{
                     }catch (Exception ex){
                         ex.printStackTrace();
                     }
-                    cursor.moveToNext();
+                    //cursor.moveToNext();
                 }
             }
         }
@@ -427,7 +437,7 @@ public class Lisener{
 
         Call<RespuestaAnticipoDTO> call = restClient.
                 postAnticipo(anticiposDTO,token,"application/json");
-        call.enqueue(new Callback<RespuestaAnticipoDTO>() {
+        /*call.enqueue(new Callback<RespuestaAnticipoDTO>() {
             @Override
             public void onResponse(Call<RespuestaAnticipoDTO> call,
                                    Response<RespuestaAnticipoDTO> response) {
@@ -445,7 +455,14 @@ public class Lisener{
             public void onFailure(Call<RespuestaAnticipoDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
         return _registrado;
     }
     //endregion
@@ -459,7 +476,7 @@ public class Lisener{
                     SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             if(cursor.moveToFirst()){
                 TraspasoDTO traspasoDTO;
-                while (!cursor.isAfterLast()){
+                while (!cursor.moveToNext()){
                     traspasoDTO = new TraspasoDTO();
                     try {
                         traspasoDTO.setFecha(
@@ -522,7 +539,7 @@ public class Lisener{
                         );
                         Cursor imagenes = sagasSql.GetImagenesTraspaso(traspasoDTO.getClaveOperacion());
                         imagenes.moveToFirst();
-                        while (!imagenes.isAfterLast()){
+                        while (!imagenes.moveToNext()){
                             traspasoDTO.getImagenes().add(
                                     imagenes.getString(
                                             imagenes.getColumnIndex("Imagen")
@@ -546,7 +563,7 @@ public class Lisener{
                         sagasSql.EliminarTraspasos(traspasoDTO.getClaveOperacion());
                         sagasSql.EliminarImagenesTraspasos(traspasoDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
+                   // cursor.moveToNext();
                 }
             }
         }
@@ -589,7 +606,9 @@ public class Lisener{
                     _registrado = false;
                 }
             });
+
         }
+
         return _registrado;
     }
     //endregion
@@ -607,7 +626,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetAutoconsumos();
             if(cursor.moveToFirst()){
                 CalibracionDTO dto;
-                while (!cursor.isAfterLast()){
+                while (!cursor.moveToNext()){
                     dto = new CalibracionDTO();
                     dto.setCantidadFotografias(
                             cursor.getInt(
@@ -666,7 +685,7 @@ public class Lisener{
 
                     Cursor imagenes = sagasSql.GetFotografiasCalibracion(dto.getClaveOperacion());
                     imagenes.moveToFirst();
-                    while (!imagenes.isAfterLast()){
+                    while (!imagenes.moveToNext()){
                         try {
                             dto.getImagenes().add(
                                     imagenes.getString(
@@ -697,7 +716,7 @@ public class Lisener{
                         sagasSql.EliminarCalibracion(dto.getClaveOperacion());
                         sagasSql.EliminarImagenesCalibracion(dto.getClaveOperacion());
                     }
-                    cursor.moveToNext();
+                   // cursor.moveToNext();
                 }
             }
 
@@ -729,7 +748,7 @@ public class Lisener{
                 token,
                 "application/json"
         );
-        call.enqueue(new Callback<RespuestaTraspasoDTO>() {
+       /* call.enqueue(new Callback<RespuestaTraspasoDTO>() {
             @Override
             public void onResponse(Call<RespuestaTraspasoDTO> call,
                                    Response<RespuestaTraspasoDTO> response) {
@@ -742,9 +761,16 @@ public class Lisener{
                 _registrado = false;
                 Log.e("Error","Error registro "+dto.getClaveOperacion());
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+dto.getClaveOperacion()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
         return _registrado;
     }
     //endregion
@@ -763,7 +789,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetAutoconsumos();
             AutoconsumoDTO dto;
             if(cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     dto = new AutoconsumoDTO();
                     /*Coloco los valors del autoconsumo*/
                     dto.setClaveOperacion(cursor.getString(
@@ -812,7 +838,7 @@ public class Lisener{
                     /*Coloco las imagenes */
                     Cursor imagenes = sagasSql.GetImagenesAutoconsumo(dto.getClaveOperacion());
                     imagenes.moveToFirst();
-                    while (!imagenes.isAfterLast()){
+                    while (!imagenes.moveToNext()){
                         dto.getImagenes().add(
                                 imagenes.getString(
                                         imagenes.getColumnIndex("Imagen")
@@ -836,7 +862,7 @@ public class Lisener{
                         sagasSql.EliminarAutoconsumo(dto.getClaveOperacion());
                         sagasSql.EliminarImagenesAutoconsumo(dto.getClaveOperacion());
                     }
-                    cursor.moveToNext();
+                    //cursor.moveToNext();
                 }
             }
         }
@@ -864,7 +890,7 @@ public class Lisener{
                 "application/json"
         );
         Log.w("Url camioneta", ApiClient.BASE_URL);
-        call.enqueue(new Callback<RespuestaRecargaDTO>() {
+        /*call.enqueue(new Callback<RespuestaRecargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaRecargaDTO> call,
                                    Response<RespuestaRecargaDTO> response) {
@@ -884,183 +910,193 @@ public class Lisener{
                 Log.e("error", t.toString());
                 _registrado = false;
             }
-        });
+        });*/
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
         return _registrado;
     }
     //endregion
 
     //region Punto de venta
     private boolean PuntoVenta() {
+        Log.w("pv",ServicioDisponible()+"");
         if(ServicioDisponible()){
             Log.w("Iniciando","Revisando las ventas "+ new Date());
+
             Cursor cursor = sagasSql.GetVentas();
             VentaDTO ventaDTO;
             boolean esCamioneta,
                     esEstacion,
                     esPipa;
-            if(cursor.moveToFirst()){
-                while (!cursor.isAfterLast()){
-                    ventaDTO = new VentaDTO();
-                    /*coloco los valores de la venta*/
-                    ventaDTO.setFolioVenta(cursor.getString(cursor.getColumnIndex("FolioVenta")));
-                    ventaDTO.setIdCliente(cursor.getInt(cursor.getColumnIndex("IdCliente")));
-                    ventaDTO.setSubtotal(cursor.getDouble(cursor.getColumnIndex("Subtotal")));
-                    ventaDTO.setIva(cursor.getDouble(cursor.getColumnIndex("Iva")));
-                    ventaDTO.setTotal(cursor.getDouble(cursor.getColumnIndex("Total")));
-                    ventaDTO.setFactura(cursor.getInt(
-                            cursor.getColumnIndex("Factura"))>0
-                    );
-                    ventaDTO.setCredito(cursor.getInt(
-                            cursor.getColumnIndex("Credito"))>0
-                    );
-                    ventaDTO.setEfectivo(cursor.getDouble(cursor.getColumnIndex("Efectivo")));
-                    ventaDTO.setFecha(cursor.getString(cursor.getColumnIndex("Fecha")));
-                    ventaDTO.setHora(cursor.getString(cursor.getColumnIndex("Hora")));
-                    ventaDTO.setCambio(cursor.getDouble(cursor.getColumnIndex("Cambio")));
-                    ventaDTO.setSinNumero(
-                            cursor.getInt(cursor.getColumnIndex("SinNumero")) > 0
-                    );
-                    esCamioneta = cursor.getInt(cursor.getColumnIndex("EsCamioneta"))>0;
-                    esEstacion = cursor.getInt(cursor.getColumnIndex("EsEstacion"))>0;
-                    esPipa = cursor.getInt(cursor.getColumnIndex("EsPipa"))>0;
-                    //Obtengo y coloco el concepto de venta
-                    Cursor concepto = sagasSql.GetVentaConcepto(ventaDTO.getFolioVenta());
-                    if(concepto.moveToFirst()) {
-                        while (!concepto.isAfterLast()) {
-                            ConceptoDTO conceptoDTO= new ConceptoDTO();
+            while (cursor.moveToNext()){
+                ventaDTO = new VentaDTO();
+                /*coloco los valores de la venta*/
+                ventaDTO.setFolioVenta(cursor.getString(cursor.getColumnIndex("FolioVenta")));
+                ventaDTO.setIdCliente(cursor.getInt(cursor.getColumnIndex("IdCliente")));
+                ventaDTO.setSubtotal(cursor.getDouble(cursor.getColumnIndex("Subtotal")));
+                ventaDTO.setIva(cursor.getDouble(cursor.getColumnIndex("Iva")));
+                ventaDTO.setTotal(cursor.getDouble(cursor.getColumnIndex("Total")));
+                ventaDTO.setFactura(cursor.getInt(
+                        cursor.getColumnIndex("Factura"))>0
+                );
+                ventaDTO.setCredito(cursor.getInt(
+                        cursor.getColumnIndex("Credito"))>0
+                );
+                ventaDTO.setEfectivo(cursor.getDouble(cursor.getColumnIndex("Efectivo")));
+                ventaDTO.setFecha(cursor.getString(cursor.getColumnIndex("Fecha")));
+                ventaDTO.setHora(cursor.getString(cursor.getColumnIndex("Hora")));
+                ventaDTO.setCambio(cursor.getDouble(cursor.getColumnIndex("Cambio")));
+                ventaDTO.setSinNumero(
+                        cursor.getInt(cursor.getColumnIndex("SinNumero")) > 0
+                );
+                esCamioneta = cursor.getInt(cursor.getColumnIndex("EsCamioneta"))>0;
+                esEstacion = cursor.getInt(cursor.getColumnIndex("EsEstacion"))>0;
+                esPipa = cursor.getInt(cursor.getColumnIndex("EsPipa"))>0;
+                //Obtengo y coloco el concepto de venta
+                Cursor concepto = sagasSql.GetVentaConcepto(ventaDTO.getFolioVenta());
+                if(concepto.moveToFirst()) {
+                    while (!concepto.moveToNext()) {
+                        ConceptoDTO conceptoDTO= new ConceptoDTO();
 
-                            conceptoDTO.setIdTipoGas(concepto.getInt(
-                                    concepto.getColumnIndex("IdTipoGas"))
-                            );
-                            conceptoDTO.setCantidad(concepto.getInt(
-                                    concepto.getColumnIndex("Cantidad"))
-                            );
-                            conceptoDTO.setPUnitario(concepto.getDouble(
-                                    concepto.getColumnIndex("PUnitario"))
-                            );
-                            conceptoDTO.setDescuento(concepto.getDouble(
-                                    concepto.getColumnIndex("Descuento")
-                            ));
-                            conceptoDTO.setSubtotal(concepto.getDouble(
-                                    concepto.getColumnIndex("Subtotal")
-                            ));
-                            conceptoDTO.setIdCategoria(concepto.getInt(
-                                    concepto.getColumnIndex("IdCategoria")));
-                            conceptoDTO.setIdLinea(concepto.getInt(
-                                    concepto.getColumnIndex("IdLinea"))
-                            );
-                            conceptoDTO.setIdProducto(concepto.getInt(
-                                    concepto.getColumnIndex("IdProducto"))
-                            );
-                            conceptoDTO.setConcepto(concepto.getString(
-                                    concepto.getColumnIndex("Concepto"))
-                            );
+                        conceptoDTO.setIdTipoGas(concepto.getInt(
+                                concepto.getColumnIndex("IdTipoGas"))
+                        );
+                        conceptoDTO.setCantidad(concepto.getInt(
+                                concepto.getColumnIndex("Cantidad"))
+                        );
+                        conceptoDTO.setPUnitario(concepto.getDouble(
+                                concepto.getColumnIndex("PUnitario"))
+                        );
+                        conceptoDTO.setDescuento(concepto.getDouble(
+                                concepto.getColumnIndex("Descuento")
+                        ));
+                        conceptoDTO.setSubtotal(concepto.getDouble(
+                                concepto.getColumnIndex("Subtotal")
+                        ));
+                        conceptoDTO.setIdCategoria(concepto.getInt(
+                                concepto.getColumnIndex("IdCategoria")));
+                        conceptoDTO.setIdLinea(concepto.getInt(
+                                concepto.getColumnIndex("IdLinea"))
+                        );
+                        conceptoDTO.setIdProducto(concepto.getInt(
+                                concepto.getColumnIndex("IdProducto"))
+                        );
+                        conceptoDTO.setConcepto(concepto.getString(
+                                concepto.getColumnIndex("Concepto"))
+                        );
 
-                            conceptoDTO.setDia(
-                                    concepto.getInt(
-                                            concepto.getColumnIndex("Dia")
-                                    )
-                            );
-                            conceptoDTO.setMes(
-                                    concepto.getInt(
-                                            concepto.getColumnIndex("Mes")
-                                    )
-                            );
-                            conceptoDTO.setYear(
-                                    concepto.getInt(
-                                            concepto.getColumnIndex("Year")
-                                    )
-                            );
-                            conceptoDTO.setIdProducto(
-                                    concepto.getInt(
-                                            concepto.getColumnIndex("IdProducto")
-                                    )
-                            );
-                            conceptoDTO.setIdLinea(
-                                    concepto.getInt(
-                                            concepto.getColumnIndex("IdLinea")
-                                    )
-                            );
-                            conceptoDTO.setIdCategoria(
-                                    concepto.getInt(
-                                            concepto.getColumnIndex("IdCategoria")
-                                    )
-                            );
-                            conceptoDTO.setIdUnidadmedida(
-                                    concepto.getInt(
-                                            concepto.getColumnIndex("IdUnidadMedida")
-                                    )
-                            );
-                            conceptoDTO.setPrecioUnitarioProducto(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex(
-                                                    "PrecioUnitarioProducto")
-                                    )
-                            );
-                            conceptoDTO.setPrecioUnitarioLt(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex("PrecioUnitarioLt")
-                                    )
-                            );
-                            conceptoDTO.setPrecioUnitarioKg(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex("PrecioUnitatioKg")
-                                    )
-                            );
-                            conceptoDTO.setDescuentoUnitarioProducto(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex("DescuentoUnitarioProducto")
-                                    )
-                            );
-                            conceptoDTO.setDescuentoUnitarioLt(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex("DescuentoUnitarioLt")
-                                    )
-                            );
-                            conceptoDTO.setDescuentoUnitarioKg(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex("DescuentoUnitarioKg")
-                                    )
-                            );
+                        conceptoDTO.setDia(
+                                concepto.getInt(
+                                        concepto.getColumnIndex("Dia")
+                                )
+                        );
+                        conceptoDTO.setMes(
+                                concepto.getInt(
+                                        concepto.getColumnIndex("Mes")
+                                )
+                        );
+                        conceptoDTO.setYear(
+                                concepto.getInt(
+                                        concepto.getColumnIndex("Year")
+                                )
+                        );
+                        conceptoDTO.setIdProducto(
+                                concepto.getInt(
+                                        concepto.getColumnIndex("IdProducto")
+                                )
+                        );
+                        conceptoDTO.setIdLinea(
+                                concepto.getInt(
+                                        concepto.getColumnIndex("IdLinea")
+                                )
+                        );
+                        conceptoDTO.setIdCategoria(
+                                concepto.getInt(
+                                        concepto.getColumnIndex("IdCategoria")
+                                )
+                        );
+                        conceptoDTO.setIdUnidadmedida(
+                                concepto.getInt(
+                                        concepto.getColumnIndex("IdUnidadMedida")
+                                )
+                        );
+                        conceptoDTO.setPrecioUnitarioProducto(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex(
+                                                "PrecioUnitarioProducto")
+                                )
+                        );
+                        conceptoDTO.setPrecioUnitarioLt(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex("PrecioUnitarioLt")
+                                )
+                        );
+                        conceptoDTO.setPrecioUnitarioKg(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex("PrecioUnitatioKg")
+                                )
+                        );
+                        conceptoDTO.setDescuentoUnitarioProducto(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex("DescuentoUnitarioProducto")
+                                )
+                        );
+                        conceptoDTO.setDescuentoUnitarioLt(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex("DescuentoUnitarioLt")
+                                )
+                        );
+                        conceptoDTO.setDescuentoUnitarioKg(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex("DescuentoUnitarioKg")
+                                )
+                        );
 
-                            conceptoDTO.setCantidad(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex("Cantidad")
-                                    )
-                            );
-                            conceptoDTO.setCantidadLt(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex("CantidadLt")
-                                    )
-                            );
+                        conceptoDTO.setCantidad(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex("Cantidad")
+                                )
+                        );
+                        conceptoDTO.setCantidadLt(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex("CantidadLt")
+                                )
+                        );
 
-                            conceptoDTO.setCantidadKg(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex("CantidadKg")
-                                    )
-                            );
-                            conceptoDTO.setDescuentoUnitarioLt(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex("DescuentoTotal")
-                                    )
-                            );
+                        conceptoDTO.setCantidadKg(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex("CantidadKg")
+                                )
+                        );
+                        conceptoDTO.setDescuentoUnitarioLt(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex("DescuentoTotal")
+                                )
+                        );
 
-                            conceptoDTO.setDescuentoUnitarioLt(
-                                    concepto.getDouble(
-                                            concepto.getColumnIndex("IdEmpresa")
-                                    )
-                            );
+                        conceptoDTO.setDescuentoUnitarioLt(
+                                concepto.getDouble(
+                                        concepto.getColumnIndex("IdEmpresa")
+                                )
+                        );
 
-                            concepto.moveToNext();
-                        }
+                        concepto.moveToNext();
                     }
-                    if(registrarVenta(ventaDTO,esCamioneta,esEstacion,esPipa)){
-                        sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
-                        sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
-                    }
-                    cursor.moveToNext();
                 }
+                Log.w("Registro","Registrando en servicio de ventas");
+
+                if(registrarVenta(ventaDTO,esCamioneta,esEstacion,esPipa)){
+                    sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
+                    sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
+                }
+               // cursor.moveToNext();
             }
+
         }
         return (sagasSql.GetVentas().getCount()==0);
     }
@@ -1079,26 +1115,34 @@ public class Lisener{
                 token,
                 "application/json"
         );
-        call.enqueue(new Callback<RespuestaPuntoVenta>() {
-            @Override
-            public void onResponse(Call<RespuestaPuntoVenta> call,
-                                   Response<RespuestaPuntoVenta> response) {
-                _registrado = call.isExecuted() && response.isSuccessful();
-                Log.e("Corte"+ventaDTO.getFolioVenta(),
-                        String.valueOf(response.isSuccessful()));
-            }
 
-            @Override
-            public void onFailure(Call<RespuestaPuntoVenta> call, Throwable t) {
-                _registrado = false;
-            }
-        });
+//        call.enqueue(new Callback<RespuestaPuntoVenta>() {
+//            @Override
+//            public void onResponse(Call<RespuestaPuntoVenta> call,
+//                                   Response<RespuestaPuntoVenta> response) {
+//                _registrado = call.isExecuted() && response.isSuccessful();
+//                Log.e("Corte"+ventaDTO.getFolioVenta(),
+//                        String.valueOf(response.isSuccessful()));
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RespuestaPuntoVenta> call, Throwable t) {
+//                _registrado = false;
+//            }
+//        });
+        Log.w("Registro","Registro en servicio venta"+ventaDTO.getFolioVenta()+": "+
+                _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         /*if(_registrado){
             sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
             sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
         }*/
-        Log.w("Registro","Registro en servicio venta"+ventaDTO.getFolioVenta()+": "+
-                _registrado);
+
         return _registrado;
     }
     //endregion
@@ -1117,7 +1161,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
             RecargaDTO recargaDTO;
             if(cursor.moveToFirst()){
-                while (!cursor.isAfterLast()){
+                while (!cursor.moveToNext()){
                     recargaDTO = new RecargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     recargaDTO.setClaveOperacion(cursor.getString(
@@ -1149,7 +1193,7 @@ public class Lisener{
                             cursor.getColumnIndex("Tipo"));
                     Cursor imagenes = sagasSql.GetImagenesRecarga(recargaDTO.getClaveOperacion());
                     imagenes.moveToFirst();
-                    while (!imagenes.isAfterLast()){
+                    while (!imagenes.moveToNext()){
                         try {
                             recargaDTO.getImagenes().add(
                                     imagenes.getString(
@@ -1176,7 +1220,7 @@ public class Lisener{
                                 recargaDTO.getClaveOperacion());
                     }
 
-                    cursor.moveToNext();
+                    //cursor.moveToNext();
                 }
             }
         }
@@ -1202,7 +1246,7 @@ public class Lisener{
                     recargaDTO,token,"application/json"
             );
         }
-        call.enqueue(new Callback<RespuestaRecargaDTO>() {
+        /*call.enqueue(new Callback<RespuestaRecargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaRecargaDTO> call,
                                    Response<RespuestaRecargaDTO> response) {
@@ -1215,9 +1259,16 @@ public class Lisener{
             public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+recargaDTO.getClaveOperacion()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
         return _registrado;
     }
 
@@ -1238,7 +1289,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_CAMIONETA);
             RecargaDTO recargaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     recargaDTO = new RecargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     recargaDTO.setClaveOperacion(cursor.getString(
@@ -1263,7 +1314,7 @@ public class Lisener{
                     Cursor cantidad = sagasSql.GetCilindrosRecarga(recargaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
 
-                    while (!cantidad.isAfterLast()) {
+                    while (!cantidad.moveToNext()) {
                         CilindrosDTO row = new CilindrosDTO();
                         row.setCantidad(cursor.getInt(cursor.getColumnIndex(
                                 "Cantidad")));
@@ -1286,6 +1337,7 @@ public class Lisener{
                 }
             }
         }
+
         return (sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_CAMIONETA).getCount()==0);
     }
 
@@ -1302,7 +1354,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaRecargaDTO> call = restClient.postRecarga(
                 recargaDTO,token,"application/json");
-        call.enqueue(new Callback<RespuestaRecargaDTO>() {
+        /*call.enqueue(new Callback<RespuestaRecargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaRecargaDTO> call,
                                    Response<RespuestaRecargaDTO> response) {
@@ -1315,9 +1367,15 @@ public class Lisener{
             public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+recargaDTO.getClaveOperacion()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         return _registrado;
     }
     //endregion
@@ -1330,7 +1388,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIncialesCamioneta();
             LecturaCamionetaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new LecturaCamionetaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1347,7 +1405,7 @@ public class Lisener{
                     Cursor cantidad = sagasSql.GetCilindrosLecturaInicialCamioneta(
                             lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
-                    while (!cantidad.isAfterLast()) {
+                    while (!cantidad.moveToNext()) {
                         CilindrosDTO row = new CilindrosDTO();
                         row.setCantidad(cantidad.getInt(cantidad.getColumnIndex(
                                 "Cantidad")));
@@ -1370,10 +1428,11 @@ public class Lisener{
                         sagasSql.EliminarCilindrosLecturaInicialCamioneta(
                                 lecturaDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
+                    //cursor.moveToNext();
                 }
             }
         }
+
         return (sagasSql.GetLecturasIncialesCamioneta().getCount()==0);
     }
 
@@ -1381,9 +1440,11 @@ public class Lisener{
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
-        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialCamioneta(lecturaDTO,
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialCamioneta(
+                lecturaDTO,
                 token,"application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+
+       /* call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1396,9 +1457,16 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
         return _registrado;
     }
     //endregion
@@ -1411,7 +1479,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturaFinalCamionetas();
             LecturaCamionetaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new LecturaCamionetaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1427,7 +1495,7 @@ public class Lisener{
                     Cursor cantidad = sagasSql.GetCilindrosLecturaFinalCamioneta(
                             lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
-                    while (!cantidad.isAfterLast()) {
+                    while (!cantidad.moveToNext()) {
                         CilindrosDTO row = new CilindrosDTO();
                         row.setCantidad(cursor.getInt(cursor.getColumnIndex(
                                 "Cantidad")));
@@ -1450,7 +1518,7 @@ public class Lisener{
                         sagasSql.EliminarCilindrosLecturaFinalCamioneta(
                                 lecturaDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
+                    //cursor.moveToNext();
                 }
             }
         }
@@ -1463,7 +1531,8 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalCamioneta(lecturaDTO,
                 token,"application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+
+       /* call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1476,9 +1545,16 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         return _registrado;
     }
     //endregion
@@ -1498,7 +1574,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasFinalesAlmacen();
             LecturaAlmacenDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new LecturaAlmacenDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1516,7 +1592,7 @@ public class Lisener{
                     Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
                             lecturaDTO.getClaveOperacion());
                     Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
+                    while (Imagen.moveToNext()){
                         String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
@@ -1535,7 +1611,7 @@ public class Lisener{
                         sagasSql.EliminarImagenesLecturaFinalAlmacen(lecturaDTO.getClaveOperacion());
                         //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
-                    cursor.moveToNext();
+                    //cursor.moveToNext();
                 }
             }
         }
@@ -1553,7 +1629,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalAlmacen(lecturaDTO,
                 token,"application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+       /* call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1566,9 +1642,16 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
         return _registrado;
     }
     //endregion
@@ -1587,7 +1670,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIncialesAlmacen();
             LecturaAlmacenDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new LecturaAlmacenDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1605,7 +1688,7 @@ public class Lisener{
                     Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
                             lecturaDTO.getClaveOperacion());
                     Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
+                    while (Imagen.moveToNext()){
                         String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
@@ -1624,7 +1707,7 @@ public class Lisener{
                         sagasSql.EliminarImagenesLecturaInicialAlmacen(lecturaDTO.getClaveOperacion());
                         //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
-                    cursor.moveToNext();
+                    //cursor.moveToNext();
                 }
             }
         }
@@ -1643,7 +1726,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialAlmacen(lecturaDTO,
                 token,"application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+        /*call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1656,9 +1739,16 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
         return _registrado;
     }
     //endregion
@@ -1678,7 +1768,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIncialesPipas();
             LecturaPipaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new LecturaPipaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -1753,7 +1843,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialPipa(lecturaDTO,
                 token,"application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+        /*call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1766,9 +1856,16 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
         return _registrado;
     }
     //endregion
@@ -1781,7 +1878,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasFinaesPipas();
             LecturaPipaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new LecturaPipaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -1816,7 +1913,7 @@ public class Lisener{
                     Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
                             lecturaDTO.getClaveProceso());
                     Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
+                    while (Imagen.moveToNext()){
                         String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
@@ -1857,7 +1954,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalPipa(lecturaDTO,
                 token,"application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+      /* call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1870,9 +1967,16 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
         return _registrado;
     }
     //endregion
@@ -1893,7 +1997,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasFinales();
             LecturaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new LecturaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -1928,7 +2032,7 @@ public class Lisener{
                     Cursor Imagen = sagasSql.GetImagenesLecturaFinalByClaveOperacion(
                             lecturaDTO.getClaveProceso());
                     Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
+                    while (Imagen.moveToNext()){
                         String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
@@ -1947,7 +2051,7 @@ public class Lisener{
                         sagasSql.EliminarImagenesLecturaFinal(lecturaDTO.getClaveProceso());
                         //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
-                    cursor.moveToNext();
+                    //cursor.moveToNext();
                 }
             }
         }
@@ -1967,7 +2071,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinal(lecturaDTO,token,
                 "application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+        /*call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1980,9 +2084,16 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
         return _registrado;
     }
     //endregion
@@ -2003,7 +2114,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIniciales();
             LecturaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new LecturaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -2038,7 +2149,7 @@ public class Lisener{
                     Cursor Imagen = sagasSql.GetLecturaImagenesByClaveUnica(
                             lecturaDTO.getClaveProceso());
                     Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
+                    while (Imagen.moveToNext()){
                         String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
                         try {
                             lecturaDTO.getImagenesURI().add(new URI(iuri));
@@ -2057,7 +2168,7 @@ public class Lisener{
                         sagasSql.EliminarLecturaImagenes(lecturaDTO.getClaveProceso());
                         //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
-                    cursor.moveToNext();
+                   // cursor.moveToNext();
                 }
             }
         }
@@ -2078,7 +2189,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(lecturaDTO,token,
                 "application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+        /*call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -2091,9 +2202,15 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         return _registrado;
     }
     //endregion
@@ -2107,7 +2224,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetFinalizarDescargas();
             FinalizarDescargaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new FinalizarDescargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -2143,7 +2260,7 @@ public class Lisener{
                     Cursor cantidad = sagasSql.
                             GetImagenesFinalizarDescargaByClaveOperacion(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
-                    while (!cantidad.isAfterLast()) {
+                    while (!cantidad.moveToNext()) {
                         String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         //try {
                         //  lecturaDTO.getImagenesURI().add(new URI(iuri));
@@ -2162,7 +2279,7 @@ public class Lisener{
                         sagasSql.EliminarFinalizarDescarga(lecturaDTO.getClaveOperacion());
                         sagasSql.EliminarImagenes(lecturaDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
+                    //cursor.moveToNext();
                 }
             }
         }
@@ -2175,7 +2292,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaFinalizarDescargaDTO> call = restClient.postFinalizarDescarga(lecturaDTO,token,
                 "application/json");
-        call.enqueue(new Callback<RespuestaFinalizarDescargaDTO>() {
+       /* call.enqueue(new Callback<RespuestaFinalizarDescargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaFinalizarDescargaDTO> call,
                                    Response<RespuestaFinalizarDescargaDTO> response) {
@@ -2188,9 +2305,15 @@ public class Lisener{
             public void onFailure(Call<RespuestaFinalizarDescargaDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         return _registrado;
     }
     //endregion
@@ -2203,7 +2326,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetIniciarDescargas();
             IniciarDescargaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new IniciarDescargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -2239,7 +2362,7 @@ public class Lisener{
                     Cursor cantidad = sagasSql.
                             GetImagenesDescargaByClaveUnica(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
-                    while (!cantidad.isAfterLast()) {
+                    while (!cantidad.moveToNext()) {
                         String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         //try {
                         //  lecturaDTO.getImagenesURI().add(new URI(iuri));
@@ -2259,7 +2382,7 @@ public class Lisener{
                         sagasSql.EliminarDescarga(lecturaDTO.getClaveOperacion());
                         sagasSql.EliminarImagenesDescarga(lecturaDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
+                    //cursor.moveToNext();
                 }
             }
         }
@@ -2272,7 +2395,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(lecturaDTO,token,
                 "application/json");
-        call.enqueue(new Callback<RespuestaIniciarDescargaDTO>() {
+        /*call.enqueue(new Callback<RespuestaIniciarDescargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
                                    Response<RespuestaIniciarDescargaDTO> response) {
@@ -2285,9 +2408,15 @@ public class Lisener{
             public void onFailure(Call<RespuestaIniciarDescargaDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         return _registrado;
     }
     //endregion
@@ -2301,7 +2430,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetPapeletas();
             PrecargaPapeletaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (!cursor.moveToNext()) {
                     lecturaDTO = new PrecargaPapeletaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -2354,7 +2483,7 @@ public class Lisener{
                     //Cursor cantidad = papeletaSQL.GetRecordsByCalveUnica(lecturaDTO.getClaveOperacion());
                     Cursor cantidad = sagasSql.GetRecordsByCalveUnica(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
-                    while (!cantidad.isAfterLast()) {
+                    while (!cantidad.moveToNext()) {
                         //String iuri = cantidad.getString(cantidad.getColumnIndex("Imagen"));
                         //try {
                         //lecturaDTO.getImagenesURI().add(new URI(iuri));
@@ -2386,7 +2515,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(lecturaDTO,token,
                 "application/json");
-        call.enqueue(new Callback<RespuestaPapeletaDTO>() {
+        /*call.enqueue(new Callback<RespuestaPapeletaDTO>() {
             @Override
             public void onResponse(Call<RespuestaPapeletaDTO> call,
                                    Response<RespuestaPapeletaDTO> response) {
@@ -2399,9 +2528,15 @@ public class Lisener{
             public void onFailure(Call<RespuestaPapeletaDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         return _registrado;
     }
     //endregion
@@ -2409,24 +2544,17 @@ public class Lisener{
     //region Estatus servicio
     private boolean ServicioDisponible(){
         Log.v("Servicio","Verifica el estatus del servicio");
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         RestClient restClientS = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
                 "application/json");
-        callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
-            @Override
-            public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
-                RespuestaServicioDisponibleDTO data = response.body();
-                EstaDisponible = response.isSuccessful() && data.isExito();
-                Log.w("Servicio","El servicio esta disponible");
-            }
+        try {
+            EstaDisponible = callS.execute().code() ==200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            @Override
-            public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
-                EstaDisponible = false;
-                Log.w("Servicio","El servicio no esta disponible");
-            }
-        });
         return EstaDisponible;
     }
     //endregion

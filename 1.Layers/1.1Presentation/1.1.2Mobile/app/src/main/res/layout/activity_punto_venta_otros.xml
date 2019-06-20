@@ -142,6 +142,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
                 app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaOtrosActivityProducto"
+                android:textColor="@color/cardview_dark_background"
                 tools:ignore="LabelFor,UnusedAttribute" />
         </TableRow>
 
@@ -172,6 +173,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/textView16"
+                android:textColor="@color/cardview_dark_background"
                 app:layout_constraintTop_toBottomOf="@+id/ETProductoVentaOtrosConcepto"
                 tools:ignore="LabelFor"
                 tools:targetApi="o" />
@@ -204,6 +206,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.818"
                 app:layout_constraintStart_toEndOf="@+id/textView17"
+                android:textColor="@color/cardview_dark_background"
                 app:layout_constraintTop_toBottomOf="@+id/ETPuntoVentaOtrosActivityPrecio"
                 tools:ignore="LabelFor,UnusedAttribute" />
         </TableRow>
