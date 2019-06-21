@@ -91,9 +91,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         Log.w("Genero_clave",clave_unica);
         Log.w("Consulta","Consulto si el servicio esta disponible");
         precargaPapeletaDTO.setClaveOperacion(clave_unica);
+
         //region Verifica si el servcio esta disponible
-
-
         RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
@@ -109,7 +108,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
-
                 @Override
                 public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
                     esta_disponible = false;

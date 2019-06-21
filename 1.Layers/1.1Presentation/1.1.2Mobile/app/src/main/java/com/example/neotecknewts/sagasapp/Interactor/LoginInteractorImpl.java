@@ -99,14 +99,17 @@ public class LoginInteractorImpl implements LoginInteractor {
             public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
                 try{
                     UsuarioDTO data = response.body();
-                    Log.d("Jimy", response.code()+"");
-                    Log.d("Jimy", response.isSuccessful()+"");
+                    //Log.d("Jimy", response.code()+"");
+                    //Log.d("Jimy", response.isSuccessful()+"");
+                    //loginPresenter.onSuccessLogin(UsuarioDTO);
+
                     if (response.isSuccessful()) {
-                        Log.d("Jimy", data.toString());
-                        Log.w(TAG,"Sucess");
+                        //Log.d("Jimy", data.toString());
+                        //Log.w(TAG,"Sucess");
                         if(data.getIdUsuario()!= 0){
                             if(data.getLengthListMenu()  > 0){
                                 loginPresenter.onSuccessLogin(data);
+
                             } else {
                                 loginPresenter.onError(data.getMensaje());
                             }
