@@ -2,10 +2,14 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +26,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
@@ -34,6 +39,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
+import com.example.neotecknewts.sagasapp.PictureActivity;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Permisos;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
@@ -95,6 +101,16 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
     public Permisos permisos;
 
+    private Camera mCamera;
+    private CameraPreview mPreview;
+    private Camera.PictureCallback mPicture;
+    private Button capture, switchCamera;
+    private Context myContext;
+    private LinearLayout cameraPreview;
+    private boolean cameraFront = false;
+    public static Bitmap bitmap;
+
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,6 +118,28 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
         //Se indica que layout se carga
         setContentView(R.layout.activity_camera);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        myContext = this;
+
+        mCamera =  Camera.open();
+        mCamera.setDisplayOrientation(90);
+
+        cameraPreview = (LinearLayout) findViewById(R.id.cPreview);
+        mPreview = new CameraPreview(myContext, mCamera);
+        cameraPreview.addView(mPreview);
+        mPicture = getPictureCallback();
+
+        capture = (Button) findViewById(R.id.button_foto);
+        capture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCamera.takePicture(null, null, mPicture);
+            }
+        });
+
+        mCamera.startPreview();
+
         permisos = new Permisos(CameraDescargaActivity.this);
         permisos.permisos();
 
@@ -184,7 +222,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             }else if (extras.getBoolean("EsLecturaInicial") ||
                     extras.getBoolean("EsLecturaFinal")){
                 lecturaDTO = (LecturaDTO) extras.getSerializable("lecturaDTO");
-                             cantidadFotos = lecturaDTO.getCantidadFotografias();
+                cantidadFotos = lecturaDTO.getCantidadFotografias();
                 textViewTitulo.setText("Fotografia "+lecturaDTO.getNombreTipoMedidor()
                         +" - "+lecturaDTO.getNombreEstacionCarburacion() );
                 EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
@@ -215,7 +253,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                         getSerializable("lecturaAlmacenDTO");
                 cantidadFotos = lecturaAlmacenDTO.getCantidadFotografias();
                 textViewTitulo.setText("Fotografia "+lecturaAlmacenDTO.getNombreTipoMedidor()+
-                    " - "+lecturaAlmacenDTO.getNombreAlmacen()
+                        " - "+lecturaAlmacenDTO.getNombreAlmacen()
                 );
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
@@ -229,7 +267,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
                 cantidadFotos = recargaDTO.getCantidadFotosEntrada();
                 textViewTitulo.setText("Fotografia "+ recargaDTO.getNombreMedidorEntrada()+
-                    " - Estación"
+                        " - Estación"
                 );
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
@@ -356,26 +394,11 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             layoutNitidez.setVisibility(View.VISIBLE);
             textViewMensaje.setVisibility(View.GONE);
         }else{
-            layoutTitle.setVisibility(View.VISIBLE);
+//            layoutTitle.setVisibility(View.VISIBLE);
             layoutCameraButton.setVisibility(View.VISIBLE);
-            layoutNitidez.setVisibility(View.GONE);
+            layoutNitidez.setVisibility(View.VISIBLE);
             textViewMensaje.setVisibility(View.VISIBLE);
         }
-
-        //se decalran los onClick de cada boton
-        final Button buttonFoto = (Button) findViewById(R.id.button_foto);
-        buttonFoto.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                List<String> permissionList = Utilidades.checkAndRequestPermissions(CameraDescargaActivity.this);
-
-                Log.w("Prueba","prueba"+permissions(permissionList));
-
-                //if (permissions(permissionList)) {
-
-                    openCameraIntent();
-                //}
-            }
-        });
 
         final Button buttonRetomarFoto =(Button) findViewById(R.id.button_foto_incorrecta);
         buttonRetomarFoto.setOnClickListener(new View.OnClickListener() {
@@ -386,7 +409,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
                 /*if (permissions(permissionList)) {*/
 
-                    openCameraIntent();
+                openCameraIntent();
                 /*}*/
             }
         });
@@ -401,6 +424,60 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
 
     }
+
+    public void onResume() {
+
+        super.onResume();
+        System.out.println(321);
+        if(mCamera == null) {
+            mCamera = Camera.open();
+            mCamera.setDisplayOrientation(90);
+            mPicture = getPictureCallback();
+            mPreview.refreshCamera(mCamera);
+            Log.d("nu", "null");
+        }else {
+            Log.d("nu","no null");
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //when on Pause, release camera in order to be used from other applications
+        releaseCamera();
+    }
+
+    private void releaseCamera() {
+        // stop and release camera
+        if (mCamera != null) {
+            mCamera.stopPreview();
+            mCamera.setPreviewCallback(null);
+            mCamera.release();
+            mCamera = null;
+        }
+    }
+
+    private Camera.PictureCallback getPictureCallback() {
+        Camera.PictureCallback picture = new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+                Matrix matrix = new Matrix();
+
+                matrix.postRotate(90);
+
+                bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                imageViewFoto.setImageBitmap(rotatedBitmap);
+                mPreview.refreshCamera(mCamera);
+                //como la foto ya fue tomada se muestra el layout de nitidez
+
+            }
+        };
+        return picture;
+    }
+
+
     //En caso de que la foto sea correcta
     public void checarboton(){
         Log.w("Boton","finalizar"+cantidadFotos+finalizar+almacen);
@@ -453,7 +530,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             //se pone visible el layout para tomar la siguiente fotografia
             layoutTitle.setVisibility(View.VISIBLE);
             layoutCameraButton.setVisibility(View.VISIBLE);
-            layoutNitidez.setVisibility(View.GONE);
+            layoutNitidez.setVisibility(View.VISIBLE);
             textViewMensaje.setVisibility(View.VISIBLE);
             textViewMensaje.setText(R.string.mensaje_segunda_foto);
             cantidadFotos--;
@@ -469,7 +546,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }else if(iniciar&&!almacen){
                     Log.w("Boton","TractorIniciar"+cantidadFotos);
                     iniciarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
-                    //si es el medidor del tractor (la variable almacen es falsa por lo que estamos en la fotos del medidor del tractor
+                    //si es el medidor del tractor (la variable almacen es falsa por lo que estamos en la foto del medidor del tractor
                     //se inicia el captivity para capturar el porcentaje del siguiente medidor
                     if(!TanquePrestado)
                         startActivityPorcentaje();
@@ -537,6 +614,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         }
     }
 
+
+
 //metodo que abre la camara
     private void openCameraIntent() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -567,8 +646,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 fotoTomada=true;
                 layoutTitle.setVisibility(View.GONE);
                 layoutCameraButton.setVisibility(View.GONE);
-                layoutNitidez.setVisibility(View.VISIBLE);
-                textViewMensaje.setVisibility(View.GONE);
+                layoutNitidez.setVisibility(View.GONE);
+                textViewMensaje.setVisibility(View.VISIBLE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -728,7 +807,6 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             startActivity(intent);
         }
     }
-
     private void startActivityAutoconsumo(){
         if(EsAutoconsumoPipaInicial||EsAutoconsumoPipaFinal){
             Intent intent = new Intent(CameraDescargaActivity.this,
@@ -739,7 +817,6 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             startActivity(intent);
         }
     }
-
     private void startActivityTraspaso(){
 
         if(EsTraspasoEstacionInicial ||EsTraspasoEstacionFinal){

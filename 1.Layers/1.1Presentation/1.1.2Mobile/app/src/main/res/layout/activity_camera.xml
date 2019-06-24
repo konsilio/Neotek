@@ -2,130 +2,166 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layout_title">
-
-        <TextView
-            android:id="@+id/textTitulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="@string/title_foto_magnatel_almacen"
-            android:textColor="@color/colorTextLogin"
-            android:textSize="18sp"
-            android:textStyle="italic" />
-
-    </LinearLayout>
-
-    <com.jsibbold.zoomage.ZoomageView
-        android:id="@+id/image_view_foto"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:zoomage_animateOnReset="true"
-        app:zoomage_autoCenter="true"
-        app:zoomage_autoResetMode="UNDER"
-        app:zoomage_maxScale="8"
-        app:zoomage_minScale="0.6"
-        app:zoomage_restrictBounds="false"
-        app:zoomage_zoomable="true" />
-
-    <LinearLayout
-        android:id="@+id/layout_photo_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/button_foto"
-            style="@style/SagasTheme.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="5sp"
-            android:background="@drawable/ripple_effect"
-            android:drawableStart="@mipmap/ic_camera"
-            android:padding="2sp"
-            android:text="@string/tomar_foto"
-            tools:ignore="ObsoleteLayoutParam" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_photo_nitida"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="@string/message_imagen_nitida"
-            android:textColor="@color/colorTextLogin"
-            android:textSize="18sp"
-            android:textStyle="italic" />
-
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/layout_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/button_foto_correcta"
-                style="@style/SagasTheme.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="5sp"
-                android:layout_weight="1"
-                android:background="@drawable/ripple_effect"
-                android:gravity="center_vertical"
-                android:text="@string/message_nitida_si"
-                android:textAlignment="center"
-                tools:ignore="ObsoleteLayoutParam" />
 
-            <Button
-                android:id="@+id/button_foto_incorrecta"
-                style="@style/SagasTheme.Button"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textTitulo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="5sp"
-                android:layout_weight="1"
-                android:background="@drawable/ripple_effect"
-                android:gravity="center_vertical"
-                android:text="@string/message_nitida_no"
-                android:textAlignment="center"
-                android:textSize="14sp"
-                tools:ignore="ObsoleteLayoutParam" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="@string/title_foto_magnatel_almacen"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="319dp">
+
+                <LinearLayout
+                    android:id="@+id/cPreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-175dp"
+                    android:layout_marginBottom="-175dp"
+                    android:orientation="horizontal"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="top|center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="50dp"
+                        android:background="@drawable/circleblackcamera"
+                        android:orientation="horizontal"></LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layout_photo_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_foto"
+                    style="@style/SagasTheme.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="5sp"
+                    android:background="@drawable/ripple_effect"
+                    android:drawableStart="@mipmap/ic_camera"
+                    android:padding="2sp"
+                    android:text="@string/tomar_foto"
+                    tools:ignore="ObsoleteLayoutParam" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_photo_nitida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="@string/message_imagen_nitida"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/button_foto_correcta"
+                        style="@style/SagasTheme.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ripple_effect"
+                        android:gravity="center_vertical"
+                        android:text="@string/message_nitida_si"
+                        android:textAlignment="center"
+                        tools:ignore="ObsoleteLayoutParam" />
+
+                    <Button
+                        android:id="@+id/button_foto_incorrecta"
+                        style="@style/SagasTheme.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/ripple_effect"
+                        android:gravity="center_vertical"
+                        android:text="@string/message_nitida_no"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        tools:ignore="ObsoleteLayoutParam" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textIndicaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="@string/mensaje_foto_papeleta"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="18sp" />
+
+            <com.jsibbold.zoomage.ZoomageView
+                android:id="@+id/image_view_foto"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:zoomage_animateOnReset="true"
+                app:zoomage_autoCenter="true"
+                app:zoomage_autoResetMode="UNDER"
+                app:zoomage_maxScale="8"
+                app:zoomage_minScale="0.6"
+                app:zoomage_restrictBounds="false"
+                app:zoomage_zoomable="true" />
 
         </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textIndicaciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="@string/mensaje_foto_papeleta"
-        android:textColor="@color/colorTextLogin"
-        android:textSize="18sp" />
-
+    </ScrollView>
 </LinearLayout>
