@@ -104,7 +104,7 @@
                                 </ul>
                             </li>*@
                         }
-                        if (rol.Ventas)
+                        if (rol.VentasCajaGeneral)
                         {
                             <li>
                                 <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">attach_money</i><span>Ventas</span> </a>
@@ -224,7 +224,7 @@
                                     @if (rol.ReporteCallCenter)
                                     {
                                     <li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>}
-                                    @if (rol.Ventas) //ReporteCorteCaja
+                                    @if (rol.ReporteCorteCaja)
                                     {
                                     <li>@Html.ActionLink("Corte de Caja", "CorteCaja", "Reportes")</li>}
                                     @if (rol.Ventas) //ReporteGastoVehiculo
