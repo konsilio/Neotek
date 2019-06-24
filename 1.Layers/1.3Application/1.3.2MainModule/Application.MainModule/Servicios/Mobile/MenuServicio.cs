@@ -74,10 +74,8 @@ namespace Application.MainModule.Servicios.Mobile
                         {
                             hayLectura = true;
                             esChofer = false;
-                        }
-                        
-                    }
-                    
+                        }                        
+                    }                    
                 }
                 else
                 {
@@ -94,7 +92,6 @@ namespace Application.MainModule.Servicios.Mobile
                         }
                         _AppCompraEntraGas = true;
                     }
-
                     if (rol.AppCompraGasIniciarDescarga && !_AppCompraGasIniciarDescarga)
                     {
                         if (hayLectura)
@@ -103,7 +100,6 @@ namespace Application.MainModule.Servicios.Mobile
                         }
                         _AppCompraGasIniciarDescarga = true;
                     }
-
                     if (rol.AppCompraGasFinalizarDescarga && !_AppCompraGasFinalizarDescarga)
                     {
                         if (hayLectura)
@@ -119,8 +115,7 @@ namespace Application.MainModule.Servicios.Mobile
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraVerOCompra"]));
                         }
                         _AppCompraVerOCompra = true;
-                    }
-                                        
+                    }                                        
                     //Estación Calibacion 
                     if (rol.AppTomaLecturaEstacionCarb && !_AppTomaLecturaEstacionCarb && esChofer && esEstacion)
                     {
@@ -132,7 +127,6 @@ namespace Application.MainModule.Servicios.Mobile
                         }
                         _AppTomaLecturaEstacionCarb = true;
                     }
-
                     //Almacen principal 
                     if (rol.AppTomaLecturaAlmacenPral && !_AppTomaLecturaAlmacenPral && !esChofer)
                     {
@@ -143,7 +137,6 @@ namespace Application.MainModule.Servicios.Mobile
                         }
                         _AppTomaLecturaAlmacenPral = true;
                     }
-
                     //Pipa
                     if (rol.AppTomaLecturaPipa && !_AppTomaLecturaPipa && !esChofer)
                     {
@@ -153,7 +146,6 @@ namespace Application.MainModule.Servicios.Mobile
                         }
                         _AppTomaLecturaPipa = true;
                     }
-
                     //Camioneta
                     if (rol.AppTomaLecturaCamionetaCilindro && !_AppTomaLecturaCamionetaCilindro &&  !esChofer)
                     {

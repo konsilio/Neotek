@@ -12,8 +12,8 @@
         )
 <!-- Bootstrap Select Css -->
 
-<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/Resources/js/Clientes.js"></script>
+@*<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>*@
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
 <script type="text/javascript">
@@ -169,10 +169,10 @@
                                             <table class="table table table-striped table-hover" name="EmpresasGaseras">
                                                 <thead>
                                                     <tr>
-                                                        <th>Gasera</th>
+                                                        @*<th>Gasera</th>*@
                                                         <th>Tipo Persona</th>
-                                                        <th>Régimen Fiscal</th>
-                                                        <th>Razón social</th>
+                                                        @*<th>Régimen Fiscal</th>*@
+                                                        <th>Nombre/Razón social</th>
                                                         <th>RFC</th>
                                                         <th>CreditoMonto</th>
                                                         <th>CreditoDias</th>
@@ -187,9 +187,9 @@
                                                     @foreach (var item in @ViewBag.Clientes)
                                                     {
                                                     <tr>
-                                                        <td>@item.Empresa</td>
+                                                        @*<td>@item.Empresa</td>*@
                                                         <td>@item.TipoPersonaFiscal</td>
-                                                        <td>@item.RegimenFiscal</td>
+                                                        @*<td>@item.RegimenFiscal</td>*@
                                                         <td>@item.RazonSocial</td>
                                                         <td>@item.Rfc</td>
                                                         <td>@item.limiteCreditoMonto</td>

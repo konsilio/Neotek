@@ -436,7 +436,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 PorcentajeIva = pv.PorcentajeIva,
                 EfectivoRecibido = pv.EfectivoRecibido,
                 CambioRegresado = pv.CambioRegresado,
-                PuntoVenta = pv.PuntoVenta,
+                PuntoVenta = pv.CPuntoVenta.UnidadesAlmacen.Numero,
                 RazonSocial = pv.RazonSocial,
                 RFC = pv.RFC,
                 ClienteConCredito = pv.ClienteConCredito,
@@ -451,6 +451,13 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 usDTO.VentaTotalCredito = _cg.VentaTotalCredito;
                 usDTO.VentaTotalContado = _cg.VentaTotalContado;
                 usDTO.OtrasVentas = _cg.OtrasVentas;
+            }
+            else
+            {
+                if (usDTO.IdCamioneta != null)                
+                    usDTO.VentaTotal = pv.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg.Value);
+                else                
+                    usDTO.VentaTotal = pv.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt.Value);
             }
             //usDTO.VentaTotal = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal;
             //usDTO.VentaTotalCredito = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito;

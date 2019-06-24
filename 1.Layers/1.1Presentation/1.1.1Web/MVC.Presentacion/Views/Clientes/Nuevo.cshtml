@@ -10,7 +10,7 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
-<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+@*<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>*@
 <script src="~/Resources/js/Clientes.js"></script>
 <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
 <script type="text/javascript">
@@ -228,7 +228,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         <div>
-                                            Apellido 1:*
+                                            Apellido Paterno:*
                                             <input type="text" name="Apellido1" class="form-control" />
                                             @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                         </div>
@@ -237,7 +237,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         <div>
-                                            Apellido 2:
+                                            Apellido Materno:
                                             <input type="text" name="Apellido2" class="form-control" />
                                         </div>
                                     </div>

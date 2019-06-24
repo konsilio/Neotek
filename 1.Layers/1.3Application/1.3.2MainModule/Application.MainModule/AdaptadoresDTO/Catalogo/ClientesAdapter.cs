@@ -17,7 +17,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             string nom = "";
             string apell = "";
             string apell2 = "";
-            if (us.Nombre == "" || us.Nombre == null || us.Apellido1 == "" || us.Apellido1 == null)
+            if  (us.RepresentanteLegal != null)
             {
                 if (us.RepresentanteLegal.Split(' ').Count() == 4)
                 {
