@@ -224,17 +224,20 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
 
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
+
         int intentos_post = 0;
         registra_lectura = true;
+        Log.d("REST",lecturaCamionetaDTO.toString());
         /*while(intentos_post<3) {*/
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalCamioneta(
                 lecturaCamionetaDTO,token,"application/json");
-        Log.w("Url camioneta", ApiClient.BASE_URL);
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
                 RespuestaLecturaInicialDTO data = response.body();
+                Log.d("REST",""+response.isSuccessful());
+                Log.d("REST",""+response.code());
                 if (response.isSuccessful()) {
                     Log.w("IniciarDescarga", "Success");
                     enviarDatosPresenter.onSuccessServicio();

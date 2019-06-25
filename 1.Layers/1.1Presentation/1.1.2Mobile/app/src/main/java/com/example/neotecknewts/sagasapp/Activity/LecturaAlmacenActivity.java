@@ -72,59 +72,59 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
                 R.layout.custom_spinner,lista_almacenes));*/
         SLecturaAlmacenActivityListaMedidor.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>=0){
-                    lecturaAlmacenDTO.setNombreTipoMedidor(
-                            SLecturaAlmacenActivityListaMedidor.getItemAtPosition(position).
-                                    toString()
-                    );
-                    if(medidorDTOList.size()>0 && !medidorDTOList.isEmpty() && medidorDTOList!=null) {
-                        for (MedidorDTO medidor : medidorDTOList) {
-                            if (medidor.getNombreTipoMedidor().equals(
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if(position>=0){
+                            lecturaAlmacenDTO.setNombreTipoMedidor(
                                     SLecturaAlmacenActivityListaMedidor.getItemAtPosition(position).
-                                            toString())) {
-                                lecturaAlmacenDTO.setIdTipoMedior(medidor.getIdTipoMedidor());
-                                lecturaAlmacenDTO.setCantidadFotografias(medidor.getCantidadFotografias());
-                                lecturaAlmacenDTO.setNombreTipoMedidor(medidor.getNombreTipoMedidor());
+                                            toString()
+                            );
+                            if(medidorDTOList.size()>0 && !medidorDTOList.isEmpty() && medidorDTOList!=null) {
+                                for (MedidorDTO medidor : medidorDTOList) {
+                                    if (medidor.getNombreTipoMedidor().equals(
+                                            SLecturaAlmacenActivityListaMedidor.getItemAtPosition(position).
+                                                    toString())) {
+                                        lecturaAlmacenDTO.setIdTipoMedior(medidor.getIdTipoMedidor());
+                                        lecturaAlmacenDTO.setCantidadFotografias(medidor.getCantidadFotografias());
+                                        lecturaAlmacenDTO.setNombreTipoMedidor(medidor.getNombreTipoMedidor());
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                lecturaAlmacenDTO.setIdTipoMedior(0);
-                lecturaAlmacenDTO.setNombreTipoMedidor("");
-                lecturaAlmacenDTO.setCantidadFotografias(0);
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        lecturaAlmacenDTO.setIdTipoMedior(0);
+                        lecturaAlmacenDTO.setNombreTipoMedidor("");
+                        lecturaAlmacenDTO.setCantidadFotografias(0);
 
-            }
-        });
+                    }
+                });
         SLecturaAlmacenActivityListaAlmacen.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position>=0){
-                    if(DatosTomaLecturaDtoList!=null && DatosTomaLecturaDtoList.getAlmacenes().size()>0) {
-                        for (AlmacenDTO almacenDTO : DatosTomaLecturaDtoList.getAlmacenes()) {
-                            if (almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
-                                lecturaAlmacenDTO.setIdAlmacen(almacenDTO.getIdAlmacenGas());
-                                lecturaAlmacenDTO.setNombreAlmacen(almacenDTO.getNombreAlmacen());
-                                lecturaAlmacenDTO.setPorcentajeMedidor(almacenDTO.getPorcentajeMedidor());
-                                lecturaAlmacenDTO.setCapacidadAlmacen(almacenDTO.getCapacidad());
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position>=0){
+                            if(DatosTomaLecturaDtoList!=null && DatosTomaLecturaDtoList.getAlmacenes().size()>0) {
+                                for (AlmacenDTO almacenDTO : DatosTomaLecturaDtoList.getAlmacenes()) {
+                                    if (almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
+                                        lecturaAlmacenDTO.setIdAlmacen(almacenDTO.getIdAlmacenGas());
+                                        lecturaAlmacenDTO.setNombreAlmacen(almacenDTO.getNombreAlmacen());
+                                        lecturaAlmacenDTO.setPorcentajeMedidor(almacenDTO.getPorcentajeMedidor());
+                                        lecturaAlmacenDTO.setCapacidadAlmacen(almacenDTO.getCapacidad());
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                lecturaAlmacenDTO.setIdAlmacen(0);
-                lecturaAlmacenDTO.setNombreAlmacen("");
-            }
-        });
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        lecturaAlmacenDTO.setIdAlmacen(0);
+                        lecturaAlmacenDTO.setNombreAlmacen("");
+                    }
+                });
         lecturaAlmacenPresenter.getAlmacenes(session.getToken(),banlist);
         BtnLecturaAlamacenActivityGuardar = findViewById(R.id.BtnLecturaAlamacenActivityGuardar);
         BtnLecturaAlamacenActivityGuardar.setOnClickListener(v -> {
@@ -250,3 +250,4 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
         }
     }
 }
+

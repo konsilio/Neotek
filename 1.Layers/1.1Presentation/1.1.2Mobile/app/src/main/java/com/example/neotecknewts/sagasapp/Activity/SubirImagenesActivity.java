@@ -365,6 +365,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    Log.d("image", image.trim());
                     lecturaDTO.getImagenes().add(image.trim());
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){

@@ -326,6 +326,9 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     @Override
     public void onSuccessPrecioVenta(PrecioVentaDTO data) {
         if (data != null) {
+            data.setPrecioSalidaKg(data.getPrecioSalidaKg()/1.16);
+            data.setPrecioSalidaLt(data.getPrecioSalidaLt()/1.16);
+
             precioVentaDTO = data;
 
             /*if(esGasLP ||EsVentaPipa||EsVentaCarburacion){
@@ -533,7 +536,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      */
     private void VentaCilindroGas() {
         List<ConceptoDTO> conceptos = new ArrayList<>();
-        for (int x = 0; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
+        for (int x =0; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
             View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
             LinearLayout linearLayout = view.findViewById(R.id.Layout);
             CardView card = linearLayout.findViewById(R.id.CVEstacionesCarburacionItem);
@@ -615,6 +618,9 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                                         cilindros.getCantidad()
                         );
                         Gas.setSubtotal(Gas.getPrecioUnitarioKg() * Gas.getCantidad());
+                        Log.d("preciounitario",Gas.getPrecioUnitarioKg()+"");
+                        Log.d("cantidad",Gas.getCantidad()+"");
+                        Log.d("resultado",Gas.getPrecioUnitarioKg() * Gas.getCantidad() +"" );
                         Gas.setConcepto("Gas");
                         Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
                         Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
@@ -723,7 +729,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      */
     private void VentaGaslp() {
         List<ConceptoDTO> conceptos = new ArrayList<>();
-        for (int x = 0; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
+        for (int x = 0 ; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
             View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
             LinearLayout linearLayout = view.findViewById(R.id.Layout);
             CardView card = linearLayout.findViewById(R.id.CVEstacionesCarburacionItem);
@@ -748,7 +754,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         Gas.setIdUnidadmedida(precioVentaDTO.getIdUnidadMedida());
                         Gas.setPrecioUnitarioProducto(precioVentaDTO.getPrecioSalidaKg());
                         Gas.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
-                        Gas.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
+                        //Gas.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
                         Gas.setDescuento(0);
                         Gas.setDescuentoUnitarioKg(0);
                         Gas.setDescuentoUnitarioLt(0);
@@ -756,7 +762,13 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                                 cantidadVenta
                         );
                         if (EsVentaCamioneta && esGasLP) {
-                            double cap = ExistenciasDTO.get(x).getCapacidadKg();
+                            Gas.setConcepto(TVTipo.getText().toString());
+                            Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
+                            Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+
+                            double cap = Double.parseDouble(Gas.getConcepto().substring(6,9));
+
+                            //double cap = ExistenciasDTO.get(x).getCapacidadKg();
                             Gas.setCantidadKg(
                                     cap * cantidadVenta *
                                             precioVentaDTO.getPrecioSalidaKg()
@@ -766,13 +778,15 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                                     cap * cantidadVenta *
                                             precioVentaDTO.getPrecioSalidaLt()
                             );
-
+                            Log.d("Ali"," Capacidad= "+cap);
+                            Log.d("Ali"," cantidadVenta= "+cantidadVenta);
+                            Log.d("Ali"," PrecioSalidaKg= "+precioVentaDTO.getPrecioSalidaKg());
+                            Log.d("Ali"," Total= "+cap * cantidadVenta * precioVentaDTO.getPrecioSalidaKg());
                             Gas.setSubtotal(
                                     cap * cantidadVenta * precioVentaDTO.getPrecioSalidaKg()
                             );
-                            Gas.setConcepto(TVTipo.getText().toString());
-                            Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
-                            Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+
+
                         } else {
                             Gas.setCantidadKg(
                                     precioVentaDTO.getPrecioSalidaKg() * cantidadVenta
@@ -784,8 +798,8 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                             Gas.setConcepto(TVTipo.getText().toString());
                             Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
                             Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
-                        }
 
+                        }
 
                         conceptos.add(Gas);
                     } else {
@@ -800,11 +814,14 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                     }
                 }
             }
+
         }
         for (int x = 0; x < conceptos.size(); x++) {
             actualizarConceptos(conceptos.get(x));
         }
+
     }
+
 
     public void LimpiarLista() {
         for (int x = 0; x < data_get.size() - 1; x++) {

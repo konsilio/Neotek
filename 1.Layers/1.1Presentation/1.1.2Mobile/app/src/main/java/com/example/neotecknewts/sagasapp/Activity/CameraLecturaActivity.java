@@ -583,5 +583,6 @@ public class CameraLecturaActivity extends AppCompatActivity {
             cursor.close();
         }
         return cadena;
+
     }
 }

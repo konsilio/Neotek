@@ -53,3 +53,4 @@ public class LecturaAlmacenPresenterImpl implements LecturaAlmacenPresenter {
         lecturaAlmacenView.hiddeProgress();
     }
 }
+
