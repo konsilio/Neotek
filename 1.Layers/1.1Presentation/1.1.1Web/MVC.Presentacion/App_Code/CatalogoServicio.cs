@@ -2292,6 +2292,12 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarCliente(id);
             return agente._ClienteModel;
         }
+        public static ClientesDto ObtenerClienteDto(int id, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarClienteDto(id, token);
+            return agente._ClienteDTO;
+        }
         public static ClientesModel ObtenerCliente(int id, string token)
         {
             var agente = new AgenteServicio();

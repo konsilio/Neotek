@@ -855,6 +855,40 @@ namespace MVC.Presentacion.Agente
                 _ClienteModel = c;
             }
         }
+        public void BuscarClienteDto(int id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCliente"];
+            GetClienteDto(id, tkn).Wait();
+        }
+        private async Task GetClienteDto(int id, string token = null)
+        {
+            using (var client = new HttpClient())
+            {
+                ClientesDto c = new ClientesDto();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiCatalgos, id.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        c = await response.Content.ReadAsAsync<ClientesDto>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    c = new ClientesDto();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ClienteDTO = c;
+            }
+        }
         public void BuscarListaClientes(int id, int TipoPersona, int regimen, string rfc, string nombre, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetClientes"];
@@ -973,7 +1007,6 @@ namespace MVC.Presentacion.Agente
 
             }
         }
-
         public void BuscarClientesRfcTel(ClientesDto mod, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutClientesRfcTel"];
@@ -1010,7 +1043,6 @@ namespace MVC.Presentacion.Agente
 
             }
         }
-
         public void BuscarListaLocaciones(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaLocacion"];
