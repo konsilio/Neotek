@@ -33,7 +33,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 IdTipoMedidor = linicial.IdTipoMedidor.Value,
                 ClaveProceso = linicial.ClaveOperacion,
-                PorcentajeP5000 = linicial.P5000.Value,
+                CantidadP5000 = linicial.P5000.Value,
                 PorcentajeMedidor = linicial.Porcentaje.Value,
                 IdEstacionCarburacion = linicial.IdCAlmacenGas
             };
@@ -200,7 +200,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdTipoMedidor = lectura.IdTipoMedidor??0,
                 IdEstacionCarburacion = lectura.IdCAlmacenGas,
                 PorcentajeMedidor = lectura.Porcentaje??0,
-                PorcentajeP5000 = lectura.P5000??0,
+                CantidadP5000 = lectura.P5000??0,
                
             };
         }

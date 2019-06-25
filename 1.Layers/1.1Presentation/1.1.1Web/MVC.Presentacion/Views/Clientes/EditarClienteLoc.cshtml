@@ -60,19 +60,7 @@
                                     <div class="form-group">
                                         <input type="text" name="TipoLocacion" class="form-control" value="@ViewBag.Locaciones.TipoLocacion">
                                     </div>
-                                </div>
-                                @*<div class="col-lg-7 col-md-7 col-sm-7">
-                                        <div class="form-group">
-                                            <div>
-                                                Localización Manual
-                                                <label class="switch">
-                                                    <input type="checkbox" id="payMethod">
-                                                    <span class="slider round"></span>
-                                                </label>
-                                                Localización Google Maps
-                                            </div>
-                                        </div>
-                                    </div>*@
+                                </div>                               
                             </div>
                             <div class="row clearfix" id="Dir">
                                 <div class="col-lg-2 col-md-2 col-sm-2">
@@ -102,15 +90,33 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <div class="form-group">
+                                        @*<div class="form-group">
                                             <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
                                                 @foreach (var lst in ViewBag.ListaPaises)
                                                 {
                                                     <option value="@lst.IdPais">@lst.Pais</option>
                                                 }
                                             </select>
+                                        </div>*@
+                                        <div class="form-group">
+                                            @Html.DevExpress().ComboBox(settings =>
+                                       {
+                                           settings.Name = "cliente.Locacion.IdPais";
+                                           settings.Width = 180;
+                                           settings.SelectedIndex = Model.IdPais;
+                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                           settings.Theme = "Material";
+                                           settings.Properties.TextField = "Pais";
+                                           settings.Properties.ValueField = "IdPais";
+                                           settings.Properties.ValueType = typeof(byte);
+                                           settings.ClientEnabled = true;
+                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                       }).BindList(ViewBag.ListaPaises).Bind(Model.IdPais).GetHtml()
+                                            @Html.ValidationMessageFor(model => model.IdPais, "", new { @class = "text-danger" })
+
                                         </div>
-                                        @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
+                                       
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                         <div class="form-group">

@@ -22,7 +22,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool EsFijo { get; set; }
         public decimal limiteCreditoMonto { get; set; }        
         public short limiteCreditoDias { get; set; }
-        public decimal CreditoDisponibleMonto { get; set; }
+        public decimal CreditoDisponibleMonto { get; set; }       
         public string Telefono1 { get; set; }
         public string Telefono2 { get; set; }        
         public string Telefono3 { get; set; }        
