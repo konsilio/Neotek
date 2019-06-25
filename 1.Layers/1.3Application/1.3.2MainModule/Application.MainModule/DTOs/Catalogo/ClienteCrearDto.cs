@@ -145,5 +145,6 @@ namespace Application.MainModule.DTOs.Catalogo
         public List<ClienteLocacionDTO> Locaciones { get; set; }
         public ClienteLocacionDTO Locacion { get; set; }
         public bool VentaExtraordinaria { get; set; }
+        public bool EsFijo { get; set; }
     }
 }

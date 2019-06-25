@@ -395,9 +395,9 @@
                                         <div class="form-group">
                                             @if (Model.cliente != null)
                                             {
-                                                if (Model.cliente.Locaciones.Count > 0)                                              
+                                                if (Model.cliente.Locaciones.Count > 0)
                                                 {
-                                                    <input type="submit" value="Finalizar" formaction=@Url.Action("Nuevo", new { id = Model.IdCliente }) class="btn btn-raised btn-round btn-primary float-right" />
+                                                    <input type="submit" value="Continuar" formaction="Terminar" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
                                                 }
                                             }
                                         </div>

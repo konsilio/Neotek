@@ -131,12 +131,11 @@ namespace MVC.Presentacion.Controllers
             var JsonInfo = JsonConvert.SerializeObject(_lst);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Terminar(PedidoModel model = null)
+        public ActionResult Terminar(PedidoModel model)
         {
 
-            return RedirectToAction("Nuevo", new { idCliente = model.IdCliente }); 
+            return RedirectToAction("Nuevo","Pedidos" ,new { id = model.cliente.IdCliente });
         }
-
         public ActionResult AltaCliente(PedidoModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));

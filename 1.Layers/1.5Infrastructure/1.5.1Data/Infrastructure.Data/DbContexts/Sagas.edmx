@@ -733,9 +733,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene defi
         <EntityType Name="Bitacora">
           <Key>
             <PropertyRef Name="Id" />
-            
-            
-            
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUsuario" Type="int" />
@@ -898,6 +895,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene defi
           <Property Name="limiteCreditoDias" Type="smallint" Nullable="false" />
           <Property Name="CreditoDisponibleMonto" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="VentaExtraordinaria" Type="bit" />
+          <Property Name="EsFijo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CClienteContacto">
           <Key>
@@ -1453,6 +1451,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="GastoMensual" Type="bit" Nullable="false" />
           <Property Name="EsFiscal" Type="bit" Nullable="false" />
+          <Property Name="IdTipoEgreso" Type="smallint" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -10254,6 +10253,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CuentaContable" Relationship="Sagas.MainModuleModel.FK_CCliente_CCuentaContable" FromRole="Cliente" ToRole="CuentaContable" />
           <NavigationProperty Name="VentaPuntoDeVenta" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_CCliente" FromRole="Cliente" ToRole="VentaPuntoDeVenta" />
           <NavigationProperty Name="Cargo" Relationship="Sagas.MainModuleModel.FK_Cargo_CCliente" FromRole="Cliente" ToRole="Cargo" />
+          <Property Name="EsFijo" Type="Boolean" Nullable="false" />
 
 
           <!--<NavigationProperty Name="CClienteCondicion" Relationship="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" FromRole="CCliente" ToRole="CClienteCondicion" />
@@ -11716,6 +11716,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="EsFiscal" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_Egreso_CCentroCosto" FromRole="Egreso" ToRole="CentroCosto" />
           <NavigationProperty Name="CCuentaContable" Relationship="Sagas.MainModuleModel.FK_Egreso_CCuentaContable" FromRole="Egreso" ToRole="CuentaContable" />
+          <Property Name="IdTipoEgreso" Type="Int16" />
           <!--<NavigationProperty Name="CTipoEgreso" Relationship="Sagas.MainModuleModel.FK_Egreso_CTipoEgreso" FromRole="Egreso" ToRole="CTipoEgreso" />-->
 
 
@@ -13544,6 +13545,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
               </MappingFragment>
               <MappingFragment StoreEntitySet="CClienteCondicion">
+                <ScalarProperty Name="EsFijo" ColumnName="EsFijo" />
                 <ScalarProperty Name="VentaExtraordinaria" ColumnName="VentaExtraordinaria" />
                 <ScalarProperty Name="CreditoDisponibleMonto" ColumnName="CreditoDisponibleMonto" />
                 <ScalarProperty Name="DescuentoXKilo" ColumnName="DescuentoXKilo" />
@@ -14258,6 +14260,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Egreso">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Egreso">
               <MappingFragment StoreEntitySet="Egreso">
+                <ScalarProperty Name="IdTipoEgreso" ColumnName="IdTipoEgreso" />
                 <ScalarProperty Name="EsFiscal" ColumnName="EsFiscal" />
                 <ScalarProperty Name="GastoMensual" ColumnName="GastoMensual" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
