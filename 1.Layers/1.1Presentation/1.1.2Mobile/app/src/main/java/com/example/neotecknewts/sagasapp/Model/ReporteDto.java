@@ -8,6 +8,9 @@
  */
 package com.example.neotecknewts.sagasapp.Model;
 
+import android.app.Notification;
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -20,7 +23,7 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
     @SerializedName("IdCAlmacenGas")
     private int IdCAlmacenGas;
 
-    @SerializedName("NombreCAlmacen")
+    @SerializedName("Estacion")
     private String Estacion;
 
     @SerializedName("Medidor")
@@ -83,7 +86,15 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
     }
 
     public String getClaveOperacion() {
-        return ClaveOperacion;
+        //return ClaveOperacion;}
+        /*
+        if(ClaveOperacion.isEmpty()){
+            //System.out.println(getMensaje());
+            Log.d("mensaje",getMensaje());
+        }*/
+        Log.d("Claveoperacion",ClaveOperacion+"");
+         return ClaveOperacion!=null?ClaveOperacion:"";
+
     }
 
     public void setClaveOperacion(String claveOperacion) {
@@ -91,7 +102,7 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
     }
 
     public String getEstacion() {
-        return Estacion;
+        return Estacion!=null?Estacion:"";
     }
 
     public void setEstacion(String estacion) {
@@ -240,6 +251,32 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
 
     public void setEsCamioneta(boolean esCamioneta) {
         EsCamioneta = esCamioneta;
+    }
+
+    @Override
+    public String toString() {
+        return "ReporteDto{" +
+                "IdCAlmacenGas=" + IdCAlmacenGas +
+                ", Estacion='" + Estacion + '\'' +
+                ", Medidor=" + Medidor +
+                ", ClaveOperacion='" + ClaveOperacion + '\'' +
+                ", Fecha=" + Fecha +
+                ", Hora='" + Hora + '\'' +
+                ", PorcentajeSalida=" + PorcentajeSalida +
+                ", PorcentajeRegreso=" + PorcentajeRegreso +
+                ", LecturaInicial=" + LecturaInicial +
+                ", LecturaFinal=" + LecturaFinal +
+                ", LitrosVenta=" + LitrosVenta +
+                ", Precio=" + Precio +
+                ", ImporteContado=" + ImporteContado +
+                ", ImporteCredito=" + ImporteCredito +
+                ", tanques=" + tanques +
+                ", otrasVentas=" + otrasVentas +
+                ", Carburacion=" + Carburacion +
+                ", KilosVenta=" + KilosVenta +
+                ", TOtrasVentas=" + TOtrasVentas +
+                ", EsCamioneta=" + EsCamioneta +
+                '}';
     }
 
     public class TanquesDto {

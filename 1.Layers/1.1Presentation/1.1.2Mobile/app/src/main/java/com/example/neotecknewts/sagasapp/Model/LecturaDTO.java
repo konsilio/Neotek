@@ -1,5 +1,7 @@
 package com.example.neotecknewts.sagasapp.Model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -148,9 +150,9 @@ public class LecturaDTO implements Serializable {
     }
 
     public int getCantidadP5000() {
+        Log.d("getCantidadP5000", CantidadP5000+"");
         return CantidadP5000;
     }
-
     public void setCantidadP5000(int cantidadP500) {
         CantidadP5000 = cantidadP500;
     }
@@ -163,11 +165,17 @@ public class LecturaDTO implements Serializable {
         PorcentajeMedidor = porcentajeMedidor;
     }
 
-    public String getClaveProceso() {
+    public String getClaveProceso()
+    {
+        Log.d("claveproceso",ClaveProceso+"");
+        if(ClaveProceso.isEmpty()){
+
+        }
         return ClaveProceso;
     }
 
     public void setClaveProceso(String claveProceso) {
+
         ClaveProceso = claveProceso;
     }
 
