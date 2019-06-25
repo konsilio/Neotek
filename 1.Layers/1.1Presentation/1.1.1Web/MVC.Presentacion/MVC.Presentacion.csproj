@@ -11684,6 +11684,7 @@
     <Content Include="Views\Reportes\GastoVehicular.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolTransporte.cshtml" />
     <Content Include="Views\Pedidos\_Pedidos.cshtml" />
+    <Content Include="Views\Clientes\_Clientes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

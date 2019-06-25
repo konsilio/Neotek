@@ -115,8 +115,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = respuesta;              
                 return RedirectToAction("EditarCliente", "Clientes", new { id = _Obj.IdCliente });
             }
-        }
-      
+        }      
         public ActionResult BorrarClientes(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -182,8 +181,7 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("EditarLocaciones", "Clientes", new { id = _Obj.IdCliente });
             }
          
-        }
-               
+        }               
         public ActionResult EditarClienteLoc(int id, short idOrden)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -262,7 +260,6 @@ namespace MVC.Presentacion.Controllers
             return RedirectToAction("Index", new { TipoPersona = filterObj.IdTipoPersona, regimen = filterObj.IdRegimenFiscal
                 , rfc =filterObj.Rfc, nombre=filterObj.RazonSocial });
         }
-
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;
@@ -278,6 +275,13 @@ namespace MVC.Presentacion.Controllers
                     Mensaje = Resp.MensajesError[0];
             }
             return Mensaje;
+        }
+        public ActionResult GridClientes()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tok = Session["StringToken"].ToString();
+            var model = CatalogoServicio.ListaClientes(0, null, null, null, null, _tok);
+            return PartialView("_Clientes", model);
         }
     }
 }
