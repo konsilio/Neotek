@@ -427,6 +427,13 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+        public ActionResult Pedidos()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            var model = PedidosServicio.ObtenerPedidos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            return PartialView("_Pedidos", model);
+        }
         #region Combos
         public ActionResult ComboBoxPartialPais()
         {

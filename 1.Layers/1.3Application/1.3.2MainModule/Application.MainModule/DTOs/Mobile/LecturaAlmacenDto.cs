@@ -23,7 +23,7 @@ namespace Application.MainModule.DTOs.Mobile
         /// <summary>
         /// Clave de operación de la lectura (Ej. LIA07092018114101,LFA07092018114101)
         /// </summary>
-        public string ClaveOperacion { get; set; }
+        public string ClaveProceso { get; set; }
         
         /// <summary>
         /// Id de la estación de carburación
@@ -38,7 +38,7 @@ namespace Application.MainModule.DTOs.Mobile
         /// <summary>
         /// Procentaje que marco el medidor P5000
         /// </summary>
-        public decimal PorcentajeP5000 { get; set; }
+        public decimal CantidadP5000 { get; set; }
         
         /// <summary>
         /// Imagen del medidor P50000
