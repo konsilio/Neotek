@@ -55,10 +55,14 @@ namespace Application.MainModule.DTOs.Catalogo
         [StringLength(10, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Num Int")]
         public string NumInt { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Referencia")]
         public string formatted_address { get; set; }
         public string location_lat { get; set; }
         public string location_lng { get; set; }
         public string place_id { get; set; }
+        [Required(ErrorMessage = Error.R0002)]      
+        [Display(Name = "Tipo Locacion")]
         public string TipoLocacion { get; set; }
         public string Pais { get; set; }
         public string Estado { get; set; }

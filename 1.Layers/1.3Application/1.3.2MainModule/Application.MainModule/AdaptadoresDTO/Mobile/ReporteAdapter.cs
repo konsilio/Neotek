@@ -32,7 +32,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new LecturaAlmacenDto()
             {
                 IdTipoMedidor = linicial.IdTipoMedidor.Value,
-                ClaveOperacion = linicial.ClaveOperacion,
+                ClaveProceso = linicial.ClaveOperacion,
                 PorcentajeP5000 = linicial.P5000.Value,
                 PorcentajeMedidor = linicial.Porcentaje.Value,
                 IdEstacionCarburacion = linicial.IdCAlmacenGas
@@ -196,7 +196,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new LecturaAlmacenDto()
             {
-                ClaveOperacion = lectura.ClaveOperacion,
+                ClaveProceso = lectura.ClaveOperacion,
                 IdTipoMedidor = lectura.IdTipoMedidor??0,
                 IdEstacionCarburacion = lectura.IdCAlmacenGas,
                 PorcentajeMedidor = lectura.Porcentaje??0,

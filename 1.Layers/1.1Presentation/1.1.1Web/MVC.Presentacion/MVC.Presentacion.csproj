@@ -11683,6 +11683,7 @@
     <Content Include="Views\Reportes\CorteCaja.cshtml" />
     <Content Include="Views\Reportes\GastoVehicular.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolTransporte.cshtml" />
+    <Content Include="Views\Pedidos\_Pedidos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
