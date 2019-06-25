@@ -143,8 +143,8 @@
                                            settings.Properties.ValueField = "IdTipoPersona";
                                            settings.ClientEnabled = true;
                                            settings.SelectedIndex = 0;
-                                           settings.Properties.ValueType= typeof(byte);
-                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";                                          
+                                           settings.Properties.ValueType = typeof(byte);
+                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
                                        }).BindList(ViewBag.TipoPersona).Bind(Model.cliente.IdTipoPersona).GetHtml()
                                             @Html.ValidationMessageFor(m => m.cliente.IdTipoPersona, "", new { @class = "alert-danger" })
                                         </div>
@@ -152,7 +152,7 @@
 
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
-                                            <b> Régimen Fiscal:*</b>                                     
+                                            <b> Régimen Fiscal:*</b>
                                             @Html.DevExpress().ComboBox(settings =>
                                        {
                                            settings.Name = "cliente.IdRegimenFiscal";
@@ -172,7 +172,7 @@
                                            };
                                        }).BindList(ViewBag.Regimen).GetHtml()
                                             @Html.ValidationMessageFor(m => m.cliente.IdRegimenFiscal, "", new { @class = "alert-danger" })
-                                        </div>                                        
+                                        </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
@@ -194,10 +194,10 @@
                                         <div class="form-group">
                                             RFC:*
                                             @Html.TextBoxFor(m => m.cliente.Rfc, Model.cliente.Rfc, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.cliente.Rfc, "", new { @class = "alert-danger"})
+                                            @Html.ValidationMessageFor(m => m.cliente.Rfc, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="row clearfix" id="div_hideRP" hidden="hidden">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -211,7 +211,7 @@
                                                         <div class="form-group">
                                                             Nombre Completo:@Html.TextBoxFor(m => m.cliente.RepresentanteLegal, new { @class = "form-control" })
                                                         </div>
-                                                    </div>                                                   
+                                                    </div>
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -330,7 +330,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
@@ -354,8 +353,30 @@
                         </div>
                     </div>
                 </div>
+                <div class="body">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-5">
+                            <div class="form-group">
+                                <input type="button" value="Cancelar" id="btnRegresarIndexNC" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-primary btn-round float-left" />
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7">
+                            <div class="form-group">
+                                @*<input type="submit" value="Crear" formaction="GuardarCliente" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />*@
+                                <input type="submit" value="Continuar" formaction="AltaClienteDireccion" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+</body>
+</html>
 
-                @*
+
+
+@*
                 <div class="row clearfix" hidden>Se oculta div por solicitud del cliente para modulo de Call Center
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card">
@@ -470,24 +491,4 @@
             </div>
         </div>
     </div>
-                *@
-                <div class="body">
-                    <div class="row clearfix">
-                        <div class="col-lg-5 col-md-5 col-sm-5">
-                            <div class="form-group">
-                                <input type="submit" value="Cancelar" id="btnRegresarIndexNC" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-primary btn-round float-left" />
-                            </div>
-                        </div>
-                        <div class="col-lg-7 col-md-7 col-sm-7">
-                            <div class="form-group">
-                                @*<input type="submit" value="Crear" formaction="GuardarCliente" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />*@
-                                <input type="submit" value="Continuar" formaction="AltaClienteDireccion" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    }
-</body>
-</html>
+*@

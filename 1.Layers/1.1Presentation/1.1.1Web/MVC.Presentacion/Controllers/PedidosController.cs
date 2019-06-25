@@ -18,9 +18,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
             if (!string.IsNullOrEmpty(msj))
-            {
                 ViewBag.Msj = msj; ViewBag.Tipo = "alert-success";
-            }
 
             if (TempData["RespuestaDTO"] != null)
             {
@@ -32,9 +30,7 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.MensajeError = TempData["RespuestaDTO"];
                 }
                 else
-                {
                     ViewBag.Tipo = "alert-success";
-                }
             }
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
             if (ViewBag.EsAdmin)
@@ -44,9 +40,7 @@ namespace MVC.Presentacion.Controllers
 
             List<PedidoModel> lstPmodel = PedidosServicio.ObtenerPedidos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             PedidoModel model = new PedidoModel();
-            //{
             model.Pedidos = lstPmodel;
-            //};
 
             if (idpedido > 0 || (tel1 != null && tel1 != "") || (rfc != null && rfc != ""))
             {
@@ -56,11 +50,9 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Msj = "No se encontraron resultados"; ViewBag.Tipo = "alert-danger";
                 }
             }
-
             if (TempData["Msj"] != null)
-            {
                 ViewBag.MensajeError = TempData["Msj"];
-            }
+
             return View(model);
         }
         public ActionResult Nuevo(int? id, RegistrarPedidoModel _model = null, string msj = null)
@@ -83,6 +75,14 @@ namespace MVC.Presentacion.Controllers
             {
                 var cliente = CatalogoServicio.ObtenerCliente(id.Value, _tkn);
                 _model.Rfc = cliente.Rfc;
+            }
+            if (id != null)
+            {
+                _model.IdCliente = id ?? 0;
+                List<ClientesDto> lc = new List<ClientesDto>();
+                lc.Add(CatalogoServicio.ObtenerClienteDto(id ?? 0, _tkn));
+                ViewBag.ListaCliente = lc;
+                ViewBag.ListaDomicilios = CatalogoServicio.ObtenerLocaciones(id ?? 0, _tkn);
             }
             return View(_model);
         }
@@ -130,6 +130,11 @@ namespace MVC.Presentacion.Controllers
                 _lst = CatalogoServicio.ObtenerLocaciones(lstClientes.FirstOrDefault().IdCliente, _tkn);
             var JsonInfo = JsonConvert.SerializeObject(_lst);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Terminar(PedidoModel model = null)
+        {
+
+            return RedirectToAction("Nuevo", new { idCliente = model.IdCliente }); 
         }
 
         public ActionResult AltaCliente(PedidoModel model = null)
