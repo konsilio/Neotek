@@ -10,7 +10,7 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
-<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+@*<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>*@
 <script src="~/Resources/js/Clientes.js"></script>
 <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
 <script type="text/javascript">
@@ -228,7 +228,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         <div>
-                                            Apellido 1:*
+                                            Apellido Paterno:*
                                             <input type="text" name="Apellido1" class="form-control" />
                                             @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                         </div>
@@ -237,7 +237,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         <div>
-                                            Apellido 2:
+                                            Apellido Materno:
                                             <input type="text" name="Apellido2" class="form-control" />
                                         </div>
                                     </div>
@@ -247,32 +247,32 @@
                     </div>
                 </div>
             </div>
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row clearfix">               
                     <div class="card">
                         <div class="header">
                             <h2><strong>Condición del crédito y descuento</strong></h2>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:12.666667%">
+                                <div class="col-md-3" >
                                     <div class="form-group">
                                         Límite de crédito:
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        Monto $ <input name="limiteCreditoMonto" class="form-control" type="number" />
+                                        Kilos de Credito<input name="limiteCreditoMonto" class="form-control" type="number" />
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                <div class="col-md-3" >
                                     <div class="form-group">
                                         <div>
-                                            Días <input name="limiteCreditoDias" class="form-control" type="number" />
+                                            Días para pagar 
+                                            <input name="limiteCreditoDias" class="form-control" type="number" />
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                <div class="col-md-3" >
                                     <div class="form-group">
                                         <div>
                                             Credito disponible:
@@ -280,23 +280,29 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-3" style="max-width:15.666667%">
                                     <div class="form-group">
                                         <div>
-                                            Descuento %:
+                                            Descuento:
                                             <input name="DescuentoXKilo" class="form-control" type="number" />
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                </div>                           
+                               
+                                <div class="col-md-2">
+                                    ¿Es Precio fijo?
                                     <div class="form-group">
-                                        <div>
-                                            Autorizar ventas con límite de crédito excedido
-                                        </div>
+                                        <label class="switch">
+                                            @Html.CheckBoxFor(m => m.EsFijo, new { @class = "form-control" })
+                                            <span class="slider round"></span>
+                                        </label>
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1">
-                                    <div class="form-group">
+                                <div class="col-md-4">
+                                    Autorizar ventas con límite de crédito excedido
+                                    <div class="form-group center" >
                                         <label class="switch">
                                             @Html.CheckBoxFor(m => m.VentaExtraordinaria, new { @class = "form-control" })
                                             <span class="slider round"></span>
@@ -306,7 +312,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+             
             </div>
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">

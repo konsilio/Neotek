@@ -77,7 +77,7 @@ namespace Application.MainModule.Servicios.Pedidos
         {
             List<PedidoDashDTO> listDTO = new List<PedidoDashDTO>();
             int Dias = Periodo.Month.Equals(DateTime.Now.Month) && Periodo.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(Periodo.Year, Periodo.Month);
-            for (int i = 1; i < Dias; i++)
+            for (int i = 1; i <= Dias; i++)
             {
                 PedidoDashDTO dto = new PedidoDashDTO();
                 dto.Dia = i;

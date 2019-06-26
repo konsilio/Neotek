@@ -96,14 +96,15 @@
                         }
                         if (rol.CompraOrdenCompra)
                         {
-                            <li>
+                            <li class="menu_dark"><a href="@Url.Action("Ordenes", "OrdenCompra")"><i class="material-icons">shopping_cart </i><span class="icon-name">Compras</span> </a></li>
+                            @*<li>
                                 <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
                                 <ul class="ml-menu">
                                     <li><a href="@Url.Action("Ordenes", "OrdenCompra")">Orden de Compra </a></li>
                                 </ul>
-                            </li>
+                            </li>*@
                         }
-                        if (rol.Ventas)
+                        if (rol.VentasCajaGeneral)
                         {
                             <li>
                                 <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">attach_money</i><span>Ventas</span> </a>
@@ -217,16 +218,16 @@
                                     @if (rol.ReporteRendimientoVehicular)
                                     {
                                     <li>@Html.ActionLink("Rendimiento Vehicular", "RendimientoVehicular", "Reportes")</li>}
-                                    @if (rol.ReporteInvConcepto)
+                                    @if (rol.ReporteRendimientoVehicular)
                                     {
                                     <li>@Html.ActionLink("Inv. Concepto", "InventarioXConcepto", "Reportes")</li>}
-                                    @if (rol.ReporteHistVentas)
+                                    @if (rol.ReporteCallCenter)
                                     {
                                     <li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>}
                                     @if (rol.ReporteCorteCaja)
                                     {
                                     <li>@Html.ActionLink("Corte de Caja", "CorteCaja", "Reportes")</li>}
-                                    @if (rol.ReporteGastoVehiculo)
+                                    @if (rol.Ventas) //ReporteGastoVehiculo
                                     {
                                     <li>@Html.ActionLink("Gasto Por Vehiculo", "GastoVehicular", "Reportes")</li>}
                                 </ul>

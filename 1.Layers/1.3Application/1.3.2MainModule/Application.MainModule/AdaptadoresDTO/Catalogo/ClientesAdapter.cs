@@ -17,7 +17,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             string nom = "";
             string apell = "";
             string apell2 = "";
-            if (us.Nombre == "" || us.Nombre == null || us.Apellido1 == "" || us.Apellido1 == null)
+            if  (us.RepresentanteLegal != null)
             {
                 if (us.RepresentanteLegal.Split(' ').Count() == 4)
                 {
@@ -82,8 +82,9 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Empresa = us.Empresa.NombreComercial,
                 TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
                 RegimenFiscal = us.RegimenFiscal.Descripcion,
-                Cliente = nom + " " + apell + " " + apell2 + " " + us.Rfc,//us.Nombre + " " + us.Apellido1 + " " + us.Rfc,
+                Cliente = nom + " " + apell + " " + apell2 + " " + us.Rfc,//us.Nombre + " " + us.Apellido1 + " " + us.Rfc,              
                 Locaciones = ClienteServicio.ObtenerLoc(us.IdCliente),
+                EsFijo = us.EsFijo,
             };
             return usDTO;
         }
@@ -214,6 +215,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Activo = true,
                 FechaRegistro = DateTime.Now,
                 VentaExtraordinaria = cteDTO.VentaExtraordinaria,
+                EsFijo = cteDTO.EsFijo,
             };
         }
 
@@ -252,6 +254,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             if (Ctedto.Celular != null) catCliente.Celular = Ctedto.Celular; else catCliente.Celular = catCliente.Celular;
             if (Ctedto.CorreoElectronico != null) catCliente.CorreoElectronico = Ctedto.CorreoElectronico; else catCliente.CorreoElectronico = catCliente.CorreoElectronico;
             if (Ctedto.Domicilio != null) catCliente.Domicilio = Ctedto.Domicilio; else catCliente.Domicilio = catCliente.Domicilio;
+            catCliente.EsFijo = Ctedto.EsFijo;
             // if (Ctedto.Loca != null) catCliente.Domicilio = Ctedto.Domicilio; else catCliente.Domicilio = catCliente.Domicilio;
 
             return catCliente;

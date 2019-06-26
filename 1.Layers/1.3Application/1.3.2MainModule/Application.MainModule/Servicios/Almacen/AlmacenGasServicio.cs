@@ -724,7 +724,7 @@ namespace Application.MainModule.Servicios.Almacenes
                         reporteDTO = ReporteAdapter.ToDtoPipa(almacen, lectInicial, lectFinal, ventasContado, ventasCredito);
                     else
                         reporteDTO = ReporteAdapter.ToDtoEstacion(almacen, lectInicial, lectFinal, ventasContado, ventasCredito);
-                    reporteDTO.LitrosVenta = reporteDTO.LecturaInicial.PorcentajeP5000 - reporteDTO.LecturaFinal.PorcentajeP5000;
+                    reporteDTO.LitrosVenta = reporteDTO.LecturaInicial.CantidadP5000 - reporteDTO.LecturaFinal.CantidadP5000;
                     reporteDTO.Fecha = fecha;
                     reporteDTO.Precio = precioVentaGas;
                     reporteDTO.ClaveReporte = DateTime.Now.Year + "R" + DateTime.Now.Ticks;
@@ -816,12 +816,12 @@ namespace Application.MainModule.Servicios.Almacenes
                 ImporteCredito = 0,
                 LecturaFinal = new LecturaAlmacenDto()
                 {
-                    PorcentajeP5000 = reporte.P5000Final ?? 0,
+                    CantidadP5000 = reporte.P5000Final ?? 0,
                     PorcentajeMedidor = reporte.PorcentajeFinal ?? 0
                 },
                 LecturaInicial = new LecturaAlmacenDto()
                 {
-                    PorcentajeP5000 = reporte.PorcentajeInicial ?? 0,
+                    CantidadP5000 = reporte.PorcentajeInicial ?? 0,
                     PorcentajeMedidor = reporte.PorcentajeInicial ?? 0
                 },
                 Medidor = TipoMedidorAdapter.ToDto(almacen.Medidor),

@@ -138,6 +138,12 @@ namespace Application.MainModule.Flujos
             else
                 return ClienteServicio.ListaClientes().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
+        public List<ClientesDto> ClientesRfc(ClientesDto dto)
+        {
+            var resp = PermisosServicio.PuedeConsultarCliente();
+            if (!resp.Exito) return null;           
+           return ClienteServicio.BuscarRfcyTel(dto).ToList();
+        }
         public List<ClienteLocacionDTO> ListaLocaciones(int id)
         {
             var resp = PermisosServicio.PuedeConsultarCliente();
@@ -148,6 +154,11 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeRegistrarCliente();
             if (!resp.Exito) return resp;
+
+            var ExisteRfc = ClienteServicio.BuscarClientePorRFC(cteDto.Rfc);
+            if (ExisteRfc != null)
+                if (!ExisteRfc.Rfc.Equals(ClienteServicio.ObtenerPublicoEnGeneral().Rfc))                
+                    return ClienteServicio.YaExiste();
 
             var cliente = ClientesAdapter.FromDtoMod(cteDto);
 
@@ -174,7 +185,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var clientes = ClienteServicio.Obtener(cteDto.IdCliente);
-            if (clientes == null) return ClienteServicio.NoExiste();
+            if (clientes == null) return ClienteServicio.YaExiste();
 
             var cte = ClientesAdapter.FromDtoEditar(cteDto, clientes);
             cte.FechaRegistro = cte.FechaRegistro;
@@ -455,7 +466,7 @@ namespace Application.MainModule.Flujos
         {
             var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
-            //var pv = PrecioVentaGasServicio.ObtenerPrecioVigente((short)2); (Test)
+         
             return PrecioVentaGasAdapter.ToDTO(pv, producto);
         }
         public RespuestaDto EliminaPreciosVenta(PrecioVentaDTO cteDto)
@@ -947,6 +958,7 @@ namespace Application.MainModule.Flujos
                     var almacen = AlmacenGasServicio.RegistraAlmacen(vehiculoDto);
                     if (!almacen.Exito)
                         return CamionetaServicio.Borrar(cam.Id);
+                   
                 }
             }
             if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Pipa)//IdPipa

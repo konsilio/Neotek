@@ -39,6 +39,16 @@ namespace Application.MainModule.Servicios.Catalogos
             else
                 return 0;
         }
+        public static List<ClientesDto> BuscarRfcyTel(ClientesDto cliente)
+        {
+            if (cliente.Telefono1.Equals("1"))
+                cliente.Telefono1 = null;
+            if (cliente.Rfc.Equals("1"))
+                cliente.Rfc = null;
+            List<ClientesDto> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTO(new ClientesDataAccess().BuscarRfcTel(cliente, TokenServicio.ObtenerIdEmpresa()));
+            return lClientes;
+
+        }
 
         public static int BuscarCliente(ClienteDTO cliente)
         {
@@ -106,17 +116,22 @@ namespace Application.MainModule.Servicios.Catalogos
             };
         }
 
+        public static RespuestaDto YaExiste()
+        {
+            string mensaje = string.Format(Error.SiExiste, "El RFC");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
+        }
+
         public static Cliente BuscarClientePorRFC(string rfc)
         {
             return new ClientesDataAccess().Buscar(rfc);
         }
-
-        /// <summary>
-        /// Permite realizar la actualización de los
-        /// datos de credito del cliente
-        /// </summary>
-        /// <param name="cliente">Entidad de Cliente con los datos de creditoActualizados</param>
-        /// <returns>Restorna la respuesta de la actualización del credito</returns>
         public static RespuestaDto ModificarCredito(Cliente cliente)
         {
             return new ClientesDataAccess().ActualizarCredito(cliente);

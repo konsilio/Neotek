@@ -128,7 +128,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 CobranzaConsultarFactura = rol.CobranzaConsultarFactura,
                 CobranzaFacturar = rol.CobranzaFacturar,
                 FacturasVerFacturas = rol.FacturasVerFacturas,
-                FacturasFacturar = rol.FacturasFacturar
+                FacturasFacturar = rol.FacturasFacturar,
+                HVCargaInformacion = rol.HVCargaInformacion,
+                HistoricoVentas = rol.HistoricoVentas,
+                CatLiquidarCajaGeneral = rol.CatLiquidarCajaGeneral,
+                CatConsultarCajaGeneral = rol.CatConsultarCajaGeneral
             };
             return r;
         }
@@ -253,7 +257,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 CobranzaConsultarFactura = rolDTO.CobranzaConsultarFactura,
                 CobranzaFacturar = rolDTO.CobranzaFacturar,
                 FacturasVerFacturas = rolDTO.FacturasVerFacturas,
-                FacturasFacturar = rolDTO.FacturasFacturar
+                FacturasFacturar = rolDTO.FacturasFacturar,
+                HVCargaInformacion = rolDTO.HVCargaInformacion,
+                HistoricoVentas = rolDTO.HistoricoVentas,
+                CatLiquidarCajaGeneral = rolDTO.CatLiquidarCajaGeneral,
+                CatConsultarCajaGeneral = rolDTO.CatConsultarCajaGeneral
             };
         }
         public static Rol FromDtoPermiso(RolDto rolDTO)
@@ -373,7 +381,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 CobranzaConsultarFactura = rolDTO.CobranzaConsultarFactura,
                 CobranzaFacturar = rolDTO.CobranzaFacturar,
                 FacturasVerFacturas = rolDTO.FacturasVerFacturas,
-                FacturasFacturar = rolDTO.FacturasFacturar
+                FacturasFacturar = rolDTO.FacturasFacturar,
+                HVCargaInformacion = rolDTO.HVCargaInformacion,
+                HistoricoVentas = rolDTO.HistoricoVentas,
+                CatLiquidarCajaGeneral = rolDTO.CatLiquidarCajaGeneral,
+                CatConsultarCajaGeneral = rolDTO.CatConsultarCajaGeneral
             };
         }
         public static Rol FromDtoNomRol(RolDto rolDTO, Rol rol)
@@ -485,7 +497,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 CobranzaConsultarFactura = rol.CobranzaConsultarFactura,
                 CobranzaFacturar = rol.CobranzaFacturar,
                 FacturasVerFacturas = rol.FacturasVerFacturas,
-                FacturasFacturar = rol.FacturasFacturar
+                FacturasFacturar = rol.FacturasFacturar,
+                HVCargaInformacion = rol.HVCargaInformacion,
+                HistoricoVentas = rol.HistoricoVentas,
+                CatLiquidarCajaGeneral = rol.CatLiquidarCajaGeneral,
+                CatConsultarCajaGeneral = rol.CatConsultarCajaGeneral
             };
         }
 

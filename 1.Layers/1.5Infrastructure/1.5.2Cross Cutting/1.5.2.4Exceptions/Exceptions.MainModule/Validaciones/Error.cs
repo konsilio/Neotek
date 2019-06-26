@@ -9,7 +9,7 @@ namespace Exceptions.MainModule.Validaciones
     public static class Error
     {
         public const string NoExiste = "{0} no existe. Revise la información que esta solicitando.";
-        public const string SiExiste = "{0} ya existe. Revise la información que esta solicitando.";
+        public const string SiExiste = "{0} ya existe. Revise la información.";
         public const string ContieneRol = "{0} contiene el Rol {1}. Por lo que no puede asignarse de nuevo.";
         public const string EstatusIncorrecto = "El estatus de {0} no corresponde al proceso que desea realizar";
         public const string PagoExistente = "Ya no puedes solicitar un pago para {0}, ya se realizdo uno";
@@ -18,11 +18,12 @@ namespace Exceptions.MainModule.Validaciones
         public const string S0002 = "El campo '{0}' requiere un mínimo de {2} caracteres y un máximo de {1}.";
         public const string S0003 = "El usuario y la contraseña no coinciden";
         public const string S0004 = "No se logró {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
+        public const string S0005 = "El usuario no tiene acciones permitida en la aplicación";
 
         public const string R0001 = "Error al guardar la requisición";
         public const string R0002 = "El campo '{0}' es obligatorio.";
         public const string R0003 = "El campo '{0}' el valor debe ser mayor a 0.";
-        public const string R0004 = "El campo '{0}' requiere un mínimo de {1} caracteres y un máximo de {2}.";
+        public const string R0004 = "El campo '{0}' requiere un mínimo de {2} caracteres y un máximo de {1}.";
         public const string R0005 = "El campo '{0}' debe ser numerico y/o mayor a 0";
         public const string R0006 = "La lista de '{0}' debe contener al menos un elemento";
         public const string R0007 = "Debes agregar al menos un producto";

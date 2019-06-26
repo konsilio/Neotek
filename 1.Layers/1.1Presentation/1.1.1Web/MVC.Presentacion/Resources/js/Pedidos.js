@@ -1,34 +1,4 @@
-﻿$(document).ready(function () {
-
-    //var valueSel = TipoUnidad.GetValue();
-    // function(s, e) { alert('!!!')}
-    //var $select = $('#cbxCte');
-
-    //if ($('#cbxCte').has('option').length > 0) {
-    //    $('#btnCrearCte').prop('disabled', true);
-    //} else { $('#btnCrearCte').prop('disabled', false); alert("empty")}
-    //$('select').on('change', function () {
-
-    //    var value = $('#TipoUnidad').find('option:selected').val();//get value to filter of selected
-
-    //    if (value == 1)//Pipa
-    //    {
-    //        $('.selPipa').show();
-    //        $('.selCamioneta').hide();
-    //    }
-    //    if (value == 2)//Camioneta
-    //    {
-    //        $('.selPipa').hide();
-    //        $('.selCamioneta').show();
-    //    }
-    //});
-   
-    //  btnCrearCte
-    //$("#btnCrearCte").click(function () {
-    //    var form = $(this).parent("form");
-    //    form.attr('action', '<%= Url.RouteUrl(new { Controller = "Pedidos", Action = "AltaCliente" }) %>');
-    //    form.attr('method', 'get');
-    //});
+﻿$(document).ready(function () {  
     $('#btnBuscarC').click(function () {
         IdCliente.ClearItems();
         Orden.ClearItems();
@@ -41,7 +11,7 @@
             var x = data;
 
             if (data != "[]") {
-                $('#btnCrearCte').prop('disabled', true);
+              //  $('#btnCrearCte').prop('disabled', true);
                 $.each(JSON.parse(data), function (key, val) {
                     //IdCliente.AddItem(val.Nombre, val.IdCliente)
                     IdCliente.AddItem([val.Nombre, val.Apellido1, val.Rfc], val.IdCliente)
@@ -50,7 +20,7 @@
             }
             else {
                 $('#ModalConfirmacion').modal('show');
-                $('#btnCrearCte').prop('disabled', false);
+               // $('#btnCrearCte').prop('disabled', false);
             }
         });
 
@@ -101,7 +71,7 @@ function OnSelectedChange(s, e) {
 //    }   
 //}
 var Aceptar = function () {
-    $('#btnCrearCte').prop('disabled', true)
+  //  $('#btnCrearCte').prop('disabled', true)
 };
 //var Cancelar = function () {
 //    $('#btnCrearCte').prop('disabled', false)
