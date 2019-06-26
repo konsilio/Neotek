@@ -11,45 +11,51 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/layout_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <TextView
-                android:id="@+id/textTitulo"
+            <LinearLayout
+                android:id="@+id/layout_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:text="@string/title_foto_magnatel_almacen"
-                android:textColor="@color/colorTextLogin"
-                android:textSize="18sp"
-                android:textStyle="italic" />
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/textTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="@string/title_foto_magnatel_almacen"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="319dp">
+                android:layout_height="490dp"
+                >
 
                 <LinearLayout
                     android:id="@+id/cPreview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-175dp"
-                    android:layout_marginBottom="-175dp"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal">
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="top|center"
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="350dp"
+                        android:layout_height="350dp"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="50dp"
                         android:background="@drawable/circleblackcamera"
@@ -119,21 +125,21 @@
                         android:textAlignment="center"
                         tools:ignore="ObsoleteLayoutParam" />
 
-                    <Button
-                        android:id="@+id/button_foto_incorrecta"
-                        style="@style/SagasTheme.Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="5sp"
-                        android:layout_weight="1"
-                        android:background="@drawable/ripple_effect"
-                        android:gravity="center_vertical"
-                        android:text="@string/message_nitida_no"
-                        android:textAlignment="center"
-                        android:textSize="14sp"
-                        tools:ignore="ObsoleteLayoutParam" />
+                    <!--        <Button
+                                android:id="@+id/button_foto_incorrecta"
+                                style="@style/SagasTheme.Button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_margin="5sp"
+                                android:layout_weight="1"
+                                android:background="@drawable/ripple_effect"
+                                android:gravity="center_vertical"
+                                android:text="@string/message_nitida_no"
+                                android:textAlignment="center"
+                                android:textSize="14sp"
+                                tools:ignore="ObsoleteLayoutParam" /> -->
 
                 </LinearLayout>
 

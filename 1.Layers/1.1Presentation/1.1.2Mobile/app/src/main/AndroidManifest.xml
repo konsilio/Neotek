@@ -45,7 +45,13 @@
         <activity
             android:name=".Activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SagasTheme" />
+            android:theme="@style/SagasTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activity.MenuActivity"
             android:configChanges="orientation"
@@ -94,12 +100,9 @@
             android:label="@string/title_proceso_descarga"
             android:screenOrientation="portrait"
             android:theme="@style/AppEnter" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+
 
         <activity
             android:name=".Activity.SubirImagenesActivity"
