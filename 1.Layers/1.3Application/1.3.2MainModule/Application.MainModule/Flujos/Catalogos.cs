@@ -466,7 +466,7 @@ namespace Application.MainModule.Flujos
         {
             var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
-            //var pv = PrecioVentaGasServicio.ObtenerPrecioVigente((short)2); (Test)
+         
             return PrecioVentaGasAdapter.ToDTO(pv, producto);
         }
         public RespuestaDto EliminaPreciosVenta(PrecioVentaDTO cteDto)
