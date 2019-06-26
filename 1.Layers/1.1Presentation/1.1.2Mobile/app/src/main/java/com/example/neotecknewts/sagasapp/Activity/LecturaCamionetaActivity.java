@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -92,13 +93,17 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("mensaje","mensaje");
                 if(position>=0 && DatosTomaLecturaDto.getAlmacenes()!=null) {
+                    Log.d("mensaje","mensajeif");
                  for (AlmacenDTO almacenDTO:DatosTomaLecturaDto.getAlmacenes()) {
                      if(almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
+                         Log.d("mensaje","mensajesegundoif");
                          lecturaCamionetaDTO.setIdCamioneta(almacenDTO.getIdAlmacenGas());
                          lecturaCamionetaDTO.setNombreCamioneta(SLecturaCamionetaActivityListaCamioneta
                                  .getItemAtPosition(position).toString());
                          cilindrosDTOS = almacenDTO.getCilindros();
+                           Log.d("mensaje",cilindrosDTOS.toString());
                      }
                  }
                 }

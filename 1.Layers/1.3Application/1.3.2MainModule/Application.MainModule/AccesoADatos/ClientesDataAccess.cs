@@ -12,7 +12,7 @@ using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
-   public class ClientesDataAccess
+    public class ClientesDataAccess
     {
         private SagasDataUow uow;
 
@@ -23,7 +23,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<Cliente> Buscar()
         {
-            return uow.Repository<Cliente>().Get(x => x.Activo).ToList();                                                          
+            return uow.Repository<Cliente>().Get(x => x.Activo).ToList();
         }
 
         public Cliente Buscar(int idCliente)
@@ -41,16 +41,79 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<ClienteLocacion>().GetSingle(x => x.IdCliente.Equals(idCliente) && x.Orden.Equals(idOrden));
         }
 
-        public Cliente BuscarRazonSocial(ClienteDTO cliente,short idEmpresa)
+        public Cliente BuscarRazonSocial(ClienteDTO cliente, short idEmpresa)
         {
             var consulta = uow.Repository<Cliente>().GetSingle(
                 x =>
-                (x.RazonSocial!=null && x.RazonSocial.Trim().ToLower().Equals(cliente.RazonSocial) && x.RazonSocial.Any()) &&
+                (x.RazonSocial != null && x.RazonSocial.Trim().ToLower().Equals(cliente.RazonSocial) && x.RazonSocial.Any()) &&
                 x.IdTipoPersona.Equals(cliente.IdTipoPersona) &&
                 x.IdRegimenFiscal.Equals(cliente.IdTipoRegimen) &&
                 x.IdEmpresa.Equals(idEmpresa)
                );
-         
+
+            return (consulta != null) ? consulta : null;
+        }
+        public List<Cliente> BuscarRfcTel(DTOs.Catalogo.ClientesDto cliente, short idEmpresa)
+        {
+            List<Cliente> consulta = new List<Cliente>();
+            if (cliente.Rfc != null)
+            {
+                if (cliente.Rfc.Split(' ').Count().Equals(1))
+                {
+                    consulta = uow.Repository<Cliente>().Get(
+                                                 x => x.Nombre.Contains(cliente.Rfc) ||
+                                                 x.Apellido1.Contains(cliente.Rfc) ||
+                                                 x.Apellido2.Contains(cliente.Rfc) 
+                                                 && x.Activo).ToList();
+                }
+                else
+                {
+                    if (cliente.Rfc.Split(' ').Count().Equals(2))
+                    {
+                        var n = cliente.Rfc.Split(' ')[0];
+                        var ap = cliente.Rfc.Split(' ')[1];
+                        consulta = uow.Repository<Cliente>().Get(x =>
+                                    x.Nombre.Contains(n)
+                                    || x.Apellido1.Contains(ap)
+                                    && x.Activo).ToList();
+                    }
+                    if (cliente.Rfc.Split(' ').Count().Equals(3))
+                    {
+                        var n = cliente.Rfc.Split(' ')[0];
+                        var ap = cliente.Rfc.Split(' ')[1];
+                        var am = cliente.Rfc.Split(' ')[2];
+                        consulta = uow.Repository<Cliente>().Get(x =>
+                                    x.Nombre.Contains(n)
+                                    || x.Apellido1.Contains(ap)
+                                    || x.Apellido2.Contains(am)
+                                    && x.Activo).ToList();
+                    }
+                    if (cliente.Rfc.Split(' ').Count().Equals(4))
+                    {
+                        var n = string.Concat(cliente.Rfc.Split(' ')[0], " ", cliente.Rfc.Split(' ')[1]);
+                        var ap = cliente.Rfc.Split(' ')[2];
+                        var am = cliente.Rfc.Split(' ')[3];
+                        consulta = uow.Repository<Cliente>().Get(x =>
+                                    x.Nombre.Contains(n)
+                                    || x.Apellido1.Contains(ap)
+                                    || x.Apellido2.Contains(am)
+                                    && x.Activo).ToList();
+                    }                   
+                }
+            }
+            if (cliente.Telefono1 != null)
+            {
+                consulta = uow.Repository<Cliente>().Get(
+                                     x =>
+                                      (x.Telefono1.Trim().Equals(cliente.Telefono1)
+                                      || x.Telefono.Trim().Equals(cliente.Telefono1)
+                                      || x.Telefono.Trim().Equals(cliente.Celular)
+                                      || x.Telefono.Trim().Equals(cliente.Celular1)
+                                      ) && x.IdEmpresa.Equals(idEmpresa)
+                                       && x.Activo
+                                    ).ToList();
+            }
+
             return (consulta != null) ? consulta : null;
         }
 
@@ -65,14 +128,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 x.Telefono.Equals(cliente.TelefonoFijo) &&
                 x.Celular.Equals(cliente.Celular)
                 && !x.Telefono.Equals(null)
-                && !x.Celular.Equals(null) 
+                && !x.Celular.Equals(null)
                 && !x.Nombre.Equals(null)
                 && !x.Apellido2.Equals(null)
                 );
             return respuesta;
         }
 
-        public List<Cliente> BuscadorClientes(string criterio,short idEmpresa)
+        public List<Cliente> BuscadorClientes(string criterio, short idEmpresa)
         {
             return uow.Repository<Cliente>().Get(
                 x => ((x.Telefono.Contains(criterio)
@@ -84,6 +147,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 || x.Celular2.Contains(criterio)
                 || x.Celular3.Contains(criterio)
                 || x.Rfc.ToLower().Contains(criterio)))
+                || x.RazonSocial.Equals(criterio)
+                || x.Nombre.Equals(criterio)
                 && x.IdEmpresa.Equals(idEmpresa)
                 && x.Activo
             ).ToList();
@@ -127,7 +192,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    var clienteCredito =  uow.Repository<Cliente>().GetSingle(x=>x.IdCliente.Equals(cliente.IdCliente));
+                    var clienteCredito = uow.Repository<Cliente>().GetSingle(x => x.IdCliente.Equals(cliente.IdCliente));
                     clienteCredito.CreditoDisponibleMonto = cliente.CreditoDisponibleMonto;
                     uow.Repository<Cliente>().Update(clienteCredito);
                     uow.SaveChanges();
@@ -246,14 +311,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             try
             {
-                return uow.Repository<Cliente>().GetSingle(x => x.Rfc.Equals(rfc));
+                var consulta = uow.Repository<Cliente>().GetSingle(x => x.Rfc != null
+                                                    && x.Rfc.Equals(rfc));
+                return consulta;
             }
             catch (Exception ex)
             {
 
                 throw ex;
             }
-           
+
         }
     }
 }

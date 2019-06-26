@@ -122,7 +122,9 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             CargosDTO dto = new CargosDTO();
             dto.IdCargo = _dto.IdCargo;
             dto.IdCliente = _dto.IdCliente;
-            dto.Cliente = ClienteServicio.Obtener(_dto.IdCliente).RazonSocial;
+            dto.Cliente = string.Concat(_dto.CCliente.Nombre, " ", _dto.CCliente.Apellido1);
+            if (_dto.CCliente.IdTipoPersona.Equals(2))
+                dto.Cliente = _dto.CCliente.RazonSocial;
             dto.Rfc = ClienteServicio.Obtener(_dto.IdCliente).Rfc;
             dto.IdEmpresa = _dto.IdEmpresa;
             dto.Ticket = _dto.Ticket;

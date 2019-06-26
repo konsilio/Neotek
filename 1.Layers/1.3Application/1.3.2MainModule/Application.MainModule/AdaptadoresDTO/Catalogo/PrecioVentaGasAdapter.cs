@@ -2,6 +2,7 @@
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Ventas;
 using Sagas.MainModule.Entidades;
 using System;
@@ -246,6 +247,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         public static PrecioVentaDTO ToDTO(PrecioVenta pv, Producto producto)
         {
             var nombreEmp = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial;
+            var usuario = UsuarioServicio.Obtener(TokenServicio.ObtenerIdUsuario());
 
             PrecioVentaDTO usDTO = new PrecioVentaDTO()
             {
@@ -263,9 +265,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 PrecioPemexLt = pv.PrecioPemexLt,
                 UtilidadEsperadaKg = pv.UtilidadEsperadaKg,
                 UtilidadEsperadaLt = pv.UtilidadEsperadaLt,
-                PrecioSalida = pv.PrecioSalida,
-                PrecioSalidaKg = pv.PrecioSalidaKg,
-                PrecioSalidaLt = pv.PrecioSalidaLt,
+                PrecioSalida = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalida,
+                PrecioSalidaKg = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalidaKg,
+                PrecioSalidaLt = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalidaLt,
                 EsGas = pv.EsGas,
                 FechaProgramada = pv.FechaProgramada,
                 FechaVencimiento = pv.FechaVencimiento,
@@ -276,6 +278,15 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 CategoriaProducto = ProductoServicio.ObtenerProducto((pv.IdProducto)).Descripcion,//Concepto
                 IdUnidadMedida = producto.IdUnidadMedida,
             };
+            if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null)
+            {
+                if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion.Equals(15))
+                {
+                    usDTO.PrecioSalida = Convert.ToDecimal(8.88);
+                    usDTO.PrecioSalidaKg = Convert.ToDecimal(8.88);
+                    usDTO.PrecioSalidaLt = Convert.ToDecimal(8.88);
+                }
+            } 
             return usDTO;
         }
         public static List<RepHistorioPrecioDTO> ToRepo(List<PrecioVenta> entidades, HistoricoPrecioDTO dto)

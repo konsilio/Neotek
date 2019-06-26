@@ -74,5 +74,19 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarPipas(id, tkn);
             return agente._ListaPipas;
         }
+        public static ClientesModel ClienteGenerico(string tkn)
+        {
+            return new ClientesModel()
+            {
+                IdRegimenFiscal = 612,
+                IdTipoPersona = 1,
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn),
+                Rfc = "XAXX010101000",
+                limiteCreditoMonto = 0,
+                limiteCreditoDias = 0,
+                CreditoDisponibleMonto = 0,
+
+            };
+        }
     }
 }

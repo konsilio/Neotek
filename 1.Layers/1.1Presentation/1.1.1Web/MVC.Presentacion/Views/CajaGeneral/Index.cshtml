@@ -262,7 +262,7 @@
                                 </div>
                             </div>
                             <div class="row clearfix">
-                                @if (ViewBag.CajaGeneral != null && ViewBag.CajaGeneral.Count >= 1)
+                                @if (ViewBag.CajaGeneral != null)
                                 {
                                     <div class="col-md-6">
                                         Página @(ViewBag.CajaGeneral.PageCount < ViewBag.CajaGeneral.PageNumber ? 0 : ViewBag.CajaGeneral.PageNumber) de @ViewBag.CajaGeneral.PageCount
