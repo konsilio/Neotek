@@ -226,7 +226,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
-
         builder1.setNegativeButton(
                 R.string.message_acept,
                 new DialogInterface.OnClickListener() {
@@ -317,7 +316,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     //metodo que se llama al obtener el menu desde web service
     @Override
     public void onSuccessGetMenu(List<MenuDTO> menuDTOs) {
-        Log.w("OnSuccesView",""+menuDTOs.size());
         ArrayList<MenuDTO> menus = new ArrayList<>(menuDTOs.size());
         menus.addAll(menuDTOs);
        menu.clear();

@@ -47,6 +47,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class VerReporteActivity extends AppCompatActivity {
+
     private boolean EsReporteDelDia;
     private boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
@@ -75,6 +76,7 @@ public class VerReporteActivity extends AppCompatActivity {
     String device_select;
     NumberFormat format;
     Session session;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,8 +164,8 @@ public class VerReporteActivity extends AppCompatActivity {
                     GenerarReporte(ventaDTO);
                 //}
             }
-
         }
+        Log.d("html", (bundle.toString()));
         WebView WVVerReporteActivityReporte = findViewById(R.id.WVVerReporteActivityReporte);
         Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
         Button btnReporteActivityImprimir = findViewById(R.id.BtnReporteActivityImprimir);
@@ -223,8 +225,10 @@ public class VerReporteActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
             }
         });
+        WVVerReporteActivityReporte.getSettings().setJavaScriptEnabled(true);
         WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
                 "text/HTML", "UTF-8", null);
+        Log.d("html",HtmlReporte+"");
     }
 
     private void GenerarReporte(VentaDTO ventaDTO) {
@@ -1583,8 +1587,7 @@ public class VerReporteActivity extends AppCompatActivity {
         }
     }
 
-    public String Convert(String text)
-    {
+    public String Convert(String text) {
         String newText="";
         char[]charArray=text.toCharArray();
         for(char c: charArray)

@@ -1,5 +1,7 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
+import android.util.Log;
+
 import com.example.neotecknewts.sagasapp.Activity.ReporteView;
 import com.example.neotecknewts.sagasapp.Interactor.ReporteInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.ReporteInteractorImpl;
@@ -45,6 +47,7 @@ public class ReportePresenterImpl implements ReportePresenter {
 
     @Override
     public void onSuccessReport(ReporteDto reporteDTO) {
+        Log.d("Report", "Success");
         view.hiddeProgress();
         view.onSuccessReport(reporteDTO);
     }

@@ -508,7 +508,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         if (conceptoDTO.getDescuento() > 0) {
             precio = conceptoDTO.getPUnitario() - conceptoDTO.getDescuento();
         }
-        precio = precio * conceptoDTO.getCantidad() ;
+        precio = precio * conceptoDTO.getCantidad();
         //conceptoDTO.setSubtotal(precio);
         ventaDTO.getConcepto().add(conceptoDTO);
         NumberFormat format = NumberFormat.getCurrencyInstance();

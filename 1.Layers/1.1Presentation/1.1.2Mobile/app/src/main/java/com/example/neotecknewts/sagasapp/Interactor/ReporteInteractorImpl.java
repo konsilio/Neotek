@@ -76,17 +76,21 @@ public class ReporteInteractorImpl implements ReporteInteractor {
                 fecha,
                 token,
                 "application/json"
+
         );
         call.enqueue(new Callback<ReporteDto>() {
             @Override
             public void onResponse(Call<ReporteDto> call,
                                    Response<ReporteDto> response) {
                 ReporteDto reporteDTO  = response.body();
+
+                Log.w("responsebody",response.body().toString()+"");
+                Log.w("response",response.code()+"");
                 if(response.isSuccessful()){
+
                     Log.w("Success","Se han cargado ");
-
+                    reporteDTO.setExito(true);
                     presenter.onSuccessReport(reporteDTO);
-
                 }else{
                     switch (response.code()) {
                         case 404:
@@ -106,15 +110,17 @@ public class ReporteInteractorImpl implements ReporteInteractor {
                         presenter.onError(reporteDTO);
                     else
                         presenter.onError("Error no. "+response.code()+":"+response.message());
-
                 }
+
             }
+
 
             @Override
             public void onFailure(Call<ReporteDto> call, Throwable t) {
                 presenter.onError(t.getMessage());
             }
         });
+
     }
 
 }

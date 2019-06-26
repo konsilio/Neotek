@@ -68,7 +68,7 @@ public class Sincronizacion {
     }
     public void mostrarDialogoExito(){
         this.dialog.setTitle("Listo");
-        this.dialog.setMessage("Se na sincronizado los datos");
+        this.dialog.setMessage("Se ha sincronizado los datos");
         this.dialog.setPositiveButton(R.string.message_acept,(dialogInterface, i) ->
                 dialogInterface.dismiss());
         this.dialog.create().show();
