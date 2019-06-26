@@ -1470,7 +1470,6 @@ namespace Application.MainModule.Flujos
         }
         public List<DatosGasVentaDto> CatalogosGas(bool esLP, bool esCilindroConGas, bool esCilindro)
         {
-
             var pv = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(pv.IdCAlmacenGas);
             if (esLP)
