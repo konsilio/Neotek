@@ -1921,7 +1921,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      * <h3>InsertImagenesLecturaInicialAlamacen</h3>
      * Permite realizar el registro en la base de datos de las imagenes que se registran en la
      * lectura , se toma como parametro un objeto de tipo {@link LecturaAlmacenDTO} con los datos
-     * a registrar y en caso de que se realizen correctamente los incerts por cada imagen
+     * a registrar y en caso de que se realizen correctamente los inserts por cada imagen
      * se retornara un array de tipo {@link Long} con los id de dicho registros
      * @param lecturaAlmacenDTO Objeto de tipo {@link LecturaAlmacenDTO} con los valores a registrar
      * @return Array de tipo {@link Long} con los ids registrados
@@ -2000,7 +2000,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     /**
      * <h3>GetLecturaFinalAlmacenByClaveOperacion</h3>
      * Permite obtener un registro de la lectura inicial del almacen, se tomara como parametro un
-     * {@link String} que reprecenta la clave de operación y tras consultar se retornara un objeto
+     * {@link String} que representa la clave de operación y tras consultar se retornara un objeto
      * de tipo {@link Cursor} con el resultado de la consulta.
      * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
      * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
