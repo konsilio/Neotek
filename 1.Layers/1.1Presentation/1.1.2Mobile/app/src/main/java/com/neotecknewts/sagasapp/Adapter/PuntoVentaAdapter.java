@@ -165,6 +165,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Iva.setText(new DecimalFormat("#.##").format(iva));
                             Total.setText(new DecimalFormat("#.##").format(sub + iva));
                             precioVentaDTO.setPrecioSalidaLt(Double.parseDouble(PrecioLitro.getText().toString()));
+                            //Log.d("Precionulo",PrecioLitro+"");
                             cantidad = editTextCantidad;
                             Litro = editTextPrecioLitro;
                             existencia = items.get(position);

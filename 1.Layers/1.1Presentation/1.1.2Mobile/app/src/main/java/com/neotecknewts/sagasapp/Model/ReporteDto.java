@@ -86,14 +86,8 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
 
     public String getClaveOperacion() {
         //return ClaveOperacion;}
-        /*
-        if(ClaveOperacion.isEmpty()){
-            //System.out.println(getMensaje());
-            Log.d("mensaje",getMensaje());
-        }*/
         Log.d("Claveoperacion",ClaveOperacion+"");
          return ClaveOperacion!=null?ClaveOperacion:"";
-
     }
 
     public void setClaveOperacion(String claveOperacion) {
@@ -130,6 +124,7 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
 
     public void setPorcentajeSalida(double porcentajeSalida) {
         PorcentajeSalida = porcentajeSalida;
+        Log.d("",porcentajeSalida+"");
     }
 
     public double getPorcentajeRegreso() {

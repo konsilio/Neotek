@@ -11,6 +11,9 @@ abstract class RespuestaDTO {
     @SerializedName("Exito")
     private boolean Exito;
 
+    @SerializedName("Error")
+    private boolean Error;
+
     @SerializedName("Mensaje")
     private String Mensaje;
 
@@ -22,6 +25,10 @@ abstract class RespuestaDTO {
 
     public boolean isExito() {
         return Exito;
+    }
+
+    public boolean isError() {
+        return Error;
     }
 
     public void setExito(boolean exito) {

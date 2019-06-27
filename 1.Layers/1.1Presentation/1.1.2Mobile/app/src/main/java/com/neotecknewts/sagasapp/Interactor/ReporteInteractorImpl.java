@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.neotecknewts.sagasapp.Model.DatosReporteDTO;
 import com.neotecknewts.sagasapp.Model.ReporteDto;
+//import com.neotecknewts.sagasapp.Model.RespuestaDTO;
 import com.neotecknewts.sagasapp.Presenter.ReportePresenterImpl;
 import com.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.neotecknewts.sagasapp.Presenter.Rest.RestClient;
@@ -74,17 +75,23 @@ public class ReporteInteractorImpl implements ReporteInteractor {
         );
         call.enqueue(new Callback<ReporteDto>() {
             @Override
-            public void onResponse(Call<ReporteDto> call,
-                                   Response<ReporteDto> response) {
+            public void onResponse(Call<ReporteDto> call,  Response<ReporteDto> response) {
                 ReporteDto reporteDTO  = response.body();
+                //RespuestaDTO respuestaDTO = response.body();
 
-                Log.w("responsebody",response.body().toString()+"");
-                Log.w("response",response.code()+"");
+
+
                 if(response.isSuccessful()){
-
+                    Log.d("Error", reporteDTO.isError()+"");
+                    Log.d("Reportebody",reporteDTO.toString());
+                    Log.d("reportedto",reporteDTO.isExito()+"");
+                    Log.d("reportedto",reporteDTO.getMensaje());
                     Log.w("Success","Se han cargado ");
-                    reporteDTO.setExito(true);
-                    presenter.onSuccessReport(reporteDTO);
+                    if(!reporteDTO.isError()) {
+                        presenter.onSuccessReport(reporteDTO);
+                    } else {
+                        presenter.onError(reporteDTO.getMensaje());
+                    }
                 }else{
                     switch (response.code()) {
                         case 404:

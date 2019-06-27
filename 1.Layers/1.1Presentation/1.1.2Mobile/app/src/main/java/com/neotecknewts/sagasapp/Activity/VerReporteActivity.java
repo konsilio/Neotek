@@ -7,41 +7,46 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.print.PrinterInfo;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Printer;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.neotecknewts.sagasapp.Model.CorteDTO;
 import com.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.neotecknewts.sagasapp.Model.VentaDTO;
+import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Util.Session;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
 public class VerReporteActivity extends AppCompatActivity {
-
     private boolean EsReporteDelDia;
     private boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
@@ -70,7 +75,6 @@ public class VerReporteActivity extends AppCompatActivity {
     String device_select;
     NumberFormat format;
     Session session;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +106,8 @@ public class VerReporteActivity extends AppCompatActivity {
             EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
 
             if(EsReporteDelDia) {
+                Log.d("Ali", "text: "+ (String) bundle.get("StringReporte"));
+                Log.d("Ali", "html: "+ (String) bundle.get("HtmlReporte"));
                 StringReporte = (String) bundle.get("StringReporte");
                 HtmlReporte = (String) bundle.get("HtmlReporte");
             }
@@ -153,13 +159,13 @@ public class VerReporteActivity extends AppCompatActivity {
             }
             if(EsVentaCamioneta || EsVentaCarburacion || EsVentaPipa){
                 //if(EsVentaCamioneta) {
-                    setTitle("Nota de venta");
-                    ventaDTO = (VentaDTO) bundle.getSerializable("ventaDTO");
-                    GenerarReporte(ventaDTO);
+                setTitle("Nota de venta");
+                ventaDTO = (VentaDTO) bundle.getSerializable("ventaDTO");
+                GenerarReporte(ventaDTO);
                 //}
             }
+
         }
-        Log.d("html", (bundle.toString()));
         WebView WVVerReporteActivityReporte = findViewById(R.id.WVVerReporteActivityReporte);
         Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
         Button btnReporteActivityImprimir = findViewById(R.id.BtnReporteActivityImprimir);
@@ -219,10 +225,8 @@ public class VerReporteActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
             }
         });
-        WVVerReporteActivityReporte.getSettings().setJavaScriptEnabled(true);
         WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
                 "text/HTML", "UTF-8", null);
-        Log.d("html",HtmlReporte+"");
     }
 
     private void GenerarReporte(VentaDTO ventaDTO) {
@@ -243,10 +247,10 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tr>";
         if(ventaDTO.getEstacion().trim().length()>0 || !ventaDTO.getEstacion().isEmpty()
                 && !ventaDTO.getEstacion().equals("")) {
-                HtmlReporte+="<tr>" +
-                "<td>Surtido</td>"+
-                "<td>[{Estacion}]</td>"+
-                "</tr>";
+            HtmlReporte+="<tr>" +
+                    "<td>Surtido</td>"+
+                    "<td>[{Estacion}]</td>"+
+                    "</tr>";
         }
         HtmlReporte+="</table>"+
                 "<hr>";
@@ -254,21 +258,21 @@ public class VerReporteActivity extends AppCompatActivity {
         if(ventaDTO.isEsBusqueda()) {
             if(ventaDTO.getRazonSocial().trim().length()>0){
                 HtmlReporte += "<h3>Cliente</h3>" +
-                            "<table>" +
-                            "<tr>"+
-                            "<td>No.Cliente</td>"+
-                            "<td>[{No.Cliente}]</td>"+
-                            "</tr>"+
-                            "<tr>" +
-                            "<td>Razon social</td>" +
-                            "<td>[{Razon-social}]</td>" +
-                            "</tr>" +
-                            "<tr>" +
-                            "<td>RFC</td>" +
-                            "<td>[{RFC}]</td>" +
-                            "</tr>" +
-                            "</table>";
-                }else {
+                        "<table>" +
+                        "<tr>"+
+                        "<td>No.Cliente</td>"+
+                        "<td>[{No.Cliente}]</td>"+
+                        "</tr>"+
+                        "<tr>" +
+                        "<td>Razon social</td>" +
+                        "<td>[{Razon-social}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>RFC</td>" +
+                        "<td>[{RFC}]</td>" +
+                        "</tr>" +
+                        "</table>";
+            }else {
                 HtmlReporte += "<h3>Cliente</h3>" +
                         "<table>" +
                         "<tr>"+
@@ -349,10 +353,10 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</body>";
 
         StringReporte = "\tTiket de venta\n" +
-                        "Gas Mundial de Guerrero\n\n"+
-                        "Tiket\t[{Clave-venta}]\n"+
-                        "Fecha\t[{Fecha}]\n"+
-                        "Hora\t[{Hora}]\n";
+                "Gas Mundial de Guerrero\n\n"+
+                "Tiket\t[{Clave-venta}]\n"+
+                "Fecha\t[{Fecha}]\n"+
+                "Hora\t[{Hora}]\n";
         if(ventaDTO.getEstacion().trim().length()>0 || !ventaDTO.getEstacion().isEmpty()
                 && !ventaDTO.getEstacion().equals("")) {
             StringReporte+="Surtido: \t [{Estacion}]\n";
@@ -389,12 +393,12 @@ public class VerReporteActivity extends AppCompatActivity {
         }
         //endregion
         StringReporte +="--------------------------------\n"+
-                        "|Concepto|Cant.|P.Uni.|Desc|Subt|\n"+
-                        "--------------------------------\n"+
-                        "[{Concepto}]\n"+
-                        "________________________________\n"+
-                        "\tI.V.A. (16%) [{iva}]\n"+
-                        "\tTotal [{Total}]\n";
+                "|Concepto|Cant.|P.Uni.|Desc|Subt|\n"+
+                "--------------------------------\n"+
+                "[{Concepto}]\n"+
+                "________________________________\n"+
+                "\tI.V.A. (16%) [{iva}]\n"+
+                "\tTotal [{Total}]\n";
         if(!ventaDTO.isCredito()) {
             StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
                     "\tCambio [{Cambio}]\n";
@@ -402,18 +406,18 @@ public class VerReporteActivity extends AppCompatActivity {
             StringReporte += "\tVenta Contado\n";
         }
         StringReporte += "Le atendio [{Usuario}]"+
-                        "\n--------------------------------\n"+
-                        "Gas Mundial de Guerrero S.A de C.V.\n"+
-                        "Av. Principal No. 5477 C.P. 56789\n"+
-                        "www.gasmundialdeguerrero.com.mx\n\n"+
+                "\n--------------------------------\n"+
+                "Gas Mundial de Guerrero S.A de C.V.\n"+
+                "Av. Principal No. 5477 C.P. 56789\n"+
+                "www.gasmundialdeguerrero.com.mx\n\n"+
 
-                        "Facturacion electronica en :\n"+
-                        "www.gasmundialdeguerrero.com.mx/\n"+
-                        "facturacion\n\n"+
-                        "Folio Factura: [{Folio-factura}]\n\n"+
-                        "Gracias por su confianza,vuelva\n" +
-                        "pronto!"
-                    ;
+                "Facturacion electronica en :\n"+
+                "www.gasmundialdeguerrero.com.mx/\n"+
+                "facturacion\n\n"+
+                "Folio Factura: [{Folio-factura}]\n\n"+
+                "Gracias por su confianza,vuelva\n" +
+                "pronto!"
+        ;
         StringReporte = StringReporte.replace("[{Clave-venta}]",ventaDTO.getFolioVenta());
         HtmlReporte = HtmlReporte.replace("[{Clave-venta}]",ventaDTO.getFolioVenta());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
@@ -623,29 +627,29 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tbody>" +
                 "</table >"+
                 "<hr>";
-                if(!corteDTO.isCamioneta()) {
-                    HtmlReporte += "<h3 style='text-align: center;'>P5000</h3>" +
-                            "<table style='font-size:14px; width:100%;margin-left:5px;margin-rigth:5px;'>" +
-                            "<tbody>" +
-                            "<tr>" +
-                            "<td>Inicial: </td>" +
-                            "<td style='text-align: right; font-weight:bold;'> [{Inicial}]</td>" +
-                            "</tr>" +
-                            "<tr>" +
-                            "<td>Final: </td>" +
-                            "<td style='text-align: right; font-weight:bold;'>[{Final}]</td>" +
-                            "</tr>" +
-                            "<tr>" +
-                            "<td>Litros vendidos: </td>" +
-                            "<td style='text-align: right; font-weight:bold;'>[{Litros-vendidos}]</td>" +
-                            "</tr></tbody>"+
+        if(!corteDTO.isCamioneta()) {
+            HtmlReporte += "<h3 style='text-align: center;'>P5000</h3>" +
+                    "<table style='font-size:14px; width:100%;margin-left:5px;margin-rigth:5px;'>" +
+                    "<tbody>" +
+                    "<tr>" +
+                    "<td>Inicial: </td>" +
+                    "<td style='text-align: right; font-weight:bold;'> [{Inicial}]</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>Final: </td>" +
+                    "<td style='text-align: right; font-weight:bold;'>[{Final}]</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>Litros vendidos: </td>" +
+                    "<td style='text-align: right; font-weight:bold;'>[{Litros-vendidos}]</td>" +
+                    "</tr></tbody>"+
                     "</table>";
-                }
-                HtmlReporte +=
+        }
+        HtmlReporte +=
                 "</body>";
 
         StringReporte =
-                        "Reporte-Corte de caja\n" +
+                "Reporte-Corte de caja\n" +
 
                         "Clave Corte\t" +
                         "[{ClaveTraspaso}]\n" +
@@ -666,7 +670,7 @@ public class VerReporteActivity extends AppCompatActivity {
                         "[{Monto-corte}]\n" +
                         "-----------------------\n";
         if(!corteDTO.isCamioneta()) {
-             StringReporte +="\tP5000" +
+            StringReporte +="\tP5000" +
                     "Inicial: \t" +
                     "[{Inicial}]\n" +
                     "Final: \t" +
@@ -674,15 +678,15 @@ public class VerReporteActivity extends AppCompatActivity {
                     "Litros vendidos: \t" +
                     "[{Litros-vendidos}]\n" ;
         }
-                StringReporte+="Entrega\n"+
-                        "[{Entrego-nombre}]\n\n" +
-                        "________________________\n"+
-                        "Firma\n\n"+
-                        "Recibe:\n"+
-                        "[{Recibio}]\n\n"+
-                        "________________________\n"+
-                        "Firma\n\n"
-                        ;
+        StringReporte+="Entrega\n"+
+                "[{Entrego-nombre}]\n\n" +
+                "________________________\n"+
+                "Firma\n\n"+
+                "Recibe:\n"+
+                "[{Recibio}]\n\n"+
+                "________________________\n"+
+                "Firma\n\n"
+        ;
         HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",
                 corteDTO.getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",
@@ -723,7 +727,7 @@ public class VerReporteActivity extends AppCompatActivity {
 
         NumberFormat dformat = new DecimalFormat("#.00");
         HtmlReporte = HtmlReporte.replace("[{Venta-total}]",
-               "$"+dformat.format(corteDTO.getTotal())
+                "$"+dformat.format(corteDTO.getTotal())
         );
         StringReporte = StringReporte.replace("[{Venta-total}]",
                 "$"+dformat.format(corteDTO.getTotal())
@@ -818,23 +822,23 @@ public class VerReporteActivity extends AppCompatActivity {
 
         StringReporte =
                 "\t Reporte-Anticipo \n" +
-                "Clave Anticipo \t" +
-                "[{ClaveTraspaso}]\n" +
-                "Fecha \t" +
-                " [{Fecha}]\n" +
-                "Hora \t" +
-                "[{Hora}]\n" +
-                "-----------------------------\n" +
-                "Estacion \t"+
-                "[{Estacion}]\n" +
-                "Monto anticipado: \t" +
-                "[{Monto-anticipo}]\n\n"+
-                "Entrega: \n"+
-                "[{Usuario-entrego}]\n____________________________\n"+
+                        "Clave Anticipo \t" +
+                        "[{ClaveTraspaso}]\n" +
+                        "Fecha \t" +
+                        " [{Fecha}]\n" +
+                        "Hora \t" +
+                        "[{Hora}]\n" +
+                        "-----------------------------\n" +
+                        "Estacion \t"+
+                        "[{Estacion}]\n" +
+                        "Monto anticipado: \t" +
+                        "[{Monto-anticipo}]\n\n"+
+                        "Entrega: \n"+
+                        "[{Usuario-entrego}]\n____________________________\n"+
                         "Firma\n\n"+
-                "Recibe\n"+
+                        "Recibe\n"+
                         "[{Usuario-recibi}]\n____________________________\n"+
-        "Firma\n\n";
+                        "Firma\n\n";
         HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter6 =
@@ -990,7 +994,7 @@ public class VerReporteActivity extends AppCompatActivity {
 
         HtmlReporte = HtmlReporte.replace("[{P5000Inicial2}]",
                 String.valueOf(traspasoDTO
-                .getP5000EntradaInicial()));
+                        .getP5000EntradaInicial()));
         StringReporte = StringReporte.replace("[{P5000Inicial2}]",
                 String.valueOf(
                         traspasoDTO.getP5000EntradaInicial()
@@ -1000,12 +1004,12 @@ public class VerReporteActivity extends AppCompatActivity {
                 String.valueOf(
                         traspasoDTO.getP5000Entrada()
                 )
-                );
+        );
         StringReporte = StringReporte.replace("[{P5000Final2}]",
                 String.valueOf(
                         traspasoDTO.getP5000Entrada()
                 )
-                );
+        );
         double traspasados = traspasoDTO.getP5000Salida() - traspasoDTO.getP5000Entrada();
         HtmlReporte = HtmlReporte.replace("[{LitrosTraspasados}]",
                 String.valueOf(traspasados));
@@ -1339,7 +1343,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 String.valueOf(traspasados));
 
         StringReporte = StringReporte.replace("[{NombrePipaTraspaso}]",
-        traspasoDTO.getNombreEstacionTraspaso());
+                traspasoDTO.getNombreEstacionTraspaso());
         HtmlReporte = HtmlReporte.replace("[{NombrePipaTraspaso}]",
                 traspasoDTO.getNombreEstacionTraspaso());
 
@@ -1387,7 +1391,7 @@ public class VerReporteActivity extends AppCompatActivity {
                             R.style.AlertDialog);
                     builder.setTitle(R.string.error_titulo);
                     builder.setMessage("No se ha podido encontra ninguna impresora, verique:\n"+
-                    " - La impreso este encendida\n - Que la impresora este vinculada al dispositivo");
+                            " - La impreso este encendida\n - Que la impresora este vinculada al dispositivo");
                 }
                 for (int x = 0;x<adevices.size();x++){
                     lista[x] = adevices.get(x);
@@ -1449,7 +1453,7 @@ public class VerReporteActivity extends AppCompatActivity {
                     // MP300 is the name of the bluetooth printer device
                     //if (device.getName().equals("EC MP-2")) {
                     if (device.getName().equals(charSequence)) {
-                            mmDevice = device;
+                        mmDevice = device;
                         break;
                     }
                 }
@@ -1581,7 +1585,8 @@ public class VerReporteActivity extends AppCompatActivity {
         }
     }
 
-    public String Convert(String text) {
+    public String Convert(String text)
+    {
         String newText="";
         char[]charArray=text.toCharArray();
         for(char c: charArray)
