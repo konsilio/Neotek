@@ -164,6 +164,19 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
+        public ActionResult Comisiones(PeriodoDTO model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
+            if (model != null && !model.FechaFin.Equals(DateTime.MinValue) && !model.FechaInicio.Equals(DateTime.MinValue))
+            {
+                ViewData["Reporte"] = TiposReporteConst.Comision;
+                TempData["DataSource"] = ReporteServicio.CalcularComisiones(model, tkn);
+            }
+            return View(model);
+        }
 
         //Cubo de inforamcion
         public ActionResult GetGridView(string Tipo)
@@ -193,6 +206,8 @@ namespace MVC.Presentacion.Controllers
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<CorteCajaDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.GastoVehicular))
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<GastoVehiculoDTO>)TempData["DataSource"]);
+            if (Tipo.Equals(TiposReporteConst.Comision))
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<ComisionDTO>)TempData["DataSource"]);
             return View(TiposReporteConst.CuboInformacionGeneral);
         }
     }

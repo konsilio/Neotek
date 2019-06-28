@@ -68,6 +68,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepGastoXVehiculo(dto));
         }
+        [Route("comisiones")]
+        public HttpResponseMessage PostComisiones(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepComisiones(dto));
+        }
         [Route("dashboard/remanente")]
         public HttpResponseMessage GetDashRemanente()
         {

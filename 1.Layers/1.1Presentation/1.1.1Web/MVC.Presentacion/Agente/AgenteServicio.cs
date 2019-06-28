@@ -134,6 +134,7 @@ namespace MVC.Presentacion.Agente
         public List<InventarioXConceptoDTO> _ListaInventarioConcepto;
         public List<CorteCajaDTO> _ListaCorteCaja;
         public List<GastoVehiculoDTO> _ListaGastoVehicular;
+        public List<ComisionDTO> _ListaComisiones;
 
         public AgenteServicio()
         {
@@ -5580,6 +5581,41 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _ListaGastoVehicular = list;
+            }
+        }
+        #endregion
+        #region Caomision
+        public void CalcularComisiones(PeriodoDTO model, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostComisiones"];
+            PostComisiones(model, tkn).Wait();
+        }
+        private async Task PostComisiones(PeriodoDTO model, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ComisionDTO> list = new List<ComisionDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRoute, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<ComisionDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<ComisionDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaComisiones = list;
             }
         }
         #endregion

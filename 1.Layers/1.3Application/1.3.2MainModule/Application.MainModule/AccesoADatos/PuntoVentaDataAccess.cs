@@ -72,6 +72,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<PuntoVenta>().Get(x => x.Activo).ToList();
         }
+        public List<VentaPuntoDeVenta> BuscarVentas(DateTime fi, DateTime ff)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FechaRegistro >= fi && 
+                                                                x.FechaRegistro <= ff ).ToList();
+        }
         public List<PuntoVenta> BuscarTodos(short idEmpresa)
         {
             return uow.Repository<PuntoVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -178,11 +183,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<VentaCorteAnticipoEC> BuscarAnticipos(DateTime fecha, short idCAlmacenGas)
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(
-                x => x.IdCAlmacenGas.Equals(idCAlmacenGas) &&
-                x.FechaCorteAnticipo.Day.Equals(fecha.Day) &&
-                x.FechaCorteAnticipo.Month.Equals(fecha.Month) &&
-                x.FechaCorteAnticipo.Year.Equals(fecha.Year) &&
-                x.TipoOperacion.Equals(1)
+                x => x.IdCAlmacenGas.Equals(idCAlmacenGas) 
+                && x.FechaCorteAnticipo.Day.Equals(fecha.Day) 
+                && x.FechaCorteAnticipo.Month.Equals(fecha.Month) 
+                && x.FechaCorteAnticipo.Year.Equals(fecha.Year)
+                //&& x.TipoOperacion.Equals("1")
              ).ToList();
         }
         public RespuestaDto RegistrarReporteDia(ReporteDelDia reporteEntity)

@@ -138,6 +138,8 @@
     <Compile Include="DTOs\Pedidos\PedidoDashDTO.cs" />
     <Compile Include="DTOs\Reportes\CajaGeneral\CajaGeneralDTO.cs" />
     <Compile Include="DTOs\Reportes\CajaGeneral\RepCorteCajaDTO.cs" />
+    <Compile Include="DTOs\Reportes\Comisiones\ComisionDiaDTO.cs" />
+    <Compile Include="DTOs\Reportes\Comisiones\ComisionDTO.cs" />
     <Compile Include="DTOs\Reportes\DashBoard\AdministracionDTO.cs" />
     <Compile Include="DTOs\Reportes\DashBoard\AndenDTO.cs" />
     <Compile Include="DTOs\Reportes\DashBoard\CarteraDTO.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="DTOs\Reportes\GastoVehicular\RepGastoVehicularDTO.cs" />
     <Compile Include="DTOs\Reportes\InventarioConcepto\InventarioXConceptoDTO.cs" />
     <Compile Include="DTOs\Reportes\InventarioConcepto\RepInventarioXConceptorDTO.cs" />
+    <Compile Include="DTOs\Reportes\PeriodoDTO.cs" />
     <Compile Include="DTOs\Seguridad\MenuDto.cs" />
     <Compile Include="Servicios\Equipo\CalculosEquipoTrasporte.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDetalleDTO.cs" />
