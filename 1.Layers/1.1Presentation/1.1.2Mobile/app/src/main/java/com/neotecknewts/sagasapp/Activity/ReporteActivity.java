@@ -273,11 +273,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                 );
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{Lectura-inicial}]",
-                        String.valueOf(reporteDTO.getLecturaInicial().getCantidadP5000())
+                        String.valueOf(reporteDTO.getLecturaInicial()!=null?reporteDTO.getLecturaInicial().getCantidadP5000():"")
                 );
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{Lectura-final}]",
-                        String.valueOf(reporteDTO.getLecturaFinal().getCantidadP5000())
+                        String.valueOf(reporteDTO.getLecturaFinal()!=null?reporteDTO.getLecturaFinal().getCantidadP5000():"")
                 );
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{litros-venta}]",
@@ -391,11 +391,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                 );
                 formato_reporte_pipa_html = formato_reporte_pipa_html.replace(
                         "[{Lectura-inicial}]",
-                        String.valueOf(reporteDTO.getLecturaInicial().getCantidadP5000())
+                        String.valueOf(reporteDTO.getLecturaInicial()!=null?reporteDTO.getLecturaInicial().getCantidadP5000():"")
                 );
                 formato_reporte_pipa_html = formato_reporte_pipa_html.replace(
                         "[{Lectura-final}]",
-                        String.valueOf(reporteDTO.getLecturaFinal().getCantidadP5000())
+                        String.valueOf(reporteDTO.getLecturaFinal()!=null?reporteDTO.getLecturaFinal().getCantidadP5000():"")
                 );
                 formato_reporte_pipa_html = formato_reporte_pipa_html.replace(
                         "[{litros-venta}]",
@@ -655,22 +655,24 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                 reporte_con_formato = new String[2];
                 reporte_con_formato[0] = formato_reporte_camioneta_text;
                 reporte_con_formato[1] = formato_reporte_camioneta_html;
+
+                if (EsReporteDelDia) {
+                    Log.d("Ali", "text: " + datos[0]);
+                    Log.d("Ali", "html: " + datos[1]);
+                    Intent intent = new Intent(ReporteActivity.this,
+                            VerReporteActivity.class);
+                    intent.putExtra("EsReporteDelDia", EsReporteDelDia);
+                    intent.putExtra("FechaReporte", fecha);
+                    intent.putExtra("unidadDTO", unidadesDTO);
+                    intent.putExtra("StringReporte", reporte_con_formato[0]);
+                    intent.putExtra("HtmlReporte", reporte_con_formato[1]);
+
+                    startActivity(intent);
+                }
             }
 
             Log.d("esreportedia", EsReporteDelDia+"");
-            /*if (EsReporteDelDia) {
-                Log.d("Ali", "text: "+datos[0]);
-                Log.d("Ali", "html: "+datos[1]);
-                Intent intent = new Intent(ReporteActivity.this,
-                        VerReporteActivity.class);
-                intent.putExtra("EsReporteDelDia", EsReporteDelDia);
-                intent.putExtra("FechaReporte", fecha);
-                intent.putExtra("unidadDTO", unidadesDTO);
-                intent.putExtra("StringReporte", datos[0]);
-                intent.putExtra("HtmlReporte", datos[1]);
 
-                startActivity(intent);
-            }*/
         }
     }
 

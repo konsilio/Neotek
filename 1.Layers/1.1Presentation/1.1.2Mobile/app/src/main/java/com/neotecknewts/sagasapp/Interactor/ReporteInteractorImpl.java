@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.neotecknewts.sagasapp.Model.DatosReporteDTO;
 import com.neotecknewts.sagasapp.Model.ReporteDto;
-//import com.neotecknewts.sagasapp.Model.RespuestaDTO;
 import com.neotecknewts.sagasapp.Presenter.ReportePresenterImpl;
 import com.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.neotecknewts.sagasapp.Presenter.Rest.RestClient;
@@ -15,6 +14,7 @@ import retrofit2.Response;
 
 public class ReporteInteractorImpl implements ReporteInteractor {
     ReportePresenterImpl presenter;
+
     public ReporteInteractorImpl(ReportePresenterImpl reportePresenter) {
         this.presenter = reportePresenter;
     }
@@ -23,20 +23,20 @@ public class ReporteInteractorImpl implements ReporteInteractor {
     public void GetUnidades(String token) {
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
-        Call<DatosReporteDTO> call = restClient.getUnidades(token,"application/json");
+        Call<DatosReporteDTO> call = restClient.getUnidades(token, "application/json");
 
         call.enqueue(new Callback<DatosReporteDTO>() {
             @Override
             public void onResponse(Call<DatosReporteDTO> call,
                                    Response<DatosReporteDTO> response) {
-                if(response.isSuccessful()){
-                    Log.w("Success","Se han cargado ");
+                if (response.isSuccessful()) {
+                    Log.w("Success", "Se han cargado ");
                     presenter.onSuccessUnidades(response.body());
 
-                }else{
+                } else {
                     switch (response.code()) {
                         case 404:
-                            Log.w("Error","not found");
+                            Log.w("Error", "not found");
 
 
                             break;
@@ -45,11 +45,11 @@ public class ReporteInteractorImpl implements ReporteInteractor {
 
                             break;
                         default:
-                            Log.w("Error", "Error desconocido: "+response.code());
+                            Log.w("Error", "Error desconocido: " + response.code());
 
                             break;
                     }
-                    presenter.onError("Error no. "+response.code()+":"+response.message());
+                    presenter.onError("Error no. " + response.code() + ":" + response.message());
 
                 }
             }
@@ -75,27 +75,20 @@ public class ReporteInteractorImpl implements ReporteInteractor {
         );
         call.enqueue(new Callback<ReporteDto>() {
             @Override
-            public void onResponse(Call<ReporteDto> call,  Response<ReporteDto> response) {
-                ReporteDto reporteDTO  = response.body();
-                //RespuestaDTO respuestaDTO = response.body();
+            public void onResponse(Call<ReporteDto> call, Response<ReporteDto> response) {
+                ReporteDto reporteDTO = response.body();
+
+                Log.w("responsebody", response.body().toString() + "");
+                Log.w("response", response.code() + "");
 
 
-
-                if(response.isSuccessful()){
-                    Log.d("Error", reporteDTO.isError()+"");
-                    Log.d("Reportebody",reporteDTO.toString());
-                    Log.d("reportedto",reporteDTO.isExito()+"");
-                    Log.d("reportedto",reporteDTO.getMensaje());
-                    Log.w("Success","Se han cargado ");
-                    if(!reporteDTO.isError()) {
-                        presenter.onSuccessReport(reporteDTO);
-                    } else {
-                        presenter.onError(reporteDTO.getMensaje());
-                    }
-                }else{
+                if (response.isSuccessful()) {
+                    Log.w("Success", "Se han cargado ");
+                    reporteDTO.setExito(true);
+                } else {
                     switch (response.code()) {
                         case 404:
-                            Log.w("Error","not found");
+                            Log.w("Error", "not found");
 
                             break;
                         case 500:
@@ -103,14 +96,19 @@ public class ReporteInteractorImpl implements ReporteInteractor {
 
                             break;
                         default:
-                            Log.w("Error", "Error desconocido: "+response.code());
+                            Log.w("Error", "Error desconocido: " + response.code());
 
                             break;
                     }
-                    if(reporteDTO!=null)
+                    if (reporteDTO != null)
                         presenter.onError(reporteDTO);
                     else
-                        presenter.onError("Error no. "+response.code()+":"+response.message());
+                        presenter.onError("Error no. " + response.code() + ":" + response.message());
+                }
+                if (reporteDTO.isExito() && reporteDTO.getLecturaInicial()!= null && reporteDTO.getLecturaFinal()!= null) {
+                    presenter.onSuccessReport(reporteDTO);
+                } else {
+                    presenter.onError(reporteDTO.getMensaje());
                 }
 
             }

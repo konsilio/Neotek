@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.hardware.camera2.CaptureRequest;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -129,7 +130,6 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         mPreview = new CameraPreview(myContext, mCamera);
         cameraPreview.addView(mPreview);
         mPicture = getPictureCallback();
-
         capture = (Button) findViewById(R.id.button_foto);
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -444,8 +444,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
         // Create imageDir
         File mypath = new File(directory, Calendar.getInstance().getTimeInMillis() + ".jpg");
-
         FileOutputStream fos = null;
+
         try {
             fos = new FileOutputStream(mypath);
             // Use the compress method on the BitMap object to write image to the OutputStream
@@ -478,7 +478,6 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 //como la foto ya fue tomada se muestra el layout de nitidez
                 layoutNitidez.setVisibility(View.VISIBLE);
                 textViewMensaje.setVisibility(View.VISIBLE);
-
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Images.Media.TITLE, new Date().toString() + "M");
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
