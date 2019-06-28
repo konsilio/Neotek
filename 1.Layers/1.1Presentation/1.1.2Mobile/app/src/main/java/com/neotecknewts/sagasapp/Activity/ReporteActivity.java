@@ -445,14 +445,9 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                 "Clave Reporte:[{ClaveReporte}]\n" +
                                 "Fecha:[{Fecha}]\n" +
                                 "---------------------------------\n" +
-                                "Porcentajes(%)\n" +
-                                "<div>" +
-                                "<table>" +
-                                "<theader>" +
-                                "<tr>" +
                                 "Tanques de: " +
-                                "\tNormal:" +
-                                "\tVenta:\n" +
+                                "\tNormal:  " +
+                                "\tVenta: \n" +
 
                                 "[{Tanques}]\n" +
 
@@ -462,10 +457,10 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                 "[{Otras-ventas}]\n" +
                                 "---------------------------------\n" +
 
-                                "Carburación: " +
+                                "Carburacion: " +
                                 "\t $ [{Carburacion}]\n" +
                                 "Kilos de venta: " +
-                                "\t $ [{Kilos-de-venta}]" +
+                                "\t $ [{Kilos-de-venta}]\n" +
                                 "Precio: " +
                                 "\t $ [{Precio}]\n" +
 
@@ -485,13 +480,23 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "[{ClaveReporte}]",
                         reporteDTO.getClaveOperacion()
                 );
+                formato_reporte_camioneta_text = formato_reporte_camioneta_text.replace(
+                        "[{Fecha}]",
+                        mDay + "/" + (mMonth + 1) + "/" + mYear);
                 for (ReporteDto.TanquesDto tanqueDto :
                         reporteDTO.getTanques()) {
                     formato_reporte_camioneta_text = formato_reporte_camioneta_text.replace(
                             "[{Tanques}]",
                             tanqueDto.getTanques() +
-                                    "\t" + tanqueDto.getNormal() +
-                                    "\t" + tanqueDto.getVenta() + "\n"
+                                    "       " + tanqueDto.getNormal() +
+                                    "       " + tanqueDto.getVenta() + "\n"
+                    );
+                }
+                for (ReporteDto.TanquesDto tanqueDto :
+                        reporteDTO.getTanques()) {
+                    formato_reporte_camioneta_text = formato_reporte_camioneta_text.replace(
+                            "[{Otras-ventas}]",
+                            tanqueDto.getNormal() + ""
                     );
                 }
                 for (ReporteDto.OtrasVentasDTO otraVentaDTO :
@@ -607,6 +612,9 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "[{ClaveReporte}]",
                         reporteDTO.getClaveOperacion()
                 );
+                formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
+                        "[{Fecha}]",
+                        mDay + "/" + (mMonth + 1) + "/" + mYear);
                 for (ReporteDto.TanquesDto tanqueDto :
                         reporteDTO.getTanques()) {
                     formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
@@ -616,18 +624,40 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                     "<td>" + tanqueDto.getVenta() + "</td>"
                     );
                 }
-                for (ReporteDto.OtrasVentasDTO otraVentaDTO :
-                        reporteDTO.getOtrasVentas()) {
+                for (ReporteDto.TanquesDto tanqueDto :
+                        reporteDTO.getTanques()) {
                     formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
                             "[{Otras-ventas}]",
-                            "<td>" + otraVentaDTO.getProducto() + "</td>" +
-                                    "<td>" + otraVentaDTO.getCantidad() + "</td>"
+                            tanqueDto.getNormal() + ""
                     );
                 }
+                /*if(total_otras_ventas==0){
+                    formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
+                            "[{Otras-ventas}]",
+                            String.valueOf(reporteDTO.getOtrasVentas())
+
+                    );
+                }else{
+                    for (ReporteDto.OtrasVentasDTO otraVentaDTO :
+                            reporteDTO.getOtrasVentas()) {
+                        formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
+                                "[{Otras-ventas}]",
+                                "<td>" + otraVentaDTO.getProducto() + "</td>" +
+                                        "<td>" + otraVentaDTO.getCantidad() + "</td>"
+                        );
+                    }
+                }*/
+
+
                 formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
                         "[{Carburacion}]",
                         String.valueOf(reporteDTO.getCarburacion())
                 );
+               /* formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
+                                "[{Otras-ventas}]",
+                                String.valueOf(reporteDTO.getImporteCredito())
+
+                );*/
                 formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
                         "[{Kilos-de-venta}]",
                         String.valueOf(reporteDTO.getKilosVenta())

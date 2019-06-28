@@ -166,7 +166,7 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
 
                             break;
                     }
-                    mensaje = "Se ha generado un error,al solicitar los precio";
+                    mensaje = " un error,al solicitar los precio";
                     if(data==null) {
                         presenter.onError(mensaje);
                     }else{

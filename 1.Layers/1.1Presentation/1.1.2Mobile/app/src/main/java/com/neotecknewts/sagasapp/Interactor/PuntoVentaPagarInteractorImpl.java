@@ -51,7 +51,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
             public void onResponse(Call<RespuestaPuntoVenta> call, Response<RespuestaPuntoVenta> response) {
                 RespuestaPuntoVenta data = response.body();
                 if (response.isSuccessful()) {
-                    Log.w("Estatus","Success");
+
                     presenter.onSuccess(data);
                     registro_local = false;
                 }
@@ -80,6 +80,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
 
                             break;
                     }
+                    Log.d("ErrorVentaPagar", mensaje = "Se ha generado un error: "+response.message());
                     mensaje = "Se ha generado un error: "+response.message();
                     registro_local = true;
                     if(respuesta!=null){
@@ -90,6 +91,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                         } else {
                             presenter.onError(mensaje);
                         }
+                        Log.d("responsecode",response.code()+"");
                         if(response.code()>=300) {
                             local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
                             presenter.onSuccessAndroid();

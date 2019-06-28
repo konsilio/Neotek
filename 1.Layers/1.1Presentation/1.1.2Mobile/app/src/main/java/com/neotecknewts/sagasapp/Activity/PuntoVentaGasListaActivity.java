@@ -116,6 +116,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             startActivity(intent);
         });
 
+        Log.d("ventacmaioneta",EsVentaCamioneta+"");
         BtnPuntoVentaGasListaActivityGasListaAgregar.setOnClickListener(v -> {
             if (esCilindroGas) VentaCilindroGas();
             else if (esCilindro) VentaCilindro();
@@ -199,8 +200,10 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         presenter = new PuntoVentaGasListaPresenterImpl(this);
 
         presenter.getPrecioVenta(session.getToken());
+        Log.d("EsVentaCamioneta",EsVentaCamioneta+"");
         if (EsVentaCamioneta) {
             Log.d("Jimmy", "EsVentaCamioneta true ");
+
             presenter.getCamionetaCilindros(
                     esGasLP,
                     esCilindroGas,

@@ -747,6 +747,7 @@ public class Lisener{
         });
         Log.w("Registro","Registro en servicio "+dto.getClaveOperacion()+": "+
                 _registrado);
+        Log.d("Lecturainicial",LecturaInicialCamioneta()+"");
         return _registrado;
     }
     //endregion
