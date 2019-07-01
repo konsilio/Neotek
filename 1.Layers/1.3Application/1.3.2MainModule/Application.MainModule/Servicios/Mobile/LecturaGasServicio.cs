@@ -84,8 +84,7 @@ namespace Application.MainModule.Servicios.Mobile
                     camionetaCilindroActualizar.IdCilindro = camionetaCilindro.IdCilindro;
                     camionetaCilindroActualizar.Cantidad = cilindro.Cantidad;
                     var actualizar = AlmacenGasServicio.ActualizaCilindro(camionetaCilindroActualizar);
-                }
-                
+                }                
             }
             #endregion
             return lecturaCamioenta;
