@@ -1,6 +1,7 @@
 package com.neotecknewts.sagasapp.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -110,6 +111,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     private LinearLayout cameraPreview;
     private boolean cameraFront = false;
     public static Bitmap bitmap;
+    ProgressDialog dialog;
 
 
     @SuppressLint("SetTextI18n")
@@ -121,19 +123,38 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         setContentView(R.layout.activity_camera);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        myContext = this;
 
+
+        myContext = this;
         mCamera = Camera.open();
         mCamera.setDisplayOrientation(90);
+
+        Camera.Parameters parameters = mCamera.getParameters();
+        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        mCamera.setParameters(parameters);
 
         cameraPreview = (LinearLayout) findViewById(R.id.cPreview);
         mPreview = new CameraPreview(myContext, mCamera);
         cameraPreview.addView(mPreview);
         mPicture = getPictureCallback();
         capture = (Button) findViewById(R.id.button_foto);
+
+        dialog = new ProgressDialog(CameraDescargaActivity.this);
+        dialog.setMessage("Cargando");
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.w("Camera log", "Click");
+
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        dialog.show();
+                    }
+                });
+
+
                 mCamera.takePicture(null, null, mPicture);
             }
         });
@@ -438,7 +459,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         }
     }
 
-    private String saveToInternalStorage(Bitmap bitmapImage) {
+    private String saveToInternalStorage(byte[] data) {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
@@ -449,7 +470,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         try {
             fos = new FileOutputStream(mypath);
             // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.write(data);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -466,14 +487,20 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         Camera.PictureCallback picture = new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
+                Log.w("Camera log", "Tomada");
                 Matrix matrix = new Matrix();
                 matrix.postRotate(90);
 
                 bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                imageurl = saveToInternalStorage(rotatedBitmap);
                 fotoTomada = true;
+                Log.w("Camera log", "Rotada");
+                imageurl = saveToInternalStorage(data);
+                Log.w("Camera log", "Guardada");
+
                 imageViewFoto.setImageBitmap(rotatedBitmap);
+                Log.w("Camera log", "SetBitmap");
+                dialog.dismiss();
                 mPreview.refreshCamera(mCamera);
                 //como la foto ya fue tomada se muestra el layout de nitidez
                 layoutNitidez.setVisibility(View.VISIBLE);
@@ -534,7 +561,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 } else if (EsCalibracionPipaInicial || EsCalibracionPipaFinal) {
                     Log.v("Traspaso pipa", "finalizar " + cantidadFotos);
                     calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
-                }else{
+                } else {
                     Log.d("Checar boton", "Else");
                 }
             } catch (Exception ex) {
@@ -619,7 +646,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                     Log.v("Traspaso pipa", "finalizar " + cantidadFotos);
                     calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
                     startActivityCalibracion();
-                }else{
+                } else {
                     Log.d("Checar boton", "Else");
                 }
             } catch (Exception ex) {
