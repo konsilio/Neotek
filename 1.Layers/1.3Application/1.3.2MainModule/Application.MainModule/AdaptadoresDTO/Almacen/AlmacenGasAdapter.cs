@@ -1309,49 +1309,53 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.PorcentajeActualGeneral = almacenGasTotal.PorcentajeActualGeneral;
             almGMovimiento.PorcentajeAnteriorGeneral = invAnterior.PorcentajeAnteriorGeneral;
             //------Almacen Gas Total y General--------------
+            if (ultimoMovimiento != null)
+            {
 
-            almGMovimiento.CalibracionAcumDiaKg = ultimoMovimiento.CalibracionAcumDiaKg;
-            almGMovimiento.CalibracionAcumDiaLt = ultimoMovimiento.CalibracionAcumDiaLt;
-            almGMovimiento.CalibracionAcumMesKg = ultimoMovimiento.CalibracionAcumMesKg;
-            almGMovimiento.CalibracionAcumMesLt = ultimoMovimiento.CalibracionAcumMesLt;
-            almGMovimiento.CalibracionAcumAnioKg = ultimoMovimiento.CalibracionAcumAnioKg;
-            almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;
-            almGMovimiento.RemaAcumDiaKg = ultimoMovimiento.RemaAcumDiaKg;
-            almGMovimiento.RemaAcumDiaLt = ultimoMovimiento.RemaAcumDiaLt;
-            almGMovimiento.RemaAcumMesKg = ultimoMovimiento.RemaAcumMesKg;
-            almGMovimiento.RemaAcumMesLt = ultimoMovimiento.RemaAcumMesLt;
-            almGMovimiento.RemaAcumAnioKg = ultimoMovimiento.RemaAcumAnioKg;
-            almGMovimiento.RemaAcumAnioLt = ultimoMovimiento.RemaAcumAnioLt;
-            almGMovimiento.AutoconsumoAcumDiaKg = ultimoMovimiento.AutoconsumoAcumDiaKg;
-            almGMovimiento.AutoconsumoAcumDiaLt = ultimoMovimiento.AutoconsumoAcumDiaLt;
-            almGMovimiento.AutoconsumoAcumMesKg = ultimoMovimiento.AutoconsumoAcumMesKg;
-            almGMovimiento.AutoconsumoAcumMesLt = ultimoMovimiento.AutoconsumoAcumMesLt;
-            almGMovimiento.AutoconsumoAcumAnioKg = ultimoMovimiento.AutoconsumoAcumAnioKg;
-            almGMovimiento.AutoconsumoAcumAnioLt = ultimoMovimiento.AutoconsumoAcumAnioLt;
-            almGMovimiento.TraspasoAcumDiaKg = ultimoMovimiento.TraspasoAcumDiaKg;
-            almGMovimiento.TraspasoAcumDiaLt = ultimoMovimiento.TraspasoAcumDiaLt;
-            almGMovimiento.TraspasoAcumMesKg = ultimoMovimiento.TraspasoAcumMesKg;
-            almGMovimiento.TraspasoAcumMesLt = ultimoMovimiento.TraspasoAcumMesLt;
-            almGMovimiento.TraspasoAcumAnioKg = ultimoMovimiento.TraspasoAcumAnioKg;
-            almGMovimiento.TraspasoAcumAnioLt = ultimoMovimiento.TraspasoAcumAnioLt;
-            almGMovimiento.DescargaAcumDiaKg = ultimoMovimiento.DescargaAcumDiaKg;
-            almGMovimiento.DescargaAcumDiaLt = ultimoMovimiento.DescargaAcumDiaLt;
-            almGMovimiento.DescargaAcumMesKg = ultimoMovimiento.DescargaAcumMesKg;
-            almGMovimiento.DescargaAcumMesLt = ultimoMovimiento.DescargaAcumMesLt;
-            almGMovimiento.DescargaAcumAnioKg = ultimoMovimiento.DescargaAcumAnioKg;
-            almGMovimiento.DescargaAcumAnioLt = ultimoMovimiento.DescargaAcumAnioLt;
-            almGMovimiento.RecargaAcumDiaKg = ultimoMovimiento.RecargaAcumDiaKg;
-            almGMovimiento.RecargaAcumDiaLt = ultimoMovimiento.RecargaAcumDiaLt;
-            almGMovimiento.RecargaAcumMesKg = ultimoMovimiento.RecargaAcumMesKg;
-            almGMovimiento.RecargaAcumMesLt = ultimoMovimiento.RecargaAcumMesLt;
-            almGMovimiento.RecargaAcumAnioKg = ultimoMovimiento.RecargaAcumAnioKg;
-            almGMovimiento.RecargaAcumAnioLt = ultimoMovimiento.RecargaAcumAnioLt;
-            almGMovimiento.VentaAcumDiaKg = ultimoMovimiento.VentaAcumDiaKg;
-            almGMovimiento.VentaAcumDiaLt = ultimoMovimiento.VentaAcumDiaLt;
-            almGMovimiento.VentaAcumMesKg = ultimoMovimiento.VentaAcumMesKg;
-            almGMovimiento.VentaAcumMesLt = ultimoMovimiento.VentaAcumMesLt;
-            almGMovimiento.VentaAcumAnioKg = ultimoMovimiento.VentaAcumAnioKg;
-            almGMovimiento.VentaAcumAnioLt = ultimoMovimiento.VentaAcumAnioLt;
+
+                almGMovimiento.CalibracionAcumDiaKg = ultimoMovimiento.CalibracionAcumDiaKg;
+                almGMovimiento.CalibracionAcumDiaLt = ultimoMovimiento.CalibracionAcumDiaLt;
+                almGMovimiento.CalibracionAcumMesKg = ultimoMovimiento.CalibracionAcumMesKg;
+                almGMovimiento.CalibracionAcumMesLt = ultimoMovimiento.CalibracionAcumMesLt;
+                almGMovimiento.CalibracionAcumAnioKg = ultimoMovimiento.CalibracionAcumAnioKg;
+                almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;
+                almGMovimiento.RemaAcumDiaKg = ultimoMovimiento.RemaAcumDiaKg;
+                almGMovimiento.RemaAcumDiaLt = ultimoMovimiento.RemaAcumDiaLt;
+                almGMovimiento.RemaAcumMesKg = ultimoMovimiento.RemaAcumMesKg;
+                almGMovimiento.RemaAcumMesLt = ultimoMovimiento.RemaAcumMesLt;
+                almGMovimiento.RemaAcumAnioKg = ultimoMovimiento.RemaAcumAnioKg;
+                almGMovimiento.RemaAcumAnioLt = ultimoMovimiento.RemaAcumAnioLt;
+                almGMovimiento.AutoconsumoAcumDiaKg = ultimoMovimiento.AutoconsumoAcumDiaKg;
+                almGMovimiento.AutoconsumoAcumDiaLt = ultimoMovimiento.AutoconsumoAcumDiaLt;
+                almGMovimiento.AutoconsumoAcumMesKg = ultimoMovimiento.AutoconsumoAcumMesKg;
+                almGMovimiento.AutoconsumoAcumMesLt = ultimoMovimiento.AutoconsumoAcumMesLt;
+                almGMovimiento.AutoconsumoAcumAnioKg = ultimoMovimiento.AutoconsumoAcumAnioKg;
+                almGMovimiento.AutoconsumoAcumAnioLt = ultimoMovimiento.AutoconsumoAcumAnioLt;
+                almGMovimiento.TraspasoAcumDiaKg = ultimoMovimiento.TraspasoAcumDiaKg;
+                almGMovimiento.TraspasoAcumDiaLt = ultimoMovimiento.TraspasoAcumDiaLt;
+                almGMovimiento.TraspasoAcumMesKg = ultimoMovimiento.TraspasoAcumMesKg;
+                almGMovimiento.TraspasoAcumMesLt = ultimoMovimiento.TraspasoAcumMesLt;
+                almGMovimiento.TraspasoAcumAnioKg = ultimoMovimiento.TraspasoAcumAnioKg;
+                almGMovimiento.TraspasoAcumAnioLt = ultimoMovimiento.TraspasoAcumAnioLt;
+                almGMovimiento.DescargaAcumDiaKg = ultimoMovimiento.DescargaAcumDiaKg;
+                almGMovimiento.DescargaAcumDiaLt = ultimoMovimiento.DescargaAcumDiaLt;
+                almGMovimiento.DescargaAcumMesKg = ultimoMovimiento.DescargaAcumMesKg;
+                almGMovimiento.DescargaAcumMesLt = ultimoMovimiento.DescargaAcumMesLt;
+                almGMovimiento.DescargaAcumAnioKg = ultimoMovimiento.DescargaAcumAnioKg;
+                almGMovimiento.DescargaAcumAnioLt = ultimoMovimiento.DescargaAcumAnioLt;
+                almGMovimiento.RecargaAcumDiaKg = ultimoMovimiento.RecargaAcumDiaKg;
+                almGMovimiento.RecargaAcumDiaLt = ultimoMovimiento.RecargaAcumDiaLt;
+                almGMovimiento.RecargaAcumMesKg = ultimoMovimiento.RecargaAcumMesKg;
+                almGMovimiento.RecargaAcumMesLt = ultimoMovimiento.RecargaAcumMesLt;
+                almGMovimiento.RecargaAcumAnioKg = ultimoMovimiento.RecargaAcumAnioKg;
+                almGMovimiento.RecargaAcumAnioLt = ultimoMovimiento.RecargaAcumAnioLt;
+                almGMovimiento.VentaAcumDiaKg = ultimoMovimiento.VentaAcumDiaKg;
+                almGMovimiento.VentaAcumDiaLt = ultimoMovimiento.VentaAcumDiaLt;
+                almGMovimiento.VentaAcumMesKg = ultimoMovimiento.VentaAcumMesKg;
+                almGMovimiento.VentaAcumMesLt = ultimoMovimiento.VentaAcumMesLt;
+                almGMovimiento.VentaAcumAnioKg = ultimoMovimiento.VentaAcumAnioKg;
+                almGMovimiento.VentaAcumAnioLt = ultimoMovimiento.VentaAcumAnioLt;
+            }
             return almGMovimiento;
         }
     }
