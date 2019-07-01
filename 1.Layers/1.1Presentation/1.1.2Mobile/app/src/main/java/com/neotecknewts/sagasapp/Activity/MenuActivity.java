@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -138,10 +139,12 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             men+=mensaje+"\n";
         }
         if(mensajes.size()>0) {
+            Log.d("sincronizando","sincronizando");
             alertDialog.setMessage(men);
             alertDialog.setPositiveButton("Sincronizar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
                             progressSincronizar = new ProgressDialog(MenuActivity.this,R.style.AlertDialog);
                             progressSincronizar.setIndeterminate(true);
                             progressSincronizar.setMessage(getString( R.string.message_cargando));
@@ -149,7 +152,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                             progressSincronizar.show();
                             //semaforo.sincronizar(session.getToken(),progressSincronizar);
                             semaforo.sincronizar(session.getToken());
-                            dialogInterface.dismiss();
                         }
                     }
             );
@@ -275,6 +277,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                             .build()
             ).show();
         }else {
+            Log.w("procesoSinc", semaforo.VerificarEstatus()+"" );
             libres.setVisible(true);
 
             Tooltip.make(this,

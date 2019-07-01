@@ -1185,7 +1185,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      * Permite consultar un registro de la lectura inicial por medio de la clave ùnica, se envia de
      * parametro un {@link String} que reprecenta dicha clave y retornara un objeto de tipo
      * {@link Cursor} con los valores de la consulta en caso de existir.
-     * @param ClaveProceso Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @param ClaveProceso Cadena de tipo {@link String} que representa la clave unica de proceso
      * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
      * @date 30/08/2018

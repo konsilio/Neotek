@@ -461,7 +461,7 @@ public class Lisener{
                     SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             if(cursor.moveToFirst()){
                 TraspasoDTO traspasoDTO;
-                while (!cursor.isAfterLast()){
+                while (cursor.moveToNext()){
                     traspasoDTO = new TraspasoDTO();
                     try {
                         traspasoDTO.setFecha(
@@ -570,7 +570,7 @@ public class Lisener{
                     "application/json"
             );
             Log.w("Url camioneta", ApiClient.getClient().baseUrl().toString());
-            call.enqueue(new Callback<RespuestaTraspasoDTO>() {
+           /* call.enqueue(new Callback<RespuestaTraspasoDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaTraspasoDTO> call,
                                        Response<RespuestaTraspasoDTO> response) {
@@ -590,7 +590,12 @@ public class Lisener{
                     Log.e("error", t.toString());
                     _registrado = false;
                 }
-            });
+            });*/
+            try {
+                return call.execute().code() == 200;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return _registrado;
     }
@@ -894,6 +899,7 @@ public class Lisener{
 
     //region Punto de venta
     private boolean PuntoVenta() {
+        Log.w("Iniciando","Revisando las ventas "+ new Date());
         if(ServicioDisponible()){
             Log.w("Iniciando","Revisando las ventas "+ new Date());
             Cursor cursor = sagasSql.GetVentas();
@@ -902,7 +908,9 @@ public class Lisener{
                     esEstacion,
                     esPipa;
             if(cursor.moveToFirst()){
-                while (!cursor.moveToFirst()){
+                Log.d("cursor",cursor.toString());
+                while (!cursor.moveToNext()){
+                    Log.d("cursor", cursor.toString());
                     ventaDTO = new VentaDTO();
                     /*coloco los valores de la venta*/
                     ventaDTO.setFolioVenta(cursor.getString(cursor.getColumnIndex("FolioVenta")));
@@ -930,6 +938,7 @@ public class Lisener{
                     Cursor concepto = sagasSql.GetVentaConcepto(ventaDTO.getFolioVenta());
                     if(concepto.moveToFirst()) {
                         while (!concepto.isAfterLast()) {
+                            Log.d("concepto",concepto.toString());
                             ConceptoDTO conceptoDTO= new ConceptoDTO();
 
                             conceptoDTO.setIdTipoGas(concepto.getInt(
@@ -1058,6 +1067,8 @@ public class Lisener{
                         }
                     }
                     if(registrarVenta(ventaDTO,esCamioneta,esEstacion,esPipa)){
+                        Log.d("folioventa",ventaDTO.getFolioVenta() );
+                        Log.d("cursor", cursor.toString());
                         sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
                         sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
                     }
@@ -1065,6 +1076,7 @@ public class Lisener{
                 }
             }
         }
+        Log.w("registroterminado", _registrado+"");
         return (sagasSql.GetVentas().getCount()==0);
     }
 
@@ -1072,7 +1084,8 @@ public class Lisener{
             esPipa) {
 
         Log.w("Registro","Registrando en servicio de ventas: "+ventaDTO.getFolioVenta());
-
+        Log.w("Registro","Registro en servicio venta"+ventaDTO.getFolioVenta()+": "+
+                _registrado);
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaPuntoVenta> call = restClient.pagar(
                 ventaDTO,
@@ -1081,8 +1094,9 @@ public class Lisener{
                 esPipa,*/
                 token,
                 "application/json"
+
         );
-        call.enqueue(new Callback<RespuestaPuntoVenta>() {
+       /* call.enqueue(new Callback<RespuestaPuntoVenta>() {
             @Override
             public void onResponse(Call<RespuestaPuntoVenta> call,
                                    Response<RespuestaPuntoVenta> response) {
@@ -1095,13 +1109,17 @@ public class Lisener{
             public void onFailure(Call<RespuestaPuntoVenta> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        });*/
         /*if(_registrado){
             sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
             sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
         }*/
-        Log.w("Registro","Registro en servicio venta"+ventaDTO.getFolioVenta()+": "+
-                _registrado);
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.w("registroterminado2", _registrado+"");
         return _registrado;
     }
     //endregion
