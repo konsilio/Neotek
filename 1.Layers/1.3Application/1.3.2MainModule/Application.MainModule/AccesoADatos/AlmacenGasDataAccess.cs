@@ -577,6 +577,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     //_respuesta.ModeloValido = true;
                     //_respuesta.Mensaje = Exito.OK;
                 }
+
                 catch (Exception ex)
                 {
                     //_respuesta.Exito = false;
@@ -794,8 +795,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas)
         {
-            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                                    && x.IdAlmacenGas.Equals(idAlmacenGas)).LastOrDefault();
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.IdAlmacenGas.Equals(idAlmacenGas)).LastOrDefault();
         }
         public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas, byte idTipoEvento, byte idTipoMovimiento)
         {
@@ -1132,7 +1132,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 _respuesta.Exito = true;
                 _respuesta.ModeloValido = true;
                 _respuesta.Mensaje = Exito.OK;
-
             }
             catch (Exception ex)
             {
