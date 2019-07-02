@@ -173,7 +173,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
             RecargaDTO recargaDTO;
             if(cursor.moveToFirst()){
-                while (!cursor.isAfterLast()){
+                while (cursor.moveToFirst()){
                     /* Coloco los valores de la base de datos en el DTO */
                     recargaDTO = new RecargaDTO();
                     recargaDTO.setClaveOperacion(cursor.getString(
@@ -238,6 +238,23 @@ public class Lisener{
         }
         return (sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_PIPA).getCount()==0);
     }
+
+   /* private  boolean Registrado(CorteDTO corteDTO,String token){
+
+        RestClient restClient = ApiClient.getClient().create(RestClient.class);
+
+        Call<RespuestaCorteDto> call = restClient.
+                postCorte(corteDTO,token,"application/json");
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return _registrado;
+    }
+    */
+
     //endregion
 
     //region Corte de caja
@@ -248,7 +265,7 @@ public class Lisener{
             @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             if(cursor.moveToFirst()){
                 CorteDTO corteDTO;
-                while (!cursor.isAfterLast()){
+                while (cursor.moveToFirst()){
                     try {
                         corteDTO = new CorteDTO();
                         corteDTO.setClaveOperacion(
@@ -331,6 +348,7 @@ public class Lisener{
 
         Call<RespuestaCorteDto> call = restClient.
                 postCorte(corteDTO,token,"application/json");
+/*
         call.enqueue(new Callback<RespuestaCorteDto>() {
             @Override
             public void onResponse(Call<RespuestaCorteDto> call,
@@ -350,6 +368,14 @@ public class Lisener{
                 _registrado = false;
             }
         });
+
+*/
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return _registrado;
     }
     //endregion
@@ -362,7 +388,7 @@ public class Lisener{
             @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             if(cursor.moveToFirst()){
                 AnticiposDTO anticiposDTO;
-                while (!cursor.isAfterLast()){
+                while (cursor.moveToFirst()){
                     anticiposDTO = new AnticiposDTO();
                     try{
                         anticiposDTO.setTotal(cursor.getDouble(
@@ -429,7 +455,7 @@ public class Lisener{
 
         Call<RespuestaAnticipoDTO> call = restClient.
                 postAnticipo(anticiposDTO,token,"application/json");
-        call.enqueue(new Callback<RespuestaAnticipoDTO>() {
+        /*call.enqueue(new Callback<RespuestaAnticipoDTO>() {
             @Override
             public void onResponse(Call<RespuestaAnticipoDTO> call,
                                    Response<RespuestaAnticipoDTO> response) {
@@ -447,7 +473,14 @@ public class Lisener{
             public void onFailure(Call<RespuestaAnticipoDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        })*/;
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         return _registrado;
     }
     //endregion
@@ -461,7 +494,9 @@ public class Lisener{
                     SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             if(cursor.moveToFirst()){
                 TraspasoDTO traspasoDTO;
-                while (cursor.moveToNext()){
+                Log.d("cursor traspaso",cursor+"");
+                while (cursor.moveToFirst()){
+                    Log.d("cursor traspasosecond",cursor+"");
                     traspasoDTO = new TraspasoDTO();
                     try {
                         traspasoDTO.setFecha(
@@ -556,9 +591,8 @@ public class Lisener{
     }
 
     private  boolean Registrar(TraspasoDTO dto,String tipo,boolean esFinal){
-        if(ServicioDisponible()){
-            Log.w("Iniciando",new Date()+"Envio del traspaso: "+dto.getClaveOperacion());
 
+            Log.w("Iniciando",new Date()+"Envio del traspaso: "+dto.getClaveOperacion());
 
             RestClient restClient = ApiClient.getClient().create(RestClient.class);
             Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
@@ -591,12 +625,13 @@ public class Lisener{
                     _registrado = false;
                 }
             });*/
-            try {
-                return call.execute().code() == 200;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         return _registrado;
     }
     //endregion
@@ -614,7 +649,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetAutoconsumos();
             if(cursor.moveToFirst()){
                 CalibracionDTO dto;
-                while (!cursor.isAfterLast()){
+                while (cursor.moveToFirst()){
                     dto = new CalibracionDTO();
                     dto.setCantidadFotografias(
                             cursor.getInt(
@@ -736,7 +771,7 @@ public class Lisener{
                 token,
                 "application/json"
         );
-        call.enqueue(new Callback<RespuestaTraspasoDTO>() {
+        /*call.enqueue(new Callback<RespuestaTraspasoDTO>() {
             @Override
             public void onResponse(Call<RespuestaTraspasoDTO> call,
                                    Response<RespuestaTraspasoDTO> response) {
@@ -749,10 +784,16 @@ public class Lisener{
                 _registrado = false;
                 Log.e("Error","Error registro "+dto.getClaveOperacion());
             }
-        });
+        });*/
         Log.w("Registro","Registro en servicio "+dto.getClaveOperacion()+": "+
                 _registrado);
         Log.d("Lecturainicial",LecturaInicialCamioneta()+"");
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.w("registroterminado2", _registrado+"");
         return _registrado;
     }
     //endregion
@@ -771,7 +812,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetAutoconsumos();
             AutoconsumoDTO dto;
             if(cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     dto = new AutoconsumoDTO();
                     /*Coloco los valors del autoconsumo*/
                     dto.setClaveOperacion(cursor.getString(
@@ -872,7 +913,7 @@ public class Lisener{
                 "application/json"
         );
         Log.w("Url camioneta", ApiClient.BASE_URL);
-        call.enqueue(new Callback<RespuestaRecargaDTO>() {
+        /*call.enqueue(new Callback<RespuestaRecargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaRecargaDTO> call,
                                    Response<RespuestaRecargaDTO> response) {
@@ -892,7 +933,14 @@ public class Lisener{
                 Log.e("error", t.toString());
                 _registrado = false;
             }
-        });
+        })*/;
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return _registrado;
     }
     //endregion
@@ -909,7 +957,8 @@ public class Lisener{
                     esPipa;
             if(cursor.moveToFirst()){
                 Log.d("cursor",cursor.toString());
-                while (!cursor.moveToNext()){
+                while (cursor.moveToNext()){
+                    Log.d("while","thisiswhile");
                     Log.d("cursor", cursor.toString());
                     ventaDTO = new VentaDTO();
                     /*coloco los valores de la venta*/
@@ -1067,14 +1116,16 @@ public class Lisener{
                         }
                     }
                     if(registrarVenta(ventaDTO,esCamioneta,esEstacion,esPipa)){
-                        Log.d("folioventa",ventaDTO.getFolioVenta() );
+                        Log.d("folioventa",ventaDTO.getFolioVenta());
                         Log.d("cursor", cursor.toString());
                         sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
                         sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
                     }
                     cursor.moveToNext();
                 }
+                Log.w("registroterminado", _registrado+"");
             }
+            Log.w("registroterminado", _registrado+"");
         }
         Log.w("registroterminado", _registrado+"");
         return (sagasSql.GetVentas().getCount()==0);
@@ -1138,7 +1189,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
             RecargaDTO recargaDTO;
             if(cursor.moveToFirst()){
-                while (!cursor.isAfterLast()){
+                while (!cursor.moveToFirst()){
                     recargaDTO = new RecargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     recargaDTO.setClaveOperacion(cursor.getString(
@@ -1223,6 +1274,7 @@ public class Lisener{
                     recargaDTO,token,"application/json"
             );
         }
+/*
         call.enqueue(new Callback<RespuestaRecargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaRecargaDTO> call,
@@ -1237,6 +1289,13 @@ public class Lisener{
                 _registrado = false;
             }
         });
+*/
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+recargaDTO.getClaveOperacion()+": "+
                 _registrado);
         return _registrado;
@@ -1259,7 +1318,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_CAMIONETA);
             RecargaDTO recargaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     recargaDTO = new RecargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     recargaDTO.setClaveOperacion(cursor.getString(
@@ -1323,7 +1382,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaRecargaDTO> call = restClient.postRecarga(
                 recargaDTO,token,"application/json");
-        call.enqueue(new Callback<RespuestaRecargaDTO>() {
+        /*call.enqueue(new Callback<RespuestaRecargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaRecargaDTO> call,
                                    Response<RespuestaRecargaDTO> response) {
@@ -1336,7 +1395,13 @@ public class Lisener{
             public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        })*/;
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+recargaDTO.getClaveOperacion()+": "+
                 _registrado);
         return _registrado;
@@ -1351,7 +1416,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIncialesCamioneta();
             LecturaCamionetaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new LecturaCamionetaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1404,7 +1469,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialCamioneta(lecturaDTO,
                 token,"application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+        /*call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1417,7 +1482,14 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        })*/;
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
         return _registrado;
@@ -1432,7 +1504,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturaFinalCamionetas();
             LecturaCamionetaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new LecturaCamionetaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1484,6 +1556,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalCamioneta(lecturaDTO,
                 token,"application/json");
+/*
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
@@ -1498,6 +1571,14 @@ public class Lisener{
                 _registrado = false;
             }
         });
+
+*/
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
         return _registrado;
@@ -1519,7 +1600,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasFinalesAlmacen();
             LecturaAlmacenDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new LecturaAlmacenDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1574,7 +1655,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalAlmacen(lecturaDTO,
                 token,"application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+        /*call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1587,7 +1668,14 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        })*/;
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
         return _registrado;
@@ -1608,7 +1696,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIncialesAlmacen();
             LecturaAlmacenDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new LecturaAlmacenDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1664,7 +1752,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialAlmacen(lecturaDTO,
                 token,"application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+        /*call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1677,7 +1765,14 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        })*/;
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
         return _registrado;
@@ -1699,7 +1794,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIncialesPipas();
             LecturaPipaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new LecturaPipaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -1774,7 +1869,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialPipa(lecturaDTO,
                 token,"application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+        /*call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -1787,7 +1882,13 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        })*/;
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
                 _registrado);
         return _registrado;
@@ -1802,7 +1903,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasFinaesPipas();
             LecturaPipaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new LecturaPipaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -1878,6 +1979,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalPipa(lecturaDTO,
                 token,"application/json");
+/*
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
@@ -1892,6 +1994,14 @@ public class Lisener{
                 _registrado = false;
             }
         });
+*/
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
                 _registrado);
         return _registrado;
@@ -1914,7 +2024,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasFinales();
             LecturaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new LecturaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -1988,7 +2098,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinal(lecturaDTO,token,
                 "application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+        /*call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -2001,7 +2111,14 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        })*/;
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
                 _registrado);
         return _registrado;
@@ -2024,7 +2141,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIniciales();
             LecturaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new LecturaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -2099,7 +2216,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(lecturaDTO,token,
                 "application/json");
-        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+        /*call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override
             public void onResponse(Call<RespuestaLecturaInicialDTO> call,
                                    Response<RespuestaLecturaInicialDTO> response) {
@@ -2112,7 +2229,14 @@ public class Lisener{
             public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        })*/;
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
                 _registrado);
         return _registrado;
@@ -2128,7 +2252,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetFinalizarDescargas();
             FinalizarDescargaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new FinalizarDescargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -2196,7 +2320,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaFinalizarDescargaDTO> call = restClient.postFinalizarDescarga(lecturaDTO,token,
                 "application/json");
-        call.enqueue(new Callback<RespuestaFinalizarDescargaDTO>() {
+        /*call.enqueue(new Callback<RespuestaFinalizarDescargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaFinalizarDescargaDTO> call,
                                    Response<RespuestaFinalizarDescargaDTO> response) {
@@ -2209,7 +2333,14 @@ public class Lisener{
             public void onFailure(Call<RespuestaFinalizarDescargaDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        })*/;
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
         return _registrado;
@@ -2224,7 +2355,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetIniciarDescargas();
             IniciarDescargaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new IniciarDescargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -2293,6 +2424,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(lecturaDTO,token,
                 "application/json");
+/*
         call.enqueue(new Callback<RespuestaIniciarDescargaDTO>() {
             @Override
             public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
@@ -2307,6 +2439,14 @@ public class Lisener{
                 _registrado = false;
             }
         });
+*/
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
         return _registrado;
@@ -2322,7 +2462,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetPapeletas();
             PrecargaPapeletaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
+                while (cursor.moveToFirst()) {
                     lecturaDTO = new PrecargaPapeletaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -2407,7 +2547,7 @@ public class Lisener{
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(lecturaDTO,token,
                 "application/json");
-        call.enqueue(new Callback<RespuestaPapeletaDTO>() {
+        /*call.enqueue(new Callback<RespuestaPapeletaDTO>() {
             @Override
             public void onResponse(Call<RespuestaPapeletaDTO> call,
                                    Response<RespuestaPapeletaDTO> response) {
@@ -2420,7 +2560,14 @@ public class Lisener{
             public void onFailure(Call<RespuestaPapeletaDTO> call, Throwable t) {
                 _registrado = false;
             }
-        });
+        })*/;
+
+        try {
+            return call.execute().code() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
                 _registrado);
         return _registrado;

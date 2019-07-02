@@ -2723,7 +2723,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarTraspasos(String claveOperacion){
         return this.getWritableDatabase().delete(
                 TABLE_TRASPASOS,
-                "WHERE ClaveOperacion = '"+claveOperacion+"'",
+                " ClaveOperacion = '"+claveOperacion+"'",
                 null
         );
     }
@@ -2731,7 +2731,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public  Integer EliminarImagenesTraspasos(String claveOperacion){
         return this.getWritableDatabase().delete(
                 TABLE_TRASPASOS_IMAGENES,
-                " WHERE ClaveOperacion = '"+claveOperacion+"'",
+                " ClaveOperacion = '"+claveOperacion+"'",
                 null
         );
     }
