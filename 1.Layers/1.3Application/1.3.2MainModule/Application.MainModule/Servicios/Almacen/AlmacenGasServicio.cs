@@ -99,7 +99,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 CapacidadGeneralLt = 0,
                 CantidadActualGeneralKg = 0,
                 CantidadActualGeneralLt = 0,
-                PorcentajeActualGeneral = 0,                 
+                PorcentajeActualGeneral = 0,
                 PorcentajeActual = 0,
                 Activo = true,
                 FechaRegistro = DateTime.Now,
@@ -589,7 +589,7 @@ namespace Application.MainModule.Servicios.Almacenes
             if (AutoConsumo.Fotografias != null && AutoConsumo.Fotografias.Count > 0)
                 return AutoConsumo.Fotografias.ToList();
             return new AlmacenGasDataAccess().BuscarImagenesAutoConsumo(AutoConsumo.IdEmpresa, AutoConsumo.Year, AutoConsumo.Mes, AutoConsumo.Dia, AutoConsumo.Orden);
-        }        
+        }
         public static List<Camioneta> ObtenerCamionetasEmpresa(short idEmpresa)
         {
             return new AlmacenGasDataAccess().ObtenerCamionetasEmpresa(idEmpresa);
@@ -924,12 +924,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(unidad.IdAlmacenGas.Value, unidad.IdCAlmacenGas, unidad.IdEmpresa, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
         }
-
         public static List<AlmacenGasTraspaso> Traspasos(short idCAlmacenGas)
         {
             return new AlmacenGasDataAccess().Traspasos(idCAlmacenGas);
         }
-
         public static List<AlmacenGasMovimiento> ObtenerUltimosMovimientosDeDescargas(AlmacenGasDescarga descarga, short idEmpresa)
         {
             var ulMovDia = new AlmacenGasDataAccess().BuscarUltimoMovimientoConTipoEvento(idEmpresa, TipoEventoEnum.Descarga, (short)descarga.FechaFinDescarga.Value.Year, (byte)descarga.FechaFinDescarga.Value.Month, (byte)descarga.FechaFinDescarga.Value.Day);
@@ -1149,9 +1147,9 @@ namespace Application.MainModule.Servicios.Almacenes
         public static void ProcesarInventario()
         {
             var lecturasIniciales = AplicarTomaLecturaInicial();
-            //var descargasDto = AplicarDescargas();
-            //var recargasDto = AplicarRecargas();
-            //var traspasosDto = AplicarTraspaso();
+            var descargasDto = AplicarDescargas();
+            var recargasDto = AplicarRecargas();
+            var traspasosDto = AplicarTraspaso();
             //var autoConsumosDto = AplicarAutoConsumo();
             //var calibracionesDto = AplicarCalibracion();
             var lecturasFinales = AplicarTomaLecturaFinal();
@@ -1195,7 +1193,7 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             decimal kilogramosPapeletaTractor = descarga.MasaKg ?? 0;
             decimal litrosPapeletaTractor = CalcularGasServicio.ObtenerLitrosDesdeKilos(kilogramosPapeletaTractor, empresa.FactorLitrosAKilos);
-            decimal litrosRealesTractor = CalcularGasServicio.ObtenerLitrosEnElTanque(descarga.CapacidadTanqueLt.Value, descarga.PorcenMagnatelOcularTractorINI.Value);
+            decimal litrosRealesTractor = CalcularGasServicio.ObtenerLitrosEnElTanque(descarga.CapacidadTanqueLt.Value, descarga.PorcenMagnatelOcularTractorINI ?? 0);
             decimal kilogramosRealesTractor = CalcularGasServicio.ObtenerKilogramosDesdeLitros(litrosRealesTractor, empresa.FactorLitrosAKilos);
             decimal kilogramosRemanentes = CalcularGasServicio.ObtenerDiferenciaKilogramos(kilogramosRealesTractor, kilogramosPapeletaTractor);
             decimal litrosRemanentes = CalcularGasServicio.ObtenerLitrosDesdeKilos(kilogramosRemanentes, empresa.FactorLitrosAKilos);
@@ -1206,7 +1204,7 @@ namespace Application.MainModule.Servicios.Almacenes
 
             unidadEntrada.CantidadActualKg = CalcularGasServicio.SumarKilogramos(unidadEntrada.CantidadActualKg, kilogramosRealesTractor);
             unidadEntrada.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdeKilos(unidadEntrada.CantidadActualKg, empresa.FactorLitrosAKilos);
-            unidadEntrada.PorcentajeActual = descarga.PorcenMagnatelOcularAlmacenFIN.Value;
+            unidadEntrada.PorcentajeActual = descarga.PorcenMagnatelOcularAlmacenFIN ?? 0;
 
             unidadEntrada = AplicarDescargaAlmacenAlterno(unidadEntrada, descarga);
 
@@ -1675,8 +1673,8 @@ namespace Application.MainModule.Servicios.Almacenes
             {
                 TraspasoLecturaInicial = TraspasoInicial,
                 TraspasosFinales = TraspasosFinales,
-                unidadSalida = AlmacenGasServicio.ObtenerUnidadAlamcenGas(TraspasoInicial, true),
-                unidadEntrada = AlmacenGasServicio.ObtenerUnidadAlamcenGas(TraspasoInicial, false),
+                unidadSalida = ObtenerUnidadAlamcenGas(TraspasoInicial, true),
+                unidadEntrada = ObtenerUnidadAlamcenGas(TraspasoInicial, false),
             };
             apReDto.Empresa = EmpresaServicio.Obtener(apReDto.unidadEntrada);
             apReDto = AplicarTraspaso(apReDto);
@@ -2050,7 +2048,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 CalibracionsGasIniciales.ForEach(x => aplicaciones.Add(AplicarCalibracion(x, CalibracionsGasFinales)));
                 //new AlmacenGasCalibracionDataAccess().Actualizar(aplicaciones);
             }
-
             return aplicaciones;
         }
         public static AplicaCalibracionDto AplicarCalibracion(AlmacenGasCalibracion CalibracionInicial, List<AlmacenGasCalibracion> CalibracionsFinales)
@@ -2304,8 +2301,7 @@ namespace Application.MainModule.Servicios.Almacenes
             AplicaTomaLecturaDto apLecturaDto = new AplicaTomaLecturaDto()
             {
                 TomaLecturaLectura = TomaLecturaInicial,
-                //TomaLecturasFinales = TomaLecturasGasFinales,
-                unidadAlmacenGas = AlmacenGasServicio.ObtenerUnidadAlmacenGas(TomaLecturaInicial)
+                unidadAlmacenGas = ObtenerUnidadAlmacenGas(TomaLecturaInicial)
             };
 
             apLecturaDto.Empresa = EmpresaServicio.Obtener(apLecturaDto.unidadAlmacenGas);
@@ -2345,35 +2341,9 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static AplicaTomaLecturaDto AplicarTomaLecturaInicialProceso(AplicaTomaLecturaDto apLectDto)
         {
-            //apLectDto.TomaLecturaLecturaFinal = apLectDto.TomaLecturasFinales.FirstOrDefault(x => x.IdCAlmacenGas.Equals(apLectDto.TomaLecturaLecturaInicial.IdCAlmacenGas));
-            //if (apLectDto.TomaLecturaLecturaFinal == null) return new AplicaTomaLecturaDto();
-            //AlmacenGasMovimiento ulMov;
-            //AlmacenGasMovimiento ulMovUnidad;
-
             apLectDto.AlmacenGas = ObtenerAlmacenGasTotal(apLectDto.Empresa.IdEmpresa);
-
             apLectDto.ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas);
             apLectDto.ulMovUnidad = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLectura.IdCAlmacenGas);
-
-            //ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas);
-            //ulMovUnidad = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLecturaInicial.IdCAlmacenGas);
-            ////ulMovUnidad = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLecturaInicial.IdCAlmacenGas, TipoEventoEnum.TomaLectura, TipoMovimientoEnum.LectInicial, apLectDto.TomaLecturaLecturaInicial.FechaAplicacion);
-
-            //if (ulMovUnidad.Dia > 0 && ulMovUnidad.Mes > 0 && ulMovUnidad.Year > 0 && ulMovUnidad.IdEmpresa > 0 && ulMovUnidad.Orden > 0)
-            //    ulMovUnidad = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas, TipoEventoEnum.TomaLectura, TipoMovimientoEnum.LectFinal, apLectDto.TomaLecturaLecturaInicial.FechaAplicacion);
-            //else
-            //{
-
-            //var fecha = apLectDto.TomaLecturaLecturaInicial.FechaAplicacion.AddDays(-1);
-            //while (ulMov.Dia > 0 && ulMov.Mes > 0 && ulMov.Year > 0 && ulMov.IdEmpresa > 0 && ulMov.Orden > 0)
-            //{
-            //    ulMov = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLecturaInicial.IdCAlmacenGas, TipoEventoEnum.TomaLectura, TipoMovimientoEnum.LectFinal, fecha);
-            //    fecha = fecha.AddDays(-1);
-            //}
-            //}
-
-            //if (ulMov.IdEmpresa <= 0)
-            //    return new AplicaTomaLecturaDto();
 
             switch (apLectDto.identidadUA)
             {
@@ -2476,14 +2446,14 @@ namespace Application.MainModule.Servicios.Almacenes
                 CantidadAcumuladaAnioKg = apLectDto.ulMovUnidad.CantidadAcumuladaAnioKg,
                 CantidadAcumuladaAnioLt = apLectDto.ulMovUnidad.CantidadAcumuladaAnioLt,
 
-                CantidadAnteriorTotalKg = apLectDto.ulMov.CantidadActualTotalKg,
-                CantidadAnteriorTotalLt = apLectDto.ulMov.CantidadActualTotalLt,
-                PorcentajeAnteriorTotal = apLectDto.ulMov.PorcentajeActualTotal,
-                CantidadAnteriorGeneralKg = apLectDto.ulMov.CantidadActualGeneralKg,
-                CantidadAnteriorGeneralLt = apLectDto.ulMov.CantidadActualGeneralLt,
-                PorcentajeAnteriorGeneral = apLectDto.ulMov.PorcentajeActualGeneral,
-            };
+                CantidadAnteriorTotalKg = apLectDto.ulMov != null ? apLectDto.ulMov.CantidadActualTotalKg : 0,
+                CantidadAnteriorTotalLt = apLectDto.ulMov != null ? apLectDto.ulMov.CantidadActualTotalLt : 0,
+                PorcentajeAnteriorTotal = apLectDto.ulMov != null ? apLectDto.ulMov.PorcentajeActualTotal : 0,
+                CantidadAnteriorGeneralKg = apLectDto.ulMov != null ? apLectDto.ulMov.CantidadActualGeneralKg : 0,
+                CantidadAnteriorGeneralLt = apLectDto.ulMov != null ? apLectDto.ulMov.CantidadActualGeneralLt : 0,
+                PorcentajeAnteriorGeneral = apLectDto.ulMov != null ? apLectDto.ulMov.PorcentajeActualGeneral : 0,
 
+            };
             apLectDto.MovimientoUnidad = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas, apLectDto.TomaLecturaLectura, apLectDto.AlmacenGas, apLectDto.ulMov, apLectDto.Empresa, invAnterior, true);
             apLectDto.AlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.AlmacenGas);
             apLectDto.unidadAlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas);
@@ -2593,6 +2563,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 apLectDto.AlmacenGas.CapacidadGeneralKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(apLectDto.AlmacenGas.CapacidadGeneralLt, apLectDto.Empresa.FactorLitrosAKilos);
             }
 
+
             return apLectDto;
         }
         public static AplicaTomaLecturaDto AplicarTomaLecturaPipa(AplicaTomaLecturaDto apLectDto)
@@ -2603,39 +2574,10 @@ namespace Application.MainModule.Servicios.Almacenes
             apLectDto.unidadAlmacenGas.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(apLectDto.unidadAlmacenGas.CantidadActualLt, apLectDto.Empresa.FactorLitrosAKilos);
             apLectDto.TomaLecturaLectura.DatosProcesados = true;
 
-            //decimal LitrosSalientes = CalcularGasServicio.ObtenerDiferenciaLecturaP5000(apLectDto.TomaLecturaLecturaFinal.P5000.Value, apLectDto.TomaLecturaLecturaInicial.P5000.Value);
-            //decimal KilosSalientes = CalcularGasServicio.ObtenerKilogramosDesdeLitros(LitrosSalientes, apLectDto.Empresa.FactorLitrosAKilos);
-
-
-
-            ////Hizo autoconsumos como unidad de salida
-            ////Hizo calibración
-            ////Hizo recargas como unidad de salida
-            ////Hizo traspasos como unidad de salida
-
-            //if (apLectDto.TomaLecturaLecturaFinal.IdDestinoTomaLectura.Equals(TomaLecturaDestinoEnum.TanquePortatil))
-            //{
-            //    apLectDto.unidadAlmacenGasPrincipal = ObtenerAlmacenGeneral(apLectDto.Empresa).FirstOrDefault();
-            //    apLectDto.unidadAlmacenGasPrincipal.CantidadActualLt = CalcularGasServicio.SumarLitros(apLectDto.unidadAlmacenGasPrincipal.CantidadActualLt, Litros);
-            //    apLectDto.unidadAlmacenGasPrincipal.CantidadActualKg = CalcularGasServicio.SumarKilogramos(apLectDto.unidadAlmacenGasPrincipal.CantidadActualKg, KilosSalientes);
-
-            //    apLectDto.unidadAlmacenGas.CantidadActualLt = CalcularGasServicio.RestarLitros(apLectDto.unidadAlmacenGas.CantidadActualLt, Litros);
-            //    apLectDto.unidadAlmacenGas.CantidadActualKg = CalcularGasServicio.RestarKilogramos(apLectDto.unidadAlmacenGas.CantidadActualKg, KilosSalientes);
-            //    apLectDto.unidadAlmacenGas.PorcentajeActual = apLectDto.TomaLecturaLecturaFinal.Porcentaje;
-            //}
-
-            //apLectDto.unidadAlmacenGas.P5000Actual = apLectDto.TomaLecturaLecturaFinal.P5000;
-            //apLectDto.unidadAlmacenGas.PorcentajeTomaLecturaPlaneada = apLectDto.TomaLecturaLecturaFinal.PorcentajeTomaLectura.Value;
-
-            //apLectDto.unidadAlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas);
-
-            //apLectDto.TomaLecturaLecturaInicialFotos = GenerarImagenes(apLectDto.TomaLecturaLecturaInicial);
-            //apLectDto.TomaLecturaLecturaInicial.DatosProcesados = true;
-            //apLectDto.TomaLecturaLecturaInicialSinNavProp = AlmacenGasAdapter.FromEntity(apLectDto.TomaLecturaLecturaInicial);
-
-            //apLectDto.TomaLecturaLecturaFinalFotos = GenerarImagenes(apLectDto.TomaLecturaLecturaFinal);
-            //apLectDto.TomaLecturaLecturaFinal.DatosProcesados = true;
-            //apLectDto.TomaLecturaLecturaFinalSinNavProp = AlmacenGasAdapter.FromEntity(apLectDto.TomaLecturaLecturaFinal);
+            //apLectDto.MovimientoUnidad = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas, apLectDto.TomaLecturaLectura, apLectDto.AlmacenGas, apLectDto.ulMov, apLectDto.Empresa, invAnterior, true);
+            apLectDto.AlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.AlmacenGas);
+            apLectDto.unidadAlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas);
+            apLectDto.TomaLecturaLectura = AlmacenGasAdapter.FromEntity(apLectDto.TomaLecturaLectura);
             return apLectDto;
         }
         public static AplicaTomaLecturaDto AplicarTomaLecturaFinalPipa(AplicaTomaLecturaDto apLectDto)
@@ -2645,23 +2587,40 @@ namespace Application.MainModule.Servicios.Almacenes
             apLectDto.unidadAlmacenGas.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdePorcentaje(apLectDto.unidadAlmacenGas.CapacidadTanqueLt.Value, apLectDto.unidadAlmacenGas.PorcentajeActual);
             apLectDto.unidadAlmacenGas.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(apLectDto.unidadAlmacenGas.CantidadActualLt, apLectDto.Empresa.FactorLitrosAKilos);
             apLectDto.TomaLecturaLectura.DatosProcesados = true;
+
+            //apLectDto.MovimientoUnidad = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas, apLectDto.TomaLecturaLectura, apLectDto.AlmacenGas, apLectDto.ulMov, apLectDto.Empresa, invAnterior, true);
+            apLectDto.AlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.AlmacenGas);
+            apLectDto.unidadAlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas);
+            apLectDto.TomaLecturaLectura = AlmacenGasAdapter.FromEntity(apLectDto.TomaLecturaLectura);
             return apLectDto;
         }
         public static AplicaTomaLecturaDto AplicarTomaLecturaEstacion(AplicaTomaLecturaDto apLectDto)
         {
-            apLectDto.unidadAlmacenGas.PorcentajeActual = apLectDto.TomaLecturaLectura.Porcentaje.Value;
+            apLectDto.unidadAlmacenGas.PorcentajeActual = apLectDto.TomaLecturaLectura.Porcentaje ?? 0;
             apLectDto.unidadAlmacenGas.P5000Actual = apLectDto.TomaLecturaLectura.P5000;
             apLectDto.unidadAlmacenGas.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdePorcentaje(apLectDto.unidadAlmacenGas.CapacidadTanqueLt.Value, apLectDto.unidadAlmacenGas.PorcentajeActual);
             apLectDto.unidadAlmacenGas.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(apLectDto.unidadAlmacenGas.CantidadActualLt, apLectDto.Empresa.FactorLitrosAKilos);
             apLectDto.TomaLecturaLectura.DatosProcesados = true;
+
+
+            apLectDto.AlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.AlmacenGas);
+            apLectDto.unidadAlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas);
+            apLectDto.TomaLecturaLectura = AlmacenGasAdapter.FromEntity(apLectDto.TomaLecturaLectura);
+            apLectDto.TomaLecturaLectura.Cilindros = null;
+            apLectDto.TomaLecturaLectura.Fotografias = null;
             return apLectDto;
         }
         public static AplicaTomaLecturaDto AplicarTomaLecturaCamioneta(AplicaTomaLecturaDto apLectDto)
         {
             AlmacenGasMovimiento ulMovRecarga = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.unidadAlmacenGas.IdCAlmacenGas, TipoEventoEnum.Recarga, TipoMovimientoEnum.Entrada);
+            apLectDto.AlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.AlmacenGas);
+            apLectDto.unidadAlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas);
+            apLectDto.TomaLecturaLectura = AlmacenGasAdapter.FromEntity(apLectDto.TomaLecturaLectura);
 
             if (ulMovRecarga.IdEmpresa <= 0 && ulMovRecarga.Year <= 0 && ulMovRecarga.Mes <= 0 && ulMovRecarga.Dia <= 0)
+            {
                 return new AplicaTomaLecturaDto();
+            }
 
             apLectDto.unidadAlmacenGas.PorcentajeActual = apLectDto.TomaLecturaLectura.Porcentaje.Value;
             apLectDto.unidadAlmacenGas.P5000Actual = ulMovRecarga.P5000Actual;

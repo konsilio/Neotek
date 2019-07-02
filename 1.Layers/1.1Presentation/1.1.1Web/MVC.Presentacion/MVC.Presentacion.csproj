@@ -406,6 +406,7 @@
     <Compile Include="Models\Pedidos\RegistrarPedidoModel.cs" />
     <Compile Include="Models\Reporte\CallCenter\CallCenterDTO.cs" />
     <Compile Include="Models\Reporte\CallCenter\CallCenterModel.cs" />
+    <Compile Include="Models\Reporte\Comision\ComisionDTO.cs" />
     <Compile Include="Models\Reporte\CorteCaja\CorteCajaDTO.cs" />
     <Compile Include="Models\Reporte\CorteCaja\CorteCajaModel.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarDTO.cs" />
@@ -423,6 +424,7 @@
     <Compile Include="Models\Reporte\InventarioConcepto\InventarioXConceptoDTO.cs" />
     <Compile Include="Models\Reporte\OrdenCompra\OrdenCompraModel.cs" />
     <Compile Include="Models\Reporte\OrdenCompra\OrdenCompraRepDTO.cs" />
+    <Compile Include="Models\Reporte\RangoDTO.cs" />
     <Compile Include="Models\Reporte\RendimientoVehicular\RendimientoVehicularDTO.cs" />
     <Compile Include="Models\Reporte\RendimientoVehicular\RendimientoVehicularModel.cs" />
     <Compile Include="Models\Reporte\Requisicion\RequisicionModel.cs" />
@@ -11685,6 +11687,7 @@
     <Content Include="Views\Shared\EditorTemplates\RolTransporte.cshtml" />
     <Content Include="Views\Pedidos\_Pedidos.cshtml" />
     <Content Include="Views\Clientes\_Clientes.cshtml" />
+    <Content Include="Views\Reportes\Comisiones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -191,9 +191,7 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaClientes()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaClientes());
-        }
-        
-
+        }       
         [Route("clientes/listaclientesloc/{idCliente}")]
         public HttpResponseMessage GetListaLocacion(int idCliente)
         {

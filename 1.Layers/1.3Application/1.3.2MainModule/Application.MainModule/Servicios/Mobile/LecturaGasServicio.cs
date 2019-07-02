@@ -84,8 +84,7 @@ namespace Application.MainModule.Servicios.Mobile
                     camionetaCilindroActualizar.IdCilindro = camionetaCilindro.IdCilindro;
                     camionetaCilindroActualizar.Cantidad = cilindro.Cantidad;
                     var actualizar = AlmacenGasServicio.ActualizaCilindro(camionetaCilindroActualizar);
-                }
-                
+                }                
             }
             #endregion
             return lecturaCamioenta;
@@ -130,7 +129,7 @@ namespace Application.MainModule.Servicios.Mobile
                 if (ultimalectura != null)
                 {
                     alms.ElementAt(i).P5000Actual = ultimalectura.P5000;
-                    alms.ElementAt(i).PorcentajeActual = ultimalectura.Porcentaje.Value;                 
+                    alms.ElementAt(i).PorcentajeActual = ultimalectura.Porcentaje ?? 0;                 
                 }
             }
 

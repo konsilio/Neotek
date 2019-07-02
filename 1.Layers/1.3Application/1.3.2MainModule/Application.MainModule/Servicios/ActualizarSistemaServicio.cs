@@ -14,7 +14,6 @@ namespace Application.MainModule.Servicios
         {
             CajaGeneralServicio.ProcesarVentasPuntosDeVenta();
             AlmacenGasServicio.ProcesarInventario();
-          
             //ImagenServicio.LimpiarImagenes();
         }
     }
