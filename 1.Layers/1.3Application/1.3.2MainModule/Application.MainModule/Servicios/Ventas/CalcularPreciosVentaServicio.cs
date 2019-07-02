@@ -1,4 +1,5 @@
-﻿using Application.MainModule.Servicios.AccesoADatos;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
@@ -30,7 +31,6 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return precioSalida - factorLitrosaKilos;
         }
-
         public static decimal ObtenerPrecioPemexKilosaLt(decimal precioPemex, decimal factorLitrosaKilos)
         {
             return precioPemex * factorLitrosaKilos;
@@ -56,12 +56,10 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return Ingreso + Saldo;
         }
-
         public static decimal ObtenerSaldoVentaEgreso(decimal Egreso, decimal Saldo)
         {
             return Saldo - Egreso;
         }
-
         public static decimal ObtenerLtVenta(short empresa, short anio, byte mes, byte dia, short orden, string type)//VentaPuntoDeVentaDetalle
         {
             List<VentaPuntoDeVentaDetalle> getTot = new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, anio, mes, dia, orden);
@@ -84,7 +82,6 @@ namespace Application.MainModule.Servicios.Ventas
             }
             return total;
         }
-
         public static decimal ObtenerSaldoActual(int puntoventa)//Movimientos
         {
             return new CajaGeneralDataAccess().Buscar(puntoventa).OrderByDescending(x => x.Orden).FirstOrDefault().Saldo;
@@ -129,12 +126,10 @@ namespace Application.MainModule.Servicios.Ventas
             else
                 return 0;
         }
-
         public static VentaPuntoDeVenta ObtenerUltimoSaldoEfectivo(short empresa, int puntoventa, string Tipo, DateTime fecha)//VentaPuntoDeVenta-Efectivo
         {
             return new CajaGeneralDataAccess().BuscarUltimoMovimiento(empresa, puntoventa, Tipo, fecha);
         }
-
         public static decimal ObtenerSaldoActual(short empresa, int puntoventa, string Tipo, DateTime fecha)//puntos de venta
         {
             decimal value = 0;
@@ -415,7 +410,6 @@ namespace Application.MainModule.Servicios.Ventas
 
             return value;
         }
-
         public static decimal ObtenerUltimoSaldoDia(int puntoventa, int position, string Tipo, int p)//puntos de venta
         {
             // return new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.Orden == (orden - 1)).FirstOrDefault().TotalDia;//.OrderByDescending(x => x.Orden).FirstOrDefault().TotalDia;
@@ -592,19 +586,39 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return Total + TotalDia;
         }
-
         public static decimal ObtenerKilosVenta(decimal capacidad, decimal cantidad)
         {
             return capacidad * cantidad;
         }
-
         public static short ObtenerConsecutivoOrden()
         {
             return new CajaGeneralDataAccess().BuscarTodos().OrderByDescending(x => x.Orden).FirstOrDefault().Orden;
         }
         public static decimal ObtenerKilosCamioneta(decimal TotalKilosInical, decimal TotalKilosVendidos)
         {
-           return TotalKilosInical - TotalKilosVendidos;
+            return TotalKilosInical - TotalKilosVendidos;
+        }
+        public static decimal CalcularComisionCamioneta(List<VentaPuntoDeVenta> ventas, PeriodoDTO Periodo)
+        {
+            decimal Respuesta = 0;
+            for (DateTime date = Periodo.FechaInicio; Periodo.FechaFin.CompareTo(date) > 0; date = date.AddDays(1.0))
+            {
+                var ventaDia = ventas.Where(x => x.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())).Sum(v => v.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadKg ?? 0));
+                if (ventaDia >= 400)                
+                    Respuesta += ventaDia * (decimal)0.4;                
+            }
+            return Respuesta;
+        }
+        public static decimal CalcularComisionPipas(List<VentaPuntoDeVenta> ventas, PeriodoDTO Periodo)
+        {
+            decimal Respuesta = 0;
+            for (DateTime date = Periodo.FechaInicio; Periodo.FechaFin.CompareTo(date) > 0; date = date.AddDays(1.0))
+            {
+                var ventaDia = ventas.Where(x => x.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())).Sum(v => v.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadLt ?? 0));
+                if (ventaDia >= 2500)
+                    Respuesta += ventaDia * (decimal)0.15;
+            }
+            return Respuesta;
         }
     }
 }

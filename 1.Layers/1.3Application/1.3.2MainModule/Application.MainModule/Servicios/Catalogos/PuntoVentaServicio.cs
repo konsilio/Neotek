@@ -20,8 +20,12 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<PuntoVentaDTO> Obtener()
         {
-            List<PuntoVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PuntoVentaAdapter.ToDTO(new PuntoVentaDataAccess().BuscarTodos());
+            List<PuntoVentaDTO> lPventas = PuntoVentaAdapter.ToDTO(new PuntoVentaDataAccess().BuscarTodos());
             return lPventas;
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentas(DateTime fi, DateTime ff)
+        {           
+            return new PuntoVentaDataAccess().BuscarVentas(fi, ff);
         }
         public static PuntoVenta Obtener(int idPuntoVenta)
         {

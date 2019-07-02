@@ -46,7 +46,10 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static decimal ObtenerPorcentajeDesdeLitros(decimal capacidadTanqueLt, decimal litros)
         {
-            return (litros / capacidadTanqueLt) * 100;
+            if (!litros.Equals(0) && !capacidadTanqueLt.Equals(0))
+                return (litros / capacidadTanqueLt) * 100;
+            else
+                return 0;
         }
         public static decimal SumarKilogramos(decimal cantidadActualKg, decimal ingresoKg)
         {

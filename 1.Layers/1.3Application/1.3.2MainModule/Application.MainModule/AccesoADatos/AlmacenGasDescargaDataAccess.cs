@@ -159,7 +159,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-
                     uow.Repository<AlmacenGasMovimiento>().Insert(Movimiento);
 
                     uow.SaveChanges();

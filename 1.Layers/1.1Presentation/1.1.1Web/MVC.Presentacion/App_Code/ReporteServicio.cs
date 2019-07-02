@@ -75,5 +75,11 @@ namespace MVC.Presentacion.App_Code
             agenteServico.BuscarRepoGastoVehicular(model, tkn);
             return agenteServico._ListaGastoVehicular;
         }
+        public static List<ComisionDTO> CalcularComisiones(PeriodoDTO model, string tkn)
+        {
+            AgenteServicio agenteServico = new AgenteServicio();
+            agenteServico.CalcularComisiones(model, tkn);
+            return agenteServico._ListaComisiones;
+        }
     }
 }
