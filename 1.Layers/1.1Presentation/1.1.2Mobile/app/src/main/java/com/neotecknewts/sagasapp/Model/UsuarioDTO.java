@@ -72,12 +72,18 @@ public class UsuarioDTO {
 
     @Override
     public String toString() {
+        String menu="";
+        for (int i= 0; i < listMenu.length; i++) {
+            menu = menu + listMenu[i].toString();
+        }
         return "UsuarioDTO{" +
                 "IdUsuario=" + IdUsuario +
                 ", Exito=" + Exito +
                 ", token='" + token + '\'' +
                 ", Mensaje='" + Mensaje + '\'' +
-                ", IdAlmacen=" + IdAlmacen +
+                ", IdAlmacen=" + IdAlmacen + '\'' +
+                ", Lista Menu=" + menu +
+
                 '}';
     }
 

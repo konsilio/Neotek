@@ -19,6 +19,7 @@ import com.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.neotecknewts.sagasapp.Model.LecturaPipaDTO;
+import com.neotecknewts.sagasapp.Model.MenuDTO;
 import com.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.neotecknewts.sagasapp.Model.TraspasoDTO;
@@ -26,6 +27,8 @@ import com.neotecknewts.sagasapp.Model.VentaDTO;
 import com.neotecknewts.sagasapp.Model.VentasCorteDTO;
 
 import java.net.URI;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,23 +57,18 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_LECTURA_FINALIZAR_IAMGENES = "lectura_finalizar_imagenes";
     private static final String TABLE_LECTURA_INICIAL_PIPA = "lectura_inicial_pipa";
     private static final String TABLE_LECTURA_INICIAL_PIPA_P5000 = "lectura_inicial_pipa_p5000";
-    private static final String TABLE_LECTURA_INICIAL_PIPA_IMAGENES =
-            "lectura_inicial_pipa_imagenes";
+    private static final String TABLE_LECTURA_INICIAL_PIPA_IMAGENES = "lectura_inicial_pipa_imagenes";
     private static final String TABLE_LECTURA_FINAL_PIPA = "lectura_final_pipa";
     private static final String TABLE_LECTURA_FINAL_PIPA_P5000 = "lectura_finalal_pipa_p5000";
     private static final String TABLE_LECTURA_FINAL_PIPA_IMAGENES = "lectura_final_pipa_imagenes";
     private static final String TABLE_LECTURA_INICIAL_ALMACEN = "lectura_incial_almancen";
-    private static final String TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES =
-            "lectura_inicial_almacen_imagenes";
+    private static final String TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES = "lectura_inicial_almacen_imagenes";
     private static final String TABLE_LECTURA_FINAL_ALMACEN = "lectura_final_almacen";
-    private static final String TABLE_LECTURA_FINAL_ALMACEN_IMAGENES =
-            "lectura_final_almacen_imagenes";
+    private static final String TABLE_LECTURA_FINAL_ALMACEN_IMAGENES = "lectura_final_almacen_imagenes";
     private static final String TABLE_LECTURA_INICIAL_CAMIONETA ="lectura_inicial_camioneta";
-    private static final String TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS =
-            "lectura_inicial_camioneta_cilindros";
+    private static final String TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS = "lectura_inicial_camioneta_cilindros";
     private static final String TABLE_LECTURA_FINAL_CAMIONETA = "lectura_final_camioneta";
-    private static final String TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS =
-            "lectura_final_camiones_cilindros";
+    private static final String TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS = "lectura_final_camiones_cilindros";
     private static final String TABLE_RECARGAS = "recargas";
     private static final String TABLE_RECARGAS_IMAGENES = "recargas_imagenes";
     private static final String TABLE_RECARGAS_CILINDROS = "recargas_images_cilindros";
@@ -86,9 +84,10 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_ANTICIPOS = "anticipos";
     private static final String TABLE_CORTES ="cortes";
     private static final String TABLE_CORTES_VENTAS ="cortes_ventas";
+    private static final String TABLE_MENU = "menu";
 
     public static final String TIPO_RECARGA_CAMIONETA = "C";
-    public static final String TIPO_RECARGA_ESTACION_CARBURACION =  "EC";
+    public static final String TIPO_RECARGA_ESTACION_CARBURACION = "EC";
     public static final String TIPO_RECARGA_PIPA = "P";
     public static final String TIPO_AUTOCONSUMO_ESTACION_CARBURACION = "ACEC";
     public static final String TIPO_AUTOCONSUMO_INVENTARIO_GENERAL = "ACIG";
@@ -148,6 +147,15 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "IdTipoMedidorTractor INTEGER,"+
                 "CantidadFotosTractor INTEGER,"+
                 "Falta BOOLEAN DEFAULT 1)");
+
+       //TABLA MENU
+        db.execSQL("CREATE TABLE "+TABLE_MENU+"(" +
+                "headerMenu VARCHAR,"+
+                "name VARCHAR,"+
+                "imageRef VARCHAR,"+
+                "Falta BOOLEAN DEFAULT 1"+
+                ")");
+
 
         //endregion
         //region tabla Imagenes de la papeleta
@@ -720,6 +728,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_ANTICIPOS);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_CORTES);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_CORTES_VENTAS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_MENU);
         onCreate(db);
     }
     //endregion
@@ -733,11 +742,12 @@ public class SAGASSql extends SQLiteOpenHelper {
      * @return boolean Resultado del registro en base de datos
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
      */
+
     public boolean Insert(PrecargaPapeletaDTO papeletaDTO, String clave_operacion){
 
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("ClaveOperacion",clave_operacion);
+        contentValues.put("CompraEntraGas",clave_operacion);
         contentValues.put("IdOrdenCompraExpedidor",papeletaDTO.getIdOrdenCompraExpedidor());
         contentValues.put("IdOrdenCompraPorteador",papeletaDTO.getIdOrdenCompraPorteador());
         contentValues.put("IdProveedorPorteador",papeletaDTO.getIdProveedorPorteador());
@@ -842,6 +852,24 @@ public class SAGASSql extends SQLiteOpenHelper {
         }
         return inserts;
     }
+
+    public ArrayList<MenuDTO> InsertMenuDTO(ArrayList<MenuDTO> dto){
+
+        for (MenuDTO : MenuDTO dto){
+            ContentValues Values = new ContentValues();
+            Values.put("headerMenu", MenuDTO.getHeaderMenu());
+            Values.put("name", MenuDTO.getName());
+            Values.put("imageRef",MenuDTO.getImageRef());
+           this.getWritableDatabase().insert(TABLE_MENU, null, Values);
+        }
+
+        return dto;
+    }
+
+    public Cursor getMenuDTO(){
+        return getReadableDatabase().rawQuery("SELECT");
+    }
+
     /**
      * GetRecordsByCalveUnica
      * Retorna un arreglo con las imagenes de la papeleta, se tomara como parametro la
@@ -967,6 +995,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      * @return Un arreglo de tipo {@link Long} con los id de los datos registrados en base de datos
      * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
      */
+
     public Long[] IncertarImagenesDescarga(IniciarDescargaDTO iniciarDescargaDTO,
                                            String ClaveOperacion){
         Long[] inserts = new Long[iniciarDescargaDTO.getImagenes().size()];
@@ -2777,6 +2806,9 @@ public class SAGASSql extends SQLiteOpenHelper {
         );
     }
 
+    public Cursor GetMenu() {
+    return  this.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_MENU, null);
+    }
     public Cursor GetCortes() {
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_CORTES,
                 null);

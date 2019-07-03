@@ -3,6 +3,7 @@ package com.neotecknewts.sagasapp.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 import com.neotecknewts.sagasapp.Presenter.LoginPresenter;
 import com.neotecknewts.sagasapp.Presenter.LoginPresenterImpl;
+import com.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.neotecknewts.sagasapp.Util.Permisos;
 import com.neotecknewts.sagasapp.Util.Session;
 import com.neotecknewts.sagasapp.Util.Utilidades;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private EditText editTextCorreoElectronico;
     private EditText editTextContraseña;
     private Spinner spinnerGaseras;
+    private SAGASSql sagasSql;
 
     //variable para usuario y contraseña
     public String contraseña;
@@ -196,9 +199,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     //funcion que inicia el activity del menu y le envia la lista para construirlo
     public void startActivity(ArrayList<MenuDTO> menuDTOs){
+        Cursor cursor = sagasSql.GetMenu();
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         intent.putExtra("lista",menuDTOs);
         startActivity(intent);
+
     }
 
 

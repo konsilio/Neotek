@@ -88,7 +88,12 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             menu.get(0).getName();
             // and get whatever type user account id is
         }else{
-            presenter.getMenu(session.getTokenWithBearer());
+            if(session.isLogin()){
+                presenter.getMenu(session.getTokenWithBearer());
+            }else{
+
+            }
+
         }
         /*MenuDTO mA = new MenuDTO();
         mA.setHeaderMenu("Disposición de efectivo - Anticipo");

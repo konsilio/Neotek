@@ -41,4 +41,14 @@ public class MenuDTO implements Serializable{
     public void setImageRef(String imageRef) {
         this.imageRef = imageRef;
     }
+
+
+    @Override
+    public String toString() {
+        return "MenuDTO{" +
+                "headerMenu='" + headerMenu + '\'' +
+                ", name='" + name + '\'' +
+                ", imageRef='" + imageRef + '\'' +
+                '}';
+    }
 }

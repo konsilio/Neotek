@@ -1,5 +1,6 @@
 package com.neotecknewts.sagasapp.Interactor;
 
+import android.database.Cursor;
 import android.util.Log;
 
 import com.neotecknewts.sagasapp.Model.EmpresaDTO;
@@ -103,13 +104,15 @@ public class LoginInteractorImpl implements LoginInteractor {
                         if(data.getIdUsuario()!= 0){
                             if(data.getLengthListMenu()  > 0){
                                 // Debería de guardar en bd
+                                // Log.d("Ali",data.getListMenu());
                                 loginPresenter.onSuccessLogin(data);
 
                             } else {
                                 loginPresenter.onError(data.getMensaje());
                             }
                         }else {
-                            loginPresenter.onError(data.getMensaje());
+                            //loginPresenter.onError(data.getMensaje());
+
                         }
                     }
                     else {
