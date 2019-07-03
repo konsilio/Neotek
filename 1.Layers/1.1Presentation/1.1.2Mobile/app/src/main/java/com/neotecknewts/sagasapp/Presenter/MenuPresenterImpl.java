@@ -23,7 +23,7 @@ public class MenuPresenterImpl implements MenuPresenter {
         this.interactor = new MenuInteractorImpl(this);
     }
 
-    //metodo que se llama para obtener el menu
+    //metodo que se llama para cargar el menu
     @Override
     public void getMenu(String token) {
         menuView.showProgress(R.string.message_cargando);

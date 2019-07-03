@@ -1,14 +1,20 @@
 package com.neotecknewts.sagasapp.Interactor;
 
 import android.database.Cursor;
+import android.provider.ContactsContract;
+import android.support.v7.view.menu.ListMenuPresenter;
+import android.support.v7.view.menu.MenuView;
 import android.util.Log;
 
 import com.neotecknewts.sagasapp.Model.EmpresaDTO;
+import com.neotecknewts.sagasapp.Model.MenuDTO;
 import com.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 import com.neotecknewts.sagasapp.Presenter.LoginPresenter;
+import com.neotecknewts.sagasapp.Presenter.MenuPresenterImpl;
 import com.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.neotecknewts.sagasapp.Presenter.Rest.RestClient;
+import com.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +35,8 @@ public class LoginInteractorImpl implements LoginInteractor {
     //se declara el tag de la clase y el presenter correspondiente
     public static final String TAG = "LoginInteractor";
     LoginPresenter loginPresenter;
+    private SAGASSql sagasSql;
+    private  String token;
 
     //constructor de la clase y se inicializa el presenter
     public LoginInteractorImpl(LoginPresenter loginPresenter){
@@ -80,6 +88,11 @@ public class LoginInteractorImpl implements LoginInteractor {
         });
     }
 
+    public LoginInteractorImpl(SAGASSql sagasSql,String token){
+        this.sagasSql = sagasSql;
+        this.token = token;
+    }
+
     //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados
     //hace el login
     @Override
@@ -103,6 +116,7 @@ public class LoginInteractorImpl implements LoginInteractor {
                         //Log.w(TAG,"Sucess");
                         if(data.getIdUsuario()!= 0){
                             if(data.getLengthListMenu()  > 0){
+                                Cursor cursor = sagasSql.GetMenu();
                                 // Debería de guardar en bd
                                 // Log.d("Ali",data.getListMenu());
                                 loginPresenter.onSuccessLogin(data);
@@ -112,6 +126,11 @@ public class LoginInteractorImpl implements LoginInteractor {
                             }
                         }else {
                             //loginPresenter.onError(data.getMensaje());
+                            //Cursor cursor = sagasSql.GetRecargas(SAGASSql.TABLE_PAPELETAS);
+                            data.getLengthListMenu();
+                            //Cursor menu = sagasSql.getMenuDTO(MenuDTO.getHeaderMenu());
+
+
 
                         }
                     }

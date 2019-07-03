@@ -958,7 +958,6 @@ public class Lisener{
             if(cursor.moveToFirst()){
                 Log.d("cursor",cursor.toString());
                 while (cursor.moveToNext()){
-                    Log.d("while","thisiswhile");
                     Log.d("cursor", cursor.toString());
                     ventaDTO = new VentaDTO();
                     /*coloco los valores de la venta*/
@@ -2355,7 +2354,9 @@ public class Lisener{
             Cursor cursor = sagasSql.GetIniciarDescargas();
             IniciarDescargaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
+                Log.d("cursordescarga",cursor.moveToFirst()+"");
                 while (cursor.moveToFirst()) {
+                    Log.d("cursordescargawhile",cursor.moveToFirst()+"");
                     lecturaDTO = new IniciarDescargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -2392,6 +2393,7 @@ public class Lisener{
                             GetImagenesDescargaByClaveUnica(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     while (!cantidad.isAfterLast()) {
+                        Log.d("cursordescargawhile",cursor.moveToFirst()+"");
                         String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         //try {
                         //  lecturaDTO.getImagenesURI().add(new URI(iuri));

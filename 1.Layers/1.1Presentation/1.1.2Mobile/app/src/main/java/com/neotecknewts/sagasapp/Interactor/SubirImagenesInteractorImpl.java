@@ -2430,7 +2430,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         if(iniciarDescargaSQL.GetDescargaByClaveOperacion(clave_unica).getCount()== 0){
             iniciarDescargaSQL.InsertDescarga(iniciarDescargaDTO,clave_unica);
             if(iniciarDescargaSQL.GetImagenesDescargaByClaveUnica(clave_unica).getCount()==0){
-                iniciarDescargaSQL.IncertarImagenesDescarga(iniciarDescargaDTO,clave_unica);
+                iniciarDescargaSQL.InsertarImagenesDescarga(iniciarDescargaDTO,clave_unica);
             }
         }
     }
@@ -2467,7 +2467,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             if(sagasSql.GetLecturaFinalByClaveProceso(clave_unica).getCount()==0){
                 sagasSql.IncertarLecturaFinal(lecturaDTO);
                 if(sagasSql.GetImagenesLecturaFinalByClaveOperacion(clave_unica).getCount()==0){
-                    sagasSql.IncertImagenesLecturaFinal(lecturaDTO);
+                    sagasSql.InsertarImagenesDescarga(lecturaDTO);
                 }
             }
         }else {

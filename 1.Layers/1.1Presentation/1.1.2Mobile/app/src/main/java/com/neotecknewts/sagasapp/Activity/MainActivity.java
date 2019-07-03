@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -75,6 +76,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
         if(Utilidades.checkAndRequestPermissions(this).size()>0){
             Permisos permisos = new Permisos(this);
             permisos.permisos();
+        }
+        SAGASSql dbHelper = new SAGASSql(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        if (db != null) {
+            // Hacer las operaciones que queramos sobre la base de datos
+            db.execSQL("INSERT INTO comments (headerMenu, name, imageRef) VALUES (MenuDTO)");
         }
         //se inicializa la session
         session = new Session(getApplicationContext());
@@ -199,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     //funcion que inicia el activity del menu y le envia la lista para construirlo
     public void startActivity(ArrayList<MenuDTO> menuDTOs){
-        Cursor cursor = sagasSql.GetMenu();
+        //Cursor cursor = sagasSql.GetMenu();
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         intent.putExtra("lista",menuDTOs);
         startActivity(intent);
