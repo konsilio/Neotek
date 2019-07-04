@@ -1007,7 +1007,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarImagenesDescarga(String ClaveUnica){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_DESCARGAS_IMAGENES,
+        return db.delete("DELETE FROM "+ TABLE_DESCARGAS_IMAGENES,
                 " ClaveUnica = '"+ClaveUnica+"'",null);
     }
 

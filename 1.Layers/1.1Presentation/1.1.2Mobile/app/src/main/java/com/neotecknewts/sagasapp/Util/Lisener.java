@@ -2393,23 +2393,24 @@ public class Lisener{
                             GetImagenesDescargaByClaveUnica(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
                     Log.w("cantidad", cantidad.getCount()+"");
-                    while (cantidad.getCount()>0) {
+                    while (!cantidad.isAfterLast()) {
                         Log.d("cursorwhile",cursor.moveToFirst()+"");
                         String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         //try {
-                        //  lecturaDTO.getImagenesURI().add(new URI(iuri));
+                        //lecturaDTO.getImagenesURI().add(new URI(iuri));
                         lecturaDTO.getImagenes().add(
                                 cantidad.getString(cantidad.getColumnIndex("Imagen"))
                                 //iuri
                         );
-                        //} catch (URISyntaxException e) {
-                        //    e.printStackTrace();
-                        //}
-                        cantidad.moveToFirst();
+                        /*} catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }*/
+                        cantidad.isAfterLast();
                     }
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaDescarga(lecturaDTO);
-                    if (registrado){
+                    Log.d("registro", registrado+"");
+                    if (!registrado){
                         Log.d("cursorliminar",cursor.moveToFirst()+"");
                         sagasSql.EliminarDescarga(lecturaDTO.getClaveOperacion());
                         sagasSql.EliminarImagenesDescarga(lecturaDTO.getClaveOperacion());
