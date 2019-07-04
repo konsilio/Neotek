@@ -96,7 +96,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public static final String TIPO_CALIBRACION_ESTACION = "CALES";
     public static final String TIPO_TRASPASO_ESTACION = "TEC";
     public static final String TIPO_TRASPASO_PIPA = "TP";
-    //private static final String TABLE_MENU = "menu";
+    private static final String TABLE_MENU = "menu";
 
     //endregion
 
@@ -150,12 +150,12 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Falta BOOLEAN DEFAULT 1)");
 
        //TABLA MENU
-       /* db.execSQL("CREATE TABLE "+TABLE_MENU+"(" +
+        db.execSQL("CREATE TABLE "+TABLE_MENU+"(" +
                 "headerMenu VARCHAR,"+
                 "name VARCHAR,"+
                 "imageRef VARCHAR,"+
                 "Falta BOOLEAN DEFAULT 1"+
-                ")");*/
+                ")");
 
 
         //endregion
@@ -729,7 +729,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_ANTICIPOS);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_CORTES);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_CORTES_VENTAS);
-        //db.execSQL("DROP TABLE IF EXISTS "+TABLE_MENU);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_MENU);
         onCreate(db);
     }
     //endregion
@@ -854,7 +854,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         return inserts;
     }
 
-    /*public Long[] InsertMenuDTO(List<URI> imageRef, List<String> url, String headerMenu){
+    public Long[] InsertMenuDTO(List<URI> imageRef, List<String> url, String headerMenu){
         SQLiteDatabase db = this.getWritableDatabase();
         Long[] inserts = new Long[imageRef.size()];
         for (int x = 0;x<imageRef.size();x++){
@@ -867,7 +867,7 @@ public class SAGASSql extends SQLiteOpenHelper {
 
         }
         return inserts;
-    }*/
+    }
 
    /* public ArrayList<MenuDTO> InsertMenuDTO(ArrayList<MenuDTO> dto){
         //SQLiteDatabase db = this.getWritableDatabase();
@@ -882,10 +882,10 @@ public class SAGASSql extends SQLiteOpenHelper {
         return dto;
     }*/
 
-   /* public Cursor getMenuDTO(){
+    public Cursor getMenuDTO(){
         return getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_MENU+
                 " WHERE Corte =''",null);
-    }*/
+    }
 
     /**
      * GetRecordsByCalveUnica
@@ -1000,7 +1000,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     //region Metodos para Imagenes de Iniciar descarga
 
     /**
-     * InsertarImagenesDescarga
+     * IncertarImagenesDescarga
      * Permite realizar el registro de la imagenes en la base de datos local, se envian como
      * parametros un objeto de tipo {@link IniciarDescargaDTO} que contiene la imagenes y un
      * {@link String} que sera la clave de operación que le corresponde, tras finalizar de
@@ -1013,7 +1013,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
      */
 
-    public Long[] InsertarImagenesDescarga(IniciarDescargaDTO iniciarDescargaDTO,
+    public Long[] IncertarImagenesDescarga(IniciarDescargaDTO iniciarDescargaDTO,
                                            String ClaveOperacion){
         Long[] inserts = new Long[iniciarDescargaDTO.getImagenes().size()];
         SQLiteDatabase db = this.getWritableDatabase();
@@ -2823,9 +2823,10 @@ public class SAGASSql extends SQLiteOpenHelper {
         );
     }
 
- /*   public Cursor GetMenu() {
-    //return  this.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_MENU, null);
+    /*public Cursor GetMenu() {
+    return  this.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_MENU, null);
     }*/
+
     public Cursor GetCortes() {
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_CORTES,
                 null);
