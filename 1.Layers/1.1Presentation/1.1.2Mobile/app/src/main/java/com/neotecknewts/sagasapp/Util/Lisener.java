@@ -2354,8 +2354,9 @@ public class Lisener{
             Log.w("Iniciando", "Revisando inicio descarga: " + new Date());
             Cursor cursor = sagasSql.GetIniciarDescargas();
             IniciarDescargaDTO lecturaDTO = null;
-            if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                //Log.d("cursor",cursor.moveToFirst()+"");
+                while (cursor.moveToNext()) {
+                    //Log.d("cursorwhile",cursor.moveToFirst()+"");
                     lecturaDTO = new IniciarDescargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -2391,7 +2392,9 @@ public class Lisener{
                     Cursor cantidad = sagasSql.
                             GetImagenesDescargaByClaveUnica(lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
-                    while (!cantidad.isAfterLast()) {
+                    Log.w("cantidad", cantidad.getCount()+"");
+                    while (cantidad.getCount()>0) {
+                        Log.d("cursorwhile",cursor.moveToFirst()+"");
                         String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
                         //try {
                         //  lecturaDTO.getImagenesURI().add(new URI(iuri));
@@ -2402,19 +2405,20 @@ public class Lisener{
                         //} catch (URISyntaxException e) {
                         //    e.printStackTrace();
                         //}
-                        cantidad.moveToNext();
+                        cantidad.moveToFirst();
                     }
-
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaDescarga(lecturaDTO);
                     if (registrado){
+                        Log.d("cursorliminar",cursor.moveToFirst()+"");
                         sagasSql.EliminarDescarga(lecturaDTO.getClaveOperacion());
                         sagasSql.EliminarImagenesDescarga(lecturaDTO.getClaveOperacion());
                     }
                     cursor.moveToNext();
                 }
-            }
+
         }
+        Log.d("cursorliminar",sagasSql.GetIniciarDescargas()+"");
         return (sagasSql.GetIniciarDescargas().getCount()==0);
     }
 
