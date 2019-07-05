@@ -9,6 +9,7 @@ import com.neotecknewts.sagasapp.Interactor.LoginInteractorImpl;
 import com.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
+import com.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class LoginPresenterImpl implements LoginPresenter {
     MainView mainView;
 
     //se obtiene la vista al ser contruido y se inicializa el interactor
-    public LoginPresenterImpl(MainView view){
+    public LoginPresenterImpl(MainView view, SAGASSql sagasSql){
         this.mainView = view;
-        this.interactor = new LoginInteractorImpl(this);
+        this.interactor = new LoginInteractorImpl(this, sagasSql);
     }
     //metodo para obtener empresas
     @Override

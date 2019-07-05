@@ -83,11 +83,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         if (db != null) {
             // Hacer las operaciones que queramos sobre la base de datos
-            db.execSQL("INSERT INTO comments (headerMenu, name, imageRef) VALUES (MenuDTO)");
+            //db.execSQL("INSERT INTO comments (headerMenu, name, imageRef) VALUES (MenuDTO)");
         }
         //se inicializa la session
         session = new Session(getApplicationContext());
 
+        if(session.isLogin())
+            startActivity();
         //se inicializan las variables de la vista
         editTextContraseña = (EditText) findViewById(R.id.input_password);
         editTextCorreoElectronico = (EditText) findViewById(R.id.input_username);
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         //linearLayoutLogin.setVisibility(View.GONE);
 
         //se inicializa el presenter
-        loginPresenter = new LoginPresenterImpl(this);
+        loginPresenter = new LoginPresenterImpl(this, dbHelper);
 
         //se obtienen las empresas para llenar el spinner
         loginPresenter.getEmpresas();
@@ -212,6 +214,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
         intent.putExtra("lista",menuDTOs);
         startActivity(intent);
 
+    }
+
+    //funcion que inicia el activity del menu si ya tiene una sesion iniciada
+    public void startActivity(){
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivity(intent);
     }
 
 

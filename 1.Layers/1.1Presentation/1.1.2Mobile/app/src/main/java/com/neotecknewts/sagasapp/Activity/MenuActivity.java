@@ -79,6 +79,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
 
+        this.sagasSql = new SAGASSql(this);
+
+
         menu = new ArrayList<>();
 /*        menu.add("Iniciar Descarga");
         menu.add("Finalizar Descarga");
@@ -104,11 +107,10 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                             menu.add(new MenuDTO(
                                     cursor.getString(cursor.getColumnIndex("headerMenu")),
                                     cursor.getString(cursor.getColumnIndex("name")),
-                                    cursor.getString(cursor.getColumnIndex("imageRef")),));
+                                    cursor.getString(cursor.getColumnIndex("imageRef"))));
                         }
                     }
                 }
-                presenter.getMenu(session.getTokenWithBearer());
             }else{
 
             }

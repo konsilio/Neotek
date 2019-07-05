@@ -39,8 +39,9 @@ public class LoginInteractorImpl implements LoginInteractor {
     private  String token;
 
     //constructor de la clase y se inicializa el presenter
-    public LoginInteractorImpl(LoginPresenter loginPresenter){
+    public LoginInteractorImpl(LoginPresenter loginPresenter, SAGASSql sagasSql){
         this.loginPresenter = loginPresenter;
+        this.sagasSql = sagasSql;
     }
 
     //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados
@@ -124,8 +125,7 @@ public class LoginInteractorImpl implements LoginInteractor {
                                 loginPresenter.onError(data.getMensaje());
                             }
                         }else {
-                            data.getLengthListMenu();
-
+                            loginPresenter.onError(data.getMensaje());
                         }
                     }
                     else {

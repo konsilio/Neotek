@@ -30,6 +30,12 @@ public class MenuDTO implements Serializable{
         return name;
     }
 
+    public MenuDTO(String headerMenu, String name, String imageRef) {
+        this.headerMenu = headerMenu;
+        this.name = name;
+        this.imageRef = imageRef;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
