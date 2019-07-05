@@ -175,16 +175,13 @@ namespace Application.MainModule.Flujos
             var permiso = PermisosServicio.PuedeConsultarRemanenteGral();
             if (!permiso.Exito) return null;
             List<RemanenteGeneralDTO> remaGeneral = new List<RemanenteGeneralDTO>();
-            //if (TokenServicio.ObtenerEsAdministracionCentral())
-            //{
-            //    return new List<RemanenteGeneralDTO>();
-            //}
+                       
             var AlmacenPrincipal = AlmacenGasServicio.ObtenerAlmacenPrincipal(dto.IdEmpresa == (short)0 ? TokenServicio.ObtenerIdEmpresa() : dto.IdEmpresa);
             var lectura = AlmacenGasServicio.ObtenerLecturaIncialdelMes(AlmacenPrincipal.IdCAlmacenGas, dto.Fecha.Month, dto.Fecha.Year).OrderByDescending(x => x.FechaAplicacion).FirstOrDefault();
             var descargas = AlmacenGasServicio.ObtenerDescargasTodas();
             var pventas = PuntoVentaServicio.ObtenerIdEmp(dto.IdEmpresa);
             int Dias = dto.Fecha.Month.Equals(DateTime.Now.Month) && dto.Fecha.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month);
-
+            dto.Fecha = Convert.ToDateTime(string.Concat(dto.Fecha.Year,"/", dto.Fecha.Month, "/", "1", " ", "00:00:01"));
             for (int i = 0; i < Dias; i++)
             {
                 RemanenteGeneralDTO rema = new RemanenteGeneralDTO();

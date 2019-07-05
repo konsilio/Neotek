@@ -900,9 +900,11 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas, idTipoEvento, idTipoMovimiento);
         }
-        public static AlmacenGasMovimiento ObtenerUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas, DateTime fecha)
+        public static AlmacenGasMovimiento ObtenerUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas, DateTime? fecha)
         {
-            var ulMov = new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
+            if (fecha == null)
+                return AlmacenGasAdapter.FromInit();
+            var ulMov = new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas, (short)fecha.Value.Year, (byte)fecha.Value.Month, (byte)fecha.Value.Day);
             if (ulMov != null) return ulMov;
 
             ulMov = ObtenerUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas);
@@ -930,14 +932,18 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static List<AlmacenGasMovimiento> ObtenerUltimosMovimientosDeDescargas(AlmacenGasDescarga descarga, short idEmpresa)
         {
-            var ulMovDia = new AlmacenGasDataAccess().BuscarUltimoMovimientoConTipoEvento(idEmpresa, TipoEventoEnum.Descarga, (short)descarga.FechaFinDescarga.Value.Year, (byte)descarga.FechaFinDescarga.Value.Month, (byte)descarga.FechaFinDescarga.Value.Day);
-            var ulMovMes = new AlmacenGasDataAccess().BuscarUltimoMovimientoConTipoEvento(idEmpresa, TipoEventoEnum.Descarga, (short)descarga.FechaFinDescarga.Value.Year, (byte)descarga.FechaFinDescarga.Value.Month);
-            var ulMovAnio = new AlmacenGasDataAccess().BuscarUltimoMovimientoConTipoEvento(idEmpresa, TipoEventoEnum.Descarga, (short)descarga.FechaFinDescarga.Value.Year);
-
-            return new List<AlmacenGasMovimiento>()
+            if (descarga.FechaFinDescarga != null)
             {
-                ulMovDia, ulMovMes, ulMovAnio
-            };
+                var ulMovDia = new AlmacenGasDataAccess().BuscarUltimoMovimientoConTipoEvento(idEmpresa, TipoEventoEnum.Descarga, (short)descarga.FechaFinDescarga.Value.Year, (byte)descarga.FechaFinDescarga.Value.Month, (byte)descarga.FechaFinDescarga.Value.Day);
+                var ulMovMes = new AlmacenGasDataAccess().BuscarUltimoMovimientoConTipoEvento(idEmpresa, TipoEventoEnum.Descarga, (short)descarga.FechaFinDescarga.Value.Year, (byte)descarga.FechaFinDescarga.Value.Month);
+                var ulMovAnio = new AlmacenGasDataAccess().BuscarUltimoMovimientoConTipoEvento(idEmpresa, TipoEventoEnum.Descarga, (short)descarga.FechaFinDescarga.Value.Year);
+
+                return new List<AlmacenGasMovimiento>()
+                {
+                    ulMovDia, ulMovMes, ulMovAnio
+                };
+            }
+            return new List<AlmacenGasMovimiento>();
         }
         public static List<AlmacenGasMovimiento> ObtenerUltimosMovimientosPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha)
         {
@@ -984,9 +990,11 @@ namespace Application.MainModule.Servicios.Almacenes
                 ulMovDia, ulMovMes, ulMovAnio
             };
         }
-        public static AlmacenGasMovimiento ObtenerUltimoMovimientoPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha)
+        public static AlmacenGasMovimiento ObtenerUltimoMovimientoPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime? fecha)
         {
-            var movimientos = ObtenerUltimosMovimientosPorUnidadAlmacenGas(idEmpresa, idCAlmacenGas, fecha);
+            if (fecha == null) return AlmacenGasAdapter.FromInit();
+
+            var movimientos = ObtenerUltimosMovimientosPorUnidadAlmacenGas(idEmpresa, idCAlmacenGas, fecha.Value);
 
             if (movimientos.ElementAt(0) != null) return movimientos.ElementAt(0);
 
@@ -1146,7 +1154,7 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static void ProcesarInventario()
         {
-            var lecturasIniciales = AplicarTomaLecturaInicial();
+            //var lecturasIniciales = AplicarTomaLecturaInicial();
             var descargasDto = AplicarDescargas();
             var recargasDto = AplicarRecargas();
             var traspasosDto = AplicarTraspaso();
@@ -1217,8 +1225,8 @@ namespace Application.MainModule.Servicios.Almacenes
             decimal almacenGeneralPorcent = almacenGasTotal.PorcentajeActualGeneral;
             almacenGasTotal = AplicarDescargaAlmacenTotal(almacenGasTotal, unidadEntrada, litrosRealesTractor, kilogramosRealesTractor);
 
-            AlmacenGasMovimiento ulMov = ObtenerUltimoMovimientoEnInventario(empresa.IdEmpresa, almacenGasTotal.IdAlmacenGas, descarga.FechaFinDescarga.Value);
-            AlmacenGasMovimiento ulMovDescarga = ObtenerUltimoMovimientoPorUnidadAlmacenGas(empresa.IdEmpresa, unidadEntrada.IdCAlmacenGas, descarga.FechaFinDescarga.Value);
+            AlmacenGasMovimiento ulMov = ObtenerUltimoMovimientoEnInventario(empresa.IdEmpresa, almacenGasTotal.IdAlmacenGas, descarga.FechaFinDescarga);
+            AlmacenGasMovimiento ulMovDescarga = ObtenerUltimoMovimientoPorUnidadAlmacenGas(empresa.IdEmpresa, unidadEntrada.IdCAlmacenGas, descarga.FechaFinDescarga);
             RemaDto remaDto = RemaServicio.ObtenerRema(descarga, almacenGasTotal.IdAlmacenGas, empresa.IdEmpresa);
 
             var invAnterior = new InventarioAnteriorDto
@@ -2618,9 +2626,8 @@ namespace Application.MainModule.Servicios.Almacenes
             apLectDto.TomaLecturaLectura = AlmacenGasAdapter.FromEntity(apLectDto.TomaLecturaLectura);
 
             if (ulMovRecarga.IdEmpresa <= 0 && ulMovRecarga.Year <= 0 && ulMovRecarga.Mes <= 0 && ulMovRecarga.Dia <= 0)
-            {
                 return new AplicaTomaLecturaDto();
-            }
+
 
             apLectDto.unidadAlmacenGas.PorcentajeActual = apLectDto.TomaLecturaLectura.Porcentaje.Value;
             apLectDto.unidadAlmacenGas.P5000Actual = ulMovRecarga.P5000Actual;
@@ -2767,8 +2774,8 @@ namespace Application.MainModule.Servicios.Almacenes
             {
                 IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
                 IdTipo = TipoRemanenteEnum.General,
-                Fecha = new DateTime(2018, 12, 1),//Comentar esta linea en produccion
-                //Fecha = DateTime.Now, //Comentar esta line en Desarollo
+                //Fecha = new DateTime(2018, 12, 1),//Comentar esta linea en produccion
+                Fecha = DateTime.Now, //Comentar esta line en Desarollo
                 IdPuntoVenta = 0
             };
         }
