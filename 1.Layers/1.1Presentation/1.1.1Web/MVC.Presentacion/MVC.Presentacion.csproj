@@ -321,6 +321,7 @@
     <Compile Include="Models\Catalogos\CentroCosto\TipoCentroCostoDTO.cs" />
     <Compile Include="Models\Catalogos\ClienteModel.cs" />
     <Compile Include="Models\Catalogos\CombustibleModel.cs" />
+    <Compile Include="Models\Catalogos\CuentaContable\CuentaContableAutorizadoDTO.cs" />
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableCrearDTO.cs" />
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableDTO.cs" />
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableEliminarDTO.cs" />
@@ -11688,6 +11689,7 @@
     <Content Include="Views\Pedidos\_Pedidos.cshtml" />
     <Content Include="Views\Clientes\_Clientes.cshtml" />
     <Content Include="Views\Reportes\Comisiones.cshtml" />
+    <Content Include="Views\CuentaContable\CuentaContableAutorizado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

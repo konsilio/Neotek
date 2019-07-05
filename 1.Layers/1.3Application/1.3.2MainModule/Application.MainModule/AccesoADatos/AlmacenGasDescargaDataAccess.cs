@@ -142,7 +142,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     //_respuesta.ModeloValido = true;
                     //_respuesta.Mensaje = Exito.OK;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     //_respuesta.Exito = false;
                     //_respuesta.Mensaje = string.Format(Error.C0003, "de la descargar de gas"); ;

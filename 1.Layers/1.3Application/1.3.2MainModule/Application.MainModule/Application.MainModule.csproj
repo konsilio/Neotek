@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccesoADatos\CuentaContableAutorizadoDataAcces.cs" />
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenProductoAdapter.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\ClientesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CombustibleAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CuentaContableAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\CuentaContableAutorizadoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EquipoTransporteAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EstacionCarburacionAdapter.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="DTOs\Almacen\RemanentePuntoVentaDTO.cs" />
     <Compile Include="DTOs\Catalogo\CamionetaDTO.cs" />
     <Compile Include="DTOs\Catalogo\CombustibleDTO.cs" />
+    <Compile Include="DTOs\Catalogo\CuentaContableAutorizadoDTO.cs" />
     <Compile Include="DTOs\Catalogo\PipaDTO.cs" />
     <Compile Include="DTOs\Catalogo\PrecioVentaEstatusDTO.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PrecioVentaGasAdapter.cs" />
@@ -140,6 +143,7 @@
     <Compile Include="DTOs\Reportes\CajaGeneral\RepCorteCajaDTO.cs" />
     <Compile Include="DTOs\Reportes\Comisiones\ComisionDiaDTO.cs" />
     <Compile Include="DTOs\Reportes\Comisiones\ComisionDTO.cs" />
+    <Compile Include="DTOs\Reportes\CuentasConsolidadas\CuentasConsolidadasDTO.cs" />
     <Compile Include="DTOs\Reportes\DashBoard\AdministracionDTO.cs" />
     <Compile Include="DTOs\Reportes\DashBoard\AndenDTO.cs" />
     <Compile Include="DTOs\Reportes\DashBoard\CarteraDTO.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="DTOs\Reportes\InventarioConcepto\RepInventarioXConceptorDTO.cs" />
     <Compile Include="DTOs\Reportes\PeriodoDTO.cs" />
     <Compile Include="DTOs\Seguridad\MenuDto.cs" />
+    <Compile Include="Servicios\Catalogos\CuentaContableAutorizadoServicio.cs" />
     <Compile Include="Servicios\Equipo\CalculosEquipoTrasporte.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDetalleDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDTO.cs" />

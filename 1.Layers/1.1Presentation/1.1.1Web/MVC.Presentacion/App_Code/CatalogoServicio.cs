@@ -2809,6 +2809,33 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
 
+        #region Cuenta Contable Autorizado
+        public static RespuestaDTO GuardarCtaCtbleAutorizado(CuentaContableAutorizadoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarCuentaContableAutorizado(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarCtaContable(CuentaContableAutorizadoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarCuentaContableAutorizado(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static List<CuentaContableAutorizadoDTO> ListaCtaCtbleAutorizado(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaCuentaContableAutorizado(tkn);
+            return agente._ListaCuentaContableAutorizado;
+        }
+        public static CuentaContableAutorizadoDTO ObtenerCtaCtbleAutorizado(string tkn, int id)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarCuentaContableAutorizado(tkn, id);
+            return agente._CuentaContableAutorizadoDTO;
+        }
+        #endregion
+
         #region Impuestos
         public static List<SelectListItem> ListaIVA()
         {

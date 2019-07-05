@@ -317,7 +317,6 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 FechaRegistro = lectura.FechaRegistro,
             };
         }
-
         public static AlmacenGasTomaLecturaFoto FromEntity(AlmacenGasTomaLecturaFoto img)
         {
             return new AlmacenGasTomaLecturaFoto
@@ -583,9 +582,9 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
 
             //------Ids y nombres-----------------
             almGMovimiento.IdEmpresa = empresa.IdEmpresa;
-            almGMovimiento.Year = (short)descarga.FechaFinDescarga.Value.Year;
-            almGMovimiento.Mes = (byte)descarga.FechaFinDescarga.Value.Month;
-            almGMovimiento.Dia = (byte)descarga.FechaFinDescarga.Value.Day;
+            almGMovimiento.Year = descarga.FechaFinDescarga != null ? (short)descarga.FechaFinDescarga.Value.Year : (short)DateTime.Now.Year;
+            almGMovimiento.Mes = descarga.FechaFinDescarga != null ? (byte)descarga.FechaFinDescarga.Value.Month : (byte)DateTime.Now.Month;
+            almGMovimiento.Dia = descarga.FechaFinDescarga != null ? (byte)descarga.FechaFinDescarga.Value.Day : (byte)DateTime.Now.Day;
             almGMovimiento.Orden = ultimoMovimiento != null && ultimoMovimiento.Orden > 0 ? (short)(ultimoMovimiento.Orden + 1) : (short)1;
             almGMovimiento.IdTipoMovimiento = TipoMovimientoEnum.Entrada;
             almGMovimiento.IdTipoEvento = TipoEventoEnum.Descarga;

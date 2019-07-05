@@ -159,6 +159,14 @@ namespace Application.MainModule.Flujos
             }
             return respesta;
         }
+        public List<CuentasConsolidadasDTO> RepCuentasConsolidadas(DateTime periodo)
+        {
+            var gastos = EgresoServicio.BuscarTodos(periodo);
+            var cuentasContables = CuentaContableServicio.Obtener();
+
+            return new List<CuentasConsolidadasDTO>();
+        }
+
         #region Dash Board (Pruebas)
         //public AdministracionDTO DashAdministracionVentaVSRema()
         //{

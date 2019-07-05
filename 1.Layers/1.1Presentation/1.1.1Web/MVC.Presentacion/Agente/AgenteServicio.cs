@@ -55,6 +55,7 @@ namespace MVC.Presentacion.Agente
         public AdministracionDTO _AdministracionDTO;
         public AndenDTO _AndenDTO;
         public CarteraDTO _CarteraDTO;
+        public CuentaContableAutorizadoDTO _CuentaContableAutorizadoDTO;
         public string _Json;
 
         public List<ClienteLocacionMod> _cteLocacion;
@@ -135,6 +136,7 @@ namespace MVC.Presentacion.Agente
         public List<CorteCajaDTO> _ListaCorteCaja;
         public List<GastoVehiculoDTO> _ListaGastoVehicular;
         public List<ComisionDTO> _ListaComisiones;
+        public List<CuentaContableAutorizadoDTO> _ListaCuentaContableAutorizado;
 
         public AgenteServicio()
         {
@@ -1022,16 +1024,16 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
-                {                    
+                {
                     HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, dto).ConfigureAwait(false);
 
                     if (response.IsSuccessStatusCode)
-                            lus = await response.Content.ReadAsAsync<List<ClientesDto>>();
-                        else
-                        {
-                            client.CancelPendingRequests();
-                            client.Dispose();
-                        }  
+                        lus = await response.Content.ReadAsAsync<List<ClientesDto>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
 
                 }
                 catch (Exception)
@@ -2332,6 +2334,63 @@ namespace MVC.Presentacion.Agente
                     client.Dispose();
                 }
                 _RespuestaDTO = resp;
+            }
+        }
+
+
+
+        public void GuardarCuentaContableAutorizado(CuentaContableAutorizadoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraCuentaContableAutorizado"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public void ModificarCuentaContableAutorizado(CuentaContableAutorizadoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaCuentaContableAutorizado"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void ListaCuentaContableAutorizado(string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["GetListaCuentasContablesAutorizado"];
+            GetListaCuentaContableAutorizado(tkn, null).Wait();
+        }
+        public void BuscarCuentaContableAutorizado(string tkn, int idCuenta)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["GetCuentaContableAutorizado"];
+            GetListaCuentaContableAutorizado(tkn, idCuenta).Wait();
+        }
+        private async Task GetListaCuentaContableAutorizado(string Token, int? id)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CuentaContableAutorizadoDTO> list = new List<CuentaContableAutorizadoDTO>();
+                CuentaContableAutorizadoDTO dto = new CuentaContableAutorizadoDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    if (id != null)
+                    {
+                        HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute, id)).ConfigureAwait(false);
+                        if (response.IsSuccessStatusCode)
+                            list = await response.Content.ReadAsAsync<List<CuentaContableAutorizadoDTO>>();                       
+                        _ListaCuentaContableAutorizado = list;
+                    }
+                    else
+                    {
+                        HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute, id)).ConfigureAwait(false);
+                        if (response.IsSuccessStatusCode)
+                            dto = await response.Content.ReadAsAsync<CuentaContableAutorizadoDTO>();
+                        _CuentaContableAutorizadoDTO = dto;
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<CuentaContableAutorizadoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
             }
         }
         #endregion
@@ -5635,7 +5694,7 @@ namespace MVC.Presentacion.Agente
                 try
                 {
                     HttpResponseMessage response = new HttpResponseMessage();
-                    if(Tipo.Equals(MetodoRestConst.Get))
+                    if (Tipo.Equals(MetodoRestConst.Get))
                         response = await client.GetAsync(string.Concat(ApiRoute, _dto.ToString())).ConfigureAwait(false);
                     if (Tipo.Equals(MetodoRestConst.Post))
                         response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
