@@ -116,21 +116,15 @@ public class LoginInteractorImpl implements LoginInteractor {
                         //Log.w(TAG,"Sucess");
                         if(data.getIdUsuario()!= 0){
                             if(data.getLengthListMenu()  > 0){
-                                Cursor cursor = sagasSql.getMenuDTO();
+                                sagasSql.InsertMenuDTO(data.getListMenu());
                                 // Debería de guardar en bd
                                 // Log.d("Ali",data.getListMenu());
                                 loginPresenter.onSuccessLogin(data);
-
                             } else {
                                 loginPresenter.onError(data.getMensaje());
                             }
                         }else {
-                            //loginPresenter.onError(data.getMensaje());
-                            //Cursor cursor = sagasSql.GetRecargas(SAGASSql.TABLE_PAPELETAS);
                             data.getLengthListMenu();
-                            //Cursor menu = sagasSql.getMenuDTO(MenuDTO.getHeaderMenu());
-
-
 
                         }
                     }

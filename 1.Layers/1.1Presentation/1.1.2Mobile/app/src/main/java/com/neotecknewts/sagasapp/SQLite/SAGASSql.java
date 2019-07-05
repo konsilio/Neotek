@@ -151,9 +151,9 @@ public class SAGASSql extends SQLiteOpenHelper {
 
        //TABLA MENU
         db.execSQL("CREATE TABLE "+TABLE_MENU+"(" +
-                "headerMenu VARCHAR,"+
-                "name VARCHAR,"+
-                "imageRef VARCHAR,"+
+                "headerMenu TEXT,"+
+                "name TEXT,"+
+                "imageRef TEXT,"+
                 "Falta BOOLEAN DEFAULT 1"+
                 ")");
 
@@ -854,37 +854,21 @@ public class SAGASSql extends SQLiteOpenHelper {
         return inserts;
     }
 
-    public Long[] InsertMenuDTO(List<URI> imageRef, List<String> url, String headerMenu){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Long[] inserts = new Long[imageRef.size()];
-        for (int x = 0;x<imageRef.size();x++){
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("imageRef",imageRef.get(x).toString());
-            contentValues.put("name",url.get(x));
-            contentValues.put("headerMenu",headerMenu);
-            inserts[x] =  db.insert(TABLE_MENU,null,contentValues);
-            Log.w("imageRef",String.valueOf(inserts[x]));
+  public MenuDTO[] InsertMenuDTO(MenuDTO[] dto){
+      //SQLiteDatabase db = this.getWritableDatabase();
+      for (MenuDTO menuDTO: dto){
+          ContentValues Values = new ContentValues();
+          Values.put("headerMenu", menuDTO.getHeaderMenu());
+          Values.put("name", menuDTO.getName());
+          Values.put("imageRef",menuDTO.getImageRef());
+          this.getWritableDatabase().insert(TABLE_MENU, null, Values);
+      }
+      return dto;
+  }
 
-        }
-        return inserts;
-    }
-
-   /* public ArrayList<MenuDTO> InsertMenuDTO(ArrayList<MenuDTO> dto){
-        //SQLiteDatabase db = this.getWritableDatabase();
-
-        for (MenuDTO : MenuDTO dto){
-            ContentValues Values = new ContentValues();
-            Values.put("headerMenu", MenuDTO.getHeaderMenu());
-            Values.put("name", MenuDTO.getName());
-            Values.put("imageRef",MenuDTO.getImageRef());
-           this.getWritableDatabase().insert(TABLE_MENU, null, Values);
-        }
-        return dto;
-    }*/
 
     public Cursor getMenuDTO(){
-        return getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_MENU+
-                " WHERE Corte =''",null);
+        return getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_MENU ,null);
     }
 
     /**

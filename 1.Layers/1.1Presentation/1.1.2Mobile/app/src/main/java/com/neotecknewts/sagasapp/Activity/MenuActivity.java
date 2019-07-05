@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -20,14 +21,17 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Adapter.MenuAdapter;
 import com.neotecknewts.sagasapp.Model.MenuDTO;
 import com.neotecknewts.sagasapp.Presenter.MenuPresenter;
 import com.neotecknewts.sagasapp.Presenter.MenuPresenterImpl;
+import com.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.neotecknewts.sagasapp.Util.Semaforo;
 import com.neotecknewts.sagasapp.Util.Session;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +43,7 @@ import it.sephiroth.android.library.tooltip.Tooltip;
 
 public class MenuActivity extends AppCompatActivity implements MenuView {
 
+    private SAGASSql sagasSql;
     //lista que se usa para llenar el recycler view que crea el menu
     ArrayList<MenuDTO> menu;
 
@@ -89,6 +94,20 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             // and get whatever type user account id is
         }else{
             if(session.isLogin()){
+                if(isOnline()){
+                    presenter.getMenu(session.getTokenWithBearer());
+                }else{
+                    Cursor cursor = sagasSql.getMenuDTO();
+                    if(cursor.moveToFirst()){
+                        menu = new ArrayList<MenuDTO>();
+                        while (cursor.moveToNext()){
+                            menu.add(new MenuDTO(
+                                    cursor.getString(cursor.getColumnIndex("headerMenu")),
+                                    cursor.getString(cursor.getColumnIndex("name")),
+                                    cursor.getString(cursor.getColumnIndex("imageRef")),));
+                        }
+                    }
+                }
                 presenter.getMenu(session.getTokenWithBearer());
             }else{
 
@@ -133,6 +152,21 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         display.getSize(size);
         context =this;
         enviarDatos();
+    }
+
+    public boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int     exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        catch (InterruptedException e) { e.printStackTrace(); }
+
+        return false;
     }
 
     private void enviarDatos() {

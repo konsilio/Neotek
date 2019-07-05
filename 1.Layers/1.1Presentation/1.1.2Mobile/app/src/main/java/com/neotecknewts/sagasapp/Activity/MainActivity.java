@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private EditText editTextCorreoElectronico;
     private EditText editTextContraseña;
     private Spinner spinnerGaseras;
-    private SAGASSql sagasSql;
+
+
 
     //variable para usuario y contraseña
     public String contraseña;
@@ -152,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
             builder.create().show();
         }else {
             IdEmpresa = empresaDTOs.get(spinnerGaseras.getSelectedItemPosition()).getIdEmpresa();
-
             //se verifica que no haya campos vacios y que sea un correo valido, y en caso contrario se muestra un mensaje
             if (TextUtils.isEmpty(usuario) || TextUtils.isEmpty(contraseña)) {
                 showDialog(getResources().getString(R.string.empty_field));
