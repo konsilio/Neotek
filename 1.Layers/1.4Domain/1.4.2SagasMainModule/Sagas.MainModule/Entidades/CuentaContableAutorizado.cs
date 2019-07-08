@@ -17,6 +17,7 @@ namespace Sagas.MainModule.Entidades
         public int IdCuentaContable { get; set; }
         public decimal Autorizado { get; set; }
         public System.DateTime Fecha { get; set; }
+        public int IdCuentaContableAutorizado { get; set; }
     
         public virtual CuentaContable CCuentaContable { get; set; }
     }

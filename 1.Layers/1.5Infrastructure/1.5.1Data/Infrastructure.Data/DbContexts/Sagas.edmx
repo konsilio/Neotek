@@ -728,14 +728,9 @@
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaCreacion" Type="date" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Bitacora">
           <Key>
             <PropertyRef Name="Id" />
-            
-            
-            
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUsuario" Type="int" />
@@ -1383,14 +1378,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CuentaContableAutorizado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="CuentaContableAutorizado">
           <Key>
-            <PropertyRef Name="IdCuentaContable" />
-            <PropertyRef Name="Autorizado" />
-            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="IdCuentaContableAutorizado" />
           </Key>
+          <Property Name="IdCuentaContableAutorizado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdCuentaContable" Type="int" Nullable="false" />
           <Property Name="Autorizado" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Fecha" Type="smalldatetime" Nullable="false" />
@@ -5400,6 +5392,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CuentaContableAutorizad
           <EntitySet Name="AlmacenGasTraspasoFoto" EntityType="Self.AlmacenGasTraspasoFoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenSalidaProducto" EntityType="Self.AlmacenSalidaProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AsignacionUtilitarios" EntityType="Self.AsignacionUtilitarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bitacora" EntityType="Self.Bitacora" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAlmacenGas" EntityType="Self.CAlmacenGas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAlmacenGasCalibracion" EntityType="Self.CAlmacenGasCalibracion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAlmacenGasCilindro" EntityType="Self.CAlmacenGasCilindro" Schema="dbo" store:Type="Tables" />
@@ -5450,6 +5443,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CuentaContableAutorizad
           <EntitySet Name="CTipoMovimiento" EntityType="Self.CTipoMovimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTipoOperadorChofer" EntityType="Self.CTipoOperadorChofer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTipoPersona" EntityType="Self.CTipoPersona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CuentaContableAutorizado" EntityType="Self.CuentaContableAutorizado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CUsoCFDI" EntityType="Self.CUsoCFDI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CUtilitario" EntityType="Self.CUtilitario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleMantenimiento" EntityType="Self.DetalleMantenimiento" Schema="dbo" store:Type="Tables" />
@@ -5501,15 +5495,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CuentaContableAutorizad
           <EntitySet Name="VentaPuntoDeVenta" EntityType="Self.VentaPuntoDeVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaPuntoDeVentaDetalle" EntityType="Self.VentaPuntoDeVentaDetalle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaPuntoDeVentaEfectivo" EntityType="Self.VentaPuntoDeVentaEfectivo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Bitacora" EntityType="Self.Bitacora" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Bitacora].[Id] AS [Id], 
-    [Bitacora].[IdUsuario] AS [IdUsuario], 
-    [Bitacora].[Descripcion] AS [Descripcion], 
-    [Bitacora].[Accion] AS [Accion], 
-    [Bitacora].[FechaRegistro] AS [FechaRegistro]
-    FROM [dbo].[Bitacora] AS [Bitacora]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="CProductoAsociado" EntityType="Self.CProductoAsociado" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [CProductoAsociado].[IdProducto] AS [IdProducto], 
@@ -5517,13 +5502,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CuentaContableAutorizad
     [CProductoAsociado].[Activo] AS [Activo], 
     [CProductoAsociado].[FechaRegistro] AS [FechaRegistro]
     FROM [dbo].[CProductoAsociado] AS [CProductoAsociado]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="CuentaContableAutorizado" EntityType="Self.CuentaContableAutorizado" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [CuentaContableAutorizado].[IdCuentaContable] AS [IdCuentaContable], 
-    [CuentaContableAutorizado].[Autorizado] AS [Autorizado], 
-    [CuentaContableAutorizado].[Fecha] AS [Fecha]
-    FROM [dbo].[CuentaContableAutorizado] AS [CuentaContableAutorizado]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Abono_Cargo1" Association="Self.FK_Abono_Cargo1">
             <End Role="Cargo" EntitySet="Cargo" />
@@ -12413,14 +12391,16 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CuentaContableAutorizad
         </Association>
         <EntityType Name="CuentaContableAutorizado">
           <Key>
-            <PropertyRef Name="IdCuentaContable" />
+            <!--<PropertyRef Name="IdCuentaContable" />
             <PropertyRef Name="Autorizado" />
-            <PropertyRef Name="Fecha" />
+            <PropertyRef Name="Fecha" />-->
+            <PropertyRef Name="IdCuentaContableAutorizado" />
           </Key>
           <Property Name="IdCuentaContable" Type="Int32" Nullable="false" />
           <Property Name="Autorizado" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="CCuentaContable" Relationship="Sagas.MainModuleModel.FK_CuentaContableAutorizado_CCuentaContable" FromRole="CuentaContableAutorizado" ToRole="CuentaContable" />
+          <Property Name="IdCuentaContableAutorizado" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_CuentaContableAutorizado_CCuentaContable">
           <End Type="Sagas.MainModuleModel.CuentaContable" Role="CuentaContable" Multiplicity="1" />
@@ -14581,6 +14561,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CuentaContableAutorizad
           <EntitySetMapping Name="CuentaContableAutorizado">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.CuentaContableAutorizado">
               <MappingFragment StoreEntitySet="CuentaContableAutorizado">
+                <ScalarProperty Name="IdCuentaContableAutorizado" ColumnName="IdCuentaContableAutorizado" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="Autorizado" ColumnName="Autorizado" />
                 <ScalarProperty Name="IdCuentaContable" ColumnName="IdCuentaContable" />
@@ -14595,7 +14576,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CuentaContableAutorizad
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
-        <DesignerProperty Name="MetadataArtifactProcessing" Value="CopyToOutputDirectory" />
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
       </DesignerInfoPropertySet>
     </Connection>
     <Options>

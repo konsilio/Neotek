@@ -161,10 +161,23 @@ namespace Application.MainModule.Flujos
         }
         public List<CuentasConsolidadasDTO> RepCuentasConsolidadas(DateTime periodo)
         {
+            List<CuentasConsolidadasDTO> respuesta = new List<CuentasConsolidadasDTO>();
             var gastos = EgresoServicio.BuscarTodos(periodo);
             var cuentasContables = CuentaContableServicio.Obtener();
 
-            return new List<CuentasConsolidadasDTO>();
+            foreach (var cc in cuentasContables)
+            {
+                var cca = CuentaContableAutorizadoServicio.Obtener(cc.IdCuentaContable, periodo);
+                if (cca == null)
+                    cca = CuentaContableAutorizadoServicio.RegistrarCuentaContableAutorizado(cc.IdCuentaContable);
+                CuentasConsolidadasDTO dto = new CuentasConsolidadasDTO();
+                dto.Concepto = cc.Descripcion;
+                dto.CantidadAutorizada = cca == null ? 0 : cca.Autorizado;
+                dto.CantidadGastada = gastos == null ? 0 : gastos.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(y => y.Monto);
+                dto.Diferencia = dto.CantidadAutorizada - dto.CantidadGastada;
+                respuesta.Add(dto);
+            }
+            return respuesta;
         }
 
         #region Dash Board (Pruebas)

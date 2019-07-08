@@ -11,11 +11,38 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios
 {
-   public static class CuentaContableAutorizadoServicio
+    public static class CuentaContableAutorizadoServicio
     {
         public static RespuestaDto RegistrarCuentaContableAutorizado(CuentaContableAutorizado provee)
         {
             return new CuentaContableAutorizadoDataAcces().Insertar(provee);
+        }
+        public static CuentaContableAutorizado RegistrarCuentaContableAutorizado(int idCuentaContable)
+        {
+            var autorizadas = new CuentaContableAutorizadoDataAcces().BuscarTodos(idCuentaContable);
+            CuentaContableAutorizado ultima = new CuentaContableAutorizado();
+            if (autorizadas.Count.Equals(0))
+            {
+                ultima.IdCuentaContable = idCuentaContable;
+                ultima.Autorizado = 0;
+                ultima.Fecha = DateTime.Parse(DateTime.Now.ToShortDateString());                
+            }
+            else            
+                ultima = autorizadas.OrderByDescending(x => x.Fecha).FirstOrDefault();
+            
+
+            CuentaContableAutorizado entidad = new CuentaContableAutorizado();
+            entidad.IdCuentaContable = idCuentaContable;
+            entidad.Autorizado = ultima.Autorizado;
+            entidad.Fecha = DateTime.Parse(DateTime.Now.ToShortDateString());
+
+            var respuesta = new CuentaContableAutorizadoDataAcces().Insertar(entidad);
+            if (respuesta.Exito)
+            {
+                entidad.IdCuentaContableAutorizado = respuesta.Id;
+            }
+
+            return entidad;
         }
         public static RespuestaDto ModificarCuentaContableAutorizado(CuentaContableAutorizado provee)
         {

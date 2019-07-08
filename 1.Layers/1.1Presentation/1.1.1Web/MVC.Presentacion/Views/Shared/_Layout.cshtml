@@ -200,10 +200,12 @@
                                     @if (rol.ReporteCuentasXPagar)
                                     {
                                     <li>@Html.ActionLink("Cuentas por pagar", "CuentasXPagar", "Reportes")</li>
+                                    <li>@Html.ActionLink("Cuentas Cosolidadas", "CuentaConsolidada", "Reportes")</li>
                                     }
                                     @if (rol.ReportePuntoVenta)
                                     {
                                     <li>@Html.ActionLink("Inv. Punto de venta", "InventarioXPuntoVenta", "Reportes")</li>
+                                    <li>@Html.ActionLink("Calculo de comisiones", "Comisiones", "Reportes")</li>
                                     }
                                     @if (rol.ReportePrecioVenta)
                                     {
@@ -231,7 +233,7 @@
                                     }
                                     @if (rol.ReporteCallCenter)
                                     {
-                                    <li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>
+                                    @*<li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>*@
                                     }
                                     @if (rol.ReporteCorteCaja)
                                     {
@@ -241,7 +243,6 @@
                                     {
                                     <li>@Html.ActionLink("Gasto Por Vehiculo", "GastoVehicular", "Reportes")</li>
                                     }
-                                    <li>@Html.ActionLink("Calculo de comisiones", "Comisiones", "Reportes")</li>
                                 </ul>
                             </li>
                         }                       

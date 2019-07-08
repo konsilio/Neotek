@@ -28,7 +28,7 @@ namespace Application.MainModule.AccesoADatos
                 {
                     uow.Repository<CuentaContableAutorizado>().Insert(entidad);
                     uow.SaveChanges();
-                    _respuesta.Id = entidad.IdCuentaContable;
+                    _respuesta.Id = entidad.IdCuentaContableAutorizado;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
@@ -78,7 +78,11 @@ namespace Application.MainModule.AccesoADatos
         }
         public CuentaContableAutorizado Buscar(int id)
         {
-            return uow.Repository<CuentaContableAutorizado>().GetSingle(x => x.IdCuentaContable.Equals(id));
+            return uow.Repository<CuentaContableAutorizado>().GetSingle(x => x.IdCuentaContableAutorizado.Equals(id));
+        }
+        public List<CuentaContableAutorizado> BuscarTodos(int id)
+        {
+            return uow.Repository<CuentaContableAutorizado>().Get(x => x.IdCuentaContable.Equals(id)).ToList();
         }
         public CuentaContableAutorizado Buscar(int id, DateTime date)
         {

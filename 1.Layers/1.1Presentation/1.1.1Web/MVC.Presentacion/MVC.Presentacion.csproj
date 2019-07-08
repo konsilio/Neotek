@@ -410,6 +410,7 @@
     <Compile Include="Models\Reporte\Comision\ComisionDTO.cs" />
     <Compile Include="Models\Reporte\CorteCaja\CorteCajaDTO.cs" />
     <Compile Include="Models\Reporte\CorteCaja\CorteCajaModel.cs" />
+    <Compile Include="Models\Reporte\CuentasConsolodadas\CuentaConsolodadaDTO.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarDTO.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarModel.cs" />
     <Compile Include="Models\Reporte\DashBoard\AdministracionDTO.cs" />
@@ -11690,6 +11691,8 @@
     <Content Include="Views\Clientes\_Clientes.cshtml" />
     <Content Include="Views\Reportes\Comisiones.cshtml" />
     <Content Include="Views\CuentaContable\CuentaContableAutorizado.cshtml" />
+    <Content Include="Views\CuentaContable\_CuentasContables.cshtml" />
+    <Content Include="Views\Reportes\CuentaConsolidada.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
