@@ -1,5 +1,7 @@
 package com.neotecknewts.sagasapp.Presenter;
 
+import android.content.Context;
+
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Activity.BuscarClienteView;
 import com.neotecknewts.sagasapp.Interactor.BuscarClienteInteractor;
@@ -9,9 +11,9 @@ import com.neotecknewts.sagasapp.Model.DatosClientesDTO;
 public class BuscarClientePresenterImpl implements BuscarClientePresenter {
     BuscarClienteView view;
     BuscarClienteInteractor interactor;
-    public BuscarClientePresenterImpl(BuscarClienteView view) {
+    public BuscarClientePresenterImpl(BuscarClienteView view, Context context) {
         this.view = view;
-        this.interactor = new BuscarClienteInteractorImpl(this);
+        this.interactor = new BuscarClienteInteractorImpl(this, context);
     }
 
     @Override

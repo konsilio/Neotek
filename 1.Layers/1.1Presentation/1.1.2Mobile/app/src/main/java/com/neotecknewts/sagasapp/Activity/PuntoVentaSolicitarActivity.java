@@ -20,11 +20,12 @@ import com.neotecknewts.sagasapp.Util.Constantes;
 import com.neotecknewts.sagasapp.Util.Session;
 import com.neotecknewts.sagasapp.Util.Utilidades;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PuntoVentaSolicitarActivity extends AppCompatActivity implements PuntoVentaSolicitarView {
-    boolean EsVentaCarburacion,EsVentaCamioneta,EsVentaPipa;
+    boolean EsVentaCarburacion, EsVentaCamioneta, EsVentaPipa;
     boolean esGasLP;
     TextView PuntoVentaSolicitarActivityTitulo;
     Button BtnPuntoVentaSolicitarActivitySeguirSinNumero,
@@ -34,28 +35,30 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
     ProgressDialog progressDialog;
     VentaDTO ventaDTO;
     PuntoVentaSolicitarPresenter presenter;
+
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punto_venta_solicitar);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null){
-            EsVentaCarburacion = bundle.getBoolean("EsVentaCarburacion",false);
-            EsVentaCamioneta = bundle.getBoolean("EsVentaCamioneta",false);
-            EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
-            esGasLP = bundle.getBoolean("esGasLP",false);
+        if (bundle != null) {
+            EsVentaCarburacion = bundle.getBoolean("EsVentaCarburacion", false);
+            EsVentaCamioneta = bundle.getBoolean("EsVentaCamioneta", false);
+            EsVentaPipa = bundle.getBoolean("EsVentaPipa", false);
+            esGasLP = bundle.getBoolean("esGasLP", false);
 
         }
-        presenter = new PuntoVentaSolicitarPresenterImpl(this);
+        presenter = new PuntoVentaSolicitarPresenterImpl(this, PuntoVentaSolicitarActivity.this);
         Session session = new Session(this);
-        presenter.hayCorte(session.getToken());
+        if (isOnline())
+            presenter.hayCorte(session.getToken());
         PuntoVentaSolicitarActivityTitulo = findViewById(R.id.PuntoVentaSolicitarActivityTitulo);
         /*BtnPuntoVentaSolicitarActivitySeguirSinNumero = findViewById(R.id.
                 BtnPuntoVentaSolicitarActivitySeguirSinNumero);*/
         BtnPuntoVentaSolicitarActivityRegistrarCliente = findViewById(R.id.
                 BtnPuntoVentaSolicitarActivityRegistrarCliente);
-        BtnPuntoVentaSolicitarActivityBuscarCliente= findViewById(R.id.
+        BtnPuntoVentaSolicitarActivityBuscarCliente = findViewById(R.id.
                 BtnPuntoVentaSolicitarActivityBuscarCliente);
         ETPuntoVentaSolicitarActivityBuscador = findViewById(R.id.
                 ETPuntoVentaSolicitarActivityBuscador);
@@ -67,33 +70,33 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
                 new SimpleDateFormat("yyyyMMddhhmmss");*/
         SimpleDateFormat s =
                 new SimpleDateFormat("MMddhhmmss");
-        if(EsVentaCamioneta){
+        if (EsVentaCamioneta) {
             //String codigo = s.format(actual)+"VC"+getRandomString(4);
-            String codigo = String.valueOf(actual.getYear())+
+            String codigo = String.valueOf(actual.getYear()) +
                     Integer.toHexString(Integer.parseInt(s.format(actual)));
-            Log.w("codigo",codigo);
+            Log.w("codigo", codigo);
             ventaDTO.setFolioVenta(codigo.toUpperCase());
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.Camioneta));
-        }else if(EsVentaCarburacion){
+        } else if (EsVentaCarburacion) {
             //String codigo = s.format(new Date())+"VEC"+getRandomString(4);
-            String codigo = String.valueOf(actual.getYear())+
+            String codigo = String.valueOf(actual.getYear()) +
                     Integer.toHexString(Integer.parseInt(s.format(actual)));
-            Log.w("codigo",codigo);
+            Log.w("codigo", codigo);
             ventaDTO.setFolioVenta(codigo.toUpperCase());
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.Estacion));
-        }else if(EsVentaPipa){
+        } else if (EsVentaPipa) {
             //String codigo = s.format(new Date())+"VEC"+getRandomString(4);
-            String codigo = String.valueOf(actual.getYear())+
+            String codigo = String.valueOf(actual.getYear()) +
                     Integer.toHexString(Integer.parseInt(s.format(actual)));
-            Log.w("codigo",codigo);
+            Log.w("codigo", codigo);
             ventaDTO.setFolioVenta(codigo.toUpperCase());
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.pipa));
         }
-        Log.w("FolioVenta",ventaDTO.getFolioVenta());
+        Log.w("FolioVenta", ventaDTO.getFolioVenta());
 
         //BtnPuntoVentaSolicitarActivitySeguirSinNumero.setOnClickListener(v -> SeguirSinNumero());
         BtnPuntoVentaSolicitarActivityRegistrarCliente.setOnClickListener(v -> RegistrarCliente());
-        BtnPuntoVentaSolicitarActivityBuscarCliente.setOnClickListener(v-> Buscar());
+        BtnPuntoVentaSolicitarActivityBuscarCliente.setOnClickListener(v -> Buscar());
     }
 
     @Override
@@ -109,7 +112,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         ventaDTO.setEsSinNumero(true);
         ventaDTO.setEsRegistro(false);
         ventaDTO.setEsBusqueda(false);
-        if(EsVentaCamioneta) {
+        if (EsVentaCamioneta) {
             Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                     VentaGasActivity.class);
             intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
@@ -117,7 +120,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("ventaDTO", ventaDTO);
             startActivity(intent);
-        }else if(EsVentaCarburacion){
+        } else if (EsVentaCarburacion) {
             Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                     PuntoVentaGasListaActivity.class);
             intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
@@ -126,7 +129,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
             intent.putExtra("ventaDTO", ventaDTO);
             startActivity(intent);
 
-        }else  if (EsVentaPipa){
+        } else if (EsVentaPipa) {
             Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                     PuntoVentaGasListaActivity.class);
             intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
@@ -146,17 +149,17 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         ventaDTO.setEsBusqueda(false);
         Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                 RegistroClienteActivity.class);
-        intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
-        intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
-        intent.putExtra("EsVentaPipa",EsVentaPipa);
-        intent.putExtra("ventaDTO",ventaDTO);
-        intent.putExtra("esGasLP",esGasLP);
+        intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+        intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+        intent.putExtra("EsVentaPipa", EsVentaPipa);
+        intent.putExtra("ventaDTO", ventaDTO);
+        intent.putExtra("esGasLP", esGasLP);
         startActivity(intent);
     }
 
     @Override
     public void Buscar() {
-        if(ETPuntoVentaSolicitarActivityBuscador.getText().length()>0) {
+        if (ETPuntoVentaSolicitarActivityBuscador.getText().length() > 0) {
             ventaDTO.setFecha(Utilidades.getCurrentDate(Constantes.FORMATO_FECHA_API));
             ventaDTO.setSinNumero(false);
             ventaDTO.setEsSinNumero(false);
@@ -168,8 +171,8 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
             intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("criterio", ETPuntoVentaSolicitarActivityBuscador.getText().toString());
-            intent.putExtra("ventaDTO",ventaDTO);
-            intent.putExtra("esGasLP",esGasLP);
+            intent.putExtra("ventaDTO", ventaDTO);
+            intent.putExtra("esGasLP", esGasLP);
             startActivity(intent);
         }
     }
@@ -185,16 +188,16 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
 
     @Override
     public void onError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
-        builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
+        builder.setPositiveButton(R.string.message_acept, ((dialog, which) -> dialog.dismiss()));
         builder.create().show();
     }
 
     @Override
     public void onHiddeProgress() {
-        if(progressDialog!= null && progressDialog.isShowing()){
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.hide();
             progressDialog.dismiss();
         }
@@ -202,22 +205,37 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
 
     @Override
     public void onResultVerificaCorte(RespuestaCortesAntesVentaDTO data) {
-        if(data!=null){
-                if(data.isHayCorte()){
-                    AlertDialog.Builder builder = new
-                            AlertDialog.Builder(this,R.style.AlertDialog);
-                    builder.setTitle(R.string.error_titulo);
-                    builder.setMessage("Ya se ha realizado un corte del día de hoy por lo cual "+
-                    " no se pueden realizar mas ventas ");
-                    builder.setCancelable(false);
-                    builder.setPositiveButton(
-                            R.string.message_acept,
-                            (dialog, which) -> {
-                                this.finish();
-                            }
-                    );
-                    builder.create().show();
-                }
+        if (data != null) {
+            if (data.isHayCorte()) {
+                AlertDialog.Builder builder = new
+                        AlertDialog.Builder(this, R.style.AlertDialog);
+                builder.setTitle(R.string.error_titulo);
+                builder.setMessage("Ya se ha realizado un corte del día de hoy por lo cual " +
+                        " no se pueden realizar mas ventas ");
+                builder.setCancelable(false);
+                builder.setPositiveButton(+
+                                R.string.message_acept,
+                        (dialog, which) -> {
+                            this.finish();
+                        }
+                );
+                builder.create().show();
+            }
         }
+    }
+
+    public boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

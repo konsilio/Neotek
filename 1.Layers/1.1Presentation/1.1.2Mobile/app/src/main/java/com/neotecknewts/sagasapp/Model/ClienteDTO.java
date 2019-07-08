@@ -1,11 +1,11 @@
 /**
  * ClienteDTO
  * Modelo dto de los datos del cliebre para el registro y listado de clientes del buscador
+ *
  * @developer Jorge Omar Tovar Martínez jorge.tovar@neoteck.com.mx
  * @company Neoteck
  * @date 28/11/2018
  * @update 28/11/2018
- *
  */
 package com.neotecknewts.sagasapp.Model;
 
@@ -155,6 +155,25 @@ public class ClienteDTO extends RespuestaDTO implements Serializable {
 
     public void setLimiteCredito(double limiteCredito) {
         LimiteCredito = limiteCredito;
+    }
+
+    public ClienteDTO(int idCliente, int idTipoPersona, int idTipoRegimen, String nombre, String apellido_uno, String apellido_dos, String celular, String telefono_fijo, String RFC, String razonSocial, int credito, int factura, double limiteCredito) {
+        this.IdCliente = idCliente;
+        this.IdTipoPersona = idTipoPersona;
+        this.IdTipoRegimen = idTipoRegimen;
+        this.Nombre = nombre;
+        this.Apellido_uno = apellido_uno;
+        this.Apellido_dos = apellido_dos;
+        this.Celular = celular;
+        this.Telefono_fijo = telefono_fijo;
+        this.RFC = RFC;
+        this.RazonSocial = razonSocial;
+        this.Credito = credito==1?true:false;
+        this.Factura = factura==1?true:false;
+        this.LimiteCredito = limiteCredito;
+    }
+
+    public ClienteDTO() {
     }
 
     @Override
