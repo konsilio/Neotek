@@ -220,7 +220,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             );
         }
         //endregion
-
+    //endregion
         presenter.getListaCamionetaCilindros(session.getToken(),
                 esGasLP, esCilindroGas, esCilindro);
         //Agrego la lista de conceptos que viene actualmente
