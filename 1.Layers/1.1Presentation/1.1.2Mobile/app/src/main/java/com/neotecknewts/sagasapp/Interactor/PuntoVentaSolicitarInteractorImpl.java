@@ -1,6 +1,8 @@
 package com.neotecknewts.sagasapp.Interactor;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.neotecknewts.sagasapp.Model.RespuestaCortesAntesVentaDTO;
@@ -21,9 +23,18 @@ import retrofit2.Response;
 
 public class PuntoVentaSolicitarInteractorImpl implements PuntoVentaSolicitarInteractor {
     PuntoVentaSolicitarPresenter presenter;
-
-    public PuntoVentaSolicitarInteractorImpl(PuntoVentaSolicitarPresenter presenter) {
+    Context context;
+    public PuntoVentaSolicitarInteractorImpl(PuntoVentaSolicitarPresenter presenter, Context context) {
         this.presenter = presenter;
+        this.context = context;
+    }
+
+    public void saveSiHayCorte(boolean siHay){
+        SharedPreferences prefs = this.context.getSharedPreferences("CORTE", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("siHay", siHay);
+        editor.commit();
     }
 
     @Override
@@ -47,6 +58,7 @@ public class PuntoVentaSolicitarInteractorImpl implements PuntoVentaSolicitarInt
                 RespuestaCortesAntesVentaDTO data = response.body();
                 if (response.isSuccessful()) {
                     Log.w("Estatus","Success");
+                    saveSiHayCorte(data.isHayCorte());
                     presenter.onSuccess(data);
                 }
                 else {

@@ -1,11 +1,13 @@
 package com.neotecknewts.sagasapp.Interactor;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.neotecknewts.sagasapp.Model.DatosClientesDTO;
 import com.neotecknewts.sagasapp.Presenter.BuscarClientePresenter;
 import com.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.neotecknewts.sagasapp.Presenter.Rest.RestClient;
+import com.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,8 +15,11 @@ import retrofit2.Response;
 
 public class BuscarClienteInteractorImpl implements BuscarClienteInteractor {
     BuscarClientePresenter presenter;
-    public BuscarClienteInteractorImpl(BuscarClientePresenter presenter) {
+    private SAGASSql sagasSql;
+
+    public BuscarClienteInteractorImpl(BuscarClientePresenter presenter, Context context) {
         this.presenter = presenter;
+        this.sagasSql = new SAGASSql(context);
     }
 
     @Override
@@ -34,8 +39,10 @@ public class BuscarClienteInteractorImpl implements BuscarClienteInteractor {
             @Override
             public void onResponse(Call<DatosClientesDTO> call, Response<DatosClientesDTO> response) {
                 DatosClientesDTO data = response.body();
+
                 if (response.isSuccessful()) {
                     Log.w("Estatus","Success");
+                    sagasSql.InsertClients(data.getList());
                     presenter.onSuccess(data);
                 }
                 else {
