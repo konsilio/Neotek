@@ -14,6 +14,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return new CuentaContableAutorizado()
             {
+                IdCuentaContableAutorizado = dto.IdCuentaContableAutorizado,
                 IdCuentaContable = dto.IdCuentaContable,
                 Autorizado = dto.Autorizado,
                 Fecha = dto.Fecha,
@@ -27,6 +28,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return new CuentaContableAutorizadoDTO()
             {
+                IdCuentaContableAutorizado = Entidad.IdCuentaContableAutorizado,
                 IdCuentaContable = Entidad.IdCuentaContable,
                 Autorizado = Entidad.Autorizado,
                 Fecha = Entidad.Fecha,
@@ -40,6 +42,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return new CuentaContableAutorizado()
             {
+                IdCuentaContableAutorizado = Entidad.IdCuentaContableAutorizado,
                 IdCuentaContable = Entidad.IdCuentaContable,
                 Autorizado = Entidad.Autorizado,
                 Fecha = Entidad.Fecha,

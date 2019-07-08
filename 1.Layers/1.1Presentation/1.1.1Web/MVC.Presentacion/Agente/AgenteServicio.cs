@@ -137,6 +137,7 @@ namespace MVC.Presentacion.Agente
         public List<GastoVehiculoDTO> _ListaGastoVehicular;
         public List<ComisionDTO> _ListaComisiones;
         public List<CuentaContableAutorizadoDTO> _ListaCuentaContableAutorizado;
+        public List<CuentaConsolidadaDTO> _ListaCuentasConsolidadas;
 
         public AgenteServicio()
         {
@@ -5675,6 +5676,41 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _ListaComisiones = list;
+            }
+        }
+        #endregion
+        #region Cuentas Consolidadas
+        public void CuentasConsolidadas(CuentasPorPagarModel model, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostCuentasConsolodadas"];
+            PostCuentasConsolidadas(model, tkn).Wait();
+        }
+        private async Task PostCuentasConsolidadas(CuentasPorPagarModel model, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CuentaConsolidadaDTO> list = new List<CuentaConsolidadaDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRoute, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<CuentaConsolidadaDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<CuentaConsolidadaDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaCuentasConsolidadas = list;
             }
         }
         #endregion

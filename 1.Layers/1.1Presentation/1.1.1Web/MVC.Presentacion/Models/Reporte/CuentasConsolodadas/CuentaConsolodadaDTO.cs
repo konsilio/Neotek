@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Application.MainModule.DTOs
+namespace MVC.Presentacion.Models
 {
-    public class CuentasConsolidadasDTO
+    public class CuentaConsolidadaDTO
     {
         public string Concepto { get; set; }
         public decimal CantidadAutorizada { get; set; }

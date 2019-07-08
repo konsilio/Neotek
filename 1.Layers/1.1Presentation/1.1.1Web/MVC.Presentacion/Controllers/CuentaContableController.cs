@@ -124,7 +124,6 @@ namespace MVC.Presentacion.Controllers
                 model.Autorizado = 0;
                 return View(model);
             }
-
         }
         public ActionResult CrearAutorizado(CuentaContableAutorizadoDTO model)
         {
@@ -142,6 +141,13 @@ namespace MVC.Presentacion.Controllers
             }
             else
                 return View(AutenticacionServicio.InitIndex(new LoginModel()));
+        }
+        public ActionResult Grid()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+       
+            return PartialView("_CuentasContables", CatalogoServicio.ListaCtaCtble(tkn));
         }
         private string Validar(RespuestaDTO Resp = null)
         {

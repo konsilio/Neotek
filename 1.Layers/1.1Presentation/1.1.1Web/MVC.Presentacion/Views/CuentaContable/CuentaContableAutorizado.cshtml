@@ -1,8 +1,4 @@
 ﻿@model MVC.Presentacion.Models.CuentaContableAutorizadoDTO
-@{
-    Layout = null;
-}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,14 +27,14 @@
                     </div>
                     <div class="card">
                         <div class="header">
-                            <b><strong>Insertar Cuenta contable</strong></b>
+                            <b><strong>Ingrese la cantidad Autorizada del punto de equilibrio</strong></b>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-md-4">
+                                    <b>Descripción</b>
                                     <div class="form-group">
-                                        <b>Descripcion</b>
-                                        @Model.DescripcionCuenta
+                                       @Html.LabelFor(m => m.DescripcionCuenta, Model.DescripcionCuenta)
                                     </div>
                                     <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
                                 </div>
@@ -52,18 +48,9 @@
                                 <div class="col-md-1">
                                     <b>&nbsp; </b>
                                     <div class="form-group">
-                                        @if (ViewBag.EsEdicion == null)
-                                        {
-                                            <button btn id="BtnCrear" formaction="CrearAutorizado" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
-                                                <i class="zmdi zmdi-plus"></i>
-                                            </button>
-                                        }
-                                        else
-                                        {
-                                            <button btn id="btnUpDate" formaction="ModificarAutorizado" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
-                                                <i class="zmdi zmdi-swap"></i>
-                                            </button>
-                                        }
+                                        <button btn id="BtnCrear"  type="submit" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

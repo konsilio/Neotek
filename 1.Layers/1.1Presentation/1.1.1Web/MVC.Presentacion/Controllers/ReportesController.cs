@@ -177,6 +177,20 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
+        public ActionResult CuentaConsolidada(CuentasPorPagarModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
+            if (model != null && !model.Periodo.Equals(DateTime.MinValue))
+            {
+                ViewData["Periodo"] = model.Periodo;
+                ViewData["Reporte"] = TiposReporteConst.CuentaConsolidada;
+                TempData["DataSource"] = ReporteServicio.CuentasConsolidadas(model, tkn);
+            }
+            return View(model);
+        }
 
         //Cubo de inforamcion
         public ActionResult GetGridView(string Tipo)
@@ -208,6 +222,8 @@ namespace MVC.Presentacion.Controllers
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<GastoVehiculoDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.Comision))
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<ComisionDTO>)TempData["DataSource"]);
+            if (Tipo.Equals(TiposReporteConst.CuentaConsolidada))
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<CuentaConsolidadaDTO>)TempData["DataSource"]);
             return View(TiposReporteConst.CuboInformacionGeneral);
         }
     }

@@ -20,5 +20,6 @@ namespace MVC.Presentacion.Models
         public static string CorteCaja = "CorteCaja";
         public static string GastoVehicular = "GastoXVehiculo";
         public static string Comision = "Comisiones";
+        public static string CuentaConsolidada = "CuentaConsolidada";
     }
 }
