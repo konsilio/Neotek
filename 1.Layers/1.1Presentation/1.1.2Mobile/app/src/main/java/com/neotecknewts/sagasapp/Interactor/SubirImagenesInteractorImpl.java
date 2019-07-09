@@ -273,6 +273,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
                                        Response<RespuestaIniciarDescargaDTO> response) {
                     RespuestaIniciarDescargaDTO data = response.body();
+                    Log.d("Ali","Estatus: " + response.code());
 
                     if (response.isSuccessful()&& data.isExito()) {
                         Log.w("IniciarDescarga", "Success");

@@ -182,4 +182,25 @@ public class IniciarDescargaDTO implements Serializable {
     public void setFechaDescarga(String fechaDescarga) {
         FechaDescarga = fechaDescarga;
     }
+
+    @Override
+    public String toString() {
+        return "IniciarDescargaDTO{" +
+                "IdOrdenCompra=" + IdOrdenCompra +
+                ", NombreTipoMedidorTractor='" + NombreTipoMedidorTractor + '\'' +
+                ", NombreTipoMedidorAlmacen='" + NombreTipoMedidorAlmacen + '\'' +
+                ", IdTipoMedidorTractor=" + IdTipoMedidorTractor +
+                ", IdTipoMedidorAlmacen=" + IdTipoMedidorAlmacen +
+                ", CantidadFotosAlmacen=" + CantidadFotosAlmacen +
+                ", CantidadFotosTractor=" + CantidadFotosTractor +
+                ", TanquePrestado=" + TanquePrestado +
+                ", PorcentajeMedidorAlmacen=" + PorcentajeMedidorAlmacen +
+                ", PorcentajeMedidorTractor=" + PorcentajeMedidorTractor +
+                ", IdAlmacen=" + IdAlmacen +
+                ", Imagenes=" + Imagenes +
+                ", ImagenesURI=" + ImagenesURI +
+                ", ClaveOperacion='" + ClaveOperacion + '\'' +
+                ", FechaDescarga='" + FechaDescarga + '\'' +
+                '}';
+    }
 }
