@@ -431,7 +431,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
-            var model = PedidosServicio.ObtenerPedidos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            var model = PedidosServicio.ObtenerPedidos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).OrderByDescending(x => x.FechaRegistroPedido);
             return PartialView("_Pedidos", model);
         }
         #region Combos
