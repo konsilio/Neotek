@@ -51,18 +51,11 @@ namespace MVC.Presentacion.Controllers
         [HttpPost]
         public ActionResult Registrar(PrecioVentaModel _ObjModel)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             string _tok = Session["StringToken"].ToString();
-
             var respuesta = CatalogoServicio.RegistrarPrecio(_ObjModel, _tok);
-
-            if (respuesta.Exito)
-            {
-                //TempData["RespuestaDTO"] = "Cambio Exitoso";
-                //TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index", _ObjModel);
-            }
-
+            if (respuesta.Exito)      
+                return RedirectToAction("Index", _ObjModel);    
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
@@ -72,7 +65,7 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult EditarPrecioVentaOtro(short id)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
@@ -86,13 +79,9 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tok = Session["StringToken"].ToString();
-
             var respuesta = CatalogoServicio.ModificarPrecioVenta(_Obj, _tok);
-
             if (respuesta.Exito)
-            {
-                //TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
+            {              
                 return RedirectToAction("Index", _Obj);
             }
 

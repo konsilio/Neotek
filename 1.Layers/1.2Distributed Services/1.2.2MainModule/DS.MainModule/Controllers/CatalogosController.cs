@@ -551,29 +551,45 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_catalogos.RegistraCuentaContable(cuentaDto), Request);
         }
-
         [Route("modifica/cuenta/contable")]
         public HttpResponseMessage PutModificaCuentaContable(CuentaContableModificarDto cuentaDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ModificaCuentaContable(cuentaDto), Request);
         }
-
         [Route("elimina/cuenta/contable")]
         public HttpResponseMessage PutEliminaCuentaContable(CuentaContableEliminarDto cuentaDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaCuentaContable(cuentaDto), Request);
         }
-
         [Route("consulta/cuentas/contables")]
         public HttpResponseMessage GetListaCuentasContables()
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ConsultaCuentasContables(), Request);
         }
-
         [Route("consulta/cuenta/contable/{idCuenta}")]
         public HttpResponseMessage GetCuentaContable(int idCuenta)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCuentaContable(idCuenta));
+        }
+        [Route("registra/cuenta/contableautorizado")]
+        public HttpResponseMessage PostRegistraCuentaContableAutorizado(CuentaContableAutorizadoDTO cuentaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraCuentaContableAutorizado(cuentaDto), Request);
+        }
+        [Route("modifica/cuenta/contableautorizado")]
+        public HttpResponseMessage PutModificaCuentaContableAutorizado(CuentaContableAutorizadoDTO cuentaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaCuentaContableAutorizado(cuentaDto), Request);
+        }      
+        [Route("consulta/cuentas/contablesautorizado")]
+        public HttpResponseMessage GetListaCuentasContablesAutorizado()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ConsultaCuentasContablesAutorizado(), Request);
+        }
+        [Route("consulta/cuenta/contableautorizado/{idCuenta}")]
+        public HttpResponseMessage GetCuentaContableAutorizado(int idCuenta)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCuentaContableAutorizado(idCuenta));
         }
         #endregion
 

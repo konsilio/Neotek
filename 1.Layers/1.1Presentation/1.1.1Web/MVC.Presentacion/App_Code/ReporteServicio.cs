@@ -81,5 +81,11 @@ namespace MVC.Presentacion.App_Code
             agenteServico.CalcularComisiones(model, tkn);
             return agenteServico._ListaComisiones;
         }
+        public static List<CuentaConsolidadaDTO> CuentasConsolidadas(CuentasPorPagarModel model, string tkn)
+        {
+            AgenteServicio agenteServico = new AgenteServicio();
+            agenteServico.CuentasConsolidadas(model, tkn);
+            return agenteServico._ListaCuentasConsolidadas;
+        }
     }
 }

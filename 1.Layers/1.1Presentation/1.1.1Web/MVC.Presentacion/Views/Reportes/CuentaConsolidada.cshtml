@@ -1,5 +1,6 @@
 ﻿@using MVC.Presentacion.Models;
 @model CuentasPorPagarModel
+
 @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -11,15 +12,7 @@
         new Script { ExtensionSuite = ExtensionSuite.Editors },
         new Script { ExtensionSuite = ExtensionSuite.GridView }
     )
-<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
-<script src="~/assets/js/pages/ui/notifications.js"></script>
-<script type="text/javascript">
-    var mensaje = '@ViewBag.Msj';
-    if (mensaje != '') {
-        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
-    }
 
-</script>
 <body>
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -29,7 +22,7 @@
     </div>
     <section class="content home">
         <div class="container-fluid">
-            @using (Html.BeginForm("CuentasXPagar", "Reportes", FormMethod.Post))
+            @using (Html.BeginForm("CuentaConsolidada", "Reportes", FormMethod.Post))
             {
                 <div class="block-header">
                     <div class="row clearfix">
@@ -38,7 +31,7 @@
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Reportes</li>
-                                <li class="breadcrumb-item">Cuentas por pagar</li>
+                                <li class="breadcrumb-item">Punto de Equilibrio</li>
                             </ul>
                         </div>
                     </div>
@@ -67,15 +60,15 @@
                                 </div>
                             </div>
                             <div class="row clearfix">
-                                <div class="blockquote blockquote-info btn-round">
+                                <div class="col-md-12 blockquote blockquote-info btn-round">
                                     <div class="table-responsive">
                                         @if (TempData["DataSource"] != null)
                                         {
-                                            @Html.Partial("_CuboDeInformacionPartial", (List<CuentasPorPagarDTO>)TempData["DataSource"])
+                                            @Html.Partial("_CuboDeInformacionPartial", (List<CuentaConsolidadaDTO>)TempData["DataSource"])
                                         }
                                         else
                                         {
-                                            @Html.Partial("_CuboDeInformacionPartial", new List<CuentasPorPagarDTO>())
+                                            @Html.Partial("_CuboDeInformacionPartial", new List<CuentaConsolidadaDTO>())
                                         }
                                     </div>
                                 </div>

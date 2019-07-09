@@ -120,5 +120,6 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<UsoCFDI> UsoCFDI { get; set; }
         public virtual DbSet<HistoricoVentas> HistoricoVentas { get; set; }
         public virtual DbSet<Bitacora> Bitacora { get; set; }
+        public virtual DbSet<CuentaContableAutorizado> CuentaContableAutorizado { get; set; }
     }
 }
