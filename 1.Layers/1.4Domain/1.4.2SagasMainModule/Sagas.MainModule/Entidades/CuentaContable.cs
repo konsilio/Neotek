@@ -22,6 +22,7 @@ namespace Sagas.MainModule.Entidades
             this.Clientes = new HashSet<Cliente>();
             this.Egreso = new HashSet<Egreso>();
             this.Ingreso = new HashSet<Ingreso>();
+            this.CuentaContableAutorizado = new HashSet<CuentaContableAutorizado>();
         }
     
         public int IdCuentaContable { get; set; }
@@ -42,5 +43,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<Egreso> Egreso { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ingreso> Ingreso { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CuentaContableAutorizado> CuentaContableAutorizado { get; set; }
     }
 }

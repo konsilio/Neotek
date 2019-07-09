@@ -73,6 +73,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepComisiones(dto));
         }
+        [Route("cuentasconsolidadas")]
+        public HttpResponseMessage PostCuentasConsolodadas(CuentasPorPagarDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCuentasConsolidadas(dto.Periodo));
+        }
         [Route("dashboard/remanente")]
         public HttpResponseMessage GetDashRemanente()
         {
