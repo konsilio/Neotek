@@ -137,16 +137,16 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 Cantidad30 = cant30,
                 Cantidad45 = cant45,
                 MotivoCancelacion = p.MotivoCancelacion,
-                Telefono1 = cliente.Telefono1 ??cliente.Telefono,
+                Telefono1 = cliente.Telefono1 ?? cliente.Telefono,
                 Rfc = cliente.Rfc,
-                Calle = clienteL.Calle,
+                Calle = string.Concat(clienteL.Calle, " Num. Ext: ", clienteL.NumExt, " Nun. Int: ", clienteL.NumInt),
                 Colonia = clienteL.Colonia,
                 NombreRfc = cliente.Nombre + " " + cliente.Apellido1 + " " + cliente.Apellido2,
                 ReferenciaUbicacion = cliente.Locaciones.FirstOrDefault().formatted_address,
                 encuesta = pe.Count > 0 ? FromDto(pe) : FromInit(p.IdPedido),
                 //Pedidos = FromDtoDetalle(pd),
                 //cliente = ClientesAdapter.ToDTO(cliente),
-            };
+            };           
             return usDTO;
         }
         public static CamionetaDTO ToDTO(Camioneta p)

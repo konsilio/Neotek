@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Application.MainModule.DTOs.Almacen
+namespace MVC.Presentacion.Models
 {
-    public class RemanentePuntoVentaDTO
+    public class RemanentePtoVentaDTO
     {
         public short IdEmpresa { get; set; }
         public int IdPuntoVenta { get; set; }

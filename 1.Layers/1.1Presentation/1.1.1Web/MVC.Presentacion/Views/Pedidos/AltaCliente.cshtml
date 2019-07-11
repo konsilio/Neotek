@@ -15,7 +15,7 @@
 
 <html>
 <head>
-    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+
     <script src="~/Resources/js/Clientes.js"></script>
     <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
     <script type="text/javascript">
@@ -114,46 +114,37 @@
                         </div>
                     </div>
                 }
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong>Fiscales</strong></h2>
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Fiscales</strong></h2>
+                    </div>
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <b>Tipo Persona:*</b>
+                                    @Html.DevExpress().ComboBox(settings =>
+                                           {
+                                               settings.Name = "cliente.IdTipoPersona";
+                                               settings.Width = 180;
+                                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                               settings.Theme = "Material";
+                                               settings.Properties.TextField = "Descripcion";
+                                               settings.Properties.ValueField = "IdTipoPersona";
+                                               settings.ClientEnabled = true;
+                                               settings.SelectedIndex = 0;
+                                               settings.Properties.ValueType = typeof(byte);
+                                               settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                           }).BindList(ViewBag.TipoPersona).Bind(Model.cliente.IdTipoPersona).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.cliente.IdTipoPersona, "", new { @class = "alert-danger" })
+                                </div>
                             </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <b>Tipo Persona:*</b>
-                                            @*<select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
-                                                        <option value="0">Seleccione</option>
-                                                        @foreach (var lst in ViewBag.TipoPersona)
-                                                    {
-                                                <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
-                                                    }
-                                                    </select>*@
-                                            @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "cliente.IdTipoPersona";
-                                           settings.Width = 180;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Theme = "Material";
-                                           settings.Properties.TextField = "Descripcion";
-                                           settings.Properties.ValueField = "IdTipoPersona";
-                                           settings.ClientEnabled = true;
-                                           settings.SelectedIndex = 0;
-                                           settings.Properties.ValueType = typeof(byte);
-                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
-                                       }).BindList(ViewBag.TipoPersona).Bind(Model.cliente.IdTipoPersona).GetHtml()
-                                            @Html.ValidationMessageFor(m => m.cliente.IdTipoPersona, "", new { @class = "alert-danger" })
-                                        </div>
-                                    </div>
 
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <b> Régimen Fiscal:*</b>
-                                            @Html.DevExpress().ComboBox(settings =>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <b> Régimen Fiscal:*</b>
+                                    @Html.DevExpress().ComboBox(settings =>
                                        {
                                            settings.Name = "cliente.IdRegimenFiscal";
                                            settings.Width = 180;
@@ -171,112 +162,107 @@
                                                combo.SelectedIndex = Model.cliente.IdRegimenFiscal.Value;
                                            };
                                        }).BindList(ViewBag.Regimen).GetHtml()
-                                            @Html.ValidationMessageFor(m => m.cliente.IdRegimenFiscal, "", new { @class = "alert-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Teléfono:@Html.TextBoxFor(m => m.cliente.Telefono, new { @class = "form-control", @id = "txtTel" })
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @Html.ValidationMessageFor(m => m.cliente.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                 </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-8 col-md-8 col-sm-8">
-                                        <div class="form-group" id="hide_razonS" hidden="hidden">
-                                            Razón Social:*
-                                            @Html.TextBoxFor(m => m.cliente.RazonSocial, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.cliente.RazonSocial, "", new { @class = "alert-danger" })
-                                        </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <div>
+                                        Teléfono:@Html.TextBoxFor(m => m.cliente.Telefono, new { @class = "form-control", @id = "txtTel" })
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            RFC:*
-                                            @Html.TextBoxFor(m => m.cliente.Rfc, Model.cliente.Rfc, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.cliente.Rfc, "", new { @class = "alert-danger" })
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row clearfix" id="div_hideRP" hidden="hidden">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="card">
-                                            <div class="header">
-                                                <h2><strong>Representante Legal</strong></h2>
-                                            </div>
-                                            <div class="body">
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            Nombre Completo:@Html.TextBoxFor(m => m.cliente.RepresentanteLegal, new { @class = "form-control" })
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            Dirección:@Html.TextBoxFor(m => m.cliente.Domicilio, new { @class = "form-control", @id = "txtNomCom" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                                        <div class="form-group">
-                                                            Celular:@Html.TextBoxFor(m => m.cliente.Celular, new { @class = "form-control", @id = "txtTel" })
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            E-mail:@Html.TextBoxFor(m => m.cliente.CorreoElectronico, new { @class = "form-control", @id = "txtEmail" })
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row clearfix" id="div_hidePM">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            Nombres:* @Html.TextBoxFor(m => m.cliente.Nombre, new { @class = "form-control" })@*<input type="text" name="Nombre" class="form-control" />*@
-                                            @Html.ValidationMessageFor(m => m.cliente.Nombre, "", new { @class = "alert-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Apellido Paterno:*
-                                                @Html.TextBoxFor(m => m.cliente.Apellido1, new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(m => m.cliente.Apellido1, "", new { @class = "alert-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Apellido Materno:
-                                                @Html.TextBoxFor(m => m.cliente.Apellido2, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="form-group" id="hide_razonS" hidden="hidden">
+                                    Razón Social:*
+                                    @Html.TextBoxFor(m => m.cliente.RazonSocial, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.cliente.RazonSocial, "", new { @class = "alert-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    RFC:*
+                                    @Html.TextBoxFor(m => m.cliente.Rfc, Model.cliente.Rfc, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.cliente.Rfc, "", new { @class = "alert-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix" id="div_hideRP" hidden="hidden">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h2><strong>Representante Legal</strong></h2>
+                                    </div>
+                                    <div class="body">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    Nombre Completo:@Html.TextBoxFor(m => m.cliente.RepresentanteLegal, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    Dirección:@Html.TextBoxFor(m => m.cliente.Domicilio, new { @class = "form-control", @id = "txtNomCom" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div class="form-group">
+                                                    Celular:@Html.TextBoxFor(m => m.cliente.Celular, new { @class = "form-control", @id = "txtTel" })
+                                                </div>
+                                            </div>
 
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    E-mail:@Html.TextBoxFor(m => m.cliente.CorreoElectronico, new { @class = "form-control", @id = "txtEmail" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix" id="div_hidePM">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    Nombres:* @Html.TextBoxFor(m => m.cliente.Nombre, new { @class = "form-control" })@*<input type="text" name="Nombre" class="form-control" />*@
+                                    @Html.ValidationMessageFor(m => m.cliente.Nombre, "", new { @class = "alert-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <div>
+                                        Apellido Paterno:*
+                                        @Html.TextBoxFor(m => m.cliente.Apellido1, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.cliente.Apellido1, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <div>
+                                        Apellido Materno:
+                                        @Html.TextBoxFor(m => m.cliente.Apellido2, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+               
                         <div class="card">
                             <div class="header">
                                 <h2><strong>Condición del crédito y descuento</strong></h2>
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
                                         <div class="form-group">
                                             <div>
                                                 Autorizar ventas con límite de crédito excedido
@@ -328,8 +314,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">

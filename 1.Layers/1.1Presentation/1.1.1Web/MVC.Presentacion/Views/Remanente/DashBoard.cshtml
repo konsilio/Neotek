@@ -1,8 +1,8 @@
-﻿@model MVC.Presentacion.Models.Almacen.RemanenteModel
+﻿@using MVC.Presentacion.Models
+@model  MVC.Presentacion.Models.Almacen.RemanenteModel
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
         )
 @Html.DevExpress().GetScripts(
@@ -96,7 +96,7 @@
                                 <div class="col-md-2">
                                     <strong>Periodo</strong>
                                     @Html.DevExpress().DateEdit(settings =>
-                               {                                   
+                               {
                                    settings.Name = "Fecha";
                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                    settings.Properties.PickerType = DatePickerType.Months;
@@ -133,17 +133,17 @@
                                             {
                                                 foreach (var item in ViewBag.RemaGeneral)
                                                 {
-                                                   <tr>
-                                                       <td>@item.dia</td>
-                                                       <td>@item.InventarioInicial</td>
-                                                       <td>@item.AcumuladoCompras</td>
-                                                       <td>@item.Ventas</td>
-                                                       <td>@item.Carburacion</td>
-                                                       <td>@item.InventarioLibro</td>
-                                                       <td>@item.InventarioFisico</td>
-                                                       <td>@item.GasSobrante</td>
-                                                       <td>@item.RemanenteDecimal</td>
-                                                   </tr>
+                                                    <tr>
+                                                        <td>@item.dia</td>
+                                                        <td>@item.InventarioInicial</td>
+                                                        <td>@item.AcumuladoCompras</td>
+                                                        <td>@item.Ventas</td>
+                                                        <td>@item.Carburacion</td>
+                                                        <td>@item.InventarioLibro</td>
+                                                        <td>@item.InventarioFisico</td>
+                                                        <td>@item.GasSobrante</td>
+                                                        <td>@item.RemanenteDecimal</td>
+                                                    </tr>
                                                 }
                                             }
                                         </tbody>
@@ -151,14 +151,14 @@
                                 </div>
                             </div>
                             <div id="RemaneteGeneralDatos">
-                                
+
                                 <div class="row clearfix">
                                     <div class="col-md-3">Remanente Generado al :</div>
                                     <div class="col-md-3"> (Toneladas)</div>
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-md-3">Remanente de Venta</div>
-                                    <div class="col-md-3">$ 0.00</div>
+                                    <div class="col-md-3">$</div>
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-md-3">Remanente de Transporte</div>
@@ -176,6 +176,7 @@
                                     <div class="col-md-3">0.00</div>
                                 </div>
                             </div>
+
                             @*Remanente por unidad de venta*@
                             <div class="row clearfix blockquote blockquote-info btn-round" id="PuntoVentaTabla">
                                 <div class="table-responsive">
@@ -183,47 +184,32 @@
                                         <thead>
                                             <tr>
                                                 <td><strong>Nombre</strong></td>
-                                                <td><strong>01</strong></td>
-                                                <td><strong>02</strong></td>
-                                                <td><strong>03</strong></td>
-                                                <td><strong>04</strong></td>
-                                                <td><strong>05</strong></td>
-                                                <td><strong>06</strong></td>
-                                                <td><strong>07</strong></td>
-                                                <td><strong>08</strong></td>
-                                                <td><strong>09</strong></td>
-                                                <td><strong>10</strong></td>
-                                                <td><strong>11</strong></td>
-                                                <td><strong>12</strong></td>
-                                                <td><strong>13</strong></td>
-                                                <td><strong>14</strong></td>
-                                                <td><strong>15</strong></td>
-                                                <td><strong>16</strong></td>
-                                                <td><strong>17</strong></td>
-                                                <td><strong>18</strong></td>
-                                                <td><strong>19</strong></td>
-                                                <td><strong>20</strong></td>
-                                                <td><strong>21</strong></td>
-                                                <td><strong>22</strong></td>
-                                                <td><strong>23</strong></td>
-                                                <td><strong>24</strong></td>
-                                                <td><strong>25</strong></td>
-                                                <td><strong>26</strong></td>
-                                                <td><strong>27</strong></td>
-                                                <td><strong>28</strong></td>
-                                                <td><strong>29</strong></td>
-                                                <td><strong>30</strong></td>
-                                                <td><strong>31</strong></td>
+                                                @if (ViewBag.RemaPuntoVenta != null)
+                                                {
+                                                    foreach (var item in ViewBag.RemaPuntoVenta)
+                                                    {
+                                                        {
+                                                            <td><strong>@item.dia</strong></td>
+                                                        }
+                                                    }
+                                                }
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (ViewBag.RemaPuntoVenta != null)
-                                            {
-                                                foreach (var item in ViewBag.RemaPuntoVenta)
+                                            <tr>
+                                                @if (ViewBag.RemaPuntoVenta != null)
                                                 {
-                                                    
-                                                }
-                                            }
+                                                    <td>
+                                                        @ViewBag.NombrePuntoVenta
+                                                    </td>
+                                                    foreach (var item in ViewBag.RemaPuntoVenta)
+                                                    {
+                                                        <td>
+                                                            @item.Remanente
+                                                        </td>
+                                                    }
+                                                 }
+                                            </tr>
                                     </table>
                                 </div>
                             </div>
@@ -232,6 +218,5 @@
                 </div>
             </div>
         </section>
-    }
+   }
 </body>
-@*<script src="assets/js/pages/forms/advanced-form-elements.js"></script>*@

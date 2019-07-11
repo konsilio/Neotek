@@ -175,13 +175,13 @@ namespace Application.MainModule.Flujos
             var permiso = PermisosServicio.PuedeConsultarRemanenteGral();
             if (!permiso.Exito) return null;
             List<RemanenteGeneralDTO> remaGeneral = new List<RemanenteGeneralDTO>();
-                       
+
             var AlmacenPrincipal = AlmacenGasServicio.ObtenerAlmacenPrincipal(dto.IdEmpresa == (short)0 ? TokenServicio.ObtenerIdEmpresa() : dto.IdEmpresa);
             var lectura = AlmacenGasServicio.ObtenerLecturaIncialdelMes(AlmacenPrincipal.IdCAlmacenGas, dto.Fecha.Month, dto.Fecha.Year).OrderByDescending(x => x.FechaAplicacion).FirstOrDefault();
             var descargas = AlmacenGasServicio.ObtenerDescargasTodas();
             var pventas = PuntoVentaServicio.ObtenerIdEmp(dto.IdEmpresa);
             int Dias = dto.Fecha.Month.Equals(DateTime.Now.Month) && dto.Fecha.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month);
-            dto.Fecha = Convert.ToDateTime(string.Concat(dto.Fecha.Year,"/", dto.Fecha.Month, "/", "1", " ", "00:00:01"));
+            dto.Fecha = Convert.ToDateTime(string.Concat(dto.Fecha.Year, "/", dto.Fecha.Month, "/", "1", " ", "00:00:01"));
             for (int i = 0; i < Dias; i++)
             {
                 RemanenteGeneralDTO rema = new RemanenteGeneralDTO();
@@ -234,13 +234,62 @@ namespace Application.MainModule.Flujos
             }
             return remaGeneral;
         }
-        public List<RepInventarioPorPuntoVentaDTO> BuscarInvetarioPorPuntoDeVenta(List<Pipa> pipas, List<EstacionCarburacion> estaciones)
+        public List<RemanentePuntoVentaDTO> ConsultarRemanentePorPuntoventa(RemanenteDTO dto)
+        {
+            List<RemanentePuntoVentaDTO> remaPuntoVenta = new List<RemanentePuntoVentaDTO>();
+            
+            var pventa = PuntoVentaServicio.Obtener(dto.IdPuntoVenta);
+            int Dias = dto.Fecha.Month.Equals(DateTime.Now.Month) && dto.Fecha.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month);
+            dto.Fecha = Convert.ToDateTime(string.Concat(dto.Fecha.Year, "/", dto.Fecha.Month, "/", "1", " ", "00:00:01"));
+           
+            for (int i = 0; i < Dias; i++)
+            {
+                RemanentePuntoVentaDTO rema = new RemanentePuntoVentaDTO();
+               
+                if (pventa.UnidadesAlmacen.IdCamioneta != null)
+                {
+                    var ventasCamioneta = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
+                    foreach (var venta in ventasCamioneta)
+                    {
+                        if (venta.FechaRegistro < dto.Fecha)
+                            rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
+                    }
+                }
+                if (pventa.UnidadesAlmacen.IdPipa != null)
+                {
+                    var ventasPipa = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
+                    foreach (var venta in ventasPipa)
+                    {
+                        if (venta.FechaRegistro < dto.Fecha)
+                            rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
+                    }
+                }
+                if (pventa.UnidadesAlmacen.IdEstacionCarburacion != null)
+                {
+                    var ventasCarburacion = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
+                    foreach (var venta in ventasCarburacion)
+                    {
+                        if (venta.FechaRegistro < dto.Fecha)
+                            rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
+                    }
+                }
+                rema.IdPuntoVenta = dto.IdPuntoVenta;
+                rema.NombrePuntoVenta = pventa.UnidadesAlmacen.Numero;
+                rema.Mes = dto.Fecha.Month;
+                rema.Anio = dto.Fecha.Year;
+                rema.dia = dto.Fecha.Day;
+                remaPuntoVenta.Add(rema);
+
+                dto.Fecha = dto.Fecha.AddDays(1);
+            }
+            return remaPuntoVenta;
+        }
+        public List<RepInventarioPorPuntoVentaDTO> BuscarInvetarioPorPuntoDeVenta(List<Pipa> pipas, List<EstacionCarburacion> estaciones, DateTime fecha)
         {
             List<RepInventarioPorPuntoVentaDTO> repo = new List<RepInventarioPorPuntoVentaDTO>();
-
             foreach (var p in pipas)
             {
-                var lecturas = AlmacenGasServicio.ObtenerLecturas(p.UnidadAlmacenGas.ToList()[0].IdAlmacenGas.Value);
+                var lecturas = AlmacenGasServicio.ObtenerLecturas(p.UnidadAlmacenGas.ToList()[0].IdAlmacenGas.Value, fecha);
                 foreach (var item in lecturas)
                 {
                     if (item.IdTipoEvento.Equals(TipoEventoEnum.Inicial))
@@ -248,8 +297,8 @@ namespace Application.MainModule.Flujos
                         RepInventarioPorPuntoVentaDTO r = new RepInventarioPorPuntoVentaDTO();
                         r.ID = Convertir.ConcatenarNumeros(item.IdCAlmacenGas, item.IdOrden);
                         r.NombreVehiculo = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(item.UnidadAlmacenGas);
-                        r.LecturaInicial = item.P5000 ?? 0;
-                        r.ImagenLI = item.Fotografias.Count.Equals(0) ? string.Empty : item.Fotografias.SingleOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
+                        r.LecturaInicial = Convert.ToInt32(item.P5000 ?? 0);
+                        r.ImagenLI = item.Fotografias.Count.Equals(0) ? string.Empty : item.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
                         r.Fecha = item.FechaRegistro;
                         repo.Add(r);
                     }
@@ -261,8 +310,8 @@ namespace Application.MainModule.Flujos
                         if (repo.Exists(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
                         {
                             var li = repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaInicial;
-                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaFinal = item.P5000 ?? 0;
-                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).ImagenLF = item.Fotografias.SingleOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaFinal = Convert.ToInt32(item.P5000 ?? 0);
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).ImagenLF = item.Fotografias.Count.Equals(0) ? string.Empty : item.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
                             repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).Diferencia = CalculosGenerales.DiferenciaEntreDosNumero(li, item.P5000 ?? 0);
                         }
                     }
@@ -270,7 +319,7 @@ namespace Application.MainModule.Flujos
             }
             foreach (var e in estaciones)
             {
-                var lecturas = AlmacenGasServicio.ObtenerLecturas(e.UnidadAlmacenGas.ToList()[0].IdAlmacenGas.Value);
+                var lecturas = AlmacenGasServicio.ObtenerLecturas(e.UnidadAlmacenGas.ToList()[0].IdAlmacenGas.Value, fecha);
                 foreach (var item in lecturas)
                 {
                     if (item.IdTipoEvento.Equals(TipoEventoEnum.Inicial))
@@ -278,8 +327,8 @@ namespace Application.MainModule.Flujos
                         RepInventarioPorPuntoVentaDTO r = new RepInventarioPorPuntoVentaDTO();
                         r.ID = Convertir.ConcatenarNumeros(item.IdCAlmacenGas, item.IdOrden);
                         r.NombreVehiculo = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(item.UnidadAlmacenGas);
-                        r.LecturaInicial = item.P5000 ?? 0;
-                        r.ImagenLI = item.Fotografias.SingleOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
+                        r.LecturaInicial = Convert.ToInt32(item.P5000 ?? 0);
+                        r.ImagenLI = item.Fotografias.Count.Equals(0) ? string.Empty : item.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
                         r.Fecha = item.FechaRegistro;
                         repo.Add(r);
                     }
@@ -292,15 +341,14 @@ namespace Application.MainModule.Flujos
                         if (repo.Exists(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
                         {
                             var li = repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaInicial;
-                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaFinal = item.P5000 ?? 0;
-                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).ImagenLF = item.Fotografias.SingleOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaFinal = Convert.ToInt32(item.P5000 ?? 0);
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).ImagenLF = item.Fotografias.Count.Equals(0) ? string.Empty : item.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
                             repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).Diferencia = CalculosGenerales.DiferenciaEntreDosNumero(li, item.P5000 ?? 0);
                         }
                     }
                 }
             }
-
-            return repo;
+            return repo.Select(x => { x.Diferencia = CalcularGasServicio.ObtenerDiferenciaLitros(x.LecturaFinal, x.LecturaInicial); return x; }).ToList();
         }
     }
 }

@@ -10,8 +10,8 @@ namespace Application.MainModule.DTOs
     {
         public int ID { get; set; }
         public string NombreVehiculo { get; set; }
-        public decimal LecturaInicial { get; set; }
-        public decimal LecturaFinal { get; set; }
+        public int LecturaInicial { get; set; }
+        public int LecturaFinal { get; set; }
         public string ImagenLI { get; set; }
         public string ImagenLF { get; set; }
         public decimal Diferencia { get; set; }

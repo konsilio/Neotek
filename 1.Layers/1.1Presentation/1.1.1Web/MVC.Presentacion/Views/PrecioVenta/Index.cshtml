@@ -12,27 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
-    <script type="text/javascript">
-        //$(function () {
-        //    $('select').on('change', function () {
-        //        $('#tblfilterable tbody tr').each(function () {
-        //            var value = $('#IdTipoFecha').find('option:selected').text();//get value to filter of selected
-        //            var hiderow = $(this).find("td").eq(6).html();//get value of column status
-        //            if (value != hiderow) {
-        //                var rowindex = $(this).index();
-        //                $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
-        //            }
-        //            if (value == hiderow) {
-        //                var rowindex = $(this).index();
-        //                $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
-        //            }
-        //            if (value == 'Seleccione') {
-        //                $('#tblfilterable tbody tr').show();
-        //            }
-        //        });
-        //    });
-        //});
+
+    <script type="text/javascript">      
         $(document).ready(function () {
             $("#txtFlete").keyup(function () {
                 var precio = $("#PrecioPMX").val();

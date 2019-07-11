@@ -32,15 +32,15 @@ namespace MVC.Presentacion.Controllers
             if (TempData["DataSource"] != null)
                 TempData["DataSource"] = null;
             if (model == null)
-                model = new InventarioPorPuntoVentaModel();
-            model.Pipas = PedidosServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(x => { x.Activo = false; return x; }).ToList();
-            model.Estaciones = CatalogoServicio.GetListaEstacionCarburacion(tkn).Select(x => { x.Activo = false; return x; }).ToList();
+                model = new InventarioPorPuntoVentaModel();          
             if (model != null && !model.Fecha.Equals(DateTime.MinValue))
             {
                 ViewData["Periodo"] = model.Fecha;
                 ViewData["Reporte"] = TiposReporteConst.InventarioPorPuntoVenta;
                 TempData["DataSource"] = ReporteServicio.BuscarInventarioPorPuntoVenta(model, tkn);
             }
+            model.Pipas = PedidosServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(x => { x.Activo = false; return x; }).ToList();
+            model.Estaciones = CatalogoServicio.GetListaEstacionCarburacion(tkn).Select(x => { x.Activo = false; return x; }).ToList();
             return View(model);
         }
         public ActionResult HistoricoPrecioVenta(HistoricoPrecioVentaModel model = null)

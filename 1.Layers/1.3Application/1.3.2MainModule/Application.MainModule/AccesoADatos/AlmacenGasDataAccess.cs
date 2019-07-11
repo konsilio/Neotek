@@ -177,6 +177,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                     ).ToList();
         }
+        public List<AlmacenGasTomaLectura> BuscarLecturas(short idCAlmacenGas, DateTime fecha)
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas) 
+                                                                    && x.FechaRegistro.Day.Equals(fecha.Day)
+                                                                    && x.FechaRegistro.Month.Equals(fecha.Month)
+                                                                    && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
+        }
         public List<AlmacenGasTomaLecturaCilindro> BuscarLecturasCamioneta(short idCAlmacenGas)
         {
             return uow.Repository<AlmacenGasTomaLecturaCilindro>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
