@@ -187,6 +187,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarLecturas(idCAlmacenGas);
         }
+        public static List<AlmacenGasTomaLectura> ObtenerLecturas(short idCAlmacenGas, DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().BuscarLecturas(idCAlmacenGas, fecha);
+        }
         public static List<AlmacenGasTomaLecturaCilindro> ObtenerLecturasCamioneta(short idCAlmacenGas)
         {
             return new AlmacenGasDataAccess().BuscarLecturasCamioneta(idCAlmacenGas);

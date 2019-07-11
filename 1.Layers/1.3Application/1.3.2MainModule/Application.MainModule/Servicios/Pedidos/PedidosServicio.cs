@@ -25,7 +25,7 @@ namespace Application.MainModule.Servicios.Pedidos
         }
         public static RegistraPedidoDto Obtener(int idPedido)
         {
-            RegistraPedidoDto Pedido = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTOEdit(new PedidosDataAccess().BuscarPedido(idPedido));
+            RegistraPedidoDto Pedido = PedidosAdapter.ToDTOEdit(new PedidosDataAccess().BuscarPedido(idPedido));
             return Pedido;
         }        
         public static List<EstatusPedidoDto> ObtenerEstatus()

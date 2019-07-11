@@ -45,7 +45,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
             var pipas = PipaServicio.Obtener(dto.Pipas);
             var estaciones = EstacionCarburacionServicio.Obtener(dto.Estaciones);
-            return new Almacenes().BuscarInvetarioPorPuntoDeVenta(pipas, estaciones);
+            return new Almacenes().BuscarInvetarioPorPuntoDeVenta(pipas, estaciones, dto.Fecha);
         }
         public List<RepHistorioPrecioDTO> RepHistorioPrecios(HistoricoPrecioDTO dto)
         {

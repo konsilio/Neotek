@@ -18,7 +18,11 @@
     if (mensaje != '') {
         $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
     }
-
+    function selectAll() {
+        $('ul li').each(function (i) {
+            $(this).attr('rel'); // This is your rel value
+        });
+    }
 </script>
 <body>
     <div class="page-loader-wrapper">
@@ -63,6 +67,7 @@
                                     <strong>Estaciones</strong>
                                     <div class="form-group">
                                         <ul>
+                                            @*<li style="list-style:none" onclick="selectAll()" > Seleccionar todo</li>*@
                                             @Html.EditorFor(m => m.Pipas)
                                         </ul>
                                     </div>
