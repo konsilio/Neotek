@@ -140,22 +140,25 @@ namespace Application.MainModule.Flujos
                 dto.Venta = 0;
                 dto.Comision = 0;
                 dto.Total = 0;
+                              
                 if (chofer.PuntosVenta.Count > 0)
                 {
-                    if (chofer.PuntosVenta.SingleOrDefault().UnidadesAlmacen.IdCamioneta != null)
+                    dto.PuntoVenta = chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.Numero;
+                    if (chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdCamioneta != null)
                     {
                         dto.Venta = ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).Sum(y => y.VentaPuntoDeVentaDetalle.Sum(v => v.CantidadKg.Value));
                         dto.Comision = (decimal)0.4;
                         dto.Total = CalcularPreciosVentaServicio.CalcularComisionCamioneta(ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).ToList(), periodo);
                     }
-                    if (chofer.PuntosVenta.SingleOrDefault().UnidadesAlmacen.IdPipa != null)
+                    if (chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdPipa != null)
                     {
                         dto.Venta = ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).Sum(y => y.VentaPuntoDeVentaDetalle.Sum(v => v.CantidadLt.Value));
                         dto.Comision = (decimal)0.15;
                         dto.Total = CalcularPreciosVentaServicio.CalcularComisionPipas(ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).ToList(), periodo);
                     }
+                    respesta.Add(dto);
                 }
-                respesta.Add(dto);
+               
             }
             return respesta;
         }

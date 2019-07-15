@@ -1033,7 +1033,6 @@ namespace Application.MainModule.Flujos
             }
             return EquipoTransporteServicio.Alta(vehiculo);
         }
-
         public RespuestaDto ModificaEquipoTrasnporte(EquipoTransporteDTO vehiculoDto)
         {
             var resp = PermisosServicio.PuedeModificarPedido();
@@ -1196,6 +1195,7 @@ namespace Application.MainModule.Flujos
             }
             return respuesta;
         }
+
         #region Asignaciones 
         public List<TransporteDTO> BuscarAsignaciones()
         {

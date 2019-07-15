@@ -4,6 +4,7 @@ using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
@@ -349,6 +350,11 @@ namespace Application.MainModule.Flujos
                 }
             }
             return repo.Select(x => { x.Diferencia = CalcularGasServicio.ObtenerDiferenciaLitros(x.LecturaFinal, x.LecturaInicial); return x; }).ToList();
+        }
+        public List<UnidadAlmacenGasDTO> ListaUnidadesAlmacen()
+        {
+            var ua = AlmacenGasServicio.ObtenerPuntosVenta(TokenServicio.ObtenerIdEmpresa());
+            return AlmacenGasAdapter.ToDTO(ua);
         }
     }
 }

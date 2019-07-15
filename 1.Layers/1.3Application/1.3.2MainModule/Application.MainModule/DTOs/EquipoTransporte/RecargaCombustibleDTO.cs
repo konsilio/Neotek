@@ -27,8 +27,8 @@ namespace Application.MainModule.DTOs.EquipoTransporte
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Tipo Combustible")]
         public int IdTipoCombustible { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Vehiculo")]
+        //[Required(ErrorMessage = Error.R0002)]
+        //[Display(Name = "Vehiculo")]
         public string Vehiculo { get; set; }
         public string Chofer { get; set; }
         [Required(ErrorMessage = Error.R0002)]
@@ -37,5 +37,8 @@ namespace Application.MainModule.DTOs.EquipoTransporte
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Monto")]
         public decimal Monto { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Cuenta Contable")]
+        public int IdCuentaContable { get; set; }
     }
 }

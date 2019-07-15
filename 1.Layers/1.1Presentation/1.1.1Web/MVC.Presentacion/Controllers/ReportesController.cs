@@ -39,7 +39,9 @@ namespace MVC.Presentacion.Controllers
                 ViewData["Reporte"] = TiposReporteConst.InventarioPorPuntoVenta;
                 TempData["DataSource"] = ReporteServicio.BuscarInventarioPorPuntoVenta(model, tkn);
             }
-            model.Pipas = PedidosServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(x => { x.Activo = false; return x; }).ToList();
+            var pipas = PedidosServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            pipas.RemoveAt(0);
+            model.Pipas = pipas.Select(x => { x.Activo = false; return x; }).ToList();
             model.Estaciones = CatalogoServicio.GetListaEstacionCarburacion(tkn).Select(x => { x.Activo = false; return x; }).ToList();
             return View(model);
         }

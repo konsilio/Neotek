@@ -347,6 +347,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarTodasLecturasNoProcesadas(idTipoEvento);
         }
+        public static List<UnidadAlmacenGas> ObtenerPuntosVenta(short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().BuscarTodosPuntosVenta(idEmpresa);
+        }
         public static List<UnidadAlmacenGas> ObtenerEstaciones(short idEmpresa)
         {
             return new AlmacenGasDataAccess().BuscarTodosEstacionCarburacion(idEmpresa);

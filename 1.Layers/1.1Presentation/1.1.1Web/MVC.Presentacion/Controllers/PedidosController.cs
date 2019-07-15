@@ -332,7 +332,7 @@ namespace MVC.Presentacion.Controllers
             _tkn = Session["StringToken"].ToString();
             if (!string.IsNullOrEmpty(msj)) ViewBag.Msj = msj;
 
-            var model = PedidosServicio.ObtenerIdPedido(idPedido.Value, _tkn);
+            var model = PedidosServicio.ObtenerIdPedido(idPedido ?? 0, _tkn);
             if (TempData["RespuestaDTO"] != null)
             {
                 if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)

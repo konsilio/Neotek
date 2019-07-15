@@ -73,5 +73,10 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanentePorPuntoventa(dto));
         }
+        [Route("buscar/unidadalmacen")]
+        public HttpResponseMessage GetListaUnidadAlmacen()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.ListaUnidadesAlmacen());
+        }
     }
 }
