@@ -52,21 +52,24 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <strong>Vehiculo*</strong>
+                                        <strong>Vehículo*</strong>
                                         @Html.DevExpress().ComboBox(settings =>
                                    {
                                        settings.Name = "Id_Vehiculo";
                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                        settings.SelectedIndex = 0;
                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.TextField = "Descripcion";
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                                       settings.Properties.DropDownWidth = 550;
+                                       //settings.Properties.TextField = "Descripcion";
                                        settings.Properties.ValueField = "IdEquipoTransporte";
                                        settings.Properties.ValueType = typeof(int);
                                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
-                                       settings.Properties.TextFormatString = "{0} {1} {2}";
+                                       settings.Properties.TextFormatString = "{0}";
+                                       settings.Properties.Columns.Add("Descripcion", "Descripción", 130);
+                                       settings.Properties.Columns.Add("Chofer", "Chofer", 130);
                                        settings.CustomJSProperties = (sender, e) =>
                                        {
                                            System.Collections.ArrayList list = new System.Collections.ArrayList();
@@ -77,19 +80,19 @@
                                            }
                                            e.Properties["cphidenVehiculos"] = list;
                                        };
-                                   }).BindList(ViewBag.Vehiculos).Bind(Model.Id_Vehiculo).GetHtml()
+                                   }).BindList(ViewBag.Vehiculos).GetHtml()
                                     </div>
                                     @Html.ValidationMessageFor(m => m.Id_Vehiculo, "", new { @class = "alert-danger" })
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <strong>Chofer</strong>
-                                        <div>
-                                            @Html.LabelFor(m => m.Chofer, Model.Chofer)
+                                @*<div class="col-md-3">
+                                        <div class="form-group">
+                                            <strong>Chofer</strong>
+                                            <div>
+                                                @Html.LabelFor(m => m.Chofer, Model.Chofer)
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
+                                    </div>*@
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <strong>Kilometraje Actual*</strong>
                                         @Html.DevExpress().TextBox(settings =>
@@ -104,7 +107,7 @@
                                         @Html.ValidationMessageFor(m => m.KilometrajeActual, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <strong>Kilometraje Recorrido*</strong>
                                         @Html.DevExpress().TextBox(settings =>
@@ -199,6 +202,24 @@
                                                 <i class="zmdi zmdi-swap"></i>
                                             </button>
                                         }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <strong>Cuenta Contable*</strong>
+                                        @Html.DevExpress().ComboBox(settings =>
+                                       {
+                                           settings.Name = "IdCuentaContable";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           //settings.SelectedIndex = 0;
+                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                           settings.Properties.TextField = "Descripcion";
+                                           settings.Properties.ValueField = "IdCuentaContable";
+                                       }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
+                                        @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>

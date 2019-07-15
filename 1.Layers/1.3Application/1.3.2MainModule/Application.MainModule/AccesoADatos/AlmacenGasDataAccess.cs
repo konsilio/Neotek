@@ -600,6 +600,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.IdEstacionCarburacion != null
                                                             && x.Activo).ToList();
         }
+        public List<UnidadAlmacenGas> BuscarTodosPuntosVenta(short idEmpresa)
+        {
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                            && (x.IdEstacionCarburacion != null || x.IdPipa != null || x.IdCamioneta != null)                                                            
+                                                            && x.Activo).ToList();
+        }
         public List<AlmacenGasMovimiento> BuscarMovimientos(string folio, short year, byte mes, byte dia)
         {
             return uow.Repository<AlmacenGasMovimiento>().Get(x => x.FolioOperacionDia.Equals(folio)

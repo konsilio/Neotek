@@ -25,6 +25,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public string Placas { get; set; }
         public string NumMotor { get; set; }
         public string DescVehiculo { get; set; }
+        public string Chofer { get; set; }
 
         public string Marca { get; set; }
         public string Modelo { get; set; }

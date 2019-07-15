@@ -21,5 +21,6 @@ namespace MVC.Presentacion.Models
         public string Chofer { get; set; }
         public DateTime FechaRecarga { get; set; }
         public decimal Monto { get; set; }
+        public int IdCuentaContable { get; set; }
     }
 }

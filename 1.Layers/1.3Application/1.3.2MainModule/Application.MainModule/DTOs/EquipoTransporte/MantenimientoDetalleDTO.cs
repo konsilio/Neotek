@@ -30,5 +30,6 @@ namespace Application.MainModule.DTOs.EquipoTransporte
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Monto")]
         public decimal Monto { get; set; }
+        public int IdCuentaContable { get; set; }
     }
 }

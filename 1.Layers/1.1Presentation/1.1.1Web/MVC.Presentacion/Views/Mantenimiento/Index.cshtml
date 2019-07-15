@@ -17,13 +17,13 @@
 <script type="text/javascript">
     var mensaje = '@ViewBag.Msj';
     if (mensaje != '') {
-        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));      
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
     }
     function OnSelectedIndexChanged(s, e) {
         var item = id_vehiculo.cphidenVehiculos[id_vehiculo.GetSelectedIndex()].split("|")
         $("#esCamioneta").val(item[0])
         $("#esPipa").val(item[1])
-        $("#esUtilitario").val(item[2])     
+        $("#esUtilitario").val(item[2])
     }
 </script>
 <body>
@@ -33,7 +33,7 @@
             {
                 @Html.HiddenFor(m => m.Id_DetalleMtto)
 
-                <input type="text" hidden="hidden" name="esCamioneta" id="esCamioneta"/>
+                <input type="text" hidden="hidden" name="esCamioneta" id="esCamioneta" />
                 <input type="text" hidden="hidden" name="esPipa" id="esPipa" />
                 <input type="text" hidden="hidden" name="esUtilitario" id="esUtilitario" />
 
@@ -72,19 +72,22 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <strong>Vehiculo*</strong>
+                                        <strong>Vehículo*</strong>
                                         @Html.DevExpress().ComboBox(settings =>
                                    {
                                        settings.Name = "id_vehiculo";
                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                        settings.SelectedIndex = 0;
                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Properties.TextField = "Descripcion";
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                                       settings.Properties.DropDownWidth = 550;
+                                       //settings.Properties.TextField = "Descripcion";
                                        settings.Properties.ValueField = "IdEquipoTransporte";
                                        settings.Properties.ValueType = typeof(int);
                                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
-                                       settings.Properties.TextFormatString = "{0} {1} {2}";
+                                       settings.Properties.TextFormatString = "{0}";
+                                       settings.Properties.Columns.Add("Descripcion", "Descripción", 130);
+                                       settings.Properties.Columns.Add("Chofer", "Chofer", 130);
                                        settings.CustomJSProperties = (sender, e) =>
                                        {
                                            System.Collections.ArrayList list = new System.Collections.ArrayList();
@@ -95,7 +98,7 @@
                                            }
                                            e.Properties["cphidenVehiculos"] = list;
                                        };
-                                   }).BindList(ViewBag.Vehiculos).Bind(Model.id_vehiculo).GetHtml()
+                                   }).BindList(ViewBag.Vehiculos).GetHtml()
                                         @Html.ValidationMessageFor(m => m.id_vehiculo, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -146,7 +149,7 @@
                                         @Html.ValidationMessageFor(m => m.DescripcionMtto, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <strong>Costo Mantenimiento*</strong>
                                         @Html.DevExpress().TextBox(settings =>
@@ -156,12 +159,13 @@
                                        settings.Properties.DisplayFormatString = "f2";
                                        settings.Properties.MaskSettings.ErrorText = "Monto";
                                        settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                                       //settings.Attributes.Add("class", "form-control");
                                    }).GetHtml()
                                         @* @Html.TextBoxFor(m => m.Monto, Model.Monto.ToString(), new { @class = "form-control number" })*@
                                         @Html.ValidationMessageFor(m => m.Monto, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                     <b></b>
                                     <div class="form-group">
                                         @if (ViewBag.EsEdicion == null)
@@ -179,7 +183,25 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <strong>Cuenta Contable*</strong>
+                                        @Html.DevExpress().ComboBox(settings =>
+                                       {
+                                           settings.Name = "IdCuentaContable";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                           //settings.SelectedIndex = 0;
+                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                           settings.Properties.TextField = "Descripcion";
+                                           settings.Properties.ValueField = "IdCuentaContable";
+                                       }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
+                                        @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
                             @if (ViewBag.MensajeError != null)
                             {
                                 <div id="DivAlerta" class="container">

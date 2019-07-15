@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Catalogo;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
 using Sagas.MainModule.ObjetosValor.Enum;
@@ -59,6 +60,36 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 FechaRegistro = unidad.FechaRegistro,
                 PorcentajeCalibracionPlaneada = unidad.PorcentajeCalibracionPlaneada,
             };
+        }
+        public static UnidadAlmacenGasDTO ToDTO(UnidadAlmacenGas unidad)
+        {
+            return new UnidadAlmacenGasDTO()
+            {
+                IdCAlmacenGas = unidad.IdCAlmacenGas,
+                IdAlmacenGas = unidad.IdAlmacenGas,
+                IdEmpresa = unidad.IdEmpresa,
+                IdTipoAlmacen = unidad.IdTipoAlmacen,
+                IdTipoMedidor = unidad.IdTipoMedidor,
+                IdEstacionCarburacion = unidad.IdEstacionCarburacion,
+                IdCamioneta = unidad.IdCamioneta,
+                IdPipa = unidad.IdPipa,
+                EsGeneral = unidad.EsGeneral,
+                EsAlterno = unidad.EsAlterno,
+                Numero = unidad.Numero,
+                CapacidadTanqueLt = unidad.CapacidadTanqueLt,
+                CapacidadTanqueKg = unidad.CapacidadTanqueKg,
+                CantidadActualLt = unidad.CantidadActualLt,
+                CantidadActualKg = unidad.CantidadActualKg,
+                PorcentajeActual = unidad.PorcentajeActual,
+                P5000Actual = unidad.P5000Actual,
+                Activo = unidad.Activo,
+                FechaRegistro = unidad.FechaRegistro,
+                PorcentajeCalibracionPlaneada = unidad.PorcentajeCalibracionPlaneada,
+            };
+        }
+        public static List<UnidadAlmacenGasDTO> ToDTO(List<UnidadAlmacenGas> unidad)
+        {
+            return unidad.Select(x => ToDTO(x)).ToList();
         }
 
         public static AlmacenGas FromInit(Empresa emp)
