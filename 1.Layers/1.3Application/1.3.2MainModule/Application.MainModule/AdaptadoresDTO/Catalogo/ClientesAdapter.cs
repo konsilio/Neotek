@@ -349,7 +349,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 CorreoElectronico = cte.CorreoElectronico,
                 Domicilio = cte.Domicilio,
                 /**************************/
-                Locaciones = cte.Locaciones//getLoc(cte.Locaciones.ToList()),
+               //Locaciones = cte.Locaciones//getLoc(cte.Locaciones.ToList()),
 
                 //Orden = cte
                 //IdPais =

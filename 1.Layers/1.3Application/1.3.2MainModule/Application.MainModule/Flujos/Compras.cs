@@ -1,6 +1,7 @@
 ﻿//using Application.MainModule.AdaptadoresDTO.Almacenes;
 using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.Mobile;
+using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
@@ -259,7 +260,10 @@ namespace Application.MainModule.Flujos
             entity.SaldoInsoluto = oc.Total.Value - dto.MontoPagado;
 
             oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
-            return OrdenCompraPagoServicio.Actualiza(entity, oc);
+
+            var req = RequisicionAdapter.FromEntity(RequisicionServicio.Buscar(oc.IdRequisicion));
+            req.IdRequisicionEstatus = RequisicionEstatusEnum.Autorizacion_finalizada;
+            return OrdenCompraPagoServicio.Actualiza(entity, oc, req);
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
         {
