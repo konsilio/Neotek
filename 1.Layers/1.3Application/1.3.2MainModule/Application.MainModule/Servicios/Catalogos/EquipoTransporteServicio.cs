@@ -108,12 +108,13 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static string ObtenerNombre(DetalleRecargaCombustible qt)
         {
-            if (qt.EsCamioneta)
-                return new EquipoTransporteDataAccess().BuscarCamioneta(qt.Id_Vehiculo).Nombre;
-            if (qt.EsPipa)
-                return new EquipoTransporteDataAccess().BuscarPipa(qt.Id_Vehiculo).Nombre;
-            if (qt.EsUtilitario)
-                return new EquipoTransporteDataAccess().BuscarUtilitario(qt.Id_Vehiculo).Nombre;
+            var eq = new EquipoTransporteDataAccess().Buscar(qt.Id_Vehiculo);
+            if (eq.IdCamioneta != null)
+                return new EquipoTransporteDataAccess().BuscarCamioneta(eq.IdCamioneta.Value).Nombre;
+            if (eq.IdPipa != null)
+                return new EquipoTransporteDataAccess().BuscarPipa(eq.IdPipa.Value).Nombre;
+            if (eq.IdUtilitario != null)
+                return new EquipoTransporteDataAccess().BuscarUtilitario(eq.IdUtilitario.Value).Nombre;
             return null;
         }
         public static string ObtenerNombre(DetalleMantenimiento qt)
