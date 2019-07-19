@@ -49,7 +49,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             }
             var cliente = ClienteServicio.Obtener(p.IdCliente);
             var clienteL = ClienteServicio.ObtenerCL(p.IdCliente, p.IdDireccion);
-            var uni = p.IdCamioneta > 0 ? AlmacenGasServicio.ObtenerCamioneta(p.IdCamioneta.Value).Nombre : AlmacenGasServicio.ObtenerPipa(p.IdPipa ?? 0).Nombre;
+            var uni = p.IdCamioneta > 0 ? AlmacenGasServicio.ObtenerCamioneta(p.IdCamioneta.Value).Nombre : p.IdPipa > 0 ? AlmacenGasServicio.ObtenerPipa(p.IdPipa ?? 0).Nombre : "No asignado";
             List<RespuestaSatisfaccionPedido> pe = new PedidosDataAccess().BuscarEnc(p.IdPedido);
             PedidoModelDto usDTO = new PedidoModelDto()
             {

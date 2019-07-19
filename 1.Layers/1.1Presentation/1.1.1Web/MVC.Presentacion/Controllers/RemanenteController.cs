@@ -19,7 +19,10 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-            if (TempData["RemanenteDTO"] != null) { ViewBag.RemaGeneral = (List<RemanenteGeneralDTO>)TempData["RemanenteDTO"]; }
+            if (TempData["RemanenteDTO"] != null) {
+                ViewBag.RemaGeneral = (List<RemanenteGeneralDTO>)TempData["RemanenteDTO"];
+                ViewBag.RemaGeneralFinal = ((List<RemanenteGeneralDTO>)TempData["RemanenteDTO"]).LastOrDefault();
+            }
             if (TempData["RemanentePtoVentaDTO"] != null) {
 
                 ViewBag.RemaPuntoVenta = (List<RemanentePtoVentaDTO>)TempData["RemanentePtoVentaDTO"];

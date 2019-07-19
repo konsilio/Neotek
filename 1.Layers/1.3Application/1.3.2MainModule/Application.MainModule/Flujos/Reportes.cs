@@ -89,7 +89,7 @@ namespace Application.MainModule.Flujos
             var alamacenes = ProductoAlmacenServicio.BuscarAlmacen(dto.FechaInicio, dto.FechaFinal);
             return AlmacenProductoAdapter.ToRepDTO(alamacenes);
         }
-        public List<RepCorteCajaDTO> RepCorteCaja(CajaGeneralDTO dto)
+        public List<RepCorteCajaDTO> RepCorteCaja(CajaGralDTO dto)
         {
             var resp = PermisosServicio.PuedeModificarCajaGeneral();
             if (!resp.Exito) return null;
@@ -148,15 +148,19 @@ namespace Application.MainModule.Flujos
                     {
                         dto.Venta = ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).Sum(y => y.VentaPuntoDeVentaDetalle.Sum(v => v.CantidadKg.Value));
                         dto.Comision = (decimal)0.4;
+                        dto.Unidad = "Kg";
                         dto.Total = CalcularPreciosVentaServicio.CalcularComisionCamioneta(ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).ToList(), periodo);
                     }
                     if (chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdPipa != null)
                     {
                         dto.Venta = ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).Sum(y => y.VentaPuntoDeVentaDetalle.Sum(v => v.CantidadLt.Value));
                         dto.Comision = (decimal)0.15;
+                        dto.Unidad = "Lts";
                         dto.Total = CalcularPreciosVentaServicio.CalcularComisionPipas(ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).ToList(), periodo);
                     }
-                    respesta.Add(dto);
+                    if (!chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.EsGeneral && chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion == null)                    
+                        respesta.Add(dto);
+                    
                 }
                
             }
