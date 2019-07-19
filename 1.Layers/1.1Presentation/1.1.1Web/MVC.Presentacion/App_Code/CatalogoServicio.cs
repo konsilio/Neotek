@@ -2607,7 +2607,7 @@ namespace MVC.Presentacion.App_Code
         {
             if (model.CentrosCostos == null)
                 model = InitCentroCosto(tkn);
-            var cc = model.CentrosCostos.SingleOrDefault(x => x.IdCentroCosto.Equals(idcc));
+            var cc = model.CentrosCostos.FirstOrDefault(x => x.IdCentroCosto.Equals(idcc));
             model.Numero = cc.Numero;
             model.IdCentroCosto = cc.IdCentroCosto;
             model.Descripcion = cc.Descripcion;

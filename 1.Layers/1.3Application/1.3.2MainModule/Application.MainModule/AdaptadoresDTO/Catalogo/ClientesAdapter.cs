@@ -17,7 +17,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             string nom = "";
             string apell = "";
             string apell2 = "";
-            if  (us.RepresentanteLegal != null)
+            if (us.RepresentanteLegal != null && !us.RepresentanteLegal.Equals(string.Empty))
             {
                 if (us.RepresentanteLegal.Split(' ').Count() == 4)
                 {
@@ -73,11 +73,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Password = us.Password,
                 AccesoPortal = us.AccesoPortal,
                 Rfc = us.Rfc,
-                RazonSocial = us.RazonSocial,
+                RazonSocial = us.RazonSocial ?? string.Concat(nom, " ", apell, " ", apell2),
                 RepresentanteLegal = us.RepresentanteLegal,
-                Telefono = us.Telefono,
-                Celular = us.Celular,
-                CorreoElectronico = us.CorreoElectronico,
+                Telefono = us.Telefono ?? us.Telefono1,
+                Celular = us.Celular ?? us.Celular1,
+                CorreoElectronico = us.CorreoElectronico ?? us.Email1,
                 Domicilio = us.Domicilio,
                 Empresa = us.Empresa.NombreComercial,
                 TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,

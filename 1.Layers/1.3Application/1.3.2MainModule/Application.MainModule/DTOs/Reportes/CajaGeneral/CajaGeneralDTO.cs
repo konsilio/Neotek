@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs
 {
-    public class CajaGeneralDTO
+    public class CajaGralDTO
     {
         public DateTime Fecha { get; set; }
     }

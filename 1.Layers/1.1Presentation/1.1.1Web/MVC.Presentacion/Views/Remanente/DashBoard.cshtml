@@ -46,7 +46,7 @@
                             <h2>Remanente</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item">Remanenete</li>
+                                <li class="breadcrumb-item">Remanente</li>
                             </ul>
                         </div>
                     </div>
@@ -60,17 +60,17 @@
                                 <div class="col-md-3">
                                     <strong>Gasera:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
-                                        {
-                                            settings.Name = "IdEmpresa";
-                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.SelectedIndex = 0;
-                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                            settings.Properties.ValueType = typeof(short);
-                                            settings.Properties.Items.Add("Selecciones uno", 0);
-                                            settings.Properties.TextField = "NombreComercial";
-                                            settings.Properties.ValueField = "IdEmpresa";
-                                        }).BindList(ViewBag.Empresas).Bind(Model.IdEmpresa).GetHtml()
+                               {
+                                   settings.Name = "IdEmpresa";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.SelectedIndex = 1;
+
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Properties.ValueType = typeof(short);
+                                   settings.Properties.TextField = "NombreComercial";
+                                   settings.Properties.ValueField = "IdEmpresa";
+                               }).BindList(ViewBag.Empresas).Bind(Model.IdEmpresa).GetHtml()
                                 </div>
                                 <div class="col-md-2">
                                     <strong>Tipo:</strong>
@@ -84,7 +84,7 @@
                                         settings.ClientEnabled = true;
                                         settings.Properties.ClientSideEvents.SelectedIndexChanged = "ChangeTipo";
                                         settings.Properties.ClientSideEvents.Init = "ChangeTipo";
-                                        settings.Properties.Items.Add("Selecciones uno", 0);
+                                        settings.Properties.Items.Add("Seleccione", 0);
                                         settings.Properties.Items.Add("General", 1);
                                         settings.Properties.Items.Add("Por punto de venta", 2);
                                     }).Bind(Model.IdTipo).GetHtml()
@@ -123,7 +123,7 @@
                                                 <td><strong>Ventas (Camionetas y Pipas)</strong></td>
                                                 <td><strong>Carburación</strong></td>
                                                 <td><strong>Inv. Final(Libro)</strong></td>
-                                                <td><strong>Inv. Fisicio</strong></td>
+                                                <td><strong>Inv. Físicio</strong></td>
                                                 <td><strong>Gas sobrante</strong></td>
                                                 <td><strong>Rema (%)</strong></td>
                                             </tr>
@@ -151,30 +151,34 @@
                                 </div>
                             </div>
                             <div id="RemaneteGeneralDatos">
+                                @if (ViewBag.RemaGeneralFinal != null)
+                                {                                 
+                                    
+                                    <div class="row clearfix">
+                                        <div class="col-md-3">Remanente Generado al : @ViewBag.RemaGeneralFinal.dia</div>
+                                        <div class="col-md-3"> (Toneladas)</div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-3">Remanente de Venta</div>
+                                        <div class="col-md-3">$ @ViewBag.RemaGeneralFinal.Ventas</div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-3">Remanente de Transporte</div>
+                                        <div class="col-md-3"> @ViewBag.RemaGeneralFinal.Carburacion</div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-3">Total de Remanente Determinado</div>
+                                        <div class="col-md-3"> @ViewBag.RemaGeneralFinal.InventarioLibro</div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-3">Gas Sobrante (O faltante)</div>
+                                        <div class="col-md-3">@ViewBag.RemaGeneralFinal.GasSobrante</div>
+                                    </div>
+                                    @*<div class="row clearfix">
+                                            <div class="col-md-3">0.00</div>
+                                        </div>*@
 
-                                <div class="row clearfix">
-                                    <div class="col-md-3">Remanente Generado al :</div>
-                                    <div class="col-md-3"> (Toneladas)</div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">Remanente de Venta</div>
-                                    <div class="col-md-3">$</div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">Remanente de Transporte</div>
-                                    <div class="col-md-3"> 0.00</div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">Total de Remanente Determinado</div>
-                                    <div class="col-md-3"> 0.00</div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">Gas Sobrante (O faltante)</div>
-                                    <div class="col-md-3"> 0.00</div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">0.00</div>
-                                </div>
+                                }
                             </div>
 
                             @*Remanente por unidad de venta*@
@@ -208,7 +212,7 @@
                                                             @item.Remanente
                                                         </td>
                                                     }
-                                                 }
+                                                }
                                             </tr>
                                     </table>
                                 </div>
@@ -218,5 +222,5 @@
                 </div>
             </div>
         </section>
-   }
+    }
 </body>
