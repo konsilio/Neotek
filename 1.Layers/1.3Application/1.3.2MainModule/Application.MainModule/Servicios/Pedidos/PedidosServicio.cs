@@ -18,16 +18,21 @@ namespace Application.MainModule.Servicios.Pedidos
 {
     public class PedidosServicio
     {
+        public static List<PedidoModelDto> Obtener()
+        {
+            List<PedidoModelDto> lPedidos = PedidosAdapter.ToDTO(new PedidosDataAccess().Buscar());
+            return lPedidos;
+        }
         public static List<PedidoModelDto> Obtener(short idempresa)
         {
-            List<PedidoModelDto> lPedidos = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PedidosDataAccess().Buscar(idempresa));
-            return lPedidos;
+            var pedidos = new PedidosDataAccess().Buscar(idempresa);
+            return PedidosAdapter.ToDTO(pedidos);
         }
         public static RegistraPedidoDto Obtener(int idPedido)
         {
             RegistraPedidoDto Pedido = PedidosAdapter.ToDTOEdit(new PedidosDataAccess().BuscarPedido(idPedido));
             return Pedido;
-        }        
+        }
         public static List<EstatusPedidoDto> ObtenerEstatus()
         {
             return PedidosAdapter.ToDTO(new PedidosDataAccess().BuscarEstatus());

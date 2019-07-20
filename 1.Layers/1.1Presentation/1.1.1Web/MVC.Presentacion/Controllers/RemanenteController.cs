@@ -23,11 +23,10 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.RemaGeneral = (List<RemanenteGeneralDTO>)TempData["RemanenteDTO"];
                 ViewBag.RemaGeneralFinal = ((List<RemanenteGeneralDTO>)TempData["RemanenteDTO"]).LastOrDefault();
             }
-            if (TempData["RemanentePtoVentaDTO"] != null) {
-
-                ViewBag.RemaPuntoVenta = (List<RemanentePtoVentaDTO>)TempData["RemanentePtoVentaDTO"];
-                ViewBag.NombrePuntoVenta = ((List<RemanentePtoVentaDTO>)TempData["RemanentePtoVentaDTO"]).FirstOrDefault().NombrePuntoVenta;
-            }
+            if (TempData["RemanentePtoVentaDTO"] != null) 
+                ViewBag.RemaPuntoVenta = (List<RemanentePuntoVentaTodosDTO>)TempData["RemanentePtoVentaDTO"];
+                //ViewBag.NombrePuntoVenta = ((List<RemanentePuntoVentaTodosDTO>)TempData["RemanentePtoVentaDTO"]).FirstOrDefault().NombrePuntoVenta;
+            
             return View(model);
         }
         public ActionResult Buscar(RemanenteModel model = null)

@@ -16,4 +16,8 @@ namespace Application.MainModule.DTOs.Almacen
         public int Mes { get; set; }
         public int dia { get; set; }
     }
+    public class RemanentePuntoVentaTodosDTO
+    {
+        public List<RemanentePuntoVentaDTO> RemaentePuntoVenta { get; set; }
+    }
 }

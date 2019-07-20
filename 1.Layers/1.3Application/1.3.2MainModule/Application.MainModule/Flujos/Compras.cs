@@ -175,7 +175,7 @@ namespace Application.MainModule.Flujos
                     var entity = OrdenComprasAdapter.FromEntity(oc);
                     lOC.Add(entity);
 
-                    var prodsEntity = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(p.IdOrdenCompra));
+                    var prodsEntity      = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(p.IdOrdenCompra));
                     var prodOC = ProductosOCAdapter.FromDTO(listDTO);
                     lOCP = OrdenCompraServicio.AplicarCambiosOrdenCompraProducto(prodOC, prodsEntity);
                 }                
@@ -249,7 +249,6 @@ namespace Application.MainModule.Flujos
 
             var entity = OrdenCompraPagoAdapter.FromEntity(Pago);
             var oc = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(entity.IdOrdenCompra));
-
 
             entity.PhysicalPathCapturaPantalla = dto.PhysicalPathCapturaPantalla;
             entity.UrlPathCapturaPantalla = dto.UrlPathCapturaPantalla;
