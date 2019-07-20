@@ -38,18 +38,18 @@ namespace MVC.Presentacion.Controllers
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
 
-            List<PedidoModel> lstPmodel = PedidosServicio.ObtenerPedidos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+           
             PedidoModel model = new PedidoModel();
-            model.Pedidos = lstPmodel;
+            //model.Pedidos = PedidosServicio.ObtenerPedidos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
 
-            if (idpedido > 0 || (tel1 != null && tel1 != "") || (rfc != null && rfc != ""))
-            {
-                model.Pedidos = PedidosServicio.ObtenerPedidosFiltro(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn, idpedido, rfc, tel1);
-                if (model.Pedidos.Count == 0)
-                {
-                    ViewBag.Msj = "No se encontraron resultados"; ViewBag.Tipo = "alert-danger";
-                }
-            }
+            //if (idpedido > 0 || (tel1 != null && tel1 != "") || (rfc != null && rfc != ""))
+            //{
+            //    model.Pedidos = PedidosServicio.ObtenerPedidosFiltro(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn, idpedido, rfc, tel1);
+            //    if (model.Pedidos.Count == 0)
+            //    {
+            //        ViewBag.Msj = "No se encontraron resultados"; ViewBag.Tipo = "alert-danger";
+            //    }
+            //}
             if (TempData["Msj"] != null)
                 ViewBag.MensajeError = TempData["Msj"];
 

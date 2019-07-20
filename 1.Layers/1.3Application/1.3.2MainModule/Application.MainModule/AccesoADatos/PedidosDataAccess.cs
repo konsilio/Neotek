@@ -19,6 +19,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
+        public List<Pedido> Buscar()
+        {
+            return uow.Repository<Pedido>().GetAll().ToList();
+        }
         public List<Pedido> Buscar(short idempresa)
         {
             return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa)).ToList();

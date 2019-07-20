@@ -14,18 +14,24 @@
 <script language="JavaScript" type="text/javascript">
     function ChangeTipo(s, e) {
         var sel = s.GetValue();
+       
+        if (sel == 0 || sel == 1) {
+            $('#PuntoVentaCampos').hide();
+            $('#PuntoVentaTabla').hide();
+            $('#RemaneteGeneralDatos').show();
+            $('#RemaneteGeneralTabla').show();
+        }
         if (sel == 2) {
             $('#PuntoVentaCampos').show();
             $('#PuntoVentaTabla').show();
             $('#RemaneteGeneralDatos').hide();
             $('#RemaneteGeneralTabla').hide();
-
         }
-        else {
-            $('#PuntoVentaCampos').hide();
-            $('#PuntoVentaTabla').hide();
-            $('#RemaneteGeneralDatos').show();
-            $('#RemaneteGeneralTabla').show();
+        if (sel == 3) {
+            $('#PuntoVentaCampos').show();
+            $('#PuntoVentaTabla').show();
+            $('#RemaneteGeneralDatos').hide();
+            $('#RemaneteGeneralTabla').hide();
         }
     };
 </script>
@@ -75,19 +81,21 @@
                                 <div class="col-md-2">
                                     <strong>Tipo:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
-                                    {
-                                        settings.Name = "IdTipo";
-                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                        settings.SelectedIndex = 0;
-                                        settings.Properties.DisplayFormatString = "{0}";
-                                        settings.Properties.ValueType = typeof(int);
-                                        settings.ClientEnabled = true;
-                                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "ChangeTipo";
-                                        settings.Properties.ClientSideEvents.Init = "ChangeTipo";
-                                        settings.Properties.Items.Add("Seleccione", 0);
-                                        settings.Properties.Items.Add("General", 1);
-                                        settings.Properties.Items.Add("Por punto de venta", 2);
-                                    }).Bind(Model.IdTipo).GetHtml()
+                               {
+                                   settings.Name = "IdTipo";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.SelectedIndex = 0;
+                                   settings.Properties.DisplayFormatString = "{0}";
+                                   settings.Properties.ValueType = typeof(int);
+                                   settings.ClientEnabled = true;
+                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "ChangeTipo";
+                                   settings.Properties.ClientSideEvents.Init = "ChangeTipo";
+                                   settings.Properties.Items.Add("Seleccione", 0);
+                                   settings.Properties.Items.Add("General", 1);
+                                   settings.Properties.Items.Add("Por punto de venta", 2);
+                                   settings.Properties.Items.Add("Por tracto", 3);
+
+                               }).Bind(Model.IdTipo).GetHtml()
                                 </div>
                                 <div class="col-md-3" id="PuntoVentaCampos">
                                     <strong>Punto de venta</strong>
@@ -152,8 +160,8 @@
                             </div>
                             <div id="RemaneteGeneralDatos">
                                 @if (ViewBag.RemaGeneralFinal != null)
-                                {                                 
-                                    
+                                {
+
                                     <div class="row clearfix">
                                         <div class="col-md-3">Remanente Generado al : @ViewBag.RemaGeneralFinal.dia</div>
                                         <div class="col-md-3"> (Toneladas)</div>
@@ -190,7 +198,7 @@
                                                 <td><strong>Nombre</strong></td>
                                                 @if (ViewBag.RemaPuntoVenta != null)
                                                 {
-                                                    foreach (var item in ViewBag.RemaPuntoVenta)
+                                                    foreach (var item in ((List<RemanentePuntoVentaTodosDTO>)ViewBag.RemaPuntoVenta).FirstOrDefault().RemaentePuntoVenta.ToList())
                                                     {
                                                         {
                                                             <td><strong>@item.dia</strong></td>
@@ -200,20 +208,25 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                @if (ViewBag.RemaPuntoVenta != null)
+
+                                            @if (ViewBag.RemaPuntoVenta != null)
+                                            {
+                                                foreach (var puntoVenta in ((List<RemanentePuntoVentaTodosDTO>)ViewBag.RemaPuntoVenta))
                                                 {
-                                                    <td>
-                                                        @ViewBag.NombrePuntoVenta
-                                                    </td>
-                                                    foreach (var item in ViewBag.RemaPuntoVenta)
-                                                    {
+                                                    <tr>
                                                         <td>
-                                                            @item.Remanente
+                                                            @puntoVenta.RemaentePuntoVenta.FirstOrDefault().NombrePuntoVenta
                                                         </td>
-                                                    }
+
+                                                        @foreach (var remaPtv in puntoVenta.RemaentePuntoVenta)
+                                                        {
+                                                            <td>
+                                                                @remaPtv.Remanente
+                                                            </td>
+                                                        }
+                                                    </tr>
                                                 }
-                                            </tr>
+                                            }
                                     </table>
                                 </div>
                             </div>

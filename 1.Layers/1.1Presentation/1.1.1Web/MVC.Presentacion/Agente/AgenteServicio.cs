@@ -108,7 +108,7 @@ namespace MVC.Presentacion.Agente
         public List<PipaModel> _ListaPipas;
         public List<CargosModel> _ListaCargos;
         public List<RemanenteGeneralDTO> _ListaRemanenteGenaral;
-        public List<RemanentePtoVentaDTO> _ListaRemanentePtoVenta;
+        public List<RemanentePuntoVentaTodosDTO> _ListaRemanentePtoVenta;
         public List<EquipoTransporteDTO> _ListaVehiculos;
         public List<CombustibleModel> _ListaCombustibles;
         public List<TipoUnidadModel> _ListaTiposUnidad;
@@ -3920,7 +3920,7 @@ namespace MVC.Presentacion.Agente
         {
             using (var client = new HttpClient())
             {
-                List<RemanentePtoVentaDTO> emp = new List<RemanentePtoVentaDTO>();
+                List<RemanentePuntoVentaTodosDTO> emp = new List<RemanentePuntoVentaTodosDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
@@ -3928,7 +3928,7 @@ namespace MVC.Presentacion.Agente
                 {
                     HttpResponseMessage response = await client.PostAsJsonAsync(ApiRoute, model).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        emp = await response.Content.ReadAsAsync<List<RemanentePtoVentaDTO>>();
+                        emp = await response.Content.ReadAsAsync<List<RemanentePuntoVentaTodosDTO>>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -3937,7 +3937,7 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    emp = new List<RemanentePtoVentaDTO>();
+                    emp = new List<RemanentePuntoVentaTodosDTO>();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }

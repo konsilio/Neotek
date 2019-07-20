@@ -13,6 +13,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string ContieneRol = "{0} contiene el Rol {1}. Por lo que no puede asignarse de nuevo.";
         public const string EstatusIncorrecto = "El estatus de {0} no corresponde al proceso que desea realizar";
         public const string PagoExistente = "Ya no puedes solicitar un pago para {0}, ya se realizdo uno";
+        public const string NoEncontrado = "No se encontro info";
 
         public const string S0001 = "El campo '{0}' es obligatorio.";
         public const string S0002 = "El campo '{0}' requiere un mínimo de {2} caracteres y un máximo de {1}.";

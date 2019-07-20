@@ -25,10 +25,10 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
 
             if (TokenServicio.EsSuperUsuario())
-                return PedidosServicio.Obtener(idempresa).ToList();
+                return PedidosServicio.Obtener().ToList();
 
             else
-                return PedidosServicio.Obtener(idempresa).Where(x => x.cliente.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+                return PedidosServicio.Obtener(idempresa);
         }
         public RegistraPedidoDto PedidoId(int idPedido)
         {

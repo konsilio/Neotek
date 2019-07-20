@@ -15,4 +15,8 @@ namespace MVC.Presentacion.Models
         public int Mes { get; set; }
         public int dia { get; set; }
     }
+    public class RemanentePuntoVentaTodosDTO
+    {
+        public List<RemanentePtoVentaDTO> RemaentePuntoVenta { get; set; }
+    }
 }

@@ -266,6 +266,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeConsultarPuntoVenta();
             if (!resp.Exito) return null;
+
             return PuntoVentaServicio.Obtener().ToList();
         }
         public RespuestaDto EliminaPuntosVenta(PuntoVentaDTO cteDto)
