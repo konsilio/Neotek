@@ -106,7 +106,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
             }
         });
 
-        final Button buttonRetomarFoto =(Button) findViewById(R.id.button_foto_incorrecta);
+/*        final Button buttonRetomarFoto =(Button) findViewById(R.id.button_foto_incorrecta);
         buttonRetomarFoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
@@ -118,7 +118,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
                     openCameraIntent();
                 //}
             }
-        });
+        });*/
 
         final Button buttonFotoCorrecta =(Button) findViewById(R.id.button_foto_correcta);
         buttonFotoCorrecta.setOnClickListener(new View.OnClickListener() {

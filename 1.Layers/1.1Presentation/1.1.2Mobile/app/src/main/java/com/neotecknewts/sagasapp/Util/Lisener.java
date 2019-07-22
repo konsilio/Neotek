@@ -173,7 +173,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
             RecargaDTO recargaDTO;
             if(cursor.moveToFirst()){
-                while (cursor.moveToFirst()){
+                do{
                     /* Coloco los valores de la base de datos en el DTO */
                     recargaDTO = new RecargaDTO();
                     recargaDTO.setClaveOperacion(cursor.getString(
@@ -204,25 +204,28 @@ public class Lisener{
                     String tipo = cursor.getString(
                             cursor.getColumnIndex("EsTipo"));
                     Cursor imagenes = sagasSql.GetImagenesRecarga(recargaDTO.getClaveOperacion());
-                    imagenes.moveToFirst();
-                    while (!imagenes.isAfterLast()){
-                        try {
-                            recargaDTO.getImagenes().add(
-                                    imagenes.getString(
-                                            imagenes.getColumnIndex("Imagen")
-                                    )
-                            );
 
-                            recargaDTO.getImagenesUri().add(
-                                    new URI(imagenes.getString(
-                                            imagenes.getColumnIndex("Url")
-                                    ))
-                            );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
+                    if(imagenes.moveToFirst()){
+                        do{
+                                try {
+                                    recargaDTO.getImagenes().add(
+                                            imagenes.getString(
+                                                    imagenes.getColumnIndex("Imagen")
+                                            )
+                                    );
+
+                                    recargaDTO.getImagenesUri().add(
+                                            new URI(imagenes.getString(
+                                                    imagenes.getColumnIndex("Url")
+                                            ))
+                                    );
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
+                                imagenes.moveToNext();
+                            } while (imagenes.moveToNext());
+
                         }
-                        imagenes.moveToNext();
-                    }
 
                     Log.w("ClaveProceso", recargaDTO.getClaveOperacion());
                     registrado = RegistrarRecarga(recargaDTO,tipo,esInicial);
@@ -232,8 +235,8 @@ public class Lisener{
                                 recargaDTO.getClaveOperacion());
                     }
 
-                    cursor.moveToNext();
-                }
+//                    cursor.moveToNext();
+                } while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_PIPA).getCount()==0);
@@ -388,7 +391,7 @@ public class Lisener{
             @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             if(cursor.moveToFirst()){
                 AnticiposDTO anticiposDTO;
-                while (cursor.moveToFirst()){
+                do {
                     anticiposDTO = new AnticiposDTO();
                     try{
                         anticiposDTO.setTotal(cursor.getDouble(
@@ -441,8 +444,8 @@ public class Lisener{
                     }catch (Exception ex){
                         ex.printStackTrace();
                     }
-                    cursor.moveToNext();
-                }
+                    //cursor.moveToNext();
+                } while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetAnticipos().getCount()==0);
@@ -495,7 +498,7 @@ public class Lisener{
             if(cursor.moveToFirst()){
                 TraspasoDTO traspasoDTO;
                 Log.d("cursor traspaso",cursor+"");
-                while (cursor.moveToFirst()){
+                do {
                     Log.d("cursor traspasosecond",cursor+"");
                     traspasoDTO = new TraspasoDTO();
                     try {
@@ -558,13 +561,14 @@ public class Lisener{
                                 )
                         );
                         Cursor imagenes = sagasSql.GetImagenesTraspaso(traspasoDTO.getClaveOperacion());
-                        imagenes.moveToFirst();
-                        while (!imagenes.isAfterLast()){
-                            traspasoDTO.getImagenes().add(
-                                    imagenes.getString(
-                                            imagenes.getColumnIndex("Imagen")
-                                    )
-                            );
+
+                        if(imagenes.moveToFirst()){
+                            do{
+                                    traspasoDTO.getImagenes().add(
+                                            imagenes.getString(
+                                                    imagenes.getColumnIndex("Imagen")
+                                            )
+                                    );
                             /*traspasoDTO.getImagenesUri().add(
                                     new URI(
                                             imagenes.getString(
@@ -572,8 +576,11 @@ public class Lisener{
                                             )
                                     )
                             );*/
-                            imagenes.moveToNext();
-                        }
+                                   // imagenes.moveToNext();
+                                }while (imagenes.moveToNext());
+
+                            }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -583,8 +590,8 @@ public class Lisener{
                         sagasSql.EliminarTraspasos(traspasoDTO.getClaveOperacion());
                         sagasSql.EliminarImagenesTraspasos(traspasoDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
-                }
+                    //cursor.moveToNext();
+                }while (cursor.moveToNext());
             }
         }
         return (this.sagasSql.GetTraspasos().getCount()==0);
@@ -649,7 +656,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetAutoconsumos();
             if(cursor.moveToFirst()){
                 CalibracionDTO dto;
-                while (cursor.moveToFirst()){
+                do {
                     dto = new CalibracionDTO();
                     dto.setCantidadFotografias(
                             cursor.getInt(
@@ -707,25 +714,28 @@ public class Lisener{
                     );
 
                     Cursor imagenes = sagasSql.GetFotografiasCalibracion(dto.getClaveOperacion());
-                    imagenes.moveToFirst();
-                    while (!imagenes.isAfterLast()){
-                        try {
-                            dto.getImagenes().add(
-                                    imagenes.getString(
-                                            imagenes.getColumnIndex("Imagen")
-                                    )
-                            );
 
-                            dto.getImagenesUri().add(new URI(
-                                    imagenes.getString(
-                                            imagenes.getColumnIndex("Url")
-                                    )
-                            ));
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
+                    if (imagenes.moveToFirst()){
+                        do {
+                                try {
+                                    dto.getImagenes().add(
+                                            imagenes.getString(
+                                                    imagenes.getColumnIndex("Imagen")
+                                            )
+                                    );
+
+                                    dto.getImagenesUri().add(new URI(
+                                            imagenes.getString(
+                                                    imagenes.getColumnIndex("Url")
+                                            )
+                                    ));
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
+                                //imagenes.moveToNext();
+                            }while (imagenes.moveToNext());
+
                         }
-                        imagenes.moveToNext();
-                    }
                     boolean esFinal = (
                             cursor.getInt(
                                     cursor.getColumnIndex("EsFinal")
@@ -739,8 +749,7 @@ public class Lisener{
                         sagasSql.EliminarCalibracion(dto.getClaveOperacion());
                         sagasSql.EliminarImagenesCalibracion(dto.getClaveOperacion());
                     }
-                    cursor.moveToNext();
-                }
+                }while (cursor.moveToNext());
             }
 
         }
@@ -812,7 +821,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetAutoconsumos();
             AutoconsumoDTO dto;
             if(cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     dto = new AutoconsumoDTO();
                     /*Coloco los valors del autoconsumo*/
                     dto.setClaveOperacion(cursor.getString(
@@ -860,23 +869,25 @@ public class Lisener{
                     );
                     /*Coloco las imagenes */
                     Cursor imagenes = sagasSql.GetImagenesAutoconsumo(dto.getClaveOperacion());
-                    imagenes.moveToFirst();
-                    while (!imagenes.isAfterLast()){
-                        dto.getImagenes().add(
-                                imagenes.getString(
-                                        imagenes.getColumnIndex("Imagen")
-                                )
-                        );
-                        try {
-                            URI uri = new URI(imagenes.getString(
-                                    imagenes.getColumnIndex("Url")
-                            ));
-                            dto.getImagenesURI().add(uri);
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
+                    if (imagenes.moveToFirst()){
+                        do {
+                                dto.getImagenes().add(
+                                        imagenes.getString(
+                                                imagenes.getColumnIndex("Imagen")
+                                        )
+                                );
+                                try {
+                                    URI uri = new URI(imagenes.getString(
+                                            imagenes.getColumnIndex("Url")
+                                    ));
+                                    dto.getImagenesURI().add(uri);
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
+                                //imagenes.moveToNext();
+                            } while (imagenes.moveToNext());
+
                         }
-                        imagenes.moveToNext();
-                    }
 
                     if(Registrar(dto,
                             cursor.getString( cursor.getColumnIndex("Tipo")),
@@ -885,8 +896,8 @@ public class Lisener{
                         sagasSql.EliminarAutoconsumo(dto.getClaveOperacion());
                         sagasSql.EliminarImagenesAutoconsumo(dto.getClaveOperacion());
                     }
-                    cursor.moveToNext();
-                }
+                    //cursor.moveToNext();
+                }while (cursor.moveToFirst());
             }
         }
         return (this.sagasSql.GetAutoconsumos().getCount()==0);
@@ -957,7 +968,7 @@ public class Lisener{
                     esPipa;
             if(cursor.moveToFirst()){
                 Log.d("cursor",cursor.toString());
-                while (cursor.moveToNext()){
+                do {
                     Log.d("cursor", cursor.toString());
                     ventaDTO = new VentaDTO();
                     /*coloco los valores de la venta*/
@@ -985,7 +996,7 @@ public class Lisener{
                     //Obtengo y coloco el concepto de venta
                     Cursor concepto = sagasSql.GetVentaConcepto(ventaDTO.getFolioVenta());
                     if(concepto.moveToFirst()) {
-                        while (!concepto.isAfterLast()) {
+                        do {
                             Log.d("concepto",concepto.toString());
                             ConceptoDTO conceptoDTO= new ConceptoDTO();
 
@@ -1110,9 +1121,8 @@ public class Lisener{
                                             concepto.getColumnIndex("IdEmpresa")
                                     )
                             );
-
-                            concepto.moveToNext();
-                        }
+                            //concepto.moveToNext();
+                        }while (concepto.moveToNext());
                     }
                     if(registrarVenta(ventaDTO,esCamioneta,esEstacion,esPipa)){
                         Log.d("folioventa",ventaDTO.getFolioVenta());
@@ -1120,8 +1130,8 @@ public class Lisener{
                         sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
                         sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
                     }
-                    cursor.moveToNext();
-                }
+                    //cursor.moveToNext();
+                }while (cursor.moveToNext());
                 Log.w("registroterminado", _registrado+"");
             }
             Log.w("registroterminado", _registrado+"");
@@ -1188,7 +1198,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
             RecargaDTO recargaDTO;
             if(cursor.moveToFirst()){
-                while (!cursor.moveToFirst()){
+                do {
                     recargaDTO = new RecargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     recargaDTO.setClaveOperacion(cursor.getString(
@@ -1219,25 +1229,29 @@ public class Lisener{
                     String tipo = cursor.getString(
                             cursor.getColumnIndex("Tipo"));
                     Cursor imagenes = sagasSql.GetImagenesRecarga(recargaDTO.getClaveOperacion());
-                    imagenes.moveToFirst();
-                    while (!imagenes.isAfterLast()){
-                        try {
-                            recargaDTO.getImagenes().add(
-                                    imagenes.getString(
-                                            imagenes.getColumnIndex("Imagen")
-                                    )
-                            );
 
-                            recargaDTO.getImagenesUri().add(
-                                    new URI(imagenes.getString(
-                                            imagenes.getColumnIndex("Url")
-                                    ))
-                            );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
+                    if(imagenes.moveToFirst()){
+                        do {
+                                try {
+                                    recargaDTO.getImagenes().add(
+                                            imagenes.getString(
+                                                    imagenes.getColumnIndex("Imagen")
+                                            )
+                                    );
+
+                                    recargaDTO.getImagenesUri().add(
+                                            new URI(imagenes.getString(
+                                                    imagenes.getColumnIndex("Url")
+                                            ))
+                                    );
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }while (imagenes.moveToNext());
+
                         }
-                        imagenes.moveToNext();
-                    }
+
 
                     Log.w("ClaveProceso", recargaDTO.getClaveOperacion());
                     registrado = RegistrarRecarga(recargaDTO,tipo,esInicial);
@@ -1247,8 +1261,8 @@ public class Lisener{
                                 recargaDTO.getClaveOperacion());
                     }
 
-                    cursor.moveToNext();
-                }
+                    //cursor.moveToNext();
+                }while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION).getCount()==0);
@@ -1317,7 +1331,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_CAMIONETA);
             RecargaDTO recargaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     recargaDTO = new RecargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     recargaDTO.setClaveOperacion(cursor.getString(
@@ -1340,19 +1354,22 @@ public class Lisener{
                     String tipo = cursor.getString(
                             cursor.getColumnIndex("Tipo"));
                     Cursor cantidad = sagasSql.GetCilindrosRecarga(recargaDTO.getClaveOperacion());
-                    cantidad.moveToFirst();
 
-                    while (!cantidad.isAfterLast()) {
-                        CilindrosDTO row = new CilindrosDTO();
-                        row.setCantidad(cursor.getInt(cursor.getColumnIndex(
-                                "Cantidad")));
-                        row.setCilindroKg(cursor.getString(cursor.getColumnIndex(
-                                "CilindroKg")));
-                        row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
-                                "IdCilindro")));
-                        recargaDTO.getCilindros().add(row);
-                        cantidad.moveToNext();
-                    }
+                    if (cantidad.moveToFirst()){
+                        do{
+                                CilindrosDTO row = new CilindrosDTO();
+                                row.setCantidad(cursor.getInt(cursor.getColumnIndex(
+                                        "Cantidad")));
+                                row.setCilindroKg(cursor.getString(cursor.getColumnIndex(
+                                        "CilindroKg")));
+                                row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
+                                        "IdCilindro")));
+                                recargaDTO.getCilindros().add(row);
+                               // cantidad.moveToNext();
+                            }while (cantidad.moveToNext());
+
+                        }
+
 
                     Log.w("ClaveProceso", recargaDTO.getClaveOperacion());
                     registrado = RegistrarRecargaCamioneta(recargaDTO);
@@ -1361,8 +1378,8 @@ public class Lisener{
                         sagasSql.EliminarCilindrosLecturaInicialCamioneta(
                                 recargaDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
-                }
+                    //cursor.moveToNext();
+                }while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_CAMIONETA).getCount()==0);
@@ -1415,7 +1432,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIncialesCamioneta();
             LecturaCamionetaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     lecturaDTO = new LecturaCamionetaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1431,22 +1448,24 @@ public class Lisener{
 
                     Cursor cantidad = sagasSql.GetCilindrosLecturaInicialCamioneta(
                             lecturaDTO.getClaveOperacion());
-                    cantidad.moveToFirst();
-                    while (!cantidad.isAfterLast()) {
-                        CilindrosDTO row = new CilindrosDTO();
-                        row.setCantidad(cantidad.getInt(cantidad.getColumnIndex(
-                                "Cantidad")));
-                        row.setCilindroKg(cantidad.getString(cantidad.getColumnIndex(
-                                "CilindroKg")));
-                        row.setIdCilindro(cantidad.getInt(cantidad.getColumnIndex(
-                                "IdCilindro")));
-                        lecturaDTO.getCilindros().add(row);
-                        lecturaDTO.getIdCilindro().add(cantidad.getInt(cantidad.getColumnIndex(
-                                "IdCilindro")));
-                        lecturaDTO.getCilindroCantidad().add(cantidad.getInt(cantidad.getColumnIndex(
-                                "Cantidad")));
-                        cantidad.moveToNext();
-                    }
+
+                    if (cantidad.moveToFirst()){
+                        do {
+                                CilindrosDTO row = new CilindrosDTO();
+                                row.setCantidad(cantidad.getInt(cantidad.getColumnIndex(
+                                        "Cantidad")));
+                                row.setCilindroKg(cantidad.getString(cantidad.getColumnIndex(
+                                        "CilindroKg")));
+                                row.setIdCilindro(cantidad.getInt(cantidad.getColumnIndex(
+                                        "IdCilindro")));
+                                lecturaDTO.getCilindros().add(row);
+                                lecturaDTO.getIdCilindro().add(cantidad.getInt(cantidad.getColumnIndex(
+                                        "IdCilindro")));
+                                lecturaDTO.getCilindroCantidad().add(cantidad.getInt(cantidad.getColumnIndex(
+                                        "Cantidad")));
+                            }while (cantidad.moveToNext());
+
+                        }
 
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaInicialCamioneta(lecturaDTO);
@@ -1455,8 +1474,8 @@ public class Lisener{
                         sagasSql.EliminarCilindrosLecturaInicialCamioneta(
                                 lecturaDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
-                }
+                    //cursor.moveToNext();
+                }while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetLecturasIncialesCamioneta().getCount()==0);
@@ -1503,7 +1522,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturaFinalCamionetas();
             LecturaCamionetaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     lecturaDTO = new LecturaCamionetaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1518,22 +1537,24 @@ public class Lisener{
                     ));
                     Cursor cantidad = sagasSql.GetCilindrosLecturaFinalCamioneta(
                             lecturaDTO.getClaveOperacion());
-                    cantidad.moveToFirst();
-                    while (!cantidad.isAfterLast()) {
-                        CilindrosDTO row = new CilindrosDTO();
-                        row.setCantidad(cursor.getInt(cursor.getColumnIndex(
-                                "Cantidad")));
-                        row.setCilindroKg(cursor.getString(cursor.getColumnIndex(
-                                "CilindroKg")));
-                        row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
-                                "IdCilindro")));
-                        lecturaDTO.getCilindros().add(row);
-                        lecturaDTO.getIdCilindro().add(cursor.getInt(cursor.getColumnIndex(
-                                "IdCilindro")));
-                        lecturaDTO.getCilindroCantidad().add(cursor.getInt(cursor.getColumnIndex(
-                                "Cantidad")));
-                        cantidad.moveToNext();
-                    }
+
+                    if (cantidad.moveToFirst()){
+                        do {
+                                CilindrosDTO row = new CilindrosDTO();
+                                row.setCantidad(cursor.getInt(cursor.getColumnIndex(
+                                        "Cantidad")));
+                                row.setCilindroKg(cursor.getString(cursor.getColumnIndex(
+                                        "CilindroKg")));
+                                row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
+                                        "IdCilindro")));
+                                lecturaDTO.getCilindros().add(row);
+                                lecturaDTO.getIdCilindro().add(cursor.getInt(cursor.getColumnIndex(
+                                        "IdCilindro")));
+                                lecturaDTO.getCilindroCantidad().add(cursor.getInt(cursor.getColumnIndex(
+                                        "Cantidad")));
+                            }while (cantidad.moveToNext());
+
+                        }
 
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaFinalCamioneta(lecturaDTO);
@@ -1542,8 +1563,7 @@ public class Lisener{
                         sagasSql.EliminarCilindrosLecturaFinalCamioneta(
                                 lecturaDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
-                }
+                }while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetLecturaFinalCamionetas().getCount()==0);
@@ -1599,7 +1619,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasFinalesAlmacen();
             LecturaAlmacenDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     lecturaDTO = new LecturaAlmacenDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1616,19 +1636,20 @@ public class Lisener{
                             "PorcentajeMedidor")));
                     Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
                             lecturaDTO.getClaveOperacion());
-                    Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    Imagen.getString(Imagen.getColumnIndex("Imagen"))
-                            );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
+                    if (Imagen.moveToFirst()){
+                        do {
+                                String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                                try {
+                                    lecturaDTO.getImagenesURI().add(new URI(iuri));
+                                    lecturaDTO.getImagenes().add(
+                                            Imagen.getString(Imagen.getColumnIndex("Imagen"))
+                                    );
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
+                            } while (Imagen.moveToNext());
+
                         }
-                        Imagen.moveToNext();
-                    }
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaFinalAlmacen(lecturaDTO);
                     if (registrado){
@@ -1636,8 +1657,7 @@ public class Lisener{
                         sagasSql.EliminarImagenesLecturaFinalAlmacen(lecturaDTO.getClaveOperacion());
                         //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
-                    cursor.moveToNext();
-                }
+                }while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetLecturasFinalesAlmacen().getCount()==0);
@@ -1695,7 +1715,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIncialesAlmacen();
             LecturaAlmacenDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     lecturaDTO = new LecturaAlmacenDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -1712,19 +1732,22 @@ public class Lisener{
                             "PorcentajeMedidor")));
                     Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
                             lecturaDTO.getClaveOperacion());
-                    Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    Imagen.getString(Imagen.getColumnIndex("Imagen"))
-                            );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
+                    if (Imagen.moveToFirst()){
+                        do {
+                                String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                                try {
+                                    lecturaDTO.getImagenesURI().add(new URI(iuri));
+                                    lecturaDTO.getImagenes().add(
+                                            Imagen.getString(Imagen.getColumnIndex("Imagen"))
+                                    );
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }while (Imagen.moveToNext());
+
                         }
-                        Imagen.moveToNext();
-                    }
+
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaInicialAlmacen(lecturaDTO);
                     if (registrado){
@@ -1732,8 +1755,8 @@ public class Lisener{
                         sagasSql.EliminarImagenesLecturaInicialAlmacen(lecturaDTO.getClaveOperacion());
                         //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
-                    cursor.moveToNext();
-                }
+
+                }while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetLecturasIncialesAlmacen().getCount()==0);
@@ -1793,7 +1816,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIncialesPipas();
             LecturaPipaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     lecturaDTO = new LecturaPipaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -1827,19 +1850,22 @@ public class Lisener{
                     }*/
                     Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
                             lecturaDTO.getClaveProceso());
-                    Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    Imagen.getString(Imagen.getColumnIndex("Imagen"))
-                            );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
+
+                    if (Imagen.moveToFirst()){
+                        do {
+                                String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
+                                try {
+                                    lecturaDTO.getImagenesURI().add(new URI(iuri));
+                                    lecturaDTO.getImagenes().add(
+                                            Imagen.getString(Imagen.getColumnIndex("Imagen"))
+                                    );
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }while (Imagen.moveToNext());
+
                         }
-                        Imagen.moveToNext();
-                    }
                     Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
                     registrado = RegistrarLecturaInicialPipa(lecturaDTO);
                     if (registrado){
@@ -1847,8 +1873,8 @@ public class Lisener{
                         sagasSql.EliminarImagenesLecturaInicialPipas(lecturaDTO.getClaveProceso());
                         //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
-                    cursor.moveToNext();
-                }
+
+                }while ( cursor.moveToNext());
             }
         }
         return (sagasSql.GetLecturasIncialesPipas().getCount()==0);
@@ -1902,7 +1928,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasFinaesPipas();
             LecturaPipaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     lecturaDTO = new LecturaPipaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -1936,19 +1962,22 @@ public class Lisener{
                     }*/
                     Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
                             lecturaDTO.getClaveProceso());
-                    Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
-                            );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
+
+                    if (Imagen.moveToFirst()){
+                        do {
+                                String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                                try {
+                                    lecturaDTO.getImagenesURI().add(new URI(iuri));
+                                    lecturaDTO.getImagenes().add(
+                                            cursor.getString(cursor.getColumnIndex("Imagen"))
+                                    );
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }while (Imagen.moveToNext());
+
                         }
-                        Imagen.moveToNext();
-                    }
                     Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
                     registrado = RegistrarLecturaFinalPipa(lecturaDTO);
                     if (registrado){
@@ -1956,8 +1985,8 @@ public class Lisener{
                         sagasSql.EliminarImagenesLecturaFinalPipas(lecturaDTO.getClaveProceso());
                         //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
-                    cursor.moveToNext();
-                }
+
+                }while (cursor.moveToNext());
             }
         }
 
@@ -2023,7 +2052,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasFinales();
             LecturaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     lecturaDTO = new LecturaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -2057,19 +2086,22 @@ public class Lisener{
                     }*/
                     Cursor Imagen = sagasSql.GetImagenesLecturaFinalByClaveOperacion(
                             lecturaDTO.getClaveProceso());
-                    Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    Imagen.getString(Imagen.getColumnIndex("Imagen"))
-                            );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
+
+                    if (Imagen.moveToFirst()){
+                        do {
+                                String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
+                                try {
+                                    lecturaDTO.getImagenesURI().add(new URI(iuri));
+                                    lecturaDTO.getImagenes().add(
+                                            Imagen.getString(Imagen.getColumnIndex("Imagen"))
+                                    );
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
+
+                            } while (Imagen.moveToNext());
+
                         }
-                        Imagen.moveToNext();
-                    }
                     Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
                     registrado = RegistrarLecturaFinal(lecturaDTO);
                     if (registrado){
@@ -2077,8 +2109,8 @@ public class Lisener{
                         sagasSql.EliminarImagenesLecturaFinal(lecturaDTO.getClaveProceso());
                         //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
-                    cursor.moveToNext();
-                }
+
+                }while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetLecturasFinales().getCount()==0);
@@ -2140,7 +2172,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetLecturasIniciales();
             LecturaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     lecturaDTO = new LecturaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveProceso(cursor.getString(
@@ -2174,19 +2206,21 @@ public class Lisener{
                     }*/
                     Cursor Imagen = sagasSql.GetLecturaImagenesByClaveUnica(
                             lecturaDTO.getClaveProceso());
-                    Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    Imagen.getString(Imagen.getColumnIndex("Imagen"))
-                            );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
+
+                    if (Imagen.moveToFirst()){
+                        do {
+                                String iuri = Imagen.getString(Imagen.getColumnIndex("Url"));
+                                try {
+                                    lecturaDTO.getImagenesURI().add(new URI(iuri));
+                                    lecturaDTO.getImagenes().add(
+                                            Imagen.getString(Imagen.getColumnIndex("Imagen"))
+                                    );
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
+                            }while (Imagen.moveToNext());
+
                         }
-                        Imagen.moveToNext();
-                    }
                     Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
                     registrado = RegistrarLecturaInicial(lecturaDTO);
                     if (registrado){
@@ -2194,8 +2228,7 @@ public class Lisener{
                         sagasSql.EliminarLecturaImagenes(lecturaDTO.getClaveProceso());
                         //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
-                    cursor.moveToNext();
-                }
+                }while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetLecturasIniciales().getCount()==0);
@@ -2251,7 +2284,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetFinalizarDescargas();
             FinalizarDescargaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do{
                     lecturaDTO = new FinalizarDescargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -2286,19 +2319,21 @@ public class Lisener{
 
                     Cursor cantidad = sagasSql.
                             GetImagenesFinalizarDescargaByClaveOperacion(lecturaDTO.getClaveOperacion());
-                    cantidad.moveToFirst();
-                    while (!cantidad.isAfterLast()) {
-                        String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
-                        //try {
-                        //  lecturaDTO.getImagenesURI().add(new URI(iuri));
-                        lecturaDTO.getImagenes().add(
-                                cantidad.getString(cantidad.getColumnIndex("Imagen"))
-                        );
-                        //} catch (URISyntaxException e) {
-                        //    e.printStackTrace();
-                        //}
-                        cantidad.moveToNext();
-                    }
+
+                    if(cantidad.moveToFirst()){
+                        do{
+                                String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
+                                //try {
+                                //  lecturaDTO.getImagenesURI().add(new URI(iuri));
+                                lecturaDTO.getImagenes().add(
+                                        cantidad.getString(cantidad.getColumnIndex("Imagen"))
+                                );
+                                //} catch (URISyntaxException e) {
+                                //    e.printStackTrace();
+                                //}
+                            } while (cantidad.moveToNext());
+
+                        }
 
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaFinalizarDescarga(lecturaDTO);
@@ -2306,8 +2341,8 @@ public class Lisener{
                         sagasSql.EliminarFinalizarDescarga(lecturaDTO.getClaveOperacion());
                         sagasSql.EliminarImagenes(lecturaDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
-                }
+                    //cursor.moveToNext();
+                }while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetPapeletas().getCount()==0);
@@ -2354,7 +2389,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetIniciarDescargas();
             IniciarDescargaDTO lecturaDTO = null;
                 //Log.d("cursor",cursor.moveToFirst()+"");
-                while (cursor.moveToNext()) {
+            do {
                     //Log.d("cursorwhile",cursor.moveToFirst()+"");
                     lecturaDTO = new IniciarDescargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
@@ -2390,22 +2425,23 @@ public class Lisener{
 
                     Cursor cantidad = sagasSql.
                             GetImagenesDescargaByClaveUnica(lecturaDTO.getClaveOperacion());
-                    cantidad.moveToFirst();
                     Log.w("cantidad", cantidad.getCount()+"");
-                    while (!cantidad.isAfterLast()) {
-                        Log.d("cursordescargawhile",cursor.moveToFirst()+"");
-                        String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
-                        //try {
-                        //lecturaDTO.getImagenesURI().add(new URI(iuri));
-                        lecturaDTO.getImagenes().add(
-                                cantidad.getString(cantidad.getColumnIndex("Imagen"))
-                                //iuri
-                        );
+                    if (cantidad.moveToFirst()){
+                        do {
+                                Log.d("cursordescargawhile",cursor.moveToFirst()+"");
+                                String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
+                                //try {
+                                //lecturaDTO.getImagenesURI().add(new URI(iuri));
+                                lecturaDTO.getImagenes().add(
+                                        cantidad.getString(cantidad.getColumnIndex("Imagen"))
+                                        //iuri
+                                );
                         /*} catch (URISyntaxException e) {
                             e.printStackTrace();
                         }*/
-                        cantidad.isAfterLast();
-                    }
+                            }while (cantidad.moveToNext());
+
+                        }
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaDescarga(lecturaDTO);
                     Log.d("registro", registrado+"");
@@ -2414,8 +2450,7 @@ public class Lisener{
                         sagasSql.EliminarDescarga(lecturaDTO.getClaveOperacion());
                         sagasSql.EliminarImagenesDescarga(lecturaDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
-                }
+                }while (cursor.moveToNext());
 
         }
         Log.d("cursorliminar",sagasSql.GetIniciarDescargas()+"");
@@ -2466,7 +2501,7 @@ public class Lisener{
             Cursor cursor = sagasSql.GetPapeletas();
             PrecargaPapeletaDTO lecturaDTO = null;
             if (cursor.moveToFirst()) {
-                while (cursor.moveToFirst()) {
+                do {
                     lecturaDTO = new PrecargaPapeletaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
                     lecturaDTO.setClaveOperacion(cursor.getString(
@@ -2518,28 +2553,27 @@ public class Lisener{
 
                     //Cursor cantidad = papeletaSQL.GetRecordsByCalveUnica(lecturaDTO.getClaveOperacion());
                     Cursor cantidad = sagasSql.GetRecordsByCalveUnica(lecturaDTO.getClaveOperacion());
-                    cantidad.moveToFirst();
-                    while (!cantidad.isAfterLast()) {
-                        //String iuri = cantidad.getString(cantidad.getColumnIndex("Imagen"));
-                        //try {
-                        //lecturaDTO.getImagenesURI().add(new URI(iuri));
-                        lecturaDTO.getImagenes().add(
-                                cantidad.getString(cantidad.getColumnIndex("Url"))
-                        );
-                        //} catch (URISyntaxException e) {
-                        //    e.printStackTrace();
-                        //}
-                        cantidad.moveToNext();
-                    }
+                    if (cantidad.moveToFirst()){
+                        do {
+                                //String iuri = cantidad.getString(cantidad.getColumnIndex("Imagen"));
+                                //try {
+                                //lecturaDTO.getImagenesURI().add(new URI(iuri));
+                                lecturaDTO.getImagenes().add(
+                                        cantidad.getString(cantidad.getColumnIndex("Url"))
+                                );
+                                //} catch (URISyntaxException e) {
+                                //    e.printStackTrace();
+                                //}
+                            }while (cantidad.moveToNext());
 
+                        }
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarPapeleta(lecturaDTO);
                     if (registrado){
                         sagasSql.Eliminar(lecturaDTO.getClaveOperacion());
                         sagasSql.EliminarImagenes(lecturaDTO.getClaveOperacion());
                     }
-                    cursor.moveToNext();
-                }
+                }while (cursor.moveToNext());
             }
         }
         return (sagasSql.GetPapeletas().getCount()==0);

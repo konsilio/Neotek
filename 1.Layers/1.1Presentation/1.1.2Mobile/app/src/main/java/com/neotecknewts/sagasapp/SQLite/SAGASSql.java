@@ -172,7 +172,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "Imagen TEXT," +
                 "Url TEXT," +
-                "CalveUnica TEXT," +
+                "ClaveUnica TEXT," +
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
