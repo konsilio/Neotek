@@ -756,7 +756,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             }
         });
         builder.setCancelable(false);
-        builder.create().show();
+       // builder.create().show();
     }
 
     @Override

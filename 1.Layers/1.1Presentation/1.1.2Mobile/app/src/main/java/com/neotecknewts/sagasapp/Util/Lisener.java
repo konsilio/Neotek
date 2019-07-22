@@ -2389,7 +2389,8 @@ public class Lisener{
             Cursor cursor = sagasSql.GetIniciarDescargas();
             IniciarDescargaDTO lecturaDTO = null;
                 //Log.d("cursor",cursor.moveToFirst()+"");
-            do {
+            if (cursor.moveToFirst()){
+                do {
                     //Log.d("cursorwhile",cursor.moveToFirst()+"");
                     lecturaDTO = new IniciarDescargaDTO();
                     /* Coloco los valores de la base de datos en el DTO */
@@ -2425,23 +2426,23 @@ public class Lisener{
 
                     Cursor cantidad = sagasSql.
                             GetImagenesDescargaByClaveUnica(lecturaDTO.getClaveOperacion());
-                    Log.w("cantidad", cantidad.getCount()+"");
-                    if (cantidad.moveToFirst()){
+                    Log.w("cantidad", cantidad.getCount() + "");
+                    if (cantidad.moveToFirst()) {
                         do {
-                                Log.d("cursordescargawhile",cursor.moveToFirst()+"");
-                                String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
-                                //try {
-                                //lecturaDTO.getImagenesURI().add(new URI(iuri));
-                                lecturaDTO.getImagenes().add(
-                                        cantidad.getString(cantidad.getColumnIndex("Imagen"))
-                                        //iuri
-                                );
+                            Log.d("cursordescargawhile", cursor.moveToFirst() + "");
+                            String iuri = cantidad.getString(cantidad.getColumnIndex("Url"));
+                            //try {
+                            //lecturaDTO.getImagenesURI().add(new URI(iuri));
+                            lecturaDTO.getImagenes().add(
+                                    cantidad.getString(cantidad.getColumnIndex("Imagen"))
+                                    //iuri
+                            );
                         /*} catch (URISyntaxException e) {
                             e.printStackTrace();
                         }*/
-                            }while (cantidad.moveToNext());
+                        } while (cantidad.moveToNext());
 
-                        }
+                    }
                     Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarLecturaDescarga(lecturaDTO);
                     Log.d("registro", registrado+"");
@@ -2451,6 +2452,8 @@ public class Lisener{
                         sagasSql.EliminarImagenesDescarga(lecturaDTO.getClaveOperacion());
                     }
                 }while (cursor.moveToNext());
+
+            }
 
         }
         Log.d("cursorliminar",sagasSql.GetIniciarDescargas()+"");
