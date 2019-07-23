@@ -26,5 +26,13 @@ namespace Utilities.MainModule
                 return cantidadMenor - cantidadMayor;
             return cantidadMayor - cantidadMenor;
         }
+        public static decimal Truncar(decimal cantidad, decimal digitos)
+        {
+            decimal decimales = 1;
+            for (int i = 0; i < digitos; i++)            
+                decimales = decimales * 10;
+
+            return Math.Truncate(cantidad * decimales) / decimales;
+        }
     }
 }

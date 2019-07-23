@@ -380,8 +380,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<VentaPuntoDeVenta> ObtenerVentas(int idPuntoVenta, DateTime fecha)
         {
-            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FechaRegistro.Day.Equals(fecha.Day) && x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Year.Equals(fecha.Year)
-            && x.IdPuntoVenta.Equals(idPuntoVenta)).ToList();
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FechaRegistro.Day.Equals(fecha.Day) 
+                                                        && x.FechaRegistro.Month.Equals(fecha.Month) 
+                                                        && x.FechaRegistro.Year.Equals(fecha.Year)
+                                                        && x.IdPuntoVenta.Equals(idPuntoVenta)).ToList();
         }
         public List<VentaPuntoDeVenta> BuscarVentasPorRFC(string rfc)
         {
@@ -400,6 +402,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdEmpresa.Equals(IdEmpresa) 
                                                             && x.FechaRegistro.Month.Equals(p.Month)
                                                             && x.FechaRegistro.Year.Equals(p.Year)).ToList();
+        }
+        public List<VentaPuntoDeVenta> ObtenerVentas(short idCAlmacenGas, DateTime fecha)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FechaRegistro.Day.Equals(fecha.Day)
+                                                        && x.FechaRegistro.Month.Equals(fecha.Month)
+                                                        && x.FechaRegistro.Year.Equals(fecha.Year)
+                                                        && x.CPuntoVenta.IdCAlmacenGas.Equals(idCAlmacenGas)).ToList();
         }
     }
 }

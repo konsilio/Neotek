@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sagas.MainModule.Entidades;
+using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Ventas;
+using Sagas.MainModule.ObjetosValor.Enum;
+using Utilities.MainModule;
 
 namespace Application.MainModule.Servicios.Almacenes
 {
@@ -53,7 +57,7 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static decimal SumarKilogramos(decimal cantidadActualKg, decimal ingresoKg)
         {
-            return cantidadActualKg + ingresoKg;   
+            return cantidadActualKg + ingresoKg;
         }
         public static decimal SumarLitros(decimal cantidadActualLt, decimal ingresoLt)
         {
@@ -92,5 +96,39 @@ namespace Application.MainModule.Servicios.Almacenes
             //Salidas de gas -> litrosRecargados y litrosCarburados
             return litrosInicialesEnAlmacen + litrosDescargados - litrosRecargados - litrosCarburados;
         }
+        public static decimal ObtenerPorcentajeRemanentePtoVenta(short idAlmacenGas, decimal ventas, decimal porcentajefinal, DateTime fecha)
+        {
+
+            var capacidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(idAlmacenGas).CapacidadTanqueKg;
+            decimal diferencia = 0;
+            var lecturas = AlmacenGasServicio.ObtenerLecturas(idAlmacenGas);
+            foreach (var item in lecturas)
+            {
+                var lecturaInicial = 0;
+                if (item.IdTipoEvento.Equals(TipoEventoEnum.Inicial) && item.FechaRegistro.ToShortDateString().Equals(fecha.ToShortDateString()))                
+                   lecturaInicial = Convert.ToInt32(item.P5000 ?? 0);             
+
+                if (lecturas.Exists(x => x.FechaRegistro.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
+                    diferencia = CalculosGenerales.DiferenciaEntreDosNumero(lecturaInicial, item.P5000 ?? 0);               
+            }
+
+
+
+
+            var libro = diferencia - ventas;
+            var real = porcentajefinal * capacidad;
+
+            return (decimal)((real / libro) * 100);
+        }
+        //public static decimal ObtenerPorcentajeRemanentePtoVenta(short idAlmacenGas, decimal diferencia, decimal porcentajefinal, DateTime periodo)
+        //{
+        //    var ventas = CajaGeneralServicio.ObtenerVentasPorCAlmacenGas(idAlmacenGas, periodo).Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadKg));
+        //    var capacidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(idAlmacenGas).CapacidadTanqueKg;
+        //    var recargas = AlmacenGasServicio.ObtenerRecargasNoProcesadas();
+        //    var libro = diferencia - ventas;
+        //    var real = porcentajefinal * capacidad;
+
+        //    return (decimal)((real / libro) * 100);
+        //}
     }
 }

@@ -196,7 +196,7 @@
                                         <thead>
                                             <tr>
                                                 <td><strong>Nombre</strong></td>
-                                                @if (ViewBag.RemaPuntoVenta != null)
+                                                @if (ViewBag.RemaPuntoVenta != null && ViewBag.RemaPuntoVenta.Count > 0)
                                                 {
                                                     foreach (var item in ((List<RemanentePuntoVentaTodosDTO>)ViewBag.RemaPuntoVenta).FirstOrDefault().RemaentePuntoVenta.ToList())
                                                     {
@@ -221,7 +221,8 @@
                                                         @foreach (var remaPtv in puntoVenta.RemaentePuntoVenta)
                                                         {
                                                             <td>
-                                                                @remaPtv.Remanente
+                                                                @remaPtv.Remanente 
+                                                                (@remaPtv.Porcentaje %)
                                                             </td>
                                                         }
                                                     </tr>
