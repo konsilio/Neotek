@@ -15,6 +15,7 @@ namespace Application.MainModule.DTOs
         public string ImagenLI { get; set; }
         public string ImagenLF { get; set; }
         public decimal Diferencia { get; set; }
+        //public decimal Porcentaje { get; set; }
         public DateTime Fecha { get; set; }
     }
 }

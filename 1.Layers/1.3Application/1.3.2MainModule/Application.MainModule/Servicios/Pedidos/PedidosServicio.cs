@@ -4,6 +4,7 @@ using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacenes;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
@@ -25,7 +26,8 @@ namespace Application.MainModule.Servicios.Pedidos
         }
         public static List<PedidoModelDto> Obtener(short idempresa)
         {
-            var pedidos = new PedidosDataAccess().Buscar(idempresa);
+            //var pedidos = new PedidosDataAccess().Buscar(idempresa);
+            var pedidos = new PedidosDataAccess().Buscar(idempresa, DateTime.Now).ToList();
             return PedidosAdapter.ToDTO(pedidos);
         }
         public static RegistraPedidoDto Obtener(int idPedido)
@@ -94,5 +96,6 @@ namespace Application.MainModule.Servicios.Pedidos
             }
             return listDTO;
         }
+        
     }
 }

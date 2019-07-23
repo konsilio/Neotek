@@ -672,6 +672,10 @@ namespace Application.MainModule.Servicios.Ventas
             else
                 return 0;
         }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorCAlmacenGas(short idCAlmacen, DateTime fecha)
+        {
+            return new PuntoVentaDataAccess().ObtenerVentas(idCAlmacen, fecha);
+        }
     }
 }
 

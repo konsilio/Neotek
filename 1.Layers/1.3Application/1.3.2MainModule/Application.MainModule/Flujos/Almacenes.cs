@@ -299,13 +299,10 @@ namespace Application.MainModule.Flujos
             }
             return remaGeneral;
         }
-
-
-
         public List<RemanentePuntoVentaTodosDTO> ConsultarRemanentePorPuntoventa(RemanenteDTO dto)
         {
             List<RemanentePuntoVentaTodosDTO> respuesta = new List<RemanentePuntoVentaTodosDTO>();
-            
+
             var PuntosVenta = new List<PuntoVenta>();
             if (dto.IdPuntoVenta.Equals(0))
                 PuntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
@@ -313,12 +310,12 @@ namespace Application.MainModule.Flujos
                 PuntosVenta.Add(PuntoVentaServicio.Obtener(dto.IdPuntoVenta));
             foreach (var pventa in PuntosVenta)
             {
+                var _calibracion = pventa.UnidadesAlmacen.Calibraciones != null && !pventa.UnidadesAlmacen.Calibraciones.Count.Equals(0) ? pventa.UnidadesAlmacen.Calibraciones.LastOrDefault().Porcentaje : 0; 
                 List<RemanentePuntoVentaDTO> remaPuntoVenta = new List<RemanentePuntoVentaDTO>();
                 RemanentePuntoVentaTodosDTO resp = new RemanentePuntoVentaTodosDTO();
                 resp.RemaentePuntoVenta = new List<RemanentePuntoVentaDTO>();
                 int Dias = dto.Fecha.Month.Equals(DateTime.Now.Month) && dto.Fecha.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month);
                 dto.Fecha = Convert.ToDateTime(string.Concat(dto.Fecha.Year, "/", dto.Fecha.Month, "/", "1", " ", "00:00:01"));
-
                 for (int i = 0; i < Dias; i++)
                 {
                     RemanentePuntoVentaDTO rema = new RemanentePuntoVentaDTO();
@@ -329,7 +326,11 @@ namespace Application.MainModule.Flujos
                         foreach (var venta in ventasCamioneta)
                         {
                             if (venta.FechaRegistro < dto.Fecha)
-                                rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
+                            {
+                                rema.Porcentaje = CalcularGasServicio.ObtenerPorcentajeRemanentePtoVenta(pventa.UnidadesAlmacen.IdCAlmacenGas, venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0), 20,DateTime.Now);
+                                rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0) * _calibracion;
+                                
+                            }
                         }
                     }
                     if (pventa.UnidadesAlmacen.IdPipa != null)
@@ -338,7 +339,8 @@ namespace Application.MainModule.Flujos
                         foreach (var venta in ventasPipa)
                         {
                             if (venta.FechaRegistro < dto.Fecha)
-                                rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
+                                rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0) * _calibracion;
+                           
                         }
                     }
                     if (pventa.UnidadesAlmacen.IdEstacionCarburacion != null)
@@ -347,20 +349,25 @@ namespace Application.MainModule.Flujos
                         foreach (var venta in ventasCarburacion)
                         {
                             if (venta.FechaRegistro < dto.Fecha)
-                                rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
+                                rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 00) * _calibracion;
                         }
                     }
+                    rema.Remanente = CalculosGenerales.Truncar(rema.Remanente, 2);
                     rema.IdPuntoVenta = dto.IdPuntoVenta;
                     rema.NombrePuntoVenta = pventa.UnidadesAlmacen.Numero;
+                    rema.Porcentaje = CalculosGenerales.Truncar(_calibracion, 1);
                     rema.Mes = dto.Fecha.Month;
                     rema.Anio = dto.Fecha.Year;
                     rema.dia = dto.Fecha.Day;
                     remaPuntoVenta.Add(rema);
 
+
                     dto.Fecha = dto.Fecha.AddDays(1);
                 }
                 resp.RemaentePuntoVenta.AddRange(remaPuntoVenta);
-                respuesta.Add(resp);               
+                respuesta.Add(resp);
+                if (respuesta.Count.Equals(2))
+                    return respuesta;
             }
             return respuesta;
         }
@@ -390,9 +397,10 @@ namespace Application.MainModule.Flujos
                         if (repo.Exists(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
                         {
                             var li = repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaInicial;
+                            var dif = CalculosGenerales.DiferenciaEntreDosNumero(li, item.P5000 ?? 0);
                             repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaFinal = Convert.ToInt32(item.P5000 ?? 0);
                             repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).ImagenLF = item.Fotografias.Count.Equals(0) ? string.Empty : item.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(item.IdOrden)).UrlImagen ?? string.Empty;
-                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).Diferencia = CalculosGenerales.DiferenciaEntreDosNumero(li, item.P5000 ?? 0);
+                            repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).Diferencia = dif;                       
                         }
                     }
                 }
@@ -417,7 +425,6 @@ namespace Application.MainModule.Flujos
                 {
                     if (item.IdTipoEvento.Equals(TipoEventoEnum.Final))
                     {
-
                         if (repo.Exists(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
                         {
                             var li = repo.FirstOrDefault(x => x.Fecha.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())).LecturaInicial;

@@ -22,6 +22,7 @@ using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.Servicios.Ventas;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.DTOs;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.Servicios.Almacenes
 {
@@ -631,6 +632,23 @@ namespace Application.MainModule.Servicios.Almacenes
                 return nombre;
 
             return EstacionCarburacionServicio.ObtenerNombre(uAG);
+        }
+        public static string ObtenerNombreUnidadAlmacenGas(Pedido p)
+        {
+            if (p.IdCamioneta != 0)
+                return ObtenerCamioneta(p.IdCamioneta.Value).Nombre;
+            if (p.IdPipa != 0)
+                return ObtenerPipa(p.IdPipa.Value).Nombre;
+            return "Sin Asignar";
+
+        }
+        public static string ObtenerCantidad(Pedido p, string cant)
+        {
+            if (p.IdCamioneta != 0)
+                return cant.TrimEnd(' ').TrimEnd(',');
+            if (p.PedidoDetalle.Count > 0)
+                return CalculosGenerales.Truncar(p.PedidoDetalle.FirstOrDefault().Cantidad.Value, 2).ToString().Split(',')[0] + " Kg";
+            return Error.NoEncontrado;
         }
         public static ReporteDiaDTO ReporteDia(DateTime fecha, short idCAlmacenGas)
         {

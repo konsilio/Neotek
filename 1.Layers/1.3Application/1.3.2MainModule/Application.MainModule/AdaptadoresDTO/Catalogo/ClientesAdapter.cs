@@ -13,7 +13,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
     {
         public static ClientesDto ToDTO(Cliente us)
         {
-
             string nom = "";
             string apell = "";
             string apell2 = "";
@@ -57,7 +56,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 DescuentoXKilo = us.DescuentoXKilo,
                 limiteCreditoMonto = us.limiteCreditoMonto,
                 limiteCreditoDias = us.limiteCreditoDias,
-                Telefono1 = us.Telefono1,
+                Telefono1 = us.Telefono.Equals(string.Empty) ? us.Telefono1.Equals(string.Empty) ? us.Celular:us.Telefono1 : us.Telefono,
                 Telefono2 = us.Telefono2,
                 Telefono3 = us.Telefono3,
                 Celular1 = us.Celular1,
@@ -83,7 +82,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
                 RegimenFiscal = us.RegimenFiscal.Descripcion,
                 Cliente = nom + " " + apell + " " + apell2 + " " + us.Rfc,//us.Nombre + " " + us.Apellido1 + " " + us.Rfc,              
-                Locaciones = ClienteServicio.ObtenerLoc(us.IdCliente),
+                //Locaciones = cl != null ? ToDTOLoc(cl) : ClienteServicio.ObtenerLoc(us.IdCliente),
                 EsFijo = us.EsFijo,
             };
             return usDTO;
@@ -93,7 +92,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             List<ClientesDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
-
         public static ClienteLocacionDTO ToDTOL(ClienteLocacion _loc)
         {
             var p = PaisServicio.Obtener(_loc.IdPais);
@@ -130,7 +128,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
             return locDto;
         }
-
         public static ClienteLocacion FromDtox(ClienteLocacionDTO cteDTO)
         {
             return new ClienteLocacion()
@@ -218,7 +215,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 EsFijo = cteDTO.EsFijo,
             };
         }
-
         public static Cliente FromDtoEditar(ClienteCrearDto Ctedto, Cliente catCte)
         {
             var catCliente = FromEntity(catCte);
@@ -259,7 +255,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
             return catCliente;
         }
-
         public static ClienteLocacion FromDto(ClienteLocacionDTO Ctedto, ClienteLocacion catCte)
         {
             var catCliente = FromEntityLoc(catCte);
@@ -281,7 +276,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
             return catCliente;
         }
-
         public static List<ClienteLocacionDTO> getLoc(List<ClienteLocacion> inf)
         {
             List<ClienteLocacionDTO> lst = new List<ClienteLocacionDTO>();

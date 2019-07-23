@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities.MainModule;
 
 namespace Application.MainModule.AdaptadoresDTO.Pedidos
 {
@@ -33,39 +34,38 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 {
                     if (item.Cilindro20 == true)
                     {
-                        cant += item.Cantidad.ToString().Split(',')[0] + " " + "Cilindro(s) 20Kg" + ", ";
+                        cant += CalculosGenerales.Truncar(item.Cantidad.Value, 2).ToString() + " " + "Cilindro(s) 20Kg" + ", ";
                         cant20 = item.Cantidad.ToString().Split(',')[0];
                     }
                     if (item.Cilindro30 == true)
                     {
-                        cant += item.Cantidad.ToString().Split(',')[0] + " " + "Cilindro(s) 30Kg" + ", ";
+                        cant += CalculosGenerales.Truncar(item.Cantidad.Value, 2).ToString() + " " + "Cilindro(s) 30Kg" + ", ";
                         cant30 = item.Cantidad.ToString().Split(',')[0];
                     }
                     if (item.Cilindro45 == true)
                     {
-                        cant += item.Cantidad.ToString().Split(',')[0] + " " + "Cilindro(s) 45Kg" + ", ";
+                        cant += CalculosGenerales.Truncar(item.Cantidad.Value, 2).ToString() + " " + "Cilindro(s) 45Kg" + ", ";
                         cant45 = item.Cantidad.ToString().Split(',')[0];
                     }
                 }
             }
             var cliente = ClienteServicio.Obtener(p.IdCliente);
-            var clienteL = ClienteServicio.ObtenerCL(p.IdCliente, p.IdDireccion);
-            var uni = p.IdCamioneta > 0 ? AlmacenGasServicio.ObtenerCamioneta(p.IdCamioneta.Value).Nombre : p.IdPipa > 0 ? AlmacenGasServicio.ObtenerPipa(p.IdPipa ?? 0).Nombre : "No asignado";
-            List<RespuestaSatisfaccionPedido> pe = new PedidosDataAccess().BuscarEnc(p.IdPedido);
+            //var clienteL = cliente.Locaciones.FirstOrDefault();
+            //var pe = p.RespuestaSatisfaccionPedido.ToList();
             PedidoModelDto usDTO = new PedidoModelDto()
             {
                 IdPedido = p.IdPedido,
-                IdPedidoDetalle = p.PedidoDetalle.Count > 0 ? p.PedidoDetalle.FirstOrDefault().IdPedidoDetalle: 0,
+                IdPedidoDetalle = p.PedidoDetalle.Count > 0 ? p.PedidoDetalle.FirstOrDefault().IdPedidoDetalle : 0,
                 IdEstatusPedido = p.IdEstatusPedido,
-                EstatusPedido = EstatusPedidoConst.ObtenerString(p.IdEstatusPedido),
-                Cantidad = p.IdCamioneta > 0 ? cant.TrimEnd(' ').TrimEnd(',') : p.PedidoDetalle.Count > 0 ? p.PedidoDetalle.FirstOrDefault().Cantidad.ToString().Split(',')[0] + " Kg" : Error.NoEncontrado,
+                EstatusPedido = p.PedidoEstatus.Descripcion,
+                Cantidad = AlmacenGasServicio.ObtenerCantidad(p, cant),
                 Cantidad20 = cant20,
                 Cantidad30 = cant30,
                 Cantidad45 = cant45,
                 MotivoCancelacion = "",
-                Calle = clienteL != null ? clienteL.Calle : string.Empty,
-                Colonia = clienteL != null ? clienteL.Colonia : string.Empty,
-                Unidad = uni,
+                //Calle = clienteL != null ? clienteL.Calle : string.Empty,
+                //Colonia = clienteL != null ? clienteL.Colonia : string.Empty,
+                Unidad = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(p),
                 NombreRfc = cliente.Nombre + " " + cliente.Apellido1 + " " + cliente.Apellido2,
                 IdPipa = p.IdPipa ?? 0,
                 IdCamioneta = p.IdCamioneta ?? 0,
@@ -74,8 +74,8 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 FechaRegistroPedido = p.FechaRegistro,
                 FechaEntregaPedido = p.FechaPedido.Value,
                 Pedidos = FromDtoDetalle(p.PedidoDetalle.ToList()),
-                encuesta = pe.Count > 0 ? FromDto(pe) : FromInit(p.IdPedido),
-                //cliente = ClientesAdapter.ToDTO(cliente),
+                //encuesta = pe.Count > 0 ? FromDto(pe) : FromInit(p.IdPedido),
+                cliente = ClientesAdapter.ToDTO(cliente),
             };
             return usDTO;
         }
