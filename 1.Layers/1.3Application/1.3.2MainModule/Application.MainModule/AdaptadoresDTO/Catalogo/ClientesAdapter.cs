@@ -77,7 +77,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Telefono = us.Telefono ?? us.Telefono1,
                 Celular = us.Celular ?? us.Celular1,
                 CorreoElectronico = us.CorreoElectronico ?? us.Email1,
-                Domicilio = us.Domicilio,
+                Domicilio = us.Domicilio ?? string.Empty,
                 Empresa = us.Empresa.NombreComercial,
                 TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
                 RegimenFiscal = us.RegimenFiscal.Descripcion,

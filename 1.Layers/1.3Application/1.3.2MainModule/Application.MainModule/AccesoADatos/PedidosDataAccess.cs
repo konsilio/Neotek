@@ -31,7 +31,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa) 
                                                 && (x.FechaRegistro.Month.Equals(periodo.Month) 
-                                                && x.FechaRegistro.Year.Equals(periodo.Year))).ToList();
+                                                && x.FechaRegistro.Year.Equals(periodo.Year))
+                                                && x.PedidoDetalle.Count > 0).ToList();
         }
         public List<PedidoDetalle> Buscar(int idPedido)
         {

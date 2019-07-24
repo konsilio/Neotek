@@ -116,7 +116,7 @@
                                                             settings.Name = "IdCliente";
                                                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                                             //settings.SelectedIndex = 0;
-                                                            settings.Properties.DropDownWidth = 550;
+                                                            settings.Properties.DropDownWidth = 650;
                                                             settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
                                                             settings.Properties.CallbackPageSize = 30;
                                                             settings.Properties.TextFormatString = "{0} {1}";
@@ -124,7 +124,8 @@
                                                             settings.Properties.ValueType = typeof(int);                                                           
                                                             settings.Properties.Columns.Add("Nombre", "Nombre", 130);
                                                             settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
-                                                            settings.Properties.Columns.Add("Rfc", "RFC", 230);                                                       
+                                                            settings.Properties.Columns.Add("Rfc", "RFC", 230);
+                                                            settings.Properties.Columns.Add("Telefono", "Telefono", 100);                                                       
                                                         }).BindList(ViewBag.ListaCliente).Bind(Model.IdCliente).GetHtml();
                                                     }
                                                     else
@@ -134,15 +135,16 @@
                                                             settings.Name = "IdCliente";
                                                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                                             settings.SelectedIndex = 0;
-                                                            settings.Properties.DropDownWidth = 550;
+                                                            settings.Properties.DropDownWidth = 650;
                                                             settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
                                                             settings.Properties.CallbackPageSize = 30;
-                                                            // settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                             settings.Properties.TextFormatString = "{0} {1}";
                                                             settings.Properties.ValueType = typeof(int);
                                                             settings.Properties.Columns.Add("Nombre", "Nombre", 130);
                                                             settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
                                                             settings.Properties.Columns.Add("Rfc", "RFC", 230);
+                                                            settings.Properties.Columns.Add("Telefono", "Telefono", 100);
                                                         }).GetHtml();
                                                     }
 
@@ -185,19 +187,19 @@
                                                     {
                                                         Html.DevExpress().ComboBox(settings =>
                                                         {
-
                                                             settings.Name = "Orden";
-                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);                                                            
-                                                            settings.Properties.DropDownWidth = 550;
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.DropDownWidth = 650;
                                                             settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
                                                             settings.Properties.CallbackPageSize = 30;
                                                             settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                            settings.Properties.TextFormatString = "{0} {1} {2}";
+                                                            settings.Properties.TextFormatString = "{0}";
                                                             settings.Properties.ValueField = "Orden";
                                                             settings.Properties.ValueType = typeof(int);
-                                                            settings.Properties.Columns.Add("Calle", "Calle", 130);
-                                                            settings.Properties.Columns.Add("NumExt", "NumExt", 130);
-                                                            settings.Properties.Columns.Add("Colonia", "Colonia", 230);
+                                                            settings.Properties.Columns.Add("Calle", "Calle", 150);
+                                                            settings.Properties.Columns.Add("NumExt", "NumExt", 100);
+                                                            settings.Properties.Columns.Add("Colonia", "Colonia", 150);
+                                                            settings.Properties.Columns.Add("formatted_address", "Referencia", 250);
                                                         }).BindList(ViewBag.ListaDomicilios).GetHtml();
                                                     }
                                                     else
@@ -207,15 +209,16 @@
                                                             settings.Name = "Orden";
                                                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                                             settings.SelectedIndex = 0;
-                                                            settings.Properties.DropDownWidth = 550;
+                                                            settings.Properties.DropDownWidth = 700;
                                                             settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
                                                             settings.Properties.CallbackPageSize = 30;
                                                             settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                             settings.Properties.TextFormatString = "{0}";
                                                             settings.Properties.ValueType = typeof(int);
-                                                            settings.Properties.Columns.Add("Calle", "Calle", 130);
-                                                            settings.Properties.Columns.Add("NumExt", "NumExt", 130);
-                                                            settings.Properties.Columns.Add("Colonia", "Colonia", 230);
+                                                            settings.Properties.Columns.Add("Calle", "Calle", 150);
+                                                            settings.Properties.Columns.Add("NumExt", "NumExt", 100);
+                                                            settings.Properties.Columns.Add("Colonia", "Colonia", 150);
+                                                            settings.Properties.Columns.Add("formatted_address", "Referencia", 300);
                                                         }).GetHtml();
                                                     }
                                                 </div>
@@ -241,24 +244,24 @@
                                                     <b>Estatus pedido:</b>
                                                     @Html.DevExpress().ComboBox(settings =>
                                                {
-                                                   settings.Name = "IdEstatusPedido";
-                                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                                   settings.SelectedIndex = 0;
-                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                   //dxeListBoxItem_Material itemst dxeListBoxItemSelected_Material
-                                                   settings.Properties.ItemStyle.SelectedStyle.CssClass = "ddlSelect";
-                                                   settings.Properties.ButtonStyle.CssClass = "ddlbtn";
-                                                   settings.Properties.ButtonStyle.Cursor = "pointer";
-                                                   settings.Properties.ButtonStyle.HoverStyle.CssClass = "btnhover";
-                                                   settings.Theme = "Material";
-                                                   //settings.Properties.DropDownHeight =25; altura listbox desplegable
-                                                   settings.ControlStyle.CssClass = "devExpressDropDown";
-                                                   settings.Properties.CaptionStyle.CssClass = "BoldCaption";
-                                                   settings.Properties.ItemStyle.CssClass = "itemst";
-                                                   settings.Properties.TextField = "Descripcion";
-                                                   settings.Properties.ValueField = "IdEstatusPedido";
-                                               }).BindList(ViewBag.Estatus).GetHtml()
+                                                            settings.Name = "IdEstatusPedido";
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.SelectedIndex = 0;
+                                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                            //dxeListBoxItem_Material itemst dxeListBoxItemSelected_Material
+                                                            settings.Properties.ItemStyle.SelectedStyle.CssClass = "ddlSelect";
+                                                            settings.Properties.ButtonStyle.CssClass = "ddlbtn";
+                                                            settings.Properties.ButtonStyle.Cursor = "pointer";
+                                                            settings.Properties.ButtonStyle.HoverStyle.CssClass = "btnhover";
+                                                            settings.Theme = "Material";
+                                                            //settings.Properties.DropDownHeight =25; altura listbox desplegable
+                                                            settings.ControlStyle.CssClass = "devExpressDropDown";
+                                                            settings.Properties.CaptionStyle.CssClass = "BoldCaption";
+                                                            settings.Properties.ItemStyle.CssClass = "itemst";
+                                                            settings.Properties.TextField = "Descripcion";
+                                                            settings.Properties.ValueField = "IdEstatusPedido";
+                                                        }).BindList(ViewBag.Estatus).GetHtml()
                                                 </div>
                                             </div>
                                             @Html.ValidationMessageFor(m => m.TipoUnidad, "", new { @class = "alert-danger" })

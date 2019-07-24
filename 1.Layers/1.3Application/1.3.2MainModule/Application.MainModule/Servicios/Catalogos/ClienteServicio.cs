@@ -20,17 +20,14 @@ namespace Application.MainModule.Servicios.Catalogos
             List<ClientesDto> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTO(new ClientesDataAccess().Buscar());
             return lClientes;
         }
-
         public static RespuestaDto AltaCliente(Cliente cte)
         {
             return new ClientesDataAccess().Insertar(cte);
         }
-
         public static RespuestaDto AltaClienteL(ClienteLocacion cte)
         {
             return new ClientesDataAccess().Insertar(cte);
         }
-
         public static int BuscarRazon(ClienteDTO cliente)
         {
             var resultado = new ClientesDataAccess().BuscarRazonSocial(cliente, TokenServicio.ObtenerIdEmpresa());
@@ -49,7 +46,6 @@ namespace Application.MainModule.Servicios.Catalogos
             return lClientes;
 
         }
-
         public static int BuscarCliente(ClienteDTO cliente)
         {
             var resultado = new ClientesDataAccess().Buscar(cliente);
@@ -58,22 +54,85 @@ namespace Application.MainModule.Servicios.Catalogos
             else
                 return 0;
         }
-
         public static Cliente Obtener(int IdCliente)
         {
             return new ClientesDataAccess().Buscar(IdCliente);
         }
-
+        public static string ObtenerNomreCliente(int idCliente)
+        {
+            var us = Obtener(idCliente);
+            string nom = "";
+            string apell = "";
+            string apell2 = "";
+            if (us.RepresentanteLegal != null && !us.RepresentanteLegal.Equals(string.Empty))
+            {
+                if (us.RepresentanteLegal.Split(' ').Count() == 4)
+                {
+                    nom = us.RepresentanteLegal.Split(' ')[0] + " " + us.RepresentanteLegal.Split(' ')[1];
+                    apell = us.RepresentanteLegal.Split(' ')[2];
+                    apell2 = us.RepresentanteLegal.Split(' ')[3];
+                }
+                else if (us.RepresentanteLegal.Split(' ').Count() == 3)
+                {
+                    nom = us.RepresentanteLegal.Split(' ')[0];
+                    apell = us.RepresentanteLegal.Split(' ')[1];
+                    apell2 = us.RepresentanteLegal.Split(' ')[2];
+                }
+                else if (us.RepresentanteLegal.Split(' ').Count() == 2)
+                {
+                    nom = us.RepresentanteLegal.Split(' ')[0];
+                    apell = us.RepresentanteLegal.Split(' ')[1];
+                }
+            }
+            else
+            {
+                nom = us.Nombre;
+                apell = us.Apellido1;
+                apell2 = us.Apellido2;
+            }
+            return string.Concat(nom, " ", apell, " ", apell2);
+        }
+        public static string ObtenerNomreCliente(Cliente us)
+        {            
+            string nom = "";
+            string apell = "";
+            string apell2 = "";
+            if (us.RepresentanteLegal != null && !us.RepresentanteLegal.Equals(string.Empty))
+            {
+                if (us.RepresentanteLegal.Split(' ').Count() == 4)
+                {
+                    nom = us.RepresentanteLegal.Split(' ')[0] + " " + us.RepresentanteLegal.Split(' ')[1];
+                    apell = us.RepresentanteLegal.Split(' ')[2];
+                    apell2 = us.RepresentanteLegal.Split(' ')[3];
+                }
+                else if (us.RepresentanteLegal.Split(' ').Count() == 3)
+                {
+                    nom = us.RepresentanteLegal.Split(' ')[0];
+                    apell = us.RepresentanteLegal.Split(' ')[1];
+                    apell2 = us.RepresentanteLegal.Split(' ')[2];
+                }
+                else if (us.RepresentanteLegal.Split(' ').Count() == 2)
+                {
+                    nom = us.RepresentanteLegal.Split(' ')[0];
+                    apell = us.RepresentanteLegal.Split(' ')[1];
+                }
+            }
+            else
+            {
+                nom = us.Nombre;
+                apell = us.Apellido1;
+                apell2 = us.Apellido2;
+            }
+            return string.Concat(nom, " ", apell, " ", apell2);
+        }
         public static ClienteLocacion ObtenerCL(int IdCliente, short Orden)
         {
             return new ClientesDataAccess().BuscarLocacionId(IdCliente, Orden);
         }
-
         public static List<Cliente> BuscadorClientes(string criterio)
         {
             return new ClientesDataAccess().BuscadorClientes(criterio, TokenServicio.ObtenerIdEmpresa());
         }
-
         public static List<ClienteLocacionDTO> ObtenerLoc(int IdCliente)
         {
             List<ClienteLocacionDTO> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTOLoc(new ClientesDataAccess().BuscarLocacion(IdCliente));
@@ -88,22 +147,18 @@ namespace Application.MainModule.Servicios.Catalogos
             else
                 return (short)0;
         }
-
         public static RespuestaDto Eliminar(ClienteLocacion cteLoc)
         {
             return new ClientesDataAccess().Eliminar(cteLoc);
         }
-
         public static RespuestaDto ModificarCL(ClienteLocacion cte)
         {
             return new ClientesDataAccess().Actualizar(cte);
         }
-
         public static RespuestaDto Modificar(Cliente cte)
         {
             return new ClientesDataAccess().Actualizar(cte);
         }
-
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El cliente");
@@ -115,7 +170,6 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
-
         public static RespuestaDto YaExiste()
         {
             string mensaje = string.Format(Error.SiExiste, "El RFC");
@@ -127,7 +181,6 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
-
         public static Cliente BuscarClientePorRFC(string rfc)
         {
             return new ClientesDataAccess().Buscar(rfc);

@@ -403,6 +403,7 @@
     <Compile Include="Models\OrdenCompra\RequisicionOCDTO.cs" />
     <Compile Include="Models\Pedidos\EncuestaModel.cs" />
     <Compile Include="Models\Pedidos\EstatusPedidoModel.cs" />
+    <Compile Include="Models\Pedidos\EstatusPedidosEnum.cs" />
     <Compile Include="Models\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="Models\Pedidos\PedidoModel.cs" />
     <Compile Include="Models\Pedidos\RegistrarPedidoModel.cs" />

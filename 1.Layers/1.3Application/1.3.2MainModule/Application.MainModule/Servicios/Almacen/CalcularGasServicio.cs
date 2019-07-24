@@ -96,29 +96,31 @@ namespace Application.MainModule.Servicios.Almacenes
             //Salidas de gas -> litrosRecargados y litrosCarburados
             return litrosInicialesEnAlmacen + litrosDescargados - litrosRecargados - litrosCarburados;
         }
-        public static decimal ObtenerPorcentajeRemanentePtoVenta(short idAlmacenGas, decimal ventas, decimal porcentajefinal, DateTime fecha)
+        public static decimal ObtenerPorcentajeRemanentePtoVenta(short idAlmacenGas, decimal ventas, DateTime fecha)
         {
-
             var capacidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(idAlmacenGas).CapacidadTanqueKg;
             decimal diferencia = 0;
-            var lecturas = AlmacenGasServicio.ObtenerLecturas(idAlmacenGas);
+            decimal porcentajefinal = 0;
+            var lecturas = AlmacenGasServicio.ObtenerLecturas(idAlmacenGas, fecha);
             foreach (var item in lecturas)
             {
                 var lecturaInicial = 0;
                 if (item.IdTipoEvento.Equals(TipoEventoEnum.Inicial) && item.FechaRegistro.ToShortDateString().Equals(fecha.ToShortDateString()))                
-                   lecturaInicial = Convert.ToInt32(item.P5000 ?? 0);             
+                   lecturaInicial = Convert.ToInt32(item.P5000 ?? 0);
 
-                if (lecturas.Exists(x => x.FechaRegistro.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
-                    diferencia = CalculosGenerales.DiferenciaEntreDosNumero(lecturaInicial, item.P5000 ?? 0);               
+                if (lecturas.Exists(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final) && x.FechaRegistro.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
+                {
+                    porcentajefinal = item.Porcentaje ?? 0;
+                    diferencia = CalculosGenerales.DiferenciaEntreDosNumero(lecturaInicial, item.P5000 ?? 0);
+                }     
             }
-
-
-
 
             var libro = diferencia - ventas;
             var real = porcentajefinal * capacidad;
-
-            return (decimal)((real / libro) * 100);
+            if (libro != 0 && real != 0)
+                return (decimal)((real / libro) * 100);
+            else
+                return 0;
         }
         //public static decimal ObtenerPorcentajeRemanentePtoVenta(short idAlmacenGas, decimal diferencia, decimal porcentajefinal, DateTime periodo)
         //{

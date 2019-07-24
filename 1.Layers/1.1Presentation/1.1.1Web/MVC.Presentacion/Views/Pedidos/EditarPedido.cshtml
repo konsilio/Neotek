@@ -141,6 +141,7 @@
 <body style="height:100%">
     @using (Html.BeginForm("GuardarEdicionPedido", "Pedidos", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.IdPedido)
         @Html.HiddenFor(m => m.IdEmpresa)
         @Html.HiddenFor(m => m.Orden)
         @Html.HiddenFor(m => m.IdPedidoDetalle)
@@ -236,7 +237,7 @@
                                                         <div class="form-group">
                                                             <strong>Teléfono:  &nbsp;</strong>
                                                         </div>
-                                                        @Model.Telefono1
+                                                        @Html.TextBoxFor(m => m.Telefono1)
                                                     </div>
                                                     <div class="row clearfix">
                                                         <div class="form-group">
