@@ -21,7 +21,7 @@ import retrofit2.Response;
 
 public class IniciarDescargaInteractorImpl implements IniciarDescargaInteractor {
     //se declara el tag de la clase y el presenter correspondiente
-    public static final String TAG = "IniciarDescInteractor";
+    public static final String TAG = "";
     IniciarDescargaPresenter iniciarDescargaPresenter;
 
     //constructor de la clase y se inicializa el presenter

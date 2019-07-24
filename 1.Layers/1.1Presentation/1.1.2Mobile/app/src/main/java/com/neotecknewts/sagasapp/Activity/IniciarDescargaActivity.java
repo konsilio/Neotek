@@ -56,9 +56,6 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
 
     //objeto que se llenara con los datos del activity
     public IniciarDescargaDTO iniciarDescargaDTO;
-
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +117,9 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
 
     //este metodo recopila los datos de la vista y los asigna al objeto
     public void onClickRegistrar(){
+        Log.d("iniciardescargadto",iniciarDescargaDTO+"");
+        System.out.println(ordenesCompraDTO);
+        Log.d("Almacendto", almacenDTOs+"");
         iniciarDescargaDTO.setIdOrdenCompra(ordenesCompraDTO.get(spinnerOrdenCompra.getSelectedItemPosition()).getIdOrdenCompra());
 
         iniciarDescargaDTO.setIdTipoMedidorAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getIdTipoMedidor());
