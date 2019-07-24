@@ -687,10 +687,10 @@ public class VerReporteActivity extends AppCompatActivity {
                 "________________________\n"+
                 "Firma\n\n"
         ;
-        HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",
+        /*HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",
                 corteDTO.getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",
-                corteDTO.getClaveOperacion());
+                corteDTO.getClaveOperacion());*/
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sfdate =
@@ -839,8 +839,8 @@ public class VerReporteActivity extends AppCompatActivity {
                         "Recibe\n"+
                         "[{Usuario-recibi}]\n____________________________\n"+
                         "Firma\n\n";
-        HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
-        StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
+        /*HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
+        StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());*/
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter6 =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         try {
@@ -950,10 +950,10 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte = StringReporte.replace("[{Estacion}]",
                 traspasoDTO.getNombreEstacionTraspaso());
 
-        HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",traspasoDTO.
+        /*HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",traspasoDTO.
                 getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",traspasoDTO.
-                getClaveOperacion());
+                getClaveOperacion());*/
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
                 new SimpleDateFormat("dd/MM/yyyy");
@@ -1050,7 +1050,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "<tbody>" +
                 "<tr>" +
                 "<td>Clave Recarga</td>" +
-                "<td>[{ClaveRecarga}]</td>" +
+                //"<td>[{ClaveRecarga}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td>Fecha</td>" +
@@ -1085,7 +1085,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "<td>Final</td>" +
                 "</tr>" +
                 "<tr>" +
-                "<td>[{NombrePipa}]</td>" +
+              // "<td>[{NombrePipa}]</td>" +
                 "<td>[{LecturaInicialPipa}]</td>" +
                 "<td>[{LecturaFinalPipa}]</td>" +
                 "</tr>" +
@@ -1103,7 +1103,7 @@ public class VerReporteActivity extends AppCompatActivity {
 
         StringReporte = "\n Reporte-Recarga - [{Pipa}] \n" +
                 "\n Clave Recarga" +
-                "\t [{ClaveRecarga}]" +
+               // "\t [{ClaveRecarga}]" +
                 "\n Fecha " +
                 "\t [{Fecha}]" +
                 "\n Hora" +
@@ -1119,7 +1119,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "\n\t" +
                 "Inicial:\t" +
                 "Final\n" +
-                "[{NombrePipa}] \t" +
+                //"[{NombrePipa}] \t" +
                 "[{LecturaInicialPipa}] \t" +
                 "[{LecturaFinalPipa}] \n" +
                 "[{NombreEstacion}] \t" +
@@ -1131,10 +1131,11 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte = StringReporte.replace("[{Pipa}]","");
         HtmlReporte = HtmlReporte.replace("[{Pipa}]","");
 
-        StringReporte = StringReporte.replace("[{ClaveRecarga}]",recargaDTO
+        /*StringReporte = StringReporte.replace("[{ClaveRecarga}]",recargaDTO
                 .getClaveOperacion());
+
         HtmlReporte = HtmlReporte.replace("[{ClaveRecarga}]",recargaDTO
-                .getClaveOperacion());
+                .getClaveOperacion());*/
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
                 new SimpleDateFormat("dd/MM/yyyy");
@@ -1144,10 +1145,11 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte = StringReporte.replace("[{Hora}]","");
         HtmlReporte = HtmlReporte.replace("[{Hora}]","");
 
-        StringReporte = StringReporte.replace("[{Hora}]",fdate.format(recargaDTO
-                .getClaveOperacion()));
-        HtmlReporte = HtmlReporte.replace("[{Hora}]",fdate.format(recargaDTO
-                .getClaveOperacion()));
+       /* StringReporte = StringReporte.replace("[{Hora}]",(recargaDTO
+                .getClaveOperacion()));*/
+
+       /* HtmlReporte = HtmlReporte.replace("[{Hora}]",(recargaDTO
+                .getClaveOperacion()));*/
         StringReporte = StringReporte.replace("[{PorcentajeInicial}]",
                 String.valueOf(recargaDTO.getProcentajeSalida()));
         HtmlReporte = HtmlReporte.replace("[{PorcentajeInicial}]",
@@ -1231,7 +1233,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "<td>[{LecturaFinalEstacion}]</td>" +
                 "</tr>" +
 
-                "<td>[{NombrePipa}]</td>" +
+               // "<td>[{NombrePipa}]</td>" +
                 "<td>[{LecturaInicialPipa}]</td>" +
                 "<td>[{LecturaFinalPipa}]</td>" +
                 "</tr>" +
@@ -1266,7 +1268,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "[{LecturaIncialEstacion}] |\t" +
                 "[{LecturaFinalEstacion}] |\n" +
 
-                "[{NombrePipa}] |\t" +
+               // "[{NombrePipa}] |\t" +
                 "[{LecturaInicialPipa}] |\t" +
                 "[{LecturaFinalPipa}] |\n" +
                 "Litros traspasados: \t" +
@@ -1282,10 +1284,10 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{Estacion}]",
                 traspasoDTO.getNombreEstacionTraspaso());
 
-        StringReporte = StringReporte.replace("[{ClaveTraspaso}]",traspasoDTO
+        /*StringReporte = StringReporte.replace("[{ClaveTraspaso}]",traspasoDTO
                 .getClaveOperacion());
         HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",traspasoDTO
-                .getClaveOperacion());
+                .getClaveOperacion());*/
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
                 new SimpleDateFormat("dd/MM/yyyy");
@@ -1321,10 +1323,11 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{LecturaFinalEstacion}]",
                 String.valueOf(traspasoDTO.getP5000Salida()));
 
-        StringReporte = StringReporte.replace("[{NombrePipa}]",
-                traspasoDTO.getNombreEstacionEntrada());
+        /*StringReporte = StringReporte.replace("[{NombrePipa}]",
+                traspasoDTO.getNombreEstacionTraspaso());
+
         HtmlReporte = HtmlReporte.replace("[{NombrePipa}]",
-                traspasoDTO.getNombreEstacionEntrada());
+                traspasoDTO.getNombreEstacionTraspaso());*/
 
         StringReporte = StringReporte.replace("[{LecturaInicialPipa}]",
                 String.valueOf(traspasoDTO.getP5000EntradaInicial()));

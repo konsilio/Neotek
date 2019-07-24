@@ -187,5 +187,25 @@ public class LecturaDTO implements Serializable {
         CapacidadAlmacen = capacidadAlmacen;
     }
 
+    @Override
+    public String toString() {
+        return "LecturaDTO{" +
+                "IdTipoMedidor=" + IdTipoMedidor +
+                ", NombreTipoMedidor='" + NombreTipoMedidor + '\'' +
+                ", CantidadFotografias=" + CantidadFotografias +
+                ", Imagenes=" + Imagenes +
+                ", ImagenesURI=" + ImagenesURI +
+                ", NombreEstacionCarburacion='" + NombreEstacionCarburacion + '\'' +
+                ", IdEstacionCarburacion=" + IdEstacionCarburacion +
+                ", ImagenP5000='" + ImagenP5000 + '\'' +
+                ", ImagenP5000URI=" + ImagenP5000URI +
+                ", CantidadP5000=" + CantidadP5000 +
+                ", PorcentajeMedidor=" + PorcentajeMedidor +
+                ", ClaveProceso='" + ClaveProceso + '\'' +
+                ", FechaAplicacion=" + FechaAplicacion +
+                ", CapacidadAlmacen=" + CapacidadAlmacen +
+                '}';
+    }
+
     //endregion
 }

@@ -5,4 +5,5 @@
     android:layout_height="wrap_content"
     android:maxLines="1"
     android:padding="10dp"
-    android:textSize="18sp" />
+    android:textSize="18sp"
+    android:textColor="@color/cardview_dark_background"/>

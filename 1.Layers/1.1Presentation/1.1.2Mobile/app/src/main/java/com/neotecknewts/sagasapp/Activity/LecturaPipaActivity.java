@@ -206,7 +206,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
         progressDialog = new ProgressDialog(LecturaPipaActivity.this);
         progressDialog.setMessage(getString(message_cargando));
         progressDialog.setIndeterminate(true);
-        progressDialog.show();
+        //progressDialog.show();
     }
 
     @Override

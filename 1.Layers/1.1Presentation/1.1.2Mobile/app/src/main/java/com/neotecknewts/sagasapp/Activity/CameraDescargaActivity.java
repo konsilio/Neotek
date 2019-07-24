@@ -207,6 +207,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
                 }
                 iniciar = extras.getBoolean("EsDescargaIniciar");
+                finalizar =extras.getBoolean("EsDescargafinalizar");
                 almacen = extras.getBoolean("Almacen");
                 textViewMensaje.setText(R.string.mensaje_primera_foto);
                 TanquePrestado = extras.getBoolean("TanquePrestado");
@@ -228,7 +229,6 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 } else if (!extras.getBoolean("Almacen")) {
                     cantidadFotos = finalizarDescarga.getCantidadFotosTractor();
                     textViewTitulo.setText("Fotografia " + finalizarDescarga.getNombreTipoMedidorTractor() + " - Tractor");
-
                 }
                 finalizar = extras.getBoolean("EsDescargaFinalizar");
                 almacen = extras.getBoolean("Almacen");

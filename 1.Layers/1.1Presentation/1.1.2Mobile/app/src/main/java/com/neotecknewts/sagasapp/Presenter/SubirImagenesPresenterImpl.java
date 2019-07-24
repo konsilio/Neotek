@@ -165,7 +165,6 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         subirImagenesView.showProgress(R.string.message_cargando);
         interactor.registrarLecturaInicialPipa(sagasSql,token,lecturaPipaDTO);
     }
-
     /**
      * <h3>registrarLecturaFinalalPipa</h3>
      * Permite realizar la lectura final de la pipa, se enviaran como parametros
@@ -181,14 +180,12 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         subirImagenesView.showProgress(R.string.message_cargando);
         interactor.registrarLecturaFinalizalPipa(sagasSql,token,lecturaPipaDTO);
     }
-
     @Override
     public void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token,
                                                LecturaAlmacenDTO lecturaAlmacenDTO) {
         subirImagenesView.showProgress(R.string.message_cargando);
         interactor.registrarLecturaInicialAlmacen(sagasSql,token,lecturaAlmacenDTO);
     }
-
     @Override
     public void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token,
                                              LecturaAlmacenDTO lecturaAlmacenDTO) {
@@ -210,7 +207,6 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         subirImagenesView.hideProgress();
         subirImagenesView.onSuccessRegistroRecarga();
     }
-
     @Override
     public void registrarRecargaPipa(SAGASSql sagasSql, String token, RecargaDTO recargaDTO,
                                      boolean esRecargaPipaFinal) {

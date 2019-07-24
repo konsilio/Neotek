@@ -243,7 +243,7 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
         progressDialog.setIndeterminate(true);
         progressDialog.setTitle(getString(R.string.app_name));
         progressDialog.setMessage(getString(mensaje));
-        progressDialog.show();
+        //progressDialog.show();
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.neotecknewts.sagasapp.R;
@@ -41,6 +42,8 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
     public Spinner spinnerMedidorTractor;
     public Spinner spinnerAlmacenes;
     public TextView textViewTitulo;
+    public Switch switchTanquePrestado;
+    public TextView TvIniciarDescargaActivityNo,TvIniciarDescargaActivitySi;
 
     //cuadro de dialogo con el progreso de la obtencion de datos
     ProgressDialog progressDialog;
@@ -50,7 +53,6 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
 
     //lista de objetos a mostrar en los spinners
     List<OrdenCompraDTO> ordenesCompraDTO;
-
     List<MedidorDTO> medidorDTOs;
     List<AlmacenDTO> almacenDTOs;
 
@@ -68,20 +70,21 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         finalizarDescargaDTO = new FinalizarDescargaDTO();
 
         //se incializan las variables de la vista
+        switchTanquePrestado = (Switch)findViewById(R.id.switch_tanque);
         spinnerOrdenCompra = (Spinner)findViewById(R.id.spinner_orden_compra);
         linearLayoutTanque = (LinearLayout) findViewById(R.id.layout_tanque);
         spinnerMedidorAlmacen = (Spinner) findViewById(R.id.spinner_medidor_almacen);
         spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
         spinnerAlmacenes = (Spinner)findViewById(R.id.spinner_almacen);
         textViewTitulo = (TextView) findViewById(R.id.textTitulo);
+        TvIniciarDescargaActivitySi = findViewById(R.id.TvIniciarDescargaActivitySi);
+        TvIniciarDescargaActivityNo = findViewById(R.id.TvIniciarDescargaActivityNo);
 
         //se incializa la clase de la session
         session = new Session(getApplicationContext());
-
         //ya que se usa el mismo layout que en iniciar descarga se oculta si el tanque es prestado y se cambia el titulo
         linearLayoutTanque.setVisibility(View.GONE);
         textViewTitulo.setText(R.string.title_finalizar_descarga);
-
         //se inicializa el presenter
         presenter = new FinalizarDescargaPresenterImpl(this);
 
@@ -89,24 +92,31 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         String[] ordenes = {"prueba1", "prueba2"};
         String[] medidores = {"Rotogate", "Magnatel"};
 
-
         spinnerOrdenCompra.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
         spinnerMedidorAlmacen.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
         spinnerMedidorTractor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
         spinnerAlmacenes.setAdapter(new ArrayAdapter<String>(this,R.layout.custom_spinner,ordenes));
 
-
         //onclick del boton
         final Button buttonRegistrar = (Button) findViewById(R.id.registrar_button);
         buttonRegistrar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onClickRegistrar();
-            }
+            public void onClick(View v) {onClickRegistrar(); }
         });
-
         //se obtienen las ordenes de compra, con el token guardado en la session
         presenter.getOrdenesCompra(session.getIdEmpresa(),session.getTokenWithBearer());
-
+        TvIniciarDescargaActivityNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchTanquePrestado.setChecked(false);
+            }
+        });
+        /*Detecto el evento clic en el label de 'Si' opara cambiar el switch a on*/
+        TvIniciarDescargaActivitySi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchTanquePrestado.setChecked(true);
+            }
+        });
     }
 
     //este metodo recopila los datos de la vista y los asigna al objeto
@@ -121,6 +131,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         finalizarDescargaDTO.setNombreTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getNombreTipoMedidor());
 
         finalizarDescargaDTO.setIdAlmacen(almacenDTOs.get(spinnerAlmacenes.getSelectedItemPosition()).getIdAlmacenGas());
+        finalizarDescargaDTO.setTanquePrestado(switchTanquePrestado.isChecked());
         showDialog(getResources().getString(R.string.message_continuar));
     }
 
@@ -175,6 +186,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         intent.putExtra("EsDescargaFinalizar",true);
         intent.putExtra("EsDescargaIniciar",false);
         intent.putExtra("Almacen",false);
+        intent.putExtra("TanquePrestado",switchTanquePrestado.isChecked());
         startActivity(intent);
     }
 
@@ -202,17 +214,25 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
     //metodo que se ejectuta cuando se terminan de obtener las ordenes de comra
     @Override
     public void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO) {
-        Log.w("VIEW", respuestaOrdenesCompraDTO.getOrdenesCompra().size()+"");
-        this.ordenesCompraDTO = respuestaOrdenesCompraDTO.getOrdenesCompra();
-        String[] ordenes = new String[ordenesCompraDTO.size()];
-        for (int i =0; i<ordenes.length; i++){
-            //se asignan al arreglo que se pone en el spinner los nombres de las ordenes de compra
-            ordenes[i]=ordenesCompraDTO.get(i).getNumOrdenCompra();
-        }
+        if(respuestaOrdenesCompraDTO.isExito()) {
+            this.ordenesCompraDTO = respuestaOrdenesCompraDTO.getOrdenesCompra();
+            String[] ordenes = new String[ordenesCompraDTO.size()];
+            for (int i = 0; i < ordenes.length; i++) {
+                //se asignan al arreglo que se pone en el spinner los nombres de las ordenes de compra
+                ordenes[i] = ordenesCompraDTO.get(i).getNumOrdenCompra();
+            }
 
-        spinnerOrdenCompra.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
-        //se hace el lamado al web service para obtener medidores
-        presenter.getMedidores(session.getTokenWithBearer());
+            spinnerOrdenCompra.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+            builder.setTitle(R.string.error_titulo);
+            builder.setMessage(respuestaOrdenesCompraDTO.getMensaje());
+            builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
+                dialog.dismiss();
+            }));
+            builder.create().show();
+        }   presenter.getMedidores(session.getTokenWithBearer());
+
     }
 
     //metodo que se ejectuta cuando se terminan de obtener las ordenes de comra

@@ -331,7 +331,7 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
         progressDialog = new ProgressDialog(RecargaEstacionCarburacionActivity.this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(getString(mensaje));
-        progressDialog.show();
+        //progressDialog.show();
     }
 
     @Override

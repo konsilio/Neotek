@@ -757,6 +757,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         });
         builder.setCancelable(false);
        // builder.create().show();
+
     }
 
     @Override
@@ -816,6 +817,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             }else if (iniciar){
                 presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),sagasSql);
             }else if (finalizar){
+                Log.d("registrarfinalizarDesc", finalizarDescarga.toString());
                 presenter.registrarFinalizarDescarga(finalizarDescarga,session.getToken(),sagasSql);
             }else if (EsLecturaInicial){
                 presenter.registrarLecturaInicial(sagasSql,session.getToken(),lecturaDTO);

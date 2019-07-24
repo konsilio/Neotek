@@ -78,7 +78,6 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
 
         //se incializa la clase de la session
         session = new Session(getApplicationContext());
-
         //se inicializa el presenter
         presenter = new IniciarDescargaPresenterImpl(this);
 
@@ -121,7 +120,6 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
     //este metodo recopila los datos de la vista y los asigna al objeto
     public void onClickRegistrar(){
         iniciarDescargaDTO.setIdOrdenCompra(ordenesCompraDTO.get(spinnerOrdenCompra.getSelectedItemPosition()).getIdOrdenCompra());
-
         iniciarDescargaDTO.setIdTipoMedidorAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getIdTipoMedidor());
         iniciarDescargaDTO.setCantidadFotosAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getCantidadFotografias());
         iniciarDescargaDTO.setNombreTipoMedidorAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getNombreTipoMedidor());

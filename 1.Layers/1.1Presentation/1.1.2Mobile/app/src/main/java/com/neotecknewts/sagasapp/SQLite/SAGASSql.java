@@ -1109,11 +1109,12 @@ public class SAGASSql extends SQLiteOpenHelper {
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
      * @date 28/08/2018
      */
-    public Long InsertFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO, String ClaveOperacion) {
+    public Long InsertFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO,
+                                        String ClaveOperacion) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("ClaveOperacion", ClaveOperacion);
-        contentValues.put("IdOrdenCompra", finalizarDescargaDTO.getIdOrdenCompra());
+        //contentValues.put("ClaveOperacion", ClaveOperacion);
+        contentValues.put("ClaveOperacion",finalizarDescargaDTO.getClaveOperacion());
         contentValues.put("IdTipoMedidorTractor", finalizarDescargaDTO.getIdTipoMedidorTractor());
         contentValues.put("IdTipoMedidorAlmacen", finalizarDescargaDTO.getIdTipoMedidorAlmacen());
         contentValues.put("TanquePrestado", finalizarDescargaDTO.getTanquePrestado());

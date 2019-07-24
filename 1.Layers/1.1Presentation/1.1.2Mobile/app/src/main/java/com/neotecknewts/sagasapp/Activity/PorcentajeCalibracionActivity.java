@@ -54,10 +54,12 @@ public class PorcentajeCalibracionActivity extends AppCompatActivity implements 
 
         BtnCalibracionPipaActivitySiguiente.setOnClickListener(v->{VerificarPorcentaje();});
         Double porcentaje = calibracionDTO.getPorcentajeCalibracion();
+        //Double porcentaje_decimal = calibracionDTO.getPorcentajeCalibracion();
         porcentaje_original = calibracionDTO.getPorcentajeCalibracion();
         int parte_entera = porcentaje.intValue();
-        int decimal = (int)porcentaje_original-parte_entera;
-
+        int decimal = porcentaje.intValue();
+        //aqui
+        //int decimal = (int)porcentaje_original-parte_entera;
 
         NPCalibracionPorcentajeActivityEntero.setMaxValue(100);
         NPCalibracionPorcentajeActivityEntero.setMinValue(0);
@@ -120,7 +122,8 @@ public class PorcentajeCalibracionActivity extends AppCompatActivity implements 
                 Double porcentaje = calibracionDTO.getPorcentajeCalibracion();
                 porcentaje_original = calibracionDTO.getPorcentajeCalibracion();
                 int parte_entera = porcentaje.intValue();
-                int decimal = (int)porcentaje_original-parte_entera;
+                int decimal = porcentaje.intValue();
+                //int decimal = (int)porcentaje_original-parte_entera;
                 NPCalibracionPorcentajeActivityEntero.setValue(parte_entera);
                 NPCalibracionPorcentajeActivityDecimal.setValue(decimal);
             }));
