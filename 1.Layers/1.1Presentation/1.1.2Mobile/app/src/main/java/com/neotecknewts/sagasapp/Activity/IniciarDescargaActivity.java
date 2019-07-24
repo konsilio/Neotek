@@ -247,7 +247,6 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
         for (int i =0; i<medidores.length; i++){
             medidores[i]=medidorDTOs.get(i).getNombreTipoMedidor();
         }
-
         spinnerMedidorAlmacen.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, medidores));
         spinnerMedidorTractor.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, medidores));
         //se hace el lamado al web service para obtener almacenes

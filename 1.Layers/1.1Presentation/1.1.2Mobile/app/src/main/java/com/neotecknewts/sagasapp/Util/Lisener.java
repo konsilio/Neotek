@@ -802,7 +802,7 @@ public class Lisener{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.w("registroterminado5", _registrado+"");
+        Log.w("registroterminado2", _registrado+"");
         return _registrado;
     }
     //endregion
@@ -1127,11 +1127,11 @@ public class Lisener{
                         sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
                     }
                 }while (cursor.moveToNext());
-                Log.w("registroterminado1", _registrado+"");
+                Log.w("registroterminado", _registrado+"");
             }
-            Log.w("registroterminado2", _registrado+"");
+            Log.w("registroterminado", _registrado+"");
         }
-        Log.w("registroterminado3", _registrado+"");
+        Log.w("registroterminado", _registrado+"");
         return (sagasSql.GetVentas().getCount()==0);
     }
 
@@ -1174,7 +1174,7 @@ public class Lisener{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.w("registroterminado4", _registrado+"");
+        Log.w("registroterminado2", _registrado+"");
         return _registrado;
     }
     //endregion
@@ -2273,8 +2273,7 @@ public class Lisener{
     private boolean FinalizarDescarga() {
         boolean servicio = ServicioDisponible();
         boolean registrado;
-        Log.d("serviciotrue", servicio+"");
-        if(ServicioDisponible()) {
+        if(!ServicioDisponible()) {
             Log.w("Iniciando", "Revisando finalizar descarga: " + new Date());
             Cursor cursor = sagasSql.GetFinalizarDescargas();
             FinalizarDescargaDTO lecturaDTO = null;

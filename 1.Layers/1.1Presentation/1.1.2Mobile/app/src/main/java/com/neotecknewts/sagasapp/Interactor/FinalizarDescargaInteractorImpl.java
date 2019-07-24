@@ -24,9 +24,9 @@ public class FinalizarDescargaInteractorImpl implements FinalizarDescargaInterac
     public static final String TAG = "FinalizarDescInteractor";
     FinalizarDescargaPresenter finalizarDescargaPresenter;
 
-    //constructor de la clase y se inicializa el presenter
+        //constructor de la clase y se inicializa el presenter
     public FinalizarDescargaInteractorImpl(FinalizarDescargaPresenter finalizarDescargaPresenter){
-        this.finalizarDescargaPresenter = finalizarDescargaPresenter;
+            this.finalizarDescargaPresenter = finalizarDescargaPresenter;
     }
 
     //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados

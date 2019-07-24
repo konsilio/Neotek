@@ -205,10 +205,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      *                           datos en local de la descarga
      * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
      */
-
     @Override
     public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO,
-                                         String token, SAGASSql iniciarDescargaSQL){
+                                         String token, SAGASSql iniciarDescargaSQL) {
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
@@ -347,6 +346,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         finalizarDescargaDTO.setTanquePrestado(false);
         //region Verifica si el servcio esta disponible
 
+
         RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
         int servicio_intentos = 0;
@@ -360,7 +360,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
                                        Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
-                    Log.d("response", response.body().toString());
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
 
@@ -399,9 +398,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 public void onResponse(Call<RespuestaFinalizarDescargaDTO> call,
                                        Response<RespuestaFinalizarDescargaDTO> response) {
                     RespuestaFinalizarDescargaDTO data = response.body();
-                    if (response.isSuccessful()&& data.isExito()) {
+                    if (response.isSuccessful()) {
                         Log.w("IniciarDescarga", "Success");
-                        subirImagenesPresenter.onSuccessRegistrarFinalizarDescarga();                } else {
+                        subirImagenesPresenter.onRegistrarIniciarDescarga();
+                    } else {
                         switch (response.code()) {
                             case 404:
                                 Log.w("IniciarDescarga", "not found");
