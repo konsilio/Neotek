@@ -6,13 +6,13 @@
     MenuDto rol = Session["Roles"] as MenuDto;
 }
 <script>
-    @*window.onload = function() {
+    window.onload = function() {
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, @Html.Raw(ViewBag.VentasRema.Json));
 
         var ctx = document.getElementById('CallCenter').getContext('2d');
         var myChart = new Chart(ctx, @Html.Raw(ViewBag.CallCenter));
-    }*@
+    }
 </script>
 <section class="content home">
     <div class="container-fluid">
@@ -47,7 +47,7 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">battery_full</i></p>
                             <span>Venta de Camionetas</span>
-                            @*<h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalCamionetas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalCamionetas</span></h3>*@
+                            <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalCamionetas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalCamionetas</span></h3>
                             <small class="text-muted">Kilogramos</small>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">local_shipping</i></p>
                             <span>Venta de Pipas</span>
-                            @*<h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</h3>*@
+                            <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</h3>
                             <small class="text-muted">Kilogramos</small>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-red">local_gas_station</i></p>
                             <span>Venta de Estaciones</span>
-                            @*<h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</h3>*@
+                            <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</h3>
                             <small class="text-muted">Kilogramos</small>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-green">functions</i></p>
                             <span>Total de Venta</span>
-                            @*<h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalVetna" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalVetna</h3>*@
+                            <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalVetna" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalVetna</h3>
                             <small class="text-muted">Kilogramos</small>
                         </div>
                     </div>
@@ -127,7 +127,7 @@
                             <div class="body">
                                 <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">pie_chart_outlined</i></p>
                                 <span>Total de producto</span>
-                                <h3 class="m-b-10">@*<span class="number count-to" data-from="0" data-to="@ViewBag.Anden.TotalProduto" data-speed="2000" data-fresh-interval="700">140180</span>*@</h3>
+                                <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.Anden.TotalProduto" data-speed="2000" data-fresh-interval="700">140180</span></h3>
                                 <small class="text-muted">Kilogramos</small>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                             <div class="body">
                                 <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">queue_play_next</i></p>
                                 <span>Siguiente orden de compra</span>
-                                @*<h3 class="m-b-10 ">@ViewBag.Anden.OrdenCompra</h3>*@
+                                <h3 class="m-b-10 ">@ViewBag.Anden.OrdenCompra</h3>
                                 <small class="text-muted">Autorizada</small>
                             </div>
                         </div>
@@ -152,9 +152,9 @@
                         <div class="card text-center">
                             <div class="body">
                                 <span>Nivel de almacén principal (%)</span>
-                                @*<input type="text" class="knob" value="@ViewBag.Anden.NivelAlmacen" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">*@
+                                <input type="text" class="knob" value="@ViewBag.Anden.NivelAlmacen" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
                                 <div>
-                                    @*<small class="text-muted">@ViewBag.Anden.KilosAlmacen kg.</small>*@
+                                    <small class="text-muted">@ViewBag.Anden.KilosAlmacen kg.</small>
                                 </div>
                             </div>
                         </div>
@@ -394,7 +394,7 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">battery_full</i></p>
                             <span>Venta de Camionetas</span>
-                            <h3 class="m-b-10">$@*<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalCamionetas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalCamionetas</span>*@</h3>
+                            <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalCamionetas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalCamionetas</span></h3>
                             <small class="text-muted">Pesos</small>
                         </div>
                     </div>
@@ -404,7 +404,7 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">local_shipping</i></p>
                             <span>Venta de Pipas</span>
-                            <h3 class="m-b-10">$@*<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</span>*@</h3>
+                            <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</span></h3>
                             <small class="text-muted">Pesos</small>
                         </div>
                     </div>
@@ -414,7 +414,7 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-red">local_gas_station</i></p>
                             <span>Venta de Estaciones</span>
-                            <h3 class="m-b-10">$@*<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</span>*@</h3>
+                            <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</span></h3>
                             <small class="text-muted">Pesos</small>
                         </div>
 
@@ -425,7 +425,7 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-green">functions</i></p>
                             <span>Total de ventas</span>
-                            <h3 class="m-b-10">$@*<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalVetna" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalVetna</span>*@</h3>
+                            <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalVetna" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalVetna</span></h3>
                             <small class="text-muted">Pesos</small>
                         </div>
                     </div>

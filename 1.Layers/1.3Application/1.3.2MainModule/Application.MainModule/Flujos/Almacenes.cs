@@ -319,39 +319,42 @@ namespace Application.MainModule.Flujos
                 for (int i = 0; i < Dias; i++)
                 {
                     RemanentePuntoVentaDTO rema = new RemanentePuntoVentaDTO();
-
-                    if (pventa.UnidadesAlmacen.IdCamioneta != null)
-                    {
-                        var ventasCamioneta = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
-                        foreach (var venta in ventasCamioneta)
+                    //if (pventa.UnidadesAlmacen.IdCamioneta != null)
+                    //{
+                        var ventas = CajaGeneralServicio.ObtenerVentasPorCAlmacenGas(pventa.IdCAlmacenGas, dto.Fecha);
+                        foreach (var venta in ventas)
                         {
-                            if (venta.FechaRegistro < dto.Fecha)
-                            {
-                                rema.Porcentaje = CalcularGasServicio.ObtenerPorcentajeRemanentePtoVenta(pventa.UnidadesAlmacen.IdCAlmacenGas, venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0), 20,DateTime.Now);
+                            //if (venta.FechaRegistro < dto.Fecha)
+                            //{
+                                rema.Porcentaje = CalcularGasServicio.ObtenerPorcentajeRemanentePtoVenta(pventa.UnidadesAlmacen.IdCAlmacenGas, venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0), dto.Fecha);
                                 rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0) * _calibracion;
-                                
-                            }
+                            //}
                         }
-                    }
-                    if (pventa.UnidadesAlmacen.IdPipa != null)
-                    {
-                        var ventasPipa = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
-                        foreach (var venta in ventasPipa)
-                        {
-                            if (venta.FechaRegistro < dto.Fecha)
-                                rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0) * _calibracion;
-                           
-                        }
-                    }
-                    if (pventa.UnidadesAlmacen.IdEstacionCarburacion != null)
-                    {
-                        var ventasCarburacion = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
-                        foreach (var venta in ventasCarburacion)
-                        {
-                            if (venta.FechaRegistro < dto.Fecha)
-                                rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 00) * _calibracion;
-                        }
-                    }
+                    //}
+                    //if (pventa.UnidadesAlmacen.IdPipa != null)
+                    //{
+                    //    var ventasPipa = CajaGeneralServicio.ObtenerVentasPorCAlmacenGas(pventa.IdCAlmacenGas, dto.Fecha);
+                    //    foreach (var venta in ventasPipa)
+                    //    {
+                    //        if (venta.FechaRegistro < dto.Fecha)
+                    //        {
+                    //            rema.Porcentaje = CalcularGasServicio.ObtenerPorcentajeRemanentePtoVenta(pventa.UnidadesAlmacen.IdCAlmacenGas, venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0), dto.Fecha);
+                    //            rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0) * _calibracion;
+                    //        }
+                    //    }
+                    //}
+                    //if (pventa.UnidadesAlmacen.IdEstacionCarburacion != null)
+                    //{
+                    //    var ventasCarburacion = CajaGeneralServicio.ObtenerVentasPorCAlmacenGas(pventa.IdCAlmacenGas, dto.Fecha);
+                    //    foreach (var venta in ventasCarburacion)
+                    //    {
+                    //        if (venta.FechaRegistro < dto.Fecha)
+                    //        {
+                    //            rema.Porcentaje = CalcularGasServicio.ObtenerPorcentajeRemanentePtoVenta(pventa.UnidadesAlmacen.IdCAlmacenGas, venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0), dto.Fecha);
+                    //            rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 00) * _calibracion;
+                    //        }                               
+                    //    }
+                    //}
                     rema.Remanente = CalculosGenerales.Truncar(rema.Remanente, 2);
                     rema.IdPuntoVenta = dto.IdPuntoVenta;
                     rema.NombrePuntoVenta = pventa.UnidadesAlmacen.Numero;
@@ -366,8 +369,8 @@ namespace Application.MainModule.Flujos
                 }
                 resp.RemaentePuntoVenta.AddRange(remaPuntoVenta);
                 respuesta.Add(resp);
-                if (respuesta.Count.Equals(2))
-                    return respuesta;
+                //if (respuesta.Count.Equals(6))
+                //   return respuesta;
             }
             return respuesta;
         }

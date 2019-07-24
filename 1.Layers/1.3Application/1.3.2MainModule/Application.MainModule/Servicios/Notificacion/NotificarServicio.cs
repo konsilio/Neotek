@@ -193,7 +193,6 @@ namespace Application.MainModule.Servicios.Notificacion
             {
                 EnviarCorreosServicio.Enviar(dto);
             }
-
         }
         private static FBNotificacionDTO Enviar(FBNotificacionDTO dto, KeyValuePair<string, string> Autorizacion)
         {

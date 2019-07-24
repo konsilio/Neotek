@@ -27,8 +27,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Rfc = cliente.RFC,
                 IdTipoPersona = cliente.IdTipoPersona,
                 IdRegimenFiscal = cliente.IdTipoRegimen,
-                RazonSocial = cliente.RazonSocial,
-                
+                RazonSocial = cliente.RazonSocial,                
             };
         }
 

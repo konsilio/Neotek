@@ -23,6 +23,7 @@ namespace MVC.Presentacion.Models.Pedidos
         public string Colonia { get; set; }
         public string Unidad { get; set; }
         public string NombreRfc { get; set; }
+        public string Telefono { get; set; }
         public int IdPipa { get; set; }
         public int IdCamioneta { get; set; }
         public string ReferenciaUbicacion { get; set; }
