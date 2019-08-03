@@ -18,18 +18,21 @@
         if (sel == 0 || sel == 1) {
             $('#PuntoVentaCampos').hide();
             $('#PuntoVentaTabla').hide();
+            $('#RemaneteTracto').hide();
             $('#RemaneteGeneralDatos').show();
             $('#RemaneteGeneralTabla').show();
         }
         if (sel == 2) {
             $('#PuntoVentaCampos').show();
             $('#PuntoVentaTabla').show();
+            $('#RemaneteTracto').hide();
             $('#RemaneteGeneralDatos').hide();
             $('#RemaneteGeneralTabla').hide();
         }
         if (sel == 3) {
-            $('#PuntoVentaCampos').show();
-            $('#PuntoVentaTabla').show();
+            $('#PuntoVentaCampos').hide();
+            $('#PuntoVentaTabla').hide();
+            $('#RemaneteTracto').show();
             $('#RemaneteGeneralDatos').hide();
             $('#RemaneteGeneralTabla').hide();
         }
@@ -208,7 +211,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                             @if (ViewBag.RemaPuntoVenta != null)
                                             {
                                                 foreach (var puntoVenta in ((List<RemanentePuntoVentaTodosDTO>)ViewBag.RemaPuntoVenta))
@@ -228,6 +230,32 @@
                                                     </tr>
                                                 }
                                             }
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row clearfix blockquote blockquote-info btn-round" id="RemaneteTracto">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td><strong>Día</strong></td>                                             
+                                                <td><strong>Remanente acumulado (kg)</strong></td>
+                                                <td><strong>Remanente generado (kg)</strong></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.RemaTracto != null)
+                                            {
+                                                foreach (var item in ViewBag.RemaTracto)
+                                                {
+                                                    <tr>
+                                                        <td>@item.dia</td>                                                       
+                                                        <td>@item.AcumuladoCompras</td>                                                      
+                                                        <td>@item.RemanenteDecimal</td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

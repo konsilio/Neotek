@@ -1527,8 +1527,10 @@ namespace Application.MainModule.Flujos
         }
         public ClienteDTO BuscarClientePorRFC(string rfc)
         {
-            return ClienteAdapter.ToDTO(ClienteServicio.BuscarClientePorRFC(rfc));
-        }
-       
+            var clientes = ClienteServicio.BuscarClientePorRFC(rfc);
+            if (clientes != null)            
+                return ClienteAdapter.ToDTO(clientes);
+            return new ClienteDTO();
+        }       
     }
 }

@@ -3944,6 +3944,39 @@ namespace MVC.Presentacion.Agente
                 _ListaRemanentePtoVenta = emp;
             }
         }
+        public void BuscarRemanenteTracto(RemanenteModel model, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRemanenteTracto"];
+            ListaRemanenteTracto(model, tkn).Wait();
+        }
+        private async Task ListaRemanenteTracto(RemanenteModel model, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RemanenteGeneralDTO> emp = new List<RemanenteGeneralDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRoute, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<RemanenteGeneralDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<RemanenteGeneralDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaRemanenteGenaral = emp;
+            }
+        }
         #endregion
         #region Pedidos
         public void ListaPedidos(short id, string token)

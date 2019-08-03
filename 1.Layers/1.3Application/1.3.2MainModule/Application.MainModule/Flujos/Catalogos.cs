@@ -465,10 +465,17 @@ namespace Application.MainModule.Flujos
         }
         public PrecioVentaDTO ObtenerPrecioVentaVigente()
         {
-            var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
-            var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
+            try
+            {
+                var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+                var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
 
-            return PrecioVentaGasAdapter.ToDTO(pv, producto);
+                return PrecioVentaGasAdapter.ToDTO(pv, producto);
+            }
+            catch (Exception ex)
+            {
+                return new PrecioVentaDTO() { respuesta = new RespuestaDto() { Exito = false, Mensaje = ex.ToString() } };
+            }           
         }
         public RespuestaDto EliminaPreciosVenta(PrecioVentaDTO cteDto)
         {
@@ -1009,7 +1016,6 @@ namespace Application.MainModule.Flujos
                     var almacen = AlmacenGasServicio.RegistraAlmacen(vehiculoDto);
                     if (!almacen.Exito)
                         return CamionetaServicio.Borrar(cam.Id);
-
                 }
             }
             if (vehiculoDto.IdTipoUnidad == TipoUnidadEqTransporteEnum.Pipa)//IdPipa

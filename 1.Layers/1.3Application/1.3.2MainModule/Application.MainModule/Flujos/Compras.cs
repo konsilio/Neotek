@@ -1,5 +1,4 @@
-﻿//using Application.MainModule.AdaptadoresDTO.Almacenes;
-using Application.MainModule.AdaptadoresDTO.Compras;
+﻿using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.DTOs;
@@ -62,9 +61,7 @@ namespace Application.MainModule.Flujos
 
             var Prods = BuscarRequisicion(oc.IdRequisicion).ProductosOC;
             if (Prods.Count != oc.Productos.Count) return OrdenCompraServicio.NoSeAsignoValorATotosLosProductos();
-
             //oc.Productos = OrdenCompraServicio.AsignarNuevos(oc)
-
             List<OrdenCompra> locDTO = OrdenCompraServicio.IdentificarOrdenes(oc);
             locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
             locDTO = CalcularOrdenCompraServicio.CalcularTotales(locDTO);
