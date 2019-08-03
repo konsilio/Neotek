@@ -178,6 +178,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasDescarga>().GetAll().ToList();
         }
+        public List<AlmacenGasDescarga> BuscarTodas(DateTime periodo)
+        {
+            return uow.Repository<AlmacenGasDescarga>().Get(x => x.FechaRegistro.Month.Equals(periodo.Month) && x.FechaRegistro.Year.Equals(periodo.Year)).ToList();
+        }
         public AlmacenGasDescarga Buscar(int idAlmacenEntradaGasDescarga)
         {
             return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.IdAlmacenEntradaGasDescarga.Equals(idAlmacenEntradaGasDescarga));

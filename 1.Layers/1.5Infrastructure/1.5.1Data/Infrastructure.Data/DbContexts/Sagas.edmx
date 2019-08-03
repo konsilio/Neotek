@@ -1133,7 +1133,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene defi
             <PropertyRef Name="IdPrecioVentaEstatus" />
           </Key>
           <Property Name="IdPrecioVentaEstatus" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Descripción" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegsitro" Type="smalldatetime" Nullable="false" />
         </EntityType>
@@ -10782,9 +10782,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdPrecioVentaEstatus" />
           </Key>
           <Property Name="IdPrecioVentaEstatus" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripción" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <Property Name="FechaRegsitro" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaRegsitro" Type="DateTime" Nullable="false" Precision="0" />        
           <!--<NavigationProperty Name="CPrecioVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CPrecioVentaEstatus" FromRole="CPrecioVentaEstatus" ToRole="CPrecioVenta" />-->
         </EntityType>
         <Association Name="FK_CPrecioVenta_CPrecioVentaEstatus">
@@ -13825,9 +13825,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="PrecioVentaEstatus">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.PrecioVentaEstatus">
               <MappingFragment StoreEntitySet="CPrecioVentaEstatus">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="FechaRegsitro" ColumnName="FechaRegsitro" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="Descripción" ColumnName="Descripción" />
                 <ScalarProperty Name="IdPrecioVentaEstatus" ColumnName="IdPrecioVentaEstatus" />
               </MappingFragment>
             </EntityTypeMapping>

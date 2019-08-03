@@ -57,5 +57,11 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarRemanentePtoVenta(model, tkn);
             return agente._ListaRemanentePtoVenta;
         }
+        public static List<RemanenteGeneralDTO> BuscarRemanenteTracto(RemanenteModel model, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.BuscarRemanenteTracto(model, tkn);
+            return agente._ListaRemanenteGenaral;
+        }
     }
 }

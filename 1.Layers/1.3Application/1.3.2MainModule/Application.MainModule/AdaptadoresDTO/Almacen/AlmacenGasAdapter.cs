@@ -690,7 +690,8 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.DescargaAcumMesLt = invAnterior.DescargaAcumMesLt;
             almGMovimiento.DescargaAcumAnioKg = invAnterior.DescargaAcumAnioKg;
             almGMovimiento.DescargaAcumAnioLt = invAnterior.DescargaAcumAnioLt;
-            almGMovimiento.FechaAplicacion = descarga.FechaFinDescarga.Value;
+            if (descarga.FechaFinDescarga != null)
+                almGMovimiento.FechaAplicacion = descarga.FechaFinDescarga.Value;
             //----Descarga--------------------
 
             //----Remanente--------------------

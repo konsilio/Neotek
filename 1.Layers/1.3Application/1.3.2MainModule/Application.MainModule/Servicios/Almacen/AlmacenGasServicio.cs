@@ -561,6 +561,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDescargaDataAccess().BuscarTodas();
         }
+        public static List<AlmacenGasDescarga> ObtenerDescargasTodas(DateTime periodo)
+        {
+            return new AlmacenGasDescargaDataAccess().BuscarTodas(periodo);
+        }
         public static List<string> ObtenerRutaImagenesSinVigencia(DateTime fechaVigencia)
         {
             List<string> rutas = new AlmacenGasDescargaDataAccess().BuscarImagenesSinVigencia(fechaVigencia).Select(x => x.PathImagen).ToList();
