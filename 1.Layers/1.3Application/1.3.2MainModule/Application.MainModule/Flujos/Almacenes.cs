@@ -183,6 +183,7 @@ namespace Application.MainModule.Flujos
             var pventas = PuntoVentaServicio.ObtenerIdEmp(dto.IdEmpresa);
             int Dias = dto.Fecha.Month.Equals(DateTime.Now.Month) && dto.Fecha.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month);
             dto.Fecha = Convert.ToDateTime(string.Concat(dto.Fecha.Year, "/", dto.Fecha.Month, "/", "1", " ", "00:00:01"));
+            decimal remaAcumulado = 0;
             for (int i = 1; i < Dias; i++)
             {
                 RemanenteGeneralDTO rema = new RemanenteGeneralDTO();
@@ -197,39 +198,15 @@ namespace Application.MainModule.Flujos
                     foreach (var desc in descs)
                     {
                         var ki = ((desc.CapacidadTanqueKg * (desc.PorcenMagnatelOcularTractorINI / 100)) * (decimal)0.54) ?? 0;
-                        rema.AcumuladoCompras += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(ki, desc.MasaKg ?? 0), 2);
+                        remaAcumulado += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(ki, desc.MasaKg ?? 0), 2);
                     }
                 }
                 foreach (var pventa in pventas)
                 {
-                    if (pventa.UnidadesAlmacen.IdCamioneta != null)
-                    {
-                        var ventasCamioneta = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
-                        foreach (var venta in ventasCamioneta)
-                        {
-                            if (venta.FechaRegistro < dto.Fecha)
-                                rema.Ventas += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
-                        }
-                    }
-                    if (pventa.UnidadesAlmacen.IdPipa != null)
-                    {
-                        var ventasPipa = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
-                        foreach (var venta in ventasPipa)
-                        {
-                            if (venta.FechaRegistro < dto.Fecha)
-                                rema.Ventas += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
-                        }
-                    }
-                    if (pventa.UnidadesAlmacen.IdEstacionCarburacion != null)
-                    {
-                        var ventasCarburacion = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta);
-                        foreach (var venta in ventasCarburacion)
-                        {
-                            if (venta.FechaRegistro < dto.Fecha)
-                                rema.Carburacion += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0);
-                        }
-                    }
+                    var ventasCamioneta = CajaGeneralServicio.ObtenerVentasPuntosVenta(pventa.IdPuntoVenta, dto.Fecha);
+                    rema.Ventas += ventasCamioneta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(v => v.CantidadKg) ?? 0);
                 }
+                rema.AcumuladoCompras = remaAcumulado;
                 rema.InventarioLibro = Math.Round(rema.InventarioInicial + rema.AcumuladoCompras - rema.Ventas - rema.Carburacion, 4);
                 rema.InventarioFisico = Math.Round(AlmacenGasServicio.ObtenerKgInventarioFisico(dto.Fecha, dto.IdEmpresa), 4);
                 rema.GasSobrante = Math.Round(CalcularAlmacenServicio.ObtenerGasSobrante(rema.InventarioLibro, rema.InventarioFisico), 4);
@@ -306,12 +283,12 @@ namespace Application.MainModule.Flujos
                     var ventas = CajaGeneralServicio.ObtenerVentasPorCAlmacenGas(pventa.IdCAlmacenGas, dto.Fecha);
                     foreach (var venta in ventas)
                     {
-                      
+
                         rema.Porcentaje = CalcularGasServicio.ObtenerPorcentajeRemanentePtoVenta(pventa.UnidadesAlmacen.IdCAlmacenGas, venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0), dto.Fecha);
                         rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0) * _calibracion;
-                  
+
                     }
-                  
+
                     rema.Remanente = CalculosGenerales.Truncar(rema.Remanente, 2);
                     rema.IdPuntoVenta = dto.IdPuntoVenta;
                     rema.NombrePuntoVenta = pventa.UnidadesAlmacen.Numero;

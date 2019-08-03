@@ -482,6 +482,10 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarPorPV(id);
         }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPuntosVenta(int id, DateTime fecha)
+        {
+            return new PuntoVentaDataAccess().ObtenerVentas(id, fecha);
+        }
         public static List<VentaPuntoDeVentaDetalle> ObtenerDetallesVentasNoProc(short empresa, short year, byte month, byte dia, short orden)
         {
             return new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, year, month, dia, orden);
