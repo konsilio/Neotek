@@ -14,6 +14,8 @@ namespace Application.MainModule.DTOs.Catalogo
         public string Nombre { get; set; }
         public bool Activo { get; set; }
         public bool EsForaneo { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
+        public string Serie { get; set; }
+        public int Folio { get; set; }
+        public DateTime FechaRegistro { get; set; }
     }
 }

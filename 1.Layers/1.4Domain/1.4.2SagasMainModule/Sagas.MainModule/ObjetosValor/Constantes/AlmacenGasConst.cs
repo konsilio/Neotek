@@ -10,6 +10,8 @@ namespace Sagas.MainModule.ObjetosValor.Constantes
     {
         //Nombres de elementos
         public const string NombreAlmacenAlterno = "Almcén Alterno No. {0}";
+        public const string NombreCaioneta = "Camioneta No. {0}";
+        public const string NombrePipa= "Pipa No. {0}";
         public const string AlmacenPrincipal = "AlmacenPrincipal";
         public const string Tractor = "Tractor";
         public const string P5000 = "P5000";
