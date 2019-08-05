@@ -96,29 +96,29 @@ namespace Application.MainModule.Servicios.Almacenes
             //Salidas de gas -> litrosRecargados y litrosCarburados
             return litrosInicialesEnAlmacen + litrosDescargados - litrosRecargados - litrosCarburados;
         }
-        public static decimal ObtenerPorcentajeRemanentePtoVenta(short idAlmacenGas, decimal ventas, DateTime fecha)
+        public static decimal ObtenerPorcentajeRemanentePtoVenta(UnidadAlmacenGas almacen, decimal ventas, DateTime fecha)
         {
-            var capacidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(idAlmacenGas).CapacidadTanqueKg;
+            //var capacidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(idAlmacenGas).CapacidadTanqueKg;
             decimal diferencia = 0;
             decimal porcentajefinal = 0;
-            var lecturas = AlmacenGasServicio.ObtenerLecturas(idAlmacenGas, fecha);
+            var lecturas = almacen.TomasLectura.Where(x => x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Year.Equals(fecha.Year) && x.FechaRegistro.Day.Equals(fecha.Day)).ToList();
+            //var lecturas = AlmacenGasServicio.ObtenerLecturas(almacen.IdAlmacenGas ?? 0, fecha);
             foreach (var item in lecturas)
             {
                 var lecturaInicial = 0;
-                if (item.IdTipoEvento.Equals(TipoEventoEnum.Inicial) && item.FechaRegistro.ToShortDateString().Equals(fecha.ToShortDateString()))                
-                   lecturaInicial = Convert.ToInt32(item.P5000 ?? 0);
+                if (item.IdTipoEvento.Equals(TipoEventoEnum.Inicial) && item.FechaRegistro.ToShortDateString().Equals(fecha.ToShortDateString()))
+                    lecturaInicial = Convert.ToInt32(item.P5000 ?? 0);
 
                 if (lecturas.Exists(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final) && x.FechaRegistro.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
                 {
                     porcentajefinal = item.Porcentaje ?? 0;
                     diferencia = CalculosGenerales.DiferenciaEntreDosNumero(lecturaInicial, item.P5000 ?? 0);
-                }     
+                }
             }
-
             var libro = diferencia - ventas;
-            var real = porcentajefinal * capacidad;
+            var real = porcentajefinal * almacen.AlmacenGas.CapacidadTotalKg;
             if (libro != 0 && real != 0)
-                return (decimal)((real / libro) * 100);
+                return (decimal)((diferencia / real) * 100);
             else
                 return 0;
         }

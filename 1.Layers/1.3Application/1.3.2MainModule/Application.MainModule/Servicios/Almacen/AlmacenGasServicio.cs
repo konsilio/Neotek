@@ -5,21 +5,15 @@ using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile;
 using Sagas.MainModule.ObjetosValor.Enum;
-using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.AdaptadoresDTO.Almacenes;
 using Application.MainModule.Servicios.Compras;
-using Security.MainModule.Criptografia;
 using Utilities.MainModule;
 using Sagas.MainModule.ObjetosValor.Constantes;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.AdaptadoresDTO.Mobile;
-using Application.MainModule.AdaptadoresDTO.Ventas;
-using Application.MainModule.Servicios.Ventas;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.DTOs;
 using Exceptions.MainModule.Validaciones;
@@ -90,7 +84,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             AlmacenGas almacen = new AlmacenGas()
             {
-
                 IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
                 CantidadActualKg = 0,
                 CantidadActualLt = 0,
@@ -114,8 +107,8 @@ namespace Application.MainModule.Servicios.Almacenes
                 IdEstacionCarburacion = null,
                 IdPipa = ec.IdPipa,
                 IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
-                IdTipoAlmacen = TipoUnidadAlmacenGasEnum.Fijo,
-                IdTipoMedidor = ec.IdTipoMedidor,
+                IdTipoAlmacen = TipoUnidadAlmacenGasEnum.Movil,
+                IdTipoMedidor = ec.IdCamioneta != null ? TipoMedidorGasEnum.Magnetel : ec.IdTipoMedidor,
                 CantidadActualKg = 0,
                 CantidadActualLt = 0,
                 CapacidadTanqueKg = ec.CapacidadKg,
@@ -123,7 +116,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 EsAlterno = false,
                 EsGeneral = true,
                 PorcentajeCalibracionPlaneada = 0,
-                Numero = string.Format(AlmacenGasConst.NombreAlmacenAlterno, ec.Descripcion),
+                Numero = string.Format(ec.IdCamioneta != null ? AlmacenGasConst.NombreCaioneta : string.Empty + ec.IdPipa != null ? AlmacenGasConst.NombrePipa : string.Empty, ec.Descripcion),
                 P5000Actual = null,
                 PorcentajeActual = 0,
                 Activo = true,
