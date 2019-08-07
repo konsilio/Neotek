@@ -184,7 +184,7 @@ namespace Application.MainModule.Flujos
             int Dias = dto.Fecha.Month.Equals(DateTime.Now.Month) && dto.Fecha.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month);
             dto.Fecha = Convert.ToDateTime(string.Concat(dto.Fecha.Year, "/", dto.Fecha.Month, "/", "1", " ", "00:00:01"));
             decimal remaAcumulado = 0;
-            for (int i = 1; i < Dias; i++)
+            for (int i = 1; i <= Dias; i++)
             {
                 RemanenteGeneralDTO rema = new RemanenteGeneralDTO();
                 if (lectura == null)
@@ -260,47 +260,59 @@ namespace Application.MainModule.Flujos
         public List<RemanentePuntoVentaTodosDTO> ConsultarRemanentePorPuntoventa(RemanenteDTO dto)
         {
             List<RemanentePuntoVentaTodosDTO> respuesta = new List<RemanentePuntoVentaTodosDTO>();
-
+            //Determina si el remanete por punto de venta es individual o todos
             var PuntosVenta = new List<PuntoVenta>();
             if (dto.IdPuntoVenta.Equals(0))
                 PuntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
             else
                 PuntosVenta.Add(PuntoVentaServicio.Obtener(dto.IdPuntoVenta));
+
             foreach (var pventa in PuntosVenta)
-            {
-                var _calibracion = pventa.UnidadesAlmacen.Calibraciones != null && !pventa.UnidadesAlmacen.Calibraciones.Count.Equals(0) ? pventa.UnidadesAlmacen.Calibraciones.LastOrDefault().Porcentaje : 0;
+            {                
+                //Se inicializan variables
                 List<RemanentePuntoVentaDTO> remaPuntoVenta = new List<RemanentePuntoVentaDTO>();
                 RemanentePuntoVentaTodosDTO resp = new RemanentePuntoVentaTodosDTO();
                 resp.RemaentePuntoVenta = new List<RemanentePuntoVentaDTO>();
 
-
+                //Calculo los dias que restan el mes actual o los dias del mes seleccionado 
                 int Dias = dto.Fecha.Month.Equals(DateTime.Now.Month) && dto.Fecha.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month);
                 DateTime _Fecha = Convert.ToDateTime(string.Concat(dto.Fecha.Year, "/", dto.Fecha.Month, "/", "1", " ", "00:00:01"));
-                for (int i = 1; i < Dias; i++)
+                for (int i = 1; i <= Dias; i++)
                 {
-                    RemanentePuntoVentaDTO rema = new RemanentePuntoVentaDTO();
-                    var ventas = pventa.VentaPuntoDeVenta.Where(x => x.FechaRegistro.Day.Equals(_Fecha.Day) && x.FechaRegistro.Month.Equals(_Fecha.Month) && x.FechaRegistro.Year.Equals(_Fecha.Year)); //CajaGeneralServicio.ObtenerVentasPorCAlmacenGas(pventa.IdCAlmacenGas, _Fecha);
-                    foreach (var venta in ventas)
-                    {
-                        rema.Porcentaje = CalcularGasServicio.ObtenerPorcentajeRemanentePtoVenta(pventa.UnidadesAlmacen, venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0), _Fecha);
-                        rema.Remanente += venta.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0) * _calibracion;
-                    }
-                    rema.Remanente = CalculosGenerales.Truncar(rema.Remanente, 2);
+                    RemanentePuntoVentaDTO rema = new RemanentePuntoVentaDTO() { Remanente = "0" };
+                    //obtiene las ventas del día 
+                    var ventas = pventa.VentaPuntoDeVenta.Where(x => x.FechaRegistro.ToShortDateString().Equals(_Fecha.ToShortDateString())).ToList(); 
+                    //Calculos de remanente (porcentaje y kilos)
+                    rema.Porcentaje = CalcularGasServicio.ObtenerPorcentajeRemanentePtoVenta(pventa.UnidadesAlmacen, ventas.SelectMany(x => x.VentaPuntoDeVentaDetalle).ToList(), _Fecha);
+                    rema.Remanente = CalcularGasServicio.ObteneremanentePtoVenta(pventa.UnidadesAlmacen, ventas.SelectMany(x => x.VentaPuntoDeVentaDetalle).ToList(), _Fecha);
+
                     rema.IdPuntoVenta = dto.IdPuntoVenta;
                     rema.NombrePuntoVenta = pventa.UnidadesAlmacen.Numero;
                     rema.Porcentaje = CalculosGenerales.Truncar(rema.Porcentaje, 1);
                     rema.Mes = _Fecha.Month;
                     rema.Anio = _Fecha.Year;
-                    rema.dia = _Fecha.Day;
+                    rema.dia = _Fecha.Day.ToString();
                     remaPuntoVenta.Add(rema);
 
                     _Fecha = _Fecha.AddDays(1);
                 }
+                //Se genera ultima columna para el acumlado del mes
+                RemanentePuntoVentaDTO Acumulado = new RemanentePuntoVentaDTO();
+                Acumulado.dia = "Acumulado";
+                Acumulado.Mes = dto.Fecha.Month;
+                Acumulado.Anio = dto.Fecha.Year;
+                Acumulado.IdPuntoVenta = dto.IdPuntoVenta;
+                Acumulado.NombrePuntoVenta = pventa.UnidadesAlmacen.Numero;
+                Acumulado.Remanente = string.Concat(remaPuntoVenta.Sum(r => Convert.ToDecimal(r.Remanente.Split(' ')[0])).ToString(), pventa.UnidadesAlmacen.IdCamioneta == null ? " Lts." : " kg.");
+                Acumulado.Porcentaje = CalculosGenerales.Truncar(CalculosGenerales.Promediar(remaPuntoVenta.Sum(r => r.Porcentaje), remaPuntoVenta.Count()), 2);     
+                remaPuntoVenta.Add(Acumulado);
+
                 resp.RemaentePuntoVenta.AddRange(remaPuntoVenta);
                 respuesta.Add(resp);
                 //if (respuesta.Count.Equals(6))
                 //    return respuesta;
             }
+
             return respuesta;
         }
         public List<RepInventarioPorPuntoVentaDTO> BuscarInvetarioPorPuntoDeVenta(List<Pipa> pipas, List<EstacionCarburacion> estaciones, DateTime fecha)

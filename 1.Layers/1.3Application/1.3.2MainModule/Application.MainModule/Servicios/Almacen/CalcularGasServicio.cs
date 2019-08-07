@@ -96,41 +96,85 @@ namespace Application.MainModule.Servicios.Almacenes
             //Salidas de gas -> litrosRecargados y litrosCarburados
             return litrosInicialesEnAlmacen + litrosDescargados - litrosRecargados - litrosCarburados;
         }
-        public static decimal ObtenerPorcentajeRemanentePtoVenta(UnidadAlmacenGas almacen, decimal ventas, DateTime fecha)
+        public static decimal ObtenerPorcentajeRemanentePtoVenta(UnidadAlmacenGas almacen, List<VentaPuntoDeVentaDetalle> ventas, DateTime fecha)
         {
-            //var capacidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(idAlmacenGas).CapacidadTanqueKg;
-            decimal diferencia = 0;
-            decimal porcentajefinal = 0;
-            var lecturas = almacen.TomasLectura.Where(x => x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Year.Equals(fecha.Year) && x.FechaRegistro.Day.Equals(fecha.Day)).ToList();
-            //var lecturas = AlmacenGasServicio.ObtenerLecturas(almacen.IdAlmacenGas ?? 0, fecha);
-            foreach (var item in lecturas)
+            // Obtenemos las lecturas del dia
+            var lecturas = almacen.TomasLectura.Where(x => x.FechaRegistro.ToShortDateString().Equals(fecha.ToShortDateString())).ToList();
+            // Identifica lectura inicial y final
+            var lecturaInicial = new AlmacenGasTomaLectura();
+            var lecturaFinal = new AlmacenGasTomaLectura();
+            if (lecturas.Exists(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)))
+                lecturaInicial = lecturas.FirstOrDefault(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
+            if (lecturas.Exists(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final)))
+                lecturaFinal = lecturas.FirstOrDefault(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final));
+            //Calcula Inventario inicial
+            decimal InvInicial = 0;
+            decimal InvFinal = 0;
+            decimal kilosVenta = 0;
+            if (almacen.IdCamioneta == null)
             {
-                var lecturaInicial = 0;
-                if (item.IdTipoEvento.Equals(TipoEventoEnum.Inicial) && item.FechaRegistro.ToShortDateString().Equals(fecha.ToShortDateString()))
-                    lecturaInicial = Convert.ToInt32(item.P5000 ?? 0);
-
-                if (lecturas.Exists(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final) && x.FechaRegistro.ToShortDateString().Equals(item.FechaRegistro.ToShortDateString())))
+                kilosVenta = ventas.Sum(x => x.CantidadProducto ?? 0);
+                InvInicial = ((lecturaInicial.Porcentaje ?? 0) * almacen.CapacidadTanqueLt ?? 0) / 100;
+                InvFinal = ((lecturaFinal.Porcentaje ?? 0) * almacen.CapacidadTanqueLt ?? 0) / 100;
+            }
+            else
+            {
+                foreach (var v in ventas)
                 {
-                    porcentajefinal = item.Porcentaje ?? 0;
-                    diferencia = CalculosGenerales.DiferenciaEntreDosNumero(lecturaInicial, item.P5000 ?? 0);
+                    if (v.ProductoDescripcion.Contains("20"))
+                        kilosVenta += v.CantidadProducto ?? 0 * 20;
+                    if (v.ProductoDescripcion.Contains("30"))
+                        kilosVenta += v.CantidadProducto ?? 0 * 30;
+                    if (v.ProductoDescripcion.Contains("45"))
+                        kilosVenta += v.CantidadProducto ?? 0 * 45;
                 }
             }
-            var libro = diferencia - ventas;
-            var real = porcentajefinal * almacen.AlmacenGas.CapacidadTotalKg;
+            var diferencia = CalculosGenerales.DiferenciaEntreDosNumero(InvInicial, InvFinal);
+            var libro = CalculosGenerales.DiferenciaEntreDosNumero(kilosVenta, diferencia);
+            var real = (((lecturaFinal.Porcentaje ?? 0) / 100) * almacen.CapacidadTanqueLt ?? 0);
             if (libro != 0 && real != 0)
                 return (decimal)((diferencia / real) * 100);
             else
                 return 0;
         }
-        //public static decimal ObtenerPorcentajeRemanentePtoVenta(short idAlmacenGas, decimal diferencia, decimal porcentajefinal, DateTime periodo)
-        //{
-        //    var ventas = CajaGeneralServicio.ObtenerVentasPorCAlmacenGas(idAlmacenGas, periodo).Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadKg));
-        //    var capacidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(idAlmacenGas).CapacidadTanqueKg;
-        //    var recargas = AlmacenGasServicio.ObtenerRecargasNoProcesadas();
-        //    var libro = diferencia - ventas;
-        //    var real = porcentajefinal * capacidad;
+        public static string ObteneremanentePtoVenta(UnidadAlmacenGas almacen, List<VentaPuntoDeVentaDetalle> ventas, DateTime fecha)
+        {
+            //var capacidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(idAlmacenGas).CapacidadTanqueKg;
+            // Obtenemos las lecturas del dia
+            var lecturas = almacen.TomasLectura.Where(x => x.FechaRegistro.ToShortDateString().Equals(fecha.ToShortDateString())).ToList();
+            // Identifica lectura inicial y final
+            var lecturaInicial = new AlmacenGasTomaLectura();
+            var lecturaFinal = new AlmacenGasTomaLectura();
+            if (lecturas.Exists(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)))
+                lecturaInicial = lecturas.FirstOrDefault(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
+            if (lecturas.Exists(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final)))
+                lecturaFinal = lecturas.FirstOrDefault(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final));
+            //Calcula Inventario inicial
+            decimal InvInicial = 0;
+            decimal InvFinal = 0;
+            decimal kilosVenta = 0;
+            if (almacen.IdCamioneta == null)
+            {
+                kilosVenta = ventas.Sum(x => x.CantidadProducto ?? 0);
+                InvInicial = ((lecturaInicial.Porcentaje ?? 0) * almacen.CapacidadTanqueLt ?? 0) / 100;
+                InvFinal = ((lecturaFinal.Porcentaje ?? 0) * almacen.CapacidadTanqueLt ?? 0) / 100;
 
-        //    return (decimal)((real / libro) * 100);
-        //}
+                var diferencia = CalculosGenerales.DiferenciaEntreDosNumero(InvInicial, InvFinal);
+                return string.Concat(CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(diferencia, kilosVenta), 2).ToString(), " Lts.");
+            }
+            else
+            {
+                foreach (var v in ventas)
+                {
+                    if (v.ProductoDescripcion.Contains("20"))
+                        kilosVenta += v.CantidadProducto ?? 0 * 20;
+                    if (v.ProductoDescripcion.Contains("30"))
+                        kilosVenta += v.CantidadProducto ?? 0 * 30;
+                    if (v.ProductoDescripcion.Contains("45"))
+                        kilosVenta += v.CantidadProducto ?? 0 * 45;
+                }
+                return string.Concat(CalculosGenerales.Truncar((kilosVenta * (decimal)0.1), 2).ToString(), " Kg.");
+            }
+        }
     }
 }
