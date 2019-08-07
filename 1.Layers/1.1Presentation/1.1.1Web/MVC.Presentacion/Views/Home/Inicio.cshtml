@@ -5,7 +5,7 @@
 @{
     MenuDto rol = Session["Roles"] as MenuDto;
 }
-@*<script>
+<script>
     window.onload = function() {
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, @Html.Raw(ViewBag.VentasRema.Json));
@@ -13,7 +13,7 @@
         var ctx = document.getElementById('CallCenter').getContext('2d');
         var myChart = new Chart(ctx, @Html.Raw(ViewBag.CallCenter));
     }
-</script>*@
+</script>
 <section class="content home">
     <div class="container-fluid">
         <div class="block-header">
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        @*@if (rol.Ventas)
+        @if (rol.Ventas)
         {
             <div class="header">
                 <p><strong>Ventas </strong> Indicador del mes de <strong> @System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(DateTime.Now.ToString("MMMM"))</strong></p>
@@ -431,6 +431,6 @@
                     </div>
                 </div>
             </div>
-        }*@
+        }
     </div>
 </section>
