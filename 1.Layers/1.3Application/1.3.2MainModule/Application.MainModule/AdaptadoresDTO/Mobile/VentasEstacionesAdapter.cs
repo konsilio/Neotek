@@ -99,16 +99,14 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     Subtotal = concepto.Subtotal,
                     IdProducto = concepto.IdProducto,
                     DescuentoTotal = concepto.Descuento,
-                    CantidadLt = concepto.CantidadLt,   
-                    CantidadKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.CantidadLt, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),
+                    CantidadLt = punto_venta.UnidadesAlmacen.IdCamioneta == null ? concepto.CantidadLt : CalcularGasServicio.ObtenerLitrosDesdeKilos(concepto.CantidadKg, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),   
+                    CantidadKg = punto_venta.UnidadesAlmacen.IdCamioneta == null ? CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.CantidadLt, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos) : concepto.CantidadKg,
                     //Agregados recientemente
                     IdUnidadMedida = concepto.IdUnidadMedida,
                     PrecioUnitarioKg = concepto.PrecioUnitarioKg,
                     PrecioUnitarioLt = concepto.PrecioUnitarioLt,
                     DescuentoUnitarioKg = concepto.DescuentoUnitarioKg,
-                    DescuentoUnitarioLt = concepto.DescuentoUnitarioLt,
-                    
-
+                    DescuentoUnitarioLt = concepto.DescuentoUnitarioLt,      
             });
                 idOrdenDetalle++;
             }
@@ -273,7 +271,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             var almacenCilindro = AlmacenGasServicio.ObtenerCilindro(cilindro.IdCilindro);
             return new DatosGasVentaDto()
             {
-                Nombre = "Gas LP " + almacenCilindro.CapacidadKg,
+                Nombre = "Gas LP " + Math.Truncate(almacenCilindro.CapacidadKg),
                 Existencia = cilindro.Cantidad,
                 Id = cilindro.IdCilindro,
                 PrecioUnitario = pv.PrecioSalidaKg??0,

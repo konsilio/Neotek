@@ -13,67 +13,38 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
     {
         public static ClientesDto ToDTO(Cliente us)
         {
-            string nom = "";
-            string apell = "";
-            string apell2 = "";
-            if (us.RepresentanteLegal != null && !us.RepresentanteLegal.Equals(string.Empty))
-            {
-                if (us.RepresentanteLegal.Split(' ').Count() == 4)
-                {
-                    nom = us.RepresentanteLegal.Split(' ')[0] + " " + us.RepresentanteLegal.Split(' ')[1];
-                    apell = us.RepresentanteLegal.Split(' ')[2];
-                    apell2 = us.RepresentanteLegal.Split(' ')[3];
-                }
-                else if (us.RepresentanteLegal.Split(' ').Count() == 3)
-                {
-                    nom = us.RepresentanteLegal.Split(' ')[0];
-                    apell = us.RepresentanteLegal.Split(' ')[1];
-                    apell2 = us.RepresentanteLegal.Split(' ')[2];
-                }
-                else if (us.RepresentanteLegal.Split(' ').Count() == 2)
-                {
-                    nom = us.RepresentanteLegal.Split(' ')[0];
-                    apell = us.RepresentanteLegal.Split(' ')[1];
-                }
-            }
-            else
-            {
-                nom = us.Nombre;
-                apell = us.Apellido1;
-                apell2 = us.Apellido2;
-            }
-
+            string nom = ClienteServicio.ObtenerNomreCliente(us);
             ClientesDto usDTO = new ClientesDto()
             {
                 IdCliente = us.IdCliente,
                 IdEmpresa = us.IdEmpresa,
                 IdTipoPersona = us.IdTipoPersona,
                 IdRegimenFiscal = us.IdRegimenFiscal,
-                IdCuentaContable = us.IdCuentaContable,
-                Nombre = nom,//us.Nombre,
-                Apellido1 = apell,// us.Apellido1,
-                Apellido2 = apell2,//us.Apellido2,
+                //IdCuentaContable = us.IdCuentaContable,
+                Nombre = nom.Split(' ')[0],
+                Apellido1 = nom.Split(' ')[1] ?? string.Empty,
+                Apellido2 = nom.Split(' ')[2] ?? string.Empty,
                 DescuentoXKilo = us.DescuentoXKilo,
                 limiteCreditoMonto = us.limiteCreditoMonto,
                 limiteCreditoDias = us.limiteCreditoDias,
                 Telefono1 = us.Telefono.Equals(string.Empty) ? us.Telefono1.Equals(string.Empty) ? us.Celular:us.Telefono1 : us.Telefono,
-                Telefono2 = us.Telefono2,
-                Telefono3 = us.Telefono3,
-                Celular1 = us.Celular1,
-                Celular2 = us.Celular2,
-                Celular3 = us.Celular3,
-                Email1 = us.Email1,
-                Email2 = us.Email2,
-                Email3 = us.Email3,
-                SitioWeb1 = us.SitioWeb1,
-                SitioWeb2 = us.SitioWeb2,
-                SitioWeb3 = us.SitioWeb3,
-                Usuario = us.Usuario,
-                Password = us.Password,
+                Telefono2 = us.Telefono2 ?? string.Empty,
+                Telefono3 = us.Telefono3 ?? string.Empty,
+                Celular1 = us.Celular1 ?? string.Empty,
+                Celular2 = us.Celular2 ?? string.Empty,
+                Celular3 = us.Celular3 ?? string.Empty,
+                Email1 = us.Email1 ?? string.Empty,
+                Email2 = us.Email2 ?? string.Empty,
+                Email3 = us.Email3 ?? string.Empty,
+                SitioWeb1 = us.SitioWeb1 ?? string.Empty,
+                SitioWeb2 = us.SitioWeb2 ?? string.Empty,
+                SitioWeb3 = us.SitioWeb3 ?? string.Empty,
+                //Usuario = us.Usuario,
+                //Password = us.Password,
                 AccesoPortal = us.AccesoPortal,
                 Rfc = us.Rfc,
-                RazonSocial = us.RazonSocial ?? string.Concat(nom, " ", apell, " ", apell2),
-                RepresentanteLegal = us.RepresentanteLegal,
+                RazonSocial = us.RazonSocial ?? nom,
+                RepresentanteLegal = us.RepresentanteLegal ?? string.Empty,
                 Telefono = us.Telefono ?? us.Telefono1,
                 Celular = us.Celular ?? us.Celular1,
                 CorreoElectronico = us.CorreoElectronico ?? us.Email1,
@@ -81,8 +52,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Empresa = us.Empresa.NombreComercial,
                 TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
                 RegimenFiscal = us.RegimenFiscal.Descripcion,
-                Cliente = nom + " " + apell + " " + apell2 + " " + us.Rfc,//us.Nombre + " " + us.Apellido1 + " " + us.Rfc,              
-                //Locaciones = cl != null ? ToDTOLoc(cl) : ClienteServicio.ObtenerLoc(us.IdCliente),
+                Cliente = nom + us.Rfc,
                 EsFijo = us.EsFijo,
             };
             return usDTO;
