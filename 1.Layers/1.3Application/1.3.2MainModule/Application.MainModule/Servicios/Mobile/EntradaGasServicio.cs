@@ -27,7 +27,9 @@ namespace Application.MainModule.Servicios.Mobile
         public static RespuestaDto Descargar(DescargaDto desDto, bool finDescarga = false)
         {
             var des = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(desDto.IdOrdenCompra);
-            short numOrden = (short)(des.Fotos.Max(x => x.Orden) + 1);
+            short numOrden = 0;
+            if (!des.Fotos.Count.Equals(0))
+                numOrden = (short)(des.Fotos.Max(x => x.Orden) + 1);
             desDto.FechaDescarga = DateTime.Now;            
 
             var descarga = AlmacenAdapter.FromEntity(des);

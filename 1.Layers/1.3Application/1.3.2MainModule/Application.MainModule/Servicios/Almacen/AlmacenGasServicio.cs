@@ -445,7 +445,6 @@ namespace Application.MainModule.Servicios.Almacenes
                         return recarga.UnidadAlmacenSalida;
                 }
             }
-
             if (!deSalida)
                 return ObtenerUnidadAlamcenGas(recarga.IdCAlmacenGasEntrada);
             else
