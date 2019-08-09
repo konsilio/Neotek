@@ -440,13 +440,13 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 conceptoDTO.setIdLinea(precioVentaDTO.getIdProductoLinea());
                 conceptoDTO.setIdCategoria(precioVentaDTO.getIdCategoria());
                 conceptoDTO.setIdUnidadmedida(precioVentaDTO.getIdUnidadMedida());
-                conceptoDTO.setCantidadKg(
-                        precioVentaDTO.getPrecioSalidaKg() *
-                                Double.parseDouble(adapter.cantidad.getText().toString())
-                );
+               conceptoDTO.setCantidadKg(0);
+                       /* precioVentaDTO.getPrecioSalidaKg() *
+                                Double.parseDouble(adapter.cantidad.getText().toString())*/
+
 
                 conceptoDTO.setCantidadLt(
-                        precioVentaDTO.getPrecioSalidaLt() *
+                        //precioVentaDTO.getPrecioSalidaLt() *
                                 Double.parseDouble(adapter.cantidad.getText().toString())
                 );
 
@@ -602,7 +602,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                                         cilindros.getCantidad()
                         );
                         Gas.setCantidadKg(
-                                (precioVentaDTO.getPrecioSalidaKg() * /*adapter.getCilindro(x).getCapacidadKg()*/capacidadKg) *
+                                ( /*adapter.getCilindro(x).getCapacidadKg()*/capacidadKg) *
                                         cilindros.getCantidad()
                         );
                         Gas.setCantidadLt(
@@ -720,6 +720,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      * conceptos de la venta.
      */
     private void VentaGaslp() {
+        Log.d("CantidadLtrs", new ConceptoDTO().toString());
         List<ConceptoDTO> conceptos = new ArrayList<>();
         for (int x = 0 ; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
             View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
@@ -762,14 +763,14 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
                             //double cap = ExistenciasDTO.get(x).getCapacidadKg();
                             Gas.setCantidadKg(
-                                    cap * cantidadVenta *
-                                            precioVentaDTO.getPrecioSalidaKg()
+                                    cap * cantidadVenta
 
                             );
                             Gas.setCantidadLt(
-                                    cap * cantidadVenta *
-                                            precioVentaDTO.getPrecioSalidaLt()
+                                    cap * cantidadVenta
+
                             );
+                            Log.d("Ali","Cantidad="+ cantidadActual);
                             Log.d("Ali"," Capacidad= "+cap);
                             Log.d("Ali"," cantidadVenta= "+cantidadVenta);
                             Log.d("Ali"," PrecioSalidaKg= "+precioVentaDTO.getPrecioSalidaKg());

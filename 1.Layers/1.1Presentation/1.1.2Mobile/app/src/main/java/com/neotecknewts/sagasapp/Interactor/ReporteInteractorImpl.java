@@ -78,7 +78,7 @@ public class ReporteInteractorImpl implements ReporteInteractor {
             public void onResponse(Call<ReporteDto> call, Response<ReporteDto> response) {
                 ReporteDto reporteDTO = response.body();
 
-                Log.w("responsebody", response.body().toString() + "");
+               // Log.w("responsebody", response.body().toString() + "");
                 Log.w("response", response.code() + "");
 
 

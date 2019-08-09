@@ -66,6 +66,8 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
 
         finalizarDescargaDTO = new FinalizarDescargaDTO();
 
+        Log.d("Orden de compra", new OrdenCompraDTO().toString());
+        Log.d("Finalizarordendecompra", finalizarDescargaDTO+"");
         //se incializan las variables de la vista
         spinnerOrdenCompra = (Spinner)findViewById(R.id.spinner_orden_compra);
         linearLayoutTanque = (LinearLayout) findViewById(R.id.layout_tanque);
@@ -168,6 +170,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
 
     //se inicia el nuevo activity
     public void startActivity(){
+        Log.d("Orden de compra", OrdenCompraDTO.class.toString());
         Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
         intent.putExtra("FinalizarDescarga", finalizarDescargaDTO);
         intent.putExtra("EsPapeleta",false);

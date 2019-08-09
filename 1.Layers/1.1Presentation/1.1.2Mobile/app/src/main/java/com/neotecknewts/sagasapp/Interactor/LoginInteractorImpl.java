@@ -36,7 +36,7 @@ public class LoginInteractorImpl implements LoginInteractor {
     public static final String TAG = "LoginInteractor";
     LoginPresenter loginPresenter;
     private SAGASSql sagasSql;
-    private  String token;
+    private String token;
 
     //constructor de la clase y se inicializa el presenter
     public LoginInteractorImpl(LoginPresenter loginPresenter, SAGASSql sagasSql){

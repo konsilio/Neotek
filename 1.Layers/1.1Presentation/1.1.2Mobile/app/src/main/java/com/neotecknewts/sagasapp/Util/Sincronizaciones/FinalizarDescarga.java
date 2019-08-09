@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
+import com.neotecknewts.sagasapp.Model.OrdenCompraDTO;
 import com.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.neotecknewts.sagasapp.Presenter.Rest.RestClient;
@@ -38,7 +39,9 @@ public class FinalizarDescarga {
      * api
      * @return boolean que reprecenta si se guardaron con exito
      */
+
     public boolean SincronizarFinalizarDescargas(){
+        Log.d("Orden de compra", OrdenCompraDTO.class.toString());
         Cursor cursor = db.GetFinalizarDescargas();
         if(sincronizacion.servicioDisponible()) {
             if(cursor.getCount()>0) {
@@ -112,6 +115,7 @@ public class FinalizarDescarga {
      * @return boolean que reprecenta la repsuesta del servidor
      */
     private boolean Registrar(FinalizarDescargaDTO dto) {
+        Log.d("Orden de compra", OrdenCompraDTO.class.toString());
         Log.w("Registro","Registrando en servicio "+dto.getClaveOperacion());
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);

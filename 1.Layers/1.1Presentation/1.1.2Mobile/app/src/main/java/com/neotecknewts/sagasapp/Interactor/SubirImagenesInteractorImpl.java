@@ -128,7 +128,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     token, "application/json");
 
             Log.w(TAG, ApiClient.BASE_URL);
-            Log.w("Numero ", precargaPapeletaDTO.toString());
+            //Log.w("Numero ", precargaPapeletaDTO.toString());
 
             call.enqueue(new Callback<RespuestaPapeletaDTO>() {
                 @Override
@@ -268,6 +268,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     token, "application/json");
             Log.w(TAG, ApiClient.BASE_URL);
             Log.w("Numero ", iniciarDescargaDTO.toString());
+
             call.enqueue(new Callback<RespuestaIniciarDescargaDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
@@ -355,6 +356,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while (servicio_intentos<3) {
             Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
                     "application/json");
+            Log.w("Numero2", finalizarDescargaDTO.toString());
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaServicioDisponibleDTO> call,

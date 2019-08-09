@@ -1,5 +1,7 @@
 package com.neotecknewts.sagasapp.Model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -60,8 +62,7 @@ public class OrdenCompraDTO implements Serializable{
     private String ProveedorCelular2;
 
     @SerializedName("ProveedorCelular3")
-    private String ProveedorCelular3
-            ;
+    private String ProveedorCelular3;
     @SerializedName("NumOrdenCompra")
     private String NumOrdenCompra;
 
@@ -273,5 +274,36 @@ public class OrdenCompraDTO implements Serializable{
 
     public void setIdProveedor(int idProveedor) {
         IdProveedor = idProveedor;
+    }
+
+
+    @Override
+    public String toString() {
+        return "OrdenCompraDTO{" +
+                "IdOrdenCompra=" + IdOrdenCompra +
+                ", IdProveedor=" + IdProveedor +
+                ", ProveedorNombreComercial='" + ProveedorNombreComercial + '\'' +
+                ", ProveedorEstadoProvincia='" + ProveedorEstadoProvincia + '\'' +
+                ", ProveedorMunicipio='" + ProveedorMunicipio + '\'' +
+                ", ProveedorCodigoPostal='" + ProveedorCodigoPostal + '\'' +
+                ", ProveedorColonia='" + ProveedorColonia + '\'' +
+                ", ProveedorCalle='" + ProveedorCalle + '\'' +
+                ", ProveedorNumExt='" + ProveedorNumExt + '\'' +
+                ", ProveedorNumInt='" + ProveedorNumInt + '\'' +
+                ", ProveedorRfc='" + ProveedorRfc + '\'' +
+                ", ProveedorTelefono1='" + ProveedorTelefono1 + '\'' +
+                ", ProveedorTelefono2='" + ProveedorTelefono2 + '\'' +
+                ", ProveedorTelefono3='" + ProveedorTelefono3 + '\'' +
+                ", ProveedorCelular1='" + ProveedorCelular1 + '\'' +
+                ", ProveedorCelular2='" + ProveedorCelular2 + '\'' +
+                ", ProveedorCelular3='" + ProveedorCelular3 + '\'' +
+                ", NumOrdenCompra='" + NumOrdenCompra + '\'' +
+                ", FechaRequisicion=" + FechaRequisicion +
+                ", SubtotalSinIva=" + SubtotalSinIva +
+                ", Iva=" + Iva +
+                ", Ieps=" + Ieps +
+                ", Total=" + Total +
+                ", Productos=" + Productos +
+                '}';
     }
 }

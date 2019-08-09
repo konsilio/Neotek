@@ -22,6 +22,9 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
     @SerializedName("IdCAlmacenGas")
     private int IdCAlmacenGas;
 
+    @SerializedName("NombreCAlmacen")
+    private String NombreCAlmacen;
+
     @SerializedName("Estacion")
     private String Estacion;
 
@@ -88,6 +91,14 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
         //return ClaveOperacion;}
         Log.d("Claveoperacion",ClaveOperacion+"");
          return ClaveOperacion!=null?ClaveOperacion:"";
+    }
+
+    public void setNombreCAlmacen(String nombreCAlmacen) {
+        NombreCAlmacen = nombreCAlmacen;
+    }
+
+    public String getNombreCAlmacen() {
+        return NombreCAlmacen!=null?NombreCAlmacen:"";
     }
 
     public void setClaveOperacion(String claveOperacion) {

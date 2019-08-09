@@ -293,4 +293,36 @@ public class ConceptoDTO implements Serializable {
     public void setIdCilindro(int idCilindro) {
         IdCilindro = idCilindro;
     }
+
+    @Override
+    public String toString() {
+        return "ConceptoDTO{" +
+                "IdEmpresa=" + IdEmpresa +
+                ", Year=" + Year +
+                ", Mes=" + Mes +
+                ", Dia=" + Dia +
+                ", IdProducto=" + IdProducto +
+                ", IdLinea=" + IdLinea +
+                ", IdCategoria=" + IdCategoria +
+                ", IdUnidadMedida=" + IdUnidadMedida +
+                ", PrecioUnitarioProducto=" + PrecioUnitarioProducto +
+                ", PrecioUnitarioLt=" + PrecioUnitarioLt +
+                ", PrecioUnitarioKg=" + PrecioUnitarioKg +
+                ", DescuentoUnitarioProducto=" + DescuentoUnitarioProducto +
+                ", DescuentoUnitarioLt=" + DescuentoUnitarioLt +
+                ", DescuentoUnitarioKg=" + DescuentoUnitarioKg +
+                ", Cantidad=" + Cantidad +
+                ", CantidadLt=" + CantidadLt +
+                ", CantidadKg=" + CantidadKg +
+                ", DescuentoTotal=" + DescuentoTotal +
+                ", Subtotal=" + Subtotal +
+                ", IdTipoGas=" + IdTipoGas +
+                ", Concepto='" + Concepto + '\'' +
+                ", PUnitario=" + PUnitario +
+                ", Descuento=" + Descuento +
+                ", LitrosDespachados=" + LitrosDespachados +
+                ", EsVentaCilindro=" + EsVentaCilindro +
+                ", IdCilindro=" + IdCilindro +
+                '}';
+    }
 }

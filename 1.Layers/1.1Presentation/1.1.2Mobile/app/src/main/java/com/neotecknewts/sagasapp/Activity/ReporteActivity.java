@@ -246,7 +246,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "-------------------------------\n" +
                         "Litros de venta: " +
                         "\t $ [{litros-venta}] \n" +
-                        "Precio:" +
+                        "Precio promedio del día:" +
                         "\t $ [{Precio}]\n" +
                         "Importe contado:" +
                         "\t $ [{Importe-contado}] \n" +
@@ -265,11 +265,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         mDay + "/" + (mMonth + 1) + "/" + mYear);
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{Porcentaje-salida}]",
-                        String.valueOf(reporteDTO.getPorcentajeSalida()) + "%"
+                        String.valueOf(reporteDTO.getLecturaInicial().getPorcentajeMedidor()) + "%"
                 );
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{Porcentaje-regreso}]",
-                        String.valueOf(reporteDTO.getPorcentajeRegreso()) + "%"
+                        String.valueOf(reporteDTO.getLecturaFinal().getPorcentajeMedidor()) + "%"
                 );
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{Lectura-inicial}]",
@@ -315,7 +315,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<theader>" +
                         "<tr>" +
                         "<th>Salida: </th>" +
-                        "<th>Regreso:</th>" +
+                        "<th>Regreso: </th>" +
                         "</tr>" +
                         "</theader>" +
                         "<tbody>" +
@@ -353,7 +353,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td>$ [{litros-venta}]</td>" +
                         "</tr>" +
                         "<tr>" +
-                        "<td>Precio: </td>" +
+                        "<td>Precio promedio del día: </td>" +
                         "<td>$ [{Precio}]</td>" +
                         "</tr>" +
                         "<tr>" +
@@ -373,6 +373,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                 formato_reporte_pipa_html = formato_reporte_pipa_html.replace(
                         "[{Elemento}]",
                         reporteDTO.getEstacion());
+                Log.d("Estacion", reporteDTO.getEstacion());
                 formato_reporte_pipa_html = formato_reporte_pipa_html.replace(
                         "[{ClaveReporte}]",
                         reporteDTO.getClaveOperacion()
@@ -383,11 +384,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                 );
                 formato_reporte_pipa_html = formato_reporte_pipa_html.replace(
                         "[{Porcentaje-salida}]",
-                        String.valueOf(reporteDTO.getPorcentajeSalida()) + "%"
+                        String.valueOf(reporteDTO.getLecturaInicial().getPorcentajeMedidor()) + "%"
                 );
                 formato_reporte_pipa_html = formato_reporte_pipa_html.replace(
                         "[{Porcentaje-regreso}]",
-                        String.valueOf(reporteDTO.getPorcentajeRegreso()) + "%"
+                        String.valueOf(reporteDTO.getLecturaFinal().getPorcentajeMedidor()) + "%"
                 );
                 formato_reporte_pipa_html = formato_reporte_pipa_html.replace(
                         "[{Lectura-inicial}]",
@@ -461,7 +462,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                 "\t $ [{Carburacion}]\n" +
                                 "Kilos de venta: " +
                                 "\t $ [{Kilos-de-venta}]\n" +
-                                "Precio: " +
+                                "Precio promedio del día: " +
                                 "\t $ [{Precio}]\n" +
 
                                 "Otras ventas: " +
@@ -483,15 +484,19 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                 formato_reporte_camioneta_text = formato_reporte_camioneta_text.replace(
                         "[{Fecha}]",
                         mDay + "/" + (mMonth + 1) + "/" + mYear);
-                for (ReporteDto.TanquesDto tanqueDto :
-                        reporteDTO.getTanques()) {
+
+
+                for (ReporteDto.TanquesDto tanqueDto :  reporteDTO.getTanques()) {
                     formato_reporte_camioneta_text = formato_reporte_camioneta_text.replace(
                             "[{Tanques}]",
+
                             tanqueDto.getTanques() +
                                     "       " + tanqueDto.getNormal() +
                                     "       " + tanqueDto.getVenta() + "\n"
                     );
+                    System.out.println(tanqueDto.getTanques()+"");
                 }
+
                 for (ReporteDto.TanquesDto tanqueDto :
                         reporteDTO.getTanques()) {
                     formato_reporte_camioneta_text = formato_reporte_camioneta_text.replace(
@@ -585,7 +590,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td>$ [{Kilos-de-venta}]</td>" +
                         "</tr>" +
                         "<tr>" +
-                        "<td>Precio: </td>" +
+                        "<td>Precio promedio del día: </td>" +
                         "<td>$ [{Precio}]</td>" +
                         "</tr>" +
                         "<tr>" +
@@ -615,8 +620,8 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                 formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
                         "[{Fecha}]",
                         mDay + "/" + (mMonth + 1) + "/" + mYear);
-                for (ReporteDto.TanquesDto tanqueDto :
-                        reporteDTO.getTanques()) {
+
+                for (ReporteDto.TanquesDto tanqueDto :   reporteDTO.getTanques()) {
                     formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
                             "[{Tanques}]",
                             "<td>" + tanqueDto.getTanques() + "</td>" +
@@ -736,7 +741,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "-------------------------------\n" +
                         "Litros de venta: " +
                         "\t $ [{litros-venta}] \n" +
-                        "Precio:" +
+                        "Precio promedio del día:" +
                         "\t $ [{Precio}]\n" +
                         "Importe contado:" +
                         "\t $ [{Importe-contado}] \n" +
@@ -793,7 +798,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td>$ [{litros-venta}]</td>" +
                         "</tr>" +
                         "<tr>" +
-                        "<td>Precio: </td>" +
+                        "<td>Precio promedio del día: </td>" +
                         "<td>$ [{Precio}]</td>" +
                         "</tr>" +
                         "<tr>" +
@@ -839,7 +844,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                 "\t $ [{Carburacion}]\n" +
                                 "Kilos de venta: " +
                                 "\t $ [{Kilos-de-venta}]" +
-                                "Precio: " +
+                                "Precio promedio del día: " +
                                 "\t $ [{Precio}]\n" +
 
                                 "Otras ventas: " +
@@ -902,7 +907,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td>$ [{Kilos-de-venta}]</td>" +
                         "</tr>" +
                         "<tr>" +
-                        "<td>Precio: </td>" +
+                        "<td>Precio promedio del día: </td>" +
                         "<td>$ [{Precio}]</td>" +
                         "</tr>" +
                         "<tr>" +
