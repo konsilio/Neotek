@@ -12,6 +12,7 @@ namespace Application.MainModule.DTOs.Mobile
     public class TanquesDto
     {
         public string NombreTanque { get; set; }
+        public string Tanques { get; set; }
         public decimal Normal { get; set; }
         public decimal Venta { get; set; }
     }
