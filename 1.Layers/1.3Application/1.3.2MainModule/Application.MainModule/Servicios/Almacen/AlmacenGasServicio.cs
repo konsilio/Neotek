@@ -269,17 +269,16 @@ namespace Application.MainModule.Servicios.Almacenes
                 if (autoConsumo != null)
                     totalCarburacion = (autoConsumo.UnidadEntrada.CapacidadTanqueLt ?? 0 / 100) * lectFinal.Porcentaje ?? 0;
                 reporte = ReporteAdapter.ToDtoCamioneta(resp, almacen, cilindrosInicial, cilindrosFinal, lectInicial, lectFinal, otrasVentas, ventasContado, ventasCredito);
-
                 reporte.Carburacion = totalCarburacion;
                 reporte.OtrasVentasTotal = totalOtros;
-                reporte.Precio = precioVenta.PrecioSalidaLt ?? 0;
+                reporte.Precio = CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), ventasContado.Count);
                 reporte.KilosDeVenta = KiliosVenta;
             }
 
-            if (almacen.IdEstacionCarburacion > 0 && almacen.IdEstacionCarburacion != null)
+            if (almacen.IdEstacionCarburacion != null)
                 reporte = ReporteAdapter.ToDtoEstacion(resp, almacen, lectInicial, lectFinal);
-            if (almacen.IdPipa > 0 && almacen.IdPipa != null)
-                reporte = ReporteAdapter.ToDtoPipa(resp, almacen, lectInicial, lectFinal);
+            if (almacen.IdPipa != null)
+                reporte = ReporteAdapter.ToDtoPipa(resp, almacen, lectInicial, lectFinal);          
             return reporte;
         }
         /// <summary>
@@ -712,7 +711,7 @@ namespace Application.MainModule.Servicios.Almacenes
                     reporteDTO.EsCamioneta = true;
                     reporteDTO.Carburacion = totalCarburacion;
                     reporteDTO.OtrasVentasTotal = totalOtros;
-                    reporteDTO.Precio = precioVenta.PrecioSalidaLt ?? 0;
+                    reporteDTO.Precio = reporteDTO.Precio = CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), ventasContado.Count);
                     reporteDTO.Error = false;
                     reporteDTO.Mensaje = "Exito";
                     reporteDTO.IdCAlmacenGas = almacen.IdCAlmacenGas;
@@ -746,9 +745,9 @@ namespace Application.MainModule.Servicios.Almacenes
                         reporteDTO = ReporteAdapter.ToDtoPipa(almacen, lectInicial, lectFinal, ventasContado, ventasCredito);
                     else
                         reporteDTO = ReporteAdapter.ToDtoEstacion(almacen, lectInicial, lectFinal, ventasContado, ventasCredito);
-                    reporteDTO.LitrosVenta = reporteDTO.LecturaInicial.CantidadP5000 - reporteDTO.LecturaFinal.CantidadP5000;
+                    reporteDTO.LitrosVenta = CalculosGenerales.DiferenciaEntreDosNumero(reporteDTO.LecturaInicial.CantidadP5000, reporteDTO.LecturaFinal.CantidadP5000);
                     reporteDTO.Fecha = fecha;
-                    reporteDTO.Precio = precioVentaGas;
+                    reporteDTO.Precio = CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), ventasContado.Count) ;
                     reporteDTO.ClaveReporte = DateTime.Now.Year + "R" + DateTime.Now.Ticks;
                     reporteDTO.Error = false;
                     reporteDTO.Mensaje = "Exito";

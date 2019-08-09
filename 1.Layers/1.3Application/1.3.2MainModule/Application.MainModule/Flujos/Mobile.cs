@@ -186,7 +186,7 @@ namespace Application.MainModule.Flujos
            var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacenGas);
             var resp = AlmacenGasServicio.BuscarReporteDia(fecha, idCAlmacenGas,almacen.IdEmpresa);
 
-            if (resp!=null) return AlmacenGasServicio.ReporteDiaExistente(resp,almacen);
+            if (resp!=null) return AlmacenGasServicio.ReporteDiaExistente(resp, almacen);
 
             var ReporteAlmacen = AlmacenGasServicio.ReporteDia(fecha, idCAlmacenGas);
             return ReporteAlmacen;
@@ -199,7 +199,7 @@ namespace Application.MainModule.Flujos
             var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var almacen = punto_venta.UnidadesAlmacen;
             var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
-            //var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);     
+            //var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);
             var cliente = ClienteServicio.Obtener(venta.IdCliente);
             var ventas = CajaGeneralServicio.ObtenerVentas();
             int orden = Orden(ventas, venta.Fecha);
