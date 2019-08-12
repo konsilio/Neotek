@@ -21,18 +21,20 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Pedido> Buscar()
         {
-            return uow.Repository<Pedido>().GetAll().ToList();
+            return uow.Repository<Pedido>().Get(x => x.PedidoDetalle.Count > 0).ToList();
         }
         public List<Pedido> Buscar(short idempresa)
         {
-            return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa)).ToList();
+            return uow.Repository<Pedido>().Get(x => 
+            x.IdEmpresa.Equals(idempresa)
+            && x.PedidoDetalle.Count > 0).Take(200).ToList();
         }
         public List<Pedido> Buscar(short idempresa, DateTime periodo)
         {
-            return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa) 
-                                                && (x.FechaRegistro.Month.Equals(periodo.Month) 
-                                                && x.FechaRegistro.Year.Equals(periodo.Year))
-                                                && x.PedidoDetalle.Count > 0).ToList();
+            return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa)
+                                                && x.FechaRegistro.Month.Equals(periodo.Month)
+                                                && x.FechaRegistro.Year.Equals(periodo.Year)
+                                                && x.PedidoDetalle.Count > 0).OrderByDescending(p => p.IdPedido).Take(200).ToList();
         }
         public List<PedidoDetalle> Buscar(int idPedido)
         {
@@ -44,7 +46,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<PedidoEstatus> BuscarEstatus()
         {
-            return uow.Repository<PedidoEstatus>().GetAll().ToList(); 
+            return uow.Repository<PedidoEstatus>().GetAll().ToList();
         }
         public Pedido BuscarPedido(int idPedido)
         {

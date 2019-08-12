@@ -235,9 +235,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
             };
         }
-
-        public static ReporteDiaDTO ToDtoCamioneta(UnidadAlmacenGas almacen, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosInicial, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosFinal, List<VentaPuntoDeVenta> ventasContado, List<VentaPuntoDeVenta> ventasCredito,
-            AlmacenGasTomaLectura inicial, AlmacenGasTomaLectura final)
+        public static ReporteDiaDTO ToDtoCamioneta(UnidadAlmacenGas almacen, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosInicial, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosFinal, List<VentaPuntoDeVenta> ventasContado, List<VentaPuntoDeVenta> ventasCredito, AlmacenGasTomaLectura inicial, AlmacenGasTomaLectura final)
         {
             return new ReporteDiaDTO()
             {
@@ -262,13 +260,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             decimal FINAL = 0;
 
             if (cilindroFinal != null)
-            {
                 FINAL = cilindro.Cantidad - cilindroFinal.Cantidad;
-            }
             else
-            {
                 FINAL = cilindroFinal.Cantidad;
-            }
             return new TanquesDto()
             {
                 NombreTanque = cilindro.Cilindro.CapacidadKg.ToString() + " KG",
@@ -294,7 +288,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 ImporteContado = reporteDTO.Importe,
                 ImporteCredito = reporteDTO.ImporteCredito,
                 Total = reporteDTO.Importe + reporteDTO.ImporteCredito,
-
             };
         }
     }

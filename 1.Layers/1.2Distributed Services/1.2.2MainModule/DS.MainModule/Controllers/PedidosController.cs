@@ -14,7 +14,7 @@ namespace DS.MainModule.Controllers
     public class PedidosController : ApiController
     {
         private Pedidos _pedidos;
-        public PedidosController()
+        public PedidosController() 
         {
             _pedidos = new Pedidos();
         }

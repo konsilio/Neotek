@@ -27,7 +27,7 @@ namespace Application.MainModule.Servicios.Pedidos
         public static List<PedidoModelDto> Obtener(short idempresa)
         {
             //var pedidos = new PedidosDataAccess().Buscar(idempresa);
-            var pedidos = new PedidosDataAccess().Buscar(idempresa, DateTime.Now).ToList();
+            var pedidos = new PedidosDataAccess().Buscar(idempresa, DateTime.Now);
             return PedidosAdapter.ToDTO(pedidos);
         }
         public static RegistraPedidoDto Obtener(int idPedido)
@@ -96,6 +96,21 @@ namespace Application.MainModule.Servicios.Pedidos
             }
             return listDTO;
         }
-        
+        public static decimal ObtenerCantidadVentaPipaEstacion(List<PedidoDetalle> detalles)
+        {
+            return detalles.Sum(x => x.Cantidad.Value);
+        }
     }
 }
+
+
+
+//cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro20 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 20Kg" + ", ";
+//                cant20 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
+
+//cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro30 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 30Kg" + ", ";
+//                cant30 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
+
+
+//cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro45 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 45Kg" + ", ";
+//                cant45 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();

@@ -34,6 +34,14 @@ namespace Utilities.MainModule
 
             return Math.Truncate(cantidad * decimales) / decimales;
         }
+        public static decimal Truncar(decimal cantidad, int digitos)
+        {
+            decimal decimales = 1;
+            for (int i = 0; i < digitos; i++)
+                decimales = decimales * 10;
+
+            return Math.Truncate(cantidad * decimales) / decimales;
+        }
         public static int Promediar(int total, int cantidad)
         {
             return total / cantidad;
