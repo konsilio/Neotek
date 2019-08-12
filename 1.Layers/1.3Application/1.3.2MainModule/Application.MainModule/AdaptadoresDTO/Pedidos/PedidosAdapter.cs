@@ -27,36 +27,25 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             var cant20 = "";
             var cant30 = "";
             var cant45 = "";
-            //List<PedidoDetalle> pd = new PedidosDataAccess().Buscar(p.IdPedido);
-            //foreach (var item in p.PedidoDetalle)
-            //{
-            if (p.IdCamioneta > 0)
+            if (p.PedidoDetalle != null && !p.PedidoDetalle.Count.Equals(0))
             {
-                //if (item.Cilindro20 == true)
-                //{
-                cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro20 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 20Kg" + ", ";
-                cant20 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
-                //}
-                //if (item.Cilindro30 == true)
+                if (p.IdCamioneta > 0)
+                {
+                    cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro20 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 20Kg" + ", ";
+                    cant20 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
 
-                cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro30 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 30Kg" + ", ";
-                cant30 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
+                    cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro30 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 30Kg" + ", ";
+                    cant30 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
 
-                //cant30 = item.Cantidad.ToString().Split(',')[0];
-                //}
-                //if (item.Cilindro45 == true)
-                //{
-                cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro45 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 45Kg" + ", ";
-                cant45 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
-                //}
+                    cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro45 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 45Kg" + ", ";
+                    cant45 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
+                }
+                else
+                    cant = string.Concat(CalculosGenerales.Truncar(PedidosServicio.ObtenerCantidadVentaPipaEstacion(p.PedidoDetalle.ToList()), 2).ToString(), " Lts.");
             }
-            else            
-                cant = string.Concat(CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString(), " ", "kg.");
-            
-            //}
+           
             var cliente = ClienteServicio.Obtener(p.IdCliente);
-            //var clienteL = cliente.Locaciones.FirstOrDefault();
-            //var pe = p.RespuestaSatisfaccionPedido.ToList();
+
             PedidoModelDto usDTO = new PedidoModelDto()
             {
                 IdPedido = p.IdPedido,
