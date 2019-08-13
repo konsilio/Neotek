@@ -20,6 +20,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.CMantenimiento = TransporteServicio.ListaCatMantenimiento(tkn);
             ViewBag.Mantenimientos = TransporteServicio.ListaMantenimientos(tkn).ToPagedList(page ?? 1, 20);
+            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             if (TempData["RespuestaDTO"] != null)
             {
                 var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];

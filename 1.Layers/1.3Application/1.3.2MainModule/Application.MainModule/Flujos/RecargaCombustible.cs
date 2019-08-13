@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio;
+using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
 using Application.MainModule.DTOs.EquipoTransporte;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Equipo;
@@ -24,7 +25,9 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var newMan = RecargaCombustibleAdapter.FromDTO(dto);
-            return RecargaCombustibleServicio.Crear(newMan);
+            var egreso = EgresoAdapter.FromDTO(dto);
+
+            return RecargaCombustibleServicio.Crear(newMan, egreso);
         }
         public RespuestaDto Modificar(RecargaCombustibleDTO dto)
         {

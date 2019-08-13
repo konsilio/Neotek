@@ -91,7 +91,7 @@
                                            settings.Properties.NullText = "dd/MM/yyyy";
                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       }).Bind(Model[0].FechaRango1).GetHtml()
+                                       }).Bind(Model.Count != 0 ? Model[0].FechaRango1 : DateTime.Now).GetHtml()
                                         </div>
                                         <div class="col-sm-2">
                                             <b>Fecha al:</b>
@@ -106,7 +106,7 @@
                                            //settings.Attributes.Clear();
                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       }).Bind(Model[0].FechaRango2).GetHtml()
+                                       }).Bind(Model.Count != 0? Model[0].FechaRango1 : DateTime.Now).GetHtml()
                                         </div>
                                         <div class="col-sm-3">
                                             <b>RFC:</b>

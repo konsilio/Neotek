@@ -164,7 +164,7 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
-                ViewBag.MensajeError = "No se encontraron resultados..";
+                //ViewBag.MensajeError = "No se encontraron resultados..";
                 CargosModel cm = new CargosModel();
                 cm.FechaRango1 = m.FechaRango1;
                 _model.reportedet.Add(cm);

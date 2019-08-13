@@ -10,7 +10,7 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
-<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+@*<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>*@
 <script src="~/Resources/js/Clientes.js"></script>
 <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
 <script type="text/javascript">
@@ -31,7 +31,7 @@
             $('#div_hidePM').show();
             $('#div_hideRP').show();
             $('#hide_razonS').show();
-        }     
+        }
     }
 </script>
 <!-- JS includes -->
@@ -62,21 +62,21 @@
                                     }
                                 </select>*@
                             @Html.DevExpress().ComboBox(settings =>
-                       {
-                           settings.Name = "IdEmpresa";
-                           settings.Width = 180;
-                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                           settings.Theme = "Material";
-                           settings.Properties.TextField = "NombreComercial";
-                           settings.Properties.ValueField = "IdEmpresa";
-                           settings.PreRender = (s, e) =>
                            {
-                               MVCxComboBox combo = s as MVCxComboBox;
-                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                               combo.SelectedIndex = 0;
-                           };
-                       }).BindList(ViewBag.Empresas).GetHtml()
+                               settings.Name = "IdEmpresa";
+                               settings.Width = 180;
+                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                               settings.Theme = "Material";
+                               settings.Properties.TextField = "NombreComercial";
+                               settings.Properties.ValueField = "IdEmpresa";
+                               settings.PreRender = (s, e) =>
+                               {
+                                   MVCxComboBox combo = s as MVCxComboBox;
+                                   combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                   combo.SelectedIndex = 0;
+                               };
+                           }).BindList(ViewBag.Empresas).GetHtml()
                             @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                         </div>
                     </div>
@@ -101,24 +101,24 @@
                                                 }
                                             </select>*@
                                         @Html.DevExpress().ComboBox(settings =>
-                                   {
-                                       settings.Name = "IdTipoPersona";
-                                       settings.Width = 180;
-                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Theme = "Material";
-                                       settings.Properties.TextField = "Descripcion";
-                                       settings.Properties.ValueField = "IdTipoPersona";
-                                       settings.ClientEnabled = true;
-                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
-                                       settings.PreRender = (s, e) =>
                                        {
-                                           MVCxComboBox combo = s as MVCxComboBox;
-                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                           combo.Properties.ValueType = typeof(int);
-                                           combo.SelectedIndex = 0;
-                                       };
-                                   }).BindList(ViewBag.TipoPersona).GetHtml()
+                                           settings.Name = "IdTipoPersona";
+                                           settings.Width = 180;
+                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                           settings.Theme = "Material";
+                                           settings.Properties.TextField = "Descripcion";
+                                           settings.Properties.ValueField = "IdTipoPersona";
+                                           settings.ClientEnabled = true;
+                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                           settings.PreRender = (s, e) =>
+                                           {
+                                               MVCxComboBox combo = s as MVCxComboBox;
+                                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                               combo.Properties.ValueType = typeof(int);
+                                               combo.SelectedIndex = 0;
+                                           };
+                                       }).BindList(ViewBag.TipoPersona).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -132,22 +132,22 @@
                                                 }
                                             </select>*@
                                         @Html.DevExpress().ComboBox(settings =>
-                           {
-                               settings.Name = "IdRegimenFiscal";
-                               settings.Width = 180;
-                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                               settings.Theme = "Material";
-                               settings.Properties.TextField = "Descripcion";
-                               settings.Properties.ValueField = "IdRegimenFiscal";
-                               settings.PreRender = (s, e) =>
-                               {
-                                   MVCxComboBox combo = s as MVCxComboBox;
-                                   combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                   combo.Properties.ValueType = typeof(int);
-                                   combo.SelectedIndex = 0;
-                               };
-                           }).BindList(ViewBag.Regimen).GetHtml()
+                                       {
+                                           settings.Name = "IdRegimenFiscal";
+                                           settings.Width = 180;
+                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                           settings.Theme = "Material";
+                                           settings.Properties.TextField = "Descripcion";
+                                           settings.Properties.ValueField = "IdRegimenFiscal";
+                                           settings.PreRender = (s, e) =>
+                                           {
+                                               MVCxComboBox combo = s as MVCxComboBox;
+                                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                               combo.Properties.ValueType = typeof(int);
+                                               combo.SelectedIndex = 0;
+                                           };
+                                       }).BindList(ViewBag.Regimen).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -228,7 +228,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         <div>
-                                            Apellido 1:*
+                                            Apellido Paterno:*
                                             <input type="text" name="Apellido1" class="form-control" />
                                             @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                         </div>
@@ -237,7 +237,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         <div>
-                                            Apellido 2:
+                                            Apellido Materno:
                                             <input type="text" name="Apellido2" class="form-control" />
                                         </div>
                                     </div>
@@ -247,62 +247,65 @@
                     </div>
                 </div>
             </div>
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2><strong>Condición del crédito y descuento</strong></h2>
+            <div class="card">
+                <div class="header">
+                    <h2><strong>Condición del crédito y descuento</strong></h2>
+                </div>
+                <div class="body">
+                    <div class="row clearfix">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Límite de crédito:
+                            </div>
                         </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:12.666667%">
-                                    <div class="form-group">
-                                        Límite de crédito:
-                                    </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                Listros de Crédito<input name="limiteCreditoMonto" class="form-control" type="number" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div>
+                                    Días para pagar
+                                    <input name="limiteCreditoDias" class="form-control" type="number" />
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                    <div class="form-group">
-                                        Monto $ <input name="limiteCreditoMonto" class="form-control" type="number" />
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div>
+                                    Credito disponible:
+                                    <input name="CreditoDisponibleMonto" class="form-control" type="number" />
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                    <div class="form-group">
-                                        <div>
-                                            Días <input name="limiteCreditoDias" class="form-control" type="number" />
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-3" style="max-width:15.666667%">
+                            <div class="form-group">
+                                <div>
+                                    Descuento:
+                                    <input name="DescuentoXKilo" class="form-control" type="number" />
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                    <div class="form-group">
-                                        <div>
-                                            Credito disponible:
-                                            <input name="CreditoDisponibleMonto" class="form-control" type="number" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                    <div class="form-group">
-                                        <div>
-                                            Descuento %:
-                                            <input name="DescuentoXKilo" class="form-control" type="number" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
-                                    <div class="form-group">
-                                        <div>
-                                            Autorizar ventas con límite de crédito excedido
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1">
-                                    <div class="form-group">
-                                        <label class="switch">
-                                            @Html.CheckBoxFor(m => m.VentaExtraordinaria, new { @class = "form-control" })
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            ¿Es precio fijo?
+                            <div class="form-group">
+                                <label class="switch">
+                                    @Html.CheckBoxFor(m => m.EsFijo, new { @class = "form-control" })
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            Autorizar ventas con límite de crédito excedido
+                            <div class="form-group center">
+                                <label class="switch">
+                                    @Html.CheckBoxFor(m => m.VentaExtraordinaria, new { @class = "form-control" })
+                                    <span class="slider round"></span>
+                                </label>
                             </div>
                         </div>
                     </div>

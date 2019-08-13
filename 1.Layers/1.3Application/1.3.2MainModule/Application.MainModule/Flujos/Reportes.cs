@@ -35,7 +35,7 @@ namespace Application.MainModule.Flujos
         public List<RepCuentaPorPagarDTO> RepCuentasPorPagar(DateTime periodo)
         {
             var resp = PermisosServicio.PuedeConsultarCuentaContable();
-            if (!resp.Exito) return null; 
+            if (!resp.Exito) return null;
             var requi = EgresoServicio.BuscarTodos(periodo);
             return EgresoAdapter.ToRepo(requi);
         }
@@ -45,7 +45,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
             var pipas = PipaServicio.Obtener(dto.Pipas);
             var estaciones = EstacionCarburacionServicio.Obtener(dto.Estaciones);
-            return new Almacenes().BuscarInvetarioPorPuntoDeVenta(pipas, estaciones);
+            return new Almacenes().BuscarInvetarioPorPuntoDeVenta(pipas, estaciones, dto.Fecha);
         }
         public List<RepHistorioPrecioDTO> RepHistorioPrecios(HistoricoPrecioDTO dto)
         {
@@ -63,7 +63,7 @@ namespace Application.MainModule.Flujos
         }
         public List<RepRequisicionDTO> RepRequisicion(RequisicionModelDTO dto)
         {
-           var resp = PermisosServicio.PuedeGenerarRequisicion();
+            var resp = PermisosServicio.PuedeGenerarRequisicion();
             if (!resp.Exito) return null;
             var requisicones = RequisicionServicio.BuscarRequisicionPorPeriodo(TokenServicio.ObtenerIdEmpresa(), dto.FechaInicio, dto.FechaFinal);
             return RequisicionServicio.ConvertirReporte(requisicones);
@@ -89,10 +89,10 @@ namespace Application.MainModule.Flujos
             var alamacenes = ProductoAlmacenServicio.BuscarAlmacen(dto.FechaInicio, dto.FechaFinal);
             return AlmacenProductoAdapter.ToRepDTO(alamacenes);
         }
-        public List<RepCorteCajaDTO> RepCorteCaja(CajaGeneralDTO dto)
+        public List<RepCorteCajaDTO> RepCorteCaja(CajaGralDTO dto)
         {
             var resp = PermisosServicio.PuedeModificarCajaGeneral();
-            if (!resp.Exito) return null;            
+            if (!resp.Exito) return null;
             var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
             var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
@@ -123,6 +123,70 @@ namespace Application.MainModule.Flujos
 
             return respuesta.Where(x => !x.Total.Equals(0)).ToList();
         }
+        public List<ComisionDTO> RepComisiones(PeriodoDTO periodo)
+        {
+            List<ComisionDTO> respesta = new List<ComisionDTO>();
+            var choferes = OperadorChoferServicio.ObtenerPorEmpresa(TokenServicio.ObtenerIdEmpresa());
+            periodo.FechaInicio = DateTime.Parse(string.Concat(periodo.FechaInicio.ToShortDateString(), " 00:00:00"));
+            periodo.FechaFin = DateTime.Parse(string.Concat(periodo.FechaFin.ToShortDateString(), " 23:59:59"));
+            var ventas = PuntoVentaServicio.ObtenerVentas(periodo.FechaInicio, periodo.FechaFin);
+            foreach (var chofer in choferes)
+            {
+                ComisionDTO dto = new ComisionDTO();
+                dto.FechaFin = periodo.FechaFin;
+                dto.FechaInicio = periodo.FechaInicio;
+                dto.Empleado = string.Concat(chofer.Usuario.Nombre, " ", chofer.Usuario.Apellido1);
+                dto.Puesto = chofer.TipoOperadorChofer.Descripcion;
+                dto.Venta = 0;
+                dto.Comision = 0;
+                dto.Total = 0;
+                              
+                if (chofer.PuntosVenta.Count > 0)
+                {
+                    dto.PuntoVenta = chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.Numero;
+                    if (chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdCamioneta != null)
+                    {
+                        dto.Venta = ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).Sum(y => y.VentaPuntoDeVentaDetalle.Sum(v => v.CantidadKg.Value));
+                        dto.Comision = (decimal)0.4;
+                        dto.Unidad = "Kg";
+                        dto.Total = CalcularPreciosVentaServicio.CalcularComisionCamioneta(ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).ToList(), periodo);
+                    }
+                    if (chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdPipa != null)
+                    {
+                        dto.Venta = ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).Sum(y => y.VentaPuntoDeVentaDetalle.Sum(v => v.CantidadLt.Value));
+                        dto.Comision = (decimal)0.15;
+                        dto.Unidad = "Lts";
+                        dto.Total = CalcularPreciosVentaServicio.CalcularComisionPipas(ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).ToList(), periodo);
+                    }
+                    if (!chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.EsGeneral && chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion == null)                    
+                        respesta.Add(dto);
+                    
+                }
+               
+            }
+            return respesta;
+        }
+        public List<CuentasConsolidadasDTO> RepCuentasConsolidadas(DateTime periodo)
+        {
+            List<CuentasConsolidadasDTO> respuesta = new List<CuentasConsolidadasDTO>();
+            var gastos = EgresoServicio.BuscarTodos(periodo);
+            var cuentasContables = CuentaContableServicio.Obtener();
+
+            foreach (var cc in cuentasContables)
+            {
+                var cca = CuentaContableAutorizadoServicio.Obtener(cc.IdCuentaContable, periodo);
+                if (cca == null)
+                    cca = CuentaContableAutorizadoServicio.RegistrarCuentaContableAutorizado(cc.IdCuentaContable);
+                CuentasConsolidadasDTO dto = new CuentasConsolidadasDTO();
+                dto.Concepto = cc.Descripcion;
+                dto.CantidadAutorizada = cca == null ? 0 : cca.Autorizado;
+                dto.CantidadGastada = gastos == null ? 0 : gastos.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(y => y.Monto);
+                dto.Diferencia = dto.CantidadAutorizada - dto.CantidadGastada;
+                respuesta.Add(dto);
+            }
+            return respuesta;
+        }
+
         #region Dash Board (Pruebas)
         //public AdministracionDTO DashAdministracionVentaVSRema()
         //{
@@ -200,7 +264,7 @@ namespace Application.MainModule.Flujos
         public AdministracionDTO DashAdministracionVentaVSRema()
         {
             AdministracionDTO dto = new AdministracionDTO();
-
+            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
             var remaDTO = AlmacenGasServicio.BusquedaGeneralPeriodoActual();
             var remanente = new Almacenes().ConsultarRemanenteGeneral(remaDTO);
 

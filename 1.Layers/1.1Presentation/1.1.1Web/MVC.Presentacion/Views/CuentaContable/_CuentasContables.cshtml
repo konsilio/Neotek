@@ -1,0 +1,46 @@
+﻿@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "CuentasContables";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "CuentaContable",
+            Action = "Grid"
+        };
+        settings.KeyFieldName = "IdCuentaContable";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "IdCliente";
+        //    c.Caption = "ID";
+        //    c.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        //});
+        settings.Columns.Add("Empresa", "Gasera");
+        settings.Columns.Add("Numero", "Número");
+        settings.Columns.Add("Descripcion", "Descripción");
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("ActivarEditar", new { id = d.KeyValue }) + "><i class='material-icons'>edit</i> <span class='icon-name'></span></a>"));
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Eliminar", new { id = d.KeyValue }) + "><i class='material-icons'>delete</i> <span class='icon-name'></span></a>"));
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("CuentaContableAutorizado", new { id = d.KeyValue }) + "><i class='material-icons'>spellcheck</i> <span class='icon-name'></span></a>"));
+            });
+        });
+    });
+}
+@grid.Bind(Model).GetHtml()

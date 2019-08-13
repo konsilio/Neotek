@@ -32,15 +32,17 @@ namespace MVC.Presentacion.Controllers
             if (TempData["DataSource"] != null)
                 TempData["DataSource"] = null;
             if (model == null)
-                model = new InventarioPorPuntoVentaModel();
-            model.Pipas = PedidosServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(x => { x.Activo = false; return x; }).ToList();
-            model.Estaciones = CatalogoServicio.GetListaEstacionCarburacion(tkn).Select(x => { x.Activo = false; return x; }).ToList();
+                model = new InventarioPorPuntoVentaModel();          
             if (model != null && !model.Fecha.Equals(DateTime.MinValue))
             {
                 ViewData["Periodo"] = model.Fecha;
                 ViewData["Reporte"] = TiposReporteConst.InventarioPorPuntoVenta;
                 TempData["DataSource"] = ReporteServicio.BuscarInventarioPorPuntoVenta(model, tkn);
             }
+            var pipas = PedidosServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            pipas.RemoveAt(0);
+            model.Pipas = pipas.Select(x => { x.Activo = false; return x; }).ToList();
+            model.Estaciones = CatalogoServicio.GetListaEstacionCarburacion(tkn).Select(x => { x.Activo = false; return x; }).ToList();
             return View(model);
         }
         public ActionResult HistoricoPrecioVenta(HistoricoPrecioVentaModel model = null)
@@ -164,6 +166,33 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
+        public ActionResult Comisiones(PeriodoDTO model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
+            if (model != null && !model.FechaFin.Equals(DateTime.MinValue) && !model.FechaInicio.Equals(DateTime.MinValue))
+            {
+                ViewData["Reporte"] = TiposReporteConst.Comision;
+                TempData["DataSource"] = ReporteServicio.CalcularComisiones(model, tkn);
+            }
+            return View(model);
+        }
+        public ActionResult CuentaConsolidada(CuentasPorPagarModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
+            if (model != null && !model.Periodo.Equals(DateTime.MinValue))
+            {
+                ViewData["Periodo"] = model.Periodo;
+                ViewData["Reporte"] = TiposReporteConst.CuentaConsolidada;
+                TempData["DataSource"] = ReporteServicio.CuentasConsolidadas(model, tkn);
+            }
+            return View(model);
+        }
 
         //Cubo de inforamcion
         public ActionResult GetGridView(string Tipo)
@@ -193,6 +222,10 @@ namespace MVC.Presentacion.Controllers
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<CorteCajaDTO>)TempData["DataSource"]);
             if (Tipo.Equals(TiposReporteConst.GastoVehicular))
                 return View(TiposReporteConst.CuboInformacionGeneral, (List<GastoVehiculoDTO>)TempData["DataSource"]);
+            if (Tipo.Equals(TiposReporteConst.Comision))
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<ComisionDTO>)TempData["DataSource"]);
+            if (Tipo.Equals(TiposReporteConst.CuentaConsolidada))
+                return View(TiposReporteConst.CuboInformacionGeneral, (List<CuentaConsolidadaDTO>)TempData["DataSource"]);
             return View(TiposReporteConst.CuboInformacionGeneral);
         }
     }

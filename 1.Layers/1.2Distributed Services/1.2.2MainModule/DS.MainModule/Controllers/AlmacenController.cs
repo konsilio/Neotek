@@ -69,9 +69,19 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanenteGeneral(dto));
         }
         [Route("buscar/remanente/puntoventa")]
-        public HttpResponseMessage GetRemanentePorPV(RemanenteDTO dto)
+        public HttpResponseMessage RemanentePorPV(RemanenteDTO dto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanenteGeneral(dto));
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanentePorPuntoventa(dto));
+        }
+        [Route("buscar/remanente/tracto")]
+        public HttpResponseMessage PostRemanenteTracto(RemanenteDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.ConsultarRemanenteTracto(dto));
+        }
+        [Route("buscar/unidadalmacen")]
+        public HttpResponseMessage GetListaUnidadAlmacen()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.ListaUnidadesAlmacen());
         }
     }
 }

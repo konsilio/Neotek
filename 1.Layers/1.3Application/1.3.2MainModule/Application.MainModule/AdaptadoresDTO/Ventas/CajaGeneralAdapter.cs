@@ -436,7 +436,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 PorcentajeIva = pv.PorcentajeIva,
                 EfectivoRecibido = pv.EfectivoRecibido,
                 CambioRegresado = pv.CambioRegresado,
-                PuntoVenta = pv.PuntoVenta,
+                PuntoVenta = pv.CPuntoVenta.UnidadesAlmacen.Numero,
                 RazonSocial = pv.RazonSocial,
                 RFC = pv.RFC,
                 ClienteConCredito = pv.ClienteConCredito,
@@ -451,6 +451,13 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 usDTO.VentaTotalCredito = _cg.VentaTotalCredito;
                 usDTO.VentaTotalContado = _cg.VentaTotalContado;
                 usDTO.OtrasVentas = _cg.OtrasVentas;
+            }
+            else
+            {
+                if (usDTO.IdCamioneta != null)                
+                    usDTO.VentaTotal = pv.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg.Value);
+                else                
+                    usDTO.VentaTotal = pv.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt.Value);
             }
             //usDTO.VentaTotal = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal;
             //usDTO.VentaTotalCredito = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito;
@@ -1009,9 +1016,9 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             return new DTOs.RepCorteCajaDTO()
             {
                 Descripcion = CajaGeneralConst.NombreRepoVentaPipas,
-                Cantidad = Convert.ToDouble(entidadVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadKg))),
+                Cantidad = Convert.ToDouble(entidadVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadLt))),
                 TotalVenta = Convert.ToDouble(entidadVenta.Sum(x => x.Total)),
-                Unidad = "Kg",
+                Unidad = "Lts",
             };
         }
         public static DTOs.RepCorteCajaDTO ToRepoCorteCajaCredito(List<Abono> entidadVenta)

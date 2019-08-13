@@ -18,7 +18,6 @@
 <head>
     <link href="~/Resources/css/DevExpressCss.css" rel="stylesheet" />
     <script src="~/Resources/js/Pedidos.js"></script>
-    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             debugger
@@ -142,6 +141,7 @@
 <body style="height:100%">
     @using (Html.BeginForm("GuardarEdicionPedido", "Pedidos", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.IdPedido)
         @Html.HiddenFor(m => m.IdEmpresa)
         @Html.HiddenFor(m => m.Orden)
         @Html.HiddenFor(m => m.IdPedidoDetalle)
@@ -168,338 +168,158 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-12">
                                             <div class="row clearfix">
-                                                <div class="col-sm-1">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <strong>Pedido: </strong>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            @Model.IdPedido
-                                                            <input type="hidden" name="IdPedido" value="@Model.IdPedido" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <b>Estatus pedido:</b>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    @Html.DevExpress().ComboBox(settings =>
-                                               {
-                                                   settings.Name = "IdEstatusPedido";
-                                                   settings.Width = 180;
-                                                   settings.Theme = "Material";
-                                                   settings.SelectedIndex = Model.IdEstatusPedido - 1;
-                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                   settings.Properties.TextField = "Descripcion";
-                                                   settings.Properties.ValueField = "IdEstatusPedido";
-                                               }).BindList(ViewBag.Estatus).GetHtml()
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <strong>Fecha:</strong>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            @Html.DevExpress().DateEdit(settings =>
-                                                            {
-                                                                settings.Name = "FechaPedido";
-                                                                settings.Properties.UseMaskBehavior = true;
-                                                                settings.Properties.EditFormat = EditFormat.Custom;
-                                                                settings.Theme = "Material";
-                                                                settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
-                                                                settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
-                                                                settings.Properties.TimeSectionProperties.Visible = true;
-                                                                settings.Properties.TimeSectionProperties.Adaptive = true;
-                                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
-                                                                settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
-                                                                settings.Date = DateTime.Now;
-                                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                                                settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                                            }).GetHtml()
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @if (Model.IdPipa > 0)
-                                            {
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-1">
+                                                <div class="col-sm-6">
+                                                    <div class="row clearfix">
                                                         <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Cliente: </strong>
-                                                            </div>
+                                                            <strong>Pedido: &nbsp;</strong> @Model.IdPedido
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="row clearfix">
                                                         <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.NombreRfc - @Model.Rfc
-                                                            </div>
+                                                            <b>Estatus pedido:</b>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <b></b>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <b>Fecha y hora solicitud:</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="input-group">
-                                                            @Model.FechaPedido
-                                                        </div>
-                                                    </div>
-                                                </div><br />
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <b>Calle:</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Calle
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <b>Unidad:</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
                                                         @Html.DevExpress().ComboBox(settings =>
-                                                  {
-                                                      settings.Name = "IdPipa";
-                                                      settings.Width = 180;
-                                                      settings.SelectedIndex = Model.IdPipa;
-                                                      settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                      settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                      settings.Properties.TextField = "Nombre";
-                                                      settings.Properties.ValueField = "IdPipa";
-                                                  }).BindList(ViewBag.Pipas).GetHtml()
+                                                       {
+                                                           settings.Name = "IdEstatusPedido";
+                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                                                           settings.Theme = "Material";
+                                                           settings.SelectedIndex = Model.IdEstatusPedido - 1;
+                                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                           settings.Properties.TextField = "Descripcion";
+                                                           settings.Properties.ValueField = "IdEstatusPedido";
+                                                       }).BindList(ViewBag.Estatus).GetHtml()
                                                     </div>
-                                                </div><br />
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <b>Colonia:</b>
+                                                    <div class="row clearfix">
+                                                        <strong>Fecha: &nbsp;</strong>
+                                                        @Html.DevExpress().DateEdit(settings =>
+                                                       {
+                                                           settings.Name = "FechaPedido";
+                                                           settings.Properties.UseMaskBehavior = true;
+                                                           settings.Properties.EditFormat = EditFormat.Custom;
+                                                           settings.Theme = "Material";
+                                                           settings.Properties.CalendarProperties.Style.CssClass = "CalendarWidthClass";
+                                                           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                                                           settings.Properties.TimeSectionProperties.Visible = true;
+                                                           settings.Properties.TimeSectionProperties.Adaptive = true;
+                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                           settings.Date = DateTime.Now;
+                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                                       }).GetHtml()
                                                     </div>
-                                                    <div class="col-sm-2">
+                                                    <div class="row clearfix">
                                                         <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Colonia
-                                                            </div>
+                                                            <strong>Cliente:  &nbsp;</strong>
                                                         </div>
+                                                        @Model.NombreRfc - @Model.Rfc
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="row clearfix">
+                                                        <div class="form-group">
+                                                            <strong>Fecha y hora solicitud:  &nbsp;</strong>
+                                                        </div>
+                                                        @Model.FechaPedido
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <b>Cantidad:</b>
+                                                    <div class="row clearfix">
+                                                        <div class="form-group">
+                                                            <strong>Calle:  &nbsp;</strong>
+                                                        </div>
+                                                        @Model.Calle
                                                     </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="input-group">
+                                                    <div class="row clearfix">
+                                                        <div class="form-group">
+                                                            <strong>Colonia:  &nbsp;</strong>
+                                                        </div>
+                                                        @Model.Colonia
+                                                    </div>
+                                                    <div class="row clearfix">
+                                                        <div class="form-group">
+                                                            <strong>Teléfono:  &nbsp;</strong>
+                                                        </div>
+                                                        @Html.TextBoxFor(m => m.Telefono1)
+                                                    </div>
+                                                    <div class="row clearfix">
+                                                        <div class="form-group">
+                                                            <strong>Referencia:  &nbsp;</strong>
+                                                        </div>
+                                                        @Model.ReferenciaUbicacion
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    @if (Model.IdPipa > 0)
+                                                    {
+                                                        <div class="row clearfix">
+                                                            <div class="form-group">
+                                                                <strong>Unidad:  &nbsp;</strong>
+                                                            </div>
+                                                            @Html.DevExpress().ComboBox(settings =>
+                                                           {
+                                                               settings.Name = "IdPipa";
+                                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                                                               settings.SelectedIndex = Model.IdPipa;
+                                                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                               settings.Properties.TextField = "Nombre";
+                                                               settings.Properties.ValueField = "IdPipa";
+                                                           }).BindList(ViewBag.Pipas).GetHtml()
+                                                        </div>
+                                                        <div class="row clearfix">
+                                                            <div class="form-group">
+                                                                <strong>Cantidad:  &nbsp;</strong>
+                                                            </div>
                                                             @Html.TextBoxFor(model => model.Cantidad, new { @class = "form-control" })kg
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <b>Teléfono:</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Telefono1
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-2">
-                                                        <b>Referencia:</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.ReferenciaUbicacion
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                            @if (Model.IdCamioneta > 0)
-                                            {
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-12">
+                                                    }
+                                                    @if (Model.IdCamioneta > 0)
+                                                    {
                                                         <div class="row clearfix">
-                                                            <div class="col-sm-1">
-                                                                <div class="form-group">
-                                                                    <div class="input-group">
-                                                                        <strong>Cliente: </strong>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="form-group">
+                                                                <strong>Unidad:  &nbsp;</strong>
                                                             </div>
-                                                            <div class="col-sm-4">
-                                                                <div class="form-group">
-                                                                    <div class="input-group">
-                                                                        @Model.NombreRfc - @Model.Rfc
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-2" style="top:20px">
-                                                                <b></b>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <b>Fecha y hora solicitud:</b>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <div class="input-group">
-                                                                    @Model.FechaRegistroPedido
-                                                                </div>
+                                                            @Html.DevExpress().ComboBox(settings =>
+                                                           {
+                                                               settings.Name = "IdCamioneta";
+                                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(90);
+                                                               settings.SelectedIndex = Model.IdCamioneta;
+                                                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                               settings.Properties.TextField = "Nombre";
+                                                               settings.Properties.ValueField = "IdCamioneta";
+                                                           }).BindList(ViewBag.Camionetas).GetHtml()
+                                                        </div>
+                                                        <div class="row clearfix">
+                                                            <div class="form-group">
+                                                                <strong>Cantidad:  &nbsp;</strong>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <b>Calle:</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Calle
+                                                        <div class="row clearfix">
+                                                            <div class="form-group">
+                                                                <strong>Cilindro(s) de 45 Kg.:  &nbsp;</strong>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <b>Unidad:</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        @Html.DevExpress().ComboBox(settings =>
-                                                                {
-                                                                    settings.Name = "IdCamioneta";
-                                                                    settings.Width = 180;
-                                                                    settings.SelectedIndex = Model.IdCamioneta;
-                                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                                    settings.Properties.TextField = "Nombre";
-                                                                    settings.Properties.ValueField = "IdCamioneta";
-                                                                }).BindList(ViewBag.Camionetas).GetHtml()
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <b>Colonia:</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Colonia
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <b>Cantidad:</b>
-                                                        <div class="input-group">
                                                             @Html.TextBoxFor(model => model.Cantidad45, new { @class = "form-control" })
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-2" style="top:25px">
-                                                        <b>Cilindro(s) de 45 Kg.</b>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <b>Teléfono:</b>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Telefono1
+                                                        <div class="row clearfix">
+                                                            <div class="form-group">
+                                                                <strong>Cilindro(s) de 30 Kg.:  &nbsp;</strong>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <b>Cantidad:</b>
-                                                        <div class="input-group">
                                                             @Html.TextBoxFor(model => model.Cantidad30, new { @class = "form-control" })
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-2" style="top:25px">
-                                                        <b>Cilindro(s) de 30 Kg.</b>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-3">
-                                                        <b>Referencia:</b>
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.ReferenciaUbicacion
+                                                        <div class="row clearfix">
+                                                            <div class="form-group">
+                                                                <strong>Cilindro(s) de 20 Kg.:  &nbsp;</strong>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <b>Cantidad:</b>
-                                                        <div class="input-group">
                                                             @Html.TextBoxFor(model => model.Cantidad20, new { @class = "form-control" })
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-2" style="top:25px">
-                                                        <b>Cilindro(s) de 20 Kg.</b>
-                                                    </div>
+                                                    }
                                                 </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-3">
-                                                    </div>
-                                                    <div class="col-sm-5">
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        @*<b>Hora:</b>*@
-                                                        <div class="input-group">
-                                                            @*<input name="Hora" type="number" class="form-control" />*@
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-1" style="top: 20px;">
-                                                        <div class="input-group">
-                                                            @*<input name="Minutos" type="number" class="form-control" />*@
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @*@Html.DevExpress().RatingControl(settings =>
-                           {
-                               settings.Name = "CalificationRating";
-                               settings.ClientSideEvents.ItemClick = "calificationRating_ItemClick";
-                               settings.ReadOnly = false;
-                               settings.Theme = "Material";
-                           }).Bind(Convert.ToDecimal(Model != null ? Convert.ToInt32(5) : 0)).GetHtml()*@
-                    @*Integer.Parse((string)DataBinder.Eval(c.DataItem, "Value"))*@
-                @*@Html.ValidationMessage("Calification", "", new { @class = "text-danger" })*@
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card">

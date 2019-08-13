@@ -3,7 +3,6 @@
 @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
-        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
         new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
     )
 @Html.DevExpress().GetScripts(
@@ -18,7 +17,36 @@
     if (mensaje != '') {
         $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
     }
-
+    //function selectAll() {
+    //    $('ul li').each(function (i) {
+    //        $(this).attr('rel'); 
+    //    });
+    //}
+    function toggleChecked(status) {
+        $("#checkboxes input").each(function () {           
+            $(this).prop("checked", status);
+        });
+    }
+    function toggleCheckedPipa(status) {
+        $("#checkboxespipa input").each(function () {
+            $(this).prop("checked", status);
+        });
+    }
+    $(document).ready(function () {
+        var checkAllBox = $("#checkall");
+        checkAllBox.prop('checked', true);
+        checkAllBox.click(function () {
+            var status = checkAllBox.prop('checked');
+            toggleChecked(status);
+        });
+        var checkAllBoxPipa = $("#checkallpipa");
+        checkAllBoxPipa.prop('checked', true);
+        checkAllBoxPipa.click(function () {
+            var status = checkAllBoxPipa.prop('checked');
+            toggleCheckedPipa(status);
+        });
+    });
+    
 </script>
 <body>
     <div class="page-loader-wrapper">
@@ -34,7 +62,7 @@
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12">
-                            <h2>Cubo de informacion</h2>
+                            <h2>Cubo de Información</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Reportes</li>
@@ -60,17 +88,19 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <strong>Estaciones</strong>
-                                    <div class="form-group">
+                                    <strong>Pipas</strong>
+                                    <div class="form-group" id="checkboxespipa">
                                         <ul>
+                                            <li style="list-style:none"><input type="checkbox" value="false" class="checkbox" style="width: 20px; height: 20px;" id="checkallpipa" />Todos </li>
                                             @Html.EditorFor(m => m.Pipas)
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <strong>Estaciones</strong>
-                                    <div class="form-group">
+                                    <div class="form-group" id="checkboxes">
                                         <ul>
+                                            <li style="list-style:none"><input type="checkbox" value="false" class="checkbox" style="width: 20px; height: 20px;" id="checkall" />Todos</li>
                                             @Html.EditorFor(m => m.Estaciones)
                                         </ul>
                                     </div>

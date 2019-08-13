@@ -13,77 +13,47 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
     {
         public static ClientesDto ToDTO(Cliente us)
         {
-
-            string nom = "";
-            string apell = "";
-            string apell2 = "";
-            if (us.Nombre == "" || us.Nombre == null || us.Apellido1 == "" || us.Apellido1 == null)
-            {
-                if (us.RepresentanteLegal.Split(' ').Count() == 4)
-                {
-                    nom = us.RepresentanteLegal.Split(' ')[0] + " " + us.RepresentanteLegal.Split(' ')[1];
-                    apell = us.RepresentanteLegal.Split(' ')[2];
-                    apell2 = us.RepresentanteLegal.Split(' ')[3];
-                }
-                else if (us.RepresentanteLegal.Split(' ').Count() == 3)
-                {
-                    nom = us.RepresentanteLegal.Split(' ')[0];
-                    apell = us.RepresentanteLegal.Split(' ')[1];
-                    apell2 = us.RepresentanteLegal.Split(' ')[2];
-                }
-                else if (us.RepresentanteLegal.Split(' ').Count() == 2)
-                {
-                    nom = us.RepresentanteLegal.Split(' ')[0];
-                    apell = us.RepresentanteLegal.Split(' ')[1];
-                }
-            }
-            else
-            {
-                nom = us.Nombre;
-                apell = us.Apellido1;
-                apell2 = us.Apellido2;
-            }
-
+            string nom = ClienteServicio.ObtenerNomreCliente(us);
             ClientesDto usDTO = new ClientesDto()
             {
                 IdCliente = us.IdCliente,
                 IdEmpresa = us.IdEmpresa,
                 IdTipoPersona = us.IdTipoPersona,
                 IdRegimenFiscal = us.IdRegimenFiscal,
-                IdCuentaContable = us.IdCuentaContable,
-                Nombre = nom,//us.Nombre,
-                Apellido1 = apell,// us.Apellido1,
-                Apellido2 = apell2,//us.Apellido2,
+                //IdCuentaContable = us.IdCuentaContable,
+                Nombre = nom.Split(' ')[0],
+                Apellido1 = nom.Split(' ')[1] ?? string.Empty,
+                Apellido2 = nom.Split(' ')[2] ?? string.Empty,
                 DescuentoXKilo = us.DescuentoXKilo,
                 limiteCreditoMonto = us.limiteCreditoMonto,
                 limiteCreditoDias = us.limiteCreditoDias,
-                Telefono1 = us.Telefono1,
-                Telefono2 = us.Telefono2,
-                Telefono3 = us.Telefono3,
-                Celular1 = us.Celular1,
-                Celular2 = us.Celular2,
-                Celular3 = us.Celular3,
-                Email1 = us.Email1,
-                Email2 = us.Email2,
-                Email3 = us.Email3,
-                SitioWeb1 = us.SitioWeb1,
-                SitioWeb2 = us.SitioWeb2,
-                SitioWeb3 = us.SitioWeb3,
-                Usuario = us.Usuario,
-                Password = us.Password,
+                Telefono1 = ClienteServicio.ObtenerTelefono(us),
+                Telefono2 = us.Telefono2 ?? string.Empty,
+                Telefono3 = us.Telefono3 ?? string.Empty,
+                Celular1 = us.Celular1 ?? string.Empty,
+                Celular2 = us.Celular2 ?? string.Empty,
+                Celular3 = us.Celular3 ?? string.Empty,
+                Email1 = us.Email1 ?? string.Empty,
+                Email2 = us.Email2 ?? string.Empty,
+                Email3 = us.Email3 ?? string.Empty,
+                SitioWeb1 = us.SitioWeb1 ?? string.Empty,
+                SitioWeb2 = us.SitioWeb2 ?? string.Empty,
+                SitioWeb3 = us.SitioWeb3 ?? string.Empty,
+                //Usuario = us.Usuario,
+                //Password = us.Password,
                 AccesoPortal = us.AccesoPortal,
                 Rfc = us.Rfc,
-                RazonSocial = us.RazonSocial,
-                RepresentanteLegal = us.RepresentanteLegal,
-                Telefono = us.Telefono,
-                Celular = us.Celular,
-                CorreoElectronico = us.CorreoElectronico,
-                Domicilio = us.Domicilio,
+                RazonSocial = us.RazonSocial ?? nom,
+                RepresentanteLegal = us.RepresentanteLegal ?? string.Empty,
+                Telefono = us.Telefono ?? string.Empty,
+                Celular = us.Celular ?? string.Empty,
+                CorreoElectronico = us.CorreoElectronico ?? string.Empty,
+                Domicilio = us.Domicilio ?? string.Empty,
                 Empresa = us.Empresa.NombreComercial,
                 TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
                 RegimenFiscal = us.RegimenFiscal.Descripcion,
-                Cliente = nom + " " + apell + " " + apell2 + " " + us.Rfc,//us.Nombre + " " + us.Apellido1 + " " + us.Rfc,
-                Locaciones = ClienteServicio.ObtenerLoc(us.IdCliente),
+                Cliente = nom + us.Rfc,
+                EsFijo = us.EsFijo,
             };
             return usDTO;
         }
@@ -92,7 +62,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             List<ClientesDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
-
         public static ClienteLocacionDTO ToDTOL(ClienteLocacion _loc)
         {
             var p = PaisServicio.Obtener(_loc.IdPais);
@@ -129,7 +98,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
             return locDto;
         }
-
         public static ClienteLocacion FromDtox(ClienteLocacionDTO cteDTO)
         {
             return new ClienteLocacion()
@@ -214,9 +182,9 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Activo = true,
                 FechaRegistro = DateTime.Now,
                 VentaExtraordinaria = cteDTO.VentaExtraordinaria,
+                EsFijo = cteDTO.EsFijo,
             };
         }
-
         public static Cliente FromDtoEditar(ClienteCrearDto Ctedto, Cliente catCte)
         {
             var catCliente = FromEntity(catCte);
@@ -252,11 +220,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             if (Ctedto.Celular != null) catCliente.Celular = Ctedto.Celular; else catCliente.Celular = catCliente.Celular;
             if (Ctedto.CorreoElectronico != null) catCliente.CorreoElectronico = Ctedto.CorreoElectronico; else catCliente.CorreoElectronico = catCliente.CorreoElectronico;
             if (Ctedto.Domicilio != null) catCliente.Domicilio = Ctedto.Domicilio; else catCliente.Domicilio = catCliente.Domicilio;
+            catCliente.EsFijo = Ctedto.EsFijo;
             // if (Ctedto.Loca != null) catCliente.Domicilio = Ctedto.Domicilio; else catCliente.Domicilio = catCliente.Domicilio;
 
             return catCliente;
         }
-
         public static ClienteLocacion FromDto(ClienteLocacionDTO Ctedto, ClienteLocacion catCte)
         {
             var catCliente = FromEntityLoc(catCte);
@@ -278,7 +246,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
             return catCliente;
         }
-
         public static List<ClienteLocacionDTO> getLoc(List<ClienteLocacion> inf)
         {
             List<ClienteLocacionDTO> lst = new List<ClienteLocacionDTO>();
@@ -346,7 +313,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 CorreoElectronico = cte.CorreoElectronico,
                 Domicilio = cte.Domicilio,
                 /**************************/
-                Locaciones = cte.Locaciones//getLoc(cte.Locaciones.ToList()),
+                //Locaciones = cte.Locaciones//getLoc(cte.Locaciones.ToList()),
 
                 //Orden = cte
                 //IdPais =

@@ -15,6 +15,10 @@ namespace Application.MainModule.Servicios.Equipo
         {
             return new MantenimientoDetDataAccess().Insertar(entidad);
         }
+        public static RespuestaDto Crear(DetalleMantenimiento entidad, Egreso egreso)
+        {
+            return new MantenimientoDetDataAccess().Insertar(entidad, egreso);
+        }
         public static RespuestaDto Actualizar(DetalleMantenimiento entidad)
         {
             return new MantenimientoDetDataAccess().Actualizar(entidad);

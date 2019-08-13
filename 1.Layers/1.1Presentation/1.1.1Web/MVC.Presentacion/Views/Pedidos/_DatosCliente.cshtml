@@ -1,7 +1,7 @@
 ﻿@Html.DevExpress().ComboBox(settings =>
 {
     settings.Name = "IdCliente";
-    settings.Width = 180;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
     settings.SelectedIndex = 0;
     settings.Properties.DropDownWidth = 550;
     settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
@@ -12,6 +12,7 @@
     settings.Properties.Columns.Add("Nombre", "Nombre", 130);
     settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
     settings.Properties.Columns.Add("Rfc", "RFC", 230);
+    settings.Properties.Columns.Add("Telefono", "Telefono");
 }).GetHtml()
 @*@Html.DevExpress().ComboBox(settings =>
 {

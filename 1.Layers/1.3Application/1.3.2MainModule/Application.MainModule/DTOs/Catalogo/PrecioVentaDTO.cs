@@ -1,4 +1,5 @@
-﻿using Exceptions.MainModule.Validaciones;
+﻿using Application.MainModule.DTOs.Respuesta;
+using Exceptions.MainModule.Validaciones;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -54,5 +55,6 @@ namespace Application.MainModule.DTOs.Catalogo
         public string LineaProducto { get; set; }
         public string Empresa { get; set; }
         public Nullable<short> IdUnidadMedida { get; set; }
+        public RespuestaDto respuesta { get; set; } 
     }
 }

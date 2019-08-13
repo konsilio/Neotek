@@ -129,7 +129,7 @@
                                        {
                                            settings.Name = "cliente.Locacion.IdPais";
                                            settings.Width = 180;
-                                           settings.SelectedIndex = Model.cliente.Locacion.IdPais;
+                                           settings.SelectedIndex = 1;
                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                            settings.Theme = "Material";
@@ -159,7 +159,7 @@
                                        {
                                            settings.Name = "cliente.Locacion.IdEstadoRep";
                                            settings.Width = 180;
-                                           settings.SelectedIndex = Model.cliente.Locacion.IdEstadoRep;
+                                           settings.SelectedIndex = 12;
                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                            settings.Theme = "Material";
@@ -395,9 +395,9 @@
                                         <div class="form-group">
                                             @if (Model.cliente != null)
                                             {
-                                                if (Model.cliente.Locaciones.Count > 0)                                              
+                                                if (Model.cliente.Locaciones.Count > 0)
                                                 {
-                                                    <input type="submit" value="Finalizar" formaction=@Url.Action("Nuevo", new { id = Model.IdCliente }) class="btn btn-raised btn-round btn-primary float-right" />
+                                                    <input type="submit" value="Continuar" formaction="Terminar" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
                                                 }
                                             }
                                         </div>

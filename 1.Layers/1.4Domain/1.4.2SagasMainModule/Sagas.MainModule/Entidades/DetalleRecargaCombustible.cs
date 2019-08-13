@@ -25,7 +25,9 @@ namespace Sagas.MainModule.Entidades
         public int IdTipoCombustible { get; set; }
         public System.DateTime FechaRecarga { get; set; }
         public Nullable<decimal> Monto { get; set; }
+        public int IdCuentaContable { get; set; }
     
         public virtual CCombustible CCombustible { get; set; }
+        public virtual CuentaContable CCuentaContable { get; set; }
     }
 }

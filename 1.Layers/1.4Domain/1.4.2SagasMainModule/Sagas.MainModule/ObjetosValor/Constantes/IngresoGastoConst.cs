@@ -13,5 +13,8 @@ namespace Sagas.MainModule.ObjetosValor.Constantes
 
         public const string EgresoCompra = "Egreso por Compra";
         public const string EgresoCompraExterna = "Egreso externo";
+
+        public const string EgresoMantenimiento = "Egreso por mantenimiento";
+        public const string EgresoRecarga = "Egreso por recarga de combustible";
     }
 }

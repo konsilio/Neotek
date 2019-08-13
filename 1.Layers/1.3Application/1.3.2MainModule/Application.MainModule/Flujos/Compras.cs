@@ -1,6 +1,6 @@
-﻿//using Application.MainModule.AdaptadoresDTO.Almacenes;
-using Application.MainModule.AdaptadoresDTO.Compras;
+﻿using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.Mobile;
+using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
@@ -61,9 +61,7 @@ namespace Application.MainModule.Flujos
 
             var Prods = BuscarRequisicion(oc.IdRequisicion).ProductosOC;
             if (Prods.Count != oc.Productos.Count) return OrdenCompraServicio.NoSeAsignoValorATotosLosProductos();
-
             //oc.Productos = OrdenCompraServicio.AsignarNuevos(oc)
-
             List<OrdenCompra> locDTO = OrdenCompraServicio.IdentificarOrdenes(oc);
             locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
             locDTO = CalcularOrdenCompraServicio.CalcularTotales(locDTO);
@@ -174,7 +172,7 @@ namespace Application.MainModule.Flujos
                     var entity = OrdenComprasAdapter.FromEntity(oc);
                     lOC.Add(entity);
 
-                    var prodsEntity = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(p.IdOrdenCompra));
+                    var prodsEntity      = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(p.IdOrdenCompra));
                     var prodOC = ProductosOCAdapter.FromDTO(listDTO);
                     lOCP = OrdenCompraServicio.AplicarCambiosOrdenCompraProducto(prodOC, prodsEntity);
                 }                
@@ -249,7 +247,6 @@ namespace Application.MainModule.Flujos
             var entity = OrdenCompraPagoAdapter.FromEntity(Pago);
             var oc = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(entity.IdOrdenCompra));
 
-
             entity.PhysicalPathCapturaPantalla = dto.PhysicalPathCapturaPantalla;
             entity.UrlPathCapturaPantalla = dto.UrlPathCapturaPantalla;
             entity.FechaConfirmacion = Convert.ToDateTime(DateTime.Now.ToShortDateString());
@@ -259,7 +256,10 @@ namespace Application.MainModule.Flujos
             entity.SaldoInsoluto = oc.Total.Value - dto.MontoPagado;
 
             oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
-            return OrdenCompraPagoServicio.Actualiza(entity, oc);
+
+            var req = RequisicionAdapter.FromEntity(RequisicionServicio.Buscar(oc.IdRequisicion));
+            req.IdRequisicionEstatus = RequisicionEstatusEnum.Autorizacion_finalizada;
+            return OrdenCompraPagoServicio.Actualiza(entity, oc, req);
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
         {

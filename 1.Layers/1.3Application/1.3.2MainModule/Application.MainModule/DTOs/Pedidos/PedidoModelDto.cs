@@ -31,6 +31,7 @@ namespace Application.MainModule.DTOs.Pedidos
         public string NombreRfc { get; set; }      
         public int IdPipa { get; set; }       
         public int IdCamioneta { get; set; }
+        public string Telefono { get; set; }
         public string ReferenciaUbicacion { get; set; }
         public DateTime FechaRegistroPedido { get; set; }
         public DateTime FechaEntregaPedido { get; set; }

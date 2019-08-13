@@ -23,7 +23,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Precio = 0,
                 Importe = 0,
                 ImporteCredito = 0,
-                
+
             };
         }
 
@@ -32,8 +32,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new LecturaAlmacenDto()
             {
                 IdTipoMedidor = linicial.IdTipoMedidor.Value,
-                ClaveOperacion = linicial.ClaveOperacion,
-                PorcentajeP5000 = linicial.P5000.Value,
+                ClaveProceso = linicial.ClaveOperacion,
+                CantidadP5000 = linicial.P5000.Value,
                 PorcentajeMedidor = linicial.Porcentaje.Value,
                 IdEstacionCarburacion = linicial.IdCAlmacenGas
             };
@@ -56,18 +56,18 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public ReporteDelDia FormDto(ReporteDiaDTO reporte,OperadorChoferDTO operador,PuntoVenta puntoVenta)
+        public ReporteDelDia FormDto(ReporteDiaDTO reporte, OperadorChoferDTO operador, PuntoVenta puntoVenta)
         {
-            
+
             return new ReporteDelDia()
             {
-                IdCAlmacenGas = (short) reporte.IdCAlmacenGas,
+                IdCAlmacenGas = (short)reporte.IdCAlmacenGas,
                 LitrosVenta = reporte.LitrosVenta,
                 ImporteContado = reporte.Importe,
                 PuntoVenta = reporte.NombreCAlmacen,
                 IdOperadorChofer = operador.IdOperadorChofer,
-                OperadorChofer = operador.Nombre+" "+operador.Apellido1+" "+operador.Apellido2,
-                IdEmpresa =operador.IdEmpresa,
+                OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2,
+                IdEmpresa = operador.IdEmpresa,
                 IdPuntoVenta = puntoVenta.IdPuntoVenta,
                 ImporteCredito = reporte.ImporteCredito,
                 KilosVenta = reporte.KilosDeVenta,
@@ -82,7 +82,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="resp">Entidad con el reporte encontrado</param>
         /// <param name="almacen">Unidad Almnacen gas en este caso la camioneta </param>
         /// <returns>Objeto de tipo ReporteDiaDTo con los datos encontrados </returns>
-        public static ReporteDiaDTO ToDtoCamioneta(ReporteDelDia resp, UnidadAlmacenGas almacen,ICollection<AlmacenGasTomaLecturaCilindro> cilindrosInicial, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosFinal, AlmacenGasTomaLectura inicial, AlmacenGasTomaLectura final, List<OtrasVentasDto>  otrasVentas, List<VentaPuntoDeVenta> ventasContado, List<VentaPuntoDeVenta> ventasCredito)
+        public static ReporteDiaDTO ToDtoCamioneta(ReporteDelDia resp, UnidadAlmacenGas almacen, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosInicial, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosFinal, AlmacenGasTomaLectura inicial, AlmacenGasTomaLectura final, List<OtrasVentasDto> otrasVentas, List<VentaPuntoDeVenta> ventasContado, List<VentaPuntoDeVenta> ventasCredito)
         {
             return new ReporteDiaDTO()
             {
@@ -90,6 +90,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Importe = resp.ImporteContado ?? 0,
                 IdCAlmacenGas = resp.IdCAlmacenGas ?? 0,
                 NombreCAlmacen = almacen.Camioneta.Nombre,
+                Estacion = almacen.Camioneta.Nombre,
                 ClaveReporte = resp.FolioOperacionDia,
                 Precio = resp.PrecioLt ?? 0,
                 LitrosVenta = resp.LitrosVenta ?? 0,
@@ -99,7 +100,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Error = false,
                 Mensaje = "Exito",
                 EsCamioneta = true,
-                Tanques = ToDTO(cilindrosInicial,cilindrosFinal),
+                Tanques = ToDTO(cilindrosInicial, cilindrosFinal),
                 OtrasVentas = otrasVentas
 
             };
@@ -121,6 +122,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Importe = resp.ImporteContado ?? 0,
                 IdCAlmacenGas = resp.IdCAlmacenGas ?? 0,
                 NombreCAlmacen = almacen.EstacionCarburacion.Nombre,
+                Estacion = almacen.EstacionCarburacion.Nombre,
                 ClaveReporte = resp.FolioOperacionDia,
                 Precio = resp.PrecioLt ?? 0,
                 LitrosVenta = resp.LitrosVenta ?? 0,
@@ -145,13 +147,14 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new ReporteDiaDTO()
             {
-                ImporteCredito = resp.ImporteCredito??0,
-                Importe = resp.ImporteContado??0,
-                IdCAlmacenGas = resp.IdCAlmacenGas??0,
+                ImporteCredito = resp.ImporteCredito ?? 0,
+                Importe = resp.ImporteContado ?? 0,
+                IdCAlmacenGas = resp.IdCAlmacenGas ?? 0,
                 NombreCAlmacen = almacen.Pipa.Nombre,
+                Estacion = almacen.Pipa.Nombre,
                 ClaveReporte = resp.FolioOperacionDia,
-                Precio = resp.PrecioLt??0,
-                LitrosVenta = resp.LitrosVenta??0,
+                Precio = resp.PrecioLt ?? 0,
+                LitrosVenta = resp.LitrosVenta ?? 0,
                 Fecha = resp.FechaReporte,
                 LecturaInicial = ToDTO(inicial),
                 LecturaFinal = ToDTO(final),
@@ -179,9 +182,10 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 LecturaInicial = ToDTO(lectInicial),
                 LecturaFinal = ToDTO(lectFinal),
                 IdCAlmacenGas = almacen.IdCAlmacenGas,
-                Importe = ventasContado.Sum(x=>x.Total),
-                ImporteCredito = ventasCredito.Sum(x=>x.Total),
+                Importe = ventasContado.Sum(x => x.Total),
+                ImporteCredito = ventasCredito.Sum(x => x.Total),
                 NombreCAlmacen = almacen.Pipa.Nombre,
+                Estacion = almacen.Pipa.Nombre,
                 Medidor = TipoMedidorAdapter.ToDto(almacen.Medidor)
 
             };
@@ -196,12 +200,12 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new LecturaAlmacenDto()
             {
-                ClaveOperacion = lectura.ClaveOperacion,
-                IdTipoMedidor = lectura.IdTipoMedidor??0,
+                ClaveProceso = lectura.ClaveOperacion,
+                IdTipoMedidor = lectura.IdTipoMedidor ?? 0,
                 IdEstacionCarburacion = lectura.IdCAlmacenGas,
-                PorcentajeMedidor = lectura.Porcentaje??0,
-                PorcentajeP5000 = lectura.P5000??0,
-               
+                PorcentajeMedidor = lectura.Porcentaje ?? 0,
+                CantidadP5000 = lectura.P5000 ?? 0,
+
             };
         }
         /// <summary>
@@ -226,22 +230,21 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Importe = ventasContado.Sum(x => x.Total),
                 ImporteCredito = ventasCredito.Sum(x => x.Total),
                 NombreCAlmacen = almacen.EstacionCarburacion.Nombre,
+                Estacion = almacen.EstacionCarburacion.Nombre,
                 Medidor = TipoMedidorAdapter.ToDto(almacen.Medidor)
 
             };
         }
-
-        public static ReporteDiaDTO ToDtoCamioneta(UnidadAlmacenGas almacen, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosInicial, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosFinal, List<VentaPuntoDeVenta> ventasContado, List<VentaPuntoDeVenta> ventasCredito,
-            AlmacenGasTomaLectura inicial, AlmacenGasTomaLectura final)
+        public static ReporteDiaDTO ToDtoCamioneta(UnidadAlmacenGas almacen, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosInicial, ICollection<AlmacenGasTomaLecturaCilindro> cilindrosFinal, List<VentaPuntoDeVenta> ventasContado, List<VentaPuntoDeVenta> ventasCredito, AlmacenGasTomaLectura inicial, AlmacenGasTomaLectura final)
         {
             return new ReporteDiaDTO()
             {
                 Medidor = TipoMedidorAdapter.ToDto(almacen.Medidor),
                 Importe = ventasContado.Sum(x => x.Total),
-                ImporteCredito = ventasCredito.Sum(x=>x.Total),
-                 LecturaInicial = ToDTO(inicial),
-                 LecturaFinal = ToDTO(final),
-                 Tanques = ToDTO(cilindrosInicial,cilindrosFinal)
+                ImporteCredito = ventasCredito.Sum(x => x.Total),
+                LecturaInicial = ToDTO(inicial),
+                LecturaFinal = ToDTO(final),
+                Tanques = ToDTO(cilindrosInicial, cilindrosFinal)
 
             };
         }
@@ -256,17 +259,16 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             var cilindroFinal = cilindrosFinal.Where(x => x.IdCilindro.Equals(cilindro.IdCilindro)).First();
             decimal FINAL = 0;
 
-            if (cilindroFinal != null) { 
+            if (cilindroFinal != null)
                 FINAL = cilindro.Cantidad - cilindroFinal.Cantidad;
-            }else
-            {
+            else
                 FINAL = cilindroFinal.Cantidad;
-            }
             return new TanquesDto()
             {
-                NombreTanque = cilindro.Cilindro.CapacidadKg.ToString() + "KG",
+                NombreTanque = cilindro.Cilindro.CapacidadKg.ToString() + " KG",
+                Tanques = string.Concat(Math.Truncate(cilindro.Cilindro.CapacidadKg).ToString(), " KG"),
                 Normal = cilindro.Cantidad,
-                Venta =  FINAL
+                Venta = FINAL
             };
         }
 
@@ -274,19 +276,18 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new ReporteDelDia()
             {
-                 FolioOperacionDia = reporteDTO.ClaveReporte,
-                 Dia = (byte)reporteDTO.Fecha.Day,
-                 Mes = (byte)reporteDTO.Fecha.Month,
-                 Year = (short) reporteDTO.Fecha.Year,
-                 FechaRegistro = reporteDTO.Fecha,
-                 FechaReporte = reporteDTO.Fecha,
-                 IdCAlmacenGas = (short)reporteDTO.IdCAlmacenGas,
-                 LitrosVenta = reporteDTO.LitrosVenta,
-                 KilosVenta = reporteDTO.KilosDeVenta,
-                 ImporteContado = reporteDTO.Importe,
-                 ImporteCredito = reporteDTO.ImporteCredito,
-                 Total = reporteDTO.Importe + reporteDTO.ImporteCredito,
-
+                FolioOperacionDia = reporteDTO.ClaveReporte,
+                Dia = (byte)reporteDTO.Fecha.Day,
+                Mes = (byte)reporteDTO.Fecha.Month,
+                Year = (short)reporteDTO.Fecha.Year,
+                FechaRegistro = reporteDTO.Fecha,
+                FechaReporte = reporteDTO.Fecha,
+                IdCAlmacenGas = (short)reporteDTO.IdCAlmacenGas,
+                LitrosVenta = reporteDTO.LitrosVenta,
+                KilosVenta = reporteDTO.KilosDeVenta,
+                ImporteContado = reporteDTO.Importe,
+                ImporteCredito = reporteDTO.ImporteCredito,
+                Total = reporteDTO.Importe + reporteDTO.ImporteCredito,
             };
         }
     }

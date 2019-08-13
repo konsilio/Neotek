@@ -22,6 +22,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Activo = ec.Activo,
                 EsForaneo = ec.EsForaneo,
                 FechaRegistro = DateTime.Now,
+                Serie = string.Concat("P", ec.Descripcion),
+                Folio = 0,
             };
         }
         public static Pipa FromEntity(Pipa ec)

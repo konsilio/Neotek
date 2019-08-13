@@ -26,11 +26,11 @@
         if (mensaje != '') {
             $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
         }
-        var idCliente = '@Model.IdCliente';
+        @*var idCliente = '@Model.IdCliente';
         if (idCliente > 0) {
             $('#btnBuscarC').click();
-        }
-      
+        }*@
+
     </script>
 </head>
 <body style="height:100%">
@@ -109,21 +109,45 @@
                                                 <div class="col-sm-3">
                                                     <b>Cliente:</b>
                                                     @*@Html.Partial("_DatosCliente")*@
-                                                    @Html.DevExpress().ComboBox(settings =>
-                                               {
-                                                   settings.Name = "IdCliente";
-                                                   settings.Width = 180;
-                                                   settings.SelectedIndex = 0;
-                                                   settings.Properties.DropDownWidth = 550;
-                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
-                                                   settings.Properties.CallbackPageSize = 30;
-                                                   // settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                   settings.Properties.TextFormatString = "{0}";
-                                                   settings.Properties.ValueType = typeof(int);
-                                                   settings.Properties.Columns.Add("Nombre", "Nombre", 130);
-                                                   settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
-                                                   settings.Properties.Columns.Add("Rfc", "RFC", 230);
-                                               }).GetHtml()
+                                                    @if (ViewBag.ListaCliente != null)
+                                                    {
+                                                        Html.DevExpress().ComboBox(settings =>
+                                                        {
+                                                            settings.Name = "IdCliente";
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            //settings.SelectedIndex = 0;
+                                                            settings.Properties.DropDownWidth = 650;
+                                                            settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                                                            settings.Properties.CallbackPageSize = 30;
+                                                            settings.Properties.TextFormatString = "{0} {1}";
+                                                            settings.Properties.ValueField = "IdCliente";
+                                                            settings.Properties.ValueType = typeof(int);                                                           
+                                                            settings.Properties.Columns.Add("Nombre", "Nombre", 130);
+                                                            settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
+                                                            settings.Properties.Columns.Add("Rfc", "RFC", 230);
+                                                            settings.Properties.Columns.Add("Telefono", "Telefono", 100);                                                       
+                                                        }).BindList(ViewBag.ListaCliente).Bind(Model.IdCliente).GetHtml();
+                                                    }
+                                                    else
+                                                    {
+                                                        Html.DevExpress().ComboBox(settings =>
+                                                        {
+                                                            settings.Name = "IdCliente";
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.SelectedIndex = 0;
+                                                            settings.Properties.DropDownWidth = 650;
+                                                            settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                                                            settings.Properties.CallbackPageSize = 30;
+                                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                            settings.Properties.TextFormatString = "{0} {1}";
+                                                            settings.Properties.ValueType = typeof(int);
+                                                            settings.Properties.Columns.Add("Nombre", "Nombre", 130);
+                                                            settings.Properties.Columns.Add("Apellido1", "Apellido", 130);
+                                                            settings.Properties.Columns.Add("Rfc", "RFC", 230);
+                                                            settings.Properties.Columns.Add("Telefono", "Telefono", 100);
+                                                        }).GetHtml();
+                                                    }
+
                                                 </div>
                                                 <div class="col-sm-2" style="top: 10px;">
                                                     <div class="form-group">
@@ -133,22 +157,23 @@
                                                 <div class="col-sm-3">
                                                     <b>Fecha:</b>
                                                     <div class="container">
-                                                        <div class="editor">
-                                                            @Html.DevExpress().DateEdit(settings =>
-                                                       {
-                                                           settings.Name = "FechaPedido";
-                                                           settings.Properties.UseMaskBehavior = true;
-                                                           settings.Theme = "Office365";
-                                                           settings.Properties.EditFormat = EditFormat.Custom;
-                                                           settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
-                                                           settings.Properties.TimeSectionProperties.Visible = true;
-                                                           settings.Properties.TimeSectionProperties.Adaptive = true;
-                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
-                                                           settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
-                                                           settings.Date = DateTime.Now;
-                                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                                       }).GetHtml()
+                                                        <div class="editor">                                                       
+                                                           
+                                                                @Html.DevExpress().DateEdit(settings =>
+                                                           {
+                                                               settings.Name = "FechaPedido";
+                                                               settings.Properties.UseMaskBehavior = true;
+                                                               settings.Theme = "Office365";                                                              
+                                                               settings.Properties.EditFormat = EditFormat.Custom;
+                                                               settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm tt";
+                                                               settings.Properties.TimeSectionProperties.Visible = true;
+                                                               settings.Properties.TimeSectionProperties.Adaptive = true;
+                                                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormat = EditFormat.Custom;
+                                                               settings.Properties.TimeSectionProperties.TimeEditProperties.EditFormatString = "hh:mm tt";
+                                                               settings.Date = DateTime.Now;
+                                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                               settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                                           }).GetHtml()                                                       
                                                         </div>
                                                         @Html.ValidationMessageFor(m => m.FechaPedido, "", new { @class = "alert-danger" })
                                                     </div>
@@ -158,22 +183,44 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Domicilio:</b>
-                                                    @*@Html.Partial("_LocacionesCliente")*@
-                                                    @Html.DevExpress().ComboBox(settings =>
-                                               {
-                                                   settings.Name = "Orden";
-                                                   settings.Width = 180;
-                                                   settings.SelectedIndex = 0;
-                                                   settings.Properties.DropDownWidth = 550;
-                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
-                                                   settings.Properties.CallbackPageSize = 30;
-                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                   settings.Properties.TextFormatString = "{0}";
-                                                   settings.Properties.ValueType = typeof(int);
-                                                   settings.Properties.Columns.Add("Calle", "Calle", 130);
-                                                   settings.Properties.Columns.Add("NumExt", "NumExt", 130);
-                                                   settings.Properties.Columns.Add("Colonia", "Colonia", 230);
-                                               }).GetHtml()
+                                                    @if (ViewBag.ListaDomicilios != null)
+                                                    {
+                                                        Html.DevExpress().ComboBox(settings =>
+                                                        {
+                                                            settings.Name = "Orden";
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.Properties.DropDownWidth = 650;
+                                                            settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                                                            settings.Properties.CallbackPageSize = 30;
+                                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                            settings.Properties.TextFormatString = "{0}";
+                                                            settings.Properties.ValueField = "Orden";
+                                                            settings.Properties.ValueType = typeof(int);
+                                                            settings.Properties.Columns.Add("Calle", "Calle", 150);
+                                                            settings.Properties.Columns.Add("NumExt", "NumExt", 100);
+                                                            settings.Properties.Columns.Add("Colonia", "Colonia", 150);
+                                                            settings.Properties.Columns.Add("formatted_address", "Referencia", 250);
+                                                        }).BindList(ViewBag.ListaDomicilios).GetHtml();
+                                                    }
+                                                    else
+                                                    {
+                                                        Html.DevExpress().ComboBox(settings =>
+                                                        {
+                                                            settings.Name = "Orden";
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.SelectedIndex = 0;
+                                                            settings.Properties.DropDownWidth = 700;
+                                                            settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                                                            settings.Properties.CallbackPageSize = 30;
+                                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                            settings.Properties.TextFormatString = "{0}";
+                                                            settings.Properties.ValueType = typeof(int);
+                                                            settings.Properties.Columns.Add("Calle", "Calle", 300);
+                                                            settings.Properties.Columns.Add("NumExt", "NumExt", 100);
+                                                            settings.Properties.Columns.Add("Colonia", "Colonia", 150);
+                                                            settings.Properties.Columns.Add("formatted_address", "Referencia", 300);
+                                                        }).GetHtml();
+                                                    }
                                                 </div>
 
                                                 <div class="col-sm-4">
@@ -197,24 +244,24 @@
                                                     <b>Estatus pedido:</b>
                                                     @Html.DevExpress().ComboBox(settings =>
                                                {
-                                                   settings.Name = "IdEstatusPedido";
-                                                   settings.Width = 180;
-                                                   settings.SelectedIndex = 0;
-                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                                   //dxeListBoxItem_Material itemst dxeListBoxItemSelected_Material
-                                                   settings.Properties.ItemStyle.SelectedStyle.CssClass = "ddlSelect";
-                                                   settings.Properties.ButtonStyle.CssClass = "ddlbtn";
-                                                   settings.Properties.ButtonStyle.Cursor = "pointer";
-                                                   settings.Properties.ButtonStyle.HoverStyle.CssClass = "btnhover";
-                                                   settings.Theme = "Material";
-                                                   //settings.Properties.DropDownHeight =25; altura listbox desplegable
-                                                   settings.ControlStyle.CssClass = "devExpressDropDown";
-                                                   settings.Properties.CaptionStyle.CssClass = "BoldCaption";
-                                                   settings.Properties.ItemStyle.CssClass = "itemst";
-                                                   settings.Properties.TextField = "Descripcion";
-                                                   settings.Properties.ValueField = "IdEstatusPedido";
-                                               }).BindList(ViewBag.Estatus).GetHtml()
+                                                            settings.Name = "IdEstatusPedido";
+                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                            settings.SelectedIndex = 0;
+                                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                            //dxeListBoxItem_Material itemst dxeListBoxItemSelected_Material
+                                                            settings.Properties.ItemStyle.SelectedStyle.CssClass = "ddlSelect";
+                                                            settings.Properties.ButtonStyle.CssClass = "ddlbtn";
+                                                            settings.Properties.ButtonStyle.Cursor = "pointer";
+                                                            settings.Properties.ButtonStyle.HoverStyle.CssClass = "btnhover";
+                                                            settings.Theme = "Material";
+                                                            //settings.Properties.DropDownHeight =25; altura listbox desplegable
+                                                            settings.ControlStyle.CssClass = "devExpressDropDown";
+                                                            settings.Properties.CaptionStyle.CssClass = "BoldCaption";
+                                                            settings.Properties.ItemStyle.CssClass = "itemst";
+                                                            settings.Properties.TextField = "Descripcion";
+                                                            settings.Properties.ValueField = "IdEstatusPedido";
+                                                        }).BindList(ViewBag.Estatus).GetHtml()
                                                 </div>
                                             </div>
                                             @Html.ValidationMessageFor(m => m.TipoUnidad, "", new { @class = "alert-danger" })
@@ -232,7 +279,7 @@
                                                 </div>
                                                 <div class="col-sm-1" style="top: 22px;">
                                                     <div class="form-group">
-                                                        kg.
+                                                        Lts.
                                                     </div>
                                                 </div>
                                             </div>
@@ -281,11 +328,12 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="submit" value="Cancelar" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                <input type="button" value="Cancelar" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
                                             <div class="form-group">
                                                 @*id="altaPedido"*@
-                                            <input type="submit" value="Crear pedido" formaction=@Url.Action("CrearPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                                                <input type="submit" value="Crear pedido" formaction=@Url.Action("CrearPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -294,8 +342,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
         <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">

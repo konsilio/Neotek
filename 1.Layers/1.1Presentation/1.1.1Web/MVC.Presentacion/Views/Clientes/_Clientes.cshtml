@@ -1,0 +1,53 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Clientes";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Clientes",
+            Action = "GridClientes"
+        };
+        settings.KeyFieldName = "IdCliente";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdCliente";
+            c.Caption = "ID";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        });
+        settings.Columns.Add("TipoPersonaFiscal", "Tipo Persona");
+        settings.Columns.Add("RazonSocial", "Nombre / Razón social");
+        settings.Columns.Add("Rfc", "RFC");
+        settings.Columns.Add("limiteCreditoMonto", "Credito Monto");
+        settings.Columns.Add("limiteCreditoDias", "Crédito Dias");
+        settings.Columns.Add("DescuentoXKilo", "Descuento");
+        settings.Columns.Add("Celular", "Celular");
+        settings.Columns.Add("Telefono1", "Teléfono");
+        settings.Columns.Add("Email1", "E-mail");
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("EditarCliente", new { id = d.KeyValue }) + "><i class='material-icons'>edit</i> <span class='icon-name'></span></a>"));
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("EditarLocaciones", new { id = d.KeyValue }) + "><i class='material-icons'>edit_location</i> <span class='icon-name'></span></a>"));
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("BorrarClientes", new { id = d.KeyValue }) + "><i class='material-icons'>delete</i> <span class='icon-name'></span></a>"));
+            });
+        });
+    });
+}
+@grid.Bind(Model).GetHtml()
