@@ -264,7 +264,7 @@ namespace Application.MainModule.Flujos
         public AdministracionDTO DashAdministracionVentaVSRema()
         {
             AdministracionDTO dto = new AdministracionDTO();
-
+            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
             var remaDTO = AlmacenGasServicio.BusquedaGeneralPeriodoActual();
             var remanente = new Almacenes().ConsultarRemanenteGeneral(remaDTO);
 

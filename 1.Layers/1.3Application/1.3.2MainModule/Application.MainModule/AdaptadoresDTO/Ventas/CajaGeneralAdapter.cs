@@ -1016,9 +1016,9 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             return new DTOs.RepCorteCajaDTO()
             {
                 Descripcion = CajaGeneralConst.NombreRepoVentaPipas,
-                Cantidad = Convert.ToDouble(entidadVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadKg))),
+                Cantidad = Convert.ToDouble(entidadVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadLt))),
                 TotalVenta = Convert.ToDouble(entidadVenta.Sum(x => x.Total)),
-                Unidad = "Kg",
+                Unidad = "Lts",
             };
         }
         public static DTOs.RepCorteCajaDTO ToRepoCorteCajaCredito(List<Abono> entidadVenta)
