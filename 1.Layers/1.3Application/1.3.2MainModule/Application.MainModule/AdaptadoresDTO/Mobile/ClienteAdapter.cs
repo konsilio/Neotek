@@ -20,20 +20,19 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Celular = cliente.Celular,
                 Celular1 = cliente.Celular,
                 Celular2 = cliente.Celular,
-                Celular3 =cliente.Celular,
+                Celular3 = cliente.Celular,
                 Telefono = cliente.TelefonoFijo,
-                Telefono1 =cliente.TelefonoFijo,
+                Telefono1 = cliente.TelefonoFijo,
                 Telefono2 = cliente.TelefonoFijo,
                 Rfc = cliente.RFC,
                 IdTipoPersona = cliente.IdTipoPersona,
                 IdRegimenFiscal = cliente.IdTipoRegimen,
-                RazonSocial = cliente.RazonSocial,                
+                RazonSocial = cliente.RazonSocial,
             };
         }
 
         public static DatosClientesDto FromDTO(List<Cliente> clientes)
         {
-           
             List<ClienteDTO> list = new List<ClienteDTO>();
             foreach (var cliente in clientes)
             {
@@ -50,19 +49,19 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new ClienteDTO()
             {
                 IdCliente = cliente.IdCliente,
-                Nombre = cliente.Nombre != null ? cliente.Nombre : string.Empty,
-                RazonSocial = (cliente.RazonSocial != null) ? cliente.RazonSocial : string.Empty,
-                Apellido1 = cliente.Apellido1 != null ? cliente.Apellido1 : string.Empty,
-                Apellido2 = cliente.Apellido2 != null ? cliente.Apellido2 : string.Empty,
-                TelefonoFijo = cliente.Telefono != null ? cliente.Telefono : string.Empty,
-                Celular = cliente.Celular != null ? cliente.Celular : string.Empty,
+                Nombre = cliente.Nombre ?? string.Empty,
+                RazonSocial = cliente.RazonSocial ?? string.Empty,
+                Apellido1 = cliente.Apellido1 ?? string.Empty,
+                Apellido2 = cliente.Apellido2 ?? string.Empty,
+                TelefonoFijo = cliente.Telefono ?? string.Empty,
+                Celular = cliente.Celular ?? string.Empty,
                 IdTipoRegimen = cliente.IdRegimenFiscal ?? 0,
                 IdTipoPersona = cliente.IdTipoPersona ?? 0,
-                RFC = cliente.Rfc.Trim(),
+                RFC = cliente.Rfc ?? string.Empty,
                 Credito = (cliente.limiteCreditoDias > 0 && cliente.limiteCreditoMonto > 0) ? true : false,
-                Factura = (cliente.Rfc.Trim()!="")? true:false,
+                Factura = (cliente.Rfc.Trim() != string.Empty) ? true : false,
                 LimiteCredito = cliente.limiteCreditoMonto
             };
-        }     
+        }
     }
 }

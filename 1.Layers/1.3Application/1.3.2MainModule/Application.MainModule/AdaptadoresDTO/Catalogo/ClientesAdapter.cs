@@ -27,7 +27,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 DescuentoXKilo = us.DescuentoXKilo,
                 limiteCreditoMonto = us.limiteCreditoMonto,
                 limiteCreditoDias = us.limiteCreditoDias,
-                Telefono1 = us.Telefono.Equals(string.Empty) ? us.Telefono1.Equals(string.Empty) ? us.Celular:us.Telefono1 : us.Telefono,
+                Telefono1 = ClienteServicio.ObtenerTelefono(us),
                 Telefono2 = us.Telefono2 ?? string.Empty,
                 Telefono3 = us.Telefono3 ?? string.Empty,
                 Celular1 = us.Celular1 ?? string.Empty,
@@ -45,9 +45,9 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Rfc = us.Rfc,
                 RazonSocial = us.RazonSocial ?? nom,
                 RepresentanteLegal = us.RepresentanteLegal ?? string.Empty,
-                Telefono = us.Telefono ?? us.Telefono1,
-                Celular = us.Celular ?? us.Celular1,
-                CorreoElectronico = us.CorreoElectronico ?? us.Email1,
+                Telefono = us.Telefono ?? string.Empty,
+                Celular = us.Celular ?? string.Empty,
+                CorreoElectronico = us.CorreoElectronico ?? string.Empty,
                 Domicilio = us.Domicilio ?? string.Empty,
                 Empresa = us.Empresa.NombreComercial,
                 TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
@@ -313,7 +313,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 CorreoElectronico = cte.CorreoElectronico,
                 Domicilio = cte.Domicilio,
                 /**************************/
-               //Locaciones = cte.Locaciones//getLoc(cte.Locaciones.ToList()),
+                //Locaciones = cte.Locaciones//getLoc(cte.Locaciones.ToList()),
 
                 //Orden = cte
                 //IdPais =
