@@ -14,8 +14,7 @@ namespace Application.MainModule.Servicios.Mobile
             var tpersona = TipoPersonaServicio.ListaTipoPersona();
             var tregimen = RegimenServicio.ListaRegimen();
             //var puntoventa = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-            return TipoPersonaAdapter.ToDto(tpersona,tregimen);
-            
+            return TipoPersonaAdapter.ToDto(tpersona,tregimen);            
         }
 
         public static ClienteDTO EvaluarCliente(ClienteDTO cliente)

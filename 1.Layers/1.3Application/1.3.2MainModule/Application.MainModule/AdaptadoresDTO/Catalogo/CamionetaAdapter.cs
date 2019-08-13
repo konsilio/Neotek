@@ -23,6 +23,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Activo = true,
                 EsForaneo = ec.EsForaneo,
                 FechaRegistro = DateTime.Now,
+                Serie = ec.Serie,
+                Folio = ec.Folio,
             };
         }
         public static Camioneta FromEntity(Camioneta ec)
@@ -51,6 +53,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Activo = ec.Activo,
                 EsForaneo = ec.EsForaneo,
                 FechaRegistro = DateTime.Now,
+                Folio = 0,
+                Serie = "C",
             };
         }
 

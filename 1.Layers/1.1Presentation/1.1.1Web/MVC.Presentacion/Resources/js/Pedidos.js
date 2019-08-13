@@ -14,7 +14,7 @@
               //  $('#btnCrearCte').prop('disabled', true);
                 $.each(JSON.parse(data), function (key, val) {
                     //IdCliente.AddItem(val.Nombre, val.IdCliente)
-                    IdCliente.AddItem([val.Nombre, val.Apellido1, val.Rfc], val.IdCliente)
+                    IdCliente.AddItem([val.Nombre, val.Apellido1, val.Rfc, val.Telefono], val.IdCliente)
                 });
                 $(window).on("load", showNotification('alert-success', 'Seleccione el cliente', 'top', 'center', '', ''));
             }
@@ -29,7 +29,7 @@
             var x = data;
             if (data != "[]") {
                 $.each(JSON.parse(data), function (key, val) {
-                    Orden.AddItem([val.Calle, val.NumExt, val.Colonia], val.Orden)
+                    Orden.AddItem([val.Calle, val.NumExt, val.Colonia, val.formatted_address], val.Orden)
                 });
             }
             //else {
@@ -50,9 +50,6 @@ function OnSelectedChange(s, e) {
         $("#Cantidad45").val(0);
         $("#Cantidad30").val(0);
         $("#Cantidad20").val(0);
-        //Cantidad45.value = 0;
-        //Cantidad30.value = 0;
-        //Cantidad20.value = 0;
     }
     if (value == 2)//Camioneta
     {

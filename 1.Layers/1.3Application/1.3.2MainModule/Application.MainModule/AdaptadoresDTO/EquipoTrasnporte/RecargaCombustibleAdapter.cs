@@ -51,6 +51,7 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio
                 IdTipoCombustible = dto.IdTipoCombustible,
                 FechaRecarga = dto.FechaRecarga,
                 Monto = dto.Monto,
+                IdCuentaContable = dto.IdCuentaContable,
             };
         }
         public static List<DetalleRecargaCombustible> FromDTO(List<RecargaCombustibleDTO> entidad)

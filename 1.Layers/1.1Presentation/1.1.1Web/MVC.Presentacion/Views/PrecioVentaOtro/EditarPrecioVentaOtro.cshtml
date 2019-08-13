@@ -7,32 +7,8 @@
     @{
         ViewBag.Title = "Index";
     }
-    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script src="~/Resources/js/PrecioVenta.js"></script>
-    @*<script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnRegresarIndexPVO").click(function () {
-                var form = $(this).parent("form");
-                form.attr('action', '<%= Url.RouteUrl(new { Controller = "PrecioVentaOtro", Action = "Index" }) %>');
-                form.attr('method', 'post');
-            });
-
-            $("#txtUtilidad").keyup(function () {
-                var precio = $("#PrecioPMX").val();
-
-                var utilidad = $(this).val();
-
-                var operacion = parseFloat(precio) + parseFloat(utilidad);
-
-                $("#IdPrecioSalidaKg").val(operacion)
-
-                //$("#IDPrecioSalidaKg").val(operacion);
-                // alert($('#IdPrecioSalidaKg').val());
-            });//key up.
-
-        });
-
-    </script>*@
+   
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("ActualizarPrecioVentaOtro", "PrecioVentaOtro", FormMethod.Post))

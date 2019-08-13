@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Catalogo;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
 using Sagas.MainModule.ObjetosValor.Enum;
@@ -59,6 +60,36 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 FechaRegistro = unidad.FechaRegistro,
                 PorcentajeCalibracionPlaneada = unidad.PorcentajeCalibracionPlaneada,
             };
+        }
+        public static UnidadAlmacenGasDTO ToDTO(UnidadAlmacenGas unidad)
+        {
+            return new UnidadAlmacenGasDTO()
+            {
+                IdCAlmacenGas = unidad.IdCAlmacenGas,
+                IdAlmacenGas = unidad.IdAlmacenGas,
+                IdEmpresa = unidad.IdEmpresa,
+                IdTipoAlmacen = unidad.IdTipoAlmacen,
+                IdTipoMedidor = unidad.IdTipoMedidor,
+                IdEstacionCarburacion = unidad.IdEstacionCarburacion,
+                IdCamioneta = unidad.IdCamioneta,
+                IdPipa = unidad.IdPipa,
+                EsGeneral = unidad.EsGeneral,
+                EsAlterno = unidad.EsAlterno,
+                Numero = unidad.Numero,
+                CapacidadTanqueLt = unidad.CapacidadTanqueLt,
+                CapacidadTanqueKg = unidad.CapacidadTanqueKg,
+                CantidadActualLt = unidad.CantidadActualLt,
+                CantidadActualKg = unidad.CantidadActualKg,
+                PorcentajeActual = unidad.PorcentajeActual,
+                P5000Actual = unidad.P5000Actual,
+                Activo = unidad.Activo,
+                FechaRegistro = unidad.FechaRegistro,
+                PorcentajeCalibracionPlaneada = unidad.PorcentajeCalibracionPlaneada,
+            };
+        }
+        public static List<UnidadAlmacenGasDTO> ToDTO(List<UnidadAlmacenGas> unidad)
+        {
+            return unidad.Select(x => ToDTO(x)).ToList();
         }
 
         public static AlmacenGas FromInit(Empresa emp)
@@ -317,7 +348,6 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 FechaRegistro = lectura.FechaRegistro,
             };
         }
-
         public static AlmacenGasTomaLecturaFoto FromEntity(AlmacenGasTomaLecturaFoto img)
         {
             return new AlmacenGasTomaLecturaFoto
@@ -583,9 +613,9 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
 
             //------Ids y nombres-----------------
             almGMovimiento.IdEmpresa = empresa.IdEmpresa;
-            almGMovimiento.Year = (short)descarga.FechaFinDescarga.Value.Year;
-            almGMovimiento.Mes = (byte)descarga.FechaFinDescarga.Value.Month;
-            almGMovimiento.Dia = (byte)descarga.FechaFinDescarga.Value.Day;
+            almGMovimiento.Year = descarga.FechaFinDescarga != null ? (short)descarga.FechaFinDescarga.Value.Year : (short)DateTime.Now.Year;
+            almGMovimiento.Mes = descarga.FechaFinDescarga != null ? (byte)descarga.FechaFinDescarga.Value.Month : (byte)DateTime.Now.Month;
+            almGMovimiento.Dia = descarga.FechaFinDescarga != null ? (byte)descarga.FechaFinDescarga.Value.Day : (byte)DateTime.Now.Day;
             almGMovimiento.Orden = ultimoMovimiento != null && ultimoMovimiento.Orden > 0 ? (short)(ultimoMovimiento.Orden + 1) : (short)1;
             almGMovimiento.IdTipoMovimiento = TipoMovimientoEnum.Entrada;
             almGMovimiento.IdTipoEvento = TipoEventoEnum.Descarga;
@@ -660,7 +690,8 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.DescargaAcumMesLt = invAnterior.DescargaAcumMesLt;
             almGMovimiento.DescargaAcumAnioKg = invAnterior.DescargaAcumAnioKg;
             almGMovimiento.DescargaAcumAnioLt = invAnterior.DescargaAcumAnioLt;
-            almGMovimiento.FechaAplicacion = descarga.FechaFinDescarga.Value;
+            if (descarga.FechaFinDescarga != null)
+                almGMovimiento.FechaAplicacion = descarga.FechaFinDescarga.Value;
             //----Descarga--------------------
 
             //----Remanente--------------------
@@ -1309,49 +1340,53 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.PorcentajeActualGeneral = almacenGasTotal.PorcentajeActualGeneral;
             almGMovimiento.PorcentajeAnteriorGeneral = invAnterior.PorcentajeAnteriorGeneral;
             //------Almacen Gas Total y General--------------
+            if (ultimoMovimiento != null)
+            {
 
-            almGMovimiento.CalibracionAcumDiaKg = ultimoMovimiento.CalibracionAcumDiaKg;
-            almGMovimiento.CalibracionAcumDiaLt = ultimoMovimiento.CalibracionAcumDiaLt;
-            almGMovimiento.CalibracionAcumMesKg = ultimoMovimiento.CalibracionAcumMesKg;
-            almGMovimiento.CalibracionAcumMesLt = ultimoMovimiento.CalibracionAcumMesLt;
-            almGMovimiento.CalibracionAcumAnioKg = ultimoMovimiento.CalibracionAcumAnioKg;
-            almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;
-            almGMovimiento.RemaAcumDiaKg = ultimoMovimiento.RemaAcumDiaKg;
-            almGMovimiento.RemaAcumDiaLt = ultimoMovimiento.RemaAcumDiaLt;
-            almGMovimiento.RemaAcumMesKg = ultimoMovimiento.RemaAcumMesKg;
-            almGMovimiento.RemaAcumMesLt = ultimoMovimiento.RemaAcumMesLt;
-            almGMovimiento.RemaAcumAnioKg = ultimoMovimiento.RemaAcumAnioKg;
-            almGMovimiento.RemaAcumAnioLt = ultimoMovimiento.RemaAcumAnioLt;
-            almGMovimiento.AutoconsumoAcumDiaKg = ultimoMovimiento.AutoconsumoAcumDiaKg;
-            almGMovimiento.AutoconsumoAcumDiaLt = ultimoMovimiento.AutoconsumoAcumDiaLt;
-            almGMovimiento.AutoconsumoAcumMesKg = ultimoMovimiento.AutoconsumoAcumMesKg;
-            almGMovimiento.AutoconsumoAcumMesLt = ultimoMovimiento.AutoconsumoAcumMesLt;
-            almGMovimiento.AutoconsumoAcumAnioKg = ultimoMovimiento.AutoconsumoAcumAnioKg;
-            almGMovimiento.AutoconsumoAcumAnioLt = ultimoMovimiento.AutoconsumoAcumAnioLt;
-            almGMovimiento.TraspasoAcumDiaKg = ultimoMovimiento.TraspasoAcumDiaKg;
-            almGMovimiento.TraspasoAcumDiaLt = ultimoMovimiento.TraspasoAcumDiaLt;
-            almGMovimiento.TraspasoAcumMesKg = ultimoMovimiento.TraspasoAcumMesKg;
-            almGMovimiento.TraspasoAcumMesLt = ultimoMovimiento.TraspasoAcumMesLt;
-            almGMovimiento.TraspasoAcumAnioKg = ultimoMovimiento.TraspasoAcumAnioKg;
-            almGMovimiento.TraspasoAcumAnioLt = ultimoMovimiento.TraspasoAcumAnioLt;
-            almGMovimiento.DescargaAcumDiaKg = ultimoMovimiento.DescargaAcumDiaKg;
-            almGMovimiento.DescargaAcumDiaLt = ultimoMovimiento.DescargaAcumDiaLt;
-            almGMovimiento.DescargaAcumMesKg = ultimoMovimiento.DescargaAcumMesKg;
-            almGMovimiento.DescargaAcumMesLt = ultimoMovimiento.DescargaAcumMesLt;
-            almGMovimiento.DescargaAcumAnioKg = ultimoMovimiento.DescargaAcumAnioKg;
-            almGMovimiento.DescargaAcumAnioLt = ultimoMovimiento.DescargaAcumAnioLt;
-            almGMovimiento.RecargaAcumDiaKg = ultimoMovimiento.RecargaAcumDiaKg;
-            almGMovimiento.RecargaAcumDiaLt = ultimoMovimiento.RecargaAcumDiaLt;
-            almGMovimiento.RecargaAcumMesKg = ultimoMovimiento.RecargaAcumMesKg;
-            almGMovimiento.RecargaAcumMesLt = ultimoMovimiento.RecargaAcumMesLt;
-            almGMovimiento.RecargaAcumAnioKg = ultimoMovimiento.RecargaAcumAnioKg;
-            almGMovimiento.RecargaAcumAnioLt = ultimoMovimiento.RecargaAcumAnioLt;
-            almGMovimiento.VentaAcumDiaKg = ultimoMovimiento.VentaAcumDiaKg;
-            almGMovimiento.VentaAcumDiaLt = ultimoMovimiento.VentaAcumDiaLt;
-            almGMovimiento.VentaAcumMesKg = ultimoMovimiento.VentaAcumMesKg;
-            almGMovimiento.VentaAcumMesLt = ultimoMovimiento.VentaAcumMesLt;
-            almGMovimiento.VentaAcumAnioKg = ultimoMovimiento.VentaAcumAnioKg;
-            almGMovimiento.VentaAcumAnioLt = ultimoMovimiento.VentaAcumAnioLt;
+
+                almGMovimiento.CalibracionAcumDiaKg = ultimoMovimiento.CalibracionAcumDiaKg;
+                almGMovimiento.CalibracionAcumDiaLt = ultimoMovimiento.CalibracionAcumDiaLt;
+                almGMovimiento.CalibracionAcumMesKg = ultimoMovimiento.CalibracionAcumMesKg;
+                almGMovimiento.CalibracionAcumMesLt = ultimoMovimiento.CalibracionAcumMesLt;
+                almGMovimiento.CalibracionAcumAnioKg = ultimoMovimiento.CalibracionAcumAnioKg;
+                almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;
+                almGMovimiento.RemaAcumDiaKg = ultimoMovimiento.RemaAcumDiaKg;
+                almGMovimiento.RemaAcumDiaLt = ultimoMovimiento.RemaAcumDiaLt;
+                almGMovimiento.RemaAcumMesKg = ultimoMovimiento.RemaAcumMesKg;
+                almGMovimiento.RemaAcumMesLt = ultimoMovimiento.RemaAcumMesLt;
+                almGMovimiento.RemaAcumAnioKg = ultimoMovimiento.RemaAcumAnioKg;
+                almGMovimiento.RemaAcumAnioLt = ultimoMovimiento.RemaAcumAnioLt;
+                almGMovimiento.AutoconsumoAcumDiaKg = ultimoMovimiento.AutoconsumoAcumDiaKg;
+                almGMovimiento.AutoconsumoAcumDiaLt = ultimoMovimiento.AutoconsumoAcumDiaLt;
+                almGMovimiento.AutoconsumoAcumMesKg = ultimoMovimiento.AutoconsumoAcumMesKg;
+                almGMovimiento.AutoconsumoAcumMesLt = ultimoMovimiento.AutoconsumoAcumMesLt;
+                almGMovimiento.AutoconsumoAcumAnioKg = ultimoMovimiento.AutoconsumoAcumAnioKg;
+                almGMovimiento.AutoconsumoAcumAnioLt = ultimoMovimiento.AutoconsumoAcumAnioLt;
+                almGMovimiento.TraspasoAcumDiaKg = ultimoMovimiento.TraspasoAcumDiaKg;
+                almGMovimiento.TraspasoAcumDiaLt = ultimoMovimiento.TraspasoAcumDiaLt;
+                almGMovimiento.TraspasoAcumMesKg = ultimoMovimiento.TraspasoAcumMesKg;
+                almGMovimiento.TraspasoAcumMesLt = ultimoMovimiento.TraspasoAcumMesLt;
+                almGMovimiento.TraspasoAcumAnioKg = ultimoMovimiento.TraspasoAcumAnioKg;
+                almGMovimiento.TraspasoAcumAnioLt = ultimoMovimiento.TraspasoAcumAnioLt;
+                almGMovimiento.DescargaAcumDiaKg = ultimoMovimiento.DescargaAcumDiaKg;
+                almGMovimiento.DescargaAcumDiaLt = ultimoMovimiento.DescargaAcumDiaLt;
+                almGMovimiento.DescargaAcumMesKg = ultimoMovimiento.DescargaAcumMesKg;
+                almGMovimiento.DescargaAcumMesLt = ultimoMovimiento.DescargaAcumMesLt;
+                almGMovimiento.DescargaAcumAnioKg = ultimoMovimiento.DescargaAcumAnioKg;
+                almGMovimiento.DescargaAcumAnioLt = ultimoMovimiento.DescargaAcumAnioLt;
+                almGMovimiento.RecargaAcumDiaKg = ultimoMovimiento.RecargaAcumDiaKg;
+                almGMovimiento.RecargaAcumDiaLt = ultimoMovimiento.RecargaAcumDiaLt;
+                almGMovimiento.RecargaAcumMesKg = ultimoMovimiento.RecargaAcumMesKg;
+                almGMovimiento.RecargaAcumMesLt = ultimoMovimiento.RecargaAcumMesLt;
+                almGMovimiento.RecargaAcumAnioKg = ultimoMovimiento.RecargaAcumAnioKg;
+                almGMovimiento.RecargaAcumAnioLt = ultimoMovimiento.RecargaAcumAnioLt;
+                almGMovimiento.VentaAcumDiaKg = ultimoMovimiento.VentaAcumDiaKg;
+                almGMovimiento.VentaAcumDiaLt = ultimoMovimiento.VentaAcumDiaLt;
+                almGMovimiento.VentaAcumMesKg = ultimoMovimiento.VentaAcumMesKg;
+                almGMovimiento.VentaAcumMesLt = ultimoMovimiento.VentaAcumMesLt;
+                almGMovimiento.VentaAcumAnioKg = ultimoMovimiento.VentaAcumAnioKg;
+                almGMovimiento.VentaAcumAnioLt = ultimoMovimiento.VentaAcumAnioLt;
+            }
             return almGMovimiento;
         }
     }

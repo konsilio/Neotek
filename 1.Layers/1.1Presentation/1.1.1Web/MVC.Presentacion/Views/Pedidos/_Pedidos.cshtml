@@ -1,0 +1,49 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Pedidos";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Pedidos",
+            Action = "Pedidos"
+        };
+        settings.KeyFieldName = "IdPedido";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdPedido";
+            c.Caption = "ID";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+        });
+        settings.Columns.Add("Telefono", "Tel.");
+        settings.Columns.Add("NombreRfc", "Solicitante");
+        settings.Columns.Add("Cantidad", "Cantidad");
+        settings.Columns.Add("EstatusPedido", "Estatus");
+        settings.Columns.Add("FechaRegistroPedido", "Fecha de Pedido");
+        settings.Columns.Add("Unidad", "Unidad asignada");
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("RevisarPedido", new { idPedido = d.KeyValue }) + "><i class='material-icons'>edit</i> <span class='icon-name'></span></a>"));
+                ViewContext.Writer.Write(string.Format("<a href='#ModalCancelar' data-toggle='modal' data-id='" + d.KeyValue + "' id='btnok' onclick='javascript: AsignarEliminar(" + d.KeyValue + ")'  data-target='#ModalCancelar' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>block</i><span></span></a>"));
+            });
+        });
+    });
+}
+@grid.Bind(Model).GetHtml()

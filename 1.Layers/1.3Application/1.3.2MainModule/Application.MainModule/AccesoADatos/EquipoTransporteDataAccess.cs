@@ -142,7 +142,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<CDetalleEquipoTransporte> BuscarEquipoTransporte()
         {
-            return uow.Repository<CDetalleEquipoTransporte>().Get().ToList();
+            return uow.Repository<CDetalleEquipoTransporte>().GetAll().ToList();
         }
         public List<CDetalleEquipoTransporte> BuscarEquipoTransporte(short idEmpresa)
         {

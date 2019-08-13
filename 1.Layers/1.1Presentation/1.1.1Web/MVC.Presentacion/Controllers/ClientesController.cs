@@ -18,9 +18,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
           
-            ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
-            ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(0, TipoPersona,regimen, rfc, nombre, _tkn);
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
@@ -115,8 +113,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = respuesta;              
                 return RedirectToAction("EditarCliente", "Clientes", new { id = _Obj.IdCliente });
             }
-        }
-      
+        }      
         public ActionResult BorrarClientes(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -182,8 +179,7 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("EditarLocaciones", "Clientes", new { id = _Obj.IdCliente });
             }
          
-        }
-               
+        }               
         public ActionResult EditarClienteLoc(int id, short idOrden)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -262,7 +258,6 @@ namespace MVC.Presentacion.Controllers
             return RedirectToAction("Index", new { TipoPersona = filterObj.IdTipoPersona, regimen = filterObj.IdRegimenFiscal
                 , rfc =filterObj.Rfc, nombre=filterObj.RazonSocial });
         }
-
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;
@@ -278,6 +273,13 @@ namespace MVC.Presentacion.Controllers
                     Mensaje = Resp.MensajesError[0];
             }
             return Mensaje;
+        }
+        public ActionResult GridClientes()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tok = Session["StringToken"].ToString();
+            var model = CatalogoServicio.ListaClientes(0, null, null, null, null, _tok);
+            return PartialView("_Clientes", model);
         }
     }
 }

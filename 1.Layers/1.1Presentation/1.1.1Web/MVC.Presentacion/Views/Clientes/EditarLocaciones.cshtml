@@ -1,8 +1,17 @@
 ﻿@model MVC.Presentacion.Models.Catalogos.ClienteLocacionMod
-@*@using MVC.Presentacion.Models.Catalogos
-@model List<ClienteLocacionMod>*@
 
-<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+
+@*<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>*@
 <script src="~/Resources/js/Clientes.js"></script>
 <link href="~/Resources/css/Clientes.css" rel="stylesheet" />
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
@@ -13,9 +22,9 @@
         $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
     }
     $(function () {
-        $('select').on('change', function () {
-            if ($('#ddlPais').val() !== "1") {
-                $('#ddlEdo').parent().hide();
+        $('table[id=IdPais] td').on('click', function () {
+            if (IdPais.GetValue() !== "1") {
+                $('table[id=IdEstadoRep]').parent().hide();
                 $('#txtEdoP').show();
             }
 
@@ -35,7 +44,7 @@
 {
     <section class="content home">
         <div class="container-fluid">
-            <div class="block-header">               
+            <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <h2>Clientes</h2>
@@ -50,7 +59,7 @@
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
-                            <div class="header">                           
+                            <div class="header">
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
@@ -82,17 +91,17 @@
                                         </div>
                                     </div>
                                     @*<div class="col-lg-7 col-md-7 col-sm-7">
-                                        <div class="form-group">
-                                            <div>
-                                                Localización Manual
-                                                <label class="switch">
-                                                    <input type="checkbox" id="payMethod">
-                                                    <span class="slider round"></span>
-                                                </label>
-                                                Localización Google Maps
+                                            <div class="form-group">
+                                                <div>
+                                                    Localización Manual
+                                                    <label class="switch">
+                                                        <input type="checkbox" id="payMethod">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                    Localización Google Maps
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>*@
+                                        </div>*@
                                 </div>
                                 <div class="row clearfix" id="Dir">
                                     <div class="col-lg-2 col-md-2 col-sm-2">
@@ -121,15 +130,35 @@
                                                 </div>
                                             </div>
                                         </div>
+                                     
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
-                                                <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
-                                                    @foreach (var lst in ViewBag.ListaPaises)
-                                                    {
-                                                        <option value="@lst.IdPais">@lst.Pais</option>
-                                                    }
-                                                </select>
-                                            </div>
+                                                    <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
+                                                        @foreach (var lst in ViewBag.ListaPaises)
+                                                        {
+                                                            <option value="@lst.IdPais">@lst.Pais</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            @*<div class="form-group">
+                                                @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdPais";
+                                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                                 
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Theme = "Material";
+                                                   settings.Properties.TextField = "Pais";
+                                                   settings.Properties.ValueField = "IdPais";
+                                                   settings.Properties.ValueType = typeof(byte);
+                                                   settings.ClientEnabled = true;
+                                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                               }).BindList(ViewBag.ListaPaises).GetHtml()
+                                                @Html.ValidationMessageFor(model => model.IdPais, "", new { @class = "text-danger" })*@
+
+                                            @*</div>*@
+
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1">
                                             <div class="form-group">
@@ -143,6 +172,19 @@
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
                                                 <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
+                                                @*@Html.DevExpress().ComboBox(settings =>
+                                           {
+                                               settings.Name = "IdEstadoRep";                                              
+                                                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                               settings.Theme = "Material";
+                                               settings.Properties.TextField = "Estado";
+                                               settings.Properties.ValueField = "IdEstadoRep";
+                                               settings.Properties.ValueType = typeof(int);
+                                               settings.ClientEnabled = true;
+                                               //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                           }).BindList(ViewBag.ListaEstados).GetHtml()*@
                                                 <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                     @foreach (var lst in ViewBag.ListaEstados)
                                                     {
@@ -259,13 +301,13 @@
                                             <div class="form-group">
                                                 <input type="text" name="formatted_address" class="form-control" />
                                                 @*@if (ViewBag.EsEdicion == null)
-                    {
-                         <input type="text" name="formatted_address" class="form-control" />
-                    }
-                    else
-                    {
-                        @Html.TextBoxFor(m => m[0].formatted_address, new { @class = "form-control" })
-                    }*@
+                                                    {
+                                                         <input type="text" name="formatted_address" class="form-control" />
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m[0].formatted_address, new { @class = "form-control" })
+                                                    }*@
 
                                             </div>
                                             @Html.ValidationMessageFor(m => m.formatted_address, "", new { @class = "alert-danger" })

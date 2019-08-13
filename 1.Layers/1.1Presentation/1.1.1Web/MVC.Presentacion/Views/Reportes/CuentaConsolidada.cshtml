@@ -1,0 +1,82 @@
+﻿@using MVC.Presentacion.Models;
+@model CuentasPorPagarModel
+
+@Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+    )
+@Html.DevExpress().GetScripts(
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new Script { ExtensionSuite = ExtensionSuite.Editors },
+        new Script { ExtensionSuite = ExtensionSuite.GridView }
+    )
+
+<body>
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+            <p>Espere por favor</p>
+        </div>
+    </div>
+    <section class="content home">
+        <div class="container-fluid">
+            @using (Html.BeginForm("CuentaConsolidada", "Reportes", FormMethod.Post))
+            {
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <h2>Cubo de Información</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Reportes</li>
+                                <li class="breadcrumb-item">Punto de Equilibrio</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-3">
+                                    <strong>Periodo</strong>
+                                    <div class="form-group">
+                                        @Html.DevExpress().DateEdit(settings =>
+                                      {
+                                          settings.Name = "Periodo";
+                                          settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                          settings.Properties.PickerType = DatePickerType.Months;
+                                          settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                          settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                          settings.Date = DateTime.Today;
+                                      }).Bind(Model.Periodo).GetHtml()
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>&emsp;</strong>
+                                    <div class="form-group">
+                                        <input type="submit" value="Crear reporte" class="btn btn-default btn-round" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-12 blockquote blockquote-info btn-round">
+                                    <div class="table-responsive">
+                                        @if (TempData["DataSource"] != null)
+                                        {
+                                            @Html.Partial("_CuboDeInformacionPartial", (List<CuentaConsolidadaDTO>)TempData["DataSource"])
+                                        }
+                                        else
+                                        {
+                                            @Html.Partial("_CuboDeInformacionPartial", new List<CuentaConsolidadaDTO>())
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</body>

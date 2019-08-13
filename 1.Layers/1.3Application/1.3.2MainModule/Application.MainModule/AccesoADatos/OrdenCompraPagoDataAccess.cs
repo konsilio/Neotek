@@ -77,5 +77,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public RespuestaDto Actualizar(OrdenCompraPago ocp, OrdenCompra oc, Requisicion req)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<OrdenCompraPago>().Update(ocp);
+                    uow.Repository<OrdenCompra>().Update(oc);
+                    uow.Repository<Requisicion>().Update(req);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "de la confirmación de pago");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
     }
 }

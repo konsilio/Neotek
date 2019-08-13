@@ -2292,6 +2292,12 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarCliente(id);
             return agente._ClienteModel;
         }
+        public static ClientesDto ObtenerClienteDto(int id, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarClienteDto(id, token);
+            return agente._ClienteDTO;
+        }
         public static ClientesModel ObtenerCliente(int id, string token)
         {
             var agente = new AgenteServicio();
@@ -2601,7 +2607,7 @@ namespace MVC.Presentacion.App_Code
         {
             if (model.CentrosCostos == null)
                 model = InitCentroCosto(tkn);
-            var cc = model.CentrosCostos.SingleOrDefault(x => x.IdCentroCosto.Equals(idcc));
+            var cc = model.CentrosCostos.FirstOrDefault(x => x.IdCentroCosto.Equals(idcc));
             model.Numero = cc.Numero;
             model.IdCentroCosto = cc.IdCentroCosto;
             model.Descripcion = cc.Descripcion;
@@ -2800,6 +2806,33 @@ namespace MVC.Presentacion.App_Code
             model.Numero = cc.Numero;
             model.Descripcion = cc.Descripcion;
             return model;
+        }
+        #endregion
+
+        #region Cuenta Contable Autorizado
+        public static RespuestaDTO GuardarCtaCtbleAutorizado(CuentaContableAutorizadoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarCuentaContableAutorizado(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarCtaContable(CuentaContableAutorizadoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarCuentaContableAutorizado(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static List<CuentaContableAutorizadoDTO> ListaCtaCtbleAutorizado(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaCuentaContableAutorizado(tkn);
+            return agente._ListaCuentaContableAutorizado;
+        }
+        public static CuentaContableAutorizadoDTO ObtenerCtaCtbleAutorizado(string tkn, int id)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarCuentaContableAutorizado(tkn, id);
+            return agente._CuentaContableAutorizadoDTO;
         }
         #endregion
 

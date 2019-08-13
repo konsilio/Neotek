@@ -183,10 +183,10 @@ namespace Application.MainModule.Flujos
         }
         public ReporteDiaDTO ReporteDia(DateTime fecha, short idCAlmacenGas)
         {
-            var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacenGas);
+           var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacenGas);
             var resp = AlmacenGasServicio.BuscarReporteDia(fecha, idCAlmacenGas,almacen.IdEmpresa);
 
-            if (resp!=null) return AlmacenGasServicio.ReporteDiaExistente(resp,almacen);
+            if (resp!=null) return AlmacenGasServicio.ReporteDiaExistente(resp, almacen);
 
             var ReporteAlmacen = AlmacenGasServicio.ReporteDia(fecha, idCAlmacenGas);
             return ReporteAlmacen;
@@ -199,7 +199,7 @@ namespace Application.MainModule.Flujos
             var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var almacen = punto_venta.UnidadesAlmacen;
             var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
-            //var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);     
+            //var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);
             var cliente = ClienteServicio.Obtener(venta.IdCliente);
             var ventas = CajaGeneralServicio.ObtenerVentas();
             int orden = Orden(ventas, venta.Fecha);
@@ -1470,14 +1470,13 @@ namespace Application.MainModule.Flujos
         }
         public List<DatosGasVentaDto> CatalogosGas(bool esLP, bool esCilindroConGas, bool esCilindro)
         {
-
             var pv = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(pv.IdCAlmacenGas);
             if (esLP)
             {
                 var lectInicial = AlmacenGasServicio.ObtenerUltimaLectura(unidad, false);
                 var puntoVenta = PuntoVentaServicio.Obtener(unidad);
-                var ventas = puntoVenta.VentaPuntoDeVenta.Where(x=>x.FechaRegistro.Equals(DateTime.Now));
+                var ventas = puntoVenta.VentaPuntoDeVenta.Where(x=>x.FechaRegistro.Equals(DateTime.Now));// cambiar a busqueda de fechamas especificas 
                 var precios = PuntoVentaServicio.ObtenerPreciosVenta(TokenServicio.ObtenerIdEmpresa());
                 var productosGas = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa(), true);
                 var kilosCamioneta = LecturaGasServicio.ObtenerKilosGasCamioneta(unidad.IdCAlmacenGas, DateTime.Now, pv.IdPuntoVenta);
@@ -1528,8 +1527,10 @@ namespace Application.MainModule.Flujos
         }
         public ClienteDTO BuscarClientePorRFC(string rfc)
         {
-            return ClienteAdapter.ToDTO(ClienteServicio.BuscarClientePorRFC(rfc));
-        }
-       
+            var clientes = ClienteServicio.BuscarClientePorRFC(rfc);
+            if (clientes != null)            
+                return ClienteAdapter.ToDTO(clientes);
+            return new ClienteDTO();
+        }       
     }
 }

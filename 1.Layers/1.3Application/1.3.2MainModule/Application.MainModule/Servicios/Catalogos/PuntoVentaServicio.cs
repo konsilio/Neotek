@@ -13,6 +13,7 @@ using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.AdaptadoresDTO.Ventas;
+using Application.MainModule.Servicios.Seguridad;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -20,8 +21,13 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<PuntoVentaDTO> Obtener()
         {
-            List<PuntoVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PuntoVentaAdapter.ToDTO(new PuntoVentaDataAccess().BuscarTodos());
+            List<PuntoVentaDTO> lPventas = PuntoVentaAdapter.ToDTO(new PuntoVentaDataAccess().BuscarTodos());
+            lPventas.Insert(0, PuntoVentaCero());
             return lPventas;
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentas(DateTime fi, DateTime ff)
+        {           
+            return new PuntoVentaDataAccess().BuscarVentas(fi, ff);
         }
         public static PuntoVenta Obtener(int idPuntoVenta)
         {
@@ -256,6 +262,15 @@ namespace Application.MainModule.Servicios.Catalogos
                 return EstacionCarburacionServicio.Modificar(estacion);
             }
             return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.NoExiste, "El punto de venta" )};
+        }
+        public static PuntoVentaDTO PuntoVentaCero()
+        {
+            return new PuntoVentaDTO
+            {
+                IdPuntoVenta = 0,
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
+                PuntoVenta = "Todos",
+            };
         }
     }
 }

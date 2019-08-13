@@ -16,6 +16,7 @@ namespace Application.MainModule.DTOs.Mobile
     {
         public int IdCAlmacenGas { get; set; }
         public string NombreCAlmacen { get; set; }
+        public string Estacion { get; set; }
         public MedidorDto Medidor { get; set; }
         public string ClaveReporte { get; set; }
         public DateTime Fecha { get; set; }

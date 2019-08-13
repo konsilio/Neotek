@@ -199,37 +199,50 @@
                                 <ul class="ml-menu">
                                     @if (rol.ReporteCuentasXPagar)
                                     {
-                                    <li>@Html.ActionLink("Cuentas por pagar", "CuentasXPagar", "Reportes")</li>}
+                                    <li>@Html.ActionLink("Cuentas por pagar", "CuentasXPagar", "Reportes")</li>
+                                    <li>@Html.ActionLink("Cuentas Consolidadas", "CuentaConsolidada", "Reportes")</li>
+                                    }
                                     @if (rol.ReportePuntoVenta)
                                     {
-                                    <li>@Html.ActionLink("Inv. Punto de venta", "InventarioXPuntoVenta", "Reportes")</li>}
+                                    <li>@Html.ActionLink("Inv. Punto de venta", "InventarioXPuntoVenta", "Reportes")</li>
+                                    <li>@Html.ActionLink("Cálculo de comisiones", "Comisiones", "Reportes")</li>
+                                    }
                                     @if (rol.ReportePrecioVenta)
                                     {
-                                    <li>@Html.ActionLink("Hst. Precio de venta", "HistoricoPrecioVenta", "Reportes")</li>}
+                                    <li>@Html.ActionLink("Hst. Precio de venta", "HistoricoPrecioVenta", "Reportes")</li>
+                                    }
                                     @if (rol.ReporteCallCenter)
                                     {
-                                    <li>@Html.ActionLink("Call Center", "CallCenter", "Reportes")</li>}
+                                    <li>@Html.ActionLink("Call Center", "CallCenter", "Reportes")</li>
+                                    }
                                     @if (rol.ReporteRequisicion)
                                     {
-                                    <li>@Html.ActionLink("Requisición", "Requisicion", "Reportes")</li>}
+                                    <li>@Html.ActionLink("Requisición", "Requisicion", "Reportes")</li>
+                                    }
                                     @if (rol.ReporteOrdenCompra)
                                     {
-                                    <li>@Html.ActionLink("Ordenes de Compra", "OrdenCompraRep", "Reportes")</li>}
+                                    <li>@Html.ActionLink("Órdenes de Compra", "OrdenCompraRep", "Reportes")</li>
+                                    }
                                     @if (rol.ReporteRendimientoVehicular)
                                     {
-                                    <li>@Html.ActionLink("Rendimiento Vehicular", "RendimientoVehicular", "Reportes")</li>}
+                                    <li>@Html.ActionLink("Rendimiento Vehícular", "RendimientoVehicular", "Reportes")</li>
+                                    }
                                     @if (rol.ReporteRendimientoVehicular)
                                     {
-                                    <li>@Html.ActionLink("Inv. Concepto", "InventarioXConcepto", "Reportes")</li>}
+                                    <li>@Html.ActionLink("Inv. Concepto", "InventarioXConcepto", "Reportes")</li>
+                                    }
                                     @if (rol.ReporteCallCenter)
                                     {
-                                    <li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>}
+                                    @*<li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>*@
+                                    }
                                     @if (rol.ReporteCorteCaja)
                                     {
-                                    <li>@Html.ActionLink("Corte de Caja", "CorteCaja", "Reportes")</li>}
+                                    <li>@Html.ActionLink("Corte de Caja", "CorteCaja", "Reportes")</li>
+                                    }
                                     @if (rol.Ventas) //ReporteGastoVehiculo
                                     {
-                                    <li>@Html.ActionLink("Gasto Por Vehiculo", "GastoVehicular", "Reportes")</li>}
+                                    <li>@Html.ActionLink("Gasto Por Vehiculo", "GastoVehicular", "Reportes")</li>
+                                    }
                                 </ul>
                             </li>
                         }                       
@@ -267,10 +280,10 @@
                                     {
                                     <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
                                     }
-                                    @if (rol.CatEgresos)
-                                    {
+                                    @*@if (rol.CatEgresos)
+                                    {*@
                                     <li>@Html.ActionLink("Egresos", "Index", "Egreso")</li>
-                                    }
+                                    @*}*@
                                     @if (rol.CatUsuarios)
                                     {
                                     <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
@@ -286,9 +299,10 @@
                                     @if (rol.CatCombustibles)
                                     {
                                     <li>@Html.ActionLink("Combustibles", "Index", "Combustible")</li>}
-                                    @if (rol.CatPuntosVenta)
+                                    @*@if (rol.CatPuntosVenta)
                                     {
-                                    <li>@Html.ActionLink("Puntos de venta", "Index", "PuntoVenta")</li>}
+                                    <li>@Html.ActionLink("Puntos de venta", "Index", "PuntoVenta")</li>
+                                    }*@
                                     @if (rol.CatPrecioVenta)
                                     {
                                     <li>@Html.ActionLink("Precio de venta", "Index", "PrecioVenta")</li>}

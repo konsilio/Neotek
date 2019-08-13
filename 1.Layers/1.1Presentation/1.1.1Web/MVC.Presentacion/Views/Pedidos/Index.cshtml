@@ -1,5 +1,15 @@
 ﻿@model  MVC.Presentacion.Models.Pedidos.PedidoModel
 
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <!DOCTYPE html>
 
 <html>
@@ -71,103 +81,62 @@
                                                 }
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="col-sm-6">
+
+                                        </div>
+                                        <div class="col-sm-3">
+                                            &nbsp;
+                                            <div class="form-group">                                               
+                                                <input type="submit" id="btnNuevoCte" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
+                                                @*<input type="submit" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />*@
+                                            </div>
+                                        </div>
+                                    </div>                                   
                                 </div>
                             </div>
                             <br />
-                            <div class="row clearfix">
+                            @*<div class="row clearfix">
                                 <div class="col-sm-12">
-                                    <div class="row clearfix">
+                                    <div class="row clearfix">                                       
                                         <div class="col-sm-3">
-                                            <b>Número de Pedido:</b>
-                                            @if (Model.IdPedido == 0)
-                                            { <input type="text" class="form-control" name="IdPedido" placeholder = "Número de Pedido" >}
-                                            else
-                                            {  @Html.TextBoxFor(m => m.IdPedido, new { @class = "form-control", placeholder = "Número de Pedido" })}
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <b>Teléfono del cliente:</b>
-                                                @Html.TextBoxFor(m => m.cliente.Telefono1, new { @class = "form-control", placeholder = "Teléfono del cliente" })
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <b>RFC:</b>
-                                                @Html.TextBoxFor(m => m.cliente.Rfc, new { @class = "form-control", placeholder = "RFC del cliente" })
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <input type="submit" id="btnNuevoCte" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
-                                                    <input type="submit" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
-                                                </div>
+                                            <div class="form-group">
+                                                <input type="submit" id="btnNuevoCte" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
+                                                <input type="submit" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <br />
-                                @if (ViewBag.MensajeError != null)
-                                {
-                                    <div class="row clearfix">
-                                        <div id="divMensajeError" class="container">
-                                            <div class="alert alert-danger">
-                                                <div class="alert-icon">
-                                                    <i class="zmdi zmdi-block"></i>
-                                                </div>
-                                                <strong>
-                                                    <label>@ViewBag.MensajeError</label>
-                                                </strong>
+                            </div>*@
+                            <br />
+                            @if (ViewBag.MensajeError != null)
+                            {
+                                <div class="row clearfix">
+                                    <div id="divMensajeError" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
                                             </div>
+                                            <strong>
+                                                <label>@ViewBag.MensajeError</label>
+                                            </strong>
                                         </div>
                                     </div>
-                                }
-                                <div class="row clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 blockquote blockquote-info btn-round">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-hover" name="EmpresasGaseras">
-                                                <thead>
-                                                    <tr>
-                                                        <th># Pedido</th>
-                                                        <th>RFC</th>
-                                                        <th>Nombre</th>
-                                                        <th>Cantidad</th>
-                                                        <th>Estatus</th>
-                                                        <th>Acción</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (Model.Pedidos != null)
-                                                    {
-                                                        foreach (var item in Model.Pedidos)
-                                                        {
-                                                            <tr>
-                                                                <th>@item.IdPedido</th>
-                                                                <th>@item.cliente.Rfc</th>
-                                                                <td>@item.NombreRfc</td>
-                                                                <td>@item.Cantidad</td>
-                                                                <td>@item.EstatusPedido</td>
-                                                                <td>
-                                                                    <a ID="lbEdit" href="@Url.Action("RevisarPedido", "Pedidos", new { idPedido = item.IdPedido })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">edit</i>
-                                                                        <span>Revisar pedido</span>
-                                                                    </a>
-                                                                    <a href="#ModalCancelar" data-toggle="modal" data-id="@item.IdPedido" id="btnok" class="tip" onclick="javascript: AsignarEliminar(@item.IdPedido)" data-target="#ModalCancelar" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">delete</i>
-                                                                        <span>Cancelar pedido</span>
-                                                                    </a>                                                                 
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                </div>
+                            }
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12 blockquote blockquote-info btn-round">
+                                    <div class="table-responsive">
+                                        @Html.Action("Pedidos")                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
-            </section>
+
+            </div>
+        </section>
             <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-md" role="document">
                     <div class="modal-content">
@@ -187,12 +156,11 @@
                             @*<input type="button" id="btnEliminar" value="Aceptar" class="btn btn-raised btn-primary btn-round waves-effect" />*@
                             <button type="button" id="btnEliminar" class="btn btn-raised btn-primary btn-round" onclick="Cancelar()">Aceptar</button>
                             <button type="button" id="btnclose" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
+                            <br />
                         </div>
                     </div>
                 </div>
-
             </div>
     }
 </body>
-
 </html>

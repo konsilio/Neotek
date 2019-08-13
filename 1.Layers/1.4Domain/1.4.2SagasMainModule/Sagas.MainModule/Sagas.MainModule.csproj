@@ -163,6 +163,9 @@
     <Compile Include="Entidades\CuentaContable.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\CuentaContableAutorizado.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\CUtilitario.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>

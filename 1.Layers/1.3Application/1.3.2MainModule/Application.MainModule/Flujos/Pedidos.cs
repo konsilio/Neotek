@@ -1,10 +1,13 @@
-﻿using Application.MainModule.AdaptadoresDTO.Pedidos;
+﻿using Application.MainModule.AdaptadoresDTO.Mobile;
+using Application.MainModule.AdaptadoresDTO.Pedidos;
+using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
+using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Pedidos;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
@@ -25,10 +28,10 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
 
             if (TokenServicio.EsSuperUsuario())
-                return PedidosServicio.Obtener(idempresa).ToList();
+                return PedidosServicio.Obtener().ToList();
 
             else
-                return PedidosServicio.Obtener(idempresa).Where(x => x.cliente.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+                return PedidosServicio.Obtener(idempresa);
         }
         public RegistraPedidoDto PedidoId(int idPedido)
         {
@@ -90,6 +93,14 @@ namespace Application.MainModule.Flujos
             {
                 var CrudDet = PedidosServicio.Alta(pedido.PedidoDetalle.ToList());
                 if (!CrudDet.Exito) return resp;
+            }
+            var cliente = ClienteServicio.Obtener(pedido.IdCliente);
+            if (cliente != null)
+            {
+                var clienteeditar = ClientesAdapter.FromEntity(cliente);
+                clienteeditar.Telefono = pedidoDto.Telefono1;
+                clienteeditar.Telefono1 = pedidoDto.Telefono1;
+                ClienteServicio.Modificar(clienteeditar);
             }
             return PedidosServicio.Modificar(pedido);
         }
