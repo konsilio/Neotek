@@ -1476,7 +1476,7 @@ namespace Application.MainModule.Flujos
             {
                 var lectInicial = AlmacenGasServicio.ObtenerUltimaLectura(unidad, false);
                 var puntoVenta = PuntoVentaServicio.Obtener(unidad);
-                var ventas = puntoVenta.VentaPuntoDeVenta.Where(x=>x.FechaRegistro.Equals(DateTime.Now));
+                var ventas = puntoVenta.VentaPuntoDeVenta.Where(x=>x.FechaRegistro.Equals(DateTime.Now));// cambiar a busqueda de fechamas especificas 
                 var precios = PuntoVentaServicio.ObtenerPreciosVenta(TokenServicio.ObtenerIdEmpresa());
                 var productosGas = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa(), true);
                 var kilosCamioneta = LecturaGasServicio.ObtenerKilosGasCamioneta(unidad.IdCAlmacenGas, DateTime.Now, pv.IdPuntoVenta);
