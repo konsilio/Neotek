@@ -92,8 +92,18 @@ namespace Application.MainModule.Servicios.Catalogos
             }
             return string.Concat(nom, " ", apell, " ", apell2);
         }
+        public static string ObtenerTelefono(Cliente cte)
+        {
+            if (cte.Telefono != null && !cte.Telefono.Equals(string.Empty))
+                return cte.Telefono;
+            if (cte.Telefono1 != null && !cte.Telefono1.Equals(string.Empty))
+                return cte.Telefono1;
+            if (cte.Celular != null && !cte.Celular.Equals(string.Empty))
+                return cte.Celular;
+            return string.Empty;
+        }
         public static string ObtenerNomreCliente(Cliente us)
-        {            
+        {
             string nom = "";
             string apell = "";
             string apell2 = "";
@@ -120,8 +130,8 @@ namespace Application.MainModule.Servicios.Catalogos
             else
             {
                 nom = us.Nombre;
-                apell = us.Apellido1;
-                apell2 = us.Apellido2;
+                apell = us.Apellido1 ?? string.Empty;
+                apell2 = us.Apellido2 ?? string.Empty;
             }
             return string.Concat(nom, " ", apell, " ", apell2);
         }
