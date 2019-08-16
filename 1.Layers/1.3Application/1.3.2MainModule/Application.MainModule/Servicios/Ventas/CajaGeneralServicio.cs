@@ -43,6 +43,10 @@ namespace Application.MainModule.Servicios.Ventas
             }
             return lventafinal;
         }
+        public static ReporteDelDia ObtenerReporteDia(string ClaveRporte)
+        {
+            return new CajaGeneralDataAccess().BuscarPorClaveReporte(ClaveRporte);
+        }
         //Camioneta Reporte del dia
         public static List<ReporteDiaDTO> ObtenerRepCamionetas(short unidad, DateTime fecha)
         {
@@ -137,6 +141,11 @@ namespace Application.MainModule.Servicios.Ventas
         {
             List<VentaPuntoVentaDTO> lPventas = CajaGeneralAdapter.ToDTOC(new CajaGeneralDataAccess().BuscarPorCve(cve));
             return lPventas;
+        }
+        public static List<VentaPuntoVentaDTO> ObtenerVPV(ReporteDelDia cve)
+        {
+            var Ventas = new CajaGeneralDataAccess().BuscarPorCve(cve);      
+            return CajaGeneralAdapter.ToDTOC(Ventas);
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasCamioneta(DateTime f)
         {

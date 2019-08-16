@@ -85,6 +85,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().Actualizar(cte);
         }
+        public static RespuestaDto Modificar(List<VentaPuntoDeVenta> cte)
+        {
+            return new PuntoVentaDataAccess().UpdateVentas(cte);
+        }
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El punto de venta");

@@ -56,6 +56,7 @@ namespace MVC.Presentacion.Agente
         public AndenDTO _AndenDTO;
         public CarteraDTO _CarteraDTO;
         public CuentaContableAutorizadoDTO _CuentaContableAutorizadoDTO;
+        public Models.Ventas.CorteCajaDTO _CorteCaja;
         public string _Json;
 
         public List<ClienteLocacionMod> _cteLocacion;
@@ -134,7 +135,7 @@ namespace MVC.Presentacion.Agente
         public List<OrdenCompraRepDTO> _ListaOrdenCompra;
         public List<RendimientoVehicularDTO> _ListaRendimientoVehicular;
         public List<InventarioXConceptoDTO> _ListaInventarioConcepto;
-        public List<CorteCajaDTO> _ListaCorteCaja;
+        public List<Models.CorteCajaDTO> _ListaCorteCaja;
         public List<GastoVehiculoDTO> _ListaGastoVehicular;
         public List<ComisionDTO> _ListaComisiones;
         public List<CuentaContableAutorizadoDTO> _ListaCuentaContableAutorizado;
@@ -1531,22 +1532,22 @@ namespace MVC.Presentacion.Agente
         }
         public void BuscarListaCajaGralCamioneta(string cveReporte, string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGralCamioneta"];
+            this.ApiRoute = ConfigurationManager.AppSettings["GetListaTickets"];
             GetListaCajaGralCamioneta(cveReporte, tkn).Wait();
         }
         private async Task GetListaCajaGralCamioneta(string cveRep, string Token)
         {
             using (var client = new HttpClient())
             {
-                List<CajaGeneralCamionetaModel> lus = new List<CajaGeneralCamionetaModel>();
+                Models.Ventas.CorteCajaDTO lus = new Models.Ventas.CorteCajaDTO();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + cveRep).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute,cveRep)).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        lus = await response.Content.ReadAsAsync<List<CajaGeneralCamionetaModel>>();
+                        lus = await response.Content.ReadAsAsync< Models.Ventas.CorteCajaDTO>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -1555,14 +1556,11 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    lus = new List<CajaGeneralCamionetaModel>();
+                    lus = new Models.Ventas.CorteCajaDTO();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-
-
-                _listaCajaGralCamioneta = lus;
-
+                _CorteCaja = lus;
             }
         }
         public void BuscarListaCajaGralEstacion(string cveReporte, string tkn)
@@ -5465,12 +5463,12 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Call Center
-        public void BuscarCallCenter(CallCenterModel model, string tkn)
+        public void BuscarCallCenter(PeriodoDTO model, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PostCallCenter"];
             PostCallCenter(model, this.ApiCatalgos, tkn).Wait();
         }
-        private async Task PostCallCenter(CallCenterModel model, string api, string token)
+        private async Task PostCallCenter(PeriodoDTO model, string api, string token)
         {
             using (var client = new HttpClient())
             {
@@ -5651,7 +5649,7 @@ namespace MVC.Presentacion.Agente
         {
             using (var client = new HttpClient())
             {
-                List<CorteCajaDTO> list = new List<CorteCajaDTO>();
+                List<Models.CorteCajaDTO> list = new List<Models.CorteCajaDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
@@ -5659,7 +5657,7 @@ namespace MVC.Presentacion.Agente
                 {
                     HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        list = await response.Content.ReadAsAsync<List<CorteCajaDTO>>();
+                        list = await response.Content.ReadAsAsync<List<Models.CorteCajaDTO>>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -5668,7 +5666,7 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    list = new List<CorteCajaDTO>();
+                    list = new List<Models.CorteCajaDTO>();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }

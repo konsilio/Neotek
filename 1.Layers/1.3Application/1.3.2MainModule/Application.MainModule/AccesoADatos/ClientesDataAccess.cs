@@ -103,17 +103,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             if (cliente.Telefono1 != null)
             {
-                consulta = uow.Repository<Cliente>().Get(
-                                     x =>
+                int tel = Int32.Parse(cliente.Telefono1);
+                consulta = uow.Repository<Cliente>().Get(x =>
                                       (x.Telefono1.Trim().Equals(cliente.Telefono1)
                                       || x.Telefono.Trim().Equals(cliente.Telefono1)
                                       || x.Telefono.Trim().Equals(cliente.Celular)
                                       || x.Telefono.Trim().Equals(cliente.Celular1)
+                                      || x.IdCliente.Equals(tel)
                                       ) && x.IdEmpresa.Equals(idEmpresa)
-                                       && x.Activo
-                                    ).ToList();
+                                       && x.Activo).ToList();
             }
-
             return (consulta != null) ? consulta : null;
         }
         public Cliente Buscar(ClienteDTO cliente)
@@ -146,7 +145,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 || x.Rfc.ToLower().Contains(criterio)))
                 || x.RazonSocial.Equals(criterio)
                 || x.Nombre.Equals(criterio)
-                || x.IdCliente.Equals(criterio)
+                //|| x.IdCliente.Equals(criterio)
                 && x.IdEmpresa.Equals(idEmpresa)
                 && x.Activo
             ).ToList();

@@ -8,6 +8,7 @@ using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Ventas;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -454,9 +455,9 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             }
             else
             {
-                if (usDTO.IdCamioneta != null)                
+                if (usDTO.IdCamioneta != null)
                     usDTO.VentaTotal = pv.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg.Value);
-                else                
+                else
                     usDTO.VentaTotal = pv.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt.Value);
             }
             //usDTO.VentaTotal = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal;
@@ -689,6 +690,10 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 EfectivoRecibidoAcumMes = venta.EfectivoRecibidoAcumMes,
                 EfectivoRecibidoAcumAnio = venta.EfectivoRecibidoAcumAnio,
             };
+        }
+        public static List<VentaPuntoDeVenta> FromEntity(List<VentaPuntoDeVenta> Entidades)
+        {
+            return Entidades.Select(x => FromEntity(x)).ToList();
         }
         public static VentaMovimiento FromEntity(VentaMovimiento venta)
         {
@@ -992,7 +997,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             return new DTOs.RepCorteCajaDTO()
             {
                 Descripcion = entidadEstacion.Nombre,
-                Cantidad = Convert.ToDouble(entidadVenta.Where(e => e.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion.Equals(entidadEstacion.IdEstacionCarburacion)).Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadLt))),
+                Cantidad = Convert.ToDouble(entidadVenta.Where(e => e.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion.Equals(entidadEstacion.IdEstacionCarburacion)).Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadKg))),
                 TotalVenta = Convert.ToDouble(entidadVenta.Where(e => e.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion.Equals(entidadEstacion.IdEstacionCarburacion)).Sum(x => x.Total)),
                 Unidad = "Lts",
             };

@@ -31,8 +31,16 @@ namespace Application.MainModule.Flujos
                 return PedidosServicio.Obtener().ToList();
 
             else
-                return PedidosServicio.Obtener(idempresa);
+            {
+                PeriodoDTO periodo = new PeriodoDTO();
+                periodo.FechaInicio = DateTime.Parse(string.Concat(DateTime.Now.AddDays(-2).ToShortDateString(), " 00:00:00"));
+                periodo.FechaFin = DateTime.Parse(string.Concat(DateTime.Now.ToShortDateString(), " 23:59:59"));
+
+                var pedidos = PedidosServicio.Obtener(idempresa, periodo);
+                return PedidosAdapter.ToDTO(pedidos);
+            }
         }
+               
         public RegistraPedidoDto PedidoId(int idPedido)
         {
             var resp = PermisosServicio.PuedeConsultarPedido();

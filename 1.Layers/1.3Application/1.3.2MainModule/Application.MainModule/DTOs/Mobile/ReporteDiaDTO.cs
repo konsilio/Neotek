@@ -34,6 +34,7 @@ namespace Application.MainModule.DTOs.Mobile
         public bool EsCamioneta { get; set; }
         #region Campos de error para reporte mobile
         public bool Error { get; set; }
+        public bool Exito { get; set; }
         public string Mensaje { get; set; }
         #endregion
     }

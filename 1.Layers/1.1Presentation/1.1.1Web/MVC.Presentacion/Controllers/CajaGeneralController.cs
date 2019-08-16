@@ -46,18 +46,10 @@ namespace MVC.Presentacion.Controllers
 
             return View();
         }
-        public ActionResult Liquidar(int? page, int? pagePipa)
+        public ActionResult Liquidar(CorteCajaDTO _model = null)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-
-            if (TempData["RespuestaCajaGral"] != null)
-            {
-                var Pagina = page ?? 1;
-                var PaginaPipa = pagePipa ?? 1;
-                ViewBag.CajaGeneralCamioneta = TempData["RespuestaCajaGral"];
-                ViewBag.SalidaGas = ((List<MovimientosGasModel>)TempData["RespuestaSalidaGas"]).ToPagedList(Pagina, 10);
-                ViewBag.SalidaGasCilindro = TempData["RespuestaSalidaGasCilindro"];
-            }
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+           
             if (TempData["RespuestaDTO"] != null)
             {
                 ViewBag.MessageExito = TempData["RespuestaDTO"];
@@ -68,31 +60,26 @@ namespace MVC.Presentacion.Controllers
             }
             else
                 ViewBag.MessageError = TempData["RespuestaDTOError"];
-            return View();
+            if (_model == null)
+                _model = new CorteCajaDTO();
+            if (_model.Tickets == null || _model.Tickets.Count.Equals(0))
+                if (TempData["DatosLiquidacion"] != null)
+                    _model = (CorteCajaDTO)TempData["DatosLiquidacion"];
+            return View(_model);
         }
-        public ActionResult Buscar(int? page, int? pagePipa, CajaGeneralCamionetaModel _model = null)
+        public ActionResult Buscar(CorteCajaDTO _model = null)
         {
-            if (_model != null && _model.FolioOperacionDia!=null)
+            if (_model != null && _model.FolioOperacionDia != null)
                 TempData["Model"] = _model;
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-
-            var Pagina = page ?? 1;           
-            ViewBag.CajaGeneralCamioneta = VentasServicio.ListaVentasCajaGralCamioneta(((CajaGeneralCamionetaModel)TempData["Model"]).FolioOperacionDia, _tkn).ToPagedList(Pagina, 10);
-
-            if (ViewBag.CajaGeneralCamioneta.Count == 0)
-            { TempData["RespuestaDTOError"] = "No existe la clave solicitada"; }
-            else
-            {
-                CajaGeneralCamionetaModel nMod = (CajaGeneralCamionetaModel)ViewBag.CajaGeneralCamioneta[0];
-                ViewBag.SalidaGas = VentasServicio.ListaVentasMovimientosGas(nMod, _tkn);
-                ViewBag.SalidaGasCilindro = VentasServicio.ListaVentasMovimientosGasC(nMod, _tkn).GroupBy(x => x.CantidadKg).Select(grp => grp.First());//.ToPagedList(Pagina, 10);
-
-                TempData["RespuestaCajaGral"] = ViewBag.CajaGeneralCamioneta;
-                TempData["RespuestaSalidaGas"] = ViewBag.SalidaGas;
-                TempData["RespuestaSalidaGasCilindro"] = ViewBag.SalidaGasCilindro;
-            }
-            return RedirectToAction("Liquidar", new { page, pagePipa });
+                      
+            _model = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia, _tkn);
+            TempData["DatosLiquidacion"] = _model;
+            if (_model.Tickets != null && _model.Tickets.Count == 0)
+                TempData["RespuestaDTOError"] = "No existe la clave solicitada";
+           
+            return RedirectToAction("Liquidar", _model);
         }
         public ActionResult Consultar(CajaGeneralModel _model, int? page)
         {

@@ -52,8 +52,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
         }
         public static List<RequisicionDTO> ToDTO(List<Requisicion> _requisiciones)
         {
-            List<RequisicionDTO> requisicionesDTO = _requisiciones.ToList().Select(x => ToDTO(x)).ToList();
-            return requisicionesDTO;
+            return _requisiciones.Select(x => ToDTO(x)).ToList();
         }
         public static RequisicionAutorizacionDTO ToAutDTO(Requisicion _requisicion)
         {

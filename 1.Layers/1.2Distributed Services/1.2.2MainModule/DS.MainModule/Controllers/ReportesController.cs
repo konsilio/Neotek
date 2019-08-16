@@ -34,7 +34,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepHistorioPrecios(dto));
         }
         [Route("callcenter")]
-        public HttpResponseMessage PostCallCenter(CallCenterDTO dto)
+        public HttpResponseMessage PostCallCenter(PeriodoDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCallCenter(dto));
         }

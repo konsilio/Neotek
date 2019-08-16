@@ -9,8 +9,8 @@ namespace Application.MainModule.DTOs.Ventas
 {
     public class RegistrarVentasMovimientosDTO
     {
-        public List<VentaPuntoDeVenta> ObtenerVentasRealizadas { get; set; }
-        public List<VentaCorteAnticipoEC> ObtenerCorteAnticipos { get; set; }             
+        public List<VentaPuntoDeVenta> Tickets { get; set; }
+        public List<VentaCorteAnticipoEC> Lecturas { get; set; }             
 
         public AlmacenGasMovimiento Movimiento { get; set; }
 
