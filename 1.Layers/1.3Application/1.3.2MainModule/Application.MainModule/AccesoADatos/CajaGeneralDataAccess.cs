@@ -120,19 +120,29 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FolioOperacionDia.Equals(cve)).ToList();
         }
+        public List<VentaPuntoDeVenta> BuscarPorCve(ReporteDelDia cve)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.Year.Equals(cve.Year)
+                                                            && x.Mes.Equals(cve.Mes)
+                                                            && x.Dia.Equals(cve.Dia)
+                                                           // && x.Orden.Equals(cve.Orden)
+                                                            && x.IdPuntoVenta.Equals(cve.IdPuntoVenta.Value)).ToList();
+        }
+        public ReporteDelDia BuscarPorClaveReporte(string claveReporte)
+        {
+            return uow.Repository<ReporteDelDia>().GetSingle(x => x.FolioOperacionDia.Equals(claveReporte));
+        }
         public List<VentaPuntoDeVenta> BuscarTotalVentasCamionetas(DateTime fecha)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null
                                                              && x.FechaRegistro.Month.Equals(fecha.Month)
-                                                             && x.FechaRegistro.Year.Equals(fecha.Year)
-                                                          && x.FechaRegistro.Day.Equals(fecha.Day)).ToList();
+                                                             && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
         public List<VentaPuntoDeVenta> BuscarTotalVentasPipas(DateTime fecha)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdPipa != null
                                                              && x.FechaRegistro.Month.Equals(fecha.Month)
-                                                             && x.FechaRegistro.Year.Equals(fecha.Year)
-                                                             && x.FechaRegistro.Day.Equals(fecha.Day)).ToList();
+                                                             && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
         public List<VentaPuntoDeVenta> BuscarTotalBonificaciones(DateTime fecha)
         {
@@ -140,15 +150,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                              && x.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null
                                                              && x.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null
                                                              && x.FechaRegistro.Month.Equals(fecha.Month)
-                                                             && x.FechaRegistro.Year.Equals(fecha.Year)
-                                                          && x.FechaRegistro.Day.Equals(fecha.Day)).ToList();
+                                                             && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
         public List<VentaPuntoDeVenta> BuscarTotalVentasEstaciones(DateTime fecha)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null
                                                              && x.FechaRegistro.Month.Equals(fecha.Month)
-                                                              && x.FechaRegistro.Year.Equals(fecha.Year)
-                                                             && x.FechaRegistro.Day.Equals(fecha.Day)).ToList();
+                                                              && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
         public List<VentaPuntoDeVenta> BuscarTotalVentasEstaciones(EstacionCarburacion entidad, DateTime fecha)
         {
@@ -228,7 +236,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.VentaPuntoDeVenta>().Update(pv);
+                    uow.Repository<VentaPuntoDeVenta>().Update(pv);
                     uow.SaveChanges();
                     _respuesta.Exito = true;
                     _respuesta.Id = pv.IdPuntoVenta;

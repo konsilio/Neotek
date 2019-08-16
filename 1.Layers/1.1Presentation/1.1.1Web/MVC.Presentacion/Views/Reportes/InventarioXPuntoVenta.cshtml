@@ -19,16 +19,21 @@
     }
     //function selectAll() {
     //    $('ul li').each(function (i) {
-    //        $(this).attr('rel'); 
+    //        $(this).attr('rel');
     //    });
     //}
     function toggleChecked(status) {
-        $("#checkboxes input").each(function () {           
+        $("#checkboxes input").each(function () {
             $(this).prop("checked", status);
         });
     }
     function toggleCheckedPipa(status) {
         $("#checkboxespipa input").each(function () {
+            $(this).prop("checked", status);
+        });
+    }
+    function toggleCheckedCamion(status) {
+        $("#checkboxescamion input").each(function () {
             $(this).prop("checked", status);
         });
     }
@@ -45,8 +50,14 @@
             var status = checkAllBoxPipa.prop('checked');
             toggleCheckedPipa(status);
         });
+        var checkAllBoxCamion = $("#checkallcamion");
+        checkAllBoxCamion.prop('checked', true);
+        checkAllBoxCamion.click(function () {
+            var status = checkAllBoxCamion.prop('checked');
+            toggleCheckedCamion(status);
+        });
     });
-    
+
 </script>
 <body>
     <div class="page-loader-wrapper">
@@ -87,20 +98,29 @@
                                    }).Bind(Model.Fecha).GetHtml()
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
+                                    <strong>Camionetas</strong>
+                                    <div class="form-group" id="checkboxescamion">
+                                        <ul>
+                                            <li style="list-style:none"><input type="checkbox" class="checkbox" style="width: 20px; height: 20px;" id="checkallcamion" />Todos </li>
+                                            @Html.EditorFor(m => m.Camionetas)
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
                                     <strong>Pipas</strong>
                                     <div class="form-group" id="checkboxespipa">
                                         <ul>
-                                            <li style="list-style:none"><input type="checkbox" value="false" class="checkbox" style="width: 20px; height: 20px;" id="checkallpipa" />Todos </li>
+                                            <li style="list-style:none"><input type="checkbox" class="checkbox" style="width: 20px; height: 20px;" id="checkallpipa" />Todos </li>
                                             @Html.EditorFor(m => m.Pipas)
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <strong>Estaciones</strong>
                                     <div class="form-group" id="checkboxes">
                                         <ul>
-                                            <li style="list-style:none"><input type="checkbox" value="false" class="checkbox" style="width: 20px; height: 20px;" id="checkall" />Todos</li>
+                                            <li style="list-style:none"><input type="checkbox" class="checkbox" style="width: 20px; height: 20px;" id="checkall" />Todos</li>
                                             @Html.EditorFor(m => m.Estaciones)
                                         </ul>
                                     </div>

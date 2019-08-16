@@ -11,5 +11,6 @@ namespace MVC.Presentacion.Models
         public DateTime Fecha { get; set; }
         public List<PipaModel> Pipas { get; set; }
         public List<EstacionCarburacionDTO> Estaciones { get; set; }
+        public List<CamionetaModel> Camionetas { get; set; }
     }
 }

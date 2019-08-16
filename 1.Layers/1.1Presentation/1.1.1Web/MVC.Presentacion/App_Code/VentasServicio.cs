@@ -25,11 +25,11 @@ namespace MVC.Presentacion.App_Code
             return agente._listaCajaGral;
         }     
 
-        public static List<CajaGeneralCamionetaModel> ListaVentasCajaGralCamioneta(string cveReporte, string token)
+        public static CorteCajaDTO ListaVentasCajaGralCamioneta(string cveReporte, string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarListaCajaGralCamioneta(cveReporte, token);
-            return agente._listaCajaGralCamioneta;
+            return agente._CorteCaja;
         }
         public static List<MovimientosGasModel> ListaVentasMovimientosGas(CajaGeneralCamionetaModel reporte, string token)
         {

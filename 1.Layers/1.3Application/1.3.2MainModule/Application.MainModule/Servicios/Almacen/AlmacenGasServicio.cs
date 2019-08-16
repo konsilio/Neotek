@@ -17,6 +17,8 @@ using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.DTOs;
 using Exceptions.MainModule.Validaciones;
+using Application.MainModule.AdaptadoresDTO.Ventas;
+using Exceptions.MainModule;
 
 namespace Application.MainModule.Servicios.Almacenes
 {
@@ -278,7 +280,7 @@ namespace Application.MainModule.Servicios.Almacenes
             if (almacen.IdEstacionCarburacion != null)
                 reporte = ReporteAdapter.ToDtoEstacion(resp, almacen, lectInicial, lectFinal);
             if (almacen.IdPipa != null)
-                reporte = ReporteAdapter.ToDtoPipa(resp, almacen, lectInicial, lectFinal);          
+                reporte = ReporteAdapter.ToDtoPipa(resp, almacen, lectInicial, lectFinal);
             return reporte;
         }
         /// <summary>
@@ -747,7 +749,7 @@ namespace Application.MainModule.Servicios.Almacenes
                         reporteDTO = ReporteAdapter.ToDtoEstacion(almacen, lectInicial, lectFinal, ventasContado, ventasCredito);
                     reporteDTO.LitrosVenta = CalculosGenerales.DiferenciaEntreDosNumero(reporteDTO.LecturaInicial.CantidadP5000, reporteDTO.LecturaFinal.CantidadP5000);
                     reporteDTO.Fecha = fecha;
-                    reporteDTO.Precio = CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), ventasContado.Count) ;
+                    reporteDTO.Precio = CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), ventasContado.Count);
                     reporteDTO.ClaveReporte = DateTime.Now.Year + "R" + DateTime.Now.Ticks;
                     reporteDTO.Error = false;
                     reporteDTO.Mensaje = "Exito";
@@ -815,6 +817,11 @@ namespace Application.MainModule.Servicios.Almacenes
 
             }
             #endregion
+            var upVentas = CajaGeneralAdapter.FromEntity(ventasContado);
+            upVentas.Select(x => { x.OperadorChofer = reporteDTO.ClaveReporte; return x; });
+            var resp = PuntoVentaServicio.Modificar(upVentas);
+            if (!resp.Exito)
+                return ErrorDTO(resp);
             return reporteDTO;
         }
         public static ReporteDiaDTO CrearReporteMobil(VPuntoVentaDetalleDTO reporte, UnidadAlmacenGas almacen)
@@ -2796,6 +2803,30 @@ namespace Application.MainModule.Servicios.Almacenes
                 Fecha = DateTime.Now, //Comentar esta line en Desarollo
                 IdPuntoVenta = 0
             };
+        }
+        private static ReporteDiaDTO ErrorDTO(RespuestaDto respuesta)
+        {
+            return new ReporteDiaDTO()
+            {
+                Error = true,
+                Mensaje = respuesta.Mensaje,
+            };
+        }
+        public static string ObtenerLecutraCamioneta(AlmacenGasTomaLectura lectura)
+        {
+            var cantinIcial = string.Empty;
+            cantinIcial += CalculosGenerales.Truncar(lectura.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad, 2).ToString() + " Cilindro(s) 20Kg -";
+            cantinIcial += CalculosGenerales.Truncar(lectura.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad, 2).ToString() + " Cilindro(s) 30Kg -";
+            cantinIcial += CalculosGenerales.Truncar(lectura.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad, 2).ToString() + " Cilindro(s) 45Kg";
+            return cantinIcial;
+        }
+        public static string ObtenerDiferenciaLecutraCamioneta(AlmacenGasTomaLectura li, AlmacenGasTomaLectura lf)
+        {
+            var cantinIcial = string.Empty;
+            cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad), 2).ToString() + " Cilindro(s) 20Kg -";
+            cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad), 2).ToString() + " Cilindro(s) 30Kg -";
+            cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad), 2).ToString() + " Cilindro(s) 45Kg ";
+            return cantinIcial;
         }
     }
 }

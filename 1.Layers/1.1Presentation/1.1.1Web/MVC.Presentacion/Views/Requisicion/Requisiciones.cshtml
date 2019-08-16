@@ -11,7 +11,7 @@
 <script type="text/javascript">
     var Mensaje = '@ViewBag.Msj';
     var tipo = '@ViewBag.Tipo';
-    if (numReq != '') {
+    if (Mensaje != '') {
         $(window).on("load", showNotification(tipo, Mensaje, 'top', 'center', '', ''));
     }
 </script>
@@ -93,7 +93,7 @@
                                                         <tr>
                                                             <td>@req.NombreComercial</td>
                                                             <td>@req.NumeroRequisicion</td>
-                                                            <td>@req.FechaRequerida</td>
+                                                            <td>@req.FechaRequerida.ToShortDateString()</td>
                                                             <td>@req.UsuarioSolicitante</td>
                                                             <td>@req.RequisicionEstatus</td>
                                                             <td>

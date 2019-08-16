@@ -30,10 +30,10 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneral());
         }
 
-        [Route("buscar/listamovimientosgas")]
-        public HttpResponseMessage PutListaMovimientosGas(CajaGeneralDTO Dto)
+        [Route("buscar/listatickets/{folio}")]
+        public HttpResponseMessage GetListaTickets(string folio)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGas(Dto.IdCAlmacenGas,Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, Dto.Orden,Dto.FolioOperacionDia));
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneral(folio));
         }
 
         [Route("buscar/listamovimientosgaspipa")]
@@ -46,25 +46,22 @@ namespace DS.MainModule.Controllers
             //return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGas((short)5, (short)2, (short)2018, (byte)11, (byte)29, (byte)11, oDate, "118434D0DA2"));
             
         }
+        [Route("buscar/listamovimientosgaspipa")]
+        public HttpResponseMessage GerListaMovimientos(CajaGeneralDTO Dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGas(Dto.IdCAlmacenGas, Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, Dto.Orden, Dto.FechaAplicacion, Dto.FolioOperacionDia));
 
+            //string iDate = "29/11/2018";
+            //DateTime oDate = Convert.ToDateTime(iDate);
+            //return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGas((short)5, (short)2, (short)2018, (byte)11, (byte)29, (byte)11, oDate, "118434D0DA2"));
+
+        }
         [Route("buscar/listamovimientosgascilindros")]
         public HttpResponseMessage PutListaMovimientosGasC(VPuntoVentaDetalleDTO Dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGasCilindro(Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, Dto.Orden));
         }
       
-        //[Route("buscar/listacajageneralcamioneta/{cve}")]
-        //public HttpResponseMessage GetListaCajaGralCamioneta(string cve)
-        //{
-        //    return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralCamioneta(cve));
-        //}
-
-        //[Route("buscar/listacajageneralestacion/{cve}")]
-        //public HttpResponseMessage GetListaCajaGeneralEstacion(string cve)
-        //{
-        //    return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralEstacion(cve));
-        //}
-
         [Route("Modifica/liquidarcajageneral")]
         public HttpResponseMessage PutLiquidarReporte(VentaPuntoVentaDTO vpvDto)
         {

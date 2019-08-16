@@ -1,5 +1,5 @@
 ﻿@using MVC.Presentacion.Models;
-@model  CallCenterModel
+@model  PeriodoDTO
 @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -46,19 +46,29 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-md-3">
-                                    <strong>Al dia</strong>
+                                    <strong>Del día</strong>
                                     <div class="form-group">
-
-                                         @Html.DevExpress().DateEdit(settings =>
-                                      {
-                                          settings.Name = "Periodo";
-                                          settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                          settings.Properties.PickerType = DatePickerType.Months;
-                                          settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
-                                          settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
-                                          settings.Date = DateTime.Today;
-                                      }).Bind(Model.Periodo).GetHtml()
-
+                                        @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "FechaInicio";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                       settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                       settings.Date = DateTime.Today;
+                                   }).Bind(Model.FechaInicio).GetHtml()
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Al día</strong>
+                                    <div class="form-group">
+                                        @Html.DevExpress().DateEdit(settings =>
+                                           {
+                                               settings.Name = "FechaFin";
+                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                               settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                               settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                               settings.Date = DateTime.Today;
+                                           }).Bind(Model.FechaFin).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">

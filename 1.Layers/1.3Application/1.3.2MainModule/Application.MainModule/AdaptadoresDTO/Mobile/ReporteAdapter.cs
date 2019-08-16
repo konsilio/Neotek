@@ -98,6 +98,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 LecturaInicial = ToDTO(inicial),
                 LecturaFinal = ToDTO(final),
                 Error = false,
+                Exito = true,
                 Mensaje = "Exito",
                 EsCamioneta = true,
                 Tanques = ToDTO(cilindrosInicial, cilindrosFinal),
@@ -130,6 +131,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 LecturaInicial = ToDTO(inicial),
                 LecturaFinal = ToDTO(final),
                 Error = false,
+                Exito = true,
                 Mensaje = "Exito",
                 EsCamioneta = false
             };
@@ -159,6 +161,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 LecturaInicial = ToDTO(inicial),
                 LecturaFinal = ToDTO(final),
                 Error = false,
+                Exito = true,
                 Mensaje = "Exito",
                 EsCamioneta = false
             };

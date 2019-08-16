@@ -162,6 +162,7 @@
     <Compile Include="DTOs\Seguridad\UsuarioDTO.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioRolDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuariosModel.cs" />
+    <Compile Include="DTOs\Ventas\CorteCajaDTO.cs" />
     <Compile Include="Servicios\Catalogos\CuentaContableAutorizadoServicio.cs" />
     <Compile Include="Servicios\Equipo\CalculosEquipoTrasporte.cs" />
     <Compile Include="DTOs\EquipoTransporte\MantenimientoDetalleDTO.cs" />
