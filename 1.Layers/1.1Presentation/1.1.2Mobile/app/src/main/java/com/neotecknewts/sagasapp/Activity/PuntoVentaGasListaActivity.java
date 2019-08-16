@@ -19,6 +19,7 @@ import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.neotecknewts.sagasapp.Model.ReporteDto;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Adapter.PuntoVentaAdapter;
 import com.neotecknewts.sagasapp.Model.ConceptoDTO;
@@ -527,6 +528,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      * de gas con cilindro
      */
     private void VentaCilindroGas() {
+
         List<ConceptoDTO> conceptos = new ArrayList<>();
         for (int x =0; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
             View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
@@ -539,10 +541,13 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             if (editText.getText().toString().trim().length() > 0) {
                 double cantidadVenta = Double.valueOf(editText.getText().toString());
                 double cantidadActual = adapter.getCilindro(x).getExistencias();
+                Log.d("Existenciapuntoventa", adapter.getCilindro(x).getExistencias()+"");
 
                 if (cantidadActual > 0) {
                     if (cantidadActual >= cantidadVenta) {
                         ConceptoDTO cilindros = new ConceptoDTO();
+                        Log.d("existencia", cantidadActual+"");
+                        cantidadActual = cantidadActual - cantidadVenta;
 
                         cilindros.setIdEmpresa(session.getIdEmpresa());
                         cilindros.setDia(calendar.get(Calendar.DAY_OF_WEEK));
@@ -567,6 +572,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         cilindros.setSubtotal(
                                 cilindros.getCantidad() * cilindros.getPrecioUnitarioProducto()
                         );
+
                         cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
                         cilindros.setConcepto(TVTipo.getText().toString());
                         cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());

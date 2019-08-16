@@ -328,8 +328,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     iniciarDescarga.getImagenes().add(image.trim());
-                    Log.w("Imagenes"+i,""+uri.toString());
-                    Log.w("Imagenes"+i,"Base64: "+image);
+                    Log.w("Imagenes: "+ i,""+uri.toString());
+                    Log.w("Imagenes: "+ i,"Base64: "+image);
                 }catch (Exception e){
 
                 }
@@ -365,6 +365,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     Log.d("image", image.trim());
+                    System.out.println(image.trim());
                     lecturaDTO.getImagenes().add(image.trim());
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){
@@ -398,6 +399,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    Log.w("Imagen64", image+"");
                     lecturaDTO.getImagenes().add(image.trim());
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){
@@ -482,7 +484,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     recargaDTO.getImagenes().add(image.trim());
-                    Log.w("Imagenes"+i,""+uri.toString());
+                    Log.w("Imagenes"+ i,""+uri.toString());
                 }catch (Exception e){
                     e.printStackTrace();
                 }

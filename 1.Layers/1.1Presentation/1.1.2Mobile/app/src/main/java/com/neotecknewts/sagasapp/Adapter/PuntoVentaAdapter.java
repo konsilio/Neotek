@@ -35,9 +35,11 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public boolean Mostrar;
 
     public PuntoVentaAdapter(List<ExistenciasDTO> items, boolean EsVentaCamioneta, Context context) {
+        Log.d("Item: ", items+"");
         this.items = items;
         this.EsVentaCamioneta = EsVentaCamioneta;
         this.context = context;
+
     }
 
     public EditText ETPuntoVentaGasListActivityPrecioporLitro;
@@ -78,9 +80,12 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         EditText editTextCantidad = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityCantidad;
         EditText editTextPrecioLitro = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityPrecioporLitro;
+        Log.d("Existenciaholder", editTextPrecioLitro.toString());
 
         if(precioVentaDTO != null) {
             if (EsVentaCamioneta){
+                Log.d("ExistenciaDTO", (new ExistenciasDTO().toString()));
+                Log.d("Existencia adapter", existencia+"");
                 editTextPrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaKg()));
             }else {
                 editTextPrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
@@ -102,7 +107,6 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 @Override
                 public void afterTextChanged(Editable s) {
-
                     if (!editTextCantidad.getText().toString().isEmpty() && editTextCantidad.getText() != null) {
                         double precioPorLitro;
                         if(!editTextPrecioLitro.getText().toString().isEmpty() ) {
@@ -115,8 +119,6 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                         }
                         Log.d("precioltr", precioPorLitro+"");
-
-
                         Descuento.setText(String.valueOf(0));
                         double cantidadSeleccionada = Double.parseDouble(editTextCantidad.getText().toString());
                         Log.d("Cntidadselec", cantidadSeleccionada+"");
@@ -129,11 +131,13 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         cantidad = editTextCantidad;
                         Litro = editTextPrecioLitro;
                         existencia = items.get(position);
+
                     }
 
                 }
             });
             editTextCantidad.addTextChangedListener(new TextWatcher() {
+
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 }
@@ -209,6 +213,8 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView PuntoVentaGasListaActivityCantidadGas, PuntoVentaGasListaActivityTipoGas,
                 PuntoVentaGasListActivityTituloCantidad, PuntoVentaGasListActivityExistencia;
         public EditText ETPuntoVentaGasListActivityCantidad, ETPuntoVentaGasListActivityPrecioporLitro;
+
+
 
         ExistenciasHolder(View view) {
             super(view);

@@ -106,6 +106,7 @@ public class VerReporteActivity extends AppCompatActivity {
             EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
 
             if(EsReporteDelDia) {
+                Log.d("CorteDTO", corteDTO.toString());
                 Log.d("Ali", "text: "+ (String) bundle.get("StringReporte"));
                 Log.d("Ali", "html: "+ (String) bundle.get("HtmlReporte"));
                 StringReporte = (String) bundle.get("StringReporte");

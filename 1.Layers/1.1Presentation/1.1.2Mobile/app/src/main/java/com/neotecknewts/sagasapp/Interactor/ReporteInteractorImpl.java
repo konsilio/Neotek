@@ -32,6 +32,7 @@ public class ReporteInteractorImpl implements ReporteInteractor {
                 if (response.isSuccessful()) {
                     Log.w("Success", "Se han cargado ");
                     presenter.onSuccessUnidades(response.body());
+                    Log.w("Response", response.body().toString());
 
                 } else {
                     switch (response.code()) {

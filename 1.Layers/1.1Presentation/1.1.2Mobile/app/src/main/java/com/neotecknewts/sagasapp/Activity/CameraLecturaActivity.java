@@ -110,7 +110,6 @@ public class CameraLecturaActivity extends AppCompatActivity {
             calibracionDTO = (CalibracionDTO) b.getSerializable("calibracionDTO");
             EsCalibracionPipaInicial = b.getBoolean("EsCalibracionPipaInicial",false);
             EsCalibracionPipaFinal = b.getBoolean("EsCalibracionPipaFinal",false);
-
         }
 
         LLCameraLecturaActivityTitulo = findViewById(R.id.LLCameraLecturaActivityTitulo);

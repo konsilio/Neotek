@@ -56,6 +56,7 @@ public class LoginInteractorImpl implements LoginInteractor {
             @Override
             public void onResponse(Call<List<EmpresaDTO>> call, Response<List<EmpresaDTO>> response) {
                 if (response.isSuccessful()) {
+                    Log.d("entro mensaje:", "Si entró" );
                     List<EmpresaDTO> data = response.body();
                     Log.w(TAG,"Success");
                     loginPresenter.onSuccessGetEmpresas(data);
@@ -98,7 +99,7 @@ public class LoginInteractorImpl implements LoginInteractor {
     //hace el login
     @Override
     public void postLogin(UsuarioLoginDTO usuarioLoginDTO) {
-
+        Log.d("entro mensaje:", "Si entró" );
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<UsuarioDTO> call = restClient.postLogin(usuarioLoginDTO,"application/json");
         Log.w(TAG, ApiClient.BASE_URL.toString());
@@ -113,7 +114,7 @@ public class LoginInteractorImpl implements LoginInteractor {
                     //loginPresenter.onSuccessLogin(UsuarioDTO);
 
                     if (response.isSuccessful()) {
-                        //Log.d("Jimy", data.toString());
+                        Log.d("Jimy", data.toString());
                         //Log.w(TAG,"Sucess");
                         if(data.getIdUsuario()!= 0){
                             if(data.getLengthListMenu()  > 0){
@@ -165,6 +166,7 @@ public class LoginInteractorImpl implements LoginInteractor {
 
             @Override
             public void onFailure(Call<UsuarioDTO> call, Throwable t) {
+                Log.d("entro mensaje:", "Si entró" );
                 Log.e("error", t.toString());
                 Log.e("error", t.getLocalizedMessage());
                 loginPresenter.onError(t.getMessage());

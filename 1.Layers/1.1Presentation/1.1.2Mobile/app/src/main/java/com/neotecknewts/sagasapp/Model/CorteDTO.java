@@ -255,6 +255,35 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
         IdRecibio = idRecibio;
     }
 
+    @Override
+    public String toString() {
+        return "CorteDTO{" +
+                "IdCorte=" + IdCorte +
+                ", Tiket='" + Tiket + '\'' +
+                ", Fecha='" + Fecha + '\'' +
+                ", Monto=" + Monto +
+                ", IdEstacion=" + IdEstacion +
+                ", NombreEstacion='" + NombreEstacion + '\'' +
+                ", Total=" + Total +
+                ", P5000Inicial=" + P5000Inicial +
+                ", P5000Final=" + P5000Final +
+                ", Anticipos=" + Anticipos +
+                ", MontoCorte=" + MontoCorte +
+                ", LitrosCorte=" + LitrosCorte +
+                ", ClaveOperacion='" + ClaveOperacion + '\'' +
+                ", Hora='" + Hora + '\'' +
+                ", FechaVenta='" + FechaVenta + '\'' +
+                ", TotalAnticipos=" + TotalAnticipos +
+                ", Recibe='" + Recibe + '\'' +
+                ", FechaCorte='" + FechaCorte + '\'' +
+                ", Conceptos=" + Conceptos +
+                ", Entrega='" + Entrega + '\'' +
+                ", IdRecibio=" + IdRecibio +
+                ", IdEntrega=" + IdEntrega +
+                ", Camioneta=" + Camioneta +
+                '}';
+    }
+
     public boolean isCamioneta() {
         return Camioneta;
     }

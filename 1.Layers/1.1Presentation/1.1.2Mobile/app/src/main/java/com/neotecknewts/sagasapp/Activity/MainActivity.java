@@ -157,8 +157,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
             IdEmpresa = empresaDTOs.get(spinnerGaseras.getSelectedItemPosition()).getIdEmpresa();
             //se verifica que no haya campos vacios y que sea un correo valido, y en caso contrario se muestra un mensaje
             if (TextUtils.isEmpty(usuario) || TextUtils.isEmpty(contraseña)) {
+                Log.d("mensaje:","campos vacios");
                 showDialog(getResources().getString(R.string.empty_field));
             } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(usuario).matches()) {
+                Log.d("mensaje:","correo invalido");
                 showDialog(getResources().getString(R.string.invalid_email));
             } else {
                 //String fb_token = "";
@@ -204,7 +206,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 });
 
         AlertDialog alert11 = builder1.create();
-       // alert11.show();
+        alert11.show();
+        alert11.dismiss();
     }
 
     //funcion que inicia el activity del menu y le envia la lista para construirlo
@@ -243,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void messageError(String mensaje) {
         if(mensaje==null) {
+            Log.d("mensaje:","error conexion");
             mensaje = getResources().getString(R.string.error_conexion);
         }
         showDialog(mensaje);
@@ -278,6 +282,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
             Log.w("USUARIO",usuarioDTO.getIdUsuario()+"");
             Log.w("LISTA",usuarioDTO.getListMenu().length+"");
             if(usuarioDTO.getListMenu().length==0){
+                Log.d("mensaje:","sin permisos");
                 showDialog(getResources().getString(R.string.usuario_sin_permisos));
             }else{
                 //showDialog(getResources().getString(R.string.login_sucess));
@@ -295,6 +300,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 finish();
             }
         }else{
+            Log.d("mensaje:","contraseña incorrecta");
             showDialog(getResources().getString(R.string.usuario_incorrecto));
         }
 

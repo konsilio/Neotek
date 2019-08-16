@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -92,8 +93,11 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 setFecha();
             };
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anticipo_tabla);
         Bundle bundle = getIntent().getExtras();
@@ -105,7 +109,9 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             EsCamioneta = bundle.getBoolean("EsCamioneta",false);
             EsEstacion = bundle.getBoolean("EsEstacion",false);
             EsPipa = bundle.getBoolean("EsPipa");
+            Log.d("CorteDTO", corteDTO.toString());
         }
+        Log.d("CorteDTO", corteDTO.toString());
         hasFecha = false;
         dataUsariosCorte = new UsuariosCorteDTO();
         final Calendar c = Calendar.getInstance();
@@ -226,6 +232,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
 
     @Override
     public void VerificarCampos() {
+        Log.d("CorteDTO", corteDTO.toString());
         if(hasFecha) {
             if (EsAnticipo) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);

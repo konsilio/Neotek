@@ -429,7 +429,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public void onResume() {
 
         super.onResume();
-        System.out.println(321);
+
         if (mCamera == null) {
             mCamera = Camera.open();
             mCamera.setDisplayOrientation(90);
@@ -458,7 +458,6 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             mCamera = null;
         }
     }
-
     private String saveToInternalStorage(byte[] data) {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
@@ -496,6 +495,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 fotoTomada = true;
                 Log.w("Camera log", "Rotada");
                 imageurl = saveToInternalStorage(data);
+
+                Log.d("Imagen data", data+"");
                 Log.w("Camera log", "Guardada");
 
                 imageViewFoto.setImageBitmap(rotatedBitmap);
@@ -510,6 +511,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
                 imageUri = getContentResolver().insert(
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                //imageurl = saveToInternalStorage(data);
             }
         };
         return picture;
@@ -525,6 +527,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 //se cehca que objeto se esta usando y se agrega la uri de la imagen a su lista
                 if (papeleta) {
                     papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+
                 } else if (iniciar) {
 
                     iniciarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
@@ -567,6 +570,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+            Log.d("Imagen", papeletaDTO.getImagenes()+"");
             //se pone visible el layout para tomar la siguiente fotografia
             layoutTitle.setVisibility(View.VISIBLE);
             layoutCameraButton.setVisibility(View.VISIBLE);
