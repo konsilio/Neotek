@@ -78,7 +78,12 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarLiquidacionEst(cc, tkn);
             return agente._RespuestaDTO;
         }
-
+        public static RespuestaDTO GuardarLiquidacion(CorteCajaDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GenerarLiquidacion(dto, tkn);
+            return agente._RespuestaDTO;
+        }
         #endregion
     }
 }

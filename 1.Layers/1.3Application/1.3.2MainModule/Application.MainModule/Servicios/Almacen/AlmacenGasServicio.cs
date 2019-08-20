@@ -651,7 +651,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             var almacen = ObtenerAlmacen(idCAlmacenGas);
 
-
             var reportes = new AlmacenGasDataAccess().ObtenerReportes();
             int orden = ordenReportes(reportes);
             ReporteDiaDTO reporteDTO = new ReporteDiaDTO();
@@ -750,7 +749,7 @@ namespace Application.MainModule.Servicios.Almacenes
                     reporteDTO.LitrosVenta = CalculosGenerales.DiferenciaEntreDosNumero(reporteDTO.LecturaInicial.CantidadP5000, reporteDTO.LecturaFinal.CantidadP5000);
                     reporteDTO.Fecha = fecha;
                     reporteDTO.Precio = CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), ventasContado.Count);
-                    reporteDTO.ClaveReporte = DateTime.Now.Year + "R" + DateTime.Now.Ticks;
+                    reporteDTO.ClaveReporte = fecha.Year + "R" + fecha.Ticks;
                     reporteDTO.Error = false;
                     reporteDTO.Mensaje = "Exito";
                     //Metodo anterior 

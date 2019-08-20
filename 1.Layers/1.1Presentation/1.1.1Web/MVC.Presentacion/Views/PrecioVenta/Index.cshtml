@@ -277,11 +277,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
+                    @*<div class="card">
                         <div class="header">
                             <h2><strong>Registrar precio de salida</strong></h2>
                         </div>
-                        <div class="body">
+                        < como estaba antes div class="body">
                             <div class="row clearfix">
                                 <div class="col-sm-005" style="text-align:center">
                                     <div class="form-group">
@@ -343,6 +343,65 @@
                                 <div class="col-sm-005">
                                     <div class="form-group" style="top:-10px">
                                         <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" readonly="readonly" />
+                                        <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
+                                        <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
+                                        <input type="text" name="Categoria" class="form-control date" hidden="hidden" value="Combustibles" />
+                                        <input type="text" name="Linea" class="form-control date" hidden="hidden" value="Gas" />
+                                        <input type="text" name="Producto" class="form-control date" hidden="hidden" value="Gas" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div class="form-group">
+                                        Lt.
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <b>Fecha programada:</b>
+                                </div>
+                                <div class="col-sm-3">
+                                    @Html.DevExpress().DateEdit(settings =>
+                               {
+                                   settings.Name = "FechaProgramada";
+                                   settings.Properties.UseMaskBehavior = true;
+                                   settings.Properties.EditFormat = EditFormat.Custom;
+                                   settings.Theme = "Material";
+                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                   settings.Properties.NullText = "dd/MM/yyyy";
+                                   //settings.Attributes.Clear();
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                               }).GetHtml()
+                                </div>
+                                <div class="col-sm-7">
+                                    <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Registrar precio de salida</strong></h2>
+                        </div>
+                        <div class="body">                           
+                            <div class="row clearfix">
+                                <div class="col-sm-005" style="text-align:center">
+                                    <div class="form-group">
+                                        Precio salida:
+                                    </div>
+                                </div>
+                                <div class="col-sm-005">
+                                    <div class="form-group" style="top:-10px">
+                                        <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div class="form-group">
+                                        kg.
+                                    </div>
+                                </div>
+                                <div class="col-sm-005">
+                                    <div class="form-group" style="top:-10px">
+                                        <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" />
                                         <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
                                         <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
                                         <input type="text" name="Categoria" class="form-control date" hidden="hidden" value="Combustibles" />
@@ -461,9 +520,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>Gasera</th>
-                                                    <th>Precio Compra(kg)</th>
-                                                    <th>Utilidad Esperada(kg)</th>
-                                                    <th>Precio Salida</th>
+                                                    @*<th>Precio Compra(kg)</th>
+                                                    <th>Utilidad Esperada(kg)</th>*@
+                                                    <th>Precio Salida Kg</th>
+                                                    <th>Precio Salida Lts</th>
                                                     <th>Fecha Programada</th>
                                                     <th>FechaVencimiento</th>
                                                     <th>Estatus</th>
@@ -476,29 +536,30 @@
                                                 {
                                                     foreach (var item in ViewBag.ListaPV)
                                                     {
-                                                        <tr>
-                                                            <td>@item.Empresa</td>
-                                                            <td>@item.PrecioPemexKg</td>
-                                                            <td>@item.UtilidadEsperadaKg</td>
-                                                            <td>@item.PrecioSalidaKg</td>
-                                                            <td>@item.FechaProgramada</td>
-                                                            <td>@item.FechaVencimiento</td>
-                                                            <td>@item.PrecioVentaEstatus</td>
-                                                            <td>@item.FechaRegistro</td>
-                                                            @if (item.PrecioVentaEstatus == "Programado")
-                                                            {
-                                                                <td>
-                                                                    <a href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">edit</i>
-                                                                        <span>Editar precio venta</span>
-                                                                    </a>
-                                                                    <a href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">delete</i>
-                                                                        <span>Eliminar precio venta</span>
-                                                                    </a>
-                                                                </td>
-                                                            }
-                                                        </tr>
+                                                <tr>
+                                                    <td>@item.Empresa</td>
+                                                    @*<td>@item.PrecioPemexKg</td>
+                                                    <td>@item.UtilidadEsperadaKg</td>*@
+                                                    <td>@item.PrecioSalidaKg</td>
+                                                    <td>@item.PrecioSalidaLt</td>
+                                                    <td>@item.FechaProgramada</td>
+                                                    <td>@item.FechaVencimiento</td>
+                                                    <td>@item.PrecioVentaEstatus</td>
+                                                    <td>@item.FechaRegistro</td>
+                                                    @if (item.PrecioVentaEstatus == "Programado")
+                                                    {
+                                                        <td>
+                                                            <a href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">edit</i>
+                                                                <span>Editar precio venta</span>
+                                                            </a>
+                                                            <a href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="material-icons">delete</i>
+                                                                <span>Eliminar precio venta</span>
+                                                            </a>
+                                                        </td>
+                                                    }
+                                                </tr>
                                                     }
                                                 }
                                             </tbody>
@@ -507,7 +568,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                   
+                    </div>
                 </div>
             </div>
         </section>

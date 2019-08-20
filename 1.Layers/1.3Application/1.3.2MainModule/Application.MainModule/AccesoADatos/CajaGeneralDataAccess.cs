@@ -42,6 +42,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                ).ToList();
             }
         }
+        public List<VentaCajaGeneral> ObtenerCorteUltimo(short unidad, short empresa, short year, byte month, byte dia)
+        {
+            return uow.Repository<VentaCajaGeneral>().Get(x => x.IdCAlmacenGas.Equals(unidad) && x.IdEmpresa.Equals(empresa) && x.Year.Equals(year) && x.Mes.Equals(month) && x.Dia.Equals(dia)).ToList();
+        }
         public List<VentaMovimiento> BuscarTodos()
         {
             return uow.Repository<VentaMovimiento>().Get().ToList();
@@ -212,8 +216,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-
-                    uow.Repository<Sagas.MainModule.Entidades.VentaCajaGeneral>().Update(pv);
+                    uow.Repository<VentaCajaGeneral>().Update(pv);
                     uow.SaveChanges();
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;
@@ -224,6 +227,29 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 {
                     _respuesta.Exito = false;
                     _respuesta.Mensaje = string.Format(Error.C0003, "de la liquidación"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Insertar(VentaCajaGeneral pv)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<VentaCajaGeneral>().Insert(pv);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.A0001, "de la liquidación"); ;
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }

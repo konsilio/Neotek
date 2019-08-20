@@ -137,8 +137,10 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 UtilidadEsperadaKg = PVGasDTO.UtilidadEsperadaKg,
                 UtilidadEsperadaLt = PVGasDTO.UtilidadEsperadaLt,
                 PrecioSalida = PVGasDTO.PrecioSalida,
-                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg, (decimal)flete),//PVGasDTO.PrecioSalidaKg,
-                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt(((decimal)PVGasDTO.PrecioPemexKg + (decimal)flete), factorLtaKg),
+                //PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg, (decimal)flete),//PVGasDTO.PrecioSalidaKg,
+                //PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt(((decimal)PVGasDTO.PrecioPemexKg + (decimal)flete), factorLtaKg),
+                PrecioSalidaKg = PVGasDTO.PrecioSalidaKg,
+                PrecioSalidaLt = PVGasDTO.PrecioSalidaLt,
                 EsGas = PVGasDTO.EsGas,
                 FechaProgramada = PVGasDTO.FechaProgramada,
                 FechaVencimiento = PVGasDTO.FechaVencimiento,
@@ -189,8 +191,10 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 UtilidadEsperadaKg = PVGasDTO.UtilidadEsperadaKg,
                 UtilidadEsperadaLt = PVGasDTO.UtilidadEsperadaLt,
                 PrecioSalida = PVGasDTO.PrecioSalida,
-                PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg, (decimal)flete),//PVGasDTO.PrecioSalidaKg,
-                PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt(((decimal)PVGasDTO.PrecioPemexKg + (decimal)flete), factorLtaKg),
+                //PrecioSalidaKg = CalcularPreciosVentaServicio.ObtenerPrecioSalidaKg((decimal)PVGasDTO.PrecioPemexKg, (decimal)PVGasDTO.UtilidadEsperadaKg, (decimal)flete),//PVGasDTO.PrecioSalidaKg,
+                //PrecioSalidaLt = CalcularPreciosVentaServicio.ObtenerPrecioSalidaLt(((decimal)PVGasDTO.PrecioPemexKg + (decimal)flete), factorLtaKg),
+                PrecioSalidaKg = PVGasDTO.PrecioSalidaKg,
+                PrecioSalidaLt = PVGasDTO.PrecioSalidaLt,
                 PrecioFlete = PVGasDTO.PrecioFlete,
                 EsGas = PVGasDTO.EsGas,
                 FechaProgramada = PVGasDTO.FechaProgramada,
@@ -209,9 +213,12 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             if (Ctedto.IdCategoria != 0) catPrecioVenta.IdCategoria = Ctedto.IdCategoria; else catPrecioVenta.IdCategoria = catPrecioVenta.IdCategoria;
             if (Ctedto.IdProductoLinea != 0) catPrecioVenta.IdProductoLinea = Ctedto.IdProductoLinea; else catPrecioVenta.IdProductoLinea = catPrecioVenta.IdProductoLinea;
             if (Ctedto.IdProducto != 0) catPrecioVenta.IdProducto = Ctedto.IdProducto; else catPrecioVenta.IdProducto = catPrecioVenta.IdProducto;
-            if (Ctedto.Categoria != null) catPrecioVenta.Categoria = Ctedto.Categoria; else catPrecioVenta.Categoria = catPrecioVenta.Categoria;
-            if (Ctedto.Linea != null) catPrecioVenta.Linea = Ctedto.Linea; else catPrecioVenta.Linea = catPrecioVenta.Linea;
-            if (Ctedto.Producto != null) catPrecioVenta.Producto = Ctedto.Producto; else catPrecioVenta.Producto = catPrecioVenta.Producto;
+            //if (Ctedto.Categoria != null) catPrecioVenta.Categoria = Ctedto.Categoria; else catPrecioVenta.Categoria = catPrecioVenta.Categoria;
+            //if (Ctedto.Linea != null) catPrecioVenta.Linea = Ctedto.Linea; else catPrecioVenta.Linea = catPrecioVenta.Linea;
+            //if (Ctedto.Producto != null) catPrecioVenta.Producto = Ctedto.Producto; else catPrecioVenta.Producto = catPrecioVenta.Producto;
+            if (Ctedto.Categoria != null) catPrecioVenta.Categoria = catCte.Categoria; else catPrecioVenta.Categoria = catCte.Categoria;
+            if (Ctedto.Linea != null) catPrecioVenta.Linea = catCte.Linea; else catPrecioVenta.Linea = catCte.Linea;
+            if (Ctedto.Producto != null) catPrecioVenta.Producto = catCte.Producto; else catPrecioVenta.Producto = catCte.Producto;
             if (Ctedto.PrecioActual != null) catPrecioVenta.PrecioActual = Ctedto.PrecioActual; else catPrecioVenta.PrecioActual = catPrecioVenta.PrecioActual;
             if (Ctedto.PrecioPemexKg != null) catPrecioVenta.PrecioPemexKg = Ctedto.PrecioPemexKg; else catPrecioVenta.PrecioPemexKg = catPrecioVenta.PrecioPemexKg;
             if (Ctedto.PrecioPemexLt != null) catPrecioVenta.PrecioPemexLt = Ctedto.PrecioPemexLt; else catPrecioVenta.PrecioPemexLt = catPrecioVenta.PrecioPemexLt;
