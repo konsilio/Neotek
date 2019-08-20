@@ -26,7 +26,7 @@ public interface SubirImagenesPresenter {
     void onSuccessRegistrarPapeleta();
     void onSuccessRegistrarIniciarDescarga();
     void onSuccessRegistrarFinalizarDescarga();
-    void Precio prom día();
+    void onError();
     void onSuccessRegistroPapeleta();
     void onSuccessRegistroAndroid();
 

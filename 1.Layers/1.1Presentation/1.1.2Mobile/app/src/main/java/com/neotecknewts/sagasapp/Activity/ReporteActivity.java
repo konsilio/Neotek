@@ -250,7 +250,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "-------------------------------\n" +
                         "Litros de venta: " +
                         "\t  [{litros-venta}] \n" +
-                        "Precio prom día:" +
+                        "onerror:" +
                         "\t $ [{Precio}]\n" +
                         "Importe contado:" +
                         "\t $ [{Importe-contado}] \n" +

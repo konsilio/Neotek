@@ -83,6 +83,11 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     false);
             ETLecturaP5000CantidadNull = findViewById(R.id.ETLecturaP5000CantidadNull);
             NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
+            NPLecturaP500CantidadLectura.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                }
+            });
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
                 max_p5000 = lecturaDTO.getCantidadP5000();
@@ -398,9 +403,6 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             TVLecturaP5000Registro.setText("Registra la lectura del P5000 de la "+
                     calibracionDTO.getNombreCAlmacenGas());
         }
-
-
-
 
         BtnLecturaP5000Guardar = findViewById(R.id.BtnLecturaP5000Guardar);
         BtnLecturaP5000Guardar.setOnClickListener(this);
