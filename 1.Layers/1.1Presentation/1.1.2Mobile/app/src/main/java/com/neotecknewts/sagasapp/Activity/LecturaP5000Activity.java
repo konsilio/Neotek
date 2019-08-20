@@ -83,11 +83,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     false);
             ETLecturaP5000CantidadNull = findViewById(R.id.ETLecturaP5000CantidadNull);
             NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
-            NPLecturaP500CantidadLectura.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                }
-            });
+
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
                 max_p5000 = lecturaDTO.getCantidadP5000();
@@ -414,6 +410,19 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
         NPLecturaP500CantidadLectura.setMaxValue(999999);
         NPLecturaP500CantidadLectura.setMinValue(0);
         NPLecturaP500CantidadLectura.setValue(p5000);
+
+        for (int i = 0; i < NPLecturaP500CantidadLectura.getChildCount(); i++) {
+            View childView = NPLecturaP500CantidadLectura.getChildAt(i);
+            if (childView instanceof EditText) {
+                childView.setOnKeyListener((view, i1, keyEvent) -> {
+                    if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                        NPLecturaP500CantidadLectura.setValue(Integer.parseInt(((EditText) view).getText().toString()));
+                        return true;
+                    }
+                    return false;
+                });
+            }
+        }
     }
 
     @Override
