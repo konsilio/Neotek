@@ -103,7 +103,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             if (cliente.Telefono1 != null)
             {
-                int tel = Int32.Parse(cliente.Telefono1);
+                int tel = 0;
+                int.TryParse(cliente.Telefono1, out tel);
                 consulta = uow.Repository<Cliente>().Get(x =>
                                       (x.Telefono1.Trim().Equals(cliente.Telefono1)
                                       || x.Telefono.Trim().Equals(cliente.Telefono1)

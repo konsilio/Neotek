@@ -1545,9 +1545,9 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute,cveRep)).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute, cveRep)).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        lus = await response.Content.ReadAsAsync< Models.Ventas.CorteCajaDTO>();
+                        lus = await response.Content.ReadAsAsync<Models.Ventas.CorteCajaDTO>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -2374,7 +2374,7 @@ namespace MVC.Presentacion.Agente
                     {
                         HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute, id)).ConfigureAwait(false);
                         if (response.IsSuccessStatusCode)
-                            list = await response.Content.ReadAsAsync<List<CuentaContableAutorizadoDTO>>();                       
+                            list = await response.Content.ReadAsAsync<List<CuentaContableAutorizadoDTO>>();
                         _ListaCuentaContableAutorizado = list;
                     }
                     else
@@ -5672,6 +5672,11 @@ namespace MVC.Presentacion.Agente
                 }
                 _ListaCorteCaja = list;
             }
+        }
+        public void GenerarLiquidacion(Models.Ventas.CorteCajaDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutLiquidar"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
         #region Gasto por vehiculo

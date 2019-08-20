@@ -155,10 +155,10 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeRegistrarCliente();
             if (!resp.Exito) return resp;
 
-            var ExisteRfc = ClienteServicio.BuscarClientePorRFC(cteDto.Rfc);
-            if (ExisteRfc != null)
-                if (!ExisteRfc.Rfc.Equals(ClienteServicio.ObtenerPublicoEnGeneral().Rfc))
-                    return ClienteServicio.YaExiste();
+            //var ExisteRfc = ClienteServicio.BuscarClientePorRFC(cteDto.Rfc);
+            //if (ExisteRfc != null)
+            //    if (!ExisteRfc.Rfc.Equals(ClienteServicio.ObtenerPublicoEnGeneral().Rfc))
+            //        return ClienteServicio.YaExiste();
 
             var cliente = ClientesAdapter.FromDtoMod(cteDto);
 

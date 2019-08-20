@@ -163,9 +163,7 @@ namespace Application.MainModule.Flujos
                     }
                     if (!chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.EsGeneral && chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion == null)
                         respesta.Add(dto);
-
                 }
-
             }
             return respesta;
         }

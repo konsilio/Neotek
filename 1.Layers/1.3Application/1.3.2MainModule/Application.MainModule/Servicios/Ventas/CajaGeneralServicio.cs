@@ -26,6 +26,10 @@ namespace Application.MainModule.Servicios.Ventas
             List<CajaGeneralDTO> lPventas = CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().BuscarTodos());
             return lPventas;
         }
+        //public static int ObtenerUltimoOrden()
+        //{
+        //    return new CajaGeneralDataAccess().BuscarTodos();
+        //}
         public static List<VPuntoVentaDetalleDTO> ObtenerVentas(short empresa, short year, byte month, byte dia, short? orden)
         {
             List<VentaPuntoDeVentaDetalle> _lst = BuscarPuntoVentaDetalle(empresa, year, month, dia, orden.Value).ToList();
@@ -117,6 +121,10 @@ namespace Application.MainModule.Servicios.Ventas
             List<AlmacenGasMovimientoDto> ldetalles = CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(empresa, year, month, dia, orden, Folio));
             return ldetalles;
         }
+        public static int ObtenerCorteUltimo(short unidad, short empresa, short year, byte month, byte dia)
+        {
+            return new CajaGeneralDataAccess().ObtenerCorteUltimo(unidad, empresa, year, month, dia).LastOrDefault().Orden;
+        }
         public static List<VentasPipaDto> ObtenerVentasPipas(short unidad, short empresa, short year, byte month, byte dia, short orden, DateTime fecha, string FolioOperacion)
         {
             List<VentasPipaDto> lst = new List<VentasPipaDto>();
@@ -142,10 +150,10 @@ namespace Application.MainModule.Servicios.Ventas
             List<VentaPuntoVentaDTO> lPventas = CajaGeneralAdapter.ToDTOC(new CajaGeneralDataAccess().BuscarPorCve(cve));
             return lPventas;
         }
-        public static List<VentaPuntoVentaDTO> ObtenerVPV(ReporteDelDia cve)
+        public static List<VentaPuntoDeVenta> ObtenerVPV(ReporteDelDia cve)
         {
-            var Ventas = new CajaGeneralDataAccess().BuscarPorCve(cve);      
-            return CajaGeneralAdapter.ToDTOC(Ventas);
+            return new CajaGeneralDataAccess().BuscarPorCve(cve);
+
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasCamioneta(DateTime f)
         {
@@ -179,6 +187,10 @@ namespace Application.MainModule.Servicios.Ventas
         public static RespuestaDto Actualizar(VentaCajaGeneral pv)
         {
             return new CajaGeneralDataAccess().Actualizar(pv);
+        }
+        public static RespuestaDto Insertar(VentaCajaGeneral pv)
+        {
+            return new CajaGeneralDataAccess().Insertar(pv);
         }
         public static List<VentaPuntoDeVenta> ObtenerVentas()
         {
@@ -689,6 +701,11 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new PuntoVentaDataAccess().ObtenerVentas(idCAlmacen, fecha);
         }
+        public static RespuestaDto ActualizarVentas(List<VentaPuntoDeVenta> ventas)
+        {
+            return new CajaGeneralDataAccess().Actualizar(ventas);
+        }
+
     }
 }
 
