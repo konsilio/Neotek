@@ -349,6 +349,45 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
             return catUsuario;
         }
-        
+
+
+        public static Usuario FromDTOEditar(UsuarioEditDTO usuariodto, Usuario catUser)
+        {
+            var catUsuario = FromEntity(catUser);
+
+
+            if (usuariodto.IdEmpresa != 0) { catUsuario.IdEmpresa = usuariodto.IdEmpresa; } else { catUsuario.IdEmpresa = catUsuario.IdEmpresa; }
+            if (usuariodto.Nombre != null) { catUsuario.Nombre = usuariodto.Nombre; } else catUsuario.Nombre = catUsuario.Nombre;
+            if (usuariodto.Apellido1 != null) { catUsuario.Apellido1 = usuariodto.Apellido1; } else catUsuario.Apellido1 = catUsuario.Apellido1;
+            if (usuariodto.Apellido2 != null) { catUsuario.Apellido2 = usuariodto.Apellido2; } else catUsuario.Apellido2 = catUsuario.Apellido2;
+            if (usuariodto.NombreUsuario != null) { catUsuario.NombreUsuario = usuariodto.NombreUsuario; } else catUsuario.NombreUsuario = catUsuario.NombreUsuario;
+            if (usuariodto.Password != null) { catUsuario.Password = usuariodto.Password; } else catUsuario.Password = catUsuario.Password;
+            if (usuariodto.Telefono1 != null) { catUsuario.Telefono1 = usuariodto.Telefono1; } else catUsuario.Telefono1 = catUsuario.Telefono1;
+            if (usuariodto.Telefono2 != null) { catUsuario.Telefono2 = usuariodto.Telefono2; } else catUsuario.Telefono2 = catUsuario.Telefono2;
+            if (usuariodto.Telefono3 != null) catUsuario.Telefono3 = usuariodto.Telefono3; else catUsuario.Telefono3 = catUsuario.Telefono3;
+            if (usuariodto.Celular1 != null) { catUsuario.Celular1 = usuariodto.Celular1; } else catUsuario.Celular1 = catUsuario.Celular1;
+            if (usuariodto.Celular2 != null) { catUsuario.Celular2 = usuariodto.Celular2; } else catUsuario.Celular2 = catUsuario.Celular2;
+            if (usuariodto.Celular3 != null) catUsuario.Celular3 = usuariodto.Celular3; else catUsuario.Celular3 = catUsuario.Celular3;
+            if (usuariodto.Email1 != null) { catUsuario.Email1 = usuariodto.Email1; } else catUsuario.Email1 = catUsuario.Email1;
+            if (usuariodto.Email2 != null) { catUsuario.Email2 = usuariodto.Email2; } else catUsuario.Email2 = catUsuario.Email2;
+            if (usuariodto.Email3 != null) catUsuario.Email3 = usuariodto.Email3; else catUsuario.Email3 = catUsuario.Email3;
+            if (usuariodto.SitioWeb1 != null) { catUsuario.SitioWeb1 = usuariodto.SitioWeb1; } else catUsuario.SitioWeb1 = catUsuario.SitioWeb1;
+            if (usuariodto.SitioWeb2 != null) { catUsuario.SitioWeb2 = usuariodto.SitioWeb2; } else catUsuario.SitioWeb2 = catUsuario.SitioWeb2;
+            if (usuariodto.SitioWeb3 != null) { catUsuario.SitioWeb3 = usuariodto.SitioWeb3; } else catUsuario.SitioWeb3 = catUsuario.SitioWeb3;
+            if (usuariodto.IdPais != 0) { catUsuario.IdPais = usuariodto.IdPais; } else { catUsuario.IdPais = catUsuario.IdPais; }
+            if (usuariodto.IdEstadoRep != 0) { catUsuario.IdEstadoRep = usuariodto.IdEstadoRep; } else { catUsuario.IdEstadoRep = catUsuario.IdEstadoRep; }
+            if (usuariodto.EstadoProvincia != null) catUsuario.EstadoProvincia = usuariodto.EstadoProvincia; else catUsuario.EstadoProvincia = catUsuario.EstadoProvincia;
+            if (usuariodto.Municipio != null) catUsuario.Municipio = usuariodto.Municipio; else catUsuario.Municipio = catUsuario.Municipio;
+            if (usuariodto.CodigoPostal != null) catUsuario.CodigoPostal = usuariodto.CodigoPostal; else catUsuario.CodigoPostal = catUsuario.CodigoPostal;
+            if (usuariodto.Colonia != null) catUsuario.Colonia = usuariodto.Colonia; else catUsuario.Colonia = catUsuario.Colonia;
+            if (usuariodto.Calle != null) catUsuario.Calle = usuariodto.Calle; else catUsuario.Calle = catUsuario.Calle;
+            if (usuariodto.NumExt != null) catUsuario.NumExt = usuariodto.NumExt; else catUsuario.NumExt = catUsuario.NumExt;
+            if (usuariodto.NumInt != null) catUsuario.NumInt = usuariodto.NumInt; else catUsuario.NumInt = catUsuario.NumInt;
+
+
+            return catUsuario;
+        }
+
+
     }
 }
