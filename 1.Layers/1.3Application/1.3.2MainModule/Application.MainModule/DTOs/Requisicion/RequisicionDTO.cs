@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Requisicion
 {
-    [Serializable]
+    
     public class RequisicionDTO
     {
         public int IdRequisicion { get; set; }

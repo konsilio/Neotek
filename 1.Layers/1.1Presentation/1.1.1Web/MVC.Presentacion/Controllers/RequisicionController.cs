@@ -70,6 +70,7 @@ namespace MVC.Presentacion.Controllers
             if (model == null) model = RequisicionServicio.InitRequisicion(tkn);
             else if (model.IdEmpresa == 0) model = RequisicionServicio.InitRequisicion(tkn);
 
+           
             return View(model);
         }
         public ActionResult RequisicionAlternativa(int? id, byte? estatus)
@@ -168,7 +169,7 @@ namespace MVC.Presentacion.Controllers
             TempData["ListProducto"] = model;
 
             TempData["ListProductosRequisicion"] = model.Productos;
-
+            
             return RedirectToAction("Requisicion", newModel);
         }
         public ActionResult Editar(int? id, RequisicionDTO model = null)
@@ -183,6 +184,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["ListProductos"] = model.Productos.Where(x => x.IdProducto.Equals(id));
                 TempData["ListProductosRequisicion"] = newModel.Productos;
                 TempData["IdEmpresa"] = id.Value;
+                newModel.IdUsuarioSolicitante = model.IdUsuarioSolicitante;
                 return RedirectToAction("Requisicion", newModel);
             }
             else
@@ -195,10 +197,14 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+
+           
+
             if (id != 0)
             {
                 var newModel = RequisicionServicio.ActivarBorrar(model, id, (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"], (RequisicionDTO)TempData["ListProducto"], tkn);
                 TempData["ListProductosRequisicion"] = newModel.Productos;
+                newModel.IdUsuarioSolicitante = TokenServicio.ObtenerIdUsuario(tkn);
                 return RedirectToAction("Requisicion", newModel);
             }
             else
@@ -206,22 +212,32 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Requisicion", model);
             }
         }
-        public ActionResult CrearRequisicion(RequisicionDTO model)
+        public ActionResult CrearRequisicion(RequisicionInputDTO model)
         {
-            if (TempData["ListProductosRequisicion"] != null)
-                model.Productos = (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"];
-            tkn = Session["StringToken"].ToString();
-            var respuesta = RequisicionServicio.GuardarRequisicion(model, tkn);
-            if (respuesta.Exito)
+
+            if (ModelState.IsValid)
             {
-                TempData["ListProductosRequisicion"] = null;
-                return RedirectToAction("Requisiciones", new { msj = string.Concat("Se genero: ", respuesta.Mensaje) });
+                if (TempData["ListProductosRequisicion"] != null)
+                    model.Productos = (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"];
+                tkn = Session["StringToken"].ToString();
+                var respuesta = RequisicionServicio.GuardarRequisicion(model, tkn);
+                if (respuesta.Exito)
+                {
+                    TempData["ListProductosRequisicion"] = null;
+                    return RedirectToAction("Requisiciones", new { msj = string.Concat("Se genero: ", respuesta.Mensaje) });
+                }
+                else
+                {
+                    ViewData["RespuestaDTO"] = respuesta;
+                    return RedirectToAction("Requisicion", model);
+                }
             }
-            else
-            {
-                ViewData["RespuestaDTO"] = respuesta;
+            else {
+              
                 return RedirectToAction("Requisicion", model);
             }
+
+                
         }
         public ActionResult Cancelar(int? IdRequisicion, string MotivoCancela = null)
         {

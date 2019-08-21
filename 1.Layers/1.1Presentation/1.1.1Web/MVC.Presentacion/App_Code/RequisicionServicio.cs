@@ -91,12 +91,17 @@ namespace MVC.Presentacion.App_Code
             if (ValidarProductoRepetido(model))
                 foreach (var item in model.Productos.Where((x => x.IdProducto.Equals(model.IdProducto)
                                        && x.IdCentroCosto.Equals(model.IdCentroCosto))))
-                {                   
+                {
                     item.Cantidad = item.Cantidad + model.Cantidad;
                     item.Aplicacion = item.Aplicacion + "|" + model.Aplicacion;
                 }
-            else
-                model.Productos.Add(CrearProductoNuevo(model, _tkn));
+            else {
+
+                if (model.IdTipoProducto != 0 && model.IdProducto != 0 && model.IdCentroCosto != 0 && model.Aplicacion != null)
+                {
+                    model.Productos.Add(CrearProductoNuevo(model, _tkn));
+                }
+             }
             model.IdProducto = 0;
             model.IdCentroCosto = 0;
             model.IdTipoProducto = 0;
@@ -159,6 +164,7 @@ namespace MVC.Presentacion.App_Code
             var prod = CatalogoServicio.ListaProductos(_tkn).FirstOrDefault(x => x.IdProducto.Equals(model.IdProducto));
             var cc = CatalogoServicio.BuscarCentrosCosto(_tkn).FirstOrDefault(x => x.IdCentroCosto.Equals((byte)model.IdCentroCosto));
             var orden = model.Productos.Where(x => x.IdProducto.Equals(model.IdProducto)).ToList().Count + 1;
+
             return new RequisicionProductoDTO()
             {
                 IdTipoProducto = model.IdTipoProducto,
@@ -181,7 +187,7 @@ namespace MVC.Presentacion.App_Code
                 resp = (model.Productos.Exists(x => x.IdProducto.Equals(model.IdProducto) && x.IdCentroCosto.Equals(model.IdCentroCosto)));
             return resp;
         }
-        public static RespuestaDTO GuardarRequisicion(RequisicionDTO dto, string tkn)
+        public static RespuestaDTO GuardarRequisicion(RequisicionInputDTO dto, string tkn)
         {
             dto.FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString());
             var respuestaReq = new AgenteServicio();
