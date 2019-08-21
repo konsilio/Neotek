@@ -67,7 +67,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.GuardarReporteLiquidado(vpvDto));
         }
-
+        [Route("generar/liquidar")]
+        public HttpResponseMessage PutLiquidar(CajaGeneralDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.GenerarLiquidacion(dto.FolioOperacionDia));
+        }
         [Route("Modifica/liquidarcajageneralest")]
         public HttpResponseMessage PutLiquidarReporteEstacion(VentaCorteAnticipoDTO cestDto)
         {

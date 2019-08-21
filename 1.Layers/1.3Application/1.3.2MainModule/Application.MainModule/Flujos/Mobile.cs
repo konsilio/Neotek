@@ -183,6 +183,7 @@ namespace Application.MainModule.Flujos
         }
         public ReporteDiaDTO ReporteDia(DateTime fecha, short idCAlmacenGas)
         {
+            
            var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacenGas);
             var resp = AlmacenGasServicio.BuscarReporteDia(fecha, idCAlmacenGas,almacen.IdEmpresa);
 

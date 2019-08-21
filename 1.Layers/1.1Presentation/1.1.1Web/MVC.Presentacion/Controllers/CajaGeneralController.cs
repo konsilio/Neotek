@@ -91,24 +91,23 @@ namespace MVC.Presentacion.Controllers
 
             return View("Index");
         }
-        public ActionResult GuardarLiquidar(CajaGeneralCamionetaModel _ObjModel)
+        public ActionResult GuardarLiquidar(CorteCajaDTO dto)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tok = Session["StringToken"].ToString();
 
-            var respuesta = VentasServicio.CrearGuardarLiquidacion(_ObjModel, _tok);
-
+            //var respuesta = VentasServicio.CrearGuardarLiquidacion(_ObjModel, _tok);
+            var respuesta = VentasServicio.GuardarLiquidacion(dto, _tok);
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Liquidar");
+                return RedirectToAction("Index");
             }
-
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;
-                return RedirectToAction("Liquidar");
+                return RedirectToAction("Liquidar", dto);
             }
         }
         public ActionResult Estacion()

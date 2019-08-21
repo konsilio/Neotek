@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <b>Unidad</b>
+                                            <b>Puunto de venta:</b>
                                             @Html.LabelFor(model => model.NombreUnidad, Model.NombreUnidad, new { @class = "form-control" })
                                         </div>
                                     </div>
@@ -101,21 +101,15 @@
                                             <b>Total de venta en Litros:</b>
                                         }                                      
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.TotalCantidad, Model.TotalContado.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.TotalCantidad, Model.TotalCantidad.ToString(), new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <b>Total de venta Real:</b>
+                                        <b>Total de venta real: ($)</b>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.TotalEfectio, Model.TotalCredito.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.TotalVenta, Model.TotalVenta.ToString(), new { @class = "form-control" })
                                         </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <b>Otras ventas:</b>
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.TotalOtros, Model.TotalOtros.ToString(), new { @class = "form-control" })
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                 </div>
                                 <br />
                                 @if (Model.TipoUnidad != 2)
@@ -225,15 +219,7 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="row clearfix">
                                         <div class="col-sm-8" style="text-align:right">
-                                            <b>Descuento:</b>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            @Html.LabelFor(model => model.Descuentos, Model.Descuentos.ToString(), new { @class = "form-control" })
-                                        </div>
-                                    </div><br />
-                                    <div class="row clearfix">
-                                        <div class="col-sm-8" style="text-align:right">
-                                            <b>Total:</b>
+                                            <b>Total Venta:</b>
                                         </div>
                                         <div class="col-sm-4">
                                             @Html.LabelFor(model => model.TotalVenta, Model.TotalVenta.ToString(), new { @class = "form-control" })
@@ -241,10 +227,34 @@
                                     </div><br />
                                     <div class="row clearfix">
                                         <div class="col-sm-8" style="text-align:right">
+                                            <b>Otros ingresos:</b>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            @Html.LabelFor(model => model.TotalOtros, Model.TotalOtros.ToString(), new { @class = "form-control" })
+                                        </div>
+                                    </div><br />
+                                    <div class="row clearfix">
+                                        <div class="col-sm-8" style="text-align:right">
+                                            <b>Creditos:</b>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            @Html.LabelFor(model => model.TotalCredito, Model.TotalCredito.ToString(), new { @class = "form-control" })
+                                        </div>
+                                    </div><br />
+                                    <div class="row clearfix">
+                                        <div class="col-sm-8" style="text-align:right">
+                                            <b>Descuentos:</b>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            @Html.LabelFor(model => model.Descuentos, Model.Descuentos.ToString(), new { @class = "form-control" })
+                                        </div>
+                                    </div><br />                                  
+                                    <div class="row clearfix">
+                                        <div class="col-sm-8" style="text-align:right">
                                             <b>Efectivo a recibir:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            @Html.LabelFor(model => model.TotalCredito, Model.TotalContado.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.TotalEfectio, Model.TotalEfectio.ToString(), new { @class = "form-control" })
                                         </div>
                                     </div><br />
                                     <div class="row clearfix">
@@ -260,7 +270,7 @@
                                             <input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index") class="btn btn-raised btn-round btn-primary float-right" />
                                         </div>
                                         <div class="col-sm-5">
-                                            <input type="submit" id="btnLiquidar" disabled value="Liquidar Camioneta" formaction=@Url.Action("GuardarLiquidar") formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
+                                            <input type="submit" id="btnLiquidar" disabled value="Liquidar" formaction=@Url.Action("GuardarLiquidar") formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
                                         </div>
                                     </div>
                                 </div>
@@ -271,6 +281,5 @@
             </div>
         </section>
     }
-
 </body>
 </html>
