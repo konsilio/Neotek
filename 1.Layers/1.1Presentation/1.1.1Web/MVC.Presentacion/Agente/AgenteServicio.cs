@@ -633,7 +633,7 @@ namespace MVC.Presentacion.Agente
                         _lstUserEmp = (from x in lus where x.IdUsuario == idUser select x).ToList();
 
                     }
-                    if (!String.IsNullOrEmpty(mail) && mail != "0")
+                    if (!String.IsNullOrEmpty(mail) && mail != "0" && mail!= "Seleccione uno")
                     {
                         _lstUserEmp = (from x in lus where x.Email1 == mail select x).ToList();
 

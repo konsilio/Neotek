@@ -37,6 +37,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Cilindros = ec.Cilindros,
                 IdTipoCombustible = ec.IdTipoCombustible,
                 IdTipoUnidad = EquipoTransporteServicio.ObtenerTipo(ec),
+                TipoUnidad = EquipoTransporteServicio.ObtenerNombreTipo(ec),
                 AliasUnidad = EquipoTransporteServicio.ObtenerAlias(ec),
                 IdEquipoTransporteDetalle = ec.IdEquipoTransporteDetalle,
                 CapacidadKg = EquipoTransporteServicio.ObtenerCapacidadKg(ec),

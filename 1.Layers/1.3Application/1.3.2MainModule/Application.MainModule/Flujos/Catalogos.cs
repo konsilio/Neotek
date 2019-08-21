@@ -1062,9 +1062,11 @@ namespace Application.MainModule.Flujos
                     if (Camioneta == null) return CamionetaServicio.NoExiste();
 
                     var camionetaEntity = CamionetaAdapter.FromEntity(Camioneta);
-                    camionetaEntity.Nombre = string.Format("Camioneta No. {0}", vehiculoDto.DescVehiculo);
+                    //camionetaEntity.Nombre = string.Format("Camioneta No. {0}", vehiculoDto.DescVehiculo);
+                    camionetaEntity.Nombre = vehiculoDto.Descripcion;
                     camionetaEntity.Numero = vehiculoDto.DescVehiculo;
                     camionetaEntity.Activo = vehiculoDto.Activo;
+                    camionetaEntity.EsForaneo = vehiculoDto.EsForaneo;
                     editarVehiculo.CCamioneta = camionetaEntity;
                     vehiculoDto.IdCamioneta = Camioneta.IdCamioneta;
 
@@ -1102,9 +1104,11 @@ namespace Application.MainModule.Flujos
                     if (_Pipa == null) return PipaServicio.NoExiste();
 
                     var pipaEntity = PipaAdapter.FromEntity(_Pipa);
-                    pipaEntity.Nombre = string.Format("Pipa No. {0}", vehiculoDto.DescVehiculo);
+                    // pipaEntity.Nombre = string.Format("Pipa No. {0}", vehiculoDto.DescVehiculo);
+                    pipaEntity.Nombre = vehiculoDto.Descripcion;
                     pipaEntity.Numero = vehiculoDto.DescVehiculo;
                     pipaEntity.Activo = vehiculoDto.Activo;
+                    pipaEntity.EsForaneo = vehiculoDto.EsForaneo;
                     editarVehiculo.CPipa = pipaEntity;
                     vehiculoDto.IdPipa = _Pipa.IdPipa;
                     editarVehiculo.CPipa.IdPipa = _Pipa.IdPipa;
@@ -1144,9 +1148,11 @@ namespace Application.MainModule.Flujos
                     if (_utilitario == null) return VehiculoUtilitarioServicio.NoExiste();
 
                     var utilitarioEntity = VehiculoUtilitarioAdapter.FromEntity(_utilitario);
-                    utilitarioEntity.Nombre = string.Format("Utilitario No. {0}", vehiculoDto.DescVehiculo);
+                    //utilitarioEntity.Nombre = string.Format("Utilitario No. {0}", vehiculoDto.DescVehiculo);
+                    utilitarioEntity.Nombre = vehiculoDto.Descripcion;
                     utilitarioEntity.Numero = vehiculoDto.DescVehiculo;
                     utilitarioEntity.Activo = vehiculoDto.Activo;
+                    utilitarioEntity.EsForaneo = vehiculoDto.EsForaneo;
                     editarVehiculo.CUtilitario = utilitarioEntity;
                     vehiculoDto.IdVehiculoUtilitario = _utilitario.IdUtilitario;
 
