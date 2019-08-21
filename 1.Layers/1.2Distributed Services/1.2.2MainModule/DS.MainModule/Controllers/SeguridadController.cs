@@ -67,7 +67,7 @@ namespace DS.MainModule.Controllers
         }
 
         [Route("modifica/usuario")]
-        public HttpResponseMessage PutModificaUsuario(UsuarioDTO usuarioDto)
+        public HttpResponseMessage PutModificaUsuario(UsuarioEditDTO usuarioDto)
         {
             return RespuestaHttp.crearRespuesta(_seguridad.ModificaUsuario(usuarioDto), Request);
         }

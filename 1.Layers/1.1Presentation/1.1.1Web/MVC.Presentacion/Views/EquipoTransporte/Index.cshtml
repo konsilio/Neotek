@@ -107,7 +107,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <strong>Número de Identificación:*</strong>
-                                        @Html.TextBoxFor(m => m.NumIdVehicular, new { @class = "form-control", @placeholder = "Número de Identificación" })
+                                        @Html.TextBoxFor(m => m.NumIdVehicular, new { @class = "form-control", @placeholder = "Número de Identificación", @type = "number", @min = "0" } )
                                         @Html.ValidationMessageFor(m => m.NumIdVehicular, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <strong>Número de Motor:*</strong>
-                                        @Html.TextBoxFor(m => m.NumMotor, new { @class = "form-control", @placeholder = "Número de Motor", maxlength = 50 })
+                                        @Html.TextBoxFor(m => m.NumMotor, new { @class = "form-control", @placeholder = "Número de Motor" })
                                         @Html.ValidationMessageFor(m => m.NumMotor, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -130,7 +130,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <strong>
-                                            Vehículo:*
+                                            Modelo:*
                                         </strong>
                                         @Html.TextBoxFor(m => m.DescVehiculo, new { @class = "form-control", @placeholder = "Vehículo" })
                                         @Html.ValidationMessageFor(m => m.DescVehiculo, "", new { @class = "alert-danger" })
@@ -148,7 +148,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <strong>
-                                            Modelo:*
+                                            Año:*
                                         </strong>
                                         @Html.TextBoxFor(m => m.Modelo, new { @class = "form-control", @placeholder = "Modelo" })
                                         @Html.ValidationMessageFor(m => m.Modelo, "", new { @class = "alert-danger" })
@@ -328,7 +328,7 @@
                                                     <th>#</th>
                                                     <th>Número de Placa</th>
                                                     <th>Vehículo</th>
-                                                    <th>Alias</th>
+                                                    <th>Nombre</th>
                                                     <th>Acción</th>
                                                 </tr>
                                             </thead>
@@ -341,8 +341,7 @@
                                                             <th>@item.IdEquipoTransporteDetalle</th>
                                                             <th>@item.Placas</th>
                                                             <td>@item.AliasUnidad</td>
-                                                            <td>@item.Descripcion</td>
-                                                            <td>
+                                                            <td>@string.Format("{0} {1} ",@item.TipoUnidad ,@item.NumIdVehicular)</td>                                                            <td>
                                                                 <a ID="lbEdit" href="@Url.Action("EditarVehiculo", "EquipoTransporte", new { id = item.IdEquipoTransporteDetalle })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                     <i class="material-icons">edit</i>
                                                                     <span>Editar vehículo</span>
