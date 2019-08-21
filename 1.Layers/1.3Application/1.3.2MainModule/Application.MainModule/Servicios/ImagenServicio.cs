@@ -17,7 +17,7 @@ namespace Application.MainModule.Servicios
     {
         private static string rutaImagenes = ConfigurationManager.AppSettings["RutaImagenesInventario"];
         private static string rutaImagenesPagos = ConfigurationManager.AppSettings["RutaImagenesPagos"];
-           
+
         public static AlmacenGasRecargaFoto ObtenerImagen(AlmacenGasRecargaFoto foto)
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
@@ -164,18 +164,19 @@ namespace Application.MainModule.Servicios
             foreach (var foto in fotosAlacenGasDescarga)
             {
                 ImagenDTO i = new ImagenDTO();
-                if (!string.IsNullOrEmpty( foto.UrlImagen ))
+                if (!string.IsNullOrEmpty(foto.CadenaBase64))
                 {
-                    var t = FilterFunciones.ObtenerFields(foto.UrlImagen, '/').Count;
-                    i.Nombre = foto.UrlImagen.Split('/')[t - 1];
-                    var nomPartes = FilterFunciones.ObtenerFields(i.Nombre, '_');
-                    i.UrlImg = foto.UrlImagen;
-                    i.Oden = short.Parse(nomPartes.ElementAt(2));
-                    i.Tipo = nomPartes.ElementAt(3);
-                    i.Momento = nomPartes.ElementAt(4);
-                    i.Lectura = string.Concat(nomPartes.ElementAt(5).Split('.')[0].Replace('-', '.'), " %");
+                    //var t = FilterFunciones.ObtenerFields(foto.UrlImagen, '/').Count;
+                    //i.Nombre = foto.UrlImagen.Split('/')[t - 1];
+                    //var nomPartes = FilterFunciones.ObtenerFields(i.Nombre, '_');
+                    //i.UrlImg = foto.UrlImagen;
+                    //i.Oden = short.Parse(nomPartes.ElementAt(2));
+                    //i.Tipo = nomPartes.ElementAt(3);
+                    //i.Momento = nomPartes.ElementAt(4);
+                    //i.Lectura = string.Concat(nomPartes.ElementAt(5).Split('.')[0].Replace('-', '.'), " %");
+                    i.CadenaBase64 = foto.CadenaBase64;
                     li.Add(i);
-                }             
+                }
             }
             return li;
         }
@@ -207,12 +208,12 @@ namespace Application.MainModule.Servicios
 
         public static string GenerarNombre(string nombre, string extension)
         {
-            return string.Concat(nombre, extension.Contains(".") ? extension: "." + extension);
+            return string.Concat(nombre, extension.Contains(".") ? extension : "." + extension);
         }
 
         public static string GenerarNombre(string nombre, string extension, string ruta)
         {
             return string.Concat(ruta, "\\", GenerarNombre(nombre, extension));
-        }   
+        }
     }
 }
