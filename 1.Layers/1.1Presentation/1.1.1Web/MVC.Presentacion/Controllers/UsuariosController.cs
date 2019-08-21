@@ -28,8 +28,19 @@ namespace MVC.Presentacion.Controllers
             ViewBag.ListaUsuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
             if (modelo.IdUsuario != 0)
                 model.Listausuarios = CatalogoServicio.FiltrarBusquedaUsuario(modelo, _tkn);
-            else
-                model.Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
+            else {
+
+                if (modelo.Email1!= "Seleccione uno" && modelo.Email1!=null && modelo.Email1!= string.Empty) {
+                    model.Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn).Where(x => x.Email1 == modelo.Email1).ToList();
+                }
+                else {
+
+                    model.Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
+                }
+
+                
+            }
+                
             if (TempData["RespuestaDTO"] != null) ViewBag.MessageExito = TempData["RespuestaDTO"];
             if (TempData["RespuestaDTOError"] != null)
             {

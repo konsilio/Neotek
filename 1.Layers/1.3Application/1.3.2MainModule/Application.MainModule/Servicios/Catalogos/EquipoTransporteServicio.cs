@@ -106,6 +106,18 @@ namespace Application.MainModule.Servicios.Catalogos
                 return entidad.CUtilitario.Nombre;
             return null;
         }
+
+        public static string ObtenerNombreTipo(CDetalleEquipoTransporte entidad)
+        {
+            if (entidad.IdCamioneta != null)
+                return "Camioneta";
+            if (entidad.IdPipa != null)
+                return "Pipa";
+            if (entidad.IdUtilitario != null)
+                return "Utilitario";
+            return null;
+        }
+
         public static string ObtenerNombre(DetalleRecargaCombustible qt)
         {
             var eq = new EquipoTransporteDataAccess().Buscar(qt.Id_Vehiculo);
