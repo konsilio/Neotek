@@ -286,18 +286,9 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = OrdenCompraServicio.ConfirmarDatosPapeleta(model, tkn);
-            if (respuesta.Exito)
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("OrdenCompraComplementoGas", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
-            }
 
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("OrdenCompraComplementoGas", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
-            }
-
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("OrdenCompraComplementoGas", new { id = model.OrdenCompraPorteador.IdOrdenCompra });
         }
         public ActionResult OrdenCompraPago(int id)
         {
@@ -349,7 +340,7 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Expedidor = true;
             }
 
-            ViewBag.Complemeto = complemeto;
+           //ViewBag.Complemeto = complemeto;
             TempData["intIdOrdenCompra"] = id ?? 0;
             if (TempData["RespuestaDTO"] != null)
             {

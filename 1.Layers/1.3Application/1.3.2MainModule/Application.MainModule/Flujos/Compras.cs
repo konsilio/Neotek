@@ -318,13 +318,14 @@ namespace Application.MainModule.Flujos
             ocPapeleta.ValorCarga = dto.ValorCarga;
             ocPapeleta.Sello = dto.Sello;
             ocPapeleta.NombreResponsable = dto.NombreResponsable;
-            ocPapeleta.PorcenMagnatelPapeleta = dto.PorcentajeMedidor;
+            ocPapeleta.PorcenMagnatelPapeleta = dto.PorcentajeTanque;
+            ocPapeleta.PorcenMagnatelOcular = dto.PorcentajeMedidor;
             ocPapeleta.PlacasTractor = dto.PlacasTractor;
             ocPapeleta.NombreOperador = dto.NombreOperador;
             ocPapeleta.PresionTanque = dto.PresionTanque;
             ocPapeleta.NumTanquePG = dto.NumeroTanque;
             ocPapeleta.CapacidadTanqueLt = dto.CapacidadTanque;
-            ocPapeleta.PorcenMagnatelOcular = dto.PorcenMagnatelOcularTractorINI;
+            //ocPapeleta.PorcenMagnatelOcular = dto.PorcenMagnatelOcularTractorINI;
             ocPapeleta.FechaInicioDescarga = dto.FechaEntraGas;
             ocPapeleta.PorcenMagnatelOcularAlmacenINI = dto.PorcenMagnatelOcularAlmacenINI;
             ocPapeleta.PorcenMagnatelOcularAlmacenFIN = dto.PorcenMagnatelOcularAlmacenFIN;
