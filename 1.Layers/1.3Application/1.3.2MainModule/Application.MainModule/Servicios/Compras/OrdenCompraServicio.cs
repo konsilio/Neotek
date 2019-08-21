@@ -56,7 +56,7 @@ namespace Application.MainModule.Servicios.Compras
                     nOC.IdRequisicion = ocInicial.IdRequisicion;
                     nOC.IdCentroCosto = _prod.IdCentroCosto;
                     nOC.IdCuentaContable = _prod.IdCuentaContable;
-                    nOC.IdOrdenCompraEstatus = ocInicial.IdOrdenCompraEstatus;
+                    nOC.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
                     nOC.FechaRegistro = DateTime.Today;
                     nOC.IdUsuarioGenerador = TokenServicio.ObtenerIdUsuario();
                     nOC.EsGas = p.EsGas;

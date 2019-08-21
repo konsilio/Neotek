@@ -11698,6 +11698,7 @@
     <Content Include="Views\CuentaContable\_CuentasContables.cshtml" />
     <Content Include="Views\Reportes\CuentaConsolidada.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CamionetaModel.cshtml" />
+    <Content Include="Views\OrdenCompra\_CB_Ordenes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

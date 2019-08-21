@@ -335,6 +335,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 return uow.Repository<Producto>().Get(x => x.Activo.Equals(true) && x.EsActivoVenta.Equals(true) && x.EsGas.Equals(esGas)).ToList();
             return uow.Repository<Producto>().Get(x => x.Activo.Equals(true) && x.EsActivoVenta.Equals(true) && x.EsGas.Equals(esGas)).ToList();
         }
+        public Producto BuscarProductoGas(short idEmpresa)
+        {
+            return uow.Repository<Producto>().GetSingle(x => x.Activo.Equals(true) && x.EsActivoVenta.Equals(true) && x.EsGas.Equals(true) && x.IdEmpresa.Equals(idEmpresa));
+        }
 
     }
 }
