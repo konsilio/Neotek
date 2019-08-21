@@ -3317,7 +3317,7 @@ namespace MVC.Presentacion.Agente
                 _listaRequisicion = emp;
             }
         }
-        public void GuardarRequisicion(RequisicionDTO dto, string token)
+        public void GuardarRequisicion(RequisicionInputDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRequisicion"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
