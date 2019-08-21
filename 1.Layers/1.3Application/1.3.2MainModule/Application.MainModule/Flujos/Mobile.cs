@@ -182,8 +182,7 @@ namespace Application.MainModule.Flujos
             return ClientesServicio.BuscadorClientes(criterio);
         }
         public ReporteDiaDTO ReporteDia(DateTime fecha, short idCAlmacenGas)
-        {
-            
+        {            
            var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacenGas);
             var resp = AlmacenGasServicio.BuscarReporteDia(fecha, idCAlmacenGas,almacen.IdEmpresa);
 

@@ -5,7 +5,7 @@
         settings.Name = "ProductosComplementoGas";
         settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartialUpdate" };
         settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartialUpdate" };
-
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         settings.KeyFieldName = "IdProducto";
 
         settings.SettingsPager.Visible = true;

@@ -37,11 +37,13 @@ namespace Application.MainModule.Servicios.Mobile
             var fotos = AlmacenAdapter.FromDto(desDto.Imagenes, descarga.IdAlmacenEntradaGasDescarga, numOrden);
             List<OrdenCompra> ocs = new List<OrdenCompra>();
             var complemento = OrdenCompraServicio.BuscarComplementoGas(OrdenCompraServicio.Buscar(desDto.IdOrdenCompra));
-            var ocExp = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraExpedidor));
-            ocExp.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            var ocExp = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraExpedidor));           
             var ocPort = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraPorteador));
-            ocPort.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
-
+            if (finDescarga)
+            {
+                ocExp.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+                ocPort.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            }
             ocs.Add(ocExp);
             ocs.Add(ocPort);
 
