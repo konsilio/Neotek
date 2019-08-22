@@ -238,7 +238,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
         {
             return new RepRequisicionDTO()
             {
-                NumRequisicon = entidad.NumeroRequisicion,
+                NumRequisicion = entidad.NumeroRequisicion,
                 Departamento = entidadp[0].CentroCosto.Descripcion,
                 Requisicion = RequisicionServicio.ListaProductos(entidadp),
                 Estatus = entidad.RequisicionEstatus.Estatus,
