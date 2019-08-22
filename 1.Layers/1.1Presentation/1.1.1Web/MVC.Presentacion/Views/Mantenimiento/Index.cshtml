@@ -98,7 +98,7 @@
                                            }
                                            e.Properties["cphidenVehiculos"] = list;
                                        };
-                                   }).BindList(ViewBag.Vehiculos).GetHtml()
+                                   }).BindList(ViewBag.Vehiculos).Bind(Model.id_vehiculo).GetHtml()
                                         @Html.ValidationMessageFor(m => m.id_vehiculo, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -122,14 +122,16 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <strong>Kilometraje Actual*</strong>
-                                        @Html.DevExpress().TextBox(settings =>
+                                        @*@Html.DevExpress().TextBox(settings =>
                                         {
+
                                             settings.Name = "Kilometraje_Actual";
                                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                             settings.Properties.MaskSettings.Mask = "<0..999999>";
                                             settings.Properties.MaskSettings.ErrorText = "Kilometraje Actual";
                                             settings.Properties.ValidationSettings.Display = Display.Dynamic;
-                                        }).GetHtml()
+                                        }).GetHtml()*@
+                                        @Html.TextBoxFor(m => m.Kilometraje_Actual, Model.Kilometraje_Actual.ToString(), new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.Kilometraje_Actual, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -152,7 +154,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <strong>Costo Mantenimiento*</strong>
-                                        @Html.DevExpress().TextBox(settings =>
+                                        @*@Html.DevExpress().TextBox(settings =>
                                    {
                                        settings.Name = "Monto";
                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
@@ -160,8 +162,8 @@
                                        settings.Properties.MaskSettings.ErrorText = "Monto";
                                        settings.Properties.ValidationSettings.Display = Display.Dynamic;
                                        //settings.Attributes.Add("class", "form-control");
-                                   }).GetHtml()
-                                        @* @Html.TextBoxFor(m => m.Monto, Model.Monto.ToString(), new { @class = "form-control number" })*@
+                                   }).GetHtml()*@
+                                        @Html.TextBoxFor(m => m.Monto, Model.Monto.ToString(), new { @class = "form-control number" })
                                         @Html.ValidationMessageFor(m => m.Monto, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -196,6 +198,7 @@
                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                            settings.Properties.TextField = "Descripcion";
                                            settings.Properties.ValueField = "IdCuentaContable";
+                                           settings.Properties.ValueType = typeof(int);
                                        }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
                                     </div>
@@ -243,14 +246,16 @@
                                                     <td>@mant.DescripcionMtto</td>
                                                     <td>@mant.FechaMtto</td>
                                                     <td>
-                                                        <a href="@Url.Action("Eliminar", "Mantenimiento", new { Id = mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="material-icons">delete</i>
-                                                            <span>Eliminar</span>
-                                                        </a>
+
                                                         <a href="@Url.Action("Modificar", "Mantenimiento", new { Id = mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">edit</i>
                                                             <span>Editar</span>
                                                         </a>
+                                                        <a href="@Url.Action("Eliminar", "Mantenimiento", new { Id = mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="material-icons">delete</i>
+                                                            <span>Eliminar</span>
+                                                        </a>
+
                                                     </td>
                                                 </tr>
                                             }
