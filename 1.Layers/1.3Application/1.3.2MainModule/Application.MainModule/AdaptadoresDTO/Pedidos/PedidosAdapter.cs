@@ -301,7 +301,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             _pedido.IdEmpresa = Pedidodto.IdEmpresa;
             _pedido.IdEstatusPedido = (short)Pedidodto.IdEstatusPedido;
             _pedido.FolioVenta = Pedidodto.FolioVenta;
-            _pedido.FechaRegistro = Pedidodto.FechaRegistroPedido;
+            _pedido.FechaRegistro = catCte.FechaRegistro;
             _pedido.FechaPedido = Pedidodto.FechaPedido;
             _pedido.IdPipa = Pedidodto.IdPipa;
             _pedido.IdCamioneta = Pedidodto.IdCamioneta;
@@ -460,7 +460,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 IdPedido = entidad.IdPedido,
                 RFC = ClienteServicio.Obtener(entidad.IdCliente).Rfc,
                 Estatus = EstatusPedidoConst.ObtenerString(entidad.IdEstatusPedido),
-                Observaciones = entidad.MotivoCancelacion,
+                Observaciones = string.IsNullOrEmpty(entidad.MotivoCancelacion) ? "N/A" : entidad.MotivoCancelacion,
                 Fecha = entidad.FechaRegistro,
                 //Cantidad = entidad.PedidoDetalle.Count() > 0 ? entidad.PedidoDetalle.Sum(x => x.Cantidad ?? 0) : 0,
                 Litros = lts,

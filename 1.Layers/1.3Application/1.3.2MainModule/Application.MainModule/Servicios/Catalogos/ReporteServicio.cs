@@ -22,7 +22,7 @@ namespace Application.MainModule.Servicios.Catalogos
                     {
                         RepCuentaPorPagarDTO cpp = new RepCuentaPorPagarDTO();
                         cpp.IdCuenta = idcuenta;
-                        cpp.CunentaContable = CuentaContableServicio.Obtener(oc.IdCuentaContable).Descripcion;
+                        cpp.CuentaContable = CuentaContableServicio.Obtener(oc.IdCuentaContable).Descripcion;
                         cpp.SaldoPasivo = ObtenerSaldoPasivo(oc);
                         cpp.SaldoPagado = ObtenerSaldoPagado(oc);
                         cpp.SaldoInsoluto = ObtenerSaldoInsoluto(oc);

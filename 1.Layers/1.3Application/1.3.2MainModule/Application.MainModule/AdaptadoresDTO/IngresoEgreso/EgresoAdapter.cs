@@ -128,7 +128,7 @@ namespace Application.MainModule.AdaptadoresDTO.IngresoEgreso
             {
                 IdCuenta = entidad.IdEgreso,
                 Descripcion = entidad.Descripcion,
-                CunentaContable = entidad.CCuentaContable.Descripcion,
+                CuentaContable = entidad.CCuentaContable.Descripcion,
                 SaldoPagado = Convert.ToDouble(entidad.Monto),
                 SaldoPasivo = Convert.ToDouble(entidad.Monto),
                 SaldoInsoluto = 0,
