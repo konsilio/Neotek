@@ -105,6 +105,12 @@ namespace Application.MainModule.Servicios.Pedidos
         {
             return detalles.Sum(x => x.Cantidad.Value);
         }
+        public static int ObtenerTimpoAtencion(Pedido p)
+        {
+            if (p.FechaSurtido != null)
+                return Convert.ToInt32(Math.Truncate(p.FechaSurtido.Value.Subtract(p.FechaRegistro).TotalMinutes));
+            return 0;
+        }
     }
 }
 

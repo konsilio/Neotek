@@ -49,7 +49,7 @@ namespace Application.MainModule.AdaptadoresDTO.MantenimientoDetalleAdapter
                 Kilometraje_Actual = dto.Kilometraje_Actual,
                 NumeroOC = dto.NumeroOC,
                 Monto = dto.Monto,
-                IdCunetaContable = dto.IdCuentaContable,
+                IdCuentaContable = dto.IdCuentaContable,
             };
         }
         public static List<DetalleMantenimiento> FromDTO(List<MantenimientoDetalleDTO> entidad)

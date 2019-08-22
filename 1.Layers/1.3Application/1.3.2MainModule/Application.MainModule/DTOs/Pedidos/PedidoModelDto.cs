@@ -35,6 +35,7 @@ namespace Application.MainModule.DTOs.Pedidos
         public string ReferenciaUbicacion { get; set; }
         public DateTime FechaRegistroPedido { get; set; }
         public DateTime FechaEntregaPedido { get; set; }
+        public DateTime? FechaSurtido { get; set; }
         public string Empresa { get; set; }
         public string TipoPersonaFiscal { get; set; }
         public string RegimenFiscal { get; set; }
