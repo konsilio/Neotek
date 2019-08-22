@@ -8,7 +8,7 @@ namespace Application.MainModule.DTOs
 {
     public class RepRequisicionDTO
     {
-        public string NumRequisicon { get; set; }
+        public string NumRequisicion { get; set; }
         public string Departamento { get; set; }
         public string Estatus { get; set; }
         public string Requisicion { get; set; }
