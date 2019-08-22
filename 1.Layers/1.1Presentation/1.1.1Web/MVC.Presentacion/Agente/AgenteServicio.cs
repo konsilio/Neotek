@@ -4627,6 +4627,7 @@ namespace MVC.Presentacion.Agente
         }
         public void EliminarMantenimiento(int id, string tkn)
         {
+          
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaMantenimientoDetalle"];
             EliminarMantenimientoDetalle(id, tkn).Wait();
         }
@@ -4641,7 +4642,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos + _id.ToString(), "").ConfigureAwait(false);
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRoute + _id.ToString(), "").ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
