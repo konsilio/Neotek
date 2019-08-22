@@ -7,8 +7,8 @@ namespace MVC.Presentacion.Models
 {
     public class InventarioXConceptoDTO
     {
-        public int IdREgristro { get; set; }
-        public string Descirpcion { get; set; }
+        public int IdRegistro { get; set; }
+        public string Descripcion { get; set; }
         public decimal Existencias { get; set; }
         public string Categoria { get; set; }
         public DateTime FechaActualizacion { get; set; }
