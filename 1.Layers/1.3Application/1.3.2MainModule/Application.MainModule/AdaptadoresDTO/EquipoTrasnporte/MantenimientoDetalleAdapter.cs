@@ -28,6 +28,7 @@ namespace Application.MainModule.AdaptadoresDTO.MantenimientoDetalleAdapter
                 Kilometraje_Actual = entidad.Kilometraje_Actual,
                 NumeroOC = entidad.NumeroOC,
                 Monto = entidad.Monto ?? 0,
+                IdCuentaContable=entidad.IdCuentaContable,
             };
         }
         public static List<MantenimientoDetalleDTO> ToDTO(List<DetalleMantenimiento> entidad)
@@ -71,6 +72,7 @@ namespace Application.MainModule.AdaptadoresDTO.MantenimientoDetalleAdapter
                 Kilometraje_Actual = entidad.Kilometraje_Actual,
                 NumeroOC = entidad.NumeroOC,
                 Monto = entidad.Monto ?? 0,
+                IdCuentaContable=entidad.IdCuentaContable,
             };
         }
     }

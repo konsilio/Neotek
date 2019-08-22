@@ -348,6 +348,15 @@ namespace MVC.Presentacion.App_Code
             agente.EliminarRolesAsig(cc, tkn);
             return agente._RespuestaDTO;
         }
+
+        public static RespuestaDTO EliminarRolAlUsuario(UsuarioRolModel cc,string tkn)
+        {
+            
+            var agente = new AgenteServicio();
+            agente.EliminarRolesAsig(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+
         #endregion
 
         #region Roles
