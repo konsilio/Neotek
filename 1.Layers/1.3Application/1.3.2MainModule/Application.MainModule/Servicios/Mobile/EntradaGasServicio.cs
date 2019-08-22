@@ -23,7 +23,6 @@ namespace Application.MainModule.Servicios.Mobile
             alm.DatosProcesados = false;
             return AlmacenGasServicio.InsertarDescargaGas(alm);
         }
-
         public static RespuestaDto Descargar(DescargaDto desDto, bool finDescarga = false)
         {
             var des = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(desDto.IdOrdenCompra);
@@ -49,27 +48,22 @@ namespace Application.MainModule.Servicios.Mobile
 
             return AlmacenGasServicio.ActualizarDescargaGas(descarga, fotos, ocs);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(DescargaDto dto)
         {
             return GasServicio.EvaluarClaveOperacion(dto);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(PapeletaDTO dto)
         {
             return GasServicio.EvaluarClaveOperacion(dto);
-        }
-        
+        }        
         public static RespuestaDto EvaluarExistenciaRegistro(PapeletaDTO dto)
         {
             return GasServicio.EvaluarClaveOperacion(dto);
         }
-
         public static RespuestaDto EvaluarExistenciaRegistro(DescargaDto dto)
         {
             return GasServicio.EvaluarClaveOperacion(dto);
         }       
-
         private static RespuestaDto EvaluarExistenciaRegistro(int idOCompra)
         {
             var alm = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(idOCompra);

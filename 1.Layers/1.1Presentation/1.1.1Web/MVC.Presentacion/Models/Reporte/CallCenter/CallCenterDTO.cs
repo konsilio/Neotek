@@ -17,6 +17,7 @@ namespace MVC.Presentacion.Models
         public string kg20 { get; set; }
         public string kg30 { get; set; }
         public string kg45 { get; set; }
+        public int AtendidoEn { get; set; }
         public DateTime Fecha { get; set; }
     }
 }
