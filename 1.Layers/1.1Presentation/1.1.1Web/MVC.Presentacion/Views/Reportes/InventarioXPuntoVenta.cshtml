@@ -98,7 +98,7 @@
                                    }).Bind(Model.Fecha).GetHtml()
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <strong>Camionetas</strong>
                                     <div class="form-group" id="checkboxescamion">
                                         <ul>
@@ -107,7 +107,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <strong>Pipas</strong>
                                     <div class="form-group" id="checkboxespipa">
                                         <ul>
@@ -116,7 +116,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <strong>Estaciones</strong>
                                     <div class="form-group" id="checkboxes">
                                         <ul>
@@ -143,6 +143,7 @@
                                         {
                                             @Html.Partial("_CuboDeInformacionPartial", new List<InventarioPorPuntoVentaDTO>())
                                         }
+                                        <span>Intencionalmente sin acentos</span>
                                     </div>
                                 </div>
                             </div>
