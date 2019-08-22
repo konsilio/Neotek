@@ -242,12 +242,32 @@ namespace MVC.Presentacion.Controllers
 
 
         }
-        public ActionResult BorrarRol(UsuarioRolModel objUser, short id, int idUsr, string msj = null)
+        //public ActionResult BorrarRol(UsuarioRolModel objUser, short id, int idUsr, string msj = null)
+        //{
+        //    if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+        //    _tok = Session["StringToken"].ToString();
+
+        //    var respuesta = CatalogoServicio.EliminarRolAlUsuario(objUser, idUsr, id, _tok);
+        //    if (respuesta.Exito)
+        //    {
+        //        TempData["RespuestaDTO"] = respuesta.Exito;
+        //        return RedirectToAction("ActualizaRoles", new { id = objUser.IdUsuario, msj = string.Concat("Eliminación exitosa del Rol ", objUser.IdRol) });
+        //    }
+
+        //    else
+        //    {
+        //        TempData["RespuestaDTO"] = respuesta.Exito;
+        //        return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario, msj = respuesta.MensajesError[0] });
+        //    }
+
+        //}
+
+        public ActionResult BorrarRol(UsuarioRolModel objUser)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
 
-            var respuesta = CatalogoServicio.EliminarRolAlUsuario(objUser, idUsr, id, _tok);
+            var respuesta = CatalogoServicio.EliminarRolAlUsuario(objUser, _tok);
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Exito;
@@ -261,6 +281,7 @@ namespace MVC.Presentacion.Controllers
             }
 
         }
+
         public ActionResult Buscar(UsuarioDTO filterObj)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
