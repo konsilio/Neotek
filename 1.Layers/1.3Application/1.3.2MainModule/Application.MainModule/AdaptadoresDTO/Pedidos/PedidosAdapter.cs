@@ -52,9 +52,9 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 IdPedidoDetalle = p.PedidoDetalle.Count > 0 ? p.PedidoDetalle.FirstOrDefault().IdPedidoDetalle : 0,
                 IdEstatusPedido = p.IdEstatusPedido,
                 EstatusPedido = p.PedidoEstatus.Descripcion,
-                Cantidad = cant,                
+                Cantidad = cant,
                 MotivoCancelacion = p.MotivoCancelacion ?? string.Empty,
-                   Unidad = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(p),
+                Unidad = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(p),
                 NombreRfc = cliente != null ? ClienteServicio.ObtenerNomreCliente(cliente) : string.Empty,
                 IdPipa = p.IdPipa ?? 0,
                 IdCamioneta = p.IdCamioneta ?? 0,
@@ -62,8 +62,9 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 ReferenciaUbicacion = "",
                 FechaRegistroPedido = p.FechaRegistro,
                 FechaEntregaPedido = p.FechaPedido.Value,
+                FechaSurtido = p.FechaSurtido,
                 Telefono = cliente != null ? ClienteServicio.ObtenerTelefono(cliente) : string.Empty,
-              
+
             };
             return usDTO;
         }
@@ -132,7 +133,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 NombreRfc = cliente != null ? cliente.Nombre + " " + cliente.Apellido1 + " " + cliente.Apellido2 : Error.NoEncontrado,
                 ReferenciaUbicacion = cliente != null ? cliente.Locaciones.FirstOrDefault().formatted_address : Error.NoEncontrado,
                 encuesta = pe.Count > 0 ? FromDto(pe) : FromInit(p.IdPedido),
-               
+
             };
             return usDTO;
         }
@@ -300,12 +301,12 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             _pedido.IdEmpresa = Pedidodto.IdEmpresa;
             _pedido.IdEstatusPedido = (short)Pedidodto.IdEstatusPedido;
             _pedido.FolioVenta = Pedidodto.FolioVenta;
-            _pedido.FechaRegistro = DateTime.Now;
+            _pedido.FechaRegistro = Pedidodto.FechaRegistroPedido;
             _pedido.FechaPedido = Pedidodto.FechaPedido;
             _pedido.IdPipa = Pedidodto.IdPipa;
             _pedido.IdCamioneta = Pedidodto.IdCamioneta;
             _pedido.IdDireccion = Pedidodto.Orden;
-            _pedido.Ruta = Pedidodto.Ruta;
+            _pedido.Ruta = Pedidodto.Ruta;          
             _pedido.PedidoDetalle = FromDtoDetalle(Pedidodto);
 
             return _pedido;
@@ -429,6 +430,8 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
         {
             return lu.ToList().Select(x => ToDTO(x)).ToList();
         }
+
+
         public static RepCallCenterDTO FromDTO(Pedido entidad)
         {
             var cant20 = string.Empty;
@@ -439,9 +442,9 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             {
                 if (entidad.IdCamioneta > 0)
                 {
-                    cant20 = Decimal.ToInt32(entidad.PedidoDetalle.Where(x => x.Cilindro20 ?? false).Sum(y => y.Cantidad.Value)).ToString();
-                    cant30 = Decimal.ToInt32(entidad.PedidoDetalle.Where(x => x.Cilindro30 ?? false).Sum(y => y.Cantidad.Value)).ToString();
-                    cant45 = Decimal.ToInt32(entidad.PedidoDetalle.Where(x => x.Cilindro45 ?? false).Sum(y => y.Cantidad.Value)).ToString();
+                    cant20 = decimal.ToInt32(entidad.PedidoDetalle.Where(x => x.Cilindro20 ?? false).Sum(y => y.Cantidad.Value)).ToString();
+                    cant30 = decimal.ToInt32(entidad.PedidoDetalle.Where(x => x.Cilindro30 ?? false).Sum(y => y.Cantidad.Value)).ToString();
+                    cant45 = decimal.ToInt32(entidad.PedidoDetalle.Where(x => x.Cilindro45 ?? false).Sum(y => y.Cantidad.Value)).ToString();
                     lts = "0";
                 }
                 else
@@ -449,7 +452,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                     cant20 = "0";
                     cant30 = "0";
                     cant45 = "0";
-                    lts = Decimal.ToInt32(PedidosServicio.ObtenerCantidadVentaPipaEstacion(entidad.PedidoDetalle.ToList())).ToString();
+                    lts = decimal.ToInt32(PedidosServicio.ObtenerCantidadVentaPipaEstacion(entidad.PedidoDetalle.ToList())).ToString();
                 }
             }
             return new RepCallCenterDTO()
@@ -465,6 +468,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 kg30 = cant30,
                 kg45 = cant45,
                 AtendidoPor = EquipoTransporteServicio.ObtenerNombre(entidad) ?? "N/A",
+                AtendidoEn = PedidosServicio.ObtenerTimpoAtencion(entidad),
                 Pedido = entidad.IdCamioneta != null && !entidad.IdCamioneta.Value.Equals(0) ? TipoVehiculoConst.Camioneta : TipoVehiculoConst.Pipa,
             };
         }

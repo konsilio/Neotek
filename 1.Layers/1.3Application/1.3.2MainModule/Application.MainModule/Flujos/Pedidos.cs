@@ -39,8 +39,7 @@ namespace Application.MainModule.Flujos
                 var pedidos = PedidosServicio.Obtener(idempresa, periodo);
                 return PedidosAdapter.ToDTO(pedidos);
             }
-        }
-               
+        }               
         public RegistraPedidoDto PedidoId(int idPedido)
         {
             var resp = PermisosServicio.PuedeConsultarPedido();
@@ -110,6 +109,8 @@ namespace Application.MainModule.Flujos
                 clienteeditar.Telefono1 = pedidoDto.Telefono1;
                 ClienteServicio.Modificar(clienteeditar);
             }
+            if (pedido.IdEstatusPedido.Equals(EstatusPedidoEnum.Surtido))
+                pedido.FechaSurtido = DateTime.Now;
             return PedidosServicio.Modificar(pedido);
         }
         public RespuestaDto Elimina(RegistraPedidoDto pedidoDto)
