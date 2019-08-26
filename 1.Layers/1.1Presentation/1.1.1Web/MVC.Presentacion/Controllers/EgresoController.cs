@@ -61,6 +61,12 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
         }
+        public ActionResult grid()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            return PartialView("_EgresosPartial", CatalogoServicio.ListaEgresos(tkn));
+        }
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;
