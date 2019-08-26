@@ -51,34 +51,22 @@ namespace MVC.Presentacion.Models.Requisicion
         public string UsuarioSolicitante { get; set; }
         public short IdEmpresa { get; set; }
         public string NombreComercial { get; set; }
-        public string NumeroRequisicion { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-       
+        public string NumeroRequisicion { get; set; }    
         public string MotivoRequisicion { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-       
         public string RequeridoEn { get; set; }
         public string OpinionAlmacen { get; set; }
         public string MotivoCancelacion { get; set; }
         public byte IdRequisicionEstatus { get; set; }
         public string RequisicionEstatus { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-        
         public DateTime FechaRequerida { get; set; }
         public DateTime FechaRegistro { get; set; }
         public DateTime FechaRevision { get; set; }
         public DateTime FechaAutorizacion { get; set; }
         public List<RequisicionProductoDTO> Productos { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-       
         public int IdProducto { get; set; }
         public string Producto { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-       
         public int IdTipoProducto { get; set; }
         public string TipoProducto { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-        
         public int IdCentroCosto { get; set; }
         public string CentroCosto { get; set; }
         public int IdUnidad { get; set; }

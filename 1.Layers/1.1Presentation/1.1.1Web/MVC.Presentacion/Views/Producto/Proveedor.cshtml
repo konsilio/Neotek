@@ -92,7 +92,8 @@
                                         {
                                             if (Model != null && cc.IdCuentaContable == Model.IdCuentaContable)
                                             {
-                                                <option value="@cc. ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);" selected>@cc.Descripcion</option>
+                                                @*<option value="@cc.ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);" selected>@cc.Descripcion</option>*@
+                                                <option value="@cc.IdCuentaContable" selected>@cc.Descripcion</option>
                                             }
                                             else
                                             {
