@@ -107,6 +107,7 @@ public class ReporteInteractorImpl implements ReporteInteractor {
                         presenter.onError("Error no. " + response.code() + ":" + response.message());
                 }
                 if (reporteDTO.isExito() && reporteDTO.getLecturaInicial()!= null && reporteDTO.getLecturaFinal()!= null) {
+                    Log.d("isexito", reporteDTO.isExito()+"");
                     presenter.onSuccessReport(reporteDTO);
                 } else {
                     presenter.onError(reporteDTO.getMensaje());

@@ -416,7 +416,11 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             if (childView instanceof EditText) {
                 childView.setOnKeyListener((view, i1, keyEvent) -> {
                     if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                        NPLecturaP500CantidadLectura.setValue(Integer.parseInt(((EditText) view).getText().toString()));
+                        String numberText = ((EditText) view).getText().toString();
+                        if (numberText.equals(""))
+                            NPLecturaP500CantidadLectura.setValue(0);
+                        else
+                            NPLecturaP500CantidadLectura.setValue(Integer.parseInt(numberText));
                         return true;
                     }
                     return false;

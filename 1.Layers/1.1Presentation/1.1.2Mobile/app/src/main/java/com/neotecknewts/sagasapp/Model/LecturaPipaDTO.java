@@ -59,6 +59,26 @@ public class LecturaPipaDTO implements Serializable {
 
     private double CapacidadAlmacen;
 
+    @Override
+    public String toString() {
+        return "LecturaPipaDTO{" +
+                "IdTipoMedidor=" + IdTipoMedidor +
+                ", TipoMedidor='" + TipoMedidor + '\'' +
+                ", CantidadFotografias=" + CantidadFotografias +
+                ", Imagenes=" + Imagenes +
+                ", ImagenesURI=" + ImagenesURI +
+                ", IdPipa=" + IdPipa +
+                ", NombrePipa='" + NombrePipa + '\'' +
+                ", CantidadP5000=" + CantidadP5000 +
+                ", ImagenP5000='" + ImagenP5000 + '\'' +
+                ", ImagenP5000URI=" + ImagenP5000URI +
+                ", PorcentajeMedidor=" + PorcentajeMedidor +
+                ", ClaveProceso='" + ClaveProceso + '\'' +
+                ", FechaAplicacion='" + FechaAplicacion + '\'' +
+                ", CapacidadAlmacen=" + CapacidadAlmacen +
+                '}';
+    }
+
     //region Constructores
     public LecturaPipaDTO() {
         Imagenes = new ArrayList<>();

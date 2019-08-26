@@ -207,7 +207,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
-        alert11.dismiss();
+        Log.d("showmessage", "alert mensaje");
+        //alert11.dismiss();
     }
 
     //funcion que inicia el activity del menu y le envia la lista para construirlo

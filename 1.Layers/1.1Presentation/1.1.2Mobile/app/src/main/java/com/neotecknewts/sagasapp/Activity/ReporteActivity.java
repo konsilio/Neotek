@@ -140,18 +140,25 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
         new HiloReporte().execute();
     }
 
-    @Override
+        @Override
     public void MensajeError(ArrayList<String> mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ReporteActivity.this);
-        builder.setTitle(R.string.error_titulo);
-        StringBuilder dialogo = new StringBuilder(getString(R.string.mensjae_error_campos) + "\n");
-        for (String error : mensaje) {
-            dialogo.append("\n").append(error);
-        }
-        builder.setMessage(dialogo);
-        builder.setPositiveButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());
-        builder.create().show();
+            android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this,R.style.AlertDialog);
+            builder.setTitle(R.string.error_titulo);
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(getString(R.string.mensjae_error_campos)).append("\n");
+            for (String men:mensaje){
+                stringBuilder.append(men).append("\n");
+            }
+            builder.setMessage(stringBuilder);
+            builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
+                dialog.dismiss();
+            }));
+            builder.create().show();
     }
+
+
+
+
 
     @Override
     public void onSuccessGetUnidades(DatosReporteDTO data) {

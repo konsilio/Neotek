@@ -187,7 +187,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 EsLecturaInicialPipa = (boolean) extras.get("EsLecturaInicialPipa");
                 EsLecturaFinalPipa = (boolean) extras.get("EsLecturaFinalPipa");
                 porcentaje_inicial = lecturaPipaDTO.getPorcentajeMedidor();
-
+                Log.d("CapturaPorcentaje: ", lecturaPipaDTO.getPorcentajeMedidor()+"");
                 if(porcentaje_inicial>0) {
                     int parte_entera = porcentaje_inicial.intValue();
                     int parte_decimal = (int) (porcentaje_inicial - parte_entera);
@@ -208,6 +208,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 EsLecturaFinalAlmacen = extras.getBoolean("EsLecturaFinalAlmacen");
                 porcentaje_inicial = lecturaAlmacenDTO.getPorcentajeMedidor();
                 //porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
+                Log.d("CapturaPorcentaje: ", lecturaPipaDTO.getPorcentajeMedidor()+"");
+                Log.d("CapturaPorcentaje: ", lecturaDTO.getPorcentajeMedidor()+"");
                 if(porcentaje_inicial>0) {
                     int parte_entera = porcentaje_inicial.intValue();
                     int parte_decimal = (int) (porcentaje_inicial - parte_entera);
@@ -323,7 +325,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         numberPickerProcentaje.setMinValue(0);
 
         numberPickerDecimal.setMinValue(0);
-        numberPickerDecimal.setMaxValue(99);
+        numberPickerDecimal.setMaxValue(9);
 
 
         //se agrega el listener para revisar que se cambio el valor
@@ -370,7 +372,9 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
 
     //se obtiene el valor y se asinga al objeto correspondiente
     public void onClickAceptar(){
-        porcentaje = (numberPickerProcentaje.getValue())+(numberPickerDecimal.getValue()*.10);
+
+            porcentaje = (numberPickerProcentaje.getValue()) + (numberPickerDecimal.getValue()*.10)-1.1;
+
         if(papeleta){
             papeletaDTO.setPorcentajeMedidor(porcentaje);
         }else if(iniciar&&almacen){

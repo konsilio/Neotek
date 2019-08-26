@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -53,7 +54,9 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
             EsLecturaInicialPipa = (boolean)b.get("EsLecturaInicialPipa");
             EsLecturaFinalPipa = (boolean) b.get("EsLecturaFinalPipa");
             EsFinal = b.getBoolean("EsLecturaFinalPipa",false);
+
         }
+
         TVLecturaPipaActivityTitulo = findViewById(R.id.TVLecturaPipaActivityTitulo);
         if(EsLecturaInicialPipa){
             TVLecturaPipaActivityTitulo.setText(R.string.toma_de_lectura_inicial);
@@ -81,6 +84,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaPipas));*/
         //lecturaPipaPresenter.getMedidores(session.getToken());
+
         lecturaPipaPresenter.getPipas(session.getToken(), EsFinal);
 
         SLecturaPipaActivityListaPipa.setOnItemSelectedListener(
@@ -88,17 +92,23 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position>=0) {
+
                     for (AlmacenDTO almacenDTO :DatosTomaLecturaDto.getAlmacenes()){
+
                         if (almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
                             lecturaPipaDTO.setIdPipa(almacenDTO.getIdAlmacenGas());
                             lecturaPipaDTO.setNombrePipa(almacenDTO.getNombreAlmacen());
                             lecturaPipaDTO.setPorcentajeMedidor(almacenDTO.getPorcentajeMedidor());
+                            Log.d("getPorcentaje", almacenDTO.getPorcentajeMedidor()+"");
+                            Log.d("getPorcentaje", lecturaPipaDTO.getPorcentajeMedidor()+"");
+
                             lecturaPipaDTO.setCantidadP5000(almacenDTO.getCantidadP5000());
                             lecturaPipaDTO.setCapacidadAlmacen(almacenDTO.getCapacidad());
                         }
                     }
                 }
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -121,6 +131,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
                             lecturaPipaDTO.setTipoMedidor(medidor.getNombreTipoMedidor());
                             lecturaPipaDTO.setIdTipoMedidor(medidor.getIdTipoMedidor());
                             lecturaPipaDTO.setCantidadFotografias(medidor.getCantidadFotografias());
+
                         }
                     }
                 }
@@ -264,6 +275,8 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
         for (int x =0; x< data.getAlmacenes().size();x++){
             //ListaPipas[x+1] = data.getAlmacenes().get(x).getNombreAlmacen();
             ListaPipas[x] = data.getAlmacenes().get(x).getNombreAlmacen();
+
+            Log.d("datoslectura", data.toString());
         }
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaPipas));
