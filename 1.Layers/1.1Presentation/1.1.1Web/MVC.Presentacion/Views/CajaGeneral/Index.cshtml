@@ -236,8 +236,10 @@
                                        };
                                    }).BindList(ViewBag.CboxConcepto).GetHtml()*@
                                 </div>
+                               
                                 <div class="col-sm-12">
                                     <input type="submit" value="Liquidar" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
+                                    @Html.ValidationMessageFor(m => m.Concepto, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
                             <br />

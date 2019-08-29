@@ -46,7 +46,10 @@
                                         @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", placeholder = "N° de cuenta contable" })
                                     </div>
                                     <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
-                                </div>
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
+                                    </div>
+                                    </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <b>Descripción</b>
