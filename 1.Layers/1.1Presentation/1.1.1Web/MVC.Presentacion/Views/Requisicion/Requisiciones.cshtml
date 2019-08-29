@@ -3,10 +3,24 @@
 @using PagedList;
 @model RequisicionesModel
 
+
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+
+
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
-    @*<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
-<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>*@
+@*<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+    <script src="~/assets/js/pages/tables/jquery-datatable.js"></script>*@
 <script src="~/Scripts/js/RequisicionesJS.js"></script>
 <script type="text/javascript">
     var Mensaje = '@ViewBag.Msj';F
@@ -15,8 +29,10 @@
         $(window).on("load", showNotification(tipo, Mensaje, 'top', 'center', '', ''));
     }
 </script>
+
+
 @using (Html.BeginForm("Requisicion", "Requisicion", FormMethod.Post))
-{ 
+{
 
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -24,124 +40,75 @@
             <p>Espere por favor</p>
         </div>
     </div>
-        <section class="content home">
-            <div class="container-fluid">
-                <div class="block-header">
-                    <div class="row clearfix">
-                        <div class="col-lg-5 col-md-5 col-sm-12">
-                            <h2>Requisición</h2>
-                            <ul class="breadcrumb padding-0">
-                                <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item">Requisiciones</li>
-                            </ul>
-                        </div>                                                            
-                    </div>                  
-                    <div class="row clearfix">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="header">
-                                    <h2><strong></strong><small></small></h2>
-                                </div>
-                                <div class="body">
-                                    <div class="row clearfix">
-                                        <div class="col-sm-4">
-                                            @if (ViewBag.EsAdmin)
-                                            {
-                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                    <option value="0">Seleccione una gasera</option>
-                                                    @foreach (var lst in ViewBag.Empresas)
-                                                    {
-                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                    }
-                                                </select>
-                                            }
-                                            else
-                                            {
-                                                <strong>Gasera: </strong>@ViewBag.Empresas                                               
-                                            }
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="form-group">
+    <section class="content home">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Requisición</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Requisiciones</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong></strong><small></small></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-sm-4">
+                                        @if (ViewBag.EsAdmin)
+                                        {
+                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                <option value="0">Seleccione una gasera</option>
+                                                @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <strong>Gasera: </strong>@ViewBag.Empresas
+                                        }
+                                    </div>
+                                    <div class="col-sm-4">
+                                        @*<div class="form-group">
                                                 <input type="text" id="txtNumRequisicion" class="form-control" placeholder="N° de Requisición" />
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input id="BtnNuevaReq" type="submit" onclick="location.href='@Url.Action("Requisicion", "Requisicion")'" value="Nueva requisición" class="btn btn-primary btn-round btn-block" />
-                                        </div>
+                                            </div>*@
                                     </div>
-                                    <div class="demo-masked-input">
-                                        <div class="row clearfix">
-                                     
-                                        </div>
+                                    <div class="col-sm-4">
+                                        <input id="BtnNuevaReq" type="submit" onclick="location.href='@Url.Action("Requisicion", "Requisicion")'" value="Nueva requisición" class="btn btn-primary btn-round btn-block" />
                                     </div>
-                                    <div class="row clearfix blockquote blockquote-info btn-round">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <td><strong>Gasera</strong></td>
-                                                        <td><strong>No. Requisición</strong></td>
-                                                        <td><strong>Fecha Requerida</strong></td>
-                                                        <td><strong>Solicitante</strong></td>
-                                                        <td><strong>Estatus</strong></td>
-                                                        <td><strong>Acción</strong></td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="contenido">
-                                                    @foreach (var req in ViewBag.Requisiciones)
-                                                    {
-                                                        <tr>
-                                                            <td>@req.NombreComercial</td>
-                                                            <td>@req.NumeroRequisicion</td>
-                                                            <td>@req.FechaRequerida.ToShortDateString()</td>
-                                                            <td>@req.UsuarioSolicitante</td>
-                                                            <td>@req.RequisicionEstatus</td>
-                                                            <td>
-                                                                @if (req.IdRequisicionEstatus.Equals(1))
-                                                                {
-                                                                    @*<a id="lbDgOjo" href="">
-                                                                        <i class="material-icons">picture_as_pdf</i>
-                                                                        <span class="icon-name"></span>
-                                                                    </a>*@
-                                                                    <a id="lbDgPDF" href="@Url.Action("RequisicionRevision", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">content_paste</i>
-                                                                        <span>Requisición revisión</span>
-                                                                    </a>
-                                                                }
-                                                                @if (req.IdRequisicionEstatus.Equals(3) || req.IdRequisicionEstatus.Equals(4))
-                                                                {
-                                                                    @*<a id="lbDgPDF" href="">
-                                                                        <i class="material-icons">picture_as_pdf</i>
-                                                                        <span class="icon-name"></span>
-                                                                    </a>*@
-                                                                    <a id="lbAutoriza" href="@Url.Action("RequisicionAutorizacion", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">spellcheck</i>
-                                                                        <span>Requisición autorización</span>
-                                                                    </a>
-                                                                }
-                                                            </td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                </div>
+                                <div class="demo-masked-input">
+                                    <div class="row clearfix">
+
                                     </div>
-                                    <div class="row clearfix text-center">
-                                        <div class="col-md-5">
+                                </div>
+                                <div class="row clearfix blockquote blockquote-info btn-round">
+                                    @Html.Partial("_CB_Requisiciones", (List<RequisicionDTO>)TempData["DataSourceRequisiciones"])
+                                </div>
+                                <div class="row clearfix text-center">
+                                    @*<div class="col-md-5">
                                             Página @(ViewBag.Requisiciones.PageCount < ViewBag.Requisiciones.PageNumber ? 0 : ViewBag.Requisiciones.PageNumber) de @ViewBag.Requisiciones.PageCount
                                         </div>
                                         <div class="col-md-2"></div>
                                         <div class="col-md-5">
                                             @Html.PagedListPager((IPagedList)ViewBag.Requisiciones, page => Url.Action("Requisiciones", new { page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
-                                        </div>
-                                    </div>
+                                        </div>*@
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
 }
 
