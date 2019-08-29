@@ -137,7 +137,6 @@ namespace Application.MainModule.Flujos
             var precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             if (!resp.Exito) return null;
 
-
             var ventas = CajaGeneralServicio.ObtenerVPV(reporteDia).ToList();
             var lecturas = AlmacenGasServicio.ObtenerLecturas(reporteDia.IdCAlmacenGas.Value, reporteDia.FechaReporte);
             corte.FolioOperacionDia = string.Concat("C", FechasFunciones.ObtenerClaveUnica());
@@ -165,7 +164,7 @@ namespace Application.MainModule.Flujos
             corte.DescuentoContado = ventas.Where(v => v.VentaACredito.Equals(false)).Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
             corte.DescuentoOtrasVentas = 0;
 
-            if (CajaGeneralServicio.ExisteCorteUltimo(corte.IdCAlmacenGas corte.IdEmpresa, corte.Year, corte.Mes, corte.Dia))
+            if (CajaGeneralServicio.ExisteCorteUltimo(corte.IdCAlmacenGas, corte.IdEmpresa, corte.Year, corte.Mes, corte.Dia))
                 return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.SiExiste, "La liquidacion") };
 
             var respuestaCorte = CajaGeneralServicio.Insertar(corte);
