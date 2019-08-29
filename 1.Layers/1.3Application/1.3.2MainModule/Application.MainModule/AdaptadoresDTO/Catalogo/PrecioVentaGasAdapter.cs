@@ -285,7 +285,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 PrecioSalidaLt = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalidaLt,
                 EsGas = pv.EsGas,
                 FechaProgramada = pv.FechaProgramada,
-                FechaVencimiento = pv.FechaVencimiento,
+                FechaVencimiento = pv.FechaVencimiento ?? DateTime.MinValue,
                 Activo = pv.Activo,
                 FechaRegistro = pv.FechaRegistro,
                 Empresa = usuario.Empresa.NombreComercial,

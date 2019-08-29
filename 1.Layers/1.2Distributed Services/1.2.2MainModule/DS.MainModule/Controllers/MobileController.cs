@@ -595,7 +595,7 @@ namespace DS.MainModule.Controllers
         [Route("hay-corte-estacion/{fecha}")]
         public HttpResponseMessage GetHayCorte(DateTime fecha)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.GetHayCorte(fecha),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.GetHayCorte(fecha), Request);
         }
         #endregion
 
@@ -610,6 +610,12 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.VerificarLecturaInicial(), Request);
         }*/
-        #endregion 
+        #endregion
+        [AllowAnonymous]
+        [Route("test/numeroreporte")]
+        public HttpResponseMessage GetNumeroReporte()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _mobile.testFuncionNumeroReporte());
+        }
     }
 }

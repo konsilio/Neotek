@@ -25,6 +25,20 @@ namespace Application.MainModule.Servicios.Catalogos
             lPventas.Insert(0, PuntoVentaCero());
             return lPventas;
         }
+        public static List<PuntoVenta> ObtenerTodos()
+        {
+            return new PuntoVentaDataAccess().BuscarTodos();        
+        }
+        public static List<PuntoVenta> ObtenerTodosLiquidacion()
+        {
+            var ptoVenta = ObtenerTodos();
+            return ptoVenta.Where(x => 
+                x.ReporteDelDia.SingleOrDefault(r => 
+                    r.FechaReporte.ToShortDateString().Equals(DateTime.Now.ToShortDateString())) != null
+                && x.VentaCorteAnticipoEC.Where(c => 
+                    c.FechaCorteAnticipo.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).Count().Equals(0)
+                ).ToList();
+        }
         public static List<VentaPuntoDeVenta> ObtenerVentas(DateTime fi, DateTime ff)
         {           
             return new PuntoVentaDataAccess().BuscarVentas(fi, ff);
@@ -52,9 +66,9 @@ namespace Application.MainModule.Servicios.Catalogos
             if (opCh != null)
                 if (opCh.PuntosVenta != null)
                     if (opCh.PuntosVenta.Count > 0)
-                        return opCh.PuntosVenta.FirstOrDefault();
+                        return opCh.PuntosVenta.FirstOrDefault(x => x.Activo);
 
-            return BuscarPorOperadorChofer(opCh.IdOperadorChofer).FirstOrDefault();
+            return BuscarPorOperadorChofer(opCh.IdOperadorChofer).FirstOrDefault(x => x.Activo);
         }
         public static PuntoVenta Obtener(UnidadAlmacenGas unidadAlmacen)
         {

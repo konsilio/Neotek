@@ -474,6 +474,7 @@
     <Compile Include="Models\Ventas\CorteCajaDTO.cs" />
     <Compile Include="Models\Ventas\MovimientosGasCilindros.cs" />
     <Compile Include="Models\Ventas\MovimientosGasModel.cs" />
+    <Compile Include="Models\Ventas\VentaCajaGeneralDTO.cs" />
     <Compile Include="Models\Ventas\VentaCorteAnticipoModel.cs" />
     <Compile Include="Models\Ventas\VentaDTO.cs" />
     <Compile Include="Models\Ventas\VentasPipaDto.cs" />
@@ -11699,6 +11700,7 @@
     <Content Include="Views\Reportes\CuentaConsolidada.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CamionetaModel.cshtml" />
     <Content Include="Views\OrdenCompra\_CB_Ordenes.cshtml" />
+    <Content Include="Views\CajaGeneral\_Liquidaciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
