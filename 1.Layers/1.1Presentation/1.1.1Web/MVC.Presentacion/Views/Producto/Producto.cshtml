@@ -53,6 +53,7 @@
         @using (Html.BeginForm("CrearProducto", "Producto", FormMethod.Post))
         {
             @Html.HiddenFor(m => m.IdProducto)
+            @Html.HiddenFor(m =>m.EsGas)
             <div class="block-header">
                 <div class="row">
                     <div class="col-lg-5 col-md-5 col-sm-12">
@@ -233,13 +234,14 @@
                                                     ¿Es activo de venta?
                                                 </label>
                                             </div>
-                                            <div class="form-group">
+
+                                            @*<div class="form-group">
                                                 @Html.CheckBoxFor(m => m.EsGas, new { id = "cbEsGas" })
-                                                @*<input id="cbEsGas" name="EsGas" type="checkbox">*@
+                                                <input id="cbEsGas" name="EsGas" type="checkbox">
                                                 <label for="cbEsGas">
                                                     ¿Es Gas?
                                                 </label>
-                                            </div>
+                                            </div>*@
                                         </div>
                                         <div><b>Almacén</b></div>
                                         <div class="row">
