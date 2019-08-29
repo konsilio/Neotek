@@ -45,6 +45,58 @@
 
             });//key up.
             /*******/
+            //Iniciar pagina
+            var value = $.trim($("#IdPrecioSalidaKg").val());
+            if (value.length < 1) {
+                $("#btnRegistraPrecio").attr('disabled', true);
+            } else {
+                $("#btnRegistraPrecio").attr('disabled', false);
+            }
+            //Primer input
+            $("#IdPrecioSalidaKg").click(function () {
+
+                if ($("#IdPrecioSalidaLt").val() > 0 && $(".dxeEditArea_Material").val() != "") {
+                    $("#btnRegistraPrecio").attr('disabled', false);
+                }
+                else if ($("#IdPrecioSalidaLt").val() < 1 || $(".dxeEditArea_Material").val() == "") {
+                    $("#btnRegistraPrecio").attr('disabled', true);
+                }
+
+
+            });
+
+           //Segundo input
+            $("#IdPrecioSalidaLt").click(function () {
+                
+                if ($("#IdPrecioSalidaKg").val() > 0 && $(".dxeEditArea_Material").val() != "")
+                {
+                    $("#btnRegistraPrecio").attr('disabled', false);
+                }
+                else if ($("#IdPrecioSalidaKg").val() < 1 || $(".dxeEditArea_Material").val() == "")
+                {
+                    $("#btnRegistraPrecio").attr('disabled', true);
+                }
+                    
+
+            });
+
+
+
+            //Tercer input
+            $(".dxeButton").click(function () {
+
+                if ($("#IdPrecioSalidaKg").val() > 0 && $("#IdPrecioSalidaLt").val() > 0) {
+                    $("#btnRegistraPrecio").attr('disabled', false);
+                }
+                else if ($("#IdPrecioSalidaKg").val() < 1 || $("#IdPrecioSalidaLt").val() < 1) {
+                    $("#btnRegistraPrecio").attr('disabled', true);
+                }
+
+
+            });
+           
+
+
             $("#IdA").keyup(function () {
                 debugger
                 var from = $("#IdDe").val();
@@ -391,7 +443,8 @@
                                 </div>
                                 <div class="col-sm-005">
                                     <div class="form-group" style="top:-10px">
-                                        <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" />
+                                        <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="number" class="form-control" title="Se necesita un nombre" required />
+                       
                                     </div>
                                 </div>
                                 <div class="col-sm-1">
@@ -401,7 +454,7 @@
                                 </div>
                                 <div class="col-sm-005">
                                     <div class="form-group" style="top:-10px">
-                                        <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" />
+                                        <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="number" class="form-control" required  />
                                         <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
                                         <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
                                         <input type="text" name="Categoria" class="form-control date" hidden="hidden" value="Combustibles" />
@@ -425,7 +478,7 @@
                                    settings.Properties.EditFormat = EditFormat.Custom;
                                    settings.Theme = "Material";
                                    settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                   settings.Properties.NullText = "dd/MM/yyyy";
+                                  // settings.Properties.NullText = "dd/MM/yyyy";
                                    //settings.Attributes.Clear();
                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                    settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
