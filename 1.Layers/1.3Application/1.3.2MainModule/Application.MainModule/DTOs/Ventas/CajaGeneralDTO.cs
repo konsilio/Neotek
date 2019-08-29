@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.DTOs.Ventas
 {
@@ -24,12 +26,15 @@ namespace Application.MainModule.DTOs.Ventas
         public string FolioCorteCaja { get; set; }
         public string TipoMovimiento { get; set; }
         public string Descripcion { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "simon")]
         public string Concepto { get; set; }
         public decimal Ingreso { get; set; }
         public decimal Egreso { get; set; }
         public decimal Saldo { get; set; }
         public string PuntoVenta { get; set; }
         public string OperadorChoferNombre { get; set; }
+      
         public System.DateTime FechaAplicacion { get; set; }
         public System.DateTime FechaRegistro { get; set; }
 
