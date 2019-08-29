@@ -12,11 +12,10 @@
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
 <!DOCTYPE html>
-
 <html>
 <head>
     <script type="text/javascript">
-       
+
         $(document).ready(function () {
             $("#txtUtilidad").keyup(function () {
 
@@ -227,16 +226,16 @@
                                         <div>
                                             @if (ViewBag.EsAdmin)
                                             {
-                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                @foreach (var lst in ViewBag.Empresas)
+                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                    @foreach (var lst in ViewBag.Empresas)
                                                     {
-                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                     }
-                                            </select>
+                                                </select>
                                             }
                                             else
                                             {
-                                            @ViewBag.Empresas
+                                                @ViewBag.Empresas
                                             }
                                         </div>
                                     </div>
@@ -254,12 +253,12 @@
 
                                     <strong>Categoría:</strong>
                                     @*<select name="IdCategoria" class="form-control selectpicker z-index show-tick">
-                                            <option value="0">Seleccione..</option>
-                                            @foreach (var lst in ViewBag.Categoria)
-                                            {
-                                                <option value="@lst.IdCategoria">@lst.Categoria</option>
-                                            }
-                                        </select>*@
+            <option value="0">Seleccione..</option>
+            @foreach (var lst in ViewBag.Categoria)
+            {
+                <option value="@lst.IdCategoria">@lst.Categoria</option>
+            }
+        </select>*@
                                     @Html.DevExpress().ComboBox(settings =>
                                    {
                                        settings.Name = "IdCategoria";
@@ -272,11 +271,11 @@
                                        settings.PreRender = (s, e) =>
                                        {
                                            MVCxComboBox combo = s as MVCxComboBox;
-                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione",string.Empty));
                                            combo.SelectedIndex = 0;
                                        };
                                    }).BindList(ViewBag.Categoria).GetHtml()
-
+                                    @Html.ValidationMessageFor(m => m.IdCategoria, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     @*<div class="form-group">
@@ -290,34 +289,38 @@
                                             </select>
                                         </div>*@
                                     <strong>Línea:</strong>
-                                    @Html.DevExpress().ComboBox(settings =>
-                                {
-                                    settings.Name = "IdProductoLinea";
-                                    settings.Width = 180;
-                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                    settings.Properties.TextField = "Linea";
-                                    settings.Properties.ValueField = "IdProductoLinea";
-                                    settings.Theme = "Material";
-                                    settings.PreRender = (s, e) =>
+                                    <div class="form-group">
+                                        @Html.DevExpress().ComboBox(settings =>
                                     {
-                                        MVCxComboBox combo = s as MVCxComboBox;
-                                        combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
-                                        combo.SelectedIndex = 0;
-                                    };
-                                }).BindList(ViewBag.Linea).GetHtml()
+                                        settings.Name = "IdProductoLinea";
+                                        settings.Width = 180;
+                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                        settings.Properties.TextField = "Linea";
+                                        settings.Properties.ValueField = "IdProductoLinea";
+                                        settings.Theme = "Material";
+                                        settings.PreRender = (s, e) =>
+                                        {
+                                            MVCxComboBox combo = s as MVCxComboBox;
+                                            combo.Properties.Items.Insert(0, new ListEditItem("Seleccione",string.Empty));
+                                            combo.SelectedIndex = 0;
+                                        };
+                                    }).BindList(ViewBag.Linea).GetHtml()
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.IdProductoLinea, "", new { @class = "alert-danger" })
+
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     @*<div class="form-group">
-                                            Producto:
-                                            <select name="IdProducto" class="form-control selectpicker z-index show-tick">
-                                                <option value="0">Seleccione..</option>
-                                                @foreach (var lst in ViewBag.Producto)
-                                                {
-                                                <option value="@lst.IdProducto">@lst.Producto</option>
-                                                }
-                                            </select>
-                                        </div>*@
+            Producto:
+            <select name="IdProducto" class="form-control selectpicker z-index show-tick">
+                <option value="0">Seleccione..</option>
+                @foreach (var lst in ViewBag.Producto)
+                {
+                <option value="@lst.IdProducto">@lst.Producto</option>
+                }
+            </select>
+        </div>*@
                                     <strong>Producto:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
                                 {
@@ -331,10 +334,11 @@
                                     settings.PreRender = (s, e) =>
                                     {
                                         MVCxComboBox combo = s as MVCxComboBox;
-                                        combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
+                                        combo.Properties.Items.Insert(0, new ListEditItem("Seleccione",string.Empty));
                                         combo.SelectedIndex = 0;
                                     };
                                 }).BindList(ViewBag.Producto).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.IdProducto, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="form-group">
@@ -347,24 +351,26 @@
                                     <div class="form-group">
                                         Precio Actual:
                                         <input name="PrecioActual" type="text" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.PrecioActual, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         Precio Salida:
                                         <input name="PrecioSalida" type="text" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.PrecioSalida, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         <b>Fecha programada:</b>
                                         @*<div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="zmdi zmdi-calendar"></i>
-                                                </span>
-                                                <input type="text" class="form-control date" placeholder="formato: dd/mm/aaaa" />
+            <span class="input-group-addon">
+                <i class="zmdi zmdi-calendar"></i>
+            </span>
+            <input type="text" class="form-control date" placeholder="formato: dd/mm/aaaa" />
 
-                                            </div>*@
+        </div>*@
                                         @Html.DevExpress().DateEdit(settings =>
                                {
                                    settings.Name = "FechaProgramada";
@@ -376,6 +382,7 @@
                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                    settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                }).GetHtml()
+                                        @Html.ValidationMessageFor(m => m.FechaProgramada, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -465,10 +472,9 @@
             </div>
         </section>
     }
-
-@*</body>
-@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")*@
-@Scripts.Render("~/Scripts/jquery-ui.js")
-@*<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+    @*</body>
+        @Scripts.Render("~/Scripts/jquery-1.10.2.min.js")*@
+    @Scripts.Render("~/Scripts/jquery-ui.js")
+    @*<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
 </html>

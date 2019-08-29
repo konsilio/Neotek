@@ -11,7 +11,9 @@ namespace Application.MainModule.DTOs.Pedidos
 {
     public class PedidoModelDto
     {
-        public int IdPedido { get; set; }      
+        public int IdPedido { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Tipo de Persona Fiscal")]
         public int IdCliente { get; set; }       
         public short Orden { get; set; }
         public int IdPedidoDetalle { get; set; }       
@@ -31,12 +33,16 @@ namespace Application.MainModule.DTOs.Pedidos
         public string NombreRfc { get; set; }      
         public int IdPipa { get; set; }       
         public int IdCamioneta { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Telefono")]
         public string Telefono { get; set; }
         public string ReferenciaUbicacion { get; set; }
         public DateTime FechaRegistroPedido { get; set; }
         public DateTime FechaEntregaPedido { get; set; }
         public DateTime? FechaSurtido { get; set; }
         public string Empresa { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Tipo de Persona Fiscal")]
         public string TipoPersonaFiscal { get; set; }
         public string RegimenFiscal { get; set; }
         public string FolioVenta { get; set; }
