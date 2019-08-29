@@ -177,7 +177,7 @@
                                }).GetHtml()
                                 </div>
                                 <div class="col-sm-3">
-                                    <strong>Punto de venta:</strong>                                 
+                                    <strong>Punto de venta:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
                                {
                                    settings.Name = "cbxentidad";
@@ -197,10 +197,10 @@
                                }).BindList(ViewBag.CboxEntidad).GetHtml()
                                 </div>
                                 <div class="col-sm-3">
-                                    <strong>Concepto:</strong>                                 
+                                    <strong>Concepto:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
                                {
-                                   settings.Name = "cbxconcepto";
+                                   settings.Name = "Concepto";
                                    settings.Width = 180;
 
                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
@@ -216,10 +216,10 @@
                                    };
                                }).BindList(ViewBag.CboxConcepto).GetHtml()
                                 </div>
+                               
                                 <div class="col-sm-12">
                                     <input type="submit" value="Liquidar" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
-
-                      
+                                    @Html.ValidationMessageFor(m => m.Concepto, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
                             <br />
