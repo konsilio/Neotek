@@ -1,6 +1,6 @@
-﻿@model  MVC.Presentacion.Models.Ventas.CajaGeneralModel
-@using PagedList.Mvc;
-@using PagedList;
+﻿@using MVC.Presentacion.Models.Ventas;
+@model  CajaGeneralModel
+
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -20,8 +20,13 @@
     }
 
     <script src="~/Resources/js/CajaGeneral.js"></script>
-  
     <script type="text/javascript">
+        var message = '@ViewBag.MessageExito';
+        if (message != '') {
+            $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
+        }
+    </script>
+    @*<script type="text/javascript">
         function OnSelectedChangeFilterConcepto(s, e) {
             debugger
             $('#tblfilterable tbody tr').each(function () {
@@ -49,10 +54,10 @@
             debugger
             $('#tblfilterable tbody tr').each(function () {
                 var value = s.GetValue();
-                var hiderow = $(this).find("td").eq(1).html();//get value of column entidad             
+                var hiderow = $(this).find("td").eq(1).html();//get value of column entidad
 
                 if (value != 'Seleccione') {
-                                        
+
                     if (value != 'Seleccione') {
                         if (value != hiderow) {
                             var rowindex = $(this).index();
@@ -90,7 +95,7 @@
                 $('#tblfilterable tbody tr').show();
             }
         };
-    </script>
+    </script>*@
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("Liquidar", "CajaGeneral", FormMethod.Post))
@@ -108,6 +113,21 @@
                             </ul>
                         </div>
                     </div>
+                    @if (ViewBag.MessageError != null)
+                {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MessageError</label>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <div class="card">
                         <div class="header">
                         </div>
@@ -121,16 +141,16 @@
                                         <div>
                                             @if (ViewBag.EsAdmin)
                                             {
-                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                @foreach (var lst in ViewBag.Empresas)
+                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                    @foreach (var lst in ViewBag.Empresas)
                                                     {
-                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                     }
-                                            </select>
+                                                </select>
                                             }
                                             else
                                             {
-                                            @ViewBag.Empresas
+                                                @ViewBag.Empresas
                                             }
                                         </div>
                                     </div>
@@ -143,90 +163,89 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div style="text-align:left; max-width:4.666667%">
-                                    <b>Fecha</b>
+                                    @*<b>Fecha</b>*@
                                 </div>
                                 <div class="col-sm-2">
-                                    <b>De:</b>
+                                    @*<b>De:</b>
                                     @Html.DevExpress().DateEdit(settings =>
-                               {
-                                   settings.Name = "IdDe";
-                                   settings.Properties.UseMaskBehavior = true;
-                                   settings.Properties.EditFormat = EditFormat.Custom;
-                                   settings.Theme = "Material";
-                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                   settings.Attributes.Clear();
-                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                               }).GetHtml()
-                                </div>
-                                <div class="col-sm-2">
-                                    <b>A:</b>
-                                    @Html.DevExpress().DateEdit(settings =>
-                               {
-                                   settings.Name = "IdA";
-                                   settings.Properties.UseMaskBehavior = true;
-                                   settings.Properties.EditFormat = EditFormat.Custom;
-                                   settings.Theme = "Material";
-                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                   settings.Properties.DisplayFormatString = "dd/MM/yyyy";
-                                   settings.Attributes.Clear();
-                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                   settings.ClientEnabled = true;
-                                   settings.Properties.ClientSideEvents.DateChanged = "keyupDateEdit";
-                               }).GetHtml()
-                                </div>
-                                <div class="col-sm-3">
-                                    <strong>Punto de venta:</strong>                                 
-                                    @Html.DevExpress().ComboBox(settings =>
-                               {
-                                   settings.Name = "cbxentidad";
-                                   settings.Width = 180;
-                                   settings.SelectedIndex = 0;
-                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                   settings.Theme = "Material";
-                                   settings.ClientEnabled = true;
-                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
-                                   settings.PreRender = (s, e) =>
                                    {
-                                       MVCxComboBox combo = s as MVCxComboBox;
-                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
-                                       combo.SelectedIndex = 0;
-                                   };
-                               }).BindList(ViewBag.CboxEntidad).GetHtml()
+                                       settings.Name = "IdDe";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Theme = "Material";
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                       settings.Attributes.Clear();
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                   }).GetHtml()*@
+                                </div>
+                                <div class="col-sm-2">
+                                    @*<b>A:</b>
+                                    @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "IdA";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Theme = "Material";
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                       settings.Properties.DisplayFormatString = "dd/MM/yyyy";
+                                       settings.Attributes.Clear();
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       settings.ClientEnabled = true;
+                                       settings.Properties.ClientSideEvents.DateChanged = "keyupDateEdit";
+                                   }).GetHtml()*@
                                 </div>
                                 <div class="col-sm-3">
-                                    <strong>Concepto:</strong>                                 
+                                    @*<strong>Punto de venta:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
-                               {
-                                   settings.Name = "cbxconcepto";
-                                   settings.Width = 180;
+                                   {
+                                       settings.Name = "cbxentidad";
+                                       settings.Width = 180;
+                                       settings.SelectedIndex = 0;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Theme = "Material";
+                                       settings.ClientEnabled = true;
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
+                                           combo.SelectedIndex = 0;
+                                       };
+                                   }).BindList(ViewBag.CboxEntidad).GetHtml()*@
+                                </div>
+                                <div class="col-sm-3">
+                                    @*<strong>Concepto:</strong>
+                                    @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "cbxconcepto";
+                                       settings.Width = 180;
 
-                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                   settings.Theme = "Material";
-                                   settings.ClientEnabled = true;
-                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilterConcepto";
-                                   settings.PreRender = (s, e) =>
-                                   {
-                                       MVCxComboBox combo = s as MVCxComboBox;
-                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
-                                       combo.SelectedIndex = 0;
-                                   };
-                               }).BindList(ViewBag.CboxConcepto).GetHtml()
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Theme = "Material";
+                                       settings.ClientEnabled = true;
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilterConcepto";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
+                                           combo.SelectedIndex = 0;
+                                       };
+                                   }).BindList(ViewBag.CboxConcepto).GetHtml()*@
                                 </div>
                                 <div class="col-sm-12">
                                     <input type="submit" value="Liquidar" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
-
-                      
                                 </div>
                             </div>
                             <br />
                             <div class="col-lg-12 col-md-12 col-sm-12 blockquote blockquote-info btn-round">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-hover" id="tblfilterable">
+                                        @Html.Partial("_Liquidaciones", (List<VentaCajaGeneralDTO>)ViewBag.Liquidaciones)
+                                        @*<table class="table table-striped table-hover" id="tblfilterable">
                                             <thead>
                                                 <tr>
                                                     <th>Fecha</th>
@@ -257,11 +276,11 @@
                                                     }
                                                 }
                                             </tbody>
-                                        </table>
+                                        </table>*@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
+                            @*<div class="row clearfix">
                                 @if (ViewBag.CajaGeneral != null)
                                 {
                                     <div class="col-md-6">
@@ -271,24 +290,10 @@
                                         @Html.PagedListPager((IPagedList)ViewBag.CajaGeneral, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
                                     </div>
                                 }
-                            </div>
+                            </div>*@
                         </div>
                     </div>
-                    @if (ViewBag.MessageError != null)
-                {
-                        <div class="row clearfix">
-                            <div id="divMensajeError" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
-                                    </div>
-                                    <strong>
-                                        <label>@ViewBag.MessageError</label>
-                                    </strong>
-                                </div>
-                            </div>
-                        </div>
-                    }
+
                 </div>
             </div>
         </section>

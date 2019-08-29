@@ -30,8 +30,8 @@ namespace Application.MainModule.DTOs.Ventas
         public decimal Saldo { get; set; }
         public string PuntoVenta { get; set; }
         public string OperadorChoferNombre { get; set; }
-        public System.DateTime FechaAplicacion { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
+        public DateTime FechaAplicacion { get; set; }
+        public DateTime FechaRegistro { get; set; }
 
         public string CAlmacenGas { get; set; }
         public string COperadorChofer { get; set; }
