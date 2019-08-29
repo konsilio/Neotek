@@ -1,6 +1,19 @@
-﻿@model MVC.Presentacion.Models.Catalogos.LineaProductoDTO
+﻿@using MVC.Presentacion.Models.Catalogos
+@model MVC.Presentacion.Models.Catalogos.LineaProductoDTO
 @using PagedList.Mvc;
 @using PagedList;
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+           
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+
 @{
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
 }
@@ -12,14 +25,14 @@
         $(".filterable tr:has(td)").each(function () {
             var t = $(this).text().toLowerCase();
             $("<td class='indexColumn'></td>")
-             .hide().text(t).appendTo(this);
+                .hide().text(t).appendTo(this);
         });
         $("#txtNumeroFiltro").keyup(function () {
             var s = $(this).val().toLowerCase().split(" ");
             $(".filterable tr:hidden").show();
             $.each(s, function () {
                 $(".filterable tr:visible .indexColumn:not(:contains('"
-                   + this + "'))").parent().hide();
+                    + this + "'))").parent().hide();
             });//each
         });//key up.
     });//document.ready
@@ -146,51 +159,52 @@
                                         }
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Número" id="txtNumeroFiltro" class="form-control" />
-                                        </div>
+                                        @*<div class="form-group">
+                                                <input type="text" placeholder="Número" id="txtNumeroFiltro" class="form-control" />
+                                            </div>*@
                                     </div>
-                                </div>
+                                </div><br />
                                 <div class="row clearfix blockquote blockquote-info btn-round">
-                                    <div class="table-responsive">
-                                        <table class="table table table-striped table-hover " name="RequisicionProductos">
-                                            <thead>
-                                                <tr>
-                                                    <td><b>Nombre</b></td>
-                                                    <td><b>Descripción</b></td>
-                                                    <td><b>Acción</b></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var cat in ViewBag.Lineas)
-                                                {
+                                    @Html.Partial("_CB_Lineas", (List<LineaProductoDTO>)TempData["DataSourceLineas"])
+                                    @*<div class="table-responsive">
+                                            <table class="table table table-striped table-hover " name="RequisicionProductos">
+                                                <thead>
                                                     <tr>
-                                                        <td>@cat.Linea </td>
-                                                        <td>@cat.Descripcion </td>
-                                                        <td>
-                                                            <a href="@Url.Action("EditarLineaProducto", "Producto", new { Id = cat.IdProductoLinea })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">edit</i>
-                                                                <span>Editar linea producto</span>
-                                                            </a>
-                                                            <a href="@Url.Action("EliminarLineaProducto", "Producto", new { Id = cat.IdProductoLinea })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">delete</i>
-                                                                <span>Eliminar linea producto</span>
-                                                            </a>
-                                                        </td>
+                                                        <td><b>Nombre</b></td>
+                                                        <td><b>Descripción</b></td>
+                                                        <td><b>Acción</b></td>
                                                     </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var cat in ViewBag.Lineas)
+                                                    {
+                                                        <tr>
+                                                            <td>@cat.Linea </td>
+                                                            <td>@cat.Descripcion </td>
+                                                            <td>
+                                                                <a href="@Url.Action("EditarLineaProducto", "Producto", new { Id = cat.IdProductoLinea })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="material-icons">edit</i>
+                                                                    <span>Editar linea producto</span>
+                                                                </a>
+                                                                <a href="@Url.Action("EliminarLineaProducto", "Producto", new { Id = cat.IdProductoLinea })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="material-icons">delete</i>
+                                                                    <span>Eliminar linea producto</span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>*@
                                 </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-6">
-                                        Página @(ViewBag.Lineas.PageCount < ViewBag.Lineas.PageNumber ? 0 : ViewBag.Lineas.PageNumber) de @ViewBag.Lineas.PageCount
-                                    </div>
-                                    <div class="col-md-6 text-right">
-                                        @Html.PagedListPager((IPagedList)ViewBag.Lineas, page => Url.Action("LineaProducto", new { page, @class = "btn btn-primary btn-simple" }))
-                                    </div>
-                                </div>
+                                @*<div class="row clearfix">
+                                        <div class="col-md-6">
+                                            Página @(ViewBag.Lineas.PageCount < ViewBag.Lineas.PageNumber ? 0 : ViewBag.Lineas.PageNumber) de @ViewBag.Lineas.PageCount
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            @Html.PagedListPager((IPagedList)ViewBag.Lineas, page => Url.Action("LineaProducto", new { page, @class = "btn btn-primary btn-simple" }))
+                                        </div>
+                                    </div>*@
                             </div>
                         </div>
                     </div>

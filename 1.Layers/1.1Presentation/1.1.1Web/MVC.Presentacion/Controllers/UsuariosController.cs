@@ -15,6 +15,8 @@ namespace MVC.Presentacion.Controllers
         // GET: Usuarios
         public ActionResult Index(UsuarioDTO modelo = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
@@ -46,6 +48,10 @@ namespace MVC.Presentacion.Controllers
             {
                 ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
             }
+
+            TempData["DataSourceUsuarios"] = ViewBag.ListaUsuarios;
+            TempData.Keep("DataSourceUsuarios");
+
             return View(model);
         }
         public ActionResult Nuevo()
@@ -310,6 +316,24 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+
+
+        public ActionResult CB_Usuarios()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tok = Session["StringToken"].ToString();
+            List<UsuariosModel> model = new List<UsuariosModel>();
+            if (TempData["DataSourceUsuarios"] != null)
+            {
+                model = (List<UsuariosModel>)TempData["DataSourceUsuarios"];
+                TempData["DataSourceUsuarios"] = model;
+               // TempData.Keep("DataSourceUsuarios");
+            }
+            return PartialView("_CB_Usuarios", model);
+        }
+
+
+
 
     }
 }
