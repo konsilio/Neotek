@@ -30,6 +30,7 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio
                 IdTipoCombustible = entidad.IdTipoCombustible,
                 FechaRecarga = entidad.FechaRecarga,
                 Monto = entidad.Monto ?? 0,
+                IdCuentaContable=entidad.IdCuentaContable,
             };
         }
         public static List<RecargaCombustibleDTO> ToDTO(List<DetalleRecargaCombustible> entidad)
@@ -72,7 +73,8 @@ namespace Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio
                 LitrosRecargados = entidad.LitrosRecargados,
                 IdTipoCombustible = entidad.IdTipoCombustible,
                 FechaRecarga = entidad.FechaRecarga,
-                Monto = entidad.Monto ?? 0
+                Monto = entidad.Monto ?? 0,
+                IdCuentaContable=entidad.IdCuentaContable,
             };
         }
         public static RepRendimientoVehicularDTO FormRepDTO(DetalleRecargaCombustible entidad)

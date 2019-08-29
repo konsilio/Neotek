@@ -1,0 +1,56 @@
+﻿@using MVC.Presentacion.Models.Requisicion;
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Requisiciones";
+        settings.CallbackRouteValues = new { Controller = "Requisicion", Action = "CB_Requisiciones"};
+        settings.KeyFieldName = "IdRequisicion";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdRequisicion";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+        settings.Columns.Add("NombreComercial", "Gasera");
+        settings.Columns.Add("NumeroRequisicion", "N° Requisición");
+        settings.Columns.Add("FechaRequerida", "Fecha Requerida");
+        settings.Columns.Add("UsuarioSolicitante", "Solicitante");
+        settings.Columns.Add("RequisicionEstatus", "Estatus");
+        settings.Columns.Add("IdRequisicionEstatus").Visible = false;
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.SetDataItemTemplateContent(d =>
+            {
+                if (byte.Parse(d.Grid.GetRowValues(d.VisibleIndex, "IdRequisicionEstatus").ToString()) == RequisicionEstatusEnum.Creada)
+                {
+                    ViewContext.Writer.Write(string.Format("<a id='lbDgPDF' href='"+ Url.Action("RequisicionRevision", "Requisicion" , new { Id=d.KeyValue, estatus=byte.Parse(d.Grid.GetRowValues(d.VisibleIndex, "IdRequisicionEstatus" ).ToString()) }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>content_paste</i></a>" ));
+   }
+   if (byte.Parse(d.Grid.GetRowValues(d.VisibleIndex, "IdRequisicionEstatus" ).ToString()) == RequisicionEstatusEnum.En_revision || byte.Parse(d.Grid.GetRowValues(d.VisibleIndex, "IdRequisicionEstatus" ).ToString())==RequisicionEstatusEnum.Revision_exitosa)
+   {
+   ViewContext.Writer.Write(string.Format("<a id='lbDgPDF' href='" + Url.Action("RequisicionAutorizacion", "Requisicion", new { Id = d.KeyValue, estatus = byte.Parse( d.Grid.GetRowValues(d.VisibleIndex, "IdRequisicionEstatus").ToString()) }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>spellcheck</i></a>"));
+                }
+            });
+        });
+    });
+
+}
+@grid.Bind(Model).GetHtml()

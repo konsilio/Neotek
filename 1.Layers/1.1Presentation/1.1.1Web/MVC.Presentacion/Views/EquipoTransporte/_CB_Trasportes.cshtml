@@ -1,0 +1,72 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "PreciosVentas";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "EquipoTransporte",
+            Action = "CB_Trasportes"
+        };
+        settings.KeyFieldName = "IdEquipoTransporteDetalle";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdEquipoTransporteDetalle";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+        settings.Columns.Add("IdEquipoTransporteDetalle", "#");
+        settings.Columns.Add("Placas", "Número de Placa");
+        settings.Columns.Add("AliasUnidad", "Vehículo");
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Alias";
+            column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+        settings.CustomUnboundColumnData = (s, e) =>
+        {
+            if (e.Column.FieldName == "Alias")
+            {
+                string firstName = (e.GetListSourceFieldValue("TipoUnidad")).ToString();
+                string lastName = (e.GetListSourceFieldValue("NumIdVehicular")).ToString();
+                e.Value = firstName + " " + lastName;
+            };
+        };
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.SetDataItemTemplateContent(d =>
+            {
+
+                ViewContext.Writer.Write(string.Format("<a  ID = 'lbEdit' href='" + Url.Action("EditarVehiculo", "EquipoTransporte", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>edit</i></a>"));
+
+                //if (ViewBag.EsAdmin)
+                //{
+
+                //    ViewContext.Writer.Write(string.Format("<a href='#ModalConfirmacion' data-toggle='modal' data-id='"+ d.KeyValue + "' id = 'btnok'  class='tip' onclick='javascript: AsignarEliminar("+ d.KeyValue + ")'  data-target='#ModalConfirmacion' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>delete</i></a>"));
+
+                //}
+            });
+        });
+    });
+
+}
+@grid.Bind(Model).GetHtml()
