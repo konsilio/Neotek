@@ -121,53 +121,63 @@
                                 <div class="form-group">
                                     <b>Tipo Persona:*</b>
                                     @Html.DevExpress().ComboBox(settings =>
-                                           {
-                                               settings.Name = "cliente.IdTipoPersona";
-                                               settings.Width = 180;
-                                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                               settings.Theme = "Material";
-                                               settings.Properties.TextField = "Descripcion";
-                                               settings.Properties.ValueField = "IdTipoPersona";
-                                               settings.ClientEnabled = true;
-                                               settings.SelectedIndex = 0;
-                                               settings.Properties.ValueType = typeof(byte);
-                                               settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
-                                           }).BindList(ViewBag.TipoPersona).Bind(Model.cliente.IdTipoPersona).GetHtml()
+                               {
+                                   settings.Name = "cliente.IdTipoPersona";
+                                   settings.Width = 180;
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Theme = "Material";
+                                   settings.Properties.TextField = "Descripcion";
+                                   settings.Properties.ValueField = "IdTipoPersona";
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno", string.Empty));
+                                       combo.Properties.ValueType = typeof(short);
+                                       combo.SelectedIndex = 0;
+                                   };
+                                   settings.ClientEnabled = true;
+                                   settings.SelectedIndex = 0;
+                                   settings.Properties.ValueType = typeof(byte);
+                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                               }).BindList(ViewBag.TipoPersona).Bind(Model.cliente.IdTipoPersona).GetHtml()
                                     @Html.ValidationMessageFor(m => m.cliente.IdTipoPersona, "", new { @class = "alert-danger" })
                                 </div>
+                    
                             </div>
 
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <b> Régimen Fiscal:*</b>
                                     @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "cliente.IdRegimenFiscal";
-                                           settings.Width = 180;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Theme = "Material";
-                                           settings.Properties.TextField = "Descripcion";
-                                           settings.Properties.ValueField = "IdRegimenFiscal";
-                                           //settings.Properties.ValueType = typeof(int);
-                                           settings.PreRender = (s, e) =>
-                                           {
-                                               MVCxComboBox combo = s as MVCxComboBox;
-                                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                               combo.Properties.ValueType = typeof(short);
-                                               combo.SelectedIndex = Model.cliente.IdRegimenFiscal.Value;
-                                           };
-                                       }).BindList(ViewBag.Regimen).GetHtml()
+                               {
+                                   settings.Name = "cliente.IdRegimenFiscal";
+                                   settings.Width = 180;
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Theme = "Material";
+                                   settings.Properties.TextField = "Descripcion";
+                                   settings.Properties.ValueField = "IdRegimenFiscal";
+                                   //settings.Properties.ValueType = typeof(int);
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno",string.Empty));
+                                       combo.Properties.ValueType = typeof(short);
+                                       combo.SelectedIndex = 0;
+                                   };
+                               }).BindList(ViewBag.Regimen).GetHtml()
                                     @Html.ValidationMessageFor(m => m.cliente.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <div class="form-group">
-                                    <div>
-                                        Teléfono:@Html.TextBoxFor(m => m.cliente.Telefono, new { @class = "form-control", @id = "txtTel" })
-                                    </div>
-                                </div>
+                      <div class="col-lg-4 col-md-4 col-sm-4">
+                          <div class="form-group">
+                              <div>
+                                  Teléfono:@Html.TextBoxFor(m => m.cliente.Telefono, new { @class = "form-control", @id = "txtTel", })
+
+                              </div>
+                              @Html.ValidationMessageFor(m => m.cliente.Telefono1, "", new { @class = "alert-danger" })
+                          </div>
                             </div>
                         </div>
                         <div class="row clearfix">
@@ -182,8 +192,9 @@
                                 <div class="form-group">
                                     RFC:*
                                     @Html.TextBoxFor(m => m.cliente.Rfc, Model.cliente.Rfc, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.cliente.Rfc, "", new { @class = "alert-danger" })
+
                                 </div>
+                                @Html.ValidationMessageFor(m => m.cliente.Rfc, "", new { @class = "alert-danger" })
                             </div>
                         </div>
                         <div class="row clearfix" id="div_hideRP" hidden="hidden">

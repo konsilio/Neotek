@@ -12,8 +12,10 @@ namespace MVC.Presentacion.Controllers
     public class PrecioVentaOtroController : Controller
     {
         // GET: PrecioVentaOtro
-        public ActionResult Index()
+        public ActionResult Index(PrecioVentaModel _ObjModel =null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
@@ -29,37 +31,47 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             }
 
+            TempData["DataSourcePrecioVentasOtro"] = ViewBag.ListaPV;
+            TempData.Keep("DataSourcePrecioVentasOtro");
+
             ViewBag.ListaStatus = CatalogoServicio.ListaTipoFecha(_tkn);
-            //if (TempData["RespuestaDTO"] != null)
-            //{
-            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
-            //}
-            //if (TempData["RespuestaDTOError"] != null)
-            //{
-            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
-            //}
-            //ViewBag.MessageError = TempData["RespuestaDTOError"];
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.MessageExito = TempData["RespuestaDTO"];
+            }
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MessageError = TempData["RespuestaDTOError"];
+            }
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
 
             ViewBag.Categoria = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Categoria).Select(x => x.FirstOrDefault());
             ViewBag.Linea = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Linea).Select(x => x.FirstOrDefault());
             ViewBag.Producto = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Producto).Select(x => x.FirstOrDefault());
-            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
-
-            return View();
+            if (TempData["RespuestaDTOError"] != null) {
+                ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+                    return View(_ObjModel);
+            }
+            else {
+                return View();
+            }
+            
+            
         }
 
         [HttpPost]
         public ActionResult Registrar(PrecioVentaModel _ObjModel)
         {
+        
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             string _tok = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.RegistrarPrecio(_ObjModel, _tok);
             if (respuesta.Exito)      
-                return RedirectToAction("Index", _ObjModel);    
+                return RedirectToAction("Index", _ObjModel); 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Index", _ObjModel);
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;             
+                return RedirectToAction("Index", _ObjModel);           
             }
 
         }
@@ -70,6 +82,9 @@ namespace MVC.Presentacion.Controllers
 
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.ListaPV = CatalogoServicio.ListaPrecioVenta(id, _tkn);
+
+            TempData["DataSourcePrecioVentasOtro"] = ViewBag.ListaPV;
+            TempData.Keep("DataSourcePrecioVentasOtro");
 
             return View();
         }
@@ -96,6 +111,7 @@ namespace MVC.Presentacion.Controllers
             string Mensaje = string.Empty;
             ModelState.Clear();
             if (Resp != null)
+
             {
                 if (Resp.ModelStatesStandar != null)
                     foreach (var error in Resp.ModelStatesStandar.ToList())
@@ -106,6 +122,21 @@ namespace MVC.Presentacion.Controllers
                     Mensaje = Resp.MensajesError[0];
             }
             return Mensaje;
+        }
+
+
+        public ActionResult CB_PrecioVentasOtro()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            string _tok = Session["StringToken"].ToString();
+            List<PrecioVentaModel> model = new List<PrecioVentaModel>();
+            if (TempData["DataSourcePrecioVentasOtro"] != null)
+            {
+                model = (List<PrecioVentaModel>)TempData["DataSourcePrecioVentasOtro"];
+                TempData["DataSourcePrecioVentasOtro"] = model;
+                //TempData.Keep("DataSourcePrecioVentasOtro");
+            }
+            return PartialView("_CB_PrecioVentasOtro", model);
         }
     }
 }

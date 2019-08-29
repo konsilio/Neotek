@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Web.Mvc;
 
 namespace MVC.Presentacion.App_Code
 {
@@ -54,6 +55,27 @@ namespace MVC.Presentacion.App_Code
             var Nombre = claims.FirstOrDefault(x => x.Type.Equals(TokenEtiquetasEnum.NombreUsuario));
 
             return  Nombre.Value;
+        }
+
+
+
+        public static void ClearTemp(TempDataDictionary temp)
+        {
+            if (temp.Keys.Contains("DataSourceAsignaciones"))       temp.Remove("DataSourceAsignaciones");
+            if (temp.Keys.Contains("DataSourceCentros"))            temp.Remove("DataSourceCentros");
+            if (temp.Keys.Contains("DataSourceEmpresas"))           temp.Remove("DataSourceEmpresas");
+            if (temp.Keys.Contains("DataSourceTrasportes"))         temp.Remove("DataSourceTrasportes");
+            if (temp.Keys.Contains("DataSourceMantenimientos"))     temp.Remove("DataSourceMantenimientos");
+            if (temp.Keys.Contains("DataSourcePrecioVentas"))       temp.Remove("DataSourcePrecioVentas");
+            if (temp.Keys.Contains("DataSourcePrecioVentasOtro"))   temp.Remove("DataSourcePrecioVentasOtro");
+            if (temp.Keys.Contains("DataSourceProductos"))          temp.Remove("DataSourceProductos");
+            if (temp.Keys.Contains("DataSourceLineas"))             temp.Remove("DataSourceLineas");
+            if (temp.Keys.Contains("DataSourceCategorias"))         temp.Remove("DataSourceCategorias");
+            if (temp.Keys.Contains("DataSourceUnidades"))           temp.Remove("DataSourceUnidades");
+            if (temp.Keys.Contains("DataSourceProveedores"))        temp.Remove("DataSourceProveedores");
+            if (temp.Keys.Contains("DataSourceRecargas"))           temp.Remove("DataSourceRecargas");
+            if (temp.Keys.Contains("DataSourceRequisiciones"))      temp.Remove("DataSourceRequisiciones");
+            if (temp.Keys.Contains("DataSourceUsuarios"))           temp.Remove("DataSourceUsuarios");
         }
     }
 }

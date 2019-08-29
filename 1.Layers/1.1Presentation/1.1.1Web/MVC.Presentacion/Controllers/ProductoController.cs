@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web.Mvc;
 using PagedList;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -15,11 +16,15 @@ namespace MVC.Presentacion.Controllers
         #region Categorías Producto
         public ActionResult Categoria(int? page, CategoriaProductoDTO model = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");           
             tkn = Session["StringToken"].ToString();
             ModelState.Clear();
             var Pagina = page ?? 1;
-            ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn).ToPagedList(Pagina, 20); ;
+            //ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn).ToPagedList(Pagina, 20); ;
+            TempData["DataSourceCategorias"] = CatalogoServicio.ListaCategorias(tkn).ToList();
+            TempData.Keep("DataSourceCategorias");
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             if (model != null && model.IdCategoria != 0) ViewBag.EsEdicion = true;            
@@ -81,11 +86,15 @@ namespace MVC.Presentacion.Controllers
         #region Linea Producto
         public ActionResult LineaProducto(int? page, LineaProductoDTO model = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ModelState.Clear();
             var Pagina = page ?? 1;
-            ViewBag.Lineas = CatalogoServicio.ListaLineasProducto(tkn).ToPagedList(Pagina, 20); ;
+            //ViewBag.Lineas = CatalogoServicio.ListaLineasProducto(tkn).ToPagedList(Pagina, 20); ;
+            TempData["DataSourceLineas"] = CatalogoServicio.ListaLineasProducto(tkn).ToList();
+            TempData.Keep("DataSourceLineas");
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             if (model != null && model.IdProductoLinea != 0) ViewBag.EsEdicion = true;            
@@ -147,11 +156,15 @@ namespace MVC.Presentacion.Controllers
         #region Unidada de Medida
         public ActionResult UnidadMedida(int? page, UnidadMedidaDTO model = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ModelState.Clear();
             var Pagina = page ?? 1;
-            ViewBag.Unidades = CatalogoServicio.ListaUnidadesMedida(tkn).ToPagedList(Pagina, 20); ;
+            // ViewBag.Unidades = CatalogoServicio.ListaUnidadesMedida(tkn).ToPagedList(Pagina, 20); ;
+            TempData["DataSourceUnidades"]= CatalogoServicio.ListaUnidadesMedida(tkn).ToList();
+            TempData.Keep("DataSourceUnidades");
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             if (model != null && model.IdUnidadMedida != 0) ViewBag.EsEdicion = true;
@@ -213,14 +226,24 @@ namespace MVC.Presentacion.Controllers
         #region Producto
         public ActionResult Producto(int? page, short? idempresa, ProductoDTO model = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
             var _idEmpresa = idempresa ?? 0;
             if (!_idEmpresa.Equals(0))
-                ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).Where(x => x.IdEmpresa.Equals(_idEmpresa)).ToPagedList(Pagina, 20);
+            {
+                TempData["DataSourceProductos"] = CatalogoServicio.ListaProductos(tkn).Where(x => x.IdEmpresa.Equals(_idEmpresa)).ToList();
+                TempData.Keep("DataSourceProductos");
+                //ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).Where(x => x.IdEmpresa.Equals(_idEmpresa)).ToPagedList(Pagina, 20);
+            }
             else
-                ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).ToPagedList(Pagina, 20);
+            {
+                TempData["DataSourceProductos"] = CatalogoServicio.ListaProductos(tkn);
+                TempData.Keep("DataSourceProductos");
+                //ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).ToPagedList(Pagina, 20);
+            }
             if (idempresa != null)
                 ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Where(x => x.IdEmpresa.Equals(idempresa)).ToList();
             else
@@ -298,10 +321,14 @@ namespace MVC.Presentacion.Controllers
         #region Proveedor
         public ActionResult Proveedores(int? page, ProveedorDTO model = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
-            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).ToPagedList(Pagina, 20);
+            //ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).ToPagedList(Pagina, 20);
+            TempData["DataSourceProveedores"] = CatalogoServicio.ListaProveedores(tkn).ToList();
+            TempData.Keep("DataSourceProveedores");
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             ViewBag.TipoProveedores = CatalogoServicio.ListaTipoProveedor(tkn);
             ViewBag.Estados = CatalogoServicio.GetEstados(tkn);
@@ -406,5 +433,84 @@ namespace MVC.Presentacion.Controllers
         {
             return PartialView("_ComboBoxPartial");
         }
+
+        #region GridDEvExpress CallBack
+
+        public ActionResult CB_Productos()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            List<ProductoDTO> model = new List<ProductoDTO>();
+            if (TempData["DataSourceProductos"] != null)
+            {
+                model = (List<ProductoDTO>)TempData["DataSourceProductos"];
+                TempData["DataSourceProductos"] = model;
+                //TempData.Keep("DataSourceProductos");
+            }
+            return PartialView("_CB_Productos", model);
+        }
+
+        public ActionResult CB_Lineas()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            List<LineaProductoDTO> model = new List<LineaProductoDTO>();
+            if (TempData["DataSourceLineas"] != null)
+            {
+                model = (List<LineaProductoDTO>)TempData["DataSourceLineas"];
+                TempData["DataSourceLineas"] = model;
+                //TempData.Keep("DataSourceLineas");
+            }
+            return PartialView("_CB_Lineas", model);
+        }
+
+        public ActionResult CB_Categorias()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            List<CategoriaProductoDTO> model = new List<CategoriaProductoDTO>();
+            if (TempData["DataSourceCategorias"] != null)
+            {
+                model = (List<CategoriaProductoDTO>)TempData["DataSourceCategorias"];
+                TempData["DataSourceCategorias"] = model;
+               //TempData.Keep("DataSourceCategorias");
+            }
+            return PartialView("_CB_Categorias", model);
+        }
+
+        public ActionResult CB_Unidades()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            List<UnidadMedidaDTO> model = new List<UnidadMedidaDTO>();
+            if (TempData["DataSourceUnidades"] != null)
+            {
+                model = (List<UnidadMedidaDTO>)TempData["DataSourceUnidades"];
+                TempData["DataSourceUnidades"] = model;
+               // TempData.Keep("DataSourceUnidades");
+            }
+            return PartialView("_CB_Unidades", model);
+        }
+
+
+
+        public ActionResult CB_Proveedores()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            List<ProveedorDTO> model = new List<ProveedorDTO>();
+            if (TempData["DataSourceProveedores"] != null)
+            {
+                model = (List<ProveedorDTO>)TempData["DataSourceProveedores"];
+                TempData["DataSourceProveedores"] = model;
+               // TempData.Keep("DataSourceProveedores");
+            }
+            return PartialView("_CB_Proveedores", model);
+        }
+
+
+        #endregion
+
+
     }
 }
