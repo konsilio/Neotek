@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVC.Presentacion.Models.Catalogos
 {
@@ -13,7 +14,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public short IdCategoria { get; set; }
         public short IdProductoLinea { get; set; }
         public int IdProducto { get; set; }
-        public string Categoria { get; set; }
+        public string  Categoria { get; set;  }
         public string Linea { get; set; }
         public string Producto { get; set; }
         public Nullable<decimal> PrecioActual { get; set; }
