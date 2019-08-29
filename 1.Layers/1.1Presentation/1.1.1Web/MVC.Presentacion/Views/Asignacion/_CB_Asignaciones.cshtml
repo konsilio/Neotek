@@ -1,0 +1,55 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Asignaciones";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Asignacion",
+            Action = "CB_Asignaciones"
+        };
+        settings.KeyFieldName = "IdAsignacion";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdAsignacion";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+        settings.Columns.Add("Chofer", "Nombre Chofer");
+        settings.Columns.Add("Vehiculo", "Vehiculo");
+        settings.Columns.Add("IdVehiculo").Visible=false;
+        settings.Columns.Add("TipoVehiculo").Visible=false;
+
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+
+            c.SetDataItemTemplateContent(d =>
+            {
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("Eliminar", "Asignacion", new { Id = d.Grid.GetRowValues(d.VisibleIndex, "IdVehiculo"),TV = d.Grid.GetRowValues(d.VisibleIndex, "TipoVehiculo")
+                }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>delete</i></a>"));
+            });
+        });
+    });
+
+}
+@grid.Bind(Model).GetHtml()

@@ -15,11 +15,17 @@ namespace MVC.Presentacion.Controllers
         string tkn = string.Empty;
         public ActionResult Index(int? page, MantenimientoDetalleModel model = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.CMantenimiento = TransporteServicio.ListaCatMantenimiento(tkn);
-            ViewBag.Mantenimientos = TransporteServicio.ListaMantenimientos(tkn).ToPagedList(page ?? 1, 20);
+            //ViewBag.Mantenimientos = TransporteServicio.ListaMantenimientos(tkn).ToPagedList(page ?? 1, 20);
+
+            TempData["DataSourceMantenimientos"] = TransporteServicio.ListaMantenimientos(tkn).ToList() ;
+           TempData.Keep("DataSourceMantenimientos");
+
             ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             if (TempData["RespuestaDTO"] != null)
             {
@@ -75,5 +81,26 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+
+
+        public ActionResult CB_Mantenimientos()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            List<MantenimientoDetalleModel> model = new List<MantenimientoDetalleModel>();
+            if (TempData["DataSourceMantenimientos"] != null)
+            {
+                model = (List<MantenimientoDetalleModel>)TempData["DataSourceMantenimientos"];
+                TempData["DataSourceMantenimientos"] = model;
+               // TempData.Keep("DataSourceMantenimientos");
+            }
+            return PartialView("_CB_Mantenimientos", model);
+        }
+
+      
+
+
+
+
     }
 }

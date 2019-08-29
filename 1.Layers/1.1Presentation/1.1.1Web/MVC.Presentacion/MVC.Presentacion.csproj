@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -11699,6 +11700,21 @@
     <Content Include="Views\Reportes\CuentaConsolidada.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CamionetaModel.cshtml" />
     <Content Include="Views\OrdenCompra\_CB_Ordenes.cshtml" />
+    <Content Include="Views\Requisicion\_CB_Requisiciones.cshtml" />
+    <Content Include="Views\Producto\_CB_Productos.cshtml" />
+    <Content Include="Views\Producto\_CB_Lineas.cshtml" />
+    <Content Include="Views\Producto\_CB_Unidades.cshtml" />
+    <Content Include="Views\Producto\_CB_Categorias.cshtml" />
+    <Content Include="Views\CentroCosto\_CB_CentroCostos.cshtml" />
+    <Content Include="Views\Producto\_CB_Proveedores.cshtml" />
+    <Content Include="Views\Empresas\_CB_Empresas.cshtml" />
+    <Content Include="Views\PrecioVenta\_CB_PrecioVentas.cshtml" />
+    <Content Include="Views\Usuarios\_CB_Usuarios.cshtml" />
+    <Content Include="Views\PrecioVentaOtro\_CB_PrecioVentasOtro.cshtml" />
+    <Content Include="Views\EquipoTransporte\_CB_Trasportes.cshtml" />
+    <Content Include="Views\RecargaCombustibles\_CB_Recargas.cshtml" />
+    <Content Include="Views\Asignacion\_CB_Asignaciones.cshtml" />
+    <Content Include="Views\Mantenimiento\_CB_Mantenimientos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

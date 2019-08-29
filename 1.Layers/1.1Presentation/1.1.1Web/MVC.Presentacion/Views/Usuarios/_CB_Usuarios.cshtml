@@ -1,0 +1,59 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Usuarios";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Usuarios",
+            Action = "CB_Usuarios"
+        };
+        settings.KeyFieldName = "IdUsuario";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdUsuario";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+        settings.Columns.Add("Empresa", "Gasera");
+        settings.Columns.Add("Nombre", "Nombre");
+        settings.Columns.Add("Email1", "E-mail (Acceso)");
+        settings.Columns.Add("Celular1", "Celular");
+        settings.Columns.Add("Telefono1", "Teléfono");
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("EditarUsuario", "Usuarios", new { Id = d.KeyValue}) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>edit</i></a>"));
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("ActualizaCredenciales", "Usuarios", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='zmdi zmdi-settings'></i></a>"));
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("ActualizaRoles", "Usuarios", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>dashboard</i></a>"));
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("BorrarUsuario", "Usuarios", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>delete</i></a>"));
+            });
+        });
+    });
+
+}
+@grid.Bind(Model).GetHtml()

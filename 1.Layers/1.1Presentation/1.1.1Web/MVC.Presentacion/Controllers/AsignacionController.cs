@@ -15,11 +15,15 @@ namespace MVC.Presentacion.Controllers
         string tkn = string.Empty;
         public ActionResult Index(int? page, AsignacionModel model = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.Asignaciones = TransporteServicio.ListaAsignacion(tkn).ToPagedList(page ?? 1, 20);
+            //ViewBag.Asignaciones = TransporteServicio.ListaAsignacion(tkn).ToPagedList(page ?? 1, 20);
+            TempData["DataSourceAsignaciones"] = TransporteServicio.ListaAsignacion(tkn).ToList();
+            TempData.Keep("DataSourceAsignaciones");
             if (TempData["RespuestaDTO"] != null)
             {
                 var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
@@ -40,11 +44,11 @@ namespace MVC.Presentacion.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Eliminar(short? id, short? TV)
+        public ActionResult Eliminar(short? Id, short? TV)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = TransporteServicio.EliminarAsignacion(new AsignacionModel { IdVehiculo = id ?? 0, TipoVehiculo = TV ?? 0 }, tkn);
+            var respuesta = TransporteServicio.EliminarAsignacion(new AsignacionModel { IdVehiculo = Id ?? 0, TipoVehiculo = TV ?? 0 }, tkn);
             TempData["RespuestaDTO"] = respuesta;
             return RedirectToAction("Index");
 
@@ -63,6 +67,27 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+
+
+
+        public ActionResult CB_Asignaciones()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            List<AsignacionModel> model = new List<AsignacionModel>();
+            if (TempData["DataSourceAsignaciones"] != null)
+            {
+                model = (List<AsignacionModel>)TempData["DataSourceAsignaciones"];
+                TempData["DataSourceAsignaciones"] = model;
+               // TempData.Keep("DataSourceAsignaciones");
+            }
+            return PartialView("_CB_Asignaciones", model);
+        }
+
+
+      
+
+
     }
 }
 
