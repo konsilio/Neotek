@@ -1,0 +1,31 @@
+﻿@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Liquidaciones";
+        settings.CallbackRouteValues = new { Controller = "CajaGeneral", Action = "CallBackLiquidaciones" };
+        settings.KeyFieldName = "IdPuntoVenta";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFooter = true;
+        settings.Columns.Add("PuntoVenta", "Punto de venta");
+        settings.Columns.Add("OperadorChofer", "Chofer");
+        settings.Columns.Add("FolioOperacionDia", "Folio liquidación");
+        settings.Columns.Add("VentaTotalCredito", "A credito");
+        settings.Columns.Add("VentaTotalContado", "De contado");
+        settings.Columns.Add("OtrasVentas", "Otras Ventas");
+        settings.Columns.Add("UsuarioRecibe", "Recibe");
+        settings.Columns.Add("VentaTotal", "Venta total");
+    });
+}
+@grid.Bind(Model).GetHtml()

@@ -1,6 +1,8 @@
-﻿using Application.MainModule.AdaptadoresDTO.Ventas;
+﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.Almacenes;
@@ -135,10 +137,10 @@ namespace Application.MainModule.Flujos
             var precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             if (!resp.Exito) return null;
 
-           
-            var ventas = CajaGeneralServicio.ObtenerVPV(reporteDia).ToList();          
+
+            var ventas = CajaGeneralServicio.ObtenerVPV(reporteDia).ToList();
             var lecturas = AlmacenGasServicio.ObtenerLecturas(reporteDia.IdCAlmacenGas.Value, reporteDia.FechaReporte);
-            corte.FolioOperacionDia = string.Concat("C", reporteDia.FechaReporte.Ticks.ToString());
+            corte.FolioOperacionDia = string.Concat("C", FechasFunciones.ObtenerClaveUnica());
             corte.IdCAlmacenGas = reporteDia.IdCAlmacenGas.Value;
             corte.IdOperadorChofer = reporteDia.IdOperadorChofer;
             corte.OperadorChofer = reporteDia.OperadorChofer;
@@ -150,10 +152,10 @@ namespace Application.MainModule.Flujos
             corte.Year = (short)reporteDia.FechaReporte.Year;
             corte.Mes = (byte)reporteDia.FechaReporte.Month;
             corte.Dia = (byte)reporteDia.FechaReporte.Day;
-            corte.Orden = Convert.ToInt16(CajaGeneralServicio.ObtenerCorteUltimo(corte.IdCAlmacenGas ,corte.IdEmpresa, corte.Year, corte.Mes, corte.Dia) +1);
+            corte.Orden = Convert.ToInt16(CajaGeneralServicio.ObtenerCorteUltimo(corte.IdEmpresa, corte.Year, corte.Mes, corte.Dia) + 1);
             corte.TodoCorrecto = true;
             corte.PuntoVenta = reporteDia.CAlmacenGas.Numero;
-            corte.IdPuntoVenta = reporteDia.IdPuntoVenta ?? 0;    
+            corte.IdPuntoVenta = reporteDia.IdPuntoVenta ?? 0;
             corte.VentaTotal = ventas.Sum(x => x.Total);
             corte.OtrasVentas = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt.Value));
             corte.VentaTotalContado = ventas.Where(x => x.VentaACredito.Equals(false)).Sum(v => v.Total);
@@ -163,8 +165,11 @@ namespace Application.MainModule.Flujos
             corte.DescuentoContado = ventas.Where(v => v.VentaACredito.Equals(false)).Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
             corte.DescuentoOtrasVentas = 0;
 
+            if (CajaGeneralServicio.ExisteCorteUltimo(corte.IdCAlmacenGas corte.IdEmpresa, corte.Year, corte.Mes, corte.Dia))
+                return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.SiExiste, "La liquidacion") };
+
             var respuestaCorte = CajaGeneralServicio.Insertar(corte);
-            if (!resp.Exito) return resp;
+            if (!respuestaCorte.Exito) return respuestaCorte;
 
             var VentasEntity = CajaGeneralAdapter.FromEmtity(ventas);
             VentasEntity.ForEach(x => { x.FolioOperacionDia = corte.FolioOperacionDia; });
@@ -213,6 +218,19 @@ namespace Application.MainModule.Flujos
 
             var rep = CajaGeneralAdapter.FromDtoCE(reporte);
             return CajaGeneralServicio.Actualizar(rep);
+        }
+        public List<PuntoVentaDTO> ObtenerPuntosVentaLiquidacion()
+        {
+            var resp = PermisosServicio.PuedeConsultarCajaGeneral();
+            if (!resp.Exito) return null;
+
+            var ptosVenta = PuntoVentaServicio.ObtenerTodosLiquidacion();
+            return PuntoVentaAdapter.ToDTO(ptosVenta);
+        }
+        public List<VentaCajaGeneralDTO> ObtenerLiquidaciones()
+        {
+            var liquis = CajaGeneralServicio.Obtener(DateTime.Now.AddDays(-1));
+            return CajaGeneralAdapter.ToDTO(liquis);
         }
     }
 }
