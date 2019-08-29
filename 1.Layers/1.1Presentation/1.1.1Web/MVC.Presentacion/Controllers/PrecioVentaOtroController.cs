@@ -14,6 +14,8 @@ namespace MVC.Presentacion.Controllers
         // GET: PrecioVentaOtro
         public ActionResult Index()
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
@@ -28,6 +30,9 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
                 ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             }
+
+            TempData["DataSourcePrecioVentasOtro"] = ViewBag.ListaPV;
+            TempData.Keep("DataSourcePrecioVentasOtro");
 
             ViewBag.ListaStatus = CatalogoServicio.ListaTipoFecha(_tkn);
             //if (TempData["RespuestaDTO"] != null)
@@ -71,6 +76,9 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.ListaPV = CatalogoServicio.ListaPrecioVenta(id, _tkn);
 
+            TempData["DataSourcePrecioVentasOtro"] = ViewBag.ListaPV;
+            TempData.Keep("DataSourcePrecioVentasOtro");
+
             return View();
         }
 
@@ -106,6 +114,21 @@ namespace MVC.Presentacion.Controllers
                     Mensaje = Resp.MensajesError[0];
             }
             return Mensaje;
+        }
+
+
+        public ActionResult CB_PrecioVentasOtro()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            string _tok = Session["StringToken"].ToString();
+            List<PrecioVentaModel> model = new List<PrecioVentaModel>();
+            if (TempData["DataSourcePrecioVentasOtro"] != null)
+            {
+                model = (List<PrecioVentaModel>)TempData["DataSourcePrecioVentasOtro"];
+                TempData["DataSourcePrecioVentasOtro"] = model;
+                //TempData.Keep("DataSourcePrecioVentasOtro");
+            }
+            return PartialView("_CB_PrecioVentasOtro", model);
         }
     }
 }

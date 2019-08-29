@@ -2,14 +2,15 @@
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+          
         )
 @Html.DevExpress().GetScripts(
             new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
+
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdmin).Equals(false) ? "disabled" : "";
     string EnabledEsNueva = Convert.ToBoolean(ViewBag.EsNueva).Equals(true) ? "" : "disabled";

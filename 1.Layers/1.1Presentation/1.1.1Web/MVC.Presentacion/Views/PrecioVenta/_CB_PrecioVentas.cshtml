@@ -1,0 +1,60 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "PreciosVentas";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "PrecioVenta",
+            Action = "CB_PrecioVentas"
+        };
+        settings.KeyFieldName = "IdPrecioVenta";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdPrecioVenta";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+        settings.Columns.Add("Empresa", "Gasera");
+        settings.Columns.Add("PrecioSalidaKg", "Precio Salida Kg");
+        settings.Columns.Add("PrecioSalidaLt", "Precio Salida Lts");
+        settings.Columns.Add("FechaProgramada", "Fecha Programada");
+        settings.Columns.Add("FechaVencimiento", "Fecha Vencimiento");
+        settings.Columns.Add("PrecioVentaEstatus", "Estatus");
+        settings.Columns.Add("FechaRegistro", "FechaRegistro");
+
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.SetDataItemTemplateContent(d =>
+            {
+                if (d.Grid.GetRowValues(d.VisibleIndex, "PrecioVentaEstatus").ToString()== "Programado") {
+
+                    ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("EditarPrecioVenta", "PrecioVenta", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>edit</i></a>"));
+
+                    ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("BorrarPrecioVenta", "PrecioVenta", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>delete</i></a>"));
+                }
+            });
+        });
+    });
+
+}
+@grid.Bind(Model).GetHtml()

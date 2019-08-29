@@ -1,4 +1,5 @@
-﻿@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -455,7 +456,7 @@
                     <br />
                     <div class="card">
                         <div class="body">
-                            <div class="row clearfix">
+                            @*<div class="row clearfix">
                                 <div class="col-sm-3" style="top: 20px;">
                                     @Html.DevExpress().ComboBox(settings =>
                                {
@@ -512,60 +513,62 @@
                                }).GetHtml()
                                 </div>
                             </div>
-                            <br />
+                            <br />*@
                             <div class="row clearfix blockquote blockquote-info btn-round">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="table-responsive">
-                                        <table class="table table table-striped table-hover" id="tblfilterable" name="PreciosVenta">
-                                            <thead>
-                                                <tr>
-                                                    <th>Gasera</th>
-                                                    @*<th>Precio Compra(kg)</th>
-                                                    <th>Utilidad Esperada(kg)</th>*@
-                                                    <th>Precio Salida Kg</th>
-                                                    <th>Precio Salida Lts</th>
-                                                    <th>Fecha Programada</th>
-                                                    <th>FechaVencimiento</th>
-                                                    <th>Estatus</th>
-                                                    <th>FechaRegistro</th>
-                                                    <th>Acciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (ViewBag.ListaPV != null)
-                                                {
-                                                    foreach (var item in ViewBag.ListaPV)
-                                                    {
-                                                <tr>
-                                                    <td>@item.Empresa</td>
-                                                    @*<td>@item.PrecioPemexKg</td>
-                                                    <td>@item.UtilidadEsperadaKg</td>*@
-                                                    <td>@item.PrecioSalidaKg</td>
-                                                    <td>@item.PrecioSalidaLt</td>
-                                                    <td>@item.FechaProgramada</td>
-                                                    <td>@item.FechaVencimiento</td>
-                                                    <td>@item.PrecioVentaEstatus</td>
-                                                    <td>@item.FechaRegistro</td>
-                                                    @if (item.PrecioVentaEstatus == "Programado")
-                                                    {
-                                                        <td>
-                                                            <a href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">edit</i>
-                                                                <span>Editar precio venta</span>
-                                                            </a>
-                                                            <a href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">delete</i>
-                                                                <span>Eliminar precio venta</span>
-                                                            </a>
-                                                        </td>
-                                                    }
-                                                </tr>
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                @Html.Partial("_CB_PrecioVentas", (List<PrecioVentaModel>)TempData["DataSourcePrecioVentas"])
+
+                                @*<div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="table-responsive">
+            <table class="table table table-striped table-hover" id="tblfilterable" name="PreciosVenta">
+                <thead>
+                    <tr>
+                        <th>Gasera</th>*@
+                                @*<th>Precio Compra(kg)</th>
+        <th>Utilidad Esperada(kg)</th>*@
+                                @*<th>Precio Salida Kg</th>
+                <th>Precio Salida Lts</th>
+                <th>Fecha Programada</th>
+                <th>FechaVencimiento</th>
+                <th>Estatus</th>
+                <th>FechaRegistro</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.ListaPV != null)
+            {
+                foreach (var item in ViewBag.ListaPV)
+                {
+            <tr>
+                <td>@item.Empresa</td>*@
+                                @*<td>@item.PrecioPemexKg</td>
+        <td>@item.UtilidadEsperadaKg</td>*@
+                                @*<td>@item.PrecioSalidaKg</td>
+                            <td>@item.PrecioSalidaLt</td>
+                            <td>@item.FechaProgramada</td>
+                            <td>@item.FechaVencimiento</td>
+                            <td>@item.PrecioVentaEstatus</td>
+                            <td>@item.FechaRegistro</td>
+                            @if (item.PrecioVentaEstatus == "Programado")
+                            {
+                                <td>
+                                    <a href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">edit</i>
+                                        <span>Editar precio venta</span>
+                                    </a>
+                                    <a href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">delete</i>
+                                        <span>Eliminar precio venta</span>
+                                    </a>
+                                </td>
+                            }
+                        </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>*@
                             </div>
                         </div>
                     </div>
