@@ -37,7 +37,6 @@ namespace Utilities.MainModule
 
             return contador;
         }
-
         public static double ObtenerMinutosEntreDosFechas(DateTime fechaMenor, DateTime fechaMayor)
         {
             TimeSpan resultado = fechaMayor.Subtract(fechaMenor);
@@ -53,6 +52,15 @@ namespace Utilities.MainModule
             if (Fecha.Month.Equals(DateTime.Now.Month) && Fecha.Year.Equals(DateTime.Now.Year))
                 return true;
             return false;
+        }
+        public static string ObtenerClaveUnica()
+        {
+            DateTime centuryBegin = new DateTime(2010, 1, 1);
+            DateTime currentDate = DateTime.Now;
+
+            long elapsedTicks = currentDate.Ticks - centuryBegin.Ticks;
+            TimeSpan elapsedSpan = new TimeSpan(elapsedTicks);
+            return Math.Truncate(elapsedSpan.TotalSeconds).ToString();
         }
     }
 }

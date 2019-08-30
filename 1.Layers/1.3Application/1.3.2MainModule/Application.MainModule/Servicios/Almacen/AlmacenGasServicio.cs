@@ -717,7 +717,7 @@ namespace Application.MainModule.Servicios.Almacenes
                     reporteDTO.Mensaje = "Exito";
                     reporteDTO.IdCAlmacenGas = almacen.IdCAlmacenGas;
                     reporteDTO.NombreCAlmacen = almacen.Camioneta.Nombre;
-                    reporteDTO.ClaveReporte = DateTime.Now.Year + "R" + DateTime.Now.Ticks;
+                    reporteDTO.ClaveReporte = DateTime.Now.Year + "R" + FechasFunciones.ObtenerClaveUnica();
                     reporteDTO.KilosDeVenta = KiliosVenta;
 
                     //Anterior
@@ -749,7 +749,7 @@ namespace Application.MainModule.Servicios.Almacenes
                     reporteDTO.LitrosVenta = CalculosGenerales.DiferenciaEntreDosNumero(reporteDTO.LecturaInicial.CantidadP5000, reporteDTO.LecturaFinal.CantidadP5000);
                     reporteDTO.Fecha = fecha;
                     reporteDTO.Precio = CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), ventasContado.Count);
-                    reporteDTO.ClaveReporte = fecha.Year + "R" + fecha.Ticks;
+                    reporteDTO.ClaveReporte = fecha.Year + "R" + FechasFunciones.ObtenerClaveUnica();
                     reporteDTO.Error = false;
                     reporteDTO.Mensaje = "Exito";
                     //Metodo anterior 
@@ -766,14 +766,7 @@ namespace Application.MainModule.Servicios.Almacenes
                     else
                         reporteDTO.Mensaje = "Para poder realizar el reporte del día es necesario tener las lecturas iniciales y finales de la estación: " + almacen.EstacionCarburacion.Nombre;
                 }
-                #endregion
-
-                //var respuesta = new AlmacenGasDataAccess().Insertar(adapter);
-                //if (!respuesta.Exito)
-                //{
-                //    reporte.ClaveReporte = respuesta.Mensaje;
-                //}
-                //return reporte;
+                #endregion                
             }
             #endregion
             #region Registro reporte en tabla
@@ -2827,5 +2820,6 @@ namespace Application.MainModule.Servicios.Almacenes
             cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad), 2).ToString() + " Cilindro(s) 45Kg ";
             return cantinIcial;
         }
+       
     }
 }

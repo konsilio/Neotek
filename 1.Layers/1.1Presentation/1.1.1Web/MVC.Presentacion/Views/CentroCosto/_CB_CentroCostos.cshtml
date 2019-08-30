@@ -1,0 +1,56 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "CentrosCostos";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "CentroCosto",
+            Action = "CB_CentroCostos"
+        };
+        settings.KeyFieldName = "IdCentroCosto";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdCentroCosto";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+        settings.Columns.Add("Empresa", "Gasera");
+        settings.Columns.Add("Numero", "Número");
+        settings.Columns.Add("Descripcion", "Descripción");
+        settings.Columns.Add("TipoCentroCosto", "Tipo");
+
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.SetDataItemTemplateContent(d =>
+            {
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("ActivarEditar", "CentroCosto", new { Id = d.KeyValue}) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>edit</i></a>"));
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("Eliminar", "CentroCosto", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>delete</i></a>"));
+
+            });
+        });
+    });
+
+}
+@grid.Bind(Model).GetHtml()

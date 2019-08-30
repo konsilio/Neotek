@@ -15,12 +15,18 @@ namespace MVC.Presentacion.Controllers
         // GET: EquipoTransporte
         public ActionResult Index(int? id, string placa = null, string vehiculo = null, string msj = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
             if (!string.IsNullOrEmpty(msj)) ViewBag.Msj = msj;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
             ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
-            ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            //ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+
+            TempData["DataSourceTrasportes"] = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).ToList();
+            TempData.Keep("DataSourceTrasportes");
+
             ViewBag.TipoCombustible = CatalogoServicio.ListaCombustibleIdEmp(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             ViewBag.TipoUnidad = CatalogoServicio.ListaUnidadIdEmp(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             ViewBag.TipoMedidor = CatalogoServicio.ListaMedidores(_tkn);
@@ -35,7 +41,9 @@ namespace MVC.Presentacion.Controllers
             {
                 model.AliasUnidadBusq = vehiculo;
                 model.PlacasBusq = placa;
-                ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(_tkn), placa, vehiculo, _tkn);               
+                TempData["DataSourceTrasportes"] = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(_tkn), placa, vehiculo, _tkn).ToList();
+                TempData.Keep("DataSourceTrasportes");
+                // ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(_tkn), placa, vehiculo, _tkn);               
             }
 
             if (TempData["RespuestaDTO"] != null)
@@ -48,6 +56,7 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Msj = msj;
                 }
             }
+
             return View(model);
         }
         public ActionResult Buscar(EquipoTransporteDTO _model)
@@ -119,5 +128,24 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+
+
+        public ActionResult CB_Trasportes()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+
+            List<EquipoTransporteDTO> model = new List<EquipoTransporteDTO>();
+            if (TempData["DataSourceTrasportes"] != null)
+            {
+                model = (List<EquipoTransporteDTO>)TempData["DataSourceTrasportes"];
+                TempData["DataSourceTrasportes"] = model;
+               // TempData.Keep("DataSourceTrasportes");
+            }
+            return PartialView("_CB_Trasportes", model);
+        }
+
+
     }
 }

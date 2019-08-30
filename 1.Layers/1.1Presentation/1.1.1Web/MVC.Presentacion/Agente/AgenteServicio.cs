@@ -140,6 +140,7 @@ namespace MVC.Presentacion.Agente
         public List<ComisionDTO> _ListaComisiones;
         public List<CuentaContableAutorizadoDTO> _ListaCuentaContableAutorizado;
         public List<CuentaConsolidadaDTO> _ListaCuentasConsolidadas;
+        public List<VentaCajaGeneralDTO> _ListaVentaCajaGeneralDTO;
 
         public AgenteServicio()
         {
@@ -5678,6 +5679,72 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutLiquidar"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void BuscarPtoVentasLiquidacion(string tkn)
+        {
+            ApiRoute = ConfigurationManager.AppSettings["GetPuntosVentaLiquidacion"];
+            GetPuntosVentaLiquidacion(ApiRoute, tkn).Wait();
+        }
+        private async Task GetPuntosVentaLiquidacion(string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PuntoVentaModel> list = new List<PuntoVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<PuntoVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<PuntoVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaPuntosV = list;
+            }
+        }
+        public void ObtenerLiquidacionesDelDia(string tkn)
+        {
+            ApiRoute = ConfigurationManager.AppSettings["GetLiquidacionesDelDia"];
+            GetLiquidacionesDelDia(ApiRoute, tkn).Wait();
+        }
+        private async Task GetLiquidacionesDelDia(string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<VentaCajaGeneralDTO> list = new List<VentaCajaGeneralDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<VentaCajaGeneralDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<VentaCajaGeneralDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaVentaCajaGeneralDTO = list;
+            }
         }
         #endregion
         #region Gasto por vehiculo
