@@ -21,6 +21,8 @@ namespace MVC.Presentacion.Controllers
         string tkn = string.Empty;
         public ActionResult Requisiciones(int? page, string msj = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             TempData["ListProductosRequisicion"] = null;
@@ -40,7 +42,9 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
             var Pagina = page ?? 1;
             var model = RequisicionServicio.InitRequisiciones(Session["StringToken"].ToString());
-            ViewBag.Requisiciones = model.Requisiciones.ToPagedList(Pagina, 20);
+            TempData["DataSourceRequisiciones"] = model.Requisiciones;
+            TempData.Keep("DataSourceRequisiciones");
+            //ViewBag.Requisiciones = model.Requisiciones.ToPagedList(Pagina, 20);
             return View(model);
         }
         public ActionResult Requisicion(RequisicionDTO model = null)
@@ -302,5 +306,25 @@ namespace MVC.Presentacion.Controllers
         {
             return PartialView("_ReqTipoProdServPartial");
         }
+
+
+        public ActionResult CB_Requisiciones()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+
+            List<RequisicionDTO> model = new List<RequisicionDTO>();
+            //List<RequisicionDTO> model =  RequisicionServicio.InitRequisiciones(tkn).Requisiciones.OrderByDescending(x => x.IdRequisicion).ToList();
+            if (TempData["DataSourceRequisiciones"] != null)
+            { 
+                 model = (List<RequisicionDTO>)TempData["DataSourceRequisiciones"];
+                TempData["DataSourceRequisiciones"] = model;
+                //TempData.Keep("DataSourceRequisiciones");
+            }
+            
+            return PartialView("_CB_Requisiciones", model);
+        }
+
+
     }
 }

@@ -114,8 +114,8 @@
                                 </ul>
                             </li>
                         }
-                        if (rol.HistoricoVentas)
-                        {
+                        //if (rol.HistoricoVentas)
+                        //{
                             <li>
                                 <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">receipt</i><span>Historico Ventas</span> </a>
                                 <ul class="ml-menu">
@@ -123,7 +123,7 @@
                                     <li>@Html.ActionLink("Historico Ventas", "HistoricoVentas", "Historico")</li>
                                 </ul>
                             </li>
-                        }
+                        //}
                         if (rol.CreditoCobranza)
                         {
                             <li>
@@ -231,10 +231,10 @@
                                     {
                                     <li>@Html.ActionLink("Inv. Concepto", "InventarioXConcepto", "Reportes")</li>
                                     }
-                                    @if (rol.ReporteCallCenter)
-                                    {
-                                    @*<li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>*@
-                                    }
+                                    @*@if (rol.ReporteHistVentas)
+                                    {*@
+                                    <li>@Html.ActionLink("Hst. Vs Ventas", "HistoricoVsVentas", "Reportes")</li>
+                                    @*}*@
                                     @if (rol.ReporteCorteCaja)
                                     {
                                     <li>@Html.ActionLink("Corte de Caja", "CorteCaja", "Reportes")</li>

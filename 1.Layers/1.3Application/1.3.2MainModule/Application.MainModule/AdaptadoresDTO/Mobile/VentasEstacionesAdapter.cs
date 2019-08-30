@@ -138,7 +138,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 {
                     Nombre = productoGas.Descripcion,
                     Id = productoGas.IdProducto,
-                    PrecioUnitario = precio.PrecioSalidaKg.Value,
+                    PrecioUnitario = precio != null ? precio.PrecioSalidaKg ?? 0 : 0,
                     Existencia = CantidadKgGas,
                 };
             }
