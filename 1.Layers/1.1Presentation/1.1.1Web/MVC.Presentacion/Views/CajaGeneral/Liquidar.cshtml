@@ -1,21 +1,25 @@
 ﻿@model  MVC.Presentacion.Models.Ventas.CorteCajaDTO
-
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <!DOCTYPE html>
 <html>
 <head>
     @{
-        ViewBag.Title = "Index";
+        ViewBag.Title = "Liquidación";
     }
     <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <script src="~/assets/js/pages/ui/notifications.js"></script>
     <script src="~/Resources/js/CajaGeneral.js" type="text/javascript"></script>
     <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
-    <script type="text/javascript">
-        var message = '@ViewBag.MessageExito';
-        if (message != '') {
-            $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
-        }
-    </script>
+  
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("GuardarLiquidar", "CajaGeneral", FormMethod.Post))
@@ -28,7 +32,7 @@
                             <h2>Liquidación</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item">CajaGeneral</li>
+                                <li class="breadcrumb-item">Caja General</li>
                                 <li class="breadcrumb-item">Liquidación</li>
                             </ul>
                         </div>
@@ -41,9 +45,23 @@
                                 <div class="col-sm-05">
                                     <b>Clave Reporte:</b>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-md-4">
                                     <input type="text" name="FolioOperacionDia" class="form-control" value="@Model.FolioOperacionDia" />
                                 </div>
+                                @*<div class="col-md-4">
+                                    @Html.DevExpress().ComboBox(settings =>
+                                    {
+                                        settings.Name = "IdPuntoVenta";
+                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                        settings.SelectedIndex = 0;
+                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                        settings.Properties.TextField = "PuntoVenta";
+                                        settings.Properties.ValueField = "IdPuntoVenta";
+                                        settings.Properties.ValueType = typeof(int);
+                                    }).BindList(ViewBag.PuntosVentas).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.IdPuntoVenta, "", new { @class = "alert-danger" })
+                                </div>*@
                                 <div class="col-sm-2">
                                     <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-round btn-primary float-left" />
                                 </div>
@@ -90,7 +108,7 @@
                                     </div>
                                 </div>
                                 <br />
-                                <div class="row clearfix">                                  
+                                <div class="row clearfix">
                                     <div class="col-md-3">
                                         @if (Model.TipoUnidad == 2)
                                         {
@@ -99,7 +117,7 @@
                                         else
                                         {
                                             <b>Total de venta en Litros:</b>
-                                        }                                      
+                                        }
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.TotalCantidad, Model.TotalCantidad.ToString(), new { @class = "form-control" })
                                         </div>
@@ -109,7 +127,7 @@
                                         <div class="form-group">
                                             @Html.LabelFor(model => model.TotalVenta, Model.TotalVenta.ToString(), new { @class = "form-control" })
                                         </div>
-                                    </div>                                    
+                                    </div>
                                 </div>
                                 <br />
                                 @if (Model.TipoUnidad != 2)
@@ -248,7 +266,7 @@
                                         <div class="col-sm-4">
                                             @Html.LabelFor(model => model.Descuentos, Model.Descuentos.ToString(), new { @class = "form-control" })
                                         </div>
-                                    </div><br />                                  
+                                    </div><br />
                                     <div class="row clearfix">
                                         <div class="col-sm-8" style="text-align:right">
                                             <b>Efectivo a recibir:</b>

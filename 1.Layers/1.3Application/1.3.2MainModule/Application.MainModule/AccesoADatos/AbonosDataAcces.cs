@@ -130,7 +130,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Abono> BuscarTodos(DateTime f)
         {
-            return uow.Repository<Abono>().Get(x => x.FechaAbono.Month.Equals(f.Month) &&
+            return uow.Repository<Abono>().Get(x => x.FechaAbono.Day.Equals(f.Day) &&
+                                                    x.FechaAbono.Month.Equals(f.Month) &&
                                                     x.FechaAbono.Year.Equals(f.Year)).ToList();
         }
         public List<Abono> BuscarTodos(int idCargo)

@@ -290,8 +290,7 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.EliminiarProducto(new ProductoDTO { IdProducto = id }, tkn);
             if (respuesta.Exito)
-            {
-
+            { 
                 return RedirectToAction("Producto");
             }
             else

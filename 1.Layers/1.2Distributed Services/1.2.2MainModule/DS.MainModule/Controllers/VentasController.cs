@@ -23,19 +23,16 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralIdEmpresa(idEmpresa));
         }
-
         [Route("buscar/listacajageneral")]
         public HttpResponseMessage GetListaCajaGeneral()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneral());
         }
-
         [Route("buscar/listatickets/{folio}")]
         public HttpResponseMessage GetListaTickets(string folio)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneral(folio));
         }
-
         [Route("buscar/listamovimientosgaspipa")]
         public HttpResponseMessage PutListaMovimientosGasPipa(CajaGeneralDTO Dto)
         {
@@ -60,8 +57,7 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PutListaMovimientosGasC(VPuntoVentaDetalleDTO Dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.MovimientosGasCilindro(Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, Dto.Orden));
-        }
-      
+        }      
         [Route("Modifica/liquidarcajageneral")]
         public HttpResponseMessage PutLiquidarReporte(VentaPuntoVentaDTO vpvDto)
         {
@@ -76,6 +72,16 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PutLiquidarReporteEstacion(VentaCorteAnticipoDTO cestDto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.GuardarReporteLiquidadoEst(cestDto));
+        }
+        [Route("buscar/listapuntosventaliquidacion")]
+        public HttpResponseMessage GetPuntosVentaLiquidacion()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.ObtenerPuntosVentaLiquidacion());
+        }
+        [Route("buscar/listaliquidaciones")]
+        public HttpResponseMessage GetLiquidacionesDelDia()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.ObtenerLiquidaciones());
         }
         #endregion
     }
