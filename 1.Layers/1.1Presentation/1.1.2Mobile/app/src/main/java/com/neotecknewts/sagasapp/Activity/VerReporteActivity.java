@@ -406,6 +406,11 @@ public class VerReporteActivity extends AppCompatActivity {
                     "\tCambio [{Cambio}]\n";
 
             StringReporte += "\tVenta Contado\n";
+        }else{
+            StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
+                    "\tCambio [{Cambio}]\n";
+
+            StringReporte += "\tVenta Credito\n";
         }
         StringReporte += "Le atendio [{Usuario}]"+
                 "\n--------------------------------\n"+

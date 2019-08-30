@@ -894,6 +894,8 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public MenuDTO[] InsertMenuDTO(MenuDTO[] dto) {
         //SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from "+ TABLE_MENU);
         for (MenuDTO menuDTO : dto) {
             ContentValues Values = new ContentValues();
             Values.put("headerMenu", menuDTO.getHeaderMenu());
@@ -903,7 +905,6 @@ public class SAGASSql extends SQLiteOpenHelper {
         }
         return dto;
     }
-
 
     public Cursor getMenuDTO() {
         return getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_MENU, null);

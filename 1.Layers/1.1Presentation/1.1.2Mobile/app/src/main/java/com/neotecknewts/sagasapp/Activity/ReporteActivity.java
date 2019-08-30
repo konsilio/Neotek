@@ -298,16 +298,17 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "[{Precio}]",
                         String.valueOf(reporteDTO.getPrecio())
                 );
-                Log.d("importecontado",   formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
-                        "[{Importe-contado}] ",
-                        String.valueOf(reporteDTO.getImporteContado())
 
-                ));
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{Importe-contado}] ",
                         String.valueOf(reporteDTO.getImporteContado())
 
                 );
+                formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
+                        "[{Importe-credito}]",
+                        String.valueOf(reporteDTO.getImporteCredito())
+                );
+
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{Importe-credito}]",
                         String.valueOf(reporteDTO.getImporteCredito())
