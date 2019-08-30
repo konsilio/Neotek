@@ -46,9 +46,10 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:layout_weight="1"
-                    android:text="@string/seleccionar_fecha"
                     android:textColor="@color/colorTextLogin"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    />
+                <!--android:text="@string/seleccionar_fecha"-->
 
             </LinearLayout>
 

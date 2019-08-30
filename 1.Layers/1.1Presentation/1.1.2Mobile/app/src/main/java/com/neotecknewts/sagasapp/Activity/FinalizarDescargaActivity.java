@@ -111,6 +111,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
     }
 
     //este metodo recopila los datos de la vista y los asigna al objeto
+
     public void onClickRegistrar(){
         finalizarDescargaDTO.setIdOrdenCompra(ordenesCompraDTO.get(spinnerOrdenCompra.getSelectedItemPosition()).getIdOrdenCompra());
         finalizarDescargaDTO.setIdTipoMedidorAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getIdTipoMedidor());

@@ -13,8 +13,7 @@ public class BuscarClientePresenterImpl implements BuscarClientePresenter {
     BuscarClienteInteractor interactor;
     public BuscarClientePresenterImpl(BuscarClienteView view, Context context) {
         this.view = view;
-        this.interactor = new BuscarClienteInteractorImpl(this, context);
-    }
+        this.interactor = new BuscarClienteInteractorImpl(this, context);}
 
     @Override
     public void getClientes(String criterio,String token) {

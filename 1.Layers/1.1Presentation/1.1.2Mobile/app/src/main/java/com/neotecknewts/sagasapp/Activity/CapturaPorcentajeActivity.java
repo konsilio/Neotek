@@ -347,21 +347,29 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             new 	NumberPicker.OnValueChangeListener(){
                 @Override
                 public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+
                     double porcentajeCalculo = (numberPickerProcentaje.getValue())
                             +(numberPickerDecimal.getValue()*.10);
                     if(EsLecturaInicial || EsLecturaFinal){
-
+                        Log.v("NumberPicker", numberPickerProcentaje.getValue() +"");
+                        Log.v("NumberPicker", numberPickerDecimal.getValue() +"");
                         TotalGas = (lecturaDTO.getCapacidadAlmacen()  *porcentajeCalculo )/100;
                         TVCapturaPorcentajeActivityTotalGas.setText(
                                 "Total de gas aproximado: "+String.valueOf(TotalGas)+"Lt.");
                     }else if (EsLecturaInicialAlmacen || EsLecturaFinalAlmacen){
+                        Log.v("NumberPicker", numberPickerProcentaje.getValue() +"");
+                        Log.v("NumberPicker", numberPickerDecimal.getValue() +"");
                         TotalGas = (lecturaAlmacenDTO.getCapacidadAlmacen()  *porcentajeCalculo )/100;
                         TVCapturaPorcentajeActivityTotalGas.setText(
                                 "Total de gas aproximado: "+String.valueOf(TotalGas)+"Lt.");
                     }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+                        Log.v("NumberPicker", numberPickerProcentaje.getValue() +"");
+                        Log.v("NumberPicker", numberPickerDecimal.getValue() +"");
                         TotalGas = (lecturaPipaDTO.getCapacidadAlmacen()  *porcentajeCalculo )/100;
+                        Log.v("totalgas", TotalGas+"");
                         TVCapturaPorcentajeActivityTotalGas.setText(
                                 "Total de gas aproximado: "+String.valueOf(TotalGas)+"Lt.");
+
                     }
                     //Log.v("Total aproximado de gas",String.valueOf(TotalGas));
                     if(numberPickerProcentaje.getValue()==100){

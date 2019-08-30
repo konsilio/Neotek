@@ -173,6 +173,10 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             cantidad = editTextCantidad;
                             Litro = editTextPrecioLitro;
                             existencia = items.get(position);
+                            Log.d("cantidad", cantidad+"" );
+                            Log.d("preciolitro", precioPorLitro+"" );
+                            Log.d("preciosalida", precioVentaDTO+"" );
+                            Log.d("cantidad", editTextCantidad+"" );
                         }
                     }
                 }
