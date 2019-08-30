@@ -7,7 +7,7 @@ namespace MVC.Presentacion.Models
 {
     public class JsonDTO
     {
-        public List<object> data { get; set; }
+        public List<Data> data { get; set; }
         public List<string> ykeys { get; set; }
         public List<string> barColors { get; set; }
         public List<string> labels { get; set; }
@@ -18,4 +18,12 @@ namespace MVC.Presentacion.Models
         public string gridLineColor { get; set; }
         public bool resize { get; set; }    
     }
+
+    public class Data {
+        public string y { get; set; }
+        public decimal a { get; set; }
+        public decimal b { get; set; }
+        public int m { get; set; }
+    }
+
 }
