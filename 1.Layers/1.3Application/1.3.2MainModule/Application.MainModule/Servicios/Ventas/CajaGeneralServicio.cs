@@ -26,10 +26,10 @@ namespace Application.MainModule.Servicios.Ventas
             List<CajaGeneralDTO> lPventas = CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().BuscarTodos());
             return lPventas;
         }
-        //public static int ObtenerUltimoOrden()
-        //{
-        //    return new CajaGeneralDataAccess().BuscarTodos();
-        //}
+        public static List<VentaCajaGeneral> Obtener(DateTime fecha)
+        {
+            return new CajaGeneralDataAccess().ObtenerLiquidaciones((short)fecha.Year, Convert.ToByte(fecha.Month), Convert.ToByte(fecha.Day));            
+        }
         public static List<VPuntoVentaDetalleDTO> ObtenerVentas(short empresa, short year, byte month, byte dia, short? orden)
         {
             List<VentaPuntoDeVentaDetalle> _lst = BuscarPuntoVentaDetalle(empresa, year, month, dia, orden.Value).ToList();
@@ -123,7 +123,47 @@ namespace Application.MainModule.Servicios.Ventas
         }
         public static int ObtenerCorteUltimo(short unidad, short empresa, short year, byte month, byte dia)
         {
-            return new CajaGeneralDataAccess().ObtenerCorteUltimo(unidad, empresa, year, month, dia).LastOrDefault().Orden;
+            try
+            {
+                return new CajaGeneralDataAccess().ObtenerCorteUltimo(unidad, empresa, year, month, dia).LastOrDefault().Orden;
+            }
+            catch (Exception ex)
+            {
+               return 0;
+            }            
+        }
+        public static int ObtenerCorteUltimo(short empresa, short year, byte month, byte dia)
+        {
+            try
+            {
+                return new CajaGeneralDataAccess().ObtenerCorteUltimo(empresa, year, month, dia).LastOrDefault().Orden;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+        public static bool ExisteCorteUltimo(short unidad, short empresa, short year, byte month, byte dia)
+        {
+            try
+            {
+                return new CajaGeneralDataAccess().ObtenerCorteUltimo(unidad, empresa, year, month, dia).Count().Equals(0) ? false: true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public static bool ExisteCorteUltimo(short empresa, short year, byte month, byte dia)
+        {
+            try
+            {
+                return new CajaGeneralDataAccess().ObtenerCorteUltimo(empresa, year, month, dia).Count().Equals(0) ? false : true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         public static List<VentasPipaDto> ObtenerVentasPipas(short unidad, short empresa, short year, byte month, byte dia, short orden, DateTime fecha, string FolioOperacion)
         {
@@ -166,6 +206,10 @@ namespace Application.MainModule.Servicios.Ventas
         public static List<VentaPuntoDeVenta> ObtenerTotalBonificaciones(DateTime f)
         {
             return new CajaGeneralDataAccess().BuscarTotalBonificaciones(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalDescuentos(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalDescuentos(f);
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasACredito(DateTime f)
         {

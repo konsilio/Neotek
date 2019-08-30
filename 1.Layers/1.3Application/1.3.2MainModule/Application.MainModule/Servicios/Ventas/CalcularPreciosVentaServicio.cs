@@ -620,5 +620,13 @@ namespace Application.MainModule.Servicios.Ventas
             }
             return Respuesta;
         }
+        public static double CalclarTotalCaja(decimal TotalCamionetas, decimal TotalPipas, decimal TotalEstaciones, decimal OtrosIngresos, decimal Descuentos, decimal Bonificaciones)
+        {
+            return Convert.ToDouble((TotalCamionetas + TotalPipas + TotalEstaciones + OtrosIngresos) - (Descuentos + Bonificaciones));
+        }
+        public static double CalclarTotalCaja(decimal TotalCamionetas, decimal TotalPipas, decimal TotalEstaciones, decimal Cobranza, decimal OtrosIngresos, decimal Descuentos, decimal Bonificaciones, decimal Cheques, decimal Transferencias)
+        {
+            return Convert.ToDouble((TotalCamionetas + TotalPipas + TotalEstaciones + OtrosIngresos + Cobranza) - (Descuentos + Bonificaciones + Transferencias + Cheques));
+        }
     }
 }
