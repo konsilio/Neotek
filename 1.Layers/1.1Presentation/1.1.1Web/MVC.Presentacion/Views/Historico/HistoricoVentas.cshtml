@@ -156,14 +156,14 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="header">
+                        @*<div class="header">
                             Validacion de <strong>Informacion</strong>
                         </div>
                         <div class="body">
                             <div>
                                 <div id="m_bar_chart"></div>
                             </div>
-                        </div>
+                        </div>*@
                         @if (ViewBag.json != null)
                         {
                             <input type="submit" formaction=@Url.Action("GenerarExcel") value="Exportar a Excel" class="btn btn-primary btn-round" />
