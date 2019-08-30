@@ -1106,11 +1106,21 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         }
         public static RepCorteCajaDTO ToRepoCorteCajaEstaciones(List<VentaPuntoDeVenta> entidadVenta, EstacionCarburacion entidadEstacion)
         {
-            return new DTOs.RepCorteCajaDTO()
+            return new RepCorteCajaDTO()
             {
                 Descripcion = entidadEstacion.Nombre,
                 Cantidad = Convert.ToDouble(entidadVenta.Where(e => e.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion.Equals(entidadEstacion.IdEstacionCarburacion)).Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadKg))),
                 TotalVenta = Convert.ToDouble(entidadVenta.Where(e => e.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion.Equals(entidadEstacion.IdEstacionCarburacion)).Sum(x => x.Total)),
+                Unidad = "Lts",
+            };
+        }
+        public static RepCorteCajaDTO ToRepoCorteCajaEstaciones(List<VentaPuntoDeVenta> entidadVenta)
+        {
+            return new RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoVentaCarburacion,
+                Cantidad = Convert.ToDouble(entidadVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadLt))),
+                TotalVenta = Convert.ToDouble(entidadVenta.Sum(x => x.Total)),
                 Unidad = "Lts",
             };
         }
@@ -1120,7 +1130,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         }
         public static RepCorteCajaDTO ToRepoCorteCajaCamionetas(List<VentaPuntoDeVenta> entidadVenta)
         {
-            return new DTOs.RepCorteCajaDTO()
+            return new RepCorteCajaDTO()
             {
                 Descripcion = CajaGeneralConst.NombreRepoCilindros,
                 Cantidad = Convert.ToDouble(entidadVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadKg))),
@@ -1130,7 +1140,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         }
         public static RepCorteCajaDTO ToRepoCorteCajaPipas(List<VentaPuntoDeVenta> entidadVenta)
         {
-            return new DTOs.RepCorteCajaDTO()
+            return new RepCorteCajaDTO()
             {
                 Descripcion = CajaGeneralConst.NombreRepoVentaPipas,
                 Cantidad = Convert.ToDouble(entidadVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadLt))),
@@ -1138,23 +1148,91 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 Unidad = "Lts",
             };
         }
-        public static RepCorteCajaDTO ToRepoCorteCajaCredito(List<Abono> entidadVenta)
+        public static RepCorteCajaDTO ToRepoCorteCajaCobranza(List<Abono> entidadVenta)
         {
-            return new DTOs.RepCorteCajaDTO()
+            return new RepCorteCajaDTO()
             {
-                Descripcion = CajaGeneralConst.NombreRepoVentaCredito,
+                Descripcion = CajaGeneralConst.NombreRepoVentaCobranza,
                 Cantidad = 0,
                 TotalVenta = Convert.ToDouble(entidadVenta.Sum(x => x.MontoAbono)),
                 Unidad = "NA",
             };
         }
-        public static RepCorteCajaDTO ToRepoCorteCajaBonificaciones(List<VentaPuntoDeVenta> entidadVenta)
+        public static RepCorteCajaDTO ToRepoCorteCajaCredito(List<VentaPuntoDeVenta> entidadVenta)
         {
-            return new DTOs.RepCorteCajaDTO()
+            return new RepCorteCajaDTO()
             {
-                Descripcion = CajaGeneralConst.NombreRepoBonificaciones,
+                Descripcion = CajaGeneralConst.NombreRepoVentaCredito,
                 Cantidad = 0,
-                TotalVenta = Convert.ToDouble(entidadVenta.Sum(x => x.Descuento)),
+                TotalVenta = Convert.ToDouble(entidadVenta.Sum(x => x.Total)),
+                Unidad = "NA",
+            };
+        }
+        public static List<RepCorteCajaDTO> ToRepoCorteCajaBonificaciones(List<VentaPuntoDeVenta> entidadVenta)
+        {
+            List<RepCorteCajaDTO> Respuesta = new List<RepCorteCajaDTO>();
+            //Pipas
+            Respuesta.Add( new RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoBonificacionesPipas,
+                Cantidad = 0,
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdPipa != null).Sum(x => x.Descuento)), //Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
+                Unidad = "NA",
+            });
+           //Estaciones
+            Respuesta.Add(new RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoBonificacionesCarburadoras,
+                Cantidad = 0,
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null).Sum(x => x.Descuento)),//Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
+                Unidad = "NA",
+            });
+          //Camionetas
+            Respuesta.Add(new RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoBonificacionesCamionetas,
+                Cantidad = 0,
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null).Sum(x => x.Descuento)),//Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
+                Unidad = "NA",
+            });
+            return Respuesta;
+        }
+        public static List<RepCorteCajaDTO> ToRepoCorteCajaDescuentos(List<VentaPuntoDeVenta> entidadVenta)
+        {
+            List<RepCorteCajaDTO> Respuesta = new List<RepCorteCajaDTO>();
+            //Pipas
+            Respuesta.Add(new RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoDescuentosPipas,
+                Cantidad = 0,
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdPipa != null).Sum(x => x.Descuento)), //Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
+                Unidad = "NA",
+            });
+            //Estaciones
+            Respuesta.Add(new RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoDescuentosEstaciones,
+                Cantidad = 0,
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null).Sum(x => x.Descuento)),//Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
+                Unidad = "NA",
+            });
+            //Camionetas
+            Respuesta.Add(new RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoDescuentosCamionetas,
+                Cantidad = 0,
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null).Sum(x => x.Descuento)),//Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
+                Unidad = "NA",
+            });
+            return Respuesta;
+        }
+        public static RepCorteCajaDTO ToRepoCorteCajaTotalCaja(List<VentaPuntoDeVenta> VEstaciones, List<VentaPuntoDeVenta> VPipas, List<VentaPuntoDeVenta> VCilindros, List<VentaPuntoDeVenta> VFacturasCredito, List<VentaPuntoDeVenta> VBonificaciones, List<VentaPuntoDeVenta> VDescuentos)
+        {
+            return new RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoTotalCaja,
+                Cantidad = 0,
+                TotalVenta = CalcularPreciosVentaServicio.CalclarTotalCaja(VCilindros.Sum(x => x.Total), VPipas.Sum(x => x.Total), VEstaciones.Sum(x => x.Total), 0, VDescuentos.Sum(x => x.Descuento), VBonificaciones.Sum(x => x.Descuento)),
                 Unidad = "NA",
             };
         }

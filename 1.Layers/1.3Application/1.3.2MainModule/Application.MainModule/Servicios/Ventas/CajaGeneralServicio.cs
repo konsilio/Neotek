@@ -207,6 +207,10 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarTotalBonificaciones(f);
         }
+        public static List<VentaPuntoDeVenta> ObtenerTotalDescuentos(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalDescuentos(f);
+        }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasACredito(DateTime f)
         {
             return new CajaGeneralDataAccess().BuscarTotalVentasACredito(f);
