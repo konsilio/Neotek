@@ -35,7 +35,10 @@ namespace MVC.Presentacion.Controllers
             if (id != null)
             {
                 ViewBag.EsEdicion = true;
-                return View(CatalogoServicio.ActivarModificar(id.Value, (CentroCostoModel)TempData["Model"], tkn));
+                var result = CatalogoServicio.ActivarModificar(id.Value, (CentroCostoModel)TempData["Model"], tkn);
+                TempData["DataSourceCentros"] = result.CentrosCostos.ToList();
+                TempData.Keep("DataSourceCentros");
+                return View(result);
             }
             else
             {
