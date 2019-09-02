@@ -31,13 +31,24 @@
             c.Caption = "ID";
             c.Visible = false;
         });
-        settings.Columns.Add("IdEquipoTransporteDetalle", "#");
+        settings.Columns.Add("IdEquipoTransporteDetalle", "ID").Width = System.Web.UI.WebControls.Unit.Percentage(5);
         settings.Columns.Add("Placas", "Número de Placa");
         settings.Columns.Add("AliasUnidad", "Vehículo");
         settings.Columns.Add(column =>
         {
             column.FieldName = "Alias";
             column.UnboundType = DevExpress.Data.UnboundColumnType.String;
+        });
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Activo";
+            col.FieldName = "Activo";
+            col.ColumnType = MVCxGridViewColumnType.CheckBox;
+            CheckBoxProperties properties = col.PropertiesEdit as CheckBoxProperties;
+            properties.DisplayTextChecked = "Activo";
+            properties.DisplayTextUnchecked = "Inactivo";
+            col.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            col.Settings.FilterMode = ColumnFilterMode.DisplayText;
         });
         settings.CustomUnboundColumnData = (s, e) =>
         {
@@ -57,13 +68,6 @@
             {
 
                 ViewContext.Writer.Write(string.Format("<a  ID = 'lbEdit' href='" + Url.Action("EditarVehiculo", "EquipoTransporte", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>edit</i></a>"));
-
-                //if (ViewBag.EsAdmin)
-                //{
-
-                //    ViewContext.Writer.Write(string.Format("<a href='#ModalConfirmacion' data-toggle='modal' data-id='"+ d.KeyValue + "' id = 'btnok'  class='tip' onclick='javascript: AsignarEliminar("+ d.KeyValue + ")'  data-target='#ModalConfirmacion' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>delete</i></a>"));
-
-                //}
             });
         });
     });
