@@ -217,6 +217,7 @@ namespace MVC.Presentacion.Controllers
             TempData["json"] = res;
 
             var temp = JsonConvert.DeserializeObject<JsonDTO>(res);
+            
             TempData["data"] = temp.data;
             TempData["meses"] = temp.labels;
             TempData["year"] = modelo.Years;
@@ -242,95 +243,215 @@ namespace MVC.Presentacion.Controllers
             if (modelo.IdTipoReporte == 1)
             {
 
-                pahtFile = "VentasGeneral.xlsx";
+
                 var rangeLabel = worksheet.Cells["B1:M1"];
-                var rows = 2;
-                var rowsMes = 2;
-                for (int r = 0; r < datos.Count; r++)
-                {
-                    char[] charArray = datos[r].ToString().ToCharArray();
-                    rows = rowsMes;
+                var rangeLabel2 = worksheet.Cells["C1:M1"];
+                var rangeLabel3 = worksheet.Cells["D1:M1"];
+                List<string> rangelabe = new List<string>();
+                var cont = 2;
 
-                    //create the ranges for the chart
-                    var range1 = worksheet.Cells["B" + rows.ToString() + ":K" + rows.ToString()];
-                    //add the ranges to the chart
-                    lineChart.Series.Add(range1, rangeLabel);
-                    if (charArray[6].Equals('y'))
+
+                pahtFile = "VentasGeneral.xlsx";
+
+                rangelabe.Add("Ventas");
+                rangelabe.Add("Prom. Venta");
+                rangelabe.Add("Días de Venta");
+
+                worksheet.Cells[2, 1].Value = "Ventas";
+                worksheet.Cells[3, 1].Value = "Prom. Venta";
+                worksheet.Cells[4, 1].Value = "Días de Venta";
+
+
+
+                foreach (var col in datos.OrderBy(m => m.m).OrderBy(y=> y.y))
                     {
-                        worksheet.Cells[rows, 1].Value = charArray[11].ToString() + charArray[12].ToString() + charArray[13].ToString() + charArray[14].ToString();
+                        worksheet.Cells[1, cont].Value = col.y;
+                        worksheet.Cells[2, cont].Value = col.a;
+                        worksheet.Cells[3, cont].Value = col.b;
+                        worksheet.Cells[4, cont].Value = 26;
+                        cont++;
                     }
-                    lineChart.Series[r].Header = worksheet.Cells["A" + rows.ToString()].Value.ToString();
-                    rows = 2;
-                    for (int i = 0; i < mes.Count; i++)
-                    {
-                        char[] charMes = mes[i].ToCharArray();
 
-                        string mesfila = "";
+                    string FinHeades = ExcelColumnIndexToName(datos.Count());
 
-                        for (int x = 0; x < charMes.Length; x++)
-                        {
-                            mesfila = mesfila += charMes[x];
-                        }
+                    var range1 = worksheet.Cells["B2:" + FinHeades + "2"];
+                    var range2 = worksheet.Cells["C3:" + FinHeades + "3"];
+                    //var range3 = worksheet.Cells["D3:" + FinHeades + "3"];
 
-                        if (mesfila != "")
-                        {
-                            worksheet.Cells[1, rows].Value = mesfila;
-                        }
-
-                        for (int o = 0; o < Montototal[r].MesesVenta.Count; o++)
-                        {
-                            if (Montototal[r].MesesVenta[o].mes == mesfila)
-                            {
-                                worksheet.Cells[rowsMes, rows].Value = Montototal[r].MesesVenta[o].montoTotal;
-                            }
-                        }
-
-                        rows++;
-                    }
-                    rowsMes++;
-                }
+                lineChart.Series.Add(range1, rangeLabel);
+                lineChart.Series.Add(range2, rangeLabel2);
+                //lineChart.Series.Add(range3, rangeLabel3);
 
 
-                //set the title
+
+                lineChart.Series[0].Header = "Ventas";
+                lineChart.Series[1].Header = "Prom. Venta";
+                //lineChart.Series[1].Header = "Días de Venta";
+
                 lineChart.Title.Text = "Venta General";
+
+
+
+
+
+
+
+                //pahtFile = "VentasGeneral.xlsx";
+                //var rangeLabel = worksheet.Cells["B1:M1"];
+                //var rows = 2;
+                //var rowsMes = 2;
+                //for (int r = 0; r < datos.Count; r++)
+                //{
+                //    char[] charArray = datos[r].ToString().ToCharArray();
+                //    rows = rowsMes;
+
+                //    //create the ranges for the chart
+                //    var range1 = worksheet.Cells["B" + rows.ToString() + ":K" + rows.ToString()];
+                //    //add the ranges to the chart
+                //    lineChart.Series.Add(range1, rangeLabel);
+                //    if (charArray[6].Equals('y'))
+                //    {
+                //        worksheet.Cells[rows, 1].Value = charArray[11].ToString() + charArray[12].ToString() + charArray[13].ToString() + charArray[14].ToString();
+                //    }
+                //    lineChart.Series[r].Header = worksheet.Cells["A" + rows.ToString()].Value.ToString();
+                //    rows = 2;
+                //    for (int i = 0; i < mes.Count; i++)
+                //    {
+                //        char[] charMes = mes[i].ToCharArray();
+
+                //        string mesfila = "";
+
+                //        for (int x = 0; x < charMes.Length; x++)
+                //        {
+                //            mesfila = mesfila += charMes[x];
+                //        }
+
+                //        if (mesfila != "")
+                //        {
+                //            worksheet.Cells[1, rows].Value = mesfila;
+                //        }
+
+                //        for (int o = 0; o < Montototal[r].MesesVenta.Count; o++)
+                //        {
+                //            if (Montototal[r].MesesVenta[o].mes == mesfila)
+                //            {
+                //                worksheet.Cells[rowsMes, rows].Value = Montototal[r].MesesVenta[o].montoTotal;
+                //            }
+                //        }
+
+                //        rows++;
+                //    }
+                //    rowsMes++;
+                //}
+
+
+                ////set the title
+                //lineChart.Title.Text = "Venta General";
             }
             else
             {
 
+                var rangeLabel = worksheet.Cells["B1:M1"];
+                var rangeLabel2 = worksheet.Cells["C1:M1"];
+                List<string> rangelabe = new List<string>();
+                var cont = 2;
+
                 if (modelo.IdTipoReporte == 2)
                 {
                     pahtFile = "PipasvsCamionetas.xlsx";
+
+                    rangelabe.Add("Pipas");
+                    rangelabe.Add("Camionetas");
+
+                    worksheet.Cells[2, 1].Value = "Pipas";
+                    worksheet.Cells[3, 1].Value = "Camioneta";
+
+
+                    foreach (var col in datos.OrderBy(o => o.m))
+                    {
+                        worksheet.Cells[1, cont].Value = col.y;
+                        worksheet.Cells[2, cont].Value = col.a;
+                        worksheet.Cells[3, cont].Value = col.b;
+                        cont++;
+                    }
+
+                    string FinHeades = ExcelColumnIndexToName(datos.Count());
+
+                    var range1 = worksheet.Cells["B2:" + FinHeades + "2"];
+                    var range2 = worksheet.Cells["C3:" + FinHeades + "3"];
+
+                    lineChart.Series.Add(range1, rangeLabel);
+                    lineChart.Series.Add(range2, rangeLabel2);
+
+
+                    lineChart.Series[0].Header = "Pipas";
+                    lineChart.Series[1].Header = "Camionetas";
+
+                    lineChart.Title.Text = "Pipas vs Camionetas";
+
                 }
                 else
                 {
                     pahtFile = "VentasLocalvsForaneas.xlsx";
+
+                    rangelabe.Add("Locales");
+                    rangelabe.Add("Foraneas");
+
+                    worksheet.Cells[2, 1].Value = "Locales";
+                    worksheet.Cells[3, 1].Value = "Foraneas";
+
+
+                    foreach (var col in datos.OrderBy(o => o.m))
+                    {
+                        worksheet.Cells[1, cont].Value = col.y;
+                        worksheet.Cells[2, cont].Value = col.a;
+                        worksheet.Cells[3, cont].Value = col.b;
+                        cont++;
+                    }
+
+                    string FinHeades = ExcelColumnIndexToName(datos.Count());
+
+                    var range1 = worksheet.Cells["B2:" + FinHeades + "2"];
+                    var range2 = worksheet.Cells["C3:" + FinHeades + "3"];
+
+                    lineChart.Series.Add(range1, rangeLabel);
+                    lineChart.Series.Add(range2, rangeLabel2);
+
+
+                    lineChart.Series[0].Header = "Locales";
+                    lineChart.Series[1].Header = "Foraneas";
+
+                    lineChart.Title.Text = "Local vs Foranea";
                 }
 
 
-                var rangeLabel = worksheet.Cells["B1:M1"];
-                var rowsMes = 2;
-                var rowsaños = 2;
-                var rowPipa = 2;
-                var tempa = "";
-                var rows = 2;
-                var cont = 2;
-                List<string> rangelabe = new List<string>();
-                
+              
+                //var rowsMes = 2;
+                //var rowsaños = 2;
+                //var rowPipa = 2;
+                //var tempa = "";
+                //var rows = 2;
+               
+             
+              
+
                 //rows
-                worksheet.Cells[2, 1].Value = "Pipas";
-                worksheet.Cells[3, 1].Value = "Camioneta";
+              
                 //columns
-                foreach (var col in datos.OrderBy(o=> o.m)) {
-                    worksheet.Cells[1,cont].Value = col.y;
-                    worksheet.Cells[2, cont].Value = col.a;
-                    worksheet.Cells[3, cont].Value = col.b;
-                    cont++;
-                }
+                //foreach (var col in datos.OrderBy(o=> o.m)) {
+                //    worksheet.Cells[1,cont].Value = col.y;
+                //    worksheet.Cells[2, cont].Value = col.a;
+                //    worksheet.Cells[3, cont].Value = col.b;
+                //    cont++;
+                //}
 
+                //string FinHeades = ExcelColumnIndexToName(datos.Count());
 
-                var range1 = worksheet.Cells["B" + cont.ToString() + ":CA" + cont.ToString()];              
-                rangelabe.Add("Pipas");
-                lineChart.Series.Add(range1, rangeLabel);
+                //var range1 = worksheet.Cells["B2:"+ FinHeades+"2"];
+                //var range2 = worksheet.Cells["C3:"+ FinHeades+"3"];
+                
+                //lineChart.Series.Add(range1, rangeLabel);
+                //lineChart.Series.Add(range2, rangeLabel2);
 
 
 
@@ -446,23 +567,26 @@ namespace MVC.Presentacion.Controllers
 
                 //}
 
-                for (int e = 0; e < rangelabe.Count(); e++)
-                {
-                    lineChart.Series[e].Header = worksheet.Cells["A" + cont.ToString()].Value.ToString();
-                    //rowsMes++;
-                }
+                //for (int e = 0; e < rangelabe.Count() ; e++)
+                //{
+                //    lineChart.Series[e].Header = "as";
+                //    //rowsMes++;
+                //}
+
+               
+
                 rangelabe = null;
-                rowsaños++;
+                //rowsaños++;
                 //rowPipa = 2;
                 //set the title
-                if (modelo.IdTipoReporte == 2)
-                {
-                    lineChart.Title.Text = "PipasvsCamionetas";
-                }
-                else
-                {
-                    lineChart.Title.Text = "LocalvsForanea";
-                }
+                //if (modelo.IdTipoReporte == 2)
+                //{
+                //    lineChart.Title.Text = "Pipas vs Camionetas";
+                //}
+                //else
+                //{
+                //    lineChart.Title.Text = "Local vs Foranea";
+                //}
 
             }
 
@@ -470,10 +594,10 @@ namespace MVC.Presentacion.Controllers
             lineChart.Legend.Position = eLegendPosition.Right;
 
             //size of the chart
-            lineChart.SetSize(700, 600);
+            lineChart.SetSize(900, 300);
 
             //add the chart at cell B6
-            lineChart.SetPosition(1, 0, 8, 0);
+            lineChart.SetPosition(4, 0, 1, 0);
 
             //  FileInfo infor = new FileInfo(pahtFile);
 
@@ -494,6 +618,22 @@ namespace MVC.Presentacion.Controllers
         //    var respuesta = HistoricoServicio.GetYears(tkn);
         //    return respuesta;
         //}
+
+        private string ExcelColumnIndexToName(int Index)
+        {
+            string range = string.Empty;
+            if (Index < 0) return range;
+            int a = 26;
+            int x = (int)Math.Floor(Math.Log((Index) * (a - 1) / a + 1, a));
+            Index -= (int)(Math.Pow(a, x) - 1) * a / (a - 1);
+            for (int i = x + 1; Index + i > 0; i--)
+            {
+                range = ((char)(65 + Index % a)).ToString() + range;
+                Index /= a;
+            }
+            return range;
+        }
+
         public ActionResult Eliminar(int? id)
         {
 
