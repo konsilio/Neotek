@@ -99,7 +99,7 @@ namespace Application.MainModule.Flujos
             //var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
             var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
-            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasACredito(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
+            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             //var Cobranza = CobranzaServicio.Obtener(dto.Fecha) ?? new List<Abono>(); // Descomentar en caso de necesitar cobranza en Corte de caja
             var VFacturasCredito = CajaGeneralServicio.ObtenerTotalVentasACredito(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VBonificaciones = CajaGeneralServicio.ObtenerTotalBonificaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
