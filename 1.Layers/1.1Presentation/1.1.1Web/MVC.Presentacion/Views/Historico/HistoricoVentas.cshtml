@@ -3,8 +3,8 @@
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+
         )
 @Html.DevExpress().GetScripts(
             new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -13,6 +13,11 @@
         )
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+<script src="~/assets/plugins/morrisjs/morris.js"></script>
+<link rel="stylesheet" href="~/assets/plugins/morrisjs/morris.css"/>
+
+
 <script type="text/javascript">
     var mensaje = '@ViewBag.Msj';
     if (mensaje != '') {
@@ -20,12 +25,7 @@
     }
 
 </script>
-<script>
-    $(document).ready(function () {
-        Morris.Bar(@Html.Raw(ViewBag.json));
-    });
 
-</script>
 <body>
     <section class="content home">
         <div class="container-fluid">
@@ -150,20 +150,20 @@
                                                 @ViewBag.MensajeError
                                             </strong>
                                         </div>
-                                    </div>
+                                    </div>  
                                 }
                             </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="header">
-                            Validacion de <strong>Informacion</strong>
-                        </div>
-                        <div class="body">
-                            <div>
-                                <div id="m_bar_chart"></div>
+                                Validacion de <strong>Informacion</strong>
                             </div>
-                        </div>
+                            <div class="body">
+                                <div>
+                                    <div id="m_bar_chart"></div>
+                                </div>
+                            </div>
                         @if (ViewBag.json != null)
                         {
                             <input type="submit" formaction=@Url.Action("GenerarExcel") value="Exportar a Excel" class="btn btn-primary btn-round" />
@@ -174,3 +174,9 @@
         </div>
     </section>
 </body>
+<script>
+    $(document).ready(function () {
+        Morris.Bar(@Html.Raw(ViewBag.json));
+    });
+
+</script>

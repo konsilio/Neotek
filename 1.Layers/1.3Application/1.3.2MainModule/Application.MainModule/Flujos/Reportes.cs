@@ -96,19 +96,26 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeModificarCajaGeneral();
             if (!resp.Exito) return null;
-            var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
+            //var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
             var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
-            var VFacturasCredito = CobranzaServicio.Obtener(dto.Fecha) ?? new List<Abono>();
+            //var Cobranza = CobranzaServicio.Obtener(dto.Fecha) ?? new List<Abono>(); // Descomentar en caso de necesitar cobranza en Corte de caja
+            var VFacturasCredito = CajaGeneralServicio.ObtenerTotalVentasACredito(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VBonificaciones = CajaGeneralServicio.ObtenerTotalBonificaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
+            var VDescuentos = CajaGeneralServicio.ObtenerTotalDescuentos(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
 
             List<RepCorteCajaDTO> respuesta = new List<RepCorteCajaDTO>();
-            respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones));
+            //respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaPipas(VPipas));
+            //respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCobranza(Cobranza));// Descomentar en caso de necesitar cobranza en Corte de caja
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCredito(VFacturasCredito));
-            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones));
+            respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones));
+            respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaDescuentos(VDescuentos));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaTotalCaja(VEstaciones,VPipas, VCilindros, VFacturasCredito, VBonificaciones, VDescuentos));
+
             return respuesta;
         }
         public List<RepGastoVehicularDTO> RepGastoXVehiculo(GastoVehicularDTO dto)
