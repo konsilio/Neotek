@@ -23,6 +23,16 @@ namespace MVC.Presentacion.Models
         public string y { get; set; }
         public decimal a { get; set; }
         public decimal b { get; set; }
+        public decimal c { get; set; }
+        public decimal d { get; set; }
+        public decimal e { get; set; }
+        public decimal f { get; set; }
+        public decimal g { get; set; }
+        public decimal h { get; set; }
+        public decimal i { get; set; }
+        public decimal j { get; set; }
+        public decimal k { get; set; }
+        public decimal l { get; set; }
         public int m { get; set; }
     }
 
