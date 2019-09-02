@@ -74,11 +74,11 @@
                             <div class="row clearfix">
                                 <div class="col-sm-12">
                                     <div class="row clearfix">
-                                        <div class="col-sm-2">
+                                        <div class="col-md-2">
                                             <b>No Cliente:</b>
                                             <input type="text" name="IdCliente" class="form-control" placeholder="No del cliente" />
                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-md-3">
                                             <b>Fecha del:</b>
                                             @Html.DevExpress().DateEdit(settings =>
                                        {
@@ -94,7 +94,7 @@
                                        }).Bind(Model.Count != 0 ? Model[0].FechaRango1 : DateTime.Now).GetHtml()
                                         </div>
 
-                                        <div class="col-sm-2">
+                                        <div class="col-md-3">
                                             <b>Fecha al:</b>
                                             @Html.DevExpress().DateEdit(settings =>
                                        {
@@ -109,13 +109,13 @@
                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                        }).Bind(Model.Count != 0? Model[0].FechaRango1 : DateTime.Now).GetHtml()
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-md-2">
                                             <b>RFC:</b>
                                             <input type="text" name="Rfc" class="form-control" placeholder="RFC del cliente" />
 
                                         </div>
-                                        @Html.ValidationMessageFor(m => m., "", new { @class = "alert-danger" })
-                                        <div class="col-sm-3" style="top:10px">
+                                        @*@Html.ValidationMessageFor(m => m., "", new { @class = "alert-danger" })*@
+                                        <div class="col-md-2" style="top:10px">
                                             <div class="form-group">
                                                 <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
