@@ -263,11 +263,25 @@ namespace MVC.Presentacion.Controllers
 
 
 
-                foreach (var col in datos.OrderBy(m => m.m).OrderBy(y=> y.y))
+                foreach (var col in datos.OrderBy(m => m.m))
                     {
                         worksheet.Cells[1, cont].Value = col.y;
-                        worksheet.Cells[2, cont].Value = col.a;
-                        worksheet.Cells[3, cont].Value = col.b;
+                    if (col.m == 1) worksheet.Cells[2, cont].Value = col.a;
+                    if (col.m == 2) worksheet.Cells[2, cont].Value = col.b;
+                    if (col.m == 3) worksheet.Cells[2, cont].Value = col.c;
+                    if (col.m == 4) worksheet.Cells[2, cont].Value = col.d;
+                    if (col.m == 5) worksheet.Cells[2, cont].Value = col.e;
+                    if (col.m == 6) worksheet.Cells[2, cont].Value = col.f;
+                    if (col.m == 7) worksheet.Cells[2, cont].Value = col.g;
+                    if (col.m == 8) worksheet.Cells[2, cont].Value = col.h;
+                    if (col.m == 9) worksheet.Cells[2, cont].Value = col.i;
+                    if (col.m == 10) worksheet.Cells[2, cont].Value = col.j;
+                    if (col.m == 11) worksheet.Cells[2, cont].Value = col.k;
+                    if (col.m == 12) worksheet.Cells[2, cont].Value = col.l;
+
+
+
+                    worksheet.Cells[3, cont].Value = col.b;
                         worksheet.Cells[4, cont].Value = 26;
                         cont++;
                     }
