@@ -97,7 +97,8 @@ namespace Application.MainModule.Flujos
             var oc = OrdenCompraServicio.Buscar(_oc.IdOrdenCompra);
             if (oc == null) return OrdenCompraServicio.NoExiste();
 
-            if (!oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion)) return OrdenCompraServicio.EstatusIncorrecto();
+            if (!oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion))
+                return OrdenCompraServicio.EstatusIncorrecto();
 
             var entity = OrdenComprasAdapter.FromEntity(oc);
             entity.IdUsuarioAutorizador = TokenServicio.ObtenerIdUsuario();
