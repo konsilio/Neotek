@@ -175,6 +175,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             {
                 if(!ventaDTO.isVentaExtraforanea()) {
                     if (ventaDTO.getLimiteCreditoCliente() < ventaDTO.getTotal()) {
+                        BtnPuntoVentaPagarActivityConfirmar.setEnabled(false);
                         AlertDialog.Builder builder = new AlertDialog.Builder(this,
                                 R.style.AlertDialog);
                         builder.setTitle(R.string.info);
@@ -183,14 +184,17 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                         builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
                                 dialog.dismiss());
                         builder.create().show();
-                        error = true;
+                        //error = true;
+
                     }
                 }
             }
+            /**VENTAEXTRAFORANEA00 **/
 
             if(!error) {
                 presenter.pagar(ventaDTO, session.getToken(), EsVentaCamioneta, EsVentaCarburacion,
                         EsVentaPipa, sagasSql);
+                BtnPuntoVentaPagarActivityConfirmar.setEnabled(false);
             }
         });
         NumberFormat format = NumberFormat.getCurrencyInstance();
