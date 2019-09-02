@@ -228,51 +228,7 @@
                         <div class="body">
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 @Html.Partial("_CB_Mantenimientos", (List<MantenimientoDetalleModel>)TempData["DataSourceMantenimientos"])
-                                @*<div class="table-responsive">
-                                        <table class="table table-striped  filterable">
-                                            <thead>
-                                                <tr>
-                                                    <td><strong>Id</strong></td>
-                                                    <td><strong>Vehiculo</strong></td>
-                                                    <td><strong>Servicio Realizado</strong></td>
-                                                    <td><strong>Fecha Servicio</strong></td>
-                                                    <td><strong>Acción</strong></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var mant in ViewBag.Mantenimientos)
-                                                {
-                                                    <tr>
-                                                        <td>@mant.Id_DetalleMtto</td>
-                                                        <td>@mant.Vehiculo</td>
-                                                        <td>@mant.DescripcionMtto</td>
-                                                        <td>@mant.FechaMtto</td>
-                                                        <td>
-
-                                                            <a href="@Url.Action("Modificar", "Mantenimiento", new { Id = mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">edit</i>
-                                                                <span>Editar</span>
-                                                            </a>
-                                                            <a href="@Url.Action("Eliminar", "Mantenimiento", new { Id = mant.Id_DetalleMtto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">delete</i>
-                                                                <span>Eliminar</span>
-                                                            </a>
-
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>*@
-                            </div>
-                            @*<div class="row clearfix">
-                                    <div class="col-md-6">
-                                        Página @(ViewBag.Mantenimientos.PageCount < ViewBag.Mantenimientos.PageNumber ? 0 : ViewBag.Mantenimientos.PageNumber) de @ViewBag.Mantenimientos.PageCount
-                                    </div>
-                                    <div class="col-md-6 text-right">
-                                        @Html.PagedListPager((IPagedList)ViewBag.Mantenimientos, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
-                                    </div>
-                                </div>*@
+                                                            </div>                         
                         </div>
                     </div>
                 </div>
