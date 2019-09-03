@@ -124,8 +124,8 @@ namespace Application.MainModule.Flujos
         }
         public ClientesDto ObtenerCliente(int id)
         {
-            var resp = PermisosServicio.PuedeConsultarCliente();
-            if (!resp.Exito) return null;
+            //var resp = PermisosServicio.PuedeConsultarCliente();
+            //if (!resp.Exito) return null;
             var _c = ClienteServicio.Obtener(id);
             return ClientesAdapter.ToDTO(_c);
         }
