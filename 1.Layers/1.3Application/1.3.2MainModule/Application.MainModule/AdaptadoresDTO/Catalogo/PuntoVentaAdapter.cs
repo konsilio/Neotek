@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Mobile.PuntoVenta;
 using Sagas.MainModule.ObjetosValor.Enum;
+using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.AdaptadoresDTO.Catalogo
 {
@@ -133,6 +134,14 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             return new DatosVentaExtraforaneaDTO()
             {
                 VentaExtraforanea = cliente.VentaExtraordinaria??false
+            };
+        }
+        public static OtrasVentasDto FromDTO(VentaPuntoDeVentaDetalle entidad)
+        {
+            return new OtrasVentasDto()
+            {
+                Cantidad = entidad.CantidadProducto ?? 0,
+                Tipo = entidad.ProductoDescripcion
             };
         }
     }
