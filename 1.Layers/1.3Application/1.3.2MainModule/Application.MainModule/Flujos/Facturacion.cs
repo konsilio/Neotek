@@ -144,9 +144,7 @@ namespace Application.MainModule.Flujos
             if (cfdis != null)
                 return CFDIAdapter.ToDTO(cfdis);
             else
-                return new CFDIDTO() { Respuesta="Null" };
-            
-           
+                return new CFDIDTO() { Exito = false };
         }
         public List<VentaPuntoVentaDTO> BuscarPorRFC(string RFC)
         {
@@ -165,8 +163,8 @@ namespace Application.MainModule.Flujos
         public VentaPuntoVentaDTO BuscarPorTicket(string ticket)
         {
             var venta = PuntoVentaServicio.Obtener(ticket);
-            var cfdi = BuscarFacturasPorTicket(ticket);
-            if (cfdi == null)
+            //var cfdi = BuscarFacturasPorTicket(ticket);
+            if (venta != null)
                 return CajaGeneralAdapter.ToDTOP(venta);
             else
                 return null;
