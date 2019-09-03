@@ -29,3 +29,4 @@ namespace Application.MainModule.DTOs.Cobranza
 }
 
         public string FormaPago { get; set; }
+        public string FormaPago { get; set; }

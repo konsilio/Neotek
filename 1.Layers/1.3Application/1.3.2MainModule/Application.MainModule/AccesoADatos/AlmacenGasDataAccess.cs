@@ -1133,6 +1133,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<ReporteDelDia>().GetAll().ToList();
 
         }
+        public List<ReporteDelDia> ObtenerReportesDelDia()
+        {
+            var fecha = DateTime.Now;
+            return uow.Repository<ReporteDelDia>().Get(x => x.Year.Equals(fecha.Year) 
+                                                            && x.Mes.Equals(fecha.Month)
+                                                            && x.Dia.Equals(fecha.Day)).ToList();
+
+        }
         public RespuestaDto Insertar(ReporteDelDia reporte)
         {
             RespuestaDto _respuesta = new RespuestaDto();

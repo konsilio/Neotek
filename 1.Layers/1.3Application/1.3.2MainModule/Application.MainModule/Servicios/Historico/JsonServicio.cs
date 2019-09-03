@@ -315,74 +315,74 @@ namespace Application.MainModule.Servicios
                     if (dto.Enero)
                     {
                         json += string.Concat("{ y: 'Enero ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(1) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(1) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(1) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(1) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Febrero)
                     {
                         json += string.Concat("{ y: 'Febrero ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(2) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(2) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(2) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(2) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Marzo)
                     {
                         json += string.Concat("{ y: 'Marzo ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(3) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(3) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(3) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(3) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Abril)
                     {
                         json += string.Concat("{ y: 'Abril ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(4) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(4) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(4) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(4) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Mayo)
                     {
                         json += string.Concat("{ y: 'Mayo ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(5) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(5) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(5) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(5) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Junio)
                     {
                         json += string.Concat("{ y: 'Junio ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(6) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(6) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(6) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(6) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Julio)
                     {
                         json += string.Concat("{ y: 'Julio ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(7) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(7) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(7) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(7) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Agosto)
                     {
                         json += string.Concat("{ y: 'Agosto ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(8) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(8) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(8) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(8) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Septiembre)
                     {
                         json += string.Concat("{ y: 'Septiembre ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(9) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(9) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(9) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(9) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Octubre)
                     {
                         json += string.Concat("{ y: 'Octubre ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(10) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(10) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(10) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(10) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Noviembre)
                     {
                         json += string.Concat("{ y: 'Noviembre ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(11) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(11) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(11) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(11) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                     if (dto.Diciembre)
                     {
                         json += string.Concat("{ y: 'Diciembre ", year.Year, "',");
-                        json += string.Concat("a: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(12) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
-                        json += string.Concat("b: '", ventas.Where(x => x.Anio.Equals(y) && x.Mes.Equals(12) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
+                        json += string.Concat("a: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(12) && x.EsLocal.Equals(true)).Sum(t => t.MontoVenta).ToString(), "', ");
+                        json += string.Concat("b: '", ventas.Where(x => x.EsCamioneta && x.Anio.Equals(y) && x.Mes.Equals(12) && x.EsLocal.Equals(false)).Sum(t => t.MontoVenta).ToString(), "'}, ");
                     }
                 }
             }
