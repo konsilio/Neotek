@@ -32,6 +32,13 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.BuscarRequisicionesPorEmpresa(idEmpresa));
         }
+
+        [Route("buscar/requisicionesalmacenentrada/{idEmpresa}")]
+        public HttpResponseMessage GetRequisicionesByAlmacenIdEmpresa(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _requisicion.BuscarRequisicionesAlmacenPorEmpresa(idEmpresa));
+        }
+
         [Route("buscar/requisicion/{numRequi}")]
         public HttpResponseMessage GetRequisicionByNumRequisicion(int numRequi)
         {

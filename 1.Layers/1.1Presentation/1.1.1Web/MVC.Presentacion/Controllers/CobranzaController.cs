@@ -203,7 +203,7 @@ namespace MVC.Presentacion.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] CargosModel m)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
             m.Abono.IdCargo = m.IdCargo;
             var Respuesta = CobranzaServicio.AltaNuevoCargo(m, _tkn);
