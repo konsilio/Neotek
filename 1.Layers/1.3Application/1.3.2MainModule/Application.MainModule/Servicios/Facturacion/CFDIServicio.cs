@@ -386,6 +386,7 @@ namespace Application.MainModule.Servicios.Facturacion
         {
             RespuestaDto _resp = new RespuestaDto();
             _resp.Exito = true;
+            
             _resp.Mensaje = FacturacionConst.M0001;
             foreach (var item in dtos)
             {
@@ -393,7 +394,7 @@ namespace Application.MainModule.Servicios.Facturacion
                 if (!item.RespuestaTimbrado.Exito)
                 {
                     _resp.Exito = false;
-                    _resp.MensajesError = item.RespuestaTimbrado.MensajesError;
+                    _resp.Mensaje = item.RespuestaTimbrado.Mensaje;
                     return _resp;
                 }
             }
