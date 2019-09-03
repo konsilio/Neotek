@@ -197,8 +197,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.VentaACredito
                                                             && x.FechaRegistro.Day.Equals(fecha.Day)
                                                             && x.FechaRegistro.Month.Equals(fecha.Month)
-                                                            && x.FechaRegistro.Year.Equals(fecha.Year)
-                                                            && x.FechaRegistro <= fecha).ToList();
+                                                            && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
         public List<VentaPuntoDeVenta> BuscarTodosPV()
         {
