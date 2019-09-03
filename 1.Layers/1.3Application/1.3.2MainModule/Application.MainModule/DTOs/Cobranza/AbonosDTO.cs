@@ -27,3 +27,5 @@ namespace Application.MainModule.DTOs.Cobranza
         public string URLXml { get; set; }
     }
 }
+
+        public string FormaPago { get; set; }
