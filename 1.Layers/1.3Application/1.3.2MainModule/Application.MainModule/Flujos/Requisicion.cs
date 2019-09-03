@@ -54,6 +54,13 @@ namespace Application.MainModule.Flujos
             resp = PermisosServicio.PuedeConsultarRequisicion();
             return RequisicionServicio.BuscarRequisicionPorIdEmpresa(idEmpresa);
         }
+        public List<RequisicionDTO> BuscarRequisicionesAlmacenPorEmpresa(short idEmpresa)
+        {            
+            return RequisicionServicio.BuscarRequisicionAlmacenPorIdEmpresa(idEmpresa);
+        }
+
+        
+
         public RequisicionRevisionDTO BuscarRequisicion(int idRequisicion)
         {
             RespuestaDto resp = new RespuestaDto();
