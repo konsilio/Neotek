@@ -3290,6 +3290,14 @@ namespace MVC.Presentacion.Agente
             this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionesByIdEmpresa"];
             ListaRequisiciones(idEmpresa, tkn).Wait();
         }
+
+        public void BuscarRequisicionesAlmacen(short idEmpresa, string tkn)
+        {
+            this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionesByAlmacenIdEmpresa"];
+            ListaRequisiciones(idEmpresa, tkn).Wait();
+        }
+
+
         private async Task ListaRequisiciones(short idEmpresa, string token)
         {
             using (var client = new HttpClient())
