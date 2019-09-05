@@ -1,0 +1,123 @@
+﻿@using MVC.Presentacion.Models
+@{
+    ViewBag.Title = "Reportes";
+    Layout = null;
+    TempData["DataSource"] = Model;
+}
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = (ViewData["Reporte"]==null)?"Cubo": ViewData["Reporte"].ToString();
+        settings.CallbackRouteValues = new { Controller = "Reportes", Action = "GetGridView", Tipo = ViewData["Reporte"]};
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsText.EmptyDataRow = "No se encontraron registros";
+        settings.SettingsText.GroupPanel = "Desliza los campos aquí para hacer una agrupación ";
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.SettingsPager.PageSize = 15;
+        settings.Theme = "Material";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFooter = true;
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+
+        settings.Toolbars.Add(i =>
+        {
+            i.EnableAdaptivity = true;
+            i.Items.Add(exportitem =>
+            {
+                exportitem.Command = GridViewToolbarCommand.ExportToXls;
+                exportitem.Name = "CustomExportToXLS";
+                exportitem.Text = "Exportar a XLS";
+                exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
+            });
+            i.Items.Add(exportitem =>
+            {
+                exportitem.Command = GridViewToolbarCommand.ExportToXlsx;
+                exportitem.Name = "CustomExportToXLSX";
+                exportitem.Text = "Exportar a XLSX";
+                exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
+            });
+            i.ItemAlign = GridToolbarItemAlign.Right;
+        });
+
+        settings.Columns.Add("ID", "ID").Width=50;
+        settings.Columns.Add("NombreVehiculo", "Nombre Vehiculo");
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Lectura Inicial";
+            c.FieldName = "LecturaInicial";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(d.Grid.GetRowValues(d.VisibleIndex, "LecturaInicial").ToString().Replace("-","<br>"));
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Lectura Final";
+            c.FieldName = "LecturaFinal";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(d.Grid.GetRowValues(d.VisibleIndex, "LecturaFinal").ToString().Replace("-", "<br>"));
+            });
+       });
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Imagen LI";
+            //c.FieldName = "ID";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            //c.Settings.AllowGroup = DefaultBoolean.False;
+            //c.Settings.AllowSort = DefaultBoolean.False;
+            //c.Settings.AllowAutoFilter = DefaultBoolean.False;
+            //c.Settings.AllowDragDrop = DefaultBoolean.False;
+
+            c.SetDataItemTemplateContent(d =>
+            {
+
+                if (d.Grid.GetRowValues(d.VisibleIndex, "ImagenLI").ToString() != string.Empty)
+                {
+
+                    ViewContext.Writer.Write(string.Format("<img class='imgCss'  src = 'data:image/jpeg;base64, " + d.Grid.GetRowValues(d.VisibleIndex, "ImagenLI").ToString() + "' style = 'max-width:100%;height:auto;width:auto/9;' onclick='openFile(this)'>"));
+                }
+                else
+                {
+                    ViewContext.Writer.Write(string.Format(""));
+                }
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Imagen LF";
+            // c.FieldName = "ID";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            //c.Settings.AllowGroup = DefaultBoolean.False;
+            //c.Settings.AllowSort = DefaultBoolean.False;
+            //c.Settings.AllowAutoFilter = DefaultBoolean.False;
+            //c.Settings.AllowDragDrop = DefaultBoolean.False;
+
+            c.SetDataItemTemplateContent(d =>
+            {
+                if (d.Grid.GetRowValues(d.VisibleIndex, "ImagenLF").ToString() != string.Empty)
+                {
+
+                    ViewContext.Writer.Write(string.Format("<img class='imgCss' src = 'data:image/jpeg;base64, " + d.Grid.GetRowValues(d.VisibleIndex, "ImagenLF").ToString() + "' style = 'max-width:100%;height:auto;width:auto/9;'  onclick='openFile(this)'>"));
+
+
+                }
+                else
+                {
+                    ViewContext.Writer.Write(string.Format(""));
+                }
+            });
+        });
+        settings.Columns.Add("Diferencia", "Diferencia").Width=30;
+        settings.Columns.Add("Fecha", "Fecha");
+    }
+).Bind(Model).GetHtml()
+
