@@ -444,9 +444,10 @@
                                 </div>
                                 <div class="col-sm-005">
                                     <div class="form-group" style="top:-10px">
-                                        <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="number" class="form-control" title="Se necesita un nombre" required />
-                       
+                                        <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="number" class="form-control" required />
+
                                     </div>
+                                    @Html.ValidationMessageFor(m => m.PrecioSalidaKg, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-sm-1">
                                     <div class="form-group">
@@ -455,13 +456,14 @@
                                 </div>
                                 <div class="col-sm-005">
                                     <div class="form-group" style="top:-10px">
-                                        <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="number" class="form-control" required  />
+                                        <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="number" class="form-control" required />
                                         <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
                                         <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
                                         <input type="text" name="Categoria" class="form-control date" hidden="hidden" value="Combustibles" />
                                         <input type="text" name="Linea" class="form-control date" hidden="hidden" value="Gas" />
                                         <input type="text" name="Producto" class="form-control date" hidden="hidden" value="Gas" />
                                     </div>
+                                    @Html.ValidationMessageFor(m => m.PrecioSalidaLt, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-sm-1">
                                     <div class="form-group">
@@ -485,6 +487,7 @@
                                    settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                }).GetHtml()
                                 </div>
+                                @Html.ValidationMessageFor(m => m.FechaProgramada, "", new { @class = "alert-danger" })
                                 <div class="col-sm-7">
                                     <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
                                 </div>
