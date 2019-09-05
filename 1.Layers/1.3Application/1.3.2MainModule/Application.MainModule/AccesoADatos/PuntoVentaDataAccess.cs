@@ -165,7 +165,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<VentaPuntoDeVenta> BuscarVentasTOP(int top, DateTime fecha)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x =>
-                x.FechaRegistro.Day.Equals(fecha.Day - 1) &&
+                //x.FechaRegistro.Day.Equals(fecha.Day - 1) &&
                 x.FechaRegistro.Month.Equals(fecha.Month) &&
                 x.FechaRegistro.Year.Equals(fecha.Year)
            ).Take(top).ToList();

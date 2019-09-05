@@ -192,7 +192,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var model = RequisicionServicio.BuscarRequisicionesEntrega(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            var model = RequisicionServicio.BuscarRequisicionesAlmacenEntrega(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             return PartialView("_SalidaRequisicionesPartial", model);
         }
     }

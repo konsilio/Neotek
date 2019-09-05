@@ -144,12 +144,14 @@ namespace MVC.Presentacion.Controllers
                 if (Resp.ModelStatesStandar != null)
                     foreach (var error in Resp.ModelStatesStandar.ToList())                    
                         ModelState.AddModelError(error.Key, error.Value);
-                    
-                if (Resp.MensajesError != null)                
+
+                if (Resp.MensajesError != null)
                     if (Resp.MensajesError.Count > 1)
                         Mensaje = Resp.MensajesError[0] + " " + Resp.MensajesError[1];
                     else
-                        Mensaje = Resp.MensajesError[0];                
+                        Mensaje = Resp.MensajesError[0];
+                else
+                    Mensaje = Resp.Mensaje;
             }
             return Mensaje;
         }

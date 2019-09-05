@@ -2614,7 +2614,7 @@ namespace MVC.Presentacion.App_Code
         }
         public static CentroCostoModel ActivarModificar(byte idcc, CentroCostoModel model, string tkn)
         {
-            if (model.CentrosCostos == null)
+            if (model==null ||  model.CentrosCostos == null)
                 model = InitCentroCosto(tkn);
             var cc = model.CentrosCostos.FirstOrDefault(x => x.IdCentroCosto.Equals(idcc));
             model.Numero = cc.Numero;
