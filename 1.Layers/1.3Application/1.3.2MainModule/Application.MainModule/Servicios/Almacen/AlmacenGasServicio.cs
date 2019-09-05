@@ -2760,11 +2760,15 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static string ObtenerDiferenciaLecutraCamioneta(AlmacenGasTomaLectura li, AlmacenGasTomaLectura lf)
         {
-            var cantinIcial = string.Empty;
-            cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad), 2).ToString() + " Cilindro(s) 20Kg -";
-            cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad), 2).ToString() + " Cilindro(s) 30Kg -";
-            cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad), 2).ToString() + " Cilindro(s) 45Kg ";
-            return cantinIcial;
+            decimal cantinIcial = 0;
+            //cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad), 2).ToString() + " Cilindro(s) 20Kg -";
+            //cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad), 2).ToString() + " Cilindro(s) 30Kg -";
+            //cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad), 2).ToString() + " Cilindro(s) 45Kg ";
+
+            cantinIcial += CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad)*20;
+            cantinIcial += CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad) * 30;
+            cantinIcial += CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad) * 45;
+            return cantinIcial.ToString();
         }
 
     }
