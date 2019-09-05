@@ -78,7 +78,7 @@
                                                    settings.Properties.TextField = "Descripcion";
                                                    settings.Properties.ValueField = "Id_UsoCFDI";
                                                    settings.ClientEnabled = true;
-                                                   settings.Properties.ValueType = typeof(int);
+                                                   settings.Properties.ValueType = typeof(short);
                                                }).BindList(ViewBag.ListaUsosCFDI).GetHtml()
                                                     @Html.ValidationMessageFor(m => m.IdUsoCFDI, "", new { @class = "alert-danger" })
                                                 </div>
@@ -96,7 +96,7 @@
                                                    settings.Properties.TextField = "Descripcion";
                                                    settings.Properties.ValueField = "IdFormaPago";
                                                    settings.ClientEnabled = true;
-                                                   settings.Properties.ValueType = typeof(int);
+                                                   settings.Properties.ValueType = typeof(short);
                                                 }).BindList(ViewBag.ListaFormasPago).GetHtml()
                                                     @Html.ValidationMessageFor(m => m.IdFormaPago, "", new { @class = "alert-danger" })
                                                 </div>
@@ -110,7 +110,7 @@
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div class="form-group">
-                                                    <input type="submit" value="Enviar" id="DatosCliente" formaction="GuardaEdicionCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
+                                                    <input type="submit" value="Enviar" id="DatosCliente" formaction="Facturar" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
                                                 </div>
                                             </div>
                                         </div>
