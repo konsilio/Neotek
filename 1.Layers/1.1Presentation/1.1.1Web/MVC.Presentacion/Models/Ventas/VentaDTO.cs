@@ -45,5 +45,7 @@ namespace MVC.Presentacion.Models.Ventas
         public Nullable<int> IdPipa { get; set; }
         public string Tipo { get; set; }
         public bool seleccionar { get; set;}
+        public decimal PrecioUnitario { get; set; }
+        public decimal CantidadVendida { get; set; }
     }
 }

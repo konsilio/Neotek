@@ -403,9 +403,30 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 Descripcion = "",
                 Concepto = "Venta",
                 Tipo = pv.VentaACredito == false ? "Contado" : "Credito",
+                PrecioUnitario=(EsCamioneta.IdCamioneta!=null)?pv.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioProducto??0: pv.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioLt??0,
+                CantidadVendida= GetCantidad(pv.VentaPuntoDeVentaDetalle.ToList(), EsCamioneta.IdCamioneta),
+
             };
             return usDTO;
         }
+
+        public static decimal GetCantidad(List<VentaPuntoDeVentaDetalle> ventasDetalles,int? IdCaminoeta) {
+            decimal result = 0;
+            if (IdCaminoeta != null)
+            {
+                foreach (var det in ventasDetalles)
+                {
+                    result += (det.CantidadKg ?? 0) * (det.CantidadProducto ?? 0);
+                }
+
+            }
+            else {
+                result = ventasDetalles.Sum(s => s.CantidadProducto) ?? 0;
+            }
+
+            return result;
+        }
+
         public static List<VentaPuntoVentaDTO> ToDTOC(List<VentaPuntoDeVenta> lu)
         {
             return lu.Select(x => ToDTOC(x)).ToList();
