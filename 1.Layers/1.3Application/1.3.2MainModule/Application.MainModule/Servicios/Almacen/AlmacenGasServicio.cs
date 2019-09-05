@@ -657,7 +657,8 @@ namespace Application.MainModule.Servicios.Almacenes
                                                                                                         && !vd.IdCategoria.Equals(precioVenta.IdCategoria)).ToList().Select(x => PuntoVentaAdapter.FromDTO(x))).ToList();
                     reporteDTO.Fecha = fecha;
                     reporteDTO.EsCamioneta = true;
-                    reporteDTO.Carburacion = (autoConsumo.UnidadEntrada.CapacidadTanqueLt ?? 0 / 100) * lectFinal.Porcentaje ?? 0;
+                    if (autoConsumo != null)
+                        reporteDTO.Carburacion = (autoConsumo.UnidadEntrada.CapacidadTanqueLt ?? 0 / 100) * lectFinal.Porcentaje ?? 0;
                     reporteDTO.OtrasVentasTotal = TotalVentas.Sum(tv => tv.VentaPuntoDeVentaDetalle.Where(vd => !vd.IdProducto.Equals(precioVenta.IdProducto)
                                                                                                         && !vd.IdProductoLinea.Equals(precioVenta.IdProductoLinea)
                                                                                                         && !vd.IdCategoria.Equals(precioVenta.IdCategoria)).Sum(x => x.Subtotal));
@@ -665,8 +666,8 @@ namespace Application.MainModule.Servicios.Almacenes
                     reporteDTO.Error = false;
                     reporteDTO.Mensaje = Exito.OK;
                     reporteDTO.IdCAlmacenGas = almacen.IdCAlmacenGas;
-                    reporteDTO.NombreCAlmacen = almacen.EstacionCarburacion.Nombre;
-                    reporteDTO.Estacion = almacen.EstacionCarburacion.Nombre;
+                    reporteDTO.NombreCAlmacen = almacen.Camioneta.Nombre;
+                    reporteDTO.Estacion = almacen.Camioneta.Nombre;
                     reporteDTO.ClaveReporte = DateTime.Now.Year + "R" + FechasFunciones.ObtenerClaveUnica();
                     reporteDTO.KilosDeVenta = TotalVentas.Sum(tv => tv.VentaPuntoDeVentaDetalle.Where(vd => vd.IdProducto.Equals(precioVenta.IdProducto)
                                                                                                         && vd.IdProductoLinea.Equals(precioVenta.IdProductoLinea)
@@ -694,8 +695,11 @@ namespace Application.MainModule.Servicios.Almacenes
                     reporteDTO.LitrosVenta = TotalVentas.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(v => v.CantidadLt ?? 0));
                     reporteDTO.ClaveReporte = fecha.Year + "R" + FechasFunciones.ObtenerClaveUnica();
                     reporteDTO.ImporteCredito = TotalVentas.Where(t => t.VentaACredito).Sum(x => x.Total);
-                    reporteDTO.NombreCAlmacen = almacen.EstacionCarburacion.Nombre;
-                    reporteDTO.Estacion = almacen.EstacionCarburacion.Nombre;
+                    if (almacen.EstacionCarburacion != null)
+                        reporteDTO.NombreCAlmacen = almacen.EstacionCarburacion.Nombre;
+                    if (almacen.Pipa != null)
+                        reporteDTO.NombreCAlmacen = almacen.Pipa.Nombre;
+                    //reporteDTO.Estacion = almacen.EstacionCarburacion.Nombre;
                     reporteDTO.Medidor = TipoMedidorAdapter.ToDto(almacen.Medidor);
                     reporteDTO.LecturaInicial = ReporteAdapter.ToDTO(lectInicial);
                     reporteDTO.LecturaFinal = ReporteAdapter.ToDTO(lectFinal);
