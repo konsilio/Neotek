@@ -335,8 +335,8 @@ namespace Application.MainModule.Flujos
                         {
                             r.Diferencia = 0.ToString();
                             r.LecturaFinal = Convert.ToInt32(lf.P5000 ?? 0).ToString();
-                            r.ImagenLI = li.Fotografias.Count.Equals(0) ? string.Empty : li.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(li.IdOrden)).UrlImagen ?? string.Empty;
-                            r.ImagenLF = lf.Fotografias.Count.Equals(0) ? string.Empty : lf.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(lf.IdOrden)).UrlImagen ?? string.Empty;
+                            r.ImagenLI = li.Fotografias.Count.Equals(0) ? string.Empty : li.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(li.IdOrden)).CadenaBase64 ?? string.Empty;
+                            r.ImagenLF = lf.Fotografias.Count.Equals(0) ? string.Empty : lf.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(lf.IdOrden)).CadenaBase64 ?? string.Empty;
                             r.Diferencia = CalculosGenerales.DiferenciaEntreDosNumero(li.P5000 ?? 0, lf.P5000 ?? 0).ToString();
                         }
                         r.Fecha = li.FechaRegistro;
@@ -362,8 +362,8 @@ namespace Application.MainModule.Flujos
                         {
                             r.Diferencia = 0.ToString();
                             r.LecturaFinal = Convert.ToInt32(lf.P5000 ?? 0).ToString();
-                            r.ImagenLI = li.Fotografias.Count.Equals(0) ? string.Empty : li.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(li.IdOrden)).UrlImagen ?? string.Empty;
-                            r.ImagenLF = lf.Fotografias.Count.Equals(0) ? string.Empty : lf.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(lf.IdOrden)).UrlImagen ?? string.Empty;
+                            r.ImagenLI = li.Fotografias.Count.Equals(0) ? string.Empty : li.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(li.IdOrden)).CadenaBase64 ?? string.Empty;
+                            r.ImagenLF = lf.Fotografias.Count.Equals(0) ? string.Empty : lf.Fotografias.FirstOrDefault(x => x.IdOrden.Equals(lf.IdOrden)).CadenaBase64 ?? string.Empty;
                             r.Diferencia = CalculosGenerales.DiferenciaEntreDosNumero(li.P5000 ?? 0, lf.P5000 ?? 0).ToString();
                         }
                         r.Fecha = li.FechaRegistro;
