@@ -172,8 +172,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
-            var _Categoria = ProductoServicio.ObtenerCategoria(p.IdCategoria).Nombre;
-            var _Linea = ProductoServicio.ObtenerLineaProducto(p.IdProductoLinea).Linea;
+            //var _Categoria = ProductoServicio.ObtenerCategoria(p.IdCategoria).Nombre;
+            //var _Linea = ProductoServicio.ObtenerLineaProducto(p.IdProductoLinea).Linea;
             var flete = PVGasDTO.PrecioFlete != null ? (decimal)PVGasDTO.PrecioFlete : 0;
             return new PrecioVentaDTO()
             {
@@ -182,8 +182,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 IdCategoria = p.IdCategoria,
                 IdProductoLinea = p.IdProductoLinea,
                 IdProducto = p.IdProducto,
-                Categoria = _Categoria,
-                Linea = _Linea,
+                Categoria = p.Categoria.Nombre,
+                Linea = p.LineaProducto.Linea,
                 Producto = p.Descripcion,
                 PrecioActual = PVGasDTO.PrecioActual,
                 PrecioPemexKg = PVGasDTO.PrecioPemexKg,
