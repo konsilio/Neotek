@@ -36,7 +36,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Format(Error.C0002, "del centro de costo");
+                    _respuesta.Mensaje = string.Format(Error.C0002, "registro del CFDI");
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
