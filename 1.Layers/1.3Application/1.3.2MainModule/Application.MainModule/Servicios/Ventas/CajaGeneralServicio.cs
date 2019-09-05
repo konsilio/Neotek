@@ -199,9 +199,17 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarTotalVentasCamionetas(f);
         }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasCamionetaMes(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetasMes(f);
+        }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasPipas(DateTime f)
         {
             return new CajaGeneralDataAccess().BuscarTotalVentasPipas(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasPipasMes(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasPipasMes(f);
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalBonificaciones(DateTime f)
         {
@@ -218,6 +226,10 @@ namespace Application.MainModule.Servicios.Ventas
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(DateTime f)
         {
             return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstacionesMes(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasEstacionesMes(f);
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(EstacionCarburacion entidad, DateTime f)
         {

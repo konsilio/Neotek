@@ -127,6 +127,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 ClaveReporte = resp.FolioOperacionDia,
                 Precio = resp.PrecioLt ?? 0,
                 LitrosVenta = resp.LitrosVenta ?? 0,
+                Medidor = TipoMedidorAdapter.ToDto(almacen.Medidor),
                 Fecha = resp.FechaReporte,
                 LecturaInicial = ToDTO(inicial),
                 LecturaFinal = ToDTO(final),
@@ -157,6 +158,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 ClaveReporte = resp.FolioOperacionDia,
                 Precio = resp.PrecioLt ?? 0,
                 LitrosVenta = resp.LitrosVenta ?? 0,
+                KilosDeVenta = resp.KilosVenta ?? 0,
+                Medidor = TipoMedidorAdapter.ToDto(almacen.Medidor),
                 Fecha = resp.FechaReporte,
                 LecturaInicial = ToDTO(inicial),
                 LecturaFinal = ToDTO(final),
@@ -248,7 +251,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 LecturaInicial = ToDTO(inicial),
                 LecturaFinal = ToDTO(final),
                 Tanques = ToDTO(cilindrosInicial, cilindrosFinal)
-
             };
         }
 

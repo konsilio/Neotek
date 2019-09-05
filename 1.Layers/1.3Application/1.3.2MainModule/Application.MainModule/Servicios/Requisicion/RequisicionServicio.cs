@@ -23,6 +23,13 @@ namespace Application.MainModule.Servicios.Requisiciones
         {
             return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas(_IdEmpresa));
         }
+
+        public static List<RequisicionDTO> BuscarRequisicionAlmacenPorIdEmpresa(short _IdEmpresa)
+        {
+            return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodasAlmacenPorIdEmpresa(_IdEmpresa));
+        }
+        
+
         public static List<RequisicionDTO> BuscarRequisicionPorPeriodo(short _IdEmpresa, DateTime periodo)
         {
             return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas(_IdEmpresa, periodo));

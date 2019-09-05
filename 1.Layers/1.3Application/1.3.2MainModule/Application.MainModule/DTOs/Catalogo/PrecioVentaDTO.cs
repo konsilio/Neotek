@@ -21,8 +21,7 @@ namespace Application.MainModule.DTOs.Catalogo
        
         public short IdProductoLinea { get; set; }
         public int IdProducto { get; set; }
-        public string Categoria { get; set; }
-        
+        public string Categoria { get; set; }        
         public string Linea { get; set; }
        
 

@@ -73,6 +73,7 @@ function AttachEditorValueChangedEvent() {
     });
 }
 function OnBatchEditEndEditing(s, e) {
+  
     //var PriceColIndex = s.GetColumnByField("Price").index;
     //var QuantityColIndex = s.GetColumnByField("Quantity").index;
     //var priceValue = e.rowValues[PriceColIndex].value;

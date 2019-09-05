@@ -228,7 +228,7 @@ namespace Application.MainModule.Flujos
         }
         public List<VentaCajaGeneralDTO> ObtenerLiquidaciones()
         {
-            var liquis = CajaGeneralServicio.Obtener(DateTime.Now.AddDays(-1));
+            var liquis = CajaGeneralServicio.Obtener(DateTime.Now);
             return CajaGeneralAdapter.ToDTO(liquis);
         }
     }
