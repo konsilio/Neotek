@@ -35,6 +35,9 @@ public class VentaDTO implements Serializable {
     @SerializedName("Credito")
     private boolean Credito;
 
+    @SerializedName("Bonificación")
+    private boolean Bonificación;
+
     @SerializedName("Efectivo")
     private double Efectivo;
 
@@ -149,6 +152,14 @@ public class VentaDTO implements Serializable {
 
     public void setCredito(boolean credito) {
         Credito = credito;
+    }
+
+    public boolean isBonificación() {
+        return Bonificación;
+    }
+
+    public void setBonificación(boolean bonificación) {
+        Bonificación = bonificación;
     }
 
     public double getEfectivo() {

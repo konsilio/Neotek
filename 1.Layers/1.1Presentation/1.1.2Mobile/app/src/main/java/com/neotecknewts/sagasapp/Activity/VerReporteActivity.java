@@ -351,6 +351,16 @@ public class VerReporteActivity extends AppCompatActivity {
                     "<td>[{Cambio}]</td>" +
                     "</tr>";
         }
+        if(ventaDTO.isBonificación()) {
+            HtmlReporte += "<tr>" +
+                    "<td>Efectivo recibido:</td>" +
+                    "<td>[{Efectivo}]</td>" +
+                    "</tr>" +
+                    "<tr> Bonificacion" +
+                    "<td>Cambio</td>" +
+                    "<td>[{Cambio}]</td>" +
+                    "</tr>";
+        }
         HtmlReporte+="</table>"+
                 "</body>";
 
@@ -412,6 +422,13 @@ public class VerReporteActivity extends AppCompatActivity {
 
             StringReporte += "\tVenta Credito\n";
         }
+        if(ventaDTO.isBonificación()) {
+            StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
+                    "\tCambio [{Cambio}]\n";
+
+            StringReporte += "\t Bonificación \n";
+        }
+
         StringReporte += "Le atendio [{Usuario}]"+
                 "\n--------------------------------\n"+
                 "Gas Mundial de Guerrero S.A de C.V.\n"+

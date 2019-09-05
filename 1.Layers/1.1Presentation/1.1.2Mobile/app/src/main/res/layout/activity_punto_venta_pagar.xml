@@ -141,13 +141,30 @@
                 android:id="@+id/SPuntoVentaActivityCredito"
                 android:layout_width="wrap_content"
                 android:layout_height="27dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/credito"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TVPuntoVentaActivityPagarTotal"
                 android:layout_marginRight="8dp" />
+
+            <Switch
+                android:id="@+id/SPuntoVentaActivityBonificacion"
+                android:layout_width="wrap_content"
+                android:layout_height="27dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="52dp"
+                android:text="Bonificacion"
+                android:checked="true"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/TVPuntoVentaActivityPagarTotal"
+                app:layout_constraintBottom_toTopOf="@+id/BtnPuntoVentaPagarActivityCancelar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/SPuntoVentaActivityCredito"
+                app:layout_constraintHorizontal_bias="0.068"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textView32"
@@ -170,19 +187,20 @@
                 android:id="@+id/ETPuntoVentaPagarActivityEfectivo"
                 android:layout_width="144dp"
                 android:layout_height="45dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="numberDecimal"
+                android:textColor="@color/colorTextLogin"
                 android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/BtnPuntoVentaPagarActivityConfirmar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaActivityCredito"
-                app:layout_constraintVertical_bias="0.314"
+                app:layout_constraintVertical_bias="1.0"
                 tools:ignore="LabelFor"
-                tools:targetApi="P"
-                android:textColor="@color/colorTextLogin"
-                android:layout_marginRight="8dp" />
+                tools:targetApi="P" />
 
             <Button
                 android:id="@+id/BtnPuntoVentaPagarActivityOpciones"
@@ -243,10 +261,10 @@
                 android:text="@string/total_en_efectivo"
                 app:layout_constraintBottom_toTopOf="@+id/BtnPuntoVentaPagarActivityCancelar"
                 app:layout_constraintEnd_toStartOf="@+id/ETPuntoVentaPagarActivityEfectivo"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.978"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView30"
-                app:layout_constraintVertical_bias="0.784" />
+                app:layout_constraintVertical_bias="1.0" />
             <!--android:backgroundTint="@color/colorButtonLogin"-->
 
         </android.support.constraint.ConstraintLayout>

@@ -37,7 +37,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             BtnPuntoVentaPagarActivityOpciones;
     TextView TVPuntoVentaPagarActivitySubtotal,TVPuntoVentaPagarActivityIva,
             TVPuntoVentaActivityPagarTotal,TVPuntoVentaPagarActivityEfectivo;
-    Switch SPuntoVentaPagarActivityFactura,SPuntoVentaActivityCredito;
+    Switch SPuntoVentaPagarActivityFactura,SPuntoVentaActivityCredito, SPuntoVentaActivityBonificacion;
     EditText ETPuntoVentaPagarActivityEfectivo;
     Tabla tabla;
     boolean  EsVentaCamioneta,EsVentaCarburacion,EsVentaPipa;
@@ -73,6 +73,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         TVPuntoVentaActivityPagarTotal = findViewById(R.id.TVPuntoVentaActivityPagarTotal);
         SPuntoVentaPagarActivityFactura = findViewById(R.id.SPuntoVentaPagarActivityFactura);
         SPuntoVentaActivityCredito = findViewById(R.id.SPuntoVentaActivityCredito);
+        SPuntoVentaActivityBonificacion = findViewById(R.id.SPuntoVentaActivityBonificacion);
         TVPuntoVentaPagarActivityEfectivo = findViewById(R.id.TVPuntoVentaPagarActivityEfectivo);
         ETPuntoVentaPagarActivityEfectivo = findViewById(R.id.ETPuntoVentaPagarActivityEfectivo);
         SPuntoVentaActivityCredito.setChecked(
@@ -88,10 +89,12 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             if(isChecked) {
                 TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
                 ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
+                SPuntoVentaActivityBonificacion.setVisibility(View.GONE);
 
             }else {
                 TVPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
                 ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
+                SPuntoVentaActivityBonificacion.setVisibility(View.VISIBLE);
             }
         });
 
@@ -113,16 +116,22 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             startActivity(intent);
         });
         SPuntoVentaActivityCredito.setChecked(ventaDTO.isCredito());
+        SPuntoVentaActivityBonificacion.setChecked(ventaDTO.isBonificación());
         if(ventaDTO.isTieneCredito()){
 
             if (ventaDTO.isCredito()){
                 SPuntoVentaActivityCredito.setVisibility(View.VISIBLE);
                 TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
                 ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
+                SPuntoVentaActivityBonificacion.setVisibility(View.GONE);
             }else{
 
                 TVPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
                 ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
+                SPuntoVentaActivityBonificacion.setVisibility(View.VISIBLE);
+
+                if(SPuntoVentaActivityBonificacion.isChecked()){
+                }
             }
             //SPuntoVentaActivityCredito.setVisibility(View.VISIBLE);
             //TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
@@ -132,6 +141,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             SPuntoVentaActivityCredito.setVisibility(View.GONE);
             ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
             TVPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
+            SPuntoVentaActivityBonificacion.setVisibility(View.VISIBLE);
         }
 
         if( EsVentaPipa ||EsVentaCarburacion){
@@ -150,6 +160,10 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                     double efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo
                             .getText().toString());
                     if(efectivio<ventaDTO.getTotal()){
+                        if(SPuntoVentaActivityBonificacion.isChecked()){
+                            ventaDTO.setEfectivo(efectivio);
+                            ventaDTO.setCambio(0);
+                        }else{
                         error = true;
                         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
                         builder.setTitle(R.string.info);
@@ -157,6 +171,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                         builder.setPositiveButton(R.string.regresar, (dialogInterface, i) ->
                                 dialogInterface.dismiss());
                         builder.create().show();
+                        }
                     }else {
                         ventaDTO.setEfectivo(efectivio);
                         ventaDTO.setCambio(ventaDTO.getEfectivo() - ventaDTO.getTotal());
@@ -175,16 +190,20 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             {
                 if(!ventaDTO.isVentaExtraforanea()) {
                     if (ventaDTO.getLimiteCreditoCliente() < ventaDTO.getTotal()) {
-                        BtnPuntoVentaPagarActivityConfirmar.setEnabled(false);
                         AlertDialog.Builder builder = new AlertDialog.Builder(this,
                                 R.style.AlertDialog);
                         builder.setTitle(R.string.info);
                         builder.setMessage("No se puede realizar la venta, favor de comunicarse con el" +
-                                "área de crédito y  cobranza");
+                                "área de crédito y  cobranza, Por favor intente ingresar de nuevo y pagar en efectivo");
                         builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
                                 dialog.dismiss());
                         builder.create().show();
-                        //error = true;
+                        error = true;
+                        Button  BtnConfirmar = (Button) findViewById(R.id. BtnPuntoVentaPagarActivityConfirmar);
+                        BtnConfirmar.setEnabled(false);
+
+                        /*Switch credito = (Switch) findViewById(R.id.SPuntoVentaActivityCredito);
+                        credito.setClickable(true);*/
 
                     }
                 }
@@ -194,7 +213,6 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             if(!error) {
                 presenter.pagar(ventaDTO, session.getToken(), EsVentaCamioneta, EsVentaCarburacion,
                         EsVentaPipa, sagasSql);
-                BtnPuntoVentaPagarActivityConfirmar.setEnabled(false);
             }
         });
         NumberFormat format = NumberFormat.getCurrencyInstance();
