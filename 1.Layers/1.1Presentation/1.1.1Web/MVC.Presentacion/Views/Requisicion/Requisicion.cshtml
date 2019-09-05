@@ -94,9 +94,11 @@
                                            settings.Theme = "Material";
                                        }).Bind(Model.FechaRequerida).GetHtml()
 
-                                            @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
-                                            @Html.HiddenFor(m => m.FechaRequerida)
+
+
                                         </div>
+                                        @Html.HiddenFor(m => m.FechaRequerida)
+                                        @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
                                         <div class="col-lg-3">
                                             <b>Solicitante:</b>
                                             @Html.DevExpress().ComboBox(settings =>
@@ -112,11 +114,11 @@
                                                     }).BindList(ViewBag.Usuarios).Bind(Model.IdUsuarioSolicitante).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdUsuarioSolicitante, "", new { @class = "alert-danger" })
                                             @*<select id="ddlSoliciante" name="IdUsuarioSolicitante" class="form-control show-tick" @EnabledAdminCentral data-live-search="true">
-                                                    @foreach (var lst in ViewBag.Usuarios)
-                                                    {
-                                                        <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1</option>
-                                                    }
-                                                </select>*@
+                @foreach (var lst in ViewBag.Usuarios)
+                {
+                    <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1</option>
+                }
+            </select>*@
                                             @Html.HiddenFor(m => m.IdUsuarioSolicitante)
                                             @Html.ValidationMessageFor(m => m.IdUsuarioSolicitante, "", new { @class = "alert-danger" })
                                         </div>
@@ -187,6 +189,7 @@
                                                         <option value="3">Servicio</option>
                                                     }
                                                 </select>
+                                                @*@Html.ValidationMessageFor(m => m.TipoProducto, "", new { @class = "alert-danger" })*@
                                             </div>
                                             <div class="col-lg-4">
                                                 <b>Producto:</b>
@@ -203,6 +206,8 @@
                                                         <option value="0">No hay productos</option>
                                                     }
                                                 </select>
+
+                                                @*@Html.ValidationMessageFor(m => m.Producto, "", new { @class = "alert-danger" })*@
                                             </div>
                                             <div class="col-md-2">
                                                 <strong>
@@ -249,6 +254,7 @@
                                                         }
                                                     }
                                                 </select>
+                                                @*@Html.ValidationMessageFor(m => m.CentroCosto, "", new { @class = "alert-danger" })*@
                                             </div>
                                         </div>
                                         <br />
@@ -271,6 +277,7 @@
                                                     @*<input type="text" placeholder="Comentarios..." Class="form-control" name="Aplicacion" />*@
                                                 </div>
                                                 @*<asp:Label runat="server" ID="reqApli" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
+                                                @Html.ValidationMessageFor(m => m.Aplicacion, "", new { @class = "alert-danger" })
                                             </div>
                                             <div class="col-md-4">
                                                 <label>&nbsp; </label>

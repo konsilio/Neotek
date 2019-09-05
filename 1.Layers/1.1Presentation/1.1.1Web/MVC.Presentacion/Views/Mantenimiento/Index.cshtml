@@ -111,11 +111,12 @@
                                        settings.Name = "Id_tipomtto";
                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                        settings.SelectedIndex = 0;
+                                     
                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                        settings.Properties.TextField = "Mantenimiento";
                                        settings.Properties.ValueField = "Id_Mantenimiento";
-                                       settings.Properties.ValueType = typeof(int);
+                                       settings.Properties.ValueType = typeof(int);         
                                    }).BindList(ViewBag.CMantenimiento).Bind(Model.Id_tipomtto).GetHtml()
                                         @Html.ValidationMessageFor(m => m.Id_tipomtto, "", new { @class = "alert-danger" })
                                     </div>
@@ -132,7 +133,7 @@
                                                 settings.Properties.MaskSettings.ErrorText = "Kilometraje Actual";
                                                 settings.Properties.ValidationSettings.Display = Display.Dynamic;
                                             }).GetHtml()*@
-                                        @Html.TextBoxFor(m => m.Kilometraje_Actual, Model.Kilometraje_Actual.ToString(), new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.Kilometraje_Actual, Model.Kilometraje_Actual.ToString(), new { @class = "form-control", @Value = "", @Placeholder = "0" })
                                         @Html.ValidationMessageFor(m => m.Kilometraje_Actual, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
