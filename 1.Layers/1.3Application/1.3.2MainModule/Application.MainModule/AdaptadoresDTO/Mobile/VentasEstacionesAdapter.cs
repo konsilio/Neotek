@@ -117,7 +117,10 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return productosGas.Select(x => ToDTO(x, precios, CatidadKilosGas)).ToList();
         }
-
+        public static List<DatosGasVentaDto> ToDTO(List<Producto> productosGas, List<PrecioVenta> precios, decimal CatidadKilosGas, decimal descuento, decimal precio)
+        {
+            return productosGas.Select(x => ToDTO(x, precios, CatidadKilosGas, descuento, precio)).ToList();
+        }
         public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios)
         {
             var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
@@ -129,16 +132,26 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
             };
         }
-        public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios, decimal CantidadKgGas)
+        public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios, decimal CantidadKgGas, decimal descuento = 0, decimal precio = 0)
         {
-            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
+            var _precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
+            
             if (productoGas.EsGas)
             {
+                decimal p = 0;
+                if (_precio != null)
+                {
+                    p = _precio.PrecioSalidaKg.Value;
+                    if (!descuento.Equals(0))
+                        p = p - descuento;
+                    if (!precio.Equals(0))
+                        p = precio;
+                }
                 return new DatosGasVentaDto()
                 {
                     Nombre = productoGas.Descripcion,
                     Id = productoGas.IdProducto,
-                    PrecioUnitario = precio != null ? precio.PrecioSalidaKg ?? 0 : 0,
+                    PrecioUnitario =  p,
                     Existencia = CantidadKgGas,
                 };
             }
@@ -149,7 +162,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 {
                     Nombre = productoGas.Descripcion,
                     Id = productoGas.IdProducto,
-                    PrecioUnitario = precio.PrecioSalidaKg.Value,
+                    PrecioUnitario = _precio.PrecioSalidaKg.Value,
                     Existencia = existencias != null ? existencias.Cantidad : 0,
                 };
             }
@@ -265,16 +278,30 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return cilindros.Select(x => ToDTO(x, kilosCamioneta, pv)).ToList();
         }
+        public static List<DatosGasVentaDto> ToDTOGas(List<CamionetaCilindro> cilindros, decimal kilosCamioneta, PrecioVenta pv, decimal descuento, decimal precio)
+        {
+            return cilindros.Select(x => ToDTO(x, kilosCamioneta, pv, descuento, precio)).ToList();
+        }
 
-        public static DatosGasVentaDto ToDTO(CamionetaCilindro cilindro, decimal kilosCamioneta, PrecioVenta pv)
+        public static DatosGasVentaDto ToDTO(CamionetaCilindro cilindro, decimal kilosCamioneta, PrecioVenta pv, decimal descuento = 0, decimal precio = 0)
         {
             var almacenCilindro = AlmacenGasServicio.ObtenerCilindro(cilindro.IdCilindro);
+            var _precio = pv;
+            decimal p = 0;
+            if (_precio != null)
+            {
+                p = _precio.PrecioSalidaKg.Value;
+                if (!descuento.Equals(0))
+                    p = p - descuento;
+                if (!precio.Equals(0))
+                    p = precio;
+            }
             return new DatosGasVentaDto()
             {
                 Nombre = "Gas LP " + Math.Truncate(almacenCilindro.CapacidadKg),
                 Existencia = cilindro.Cantidad,
                 Id = cilindro.IdCilindro,
-                PrecioUnitario = pv.PrecioSalidaKg ?? 0,
+                PrecioUnitario = p,
                 CapacidadKg = almacenCilindro.CapacidadKg,
                 CapacidadLt = almacenCilindro.CapacidadLt,
                 Descuento = 0
