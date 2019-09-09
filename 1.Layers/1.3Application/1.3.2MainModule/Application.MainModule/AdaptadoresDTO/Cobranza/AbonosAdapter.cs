@@ -18,6 +18,8 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         {
             AbonosDTO dto = new AbonosDTO();
             var venta = CFDIServicio.Buscar(_Abono.Id_RelTF ?? 0);
+            dto.IdCliente = _Abono.Cargo.IdCliente;
+            dto.Cliente = ClienteServicio.ObtenerNomreCliente(_Abono.Cargo.CCliente);
             dto.IdAbono = _Abono.IdAbono;
             dto.IdCargo = _Abono.IdCargo;
             dto.FechaRegistro = _Abono.FechaRegistro;

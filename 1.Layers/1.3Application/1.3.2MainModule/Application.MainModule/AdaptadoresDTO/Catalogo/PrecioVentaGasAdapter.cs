@@ -170,11 +170,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         }
         public static PrecioVentaDTO ToDTOtest(PrecioVentaDTO PVGasDTO, Producto p)
         {
-            var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
+            //var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
             //var _Categoria = ProductoServicio.ObtenerCategoria(p.IdCategoria).Nombre;
             //var _Linea = ProductoServicio.ObtenerLineaProducto(p.IdProductoLinea).Linea;
-            var flete = PVGasDTO.PrecioFlete != null ? (decimal)PVGasDTO.PrecioFlete : 0;
+            //var flete = PVGasDTO.PrecioFlete != null ? (decimal)PVGasDTO.PrecioFlete : 0;
             return new PrecioVentaDTO()
             {
                 IdEmpresa = PVGasDTO.IdEmpresa,
@@ -293,15 +293,15 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 CategoriaProducto = producto.Descripcion,//Concepto
                 IdUnidadMedida = producto.IdUnidadMedida,
             };
-            if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null)
-            {
-                if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion.Equals(15))
-                {
-                    usDTO.PrecioSalida = Convert.ToDecimal(8.88);
-                    usDTO.PrecioSalidaKg = Convert.ToDecimal(8.88);
-                    usDTO.PrecioSalidaLt = Convert.ToDecimal(8.88);
-                }
-            } 
+            //if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null)
+            //{
+            //    if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion.Equals(15))
+            //    {
+            //        usDTO.PrecioSalida = Convert.ToDecimal(8.88);
+            //        usDTO.PrecioSalidaKg = Convert.ToDecimal(8.88);
+            //        usDTO.PrecioSalidaLt = Convert.ToDecimal(8.88);
+            //    }
+            //} 
             return usDTO;
         }
         public static List<RepHistorioPrecioDTO> ToRepo(List<PrecioVenta> entidades, HistoricoPrecioDTO dto)

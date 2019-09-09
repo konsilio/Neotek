@@ -135,18 +135,19 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios, decimal CantidadKgGas, decimal descuento = 0, decimal precio = 0)
         {
             var _precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
-            
+            decimal p = 0;
+            if (_precio != null)
+            {
+                p = _precio.PrecioSalidaKg.Value;
+                if (!descuento.Equals(0))
+                    p = p - descuento;
+                if (!precio.Equals(0))
+                    p = precio;
+            }
+
             if (productoGas.EsGas)
             {
-                decimal p = 0;
-                if (_precio != null)
-                {
-                    p = _precio.PrecioSalidaKg.Value;
-                    if (!descuento.Equals(0))
-                        p = p - descuento;
-                    if (!precio.Equals(0))
-                        p = precio;
-                }
+                
                 return new DatosGasVentaDto()
                 {
                     Nombre = productoGas.Descripcion,
@@ -162,7 +163,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 {
                     Nombre = productoGas.Descripcion,
                     Id = productoGas.IdProducto,
-                    PrecioUnitario = _precio.PrecioSalidaKg.Value,
+                    PrecioUnitario = p,
                     Existencia = existencias != null ? existencias.Cantidad : 0,
                 };
             }

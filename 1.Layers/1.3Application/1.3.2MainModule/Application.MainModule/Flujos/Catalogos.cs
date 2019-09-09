@@ -469,13 +469,19 @@ namespace Application.MainModule.Flujos
             {
                 var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
                 var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
-
-                return PrecioVentaGasAdapter.ToDTO(pv, producto);
+                var pvs = PrecioVentaGasAdapter.ToDTO(pv, producto);
+                //var us = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+                //var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(us.IdCAlmacenGas);
+                //if (unidad.IdCamioneta > 0)
+                //    pvs.PrecioActual = pvs.PrecioSalidaKg;
+                //else
+                //    pvs.PrecioActual = pvs.PrecioSalidaLt;
+                return pvs;
             }
             catch (Exception ex)
             {
                 return new PrecioVentaDTO() { respuesta = new RespuestaDto() { Exito = false, Mensaje = ex.ToString() } };
-            }           
+            }
         }
         public RespuestaDto EliminaPreciosVenta(PrecioVentaDTO cteDto)
         {
@@ -936,7 +942,7 @@ namespace Application.MainModule.Flujos
                 return CuentaContableAutorizadoServicio.ModificarCuentaContableAutorizado(entidad);
             }
         }
-        
+
         public List<CuentaContableAutorizadoDTO> ConsultaCuentasContablesAutorizado()
         {
             var permiso = PermisosServicio.PuedeConsultarCuentaContable();
