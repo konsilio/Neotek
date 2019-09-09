@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -362,6 +364,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     public void onSuccessDatosCamioneta(List<com.neotecknewts.sagasapp.Model.ExistenciasDTO> respuesta) {
         ExistenciasDTO = respuesta;
         if (ExistenciasDTO != null) {
+
             adapter = new PuntoVentaAdapter(ExistenciasDTO, EsVentaCamioneta, this);
             if (!EsVentaCamioneta) {
                 adapter.esVentaGas = true;
@@ -413,6 +416,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
             this.onError("No hay datos en la venta");
 
+
         }else{
             if (Double.valueOf(adapter.cantidad.getText().toString()) > 0) {
                 double total, subtotal, iva, precio, desc;
@@ -433,6 +437,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 conceptoDTO.setDia(calendar.get(Calendar.DAY_OF_WEEK));
                 conceptoDTO.setPrecioUnitarioProducto(adapter.existencia.getPrecioUnitario());
 
+
                 conceptoDTO.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
 
                 Log.d("precio", "PrecioVentaDTO");
@@ -450,7 +455,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         //precioVentaDTO.getPrecioSalidaLt() *
                                 Double.parseDouble(adapter.cantidad.getText().toString())
                 );
-
 
                 //conceptoDTO.setPrecioUnitarioLt(Double.parseDouble(adapter.ETPuntoVentaGasListActivityPrecioporLitro.getText().toString()));
                 conceptoDTO.setLitrosDespachados(Double.parseDouble(adapter.cantidad.getText().toString()));
@@ -623,6 +627,8 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
                         Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
                         conceptos.add(Gas);
+
+
                     } else {
                         AlertDialog.Builder builder = new
                                 AlertDialog.Builder(this, R.style.AlertDialog);
@@ -812,6 +818,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         builder.create().show();
                     }
                 }
+
             }
 
         }

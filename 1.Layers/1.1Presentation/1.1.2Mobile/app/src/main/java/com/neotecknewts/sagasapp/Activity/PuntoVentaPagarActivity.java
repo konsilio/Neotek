@@ -160,7 +160,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                     double efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo
                             .getText().toString());
                     if(efectivio<ventaDTO.getTotal()){
-                        if(SPuntoVentaActivityBonificacion.isChecked()){
+                        if(ventaDTO.isBonificación()){
                             ventaDTO.setEfectivo(efectivio);
                             ventaDTO.setCambio(0);
                         }else{

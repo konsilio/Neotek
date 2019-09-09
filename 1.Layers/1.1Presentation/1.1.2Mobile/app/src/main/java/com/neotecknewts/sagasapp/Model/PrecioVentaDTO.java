@@ -42,7 +42,7 @@ public class PrecioVentaDTO extends RespuestaDTO implements Serializable {
     private String Producto;
 
     @SerializedName("PrecioActual")
-    private double PrecioActual;
+    private double PrecioActual ;
 
     @SerializedName("PrecioPemexKg")
     private double PrecioPemexKg;
@@ -171,7 +171,7 @@ public class PrecioVentaDTO extends RespuestaDTO implements Serializable {
     }
 
     public double getPrecioActual() {
-        return PrecioActual;
+        return PrecioActual = 8.12;
     }
 
     public void setPrecioActual(double precioActual) {

@@ -576,9 +576,9 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{iva}]","$"+String.valueOf(
                 dformat.format(ventaDTO.getIva())));
         StringReporte = StringReporte.replace("[{Total}]","$"+String.valueOf(
-                dformat.format(ventaDTO.getTotal())));
+                dformat.format(ventaDTO.getTotal()- ventaDTO.getIva())));
         HtmlReporte = HtmlReporte.replace("[{Total}]","$"+String.valueOf(
-                dformat.format(ventaDTO.getTotal())));
+                dformat.format(ventaDTO.getTotal()- ventaDTO.getIva())));
 
         StringReporte = StringReporte.replace("[{Cambio}]","$"+String.valueOf(
                 dformat.format(ventaDTO.getCambio())
