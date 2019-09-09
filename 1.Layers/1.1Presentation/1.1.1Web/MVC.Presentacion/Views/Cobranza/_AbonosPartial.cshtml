@@ -14,12 +14,11 @@
         settings.CommandColumn.ShowDeleteButton = false;
         settings.CommandColumn.ShowEditButton = true;
         settings.Settings.ShowFilterRow = true;
-        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowGroupPanel = true;
         settings.Settings.ShowFooter = true;
         settings.Theme = "Material";
         settings.SettingsCommandButton.UpdateButton.Text = "Abonar";
         settings.SettingsCommandButton.EditButton.Text = "Abonar";
-
         //settings.Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(c =>
         {
@@ -29,12 +28,29 @@
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "IdCliente";
+        //    c.Caption = "No Cargo";
+        //    c.Width = System.Web.UI.WebControls.Unit.Percentage(7);
+        //    c.Settings.AllowSort = DefaultBoolean.False;
+        //    c.EditFormSettings.Visible = DefaultBoolean.False;
+        //});
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Cliente";
+            c.Caption = "Cliente";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            //c.Settings.AllowSort = DefaultBoolean.False;
+            c.GroupIndex = 1;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
         settings.Columns.Add(c =>
         {
             c.FieldName = "Ticket";
             c.Caption = "Ticket";
             //c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
-            c.Settings.AllowSort = DefaultBoolean.False;
+            //c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(c =>
@@ -42,7 +58,7 @@
             c.FieldName = "TotalCargo";
             c.Caption = "Importe";
             //c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
-            c.Settings.AllowSort = DefaultBoolean.False;
+            //c.Settings.AllowSort = DefaultBoolean.False;
             c.Settings.ShowEditorInBatchEditMode = false;
             c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             c.ReadOnly = true;
