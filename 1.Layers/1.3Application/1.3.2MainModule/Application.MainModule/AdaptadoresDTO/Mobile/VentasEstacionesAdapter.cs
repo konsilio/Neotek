@@ -9,6 +9,7 @@ using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.DTOs.Mobile.Cortes;
+using Utilities.MainModule;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
@@ -135,35 +136,31 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios, decimal CantidadKgGas, decimal descuento = 0, decimal precio = 0)
         {
             var _precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
-            
             if (productoGas.EsGas)
             {
-                decimal p = 0;
-                if (_precio != null)
-                {
-                    p = _precio.PrecioSalidaKg.Value;
-                    if (!descuento.Equals(0))
-                        p = p - descuento;
-                    if (!precio.Equals(0))
-                        p = precio;
-                }
                 return new DatosGasVentaDto()
                 {
                     Nombre = productoGas.Descripcion,
                     Id = productoGas.IdProducto,
-                    PrecioUnitario =  p,
+                    PrecioUnitario = _precio.PrecioSalidaLt.Value,
+                    Descuento = descuento.Equals(0) ? (precio != 0 ? CalculosGenerales.DiferenciaEntreDosNumero(precio, _precio.PrecioSalidaLt.Value) : 0) : descuento,
                     Existencia = CantidadKgGas,
+                    CapacidadKg = 0,
+                    CapacidadLt = 0,
                 };
             }
             else
-            {
+            {// Prodcutos Otros
                 var existencias = ProductoAlmacenServicio.ObtenerAlmacen(productoGas.IdProducto, TokenServicio.ObtenerIdEmpresa());
                 return new DatosGasVentaDto()
                 {
                     Nombre = productoGas.Descripcion,
                     Id = productoGas.IdProducto,
-                    PrecioUnitario = _precio.PrecioSalidaKg.Value,
+                    PrecioUnitario = _precio.PrecioSalida.Value,
                     Existencia = existencias != null ? existencias.Cantidad : 0,
+                    Descuento = descuento.Equals(0) ? (precio != 0 ? CalculosGenerales.DiferenciaEntreDosNumero(precio, _precio.PrecioSalidaLt.Value) : 0) : descuento,
+                    CapacidadKg = 0,
+                    CapacidadLt = 0
                 };
             }
         }
@@ -180,7 +177,10 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Id = cilindro.IdCilindro,
                 Existencia = cilindro.Cantidad,
                 PrecioUnitario = cilindro.UnidadAlmacenGasCilindro.Precio,
-                Nombre = "Cilindro " + cilindro.UnidadAlmacenGasCilindro.CapacidadKg
+                Nombre = "Cilindro " + cilindro.UnidadAlmacenGasCilindro.CapacidadKg,
+                Descuento = 0,// Falta validar descuentos por clientes
+                CapacidadKg = cilindro.UnidadAlmacenGasCilindro.CapacidadKg,
+                CapacidadLt = cilindro.UnidadAlmacenGasCilindro.CapacidadLt
             };
         }
 
@@ -286,25 +286,16 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         public static DatosGasVentaDto ToDTO(CamionetaCilindro cilindro, decimal kilosCamioneta, PrecioVenta pv, decimal descuento = 0, decimal precio = 0)
         {
             var almacenCilindro = AlmacenGasServicio.ObtenerCilindro(cilindro.IdCilindro);
-            var _precio = pv;
-            decimal p = 0;
-            if (_precio != null)
-            {
-                p = _precio.PrecioSalidaKg.Value;
-                if (!descuento.Equals(0))
-                    p = p - descuento;
-                if (!precio.Equals(0))
-                    p = precio;
-            }
+
             return new DatosGasVentaDto()
             {
                 Nombre = "Gas LP " + Math.Truncate(almacenCilindro.CapacidadKg),
                 Existencia = cilindro.Cantidad,
                 Id = cilindro.IdCilindro,
-                PrecioUnitario = p,
+                PrecioUnitario = pv.PrecioSalidaKg.Value,
                 CapacidadKg = almacenCilindro.CapacidadKg,
                 CapacidadLt = almacenCilindro.CapacidadLt,
-                Descuento = 0
+                Descuento = descuento.Equals(0) ? (precio != 0 ? CalculosGenerales.DiferenciaEntreDosNumero(precio, pv.PrecioSalidaKg.Value) : 0) : descuento,
             };
         }
     }
