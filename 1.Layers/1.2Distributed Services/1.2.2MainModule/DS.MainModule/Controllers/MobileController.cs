@@ -542,6 +542,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogosGas(esLP, esCilindroConGas, esCilindro), Request);
         }
+        [Route("catalogos/venta-gas/{esLP}/{esCilindroConGas}/{esCilindro}/{idCliente}")]
+        public HttpResponseMessage GetCatalogosGas(bool esLP, bool esCilindroConGas, bool esCilindro, int idCliente)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogosGas(esLP, esCilindroConGas, esCilindro, idCliente), Request);
+        }
         /// <summary>
         /// Permite obtener el catalogo de venta de otros productos que 
         /// no sea gas para las camionetas , se retornara un objeto de tipo 
