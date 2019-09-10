@@ -13,8 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <script type="text/javascript">      
+    <script type="text/javascript">
         $(document).ready(function () {
             $("#txtFlete").keyup(function () {
                 var precio = $("#PrecioPMX").val();
@@ -38,7 +37,7 @@
                 }
 
                 $.getJSON(url, { idEmpresa: id }, function (data) {
-                    var factor = ( parseFloat(precio) +  parseFloat(flete)) -  parseFloat(data);
+                    var factor = (parseFloat(precio) + parseFloat(flete)) - parseFloat(data);
                     $("#IdPrecioSalidaLt").val(factor.toFixed(2))
                 });
 
@@ -46,56 +45,54 @@
 
             });//key up.
             /*******/
-            //Iniciar pagina
-            var value = $.trim($("#IdPrecioSalidaKg").val());
-            if (value.length < 1) {
-                $("#btnRegistraPrecio").attr('disabled', true);
-            } else {
-                $("#btnRegistraPrecio").attr('disabled', false);
-            }
-            //Primer input
-            $("#IdPrecioSalidaKg").click(function () {
+            ////Iniciar pagina
+            //var value = $.trim($("#IdPrecioSalidaKg").val());
+            //if (value.length < 1) {
+            //    $("#btnRegistraPrecio").attr('disabled', true);
+            //} else {
+            //    $("#btnRegistraPrecio").attr('disabled', false);
+            //}
+            ////Primer input
+            //$("#IdPrecioSalidaKg").click(function () {
 
-                if ($("#IdPrecioSalidaLt").val() > 0 && $(".dxeEditArea_Material").val() != "") {
-                    $("#btnRegistraPrecio").attr('disabled', false);
-                }
-                else if ($("#IdPrecioSalidaLt").val() < 1 || $(".dxeEditArea_Material").val() == "") {
-                    $("#btnRegistraPrecio").attr('disabled', true);
-                }
+            //    if ($("#IdPrecioSalidaLt").val() > 0 && $(".dxeEditArea_Material").val() != "") {
+            //        $("#btnRegistraPrecio").attr('disabled', false);
+            //    }
+            //    else if ($("#IdPrecioSalidaLt").val() < 1 || $(".dxeEditArea_Material").val() == "") {
+            //        $("#btnRegistraPrecio").attr('disabled', true);
+            //    }
 
 
-            });
+            //});
 
-           //Segundo input
-            $("#IdPrecioSalidaLt").click(function () {
-                
-                if ($("#IdPrecioSalidaKg").val() > 0 && $(".dxeEditArea_Material").val() != "")
-                {
-                    $("#btnRegistraPrecio").attr('disabled', false);
-                }
-                else if ($("#IdPrecioSalidaKg").val() < 1 || $(".dxeEditArea_Material").val() == "")
-                {
-                    $("#btnRegistraPrecio").attr('disabled', true);
-                }
-                    
+            ////Segundo input
+            //$("#IdPrecioSalidaLt").click(function () {
 
-            });
+            //    if ($("#IdPrecioSalidaKg").val() > 0 && $(".dxeEditArea_Material").val() != "") {
+            //        $("#btnRegistraPrecio").attr('disabled', false);
+            //    }
+            //    else if ($("#IdPrecioSalidaKg").val() < 1 || $(".dxeEditArea_Material").val() == "") {
+            //        $("#btnRegistraPrecio").attr('disabled', true);
+            //    }
+
+
+            //});
 
 
 
-            //Tercer input
-            $(".dxeButton").click(function () {
+            ////Tercer input
+            //$(".dxeButton").click(function () {
 
-                if ($("#IdPrecioSalidaKg").val() > 0 && $("#IdPrecioSalidaLt").val() > 0) {
-                    $("#btnRegistraPrecio").attr('disabled', false);
-                }
-                else if ($("#IdPrecioSalidaKg").val() < 1 || $("#IdPrecioSalidaLt").val() < 1) {
-                    $("#btnRegistraPrecio").attr('disabled', true);
-                }
+            //    if ($("#IdPrecioSalidaKg").val() > 0 && $("#IdPrecioSalidaLt").val() > 0) {
+            //        $("#btnRegistraPrecio").attr('disabled', false);
+            //    }
+            //    else if ($("#IdPrecioSalidaKg").val() < 1 || $("#IdPrecioSalidaLt").val() < 1) {
+            //        $("#btnRegistraPrecio").attr('disabled', true);
+            //    }
 
 
-            });
-           
+            //});
+
 
 
             $("#IdA").keyup(function () {
@@ -257,6 +254,7 @@
         };
     </script>
     <style type="text/css">
+
         .col-sm-005 {
             -webkit-box-flex: 0;
             -ms-flex: 0 0 16.666667%;
@@ -331,111 +329,111 @@
                         </div>
                     </div>
                     @*<div class="card">
-                        <div class="header">
-                            <h2><strong>Registrar precio de salida</strong></h2>
-                        </div>
-                        < como estaba antes div class="body">
-                            <div class="row clearfix">
-                                <div class="col-sm-005" style="text-align:center">
-                                    <div class="form-group">
-                                        Precio compra:
+                            <div class="header">
+                                <h2><strong>Registrar precio de salida</strong></h2>
+                            </div>
+                            < como estaba antes div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-sm-005" style="text-align:center">
+                                        <div class="form-group">
+                                            Precio compra:
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-005">
+                                        <div class="form-group" style="top:-10px">
+                                            <input name="PrecioPemexKg" id="PrecioPMX" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            kg.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-005" style="text-align:center">
+                                        <div class="form-group">
+                                            Utilidad esperada:
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-005">
+                                        <div class="form-group" style="top:-10px">
+                                            <input name="UtilidadEsperadaKg" id="txtUtilidad" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            kg.
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-005" style="text-align:center">
+                                        <div class="form-group">
+                                            Precio flete:
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-005">
+                                        <div class="form-group" style="top:-10px">
+                                            <input name="PrecioFlete" id="txtFlete" type="text" class="form-control" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-005">
-                                    <div class="form-group" style="top:-10px">
-                                        <input name="PrecioPemexKg" id="PrecioPMX" type="text" class="form-control" />
+                                <div class="row clearfix">
+                                    <div class="col-sm-005" style="text-align:center">
+                                        <div class="form-group">
+                                            Precio salida:
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-1">
-                                    <div class="form-group">
-                                        kg.
+                                    <div class="col-sm-005">
+                                        <div class="form-group" style="top:-10px">
+                                            <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" readonly="readonly" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-005" style="text-align:center">
-                                    <div class="form-group">
-                                        Utilidad esperada:
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            kg.
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-005">
-                                    <div class="form-group" style="top:-10px">
-                                        <input name="UtilidadEsperadaKg" id="txtUtilidad" type="text" class="form-control" />
+                                    <div class="col-sm-005">
+                                        <div class="form-group" style="top:-10px">
+                                            <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" readonly="readonly" />
+                                            <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
+                                            <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
+                                            <input type="text" name="Categoria" class="form-control date" hidden="hidden" value="Combustibles" />
+                                            <input type="text" name="Linea" class="form-control date" hidden="hidden" value="Gas" />
+                                            <input type="text" name="Producto" class="form-control date" hidden="hidden" value="Gas" />
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-1">
-                                    <div class="form-group">
-                                        kg.
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            Lt.
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-005" style="text-align:center">
-                                    <div class="form-group">
-                                        Precio flete:
+                                    <div class="col-sm-2">
+                                        <b>Fecha programada:</b>
                                     </div>
-                                </div>
-                                <div class="col-sm-005">
-                                    <div class="form-group" style="top:-10px">
-                                        <input name="PrecioFlete" id="txtFlete" type="text" class="form-control" />
+                                    <div class="col-sm-3">
+                                        @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "FechaProgramada";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Theme = "Material";
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                       settings.Properties.NullText = "dd/MM/yyyy";
+                                       //settings.Attributes.Clear();
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                   }).GetHtml()
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                <div class="col-sm-005" style="text-align:center">
-                                    <div class="form-group">
-                                        Precio salida:
-                                    </div>
-                                </div>
-                                <div class="col-sm-005">
-                                    <div class="form-group" style="top:-10px">
-                                        <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" readonly="readonly" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-1">
-                                    <div class="form-group">
-                                        kg.
-                                    </div>
-                                </div>
-                                <div class="col-sm-005">
-                                    <div class="form-group" style="top:-10px">
-                                        <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" readonly="readonly" />
-                                        <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
-                                        <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
-                                        <input type="text" name="Categoria" class="form-control date" hidden="hidden" value="Combustibles" />
-                                        <input type="text" name="Linea" class="form-control date" hidden="hidden" value="Gas" />
-                                        <input type="text" name="Producto" class="form-control date" hidden="hidden" value="Gas" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-1">
-                                    <div class="form-group">
-                                        Lt.
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <b>Fecha programada:</b>
-                                </div>
-                                <div class="col-sm-3">
-                                    @Html.DevExpress().DateEdit(settings =>
-                               {
-                                   settings.Name = "FechaProgramada";
-                                   settings.Properties.UseMaskBehavior = true;
-                                   settings.Properties.EditFormat = EditFormat.Custom;
-                                   settings.Theme = "Material";
-                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                   settings.Properties.NullText = "dd/MM/yyyy";
-                                   //settings.Attributes.Clear();
-                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                               }).GetHtml()
-                                </div>
-                                <div class="col-sm-7">
-                                    <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>*@
+                        </div>*@
                     <div class="card">
                         <div class="header">
                             <h2><strong>Registrar precio de salida</strong></h2>
                         </div>
-                        <div class="body">                           
+                        <div class="body">
                             <div class="row clearfix">
                                 <div class="col-sm-005" style="text-align:center">
                                     <div class="form-group">
@@ -444,10 +442,21 @@
                                 </div>
                                 <div class="col-sm-005">
                                     <div class="form-group" style="top:-10px">
-                                        <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="number" class="form-control" required />
+                                        @*<input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="number" class="form-control" required />
+                                                 @Html.ValidationMessageFor(m => m.PrecioSalidaKg, "", new { @class = "alert-danger",
 
+                                                @type = "number",
+                                                @min = "0"
+                                            })*@
+                                        @Html.TextBoxFor(m => m.PrecioSalidaKg, Model.PrecioSalidaKg.ToString(), new
+                                              {
+                                                  @class = "form-control",
+                                                  @type = "number",
+                                                  @min = "0"
+                                              })
+                                        @Html.ValidationMessageFor(m => m.PrecioSalidaKg, "", new { @class = "alert-danger" })
                                     </div>
-                                    @Html.ValidationMessageFor(m => m.PrecioSalidaKg, "", new { @class = "alert-danger" })
+
                                 </div>
                                 <div class="col-sm-1">
                                     <div class="form-group">
@@ -456,14 +465,23 @@
                                 </div>
                                 <div class="col-sm-005">
                                     <div class="form-group" style="top:-10px">
-                                        <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="number" class="form-control" required />
+                                        @*<input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="number" class="form-control" required />
+        @Html.ValidationMessageFor(m => m.PrecioSalidaLt, "", new { @class = "alert-danger" })*@
+                                        @Html.TextBoxFor(m => m.PrecioSalidaLt, Model.PrecioSalidaLt.ToString(), new
+                                             {
+                                                 @class = "form-control",
+                                                 @type = "number",
+                                                 @min = "0"
+                                             })
+                                        @Html.ValidationMessageFor(m => m.PrecioSalidaLt, "", new { @class = "alert-danger" })
                                         <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
                                         <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
                                         <input type="text" name="Categoria" class="form-control date" hidden="hidden" value="Combustibles" />
                                         <input type="text" name="Linea" class="form-control date" hidden="hidden" value="Gas" />
                                         <input type="text" name="Producto" class="form-control date" hidden="hidden" value="Gas" />
+
                                     </div>
-                                    @Html.ValidationMessageFor(m => m.PrecioSalidaLt, "", new { @class = "alert-danger" })
+
                                 </div>
                                 <div class="col-sm-1">
                                     <div class="form-group">
@@ -485,9 +503,11 @@
                                    //settings.Attributes.Clear();
                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                    settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                  
                                }).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.FechaProgramada, "", new { @class = "alert-danger", })
                                 </div>
-                                @Html.ValidationMessageFor(m => m.FechaProgramada, "", new { @class = "alert-danger" })
+
                                 <div class="col-sm-7">
                                     <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
                                 </div>
@@ -513,118 +533,117 @@
                     <div class="card">
                         <div class="body">
                             @*<div class="row clearfix">
-                                <div class="col-sm-3" style="top: 20px;">
-                                    @Html.DevExpress().ComboBox(settings =>
-                               {
-                                   settings.Name = "IdTipoFecha";
-                                   settings.Width = 180;
-                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                   settings.Theme = "Material";
-                                   settings.ClientEnabled = true;
-                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
-                                   settings.PreRender = (s, e) =>
+                                    <div class="col-sm-3" style="top: 20px;">
+                                        @Html.DevExpress().ComboBox(settings =>
                                    {
-                                       MVCxComboBox combo = s as MVCxComboBox;
-                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
-                                       combo.Properties.Items.Insert(1, new ListEditItem("Fecha Programada"));
-                                       combo.Properties.Items.Insert(2, new ListEditItem("Fecha Registro"));
-                                       combo.Properties.Items.Insert(3, new ListEditItem("Fecha Vencimiento"));
-                                       combo.Properties.ValueField = "IdTipoFecha";
-                                       combo.SelectedIndex = 0;
-                                   };
-                               }).GetHtml()
-                                </div>
-                                <div class="col-sm-3">
-                                    <b>De:</b>
-                                    @Html.DevExpress().DateEdit(settings =>
-                               {
-                                   settings.Name = "IdDe";
-                                   settings.Properties.UseMaskBehavior = true;
-                                   settings.Properties.EditFormat = EditFormat.Custom;
-                                   settings.Theme = "Material";
-                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                   settings.Properties.NullText = "dd/MM/yyyy";
-                                   //settings.Attributes.Clear();
-                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       settings.Name = "IdTipoFecha";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Theme = "Material";
+                                       settings.ClientEnabled = true;
+                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione"));
+                                           combo.Properties.Items.Insert(1, new ListEditItem("Fecha Programada"));
+                                           combo.Properties.Items.Insert(2, new ListEditItem("Fecha Registro"));
+                                           combo.Properties.Items.Insert(3, new ListEditItem("Fecha Vencimiento"));
+                                           combo.Properties.ValueField = "IdTipoFecha";
+                                           combo.SelectedIndex = 0;
+                                       };
+                                   }).GetHtml()
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <b>De:</b>
+                                        @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "IdDe";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Theme = "Material";
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                       settings.Properties.NullText = "dd/MM/yyyy";
+                                       //settings.Attributes.Clear();
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
 
-                               }).GetHtml()
+                                   }).GetHtml()
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <b>A:</b>
+                                        @Html.DevExpress().DateEdit(settings =>
+                                   {
+                                       settings.Name = "IdA";
+                                       settings.Properties.UseMaskBehavior = true;
+                                       settings.Properties.EditFormat = EditFormat.Custom;
+                                       settings.Theme = "Material";
+                                       settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                       settings.Properties.NullText = "dd/MM/yyyy";
+                                       settings.Attributes.Clear();
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       settings.ClientEnabled = true;
+                                       settings.Properties.ClientSideEvents.DateChanged = "keyupDateEdit";
+                                   }).GetHtml()
+                                    </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <b>A:</b>
-                                    @Html.DevExpress().DateEdit(settings =>
-                               {
-                                   settings.Name = "IdA";
-                                   settings.Properties.UseMaskBehavior = true;
-                                   settings.Properties.EditFormat = EditFormat.Custom;
-                                   settings.Theme = "Material";
-                                   settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                   settings.Properties.NullText = "dd/MM/yyyy";
-                                   settings.Attributes.Clear();
-                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
-                                   settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                   settings.ClientEnabled = true;
-                                   settings.Properties.ClientSideEvents.DateChanged = "keyupDateEdit";
-                               }).GetHtml()
-                                </div>
-                            </div>
-                            <br />*@
+                                <br />*@
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 @Html.Partial("_CB_PrecioVentas", (List<PrecioVentaModel>)TempData["DataSourcePrecioVentas"])
-
                                 @*<div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="table-responsive">
-            <table class="table table table-striped table-hover" id="tblfilterable" name="PreciosVenta">
-                <thead>
-                    <tr>
-                        <th>Gasera</th>*@
+                                    <div class="table-responsive">
+                                        <table class="table table table-striped table-hover" id="tblfilterable" name="PreciosVenta">
+                                            <thead>
+                                                <tr>
+                                                    <th>Gasera</th>*@
                                 @*<th>Precio Compra(kg)</th>
-        <th>Utilidad Esperada(kg)</th>*@
+                                    <th>Utilidad Esperada(kg)</th>*@
                                 @*<th>Precio Salida Kg</th>
-                <th>Precio Salida Lts</th>
-                <th>Fecha Programada</th>
-                <th>FechaVencimiento</th>
-                <th>Estatus</th>
-                <th>FechaRegistro</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (ViewBag.ListaPV != null)
-            {
-                foreach (var item in ViewBag.ListaPV)
-                {
-            <tr>
-                <td>@item.Empresa</td>*@
+                                            <th>Precio Salida Lts</th>
+                                            <th>Fecha Programada</th>
+                                            <th>FechaVencimiento</th>
+                                            <th>Estatus</th>
+                                            <th>FechaRegistro</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (ViewBag.ListaPV != null)
+                                        {
+                                            foreach (var item in ViewBag.ListaPV)
+                                            {
+                                        <tr>
+                                            <td>@item.Empresa</td>*@
                                 @*<td>@item.PrecioPemexKg</td>
-        <td>@item.UtilidadEsperadaKg</td>*@
+                                    <td>@item.UtilidadEsperadaKg</td>*@
                                 @*<td>@item.PrecioSalidaKg</td>
-                            <td>@item.PrecioSalidaLt</td>
-                            <td>@item.FechaProgramada</td>
-                            <td>@item.FechaVencimiento</td>
-                            <td>@item.PrecioVentaEstatus</td>
-                            <td>@item.FechaRegistro</td>
-                            @if (item.PrecioVentaEstatus == "Programado")
-                            {
-                                <td>
-                                    <a href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">edit</i>
-                                        <span>Editar precio venta</span>
-                                    </a>
-                                    <a href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">delete</i>
-                                        <span>Eliminar precio venta</span>
-                                    </a>
-                                </td>
-                            }
-                        </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>*@
+                                                        <td>@item.PrecioSalidaLt</td>
+                                                        <td>@item.FechaProgramada</td>
+                                                        <td>@item.FechaVencimiento</td>
+                                                        <td>@item.PrecioVentaEstatus</td>
+                                                        <td>@item.FechaRegistro</td>
+                                                        @if (item.PrecioVentaEstatus == "Programado")
+                                                        {
+                                                            <td>
+                                                                <a href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="material-icons">edit</i>
+                                                                    <span>Editar precio venta</span>
+                                                                </a>
+                                                                <a href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="material-icons">delete</i>
+                                                                    <span>Eliminar precio venta</span>
+                                                                </a>
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>*@
                             </div>
                         </div>
                     </div>
