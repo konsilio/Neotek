@@ -61,7 +61,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="card">
                                     <div class="header">
-                                        <h2>información <strong>Fiscal</strong> Adicional</h2>
+                                        <h2>Información <strong>Fiscal</strong> adicional</h2>
                                     </div>
                                     <div class="body">
                                         <div class="row clearfix">
@@ -78,7 +78,7 @@
                                                    settings.Properties.TextField = "Descripcion";
                                                    settings.Properties.ValueField = "Id_UsoCFDI";
                                                    settings.ClientEnabled = true;
-                                                   settings.Properties.ValueType = typeof(int);
+                                                   settings.Properties.ValueType = typeof(short);
                                                }).BindList(ViewBag.ListaUsosCFDI).GetHtml()
                                                     @Html.ValidationMessageFor(m => m.IdUsoCFDI, "", new { @class = "alert-danger" })
                                                 </div>
@@ -96,7 +96,7 @@
                                                    settings.Properties.TextField = "Descripcion";
                                                    settings.Properties.ValueField = "IdFormaPago";
                                                    settings.ClientEnabled = true;
-                                                   settings.Properties.ValueType = typeof(int);
+                                                   settings.Properties.ValueType = typeof(short);
                                                 }).BindList(ViewBag.ListaFormasPago).GetHtml()
                                                     @Html.ValidationMessageFor(m => m.IdFormaPago, "", new { @class = "alert-danger" })
                                                 </div>
@@ -105,12 +105,12 @@
                                         <div class="row clearfix">
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div class="form-group">
-                                                    <input type="submit" class="btn btn-raised btn-primary btn-round" />
+                                                    <input type="button" value="Regresar" src="@Url.Action("Facturar","Facturacion")"  class="btn btn-raised btn-primary btn-round" />
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div class="form-group">
-                                                    <input type="submit" value="Regresar" id="DatosCliente" formaction="GuardaEdicionCliente" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
+                                                    <input type="submit" value="Enviar" id="DatosCliente" formaction="Facturar" formmethod="post" class="btn btn-raised btn-primary btn-round enableOnInput" />
                                                 </div>
                                             </div>
                                         </div>

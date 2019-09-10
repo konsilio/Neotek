@@ -21,5 +21,6 @@ namespace MVC.Presentacion.Models
         public static string GastoVehicular = "GastoXVehiculo";
         public static string Comision = "Comisiones";
         public static string CuentaConsolidada = "CuentaConsolidada";
+        public static string CuboInvXPunVen = "_CuboInvXPunVen";
     }
 }

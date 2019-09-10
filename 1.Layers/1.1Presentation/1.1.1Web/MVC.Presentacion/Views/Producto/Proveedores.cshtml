@@ -132,8 +132,10 @@
                                         <b>RFC</b>
                                         <div class="form-group">
                                             <input type="text" class="form-control" placeholder="Ej: VECJ880326XXX">
+                                            @*@Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })*@
                                         </div>
-                                    </div>
+
+                                    </div> 
                                     <div class="col-md-3">
                                         <div class="checkbox">
                                             <input id="checkbox10" type="checkbox">

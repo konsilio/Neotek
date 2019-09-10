@@ -15,32 +15,24 @@ namespace Application.MainModule.DTOs.Catalogo
         public short IdEmpresa { get; set; }
         public byte IdPrecioVentaEstatus { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Categoría")]
+      
         public short IdCategoria { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Linea")]
+       
         public short IdProductoLinea { get; set; }
         public int IdProducto { get; set; }
-        public string Categoria { get; set; }
-        
+        public string Categoria { get; set; }        
         public string Linea { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Producto")]
+       
 
         public string Producto { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-
-        [Display(Name = "Precio Actual")]
         public Nullable<decimal> PrecioActual { get; set; }
         public Nullable<decimal> PrecioPemexKg { get; set; }
         public Nullable<decimal> PrecioPemexLt { get; set; }
         public Nullable<decimal> UtilidadEsperadaKg { get; set; }
         public Nullable<decimal> UtilidadEsperadaLt { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Precio de Salida")]
+       
         public Nullable<decimal> PrecioSalida { get; set; }
         [Required(ErrorMessage = Error.R0002)]
         public Nullable<decimal> PrecioSalidaKg { get; set; }
@@ -49,8 +41,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public Nullable<decimal> PrecioFlete { get; set; }
         public bool EsGas { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Fecha Programada")]
+     
         public System.DateTime FechaProgramada { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public Nullable<System.DateTime> FechaVencimiento { get; set; }
