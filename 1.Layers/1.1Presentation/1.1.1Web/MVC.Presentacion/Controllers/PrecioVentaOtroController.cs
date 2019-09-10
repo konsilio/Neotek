@@ -28,7 +28,7 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
-                ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).Where(w=> w.EsGas==false).ToList();
             }
 
             TempData["DataSourcePrecioVentasOtro"] = ViewBag.ListaPV;

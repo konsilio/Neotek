@@ -26,9 +26,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<PrecioVenta> BuscarTodos(short idEmpresa)
         {
-            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                         && x.Activo)
-                                                         .ToList();
+            //return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+            //                                             && x.Activo)
+            //                                             .ToList();
+            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
         }
         public List<PrecioVenta> BuscarTodos(short idEmpresa, DateTime fi, DateTime ff)
         {

@@ -259,7 +259,7 @@ namespace Application.MainModule.Flujos
             oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
 
             var req = RequisicionAdapter.FromEntity(RequisicionServicio.Buscar(oc.IdRequisicion));
-            req.IdRequisicionEstatus = RequisicionEstatusEnum.Autorizacion_finalizada;
+            req.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_entrega;
             return OrdenCompraPagoServicio.Actualiza(entity, oc, req);
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
