@@ -1,5 +1,4 @@
 ﻿@model  MVC.Presentacion.Models.Pedidos.PedidoModel
-
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -10,7 +9,6 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
-
 <script src="~/Resources/js/Clientes.js"></script>
 <link href="~/Resources/css/Clientes.css" rel="stylesheet" />
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
@@ -20,7 +18,7 @@
     if (message != '') {
         $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
     }
-   
+
     function OnSelectedChangeCountry(s, e) {
         debugger
         var value = s.GetValue();
@@ -37,17 +35,19 @@
     }
 </script>
 <style type="text/css">
+
     .hid {
         display: none;
     }
 </style>
-
 @using (Html.BeginForm("GuardarLocaciones", "Pedidos"))
 {
     @Html.HiddenFor(m => m.cliente.Orden)
     @Html.HiddenFor(m => m.cliente.IdCliente)
     @Html.HiddenFor(m => m.cliente.Locacion.IdCliente)
     @Html.HiddenFor(m => m.cliente.Locacion.Orden)
+    @Html.HiddenFor(m => m.cliente.Locacion.IdPais,1)
+
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
@@ -75,7 +75,7 @@
                                                 <div>
                                                     @if (Model.cliente != null)
                                                     {
-                                                        if (Model.cliente.IdCliente>0)//.Locaciones.Count > 0)
+                                                        if (Model.cliente.IdCliente > 0)//.Locaciones.Count > 0)
                                                         {
                                                             @*<input type="text" name="IdCliente" hidden="hidden" value="@((ViewBag.Locaciones!=null)?ViewBag.Locaciones.IdCliente:Model[0].IdCliente)" />*@
                                                             <input type="text" name="IdCliente" hidden="hidden" />
@@ -114,7 +114,7 @@
                                     </div>
                                 </div>
                                 <div class="row clearfix">
-                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                    @*<div class="col-lg-1 col-md-1 col-sm-1">
                                         <div class="form-group">
                                             <div>
                                                 <label for="txtNume">
@@ -126,23 +126,22 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
                                             @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "cliente.Locacion.IdPais";
-                                           settings.Width = 180;
-                                           settings.SelectedIndex = 1;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Theme = "Material";
-                                           settings.Properties.TextField = "Pais";
-                                           settings.Properties.ValueField = "IdPais";
-                                           settings.Properties.ValueType = typeof(byte);
-                                           settings.ClientEnabled = true;
-                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
-                                       }).BindList(ViewBag.ListaPaises).Bind(Model.cliente.Locacion.IdPais).GetHtml()
-                                            @Html.ValidationMessageFor(model => model.cliente.Locacion.IdPais, "", new { @class = "text-danger" })
-
+                                                {
+                                                    settings.Name = "cliente.Locacion.IdPais";
+                                                    settings.Width = 180;
+                                                    settings.SelectedIndex = 1;
+                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                    settings.Theme = "Material";
+                                                    settings.Properties.TextField = "Pais";
+                                                    settings.Properties.ValueField = "IdPais";
+                                                    settings.Properties.ValueType = typeof(byte);
+                                                    settings.ClientEnabled = true;
+                                                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";*@
+                                            @*}).BindList(ViewBag.ListaPaises).Bind(Model.cliente.Locacion.IdPais).GetHtml()*@
+                                            @*@Html.ValidationMessageFor(model => model.cliente.Locacion.IdPais, "", new { @class = "text-danger" })
                                         </div>
-                                    </div>
+                                    </div>*@
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                         <div class="form-group">
                                             <div>
@@ -183,7 +182,6 @@
                                         <div class="form-group">
                                             @*<input type="text" name="Municipio" class="form-control" value="@((ViewBag.Locaciones!=null)? ViewBag.Locaciones.Municipio:" ")" />*@
                                             @Html.TextBoxFor(m => m.cliente.Locacion.Municipio, new { @class = "form-control" })
-
                                         </div>
                                         @Html.ValidationMessageFor(m => m.cliente.Locacion.Municipio, "", new { @class = "alert-danger" })
                                     </div>
@@ -275,9 +273,9 @@
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <div class="form-group">
                                             <div>
-                                                @*<label for="txtNume">Por solicitud del cliente se renombra para referencia visual del domicilio 
-                                                    Referencia Google Maps:*
-                                                </label>*@
+                                                @*<label for="txtNume">Por solicitud del cliente se renombra para referencia visual del domicilio
+                                                        Referencia Google Maps:*
+                                                    </label>*@
                                                 <label for="txtNume">
                                                     Referencia:*
                                                 </label>
@@ -324,7 +322,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row clearfix">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="table-responsive">

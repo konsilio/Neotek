@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Exceptions.MainModule.Validaciones;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -15,7 +17,8 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public decimal Requeridos { get; set; }
         public string UnidadMedida { get; set; }
         public string Aplicacion { get; set; }
-        public int IdUsuarioRecibe { get; set; }       
+        public int IdUsuarioRecibe { get; set; }   
+        [Range(minimum:1, maximum:100, ErrorMessage =Error.R0003)]
         public decimal Cantidad { get; set; }
         public string UrlDocEntrada { get; set; }
         public string PathDocEntrada { get; set; }

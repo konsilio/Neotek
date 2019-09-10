@@ -99,6 +99,7 @@
                                             Monto
                                             <div class="form-group">
                                                 @Html.TextBoxFor(m => m.Monto, Model.Monto.ToString(), new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(m => m.Monto, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -141,9 +142,8 @@
                                                    settings.Properties.ValueField = "IdCentroCosto";
                                                    settings.Properties.ValueType = typeof(int);
                                                }).BindList(ViewBag.CentroCostos).Bind(Model.IdCentroCosto).GetHtml()
-                                                @Html.ValidationMessageFor(m => m.IdCentroCosto, "", new { @class = "alert-danger" })
                                             </div>
-
+                                            @Html.ValidationMessageFor(m => m.IdCentroCosto, "", new { @class = "alert-danger" })
                                         </div>
                                         <div class="col-md-4">
                                             <b>Cuenta Contable</b>

@@ -56,7 +56,8 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.MensajeError = Validar(Respuesta);
             }
             //verificar si las facturas agregadas pertenecen al mismo cliente
-            var idCliente = _mod.Tickets[0].IdCliente;
+            var idCliente = 0;
+            idCliente = _mod.Tickets[0].IdCliente;
             foreach (var tick in _mod.Tickets.Where(x => x.seleccionar).ToList())
             {
                 if (tick.IdCliente != idCliente)

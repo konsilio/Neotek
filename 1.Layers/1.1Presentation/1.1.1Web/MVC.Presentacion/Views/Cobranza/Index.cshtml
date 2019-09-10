@@ -74,6 +74,86 @@
                             @*<div class="row clearfix">
                                 <div class="col-sm-12">
                                     <div class="row clearfix">
+                                        <div class="col-sm-2">
+                                            <b>No Cliente:</b>
+                                            <input type="text" name="IdCliente" class="form-control" placeholder="No del cliente" />
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <b>Fecha del:</b>
+                                            @Html.DevExpress().DateEdit(settings =>
+                                       {
+                                           settings.Name = "FechaRango1";
+                                           settings.Properties.UseMaskBehavior = true;
+                                           settings.Properties.EditFormat = EditFormat.Custom;
+                                           settings.Theme = "Material";
+                                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                           //settings.Attributes.Clear();
+                                           settings.Properties.NullText = "dd/MM/yyyy";
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       }).Bind(Model.Count != 0 ? Model[0].FechaRango1 : DateTime.Now).GetHtml()
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <b>Fecha al:</b>
+                                            @Html.DevExpress().DateEdit(settings =>
+                                       {
+                                           settings.Name = "FechaRango2";
+                                           settings.Properties.UseMaskBehavior = true;
+                                           settings.Properties.EditFormat = EditFormat.Custom;
+                                           settings.Theme = "Material";
+                                           settings.Properties.EditFormatString = "dd/MM/yyyy";
+                                           settings.Properties.NullText= "dd/MM/yyyy";
+                                           //settings.Attributes.Clear();
+                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                                           settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
+                                       }).Bind(Model.Count != 0? Model[0].FechaRango1 : DateTime.Now).GetHtml()
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <b>RFC:</b>
+                                            <input type="text" name="Rfc" class="form-control" placeholder="RFC del cliente" />
+
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m., "", new { @class = "alert-danger" })
+                                        <div class="col-sm-3" style="top:10px">
+                                            <div class="form-group">
+                                                <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <br />
+                            @if (ViewBag.MensajeError != null)
+                            {
+                                <div class="row clearfix">
+                                    <div id="divMensajeError" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                <label>@ViewBag.MensajeError</label>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row clearfix blockquote blockquote-info btn-round">
+                                <div class="table-responsive">
+                                    @Html.Partial("_AbonosPartial", Model)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+</body>
+</html>
+
+                                    <div class="row clearfix">
                                         <div class="col-md-2">
                                             <b>No Cliente:</b>
                                             <input type="text" name="IdCliente" class="form-control" placeholder="No del cliente" />
@@ -119,35 +199,3 @@
                                                 <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>*@
-                            <br />
-                            @if (ViewBag.MensajeError != null)
-                            {
-                                <div class="row clearfix">
-                                    <div id="divMensajeError" class="container">
-                                        <div class="alert alert-danger">
-                                            <div class="alert-icon">
-                                                <i class="zmdi zmdi-block"></i>
-                                            </div>
-                                            <strong>
-                                                <label>@ViewBag.MensajeError</label>
-                                            </strong>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                            <div class="row clearfix blockquote blockquote-info btn-round">
-                                <div class="table-responsive">
-                                    @Html.Partial("_AbonosPartial", Model)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    }
-</body>
-</html>
