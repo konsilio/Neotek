@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using Exceptions.MainModule.Validaciones;
 
 namespace MVC.Presentacion.Models.Catalogos
 {
@@ -18,15 +19,20 @@ namespace MVC.Presentacion.Models.Catalogos
         public string Linea { get; set; }
         public string Producto { get; set; }
         public Nullable<decimal> PrecioActual { get; set; }
+       
         public Nullable<decimal> PrecioPemexKg { get; set; }
+        
         public Nullable<decimal> PrecioPemexLt { get; set; }
         public Nullable<decimal> UtilidadEsperadaKg { get; set; }
         public Nullable<decimal> UtilidadEsperadaLt { get; set; }
         public Nullable<decimal> PrecioSalida { get; set; }
+      
         public Nullable<decimal> PrecioSalidaKg { get; set; }
+        
         public Nullable<decimal> PrecioSalidaLt { get; set; }
         public Nullable<decimal> PrecioFlete { get; set; }
         public bool EsGas { get; set; }
+        [Required(ErrorMessage =Error.R0002)]
         public System.DateTime FechaProgramada { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public Nullable<System.DateTime> FechaVencimiento { get; set; }
