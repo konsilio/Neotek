@@ -15,8 +15,11 @@ namespace Application.MainModule.DTOs.Catalogo
         public short IdEmpresa { get; set; }
         public string Empresa { get; set; }
         [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Identificador de la cuenta")]
+        [Display(Name = "numero")]
+
         public string Numero { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "descripcion")]
         public string Descripcion { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
