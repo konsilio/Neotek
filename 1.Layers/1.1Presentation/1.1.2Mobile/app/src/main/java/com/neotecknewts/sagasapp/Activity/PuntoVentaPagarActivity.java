@@ -160,7 +160,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                     double efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo
                             .getText().toString());
                     if(efectivio<ventaDTO.getTotal()){
-                        if(ventaDTO.isBonificación()){
+                        if(SPuntoVentaActivityBonificacion.isChecked()){
                             ventaDTO.setEfectivo(efectivio);
                             ventaDTO.setCambio(0);
                         }else{
@@ -239,15 +239,18 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         for (ConceptoDTO conceptoDTO :conceptoDTOS){
             subtotal += conceptoDTO.getSubtotal();
         }
+
         NumberFormat format = NumberFormat.getCurrencyInstance();
         ventaDTO.setSubtotal(subtotal);
         TVPuntoVentaPagarActivitySubtotal.setText(format.format(subtotal));
-        double iva = subtotal * 0.16;
+
+        double total = subtotal + (subtotal * 0.19) ;
+        double iva = total * 0.16;
         ventaDTO.setIva(iva);
+        double total2 = subtotal + iva ;
         TVPuntoVentaPagarActivityIva.setText(format.format(iva));
-        double total = subtotal + iva;
-        ventaDTO.setTotal(total);
-        TVPuntoVentaActivityPagarTotal.setText(format.format(total));
+        ventaDTO.setTotal(total2);
+        TVPuntoVentaActivityPagarTotal.setText(format.format(total2));
     }
 
     @Override

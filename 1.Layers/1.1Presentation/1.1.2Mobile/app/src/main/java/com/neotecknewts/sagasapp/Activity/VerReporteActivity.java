@@ -483,6 +483,7 @@ public class VerReporteActivity extends AppCompatActivity {
                     .append("|$ ").append(String.valueOf(dformat.format(conceptoDTO.getPUnitario())))
                     .append("|$ ").append(String.valueOf(dformat.format(conceptoDTO.getDescuento())))
                     .append("|$ ").append(String.valueOf(dformat.format(conceptoDTO.getSubtotal()))).append("|\n");
+                     Log.d("desc", conceptoDTO.getDescuento()+"");
 
             ConpectoHtml.append("<tr><td>").append(conceptoDTO.getConcepto())
                     .append("</td><td>").append(String.valueOf(conceptoDTO.getCantidad()))
@@ -490,6 +491,7 @@ public class VerReporteActivity extends AppCompatActivity {
                     .append("</td><td>$ ").append(String.valueOf(dformat.format(conceptoDTO.getDescuento())))
                     .append("</td><td>$ ").append(String.valueOf(dformat.format(conceptoDTO.getSubtotal())))
                     .append("</tr>");
+            Log.d("desc", conceptoDTO.getDescuento()+"");
         }
         StringReporte = StringReporte.replace("[{Concepto}]",Conpecto);
         HtmlReporte = HtmlReporte.replace("[{Concepto}]",ConpectoHtml);
@@ -576,9 +578,9 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{iva}]","$"+String.valueOf(
                 dformat.format(ventaDTO.getIva())));
         StringReporte = StringReporte.replace("[{Total}]","$"+String.valueOf(
-                dformat.format(ventaDTO.getTotal()- ventaDTO.getIva())));
+                dformat.format(ventaDTO.getTotal())));
         HtmlReporte = HtmlReporte.replace("[{Total}]","$"+String.valueOf(
-                dformat.format(ventaDTO.getTotal()- ventaDTO.getIva())));
+                dformat.format(ventaDTO.getTotal())));
 
         StringReporte = StringReporte.replace("[{Cambio}]","$"+String.valueOf(
                 dformat.format(ventaDTO.getCambio())

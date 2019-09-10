@@ -444,8 +444,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 double total, subtotal, iva, precio, desc;
                 ventaDTO.setCredito(SWFormularioVentaCamionetaYPipaCredito.isChecked());
                 ventaDTO.setFactura(SWFormularioVentaCamionetaYPipaFactura.isChecked());
-                ExistenciasDTO existenciasDTO = new ExistenciasDTO();
-                double descuento = existenciasDTO.getDescuento();
                 ConceptoDTO conceptoDTO = new ConceptoDTO();
                 conceptoDTO.setConcepto("Litros de gas");
                 conceptoDTO.setCantidad(Double.valueOf(adapter.cantidad.getText().toString()));
@@ -838,7 +836,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                             Gas.setCantidadLt(
                                     precioVentaDTO.getPrecioSalidaLt() * cantidadVenta
                             );
-                            Gas.setSubtotal(Gas.getPrecioUnitarioLt() * Gas.getCantidad());
+                            Gas.setSubtotal((Gas.getPrecioUnitarioLt()- Gas.getDescuento()) * Gas.getCantidad());
                             Gas.setConcepto(TVTipo.getText().toString());
                             Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
                             Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());

@@ -152,7 +152,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         } else {
 
                             precioPorLitro = precioVentaDTO.getPrecioSalidaKg();
-                            precioPorLitro = precioPorLitro / 1.16;
+                            //precioPorLitro = precioPorLitro / 1.16;
                             PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                         }
 
@@ -160,9 +160,11 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         Log.d("existenciadescuento2",  existencia.getDescuento()+"");
                         //Descuento.setText(String.valueOf(existencia.getDescuento()));
                         Descuento.setText(String.valueOf(items.get(position).getDescuento()));
+                        double descuento = items.get(position).getDescuento();
                         double cantidadSeleccionada = Double.parseDouble(editTextCantidad.getText().toString());
                         Log.d("Cntidadselec", cantidadSeleccionada + "");
-                        double sub = precioPorLitro * cantidadSeleccionada;
+                        Log.d("descuentopipa", descuento + "");
+                        double sub = (precioPorLitro - descuento )* cantidadSeleccionada;
                         Subtotal.setText(new DecimalFormat("#.##").format(sub));
                         double iva = sub * 0.16;
                         Iva.setText(new DecimalFormat("#.##").format(iva));
@@ -208,11 +210,15 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Log.d("existenciadescuento", precioVentaDTO.getPrecioSalidaLt() + "");
                             System.out.println(items.get(position).getDescuento());
                             Descuento.setText(String.valueOf( items.get(position).getDescuento()));
+                            double descuento = items.get(position).getDescuento();
                             double cantidadSeleccionada = Double.parseDouble(editTextCantidad.getText().toString());
                             Log.d("Cntidadselec", cantidadSeleccionada + "");
-                            double sub = precioPorLitro * cantidadSeleccionada;
-                            Subtotal.setText(new DecimalFormat("#.##").format(sub));
+                            double sub = ((precioPorLitro - descuento) * cantidadSeleccionada );
+                            double subtotal = ((precioPorLitro - descuento) * cantidadSeleccionada - (sub * 0.16));
+                            Subtotal.setText(new DecimalFormat("#.##").format(subtotal));
                             double iva = sub * 0.16;
+                            double total = (precioPorLitro * cantidadSeleccionada) + iva ;
+
                             Iva.setText(new DecimalFormat("#.##").format(iva));
                             Total.setText(new DecimalFormat("#.##").format(sub));
                             precioVentaDTO.setPrecioSalidaLt(Double.parseDouble(PrecioLitro.getText().toString()));
