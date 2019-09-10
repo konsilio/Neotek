@@ -43,11 +43,7 @@ namespace Application.MainModule.DTOs.Pedidos
         public string Cantidad30 { get; set; }
         public string Cantidad45 { get; set; }
         public string MotivoCancelacion { get; set; }
-        //[Required(ErrorMessage = Error.R0002)]
-        //[Display(Name = "Telefono1")]
         public string Telefono1 { get; set; }
-        //[Required(ErrorMessage = Error.R0002)]
-        //[Display(Name = "Rfc")]
         public string Rfc { get; set; }
         public string Calle { get; set; }
         public string Colonia { get; set; }

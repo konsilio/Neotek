@@ -35,6 +35,7 @@ namespace MVC.Presentacion.Models.Requisicion
         public string CentroCosto { get; set; }
         public int IdUnidad { get; set; }
         public string Unidad { get; set; }
+      
         public decimal Cantidad { get; set; }
         public string Aplicacion { get; set; }
         public bool EsExterno { get; set; }
@@ -71,6 +72,7 @@ namespace MVC.Presentacion.Models.Requisicion
         public string CentroCosto { get; set; }
         public int IdUnidad { get; set; }
         public string Unidad { get; set; }
+     
         public decimal Cantidad { get; set; }
         public string Aplicacion { get; set; }
         public bool EsExterno { get; set; }

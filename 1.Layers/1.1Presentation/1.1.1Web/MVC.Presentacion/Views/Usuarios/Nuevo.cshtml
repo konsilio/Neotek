@@ -395,8 +395,10 @@
                                        settings.Properties.ValueType = typeof(byte);
                                        settings.ClientEnabled = true;
                                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                     
+
                                    }).BindList(ViewBag.ListaPaises).Bind(Model.IdPais).GetHtml()
-                                        @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
+                                        @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger"})
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
