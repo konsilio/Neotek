@@ -17,13 +17,13 @@ namespace Application.MainModule.DTOs.Catalogo
         public short IdEmpresa { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
-        [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Identificador de la cuenta")]
+        
+        [Display(Name = "Numero")]
         public string Numero { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
-        [StringLength(250, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Nombre de la cuenta")]
+       
+        [Display(Name = "Descripcion")]
         public string Descripcion { get; set; }
     }
 }
