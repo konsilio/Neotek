@@ -14,12 +14,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
     public class ProductoDataAccess
     {
         private SagasDataUow uow;
-
         public ProductoDataAccess()
         {
             uow = new SagasDataUow();
         }
-
         public RespuestaDto Insertar(CategoriaProducto cProd)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -44,7 +42,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Insertar(LineaProducto LProd)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -69,7 +66,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Insertar(UnidadMedida uM)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -94,7 +90,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Insertar(Producto prod)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -119,7 +114,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Actualizar(CategoriaProducto cProd)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -144,7 +138,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Actualizar(LineaProducto lProd)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -169,7 +162,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Actualizar(UnidadMedida uM)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -194,7 +186,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Actualizar(Producto prod)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -219,7 +210,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public List<Producto> ListaProductos()
         {
             return uow.Repository<Producto>().Get(x => x.Activo.Equals(true)).ToList();
@@ -239,7 +229,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<Producto>().GetSingle(x => x.IdProducto.Equals(idProducto)
                                                           && x.Activo);
         }
-
         public CategoriaProducto BuscarCategoria(short idCategoria)
         {
             return uow.Repository<CategoriaProducto>().GetSingle(x => x.IdCategoria.Equals(idCategoria)
@@ -323,12 +312,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<UnidadMedida>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                     && x.Activo.Equals(true)).ToList();
         }
-
         public List<ProductoAsociado> ListaProductosAsociados(int idProdcuto)
         {
             return uow.Repository<ProductoAsociado>().Get(x => x.IdProducto.Equals(idProdcuto)).ToList();
         }
-
         public List<Producto> ListaProductosActivosVenta(int idEmpresa = 0,bool esGas = false)
         {
             if(idEmpresa!= 0)
@@ -339,6 +326,5 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Producto>().GetSingle(x => x.Activo.Equals(true) && x.EsActivoVenta.Equals(true) && x.EsGas.Equals(true) && x.IdEmpresa.Equals(idEmpresa));
         }
-
     }
 }
