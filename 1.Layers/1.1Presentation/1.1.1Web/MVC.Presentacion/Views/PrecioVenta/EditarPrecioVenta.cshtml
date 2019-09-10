@@ -276,7 +276,14 @@
             </div>
             <div class="col-sm-005">
                 <div class="form-group" style="top:-10px">
-                    <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" />
+                    @*<input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" />*@
+                    @Html.TextBoxFor(m => m.PrecioSalidaKg, Model.PrecioSalidaKg.ToString(), new
+                                        {
+                                            @class = "form-control",
+                                            @type = "number",
+                                            @min = "0"
+                                        })
+                    @Html.ValidationMessageFor(m => m.PrecioSalidaKg, "", new { @class = "alert-danger" })
                 </div>
             </div>
             <div class="col-sm-1">
@@ -286,7 +293,14 @@
             </div>
             <div class="col-sm-005">
                 <div class="form-group" style="top:-10px">
-                    <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" />
+                    @*<input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" />*@
+                    @Html.TextBoxFor(m => m.PrecioSalidaLt, Model.PrecioSalidaLt.ToString(), new
+                                        {
+                                            @class = "form-control",
+                                            @type = "number",
+                                            @min = "0"
+                                        })
+                    @Html.ValidationMessageFor(m => m.PrecioSalidaLt, "", new { @class = "alert-danger" })
                     <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
                     <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
                     <input type="text" name="Categoria" class="form-control date" hidden="hidden" value="Combustibles" />

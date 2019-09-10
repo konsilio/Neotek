@@ -27,6 +27,14 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult InventarioXPuntoVenta(InventarioPorPuntoVentaModel model = null)
         {
+
+            DateTime startTime = DateTime.Now;
+
+            DateTime endTime = DateTime.Now.AddSeconds(75);
+
+            TimeSpan span = endTime.Subtract(startTime);
+       
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             if (TempData["DataSource"] != null)
@@ -208,7 +216,7 @@ namespace MVC.Presentacion.Controllers
                 if (Tipo.Equals(TiposReporteConst.CuentasXCobrar))
                     return View(TiposReporteConst.CuboInformacionGeneral, (List<CuentasPorPagarDTO>)TempData["DataSource"]);
                 if (Tipo.Equals(TiposReporteConst.InventarioPorPuntoVenta))
-                    return View(TiposReporteConst.CuboInformacionGeneral, (List<InventarioPorPuntoVentaDTO>)TempData["DataSource"]);
+                    return View(TiposReporteConst.CuboInvXPunVen, (List<InventarioPorPuntoVentaDTO>)TempData["DataSource"]);
                 if (Tipo.Equals(TiposReporteConst.HistoricoPrecioVenta))
                     return View(TiposReporteConst.CuboInformacionGeneral, (List<HistoricoPrecioVentaDTO>)TempData["DataSource"]);
                 if (Tipo.Equals(TiposReporteConst.CallCenter))

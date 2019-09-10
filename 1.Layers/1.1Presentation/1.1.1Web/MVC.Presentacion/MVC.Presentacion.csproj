@@ -9792,6 +9792,9 @@
     <Content Include="assets\plugins\jquery.easy-pie-chart\src\renderer\canvas.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="assets\plugins\jqueryui\jquery-ui.css" />
+    <Content Include="assets\plugins\jqueryui\jquery-ui.js" />
+    <Content Include="assets\plugins\jqueryui\jquery-ui.min.js" />
     <Content Include="assets\plugins\jquery\jquery-3.2.1.slim.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -11717,6 +11720,7 @@
     <Content Include="Views\RecargaCombustibles\_CB_Recargas.cshtml" />
     <Content Include="Views\Asignacion\_CB_Asignaciones.cshtml" />
     <Content Include="Views\Mantenimiento\_CB_Mantenimientos.cshtml" />
+    <Content Include="Views\Reportes\_CuboInvXPunVen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

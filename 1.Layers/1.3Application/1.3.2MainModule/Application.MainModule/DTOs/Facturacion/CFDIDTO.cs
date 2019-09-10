@@ -19,6 +19,7 @@ namespace Application.MainModule.DTOs
         public string URLPdf { get; set; }
         public string URLXml { get; set; }
         public string Respuesta { get; set; }
+        public bool Exito { get; set; }
         public RespuestaDto RespuestaTimbrado { get; set; }
     }
 }

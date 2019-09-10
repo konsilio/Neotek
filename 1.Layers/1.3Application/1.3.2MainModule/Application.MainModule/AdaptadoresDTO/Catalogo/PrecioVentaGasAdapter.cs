@@ -172,8 +172,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
-            var _Categoria = ProductoServicio.ObtenerCategoria(p.IdCategoria).Nombre;
-            var _Linea = ProductoServicio.ObtenerLineaProducto(p.IdProductoLinea).Linea;
+            //var _Categoria = ProductoServicio.ObtenerCategoria(p.IdCategoria).Nombre;
+            //var _Linea = ProductoServicio.ObtenerLineaProducto(p.IdProductoLinea).Linea;
             var flete = PVGasDTO.PrecioFlete != null ? (decimal)PVGasDTO.PrecioFlete : 0;
             return new PrecioVentaDTO()
             {
@@ -182,8 +182,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 IdCategoria = p.IdCategoria,
                 IdProductoLinea = p.IdProductoLinea,
                 IdProducto = p.IdProducto,
-                Categoria = _Categoria,
-                Linea = _Linea,
+                Categoria = p.Categoria.Nombre,
+                Linea = p.LineaProducto.Linea,
                 Producto = p.Descripcion,
                 PrecioActual = PVGasDTO.PrecioActual,
                 PrecioPemexKg = PVGasDTO.PrecioPemexKg,
@@ -280,9 +280,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 PrecioPemexLt = pv.PrecioPemexLt ?? 0,
                 UtilidadEsperadaKg = pv.UtilidadEsperadaKg,
                 UtilidadEsperadaLt = pv.UtilidadEsperadaLt ?? 0,
-                PrecioSalida = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalida,
-                PrecioSalidaKg = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalidaKg,
-                PrecioSalidaLt = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalidaLt,
+                PrecioSalida =  pv.PrecioSalida,//usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalida,
+                PrecioSalidaKg = pv.PrecioSalidaKg,// usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalidaKg,
+                PrecioSalidaLt = pv.PrecioSalidaLt,// usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalidaLt,
                 EsGas = pv.EsGas,
                 FechaProgramada = pv.FechaProgramada,
                 FechaVencimiento = pv.FechaVencimiento ?? DateTime.MinValue,

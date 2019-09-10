@@ -151,6 +151,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.FechaRegistro.Month.Equals(fecha.Month)
                                                             && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
+        public List<VentaPuntoDeVenta> BuscarTotalVentasCamionetasMes(DateTime fecha)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null
+                                                            //&& x.FechaRegistro.Day.Equals(fecha.Day)
+                                                            && x.FechaRegistro.Month.Equals(fecha.Month)
+                                                            && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
+        }
         public List<VentaPuntoDeVenta> BuscarTotalVentasPipas(DateTime fecha)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdPipa != null
@@ -158,11 +165,18 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.FechaRegistro.Month.Equals(fecha.Month)
                                                             && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
+        public List<VentaPuntoDeVenta> BuscarTotalVentasPipasMes(DateTime fecha)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdPipa != null
+                                                            //&& x.FechaRegistro.Day.Equals(fecha.Day)
+                                                            && x.FechaRegistro.Month.Equals(fecha.Month)
+                                                            && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
+        }
         public List<VentaPuntoDeVenta> BuscarTotalBonificaciones(DateTime fecha)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.Descuento > 0 // Cambiar a Bonificaciones cuando este el campo en la Tabla
-                                                             //&& x.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null
-                                                             //&& x.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null
+                                                                                //&& x.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null
+                                                                                //&& x.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null
                                                              && x.FechaRegistro.Day.Equals(fecha.Day)
                                                              && x.FechaRegistro.Month.Equals(fecha.Month)
                                                              && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
@@ -185,6 +199,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.FechaRegistro.Month.Equals(fecha.Month)
                                                             && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
+        public List<VentaPuntoDeVenta> BuscarTotalVentasEstacionesMes(DateTime fecha)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null
+                                                            //&& x.FechaRegistro.Day.Equals(fecha.Day)
+                                                            && x.FechaRegistro.Month.Equals(fecha.Month)
+                                                            && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
+        }
         public List<VentaPuntoDeVenta> BuscarTotalVentasEstaciones(EstacionCarburacion entidad, DateTime fecha)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion.Equals(entidad.IdEstacionCarburacion)
@@ -197,8 +218,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.VentaACredito
                                                             && x.FechaRegistro.Day.Equals(fecha.Day)
                                                             && x.FechaRegistro.Month.Equals(fecha.Month)
-                                                            && x.FechaRegistro.Year.Equals(fecha.Year)
-                                                            && x.FechaRegistro <= fecha).ToList();
+                                                            && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
         public List<VentaPuntoDeVenta> BuscarTodosPV()
         {
