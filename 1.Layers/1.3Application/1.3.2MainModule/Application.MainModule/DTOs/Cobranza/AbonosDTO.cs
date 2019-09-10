@@ -11,6 +11,8 @@ namespace Application.MainModule.DTOs.Cobranza
 
     public class AbonosDTO
     {
+        public int IdCliente { get; set; }
+        public string Cliente { get; set; }
         public int IdAbono { get; set; }
         public int IdCargo { get; set; }
         public DateTime FechaRegistro { get; set; }
@@ -18,7 +20,7 @@ namespace Application.MainModule.DTOs.Cobranza
         public decimal MontoAbono { get; set; }
         public byte IdFormaPago { get; set; }
         public string FolioBancario { get; set; }
-        public string FormaPago { get; set; }   
+        public string FormaPago { get; set; }
         public int Id_RelTF { get; set; }
         public string URLPdf { get; set; }
         public string URLXml { get; set; }
