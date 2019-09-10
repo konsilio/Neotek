@@ -269,6 +269,9 @@ namespace MVC.Presentacion.Controllers
             var list = CatalogoServicio.ListaCtaCtble(tkn).Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
             var JsonInfo = JsonConvert.SerializeObject(list);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
+            
+           
+      
         }
         [HttpPost]
         public ActionResult CrearProducto(ProductoDTO model)
@@ -283,6 +286,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Producto", model);
             }
+
         }
         public ActionResult EliminarProducto(short id)
         {

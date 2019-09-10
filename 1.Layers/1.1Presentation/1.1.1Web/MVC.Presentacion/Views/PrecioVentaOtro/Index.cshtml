@@ -200,6 +200,7 @@
 <body style="height:100%">
     @using (Html.BeginForm("Registrar", "PrecioVentaOtro", FormMethod.Post))
     {
+       
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -276,6 +277,7 @@
                                        };
                                    }).BindList(ViewBag.Categoria).GetHtml()
                                     @Html.ValidationMessageFor(m => m.IdCategoria, "", new { @class = "alert-danger" })
+                                   
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     @*<div class="form-group">
@@ -291,53 +293,57 @@
                                     <strong>Línea:</strong>
                                     <div class="form-group">
                                         @Html.DevExpress().ComboBox(settings =>
-                                    {
-                                        settings.Name = "IdProductoLinea";
-                                        settings.Width = 180;
-                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                        settings.Properties.TextField = "Linea";
-                                        settings.Properties.ValueField = "IdProductoLinea";
-                                        settings.Theme = "Material";
-                                        settings.PreRender = (s, e) =>
-                                        {
-                                            MVCxComboBox combo = s as MVCxComboBox;
-                                            combo.Properties.Items.Insert(0, new ListEditItem("Seleccione",string.Empty));
-                                            combo.SelectedIndex = 0;
+                                   {
+                                       settings.Name = "IdProductoLinea";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Linea";
+                                       settings.Properties.ValueField = "IdProductoLinea";
+                                       settings.Theme = "Material";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione",string.Empty));
+                                           combo.SelectedIndex = 8;
+                                     
                                         };
-                                    }).BindList(ViewBag.Linea).GetHtml()
+                                   }).BindList(ViewBag.Linea).GetHtml()
                                     </div>
                                     @Html.ValidationMessageFor(m => m.IdProductoLinea, "", new { @class = "alert-danger" })
 
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     @*<div class="form-group">
-            Producto:
-            <select name="IdProducto" class="form-control selectpicker z-index show-tick">
-                <option value="0">Seleccione..</option>
-                @foreach (var lst in ViewBag.Producto)
-                {
-                <option value="@lst.IdProducto">@lst.Producto</option>
-                }
-            </select>
-        </div>*@
+                                            Producto:
+                                            <select name="IdProducto" class="form-control selectpicker z-index show-tick">
+                                                <option value="0">Seleccione..</option>
+                                                @foreach (var lst in ViewBag.Producto)
+                                                {
+                                                <option value="@lst.IdProducto">@lst.Producto</option>
+                                                }
+                                            </select>
+                                        </div>*@
                                     <strong>Producto:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
-                                {
-                                    settings.Name = "IdProducto";
-                                    settings.Width = 180;
-                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                    settings.Properties.TextField = "Producto";
-                                    settings.Properties.ValueField = "IdProducto";
-                                    settings.Theme = "Material";
-                                    settings.PreRender = (s, e) =>
-                                    {
-                                        MVCxComboBox combo = s as MVCxComboBox;
-                                        combo.Properties.Items.Insert(0, new ListEditItem("Seleccione",string.Empty));
-                                        combo.SelectedIndex = 0;
-                                    };
-                                }).BindList(ViewBag.Producto).GetHtml()
+                               {
+                                   settings.Name = "IdProducto";
+                                   settings.Width = 180;
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Properties.TextField = "Producto";
+                                   settings.Properties.ValueField = "IdProducto";
+                                   settings.Theme = "Material";
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione", string.Empty));
+                                       combo.SelectedIndex = 0;
+                                       
+
+                                   };
+                               }).BindList(ViewBag.Producto).GetHtml()
                                     @Html.ValidationMessageFor(m => m.IdProducto, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-sm-2">
@@ -365,12 +371,12 @@
                                     <div class="form-group">
                                         <b>Fecha programada:</b>
                                         @*<div class="input-group">
-            <span class="input-group-addon">
-                <i class="zmdi zmdi-calendar"></i>
-            </span>
-            <input type="text" class="form-control date" placeholder="formato: dd/mm/aaaa" />
+                                                <span class="input-group-addon">
+                                                    <i class="zmdi zmdi-calendar"></i>
+                                                </span>
+                                                <input type="text" class="form-control date" placeholder="formato: dd/mm/aaaa" />
 
-        </div>*@
+                                            </div>*@
                                         @Html.DevExpress().DateEdit(settings =>
                                {
                                    settings.Name = "FechaProgramada";
@@ -394,61 +400,61 @@
                         </div>
                         <br />
                         <div class="card">
-                            <div class="body">                              
+                            <div class="body">
                                 <div class="row clearfix blockquote blockquote-info btn-round" style="overflow-x:auto;">
                                     @Html.Partial("_CB_PrecioVentasOtro", (List<PrecioVentaModel>)TempData["DataSourcePrecioVentasOtro"])
                                     @*<div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover" id="tblfilterable" name="PreciosVenta">
-                    <thead>
-                        <tr>
-                            <th>Gasera</th>
-                            <th>Categoría</th>
-                            <th>Línea</th>
-                            <th>Producto</th>
-                            <th>Concepto</th>
-                            <th>Precio Actual</th>
-                            <th>Precio Salida</th>
-                            <th>Fecha Programada</th>
-                            <th>FechaRegistro</th>
-                            <th>FechaVencimiento</th>
-                            <th>Estatus</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (ViewBag.ListaPV != null)
-                        {
-                            foreach (var item in ViewBag.ListaPV)
-                            {
-                                <tr>
-                                    <td>@item.Empresa</td>
-                                    <td>@item.Categoria</td>
-                                    <td>@item.Linea</td>
-                                    <td>@item.Producto</td>
-                                    <td>@item.CategoriaProducto</td>
-                                    <td>@item.PrecioActual</td>
-                                    <td>@item.PrecioSalida</td>
-                                    <td>@item.FechaProgramada</td>
-                                    <td>@item.FechaRegistro</td>
-                                    <td>@item.FechaVencimiento</td>
-                                    <td>@item.PrecioVentaEstatus</td>
-                                    @if (item.PrecioVentaEstatus == "Programado")
-                                    {
-                                        <td>
-                                            <a href="@Url.Action("EditarPrecioVentaOtro", "PrecioVentaOtro", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                <i class="material-icons">edit</i>
-                                                <span>Editar precio venta</span>
-                                            </a>
-                                        </td>
-                                    }
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>*@
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-hover" id="tblfilterable" name="PreciosVenta">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Gasera</th>
+                                                            <th>Categoría</th>
+                                                            <th>Línea</th>
+                                                            <th>Producto</th>
+                                                            <th>Concepto</th>
+                                                            <th>Precio Actual</th>
+                                                            <th>Precio Salida</th>
+                                                            <th>Fecha Programada</th>
+                                                            <th>FechaRegistro</th>
+                                                            <th>FechaVencimiento</th>
+                                                            <th>Estatus</th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (ViewBag.ListaPV != null)
+                                                        {
+                                                            foreach (var item in ViewBag.ListaPV)
+                                                            {
+                                                                <tr>
+                                                                    <td>@item.Empresa</td>
+                                                                    <td>@item.Categoria</td>
+                                                                    <td>@item.Linea</td>
+                                                                    <td>@item.Producto</td>
+                                                                    <td>@item.CategoriaProducto</td>
+                                                                    <td>@item.PrecioActual</td>
+                                                                    <td>@item.PrecioSalida</td>
+                                                                    <td>@item.FechaProgramada</td>
+                                                                    <td>@item.FechaRegistro</td>
+                                                                    <td>@item.FechaVencimiento</td>
+                                                                    <td>@item.PrecioVentaEstatus</td>
+                                                                    @if (item.PrecioVentaEstatus == "Programado")
+                                                                    {
+                                                                        <td>
+                                                                            <a href="@Url.Action("EditarPrecioVentaOtro", "PrecioVentaOtro", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                                <i class="material-icons">edit</i>
+                                                                                <span>Editar precio venta</span>
+                                                                            </a>
+                                                                        </td>
+                                                                    }
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>*@
                                 </div>
                             </div>
                         </div>

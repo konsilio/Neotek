@@ -80,6 +80,7 @@
                                    settings.Properties.TextField = "NombreComercial";
                                    settings.Properties.ValueField = "IdEmpresa";
                                }).BindList(ViewBag.Empresas).Bind(Model.IdEmpresa).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-2">
                                     <strong>Tipo:</strong>
@@ -99,6 +100,7 @@
                                    settings.Properties.Items.Add("Por tracto", 3);
 
                                }).Bind(Model.IdTipo).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.IdTipo, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-3" id="PuntoVentaCampos">
                                     <strong>Punto de venta</strong>
@@ -115,7 +117,9 @@
                                    settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
                                    settings.Date = DateTime.Today;
                                }).Bind(Model.Fecha).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.Fecha, "", new { @class = "alert-danger" })
                                 </div>
+                                
                                 <div class="col-md-1">
                                     <strong> </strong>
                                     <button class="btn btn-round btn-default"> Buscar</button>

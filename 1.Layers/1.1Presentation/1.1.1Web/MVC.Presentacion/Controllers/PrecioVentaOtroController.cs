@@ -47,7 +47,7 @@ namespace MVC.Presentacion.Controllers
 
             ViewBag.Categoria = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Categoria).Select(x => x.FirstOrDefault());
             ViewBag.Linea = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Linea).Select(x => x.FirstOrDefault());
-            ViewBag.Producto = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Producto).Select(x => x.FirstOrDefault());
+            ViewBag.Producto = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Producto).Select(x => x.FirstOrDefault()).Where(x=> x.Producto !="GAS");
             if (TempData["RespuestaDTOError"] != null) {
                 ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
                     return View(_ObjModel);
