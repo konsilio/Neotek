@@ -77,7 +77,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
             var ordenes = OrdenCompraServicio.BuscarTodo(TokenServicio.ObtenerIdEmpresa(), dto.FechaInicio, dto.FechaFinal);
             return OrdenComprasAdapter.ToRepDTO(ordenes);
-        }
+        } 
         public List<RepRendimientoVehicularDTO> RepRendimientoVehicular(RendimientoVehicularDTO dto)
         {
             var resp = PermisosServicio.PuedeRegistrarParqueVehicular();

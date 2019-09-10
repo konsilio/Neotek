@@ -1469,8 +1469,22 @@ namespace Application.MainModule.Flujos
 
             return VentasEstacionesAdapter.ToDTO(categoria, linea, productos);
         }
-        public List<DatosGasVentaDto> CatalogosGas(bool esLP, bool esCilindroConGas, bool esCilindro)
+        public List<DatosGasVentaDto> CatalogosGas(bool esLP, bool esCilindroConGas, bool esCilindro, int IdCliente = 0)
         {
+            decimal descuento = 0;
+            decimal precio = 0;
+            if (!IdCliente.Equals(0))
+            {
+                var cliente = ClienteServicio.Obtener(IdCliente);
+                if (cliente != null)
+                {
+                    if (!cliente.DescuentoXKilo.Equals(0))
+                        if (cliente.EsFijo)
+                            precio = cliente.DescuentoXKilo;
+                        else
+                            descuento = cliente.DescuentoXKilo;
+                }
+            }
             var pv = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(pv.IdCAlmacenGas);
             if (esLP)
@@ -1488,7 +1502,7 @@ namespace Application.MainModule.Flujos
                 {
                     var cilindros = AlmacenGasServicio.ObtenerCilindros(unidad);
                     var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
-                    return VentasEstacionesAdapter.ToDTOGas(cilindros, kilosCamioneta, precioVenta);
+                    return VentasEstacionesAdapter.ToDTOGas(cilindros, kilosCamioneta, precioVenta, descuento, precio);
                 }
                 else
                 {
@@ -1496,17 +1510,14 @@ namespace Application.MainModule.Flujos
                     foreach (var item in ventas)
                     {
                         foreach (var itemDetalle in item.VentaPuntoDeVentaDetalle)
-                        {
                             totalKilos += itemDetalle.CantidadKg ?? 0;
-                        }
                     }
                     if (totalKilos > 0)
                         calculo = calculo - totalKilos;
-                    return VentasEstacionesAdapter.ToDTO(productosGas.Where(x => x.EsGas).ToList(), precios, calculo);
+                    return VentasEstacionesAdapter.ToDTO(productosGas.Where(x => x.EsGas).ToList(), precios, calculo, descuento, precio);
+                    //return VentasEstacionesAdapter.ToDTO(productosGas.Where(x => x.EsGas).ToList(), precios, calculo);
                     //return VentasEstacionesAdapter.ToDTO(productosGas, precios, kilosCamioneta);
                 }
-
-
             }
             else if (esCilindroConGas)
             {

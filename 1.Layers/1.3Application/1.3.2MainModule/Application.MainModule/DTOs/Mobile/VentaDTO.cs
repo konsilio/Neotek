@@ -22,6 +22,7 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal Total { get; set; }
         public bool Factura { get; set; }
         public bool Credito { get; set; }
+        public bool Bonificacion { get; set; }
         public decimal Efectivo { get; set; }
         public DateTime Fecha { get; set; }
         public TimeSpan Hora { get; set; }
