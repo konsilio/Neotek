@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Button;
 
+import com.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Adapter.ClientesAdapter;
 import com.neotecknewts.sagasapp.Model.ClienteDTO;
@@ -34,6 +35,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
     VentaDTO ventaDTO;
     boolean EsVentaCarburacion, EsVentaCamioneta, EsVentaPipa;
     boolean esGasLP;
+    int idCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
             EsVentaPipa = extras.getBoolean("EsVentaPipa", EsVentaPipa);
             ventaDTO = (VentaDTO) extras.getSerializable("ventaDTO");
             esGasLP = extras.getBoolean("esGasLP", false);
+            idCliente = extras.getInt("idCliente");
         }
         RVBuscarClienteActivityClientes = findViewById(R.id.RVBuscarClienteActivityClientes);
         //BtnBuscarClienteActivityNo = findViewById(R.id.BtnBuscarClienteActivityNo);
@@ -62,6 +65,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
             startActivity(intent);
         });*/
         BtnBuscarClienteActivitySi.setOnClickListener(V -> {
+            Log.d("idcliente", new ExistenciasDTO()+"");
             Intent intent = new Intent(BuscarClienteActivity.this, RegistroClienteActivity.class);
             ventaDTO.setSinNumero(true);
             ventaDTO.setRFC("");
@@ -74,6 +78,8 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
             intent.putExtra("EsVentaPipa", EsVentaPipa);
             intent.putExtra("ventaDTO", ventaDTO);
             intent.putExtra("esGasLP", esGasLP);
+            intent.putExtra("idCliente", idCliente);
+
             startActivity(intent);
         });
         LinearLayoutManager linearLayout = new LinearLayoutManager(BuscarClienteActivity.this);

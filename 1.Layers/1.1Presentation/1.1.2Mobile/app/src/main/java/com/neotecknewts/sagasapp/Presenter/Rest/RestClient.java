@@ -334,9 +334,9 @@ public interface RestClient {
 
     @GET(Constantes.GET_LIST_EXISTENCIAS)
     Call<List<ExistenciasDTO>> getListaExistencias(@Path(value = "esGasLP") boolean esGasLP,
-                                                   @Path(value = "esCilindroConGas")
-                                                           boolean esCilindroConGas,
+                                                   @Path(value = "esCilindroConGas") boolean esCilindroConGas,
                                                    @Path(value = "esCilindro") boolean esCilindro,
+                                                   @Path(value = "idCliente")int idCliente,
                                                    @Header("Authorization") String token,
                                                    @Header("Content-type") String contentType
     );

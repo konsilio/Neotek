@@ -22,7 +22,7 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
 
     @Override
     public void getListaCamionetaCilindros(String token, boolean esGasLP,
-                                           boolean esCilindroConGas, boolean esCilindro) {
+                                           boolean esCilindroConGas, boolean esCilindro, int idCliente) {
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
@@ -76,9 +76,10 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
     }
 
     @Override
-    public void getListEstacionGas(String token, boolean esGasLP, boolean esCilindroGas, boolean
-            esCilindro) {
+    public void getListEstacionGas(boolean esGasLP, boolean esCilindroGas, boolean
+            esCilindro, int idCliente, String token) {
 
+        Log.d("idCliente", idCliente+"" );
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
@@ -185,15 +186,16 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
     }
 
     @Override
-    public void getCamionetaCilindros(boolean esGasLP, boolean esCilindroGas, boolean esCilindro,
+    public void getCamionetaCilindros(boolean esGasLP, boolean esCilindroGas, boolean esCilindro, int idCliente,
                                       String token) {
 
-
+        Log.d("idCliente", idCliente+"" );
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
                 esGasLP,
                 esCilindroGas,
                 esCilindro,
+                idCliente,
                 token,
                 "application/json"
         );

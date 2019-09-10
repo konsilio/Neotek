@@ -3,6 +3,7 @@ package com.neotecknewts.sagasapp.Adapter;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,8 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ventaDTO.setIdCliente(
                     items.get(position).getIdCliente()
             );
+            Log.d("idCliente", ventaDTO.getIdCliente()+"");
+
             ventaDTO.setNombre(
                     items.get(position).getNombre()
                     +" "+items.get(position).getApellido_uno()

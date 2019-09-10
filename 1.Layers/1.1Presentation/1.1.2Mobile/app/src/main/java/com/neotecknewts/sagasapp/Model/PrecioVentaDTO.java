@@ -171,7 +171,7 @@ public class PrecioVentaDTO extends RespuestaDTO implements Serializable {
     }
 
     public double getPrecioActual() {
-        return PrecioActual = 8.12;
+        return PrecioActual ;
     }
 
     public void setPrecioActual(double precioActual) {

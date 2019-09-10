@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.TextView;
 
+import com.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.neotecknewts.sagasapp.Model.DatosVentaOtrosDTO;
@@ -44,8 +46,11 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
     String[] list_categorias_original,list_lineas_original,list_producto_original;
     DatosVentaOtrosDTO otrosDTO;
     VentaDTO ventaDTO;
+    ExistenciasDTO existenciasDTO;
     boolean EsVentaCamioneta,EsVentaCarburacion,EsVentaPipa;
     int idCategoria,idLinea,idProducto;
+
+    List<com.neotecknewts.sagasapp.Model.ExistenciasDTO> ExistenciasDTO;
 
     Session session;
 
@@ -91,15 +96,17 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
         BtnPuntoVentaOtrosActivityAgregar.setOnClickListener(v->{
 
             ConceptoDTO conceptoDTO = new ConceptoDTO();
+            ExistenciasDTO existenciasDTO = new ExistenciasDTO();
             int cantidad = Integer.parseInt(ETPuntoVentaOtrosActivityCantidad.getText().toString());
             //int precioLtr= Integer.parseInt(ETPuntoVentaOtrosActivityPrecioporLitro.getText().toString());
             double punitario = Double.parseDouble(ETPuntoVentaOtrosActivityPrecio.getText().toString());
-
+//Aqui agregar descuento
+            double descuento = existenciasDTO.getDescuento();
             conceptoDTO.setCantidad(cantidad);
             //conceptoDTO.setPUnitario(precioLtr);
             conceptoDTO.setSubtotal(cantidad*punitario);
             //conceptoDTO.setPUnitario(punitario);
-            conceptoDTO.setDescuento(0);
+            conceptoDTO.setDescuento(descuento);
             conceptoDTO.setIdTipoGas(0);
             conceptoDTO.setConcepto(ETProductoVentaOtrosConcepto.getText().toString());
             conceptoDTO.setIdCategoria(idCategoria);

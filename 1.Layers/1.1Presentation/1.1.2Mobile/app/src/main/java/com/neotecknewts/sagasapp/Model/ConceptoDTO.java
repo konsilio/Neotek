@@ -103,7 +103,8 @@ public class ConceptoDTO implements Serializable {
     }
 
     public String getConcepto() {
-        return Concepto;
+
+        return Concepto ;
     }
 
     public void setConcepto(String concepto) {
