@@ -70,7 +70,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Total = venta.Total,
                 CambioRegresado = venta.Total - venta.Efectivo,
                 IdPuntoVenta = punto_venta.IdPuntoVenta,
-                PuntoVenta = punto_venta.UnidadesAlmacen.Numero,
+                PuntoVenta = punto_venta.UnidadesAlmacen.Numero,               
                 //IdCliente = venta.IdCliente,
                 //RazonSocial = cliente.RazonSocial,
                 VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, idOrden, idEmpresa),

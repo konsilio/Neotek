@@ -331,18 +331,12 @@ namespace Application.MainModule.Flujos
                 }
             }
             else
-                respuesta = PuntoVentaServicio.InsertMobile(adapter);
-
-            //var ventaPuntoDeVenta = PuntoVentaServicio.InsertMobile(adapter);
-            //respuesta = ventaPuntoDeVenta;
-            if (respuesta.Exito)
-            {
-                if (almacen.IdCamioneta > 0)
-                {
+                respuesta = PuntoVentaServicio.InsertMobile(adapter);          
+            if (respuesta.Exito)            
+                if (almacen.IdCamioneta > 0)                
                     verificaInventarioCilindros(venta);
-                }
-
-            }
+                
+            
             return respuesta;
         }
         public void verificaInventarioCilindros(VentaDTO venta)
@@ -1502,7 +1496,7 @@ namespace Application.MainModule.Flujos
                 {
                     var cilindros = AlmacenGasServicio.ObtenerCilindros(unidad);
                     var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
-                    return VentasEstacionesAdapter.ToDTOGas(cilindros, kilosCamioneta, precioVenta, descuento, precio);
+                    return VentasEstacionesAdapter.ToDTOGas(cilindros, kilosCamioneta, precioVenta);
                 }
                 else
                 {
