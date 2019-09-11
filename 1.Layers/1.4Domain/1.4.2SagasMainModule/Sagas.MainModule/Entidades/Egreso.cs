@@ -29,5 +29,6 @@ namespace Sagas.MainModule.Entidades
     
         public virtual CentroCosto CCentroCosto { get; set; }
         public virtual CuentaContable CCuentaContable { get; set; }
+        public virtual CTipoEgreso CTipoEgreso { get; set; }
     }
 }

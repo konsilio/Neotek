@@ -14,6 +14,12 @@ namespace Sagas.MainModule.Entidades
     
     public partial class CTipoEgreso
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CTipoEgreso()
+        {
+            this.Egreso = new HashSet<Egreso>();
+        }
+    
         public short IdTipoEgreso { get; set; }
         public string Descripcion { get; set; }
         public bool EsFiscal { get; set; }
@@ -21,5 +27,8 @@ namespace Sagas.MainModule.Entidades
         public decimal Monto { get; set; }
         public Nullable<int> Periocidad { get; set; }
         public bool Activo { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Egreso> Egreso { get; set; }
     }
 }
