@@ -1,0 +1,121 @@
+﻿@model List<MVC.Presentacion.Models.Cobranza.CargosModel>
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "CarteraVencida";
+        settings.KeyFieldName = "IdCargo";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "_CarteraVencidaPartial" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFooter = true;
+        settings.Theme = "Material";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Nombre";
+            c.Caption = "Cliente";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.GroupIndex = 1;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FechaRegistro";
+            c.Caption = "Fecha";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.PropertiesEdit.DisplayFormatString = "d";
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FechaVencimiento";
+            c.Caption = "Fecha Vencimiento";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.PropertiesEdit.DisplayFormatString = "d";
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Ticket";
+            c.Caption = "Ticket";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Serie";
+            c.Caption = "Serie";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SaldoActual";
+            c.Caption = "Saldo Actua";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SaldoCorriente";
+            c.Caption = "Saldo corriente";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SaldoVencido";
+            c.Caption = "Vencido";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Dias1a7";
+            c.Caption = "Días 1-7";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Dias8a16";
+            c.Caption = "8-16";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Dias17a31";
+            c.Caption = "17-31";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Dias32a61";
+            c.Caption = "32-61";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Dias62a91";
+            c.Caption = "62-91";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Mas91";
+            c.Caption = "Más 91";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+    }
+).Bind(Model).GetHtml()

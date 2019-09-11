@@ -11721,6 +11721,9 @@
     <Content Include="Views\Asignacion\_CB_Asignaciones.cshtml" />
     <Content Include="Views\Mantenimiento\_CB_Mantenimientos.cshtml" />
     <Content Include="Views\Reportes\_CuboInvXPunVen.cshtml" />
+    <Content Include="Views\Cobranza\_CarteraVencidaPartial.cshtml" />
+    <Content Include="Views\Cobranza\_CreditoRecuperadoPartial.cshtml" />
+    <Content Include="Views\Cobranza\lstCreditoR.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
