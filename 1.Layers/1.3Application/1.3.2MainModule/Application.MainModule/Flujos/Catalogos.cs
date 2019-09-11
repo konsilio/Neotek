@@ -473,9 +473,9 @@ namespace Application.MainModule.Flujos
                 var us = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
                 var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(us.IdCAlmacenGas);
                 if (unidad.IdCamioneta > 0)
-                    pvs.PrecioActual = pvs.PrecioSalidaKg;
+                    pvs.PrecioActual = pvs.PrecioSalidaKg ?? 0;
                 else
-                    pvs.PrecioActual = pvs.PrecioSalidaLt;
+                    pvs.PrecioActual = pvs.PrecioSalidaLt ?? 0;
                 return pvs;
             }
             catch (Exception ex)

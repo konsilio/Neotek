@@ -92,7 +92,10 @@ namespace MVC.Presentacion.Controllers
 
             if ((fecha1 != null && fecha1.Value.Year != 1) || (fecha1 != null && fecha2.Value.Year != 1) || (Cliente != null && Cliente != 0) || ticket != null)
             {
-                _mod.FechaRango1 = fecha1.Value; _mod.FechaRango2 = fecha2.Value; _mod.IdCliente = Cliente.Value; _mod.Ticket = ticket; _mod.IdEmpresa = empresa.Value;
+                _mod.FechaRango1 = fecha1.Value;
+                _mod.FechaRango2 = fecha2.Value;
+                _mod.IdCliente = Cliente.Value;
+                _mod.Ticket = ticket; _mod.IdEmpresa = empresa.Value;
                 _model = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
                 if (_model.Count() == 0)
                 {
@@ -101,7 +104,7 @@ namespace MVC.Presentacion.Controllers
                 }
             }
             else
-                _model = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);//CobranzaServicio.ObtenerListaR(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                _model = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
 
             if (_model.Count() == 0)
             {
@@ -122,8 +125,16 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Msj = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
                 }
             }
-
             return View(_model);
+        }
+        public ActionResult ListaCreditoRecuperado(int IdCargo)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            CargosModel _mod = new CargosModel();
+
+
+            return PartialView("DetalleVentas", ((List<CargosModel>)TempData["Cargos"]));
         }
         public ActionResult FacturarAbono(int id)
         {
@@ -147,20 +158,21 @@ namespace MVC.Presentacion.Controllers
             DateTime dt = new DateTime();
             CargosModel m = new CargosModel();
             if (model.reportedet == null)
-            { m.IdEmpresa = ViewBag.IdEmpresa; }
+             m.IdEmpresa = ViewBag.IdEmpresa; 
             if (idCliente != null || fecha != null)
             {
                 m.IdCliente = idCliente ?? 0;
-                if (idCliente != null && idCliente != 0) { ViewBag.IdCliente = idCliente; }
+                if (idCliente != null && idCliente != 0)
+                    ViewBag.IdCliente = idCliente; 
                 m.FechaRango1 = fecha ?? dt;
             }
 
             ReporteModel _model = CobranzaServicio.ObtenerListaCartera(_tkn, m);
             if (_model.reportedet.Count > 0)
             {
-                if (fecha != null) { _model.reportedet[0].FechaRango1 = fecha.Value; }
+                if (fecha != null)
+                    _model.reportedet[0].FechaRango1 = fecha.Value; 
                 _model.reportedet[0].IdEmpresa = ViewBag.IdEmpresa;
-
             }
             else
             {
@@ -170,9 +182,23 @@ namespace MVC.Presentacion.Controllers
                 _model.reportedet.Add(cm);
             }
 
-            if (ViewBag.IdCliente != null && idCliente.Value != 0 && idCliente != null) { ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet[0].Cliente ?? _model.reportedet[0].Nombre; }
-
+            if (ViewBag.IdCliente != null && idCliente.Value != 0 && idCliente != null)
+                ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet[0].Cliente ?? _model.reportedet[0].Nombre; 
+            TempData["CarteraVencida"] = _model.reportedet;
             return View(_model);
+        }
+        public ActionResult _CarteraVencidaPartial()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+
+            if (TempData["CarteraVencida"] != null)
+            {
+                TempData.Keep("CarteraVencida");
+                return PartialView((List<CargosModel>)TempData["CarteraVencida"]);
+            }
+            else
+                return PartialView(new List<CargosModel>());
         }
         public ActionResult BuscarCartera(CargosModel _model)
         {
@@ -203,7 +229,7 @@ namespace MVC.Presentacion.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult EditingUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] CargosModel m)
         {
-             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
             m.Abono.IdCargo = m.IdCargo;
             var Respuesta = CobranzaServicio.AltaNuevoCargo(m, _tkn);
@@ -252,15 +278,15 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult AgregarTikets(FacturacionGlobalModel model = null)
         {
-            if(Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
 
-            TempData["TiketsAgregados"] = model.Tickets.Where(x => x.seleccionar).ToList(); 
+            TempData["TiketsAgregados"] = model.Tickets.Where(x => x.seleccionar).ToList();
             return RedirectToAction("FacturacionGlobal", model);
         }
         public ActionResult BorrarTicket(string Folio)
         {
-            if(Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
 
             var TiketsAgregados = (List<VentaPuntoVentaDTO>)TempData["TiketsAgregados"];
