@@ -47,7 +47,7 @@ namespace Application.MainModule.Servicios.Compras
             List<OrdenCompra> nlist = new List<OrdenCompra>();
             foreach (var _prod in ocInicial.Productos)
             {
-                var p = Catalogos.ProductoServicio.ObtenerProducto(_prod.IdProducto);
+                var p = ProductoServicio.ObtenerProducto(_prod.IdProducto);
                 if (!nlist.Exists(x => x.IdProveedor.Equals(_prod.IdProveedor)))
                 {
                     OrdenCompra nOC = new OrdenCompra();
@@ -56,13 +56,34 @@ namespace Application.MainModule.Servicios.Compras
                     nOC.IdRequisicion = ocInicial.IdRequisicion;
                     nOC.IdCentroCosto = _prod.IdCentroCosto;
                     nOC.IdCuentaContable = _prod.IdCuentaContable;
-                    nOC.IdOrdenCompraEstatus = ocInicial.IdOrdenCompraEstatus;
-                    nOC.FechaRegistro = DateTime.Today;
+                    nOC.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Proceso_compra;
+                    nOC.FechaRegistro = DateTime.Now;
+                    nOC.FechaAutorizacion = DateTime.Now;
                     nOC.IdUsuarioGenerador = TokenServicio.ObtenerIdUsuario();
+                    nOC.IdUsuarioAutorizador = TokenServicio.ObtenerIdUsuario();
                     nOC.EsGas = p.EsGas;
                     nOC.EsTransporteGas = p.EsTransporteGas;
                     nOC.EsActivoVenta = p.EsActivoVenta;
                     nOC.Activo = true;
+                    if (p.EsGas)
+                    {
+                        nOC.SubtotalSinIva = 0;
+                        nOC.SubtotalSinIeps = 0;
+                        nOC.Iva = 0;
+                        nOC.Ieps = 0;
+                        nOC.Total =0;          
+                        nOC.Casetas =0;
+                        nOC.FactorCompraLitrosAKilos = 0;
+                        nOC.FactorConvTransporte = 0;
+                        nOC.FactorGalonALitros = 0;
+                        nOC.ImporteEnLitros =0;
+                        nOC.MontBelvieuDlls = 0;
+                        nOC.PrecioPorGalon =0;
+                        nOC.PrecioTransporte = 0;
+                        nOC.PVPM = 0;
+                        nOC.TarifaServicioPorGalonDlls =0;
+                        nOC.TipoDeCambioDOF = 0;
+                    }
                     nlist.Add(nOC);
                 }
             }
@@ -408,6 +429,6 @@ namespace Application.MainModule.Servicios.Compras
                 return "Pagado";
             else
                 return "Por Pagar";
-        }        
+        }
     }
 }

@@ -125,6 +125,7 @@
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <input id="NombreRol" type="text" name="NombreRol" class="form-control" />
+                                    @Html.ValidationMessageFor(m => m.ListaRoles.FirstOrDefault().IdRol, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4">

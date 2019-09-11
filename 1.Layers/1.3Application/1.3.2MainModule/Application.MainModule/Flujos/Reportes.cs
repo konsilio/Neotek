@@ -45,7 +45,8 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
             var pipas = PipaServicio.Obtener(dto.Pipas);
             var estaciones = EstacionCarburacionServicio.Obtener(dto.Estaciones);
-            return new Almacenes().BuscarInvetarioPorPuntoDeVenta(pipas, estaciones, dto.Fecha);
+            var camionetas = CamionetaServicio.Obtener(dto.Camionetas);
+            return new Almacenes().BuscarInvetarioPorPuntoDeVenta(camionetas, pipas, estaciones, dto.Fecha);
         }
         public List<RepHistorioPrecioDTO> RepHistorioPrecios(HistoricoPrecioDTO dto)
         {
@@ -54,11 +55,13 @@ namespace Application.MainModule.Flujos
             var precios = PrecioVentaGasServicio.ObtenerListaPreciosVentaIdEmp(TokenServicio.ObtenerIdEmpresa(), dto.FechaInicial, dto.FechaFinal);
             return PrecioVentaGasAdapter.ToRepo(precios, dto);
         }
-        public List<RepCallCenterDTO> RepCallCenter(CallCenterDTO dto)
+        public List<RepCallCenterDTO> RepCallCenter(PeriodoDTO dto)
         {
             var resp = PermisosServicio.PuedeConsultarPedido();
             if (!resp.Exito) return null;
-            var pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), dto.Periodo);
+            dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:00"));
+            dto.FechaFin = DateTime.Parse(string.Concat(dto.FechaFin.ToShortDateString(), " 23:59:59"));
+            var pedidos = PedidosServicio.Obtener(TokenServicio.ObtenerIdEmpresa(), dto);
             return PedidosAdapter.FromDTO(pedidos);
         }
         public List<RepRequisicionDTO> RepRequisicion(RequisicionModelDTO dto)
@@ -74,7 +77,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
             var ordenes = OrdenCompraServicio.BuscarTodo(TokenServicio.ObtenerIdEmpresa(), dto.FechaInicio, dto.FechaFinal);
             return OrdenComprasAdapter.ToRepDTO(ordenes);
-        }
+        } 
         public List<RepRendimientoVehicularDTO> RepRendimientoVehicular(RendimientoVehicularDTO dto)
         {
             var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
@@ -93,19 +96,26 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeModificarCajaGeneral();
             if (!resp.Exito) return null;
-            var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
+            //var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
             var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
-            var VFacturasCredito = CobranzaServicio.Obtener(dto.Fecha) ?? new List<Abono>();
+            //var Cobranza = CobranzaServicio.Obtener(dto.Fecha) ?? new List<Abono>(); // Descomentar en caso de necesitar cobranza en Corte de caja
+            var VFacturasCredito = CajaGeneralServicio.ObtenerTotalVentasACredito(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VBonificaciones = CajaGeneralServicio.ObtenerTotalBonificaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
+            var VDescuentos = CajaGeneralServicio.ObtenerTotalDescuentos(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
 
             List<RepCorteCajaDTO> respuesta = new List<RepCorteCajaDTO>();
-            respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones));
+            //respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaPipas(VPipas));
+            //respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCobranza(Cobranza));// Descomentar en caso de necesitar cobranza en Corte de caja
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCredito(VFacturasCredito));
-            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones));
+            respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones));
+            respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaDescuentos(VDescuentos));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaTotalCaja(VEstaciones,VPipas, VCilindros, VFacturasCredito, VBonificaciones, VDescuentos));
+
             return respuesta;
         }
         public List<RepGastoVehicularDTO> RepGastoXVehiculo(GastoVehicularDTO dto)
@@ -140,7 +150,7 @@ namespace Application.MainModule.Flujos
                 dto.Venta = 0;
                 dto.Comision = 0;
                 dto.Total = 0;
-                              
+
                 if (chofer.PuntosVenta.Count > 0)
                 {
                     dto.PuntoVenta = chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.Numero;
@@ -158,11 +168,9 @@ namespace Application.MainModule.Flujos
                         dto.Unidad = "Lts";
                         dto.Total = CalcularPreciosVentaServicio.CalcularComisionPipas(ventas.Where(x => x.IdOperadorChofer.Equals(chofer.IdOperadorChofer)).ToList(), periodo);
                     }
-                    if (!chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.EsGeneral && chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion == null)                    
+                    if (!chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.EsGeneral && chofer.PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion == null)
                         respesta.Add(dto);
-                    
                 }
-               
             }
             return respesta;
         }
@@ -269,13 +277,13 @@ namespace Application.MainModule.Flujos
             var remanente = new Almacenes().ConsultarRemanenteGeneral(remaDTO);
 
             var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
-            var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
-            var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
-            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+            var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstacionesMes(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+            var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipasMes(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamionetaMes(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
 
             dto.TotalEstaciones = (decimal)CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones).Sum(x => x.Cantidad);
             dto.TotalCamionetas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros).Cantidad;
-            dto.TotalPipas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaPipas(VPipas).Cantidad;
+            dto.TotalPipas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaPipas(VPipas).Cantidad * empresa.FactorLitrosAKilos;
             dto.TotalVetna = dto.TotalEstaciones + dto.TotalCamionetas + dto.TotalPipas;
             dto.Json = JsonServicio.JsonGeneralRemanente(remanente);
 
@@ -321,9 +329,9 @@ namespace Application.MainModule.Flujos
             AdministracionDTO dto = new AdministracionDTO();
 
             var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
-            var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstaciones(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
-            var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipas(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
-            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamioneta(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+            var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstacionesMes(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+            var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipasMes(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
+            var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamionetaMes(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
 
             dto.TotalEstaciones = (decimal)CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones).Sum(x => x.TotalVenta);
             dto.TotalCamionetas = (decimal)CajaGeneralAdapter.ToRepoCorteCajaCamionetas(VCilindros).TotalVenta;

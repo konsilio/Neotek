@@ -15,6 +15,8 @@ namespace MVC.Presentacion.Controllers
         // GET: Usuarios
         public ActionResult Index(UsuarioDTO modelo = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
@@ -28,13 +30,28 @@ namespace MVC.Presentacion.Controllers
             ViewBag.ListaUsuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
             if (modelo.IdUsuario != 0)
                 model.Listausuarios = CatalogoServicio.FiltrarBusquedaUsuario(modelo, _tkn);
-            else
-                model.Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
+            else {
+
+                if (modelo.Email1!= "Seleccione uno" && modelo.Email1!=null && modelo.Email1!= string.Empty) {
+                    model.Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn).Where(x => x.Email1 == modelo.Email1).ToList();
+                }
+                else {
+
+                    model.Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
+                }
+
+                
+            }
+                
             if (TempData["RespuestaDTO"] != null) ViewBag.MessageExito = TempData["RespuestaDTO"];
             if (TempData["RespuestaDTOError"] != null)
             {
                 ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
             }
+
+            TempData["DataSourceUsuarios"] = ViewBag.ListaUsuarios;
+            TempData.Keep("DataSourceUsuarios");
+
             return View(model);
         }
         public ActionResult Nuevo()
@@ -231,12 +248,32 @@ namespace MVC.Presentacion.Controllers
 
 
         }
-        public ActionResult BorrarRol(UsuarioRolModel objUser, short id, int idUsr, string msj = null)
+        //public ActionResult BorrarRol(UsuarioRolModel objUser, short id, int idUsr, string msj = null)
+        //{
+        //    if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+        //    _tok = Session["StringToken"].ToString();
+
+        //    var respuesta = CatalogoServicio.EliminarRolAlUsuario(objUser, idUsr, id, _tok);
+        //    if (respuesta.Exito)
+        //    {
+        //        TempData["RespuestaDTO"] = respuesta.Exito;
+        //        return RedirectToAction("ActualizaRoles", new { id = objUser.IdUsuario, msj = string.Concat("Eliminación exitosa del Rol ", objUser.IdRol) });
+        //    }
+
+        //    else
+        //    {
+        //        TempData["RespuestaDTO"] = respuesta.Exito;
+        //        return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario, msj = respuesta.MensajesError[0] });
+        //    }
+
+        //}
+
+        public ActionResult BorrarRol(UsuarioRolModel objUser)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
 
-            var respuesta = CatalogoServicio.EliminarRolAlUsuario(objUser, idUsr, id, _tok);
+            var respuesta = CatalogoServicio.EliminarRolAlUsuario(objUser, _tok);
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Exito;
@@ -250,6 +287,7 @@ namespace MVC.Presentacion.Controllers
             }
 
         }
+
         public ActionResult Buscar(UsuarioDTO filterObj)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
@@ -278,6 +316,24 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+
+
+        public ActionResult CB_Usuarios()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tok = Session["StringToken"].ToString();
+            List<UsuariosModel> model = new List<UsuariosModel>();
+            if (TempData["DataSourceUsuarios"] != null)
+            {
+                model = (List<UsuariosModel>)TempData["DataSourceUsuarios"];
+                TempData["DataSourceUsuarios"] = model;
+               // TempData.Keep("DataSourceUsuarios");
+            }
+            return PartialView("_CB_Usuarios", model);
+        }
+
+
+
 
     }
 }

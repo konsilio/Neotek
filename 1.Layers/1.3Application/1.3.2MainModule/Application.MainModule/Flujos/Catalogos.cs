@@ -124,8 +124,8 @@ namespace Application.MainModule.Flujos
         }
         public ClientesDto ObtenerCliente(int id)
         {
-            var resp = PermisosServicio.PuedeConsultarCliente();
-            if (!resp.Exito) return null;
+            //var resp = PermisosServicio.PuedeConsultarCliente();
+            //if (!resp.Exito) return null;
             var _c = ClienteServicio.Obtener(id);
             return ClientesAdapter.ToDTO(_c);
         }
@@ -155,10 +155,10 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeRegistrarCliente();
             if (!resp.Exito) return resp;
 
-            var ExisteRfc = ClienteServicio.BuscarClientePorRFC(cteDto.Rfc);
-            if (ExisteRfc != null)
-                if (!ExisteRfc.Rfc.Equals(ClienteServicio.ObtenerPublicoEnGeneral().Rfc))
-                    return ClienteServicio.YaExiste();
+            //var ExisteRfc = ClienteServicio.BuscarClientePorRFC(cteDto.Rfc);
+            //if (ExisteRfc != null)
+            //    if (!ExisteRfc.Rfc.Equals(ClienteServicio.ObtenerPublicoEnGeneral().Rfc))
+            //        return ClienteServicio.YaExiste();
 
             var cliente = ClientesAdapter.FromDtoMod(cteDto);
 
@@ -469,13 +469,19 @@ namespace Application.MainModule.Flujos
             {
                 var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
                 var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
-
-                return PrecioVentaGasAdapter.ToDTO(pv, producto);
+                var pvs = PrecioVentaGasAdapter.ToDTO(pv, producto);
+                var us = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+                var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(us.IdCAlmacenGas);
+                if (unidad.IdCamioneta > 0)
+                    pvs.PrecioActual = pvs.PrecioSalidaKg ?? 0;
+                else
+                    pvs.PrecioActual = pvs.PrecioSalidaLt ?? 0;
+                return pvs;
             }
             catch (Exception ex)
             {
                 return new PrecioVentaDTO() { respuesta = new RespuestaDto() { Exito = false, Mensaje = ex.ToString() } };
-            }           
+            }
         }
         public RespuestaDto EliminaPreciosVenta(PrecioVentaDTO cteDto)
         {
@@ -686,7 +692,14 @@ namespace Application.MainModule.Flujos
             resp = ValidarCatalogoServicio.Producto(pDto);
             if (!resp.Exito) return resp;
 
-            return ProductoServicio.RegistrarProducto(ProductoAdapter.FromDto(pDto));
+            var respP = ProductoServicio.RegistrarProducto(ProductoAdapter.FromDto(pDto));
+            if (!respP.Exito) return respP;
+            else if (pDto.EsGas || pDto.EsTransporteGas || pDto.IdProductoServicioTipo.Equals(3))
+                return respP;
+
+            var almacen = ProductoAlmacenServicio.GenaraAlmacenNuevo(respP.Id, TokenServicio.ObtenerIdEmpresa());
+            return ProductoAlmacenServicio.InsertarAlmacen(almacen);
+            
         }
         public RespuestaDto ModificaProducto(ProductoModificarDto pDto)
         {
@@ -936,7 +949,7 @@ namespace Application.MainModule.Flujos
                 return CuentaContableAutorizadoServicio.ModificarCuentaContableAutorizado(entidad);
             }
         }
-        
+
         public List<CuentaContableAutorizadoDTO> ConsultaCuentasContablesAutorizado()
         {
             var permiso = PermisosServicio.PuedeConsultarCuentaContable();
@@ -1062,9 +1075,11 @@ namespace Application.MainModule.Flujos
                     if (Camioneta == null) return CamionetaServicio.NoExiste();
 
                     var camionetaEntity = CamionetaAdapter.FromEntity(Camioneta);
-                    camionetaEntity.Nombre = string.Format("Camioneta No. {0}", vehiculoDto.DescVehiculo);
+                    //camionetaEntity.Nombre = string.Format("Camioneta No. {0}", vehiculoDto.DescVehiculo);
+                    camionetaEntity.Nombre = vehiculoDto.Descripcion;
                     camionetaEntity.Numero = vehiculoDto.DescVehiculo;
                     camionetaEntity.Activo = vehiculoDto.Activo;
+                    camionetaEntity.EsForaneo = vehiculoDto.EsForaneo;
                     editarVehiculo.CCamioneta = camionetaEntity;
                     vehiculoDto.IdCamioneta = Camioneta.IdCamioneta;
 
@@ -1102,9 +1117,11 @@ namespace Application.MainModule.Flujos
                     if (_Pipa == null) return PipaServicio.NoExiste();
 
                     var pipaEntity = PipaAdapter.FromEntity(_Pipa);
-                    pipaEntity.Nombre = string.Format("Pipa No. {0}", vehiculoDto.DescVehiculo);
+                    // pipaEntity.Nombre = string.Format("Pipa No. {0}", vehiculoDto.DescVehiculo);
+                    pipaEntity.Nombre = vehiculoDto.Descripcion;
                     pipaEntity.Numero = vehiculoDto.DescVehiculo;
                     pipaEntity.Activo = vehiculoDto.Activo;
+                    pipaEntity.EsForaneo = vehiculoDto.EsForaneo;
                     editarVehiculo.CPipa = pipaEntity;
                     vehiculoDto.IdPipa = _Pipa.IdPipa;
                     editarVehiculo.CPipa.IdPipa = _Pipa.IdPipa;
@@ -1144,9 +1161,11 @@ namespace Application.MainModule.Flujos
                     if (_utilitario == null) return VehiculoUtilitarioServicio.NoExiste();
 
                     var utilitarioEntity = VehiculoUtilitarioAdapter.FromEntity(_utilitario);
-                    utilitarioEntity.Nombre = string.Format("Utilitario No. {0}", vehiculoDto.DescVehiculo);
+                    //utilitarioEntity.Nombre = string.Format("Utilitario No. {0}", vehiculoDto.DescVehiculo);
+                    utilitarioEntity.Nombre = vehiculoDto.Descripcion;
                     utilitarioEntity.Numero = vehiculoDto.DescVehiculo;
                     utilitarioEntity.Activo = vehiculoDto.Activo;
+                    utilitarioEntity.EsForaneo = vehiculoDto.EsForaneo;
                     editarVehiculo.CUtilitario = utilitarioEntity;
                     vehiculoDto.IdVehiculoUtilitario = _utilitario.IdUtilitario;
 

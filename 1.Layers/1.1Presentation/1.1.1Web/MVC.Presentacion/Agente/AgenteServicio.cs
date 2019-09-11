@@ -56,6 +56,7 @@ namespace MVC.Presentacion.Agente
         public AndenDTO _AndenDTO;
         public CarteraDTO _CarteraDTO;
         public CuentaContableAutorizadoDTO _CuentaContableAutorizadoDTO;
+        public Models.Ventas.CorteCajaDTO _CorteCaja;
         public string _Json;
 
         public List<ClienteLocacionMod> _cteLocacion;
@@ -134,11 +135,12 @@ namespace MVC.Presentacion.Agente
         public List<OrdenCompraRepDTO> _ListaOrdenCompra;
         public List<RendimientoVehicularDTO> _ListaRendimientoVehicular;
         public List<InventarioXConceptoDTO> _ListaInventarioConcepto;
-        public List<CorteCajaDTO> _ListaCorteCaja;
+        public List<Models.CorteCajaDTO> _ListaCorteCaja;
         public List<GastoVehiculoDTO> _ListaGastoVehicular;
         public List<ComisionDTO> _ListaComisiones;
         public List<CuentaContableAutorizadoDTO> _ListaCuentaContableAutorizado;
         public List<CuentaConsolidadaDTO> _ListaCuentasConsolidadas;
+        public List<VentaCajaGeneralDTO> _ListaVentaCajaGeneralDTO;
 
         public AgenteServicio()
         {
@@ -632,7 +634,7 @@ namespace MVC.Presentacion.Agente
                         _lstUserEmp = (from x in lus where x.IdUsuario == idUser select x).ToList();
 
                     }
-                    if (!String.IsNullOrEmpty(mail) && mail != "0")
+                    if (!String.IsNullOrEmpty(mail) && mail != "0" && mail!= "Seleccione uno")
                     {
                         _lstUserEmp = (from x in lus where x.Email1 == mail select x).ToList();
 
@@ -1531,22 +1533,22 @@ namespace MVC.Presentacion.Agente
         }
         public void BuscarListaCajaGralCamioneta(string cveReporte, string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGralCamioneta"];
+            this.ApiRoute = ConfigurationManager.AppSettings["GetListaTickets"];
             GetListaCajaGralCamioneta(cveReporte, tkn).Wait();
         }
         private async Task GetListaCajaGralCamioneta(string cveRep, string Token)
         {
             using (var client = new HttpClient())
             {
-                List<CajaGeneralCamionetaModel> lus = new List<CajaGeneralCamionetaModel>();
+                Models.Ventas.CorteCajaDTO lus = new Models.Ventas.CorteCajaDTO();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + cveRep).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute, cveRep)).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        lus = await response.Content.ReadAsAsync<List<CajaGeneralCamionetaModel>>();
+                        lus = await response.Content.ReadAsAsync<Models.Ventas.CorteCajaDTO>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -1555,14 +1557,11 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    lus = new List<CajaGeneralCamionetaModel>();
+                    lus = new Models.Ventas.CorteCajaDTO();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-
-
-                _listaCajaGralCamioneta = lus;
-
+                _CorteCaja = lus;
             }
         }
         public void BuscarListaCajaGralEstacion(string cveReporte, string tkn)
@@ -2376,7 +2375,7 @@ namespace MVC.Presentacion.Agente
                     {
                         HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute, id)).ConfigureAwait(false);
                         if (response.IsSuccessStatusCode)
-                            list = await response.Content.ReadAsAsync<List<CuentaContableAutorizadoDTO>>();                       
+                            list = await response.Content.ReadAsAsync<List<CuentaContableAutorizadoDTO>>();
                         _ListaCuentaContableAutorizado = list;
                     }
                     else
@@ -3291,6 +3290,14 @@ namespace MVC.Presentacion.Agente
             this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionesByIdEmpresa"];
             ListaRequisiciones(idEmpresa, tkn).Wait();
         }
+
+        public void BuscarRequisicionesAlmacen(short idEmpresa, string tkn)
+        {
+            this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionesByAlmacenIdEmpresa"];
+            ListaRequisiciones(idEmpresa, tkn).Wait();
+        }
+
+
         private async Task ListaRequisiciones(short idEmpresa, string token)
         {
             using (var client = new HttpClient())
@@ -3319,7 +3326,7 @@ namespace MVC.Presentacion.Agente
                 _listaRequisicion = emp;
             }
         }
-        public void GuardarRequisicion(RequisicionDTO dto, string token)
+        public void GuardarRequisicion(RequisicionInputDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRequisicion"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
@@ -4629,6 +4636,7 @@ namespace MVC.Presentacion.Agente
         }
         public void EliminarMantenimiento(int id, string tkn)
         {
+          
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaMantenimientoDetalle"];
             EliminarMantenimientoDetalle(id, tkn).Wait();
         }
@@ -4643,7 +4651,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos + _id.ToString(), "").ConfigureAwait(false);
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRoute + _id.ToString(), "").ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
@@ -5465,12 +5473,12 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Call Center
-        public void BuscarCallCenter(CallCenterModel model, string tkn)
+        public void BuscarCallCenter(PeriodoDTO model, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PostCallCenter"];
             PostCallCenter(model, this.ApiCatalgos, tkn).Wait();
         }
-        private async Task PostCallCenter(CallCenterModel model, string api, string token)
+        private async Task PostCallCenter(PeriodoDTO model, string api, string token)
         {
             using (var client = new HttpClient())
             {
@@ -5651,7 +5659,7 @@ namespace MVC.Presentacion.Agente
         {
             using (var client = new HttpClient())
             {
-                List<CorteCajaDTO> list = new List<CorteCajaDTO>();
+                List<Models.CorteCajaDTO> list = new List<Models.CorteCajaDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
@@ -5659,7 +5667,7 @@ namespace MVC.Presentacion.Agente
                 {
                     HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        list = await response.Content.ReadAsAsync<List<CorteCajaDTO>>();
+                        list = await response.Content.ReadAsAsync<List<Models.CorteCajaDTO>>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -5668,11 +5676,82 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    list = new List<CorteCajaDTO>();
+                    list = new List<Models.CorteCajaDTO>();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
                 _ListaCorteCaja = list;
+            }
+        }
+        public void GenerarLiquidacion(Models.Ventas.CorteCajaDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutLiquidar"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void BuscarPtoVentasLiquidacion(string tkn)
+        {
+            ApiRoute = ConfigurationManager.AppSettings["GetPuntosVentaLiquidacion"];
+            GetPuntosVentaLiquidacion(ApiRoute, tkn).Wait();
+        }
+        private async Task GetPuntosVentaLiquidacion(string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PuntoVentaModel> list = new List<PuntoVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<PuntoVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<PuntoVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaPuntosV = list;
+            }
+        }
+        public void ObtenerLiquidacionesDelDia(string tkn)
+        {
+            ApiRoute = ConfigurationManager.AppSettings["GetLiquidacionesDelDia"];
+            GetLiquidacionesDelDia(ApiRoute, tkn).Wait();
+        }
+        private async Task GetLiquidacionesDelDia(string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<VentaCajaGeneralDTO> list = new List<VentaCajaGeneralDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<VentaCajaGeneralDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<VentaCajaGeneralDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaVentaCajaGeneralDTO = list;
             }
         }
         #endregion

@@ -1,0 +1,52 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Lineas";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Producto",
+            Action = "CB_Lineas" };
+        settings.KeyFieldName = "IdProductoLinea";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdProductoLinea";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+        settings.Columns.Add("Linea", "Nombre");
+        settings.Columns.Add("Descripcion", "Descripción");
+      
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.SetDataItemTemplateContent(d =>
+            {
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("EditarLineaProducto", "Producto", new { Id = d.KeyValue}) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>edit</i></a>"));
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("EliminarLineaProducto", "Producto", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>delete</i></a>"));
+
+            });
+        });
+    });
+
+}
+@grid.Bind(Model).GetHtml()

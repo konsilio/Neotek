@@ -2,14 +2,15 @@
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+          
         )
 @Html.DevExpress().GetScripts(
             new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
+
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdmin).Equals(false) ? "disabled" : "";
     string EnabledEsNueva = Convert.ToBoolean(ViewBag.EsNueva).Equals(true) ? "" : "disabled";
@@ -93,9 +94,11 @@
                                            settings.Theme = "Material";
                                        }).Bind(Model.FechaRequerida).GetHtml()
 
-                                            @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
-                                            @Html.HiddenFor(m => m.FechaRequerida)
+
+
                                         </div>
+                                        @Html.HiddenFor(m => m.FechaRequerida)
+                                        @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
                                         <div class="col-lg-3">
                                             <b>Solicitante:</b>
                                             @Html.DevExpress().ComboBox(settings =>
@@ -111,11 +114,11 @@
                                                     }).BindList(ViewBag.Usuarios).Bind(Model.IdUsuarioSolicitante).GetHtml()
                                             @Html.ValidationMessageFor(m => m.IdUsuarioSolicitante, "", new { @class = "alert-danger" })
                                             @*<select id="ddlSoliciante" name="IdUsuarioSolicitante" class="form-control show-tick" @EnabledAdminCentral data-live-search="true">
-                                                @foreach (var lst in ViewBag.Usuarios)
-                                                {
-                                                    <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1</option>
-                                                }
-                                            </select>*@
+                @foreach (var lst in ViewBag.Usuarios)
+                {
+                    <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1</option>
+                }
+            </select>*@
                                             @Html.HiddenFor(m => m.IdUsuarioSolicitante)
                                             @Html.ValidationMessageFor(m => m.IdUsuarioSolicitante, "", new { @class = "alert-danger" })
                                         </div>
@@ -186,6 +189,7 @@
                                                         <option value="3">Servicio</option>
                                                     }
                                                 </select>
+                                                @*@Html.ValidationMessageFor(m => m.TipoProducto, "", new { @class = "alert-danger" })*@
                                             </div>
                                             <div class="col-lg-4">
                                                 <b>Producto:</b>
@@ -202,12 +206,19 @@
                                                         <option value="0">No hay productos</option>
                                                     }
                                                 </select>
+
+                                                @*@Html.ValidationMessageFor(m => m.Producto, "", new { @class = "alert-danger" })*@
                                             </div>
                                             <div class="col-md-2">
                                                 <strong>
                                                     <label>Cantidad: <b id="unidadPord"></b> </label>
                                                 </strong>
-                                                @Html.TextBoxFor(m => m.Cantidad, Model.Cantidad.ToString(), new { @class = "form-control", @type = "number" })
+                                                @Html.TextBoxFor(m => m.Cantidad, Model.Cantidad.ToString(), new
+                                           {
+                                               @class = "form-control",
+                                               @type = "number",
+                                               @min = "0"
+                                           })
                                                 @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "alert-danger" })
                                             </div>
                                             <div class="col-lg-3">
@@ -243,6 +254,7 @@
                                                         }
                                                     }
                                                 </select>
+                                                @*@Html.ValidationMessageFor(m => m.CentroCosto, "", new { @class = "alert-danger" })*@
                                             </div>
                                         </div>
                                         <br />
@@ -265,6 +277,7 @@
                                                     @*<input type="text" placeholder="Comentarios..." Class="form-control" name="Aplicacion" />*@
                                                 </div>
                                                 @*<asp:Label runat="server" ID="reqApli" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
+                                                @Html.ValidationMessageFor(m => m.Aplicacion, "", new { @class = "alert-danger" })
                                             </div>
                                             <div class="col-md-4">
                                                 <label>&nbsp; </label>
@@ -302,11 +315,11 @@
                                                                 <td>@prodReq.Aplicacion</td>
                                                                 <td>@prodReq.CentroCosto</td>
                                                                 <td>
-                                                                    <a href="@Url.Action("Editar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">edit</i>
-                                                                        <span>Editar</span>
-                                                                    </a>
-                                                                    <a href="@Url.Action("Borrar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                    @*<a href="@Url.Action("Editar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                            <i class="material-icons">edit</i>
+                                                                            <span>Editar</span>
+                                                                        </a>*@
+                                                                    <a href="@Url.Action("Borrar", "Requisicion" , new { id=prodReq.IdProducto,idUsuarioSol=Model.UsuarioSolicitante })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">delete</i>
                                                                         <span>Eliminar</span>
                                                                     </a>

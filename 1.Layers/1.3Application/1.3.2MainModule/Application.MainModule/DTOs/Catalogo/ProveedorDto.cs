@@ -50,6 +50,9 @@ namespace Application.MainModule.DTOs.Catalogo
         public string Calle { get; set; }
         public string NumExt { get; set; }
         public string NumInt { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [StringLength(13, MinimumLength = 12, ErrorMessage = Error.C0001)]
+        [RegularExpression(ExpresionRegular.Rfc, ErrorMessage = Error.C0001)]
         public string Rfc { get; set; }
         public string RazonSocial { get; set; }
     }    

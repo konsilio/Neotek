@@ -1,0 +1,55 @@
+﻿@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Proveedores";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Producto",
+            Action = "CB_Proveedores"
+        };
+        settings.KeyFieldName = "IdProveedor";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdProveedor";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+        settings.Columns.Add("NombreComercial", "Nombre");
+        settings.Columns.Add("Rfc", "RFC");
+        settings.Columns.Add("Persona1", "Contacto");
+        settings.Columns.Add("Telefono1", "Teléfono");
+        settings.Columns.Add("Email1", "Email");
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.SetDataItemTemplateContent(d =>
+            {
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("EditarProveedor", "Producto", new { Id = d.KeyValue}) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>edit</i></a>"));
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("EliminarProveedor", "Producto", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>delete</i></a>"));
+
+            });
+        });
+    });
+
+}
+@grid.Bind(Model).GetHtml()

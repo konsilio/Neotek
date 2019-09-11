@@ -1,0 +1,80 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Empresas";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Empresas",
+            Action = "CB_Empresas"
+        };
+        settings.KeyFieldName = "IdEmpresa";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdEmpresa";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Logo";
+            c.FieldName = "UrlLogotipo180px";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.Settings.AllowGroup = DefaultBoolean.False;
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Settings.AllowAutoFilter = DefaultBoolean.False;
+            c.Settings.AllowDragDrop = DefaultBoolean.False;
+            c.SetDataItemTemplateContent(d =>
+            {
+                if (d.Grid.GetRowValues(d.VisibleIndex, "UrlLogotipo180px")!=null)
+                {
+
+                    ViewContext.Writer.Write(string.Format("<img id = '"+ d.Grid.GetRowValues(d.VisibleIndex, "UrlLogotipo180px").ToString() + "' src = '"+ d.Grid.GetRowValues(d.VisibleIndex, "UrlLogotipo180px").ToString() + "' style = 'width: 30px; height: 30px' />"));
+                }
+                else {
+                    ViewContext.Writer.Write(string.Format(""));
+                }
+            });
+        });
+        settings.Columns.Add("RazonSocial", "Razón social");
+        settings.Columns.Add("Rfc", "RFC");
+        settings.Columns.Add("Persona1", "Contacto");
+        settings.Columns.Add("Celular1", "Celular");
+        settings.Columns.Add("Telefono1", "Teléfono");
+        settings.Columns.Add("Email1", "Correo");
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("EditarEmpresa", "Empresas", new { Id = d.KeyValue}) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>edit</i></a>"));
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("ActualizaParametros", "Empresas", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='zmdi zmdi-settings'></i></a>"));
+
+                if (ViewBag.EsAdmin)
+                {
+                    ViewContext.Writer.Write(string.Format("<a href='#ModalConfirmacion' data-toggle = 'modal' data-id = '"+ d.KeyValue.ToString() + "' id = 'btnok'  class='tip'  onclick='javascript: AsignarEliminar("+ d.KeyValue.ToString() +")' data-target='#ModalConfirmacion' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>delete</i></a>"));
+                }
+            });
+        });
+    });
+
+}
+@grid.Bind(Model).GetHtml()

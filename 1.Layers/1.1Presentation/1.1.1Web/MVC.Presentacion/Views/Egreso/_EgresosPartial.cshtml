@@ -5,7 +5,7 @@
     {
         settings.Name = "Egresos";
         settings.KeyFieldName = "IdEgreso";
-        settings.CallbackRouteValues = new { Controller = "Egreso", Action = "Idex" };
+        settings.CallbackRouteValues = new { Controller = "Egreso", Action = "grid" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.CommandColumn.Visible = false;
         settings.CommandColumn.ShowNewButton = false;
@@ -50,4 +50,4 @@
             });
         });
     }
-).Bind(ViewBag.Egresos).GetHtml()
+).Bind(Model).GetHtml()

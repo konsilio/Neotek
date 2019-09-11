@@ -74,8 +74,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<VentaPuntoDeVenta> BuscarVentas(DateTime fi, DateTime ff)
         {
-            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FechaRegistro >= fi && 
-                                                                x.FechaRegistro <= ff ).ToList();
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FechaRegistro >= fi &&
+                                                                x.FechaRegistro <= ff).ToList();
         }
         public List<PuntoVenta> BuscarTodos(short idEmpresa)
         {
@@ -164,12 +164,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<VentaPuntoDeVenta> BuscarVentasTOP(int top, DateTime fecha)
         {
-            return uow.Repository<VentaPuntoDeVenta>().Get(x =>            
-                x.FechaRegistro.Day.Equals(fecha.Day -1) &&
+            return uow.Repository<VentaPuntoDeVenta>().Get(x =>
+                //x.FechaRegistro.Day.Equals(fecha.Day - 1) &&
                 x.FechaRegistro.Month.Equals(fecha.Month) &&
-                x.FechaRegistro.Year.Equals(fecha.Year)        
+                x.FechaRegistro.Year.Equals(fecha.Year)
            ).Take(top).ToList();
-        }        
+        }
         public VentaCorteAnticipoEC BuscarCorte(DateTime fecha, short idCAlmacenGas)
         {
             return uow.Repository<VentaCorteAnticipoEC>().GetSingle(
@@ -183,9 +183,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<VentaCorteAnticipoEC> BuscarAnticipos(DateTime fecha, short idCAlmacenGas)
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(
-                x => x.IdCAlmacenGas.Equals(idCAlmacenGas) 
-                && x.FechaCorteAnticipo.Day.Equals(fecha.Day) 
-                && x.FechaCorteAnticipo.Month.Equals(fecha.Month) 
+                x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                && x.FechaCorteAnticipo.Day.Equals(fecha.Day)
+                && x.FechaCorteAnticipo.Month.Equals(fecha.Month)
                 && x.FechaCorteAnticipo.Year.Equals(fecha.Year)
                 //&& x.TipoOperacion.Equals("1")
              ).ToList();
@@ -316,6 +316,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public RespuestaDto UpdateVentas(List<VentaPuntoDeVenta> Ventas)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    foreach (var venta in Ventas)
+                        uow.Repository<VentaPuntoDeVenta>().Update(venta);
+                    uow.SaveChanges();
+                    _respuesta.EsInsercion = true;                    
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "registrar la venta.");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public List<PrecioVenta> PreciosVenta(short idEmpresa)
         {
             return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
@@ -380,8 +404,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<VentaPuntoDeVenta> ObtenerVentas(int idPuntoVenta, DateTime fecha)
         {
-            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FechaRegistro.Day.Equals(fecha.Day) 
-                                                        && x.FechaRegistro.Month.Equals(fecha.Month) 
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FechaRegistro.Day.Equals(fecha.Day)
+                                                        && x.FechaRegistro.Month.Equals(fecha.Month)
                                                         && x.FechaRegistro.Year.Equals(fecha.Year)
                                                         && x.IdPuntoVenta.Equals(idPuntoVenta)).ToList();
         }
@@ -399,7 +423,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<VentaPuntoDeVenta> BuscarVentasPorPeriodo(short IdEmpresa, DateTime p)
         {
-            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdEmpresa.Equals(IdEmpresa) 
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdEmpresa.Equals(IdEmpresa)
                                                             && x.FechaRegistro.Month.Equals(p.Month)
                                                             && x.FechaRegistro.Year.Equals(p.Year)).ToList();
         }

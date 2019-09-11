@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Seguridad;
@@ -37,6 +38,14 @@ namespace Application.MainModule.Servicios.Catalogos
                 return new CamionetaDataAccess().ObtenerCamionetas();
             else
                 return new CamionetaDataAccess().ObtenerCamionetas(empresa.IdEmpresa);
+        }
+        public static List<Camioneta> Obtener(List<CamionetaDTO> camionetas)
+        {
+            List<Camioneta> lista = new List<Camioneta>();
+            foreach (var item in camionetas)
+                if (item.Activo && Obtener(item.IdCamioneta) != null)
+                    lista.Add(Obtener(item.IdCamioneta));
+            return lista;
         }
         public static List<Camioneta> Obtener(short idEmpresa)
         {

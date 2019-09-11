@@ -92,7 +92,8 @@
                                         {
                                             if (Model != null && cc.IdCuentaContable == Model.IdCuentaContable)
                                             {
-                                                <option value="@cc. ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);" selected>@cc.Descripcion</option>
+                                                @*<option value="@cc.ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);" selected>@cc.Descripcion</option>*@
+                                                <option value="@cc.IdCuentaContable" selected>@cc.Descripcion</option>
                                             }
                                             else
                                             {
@@ -264,10 +265,11 @@
                                     @Html.ValidationMessageFor(m => m.IdBanco, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-6">
-                                    <b>Cuenta</b>
+                                    <b>Cuenta *</b>
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Cuenta, new { @class = "form-control", @placeholder = "Número de cuenta" })
                                     </div>
+                                    @Html.ValidationMessageFor(m => m.Cuenta, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
                             <div class="row clearfix">

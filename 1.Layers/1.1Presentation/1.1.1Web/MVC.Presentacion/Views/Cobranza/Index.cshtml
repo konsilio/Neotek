@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                             <br />
-                            <div class="row clearfix">
+                            @*<div class="row clearfix">
                                 <div class="col-sm-12">
                                     <div class="row clearfix">
                                         <div class="col-sm-2">
@@ -93,6 +93,7 @@
                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                        }).Bind(Model.Count != 0 ? Model[0].FechaRango1 : DateTime.Now).GetHtml()
                                         </div>
+
                                         <div class="col-sm-2">
                                             <b>Fecha al:</b>
                                             @Html.DevExpress().DateEdit(settings =>
@@ -111,7 +112,9 @@
                                         <div class="col-sm-3">
                                             <b>RFC:</b>
                                             <input type="text" name="Rfc" class="form-control" placeholder="RFC del cliente" />
+
                                         </div>
+                                        @Html.ValidationMessageFor(m => m., "", new { @class = "alert-danger" })
                                         <div class="col-sm-3" style="top:10px">
                                             <div class="form-group">
                                                 <input type="submit" name="Buscar" value="Buscar" class="btn btn-raised btn-primary btn-round float-left" />
@@ -119,7 +122,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
                             <br />
                             @if (ViewBag.MensajeError != null)
                             {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Ventas
 {
+
    public class VentasPipaDto
     {
         public string Concepto { get; set; }//GAS

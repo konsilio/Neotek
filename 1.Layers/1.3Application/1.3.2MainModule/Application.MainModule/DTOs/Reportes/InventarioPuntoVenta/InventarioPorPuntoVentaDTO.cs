@@ -12,5 +12,6 @@ namespace Application.MainModule.DTOs
         public DateTime Fecha { get; set; }
         public List<PipaDTO> Pipas { get; set; }
         public List<EstacionCarburacionDTO> Estaciones { get; set; }
+        public List<CamionetaDTO> Camionetas { get; set; }
     }
 }

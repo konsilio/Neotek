@@ -5,7 +5,7 @@
         settings.Name = "ProductComplemento";
         settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "ProductComplementoPartial" };
         settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoPartialUpdate" };
-
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         settings.KeyFieldName = "IdProducto";
 
         settings.SettingsPager.Visible = true;
@@ -22,6 +22,7 @@
         settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
         settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
         settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+        settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.False;
         settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
         settings.Styles.Table.CssClass = "table";
         //settings.SettingsCommandButton.UpdateButton.Styles.CssPostfix = "btn btn-raised btn-primary btn-round btn-md";
@@ -67,7 +68,7 @@
             c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
-        });     
+        });
         settings.Columns.Add(c =>
         {
             c.FieldName = "IdCentroCosto";
@@ -154,7 +155,7 @@
             {
                 p.DisplayFormatString = "c";
             });
-        });      
+        });
         settings.CellEditorInitialize = (s, e) =>
         {
             ASPxEdit editor = (ASPxEdit)e.Editor;

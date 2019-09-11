@@ -3,7 +3,7 @@
 @using PagedList;
 @using System.Configuration;
 @model OrdenesCompraModel
-    @Html.DevExpress().GetStyleSheets(
+@Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
@@ -17,7 +17,6 @@
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdminCentral).Equals(false) ? "disabled" : "";
 }
-@*<link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />*@
 
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
@@ -116,213 +115,10 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="body">
-                            <div class="row clearfix">
-
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <input name="NumeroRequisicion" class="form-control" placeholder="N° de Requisición" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <input name="NumeroOrdenCompra" class="form-control" placeholder="N° Orden de Compra" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row clearfix">
-                                <div class="col-sm-4">
-                                    <label>Proveedor</label>
-                                    <select name="IdProveedor" class="form-control z-index show-tick selectpicker" data-live-search="true">
-                                        <option value="0">Seleccione uno</option>
-                                        @foreach (var lst in ViewBag.Proveedores)
-                                        {
-                                            <option value="@lst.IdProveedor">@lst.NombreComercial</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label>Estatus</label>
-                                    <select name="Estatus" class="form-control z-index show-tick selectpicker" data-live-search="true">
-                                        <option value="0" >Seleccione uno</option>
-                                        @foreach (var lst in ViewBag.Estatus)
-                                        {
-                                            <option value="@lst.IdOrdenCompraEstatus">@lst.Descripcion</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="demo-masked-input">
-                                <div class="row clearfix">
-                                    <div class="col-sm-3">
-                                        <label>Fecha de registro</label>
-                                   @Html.DevExpress().DateEdit(settings =>
-                                   {
-                                       settings.Name = "FechaRegistroDe";
-                                       settings.Properties.UseMaskBehavior = true;
-                                       settings.Properties.EditFormat = EditFormat.Custom;
-                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
-                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       settings.Theme = "Material";
-                                   }).Bind(Model.FechaRegistroDe).GetHtml()
-                                        @*<div class="input-group">
-                                                <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-                                                @Html.TextBoxFor(model => model.FechaRegistroDe, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
-                                            </div>*@
-                                        @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label>&nbsp; </label>
-                                        @Html.DevExpress().DateEdit(settings =>
-                                   {
-                                       settings.Name = "FechaRegistroA";
-                                       settings.Properties.UseMaskBehavior = true;
-                                       settings.Properties.EditFormat = EditFormat.Custom;
-                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
-                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       settings.Theme = "Material";
-                                   }).Bind(Model.FechaRegistroA).GetHtml()
-                                        @*<div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-                                            @Html.TextBoxFor(model => model.FechaRegistroA, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
-                                        </div>*@
-                                        @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label>Fecha de requisición</label>
-                                        @Html.DevExpress().DateEdit(settings =>
-                                   {
-                                       settings.Name = "FechaRequeridaDe";
-                                       settings.Properties.UseMaskBehavior = true;
-                                       settings.Properties.EditFormat = EditFormat.Custom;
-                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
-                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       settings.Theme = "Material";
-                                   }).Bind(Model.FechaRequeridaDe).GetHtml()
-                                        @*<div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-                                            @Html.TextBoxFor(model => model.FechaRequeridaDe, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
-                                        </div>*@
-                                        @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <label>&nbsp;</label>
-                                        @Html.DevExpress().DateEdit(settings =>
-                                   {
-                                       settings.Name = "FechaRequeridaA";
-                                       settings.Properties.UseMaskBehavior = true;
-                                       settings.Properties.EditFormat = EditFormat.Custom;
-                                       settings.Properties.EditFormatString = "dd/MM/yyyy hh:mm";
-                                       settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
-                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                       settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                       settings.Theme = "Material";
-                                   }).Bind(Model.FechaRequeridaA).GetHtml()
-                                        @*<div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-                                            @Html.TextBoxFor(model => model.FechaRequeridaA, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
-                                        </div>*@
-                                        @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="input-group">
-                                            <b>&nbsp; </b>
-                                            <button ID="lblAction" class="tn btn-danger btn-simple btn-round btn-sm" formaction="Buscar">
-                                                <i class="material-icons">search</i>
-                                                <span class="icon-name"></span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="body">        
                             <div class="row clearfix blockquote blockquote-info btn-round">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <td><strong>Gasera</strong></td>
-                                                <td><strong>N° Requisición</strong></td>
-                                                <td><strong>No. Orden de Compra</strong></td>
-                                                <td><strong>Solicitante</strong></td>
-                                                <td><strong>Proveedor</strong></td>
-                                                <td><strong>Importe</strong></td>
-                                                <td><strong>Estatus</strong></td>
-                                                <td><strong>Acción</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var _oc in ViewBag.Ordenes)
-                                            {
-                                                <tr>
-                                                    <td>@_oc.Empresa</td>
-                                                    <td>@_oc.NumeroRequisicion</td>
-                                                    <td>@_oc.NumOrdenCompra</td>
-                                                    <td>@_oc.Solicitante</td>
-                                                    <td>@_oc.Proveedor</td>
-                                                    <td>@_oc.Total</td>
-                                                    <td>@_oc.OrdenCompraEstatus</td>
-                                                    <td>
-                                                        @if (_oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion))
-                                                        {
-                                                            <a ID="lbAutOC" href="@Url.Action("OrdenCompraAutorizacion", "OrdenCompra", new { id = _oc.IdOrdenCompra })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">spellcheck</i>
-                                                                <span>Autorización orden compra</span>
-                                                            </a>
-                                                        }
-                                                        @if ((_oc.EsGas == false && _oc.EsTransporteGas == false) && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Proceso_compra))
-                                                        {
-                                                            <a ID="lbAgregarMercancia" href="@Url.Action("EntradaMercancia", "OrdenCompra", new { idOrden = _oc.IdOrdenCompra })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons"> assignment_turned_in</i>
-                                                                <span>Agregar mercancía</span>
-                                                            </a>                                                          
-                                                        }
-                                                        @if (_oc.OrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_cancelada))
-                                                        {
-                                                          
-                                                        }
-                                                        @if (_oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.SolicitudPago))
-                                                        {
-                                                            <a ID="lbAutOC" href="@Url.Action("OrdenCompraPago", "OrdenCompra", new { id = _oc.IdOrdenCompra })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">attach_money</i>
-                                                                <span>Pago orden compra</span>
-                                                            </a>
-                                                        }
-                                                        @if ((_oc.EsGas == true || _oc.EsTransporteGas == true) && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.EnComplementoCompra))
-                                                        {
-                                                            <a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraComplementoGas", "OrdenCompra", new { id = _oc.IdOrdenCompra })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">local_gas_station</i>
-                                                                <span>Visualizar orden compra</span>
-                                                            </a>
-                                                        }
-                                                        @if ((_oc.EsGas == false && _oc.EsTransporteGas == false) && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.EnComplementoCompra))
-                                                        {
-                                                            <a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraComplemento", "OrdenCompra", new { id = _oc.IdOrdenCompra })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">input</i>
-                                                                <span>Visualizar orden compra</span>
-                                                            </a>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="row clearfix text-center">
-                                <div class="col-md-5">
-                                    Página @(ViewBag.Ordenes.PageCount < ViewBag.Ordenes.PageNumber ? 0 : ViewBag.Ordenes.PageNumber) de @ViewBag.Ordenes.PageCount
-                                </div>
-                                <div class="col-md-2"></div>
-                                <div class="col-md-5">
-                                    @Html.PagedListPager((IPagedList)ViewBag.Ordenes, pageO => Url.Action("Ordenes", new { pageO, @class = "btn btn-primary btn-simple" }))
-                                </div>
-                            </div>
+                                @Html.Partial("_CB_Ordenes", (List<OrdenCompraDTO>)ViewBag.Ordenes)                               
+                            </div>                       
                         </div>
                     </div>
                 </div>

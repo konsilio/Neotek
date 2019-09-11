@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
+using Exceptions.MainModule.Validaciones;
 
 namespace MVC.Presentacion.Models.Pedidos
 {
@@ -30,6 +32,8 @@ namespace MVC.Presentacion.Models.Pedidos
         public DateTime FechaRegistroPedido { get; set; }
         public DateTime FechaEntregaPedido { get; set; }
         public string Empresa { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Tipo de Persona Fiscal")]
         public string TipoPersonaFiscal { get; set; }
         public string RegimenFiscal { get; set; }
         public string FolioVenta { get; set; }

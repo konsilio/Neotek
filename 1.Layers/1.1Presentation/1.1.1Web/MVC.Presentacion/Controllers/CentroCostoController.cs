@@ -17,6 +17,8 @@ namespace MVC.Presentacion.Controllers
         string tkn = string.Empty;
         public ActionResult CentroCosto(byte? id, string mjs = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             if (mjs != null)
@@ -33,10 +35,18 @@ namespace MVC.Presentacion.Controllers
             if (id != null)
             {
                 ViewBag.EsEdicion = true;
-                return View(CatalogoServicio.ActivarModificar(id.Value, (CentroCostoModel)TempData["Model"], tkn));
+                var result = CatalogoServicio.ActivarModificar(id.Value, (CentroCostoModel)TempData["Model"], tkn);
+                TempData["DataSourceCentros"] = result.CentrosCostos.ToList();
+                TempData.Keep("DataSourceCentros");
+                return View(result);
             }
             else
+            {
+                TempData["DataSourceCentros"] = CatalogoServicio.InitCentroCosto(tkn).CentrosCostos.ToList();
+                TempData.Keep("DataSourceCentros");
                 return View(CatalogoServicio.InitCentroCosto(tkn));
+            }
+
         }
         public ActionResult Crear(CentroCostoModel model)
         {
@@ -93,10 +103,14 @@ namespace MVC.Presentacion.Controllers
                 var respuesta = CatalogoServicio.BorrarCentroCosto(id, tkn);
                 if (respuesta.Exito)
                 {
+                    TempData["DataSourceCentros"] = CatalogoServicio.InitCentroCosto(tkn).CentrosCostos.ToList();
+                    TempData.Keep("DataSourceCentros");
                     return View("CentroCosto", CatalogoServicio.InitCentroCosto(tkn));
                 }
                 else
                 {
+                    TempData["DataSourceCentros"] = CatalogoServicio.InitCentroCosto(tkn).CentrosCostos.ToList();
+                    TempData.Keep("DataSourceCentros");
                     ViewBag.MensajeError = respuesta.Mensaje;
                     return View("CentroCosto", CatalogoServicio.InitCentroCosto(tkn));
                 }
@@ -120,5 +134,22 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+
+
+        public ActionResult CB_CentroCostos()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            List<CentroCostoDTO> model = new List<CentroCostoDTO>();
+            if (TempData["DataSourceCentros"] != null)
+            {
+                model = (List<CentroCostoDTO>)TempData["DataSourceCentros"];
+                TempData["DataSourceCentros"] = model;
+                //TempData.Keep("DataSourceCentros");
+            }
+            return PartialView("_CB_CentroCostos", model);
+        }
+
+
     }
 }

@@ -19,10 +19,17 @@ namespace Application.MainModule.Servicios.Requisiciones
         {
             return new RequisicionDataAccess().InsertarNueva(_req);
         }
-        public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(Int16 _IdEmpresa)
+        public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(short _IdEmpresa)
         {
-            return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas().Where(x => x.IdEmpresa.Equals(_IdEmpresa) && !x.Solicitante.EsAdministracionCentral).ToList());
+            return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas(_IdEmpresa));
         }
+
+        public static List<RequisicionDTO> BuscarRequisicionAlmacenPorIdEmpresa(short _IdEmpresa)
+        {
+            return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodasAlmacenPorIdEmpresa(_IdEmpresa));
+        }
+        
+
         public static List<RequisicionDTO> BuscarRequisicionPorPeriodo(short _IdEmpresa, DateTime periodo)
         {
             return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas(_IdEmpresa, periodo));

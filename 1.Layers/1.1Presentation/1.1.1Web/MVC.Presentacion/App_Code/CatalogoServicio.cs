@@ -348,6 +348,15 @@ namespace MVC.Presentacion.App_Code
             agente.EliminarRolesAsig(cc, tkn);
             return agente._RespuestaDTO;
         }
+
+        public static RespuestaDTO EliminarRolAlUsuario(UsuarioRolModel cc,string tkn)
+        {
+            
+            var agente = new AgenteServicio();
+            agente.EliminarRolesAsig(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+
         #endregion
 
         #region Roles
@@ -2605,7 +2614,7 @@ namespace MVC.Presentacion.App_Code
         }
         public static CentroCostoModel ActivarModificar(byte idcc, CentroCostoModel model, string tkn)
         {
-            if (model.CentrosCostos == null)
+            if (model==null ||  model.CentrosCostos == null)
                 model = InitCentroCosto(tkn);
             var cc = model.CentrosCostos.FirstOrDefault(x => x.IdCentroCosto.Equals(idcc));
             model.Numero = cc.Numero;

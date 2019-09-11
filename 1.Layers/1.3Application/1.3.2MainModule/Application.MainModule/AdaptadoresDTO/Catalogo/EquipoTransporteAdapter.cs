@@ -37,6 +37,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Cilindros = ec.Cilindros,
                 IdTipoCombustible = ec.IdTipoCombustible,
                 IdTipoUnidad = EquipoTransporteServicio.ObtenerTipo(ec),
+                TipoUnidad = EquipoTransporteServicio.ObtenerNombreTipo(ec),
                 AliasUnidad = EquipoTransporteServicio.ObtenerAlias(ec),
                 IdEquipoTransporteDetalle = ec.IdEquipoTransporteDetalle,
                 CapacidadKg = EquipoTransporteServicio.ObtenerCapacidadKg(ec),
@@ -57,11 +58,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             List<EquipoTransporteDTO> respuesta = new List<EquipoTransporteDTO>();
             foreach (var et in entidades)
             {
-                if (et.IdCamioneta != null && et.CCamioneta.Activo)               
+                if (et.IdCamioneta != null )               
                     respuesta.Add(toDTO(et));
-                if (et.IdPipa != null && et.CPipa.Activo)
+                if (et.IdPipa != null)
                     respuesta.Add(toDTO(et));
-                if (et.IdUtilitario != null && et.CUtilitario.Activo)
+                if (et.IdUtilitario != null )
                     respuesta.Add(toDTO(et));
             }
             return respuesta;
