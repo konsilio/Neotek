@@ -10,6 +10,7 @@ using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.DTOs.Mobile.Cortes;
 using Utilities.MainModule;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
@@ -65,24 +66,33 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdEmpresa = idEmpresa,
                 ClienteConCredito = venta.Credito,
                 IdOperadorChofer = punto_venta.IdOperadorChofer,
-                Iva = venta.Iva,
+                FolioVenta = venta.FolioVenta,
+                FolioOperacionDia = venta.FolioVenta,
+                FechaRegistro = DateTime.Now,
+                Dia = (byte)venta.Fecha.Day,
+                Mes = (byte)venta.Fecha.Month,
+                Year = (short)venta.Fecha.Year,
+                FechaAplicacion = venta.Fecha,
+                Iva = IvaEnum.p16,
                 Subtotal = venta.Subtotal,
                 Total = venta.Total,
                 CambioRegresado = venta.Total - venta.Efectivo,
                 IdPuntoVenta = punto_venta.IdPuntoVenta,
-                PuntoVenta = punto_venta.UnidadesAlmacen.Numero,               
-                //IdCliente = venta.IdCliente,
-                //RazonSocial = cliente.RazonSocial,
+                PuntoVenta = punto_venta.UnidadesAlmacen.Numero,
+                EsBonificacion = venta.Bonificacion,
+                RequiereFactura = venta.Factura,
+                VentaACredito = venta.Credito,
                 VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, idOrden, idEmpresa),
             };
         }
 
         public static ICollection<VentaPuntoDeVentaDetalle> ToDTO(List<ConceptoDTO> conceptos, VentaDTO venta, PuntoVenta punto_venta, int idOrden, short idEmpresa)
         {
-            List<VentaPuntoDeVentaDetalle> list = new List<VentaPuntoDeVentaDetalle>();
+            List<VentaPuntoDeVentaDetalle> list = new List<VentaPuntoDeVentaDetalle>();         
             int idOrdenDetalle = 1;
             foreach (var concepto in conceptos)
             {
+                var p = ProductoServicio.ObtenerProducto(concepto.IdProducto);
                 list.Add(new VentaPuntoDeVentaDetalle()
                 {
                     FechaRegistro = venta.Fecha,
@@ -99,15 +109,18 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     PrecioUnitarioProducto = concepto.PUnitario,
                     Subtotal = concepto.Subtotal,
                     IdProducto = concepto.IdProducto,
-                    DescuentoTotal = concepto.Descuento,
                     CantidadLt = punto_venta.UnidadesAlmacen.IdCamioneta == null ? concepto.CantidadLt : CalcularGasServicio.ObtenerLitrosDesdeKilos(concepto.CantidadKg, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),
                     CantidadKg = punto_venta.UnidadesAlmacen.IdCamioneta == null ? CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.CantidadLt, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos) : concepto.CantidadKg,
-                    //Agregados recientemente
+                    DescuentoTotal = concepto.Descuento * concepto.Cantidad,
                     IdUnidadMedida = concepto.IdUnidadMedida,
                     PrecioUnitarioKg = concepto.PrecioUnitarioKg,
                     PrecioUnitarioLt = concepto.PrecioUnitarioLt,
-                    DescuentoUnitarioKg = concepto.DescuentoUnitarioKg,
-                    DescuentoUnitarioLt = concepto.DescuentoUnitarioLt,
+                    DescuentoUnitarioKg = concepto.Descuento,
+                    DescuentoUnitarioLt = concepto.Descuento,
+                    ProductoLinea = p.LineaProducto.Descripcion,
+                    ProductoCategoria = p.Categoria.Descripcion,
+                    UnidadMedida = p.UnidadMedida.Acronimo,
+
                 });
                 idOrdenDetalle++;
             }
