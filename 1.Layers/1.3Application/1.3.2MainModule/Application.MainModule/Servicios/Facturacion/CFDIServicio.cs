@@ -144,7 +144,7 @@ namespace Application.MainModule.Servicios.Facturacion
             _comp.Moneda = MonedaEnum.PesoMexicano;
             _comp.Total = (float)venta.Total;
             _comp.TipoDeComprobante = TipoComprobanteEnum.Ingreso;
-            _comp.MetodoPago = dto.Id_MetodoPago.Equals(0) ? MetodoPagoConst.Pago_en_una_sola_exhibici髇 : MetodoPagoServicio.Buscar(dto.Id_MetodoPago).MetodoPagoSAT;
+            _comp.MetodoPago = dto.Id_MetodoPago.Equals(0) ? MetodoPagoConst.Pago_en_una_sola_exhibici贸n : MetodoPagoServicio.Buscar(dto.Id_MetodoPago).MetodoPagoSAT;
             _comp.LugarExpedicion = empresa.CodigoPostal;
 
             return _comp;
@@ -157,7 +157,7 @@ namespace Application.MainModule.Servicios.Facturacion
             _comp.FormaPago = "27";
             _comp.Moneda = MonedaEnum.PesoMexicano;
             _comp.TipoDeComprobante = TipoComprobanteEnum.Ingreso;
-            _comp.MetodoPago = MetodoPagoConst.Pago_en_una_sola_exhibici髇;
+            _comp.MetodoPago = MetodoPagoConst.Pago_en_una_sola_exhibici贸n;
             _comp.LugarExpedicion = empresa.CodigoPostal;
 
             return _comp;
@@ -290,7 +290,7 @@ namespace Application.MainModule.Servicios.Facturacion
             _comp.SubTotal = 0;
             _comp.Total = 0;
 
-            _comp.MetodoPago = dto.Id_MetodoPago.Equals(0) ? MetodoPagoConst.Pago_en_una_sola_exhibici髇 : MetodoPagoServicio.Buscar(dto.Id_MetodoPago).MetodoPagoSAT;
+            _comp.MetodoPago = dto.Id_MetodoPago.Equals(0) ? MetodoPagoConst.Pago_en_una_sola_exhibici贸n : MetodoPagoServicio.Buscar(dto.Id_MetodoPago).MetodoPagoSAT;
             _comp.LugarExpedicion = empresa.CodigoPostal;
 
             return _comp;
@@ -320,7 +320,7 @@ namespace Application.MainModule.Servicios.Facturacion
             dr.Serie = cfdi.Serie;
             dr.Folio = cfdi.Folio.ToString();
             dr.MonedaDR = MonedaEnum.PesoMexicano;
-            dr.MetodoDePagoDR = cfdi.Id_MetodoPago.Equals(0) ? MetodoPagoConst.Pago_en_una_sola_exhibici髇 : MetodoPagoServicio.Buscar(cfdi.Id_MetodoPago).MetodoPagoSAT;
+            dr.MetodoDePagoDR = cfdi.Id_MetodoPago.Equals(0) ? MetodoPagoConst.Pago_en_una_sola_exhibici贸n : MetodoPagoServicio.Buscar(cfdi.Id_MetodoPago).MetodoPagoSAT;
             dr.NumParcialidad = CobranzaServicio.CalcularNumAbono(abono);
             dr.ImpSaldoAnt = float.Parse(CobranzaServicio.CalcularNumSaldoAnteriorAbono(abono).ToString());
             dr.ImpPagado = float.Parse(abono.MontoAbono.ToString());
@@ -386,6 +386,7 @@ namespace Application.MainModule.Servicios.Facturacion
         {
             RespuestaDto _resp = new RespuestaDto();
             _resp.Exito = true;
+            
             _resp.Mensaje = FacturacionConst.M0001;
             foreach (var item in dtos)
             {
@@ -393,7 +394,7 @@ namespace Application.MainModule.Servicios.Facturacion
                 if (!item.RespuestaTimbrado.Exito)
                 {
                     _resp.Exito = false;
-                    _resp.MensajesError = item.RespuestaTimbrado.MensajesError;
+                    _resp.Mensaje = item.RespuestaTimbrado.Mensaje;
                     return _resp;
                 }
             }

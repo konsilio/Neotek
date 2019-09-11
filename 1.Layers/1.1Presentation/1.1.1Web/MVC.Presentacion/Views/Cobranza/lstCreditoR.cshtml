@@ -1,0 +1,36 @@
+﻿@model List<MVC.Presentacion.Models.Cobranza.CargosModel>
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "abono_" + ViewData["IdVenta"];
+        settings.SettingsDetail.MasterGridName = "CreditoRecuperado";
+        settings.CallbackRouteValues = new { Controller = "CorteCaja", Action = "DetalleVentas", CustomerID = ViewData["CustomerID"] };
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Settings.ShowFooter = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FechaAbono";
+            c.Caption = "Fecha de Abono";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.GroupIndex = 1;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "MontoAbono";
+            c.Caption = "Monto de Abono";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FormaPago";
+            c.Caption = "Forma de Pago";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+    }
+).Bind(Model).GetHtml()

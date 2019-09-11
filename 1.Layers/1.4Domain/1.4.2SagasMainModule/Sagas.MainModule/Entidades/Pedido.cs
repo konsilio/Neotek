@@ -33,6 +33,7 @@ namespace Sagas.MainModule.Entidades
         public Nullable<int> Ruta { get; set; }
         public short IdDireccion { get; set; }
         public string MotivoCancelacion { get; set; }
+        public Nullable<System.DateTime> FechaSurtido { get; set; }
     
         public virtual PedidoEstatus PedidoEstatus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -18,6 +18,8 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         {
             AbonosDTO dto = new AbonosDTO();
             var venta = CFDIServicio.Buscar(_Abono.Id_RelTF ?? 0);
+            dto.IdCliente = _Abono.Cargo.IdCliente;
+            dto.Cliente = ClienteServicio.ObtenerNomreCliente(_Abono.Cargo.CCliente);
             dto.IdAbono = _Abono.IdAbono;
             dto.IdCargo = _Abono.IdCargo;
             dto.FechaRegistro = _Abono.FechaRegistro;
@@ -242,8 +244,45 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         {
             ReporteDTO lprodDTO = new ReporteDTO();
             lprodDTO.reportedet = lCargoV.ToList().Select(x => ToDTORep(x)).ToList();
-            lprodDTO.global = lCargoT;
+            //lprodDTO.reportedet.Add(Totalizador(lprodDTO.reportedet));
+            lprodDTO.global = Global(lCargoT);
             return lprodDTO;
+        }
+        public static CargosDTO Totalizador(List<CargosDTO> cargos)
+        {
+            CargosDTO respuesta = new CargosDTO();
+            respuesta.Nombre = "Total";
+            respuesta.TotalCargo = cargos.Sum(x => x.TotalCargo);
+            respuesta.SaldoActual = cargos.Sum(x => x.SaldoActual);
+            respuesta.SaldoCorriente = cargos.Sum(x => x.SaldoCorriente);
+            respuesta.SaldoVencido = cargos.Sum(x => x.SaldoVencido);
+            respuesta.Dias1a7 = cargos.Sum(x => x.Dias1a7);
+            respuesta.Dias8a16 = cargos.Sum(x => x.Dias8a16);
+            respuesta.Dias17a31 = cargos.Sum(x => x.Dias17a31);
+            respuesta.Dias32a61 = cargos.Sum(x => x.Dias32a61);
+            respuesta.Dias62a91 = cargos.Sum(x => x.Dias62a91);
+            respuesta.Mas91 = cargos.Sum(x => x.Mas91);
+            return respuesta;
+
+        }
+        public static List<CarteraVencidaDTO> Global(List<CarteraVencidaDTO> cargos)
+        {
+            List<CarteraVencidaDTO> respuesta = new List<CarteraVencidaDTO>();
+            respuesta.Add(new CarteraVencidaDTO()
+            {
+                Nombre = "Total",
+                SaldoActualTotal = cargos.Sum(x => x.SaldoActual),
+                SaldoCorrienteTotal = cargos.Sum(x => x.SaldoCorriente),
+                SaldoVencidoTotal = cargos.Sum(x => x.SaldoVencido),
+                Dias1_7Total = cargos.Sum(x => x.Dias1_7),
+                Dias8_16Total = cargos.Sum(x => x.Dias8_16),
+                Dias17_31Total = cargos.Sum(x => x.Dias17_31),
+                Dias32_61Total = cargos.Sum(x => x.Dias32_61),
+                Dias62_91Total = cargos.Sum(x => x.Dias62_91),
+                Mas91Total = cargos.Sum(x => x.Mas91Total),
+            });
+            return respuesta;
+
         }
         public static AbonosDTO FromInit(int id)
         {

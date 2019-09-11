@@ -24,10 +24,15 @@ namespace Application.MainModule.Servicios.Pedidos
             List<PedidoModelDto> lPedidos = PedidosAdapter.ToDTO(new PedidosDataAccess().Buscar());
             return lPedidos;
         }
+        public static List<Pedido> Obtener(short IdEmpresa, PeriodoDTO dto)
+        {
+            return new PedidosDataAccess().Buscar(IdEmpresa, dto.FechaInicio, dto.FechaFin);
+  
+        }
         public static List<PedidoModelDto> Obtener(short idempresa)
         {
             //var pedidos = new PedidosDataAccess().Buscar(idempresa);
-            var pedidos = new PedidosDataAccess().Buscar(idempresa, DateTime.Now);
+            var pedidos = new PedidosDataAccess().Buscar(idempresa);
             return PedidosAdapter.ToDTO(pedidos);
         }
         public static RegistraPedidoDto Obtener(int idPedido)
@@ -99,6 +104,12 @@ namespace Application.MainModule.Servicios.Pedidos
         public static decimal ObtenerCantidadVentaPipaEstacion(List<PedidoDetalle> detalles)
         {
             return detalles.Sum(x => x.Cantidad.Value);
+        }
+        public static int ObtenerTimpoAtencion(Pedido p)
+        {
+            if (p.FechaSurtido != null)
+                return Convert.ToInt32(Math.Truncate(p.FechaSurtido.Value.Subtract(p.FechaRegistro).TotalMinutes));
+            return 0;
         }
     }
 }

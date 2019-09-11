@@ -127,22 +127,26 @@
                                         @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2">
-                                    <div class="form-group float-right">
-                                        E-mail:*
+
+                                @if (ViewBag.IdUser == null) { 
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <div class="form-group float-right">
+                                            E-mail:*
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <input type="text" name="Email1" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Email1)" class="form-control">
                                         @Html.ValidationMessageFor(m => m.Email1, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
+
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
                                         <a href="javascript:void(0);" class="tip" role="button" aria-haspopup="true" aria-expanded="false"> <i class="material-icons">help</i><span>Nombre de Usuario para accesar al sistema</span></a>
                                     </div>
                                 </div>
+                                }
                             </div>
                             <div class="row clearfix">
                                 <div class="col-sm-05">
@@ -156,23 +160,28 @@
                                         @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2">
-                                    <div class="form-group float-right">
-                                        Contraseña:*
+
+                                @if (ViewBag.IdUser == null)
+                                {
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <div class="form-group float-right">
+                                            Contraseña:*
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
-                                        <input type="password" name="Password" class="form-control" />
-                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "alert-danger" })
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <input type="password" name="Password" class="form-control" />
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "alert-danger" })
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-1 col-md-1 col-sm-1">
-                                    <div class="form-group">
-                                        <a href="javascript:void(0);" class="tip" role="button" aria-haspopup="true" aria-expanded="false"> <i class="material-icons">help</i><span>Contraseña para accesar al sistema, podrá ser cambiada</span></a>
+
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <a href="javascript:void(0);" class="tip" role="button" aria-haspopup="true" aria-expanded="false"> <i class="material-icons">help</i><span>Contraseña para accesar al sistema, podrá ser cambiada</span></a>
+                                        </div>
                                     </div>
+                                }
                                 </div>
-                            </div>
                             <div class="row clearfix">
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group float-right">
@@ -386,8 +395,10 @@
                                        settings.Properties.ValueType = typeof(byte);
                                        settings.ClientEnabled = true;
                                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                     
+
                                    }).BindList(ViewBag.ListaPaises).Bind(Model.IdPais).GetHtml()
-                                        @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
+                                        @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger"})
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">

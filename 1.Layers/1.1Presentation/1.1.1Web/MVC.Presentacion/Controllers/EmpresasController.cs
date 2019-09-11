@@ -19,15 +19,22 @@ namespace MVC.Presentacion.Controllers
         // GET: Empresas
         public ActionResult Index()
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
             RespuestaDTO Resp = new RespuestaDTO();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tok);
+           
+
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tok).SingleOrDefault().NombreComercial;
-            ViewBag.listaEmpresas = CatalogoServicio.Empresas(_tok);
+
+            //ViewBag.listaEmpresas = CatalogoServicio.Empresas(_tok);
+            TempData["DataSourceEmpresas"]= CatalogoServicio.Empresas(_tok).ToList();
+            TempData.Keep("DataSourceEmpresas");
 
             if (TempData["RespuestaDTO"] != null)
             {
@@ -210,6 +217,25 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+
+
+        public ActionResult CB_Empresas()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tok = Session["StringToken"].ToString();
+            List<EmpresaDTO> model = new List<EmpresaDTO>();
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tok);
+            if (TempData["DataSourceEmpresas"] != null)
+            {
+                model = (List<EmpresaDTO>)TempData["DataSourceEmpresas"];
+                TempData["DataSourceEmpresas"] = model;
+               // TempData.Keep("DataSourceEmpresas");
+
+            }
+            return PartialView("_CB_Empresas", model);
+        }
+
+
 
     }
 }

@@ -90,13 +90,13 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static List<Producto> Obtener(DateTime fi, DateTime ff)
         {
-            return new ProductoDataAccess().ListaProductos( fi, ff);
+            return new ProductoDataAccess().ListaProductos(fi, ff);
         }
 
         public static List<Producto> Obtener(Empresa empresa)
         {
             if (empresa.Productos != null & empresa.Productos.Count > 0)
-                return empresa.Productos.ToList().Where(x=> x.EsActivoVenta == true & x.EsGas == true & x.Activo == true).ToList();
+                return empresa.Productos.ToList().Where(x => x.EsActivoVenta == true & x.EsGas == true & x.Activo == true).ToList();
 
             return Obtener(empresa.IdEmpresa);
         }
@@ -115,7 +115,7 @@ namespace Application.MainModule.Servicios.Catalogos
         public static Producto ObtenerProducto(int idProducto)
         {
             return new ProductoDataAccess().BuscarProducto(idProducto);
-        }        
+        }
         public static List<Producto> ListaProductos()
         {
             var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
@@ -134,7 +134,7 @@ namespace Application.MainModule.Servicios.Catalogos
             if (producto != null)
                 if (producto.ProductoAsociado != null)
                     return producto.ProductoAsociado.ToList();
-            
+
             return ListaProductoAsociados(producto.IdProducto);
         }
         public static Producto ObtenerProductoAsociado(int idproAsociado)
@@ -228,7 +228,7 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
-        public static List<Producto> ObtenerProductoActivoVenta(short idEmpresa,bool esGas = false)
+        public static List<Producto> ObtenerProductoActivoVenta(short idEmpresa, bool esGas = false)
         {
             var empresa = EmpresaServicio.Obtener(idEmpresa);
 
@@ -236,6 +236,10 @@ namespace Application.MainModule.Servicios.Catalogos
                 return new ProductoDataAccess().ListaProductosActivosVenta();
             else
                 return new ProductoDataAccess().ListaProductosActivosVenta(empresa.IdEmpresa, esGas);
+        }
+        public static Producto ObtenerProductoGasVenta(short idEmpresa)
+        {
+            return new ProductoDataAccess().BuscarProductoGas(idEmpresa);
         }
     }
 }

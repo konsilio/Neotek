@@ -26,6 +26,10 @@ namespace Application.MainModule.Servicios.Ventas
             List<CajaGeneralDTO> lPventas = CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().BuscarTodos());
             return lPventas;
         }
+        public static List<VentaCajaGeneral> Obtener(DateTime fecha)
+        {
+            return new CajaGeneralDataAccess().ObtenerLiquidaciones((short)fecha.Year, Convert.ToByte(fecha.Month), Convert.ToByte(fecha.Day));            
+        }
         public static List<VPuntoVentaDetalleDTO> ObtenerVentas(short empresa, short year, byte month, byte dia, short? orden)
         {
             List<VentaPuntoDeVentaDetalle> _lst = BuscarPuntoVentaDetalle(empresa, year, month, dia, orden.Value).ToList();
@@ -42,6 +46,10 @@ namespace Application.MainModule.Servicios.Ventas
                 lventafinal.AddRange(lPventas);
             }
             return lventafinal;
+        }
+        public static ReporteDelDia ObtenerReporteDia(string ClaveRporte)
+        {
+            return new CajaGeneralDataAccess().BuscarPorClaveReporte(ClaveRporte);
         }
         //Camioneta Reporte del dia
         public static List<ReporteDiaDTO> ObtenerRepCamionetas(short unidad, DateTime fecha)
@@ -113,6 +121,50 @@ namespace Application.MainModule.Servicios.Ventas
             List<AlmacenGasMovimientoDto> ldetalles = CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(empresa, year, month, dia, orden, Folio));
             return ldetalles;
         }
+        public static int ObtenerCorteUltimo(short unidad, short empresa, short year, byte month, byte dia)
+        {
+            try
+            {
+                return new CajaGeneralDataAccess().ObtenerCorteUltimo(unidad, empresa, year, month, dia).LastOrDefault().Orden;
+            }
+            catch (Exception ex)
+            {
+               return 0;
+            }            
+        }
+        public static int ObtenerCorteUltimo(short empresa, short year, byte month, byte dia)
+        {
+            try
+            {
+                return new CajaGeneralDataAccess().ObtenerCorteUltimo(empresa, year, month, dia).LastOrDefault().Orden;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+        public static bool ExisteCorteUltimo(short unidad, short empresa, short year, byte month, byte dia)
+        {
+            try
+            {
+                return new CajaGeneralDataAccess().ObtenerCorteUltimo(unidad, empresa, year, month, dia).Count().Equals(0) ? false: true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public static bool ExisteCorteUltimo(short empresa, short year, byte month, byte dia)
+        {
+            try
+            {
+                return new CajaGeneralDataAccess().ObtenerCorteUltimo(empresa, year, month, dia).Count().Equals(0) ? false : true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         public static List<VentasPipaDto> ObtenerVentasPipas(short unidad, short empresa, short year, byte month, byte dia, short orden, DateTime fecha, string FolioOperacion)
         {
             List<VentasPipaDto> lst = new List<VentasPipaDto>();
@@ -138,17 +190,34 @@ namespace Application.MainModule.Servicios.Ventas
             List<VentaPuntoVentaDTO> lPventas = CajaGeneralAdapter.ToDTOC(new CajaGeneralDataAccess().BuscarPorCve(cve));
             return lPventas;
         }
+        public static List<VentaPuntoDeVenta> ObtenerVPV(ReporteDelDia cve)
+        {
+            return new CajaGeneralDataAccess().BuscarPorCve(cve);
+
+        }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasCamioneta(DateTime f)
         {
             return new CajaGeneralDataAccess().BuscarTotalVentasCamionetas(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasCamionetaMes(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetasMes(f);
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasPipas(DateTime f)
         {
             return new CajaGeneralDataAccess().BuscarTotalVentasPipas(f);
         }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasPipasMes(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasPipasMes(f);
+        }
         public static List<VentaPuntoDeVenta> ObtenerTotalBonificaciones(DateTime f)
         {
             return new CajaGeneralDataAccess().BuscarTotalBonificaciones(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalDescuentos(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalDescuentos(f);
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasACredito(DateTime f)
         {
@@ -157,6 +226,10 @@ namespace Application.MainModule.Servicios.Ventas
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(DateTime f)
         {
             return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f);
+        }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstacionesMes(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasEstacionesMes(f);
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(EstacionCarburacion entidad, DateTime f)
         {
@@ -170,6 +243,10 @@ namespace Application.MainModule.Servicios.Ventas
         public static RespuestaDto Actualizar(VentaCajaGeneral pv)
         {
             return new CajaGeneralDataAccess().Actualizar(pv);
+        }
+        public static RespuestaDto Insertar(VentaCajaGeneral pv)
+        {
+            return new CajaGeneralDataAccess().Insertar(pv);
         }
         public static List<VentaPuntoDeVenta> ObtenerVentas()
         {
@@ -680,6 +757,11 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new PuntoVentaDataAccess().ObtenerVentas(idCAlmacen, fecha);
         }
+        public static RespuestaDto ActualizarVentas(List<VentaPuntoDeVenta> ventas)
+        {
+            return new CajaGeneralDataAccess().Actualizar(ventas);
+        }
+
     }
 }
 

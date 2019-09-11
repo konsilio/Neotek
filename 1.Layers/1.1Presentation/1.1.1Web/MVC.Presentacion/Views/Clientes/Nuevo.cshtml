@@ -114,7 +114,7 @@
                                            settings.PreRender = (s, e) =>
                                            {
                                                MVCxComboBox combo = s as MVCxComboBox;
-                                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno",string.Empty));
                                                combo.Properties.ValueType = typeof(int);
                                                combo.SelectedIndex = 0;
                                            };
@@ -143,12 +143,12 @@
                                            settings.PreRender = (s, e) =>
                                            {
                                                MVCxComboBox combo = s as MVCxComboBox;
-                                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno", string.Empty));
                                                combo.Properties.ValueType = typeof(int);
                                                combo.SelectedIndex = 0;
                                            };
                                        }).BindList(ViewBag.Regimen).GetHtml()
-                                        @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
+                                        @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger", @Value = "", @Placeholder = "0" })
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                                     <div class="form-group">
                                         RFC:*
                                         <input type="text" name="Rfc" id="txtRfc" class="form-control" />
-                                        @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
+                                        @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger", @Value = string.Empty })
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +222,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         Nombres:* <input type="text" name="Nombre" class="form-control" />
-                                        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
+                                        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger"})
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
@@ -345,6 +345,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         Teléfono 1: <input id="txtTel1" name="Telefono1" type="text" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.Telefono1, "", new { @class = "alert-danger", @value=string.Empty })
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">

@@ -12,9 +12,12 @@ namespace MVC.Presentacion.Controllers
 {
     public class PrecioVentaController : Controller
     {
+        string _tok = string.Empty;
         // GET: PrecioVenta
         public ActionResult Index(string msj = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
@@ -28,8 +31,11 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
-                ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).Where(w=> w.EsGas==true).ToList();
             }
+
+            TempData["DataSourcePrecioVentas"] = ViewBag.ListaPV;
+            TempData.Keep("DataSourcePrecioVentas");
 
             ViewBag.ListaStatus = CatalogoServicio.ListaTipoFecha(_tkn);
             if (TempData["RespuestaDTO"] != null)
@@ -155,5 +161,22 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+
+
+        public ActionResult CB_PrecioVentas()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tok = Session["StringToken"].ToString();
+            List<PrecioVentaModel> model = new List<PrecioVentaModel>();
+            if (TempData["DataSourcePrecioVentas"] != null)
+            {
+                model = (List<PrecioVentaModel>)TempData["DataSourcePrecioVentas"];
+                TempData["DataSourcePrecioVentas"] = model;
+                //TempData.Keep("DataSourcePrecioVentas");
+            }
+            return PartialView("_CB_PrecioVentas", model);
+        }
+
+
     }
 }

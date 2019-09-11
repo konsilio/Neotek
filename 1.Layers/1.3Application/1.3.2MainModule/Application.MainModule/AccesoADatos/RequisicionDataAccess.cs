@@ -5,6 +5,7 @@ using Application.MainModule.UnitOfWork;
 using Application.MainModule.DTOs.Respuesta;
 using Sagas.MainModule.Entidades;
 using Exceptions.MainModule.Validaciones;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -43,6 +44,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Requisicion>().Get(x => x.IdEmpresa.Equals(IdEmpresa)).ToList();
         }
+
+        public List<Requisicion> BuscarTodasAlmacenPorIdEmpresa(short IdEmpresa)
+        {
+            return uow.Repository<Requisicion>().Get(
+                x => x.IdEmpresa.Equals(IdEmpresa) &&
+                x.IdRequisicionEstatus == RequisicionEstatusEnum.Autoriza_entrega &&
+                x.OrdenesCompra.Where(oc => oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_exitosa)).Count() > 0).ToList();
+        }
+
+
+
         public List<Requisicion> BuscarTodas(short IdEmpresa, DateTime p)
         {
             return uow.Repository<Requisicion>().Get(x => x.IdEmpresa.Equals(IdEmpresa) && x.FechaRegistro.Month.Equals(p.Month) && x.FechaRegistro.Year.Equals(p.Year)).ToList();
@@ -127,8 +139,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
             return _respuesta;
-        }     
-        public RequisicionProducto BuscarProducto (int idProd, int idRequ)
+        }
+        public RequisicionProducto BuscarProducto(int idProd, int idRequ)
         {
             return uow.Repository<RequisicionProducto>().GetSingle(x => x.IdRequisicion.Equals(idRequ) && x.IdProducto.Equals(idProd));
         }

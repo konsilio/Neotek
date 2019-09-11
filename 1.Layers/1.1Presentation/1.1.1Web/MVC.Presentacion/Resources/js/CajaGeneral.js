@@ -30,6 +30,7 @@ $(function () {
                         var rowindex = $(this).index();
                         $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
                     }
+                   
                 }
                 if (value != 'Seleccione') {
                     if (value != hiderow) {

@@ -5,6 +5,7 @@
     {
         settings.Name = "Abonos";
         settings.KeyFieldName = "IdCargo";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "_AbonosPartial" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Cobranza", Action = "EditingUpdate" };
@@ -12,32 +13,52 @@
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = false;
         settings.CommandColumn.ShowEditButton = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFooter = true;
         settings.Theme = "Material";
         settings.SettingsCommandButton.UpdateButton.Text = "Abonar";
         settings.SettingsCommandButton.EditButton.Text = "Abonar";
-        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        //settings.Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(c =>
         {
             c.FieldName = "IdCargo";
             c.Caption = "No Cargo";
-            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(7);
             c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "IdCliente";
+        //    c.Caption = "No Cargo";
+        //    c.Width = System.Web.UI.WebControls.Unit.Percentage(7);
+        //    c.Settings.AllowSort = DefaultBoolean.False;
+        //    c.EditFormSettings.Visible = DefaultBoolean.False;
+        //});
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Cliente";
+            c.Caption = "Cliente";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            //c.Settings.AllowSort = DefaultBoolean.False;
+            c.GroupIndex = 1;
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(c =>
         {
             c.FieldName = "Ticket";
             c.Caption = "Ticket";
-            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
-            c.Settings.AllowSort = DefaultBoolean.False;
+            //c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            //c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(c =>
         {
             c.FieldName = "TotalCargo";
             c.Caption = "Importe";
-            c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
-            c.Settings.AllowSort = DefaultBoolean.False;
+            //c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            //c.Settings.AllowSort = DefaultBoolean.False;
             c.Settings.ShowEditorInBatchEditMode = false;
             c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
             c.ReadOnly = true;
@@ -47,7 +68,7 @@
         {
             c.FieldName = "TotalAbonos";
             c.Caption = "Abonado";
-            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            //c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
@@ -55,7 +76,7 @@
         {
             c.FieldName = "SaldoInsoluto";
             c.Caption = "Saldo insoluto";
-            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            //c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
@@ -76,7 +97,7 @@
                     s.Properties.EditFormat = EditFormat.Custom;
                     s.Properties.EditFormatString = "dd/MM/yyyy";
                     settings.Attributes.Clear();
-                    s.Width = System.Web.UI.WebControls.Unit.Percentage(80);
+                    //s.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                     s.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                 }).GetHtml();
             });
@@ -128,7 +149,11 @@
                 if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") != null && !x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString().Equals(string.Empty))
                 {
                     ViewContext.Writer.Write(string.Format("<a href=" + x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString() + "class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>file_download</i></a>"));
-                }               
+                }
+                if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") == null && x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") == null)
+                {
+                    ViewContext.Writer.Write("Sin acciones");
+                }
             });
         });
 

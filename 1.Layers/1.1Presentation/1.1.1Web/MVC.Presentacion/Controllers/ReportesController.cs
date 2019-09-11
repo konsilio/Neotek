@@ -27,12 +27,20 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult InventarioXPuntoVenta(InventarioPorPuntoVentaModel model = null)
         {
+
+            DateTime startTime = DateTime.Now;
+
+            DateTime endTime = DateTime.Now.AddSeconds(75);
+
+            TimeSpan span = endTime.Subtract(startTime);
+       
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             if (TempData["DataSource"] != null)
                 TempData["DataSource"] = null;
             if (model == null)
-                model = new InventarioPorPuntoVentaModel();          
+                model = new InventarioPorPuntoVentaModel();
             if (model != null && !model.Fecha.Equals(DateTime.MinValue))
             {
                 ViewData["Periodo"] = model.Fecha;
@@ -43,6 +51,9 @@ namespace MVC.Presentacion.Controllers
             pipas.RemoveAt(0);
             model.Pipas = pipas.Select(x => { x.Activo = false; return x; }).ToList();
             model.Estaciones = CatalogoServicio.GetListaEstacionCarburacion(tkn).Select(x => { x.Activo = false; return x; }).ToList();
+            var camionetas = PedidosServicio.ObtenerCamionetas(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(x => { x.Activo = false; return x; }).ToList();
+            camionetas.RemoveAt(0);
+            model.Camionetas = camionetas;
             return View(model);
         }
         public ActionResult HistoricoPrecioVenta(HistoricoPrecioVentaModel model = null)
@@ -59,13 +70,13 @@ namespace MVC.Presentacion.Controllers
 
             return View(model);
         }
-        public ActionResult CallCenter(CallCenterModel model = null)
+        public ActionResult CallCenter(PeriodoDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             if (TempData["DataSource"] != null)
                 TempData["DataSource"] = null;
-            if (model != null && !model.Periodo.Equals(DateTime.MinValue))
+            if (model != null && !model.FechaFin.Equals(DateTime.MinValue) && !model.FechaInicio.Equals(DateTime.MinValue))
             {
                 ViewData["Reporte"] = TiposReporteConst.CallCenter;
                 TempData["DataSource"] = ReporteServicio.BuscarCallCenter(model, tkn);
@@ -130,14 +141,14 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             if (TempData["DataSource"] != null)
                 TempData["DataSource"] = null;
-            if (TempData["year"] != null) model.Years = (List<YearsDTO>)TempData["year"];        
+            if (TempData["year"] != null) model.Years = (List<YearsDTO>)TempData["year"];
             if (model.Years == null) TempData["year"] = model.Years = HistoricoServicio.GetYears(tkn);
             if (model != null && model.Years.Exists(x => x.Seleccionar))
             {
                 ViewData["Reporte"] = TiposReporteConst.HistoricoVsVentas;
                 TempData["DataSource"] = ReporteServicio.BuscarHistoricoVSVentas(model, tkn);
                 TempData["json"] = HistoricoServicio.GetJson(model, tkn);
-            }          
+            }
             return View(model);
         }
         public ActionResult CorteCaja(CorteCajaModel model = null)
@@ -199,34 +210,38 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            ViewData["Reporte"] = Tipo;
-            if (Tipo.Equals(TiposReporteConst.CuentasXCobrar))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<CuentasPorPagarDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.InventarioPorPuntoVenta))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<InventarioPorPuntoVentaDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.HistoricoPrecioVenta))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<HistoricoPrecioVentaDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.CallCenter))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<CallCenterDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.Requisicion))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<RequisicionRepDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.OrdenCompra))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<OrdenCompraRepDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.RendimientoVehicular))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<RendimientoVehicularDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.InventarioXConcepto))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<InventarioXConceptoDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.HistoricoVsVentas))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<YearsDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.CorteCaja))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<CorteCajaDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.GastoVehicular))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<GastoVehiculoDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.Comision))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<ComisionDTO>)TempData["DataSource"]);
-            if (Tipo.Equals(TiposReporteConst.CuentaConsolidada))
-                return View(TiposReporteConst.CuboInformacionGeneral, (List<CuentaConsolidadaDTO>)TempData["DataSource"]);
-            return View(TiposReporteConst.CuboInformacionGeneral);
+            if (Tipo != null)
+            {
+                ViewData["Reporte"] = Tipo;
+                if (Tipo.Equals(TiposReporteConst.CuentasXCobrar))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<CuentasPorPagarDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.InventarioPorPuntoVenta))
+                    return View(TiposReporteConst.CuboInvXPunVen, (List<InventarioPorPuntoVentaDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.HistoricoPrecioVenta))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<HistoricoPrecioVentaDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.CallCenter))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<CallCenterDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.Requisicion))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<RequisicionRepDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.OrdenCompra))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<OrdenCompraRepDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.RendimientoVehicular))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<RendimientoVehicularDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.InventarioXConcepto))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<InventarioXConceptoDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.HistoricoVsVentas))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<YearsDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.CorteCaja))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<CorteCajaDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.GastoVehicular))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<GastoVehiculoDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.Comision))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<ComisionDTO>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.CuentaConsolidada))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<CuentaConsolidadaDTO>)TempData["DataSource"]);
+                return View(TiposReporteConst.CuboInformacionGeneral);
+            }
+            return View(TiposReporteConst.CuboInformacionGeneral, new List<string>());
         }
     }
 }

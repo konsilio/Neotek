@@ -97,7 +97,8 @@ namespace Application.MainModule.Flujos
             var oc = OrdenCompraServicio.Buscar(_oc.IdOrdenCompra);
             if (oc == null) return OrdenCompraServicio.NoExiste();
 
-            if (!oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion)) return OrdenCompraServicio.EstatusIncorrecto();
+            if (!oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion))
+                return OrdenCompraServicio.EstatusIncorrecto();
 
             var entity = OrdenComprasAdapter.FromEntity(oc);
             entity.IdUsuarioAutorizador = TokenServicio.ObtenerIdUsuario();
@@ -258,7 +259,7 @@ namespace Application.MainModule.Flujos
             oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
 
             var req = RequisicionAdapter.FromEntity(RequisicionServicio.Buscar(oc.IdRequisicion));
-            req.IdRequisicionEstatus = RequisicionEstatusEnum.Autorizacion_finalizada;
+            req.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_entrega;
             return OrdenCompraPagoServicio.Actualiza(entity, oc, req);
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
@@ -312,6 +313,26 @@ namespace Application.MainModule.Flujos
             papeleta.IdTipoMedidorAlmacen = almacen.IdTipoMedidor;
 
             var ocPapeleta =  AlmacenAdapter.FromEntity(papeleta);
+            ocPapeleta.FechaPapeleta = dto.Fecha;
+            ocPapeleta.FechaEmbarque = dto.FechaEmbarque;
+            ocPapeleta.NumeroEmbarque = dto.NumeroEmbarque;
+            ocPapeleta.ValorCarga = dto.ValorCarga;
+            ocPapeleta.Sello = dto.Sello;
+            ocPapeleta.NombreResponsable = dto.NombreResponsable;
+            ocPapeleta.PorcenMagnatelPapeleta = dto.PorcentajeTanque;
+            ocPapeleta.PorcenMagnatelOcular = dto.PorcentajeMedidor;
+            ocPapeleta.PlacasTractor = dto.PlacasTractor;
+            ocPapeleta.NombreOperador = dto.NombreOperador;
+            ocPapeleta.PresionTanque = dto.PresionTanque;
+            ocPapeleta.NumTanquePG = dto.NumeroTanque;
+            ocPapeleta.CapacidadTanqueLt = dto.CapacidadTanque;
+            //ocPapeleta.PorcenMagnatelOcular = dto.PorcenMagnatelOcularTractorINI;
+            ocPapeleta.FechaInicioDescarga = dto.FechaEntraGas;
+            ocPapeleta.PorcenMagnatelOcularAlmacenINI = dto.PorcenMagnatelOcularAlmacenINI;
+            ocPapeleta.PorcenMagnatelOcularAlmacenFIN = dto.PorcenMagnatelOcularAlmacenFIN;
+            ocPapeleta.PorcenMagnatelOcularTractorFIN = dto.PorcenMagnatelOcularTractorFIN;
+            ocPapeleta.PorcenMagnatelOcularTractorINI = dto.PorcenMagnatelOcularTractorINI;
+            ocPapeleta.MasaKg = dto.KilosPapeleta;
 
             return OrdenCompraServicio.Actualizar(ocPapeleta);
         }

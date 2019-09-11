@@ -1,7 +1,21 @@
-﻿@model MVC.Presentacion.Models.Catalogos.CentroCostoModel
+﻿@using MVC.Presentacion.Models.Catalogos
+@model MVC.Presentacion.Models.Catalogos.CentroCostoModel
 @*@{
         ViewBag.Title = "Centro de Costos";
     }*@
+
+
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
@@ -44,14 +58,23 @@
                                     <label>Número</label>
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", @placeholder = "Número de centro de costo" })
-                                        @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "alert-danger" })
+
                                     </div>
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "alert-danger" })
+
+                                    </div>
+                                  
                                 </div>
                                 <div class="col-md-6 form-control-label">
                                     <label for="txtDescripcion">Descripción</label>
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", placeholder = "Descripción", @style = "max-width:initial" })
-                                        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "alert-danger" })
+
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "alert-danger", @value=string.Empty })
+
                                     </div>
                                 </div>
                                 <div class="col-md-3 form-control-label">
@@ -102,7 +125,7 @@
                                             }
                                         </select>
                                     </div>
-                                    @Html.ValidationMessageFor(m => m.IdTipoCentroCosto, "", new { @class = "alert-danger" })
+                                    @Html.ValidationMessageFor(m => m.IdEquipoTransporte, "", new { @class = "alert-danger" })
                                 </div>
                                 @*<div class="col-md-3 form-control-label">
                                     <label for="ddlVehiculo">Vehiculo</label>
@@ -245,10 +268,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4 form-control-label">
-                                    <label for="txtFiltroNumero">Número</label>
-                                    <div class="form-group">
-                                        <input type="text" id="txtFiltroNumero" class="form-control" />
-                                    </div>
+                                    @*<label for="txtFiltroNumero">Número</label>
+                                        <div class="form-group">
+                                            <input type="text" id="txtFiltroNumero" class="form-control" />
+                                        </div>*@
                                 </div>
                                 <div class="col-md-4 form-control-label">
                                     @*<label for="ddlFiltroCentroCosto">Tipo centro de costo</label>
@@ -261,27 +284,28 @@
                                             </select>
                                         </div>*@
                                 </div>
-                            </div>
+                            </div><br />
 
                             <div class="blockquote blockquote-info btn-round">
-                                <div class="row clearfix">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped filterable">
-                                            <thead>
-                                                <tr>
-                                                    <td><b>Gasera</b></td>
-                                                    <td><b>Número</b></td>
-                                                    <td><b>Descripción</b></td>
-                                                    <td><b>Tipo</b></td>
-                                                    <td><b>Acción</b></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @Html.EditorFor(m => m.CentrosCostos)
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                @Html.Partial("_CB_CentroCostos", (List<CentroCostoDTO>)TempData["DataSourceCentros"])
+                                @*<div class="row clearfix">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped filterable">
+                                                <thead>
+                                                    <tr>
+                                                        <td><b>Gasera</b></td>
+                                                        <td><b>Número</b></td>
+                                                        <td><b>Descripción</b></td>
+                                                        <td><b>Tipo</b></td>
+                                                        <td><b>Acción</b></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @Html.EditorFor(m => m.CentrosCostos)
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>*@
                             </div>
                         </div>
                     </div>

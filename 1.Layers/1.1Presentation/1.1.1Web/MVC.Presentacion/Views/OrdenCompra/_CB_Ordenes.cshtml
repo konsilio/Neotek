@@ -1,0 +1,68 @@
+﻿@using MVC.Presentacion.Models.OrdenCompra;
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Ordenes";
+        settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "CB_Ordenes" };
+        settings.KeyFieldName = "IdOrdenCompra";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdOrdenCompra";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+        settings.Columns.Add("Empresa", "Gasera");
+        settings.Columns.Add("NumeroRequisicion", "N° Requisición");
+        settings.Columns.Add("NumOrdenCompra", "N° Orden de Compra");
+        settings.Columns.Add("Solicitante", "Solicitante");
+        settings.Columns.Add("Proveedor", "Proveedor");
+        settings.Columns.Add("Total", "Importe");
+        settings.Columns.Add("OrdenCompraEstatus", "Estatus");
+        settings.Columns.Add("IdOrdenCompraEstatus").Visible = false;
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.SetDataItemTemplateContent(d =>
+            {
+                if (byte.Parse(d.Grid.GetRowValues(d.VisibleIndex, "IdOrdenCompraEstatus").ToString()) == OrdenCompraEstatusEnum.Espera_autorizacion)
+                {
+                    ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("OrdenCompraAutorizacion", new { id = d.KeyValue }) + "><i class='material-icons'>spellcheck</i> <span class='icon-name'></span></a>"));
+                }
+                if ((bool.Parse(d.Grid.GetRowValues(d.VisibleIndex, "EsGas").ToString()) == false && bool.Parse(d.Grid.GetRowValues(d.VisibleIndex, "EsTransporteGas").ToString()) == false) && byte.Parse(d.Grid.GetRowValues(d.VisibleIndex, "IdOrdenCompraEstatus").ToString()) == OrdenCompraEstatusEnum.Proceso_compra)
+                {
+                    ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("EntradaMercancia", new { idOrden = d.KeyValue }) + "><i class='material-icons'>assignment_turned_in</i> <span class='icon-name'></span></a>"));
+                }
+                if (byte.Parse(d.Grid.GetRowValues(d.VisibleIndex, "IdOrdenCompraEstatus").ToString()) == OrdenCompraEstatusEnum.SolicitudPago)
+                {
+                    ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("OrdenCompraPago", new { id = d.KeyValue }) + "><i class='material-icons'>attach_money</i> <span class='icon-name'></span></a>"));
+                }
+                if ((bool.Parse(d.Grid.GetRowValues(d.VisibleIndex, "EsGas").ToString()) == true || bool.Parse(d.Grid.GetRowValues(d.VisibleIndex, "EsTransporteGas").ToString()) == true) && byte.Parse(d.Grid.GetRowValues(d.VisibleIndex, "IdOrdenCompraEstatus").ToString()) == OrdenCompraEstatusEnum.EnComplementoCompra)
+                {
+                    ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("OrdenCompraComplementoGas", new { id = d.KeyValue }) + "><i class='material-icons'>local_gas_station</i> <span class='icon-name'></span></a>"));
+                }
+                if ((bool.Parse(d.Grid.GetRowValues(d.VisibleIndex, "EsGas").ToString()) == false && bool.Parse(d.Grid.GetRowValues(d.VisibleIndex, "EsTransporteGas").ToString()) == false) && byte.Parse(d.Grid.GetRowValues(d.VisibleIndex, "IdOrdenCompraEstatus").ToString()) == OrdenCompraEstatusEnum.EnComplementoCompra)
+                {
+                    ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("OrdenCompraComplemento", new { id = d.KeyValue }) + "><i class='material-icons'>input</i> <span class='icon-name'></span></a>"));
+                }
+            });
+        });
+    });
+}
+@grid.Bind(Model).GetHtml()

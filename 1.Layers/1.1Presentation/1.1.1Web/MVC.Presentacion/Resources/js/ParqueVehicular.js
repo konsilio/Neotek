@@ -2,7 +2,7 @@
 
     //Bloquear tamaños maximos
     $('#NumMotor').keypress(function () {
-        if (this.value.length >= 10)
+        if (this.value.length >= 50)
             return false;
     })
     $('#Placas').keypress(function () {

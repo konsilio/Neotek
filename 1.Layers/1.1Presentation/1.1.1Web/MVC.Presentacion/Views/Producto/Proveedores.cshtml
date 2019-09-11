@@ -1,6 +1,20 @@
 ﻿@model MVC.Presentacion.Models.Catalogos.ProveedorDTO
 @using PagedList.Mvc;
 @using PagedList;
+
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+
+@using MVC.Presentacion.Models.Catalogos
 @{
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
 }
@@ -24,15 +38,15 @@
     </script>*@
 
 <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
-            <p>Espere por favor</p>
-        </div>
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
     </div>
+</div>
 <section class="content home">
     <div class="container-fluid">
         @using (Html.BeginForm("Proveedor", "Producto", FormMethod.Post))
-            {
+        {
             @Html.HiddenFor(m => m.IdProveedor)
             <div class="block-header">
                 <div class="row">
@@ -46,101 +60,104 @@
                     </div>
                 </div>
             </div>
-                <div id="divPrincipal">
-                    <div class="row clearfix">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="card">
-                                <div class="header">
-                                    <h2><strong>Proveedor</strong></h2>                                   
-                                </div>
-                                <div class="body">
-                                    <div class="row clearfix">
-                                        <div class="col-lg-6 col-md-6 col-sm-12 m-b-20">
-                                            <b>Empresa</b>
-                                            @if (ViewBag.EsAdmin)
-                                            {
-                                                <select id="ddlEmpresas" class="form-control selectpicker show-tick" data-live-search="true" data-hide-disabled="true">
-                                                    @foreach (var lst in ViewBag.Empresas)
+            <div id="divPrincipal">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Proveedor</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 m-b-20">
+                                        <b>Empresa</b>
+                                        @if (ViewBag.EsAdmin)
+                                        {
+                                            <select id="ddlEmpresas" class="form-control selectpicker show-tick" data-live-search="true" data-hide-disabled="true">
+                                                @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    if (lst.IdEmpresa == Model.IdEmpresa)
                                                     {
-                                                        if (lst.IdEmpresa == Model.IdEmpresa)
-                                                        {
-                                                            <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                        }
+                                                        <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
                                                     }
-                                                </select>
-                                            }
-                                            else
-                                            {
-                                                <input type="text" class="form-control " disabled value="@ViewBag.Empresas" />
-                                                @Html.HiddenFor(m => m.IdEmpresa)
-                                            }
-                                            @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
-                                        </div>
-                                        <div class="col-lg-3 col-md-3">
-                                            <div class="form-group text-center">
-                                                <button class="btn btn-primary btn-round" id="btnProvedorNuevo">
-                                                    <i class="material-icons">add</i> Nuevo
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3">
-                                            <div class="form-group text-center">
-                                                <button class="btn btn-primary btn-round">
-                                                    <i class="material-icons">search</i> Buscar
-                                                </button>
-                                            </div>
+                                                    else
+                                                    {
+                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control " disabled value="@ViewBag.Empresas" />
+                                            @Html.HiddenFor(m => m.IdEmpresa)
+                                        }
+                                        @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="form-group text-center">
+                                            <button class="btn btn-primary btn-round" id="btnProvedorNuevo">
+                                                <i class="material-icons">add</i> Nuevo
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-3">
-                                            <b>Tipo de Proveedor</b>
-                                            <select class="form-control selectpicker show-tick" data-live-search="true" data-hide-disabled="true">
-                                                @foreach (var cc in ViewBag.TipoProveedores)
-                                                {
-                                                    <option value="@cc.IdTipoProveedor">@cc.Tipo</option>
-                                                }
-                                            </select>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="form-group text-center">
+                                            <button class="btn btn-primary btn-round">
+                                                <i class="material-icons">search</i> Buscar
+                                            </button>
                                         </div>
-                                        <div class="col-md-3">
-                                            <b>Estado</b>
-                                            <select class="form-control selectpicker selectpicker show-tick" data-live-search="true" data-hide-disabled="true">
-                                                @foreach (var cc in ViewBag.Estados)
-                                                {
-                                                    <option value="@cc.IdEstadoRep">@cc.Estado</option>
-                                                }
-                                            </select>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-3">
+                                        <b>Tipo de Proveedor</b>
+                                        <select class="form-control selectpicker show-tick" data-live-search="true" data-hide-disabled="true">
+                                            @foreach (var cc in ViewBag.TipoProveedores)
+                                            {
+                                                <option value="@cc.IdTipoProveedor">@cc.Tipo</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Estado</b>
+                                        <select class="form-control selectpicker selectpicker show-tick" data-live-search="true" data-hide-disabled="true">
+                                            @foreach (var cc in ViewBag.Estados)
+                                            {
+                                                <option value="@cc.IdEstadoRep">@cc.Estado</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>RFC</b>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Ej: VECJ880326XXX">
+                                            @*@Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })*@
                                         </div>
-                                        <div class="col-md-3">
-                                            <b>RFC</b>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="Ej: VECJ880326XXX">
-                                            </div>
+
+                                    </div> 
+                                    <div class="col-md-3">
+                                        <div class="checkbox">
+                                            <input id="checkbox10" type="checkbox">
+                                            <label for="checkbox10">
+                                                Transporta gas
+                                            </label>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="checkbox">
-                                                <input id="checkbox10" type="checkbox">
-                                                <label for="checkbox10">
-                                                    Transporta gas
-                                                </label>
-                                            </div>
-                                            <div class="checkbox">
-                                                <input id="checkbox11" type="checkbox">
-                                                <label for="checkbox11">
-                                                    Vende gas
-                                                </label>
-                                            </div>
+                                        <div class="checkbox">
+                                            <input id="checkbox11" type="checkbox">
+                                            <label for="checkbox11">
+                                                Vende gas
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row clearfix">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
+                </div>
+                <div class="row clearfix blockquote blockquote-info btn-round">
+                    @Html.Partial("_CB_Proveedores", (List<ProveedorDTO>)TempData["DataSourceProveedores"])
+                    @*<div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card">
                                 <div class="body">
                                     <div class="row clearfix">
@@ -191,9 +208,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>*@
                 </div>
+            </div>
         }
     </div>
 </section>

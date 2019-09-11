@@ -25,14 +25,23 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Pedido> Buscar(short idempresa)
         {
-            return uow.Repository<Pedido>().Get(x => 
+
+            return uow.Repository<Pedido>().Get(x =>
             x.IdEmpresa.Equals(idempresa)
-            && x.PedidoDetalle.Count > 0).Take(200).ToList();
+            && x.PedidoDetalle.Count > 0).ToList();
         }
         public List<Pedido> Buscar(short idempresa, DateTime periodo)
         {
             return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa)
-                                                && x.PedidoDetalle.Count > 0).OrderByDescending(p => p.FechaRegistro).Take(200).ToList();
+                                                && x.FechaRegistro.Year.Equals(periodo.Year)
+                                                && x.FechaRegistro.Month.Equals(periodo.Month)
+                                                && x.PedidoDetalle.Count > 0).ToList();
+        }
+        public List<Pedido> Buscar(short idempresa, DateTime fi, DateTime ff)
+        {
+            return uow.Repository<Pedido>().Get(x => x.IdEmpresa.Equals(idempresa)
+            && x.FechaRegistro >= fi && x.FechaRegistro <= ff
+                                                && x.PedidoDetalle.Count > 0).ToList();
         }
         public List<PedidoDetalle> Buscar(int idPedido)
         {
@@ -60,9 +69,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     if (_pro.IdPipa > 0)
                         foreach (var det in _pro.PedidoDetalle)
                         {
-                            uow.Repository<Sagas.MainModule.Entidades.PedidoDetalle>().Update(det);
+                            uow.Repository<PedidoDetalle>().Update(det);
                         }
-                    uow.Repository<Sagas.MainModule.Entidades.Pedido>().Update(_pro);
+                    uow.Repository<Pedido>().Update(_pro);
                     uow.SaveChanges();
                     _respuesta.Id = _pro.IdPedido;
                     _respuesta.Exito = true;
@@ -73,7 +82,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Format(Error.C0003, "del pedido"); ;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del pedido");
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
@@ -118,17 +127,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
                             if (it.Cilindro45 == true && query.Where(x => x.Cilindro45 != null).Count() > 0 && cte.Where(x => x.Cilindro45 != null).Count() == 0)
                             {
                                 var item = PedidosAdapter.FromEntity(it);
-                                uow.Repository<Sagas.MainModule.Entidades.PedidoDetalle>().Delete(item);
+                                uow.Repository<PedidoDetalle>().Delete(item);
                             }
                             if (it.Cilindro30 == true && query.Where(x => x.Cilindro30 != null).Count() > 0 && cte.Where(x => x.Cilindro30 != null).Count() == 0)
                             {
                                 var item = PedidosAdapter.FromEntity(it);
-                                uow.Repository<Sagas.MainModule.Entidades.PedidoDetalle>().Delete(item);
+                                uow.Repository<PedidoDetalle>().Delete(item);
                             }
                             if (it.Cilindro20 == true && query.Where(x => x.Cilindro20 != null).Count() > 0 && cte.Where(x => x.Cilindro20 != null).Count() == 0)
                             {
                                 var item = PedidosAdapter.FromEntity(it);
-                                uow.Repository<Sagas.MainModule.Entidades.PedidoDetalle>().Delete(item);
+                                uow.Repository<PedidoDetalle>().Delete(item);
                             }
                         }
                     }
@@ -138,7 +147,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                         {
                             if (query.Where(x => x.Cilindro45 != null).Count() > 0)
                             {
-                                uow.Repository<Sagas.MainModule.Entidades.PedidoDetalle>().Update(item);
+                                uow.Repository<PedidoDetalle>().Update(item);
                             }
                             else
                             {
@@ -149,7 +158,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                         {
                             if (query.Where(x => x.Cilindro30 != null).Count() > 0)
                             {
-                                uow.Repository<Sagas.MainModule.Entidades.PedidoDetalle>().Update(item);
+                                uow.Repository<PedidoDetalle>().Update(item);
                             }
                             else
                             {
@@ -160,7 +169,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                         {
                             if (query.Where(x => x.Cilindro20 != null).Count() > 0)
                             {
-                                uow.Repository<Sagas.MainModule.Entidades.PedidoDetalle>().Update(item);
+                                uow.Repository<PedidoDetalle>().Update(item);
                             }
                             else
                             {

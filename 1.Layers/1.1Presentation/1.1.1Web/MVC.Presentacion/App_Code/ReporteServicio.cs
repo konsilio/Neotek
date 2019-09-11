@@ -27,7 +27,7 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscarHistoricoPrecioVenta(model, token);
             return respuestaReq._ListaHistoricoPrecioVenta;
         }
-        public static List<CallCenterDTO> BuscarCallCenter(CallCenterModel model, string token)
+        public static List<CallCenterDTO> BuscarCallCenter(PeriodoDTO model, string token)
         {
             var respuestaReq = new AgenteServicio();
             respuestaReq.BuscarCallCenter(model, token);

@@ -7,7 +7,7 @@
 @Html.DevExpress().GridView(
     settings =>
     {
-        settings.Name = "Cubo";
+        settings.Name = (ViewData["Reporte"]==null)?"Cubo": ViewData["Reporte"].ToString();
         settings.CallbackRouteValues = new { Controller = "Reportes", Action = "GetGridView", Tipo = ViewData["Reporte"]};
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsText.EmptyDataRow = "No se encontraron registros";
@@ -16,23 +16,33 @@
         settings.CommandColumn.ShowNewButton = false;
         settings.CommandColumn.ShowDeleteButton = false;
         settings.CommandColumn.ShowEditButton = false;
+        settings.SettingsPager.PageSize = 15;
         settings.Theme = "Material";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         settings.Settings.ShowFilterRow = true;
         settings.Settings.ShowGroupPanel = true;
         settings.Settings.ShowFooter = true;
-        //if (ViewData["Reporte"] != null && ViewData["Reporte"].Equals(TiposReporteConst.InventarioPorPuntoVenta))
-        //{
-        //    settings.CustomUnboundColumnData = (s, e) =>
-        //    {
-        //        if (e.Column.FieldName == "FullName")
-        //        {
-        //            string firstName = (e.GetListSourceFieldValue("FirstName")).ToString();
-        //            string lastName = (e.GetListSourceFieldValue("LastName")).ToString();
-        //            e.Value = firstName + " " + lastName;
-        //        };
-        //    };
-        //}
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        settings.Toolbars.Add(i =>
+        {
+            i.EnableAdaptivity = true;
+            i.Items.Add(exportitem =>
+            {
+                exportitem.Command = GridViewToolbarCommand.ExportToXls;
+                exportitem.Name = "CustomExportToXLS";
+                exportitem.Text = "Exportar a XLS";
+                exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
+            });
+            i.Items.Add(exportitem =>
+            {
+                exportitem.Command = GridViewToolbarCommand.ExportToXlsx;
+                exportitem.Name = "CustomExportToXLSX";
+                exportitem.Text = "Exportar a XLSX";
+                exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
+            });
+            i.ItemAlign = GridToolbarItemAlign.Right;
+        });
         settings.GroupSummary.Add(new ASPxSummaryItem
         {
             FieldName = "CunentaContable",

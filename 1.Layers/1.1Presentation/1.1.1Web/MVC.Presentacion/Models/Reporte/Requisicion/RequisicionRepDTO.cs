@@ -7,7 +7,7 @@ namespace MVC.Presentacion.Models
 {
     public class RequisicionRepDTO
     {
-        public string Numrequisicion { get; set; }
+        public string NumRequisicion { get; set; }
         public string Departamento { get; set; }
         public string Estatus { get; set; }
         public string Requisicion { get; set; }

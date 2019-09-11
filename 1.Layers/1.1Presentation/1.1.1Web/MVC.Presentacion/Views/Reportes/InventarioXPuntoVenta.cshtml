@@ -12,6 +12,8 @@
     )
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
+<link rel="stylesheet" href="~/assets/plugins/jqueryui/jquery-ui.css"  />
+<script src="~/assets/plugins/jqueryui/jquery-ui.js"></script>
 <script type="text/javascript">
     var mensaje = '@ViewBag.Msj';
     if (mensaje != '') {
@@ -19,16 +21,21 @@
     }
     //function selectAll() {
     //    $('ul li').each(function (i) {
-    //        $(this).attr('rel'); 
+    //        $(this).attr('rel');
     //    });
     //}
     function toggleChecked(status) {
-        $("#checkboxes input").each(function () {           
+        $("#checkboxes input").each(function () {
             $(this).prop("checked", status);
         });
     }
     function toggleCheckedPipa(status) {
         $("#checkboxespipa input").each(function () {
+            $(this).prop("checked", status);
+        });
+    }
+    function toggleCheckedCamion(status) {
+        $("#checkboxescamion input").each(function () {
             $(this).prop("checked", status);
         });
     }
@@ -45,10 +52,39 @@
             var status = checkAllBoxPipa.prop('checked');
             toggleCheckedPipa(status);
         });
+        var checkAllBoxCamion = $("#checkallcamion");
+        checkAllBoxCamion.prop('checked', true);
+        checkAllBoxCamion.click(function () {
+            var status = checkAllBoxCamion.prop('checked');
+            toggleCheckedCamion(status);
+        });
     });
-    
+
+    function openFile(e) {
+        var image = new Image();
+        image.width= 480;
+        image.height=320;
+        image.src = e.src;
+        $("#imgdialog").html(image.outerHTML);
+        $("#dialog").dialog();
+    }
+
 </script>
+
+
+<style>
+
+    .imgCss:hover {
+        -webkit-transform: scale(2.0);
+        transform: scale(2.0)
+    }
+</style>
+
 <body>
+    <div id="dialog" title="Fotógragia">
+        <div id="imgdialog"></div>
+    </div>
+
     <div class="page-loader-wrapper">
         <div class="loader">
             <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
@@ -88,10 +124,19 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
+                                    <strong>Camionetas</strong>
+                                    <div class="form-group" id="checkboxescamion">
+                                        <ul>
+                                            <li style="list-style:none"><input type="checkbox" class="checkbox" style="width: 20px; height: 20px;" id="checkallcamion" />Todos </li>
+                                            @Html.EditorFor(m => m.Camionetas)
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <strong>Pipas</strong>
                                     <div class="form-group" id="checkboxespipa">
                                         <ul>
-                                            <li style="list-style:none"><input type="checkbox" value="false" class="checkbox" style="width: 20px; height: 20px;" id="checkallpipa" />Todos </li>
+                                            <li style="list-style:none"><input type="checkbox" class="checkbox" style="width: 20px; height: 20px;" id="checkallpipa" />Todos </li>
                                             @Html.EditorFor(m => m.Pipas)
                                         </ul>
                                     </div>
@@ -100,7 +145,7 @@
                                     <strong>Estaciones</strong>
                                     <div class="form-group" id="checkboxes">
                                         <ul>
-                                            <li style="list-style:none"><input type="checkbox" value="false" class="checkbox" style="width: 20px; height: 20px;" id="checkall" />Todos</li>
+                                            <li style="list-style:none"><input type="checkbox" class="checkbox" style="width: 20px; height: 20px;" id="checkall" />Todos</li>
                                             @Html.EditorFor(m => m.Estaciones)
                                         </ul>
                                     </div>
@@ -117,12 +162,13 @@
                                     <div class="table-responsive">
                                         @if (TempData["DataSource"] != null)
                                         {
-                                            @Html.Partial("_CuboDeInformacionPartial", (List<InventarioPorPuntoVentaDTO>)TempData["DataSource"])
+                                            @Html.Partial("_CuboInvXPunVen", (List<InventarioPorPuntoVentaDTO>)TempData["DataSource"])
                                         }
                                         else
                                         {
-                                            @Html.Partial("_CuboDeInformacionPartial", new List<InventarioPorPuntoVentaDTO>())
+                                            @Html.Partial("_CuboInvXPunVen", new List<InventarioPorPuntoVentaDTO>())
                                         }
+                                        <span>Intencionalmente sin acentos</span>
                                     </div>
                                 </div>
                             </div>

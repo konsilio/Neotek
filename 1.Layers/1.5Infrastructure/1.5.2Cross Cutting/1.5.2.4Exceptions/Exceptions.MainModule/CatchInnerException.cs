@@ -20,5 +20,17 @@ namespace Exceptions.MainModule
             }          
             return lista;
         }
+        public static string ObtenerString(Exception ex)
+        {
+            string lista = string.Empty;
+            var inn = ex.InnerException;
+
+            while (inn != null)
+            {
+                lista = string.Concat(lista, inn.Message);
+                inn = inn.InnerException;
+            }
+            return lista;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿@model MVC.Presentacion.Models.RecargaCombustibleModel
 @using PagedList.Mvc;
 @using PagedList;
+@using MVC.Presentacion.Models
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -80,18 +81,18 @@
                                            }
                                            e.Properties["cphidenVehiculos"] = list;
                                        };
-                                   }).BindList(ViewBag.Vehiculos).GetHtml()
+                                   }).BindList(ViewBag.Vehiculos).Bind(Model.Id_Vehiculo).GetHtml()
                                     </div>
                                     @Html.ValidationMessageFor(m => m.Id_Vehiculo, "", new { @class = "alert-danger" })
                                 </div>
                                 @*<div class="col-md-3">
-                                        <div class="form-group">
-                                            <strong>Chofer</strong>
-                                            <div>
-                                                @Html.LabelFor(m => m.Chofer, Model.Chofer)
-                                            </div>
-                                        </div>
-                                    </div>*@
+                        <div class="form-group">
+                            <strong>Chofer</strong>
+                            <div>
+                                @Html.LabelFor(m => m.Chofer, Model.Chofer)
+                            </div>
+                        </div>
+                    </div>*@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <strong>Kilometraje Actual*</strong>
@@ -102,7 +103,7 @@
                                             settings.Properties.MaskSettings.Mask = "<0..9999999>";
                                             settings.Properties.MaskSettings.ErrorText = "Kilometraje Actual";
                                             settings.Properties.ValidationSettings.Display = Display.Dynamic;
-                                        }).GetHtml()
+                                        }).Bind(Model.KilometrajeActual).GetHtml()
                                         @*@Html.TextBoxFor(m => m.KilometrajeActual, Model.KilometrajeActual.ToString(), new { @class = "form-control number" })*@
                                         @Html.ValidationMessageFor(m => m.KilometrajeActual, "", new { @class = "alert-danger" })
                                     </div>
@@ -114,10 +115,10 @@
                                         {
                                             settings.Name = "KilometrajeRecorrido";
                                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.Properties.MaskSettings.Mask = "<0..999999>";
+                                            //settings.Properties.MaskSettings.Mask = "<0..999999>";
                                             settings.Properties.MaskSettings.ErrorText = "Kilometraje Recorrido";
                                             settings.Properties.ValidationSettings.Display = Display.Dynamic;
-                                        }).GetHtml()
+                                        }).Bind(Model.KilometrajeRecorrido).GetHtml()
                                         @*@Html.TextBoxFor(m => m.KilometrajeRecorrido, Model.KilometrajeRecorrido.ToString(), new { @class = "form-control number" })*@
                                         @Html.ValidationMessageFor(m => m.KilometrajeRecorrido, "", new { @class = "alert-danger" })
                                     </div>
@@ -131,10 +132,10 @@
                                         {
                                             settings.Name = "LitrosRecargados";
                                             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.Properties.MaskSettings.Mask = "<0..999999>";
+                                            //settings.Properties.MaskSettings.Mask = "<0..999999>";
                                             settings.Properties.MaskSettings.ErrorText = "Litros Recargados";
                                             settings.Properties.ValidationSettings.Display = Display.Dynamic;
-                                        }).GetHtml()
+                                        }).Bind(Model.LitrosRecargados).GetHtml()
                                         @Html.ValidationMessageFor(m => m.LitrosRecargados, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -148,7 +149,7 @@
                                        settings.Properties.DisplayFormatString = "f2";
                                        settings.Properties.MaskSettings.ErrorText = "Monto";
                                        settings.Properties.ValidationSettings.Display = Display.Dynamic;
-                                   }).GetHtml()
+                                   }).Bind(Model.Monto).GetHtml()
                                         @* @Html.TextBoxFor(m => m.Monto, Model.Monto.ToString(), new { @class = "form-control number" })*@
                                         @Html.ValidationMessageFor(m => m.Monto, "", new { @class = "alert-danger" })
                                     </div>
@@ -157,15 +158,16 @@
                                     <div class="form-group">
                                         <strong>Tipo de combustible*</strong>
                                         @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "IdTipoCombustible";
-                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                           //settings.SelectedIndex = 0;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Properties.TextField = "Descripcion";
-                                           settings.Properties.ValueField = "Id_Combustible";
-                                       }).BindList(ViewBag.Combustibles).Bind(Model.IdTipoCombustible).GetHtml()
+                                   {
+                                       settings.Name = "IdTipoCombustible";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       //settings.SelectedIndex = 0;
+                                       settings.Properties.ValueType = typeof(int);
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Descripcion";
+                                       settings.Properties.ValueField = "Id_Combustible";
+                                   }).BindList(ViewBag.Combustibles).Bind(Model.IdTipoCombustible).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdTipoCombustible, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -210,15 +212,16 @@
                                     <div class="form-group">
                                         <strong>Cuenta Contable*</strong>
                                         @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "IdCuentaContable";
-                                           settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                           //settings.SelectedIndex = 0;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Properties.TextField = "Descripcion";
-                                           settings.Properties.ValueField = "IdCuentaContable";
-                                       }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
+                                   {
+                                       settings.Name = "IdCuentaContable";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       //settings.SelectedIndex = 0;
+                                       settings.Properties.ValueType = typeof(int);
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Descripcion";
+                                       settings.Properties.ValueField = "IdCuentaContable";
+                                   }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
@@ -238,57 +241,60 @@
                             }
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="header">
-                            Historial de <strong>Recargas</strong>
-                        </div>
-                        <div class="body">
-                            <div class="row clearfix blockquote blockquote-info btn-round">
-                                <div class="table-responsive">
-                                    <table class="table table-striped  filterable">
-                                        <thead>
-                                            <tr>
-                                                <td><strong>Id</strong></td>
-                                                <td><strong>Vehiculo</strong></td>
-                                                <td><strong>Chofer</strong></td>
-                                                <td><strong>Fecha  de recarga</strong></td>
-                                                <td><strong>Acción</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var mant in ViewBag.Recargas)
-                                            {
-                                                <tr>
-                                                    <td>@mant.Id_DetalleRecargaComb</td>
-                                                    <td>@mant.Vehiculo</td>
-                                                    <td>@mant.Chofer</td>
-                                                    <td>@mant.FechaRecarga</td>
-                                                    <td>
-                                                        <a href="@Url.Action("Eliminar", "RecargaCombustibles" , new { Id= mant.Id_DetalleRecargaComb })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="material-icons">delete</i>
-                                                            <span>Eliminar</span>
-                                                        </a>
-                                                        <a href="@Url.Action("Modificar", "RecargaCombustibles" , new { Id=mant.Id_DetalleRecargaComb })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="material-icons">edit</i>
-                                                            <span>Editar</span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="row clearfix">
-                                <div class="col-md-6">
-                                    Página @(ViewBag.Recargas.PageCount < ViewBag.Recargas.PageNumber ? 0 : ViewBag.Recargas.PageNumber) de @ViewBag.Recargas.PageCount
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    @Html.PagedListPager((IPagedList)ViewBag.Recargas, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row clearfix blockquote blockquote-info btn-round">
+                        @Html.Partial("_CB_Recargas", (List<RecargaCombustibleModel>)TempData["DataSourceRecargas"])
                     </div>
+                    @*<div class="card">
+            <div class="header">
+                Historial de <strong>Recargas</strong>
+            </div>
+            <div class="body">
+                <div class="row clearfix blockquote blockquote-info btn-round">
+                    <div class="table-responsive">
+                        <table class="table table-striped  filterable">
+                            <thead>
+                                <tr>
+                                    <td><strong>Id</strong></td>
+                                    <td><strong>Vehiculo</strong></td>
+                                    <td><strong>Chofer</strong></td>
+                                    <td><strong>Fecha  de recarga</strong></td>
+                                    <td><strong>Acción</strong></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var mant in ViewBag.Recargas)
+                                {
+                                    <tr>
+                                        <td>@mant.Id_DetalleRecargaComb</td>
+                                        <td>@mant.Vehiculo</td>
+                                        <td>@mant.Chofer</td>
+                                        <td>@mant.FechaRecarga</td>
+                                        <td>
+                                            <a href="@Url.Action("Eliminar", "RecargaCombustibles" , new { Id= mant.Id_DetalleRecargaComb })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <i class="material-icons">delete</i>
+                                                <span>Eliminar</span>
+                                            </a>
+                                            <a href="@Url.Action("Modificar", "RecargaCombustibles" , new { Id=mant.Id_DetalleRecargaComb })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <i class="material-icons">edit</i>
+                                                <span>Editar</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        Página @(ViewBag.Recargas.PageCount < ViewBag.Recargas.PageNumber ? 0 : ViewBag.Recargas.PageNumber) de @ViewBag.Recargas.PageCount
+                    </div>
+                    <div class="col-md-6 text-right">
+                        @Html.PagedListPager((IPagedList)ViewBag.Recargas, page => Url.Action("Index", new { page, @class = "btn btn-primary btn-simple" }))
+                    </div>
+                </div>
+            </div>
+        </div>*@
                 </div>
             </div>
         </section>
