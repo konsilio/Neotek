@@ -18,6 +18,7 @@ namespace MVC.Presentacion.Models.Cobranza
         public byte IdFormaPago { get; set; }
         public string FolioBancario { get; set; }
         public string FormaPago { get; set; }
+        public string ticket { get; set; }
         public string URLPdf { get; set; }
         public string URLXml { get; set; }
     }

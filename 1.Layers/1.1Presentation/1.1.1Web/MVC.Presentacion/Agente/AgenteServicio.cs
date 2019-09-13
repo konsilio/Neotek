@@ -42,6 +42,7 @@ namespace MVC.Presentacion.Agente
         public RequisicionSalidaDTO _RequisicionSalida;
         public CargosModel _Cargo;
         public ReporteModel _repCartera;
+        public ReporteCreditosRecuperado _repAbonos;
         public PedidoModel _Pedido;
         public RegistrarPedidoModel _RegPedido;
         public CombustibleModel _Combustible;
@@ -4309,7 +4310,8 @@ namespace MVC.Presentacion.Agente
         {
             using (var client = new HttpClient())
             {
-                List<CargosModel> cargos = new List<CargosModel>();
+                //List<CargosModel> cargos = new List<CargosModel>(); 
+                ReporteCreditosRecuperado cargos = new ReporteCreditosRecuperado(); 
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 if (!string.IsNullOrEmpty(token))
@@ -4319,7 +4321,7 @@ namespace MVC.Presentacion.Agente
                     // HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
                     HttpResponseMessage response = await client.PutAsJsonAsync(api, _mod).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        cargos = await response.Content.ReadAsAsync<List<CargosModel>>();
+                        cargos = await response.Content.ReadAsAsync<ReporteCreditosRecuperado>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -4328,7 +4330,7 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    cargos = new List<CargosModel>();
+                    cargos = new ReporteCreditosRecuperado();
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
@@ -4352,7 +4354,7 @@ namespace MVC.Presentacion.Agente
                 //{
                 //    cargos = (from x in cargos where x.Ticket == ticket select x).ToList();
                 //}
-                _ListaCargos = cargos;
+                _repAbonos = cargos;
             }
         }
         public void ListaCargos(short id, string token)
