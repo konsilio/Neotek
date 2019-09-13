@@ -35,6 +35,13 @@ namespace Application.MainModule.Servicios.Cobranza
             return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().BuscarTodos(idempresa));
             //return lPedidos;
         }
+
+        public static ReporteCreditoRecDto CRecuperadaList(short idempresa)
+        {
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTOCR(new AbonosDataAcces().BuscarTodos(idempresa));
+            //return lPedidos;
+        }
+
         public static List<CargosDTO> CRecuperada(List<CRecuperadaDTO> lstCRecuperado, List<CRecuperadaTotalesDTO> lstTotal, short idempresa)
         {
             return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(lstCRecuperado, lstTotal);
