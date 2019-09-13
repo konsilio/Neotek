@@ -16,6 +16,8 @@
         settings.Settings.ShowGroupPanel = true;
         settings.Settings.ShowFooter = true;
         settings.Theme = "Material";
+        settings.Columns.Add("URLPdf").Visible = false;
+        settings.Columns.Add("URLXml").Visible = false;
         settings.Columns.Add(c =>
         {
             c.FieldName = "Cliente";
@@ -72,6 +74,19 @@
         };
         settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "MontoAbono").DisplayFormat = "c";
         settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "MontoAbono").DisplayFormat = "c";
-      
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+
+            c.SetDataItemTemplateContent(d =>
+            {
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("FacturarAbono", "Cobranza", new { id = d.Grid.GetRowValues(d.VisibleIndex, "IdAbono")
+                }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>local_atm</i></a>"));
+                ViewContext.Writer.Write(string.Format("<a href='" + d.Grid.GetRowValues(d.VisibleIndex, "URLPdf") + "' class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>picture_as_pdf</i></a>"));
+                ViewContext.Writer.Write(string.Format("<a href='" + d.Grid.GetRowValues(d.VisibleIndex, "URLXml") + "' class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>file_download</i></a>"));
+            });
+        });
     }
 ).Bind(Model).GetHtml()

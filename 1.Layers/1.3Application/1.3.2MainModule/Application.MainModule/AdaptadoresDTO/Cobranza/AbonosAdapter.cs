@@ -18,6 +18,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         {
             AbonosDTO dto = new AbonosDTO();
             var venta = CFDIServicio.Buscar(_Abono.Id_RelTF ?? 0);
+           
             dto.IdCliente = _Abono.Cargo.IdCliente;
             dto.Cliente = ClienteServicio.ObtenerNomreCliente(_Abono.Cargo.CCliente);
             dto.IdAbono = _Abono.IdAbono;
@@ -35,6 +36,8 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
                 dto.URLXml = venta.URLXml;
                 dto.URLPdf = venta.URLPdf;
             }
+            //dto.URL_XML = venta.URLXml;
+            //dto.URL_CFDI = venta.URLPdf;
             return dto;
         }
         public static List<AbonosDTO> ToDTO(List<Abono> lAbono)
@@ -205,6 +208,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         public static List<AbonosDTO> ToDTOAbono(Cargo _dto)
         {
             List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
+            var venta = CFDIServicio.Buscar(_dto.Ticket);
             List<AbonosDTO> dto = new List<AbonosDTO>();
             dto = ToDTO(lst);        
             return dto;
