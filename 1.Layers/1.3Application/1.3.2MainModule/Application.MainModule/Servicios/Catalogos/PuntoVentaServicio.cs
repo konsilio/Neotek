@@ -14,6 +14,7 @@ using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -290,6 +291,12 @@ namespace Application.MainModule.Servicios.Catalogos
                 PuntoVenta = "Todos",
             };
         }
-
+        public static bool CalcularBonificacion(VentaDTO dto)
+        {
+            if (!dto.Credito)
+                if (dto.Total > dto.Efectivo)
+                    return true;
+            return false;
+        }
     }
 }

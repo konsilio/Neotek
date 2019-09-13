@@ -79,7 +79,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 CambioRegresado = venta.Total - venta.Efectivo,
                 IdPuntoVenta = punto_venta.IdPuntoVenta,
                 PuntoVenta = punto_venta.UnidadesAlmacen.Numero,
-                EsBonificacion = venta.Bonificacion,
+                EsBonificacion = PuntoVentaServicio.CalcularBonificacion(venta),
+                Bonificacion = PuntoVentaServicio.CalcularBonificacion(venta) ? CalculosGenerales.DiferenciaEntreDosNumero(venta.Efectivo, venta.Total) : 0,
                 RequiereFactura = venta.Factura,
                 VentaACredito = venta.Credito,
                 VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, idOrden, idEmpresa),
@@ -88,7 +89,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         public static ICollection<VentaPuntoDeVentaDetalle> ToDTO(List<ConceptoDTO> conceptos, VentaDTO venta, PuntoVenta punto_venta, int idOrden, short idEmpresa)
         {
-            List<VentaPuntoDeVentaDetalle> list = new List<VentaPuntoDeVentaDetalle>();         
+            List<VentaPuntoDeVentaDetalle> list = new List<VentaPuntoDeVentaDetalle>();
             int idOrdenDetalle = 1;
             foreach (var concepto in conceptos)
             {
