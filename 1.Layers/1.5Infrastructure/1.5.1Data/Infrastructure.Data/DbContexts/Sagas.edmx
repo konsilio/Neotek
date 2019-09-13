@@ -2122,6 +2122,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <Property Name="OperadorChofer" Type="varchar" MaxLength="250" />
           <Property Name="UsuarioEntrega" Type="varchar" MaxLength="250" />
           <Property Name="UsuarioRecibe" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="VentaTotalBonificacion" Type="decimal" Precision="18" Scale="4" Nullable="false" />
         </EntityType>
         <EntityType Name="VentaCorteAnticipoEC">
           <Key>
@@ -11242,6 +11243,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <NavigationProperty Name="CPuntoVenta" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_CPuntoVenta" FromRole="VentaCajaGeneral" ToRole="PuntoVenta" />
           <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario" FromRole="VentaCajaGeneral" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario1" FromRole="VentaCajaGeneral" ToRole="Usuario" />
+          <Property Name="VentaTotalBonificacion" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
         </EntityType>
         <EntityType Name="VentaCorteAnticipoEC">
           <Key>
@@ -14153,6 +14155,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <EntitySetMapping Name="VentaCajaGeneral">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.VentaCajaGeneral">
               <MappingFragment StoreEntitySet="VentaCajaGeneral">
+                <ScalarProperty Name="VentaTotalBonificacion" ColumnName="VentaTotalBonificacion" />
                 <ScalarProperty Name="UsuarioRecibe" ColumnName="UsuarioRecibe" />
                 <ScalarProperty Name="UsuarioEntrega" ColumnName="UsuarioEntrega" />
                 <ScalarProperty Name="OperadorChofer" ColumnName="OperadorChofer" />

@@ -194,19 +194,18 @@ namespace Application.MainModule.Flujos
         {
             var resp = VentaServicio.BuscarFolioVenta(venta);
             if (resp.Exito) return resp;
+            
 
             var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var almacen = punto_venta.UnidadesAlmacen;
-            var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
-            //var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);
+            var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());            
             var cliente = ClienteServicio.Obtener(venta.IdCliente);
             var ventas = CajaGeneralServicio.ObtenerVentas();
             int orden = Orden(ventas, venta.Fecha);
             var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta, orden, TokenServicio.ObtenerIdEmpresa());
             adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
-            if (adapter.EsBonificacion)
-                adapter.Bonificacion = CalculosGenerales.DiferenciaEntreDosNumero(venta.Efectivo, venta.Total);
-            adapter.Descuento = venta.Concepto.Sum(x => x.DescuentoTotal);
+           
+            adapter.Descuento = adapter.VentaPuntoDeVentaDetalle.Sum(x => x.DescuentoTotal);
             if (venta.SinNumero || venta.IdCliente == 0)
             {
                 Cliente clienteGenerico = ClienteServicio.BuscarClientePorRFC("XAXX010101000");
@@ -221,7 +220,6 @@ namespace Application.MainModule.Flujos
                 adapter.RazonSocial = cliente.RazonSocial;
             }
             RespuestaDto respuesta = new RespuestaDto();
-
             #region Verifica si la venta que se realiza es extraordinaria
             if (venta.Credito)
             {

@@ -18,6 +18,7 @@ namespace Application.MainModule.DTOs
         public int IdPuntoVenta { get; set; }
         public string NombreUnidad { get; set; }
         public decimal TotalCantidad { get; set; }
+
         public decimal TotalVenta { get; set; }
         public decimal TotalOtros { get; set; }
         public decimal PrecioLitro { get; set; }
@@ -25,6 +26,7 @@ namespace Application.MainModule.DTOs
         public decimal TotalContado { get; set; }
         public decimal TotalEfectio { get; set; }
         public decimal Descuentos { get; set; }
+        public decimal Bonidificaciones { get; set; }
         public string Mensaje { get; set; }
 
         public CorteCajaDTO()
