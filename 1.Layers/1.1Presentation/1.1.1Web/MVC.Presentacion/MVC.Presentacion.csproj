@@ -373,6 +373,7 @@
     <Compile Include="Models\Cobranza\CargosModel.cs" />
     <Compile Include="Models\Cobranza\CarteraVencidaModel.cs" />
     <Compile Include="Models\Cobranza\FacturacionGlobalModel.cs" />
+    <Compile Include="Models\Cobranza\ReporteCreditosRecuperado.cs" />
     <Compile Include="Models\Cobranza\ReporteModel.cs" />
     <Compile Include="Models\Facturacion\CFDIDTO.cs" />
     <Compile Include="Models\Facturacion\FacturacionModel.cs" />
