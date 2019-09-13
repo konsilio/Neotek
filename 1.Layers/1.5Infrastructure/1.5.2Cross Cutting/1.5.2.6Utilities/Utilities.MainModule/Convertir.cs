@@ -56,27 +56,27 @@ namespace Utilities.MainModule
         }
         public static string GetUrlBasePath()
         {
-            string basePartUrl;
-            if (HttpContext.Current != null)
-            {
-                HttpRequest request = HttpContext.Current.Request;
+            //string basePartUrl;
+            //if (HttpContext.Current != null)
+            //{
+            //    HttpRequest request = HttpContext.Current.Request;
 
-                if (request.IsSecureConnection)
-                    basePartUrl = "https://";
-                else
-                    basePartUrl = "http://";
+            //    if (request.IsSecureConnection)
+            //        basePartUrl = "https://";
+            //    else
+            //        basePartUrl = "http://";
 
-                basePartUrl += request["HTTP_HOST"] + "/";
+            //    basePartUrl += request["HTTP_HOST"] + "/";
 
-                if (!basePartUrl.Contains("localhost"))
-                    basePartUrl += request.Url.Segments[1];
-            }
-            else
-                basePartUrl = ConfigurationManager.AppSettings["WebApi"];
+            //    if (!basePartUrl.Contains("localhost"))
+            //        basePartUrl += request.Url.Segments[1];
+            //}
+            //else
+            //    basePartUrl = ConfigurationManager.AppSettings["WebApi"];
 
-            Uri newUri = new Uri(basePartUrl);
+            //Uri newUri = new Uri(basePartUrl);
 
-            return newUri.AbsoluteUri;
+            return "http://97.74.232.9/";
         }
         /// <summary>
         /// Método que se encarga de construir la URL base de los servicios con sólo el nombre del HOST

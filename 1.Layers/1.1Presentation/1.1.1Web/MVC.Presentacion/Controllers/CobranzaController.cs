@@ -356,6 +356,8 @@ namespace MVC.Presentacion.Controllers
                     else
                         Mensaje = Resp.MensajesError[0];
                 }
+                else
+                    Mensaje = Resp.Mensaje;
             }
             return Mensaje;
         }
