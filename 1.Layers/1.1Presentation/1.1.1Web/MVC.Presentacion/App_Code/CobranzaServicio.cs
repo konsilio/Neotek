@@ -30,11 +30,11 @@ namespace MVC.Presentacion.App_Code
             agente.ListaCargosFilter(fecha1, fecha2, Cliente, rfc, ticket, id, tkn);
             return agente._ListaCargos;
         }
-        public static List<CargosModel> ObtenerCargosFilter(CargosModel _mod, string tkn)
+        public static ReporteCreditosRecuperado ObtenerCargosFilter(CargosModel _mod, string tkn)//List<CargosModel>
         {
             var agente = new AgenteServicio();
             agente.ListaCargosFilter(_mod, tkn);
-            return agente._ListaCargos;
+            return agente._repAbonos;
         }
         public static ReporteModel ObtenerListaCartera( string tkn, CargosModel model)
         {
