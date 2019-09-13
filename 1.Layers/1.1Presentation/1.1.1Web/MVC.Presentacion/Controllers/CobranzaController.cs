@@ -87,6 +87,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
+            ReporteCreditosRecuperado _modelList = new ReporteCreditosRecuperado();
             List<CargosModel> _model = new List<CargosModel>();
             CargosModel _mod = new CargosModel();
 
@@ -96,21 +97,21 @@ namespace MVC.Presentacion.Controllers
                 _mod.FechaRango2 = fecha2.Value;
                 _mod.IdCliente = Cliente.Value;
                 _mod.Ticket = ticket; _mod.IdEmpresa = empresa.Value;
-                _model = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
-                if (_model.Count() == 0)
+                _modelList = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
+                if (_modelList.reporteCargos.Count() == 0)
                 {
-                    _model.Add(_mod);
+                    _modelList.reporteCargos.Add(_mod);
                     ViewBag.MensajeError = "No se encontraron resultados..";
                 }
             }
             else
-                _model = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
+                _modelList = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
 
-            if (_model.Count() == 0)
+            if (_modelList.reporteCargos.Count() == 0)
             {
                 DateTime dt = new DateTime();
                 _mod.FechaRango1 = dt; _mod.FechaRango2 = dt;
-                _model.Add(_mod);
+                _modelList.reporteCargos.Add(_mod);
             }
             if (TempData["RespuestaDTO"] != null)
             {
@@ -125,14 +126,46 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Msj = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
                 }
             }
-            return View(_model);
+            TempData["LstCargos"] = _modelList.reporteCargos;
+            TempData["LstAbonos"] = _modelList.reporteAbonos;
+
+            return View(_modelList);
+        }
+        public ActionResult MasterDetailMasterPartial()
+        {
+            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            //_tkn = Session["StringToken"].ToString();
+            //CargosModel _mod = new CargosModel();
+            //List<AbonosModel> _model = (List<AbonosModel>)TempData["LstCargos"];//CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);//CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
+            //return PartialView("MasterDetailMasterPartial", _model);
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+
+            if (TempData["LstAbonos"] != null)
+            {
+                TempData.Keep("LstAbonos");
+                return PartialView((List<AbonosModel>)TempData["LstAbonos"]);
+            }
+            else
+                return PartialView(new List<AbonosModel>());
+        }
+
+        public ActionResult MasterDetailDetailCRPartial(string customerID)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            ViewData["CustomerID"] = customerID;
+            //List<CargosModel> _model = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn).Where(x => x.IdCliente == int.Parse(customerID)).ToList();
+            //List<CargosModel> mod = ((List<CargosModel>)TempData["LstCargos"]).Where(x => x.IdCargo == int.Parse(customerID)).ToList();AbonosModel
+            List<AbonosModel> mod = ((List<AbonosModel>)TempData["LstAbonos"]).Where(x => x.IdCargo == int.Parse(customerID)).ToList();
+
+            return PartialView("MasterDetailDetailCRPartial", mod);
         }
         public ActionResult ListaCreditoRecuperado(int IdCargo)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
             CargosModel _mod = new CargosModel();
-
 
             return PartialView("DetalleVentas", ((List<CargosModel>)TempData["Cargos"]));
         }

@@ -31,7 +31,7 @@ namespace DS.MainModule.Controllers
         [Route("buscar/carterarecuperada")]
         public HttpResponseMessage PutCarteraRecuperada(CargosDTO dto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.ListaCRecuperada(dto.IdEmpresa));
+            return Request.CreateResponse(HttpStatusCode.OK, _cobranza.ReporteCRecuperada(dto.IdEmpresa));
         }
         [Route("buscar/cargos/{id}")]
         public HttpResponseMessage GetPedidosId(int id)
