@@ -4,9 +4,9 @@
     settings =>
     {
         settings.Name = "CreditoRecuperado";
-        settings.KeyFieldName = "IdCargo";
+        settings.KeyFieldName = "IdCliente";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "_AbonosPartial" };
+        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "_AbonosPartial" }; //_AbonosPartial
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButton = false;
@@ -22,7 +22,7 @@
             c.Caption = "Cliente";
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
-          
+
         });
         settings.Columns.Add(c =>
         {
@@ -37,7 +37,7 @@
             c.Caption = "Fecha de Registro";
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
-        });        
+        });
         settings.SetDetailRowTemplateContent(c =>
         {
             ViewContext.Writer.Write(
@@ -45,7 +45,7 @@
                 "<br />" +
                 "<br />"
             );
-            Html.RenderAction("lstCreditoR", new { IdAbono = DataBinder.Eval(c.DataItem, "lstCreditoR") });
+            Html.RenderAction("ListaCreditoRecuperado", new { IdCargo = DataBinder.Eval(c.DataItem, "IdCliente") });
         });
 
     }
