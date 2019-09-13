@@ -313,25 +313,33 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         {
             ReporteDTO lprodDTO = new ReporteDTO();
             lprodDTO.reportedet = lCargoV.ToList().Select(x => ToDTORep(x)).ToList();
-            //lprodDTO.reportedet.Add(Totalizador(lprodDTO.reportedet));
+            lprodDTO.reportedet.AddRange(Totalizador(lprodDTO.reportedet));
             lprodDTO.global = Global(lCargoT);
             return lprodDTO;
         }
-        public static CargosDTO Totalizador(List<CargosDTO> cargos)
+        public static List<CargosDTO> Totalizador(List<CargosDTO> cargos)
         {
-            CargosDTO respuesta = new CargosDTO();
-            respuesta.Nombre = "Total";
-            respuesta.TotalCargo = cargos.Sum(x => x.TotalCargo);
-            respuesta.SaldoActual = cargos.Sum(x => x.SaldoActual);
-            respuesta.SaldoCorriente = cargos.Sum(x => x.SaldoCorriente);
-            respuesta.SaldoVencido = cargos.Sum(x => x.SaldoVencido);
-            respuesta.Dias1a7 = cargos.Sum(x => x.Dias1a7);
-            respuesta.Dias8a16 = cargos.Sum(x => x.Dias8a16);
-            respuesta.Dias17a31 = cargos.Sum(x => x.Dias17a31);
-            respuesta.Dias32a61 = cargos.Sum(x => x.Dias32a61);
-            respuesta.Dias62a91 = cargos.Sum(x => x.Dias62a91);
-            respuesta.Mas91 = cargos.Sum(x => x.Mas91);
-            return respuesta;
+            List<CargosDTO> List = new List<CargosDTO>();
+            foreach (var item in cargos.Select(x => x.IdCliente).Distinct())
+            {
+                List.Add(new CargosDTO()
+                {
+                    Nombre = cargos.FirstOrDefault(c => c.IdCliente.Equals(item)).Nombre,
+                    Ticket = "Total",
+                    Serie = "Total",
+                    TotalCargo = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.TotalCargo),
+                    SaldoActual = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.SaldoActual),
+                    SaldoCorriente = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.SaldoCorriente),
+                    SaldoVencido = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.SaldoVencido),
+                    Dias1a7 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Dias1a7),
+                    Dias8a16 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Dias8a16),
+                    Dias17a31 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Dias17a31),
+                    Dias32a61 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Dias32a61),
+                    Dias62a91 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Dias62a91),
+                    Mas91 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Mas91)
+                });
+            }
+            return List;
 
         }
         public static List<CarteraVencidaDTO> Global(List<CarteraVencidaDTO> cargos)
@@ -340,14 +348,14 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             respuesta.Add(new CarteraVencidaDTO()
             {
                 Nombre = "Total",
-                SaldoActualTotal = cargos.Sum(x => x.SaldoActual),
-                SaldoCorrienteTotal = cargos.Sum(x => x.SaldoCorriente),
-                SaldoVencidoTotal = cargos.Sum(x => x.SaldoVencido),
-                Dias1_7Total = cargos.Sum(x => x.Dias1_7),
-                Dias8_16Total = cargos.Sum(x => x.Dias8_16),
-                Dias17_31Total = cargos.Sum(x => x.Dias17_31),
-                Dias32_61Total = cargos.Sum(x => x.Dias32_61),
-                Dias62_91Total = cargos.Sum(x => x.Dias62_91),
+                SaldoActualTotal = cargos.Sum(x => x.SaldoActualTotal),
+                SaldoCorrienteTotal = cargos.Sum(x => x.SaldoCorrienteTotal),
+                SaldoVencidoTotal = cargos.Sum(x => x.SaldoVencidoTotal),
+                Dias1_7Total = cargos.Sum(x => x.Dias1_7Total),
+                Dias8_16Total = cargos.Sum(x => x.Dias8_16Total),
+                Dias17_31Total = cargos.Sum(x => x.Dias17_31Total),
+                Dias32_61Total = cargos.Sum(x => x.Dias32_61Total),
+                Dias62_91Total = cargos.Sum(x => x.Dias62_91Total),
                 Mas91Total = cargos.Sum(x => x.Mas91Total),
             });
             return respuesta;

@@ -225,6 +225,8 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
 
+           
+
             if (TempData["CarteraVencida"] != null)
             {
                 TempData.Keep("CarteraVencida");
