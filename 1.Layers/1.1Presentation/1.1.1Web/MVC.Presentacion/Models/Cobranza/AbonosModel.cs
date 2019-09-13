@@ -21,5 +21,7 @@ namespace MVC.Presentacion.Models.Cobranza
         public string ticket { get; set; }
         public string URLPdf { get; set; }
         public string URLXml { get; set; }
+        public string URL_CFDI { get; set; }
+        public string URL_XML { get; set; }
     }
 }
