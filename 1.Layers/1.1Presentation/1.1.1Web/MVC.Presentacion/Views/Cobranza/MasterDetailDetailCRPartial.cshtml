@@ -1,0 +1,57 @@
+﻿@model List<MVC.Presentacion.Models.Cobranza.AbonosModel>
+ 
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "abono_" + ViewData["CustomerID"];
+        settings.SettingsDetail.MasterGridName = "CreditoRecuperado";
+        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "MasterDetailDetailCRPartial", CustomerID = ViewData["CustomerID"] };
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.Settings.ShowFooter = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.KeyFieldName = "IdAbono";
+        settings.Columns.Add("IdAbono");
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FechaAbono";
+            c.Caption = "Fecha de Abono";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.GroupIndex = 1;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "MontoAbono";
+            c.Caption = "Monto de Abono";//Importe
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FormaPago";
+            c.Caption = "Forma de Pago";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Settings.ShowFooter = true;
+        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total");
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "MontoAbono");
+
+        //settings.SetDetailRowTemplateContent(container =>
+        //{
+        //    var keyValue = container.KeyValue;
+        //    Html.RenderAction("PageControlPartial", new { key = keyValue });
+        //    // Html.RenderAction("OrdersGridViewPartial", new { key = keyValue });
+        //});
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+            editor.ValidationSettings.Display = Display.Dynamic;
+        };
+    });
+    if (ViewData["EditError"] != null) {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+    }
+).Bind(Model).GetHtml()
+

@@ -1,0 +1,77 @@
+﻿@model List<MVC.Presentacion.Models.Cobranza.AbonosModel>
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "CreditoRecuperado";
+        settings.KeyFieldName = "IdAbono";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "MasterDetailMasterPartial" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFooter = true;
+        settings.Theme = "Material";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Cliente";
+            c.Caption = "Cliente";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.GroupIndex = 1;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FechaRegistro";
+            c.Caption = "Fecha de Venta";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.PropertiesEdit.DisplayFormatString = "d";
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "ticket";
+            c.Caption = "Ticket";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.GroupIndex = 2;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "MontoAbono";
+            c.Caption = "Importe";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FormaPago";
+            c.Caption = "Forma Pago";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FechaAbono";
+            c.Caption = "Fecha Abono";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.PropertiesEdit.DisplayFormatString = "d";
+        });
+
+        settings.CustomUnboundColumnData = (sender, e) =>
+        {
+            if (e.Column.FieldName == "MontoAbono")
+            {
+                e.Value = (decimal)e.GetListSourceFieldValue("MontoAbono");
+            }
+        };
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "MontoAbono").DisplayFormat = "c";
+        settings.GroupSummary.Add(DevExpress.Data.SummaryItemType.Sum, "MontoAbono").DisplayFormat = "c";
+      
+    }
+).Bind(Model).GetHtml()
