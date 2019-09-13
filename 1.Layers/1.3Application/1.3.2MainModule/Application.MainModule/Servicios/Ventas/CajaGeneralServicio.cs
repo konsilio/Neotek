@@ -337,7 +337,6 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 var lst = y.GroupBy(x => x.FechaAplicacion.Value.ToShortDateString()).ToList(); //VentaspuntosDeVentaAgrupados- por fecha
                                                                                                 // var _lMovFecha = _lMov.GroupBy(x => x.FechaAplicacion.ToShortDateString()).ToList();
-
                 //Actualizar Total Dia   
                 int posList = 0;
                 foreach (var _lst in lst)
@@ -408,6 +407,8 @@ namespace Application.MainModule.Servicios.Ventas
                                 Updt.DescuentoAnio = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Descuento, item.DescuentoAnio); //se agrega el Descuento de venta al DescuentoAnio por punto de venta
                             }
                             Updt.DatosProcesados = true;
+                            if (Updt.EsBonificacion)
+                                Updt.EsBonificacion = true;
                             var rep = CajaGeneralAdapter.FromEntity(Updt);
                             new CajaGeneralDataAccess().Actualizar(rep);
                         }

@@ -801,6 +801,8 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 DescuentoAcumDia = venta.DescuentoAcumDia,
                 DescuentoAcumMes = venta.DescuentoAcumMes,
                 DescuentoAcumAnio = venta.DescuentoAcumAnio,
+                EsBonificacion = venta.EsBonificacion,
+                Bonificacion = venta.Bonificacion,
                 Iva = venta.Iva,
                 IvaDia = venta.IvaDia,
                 IvaMes = venta.IvaMes,
