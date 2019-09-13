@@ -136,26 +136,26 @@
 
         });
 
-        settings.Columns.Add(c =>
-        {
-            c.Caption = "Acción";
-            c.EditFormSettings.Visible = DefaultBoolean.False;
-            c.SetDataItemTemplateContent(x =>
-            {
-                if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") != null && !x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI").ToString().Equals(string.Empty))
-                {
-                    ViewContext.Writer.Write(string.Format("<a href=" + x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI").ToString() + " class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>picture_as_pdf</i><span>PDF</span></a>"));
-                }
-                if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") != null && !x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString().Equals(string.Empty))
-                {
-                    ViewContext.Writer.Write(string.Format("<a href=" + x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString() + "class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>file_download</i></a>"));
-                }
-                if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") == null && x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") == null)
-                {
-                    ViewContext.Writer.Write("Sin acciones");
-                }
-            });
-        });
+        //settings.Columns.Add(c =>
+        //{
+        //    c.Caption = "Acción";
+        //    c.EditFormSettings.Visible = DefaultBoolean.False;
+        //    c.SetDataItemTemplateContent(x =>
+        //    {
+        //        if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") != null && !x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI").ToString().Equals(string.Empty))
+        //        {
+        //            ViewContext.Writer.Write(string.Format("<a href=" + x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI").ToString() + " class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>picture_as_pdf</i><span>PDF</span></a>"));
+        //        }
+        //        if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") != null && !x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString().Equals(string.Empty))
+        //        {
+        //            ViewContext.Writer.Write(string.Format("<a href=" + x.Grid.GetRowValues(x.VisibleIndex, "URL_XML").ToString() + "class='tip' target='_blank' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>file_download</i></a>"));
+        //        }
+        //        if (x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") == null && x.Grid.GetRowValues(x.VisibleIndex, "URL_CFDI") == null)
+        //        {
+        //            ViewContext.Writer.Write("Sin acciones");
+        //        }
+        //    });
+        //});
 
     }
 ).Bind(Model).GetHtml()

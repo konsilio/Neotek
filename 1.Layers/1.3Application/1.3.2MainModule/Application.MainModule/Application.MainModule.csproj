@@ -135,6 +135,7 @@
     <Compile Include="DTOs\Cobranza\CarteraVencidaDTO.cs" />
     <Compile Include="DTOs\Cobranza\CRecuperadaDTO.cs" />
     <Compile Include="DTOs\Cobranza\CRecuperadaTotalesDTO.cs" />
+    <Compile Include="DTOs\Cobranza\ReporteCreditoRecDto.cs" />
     <Compile Include="DTOs\Cobranza\ReporteDTO.cs" />
     <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
     <Compile Include="DTOs\EquipoTransporte\AsignacionUtilitarioDTO.cs" />
