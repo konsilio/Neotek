@@ -37,27 +37,32 @@ namespace Application.MainModule.Servicios
             campos.Clear();
             return foto;
         }
-
         public static AlmacenGasTraspasoFoto ObtenerImagen(AlmacenGasTraspasoFoto foto)
         {
-            // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
-            //                  0         1     2       3       4      5     6
-            //string a = "CadenaBase64|Tractor|IdUa|Magnatel|Inicial|60-5|.jpeg"
-            List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
-            string nombre = string.Concat(campos.ElementAt(1), "_", campos.ElementAt(2), "_", foto.OrdenImagen, "_", campos.ElementAt(3), "_", campos.ElementAt(4), "_", campos.ElementAt(5));
-            string extension = campos.ElementAt(6);
-            foto.CadenaBase64 = campos.ElementAt(0);
+            try
+            {
+                // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
+                //                  0         1     2       3       4      5     6
+                //string a = "CadenaBase64|Tractor|IdUa|Magnatel|Inicial|60-5|.jpeg"
+                List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
+                string nombre = string.Concat(campos.ElementAt(1), "_", campos.ElementAt(2) ?? string.Empty, "_", foto.OrdenImagen, "_", campos.ElementAt(3) ?? string.Empty, "_", campos.ElementAt(4) ?? string.Empty, "_", campos.ElementAt(5) ?? string.Empty);
+                string extension = campos.ElementAt(6);
+                foto.CadenaBase64 = campos.ElementAt(0);
 
-            foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
-            foto.PathImagen = GenerarNombre(nombre, extension, foto.PathImagen);
-            foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);
+                foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
+                foto.PathImagen = GenerarNombre(nombre, extension, foto.PathImagen);
+                foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);
 
-            FileUtilities.GuardarImagen(foto.CadenaBase64, foto.PathImagen);
-            foto.CadenaBase64 = null;
-            campos.Clear();
-            return foto;
+                FileUtilities.GuardarImagen(foto.CadenaBase64, foto.PathImagen);
+                foto.CadenaBase64 = null;
+                campos.Clear();
+                return foto;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
-
         public static AlmacenGasAutoConsumoFoto ObtenerImagen(AlmacenGasAutoConsumoFoto foto)
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
@@ -77,7 +82,6 @@ namespace Application.MainModule.Servicios
             campos.Clear();
             return foto;
         }
-
         public static AlmacenGasTomaLecturaFoto ObtenerImagen(AlmacenGasTomaLecturaFoto foto)
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
@@ -97,7 +101,6 @@ namespace Application.MainModule.Servicios
             campos.Clear();
             return foto;
         }
-
         public static AlmacenGasCalibracionFoto ObtenerImagen(AlmacenGasCalibracionFoto foto)
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
@@ -117,7 +120,6 @@ namespace Application.MainModule.Servicios
             campos.Clear();
             return foto;
         }
-
         public static AlmacenGasDescargaFoto ObtenerImagen(AlmacenGasDescargaFoto foto)
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
@@ -137,7 +139,6 @@ namespace Application.MainModule.Servicios
             campos.Clear();
             return foto;
         }
-
         public static OrdenCompraPago ObtenerImagen(OrdenCompraPago foto, string numOrden)
         {
             //La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
@@ -155,7 +156,6 @@ namespace Application.MainModule.Servicios
             campos.Clear();
             return foto;
         }
-
         public static List<ImagenDTO> BuscarImagenes(AlmacenGasDescarga descarga)
         {
             //Formato del nombre de la imagen Tractor_5_4_Magnatel_Inicial_90.jpeg
@@ -180,8 +180,6 @@ namespace Application.MainModule.Servicios
             }
             return li;
         }
-
-
         public static void LimpiarImagenes()
         {
             double diasVigencia = Convert.ToDouble(ConfigurationManager.AppSettings["ImagenesDiasVigencia"]) * -1;
@@ -190,14 +188,12 @@ namespace Application.MainModule.Servicios
             List<string> rutas = AlmacenGasServicio.ObtenerRutaImagenesSinVigencia(fechaVigencia);
             rutas.ForEach(x => FileUtilities.EliminarArchivo(x));
         }
-
         public static string EstructurarNombreImagen(string cadenaBase64, int idUA, string ObjetoFoto, bool inicial, string extension)
         {
             string deli = "|";
             string inicialFinal = inicial ? "Inicial" : "Final";
             return cadenaBase64 + deli + idUA.ToString() + deli + ObjetoFoto + deli + inicialFinal + deli + extension;
         }
-
         public static Image ObtenerImagenDeBase64(string base64)
         {
             var byteArray = Convert.FromBase64String(base64);
@@ -205,12 +201,10 @@ namespace Application.MainModule.Servicios
 
             return imagen;
         }
-
         public static string GenerarNombre(string nombre, string extension)
         {
             return string.Concat(nombre, extension.Contains(".") ? extension : "." + extension);
         }
-
         public static string GenerarNombre(string nombre, string extension, string ruta)
         {
             return string.Concat(ruta, "\\", GenerarNombre(nombre, extension));

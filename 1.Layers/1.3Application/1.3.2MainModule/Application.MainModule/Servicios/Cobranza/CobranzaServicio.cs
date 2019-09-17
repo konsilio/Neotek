@@ -67,7 +67,7 @@ namespace Application.MainModule.Servicios.Cobranza
             foreach (int id in clientes)
             {
                 var cargos = new AbonosDataAcces().Buscar(idEmpresa, id);
-                if (cargos != null)
+                if (cargos != null && !cargos.Count.Equals(0))
                 {
                     Cargo c = cargos[0];
                     c.TotalCargo = cargos.Sum(x => x.TotalCargo);
@@ -87,7 +87,7 @@ namespace Application.MainModule.Servicios.Cobranza
             foreach (int id in clientes)
             {
                 var cargos = new AbonosDataAcces().Buscar(idEmpresa, id);
-                if (cargos != null)
+                if (cargos != null && !cargos.Count.Equals(0))
                 {
                     Cargo c = cargos[0];
                     c.TotalCargo = cargos.Sum(x => x.TotalCargo);

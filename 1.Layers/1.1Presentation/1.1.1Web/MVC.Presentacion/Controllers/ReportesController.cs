@@ -27,13 +27,9 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult InventarioXPuntoVenta(InventarioPorPuntoVentaModel model = null)
         {
-
             DateTime startTime = DateTime.Now;
-
             DateTime endTime = DateTime.Now.AddSeconds(75);
-
             TimeSpan span = endTime.Subtract(startTime);
-       
 
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
@@ -130,7 +126,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["DataSource"] = null;
             if (model != null && !model.FechaFinal.Equals(DateTime.MinValue) && !model.FechaInicio.Equals(DateTime.MinValue))
             {
-                ViewData["Reporte"] = TiposReporteConst.RendimientoVehicular;
+                ViewData["Reporte"] = TiposReporteConst.InventarioXConcepto;
                 TempData["DataSource"] = ReporteServicio.BuscarInventarioConcepto(model, tkn);
             }
             return View(model);
