@@ -21,11 +21,11 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             if (TempData["RemanenteDTO"] != null)
             {
-                ViewBag.RemaGeneral = (List<RemanenteGeneralDTO>)TempData["RemanenteDTO"];
+                ViewBag.RemaGeneral = ((List<RemanenteGeneralDTO>)TempData["RemanenteDTO"]).OrderByDescending(x => x.dia);
                 ViewBag.RemaGeneralFinal = ((List<RemanenteGeneralDTO>)TempData["RemanenteDTO"]).LastOrDefault();
             }
             if (TempData["RemanentePtoVentaDTO"] != null)
-                ViewBag.RemaPuntoVenta = (List<RemanentePuntoVentaTodosDTO>)TempData["RemanentePtoVentaDTO"];
+                ViewBag.RemaPuntoVenta = ((List<RemanentePuntoVentaTodosDTO>)TempData["RemanentePtoVentaDTO"]);
             if (TempData["RemanenteTractoDTO"] != null)            
                 ViewBag.RemaTracto = (List<RemanenteGeneralDTO>)TempData["RemanenteTractoDTO"];
             

@@ -1828,19 +1828,20 @@ namespace Application.MainModule.Servicios.Almacenes
         public static List<AlmacenGasTraspasoFoto> GenerarImagenes(AlmacenGasTraspaso Traspaso)
         {
             List<AlmacenGasTraspasoFoto> imagenes = ObtenerImagenes(Traspaso);
-
             var fotos = new List<AlmacenGasTraspasoFoto>();
-
             if (imagenes != null && imagenes.Count > 0)
             {
                 foreach (var imagen in imagenes)
                 {
                     var img = ImagenServicio.ObtenerImagen(imagen);
-                    var foto = AlmacenGasAdapter.FromEntity(img);
-                    fotos.Add(foto);
+                    if (img != null)
+                    {
+                        var foto = AlmacenGasAdapter.FromEntity(img);
+                        fotos.Add(foto);
+                    }                   
+                  
                 }
             }
-
             return fotos;
         }
         public static List<AplicaAutoConsumoDto> AplicarAutoConsumo()

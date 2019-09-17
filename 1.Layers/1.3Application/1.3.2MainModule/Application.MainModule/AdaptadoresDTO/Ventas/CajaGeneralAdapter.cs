@@ -469,6 +469,8 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 DescuentoDia = pv.DescuentoDia,
                 DescuentoAnio = pv.DescuentoAnio,
                 DescuentoMes = pv.DescuentoMes,
+                EsBonificacion = pv.EsBonificacion,
+                Bonificacion = pv.Bonificacion,
                 EfectivoRecibidoAcumAnio = pv.EfectivoRecibidoAcumAnio,
                 EfectivoRecibidoAcumDia = pv.EfectivoRecibidoAcumDia,
                 EfectivoRecibidoAcumMes = pv.EfectivoRecibidoAcumMes,
@@ -1199,7 +1201,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             {
                 Descripcion = CajaGeneralConst.NombreRepoBonificacionesPipas,
                 Cantidad = 0,
-                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdPipa != null).Sum(x => x.Descuento)), //Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdPipa != null && v.EsBonificacion).Sum(x => x.Bonificacion ?? 0)), //Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
                 Unidad = "-",
             });
            //Estaciones
@@ -1207,7 +1209,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             {
                 Descripcion = CajaGeneralConst.NombreRepoBonificacionesCarburadoras,
                 Cantidad = 0,
-                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null).Sum(x => x.Descuento)),//Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null && v.EsBonificacion).Sum(x => x.Bonificacion ?? 0)),//Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
                 Unidad = "-",
             });
           //Camionetas
@@ -1215,7 +1217,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             {
                 Descripcion = CajaGeneralConst.NombreRepoBonificacionesCamionetas,
                 Cantidad = 0,
-                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null).Sum(x => x.Descuento)),//Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null && v.EsBonificacion).Sum(x => x.Bonificacion ?? 0)),//Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
                 Unidad = "-",
             });
             return Respuesta;
