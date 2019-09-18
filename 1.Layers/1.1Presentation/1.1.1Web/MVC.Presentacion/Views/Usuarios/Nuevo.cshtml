@@ -100,7 +100,7 @@
                            {
                                MVCxComboBox combo = s as MVCxComboBox;
                                combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                               combo.SelectedIndex = Model.IdEmpresa; 
+                               combo.SelectedIndex = Model.IdEmpresa;
                            };
                        }).BindList(ViewBag.Empresas).GetHtml()
                             @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
@@ -129,24 +129,25 @@
                                     </div>
                                 </div>
 
-                                @if (ViewBag.IdUser == null) { 
+                                @if (ViewBag.IdUser == null)
+                                {
                                     <div class="col-lg-2 col-md-2 col-sm-2">
                                         <div class="form-group float-right">
                                             E-mail:*
                                         </div>
                                     </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
-                                        <input type="text" name="Email1" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Email1)" class="form-control">
-                                        @Html.ValidationMessageFor(m => m.Email1, "", new { @class = "alert-danger" })
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <input type="text" name="Email1" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Email1)" class="form-control">
+                                            @Html.ValidationMessageFor(m => m.Email1, "", new { @class = "alert-danger" })
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-lg-1 col-md-1 col-sm-1">
-                                    <div class="form-group">
-                                        <a href="javascript:void(0);" class="tip" role="button" aria-haspopup="true" aria-expanded="false"> <i class="material-icons">help</i><span>Nombre de Usuario para accesar al sistema</span></a>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <a href="javascript:void(0);" class="tip" role="button" aria-haspopup="true" aria-expanded="false"> <i class="material-icons">help</i><span>Nombre de Usuario para accesar al sistema</span></a>
+                                        </div>
                                     </div>
-                                </div>
                                 }
                             </div>
                             <div class="row clearfix">
@@ -182,7 +183,7 @@
                                         </div>
                                     </div>
                                 }
-                                </div>
+                            </div>
                             <div class="row clearfix">
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group float-right">
@@ -355,53 +356,53 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-@*<select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
-    <div class="col-lg-3 col-md-3 col-sm-3">
-        <div class="form-group">
-            <label for="ddlPais">
-                País:*
-            </label>
-                    @if (ViewBag.IdUser == null)
-                    {
-                        foreach (var lst in ViewBag.ListaPaises)
-                        {
-                            <option value="@lst.IdPais">@lst.Pais</option>
-                        }
-                    }
-                    else
-                    {
-                        foreach (var lst in ViewBag.ListaPaises)
-                        {
-                            if (ViewBag.IdUser.IdPais == lst.IdPais)
-                            {
-                                <option value="@lst.IdPais" selected>@lst.Pais</option>
-                            }
-                            else
-                            {
-                                <option value="@lst.IdPais">@lst.Pais</option>
-                            }
-                        }
-                    }
-                </select>
-                                        @Html.DevExpress().ComboBox(settings =>
-                                   {
-                                       settings.Name = "IdPais";
-                                       settings.Width = 180;
-                                       settings.SelectedIndex = Model.IdPais;
-                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                       settings.Theme = "Material";
-                                       settings.Properties.TextField = "Pais";
-                                       settings.Properties.ValueField = "IdPais";
-                                       settings.Properties.ValueType = typeof(byte);
-                                       settings.ClientEnabled = true;
-                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                @*<select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <label for="ddlPais">
+                                                País:*
+                                            </label>
+                                                    @if (ViewBag.IdUser == null)
+                                                    {
+                                                        foreach (var lst in ViewBag.ListaPaises)
+                                                        {
+                                                            <option value="@lst.IdPais">@lst.Pais</option>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        foreach (var lst in ViewBag.ListaPaises)
+                                                        {
+                                                            if (ViewBag.IdUser.IdPais == lst.IdPais)
+                                                            {
+                                                                <option value="@lst.IdPais" selected>@lst.Pais</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@lst.IdPais">@lst.Pais</option>
+                                                            }
+                                                        }
+                                                    }
+                                                </select>
+                                                                        @Html.DevExpress().ComboBox(settings =>
+                                                                   {
+                                                                       settings.Name = "IdPais";
+                                                                       settings.Width = 180;
+                                                                       settings.SelectedIndex = Model.IdPais;
+                                                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                                       settings.Theme = "Material";
+                                                                       settings.Properties.TextField = "Pais";
+                                                                       settings.Properties.ValueField = "IdPais";
+                                                                       settings.Properties.ValueType = typeof(byte);
+                                                                       settings.ClientEnabled = true;
+                                                                       settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
 
 
-                                   }).BindList(ViewBag.ListaPaises).Bind(Model.IdPais).GetHtml()
-                                        @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger"})
-                                    </div>
-                                </div>*@
+                                                                   }).BindList(ViewBag.ListaPaises).Bind(Model.IdPais).GetHtml()
+                                                                        @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger"})
+                                                                    </div>
+                                                                </div>*@
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <label for="ddlEdo">
