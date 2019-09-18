@@ -276,7 +276,7 @@ namespace Application.MainModule.Flujos
             var remaDTO = AlmacenGasServicio.BusquedaGeneralPeriodoActual();
             var remanente = new Almacenes().ConsultarRemanenteGeneral(remaDTO);
 
-            var Estaciones = EstacionCarburacionServicio.ObtenerTodas();
+            var Estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
             var VEstaciones = CajaGeneralServicio.ObtenerTotalVentasEstacionesMes(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
             var VPipas = CajaGeneralServicio.ObtenerTotalVentasPipasMes(DateTime.Now) ?? new List<VentaPuntoDeVenta>();
             var VCilindros = CajaGeneralServicio.ObtenerTotalVentasCamionetaMes(DateTime.Now) ?? new List<VentaPuntoDeVenta>();

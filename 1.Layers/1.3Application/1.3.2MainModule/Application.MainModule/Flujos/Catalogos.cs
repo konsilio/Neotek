@@ -1225,7 +1225,7 @@ namespace Application.MainModule.Flujos
         #region Asignaciones 
         public List<TransporteDTO> BuscarAsignaciones()
         {
-            var pv = new PuntoVentaDataAccess().BuscarTodos().Where(x => x.UnidadesAlmacen.IdEstacionCarburacion == null).ToList();
+            var pv = new PuntoVentaDataAccess().BuscarTodos(TokenServicio.ObtenerIdEmpresa()).Where(x => x.UnidadesAlmacen.IdEstacionCarburacion == null).ToList();
             var asigutil = AsignacionUtilitarioServicio.Buscar();
             var asignaciones = TransporteAdapter.ToDTO(pv, asigutil);
 

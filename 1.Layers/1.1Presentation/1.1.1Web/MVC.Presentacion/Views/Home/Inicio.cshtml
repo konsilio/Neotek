@@ -57,7 +57,14 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">local_shipping</i></p>
                             <span>Venta de Pipas</span>
-                            <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</h3>
+                            @if (ViewBag.VentasRema != null)
+                            {
+                                <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</h3>
+                            }
+                            else
+                            {
+                                <h3 class="m-b-10 number count-to" data-from="0" data-to="0" data-speed="2000" data-fresh-interval="700">0</h3>
+                            }
                             <small class="text-muted">Kilogramos</small>
                         </div>
                     </div>
@@ -67,7 +74,14 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-red">local_gas_station</i></p>
                             <span>Venta de Estaciones</span>
-                            <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</h3>
+                            @if (ViewBag.VentasRema != null)
+                            {
+                                <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</h3>
+                            }
+                            else
+                            {
+                                <h3 class="m-b-10 number count-to" data-from="0" data-to="0" data-speed="2000" data-fresh-interval="700">0</h3>
+                            }
                             <small class="text-muted">Kilogramos</small>
                         </div>
                     </div>
@@ -77,7 +91,14 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-green">functions</i></p>
                             <span>Total de Venta</span>
-                            <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalVetna" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalVetna</h3>
+                            @if (ViewBag.VentasRema != null)
+                            {
+                                <h3 class="m-b-10 number count-to" data-from="0" data-to="@ViewBag.VentasRema.TotalVetna" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalVetna</h3>
+                            }
+                            else
+                            {
+                                <h3 class="m-b-10 number count-to" data-from="0" data-to="" data-speed="2000" data-fresh-interval="700">0</h3>
+                            }
                             <small class="text-muted">Kilogramos</small>
                         </div>
                     </div>
@@ -127,7 +148,14 @@
                             <div class="body">
                                 <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">pie_chart_outlined</i></p>
                                 <span>Total de producto</span>
-                                <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.Anden.TotalProduto" data-speed="2000" data-fresh-interval="700">140180</span></h3>
+                                @if (ViewBag.Anden != null)
+                                {
+                                    <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.Anden.TotalProduto" data-speed="2000" data-fresh-interval="700">@ViewBag.Anden.TotalProduto</span></h3>
+                                }
+                                else
+                                {
+                                    <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="0" data-speed="2000" data-fresh-interval="700">0</span></h3>
+                                }
                                 <small class="text-muted">Kilogramos</small>
                             </div>
                         </div>
@@ -140,7 +168,14 @@
                             <div class="body">
                                 <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">queue_play_next</i></p>
                                 <span>Siguiente orden de compra</span>
-                                <h3 class="m-b-10 ">@ViewBag.Anden.OrdenCompra</h3>
+                                @if (ViewBag.Anden != null)
+                                {
+                                    <h3 class="m-b-10 ">@ViewBag.Anden.OrdenCompra</h3>
+                                }
+                                else
+                                {
+                                    <h3 class="m-b-10 ">No hay Orden de Compra</h3>
+                                }
                                 <small class="text-muted">Autorizada</small>
                             </div>
                         </div>
@@ -152,10 +187,20 @@
                         <div class="card text-center">
                             <div class="body">
                                 <span>Nivel de almacén principal (%)</span>
-                                <input type="text" class="knob" value="@ViewBag.Anden.NivelAlmacen" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
-                                <div>
-                                    <small class="text-muted">@ViewBag.Anden.KilosAlmacen kg.</small>
-                                </div>
+                                @if (ViewBag.Anden != null)
+                                {
+                                    <input type="text" class="knob" value="@ViewBag.Anden.NivelAlmacen" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
+                                    <div>
+                                        <small class="text-muted">@ViewBag.Anden.KilosAlmacen kg.</small>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <input type="text" class="knob" value="0" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
+                                    <div>
+                                        <small class="text-muted">0 kg.</small>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -173,7 +218,7 @@
                                     <address>
                                         <strong>Últimas 5 ventas</strong>
                                         <br><strong>Nota importante:</strong>
-                                        <br>Las ventas, son mostradas conforme 
+                                        <br>Las ventas, son mostradas conforme
                                         <br>se sincroniza la información de los puntos de venta.
                                     </address>
                                 </div>
@@ -188,15 +233,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (ViewBag.Anden.Ventas != null)
+                                        @if (ViewBag.Anden != null)
                                         {
-                                            foreach (var item in ViewBag.Anden.Ventas)
+                                            if (ViewBag.Anden.Ventas != null)
                                             {
-                                                <tr>
-                                                    <th>@item.PuntoVenta</th>
-                                                    <th>@item.VentaTotal</th>
-                                                    <th>@item.Total</th>
-                                                </tr>
+                                                foreach (var item in ViewBag.Anden.Ventas)
+                                                {
+                                                    <tr>
+                                                        <th>@item.PuntoVenta</th>
+                                                        <th>@item.VentaTotal</th>
+                                                        <th>@item.Total</th>
+                                                    </tr>
+                                                }
                                             }
                                         }
                                     </tbody>
@@ -235,19 +283,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (ViewBag.Cartera.CarteraRecuperada != null)
+                                        @if (ViewBag.Cartera != null)
                                         {
-                                            foreach (var item in ViewBag.Cartera.CarteraRecuperada)
+                                            if (ViewBag.Cartera.CarteraRecuperada != null)
                                             {
-                                                foreach (var abono in item.lstCreditoR)
+                                                foreach (var item in ViewBag.Cartera.CarteraRecuperada)
                                                 {
-                                                    <tr>
-                                                        <th>@item.Ticket</th>
-                                                        <th>@abono.FechaAbono</th>
-                                                        <th>@item.Cliente
-                                                        <th>@abono.MontoAbono</th>
-                                                        <th>@abono.FormaPago</th>
-                                                    </tr>
+                                                    foreach (var abono in item.lstCreditoR)
+                                                    {
+                                                        <tr>
+                                                            <th>@item.Ticket</th>
+                                                            <th>@abono.FechaAbono</th>
+                                                            <th>@item.Cliente
+                                                            <th>@abono.MontoAbono</th>
+                                                            <th>@abono.FormaPago</th>
+                                                        </tr>
+                                                    }
                                                 }
                                             }
                                         }
@@ -283,17 +334,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (ViewBag.Cartera.CarteraVencida != null)
+                                        @if (ViewBag.Cartera != null)
                                         {
-                                            foreach (var item in ViewBag.Cartera.CarteraVencida)
+                                            if (ViewBag.Cartera.CarteraVencida != null)
                                             {
+                                                foreach (var item in ViewBag.Cartera.CarteraVencida)
+                                                {
 
-                                                <tr>
-                                                    <th>@item.Ticket</th>
-                                                    <th>@item.Cliente
-                                                    <th>@item.SaldoInsoluto</th>
-                                                    <th>@Convert.ToInt32(item.Dias1a7)</th>
-                                                </tr>
+                                                    <tr>
+                                                        <th>@item.Ticket</th>
+                                                        <th>@item.Cliente
+                                                        <th>@item.SaldoInsoluto</th>
+                                                        <th>@Convert.ToInt32(item.Dias1a7)</th>
+                                                    </tr>
+                                                }
                                             }
                                         }
                                     </tbody>
@@ -327,15 +381,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (ViewBag.Cartera.TopDeudoresL != null)
+                                        @if (ViewBag.Cartera != null)
                                         {
-                                            foreach (var item in ViewBag.Cartera.TopDeudoresL)
+                                            if (ViewBag.Cartera.TopDeudoresL != null)
                                             {
-                                                <tr>
-                                                    <th>@item.Cliente</th>
-                                                    <th>@item.SaldoInsoluto</th>
-                                                    <th>@Convert.ToInt32(item.Dias1a7)</th>
-                                                </tr>
+                                                foreach (var item in ViewBag.Cartera.TopDeudoresL)
+                                                {
+                                                    <tr>
+                                                        <th>@item.Cliente</th>
+                                                        <th>@item.SaldoInsoluto</th>
+                                                        <th>@Convert.ToInt32(item.Dias1a7)</th>
+                                                    </tr>
+                                                }
                                             }
                                         }
                                     </tbody>
@@ -364,15 +421,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (ViewBag.Cartera.TopDeudoresV != null)
+                                        @if (ViewBag.Cartera != null)
                                         {
-                                            foreach (var item in ViewBag.Cartera.TopDeudoresV)
+                                            if (ViewBag.Cartera.TopDeudoresV != null)
                                             {
-                                                <tr>
-                                                    <th>@item.Cliente</th>
-                                                    <th>@item.SaldoInsoluto</th>
-                                                    <th>@Convert.ToInt32(item.Dias1a7)</th>
-                                                </tr>
+                                                foreach (var item in ViewBag.Cartera.TopDeudoresV)
+                                                {
+                                                    <tr>
+                                                        <th>@item.Cliente</th>
+                                                        <th>@item.SaldoInsoluto</th>
+                                                        <th>@Convert.ToInt32(item.Dias1a7)</th>
+                                                    </tr>
+                                                }
                                             }
                                         }
                                     </tbody>
@@ -394,7 +454,14 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">battery_full</i></p>
                             <span>Venta de Camionetas</span>
-                            <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalCamionetas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalCamionetas</span></h3>
+                            @if (ViewBag.Caja != null)
+                            {
+                                <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalCamionetas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalCamionetas</span></h3>
+                            }
+                            else
+                            {
+                                <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="0" data-speed="2000" data-fresh-interval="700"></span></h3>
+                            }
                             <small class="text-muted">Pesos</small>
                         </div>
                     </div>
@@ -404,7 +471,14 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">local_shipping</i></p>
                             <span>Venta de Pipas</span>
-                            <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</span></h3>
+                            @if (ViewBag.Caja != null)
+                            {
+                                <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalPipas" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalPipas</span></h3>
+                            }
+                            else
+                            {
+                                <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="0" data-speed="2000" data-fresh-interval="700">0</span></h3>
+                            }
                             <small class="text-muted">Pesos</small>
                         </div>
                     </div>
@@ -414,7 +488,14 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-red">local_gas_station</i></p>
                             <span>Venta de Estaciones</span>
-                            <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</span></h3>
+                            @if (ViewBag.Caja != null)
+                            {
+                                <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalEstaciones" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalEstaciones</span></h3>
+                            }
+                            else
+                            {
+                                <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="0" data-speed="2000" data-fresh-interval="700">0</span></h3>
+                            }
                             <small class="text-muted">Pesos</small>
                         </div>
 
@@ -425,7 +506,14 @@
                         <div class="body">
                             <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-green">functions</i></p>
                             <span>Total de ventas</span>
+                            @if (ViewBag.Caja != null)
+                            {
                             <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="@ViewBag.Caja.TotalVetna" data-speed="2000" data-fresh-interval="700">@ViewBag.VentasRema.TotalVetna</span></h3>
+                            }
+                            else
+                            {
+                                <h3 class="m-b-10">$<span class="number count-to" data-from="0" data-to="0" data-speed="2000" data-fresh-interval="700">0</span></h3>
+                            }
                             <small class="text-muted">Pesos</small>
                         </div>
                     </div>
