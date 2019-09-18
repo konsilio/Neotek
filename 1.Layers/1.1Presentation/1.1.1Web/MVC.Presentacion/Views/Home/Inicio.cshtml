@@ -127,7 +127,15 @@
                             <div class="body">
                                 <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-amber">pie_chart_outlined</i></p>
                                 <span>Total de producto</span>
-                                <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.Anden.TotalProduto" data-speed="2000" data-fresh-interval="700">140180</span></h3>
+                                @if (ViewBag.Anden != null)
+                                {
+                                    <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="@ViewBag.Anden.TotalProduto" data-speed="2000" data-fresh-interval="700">140180</span></h3>
+                                }
+                                else
+                                {
+                                    <h3 class="m-b-10"><span class="number count-to" data-from="0" data-to="0" data-speed="2000" data-fresh-interval="700">0</span></h3>
+
+                                }
                                 <small class="text-muted">Kilogramos</small>
                             </div>
                         </div>
