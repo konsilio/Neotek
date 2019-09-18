@@ -58,47 +58,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <b>Categorías:</b>
-                                            <select name="IdCategoria" class="form-control selectpicker show-tick" data-live-search="true">
-                                                @foreach (var cc in ViewBag.Categorias)
-                                                {
-                                                    <option value="@cc.IdCategoria">@cc.Nombre</option>
-
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <b>Línea de Productos:</b>
-                                            <select name="IdProductoLinea" class="form-control selectpicker show-tick" data-live-search="true">
-                                                @foreach (var cc in ViewBag.LineasProducto)
-                                                {
-                                                    <option value="@cc.IdProductoLinea">@cc.Linea</option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <b>Producto:</b>
-                                            <select id="productos" name="IdProducto" class="form-control show-tick selectpicker" data-live-search="true">
-                                                @if (ViewBag.Productos != null)
-                                                {
-                                                    foreach (var lst in ViewBag.Productos)
-                                                    {
-
-                                                        <option value="@lst.IdProducto">@lst.Descripcion</option>
-
-                                                    }
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+        
                                 @if (ViewBag.MensajeError != null && !ViewBag.MensajeError.Equal(string.Empty))
                                 {
                                     <div class="row clearfix">

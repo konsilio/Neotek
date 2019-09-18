@@ -15,7 +15,7 @@ namespace Sagas.MainModule.Entidades
     public partial class PrecioVentaEstatus
     {
         public byte IdPrecioVentaEstatus { get; set; }
-        public string Descripción { get; set; }
+        public string Descripcion { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegsitro { get; set; }
     }

@@ -43,6 +43,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public RespuestaDto Insertar(DetalleMantenimiento entidad, Egreso egreso)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<DetalleMantenimiento>().Insert(entidad);
+                    uow.Repository<Egreso>().Insert(egreso);
+                    uow.SaveChanges();
+                    _respuesta.Id = entidad.Id_DetalleMtto;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del centro de costo");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public RespuestaDto Actualizar(DetalleMantenimiento entidad)
         {
             RespuestaDto _respuesta = new RespuestaDto();

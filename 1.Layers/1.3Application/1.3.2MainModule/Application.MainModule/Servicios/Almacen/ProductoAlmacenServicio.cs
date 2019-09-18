@@ -73,7 +73,7 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenDataAccess().InsertarAlmacenEntradas(_almacen, prod);
         }
-        public static Almacen GenaraAlmacenNuevo(int Idpord, short idEmpresa, decimal cantidad)
+        public static Almacen GenaraAlmacenNuevo(int Idpord, short idEmpresa, decimal cantidad = 0)
         {
             return new Almacen()
             {

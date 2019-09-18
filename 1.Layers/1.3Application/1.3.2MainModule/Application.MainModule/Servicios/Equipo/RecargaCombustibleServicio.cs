@@ -15,6 +15,10 @@ namespace Application.MainModule.Servicios.Equipo
         {
             return new RecargaCombustibleDataAccess().Insertar(entidad);
         }
+        public static RespuestaDto Crear(DetalleRecargaCombustible entidad, Egreso egreso)
+        {
+            return new RecargaCombustibleDataAccess().Insertar(entidad, egreso);
+        }
         public static RespuestaDto Actualizar(DetalleRecargaCombustible entidad)
         {
             return new RecargaCombustibleDataAccess().Actualizar(entidad);

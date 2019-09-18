@@ -26,12 +26,10 @@ namespace DS.MainModule.Results
 
             return respuestaHttp;
         }
-
         internal static HttpResponseMessage crearRespuesta(RespuestaDto respuestaDto, object request)
         {
             throw new NotImplementedException();
         }
-
         public static HttpResponseMessage crearRespuesta(DS.MainModule.Filters.ValidateModelAttribute.RespuestaDto respuesta, HttpRequestMessage request)
         {
             HttpResponseMessage respuestaHttp;
@@ -43,7 +41,6 @@ namespace DS.MainModule.Results
 
             return respuestaHttp;
         }
-
         public static HttpResponseMessage crearRespuesta(RespuestaAutenticacionMobileDto respuesta, HttpRequestMessage request)
         {
             HttpResponseMessage respuestaHttp;
@@ -55,7 +52,6 @@ namespace DS.MainModule.Results
 
             return respuestaHttp;
         }
-
         public static HttpResponseMessage crearRespuesta(RespuestaOrdenesCompraDTO  respuesta, HttpRequestMessage request)
         {
             HttpResponseMessage respuestaHttp;
@@ -78,67 +74,54 @@ namespace DS.MainModule.Results
 
             return respuestaHttp;
         }
-
         public static HttpResponseMessage crearRespuesta(DatosTomaLecturaDto respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);           
         }
-
         public static HttpResponseMessage crearRespuesta<T>(List<T> respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(DatosTipoPersonaDto respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(ReporteDiaDTO respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(DatosRecargaDto respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(DatosAutoconsumoDto respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(DatosCalibracionDto respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(DatosTraspasoDto respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(DatosAnticiposCorteDto respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(DatosClientesDto respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(DatosOtrosDto respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(PuntoVentaAsignadoDTO respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
         public static HttpResponseMessage crearRespuesta(DatosCortesAntesVentaDTO respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);

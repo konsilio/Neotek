@@ -10,6 +10,6 @@ namespace MVC.Presentacion.Models.Requisicion
     [Serializable]
     public class RequisicionProductoRevisionDTO : RequisicionProductoDTO
     {     
-        
+       
     }
 }

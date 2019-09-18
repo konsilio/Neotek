@@ -10,9 +10,7 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
-<!-- Bootstrap Select Css -->
 
-<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/Resources/js/Clientes.js"></script>
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
@@ -45,200 +43,64 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="header">
-                    </div>
                     <div class="body">
-                        <div class="row clearfix">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="col-sm-3">
-                                    <div>
-                                        <strong>Gasera</strong>
-                                    </div>
-                                    <div>
-                                        @if (ViewBag.EsAdmin)
-                                        {
-                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                @foreach (var lst in ViewBag.Empresas)
-                                                {
-                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                }
-                                            </select>
-                                        }
-                                        else
-                                        {
-                                            @ViewBag.Empresas
-                                        }
-                                    </div>
+                        <div class="row clearfix col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-md-5">
+                                <div>
+                                    <strong>Gasera</strong>
+                                </div>
+                                <div>
+                                    @if (ViewBag.EsAdmin)
+                                    {
+                                        <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                            @foreach (var lst in ViewBag.Empresas)
+                                            {
+                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                            }
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        @ViewBag.Empresas
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+
+                            </div>
+                            <div class="col-md-3">
+                                &nbsp;
+                                <div class="form-group">
+                                    <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-round btn-primary btn-round " />
                                 </div>
                             </div>
                         </div>
-                        @*<br />
-                        <div class="row clearfix">
-                            <div class="col-md-12">
-                                <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-round btn-primary btn-round float-right" />
+
+                        @if (ViewBag.MessageError != null)
+                        {
+                            <div class="row clearfix">
+                                <div id="divMensajeError" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            <label>@ViewBag.MessageError</label>
+                                        </strong>
+                                    </div>
+                                </div>
                             </div>
-                        </div>*@
+                        }
                         <br />
-                        <div class="row clearfix">
-                            <div class="col-sm-3">
-                                <b>Tipo Persona</b>
-                                @*<select name="IdTipoPersona" id="ddlTipoPersona" class="form-control show-tick" data-live-search="true">
-                                    @foreach (var lst in ViewBag.TipoPersona)
-                                    {
-                                        <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
-                                    }
-                                </select>*@
-                                @Html.DevExpress().ComboBox(settings =>
-                           {
-                               settings.Name = "IdTipoPersona";
-                               settings.Width = 180;
-                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                               settings.Theme = "Material";
-                               settings.Properties.TextField = "Descripcion";
-                               settings.Properties.ValueField = "IdTipoPersona";
-                               settings.Properties.ValidationSettings.RequiredField.IsRequired = false;
-
-                               settings.PreRender = (s, e) =>
-                               {
-                                   MVCxComboBox combo = s as MVCxComboBox;
-                                   combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                   combo.Properties.ValueType = typeof(int);
-                                   combo.SelectedIndex = 0;
-                               };
-                           }).BindList(ViewBag.TipoPersona).GetHtml()
-                            </div>
-                            <div class="col-sm-6">
-                                <b>Régimen Fiscal</b>
-                                @*<select name="IdRegimenFiscal" class="form-control show-tick" data-live-search="true">
-                                    @foreach (var lst in ViewBag.RegimenFiscal)
-                                    {
-                                        <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
-                                    }
-                                </select>*@
-                                @Html.DevExpress().ComboBox(settings =>
-                           {
-                               settings.Name = "IdRegimenFiscal";
-                               settings.Width = 180;
-                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                               settings.Theme = "Material";
-                               settings.Properties.TextField = "Descripcion";
-                               settings.Properties.ValueField = "IdRegimenFiscal";
-                               settings.Properties.ValidationSettings.RequiredField.IsRequired = false;
-
-                               settings.PreRender = (s, e) =>
-                               {
-                                   MVCxComboBox combo = s as MVCxComboBox;
-                                   combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                   combo.Properties.ValueType = typeof(int);
-                                   combo.SelectedIndex = 0;
-                               };
-                           }).BindList(ViewBag.RegimenFiscal).GetHtml()
-                            </div>
-                        </div> <br />
-                        <div class="row clearfix">
-                            <div class="col-sm-12">
-                                <div class="row clearfix">
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <b>RFC</b>
-                                            <input type="text" name="Rfc" id="txtRfc" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <b>Razón Social o Nombre Completo</b>
-                                            <input type="text" name="RazonSocial" id="txtRS" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2" style="top:15px">
-                                        <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
-                                    </div>
-                                    <div class="col-sm-2" style="top:15px">
-                                        <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-round btn-primary btn-round " />
-                                    </div>
+                        <div class="row clearfix blockquote blockquote-info btn-round">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive">
+                                    @Html.Action("GridClientes", (List<ClientesDto>)ViewBag.Clientes)
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="body">
-                                <div class="row clearfix blockquote blockquote-info btn-round">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="table-responsive">
-                                            <table class="table table table-striped table-hover" name="EmpresasGaseras">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Gasera</th>
-                                                        <th>Tipo Persona</th>
-                                                        <th>Régimen Fiscal</th>
-                                                        <th>Razón social</th>
-                                                        <th>RFC</th>
-                                                        <th>CreditoMonto</th>
-                                                        <th>CreditoDias</th>
-                                                        <th>Descuento</th>
-                                                        <th>Celular</th>
-                                                        <th>Teléfono</th>
-                                                        <th>E-mail</th>
-                                                        <th>Acciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (var item in @ViewBag.Clientes)
-                                                    {
-                                                    <tr>
-                                                        <td>@item.Empresa</td>
-                                                        <td>@item.TipoPersonaFiscal</td>
-                                                        <td>@item.RegimenFiscal</td>
-                                                        <td>@item.RazonSocial</td>
-                                                        <td>@item.Rfc</td>
-                                                        <td>@item.limiteCreditoMonto</td>
-                                                        <td>@item.limiteCreditoDias</td>
-                                                        <td>@item.DescuentoXKilo</td>
-                                                        <td>@item.Celular</td>
-                                                        <td>@item.Telefono1</td>
-                                                        <td>@item.Email1</td>
-                                                        <td>
-                                                            <a ID="lblCrear" href="@Url.Action("EditarCliente", "Clientes", new { id = item.IdCliente })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">edit</i>
-                                                                <span>Editar cliente</span>
-                                                            </a>
-                                                            <a ID="lbEdit" href="@Url.Action("EditarLocaciones", "Clientes", new { id = item.IdCliente })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">edit_location</i>
-                                                                <span>Editar locaciones</span>
-                                                            </a>
-                                                            <a ID="lbBorrar" href="@Url.Action("BorrarClientes", "Clientes", new { id = item.IdCliente })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="material-icons">delete</i>
-                                                                <span>Eliminar cliente</span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-                @if (ViewBag.MessageError != null)
-                {
-                    <div class="row clearfix">
-                        <div id="divMensajeError" class="container">
-                            <div class="alert alert-danger">
-                                <div class="alert-icon">
-                                    <i class="zmdi zmdi-block"></i>
-                                </div>
-                                <strong>
-                                    <label>@ViewBag.MessageError</label>
-                                </strong>
-                            </div>
-                        </div>
-                    </div>
-                }
             </div>
         </div>
     </section>

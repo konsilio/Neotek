@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.DTOs.Seguridad
 {
     public class RolDto
     {
+
+        [Required(ErrorMessage = Error.R0002)]
         public short IdRol { get; set; }
         public string Rol1 { get; set; }
         public string NombreRol { get; set; }
@@ -123,6 +127,10 @@ namespace Application.MainModule.DTOs.Seguridad
         public bool CobranzaFacturar { get; set; }
         public bool FacturasVerFacturas { get; set; }
         public bool FacturasFacturar { get; set; }
+        public bool HVCargaInformacion { get; set; }
+        public bool HistoricoVentas { get; set; }
+        public bool CatLiquidarCajaGeneral { get; set; }
+        public bool CatConsultarCajaGeneral { get; set; }
 
     }
 }

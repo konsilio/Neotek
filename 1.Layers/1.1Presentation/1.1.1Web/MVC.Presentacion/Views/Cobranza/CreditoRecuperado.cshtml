@@ -1,9 +1,7 @@
-﻿@model  List<MVC.Presentacion.Models.Cobranza.CargosModel>
+﻿@*@model  List<MVC.Presentacion.Models.Cobranza.CargosModel>*@
+@model  MVC.Presentacion.Models.Cobranza.ReporteCreditosRecuperado
 @Html.DevExpress().GetStyleSheets(
-            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Moderno" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Moderno" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Moderno" },
-             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
         )
@@ -12,6 +10,7 @@
             new Script { ExtensionSuite = ExtensionSuite.Editors },
             new Script { ExtensionSuite = ExtensionSuite.GridView }
         )
+)
 <!DOCTYPE html>
 
 <html>
@@ -87,7 +86,7 @@
                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                                            settings.Theme = "Material";
-                                                       }).Bind(Model[0].FechaRango1).GetHtml()
+                                                       }).Bind(Model.reporteCargos[0].FechaRango1).GetHtml()
                                         </div>
                                         <div class="col-sm-2">
                                             <b>Fecha al:</b>
@@ -102,7 +101,7 @@
                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                                            settings.Theme = "Material";
-                                                       }).Bind(Model[0].FechaRango2).GetHtml()
+                                                       }).Bind(Model.reporteCargos[0].FechaRango2).GetHtml()
                                         </div>
 
                                         <div class="col-sm-3" style="top:10px">
@@ -131,57 +130,59 @@
                             }
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Ticket</th>
-                                                <th>Fecha Venta</th>
-                                                <th>Fecha Abono</th>
-                                                <th>Cliente</th>
-                                                <th>Importe</th>
-                                                <th>Forma Pago</th>
-                                                <th>Accion</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (Model != null)
-                                            {
-                                                foreach (var item in Model)
+                                    @Html.Partial("MasterDetailMasterPartial", Model.reporteAbonos)
+                                    @*<table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Ticket</th>
+                                                    <th>Fecha Venta</th>
+                                                    <th>Fecha Abono</th>
+                                                    <th>Cliente</th>
+                                                    <th>Importe</th>
+                                                    <th>Forma Pago</th>
+                                                    <th>Accion</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model != null)
                                                 {
-                                                    if (item.lstCreditoR != null)
+                                                    foreach (var item in Model)
                                                     {
-                                                        foreach (var x in item.lstCreditoR)
+                                                        if (item.lstCreditoR != null)
                                                         {
-                                                            <tr>
-                                                                <td>@item.Ticket</td>
-                                                                <td>@item.FechaRegistro</td>
-                                                                <td>@x.FechaAbono</td>
-                                                                <td>@item.Nombre</td>
-                                                                <td>@x.MontoAbono</td>
-                                                                <td>@x.FormaPago</td>
-                                                                <th>     
-                                                                    <a href="@Url.Action("FacturarAbono", "Cobranza", new { id = x.IdAbono })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">local_atm</i>
-                                                                        <span>Facturar</span>
-                                                                    </a>                                                               
-                                                                    <a ID="lbPDF" href="@item.URL_CFDI" class="tip" target="_blank" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">picture_as_pdf</i>
-                                                                        <span>PDF</span>
-                                                                    </a>
-                                                                    <a ID="lbXML" href="@item.URL_XML" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="material-icons">file_download</i>
-                                                                        <span>XML</span>
-                                                                    </a>
-                                                                </th>
-                                                            </tr>
+                                                            foreach (var x in item.lstCreditoR)
+                                                            {
+                                                                <tr>
+                                                                    <td>@item.Ticket</td>
+                                                                    <td>@item.FechaRegistro</td>
+                                                                    <td>@x.FechaAbono</td>
+                                                                    <td>@item.Cliente</td>
+                                                                    <td>@x.MontoAbono</td>
+                                                                    <td>@x.FormaPago</td>
+                                                                    <th>
+                                                                        <a href="@Url.Action("FacturarAbono", "Cobranza", new { id = x.IdAbono })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                            <i class="material-icons">local_atm</i>
+                                                                            <span>Facturar</span>
+                                                                        </a>
+                                                                        <a ID="lbPDF" href="@item.URL_CFDI" class="tip" target="_blank" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                            <i class="material-icons">picture_as_pdf</i>
+                                                                            <span>PDF</span>
+                                                                        </a>
+                                                                        <a ID="lbXML" href="@item.URL_XML" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                                            <i class="material-icons">file_download</i>
+                                                                            <span>XML</span>
+                                                                        </a>
+                                                                    </th>
+                                                                </tr>
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            }
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>*@
                                 </div>
                             </div>
+                            @*@Html.Action("MasterDetailMasterPartial")*@
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover">
@@ -196,26 +197,25 @@
                                             {
                                                 <tr>
                                                     <td>Total Efectivo</td>
-                                                    <td>@Model[0].TotalEfectivo</td>
+                                                    <td>@Model.reporteCargos[0].TotalEfectivo</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Total Cheques</td>
-                                                    <td>@Model[0].TotalCheques</td>
+                                                    <td>@Model.reporteCargos[0].TotalCheques</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Total Transferencia</td>
-                                                    <td>@Model[0].TotalTransferencia</td>
+                                                    <td>@Model.reporteCargos[0].TotalTransferencia</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Total </td>
-                                                    <td>@Model[0].Total</td>
+                                                    <td>@Model.reporteCargos[0].Total</td>
                                                 </tr>
                                             }
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

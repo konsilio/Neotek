@@ -13,6 +13,8 @@ using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.AdaptadoresDTO.Ventas;
+using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -20,8 +22,27 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<PuntoVentaDTO> Obtener()
         {
-            List<PuntoVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PuntoVentaAdapter.ToDTO(new PuntoVentaDataAccess().BuscarTodos());
+            List<PuntoVentaDTO> lPventas = PuntoVentaAdapter.ToDTO(new PuntoVentaDataAccess().BuscarTodos());
+            lPventas.Insert(0, PuntoVentaCero());
             return lPventas;
+        }
+        public static List<PuntoVenta> ObtenerTodos()
+        {
+            return new PuntoVentaDataAccess().BuscarTodos();
+        }
+        public static List<PuntoVenta> ObtenerTodosLiquidacion()
+        {
+            var ptoVenta = ObtenerTodos();
+            return ptoVenta.Where(x =>
+                x.ReporteDelDia.SingleOrDefault(r =>
+                    r.FechaReporte.ToShortDateString().Equals(DateTime.Now.ToShortDateString())) != null
+                && x.VentaCorteAnticipoEC.Where(c =>
+                    c.FechaCorteAnticipo.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).Count().Equals(0)
+                ).ToList();
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentas(DateTime fi, DateTime ff)
+        {
+            return new PuntoVentaDataAccess().BuscarVentas(fi, ff);
         }
         public static PuntoVenta Obtener(int idPuntoVenta)
         {
@@ -46,9 +67,9 @@ namespace Application.MainModule.Servicios.Catalogos
             if (opCh != null)
                 if (opCh.PuntosVenta != null)
                     if (opCh.PuntosVenta.Count > 0)
-                        return opCh.PuntosVenta.FirstOrDefault();
+                        return opCh.PuntosVenta.FirstOrDefault(x => x.Activo);
 
-            return BuscarPorOperadorChofer(opCh.IdOperadorChofer).FirstOrDefault();
+            return BuscarPorOperadorChofer(opCh.IdOperadorChofer).FirstOrDefault(x => x.Activo);
         }
         public static PuntoVenta Obtener(UnidadAlmacenGas unidadAlmacen)
         {
@@ -78,6 +99,10 @@ namespace Application.MainModule.Servicios.Catalogos
         public static RespuestaDto Modificar(PuntoVenta cte)
         {
             return new PuntoVentaDataAccess().Actualizar(cte);
+        }
+        public static RespuestaDto Modificar(List<VentaPuntoDeVenta> cte)
+        {
+            return new PuntoVentaDataAccess().UpdateVentas(cte);
         }
         public static RespuestaDto NoExiste()
         {
@@ -116,7 +141,7 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static List<VentaPuntoDeVenta> ObtenerVentasTOP(int TOP, DateTime fecha)
         {
-            return new PuntoVentaDataAccess().BuscarVentasTOP(TOP, fecha);          
+            return new PuntoVentaDataAccess().BuscarVentasTOP(TOP, fecha);
         }
         public static List<VentaPuntoVentaDTO> ObtenerVentasTOPDTO(int TOP, DateTime fecha)
         {
@@ -163,7 +188,7 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarVentasPorPeriodo(id, Periodo);
         }
-        public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(int id,DateTime fi, DateTime ff)
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(int id, DateTime fi, DateTime ff)
         {
             return new PuntoVentaDataAccess().BuscarVentasPorCliente(id).Where(x => (x.FechaRegistro > fi) && (x.FechaRegistro < ff)).ToList();
         }
@@ -255,7 +280,23 @@ namespace Application.MainModule.Servicios.Catalogos
                 estacion.Folio++;
                 return EstacionCarburacionServicio.Modificar(estacion);
             }
-            return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.NoExiste, "El punto de venta" )};
+            return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.NoExiste, "El punto de venta") };
+        }
+        public static PuntoVentaDTO PuntoVentaCero()
+        {
+            return new PuntoVentaDTO
+            {
+                IdPuntoVenta = 0,
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(),
+                PuntoVenta = "Todos",
+            };
+        }
+        public static bool CalcularBonificacion(VentaDTO dto)
+        {
+            if (!dto.Credito)
+                if (dto.Total > dto.Efectivo)
+                    return true;
+            return false;
         }
     }
 }

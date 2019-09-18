@@ -1,0 +1,52 @@
+﻿@model List<MVC.Presentacion.Models.Cobranza.CargosModel>
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "CreditoRecuperado";
+        settings.KeyFieldName = "IdCliente";
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Cobranza", Action = "_AbonosPartial" }; //_AbonosPartial
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFooter = true;
+        settings.Theme = "Material";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Nombre";
+            c.Caption = "Cliente";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Ticket";
+            c.Caption = "Ticket";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FechaRegistro";
+            c.Caption = "Fecha de Registro";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.SetDetailRowTemplateContent(c =>
+        {
+            ViewContext.Writer.Write(
+                "<strong>Viajes realizados</strong>" +
+                "<br />" +
+                "<br />"
+            );
+            Html.RenderAction("ListaCreditoRecuperado", new { IdCargo = DataBinder.Eval(c.DataItem, "IdCliente") });
+        });
+
+    }
+).Bind(Model).GetHtml()

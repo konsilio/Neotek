@@ -3,8 +3,8 @@
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+
         )
 @Html.DevExpress().GetScripts(
             new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
@@ -13,6 +13,11 @@
         )
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
+<script src="~/assets/plugins/raphael/raphael-min.js"></script>
+<script src="~/assets/plugins/morrisjs/morris.js"></script>
+<link rel="stylesheet" href="~/assets/plugins/morrisjs/morris.css"/>
+
+
 <script type="text/javascript">
     var mensaje = '@ViewBag.Msj';
     if (mensaje != '') {
@@ -20,12 +25,7 @@
     }
 
 </script>
-<script>
-    $(document).ready(function () {
-        Morris.Bar(@Html.Raw(ViewBag.json));
-    });
 
-</script>
 <body>
     <section class="content home">
         <div class="container-fluid">
@@ -39,7 +39,7 @@
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Histórico</li>
-                                <li class="breadcrumb-item">Historioc de ventas</li>
+                                <li class="breadcrumb-item">Histórico de ventas</li>
                             </ul>
                         </div>
                     </div>
@@ -122,6 +122,7 @@
                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                    settings.Theme = "Material";
+                                   
                                    settings.Properties.TextField = "TipoReporte";
                                    settings.Properties.ValueField = "id_Reporte";
                                    //settings.ClientEnabled = true;
@@ -129,7 +130,9 @@
                                    settings.PreRender = (s, e) =>
                                    {
                                        MVCxComboBox combo = s as MVCxComboBox;
-                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
+                                       combo.Properties.Items.Insert(0, new ListEditItem(""));
+                                       combo.SelectedIndex = 1;
+                                     
                                        combo.Properties.Items.Add("Venta anual x mes, General", 1);
                                        combo.Properties.Items.Add("Venta anual x mes, Pipa vs Camioneta", 2);
                                        combo.Properties.Items.Add("Venta anual x mes, Camioneta Local vs Foranea", 3);
@@ -137,7 +140,7 @@
                                        combo.SelectedIndex = Model.IdTipoReporte;
                                    };
                                }).GetHtml()
-
+                                    @Html.ValidationMessageFor(m => m.IdTipoReporte, "", new { @class = "alert-danger" })
                                 </div>
                                 @if (ViewBag.MensajeError != null)
                                 {
@@ -150,20 +153,20 @@
                                                 @ViewBag.MensajeError
                                             </strong>
                                         </div>
-                                    </div>
+                                    </div>  
                                 }
                             </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="header">
-                            Validacion de <strong>Informacion</strong>
-                        </div>
-                        <div class="body">
-                            <div>
-                                <div id="m_bar_chart"></div>
+                                Validacion de <strong>Informacion</strong>
                             </div>
-                        </div>
+                            <div class="body">
+                                <div>
+                                    <div id="m_bar_chart"></div>
+                                </div>
+                            </div>
                         @if (ViewBag.json != null)
                         {
                             <input type="submit" formaction=@Url.Action("GenerarExcel") value="Exportar a Excel" class="btn btn-primary btn-round" />
@@ -174,3 +177,9 @@
         </div>
     </section>
 </body>
+<script>
+    $(document).ready(function () {
+        Morris.Bar(@Html.Raw(ViewBag.json));
+    });
+
+</script>

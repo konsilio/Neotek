@@ -150,7 +150,6 @@ namespace Mail.MainModule
                 // En caso de suceder problemas enviando el mensaje, la descripción del
                 // problema sucedido es enviada al cliente que consumió el servicio.
                 smtpEx.ToString();
-                throw;
             }
 
             //Se limpiará los recursos.

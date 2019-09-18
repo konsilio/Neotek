@@ -22,7 +22,7 @@ namespace DS.MainModule
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
+            //ActualizarSistemaServicio.Actualizar();
             this.Timer();
         }
         protected void Application_AcquireRequestState(object sender, EventArgs e)
@@ -35,9 +35,11 @@ namespace DS.MainModule
         public void EjecutaServicios(object source, ElapsedEventArgs e)
         {
             //QUITAR ESTA LINEA EN PRODUCCION/////////////
-           myTimer.Stop();
+            //myTimer.Stop();
             //QUITAR ESTA LINEA EN PRODUCCION/////////////
             ActualizarSistemaServicio.Actualizar();
+            myTimer.Start();
+
         }
 
         private void Timer()

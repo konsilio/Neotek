@@ -1,0 +1,54 @@
+﻿
+@{
+
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "Mantenimientos";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Mantenimiento",
+            Action = "CB_Mantenimientos"
+        };
+        settings.KeyFieldName = "Id_DetalleMtto";
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFooter = true;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Id_DetalleMtto";
+            c.Caption = "ID";
+            c.Visible = false;
+        });
+        settings.Columns.Add("Id_DetalleMtto", "Id");
+        settings.Columns.Add("Vehiculo", "Vehiculo");
+        settings.Columns.Add("DescripcionMtto", "Servicio Realizado");
+        settings.Columns.Add("FechaMtto", "Fecha Servicio");
+        
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("Modificar", "Mantenimiento", new {Id = d.KeyValue}) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>edit</i></a>"));
+
+                ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("Eliminar", "Mantenimiento", new { Id = d.KeyValue}) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>delete</i></a>"));
+            });
+        });
+    });
+
+}
+@grid.Bind(Model).GetHtml()

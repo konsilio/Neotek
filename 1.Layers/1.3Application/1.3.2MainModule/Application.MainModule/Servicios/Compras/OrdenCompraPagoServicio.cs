@@ -30,6 +30,10 @@ namespace Application.MainModule.Servicios.Compras
         public static RespuestaDto Actualiza(OrdenCompraPago pago, OrdenCompra oc )
         {
             return new OrdenCompraPagoDataAccess().Actualizar(pago, oc);
-        }       
+        }
+        public static RespuestaDto Actualiza(OrdenCompraPago pago, OrdenCompra oc, Requisicion req)
+        {
+            return new OrdenCompraPagoDataAccess().Actualizar(pago, oc,req);
+        }
     }
 }

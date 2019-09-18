@@ -58,27 +58,66 @@ namespace Application.MainModule.Servicios.AccesoADatos
             List<Cliente> consulta = new List<Cliente>();
             if (cliente.Rfc != null)
             {
-                consulta = uow.Repository<Cliente>().Get(
-                                             x =>
-                                             (x.Rfc.Trim().Equals(cliente.Rfc)) &&
-                                             x.IdEmpresa.Equals(idEmpresa)
-                                            ).ToList();
+                if (cliente.Rfc.Split(' ').Count().Equals(1))
+                {
+                    consulta = uow.Repository<Cliente>().Get(
+                                                 x => x.Nombre.Contains(cliente.Rfc) ||
+                                                 x.Apellido1.Contains(cliente.Rfc) ||
+                                                 x.Apellido2.Contains(cliente.Rfc)
+                                                 && x.Activo).ToList();
+                }
+                else
+                {
+                    if (cliente.Rfc.Split(' ').Count().Equals(2))
+                    {
+                        var n = cliente.Rfc.Split(' ')[0];
+                        var ap = cliente.Rfc.Split(' ')[1];
+                        consulta = uow.Repository<Cliente>().Get(x =>
+                                    x.Nombre.Contains(n)
+                                    || x.Apellido1.Contains(ap)
+                                    && x.Activo).ToList();
+                    }
+                    if (cliente.Rfc.Split(' ').Count().Equals(3))
+                    {
+                        var n = cliente.Rfc.Split(' ')[0];
+                        var ap = cliente.Rfc.Split(' ')[1];
+                        var am = cliente.Rfc.Split(' ')[2];
+                        consulta = uow.Repository<Cliente>().Get(x =>
+                                    x.Nombre.Contains(n)
+                                    || x.Apellido1.Contains(ap)
+                                    || x.Apellido2.Contains(am)
+                                    && x.Activo).ToList();
+                    }
+                    if (cliente.Rfc.Split(' ').Count().Equals(4))
+                    {
+                        var n = string.Concat(cliente.Rfc.Split(' ')[0], " ", cliente.Rfc.Split(' ')[1]);
+                        var ap = cliente.Rfc.Split(' ')[2];
+                        var am = cliente.Rfc.Split(' ')[3];
+                        consulta = uow.Repository<Cliente>().Get(x =>
+                                    x.Nombre.Contains(n)
+                                    || x.Apellido1.Contains(ap)
+                                    || x.Apellido2.Contains(am)
+                                    && x.Activo).ToList();
+                    }
+                }
             }
             if (cliente.Telefono1 != null)
             {
-                consulta = uow.Repository<Cliente>().Get(
-                                     x =>
-                                      (x.Telefono1.Trim().Equals(cliente.Telefono1)) &&
-                                     x.IdEmpresa.Equals(idEmpresa)
-                                    ).ToList();
+                int tel = 0;
+                int.TryParse(cliente.Telefono1, out tel);
+                consulta = uow.Repository<Cliente>().Get(x =>
+                                      (x.Telefono1.Trim().Equals(cliente.Telefono1)
+                                      || x.Telefono.Trim().Equals(cliente.Telefono1)
+                                      || x.Telefono.Trim().Equals(cliente.Celular)
+                                      || x.Telefono.Trim().Equals(cliente.Celular1)
+                                      || x.IdCliente.Equals(tel)
+                                      ) && x.IdEmpresa.Equals(idEmpresa)
+                                       && x.Activo).ToList();
             }
-
             return (consulta != null) ? consulta : null;
         }
-
         public Cliente Buscar(ClienteDTO cliente)
         {
-
             var respuesta = uow.Repository<Cliente>().GetSingle(
                 x =>
                 x.Nombre.Equals(cliente.Nombre) &&
@@ -93,7 +132,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 );
             return respuesta;
         }
-
         public List<Cliente> BuscadorClientes(string criterio, short idEmpresa)
         {
             return uow.Repository<Cliente>().Get(
@@ -106,11 +144,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 || x.Celular2.Contains(criterio)
                 || x.Celular3.Contains(criterio)
                 || x.Rfc.ToLower().Contains(criterio)))
+                || x.RazonSocial.Equals(criterio)
+                || x.Nombre.Equals(criterio)
+                //|| x.IdCliente.Equals(criterio)
                 && x.IdEmpresa.Equals(idEmpresa)
                 && x.Activo
             ).ToList();
         }
-
         public RespuestaDto Insertar(Cliente cte)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -135,7 +175,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         /// <summary>
         /// Realiza al actualización de los datos de credito del cliente,
         /// se envia como parametro los datos del cliente con el credito actualizado
@@ -168,7 +207,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Insertar(ClienteLocacion cte)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -193,7 +231,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Actualizar(ClienteLocacion _pro)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -225,7 +262,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.Cliente>().Update(_pro);
+                    uow.Repository<Cliente>().Update(_pro);
                     uow.SaveChanges();
                     _respuesta.Id = _pro.IdCliente;
                     _respuesta.Exito = true;
@@ -268,8 +305,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             try
             {
-                var consulta = uow.Repository<Cliente>().GetSingle(x => x.Rfc!=null && x.Rfc.Equals(rfc));
-                
+                var consulta = uow.Repository<Cliente>().GetSingle(x => x.Rfc != null
+                                                    && x.Rfc.Equals(rfc));
                 return consulta;
             }
             catch (Exception ex)

@@ -93,7 +93,7 @@ namespace Application.MainModule.Servicios.Seguridad
             {
                 IdUsuario = aut.IdUsuario,
                 Exito = aut.Exito,
-                Mensaje = aut.Mensaje,
+                Mensaje = menu.Count.Equals(0) ? Error.S0005 : aut.Mensaje,
                 token = aut.token,
                 listMenu = menu,
             };

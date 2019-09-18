@@ -17,7 +17,9 @@ namespace Application.MainModule.DTOs.EquipoTransporte
         public bool EsCamioneta { get; set; }
         public bool EsPipa { get; set; }
         public bool EsUtilitario { get; set; }
+
         [Required(ErrorMessage = Error.R0002)]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Id_tipomtto")]
         public int Id_tipomtto { get; set; }
         [Required(ErrorMessage = Error.R0002)]
@@ -30,5 +32,6 @@ namespace Application.MainModule.DTOs.EquipoTransporte
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Monto")]
         public decimal Monto { get; set; }
+        public int IdCuentaContable { get; set; }
     }
 }

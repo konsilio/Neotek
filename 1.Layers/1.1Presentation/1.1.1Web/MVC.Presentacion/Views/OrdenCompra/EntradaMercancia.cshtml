@@ -101,7 +101,7 @@
                                         <b>Fecha de entrada</b>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-                                            @Html.TextBoxFor(m => m.FechaEntrada, new { @class = "form-control date", @placeholder = "Ej: 30/07/2018" })
+                                            @Html.TextBoxFor(m => m.FechaEntrada, new { @class = "form-control date", @placeholder = "Ej: 30/07/2018", @disabled = "disabled" })
                                         </div>
                                         @Html.ValidationMessageFor(m => m.FechaEntrada, "", new { @class = "alert-danger" })
                                     </div>

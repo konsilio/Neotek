@@ -22,6 +22,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Sello = descarga.Sello,
                 NombreResponsable = descarga.NombreResponsable,
                 PorcentajeTanque = descarga.PorcenMagnatelPapeleta.Value,
+                Fecha = descarga.FechaPapeleta.Value,
                 //Tractor
                 PlacasTractor = descarga.PlacasTractor,
                 NombreOperador = descarga.NombreOperador,
@@ -30,7 +31,8 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 CapacidadTanque = descarga.CapacidadTanqueLt.Value,
                 PorcentajeMedidor = descarga.PorcenMagnatelOcular.Value,
                 //Descarga
-                FechaEntraGas = descarga.FechaPapeleta.Value,
+                
+                FechaEntraGas = descarga.FechaEntraGas ?? DateTime.MinValue,
                 PorcenMagnatelOcularTractorINI = descarga.PorcenMagnatelOcularTractorINI ?? 0,
                 PorcenMagnatelOcularTractorFIN = descarga.PorcenMagnatelOcularTractorFIN ?? 0,
                 PorcenMagnatelOcularAlmacenINI = descarga.PorcenMagnatelOcularAlmacenINI ?? 0,

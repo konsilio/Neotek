@@ -8,12 +8,17 @@ namespace Application.MainModule.DTOs.Almacen
 {
     public class RemanentePuntoVentaDTO
     {
-        short IdEmpresa { get; set; }
-        int IdPuntoVenta { get; set; }
-        string NombrePuntoVenta { get; set; }
-        decimal Remanente { get; set; }
-        int Anio { get; set; }
-        int Mes { get; set; }
-        int dia { get; set; }
+        public short IdEmpresa { get; set; }
+        public int IdPuntoVenta { get; set; }
+        public string NombrePuntoVenta { get; set; }
+        public string Remanente { get; set; }
+        public decimal Porcentaje { get; set; }
+        public int Anio { get; set; }
+        public int Mes { get; set; }
+        public string dia { get; set; }
+    }
+    public class RemanentePuntoVentaTodosDTO
+    {
+        public List<RemanentePuntoVentaDTO> RemaentePuntoVenta { get; set; }
     }
 }

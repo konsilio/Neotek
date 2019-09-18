@@ -126,7 +126,9 @@
                                         <button type="submit" id="btnCofirmar" class="btn btn-primary btn-round btn-block">Confirmar Pago</button>
                                     </div>
                                     <div class="row clearfix">
-                                        <button type="button" class="btn btn-primary btn-round btn-block">Regresar</button>
+                                        <a href="@Url.Action("Ordenes", "OrdenCompra" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
+                                            Regresar
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -147,4 +149,4 @@
         }
     </div>
 </section>
-<script src="~/Scripts/js/ConfirmacionPagoJS.js" ></script>
+<script src="~/Scripts/js/ConfirmacionPagoJS.js"></script>

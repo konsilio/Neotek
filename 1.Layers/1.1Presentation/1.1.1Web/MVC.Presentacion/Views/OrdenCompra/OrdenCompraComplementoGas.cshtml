@@ -12,6 +12,8 @@
         )
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
+<link rel="stylesheet" href="~/assets/plugins/light-gallery/css/lightgallery.css">
+
 <script type="text/javascript">
     var mensaje = '@ViewBag.Msj';
     if (mensaje != '') {
@@ -155,9 +157,8 @@
                                                             <span class="input-group-addon">
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
-                                                            @*@Html.TextBoxFor(m => m.Fecha, new { @class = "form-control datetimepicker" })*@
-                                                            <input type="text" name="Fecha" value="@ViewBag.Complemeto.Fecha" class="form-control datetimepicker" />
-                                                            @*@Html.HiddenFor(m => m.Fecha)*@
+                                                            <input type="text" name="Fecha" value="@Model.Fecha" class="form-control datetimepicker" />
+
                                                         </div>
                                                         @Html.ValidationMessageFor(m => m.Fecha, "", new { @class = "alert-danger" })
                                                     </div>
@@ -171,7 +172,7 @@
                                                             </span>
                                                             @*@Html.TextBoxFor(m => m.FechaEmbarque, new { @class = "form-control datetimepicker" })
                                                                 @Html.HiddenFor(m => m.FechaEmbarque)*@
-                                                            <input type="text" name="FechaEmbarque" value="@ViewBag.Complemeto.FechaEmbarque" class="form-control datetimepicker" />
+                                                            <input type="text" name="FechaEmbarque" value="@Model.FechaEmbarque" class="form-control datetimepicker" />
                                                         </div>
                                                         @Html.ValidationMessageFor(m => m.FechaEmbarque, "", new { @class = "alert-danger" })
                                                     </div>
@@ -296,7 +297,7 @@
                                                             </span>
                                                             @*@Html.TextBoxFor(m => m.FechaEntraGas, new { @class = "form-control datetimepicker" })
                                                                 @Html.HiddenFor(m => m.FechaEntraGas)*@
-                                                            <input type="text" name="FechaEntraGas" value="@ViewBag.Complemeto.FechaEntraGas" class="form-control datetimepicker" />
+                                                            <input type="text" name="FechaEntraGas" value="@Model.FechaEntraGas" class="form-control datetimepicker" />
                                                         </div>
                                                         @Html.ValidationMessageFor(m => m.FechaEntraGas, "", new { @class = "alert-danger" })
                                                     </div>
@@ -525,19 +526,19 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <select name="OrdenCompraExpedidor.Iva" id="IVAExpedidor" class="form-control" data-live-search="true" onchange="javascript: CalcularImporteExpedidor()">
-                                                               
-                                                                    @foreach (var item in ViewBag.IVAs)
+
+                                                                @foreach (var item in ViewBag.IVAs)
+                                                                {
+                                                                    if (Model.OrdenCompraExpedidor.Iva.ToString() == item.Value)
                                                                     {
-                                                                        if (ViewBag.Complemeto.OrdenCompraExpedidor.Iva.ToString() == item.Value)
-                                                                        {
-                                                                            <option value="@item.Value" selected>@item.Text</option>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <option value="@item.Value">@item.Text</option>
-                                                                        }
+                                                                        <option value="@item.Value" selected>@item.Text</option>
                                                                     }
-                                                                   
+                                                                    else
+                                                                    {
+                                                                        <option value="@item.Value">@item.Text</option>
+                                                                    }
+                                                                }
+
                                                             </select>
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.Iva, "", new { @class = "alert-danger" })
                                                         </div>
@@ -601,7 +602,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <div class="form-group">                                                            
+                                                        <div class="form-group">
                                                             @if (ViewBag.Expedidor == false)
                                                             {
                                                                 <input type="submit" class="btn btn-raised btn-primary btn-round" disabled formaction=@Url.Action("SolicitarPagoExpedidor") value="Solicitar Pago" />
@@ -628,8 +629,8 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                           @Html.TextBoxFor(m => m.OrdenCompraPorteador.FactorConvTransporte, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
-                                                          
+                                                            @Html.TextBoxFor(m => m.OrdenCompraPorteador.FactorConvTransporte, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+
                                                             @Html.HiddenFor(m => m.OrdenCompraPorteador.FactorConvTransporte)
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.FactorConvTransporte, "", new { @class = "alert-danger" })
                                                         </div>
@@ -642,7 +643,7 @@
                                                     <div class="col-md-4 text-right">
                                                         <div class="form-group">
                                                             $ @Html.LabelFor(m => m.OrdenCompraPorteador.PrecioTransporte, new { id = "PrecioTransporte" })
-                                                            
+
                                                             @Html.HiddenFor(m => m.OrdenCompraPorteador.PrecioTransporte)
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.PrecioTransporte, "", new { @class = "alert-danger" })
                                                         </div>
@@ -658,7 +659,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             @Html.TextBoxFor(m => m.OrdenCompraPorteador.Casetas, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
-                                                            
+
                                                             @Html.HiddenFor(m => m.OrdenCompraPorteador.Casetas)
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.Casetas, "", new { @class = "alert-danger" })
                                                         </div>
@@ -674,7 +675,7 @@
                                                     <div class="col-md-4 text-right">
                                                         <div class="form-group">
                                                             $ @Html.LabelFor(m => m.OrdenCompraPorteador.SubtotalSinIva, new { id = "SubTotoalPorteador" })
-                                                         
+
                                                             @Html.HiddenFor(m => m.OrdenCompraPorteador.SubtotalSinIva)
                                                             @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.SubtotalSinIva, "", new { @class = "alert-danger" })
                                                         </div>
@@ -692,7 +693,7 @@
                                                             <select name="Iva" id="IVAPorteador" class="form-control" data-live-search="true" onchange="javascript: CalcularImportePortador()">
                                                                 @foreach (var item in ViewBag.IVAs)
                                                                 {
-                                                                    if (ViewBag.Complemeto.OrdenCompraPorteador.Iva.ToString() == item.Value)
+                                                                    if (Model.OrdenCompraPorteador.Iva.ToString() == item.Value)
                                                                     {
                                                                         <option value="@item.Value" selected>@item.Text</option>
                                                                     }
@@ -713,9 +714,9 @@
                                                         <label for="btnSolicitarPaogPorteador">IMPORTE A PAGAR</label>
                                                     </div>
                                                     <div class="col-md-4 form-control-label text-right">
-                                                        
-                                                         @Html.LabelFor(m => m.OrdenCompraPorteador.Total, new { id = "ImportePorteador" })
-                                                       
+
+                                                        @Html.LabelFor(m => m.OrdenCompraPorteador.Total, new { id = "ImportePorteador" })
+
                                                         @Html.HiddenFor(m => m.OrdenCompraPorteador.Total)
                                                         @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.Total, "", new { @class = "alert-danger" })
                                                     </div>
@@ -788,34 +789,34 @@
                                                 {
                                                     foreach (var item in Model.Fotos)
                                                     {
-                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
-                                                            <a href="@item.UrlImg">
-                                                                <img class="img-fluid img-thumbnail" src="@item.UrlImg" alt="">
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20" style="text-align:center">
+                                                            <a href="data:image/jpeg;base64,@item.CadenaBase64">
+                                                                <img class="img-fluid img-thumbnail" style="height:200px !important;" src="data:image/jpeg;base64,@item.CadenaBase64" alt="">
                                                             </a>
-                                                            <div class="row">
-                                                                <div class="col-md-5">
-                                                                    <strong>Nombre: </strong>
+                                                            @*<div class="row">
+                                                                    <div class="col-md-5">
+                                                                        <strong>Nombre: </strong>
+                                                                    </div>
+                                                                    <div class="col-md-7">
+                                                                        @item.Tipo
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-7">
-                                                                    @item.Tipo
+                                                                <div class="row">
+                                                                    <div class="col-md-5">
+                                                                        <strong>Evento: </strong>
+                                                                    </div>
+                                                                    <div class="col-md-7">
+                                                                        @item.Momento
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-5">
-                                                                    <strong>Evento: </strong>
-                                                                </div>
-                                                                <div class="col-md-7">
-                                                                    @item.Momento
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-5">
-                                                                    <strong>Lectura: </strong>
-                                                                </div>
-                                                                <div class="col-md-7">
-                                                                    @item.Lectura
-                                                                </div>
-                                                            </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-5">
+                                                                        <strong>Lectura: </strong>
+                                                                    </div>
+                                                                    <div class="col-md-7">
+                                                                        @item.Lectura
+                                                                    </div>
+                                                                </div>*@
                                                         </div>
                                                     }
                                                 }
@@ -830,8 +831,11 @@
                 </div>
             </div>
             <div class="row clearfix">
+
                 <div class="col-sm-4 center">
-                    <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
+                    <a href="@Url.Action("Ordenes", "OrdenCompra" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
+                        Regresar
+                    </a>
                 </div>
                 <div class="col-sm-4 center">
                     <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
@@ -840,7 +844,7 @@
                 </div>
                 <div class="col-sm-4 center">
                     <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
-                        Crear
+                        Terminar
                     </a>
                 </div>
             </div>

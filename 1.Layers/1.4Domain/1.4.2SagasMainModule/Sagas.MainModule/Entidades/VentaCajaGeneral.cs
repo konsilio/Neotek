@@ -38,6 +38,7 @@ namespace Sagas.MainModule.Entidades
         public string OperadorChofer { get; set; }
         public string UsuarioEntrega { get; set; }
         public string UsuarioRecibe { get; set; }
+        public decimal VentaTotalBonificacion { get; set; }
     
         public virtual UnidadAlmacenGas CAlmacenGas { get; set; }
         public virtual OperadorChofer COperadorChofer { get; set; }

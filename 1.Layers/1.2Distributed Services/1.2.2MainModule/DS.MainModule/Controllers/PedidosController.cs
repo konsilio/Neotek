@@ -14,7 +14,7 @@ namespace DS.MainModule.Controllers
     public class PedidosController : ApiController
     {
         private Pedidos _pedidos;
-        public PedidosController()
+        public PedidosController() 
         {
             _pedidos = new Pedidos();
         }
@@ -53,23 +53,25 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Modifica(_model));
         }
-
         [Route("registrar/pedido")]
         public HttpResponseMessage PostRegistrarPedidos(RegistraPedidoDto _model)
         {
            return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Registra(_model));
         }
-
         [Route("registrar/encuesta")]
         public HttpResponseMessage PostRegistrarEncuesta(List<EncuestaDto> _model)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _pedidos.RegistraEncuesta(_model));
         }
-
         [Route("cancelar/pedido")]
         public HttpResponseMessage PutCancelarPedidos(RegistraPedidoDto _model)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _pedidos.Elimina(_model));
         }
+        //[Route("crear/cliente")]
+        //public HttpResponseMessage PostRegistrarCliente(List<EncuestaDto> _model)
+        //{
+        //    return Request.CreateResponse(HttpStatusCode.OK, _pedidos.RegistraEncuesta(_model));
+        //}
     }
 }

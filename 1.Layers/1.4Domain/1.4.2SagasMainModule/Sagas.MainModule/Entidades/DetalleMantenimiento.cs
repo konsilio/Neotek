@@ -25,9 +25,11 @@ namespace Sagas.MainModule.Entidades
         public int Kilometraje_Actual { get; set; }
         public string NumeroOC { get; set; }
         public Nullable<decimal> Monto { get; set; }
+        public int IdCuentaContable { get; set; }
     
         public virtual Camioneta CCamioneta { get; set; }
         public virtual CMantenimiento CMantenimiento { get; set; }
         public virtual Pipa CPipa { get; set; }
+        public virtual CuentaContable CCuentaContable { get; set; }
     }
 }

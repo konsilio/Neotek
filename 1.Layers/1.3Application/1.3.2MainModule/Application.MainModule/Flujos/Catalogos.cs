@@ -124,8 +124,8 @@ namespace Application.MainModule.Flujos
         }
         public ClientesDto ObtenerCliente(int id)
         {
-            var resp = PermisosServicio.PuedeConsultarCliente();
-            if (!resp.Exito) return null;
+            //var resp = PermisosServicio.PuedeConsultarCliente();
+            //if (!resp.Exito) return null;
             var _c = ClienteServicio.Obtener(id);
             return ClientesAdapter.ToDTO(_c);
         }
@@ -141,8 +141,8 @@ namespace Application.MainModule.Flujos
         public List<ClientesDto> ClientesRfc(ClientesDto dto)
         {
             var resp = PermisosServicio.PuedeConsultarCliente();
-            if (!resp.Exito) return null;           
-           return ClienteServicio.BuscarRfcyTel(dto).ToList();
+            if (!resp.Exito) return null;
+            return ClienteServicio.BuscarRfcyTel(dto).ToList();
         }
         public List<ClienteLocacionDTO> ListaLocaciones(int id)
         {
@@ -155,8 +155,10 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeRegistrarCliente();
             if (!resp.Exito) return resp;
 
-            var ExisteRfc = ClienteServicio.BuscarClientePorRFC(cteDto.Rfc);
-            if (ExisteRfc != null) return ClienteServicio.YaExiste();
+            //var ExisteRfc = ClienteServicio.BuscarClientePorRFC(cteDto.Rfc);
+            //if (ExisteRfc != null)
+            //    if (!ExisteRfc.Rfc.Equals(ClienteServicio.ObtenerPublicoEnGeneral().Rfc))
+            //        return ClienteServicio.YaExiste();
 
             var cliente = ClientesAdapter.FromDtoMod(cteDto);
 
@@ -264,6 +266,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeConsultarPuntoVenta();
             if (!resp.Exito) return null;
+
             return PuntoVentaServicio.Obtener().ToList();
         }
         public RespuestaDto EliminaPuntosVenta(PuntoVentaDTO cteDto)
@@ -462,10 +465,23 @@ namespace Application.MainModule.Flujos
         }
         public PrecioVentaDTO ObtenerPrecioVentaVigente()
         {
-            var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
-            var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
-            //var pv = PrecioVentaGasServicio.ObtenerPrecioVigente((short)2); (Test)
-            return PrecioVentaGasAdapter.ToDTO(pv, producto);
+            try
+            {
+                var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+                var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
+                var pvs = PrecioVentaGasAdapter.ToDTO(pv, producto);
+                var us = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+                var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(us.IdCAlmacenGas);
+                if (unidad.IdCamioneta > 0)
+                    pvs.PrecioActual = pvs.PrecioSalidaKg ?? 0;
+                else
+                    pvs.PrecioActual = pvs.PrecioSalidaLt ?? 0;
+                return pvs;
+            }
+            catch (Exception ex)
+            {
+                return new PrecioVentaDTO() { respuesta = new RespuestaDto() { Exito = false, Mensaje = ex.ToString() } };
+            }
         }
         public RespuestaDto EliminaPreciosVenta(PrecioVentaDTO cteDto)
         {
@@ -676,7 +692,14 @@ namespace Application.MainModule.Flujos
             resp = ValidarCatalogoServicio.Producto(pDto);
             if (!resp.Exito) return resp;
 
-            return ProductoServicio.RegistrarProducto(ProductoAdapter.FromDto(pDto));
+            var respP = ProductoServicio.RegistrarProducto(ProductoAdapter.FromDto(pDto));
+            if (!respP.Exito) return respP;
+            else if (pDto.EsGas || pDto.EsTransporteGas || pDto.IdProductoServicioTipo.Equals(3))
+                return respP;
+
+            var almacen = ProductoAlmacenServicio.GenaraAlmacenNuevo(respP.Id, TokenServicio.ObtenerIdEmpresa());
+            return ProductoAlmacenServicio.InsertarAlmacen(almacen);
+            
         }
         public RespuestaDto ModificaProducto(ProductoModificarDto pDto)
         {
@@ -893,6 +916,56 @@ namespace Application.MainModule.Flujos
 
             return CuentaContableAdapter.ToDto(CuentaContableServicio.Obtener(idCuentaContable));
         }
+
+        public RespuestaDto RegistraCuentaContableAutorizado(CuentaContableAutorizadoDTO dto)
+        {
+            var permiso = PermisosServicio.PuedeRegistrarCuentaContable();
+            if (!permiso.Exito) return permiso;
+
+            var existente = CuentaContableAutorizadoServicio.Obtener(dto.IdCuentaContable, dto.Fecha);
+            if (existente == null)
+                return CuentaContableAutorizadoServicio.RegistrarCuentaContableAutorizado(CuentaContableAutorizadoAdapter.FromDTO(dto));
+            else
+            {
+                var entidad = CuentaContableAutorizadoAdapter.FromEntity(existente);
+                entidad.Autorizado = dto.Autorizado;
+                entidad.Fecha = dto.Fecha;
+                return CuentaContableAutorizadoServicio.ModificarCuentaContableAutorizado(entidad);
+            }
+        }
+        public RespuestaDto ModificaCuentaContableAutorizado(CuentaContableAutorizadoDTO dto)
+        {
+            var permiso = PermisosServicio.PuedeModificarCuentaContable();
+            if (!permiso.Exito) return permiso;
+
+            var existente = CuentaContableAutorizadoServicio.Obtener(dto.IdCuentaContable, dto.Fecha);
+            if (existente == null)
+                return CuentaContableAutorizadoServicio.NoExiste();
+            else
+            {
+                var entidad = CuentaContableAutorizadoAdapter.FromEntity(existente);
+                entidad.Autorizado = dto.Autorizado;
+                entidad.Fecha = dto.Fecha;
+                return CuentaContableAutorizadoServicio.ModificarCuentaContableAutorizado(entidad);
+            }
+        }
+
+        public List<CuentaContableAutorizadoDTO> ConsultaCuentasContablesAutorizado()
+        {
+            var permiso = PermisosServicio.PuedeConsultarCuentaContable();
+            if (!permiso.Exito) return new List<CuentaContableAutorizadoDTO>();
+
+            return CuentaContableAutorizadoAdapter.ToDTO(CuentaContableAutorizadoServicio.Obtener());
+        }
+        public CuentaContableAutorizadoDTO ConsultaCuentaContableAutorizado(int idCuentaContable)
+        {
+            var resp = PermisosServicio.PuedeConsultarCuentaContable();
+            if (!resp.Exito) return null;
+
+            return CuentaContableAutorizadoAdapter.ToDTO(CuentaContableAutorizadoServicio.Obtener(idCuentaContable));
+        }
+
+
         #endregion
 
         #region Estación de carburación
@@ -980,7 +1053,6 @@ namespace Application.MainModule.Flujos
             }
             return EquipoTransporteServicio.Alta(vehiculo);
         }
-
         public RespuestaDto ModificaEquipoTrasnporte(EquipoTransporteDTO vehiculoDto)
         {
             var resp = PermisosServicio.PuedeModificarPedido();
@@ -1003,9 +1075,11 @@ namespace Application.MainModule.Flujos
                     if (Camioneta == null) return CamionetaServicio.NoExiste();
 
                     var camionetaEntity = CamionetaAdapter.FromEntity(Camioneta);
-                    camionetaEntity.Nombre = string.Format("Camioneta No. {0}", vehiculoDto.DescVehiculo);
+                    //camionetaEntity.Nombre = string.Format("Camioneta No. {0}", vehiculoDto.DescVehiculo);
+                    camionetaEntity.Nombre = vehiculoDto.Descripcion;
                     camionetaEntity.Numero = vehiculoDto.DescVehiculo;
                     camionetaEntity.Activo = vehiculoDto.Activo;
+                    camionetaEntity.EsForaneo = vehiculoDto.EsForaneo;
                     editarVehiculo.CCamioneta = camionetaEntity;
                     vehiculoDto.IdCamioneta = Camioneta.IdCamioneta;
 
@@ -1043,9 +1117,11 @@ namespace Application.MainModule.Flujos
                     if (_Pipa == null) return PipaServicio.NoExiste();
 
                     var pipaEntity = PipaAdapter.FromEntity(_Pipa);
-                    pipaEntity.Nombre = string.Format("Pipa No. {0}", vehiculoDto.DescVehiculo);
+                    // pipaEntity.Nombre = string.Format("Pipa No. {0}", vehiculoDto.DescVehiculo);
+                    pipaEntity.Nombre = vehiculoDto.Descripcion;
                     pipaEntity.Numero = vehiculoDto.DescVehiculo;
                     pipaEntity.Activo = vehiculoDto.Activo;
+                    pipaEntity.EsForaneo = vehiculoDto.EsForaneo;
                     editarVehiculo.CPipa = pipaEntity;
                     vehiculoDto.IdPipa = _Pipa.IdPipa;
                     editarVehiculo.CPipa.IdPipa = _Pipa.IdPipa;
@@ -1085,9 +1161,11 @@ namespace Application.MainModule.Flujos
                     if (_utilitario == null) return VehiculoUtilitarioServicio.NoExiste();
 
                     var utilitarioEntity = VehiculoUtilitarioAdapter.FromEntity(_utilitario);
-                    utilitarioEntity.Nombre = string.Format("Utilitario No. {0}", vehiculoDto.DescVehiculo);
+                    //utilitarioEntity.Nombre = string.Format("Utilitario No. {0}", vehiculoDto.DescVehiculo);
+                    utilitarioEntity.Nombre = vehiculoDto.Descripcion;
                     utilitarioEntity.Numero = vehiculoDto.DescVehiculo;
                     utilitarioEntity.Activo = vehiculoDto.Activo;
+                    utilitarioEntity.EsForaneo = vehiculoDto.EsForaneo;
                     editarVehiculo.CUtilitario = utilitarioEntity;
                     vehiculoDto.IdVehiculoUtilitario = _utilitario.IdUtilitario;
 
@@ -1143,6 +1221,7 @@ namespace Application.MainModule.Flujos
             }
             return respuesta;
         }
+
         #region Asignaciones 
         public List<TransporteDTO> BuscarAsignaciones()
         {
@@ -1231,7 +1310,7 @@ namespace Application.MainModule.Flujos
             if (vehiculoDto.TipoVehiculo == TipoUnidadEqTransporteEnum.Utilitario)
             {
                 vehiculoDto.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
-               // var IdEmp = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => (x.IdVehiculoUtilitario==vehiculoDto.IdVehiculo)).IdEmpresa;
+                // var IdEmp = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => (x.IdVehiculoUtilitario==vehiculoDto.IdVehiculo)).IdEmpresa;
                 var asignacion = AsignacionUtilitarioServicio.Buscar(vehiculoDto);
                 asignacion.Activo = false;
 
@@ -1420,7 +1499,7 @@ namespace Application.MainModule.Flujos
             var entidad = EgresoAdapter.FromDTO(dto);
             entidad.FechaRegistro = DateTime.Now;
 
-            return EgresoServicio.Registrar(entidad);          
+            return EgresoServicio.Registrar(entidad);
         }
         public RespuestaDto ModificarEgrereo(EgresoDTO dto)
         {

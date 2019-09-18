@@ -34,7 +34,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepHistorioPrecios(dto));
         }
         [Route("callcenter")]
-        public HttpResponseMessage PostCallCenter(CallCenterDTO dto)
+        public HttpResponseMessage PostCallCenter(PeriodoDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCallCenter(dto));
         }
@@ -59,7 +59,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepInventarioPorConcepto(dto));
         }
         [Route("cortecaja")]
-        public HttpResponseMessage PostCorteCaja(CajaGeneralDTO dto)
+        public HttpResponseMessage PostCorteCaja(CajaGralDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCorteCaja(dto));
         }
@@ -67,6 +67,16 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostGastoXVehiculo(GastoVehicularDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepGastoXVehiculo(dto));
+        }
+        [Route("comisiones")]
+        public HttpResponseMessage PostComisiones(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepComisiones(dto));
+        }
+        [Route("cuentasconsolidadas")]
+        public HttpResponseMessage PostCuentasConsolodadas(CuentasPorPagarDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCuentasConsolidadas(dto.Periodo));
         }
         [Route("dashboard/remanente")]
         public HttpResponseMessage GetDashRemanente()

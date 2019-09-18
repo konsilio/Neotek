@@ -95,7 +95,7 @@ namespace Application.MainModule.Flujos
             emp.FechaRegistro = emp.FechaRegistro;
             return UsuarioServicio.Actualizar(emp);
         }
-        public RespuestaDto ModificaUsuario(UsuarioDTO userDto)
+        public RespuestaDto ModificaUsuario(UsuarioEditDTO userDto)
         {
             var resp = PermisosServicio.PuedeModificarUsuario();
             if (!resp.Exito) return resp;

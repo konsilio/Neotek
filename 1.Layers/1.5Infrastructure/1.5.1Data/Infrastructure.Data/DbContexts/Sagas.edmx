@@ -729,7 +729,7 @@
           <Property Name="FechaCreacion" Type="date" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.Bitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Bitacora">
           <Key>
             <PropertyRef Name="Id" />
@@ -898,6 +898,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene defi
           <Property Name="limiteCreditoDias" Type="smallint" Nullable="false" />
           <Property Name="CreditoDisponibleMonto" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="VentaExtraordinaria" Type="bit" />
+          <Property Name="EsFijo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CClienteContacto">
           <Key>
@@ -1132,7 +1133,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene defi
             <PropertyRef Name="IdPrecioVentaEstatus" />
           </Key>
           <Property Name="IdPrecioVentaEstatus" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Descripción" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegsitro" Type="smalldatetime" Nullable="false" />
         </EntityType>
@@ -1157,11 +1158,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene defi
           <Property Name="UrlImagen" Type="varchar" MaxLength="350" />
           <Property Name="PathImagen" Type="varchar" MaxLength="350" />
           <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="ClaveProdServ" Type="varchar" MaxLength="10" />
           <Property Name="FechaRegistro" Type="smalldatetime" />
+          <Property Name="ClaveProdServ" Type="varchar" MaxLength="10" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="CProductoAsociado">
           <Key>
             <PropertyRef Name="IdProducto" />
@@ -1382,6 +1383,15 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="CuentaContableAutorizado">
+          <Key>
+            <PropertyRef Name="IdCuentaContableAutorizado" />
+          </Key>
+          <Property Name="IdCuentaContableAutorizado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCuentaContable" Type="int" Nullable="false" />
+          <Property Name="Autorizado" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Fecha" Type="smalldatetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CUsoCFDI">
           <Key>
             <PropertyRef Name="Id_UsoCFDI" />
@@ -1421,6 +1431,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Kilometraje_Actual" Type="int" Nullable="false" />
           <Property Name="NumeroOC" Type="varchar" MaxLength="20" />
           <Property Name="Monto" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IdCuentaContable" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DetalleRecargaCombustible">
           <Key>
@@ -1437,6 +1448,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdTipoCombustible" Type="int" Nullable="false" />
           <Property Name="FechaRecarga" Type="datetime" Nullable="false" />
           <Property Name="Monto" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IdCuentaContable" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Egreso">
           <Key>
@@ -1448,6 +1460,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdCentroCosto" Type="int" Nullable="false" />
           <Property Name="IdCuentaContable" Type="int" Nullable="false" />
           <Property Name="Monto" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="IdTipoEgreso" Type="smallint" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="EsExterno" Type="bit" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
@@ -1706,6 +1719,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Ruta" Type="int" />
           <Property Name="IdDireccion" Type="smallint" Nullable="false" />
           <Property Name="MotivoCancelacion" Type="nvarchar" MaxLength="250" />
+          <Property Name="FechaSurtido" Type="datetime" />
         </EntityType>
         <EntityType Name="PedidoDetalle">
           <Key>
@@ -1898,9 +1912,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CompraCancelaOCompra" Type="bit" Nullable="false" />
           <Property Name="AlmacenActualizaExistencias" Type="bit" Nullable="false" />
           <Property Name="AlmacenVerExistencias" Type="bit" Nullable="false" />
-          <Property Name="AlmacenRegistrarAlmacen" Type="bit" Nullable="false" />
           <Property Name="AlmacenVerMovimientos" Type="bit" Nullable="false" />
-          <Property Name="AlmacenVerProductos" Type="bit" Nullable="false" />
           <Property Name="PedidoVerPedidos" Type="bit" Nullable="false" />
           <Property Name="PedidoGenerarPedido" Type="bit" Nullable="false" />
           <Property Name="PedidoEliminarPedido" Type="bit" Nullable="false" />
@@ -1925,6 +1937,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CobranzaFacturar" Type="bit" Nullable="false" />
           <Property Name="ConsultarRemanenteGeneral" Type="bit" Nullable="false" />
           <Property Name="HVCargaInformacion" Type="bit" Nullable="false" />
+          <Property Name="AlmacenRegistrarAlmacen" Type="bit" Nullable="false" />
+          <Property Name="AlmacenVerProductos" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RolAccionCatalogo">
           <Key>
@@ -2010,16 +2024,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="AppCamionetaPuntoVenta" Type="bit" Nullable="false" />
           <Property Name="AppEstacionCarbPuntoVenta" Type="bit" Nullable="false" />
           <Property Name="AppPipaPuntoVenta" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -2118,6 +2122,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="OperadorChofer" Type="varchar" MaxLength="250" />
           <Property Name="UsuarioEntrega" Type="varchar" MaxLength="250" />
           <Property Name="UsuarioRecibe" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="VentaTotalBonificacion" Type="decimal" Precision="18" Scale="4" Nullable="false" />
         </EntityType>
         <EntityType Name="VentaCorteAnticipoEC">
           <Key>
@@ -2220,6 +2225,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="DatosProcesados" Type="bit" Nullable="false" />
           <Property Name="FechaAplicacion" Type="smalldatetime" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="EsBonificacion" Type="bit" Nullable="false" />
+          <Property Name="Bonificacion" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="VentaPuntoDeVentaDetalle">
           <Key>
@@ -4310,6 +4317,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CuentaContableAutorizado_CCuentaContable">
+          <End Role="CCuentaContable" Type="Self.CCuentaContable" Multiplicity="1" />
+          <End Role="CuentaContableAutorizado" Type="Self.CuentaContableAutorizado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="CuentaContableAutorizado">
+              <PropertyRef Name="IdCuentaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CUtilitario_Empresa">
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
           <End Role="CUtilitario" Type="Self.CUtilitario" Multiplicity="*" />
@@ -4367,6 +4386,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="Egreso">
               <PropertyRef Name="IdCuentaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Egreso_CTipoEgreso">
+          <End Role="CTipoEgreso" Type="Self.CTipoEgreso" Multiplicity="0..1" />
+          <End Role="Egreso" Type="Self.Egreso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoEgreso">
+              <PropertyRef Name="IdTipoEgreso" />
+            </Principal>
+            <Dependent Role="Egreso">
+              <PropertyRef Name="IdTipoEgreso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5424,6 +5455,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="CTipoMovimiento" EntityType="Self.CTipoMovimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTipoOperadorChofer" EntityType="Self.CTipoOperadorChofer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTipoPersona" EntityType="Self.CTipoPersona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CuentaContableAutorizado" EntityType="Self.CuentaContableAutorizado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CUsoCFDI" EntityType="Self.CUsoCFDI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CUtilitario" EntityType="Self.CUtilitario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleMantenimiento" EntityType="Self.DetalleMantenimiento" Schema="dbo" store:Type="Tables" />
@@ -5463,7 +5495,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="RolAccion" EntityType="Self.RolAccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolAccionCatalogo" EntityType="Self.RolAccionCatalogo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolAccionMovil" EntityType="Self.RolAccionMovil" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioContacto" EntityType="Self.UsuarioContacto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioCredencial" EntityType="Self.UsuarioCredencial" Schema="dbo" store:Type="Tables" />
@@ -6100,6 +6131,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CTipoPersona" EntitySet="CTipoPersona" />
             <End Role="CRegimenFiscal" EntitySet="CRegimenFiscal" />
           </AssociationSet>
+          <AssociationSet Name="FK_CuentaContableAutorizado_CCuentaContable" Association="Self.FK_CuentaContableAutorizado_CCuentaContable">
+            <End Role="CCuentaContable" EntitySet="CCuentaContable" />
+            <End Role="CuentaContableAutorizado" EntitySet="CuentaContableAutorizado" />
+          </AssociationSet>
           <AssociationSet Name="FK_CUtilitario_Empresa" Association="Self.FK_CUtilitario_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CUtilitario" EntitySet="CUtilitario" />
@@ -6118,6 +6153,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </AssociationSet>
           <AssociationSet Name="FK_Egreso_CCuentaContable" Association="Self.FK_Egreso_CCuentaContable">
             <End Role="CCuentaContable" EntitySet="CCuentaContable" />
+            <End Role="Egreso" EntitySet="Egreso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Egreso_CTipoEgreso" Association="Self.FK_Egreso_CTipoEgreso">
+            <End Role="CTipoEgreso" EntitySet="CTipoEgreso" />
             <End Role="Egreso" EntitySet="Egreso" />
           </AssociationSet>
           <AssociationSet Name="FK_EmpresaConfiguracion_Empresa" Association="Self.FK_EmpresaConfiguracion_Empresa">
@@ -6684,7 +6723,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />
 
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <!--<EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
@@ -6693,7 +6732,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
+        </EntityType>-->
         <EntityType Name="UsuarioRol">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -6960,7 +6999,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
 
           <EntitySet Name="Rol" EntityType="Self.Rol" />
 
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <!--<EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />-->
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
 
           <AssociationSet Name="FK_Empresa_EstadosRepublica" Association="Self.FK_Empresa_EstadosRepublica">
@@ -7898,6 +7937,27 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CFDI" EntitySet="CFDI" />
             <End Role="Abono" EntitySet="Abono" />
           </AssociationSet>
+          <EntitySet Name="CuentaContableAutorizado" EntityType="Sagas.MainModuleModel.CuentaContableAutorizado" />
+          <AssociationSet Name="FK_CuentaContableAutorizado_CCuentaContable" Association="Sagas.MainModuleModel.FK_CuentaContableAutorizado_CCuentaContable">
+            <End Role="CuentaContable" EntitySet="CuentaContable" />
+            <End Role="CuentaContableAutorizado" EntitySet="CuentaContableAutorizado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMantenimiento_CCuentaContable" Association="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCuentaContable">
+            <End Role="CuentaContable" EntitySet="CuentaContable" />
+            <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleRecargaCombustible_CCuentaContable" Association="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCuentaContable">
+            <End Role="CuentaContable" EntitySet="CuentaContable" />
+            <End Role="DetalleRecargaCombustible" EntitySet="DetalleRecargaCombustible" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Egreso_CTipoEgreso" Association="Sagas.MainModuleModel.FK_Egreso_CTipoEgreso">
+            <End Role="CTipoEgreso" EntitySet="CTipoEgreso" />
+            <End Role="Egreso" EntitySet="Egreso" />
+          </AssociationSet>
+          <!--<AssociationSet Name="FK_DetalleMantenimiento_CCuentaContable1" Association="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCuentaContable1">
+            <End Role="CuentaContable" EntitySet="CuentaContable" />
+            <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
+          </AssociationSet>-->
         </EntityContainer>
         <EntityType Name="Requisicion">
           <Key>
@@ -9538,6 +9598,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CCuentaContable" FromRole="CuentaContable" ToRole="Cliente" />
           <NavigationProperty Name="Egreso" Relationship="Sagas.MainModuleModel.FK_Egreso_CCuentaContable" FromRole="CuentaContable" ToRole="Egreso" />
           <NavigationProperty Name="Ingreso" Relationship="Sagas.MainModuleModel.FK_Ingreso_CCuentaContable" FromRole="CuentaContable" ToRole="Ingreso" />
+          <NavigationProperty Name="CuentaContableAutorizado" Relationship="Sagas.MainModuleModel.FK_CuentaContableAutorizado_CCuentaContable" FromRole="CuentaContable" ToRole="CuentaContableAutorizado" />
+          <NavigationProperty Name="DetalleMantenimiento" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCuentaContable" FromRole="CuentaContable" ToRole="DetalleMantenimiento" />
+          <NavigationProperty Name="DetalleRecargaCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCuentaContable" FromRole="CuentaContable" ToRole="DetalleRecargaCombustible" />
+          <!--<NavigationProperty Name="DetalleMantenimiento1" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCuentaContable1" FromRole="CuentaContable" ToRole="DetalleMantenimiento" />-->
         </EntityType>
         <EntityType Name="RegimenFiscal">
           <Key>
@@ -10254,6 +10318,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CuentaContable" Relationship="Sagas.MainModuleModel.FK_CCliente_CCuentaContable" FromRole="Cliente" ToRole="CuentaContable" />
           <NavigationProperty Name="VentaPuntoDeVenta" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_CCliente" FromRole="Cliente" ToRole="VentaPuntoDeVenta" />
           <NavigationProperty Name="Cargo" Relationship="Sagas.MainModuleModel.FK_Cargo_CCliente" FromRole="Cliente" ToRole="Cargo" />
+          <Property Name="EsFijo" Type="Boolean" Nullable="false" />
 
 
           <!--<NavigationProperty Name="CClienteCondicion" Relationship="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" FromRole="CCliente" ToRole="CClienteCondicion" />
@@ -10703,9 +10768,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdPrecioVentaEstatus" />
           </Key>
           <Property Name="IdPrecioVentaEstatus" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripción" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <Property Name="FechaRegsitro" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaRegsitro" Type="DateTime" Nullable="false" Precision="0" />        
           <!--<NavigationProperty Name="CPrecioVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CPrecioVentaEstatus" FromRole="CPrecioVentaEstatus" ToRole="CPrecioVenta" />-->
         </EntityType>
         <Association Name="FK_CPrecioVenta_CPrecioVentaEstatus">
@@ -11178,6 +11243,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CPuntoVenta" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_CPuntoVenta" FromRole="VentaCajaGeneral" ToRole="PuntoVenta" />
           <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario" FromRole="VentaCajaGeneral" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario1" FromRole="VentaCajaGeneral" ToRole="Usuario" />
+          <Property Name="VentaTotalBonificacion" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
         </EntityType>
         <EntityType Name="VentaCorteAnticipoEC">
           <Key>
@@ -11323,6 +11389,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="COperadorChofer" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_COperadorChofer" FromRole="VentaPuntoDeVenta" ToRole="OperadorChofer" />
           <NavigationProperty Name="CPuntoVenta" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_CPuntoVenta" FromRole="VentaPuntoDeVenta" ToRole="PuntoVenta" />
           <NavigationProperty Name="VentaPuntoDeVentaDetalle" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta" FromRole="VentaPuntoDeVenta" ToRole="VentaPuntoDeVentaDetalle" />
+          <Property Name="EsBonificacion" Type="Boolean" Nullable="false" />
+          <Property Name="Bonificacion" Type="Decimal" Precision="18" Scale="2" />
           <!--<NavigationProperty Name="VentaPuntoDeVentaEfectivo" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVentaEfectivo_VentaPuntoDeVenta" FromRole="VentaPuntoDeVenta" ToRole="VentaPuntoDeVentaEfectivo" />-->
         </EntityType>
         <EntityType Name="VentaPuntoDeVentaDetalle">
@@ -11696,6 +11764,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Monto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Periocidad" Type="Int32" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Egreso" Relationship="Sagas.MainModuleModel.FK_Egreso_CTipoEgreso" FromRole="CTipoEgreso" ToRole="Egreso" />
           <!--<NavigationProperty Name="Egreso" Relationship="Sagas.MainModuleModel.FK_Egreso_CTipoEgreso" FromRole="CTipoEgreso" ToRole="Egreso" />-->
         </EntityType>
         <EntityType Name="Egreso">
@@ -11716,6 +11785,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="EsFiscal" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_Egreso_CCentroCosto" FromRole="Egreso" ToRole="CentroCosto" />
           <NavigationProperty Name="CCuentaContable" Relationship="Sagas.MainModuleModel.FK_Egreso_CCuentaContable" FromRole="Egreso" ToRole="CuentaContable" />
+          <Property Name="IdTipoEgreso" Type="Int16" />
+          <NavigationProperty Name="CTipoEgreso" Relationship="Sagas.MainModuleModel.FK_Egreso_CTipoEgreso" FromRole="Egreso" ToRole="CTipoEgreso" />
           <!--<NavigationProperty Name="CTipoEgreso" Relationship="Sagas.MainModuleModel.FK_Egreso_CTipoEgreso" FromRole="Egreso" ToRole="CTipoEgreso" />-->
 
 
@@ -11757,6 +11828,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="PedidoEstatus" Relationship="Sagas.MainModuleModel.FK_Pedido_PedidoEstatus" FromRole="Pedido" ToRole="PedidoEstatus" />
           <NavigationProperty Name="PedidoDetalle" Relationship="Sagas.MainModuleModel.FK_PedidoDetalle_Pedido" FromRole="Pedido" ToRole="PedidoDetalle" />
           <NavigationProperty Name="RespuestaSatisfaccionPedido" Relationship="Sagas.MainModuleModel.FK_RespuestaSatisfaccionPedido_Pedido" FromRole="Pedido" ToRole="RespuestaSatisfaccionPedido" />
+          <Property Name="FechaSurtido" Type="DateTime" Precision="3" />
 
         </EntityType>
         <EntityType Name="PedidoDetalle">
@@ -12021,9 +12093,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Kilometraje_Actual" Type="Int32" Nullable="false" />
           <Property Name="NumeroOC" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Monto" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IdCuentaContable" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CCamioneta" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCamioneta" FromRole="DetalleMantenimiento" ToRole="Camioneta" />
           <NavigationProperty Name="CMantenimiento" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CMantenimiento" FromRole="DetalleMantenimiento" ToRole="CMantenimiento" />
           <NavigationProperty Name="CPipa" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CPipa" FromRole="DetalleMantenimiento" ToRole="Pipa" />
+          <NavigationProperty Name="CCuentaContable" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCuentaContable" FromRole="DetalleMantenimiento" ToRole="CuentaContable" />         
+          <!--<NavigationProperty Name="CCuentaContable1" Relationship="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCuentaContable1" FromRole="DetalleMantenimiento" ToRole="CuentaContable" />-->
         </EntityType>
         <EntityType Name="DetalleRecargaCombustible">
           <Key>
@@ -12041,6 +12116,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="FechaRecarga" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Monto" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="CCombustible" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCombustible" FromRole="DetalleRecargaCombustible" ToRole="CCombustible" />
+          <Property Name="IdCuentaContable" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CCuentaContable" Relationship="Sagas.MainModuleModel.FK_DetalleRecargaCombustible_CCuentaContable" FromRole="DetalleRecargaCombustible" ToRole="CuentaContable" />
         </EntityType>
         <Association Name="FK_DetalleMantenimiento_CCamioneta">
           <End Type="Sagas.MainModuleModel.Camioneta" Role="Camioneta" Multiplicity="1" />
@@ -12366,6 +12443,79 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CuentaContableAutorizado">
+          <Key>
+            <!--<PropertyRef Name="IdCuentaContable" />
+            <PropertyRef Name="Autorizado" />
+            <PropertyRef Name="Fecha" />-->
+            <PropertyRef Name="IdCuentaContableAutorizado" />
+          </Key>
+          <Property Name="IdCuentaContable" Type="Int32" Nullable="false" />
+          <Property Name="Autorizado" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CCuentaContable" Relationship="Sagas.MainModuleModel.FK_CuentaContableAutorizado_CCuentaContable" FromRole="CuentaContableAutorizado" ToRole="CuentaContable" />
+          <Property Name="IdCuentaContableAutorizado" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CuentaContableAutorizado_CCuentaContable">
+          <End Type="Sagas.MainModuleModel.CuentaContable" Role="CuentaContable" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CuentaContableAutorizado" Role="CuentaContableAutorizado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="CuentaContableAutorizado">
+              <PropertyRef Name="IdCuentaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--<Association Name="FK_DetalleMantenimiento_CCuentaContable">
+          <End Type="Sagas.MainModuleModel.CuentaContable" Role="CuentaContable" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.DetalleMantenimiento" Role="DetalleMantenimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="DetalleMantenimiento">
+              <PropertyRef Name="IdCunetaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->
+        <Association Name="FK_DetalleRecargaCombustible_CCuentaContable">
+          <End Type="Sagas.MainModuleModel.CuentaContable" Role="CuentaContable" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.DetalleRecargaCombustible" Role="DetalleRecargaCombustible" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="DetalleRecargaCombustible">
+              <PropertyRef Name="IdCuentaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMantenimiento_CCuentaContable">
+          <End Type="Sagas.MainModuleModel.CuentaContable" Role="CuentaContable" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.DetalleMantenimiento" Role="DetalleMantenimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="DetalleMantenimiento">
+              <PropertyRef Name="IdCuentaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Egreso_CTipoEgreso">
+          <End Type="Sagas.MainModuleModel.CTipoEgreso" Role="CTipoEgreso" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.Egreso" Role="Egreso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoEgreso">
+              <PropertyRef Name="IdTipoEgreso" />
+            </Principal>
+            <Dependent Role="Egreso">
+              <PropertyRef Name="IdTipoEgreso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12589,17 +12739,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="AppCompraEntraGas" ColumnName="AppCompraEntraGas" />
                 <ScalarProperty Name="AppCompraVerOCompra" ColumnName="AppCompraVerOCompra" />
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Sagas.MainModuleModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -13544,6 +13683,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
               </MappingFragment>
               <MappingFragment StoreEntitySet="CClienteCondicion">
+                <ScalarProperty Name="EsFijo" ColumnName="EsFijo" />
                 <ScalarProperty Name="VentaExtraordinaria" ColumnName="VentaExtraordinaria" />
                 <ScalarProperty Name="CreditoDisponibleMonto" ColumnName="CreditoDisponibleMonto" />
                 <ScalarProperty Name="DescuentoXKilo" ColumnName="DescuentoXKilo" />
@@ -13691,9 +13831,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="PrecioVentaEstatus">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.PrecioVentaEstatus">
               <MappingFragment StoreEntitySet="CPrecioVentaEstatus">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="FechaRegsitro" ColumnName="FechaRegsitro" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="Descripción" ColumnName="Descripción" />
                 <ScalarProperty Name="IdPrecioVentaEstatus" ColumnName="IdPrecioVentaEstatus" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -14015,6 +14155,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="VentaCajaGeneral">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.VentaCajaGeneral">
               <MappingFragment StoreEntitySet="VentaCajaGeneral">
+                <ScalarProperty Name="VentaTotalBonificacion" ColumnName="VentaTotalBonificacion" />
                 <ScalarProperty Name="UsuarioRecibe" ColumnName="UsuarioRecibe" />
                 <ScalarProperty Name="UsuarioEntrega" ColumnName="UsuarioEntrega" />
                 <ScalarProperty Name="OperadorChofer" ColumnName="OperadorChofer" />
@@ -14103,6 +14244,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="VentaPuntoDeVenta">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.VentaPuntoDeVenta">
               <MappingFragment StoreEntitySet="VentaPuntoDeVenta">
+                <ScalarProperty Name="Bonificacion" ColumnName="Bonificacion" />
+                <ScalarProperty Name="EsBonificacion" ColumnName="EsBonificacion" />
                 <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="DatosProcesados" ColumnName="DatosProcesados" />
@@ -14258,6 +14401,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Egreso">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Egreso">
               <MappingFragment StoreEntitySet="Egreso">
+                <ScalarProperty Name="IdTipoEgreso" ColumnName="IdTipoEgreso" />
                 <ScalarProperty Name="EsFiscal" ColumnName="EsFiscal" />
                 <ScalarProperty Name="GastoMensual" ColumnName="GastoMensual" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
@@ -14291,6 +14435,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Pedido">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Pedido">
               <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="FechaSurtido" ColumnName="FechaSurtido" />
                 <ScalarProperty Name="MotivoCancelacion" ColumnName="MotivoCancelacion" />
                 <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
                 <ScalarProperty Name="Ruta" ColumnName="Ruta" />
@@ -14398,6 +14543,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="DetalleMantenimiento">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.DetalleMantenimiento">
               <MappingFragment StoreEntitySet="DetalleMantenimiento">
+                <ScalarProperty Name="IdCuentaContable" ColumnName="IdCuentaContable" />
                 <ScalarProperty Name="Monto" ColumnName="Monto" />
                 <ScalarProperty Name="NumeroOC" ColumnName="NumeroOC" />
                 <ScalarProperty Name="Kilometraje_Actual" ColumnName="Kilometraje_Actual" />
@@ -14415,6 +14561,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="DetalleRecargaCombustible">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.DetalleRecargaCombustible">
               <MappingFragment StoreEntitySet="DetalleRecargaCombustible">
+                <ScalarProperty Name="IdCuentaContable" ColumnName="IdCuentaContable" />
                 <ScalarProperty Name="Monto" ColumnName="Monto" />
                 <ScalarProperty Name="FechaRecarga" ColumnName="FechaRecarga" />
                 <ScalarProperty Name="Id_Vehiculo" ColumnName="Id_Vehiculo" />
@@ -14505,6 +14652,16 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CuentaContableAutorizado">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CuentaContableAutorizado">
+              <MappingFragment StoreEntitySet="CuentaContableAutorizado">
+                <ScalarProperty Name="IdCuentaContableAutorizado" ColumnName="IdCuentaContableAutorizado" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Autorizado" ColumnName="Autorizado" />
+                <ScalarProperty Name="IdCuentaContable" ColumnName="IdCuentaContable" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

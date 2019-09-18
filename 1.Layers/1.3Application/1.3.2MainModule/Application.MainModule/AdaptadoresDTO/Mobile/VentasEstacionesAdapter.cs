@@ -9,6 +9,8 @@ using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.DTOs.Mobile.Cortes;
+using Utilities.MainModule;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
@@ -20,7 +22,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 Categorias = categorias.Select(x => ToDTO(x)).ToList(),
                 Lineas = lineas.Select(x => ToDTO(x)).ToList(),
-                Productos = productos.Select(x=>ToDTO(x)).ToList()
+                Productos = productos.Select(x => ToDTO(x)).ToList()
             };
         }
 
@@ -46,7 +48,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         }
 
         public static CategoriaDto ToDTO(CategoriaProducto categoria)
-        {            
+        {
             return new CategoriaDto()
             {
                 Id = categoria.IdCategoria,
@@ -55,7 +57,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static VentaPuntoDeVenta FromDTO(VentaDTO venta, Cliente cliente, PuntoVenta punto_venta,int idOrden,short idEmpresa)
+        public static VentaPuntoDeVenta FromDTO(VentaDTO venta, Cliente cliente, PuntoVenta punto_venta, int idOrden, short idEmpresa)
         {
             return new VentaPuntoDeVenta()
             {
@@ -64,14 +66,23 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdEmpresa = idEmpresa,
                 ClienteConCredito = venta.Credito,
                 IdOperadorChofer = punto_venta.IdOperadorChofer,
-                Iva = venta.Iva,
+                FolioVenta = venta.FolioVenta,
+                FolioOperacionDia = venta.FolioVenta,
+                FechaRegistro = DateTime.Now,
+                Dia = (byte)venta.Fecha.Day,
+                Mes = (byte)venta.Fecha.Month,
+                Year = (short)venta.Fecha.Year,
+                FechaAplicacion = venta.Fecha,
+                Iva = IvaEnum.p16,
                 Subtotal = venta.Subtotal,
                 Total = venta.Total,
                 CambioRegresado = venta.Total - venta.Efectivo,
                 IdPuntoVenta = punto_venta.IdPuntoVenta,
                 PuntoVenta = punto_venta.UnidadesAlmacen.Numero,
-                //IdCliente = venta.IdCliente,
-                //RazonSocial = cliente.RazonSocial,
+                EsBonificacion = PuntoVentaServicio.CalcularBonificacion(venta),
+                Bonificacion = PuntoVentaServicio.CalcularBonificacion(venta) ? CalculosGenerales.DiferenciaEntreDosNumero(venta.Efectivo, venta.Total) : 0,
+                RequiereFactura = venta.Factura,
+                VentaACredito = venta.Credito,
                 VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, idOrden, idEmpresa),
             };
         }
@@ -82,34 +93,36 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             int idOrdenDetalle = 1;
             foreach (var concepto in conceptos)
             {
+                var p = ProductoServicio.ObtenerProducto(concepto.IdProducto);
                 list.Add(new VentaPuntoDeVentaDetalle()
                 {
-                    FechaRegistro= venta.Fecha,
+                    FechaRegistro = venta.Fecha,
                     Dia = (byte)venta.Fecha.Day,
                     Mes = (byte)venta.Fecha.Month,
-                    Year =(short) venta.Fecha.Year,
+                    Year = (short)venta.Fecha.Year,
                     ProductoDescripcion = concepto.Concepto,
-                    IdEmpresa= idEmpresa,
-                    Orden = (short) idOrden,
-                    OrdenDetalle = (short) idOrdenDetalle,
+                    IdEmpresa = idEmpresa,
+                    Orden = (short)idOrden,
+                    OrdenDetalle = (short)idOrdenDetalle,
                     CantidadProducto = concepto.Cantidad,
                     IdCategoria = concepto.IdCategoria,
                     IdProductoLinea = concepto.IdLinea,
                     PrecioUnitarioProducto = concepto.PUnitario,
                     Subtotal = concepto.Subtotal,
                     IdProducto = concepto.IdProducto,
-                    DescuentoTotal = concepto.Descuento,
-                    CantidadLt = concepto.CantidadLt,   
-                    CantidadKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.CantidadLt, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),
-                    //Agregados recientemente
+                    CantidadLt = punto_venta.UnidadesAlmacen.IdCamioneta == null ? concepto.CantidadLt : CalcularGasServicio.ObtenerLitrosDesdeKilos(concepto.CantidadKg, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),
+                    CantidadKg = punto_venta.UnidadesAlmacen.IdCamioneta == null ? CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.CantidadLt, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos) : concepto.CantidadKg,
+                    DescuentoTotal = concepto.Descuento * concepto.Cantidad,
                     IdUnidadMedida = concepto.IdUnidadMedida,
                     PrecioUnitarioKg = concepto.PrecioUnitarioKg,
                     PrecioUnitarioLt = concepto.PrecioUnitarioLt,
-                    DescuentoUnitarioKg = concepto.DescuentoUnitarioKg,
-                    DescuentoUnitarioLt = concepto.DescuentoUnitarioLt,
-                    
+                    DescuentoUnitarioKg = concepto.Descuento,
+                    DescuentoUnitarioLt = concepto.Descuento,
+                    ProductoLinea = p.LineaProducto.Descripcion,
+                    ProductoCategoria = p.Categoria.Descripcion,
+                    UnidadMedida = p.UnidadMedida.Acronimo,
 
-            });
+                });
                 idOrdenDetalle++;
             }
             return list;
@@ -119,40 +132,49 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return productosGas.Select(x => ToDTO(x, precios, CatidadKilosGas)).ToList();
         }
-
+        public static List<DatosGasVentaDto> ToDTO(List<Producto> productosGas, List<PrecioVenta> precios, decimal CatidadKilosGas, decimal descuento, decimal precio)
+        {
+            return productosGas.Select(x => ToDTO(x, precios, CatidadKilosGas, descuento, precio)).ToList();
+        }
         public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios)
         {
-            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));           
+            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
             return new DatosGasVentaDto()
             {
                 Nombre = productoGas.Descripcion,
-                Id= productoGas.IdProducto,
+                Id = productoGas.IdProducto,
                 PrecioUnitario = precio.PrecioSalidaKg.Value,
-                
+
             };
         }
-        public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios, decimal CantidadKgGas)
+        public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios, decimal CantidadKgGas, decimal descuento = 0, decimal precio = 0)
         {
-            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
+            var _precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
             if (productoGas.EsGas)
             {
                 return new DatosGasVentaDto()
                 {
                     Nombre = productoGas.Descripcion,
                     Id = productoGas.IdProducto,
-                    PrecioUnitario = precio.PrecioSalidaKg.Value,
+                    PrecioUnitario = _precio.PrecioSalidaLt.Value,
+                    Descuento = descuento.Equals(0) ? (precio != 0 ? CalculosGenerales.DiferenciaEntreDosNumero(precio, _precio.PrecioSalidaLt.Value) : 0) : descuento,
                     Existencia = CantidadKgGas,
+                    CapacidadKg = 0,
+                    CapacidadLt = 0,
                 };
             }
             else
-            {
+            {// Prodcutos Otros
                 var existencias = ProductoAlmacenServicio.ObtenerAlmacen(productoGas.IdProducto, TokenServicio.ObtenerIdEmpresa());
                 return new DatosGasVentaDto()
                 {
                     Nombre = productoGas.Descripcion,
                     Id = productoGas.IdProducto,
-                    PrecioUnitario = precio.PrecioSalidaKg.Value,
+                    PrecioUnitario = _precio.PrecioSalida.Value,
                     Existencia = existencias != null ? existencias.Cantidad : 0,
+                    Descuento = descuento.Equals(0) ? (precio != 0 ? CalculosGenerales.DiferenciaEntreDosNumero(precio, _precio.PrecioSalidaLt.Value) : 0) : descuento,
+                    CapacidadKg = 0,
+                    CapacidadLt = 0
                 };
             }
         }
@@ -169,7 +191,10 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Id = cilindro.IdCilindro,
                 Existencia = cilindro.Cantidad,
                 PrecioUnitario = cilindro.UnidadAlmacenGasCilindro.Precio,
-                Nombre = "Cilindro " + cilindro.UnidadAlmacenGasCilindro.CapacidadKg
+                Nombre = "Cilindro " + cilindro.UnidadAlmacenGasCilindro.CapacidadKg,
+                Descuento = 0,// Falta validar descuentos por clientes
+                CapacidadKg = cilindro.UnidadAlmacenGasCilindro.CapacidadKg,
+                CapacidadLt = cilindro.UnidadAlmacenGasCilindro.CapacidadLt
             };
         }
 
@@ -183,7 +208,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 {
                     var cilindrosCamionetas = cilindro.CilindrosCamionetas;
                     var cilindroExistencia = cilindro.Cantidad;
-                    
+
                     //if (cilindrosCamionetas != null)
                     //    cilindroExistencia = 0;
                     //else
@@ -192,7 +217,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     {
                         Nombre = "Cilindro " + cilindro.CapacidadKg,
                         PrecioUnitario = cilindro.Precio,
-                        Id = cilindro.IdCilindro,                        
+                        Id = cilindro.IdCilindro,
                         Existencia = cilindroExistencia,//,
                         CapacidadKg = cilindro.CapacidadKg,
                         CapacidadLt = cilindro.CapacidadLt
@@ -237,26 +262,26 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Dia = venta.Dia,
                 Orden = venta.Orden,
                 IdPuntoVenta = venta.IdPuntoVenta,
-                IdCliente =venta.IdCliente,
-                IdOperadorChofer= venta.IdOperadorChofer,
+                IdCliente = venta.IdCliente,
+                IdOperadorChofer = venta.IdOperadorChofer,
                 IdTipoVenta = venta.IdTipoVenta,//No se de que es no tiene relación
                 IdFactura = venta.IdFactura,
                 FolioOperacionDia = item.Corte,
                 FolioVenta = venta.FolioVenta,
-                RequiereFactura= venta.RequiereFactura,
+                RequiereFactura = venta.RequiereFactura,
                 VentaACredito = venta.VentaACredito,
                 Subtotal = venta.Subtotal,
-                Descuento =venta.Descuento,
-                Iva =venta.Iva,
+                Descuento = venta.Descuento,
+                Iva = venta.Iva,
                 Total = venta.Total,
                 PorcentajeIva = venta.PorcentajeIva,
                 EfectivoRecibido = venta.EfectivoRecibido,
-                CambioRegresado= venta.CambioRegresado,
+                CambioRegresado = venta.CambioRegresado,
                 PuntoVenta = venta.PuntoVenta,
-                RazonSocial =venta.RazonSocial,
-                RFC =venta.RFC,
+                RazonSocial = venta.RazonSocial,
+                RFC = venta.RFC,
                 ClienteConCredito = venta.ClienteConCredito,
-                OperadorChofer =venta.OperadorChofer,
+                OperadorChofer = venta.OperadorChofer,
                 DatosProcesados = venta.DatosProcesados,
                 FechaAplicacion = venta.FechaAplicacion,
                 FechaRegistro = venta.FechaRegistro
@@ -267,19 +292,24 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return cilindros.Select(x => ToDTO(x, kilosCamioneta, pv)).ToList();
         }
+        public static List<DatosGasVentaDto> ToDTOGas(List<CamionetaCilindro> cilindros, decimal kilosCamioneta, PrecioVenta pv, decimal descuento, decimal precio)
+        {
+            return cilindros.Select(x => ToDTO(x, kilosCamioneta, pv, descuento, precio)).ToList();
+        }
 
-        public static DatosGasVentaDto ToDTO(CamionetaCilindro cilindro, decimal kilosCamioneta, PrecioVenta pv)
+        public static DatosGasVentaDto ToDTO(CamionetaCilindro cilindro, decimal kilosCamioneta, PrecioVenta pv, decimal descuento = 0, decimal precio = 0)
         {
             var almacenCilindro = AlmacenGasServicio.ObtenerCilindro(cilindro.IdCilindro);
+
             return new DatosGasVentaDto()
             {
-                Nombre = "Gas LP " + almacenCilindro.CapacidadKg,
+                Nombre = "Gas LP " + Math.Truncate(almacenCilindro.CapacidadKg),
                 Existencia = cilindro.Cantidad,
                 Id = cilindro.IdCilindro,
-                PrecioUnitario = pv.PrecioSalidaKg??0,
-                CapacidadKg =  almacenCilindro.CapacidadKg,
+                PrecioUnitario = pv.PrecioSalidaKg.Value,
+                CapacidadKg = almacenCilindro.CapacidadKg,
                 CapacidadLt = almacenCilindro.CapacidadLt,
-                Descuento =0
+                Descuento = descuento.Equals(0) ? (precio != 0 ? CalculosGenerales.DiferenciaEntreDosNumero(precio, pv.PrecioSalidaKg.Value) : 0) : descuento,
             };
         }
     }

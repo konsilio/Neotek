@@ -4,6 +4,7 @@ using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Pedidos;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacenes;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
@@ -18,16 +19,27 @@ namespace Application.MainModule.Servicios.Pedidos
 {
     public class PedidosServicio
     {
+        public static List<PedidoModelDto> Obtener()
+        {
+            List<PedidoModelDto> lPedidos = PedidosAdapter.ToDTO(new PedidosDataAccess().Buscar());
+            return lPedidos;
+        }
+        public static List<Pedido> Obtener(short IdEmpresa, PeriodoDTO dto)
+        {
+            return new PedidosDataAccess().Buscar(IdEmpresa, dto.FechaInicio, dto.FechaFin);
+  
+        }
         public static List<PedidoModelDto> Obtener(short idempresa)
         {
-            List<PedidoModelDto> lPedidos = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTO(new PedidosDataAccess().Buscar(idempresa));
-            return lPedidos;
+            //var pedidos = new PedidosDataAccess().Buscar(idempresa);
+            var pedidos = new PedidosDataAccess().Buscar(idempresa);
+            return PedidosAdapter.ToDTO(pedidos);
         }
         public static RegistraPedidoDto Obtener(int idPedido)
         {
-            RegistraPedidoDto Pedido = AdaptadoresDTO.Pedidos.PedidosAdapter.ToDTOEdit(new PedidosDataAccess().BuscarPedido(idPedido));
+            RegistraPedidoDto Pedido = PedidosAdapter.ToDTOEdit(new PedidosDataAccess().BuscarPedido(idPedido));
             return Pedido;
-        }        
+        }
         public static List<EstatusPedidoDto> ObtenerEstatus()
         {
             return PedidosAdapter.ToDTO(new PedidosDataAccess().BuscarEstatus());
@@ -77,7 +89,7 @@ namespace Application.MainModule.Servicios.Pedidos
         {
             List<PedidoDashDTO> listDTO = new List<PedidoDashDTO>();
             int Dias = Periodo.Month.Equals(DateTime.Now.Month) && Periodo.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(Periodo.Year, Periodo.Month);
-            for (int i = 1; i < Dias; i++)
+            for (int i = 1; i <= Dias; i++)
             {
                 PedidoDashDTO dto = new PedidoDashDTO();
                 dto.Dia = i;
@@ -89,5 +101,27 @@ namespace Application.MainModule.Servicios.Pedidos
             }
             return listDTO;
         }
+        public static decimal ObtenerCantidadVentaPipaEstacion(List<PedidoDetalle> detalles)
+        {
+            return detalles.Sum(x => x.Cantidad.Value);
+        }
+        public static int ObtenerTimpoAtencion(Pedido p)
+        {
+            if (p.FechaSurtido != null)
+                return Convert.ToInt32(Math.Truncate(p.FechaSurtido.Value.Subtract(p.FechaRegistro).TotalMinutes));
+            return 0;
+        }
     }
 }
+
+
+
+//cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro20 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 20Kg" + ", ";
+//                cant20 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
+
+//cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro30 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 30Kg" + ", ";
+//                cant30 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
+
+
+//cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro45 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 45Kg" + ", ";
+//                cant45 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();

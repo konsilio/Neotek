@@ -1,0 +1,78 @@
+﻿@model MVC.Presentacion.Models.CuentaContableAutorizadoDTO
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+    <script src="~/Scripts/js/CuentasContablesJS.js"></script>
+</head>
+<body style="padding-top:10px;">
+    @using (Html.BeginForm("CrearAutorizado", "CuentaContable", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.IdCuentaContable)
+        @Html.HiddenFor(m => m.Fecha, DateTime.Now)
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Cuentas Contables</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Catálogos</li>
+                                <li class="breadcrumb-item">Cuentas contables</li>
+                                <li class="breadcrumb-item">Punto de equilibrio</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            <b><strong>Ingrese la cantidad Autorizada del punto de equilibrio</strong></b>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <b>Descripción</b>
+                                    <div class="form-group">
+                                       @Html.LabelFor(m => m.DescripcionCuenta, Model.DescripcionCuenta)
+                                    </div>
+                                    <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <b>Punto de equilibrio</b>
+                                        @Html.TextBoxFor(m => m.Autorizado, new { @class = "form-control", placeholder = "Punto de equilibrio" })
+                                   
+                                    </div>
+                                    <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                </div>
+                                <div class="col-md-1">
+                                    <b>&nbsp; </b>
+                                    <div class="form-group">
+                                        <button btn id="BtnCrear"  type="submit" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                            <i class="zmdi zmdi-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (ViewBag.MensajeError != null)
+                    {
+                        <div id="DivAlerta" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    @ViewBag.MensajeError
+                                </strong>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+</body>
+</html>

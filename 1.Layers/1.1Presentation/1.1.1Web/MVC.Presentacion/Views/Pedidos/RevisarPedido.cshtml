@@ -17,6 +17,7 @@
 <body style="height:100%">
     @using (Html.BeginForm("EditarPedido", "Pedidos", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.IdPedido)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -38,344 +39,180 @@
                                 </div>
                                 <div class="body">
                                     <div class="row clearfix">
-                                        <div class="col-sm-12">
+                                        <div class="col-md-6">
                                             <div class="row clearfix">
-                                                <div class="col-sm-1">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <strong>Pedido: </strong>
-                                                        </div>
-                                                    </div>
+                                                <div class="form-group">
+                                                    <strong>Pedido: </strong>
+                                                    @Model.IdPedido
+
                                                 </div>
-                                                <div class="col-sm-2">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            @Model.IdPedido
-                                                            <input type="hidden" name="IdPedido" value="@Model.IdPedido" />
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="form-group">
+                                                    <strong>Estatus: </strong>
+                                                    @Model.EstatusPedido
                                                 </div>
-                                                <div class="col-sm-1">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <strong>Estatus: </strong>
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="form-group">
+                                                    <strong>Fecha y hora de entrega: </strong>
+                                                    @Model.FechaPedido
                                                 </div>
-                                                <div class="col-sm-2">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            @Model.EstatusPedido
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="form-group">
+                                                    <strong>Cliente: </strong>
+                                                    @Model.NombreRfc - @Model.Rfc
+                                                    <input type="hidden" name="NombreRfc" value="@Model.NombreRfc" />
+                                                    <input type="hidden" name="IdCliente" value="@Model.IdCliente" />
                                                 </div>
-                                                <div class="col-sm-1">
+                                            </div>
+
+                                            <div class="row clearfix">
+                                                <div class="form-group">
+                                                    <strong>Fecha y hora solicitud: </strong>
+                                                    @Model.FechaPedido
                                                 </div>
-                                                <div class="col-sm-2">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <strong>Fecha y hora de entrega: </strong> 
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row clearfix">
+                                                <div class="form-group">
+                                                    <strong>Calle: </strong>
+                                                    @Model.Calle
                                                 </div>
-                                                <div class="col-sm-2">
-                                                    <div class="form-group">
-                                                        <div class="input-group"> @Model.FechaPedido
-                                                        </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="form-group">
+                                                    <strong>Colonia: </strong>
+                                                    @Model.Colonia
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="form-group">
+                                                    <strong>Teléfono: </strong>
+                                                    @Model.Telefono1
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <strong>Referencia: </strong> @Model.ReferenciaUbicacion
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row clearfix">
-                                                <div class="col-sm-1">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <strong>Cliente: </strong>
-                                                        </div>
-                                                    </div>
+                                                <div class="form-group">
+                                                    <strong>Unidad: </strong>
+                                                    @Model.Unidad
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            @Model.NombreRfc - @Model.Rfc
-                                                            <input type="hidden" name="NombreRfc" value="@Model.NombreRfc" />
-                                                            <input type="hidden" name="IdCliente" value="@Model.IdCliente" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            <strong>Fecha y hora solicitud: </strong>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <div class="form-group">
-                                                        <div class="input-group">
-                                                            @Model.FechaPedido
-                                                        </div>
-                                                    </div>
-                                                </div>                                               
                                             </div>
                                             @if (Model.IdPipa > 0)
                                             {
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Calle: </strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Calle
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Unidad: </strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Unidad
-                                                            </div>
-                                                        </div>
-                                                    </div>        
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Colonia: </strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Colonia
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Cantidad: </strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Cantidad
-                                                            </div>
-                                                        </div>
-                                                    </div>                                               
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Teléfono: </strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Telefono1
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-3">
-                                                        @*<b>Referencia:</b>
-                                                            @Html.LabelFor(model => model.ReferenciaUbicacion, new { @class = "form-control" })*@
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Referencia: </strong> @Model.ReferenciaUbicacion
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group">
-                                                            <input type="submit" value="Editar datos del cliente" formaction=@Url.Action("AltaClienteDireccion") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group">
-                                                            <input type="submit" value="Modificar pedido" formaction=@Url.Action("EditarPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
-                                                        </div>
+                                                    <div class="form-group">
+                                                        <strong>Cantidad: </strong>
+                                                        @Model.Cantidad
                                                     </div>
                                                 </div>
                                             }
                                             @if (Model.IdCamioneta > 0)
                                             {
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Calle: </strong>
-                                                            </div>
-                                                        </div>
+                                                    <div class="form-group">
+                                                        <strong>Cantidad 45 Kg:</strong>
+                                                        @if (Model.Cantidad45.Equals(string.Empty))
+                                                        {
+                                                            <label>0</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            @Model.Cantidad45
+                                                        }
                                                     </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Calle
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Unidad: </strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Unidad
-                                                            </div>
-                                                        </div>
-                                                    </div>                                                 
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Colonia: </strong>
-                                                            </div>
-                                                        </div>
+                                                    <div class="form-group">
+                                                        <strong>Cantidad 30 Kg: </strong>
+                                                        @if (Model.Cantidad30.Equals(string.Empty))
+                                                        {
+                                                            <label>0</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            @Model.Cantidad30
+                                                        }
                                                     </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Colonia
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-3" style="max-width: 13.666667%;">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Cantidad 45 Kg:</strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Cantidad45
-                                                            </div>
-                                                        </div>
-                                                    </div>                                                  
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-sm-1">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Teléfono: </strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Telefono1
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-3" style="max-width: 13.666667%;">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Cantidad 30 Kg: </strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Cantidad30
-                                                        </div>
-                                                    </div>
-                                                </div>                                                    
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Referencia: </strong> @Model.ReferenciaUbicacion
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>                                               
-                                                    <div class="col-sm-3" style="max-width: 13.666667%;">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <strong>Cantidad 20 Kg: </strong>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-2">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                @Model.Cantidad20
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group">
-                                                            <input type="submit" value="Editar datos del cliente" formaction=@Url.Action("AltaClienteDireccion") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group">
-                                                            <input type="submit" value="Modificar pedido" formaction=@Url.Action("EditarPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
-                                                        </div>
+                                                    <div class="form-group">
+                                                        <strong>Cantidad 20 Kg: </strong>
+                                                        @if (Model.Cantidad20.Equals(string.Empty))
+                                                        {
+                                                            <label>0</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            @Model.Cantidad20
+                                                        }
                                                     </div>
                                                 </div>
                                             }
+                                        </div>
+                                    </div>
+                                  
+                                    @if (Model.MotivoCancelacion != null)
+                                    {
+                                        <div class="row clearfix">
 
-                                            <hr />
-                                            <div class="row clearfix">
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <input type="submit" value="Regresar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
-                                                    </div>
+                                            <strong>Motivo de Cancelación:</strong>
+                                            <div class="col-md-12">
+                                                <div class="blockquote blockquote-info btn-round">
+                                                    @Html.TextAreaFor(m => m.MotivoCancelacion, new { @class = "form-control no-resize", @rows = "4" })
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                @*<div class="form-group">
+                                                    <input type="submit" value="Editar dirección del cliente" formmethod="post" disabled class="btn btn-raised btn-primary btn-round float-left" />
+                                                </div>*@
+                                            </div>
+                                            <div class="col-sm-4">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <input type="submit" value="Modificar pedido"  formmethod="post" disabled class="btn btn-raised btn-primary btn-round float-right" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="row clearfix">
+                                            <div class="col-sm-4">
+                                                @*<div class="form-group">
+                                                    <input type="submit" value="Editar dirección del cliente " formaction=@Url.Action("AltaClienteDireccion") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                                </div>*@
+                                            </div>
+                                            <div class="col-sm-4">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <input type="submit" value="Modificar pedido" formaction=@Url.Action("EditarPedido") formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }                                 
+                                    <hr />
+                                    <div class="row clearfix">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="submit" value="Regresar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

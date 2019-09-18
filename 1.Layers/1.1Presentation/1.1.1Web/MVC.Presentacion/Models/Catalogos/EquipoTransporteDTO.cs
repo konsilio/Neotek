@@ -25,6 +25,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public string Placas { get; set; }
         public string NumMotor { get; set; }
         public string DescVehiculo { get; set; }
+        public string Chofer { get; set; }
 
         public string Marca { get; set; }
         public string Modelo { get; set; }
@@ -32,6 +33,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public short Cilindros { get; set; }
         public int IdTipoCombustible { get; set; }
         public int IdTipoUnidad { get; set; }
+        public string TipoUnidad { get; set; }
         public bool Activo { get; set; }
         public bool EsForaneo { get; set; }
         public string AliasUnidad { get; set; }

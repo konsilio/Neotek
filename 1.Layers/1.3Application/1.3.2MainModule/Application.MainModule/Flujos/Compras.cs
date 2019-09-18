@@ -1,6 +1,6 @@
-﻿//using Application.MainModule.AdaptadoresDTO.Almacenes;
-using Application.MainModule.AdaptadoresDTO.Compras;
+﻿using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.Mobile;
+using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
@@ -61,9 +61,7 @@ namespace Application.MainModule.Flujos
 
             var Prods = BuscarRequisicion(oc.IdRequisicion).ProductosOC;
             if (Prods.Count != oc.Productos.Count) return OrdenCompraServicio.NoSeAsignoValorATotosLosProductos();
-
             //oc.Productos = OrdenCompraServicio.AsignarNuevos(oc)
-
             List<OrdenCompra> locDTO = OrdenCompraServicio.IdentificarOrdenes(oc);
             locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
             locDTO = CalcularOrdenCompraServicio.CalcularTotales(locDTO);
@@ -99,7 +97,8 @@ namespace Application.MainModule.Flujos
             var oc = OrdenCompraServicio.Buscar(_oc.IdOrdenCompra);
             if (oc == null) return OrdenCompraServicio.NoExiste();
 
-            if (!oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion)) return OrdenCompraServicio.EstatusIncorrecto();
+            if (!oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion))
+                return OrdenCompraServicio.EstatusIncorrecto();
 
             var entity = OrdenComprasAdapter.FromEntity(oc);
             entity.IdUsuarioAutorizador = TokenServicio.ObtenerIdUsuario();
@@ -174,7 +173,7 @@ namespace Application.MainModule.Flujos
                     var entity = OrdenComprasAdapter.FromEntity(oc);
                     lOC.Add(entity);
 
-                    var prodsEntity = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(p.IdOrdenCompra));
+                    var prodsEntity      = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(p.IdOrdenCompra));
                     var prodOC = ProductosOCAdapter.FromDTO(listDTO);
                     lOCP = OrdenCompraServicio.AplicarCambiosOrdenCompraProducto(prodOC, prodsEntity);
                 }                
@@ -201,12 +200,27 @@ namespace Application.MainModule.Flujos
         }
         public List<OrdenCompraDTO> ListaOrdenCompra(short IdEmpresa)
         {
-            var resp = PermisosServicio.PuedeConsultarOrdenCompra();
-            if (!resp.Exito) return new List<OrdenCompraDTO>();
+            var esAdmin = TokenServicio.ObtenerEsAdministracionCentral();
+            var esSuper = TokenServicio.EsSuperUsuario();
+            if (esAdmin || esSuper)
+            {
+                var compras = OrdenCompraServicio.BuscarTodo(IdEmpresa);
+                List<OrdenCompraDTO> _loc = OrdenComprasAdapter.ToDTO(compras);
+                return _loc;
+            }
+            else
+            {
+                var resp = PermisosServicio.PuedeConsultarOrdenCompra();
+                if (!resp.Exito) return new List<OrdenCompraDTO>();
 
-            var _locEntity = OrdenCompraServicio.BuscarTodo(IdEmpresa);
-            List<OrdenCompraDTO> loc = OrdenComprasAdapter.ToDTO(_locEntity);
-            return loc;
+                var _locEntity = OrdenCompraServicio.BuscarTodo(IdEmpresa);
+                List<OrdenCompraDTO> loc = OrdenComprasAdapter.ToDTO(_locEntity);
+
+                var tesoreria = PermisosServicio.PuedeCompraAtiendeServicioOCompra();
+                if (tesoreria.Exito) return loc.Where(x => x.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.SolicitudPago)).ToList();
+
+                return loc;
+            }          
         }
         public OrdenCompraDTO BuscarOrdenCompra(int idOrdeCompra)
         {
@@ -249,7 +263,6 @@ namespace Application.MainModule.Flujos
             var entity = OrdenCompraPagoAdapter.FromEntity(Pago);
             var oc = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(entity.IdOrdenCompra));
 
-
             entity.PhysicalPathCapturaPantalla = dto.PhysicalPathCapturaPantalla;
             entity.UrlPathCapturaPantalla = dto.UrlPathCapturaPantalla;
             entity.FechaConfirmacion = Convert.ToDateTime(DateTime.Now.ToShortDateString());
@@ -259,7 +272,10 @@ namespace Application.MainModule.Flujos
             entity.SaldoInsoluto = oc.Total.Value - dto.MontoPagado;
 
             oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
-            return OrdenCompraPagoServicio.Actualiza(entity, oc);
+
+            var req = RequisicionAdapter.FromEntity(RequisicionServicio.Buscar(oc.IdRequisicion));
+            req.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_entrega;
+            return OrdenCompraPagoServicio.Actualiza(entity, oc, req);
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
         {
@@ -312,6 +328,26 @@ namespace Application.MainModule.Flujos
             papeleta.IdTipoMedidorAlmacen = almacen.IdTipoMedidor;
 
             var ocPapeleta =  AlmacenAdapter.FromEntity(papeleta);
+            ocPapeleta.FechaPapeleta = dto.Fecha;
+            ocPapeleta.FechaEmbarque = dto.FechaEmbarque;
+            ocPapeleta.NumeroEmbarque = dto.NumeroEmbarque;
+            ocPapeleta.ValorCarga = dto.ValorCarga;
+            ocPapeleta.Sello = dto.Sello;
+            ocPapeleta.NombreResponsable = dto.NombreResponsable;
+            ocPapeleta.PorcenMagnatelPapeleta = dto.PorcentajeTanque;
+            ocPapeleta.PorcenMagnatelOcular = dto.PorcentajeMedidor;
+            ocPapeleta.PlacasTractor = dto.PlacasTractor;
+            ocPapeleta.NombreOperador = dto.NombreOperador;
+            ocPapeleta.PresionTanque = dto.PresionTanque;
+            ocPapeleta.NumTanquePG = dto.NumeroTanque;
+            ocPapeleta.CapacidadTanqueLt = dto.CapacidadTanque;
+            //ocPapeleta.PorcenMagnatelOcular = dto.PorcenMagnatelOcularTractorINI;
+            ocPapeleta.FechaInicioDescarga = dto.FechaEntraGas;
+            ocPapeleta.PorcenMagnatelOcularAlmacenINI = dto.PorcenMagnatelOcularAlmacenINI;
+            ocPapeleta.PorcenMagnatelOcularAlmacenFIN = dto.PorcenMagnatelOcularAlmacenFIN;
+            ocPapeleta.PorcenMagnatelOcularTractorFIN = dto.PorcenMagnatelOcularTractorFIN;
+            ocPapeleta.PorcenMagnatelOcularTractorINI = dto.PorcenMagnatelOcularTractorINI;
+            ocPapeleta.MasaKg = dto.KilosPapeleta;
 
             return OrdenCompraServicio.Actualizar(ocPapeleta);
         }

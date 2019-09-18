@@ -16,6 +16,7 @@ namespace Application.MainModule.DTOs.Mobile
     {
         public int IdCAlmacenGas { get; set; }
         public string NombreCAlmacen { get; set; }
+        public string Estacion { get; set; }
         public MedidorDto Medidor { get; set; }
         public string ClaveReporte { get; set; }
         public DateTime Fecha { get; set; }
@@ -33,6 +34,7 @@ namespace Application.MainModule.DTOs.Mobile
         public bool EsCamioneta { get; set; }
         #region Campos de error para reporte mobile
         public bool Error { get; set; }
+        public bool Exito { get; set; }
         public string Mensaje { get; set; }
         #endregion
     }

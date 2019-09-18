@@ -44,7 +44,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             centroCosto.IdCentroCosto = cCostoDto.IdCentroCosto;
             centroCosto.IdEmpresa = cCostoDto.IdEmpresa;
             centroCosto.IdTipoCentroCosto = cCostoDto.IdTipoCentroCosto;
-            centroCosto.IdCAlmacenGas = cCostoDto.IdCAlmacenGas;
+            centroCosto.IdCAlmacenGas = cCostoDto.IdCAlmacenGas != 0 ? cCostoDto.IdCAlmacenGas: null;
             centroCosto.IdCamioneta = cCostoDto.IdCamioneta != 0 ? cCostoDto.IdCamioneta : null;
             centroCosto.IdCilindro = cCostoDto.IdCilindro != 0 ? cCostoDto.IdCilindro : null; 
             //centroCosto.IdEquipoTransporte = cCostoDto.IdEquipoTransporte != 0 ? cCostoDto.IdCilindro : null;
@@ -63,7 +63,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 IdCentroCosto = centro.IdCentroCosto,
                 IdEmpresa = centro.IdEmpresa,
                 IdTipoCentroCosto = centro.IdTipoCentroCosto,
-                IdCAlmacenGas = centro.IdCAlmacenGas,
+                IdCAlmacenGas = centro.IdCAlmacenGas.Equals(0) ? null : centro.IdCAlmacenGas,
                 IdCamioneta = centro.IdCamioneta,
                 IdCilindro = centro.IdCilindro,
                 //IdEquipoTransporte = centro.IdEquipoTransporte,

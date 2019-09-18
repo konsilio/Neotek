@@ -23,11 +23,12 @@ namespace Application.MainModule.Servicios.Mobile
             alm.DatosProcesados = false;
             return AlmacenGasServicio.InsertarDescargaGas(alm);
         }
-
         public static RespuestaDto Descargar(DescargaDto desDto, bool finDescarga = false)
         {
             var des = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(desDto.IdOrdenCompra);
-            short numOrden = (short)(des.Fotos.Max(x => x.Orden) + 1);
+            short numOrden = 0;
+            if (!des.Fotos.Count.Equals(0))
+                numOrden = (short)(des.Fotos.Max(x => x.Orden) + 1);
             desDto.FechaDescarga = DateTime.Now;            
 
             var descarga = AlmacenAdapter.FromEntity(des);
@@ -35,37 +36,34 @@ namespace Application.MainModule.Servicios.Mobile
             var fotos = AlmacenAdapter.FromDto(desDto.Imagenes, descarga.IdAlmacenEntradaGasDescarga, numOrden);
             List<OrdenCompra> ocs = new List<OrdenCompra>();
             var complemento = OrdenCompraServicio.BuscarComplementoGas(OrdenCompraServicio.Buscar(desDto.IdOrdenCompra));
-            var ocExp = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraExpedidor));
-            ocExp.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            var ocExp = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraExpedidor));           
             var ocPort = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(complemento.IdOrdenCompraPorteador));
-            ocPort.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
-
+            if (finDescarga)
+            {
+                ocExp.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+                ocPort.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            }
             ocs.Add(ocExp);
             ocs.Add(ocPort);
 
             return AlmacenGasServicio.ActualizarDescargaGas(descarga, fotos, ocs);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(DescargaDto dto)
         {
             return GasServicio.EvaluarClaveOperacion(dto);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(PapeletaDTO dto)
         {
             return GasServicio.EvaluarClaveOperacion(dto);
-        }
-        
+        }        
         public static RespuestaDto EvaluarExistenciaRegistro(PapeletaDTO dto)
         {
             return GasServicio.EvaluarClaveOperacion(dto);
         }
-
         public static RespuestaDto EvaluarExistenciaRegistro(DescargaDto dto)
         {
             return GasServicio.EvaluarClaveOperacion(dto);
         }       
-
         private static RespuestaDto EvaluarExistenciaRegistro(int idOCompra)
         {
             var alm = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(idOCompra);

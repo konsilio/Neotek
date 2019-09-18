@@ -15,7 +15,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
     {
         public static EquipoTransporteDTO toDTO(CDetalleEquipoTransporte ec)
         {
-            return new EquipoTransporteDTO()
+            EquipoTransporteDTO dto = new EquipoTransporteDTO()
             {
                 IdEmpresa = ec.IdEmpresa,
                 IdEquipoTransporte = ec.IdEquipoTransporteDetalle,
@@ -37,18 +37,35 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Cilindros = ec.Cilindros,
                 IdTipoCombustible = ec.IdTipoCombustible,
                 IdTipoUnidad = EquipoTransporteServicio.ObtenerTipo(ec),
+                TipoUnidad = EquipoTransporteServicio.ObtenerNombreTipo(ec),
                 AliasUnidad = EquipoTransporteServicio.ObtenerAlias(ec),
                 IdEquipoTransporteDetalle = ec.IdEquipoTransporteDetalle,
                 CapacidadKg = EquipoTransporteServicio.ObtenerCapacidadKg(ec),
                 CapacidadLts = EquipoTransporteServicio.ObtenerCapacidadLt(ec),
-                EsCamioneta = ec.IdCamioneta != null ? true : false ,
+                EsCamioneta = ec.IdCamioneta != null ? true : false,
                 EsPipa = ec.IdPipa != null ? true : false,
                 EsUtilitario = ec.IdUtilitario != null ? true : false,
+                Chofer = EquipoTransporteServicio.ObtenerNombreChofer(ec),
             };
+          
+            //if (ec.IdUtilitario != null )
+            //    respuesta.Add(toDTO(et));
+
+            return dto;
         }
-        public static List<EquipoTransporteDTO> toDTO(List<CDetalleEquipoTransporte> ecs)
+        public static List<EquipoTransporteDTO> toDTO(List<CDetalleEquipoTransporte> entidades)
         {
-            return ecs.Select(x => toDTO(x)).ToList();
+            List<EquipoTransporteDTO> respuesta = new List<EquipoTransporteDTO>();
+            foreach (var et in entidades)
+            {
+                if (et.IdCamioneta != null )               
+                    respuesta.Add(toDTO(et));
+                if (et.IdPipa != null)
+                    respuesta.Add(toDTO(et));
+                if (et.IdUtilitario != null )
+                    respuesta.Add(toDTO(et));
+            }
+            return respuesta;
         }
  
         public static CDetalleEquipoTransporte FromDTO(EquipoTransporteDTO ec)

@@ -30,10 +30,10 @@
             @using (Html.BeginForm("HistoricoVsVentas", "Reportes", FormMethod.Post))
             {
                 <div class="block-header">
-                    
+
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
-                            <h2>Cubo de informacion</h2>
+                            <h2>Cubo de Información</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Histórico</li>
@@ -123,12 +123,13 @@
                                 <div class="table-responsive">
                                     @if (TempData["DataSource"] != null)
                                     {
-                                    @Html.Partial("_CuboDeInformacionPartial", (List<YearsDTO>)TempData["DataSource"])
+                                        @Html.Partial("_CuboDeInformacionPartial", (List<YearsDTO>)TempData["DataSource"])
                                     }
                                     else
                                     {
-                                    @Html.Partial("_CuboDeInformacionPartial", new List<YearsDTO>())
+                                        @Html.Partial("_CuboDeInformacionPartial", new List<YearsDTO>())
                                     }
+                                    <span>Intencionalmente sin acentos</span>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +142,7 @@
                             <div>
                                 <div id="m_bar_chart"></div>
                             </div>
-                        </div>                      
+                        </div>
                     </div>
                 </div>
             }

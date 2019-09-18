@@ -110,11 +110,12 @@
                                             <tr>
                                                 <th>@item.NombreRol</th>
                                                 <td>
-                                                    <a ID="lbBorrar" href="@Url.Action("BorrarRol", "Usuarios", new { id = item.IdRol, idUsr = ViewBag.IdUsuario })">
-                                                        <i class="material-icons">delete</i>
-                                                        <span class="icon-name"></span>
-                                                    </a>
-                                                </td>
+                                                    @*<a ID="lbBorrar" href="@Url.Action("BorrarRol", "Usuarios", new { id = item.IdRol, idUsr = ViewBag.IdUsuario })">*@
+                                                        <a ID="lbBorrar" href="@Url.Action("BorrarRol", "Usuarios",new { IdRol = item.IdRol, IdUsuario = @ViewBag.IdUser.IdUsuario,Descripcion = "" })">
+                                                            <i class="material-icons">delete</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+</td>
                                             </tr>
                                         }
                                     @*}*@

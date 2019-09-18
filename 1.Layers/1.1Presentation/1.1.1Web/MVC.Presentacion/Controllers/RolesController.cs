@@ -47,9 +47,11 @@ namespace MVC.Presentacion.Controllers
 
             if (TempData["RespuestaDTO"] != null)            
                 ViewBag.MessageExito = TempData["RespuestaDTO"];
-            
-            if (TempData["RespuestaDTOError"] != null)            
-                ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+
+            if (TempData["RespuestaDTOError"] != null)
+  
+              // ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
                 TempData["RespuestaDTOError"] = ViewBag.MessageError;            
             ViewBag.MessageError = TempData["RespuestaDTOError"];
 

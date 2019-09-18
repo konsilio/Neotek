@@ -34,22 +34,28 @@ namespace Application.MainModule.Servicios.Notificacion
             Enviar(correoDto);
             if (!incluirMensajePush)
             {
-                var Autorizacion = new KeyValuePair<string, string>("key", string.Concat("=", ConfigurationManager.AppSettings["AppNotificacionKeyAutorizacion"]));
-                var js = new FBNotificacionDTO()
+                try
                 {
-                    registration_ids = ObtenerKeysMovile(destinatarios).ToArray(),
-                    data = new Data
+                    var Autorizacion = new KeyValuePair<string, string>("key", string.Concat("=", ConfigurationManager.AppSettings["AppNotificacionKeyAutorizacion"]));
+                    var js = new FBNotificacionDTO()
                     {
-                        OrderNo = req.IdRequisicion.ToString(),
-                        Tipo = NotificacionPushConst.RT001
-                    },
-                    notification = new Notification
-                    {
-                        text = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], req.NumeroRequisicion),
-                        title = NotificacionPushConst.R0001
-                    }
-                };
-                Enviar(js, Autorizacion);
+                        registration_ids = ObtenerKeysMovile(destinatarios).ToArray(),
+                        data = new Data
+                        {
+                            OrderNo = req.IdRequisicion.ToString(),
+                            Tipo = NotificacionPushConst.RT001
+                        },
+                        notification = new Notification
+                        {
+                            text = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], req.NumeroRequisicion),
+                            title = NotificacionPushConst.R0001
+                        }
+                    };
+                    Enviar(js, Autorizacion);
+                }
+                catch (Exception ex){                   
+                }
+               
             }
         }
         public static void OrdenDeCompraNueva(OrdenCompra oc, bool incluirMensajePush = false)
@@ -193,7 +199,6 @@ namespace Application.MainModule.Servicios.Notificacion
             {
                 EnviarCorreosServicio.Enviar(dto);
             }
-
         }
         private static FBNotificacionDTO Enviar(FBNotificacionDTO dto, KeyValuePair<string, string> Autorizacion)
         {

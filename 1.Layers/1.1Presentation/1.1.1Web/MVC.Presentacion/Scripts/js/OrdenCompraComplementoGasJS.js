@@ -77,13 +77,13 @@
         var PrecioXGalon = ObtenerPrecioXGalon(RPMMNTPG, TSG, TC);
         var ImporteLitros = ObtenerImporteLitros(PrecioXGalon, FactorCGalLtr);
         var PVPM = ObtenerPVPM(ImporteLitros, FactorCaKg);
-        var PVIva = redondeo(ObtenerPVIva(PVPM, Iva), 5);
+        var PVIva = redondeo(ObtenerPVIva(PVPM, Iva), 6);
         var ImportePagar = ObtenerImportePagar(kilogramosPapeleta, PVIva);
 
-        $("#PrecioPorGalon")[0].textContent = Number.isNaN(PrecioXGalon) ? "0" : redondeo(PrecioXGalon, 5);
-        $("#ImporteEnLitros")[0].textContent = Number.isNaN(ImporteLitros) ? "0" : redondeo(ImporteLitros, 5);
-        $("#PVPM")[0].textContent = Number.isNaN(PVPM) ? "0" : redondeo(PVPM, 5);
-        $("#PrecioConIVA")[0].textContent = Number.isNaN(PVIva) ? "0" : redondeo(PVIva, 5);
+        $("#PrecioPorGalon")[0].textContent = Number.isNaN(PrecioXGalon) ? "0" : redondeo(PrecioXGalon, 6);
+        $("#ImporteEnLitros")[0].textContent = Number.isNaN(ImporteLitros) ? "0" : redondeo(ImporteLitros, 6);
+        $("#PVPM")[0].textContent = Number.isNaN(PVPM) ? "0" : redondeo(PVPM, 6);
+        $("#PrecioConIVA")[0].textContent = Number.isNaN(PVIva) ? "0" : redondeo(PVIva, 6);
         $("#ImporteExpedidor")[0].textContent = new Intl.NumberFormat("es-MX").format(Number.isNaN(ImportePagar) ? "0" : ImportePagar);
     };
 

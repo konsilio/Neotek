@@ -1,4 +1,16 @@
-﻿@model MVC.Presentacion.Models.Catalogos.CuentaContableModel
+﻿@using MVC.Presentacion.Models.Catalogos
+@model MVC.Presentacion.Models.Catalogos.CuentaContableDTO
+
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +18,8 @@
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
     <script src="~/Scripts/js/CuentasContablesJS.js"></script>
 </head>
-<body style="padding-top:10px;">   
+<body style="padding-top:10px;">
+
     @using (Html.BeginForm("Crear", "CuentaContable", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.IdCuentaContable)
@@ -35,13 +48,22 @@
                                         @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", placeholder = "N° de cuenta contable" })
                                     </div>
                                     <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                    <div class="form-group">
+                                        @*@Html.ValidationMessageFor(m => m.Numero, "", new { @class = "alert-danger",@value=0})
+                                        @Html.HiddenFor(m => m.Numero)*@
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <b>Descripción</b>
                                         @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", placeholder = "Descripción" })
+               
                                     </div>
-                                    <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                    <div class="form-group">
+                                        @*@Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "alert-danger", @value = string.Empty })*@
+
+                                    </div>
+
                                 </div>
                                 <div class="col-md-1">
                                     <b>&nbsp; </b>
@@ -50,7 +72,7 @@
                                         {
                                             <button btn id="BtnCrear" formaction="Crear" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
                                                 <i class="zmdi zmdi-plus"></i>
-                                            </button>                               
+                                            </button>
                                         }
                                         else
                                         {
@@ -81,45 +103,16 @@
                             Lista de <strong>Cuentas Contables</strong>
                         </div>
                         <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-md-3">
-                                    <strong>Gasera</strong>
-                                    <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick selectpicker" data-live-search="true">
-                                        @foreach (var lst in ViewBag.Empresas)
-                                        {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <strong>Número</strong>
-                                        <input type="text" ID="txtNumeroCtaCtble" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
-                                    <table class="table table-striped  filterable">
-                                        <thead>
-                                            <tr>
-                                                <td><strong>Gasera</strong></td>
-                                                <td><strong>Número</strong></td>
-                                                <td><strong>Descripción</strong></td>
-                                                <td><strong>Acción</strong></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @Html.EditorFor(m => m.CuentasContables)
-                                        </tbody>
-                                    </table>
+                                    @Html.Action("Grid")
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>      
+        </section>
     }
 </body>
 </html>

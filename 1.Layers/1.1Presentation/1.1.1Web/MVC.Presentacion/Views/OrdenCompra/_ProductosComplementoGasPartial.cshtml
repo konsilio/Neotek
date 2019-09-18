@@ -1,139 +1,123 @@
 @model  List<MVC.Presentacion.Models.OrdenCompra.OrdenCompraProductoDTO>
 @{
-    @*<style>
-            /* to hide unwanted column*/
-            table td:nth-child(1) {
-                display: none;
-            }
-        </style>*@
-var grid = Html.DevExpress().GridView(settings =>
-{
-    settings.Name = "ProductosComplementoGas";
-    settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartialUpdate" };
-    settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartialUpdate" };
-
-    settings.KeyFieldName = "IdProducto";
-
-    settings.SettingsPager.Visible = true;
-    settings.Settings.ShowGroupPanel = false;
-    settings.Settings.ShowFilterRow = false;
-    settings.SettingsBehavior.AllowSelectByRowClick = false;
-
-    settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
-    settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
-    settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
-    settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
-    settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
-
-    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
-    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
-    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
-    settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
-    settings.Styles.Table.CssClass = "table";
-    //settings.Columns["Producto"].Width = 1;
-
-    settings.Columns.Add(c =>
+    var grid = Html.DevExpress().GridView(settings =>
     {
-        c.FieldName = "IdOrdenCompra";
-        c.Caption = "Orden de compra";
-        c.Width = System.Web.UI.WebControls.Unit.Pixel(0);
-        c.Settings.AllowSort = DefaultBoolean.False;
-        c.Settings.ShowEditorInBatchEditMode = false;
-        c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
-        c.ReadOnly = true;
-        //c.Visible = false;
+        settings.Name = "ProductosComplementoGas";
+        settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartialUpdate" };
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartialUpdate" };
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.KeyFieldName = "IdProducto";
 
-    });
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
 
-    settings.Columns.Add(c =>
-    {
-        c.FieldName = "ProductoServicioTipo";
-        c.Caption = "Tipo";
-        c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
-        c.Settings.AllowSort = DefaultBoolean.False;
-        c.EditFormSettings.Visible = DefaultBoolean.False;
-    });
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
-    settings.Columns.Add(c =>
-    {
-        c.FieldName = "Producto";
-        c.Caption = "Producto";
-        c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
-        c.Settings.AllowSort = DefaultBoolean.False;
-        c.EditFormSettings.Visible = DefaultBoolean.False;
-    });
+        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+        settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+        settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.False;
+        settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
+        settings.Styles.Table.CssClass = "table";
+        //settings.Columns["Producto"].Width = 1;
 
-    settings.Columns.Add(c =>
-    {
-        c.FieldName = "CantidadAComprar";
-        c.Caption = "Requeridos";
-        c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
-        c.Settings.AllowSort = DefaultBoolean.False;
-        c.Settings.ShowEditorInBatchEditMode = false;
-        c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
-        //c.Visible = false;
-        c.ReadOnly = true;
-    });
-    settings.Columns.Add(c =>
-    {
-        c.FieldName = "UnidadMedida";
-        c.Caption = "Unidad";
-        c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
-        c.Settings.AllowSort = DefaultBoolean.False;
-        c.EditFormSettings.Visible = DefaultBoolean.False;
-    });
-    settings.Columns.Add(c =>
-    {
-        c.FieldName = "Aplicacion";
-        c.Caption = "Detalle";
-        c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
-        c.Settings.AllowSort = DefaultBoolean.False;
-        c.EditFormSettings.Visible = DefaultBoolean.False;
-    });
-    settings.Columns.Add(c =>
-    {
-        c.FieldName = "IdCentroCosto";
-        c.Caption = "Centro Costo";
-        c.Settings.AllowSort = DefaultBoolean.False;
-        c.EditorProperties().ComboBox(p =>
+        settings.Columns.Add(c =>
         {
-            p.TextField = "Descripcion";
-            p.ValueField = "IdCentroCosto";
-            p.ValueType = typeof(int);
-            p.DataSource = ViewBag.CentrosCosto;
+            c.FieldName = "IdOrdenCompra";
+            c.Caption = "ID";
+            c.Width = System.Web.UI.WebControls.Unit.Pixel(0);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Settings.ShowEditorInBatchEditMode = false;
+            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            c.ReadOnly = true;
+            c.Visible = false;
         });
-    });
-    settings.Columns.Add(c =>
-    {
-        c.FieldName = "IdCuentaContable";
-        c.Caption = "Cuenta Contable";
-        c.Settings.AllowSort = DefaultBoolean.False;
-        c.EditorProperties().ComboBox(p =>
+        settings.Columns.Add(c =>
         {
-            p.TextField = "Descripcion";
-            p.ValueField = "IdCuentaContable";
-            p.ValueType = typeof(int);
-            p.DataSource = ViewBag.CuentasContables;
+            c.FieldName = "ProductoServicioTipo";
+            c.Caption = "Tipo";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
         });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Producto";
+            c.Caption = "Producto";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "CantidadAComprar";
+            c.Caption = "Requeridos";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Settings.ShowEditorInBatchEditMode = false;
+            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            //c.Visible = false;
+            c.ReadOnly = true;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "UnidadMedida";
+            c.Caption = "Unidad";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Aplicacion";
+            c.Caption = "Detalle";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdCentroCosto";
+            c.Caption = "Centro Costo";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.TextField = "Descripcion";
+                p.ValueField = "IdCentroCosto";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.CentrosCosto;
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdCuentaContable";
+            c.Caption = "Cuenta Contable";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.TextField = "Descripcion";
+                p.ValueField = "IdCuentaContable";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.CuentasContables;
+            });
+        });
+
+
+
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+            editor.ValidationSettings.Display = Display.None;
+        };
+        settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
     });
-
-    //settings.CustomJSProperties = (sender, e) =>
-    //{
-    //    MVCxGridView gridView = (MVCxGridView)sender;
-    //    if (gridView.EditingRowVisibleIndex > -1)
-    //    {
-    //        e.Properties["cpIdOrdenCompra"] = gridView.GetRowValues(gridView.EditingRowVisibleIndex, "IdOrdenCompra");
-    //    }
-    //};
-
-    //settings.ClientSideEvents.BeginCallback = "function(s, e) { if(s.cpIdOrdenCompra) e.customArgs['IdOrdenCompra'] =  s.cpIdOrdenCompra; }";
-
-    settings.CellEditorInitialize = (s, e) =>
-    {
-        ASPxEdit editor = (ASPxEdit)e.Editor;
-        editor.ValidationSettings.Display = Display.None;
-    };
-    settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
-});
 }
 @grid.Bind(Model).GetHtml()

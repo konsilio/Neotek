@@ -19,5 +19,8 @@ namespace MVC.Presentacion.Models
         public static string HistoricoVsVentas = "Histrico_VS_Ventas";
         public static string CorteCaja = "CorteCaja";
         public static string GastoVehicular = "GastoXVehiculo";
+        public static string Comision = "Comisiones";
+        public static string CuentaConsolidada = "CuentaConsolidada";
+        public static string CuboInvXPunVen = "_CuboInvXPunVen";
     }
 }

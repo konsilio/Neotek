@@ -1,34 +1,4 @@
-﻿$(document).ready(function () {
-
-    //var valueSel = TipoUnidad.GetValue();
-    // function(s, e) { alert('!!!')}
-    //var $select = $('#cbxCte');
-
-    //if ($('#cbxCte').has('option').length > 0) {
-    //    $('#btnCrearCte').prop('disabled', true);
-    //} else { $('#btnCrearCte').prop('disabled', false); alert("empty")}
-    //$('select').on('change', function () {
-
-    //    var value = $('#TipoUnidad').find('option:selected').val();//get value to filter of selected
-
-    //    if (value == 1)//Pipa
-    //    {
-    //        $('.selPipa').show();
-    //        $('.selCamioneta').hide();
-    //    }
-    //    if (value == 2)//Camioneta
-    //    {
-    //        $('.selPipa').hide();
-    //        $('.selCamioneta').show();
-    //    }
-    //});
-   
-    //  btnCrearCte
-    //$("#btnCrearCte").click(function () {
-    //    var form = $(this).parent("form");
-    //    form.attr('action', '<%= Url.RouteUrl(new { Controller = "Pedidos", Action = "AltaCliente" }) %>');
-    //    form.attr('method', 'get');
-    //});
+﻿$(document).ready(function () {  
     $('#btnBuscarC').click(function () {
         IdCliente.ClearItems();
         Orden.ClearItems();
@@ -44,7 +14,7 @@
               //  $('#btnCrearCte').prop('disabled', true);
                 $.each(JSON.parse(data), function (key, val) {
                     //IdCliente.AddItem(val.Nombre, val.IdCliente)
-                    IdCliente.AddItem([val.Nombre, val.Apellido1, val.Rfc], val.IdCliente)
+                    IdCliente.AddItem([val.Nombre, val.Apellido1, val.Rfc, val.Telefono], val.IdCliente)
                 });
                 $(window).on("load", showNotification('alert-success', 'Seleccione el cliente', 'top', 'center', '', ''));
             }
@@ -59,7 +29,7 @@
             var x = data;
             if (data != "[]") {
                 $.each(JSON.parse(data), function (key, val) {
-                    Orden.AddItem([val.Calle, val.NumExt, val.Colonia], val.Orden)
+                    Orden.AddItem([val.Calle, val.NumExt, val.Colonia, val.formatted_address], val.Orden)
                 });
             }
             //else {
@@ -80,9 +50,6 @@ function OnSelectedChange(s, e) {
         $("#Cantidad45").val(0);
         $("#Cantidad30").val(0);
         $("#Cantidad20").val(0);
-        //Cantidad45.value = 0;
-        //Cantidad30.value = 0;
-        //Cantidad20.value = 0;
     }
     if (value == 2)//Camioneta
     {

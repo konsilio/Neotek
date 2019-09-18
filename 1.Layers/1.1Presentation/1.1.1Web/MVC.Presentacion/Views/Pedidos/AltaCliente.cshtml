@@ -15,7 +15,6 @@
 
 <html>
 <head>
-    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script src="~/Resources/js/Clientes.js"></script>
     <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
     <script type="text/javascript">
@@ -47,14 +46,13 @@
                 else
                     $('.credit').hide()
             });
-
         });
     </script>
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("GuardarCliente", "Clientes", FormMethod.Post))
     {
-        @Html.HiddenFor(m=>m.cliente.IdEmpresa)
+        @Html.HiddenFor(m => m.cliente.IdEmpresa)
         <section class="content home">
             <div class="container-fluid">
                 <div class="row clearfix">
@@ -67,7 +65,6 @@
                             <li class="breadcrumb-item">Nuevo</li>
                         </ul>
                     </div>
-
                 </div>
                 <div class="card">
                     <div class="body">
@@ -80,17 +77,17 @@
                                     <div>
                                         @if (ViewBag.EsAdmin)
                                         {
-                                        <select name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                            @foreach (var lst in ViewBag.Empresas)
+                                            <select name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
                                                 {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                 }
-                                        </select>
+                                            </select>
                                         }
                                         else
                                         {
-                                        @ViewBag.Empresas
-                                        <label name="cliente.IdEmpresa" value="@ViewBag.IdEmpresa" hidden></label>
+                                            @ViewBag.Empresas
+                                            <label name="cliente.IdEmpresa" value="@ViewBag.IdEmpresa" hidden></label>
                                         }
                                     </div>
                                 </div>
@@ -114,178 +111,166 @@
                         </div>
                     </div>
                 }
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong>Fiscales</strong></h2>
-                            </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <b>Tipo Persona:*</b>
-                                            @*<select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
-                                                        <option value="0">Seleccione</option>
-                                                        @foreach (var lst in ViewBag.TipoPersona)
-                                                    {
-                                                <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
-                                                    }
-                                                    </select>*@
-                                            @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "cliente.IdTipoPersona";
-                                           settings.Width = 180;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Theme = "Material";
-                                           settings.Properties.TextField = "Descripcion";
-                                           settings.Properties.ValueField = "IdTipoPersona";
-                                           settings.ClientEnabled = true;
-                                           settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
-                                           settings.PreRender = (s, e) =>
-                                           {
-                                               MVCxComboBox combo = s as MVCxComboBox;
-                                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                               combo.Properties.ValueType = typeof(int);
-                                               combo.SelectedIndex = 0;
-                                           };
-                                       }).BindList(ViewBag.TipoPersona).GetHtml()
-                                            @Html.ValidationMessageFor(m => m.cliente.IdTipoPersona, "", new { @class = "alert-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-8 col-md-8 col-sm-8">
-                                        <div class="form-group">
-                                            <b> Régimen Fiscal:*</b>
-                                            @*<select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
-                                                        @foreach (var lst in ViewBag.Regimen)
-                                                    {
-                                                <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
-                                                    }
-                                                    </select>*@
-                                            @Html.DevExpress().ComboBox(settings =>
-                           {
-                               settings.Name = "cliente.IdRegimenFiscal";
-                               settings.Width = 180;
-                               settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                               settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                               settings.Theme = "Material";
-                               settings.Properties.TextField = "Descripcion";
-                               settings.Properties.ValueField = "IdRegimenFiscal";
-                               settings.PreRender = (s, e) =>
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Fiscales</strong></h2>
+                    </div>
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <b>Tipo Persona:*</b>
+                                    @Html.DevExpress().ComboBox(settings =>
                                {
-                                   MVCxComboBox combo = s as MVCxComboBox;
-                                   combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno"));
-                                   combo.Properties.ValueType = typeof(int);
-                                   combo.SelectedIndex = 0;
-                               };
-                           }).BindList(ViewBag.Regimen).GetHtml()
-                                            @Html.ValidationMessageFor(m => m.cliente.IdRegimenFiscal, "", new { @class = "alert-danger" })
-                                        </div>
-                                    </div>
+                                   settings.Name = "cliente.IdTipoPersona";
+                                   settings.Width = 180;
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Theme = "Material";
+                                   settings.Properties.TextField = "Descripcion";
+                                   settings.Properties.ValueField = "IdTipoPersona";
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno", string.Empty));
+                                       combo.Properties.ValueType = typeof(short);
+                                       combo.SelectedIndex = 0;
+                                   };
+                                   settings.ClientEnabled = true;
+                                   settings.SelectedIndex = 0;
+                                   settings.Properties.ValueType = typeof(byte);
+                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
+                               }).BindList(ViewBag.TipoPersona).Bind(Model.cliente.IdTipoPersona).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.cliente.IdTipoPersona, "", new { @class = "alert-danger" })
                                 </div>
+                    
+                            </div>
 
-                                <div class="row clearfix">
-                                    <div class="col-lg-8 col-md-8 col-sm-8">
-                                        <div class="form-group" id="hide_razonS">
-                                            Razón Social:*
-                                            @Html.TextBoxFor(m => m.cliente.RazonSocial, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.cliente.RazonSocial, "", new { @class = "alert-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            RFC:*
-                                            @Html.TextBoxFor(m => m.cliente.Rfc, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.cliente.Rfc, "", new { @class = "alert-danger" })
-                                        </div>
-                                    </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <b> Régimen Fiscal:*</b>
+                                    @Html.DevExpress().ComboBox(settings =>
+                               {
+                                   settings.Name = "cliente.IdRegimenFiscal";
+                                   settings.Width = 180;
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Theme = "Material";
+                                   settings.Properties.TextField = "Descripcion";
+                                   settings.Properties.ValueField = "IdRegimenFiscal";
+                                   //settings.Properties.ValueType = typeof(int);
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno",string.Empty));
+                                       combo.Properties.ValueType = typeof(short);
+                                       combo.SelectedIndex = 0;
+                                   };
+                               }).BindList(ViewBag.Regimen).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.cliente.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                 </div>
-                                <div class="row clearfix" id="div_hideRP">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="card">
-                                            <div class="header">
-                                                <h2><strong>Representante Legal</strong></h2>
-                                            </div>
-                                            <div class="body">
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            Nombre Completo:@Html.TextBoxFor(m => m.cliente.RepresentanteLegal, new { @class = "form-control" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                                        <div class="form-group">
-                                                            <div>
-                                                                Teléfono:@Html.TextBoxFor(m => m.cliente.Telefono, new { @class = "form-control", @id = "txtTel" })
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            Dirección:@Html.TextBoxFor(m => m.cliente.Domicilio, new { @class = "form-control", @id = "txtNomCom" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                                        <div class="form-group">
-                                                            Celular:@Html.TextBoxFor(m => m.cliente.Celular, new { @class = "form-control", @id = "txtTel" })
-                                                         </div>
-                                                    </div>
+                            </div>
+                      <div class="col-lg-4 col-md-4 col-sm-4">
+                          <div class="form-group">
+                              <div>
+                                  Teléfono:@Html.TextBoxFor(m => m.cliente.Telefono, new { @class = "form-control", @id = "txtTel", })
 
-                                                </div>
-                                                <div class="row clearfix">
-                                                    <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <div class="form-group">
-                                                            E-mail:@Html.TextBoxFor(m => m.cliente.CorreoElectronico, new { @class = "form-control", @id = "txtEmail" })
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                              </div>
+                              @Html.ValidationMessageFor(m => m.cliente.Telefono1, "", new { @class = "alert-danger" })
+                          </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="form-group" id="hide_razonS" hidden="hidden">
+                                    Razón Social:*
+                                    @Html.TextBoxFor(m => m.cliente.RazonSocial, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.cliente.RazonSocial, "", new { @class = "alert-danger" })
                                 </div>
-                                <div class="row clearfix" id="div_hidePM">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            Nombres:* @Html.TextBoxFor(m => m.cliente.Nombre, new { @class = "form-control" })@*<input type="text" name="Nombre" class="form-control" />*@
-                                            @Html.ValidationMessageFor(m => m.cliente.Nombre, "", new { @class = "alert-danger" })
-                                        </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    RFC:*
+                                    @Html.TextBoxFor(m => m.cliente.Rfc, Model.cliente.Rfc, new { @class = "form-control" })
+
+                                </div>
+                                @Html.ValidationMessageFor(m => m.cliente.Rfc, "", new { @class = "alert-danger" })
+                            </div>
+                        </div>
+                        <div class="row clearfix" id="div_hideRP" hidden="hidden">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="card">
+                                    <div class="header">
+                                        <h2><strong>Representante Legal</strong></h2>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Apellido 1:*
-                                                @Html.TextBoxFor(m => m.cliente.Apellido1, new { @class = "form-control" })
-                                                 @Html.ValidationMessageFor(m => m.cliente.Apellido1, "", new { @class = "alert-danger" })
+                                    <div class="body">
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    Nombre Completo:@Html.TextBoxFor(m => m.cliente.RepresentanteLegal, new { @class = "form-control" })
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Apellido 2:
-                                                @Html.TextBoxFor(m => m.cliente.Apellido2, new { @class = "form-control" })
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    Dirección:@Html.TextBoxFor(m => m.cliente.Domicilio, new { @class = "form-control", @id = "txtNomCom" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div class="form-group">
+                                                    Celular:@Html.TextBoxFor(m => m.cliente.Celular, new { @class = "form-control", @id = "txtTel" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="form-group">
+                                                    E-mail:@Html.TextBoxFor(m => m.cliente.CorreoElectronico, new { @class = "form-control", @id = "txtEmail" })
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="row clearfix" id="div_hidePM">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    Nombres:* @Html.TextBoxFor(m => m.cliente.Nombre, new { @class = "form-control" })@*<input type="text" name="Nombre" class="form-control" />*@
+                                    @Html.ValidationMessageFor(m => m.cliente.Nombre, "", new { @class = "alert-danger" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <div>
+                                        Apellido Paterno:*
+                                        @Html.TextBoxFor(m => m.cliente.Apellido1, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.cliente.Apellido1, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <div>
+                                        Apellido Materno:
+                                        @Html.TextBoxFor(m => m.cliente.Apellido2, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+               
                         <div class="card">
                             <div class="header">
                                 <h2><strong>Condición del crédito y descuento</strong></h2>
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-2" style="max-width:15.666667%">
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
                                         <div class="form-group">
                                             <div>
                                                 Autorizar ventas con límite de crédito excedido
@@ -337,9 +322,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
+                    
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
@@ -363,127 +346,11 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong>Contacto</strong></h2>
-                            </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            Teléfono 1: <input id="txtTel1" name="cliente.Telefono1" type="text" class="form-control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Celular 1:
-                                                <input id="txtCel1" type="text" name="cliente.Celular1" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Email 1:
-                                                <input id="txtEmail1" type="text" name="cliente.Email1" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row clearfix">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            Teléfono 2:
-                                            <input id="txtTel2" name="cliente.Telefono2" type="text" class="form-control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Celular 2:
-                                                <input id="txtCel2" name="cliente.Celular2" type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Email 2:
-                                                <input id="txtEmail2" type="text" name="cliente.Email2" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row clearfix">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            Teléfono 3:
-                                            <input id="txtTel3" name="cliente.Telefono3" type="text" class="form-control" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Celular 3:
-                                                <input id="txtCel3" type="text" name="cliente.Celular3" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            <div>
-                                                Email 3:
-                                                <input id="txtEmail3" type="text" name="cliente.Email3" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row clearfix">
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <div class="form-group">
-                                            <div>
-                                                Sitio web 1:
-                                                <input id="txtweb1" name="cliente.SitioWeb1" type="text" class="form-control" />
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <div class="form-group">
-                                            <div>
-                                                Sitio web 2:
-                                                <input id="txtweb2" name="cliente.SitioWeb2" type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <div class="form-group">
-                                            Sitio web 3:
-                                            <input id="txtweb3" name="cliente.SitioWeb3" type="text" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="body">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-5">
                             <div class="form-group">
-                                <input type="submit" value="Cancelar" id="btnRegresarIndexNC" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-primary btn-round float-left" />
+                                <input type="button" value="Cancelar" id="btnRegresarIndexNC" formaction=@Url.Action("Nuevo") class="btn btn-raised btn-primary btn-round float-left" />
                             </div>
                         </div>
                         <div class="col-lg-7 col-md-7 col-sm-7">
@@ -499,3 +366,122 @@
     }
 </body>
 </html>
+
+
+
+@*
+                <div class="row clearfix" hidden>Se oculta div por solicitud del cliente para modulo de Call Center
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2><strong>Contacto</strong></h2>
+                </div>
+                <div class="body">
+                    <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                Teléfono 1: <input id="txtTel1" name="cliente.Telefono1" type="text" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <div>
+                                    Celular 1:
+                                    <input id="txtCel1" type="text" name="cliente.Celular1" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <div>
+                                    Email 1:
+                                    <input id="txtEmail1" type="text" name="cliente.Email1" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                Teléfono 2:
+                                <input id="txtTel2" name="cliente.Telefono2" type="text" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <div>
+                                    Celular 2:
+                                    <input id="txtCel2" name="cliente.Celular2" type="text" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <div>
+                                    Email 2:
+                                    <input id="txtEmail2" type="text" name="cliente.Email2" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                Teléfono 3:
+                                <input id="txtTel3" name="cliente.Telefono3" type="text" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <div>
+                                    Celular 3:
+                                    <input id="txtCel3" type="text" name="cliente.Celular3" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <div>
+                                    Email 3:
+                                    <input id="txtEmail3" type="text" name="cliente.Email3" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="form-group">
+                                <div>
+                                    Sitio web 1:
+                                    <input id="txtweb1" name="cliente.SitioWeb1" type="text" class="form-control" />
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="form-group">
+                                <div>
+                                    Sitio web 2:
+                                    <input id="txtweb2" name="cliente.SitioWeb2" type="text" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="form-group">
+                                Sitio web 3:
+                                <input id="txtweb3" name="cliente.SitioWeb3" type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+*@

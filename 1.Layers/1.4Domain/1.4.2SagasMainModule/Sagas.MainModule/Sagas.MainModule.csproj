@@ -163,6 +163,9 @@
     <Compile Include="Entidades\CuentaContable.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\CuentaContableAutorizado.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\CUtilitario.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -275,9 +278,6 @@
     <Compile Include="Entidades\Sagas1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Sagas.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entidades\sysdiagrams.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\TipoCentroCosto.cs">

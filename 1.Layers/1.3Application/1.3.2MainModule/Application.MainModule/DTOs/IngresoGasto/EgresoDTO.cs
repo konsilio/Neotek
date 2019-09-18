@@ -16,12 +16,15 @@ namespace Application.MainModule.DTOs
         public short IdEmpresa { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         [Required(ErrorMessage = Error.R0002)]
+        [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = Error.R0002)]
         [Display(Name = "Centro de Costo")]
         public int IdCentroCosto { get; set; }
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Cuenta Contableo")]
+        [Range(minimum: 2, maximum: int.MaxValue, ErrorMessage = Error.R0002)]
         public int IdCuentaContable { get; set; }
         [Required(ErrorMessage = Error.R0002)]
+        [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = Error.R0003)]
         [Display(Name = "Monto")]
         public decimal Monto { get; set; }
         [Required(ErrorMessage = Error.R0002)]

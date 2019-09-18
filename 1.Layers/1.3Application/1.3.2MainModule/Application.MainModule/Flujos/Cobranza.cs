@@ -26,6 +26,15 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
             return CobranzaServicio.CRecuperada(TokenServicio.ObtenerIdEmpresa()).ToList();
         }
+
+        public ReporteCreditoRecDto ReporteCRecuperada(short idempresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarCreditoRecuperado();
+            if (!resp.Exito) return null;
+
+            return CobranzaServicio.CRecuperadaList(TokenServicio.ObtenerIdEmpresa());
+        }
+        
         public DataSet ReporteCarteraRecuperada(int? idCliente, short? empresa, DateTime? fechaIni, DateTime? fechaFin, string ticket)
         {
             List<System.Data.SqlClient.SqlParameter> lp = new List<System.Data.SqlClient.SqlParameter>();

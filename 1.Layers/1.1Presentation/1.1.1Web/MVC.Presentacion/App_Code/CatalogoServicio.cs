@@ -348,6 +348,15 @@ namespace MVC.Presentacion.App_Code
             agente.EliminarRolesAsig(cc, tkn);
             return agente._RespuestaDTO;
         }
+
+        public static RespuestaDTO EliminarRolAlUsuario(UsuarioRolModel cc,string tkn)
+        {
+            
+            var agente = new AgenteServicio();
+            agente.EliminarRolesAsig(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+
         #endregion
 
         #region Roles
@@ -477,7 +486,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
-
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
 
@@ -608,6 +620,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -735,6 +751,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -861,6 +881,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -989,6 +1013,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1117,6 +1145,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
 
@@ -1241,6 +1273,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1447,6 +1483,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1575,6 +1615,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1703,6 +1747,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1831,6 +1879,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -1959,6 +2011,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -2087,6 +2143,10 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CobranzaFacturar = lst[i].CobranzaFacturar;
                 _lstc.FacturasVerFacturas = lst[i].FacturasVerFacturas;
                 _lstc.FacturasFacturar = lst[i].FacturasFacturar;
+                _lstc.HVCargaInformacion = lst[i].HVCargaInformacion;
+                _lstc.HistoricoVentas = lst[i].HistoricoVentas;
+                _lstc.CatLiquidarCajaGeneral = lst[i].CatLiquidarCajaGeneral;
+                _lstc.CatConsultarCajaGeneral = lst[i].CatConsultarCajaGeneral;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -2239,6 +2299,18 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.BuscarCliente(id);
+            return agente._ClienteModel;
+        }
+        public static ClientesDto ObtenerClienteDto(int id, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarClienteDto(id, token);
+            return agente._ClienteDTO;
+        }
+        public static ClientesModel ObtenerCliente(int id, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarCliente(id, token);
             return agente._ClienteModel;
         }
         public static List<TipoPersonaModel> ObtenerTiposPersona(string token = null)
@@ -2542,9 +2614,9 @@ namespace MVC.Presentacion.App_Code
         }
         public static CentroCostoModel ActivarModificar(byte idcc, CentroCostoModel model, string tkn)
         {
-            if (model.CentrosCostos == null)
+            if (model==null ||  model.CentrosCostos == null)
                 model = InitCentroCosto(tkn);
-            var cc = model.CentrosCostos.SingleOrDefault(x => x.IdCentroCosto.Equals(idcc));
+            var cc = model.CentrosCostos.FirstOrDefault(x => x.IdCentroCosto.Equals(idcc));
             model.Numero = cc.Numero;
             model.IdCentroCosto = cc.IdCentroCosto;
             model.Descripcion = cc.Descripcion;
@@ -2743,6 +2815,33 @@ namespace MVC.Presentacion.App_Code
             model.Numero = cc.Numero;
             model.Descripcion = cc.Descripcion;
             return model;
+        }
+        #endregion
+
+        #region Cuenta Contable Autorizado
+        public static RespuestaDTO GuardarCtaCtbleAutorizado(CuentaContableAutorizadoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarCuentaContableAutorizado(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarCtaContable(CuentaContableAutorizadoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarCuentaContableAutorizado(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static List<CuentaContableAutorizadoDTO> ListaCtaCtbleAutorizado(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaCuentaContableAutorizado(tkn);
+            return agente._ListaCuentaContableAutorizado;
+        }
+        public static CuentaContableAutorizadoDTO ObtenerCtaCtbleAutorizado(string tkn, int id)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarCuentaContableAutorizado(tkn, id);
+            return agente._CuentaContableAutorizadoDTO;
         }
         #endregion
 

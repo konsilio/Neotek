@@ -19,11 +19,11 @@ namespace Application.MainModule.DTOs.Catalogo
         public short IdEmpresa { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdTipoPersona")]
+        [Display(Name = "Tipo Persona")]
         public Nullable<byte> IdTipoPersona { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdRegimenFiscal")]
+        [Display(Name = "Regimen Fiscal")]
         public Nullable<short> IdRegimenFiscal { get; set; }
 
         [Display(Name = "IdCuentaContable")]
@@ -54,9 +54,9 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "limiteCreditoDias")]
         public short limiteCreditoDias { get; set; }
         public decimal CreditoDisponibleMonto { get; set; }
-
-        [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Telefono1")]
+ 
+        [StringLength(12, MinimumLength = 7, ErrorMessage = Error.R0004)]
+        [Display(Name = "Teléfono 1")]
         public string Telefono1 { get; set; }
 
         //[StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
@@ -113,8 +113,8 @@ namespace Application.MainModule.DTOs.Catalogo
 
         [Display(Name = "AccesoPortal")]
         public bool AccesoPortal { get; set; }
-
-        [StringLength(13, MinimumLength = 1, ErrorMessage = Error.R0004)]
+    
+        [StringLength(13, MinimumLength = 13, ErrorMessage = Error.R0004)]
         [Display(Name = "Rfc")]
         public string Rfc { get; set; }
 
@@ -145,5 +145,6 @@ namespace Application.MainModule.DTOs.Catalogo
         public List<ClienteLocacionDTO> Locaciones { get; set; }
         public ClienteLocacionDTO Locacion { get; set; }
         public bool VentaExtraordinaria { get; set; }
+        public bool EsFijo { get; set; }
     }
 }

@@ -1,8 +1,8 @@
-﻿@model MVC.Presentacion.Models.Almacen.RemanenteModel
+﻿@using MVC.Presentacion.Models
+@model  MVC.Presentacion.Models.Almacen.RemanenteModel
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
-            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
         )
 @Html.DevExpress().GetScripts(
@@ -14,18 +14,27 @@
 <script language="JavaScript" type="text/javascript">
     function ChangeTipo(s, e) {
         var sel = s.GetValue();
+       
+        if (sel == 0 || sel == 1) {
+            $('#PuntoVentaCampos').hide();
+            $('#PuntoVentaTabla').hide();
+            $('#RemaneteTracto').hide();
+            $('#RemaneteGeneralDatos').show();
+            $('#RemaneteGeneralTabla').show();
+        }
         if (sel == 2) {
             $('#PuntoVentaCampos').show();
             $('#PuntoVentaTabla').show();
+            $('#RemaneteTracto').hide();
             $('#RemaneteGeneralDatos').hide();
             $('#RemaneteGeneralTabla').hide();
-
         }
-        else {
+        if (sel == 3) {
             $('#PuntoVentaCampos').hide();
             $('#PuntoVentaTabla').hide();
-            $('#RemaneteGeneralDatos').show();
-            $('#RemaneteGeneralTabla').show();
+            $('#RemaneteTracto').show();
+            $('#RemaneteGeneralDatos').hide();
+            $('#RemaneteGeneralTabla').hide();
         }
     };
 </script>
@@ -46,7 +55,7 @@
                             <h2>Remanente</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item">Remanenete</li>
+                                <li class="breadcrumb-item">Remanente</li>
                             </ul>
                         </div>
                     </div>
@@ -60,34 +69,38 @@
                                 <div class="col-md-3">
                                     <strong>Gasera:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
-                                        {
-                                            settings.Name = "IdEmpresa";
-                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.SelectedIndex = 0;
-                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                            settings.Properties.ValueType = typeof(short);
-                                            settings.Properties.Items.Add("Selecciones uno", 0);
-                                            settings.Properties.TextField = "NombreComercial";
-                                            settings.Properties.ValueField = "IdEmpresa";
-                                        }).BindList(ViewBag.Empresas).Bind(Model.IdEmpresa).GetHtml()
+                               {
+                                   settings.Name = "IdEmpresa";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.SelectedIndex = 1;
+
+                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                   settings.Properties.ValueType = typeof(short);
+                                   settings.Properties.TextField = "NombreComercial";
+                                   settings.Properties.ValueField = "IdEmpresa";
+                               }).BindList(ViewBag.Empresas).Bind(Model.IdEmpresa).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-2">
                                     <strong>Tipo:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
-                                    {
-                                        settings.Name = "IdTipo";
-                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                        settings.SelectedIndex = 0;
-                                        settings.Properties.DisplayFormatString = "{0}";
-                                        settings.Properties.ValueType = typeof(int);
-                                        settings.ClientEnabled = true;
-                                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "ChangeTipo";
-                                        settings.Properties.ClientSideEvents.Init = "ChangeTipo";
-                                        settings.Properties.Items.Add("Selecciones uno", 0);
-                                        settings.Properties.Items.Add("General", 1);
-                                        settings.Properties.Items.Add("Por punto de venta", 2);
-                                    }).Bind(Model.IdTipo).GetHtml()
+                               {
+                                   settings.Name = "IdTipo";
+                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                   settings.SelectedIndex = 0;
+                                   settings.Properties.DisplayFormatString = "{0}";
+                                   settings.Properties.ValueType = typeof(int);
+                                   settings.ClientEnabled = true;
+                                   settings.Properties.ClientSideEvents.SelectedIndexChanged = "ChangeTipo";
+                                   settings.Properties.ClientSideEvents.Init = "ChangeTipo";
+                                   settings.Properties.Items.Add("Seleccione", 0);
+                                   settings.Properties.Items.Add("General", 1);
+                                   settings.Properties.Items.Add("Por punto de venta", 2);
+                                   settings.Properties.Items.Add("Por tracto", 3);
+
+                               }).Bind(Model.IdTipo).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.IdTipo, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-3" id="PuntoVentaCampos">
                                     <strong>Punto de venta</strong>
@@ -96,7 +109,7 @@
                                 <div class="col-md-2">
                                     <strong>Periodo</strong>
                                     @Html.DevExpress().DateEdit(settings =>
-                               {                                   
+                               {
                                    settings.Name = "Fecha";
                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                    settings.Properties.PickerType = DatePickerType.Months;
@@ -104,7 +117,9 @@
                                    settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
                                    settings.Date = DateTime.Today;
                                }).Bind(Model.Fecha).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.Fecha, "", new { @class = "alert-danger" })
                                 </div>
+                                
                                 <div class="col-md-1">
                                     <strong> </strong>
                                     <button class="btn btn-round btn-default"> Buscar</button>
@@ -123,7 +138,7 @@
                                                 <td><strong>Ventas (Camionetas y Pipas)</strong></td>
                                                 <td><strong>Carburación</strong></td>
                                                 <td><strong>Inv. Final(Libro)</strong></td>
-                                                <td><strong>Inv. Fisicio</strong></td>
+                                                <td><strong>Inv. Físicio</strong></td>
                                                 <td><strong>Gas sobrante</strong></td>
                                                 <td><strong>Rema (%)</strong></td>
                                             </tr>
@@ -133,17 +148,17 @@
                                             {
                                                 foreach (var item in ViewBag.RemaGeneral)
                                                 {
-                                                   <tr>
-                                                       <td>@item.dia</td>
-                                                       <td>@item.InventarioInicial</td>
-                                                       <td>@item.AcumuladoCompras</td>
-                                                       <td>@item.Ventas</td>
-                                                       <td>@item.Carburacion</td>
-                                                       <td>@item.InventarioLibro</td>
-                                                       <td>@item.InventarioFisico</td>
-                                                       <td>@item.GasSobrante</td>
-                                                       <td>@item.RemanenteDecimal</td>
-                                                   </tr>
+                                                    <tr>
+                                                        <td>@item.dia</td>
+                                                        <td>@item.InventarioInicial</td>
+                                                        <td>@item.AcumuladoCompras</td>
+                                                        <td>@item.Ventas</td>
+                                                        <td>@item.Carburacion</td>
+                                                        <td>@item.InventarioLibro</td>
+                                                        <td>@item.InventarioFisico</td>
+                                                        <td>@item.GasSobrante</td>
+                                                        <td>@item.RemanenteDecimal</td>
+                                                    </tr>
                                                 }
                                             }
                                         </tbody>
@@ -151,31 +166,36 @@
                                 </div>
                             </div>
                             <div id="RemaneteGeneralDatos">
-                                
-                                <div class="row clearfix">
-                                    <div class="col-md-3">Remanente Generado al :</div>
-                                    <div class="col-md-3"> (Toneladas)</div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">Remanente de Venta</div>
-                                    <div class="col-md-3">$ 0.00</div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">Remanente de Transporte</div>
-                                    <div class="col-md-3"> 0.00</div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">Total de Remanente Determinado</div>
-                                    <div class="col-md-3"> 0.00</div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">Gas Sobrante (O faltante)</div>
-                                    <div class="col-md-3"> 0.00</div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">0.00</div>
-                                </div>
+                                @if (ViewBag.RemaGeneralFinal != null)
+                                {
+
+                                    <div class="row clearfix">
+                                        <div class="col-md-3">Remanente Generado al : @ViewBag.RemaGeneralFinal.dia</div>
+                                        <div class="col-md-3"> (Toneladas)</div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-3">Remanente de Venta</div>
+                                        <div class="col-md-3">$ @ViewBag.RemaGeneralFinal.Ventas</div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-3">Remanente de Transporte</div>
+                                        <div class="col-md-3"> @ViewBag.RemaGeneralFinal.Carburacion</div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-3">Total de Remanente Determinado</div>
+                                        <div class="col-md-3"> @ViewBag.RemaGeneralFinal.InventarioLibro</div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-3">Gas Sobrante (O faltante)</div>
+                                        <div class="col-md-3">@ViewBag.RemaGeneralFinal.GasSobrante</div>
+                                    </div>
+                                    @*<div class="row clearfix">
+                                            <div class="col-md-3">0.00</div>
+                                        </div>*@
+
+                                }
                             </div>
+
                             @*Remanente por unidad de venta*@
                             <div class="row clearfix blockquote blockquote-info btn-round" id="PuntoVentaTabla">
                                 <div class="table-responsive">
@@ -183,47 +203,63 @@
                                         <thead>
                                             <tr>
                                                 <td><strong>Nombre</strong></td>
-                                                <td><strong>01</strong></td>
-                                                <td><strong>02</strong></td>
-                                                <td><strong>03</strong></td>
-                                                <td><strong>04</strong></td>
-                                                <td><strong>05</strong></td>
-                                                <td><strong>06</strong></td>
-                                                <td><strong>07</strong></td>
-                                                <td><strong>08</strong></td>
-                                                <td><strong>09</strong></td>
-                                                <td><strong>10</strong></td>
-                                                <td><strong>11</strong></td>
-                                                <td><strong>12</strong></td>
-                                                <td><strong>13</strong></td>
-                                                <td><strong>14</strong></td>
-                                                <td><strong>15</strong></td>
-                                                <td><strong>16</strong></td>
-                                                <td><strong>17</strong></td>
-                                                <td><strong>18</strong></td>
-                                                <td><strong>19</strong></td>
-                                                <td><strong>20</strong></td>
-                                                <td><strong>21</strong></td>
-                                                <td><strong>22</strong></td>
-                                                <td><strong>23</strong></td>
-                                                <td><strong>24</strong></td>
-                                                <td><strong>25</strong></td>
-                                                <td><strong>26</strong></td>
-                                                <td><strong>27</strong></td>
-                                                <td><strong>28</strong></td>
-                                                <td><strong>29</strong></td>
-                                                <td><strong>30</strong></td>
-                                                <td><strong>31</strong></td>
+                                                @if (ViewBag.RemaPuntoVenta != null && ViewBag.RemaPuntoVenta.Count > 0)
+                                                {
+                                                    foreach (var item in ((List<RemanentePuntoVentaTodosDTO>)ViewBag.RemaPuntoVenta).FirstOrDefault().RemaentePuntoVenta.ToList())
+                                                    {
+                                                        {
+                                                            <td><strong>@item.dia</strong></td>
+                                                        }
+                                                    }
+                                                }
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @if (ViewBag.RemaPuntoVenta != null)
                                             {
-                                                foreach (var item in ViewBag.RemaPuntoVenta)
+                                                foreach (var puntoVenta in ((List<RemanentePuntoVentaTodosDTO>)ViewBag.RemaPuntoVenta))
                                                 {
-                                                    
+                                                    <tr>
+                                                        <td>
+                                                            @puntoVenta.RemaentePuntoVenta.FirstOrDefault().NombrePuntoVenta
+                                                        </td>
+
+                                                        @foreach (var remaPtv in puntoVenta.RemaentePuntoVenta)
+                                                        {
+                                                            <td>
+                                                                @remaPtv.Remanente 
+                                                                (@remaPtv.Porcentaje %)
+                                                            </td>
+                                                        }
+                                                    </tr>
                                                 }
                                             }
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row clearfix blockquote blockquote-info btn-round" id="RemaneteTracto">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td><strong>Día</strong></td>                                             
+                                                <td><strong>Remanente acumulado (kg)</strong></td>
+                                                <td><strong>Remanente generado (kg)</strong></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.RemaTracto != null)
+                                            {
+                                                foreach (var item in ViewBag.RemaTracto)
+                                                {
+                                                    <tr>
+                                                        <td>@item.dia</td>                                                       
+                                                        <td>@item.AcumuladoCompras</td>                                                      
+                                                        <td>@item.RemanenteDecimal</td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -234,4 +270,3 @@
         </section>
     }
 </body>
-@*<script src="assets/js/pages/forms/advanced-form-elements.js"></script>*@

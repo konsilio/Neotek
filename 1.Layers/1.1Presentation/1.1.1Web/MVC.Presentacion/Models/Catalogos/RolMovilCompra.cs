@@ -124,5 +124,9 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool CobranzaFacturar { get; set; }
         public bool FacturasVerFacturas { get; set; }
         public bool FacturasFacturar { get; set; }
+        public bool HVCargaInformacion { get; set; }
+        public bool HistoricoVentas { get; set; }
+        public bool CatLiquidarCajaGeneral { get; set; }
+        public bool CatConsultarCajaGeneral { get; set; }
     }
 }

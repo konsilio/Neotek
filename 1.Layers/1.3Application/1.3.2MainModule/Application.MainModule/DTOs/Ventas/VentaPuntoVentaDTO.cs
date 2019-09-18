@@ -45,6 +45,8 @@ namespace Application.MainModule.DTOs.Ventas
         public Nullable<int>  IdCamioneta { get; set; }
         public Nullable<int> IdPipa { get; set; }
         public string Tipo { get; set; }
+        public decimal PrecioUnitario { get; set; }
+        public decimal CantidadVendida { get; set; }
     }
 
     public class VentaPuntoVentaComparer : IEqualityComparer<VentaPuntoVentaDTO>

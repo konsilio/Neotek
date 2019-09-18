@@ -142,7 +142,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     //_respuesta.ModeloValido = true;
                     //_respuesta.Mensaje = Exito.OK;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     //_respuesta.Exito = false;
                     //_respuesta.Mensaje = string.Format(Error.C0003, "de la descargar de gas"); ;
@@ -159,7 +159,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-
                     uow.Repository<AlmacenGasMovimiento>().Insert(Movimiento);
 
                     uow.SaveChanges();
@@ -178,6 +177,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<AlmacenGasDescarga> BuscarTodas()
         {
             return uow.Repository<AlmacenGasDescarga>().GetAll().ToList();
+        }
+        public List<AlmacenGasDescarga> BuscarTodas(DateTime periodo)
+        {
+            return uow.Repository<AlmacenGasDescarga>().Get(x => x.FechaRegistro.Month.Equals(periodo.Month) && x.FechaRegistro.Year.Equals(periodo.Year)).ToList();
         }
         public AlmacenGasDescarga Buscar(int idAlmacenEntradaGasDescarga)
         {

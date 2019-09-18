@@ -104,6 +104,8 @@
 @Html.HiddenFor(m => m.ETBorrarMantenimiento)
 @Html.HiddenFor(m => m.ETRegistrarRecargaCombustible)
 @Html.HiddenFor(m => m.ETBorrarRecargaCombustible)
+@Html.HiddenFor(m => m.HVCargaInformacion)
+@Html.HiddenFor(m => m.HistoricoVentas)
  
 <tr>
     <td>@Model.NombreRol </td>
@@ -120,6 +122,8 @@
     <td>@Html.CheckBoxFor(m => m.ConsultarRemanenteGeneral)</td>
     <td>@Html.CheckBoxFor(m => m.FacturasVerFacturas)</td>
     <td>@Html.CheckBoxFor(m => m.FacturasFacturar)</td>
+    <td>@Html.CheckBoxFor(m => m.CatLiquidarCajaGeneral)</td>
+    <td>@Html.CheckBoxFor(m => m.CatConsultarCajaGeneral)</td>
 <td>
         <a ID="lbEdit" href="@Url.Action("ActualizaNombreRol", "Roles", new { id = Model.IdRol })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">edit</i>

@@ -56,7 +56,8 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.MensajeError = Validar(Respuesta);
             }
             //verificar si las facturas agregadas pertenecen al mismo cliente
-            var idCliente = _mod.Tickets[0].IdCliente;
+            var idCliente = 0;
+            idCliente = _mod.Tickets[0].IdCliente;
             foreach (var tick in _mod.Tickets.Where(x => x.seleccionar).ToList())
             {
                 if (tick.IdCliente != idCliente)
@@ -143,12 +144,14 @@ namespace MVC.Presentacion.Controllers
                 if (Resp.ModelStatesStandar != null)
                     foreach (var error in Resp.ModelStatesStandar.ToList())                    
                         ModelState.AddModelError(error.Key, error.Value);
-                    
-                if (Resp.MensajesError != null)                
+
+                if (Resp.MensajesError != null)
                     if (Resp.MensajesError.Count > 1)
                         Mensaje = Resp.MensajesError[0] + " " + Resp.MensajesError[1];
                     else
-                        Mensaje = Resp.MensajesError[0];                
+                        Mensaje = Resp.MensajesError[0];
+                else
+                    Mensaje = Resp.Mensaje;
             }
             return Mensaje;
         }

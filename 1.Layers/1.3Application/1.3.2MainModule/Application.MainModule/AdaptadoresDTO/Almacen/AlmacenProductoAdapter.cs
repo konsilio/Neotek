@@ -160,8 +160,8 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
         {         
             return new RepInventarioXConceptorDTO()
             {
-                IdREgristro = entidad.IdAlmacen,
-                Descirpcion = entidad.Producto.Descripcion,
+                IdRegistro = entidad.IdAlmacen,
+                Descripcion = entidad.Producto.Descripcion,
                 Existencias = entidad.Cantidad,
                 Categoria = entidad.Producto.Categoria.Descripcion,
                 FechaActualizacion = entidad.FechaActualizacion,

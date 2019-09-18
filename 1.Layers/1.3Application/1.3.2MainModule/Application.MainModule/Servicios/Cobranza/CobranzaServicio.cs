@@ -35,6 +35,13 @@ namespace Application.MainModule.Servicios.Cobranza
             return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().BuscarTodos(idempresa));
             //return lPedidos;
         }
+
+        public static ReporteCreditoRecDto CRecuperadaList(short idempresa)
+        {
+            return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTOCR(new AbonosDataAcces().BuscarTodos(idempresa));
+            //return lPedidos;
+        }
+
         public static List<CargosDTO> CRecuperada(List<CRecuperadaDTO> lstCRecuperado, List<CRecuperadaTotalesDTO> lstTotal, short idempresa)
         {
             return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(lstCRecuperado, lstTotal);
@@ -60,7 +67,7 @@ namespace Application.MainModule.Servicios.Cobranza
             foreach (int id in clientes)
             {
                 var cargos = new AbonosDataAcces().Buscar(idEmpresa, id);
-                if (cargos != null)
+                if (cargos != null && !cargos.Count.Equals(0))
                 {
                     Cargo c = cargos[0];
                     c.TotalCargo = cargos.Sum(x => x.TotalCargo);
@@ -80,7 +87,7 @@ namespace Application.MainModule.Servicios.Cobranza
             foreach (int id in clientes)
             {
                 var cargos = new AbonosDataAcces().Buscar(idEmpresa, id);
-                if (cargos != null)
+                if (cargos != null && !cargos.Count.Equals(0))
                 {
                     Cargo c = cargos[0];
                     c.TotalCargo = cargos.Sum(x => x.TotalCargo);

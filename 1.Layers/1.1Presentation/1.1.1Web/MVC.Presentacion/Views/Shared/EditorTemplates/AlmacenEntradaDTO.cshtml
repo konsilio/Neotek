@@ -7,5 +7,14 @@
         <td>@Html.LabelFor(m => m.Requeridos, Model.Requeridos.ToString())</td>
         <td>@Html.LabelFor(m => m.UnidadMedida, Model.UnidadMedida)</td>
         <td>@Html.LabelFor(m => m.Aplicacion, Model.Aplicacion)</td>
-        <td>@Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", @type = "number" })</td>
+        <td>
+            @Html.TextBoxFor(m => m.Cantidad, Model.Cantidad.ToString(), new
+                                          {
+                                              @class = "form-control",
+                                              @type = "number",
+                                              @min = "1",
+                                              @value = '1'
+                                          })
+            @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "alert-danger" })
+        </td>
     </tr>

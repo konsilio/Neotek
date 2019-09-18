@@ -27,7 +27,7 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscarHistoricoPrecioVenta(model, token);
             return respuestaReq._ListaHistoricoPrecioVenta;
         }
-        public static List<CallCenterDTO> BuscarCallCenter(CallCenterModel model, string token)
+        public static List<CallCenterDTO> BuscarCallCenter(PeriodoDTO model, string token)
         {
             var respuestaReq = new AgenteServicio();
             respuestaReq.BuscarCallCenter(model, token);
@@ -74,6 +74,18 @@ namespace MVC.Presentacion.App_Code
             AgenteServicio agenteServico = new AgenteServicio();
             agenteServico.BuscarRepoGastoVehicular(model, tkn);
             return agenteServico._ListaGastoVehicular;
+        }
+        public static List<ComisionDTO> CalcularComisiones(PeriodoDTO model, string tkn)
+        {
+            AgenteServicio agenteServico = new AgenteServicio();
+            agenteServico.CalcularComisiones(model, tkn);
+            return agenteServico._ListaComisiones;
+        }
+        public static List<CuentaConsolidadaDTO> CuentasConsolidadas(CuentasPorPagarModel model, string tkn)
+        {
+            AgenteServicio agenteServico = new AgenteServicio();
+            agenteServico.CuentasConsolidadas(model, tkn);
+            return agenteServico._ListaCuentasConsolidadas;
         }
     }
 }

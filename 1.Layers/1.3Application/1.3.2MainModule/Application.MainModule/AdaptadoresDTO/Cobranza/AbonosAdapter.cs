@@ -18,8 +18,12 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         {
             AbonosDTO dto = new AbonosDTO();
             var venta = CFDIServicio.Buscar(_Abono.Id_RelTF ?? 0);
+           
+            dto.IdCliente = _Abono.Cargo.IdCliente;
+            dto.Cliente = ClienteServicio.ObtenerNomreCliente(_Abono.Cargo.CCliente);
             dto.IdAbono = _Abono.IdAbono;
             dto.IdCargo = _Abono.IdCargo;
+            dto.ticket = _Abono.Cargo.Ticket;
             dto.FechaRegistro = _Abono.FechaRegistro;
             dto.FechaAbono = _Abono.FechaAbono;
             dto.MontoAbono = _Abono.MontoAbono;
@@ -32,6 +36,8 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
                 dto.URLXml = venta.URLXml;
                 dto.URLPdf = venta.URLPdf;
             }
+            //dto.URL_XML = venta.URLXml;
+            //dto.URL_CFDI = venta.URLPdf;
             return dto;
         }
         public static List<AbonosDTO> ToDTO(List<Abono> lAbono)
@@ -93,7 +99,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
                 Id_RelTF = pAnterior.Id_RelTF,
             };
         }
-        static List<Abono> FromEntity(List<Abono> lPDTO)
+        public static List<Abono> FromEntity(List<Abono> lPDTO)
         {
             return lPDTO.ToList().Select(x => FromEntity(x)).ToList();
         }
@@ -122,7 +128,9 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             CargosDTO dto = new CargosDTO();
             dto.IdCargo = _dto.IdCargo;
             dto.IdCliente = _dto.IdCliente;
-            dto.Cliente = ClienteServicio.Obtener(_dto.IdCliente).RazonSocial;
+            dto.Cliente = string.Concat(_dto.CCliente.Nombre, " ", _dto.CCliente.Apellido1);
+            if (_dto.CCliente.IdTipoPersona.Equals(2))
+                dto.Cliente = _dto.CCliente.RazonSocial;
             dto.Rfc = ClienteServicio.Obtener(_dto.IdCliente).Rfc;
             dto.IdEmpresa = _dto.IdEmpresa;
             dto.Ticket = _dto.Ticket;
@@ -161,6 +169,75 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             }
             return lprodDTO;
         }
+        public static CargosDTO ToDTOcr(Cargo _dto)
+        {
+            List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
+            var venta = CFDIServicio.Buscar(_dto.Ticket);
+            CargosDTO dto = new CargosDTO();
+            dto.IdCargo = _dto.IdCargo;
+            dto.IdCliente = _dto.IdCliente;
+            dto.Cliente = string.Concat(_dto.CCliente.Nombre, " ", _dto.CCliente.Apellido1);
+            if (_dto.CCliente.IdTipoPersona.Equals(2))
+                dto.Cliente = _dto.CCliente.RazonSocial;
+            dto.Rfc = ClienteServicio.Obtener(_dto.IdCliente).Rfc;
+            dto.IdEmpresa = _dto.IdEmpresa;
+            dto.Ticket = _dto.Ticket;
+            dto.FechaRegistro = _dto.FechaRegistro;
+            dto.TotalCargo = _dto.TotalCargo;
+            dto.TotalAbonos = _dto.TotalAbonos;
+            dto.SaldoInsoluto = _dto.TotalCargo - _dto.TotalAbonos;
+            dto.VentaExtraordinaria = _dto.VentaExtraordinaria;
+            dto.Activo = _dto.Activo;
+            dto.FechaVencimiento = _dto.FechaVencimiento;
+            dto.Saldada = _dto.Saldada;
+            dto.lstCreditoR = ToDTO(lst);
+            dto.Abono = FromInit(_dto.IdCargo);
+            dto.Dias1a7 = ((TimeSpan)(DateTime.Now - _dto.FechaVencimiento)).Days;
+            //dto.Total = lst.Sum(x => x.MontoAbono);
+            //dto.TotalEfectivo = lst.Where(y => y.IdFormaPago == 1).Sum(x => x.MontoAbono);
+            //dto.TotalCheques = lst.Where(y => y.IdFormaPago == 2).Sum(x => x.MontoAbono);
+            //dto.TotalTransferencia = lst.Where(y => y.IdFormaPago == 3).Sum(x => x.MontoAbono);
+            if (venta != null)
+            {
+                dto.URL_XML = venta.URLXml;
+                dto.URL_CFDI = venta.URLPdf;
+            }
+
+            return dto;
+        }
+        public static List<AbonosDTO> ToDTOAbono(Cargo _dto)
+        {
+            List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
+            var venta = CFDIServicio.Buscar(_dto.Ticket);
+            List<AbonosDTO> dto = new List<AbonosDTO>();
+            dto = ToDTO(lst);        
+            return dto;
+        }
+        public static List<AbonosDTO> ToDTOcr(List<Cargo> lCargo)
+        {
+            List<AbonosDTO> lprodDTO = new List<AbonosDTO>();
+            foreach (Cargo c in lCargo)
+            {
+                lprodDTO.AddRange(ToDTOAbono(c));
+            }
+          
+            return lprodDTO;
+        }
+        public static ReporteCreditoRecDto ToDTOCR(List<Cargo> lCargo)
+        {
+            ReporteCreditoRecDto lprodDTO = new ReporteCreditoRecDto();
+            lprodDTO.reporteCargos = lCargo.ToList().Select(x => ToDTOcr(x)).ToList();
+            lprodDTO.reporteAbonos = ToDTOcr(lCargo);
+            if (lprodDTO.reporteCargos.Count > 10)
+            {
+                lprodDTO.reporteCargos[0].Total = CobranzaServicio.Total(lprodDTO.reporteCargos, "T");
+                lprodDTO.reporteCargos[0].TotalEfectivo = CobranzaServicio.Total(lprodDTO.reporteCargos, "TE");
+                lprodDTO.reporteCargos[0].TotalCheques = CobranzaServicio.Total(lprodDTO.reporteCargos, "TC");
+                lprodDTO.reporteCargos[0].TotalTransferencia = CobranzaServicio.Total(lprodDTO.reporteCargos, "TT");
+            }
+            return lprodDTO;
+        }
+
         public static CargosDTO ToDTO(CRecuperadaDTO _dto)
         {
             // List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
@@ -240,8 +317,53 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         {
             ReporteDTO lprodDTO = new ReporteDTO();
             lprodDTO.reportedet = lCargoV.ToList().Select(x => ToDTORep(x)).ToList();
-            lprodDTO.global = lCargoT;
+            lprodDTO.reportedet.AddRange(Totalizador(lprodDTO.reportedet));
+            lprodDTO.global = Global(lCargoT);
             return lprodDTO;
+        }
+        public static List<CargosDTO> Totalizador(List<CargosDTO> cargos)
+        {
+            List<CargosDTO> List = new List<CargosDTO>();
+            foreach (var item in cargos.Select(x => x.IdCliente).Distinct())
+            {
+                List.Add(new CargosDTO()
+                {
+                    Nombre = cargos.FirstOrDefault(c => c.IdCliente.Equals(item)).Nombre,
+                    Ticket = "Total",
+                    Serie = "Total",
+                    TotalCargo = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.TotalCargo),
+                    SaldoActual = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.SaldoActual),
+                    SaldoCorriente = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.SaldoCorriente),
+                    SaldoVencido = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.SaldoVencido),
+                    Dias1a7 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Dias1a7),
+                    Dias8a16 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Dias8a16),
+                    Dias17a31 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Dias17a31),
+                    Dias32a61 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Dias32a61),
+                    Dias62a91 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Dias62a91),
+                    Mas91 = cargos.Where(c => c.IdCliente.Equals(item)).Sum(x => x.Mas91)
+                });
+            }
+            return List;
+
+        }
+        public static List<CarteraVencidaDTO> Global(List<CarteraVencidaDTO> cargos)
+        {
+            List<CarteraVencidaDTO> respuesta = new List<CarteraVencidaDTO>();
+            respuesta.Add(new CarteraVencidaDTO()
+            {
+                Nombre = "Total",
+                SaldoActualTotal = cargos.Sum(x => x.SaldoActualTotal),
+                SaldoCorrienteTotal = cargos.Sum(x => x.SaldoCorrienteTotal),
+                SaldoVencidoTotal = cargos.Sum(x => x.SaldoVencidoTotal),
+                Dias1_7Total = cargos.Sum(x => x.Dias1_7Total),
+                Dias8_16Total = cargos.Sum(x => x.Dias8_16Total),
+                Dias17_31Total = cargos.Sum(x => x.Dias17_31Total),
+                Dias32_61Total = cargos.Sum(x => x.Dias32_61Total),
+                Dias62_91Total = cargos.Sum(x => x.Dias62_91Total),
+                Mas91Total = cargos.Sum(x => x.Mas91Total),
+            });
+            return respuesta;
+
         }
         public static AbonosDTO FromInit(int id)
         {

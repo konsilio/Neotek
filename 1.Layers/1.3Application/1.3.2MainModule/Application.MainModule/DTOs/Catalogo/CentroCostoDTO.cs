@@ -29,7 +29,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public int IdEquipoTransporte { get; set; }
 
         public int IdVehiculoUtilitario { get; set; }
-
+    
         public short IdCAlmacenGas { get; set; }
 
         public int IdEstacionCarburacion { get; set; }

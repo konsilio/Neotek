@@ -15,11 +15,18 @@ namespace MVC.Presentacion.Controllers
         string tkn = string.Empty;
         public ActionResult Index(int? page, RecargaCombustibleModel model = null)
         {
+            TokenServicio.ClearTemp(TempData);
+
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.Vehiculos = CatalogoServicio.Obtener(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.Combustibles = CatalogoServicio.ListaCombustible(tkn);
-            ViewBag.Recargas = TransporteServicio.ListaRecargaCombustible(tkn).ToPagedList(page ?? 1, 20);
+            //ViewBag.Recargas = TransporteServicio.ListaRecargaCombustible(tkn).ToPagedList(page ?? 1, 20);
+
+            TempData["DataSourceRecargas"] = TransporteServicio.ListaRecargaCombustible(tkn).ToList();
+            TempData.Keep("DataSourceRecargas");
+
+            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             if (TempData["RespuestaDTO"] != null)
             {
                 var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
@@ -76,5 +83,22 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+
+
+        public ActionResult CB_Recargas()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            List<RecargaCombustibleModel> model = new List<RecargaCombustibleModel>();
+            if (TempData["DataSourceRecargas"] != null)
+            {
+                model = (List<RecargaCombustibleModel>)TempData["DataSourceRecargas"];
+                TempData["DataSourceRecargas"] = model;
+                //TempData.Keep("DataSourceRecargas");
+            }
+            return PartialView("_CB_Recargas", model);
+        }
+
+
     }
 }

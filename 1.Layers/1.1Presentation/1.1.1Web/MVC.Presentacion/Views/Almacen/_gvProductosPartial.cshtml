@@ -1,6 +1,7 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
+        settings.Width = 1450;
         settings.Name = "gvProductos";
         settings.CallbackRouteValues = new { Controller = "Almacen", Action = "gvProductosPartial" };
         settings.KeyFieldName = "IdProducto";

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Requisicion
 {
-    [Serializable]
+    
     public class RequisicionDTO
     {
         public int IdRequisicion { get; set; }
@@ -40,18 +40,20 @@ namespace Application.MainModule.DTOs.Requisicion
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Producto")]
         public int IdProducto { get; set; }
+        
         public string Producto { get; set; }
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Tipo Producto")]
         public int IdTipoProducto { get; set; }
+        
         public string TipoProducto { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Centro Costo")]
+       
         public int IdCentroCosto { get; set; }
         public string CentroCosto { get; set; }
         public int IdUnidad { get; set; }
         public string Unidad { get; set; }
         public decimal Cantidad { get; set; }
+       
         public string Aplicacion { get; set; }
         public bool EsExterno { get; set; }     
     }

@@ -1,4 +1,5 @@
 ﻿using MVC.Presentacion.Agente;
+using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
 using System;
@@ -21,15 +22,15 @@ namespace MVC.Presentacion.App_Code
         public static List<CajaGeneralModel> ListaVentasCajaGralId(short id, string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaVentaCajaGralIdE(id,token);
+            agente.BuscarListaVentaCajaGralIdE(id, token);
             return agente._listaCajaGral;
-        }     
+        }
 
-        public static List<CajaGeneralCamionetaModel> ListaVentasCajaGralCamioneta(string cveReporte, string token)
+        public static CorteCajaDTO ListaVentasCajaGralCamioneta(string cveReporte, string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarListaCajaGralCamioneta(cveReporte, token);
-            return agente._listaCajaGralCamioneta;
+            return agente._CorteCaja;
         }
         public static List<MovimientosGasModel> ListaVentasMovimientosGas(CajaGeneralCamionetaModel reporte, string token)
         {
@@ -45,14 +46,14 @@ namespace MVC.Presentacion.App_Code
             entiti.Mes = rep.Mes;
             entiti.Dia = rep.Dia;
             entiti.Orden = rep.Orden;
-           
+
             return entiti;
         }
         public static List<MovimientosGasCilindros> ListaVentasMovimientosGasC(CajaGeneralCamionetaModel reporte, string token)
         {
-          MovimientosGasCilindros m = new MovimientosGasCilindros();
-          MovimientosGasCilindros model =  List(reporte,m);
-               
+            MovimientosGasCilindros m = new MovimientosGasCilindros();
+            MovimientosGasCilindros model = List(reporte, m);
+
             var agente = new AgenteServicio();
             agente.BuscarListaMovGasCilindros(model, token);
             return agente._ListaMovimientosGasC;
@@ -78,7 +79,24 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarLiquidacionEst(cc, tkn);
             return agente._RespuestaDTO;
         }
-
+        public static RespuestaDTO GuardarLiquidacion(CorteCajaDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GenerarLiquidacion(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static List<PuntoVentaModel> ListaPuntoVentaLiquidacion(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarPtoVentasLiquidacion(tkn);
+            return agente._listaPuntosV;
+        }
+        public static List<VentaCajaGeneralDTO> BuscarLiquidacionesDelDia(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ObtenerLiquidacionesDelDia(tkn);
+            return agente._ListaVentaCajaGeneralDTO;
+        }
         #endregion
     }
 }

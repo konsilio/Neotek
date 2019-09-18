@@ -18,5 +18,6 @@ namespace MVC.Presentacion.Models
         public string NumeroOC { get; set; }
         public EquipoTransporteDTO _Vehiculo {get; set;}
         public decimal Monto { get; set; }
+        public int IdCuentaContable { get; set; }
     }
 }
