@@ -186,13 +186,16 @@
                                     <li>@Html.ActionLink("Parque Vehícular", "Index", "EquipoTransporte")</li>
                                     @if (rol.ETRecargaC)
                                     {
-                                        <li>@Html.ActionLink("Recarga de combustible", "Index", "RecargaCombustibles")</li>}
+                                        <li>@Html.ActionLink("Recarga de combustible", "Index", "RecargaCombustibles")</li>
+                                    }
                                     @if (rol.ETAsignacion)
                                     {
-                                        <li>@Html.ActionLink("Asignacion", "Index", "Asignacion")</li>}
+                                        <li>@Html.ActionLink("Asignacion", "Index", "Asignacion")</li>
+                                    }
                                     @if (rol.ETMantenimiento)
                                     {
-                                        <li>@Html.ActionLink("Mantenimiento", "Index", "Mantenimiento")</li>}
+                                        <li>@Html.ActionLink("Mantenimiento", "Index", "Mantenimiento")</li>
+                                    }
                                 </ul>
                             </li>
                         }

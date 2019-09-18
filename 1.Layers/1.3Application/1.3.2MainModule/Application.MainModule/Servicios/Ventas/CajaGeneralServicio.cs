@@ -7,6 +7,7 @@ using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Seguridad;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
@@ -197,19 +198,19 @@ namespace Application.MainModule.Servicios.Ventas
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasCamioneta(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetas(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetas(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasCamionetaMes(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetasMes(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetasMes(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasPipas(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasPipas(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasPipas(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasPipasMes(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasPipasMes(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasPipasMes(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalBonificaciones(DateTime f)
         {
@@ -225,15 +226,15 @@ namespace Application.MainModule.Servicios.Ventas
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstacionesMes(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasEstacionesMes(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasEstacionesMes(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(EstacionCarburacion entidad, DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaCorteAnticipoDTO> ObtenerCE(string cve)
         {
