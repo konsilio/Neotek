@@ -60,6 +60,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string P0002 = "No cuentas con los permisos necesario para modificar {0}.";
         public const string P0003 = "No cuentas con los permisos necesario para eliminar {0}.";
         public const string P0004 = "No cuentas con los permisos necesario para consultar {0}.";
+        public const string P0005 = "No cuentas con los permisos necesario para generar {0}.";
 
         public const string A0001 = "No se logró hacer el registro {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
         public const string A0002 = "La cantidad a entregar supera las existencias en almacén";
