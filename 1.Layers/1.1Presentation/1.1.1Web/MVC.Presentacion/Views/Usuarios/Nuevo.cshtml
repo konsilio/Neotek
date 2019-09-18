@@ -50,6 +50,7 @@
 </style>
 @using (Html.BeginForm((ViewBag.IdUser == null) ? "GuardarUsuario" : "GuardaEdicionUsuario", "Usuarios", FormMethod.Post))
 {
+    @Html.HiddenFor(m => m.IdPais, 1)
     <section class="content home">
         <div class="container-fluid">
             <div class="row clearfix">
@@ -354,34 +355,34 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
-                                        <label for="ddlPais">
-                                            País:*
-                                        </label>
-                                        @*<select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
-                                                @if (ViewBag.IdUser == null)
-                                                {
-                                                    foreach (var lst in ViewBag.ListaPaises)
-                                                    {
-                                                        <option value="@lst.IdPais">@lst.Pais</option>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    foreach (var lst in ViewBag.ListaPaises)
-                                                    {
-                                                        if (ViewBag.IdUser.IdPais == lst.IdPais)
-                                                        {
-                                                            <option value="@lst.IdPais" selected>@lst.Pais</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@lst.IdPais">@lst.Pais</option>
-                                                        }
-                                                    }
-                                                }
-                                            </select>*@
+@*<select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
+    <div class="col-lg-3 col-md-3 col-sm-3">
+        <div class="form-group">
+            <label for="ddlPais">
+                País:*
+            </label>
+                    @if (ViewBag.IdUser == null)
+                    {
+                        foreach (var lst in ViewBag.ListaPaises)
+                        {
+                            <option value="@lst.IdPais">@lst.Pais</option>
+                        }
+                    }
+                    else
+                    {
+                        foreach (var lst in ViewBag.ListaPaises)
+                        {
+                            if (ViewBag.IdUser.IdPais == lst.IdPais)
+                            {
+                                <option value="@lst.IdPais" selected>@lst.Pais</option>
+                            }
+                            else
+                            {
+                                <option value="@lst.IdPais">@lst.Pais</option>
+                            }
+                        }
+                    }
+                </select>
                                         @Html.DevExpress().ComboBox(settings =>
                                    {
                                        settings.Name = "IdPais";
@@ -395,43 +396,18 @@
                                        settings.Properties.ValueType = typeof(byte);
                                        settings.ClientEnabled = true;
                                        settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
-                                     
+
 
                                    }).BindList(ViewBag.ListaPaises).Bind(Model.IdPais).GetHtml()
                                         @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger"})
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <label for="ddlEdo">
                                             Estado:*
                                         </label>
                                         @Html.TextBoxFor(m => m.EstadoProvincia, new { @id = "txtEdoP", @class = "form-control hid", @placeholder = "Estado" })
-                                        @*<input type="text" name="EstadoProvincia" style="display:none" id="txtEdoP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas.EstadoProvincia)" />*@
-                                        @*<select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                                @if (ViewBag.IdUser == null)
-                                                {
-                                                    foreach (var lst2 in ViewBag.ListaEstados)
-                                                    {
-                                                        <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    foreach (var lst2 in ViewBag.ListaEstados)
-                                                    {
-
-                                                        if (ViewBag.IdUser.IdEstadoRep == lst2.IdEstadoRep)
-                                                        {
-                                                            <option value="@lst2.IdEstadoRep" selected>@lst2.Estado</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
-                                                        }
-                                                    }
-                                                }
-                                            </select>*@
                                         @Html.DevExpress().ComboBox(settings =>
                                                {
                                                    settings.Name = "IdEstadoRep";

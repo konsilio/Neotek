@@ -30,19 +30,22 @@ namespace MVC.Presentacion.Controllers
             ViewBag.ListaUsuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
             if (modelo.IdUsuario != 0)
                 model.Listausuarios = CatalogoServicio.FiltrarBusquedaUsuario(modelo, _tkn);
-            else {
+            else
+            {
 
-                if (modelo.Email1!= "Seleccione uno" && modelo.Email1!=null && modelo.Email1!= string.Empty) {
+                if (modelo.Email1 != "Seleccione uno" && modelo.Email1 != null && modelo.Email1 != string.Empty)
+                {
                     model.Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn).Where(x => x.Email1 == modelo.Email1).ToList();
                 }
-                else {
+                else
+                {
 
                     model.Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
                 }
 
-                
+
             }
-                
+
             if (TempData["RespuestaDTO"] != null) ViewBag.MessageExito = TempData["RespuestaDTO"];
             if (TempData["RespuestaDTOError"] != null)
             {
@@ -54,7 +57,7 @@ namespace MVC.Presentacion.Controllers
 
             return View(model);
         }
-        public ActionResult Nuevo()
+        public ActionResult Nuevo(UsuarioDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
@@ -63,12 +66,17 @@ namespace MVC.Presentacion.Controllers
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
             ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
-            UsuarioDTO model = new UsuarioDTO();
-            model.IdPais = 0; model.IdEstadoRep = 0;
+            //UsuarioDTO model = new UsuarioDTO();
+
             if (TempData["RespuestaDTOError"] != null)
-            {
                 ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+            else if (TempData["EditarUsuario"] == null)
+            {
+                model.IdPais = 1;
+                model.IdEstadoRep = 12;
             }
+
+
             ViewBag.MessageError = TempData["RespuestaDTOError"];
 
             if (TempData["EditarUsuario"] != null)
@@ -96,7 +104,7 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;
-                return RedirectToAction("Nuevo");
+                return RedirectToAction("Nuevo", _ojUs);
             }
         }
         //vista ActualizaCredenciales-View
@@ -248,26 +256,6 @@ namespace MVC.Presentacion.Controllers
 
 
         }
-        //public ActionResult BorrarRol(UsuarioRolModel objUser, short id, int idUsr, string msj = null)
-        //{
-        //    if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-        //    _tok = Session["StringToken"].ToString();
-
-        //    var respuesta = CatalogoServicio.EliminarRolAlUsuario(objUser, idUsr, id, _tok);
-        //    if (respuesta.Exito)
-        //    {
-        //        TempData["RespuestaDTO"] = respuesta.Exito;
-        //        return RedirectToAction("ActualizaRoles", new { id = objUser.IdUsuario, msj = string.Concat("Eliminación exitosa del Rol ", objUser.IdRol) });
-        //    }
-
-        //    else
-        //    {
-        //        TempData["RespuestaDTO"] = respuesta.Exito;
-        //        return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario, msj = respuesta.MensajesError[0] });
-        //    }
-
-        //}
-
         public ActionResult BorrarRol(UsuarioRolModel objUser)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -279,13 +267,11 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTO"] = respuesta.Exito;
                 return RedirectToAction("ActualizaRoles", new { id = objUser.IdUsuario, msj = string.Concat("Eliminación exitosa del Rol ", objUser.IdRol) });
             }
-
             else
             {
                 TempData["RespuestaDTO"] = respuesta.Exito;
                 return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario, msj = respuesta.MensajesError[0] });
             }
-
         }
 
         public ActionResult Buscar(UsuarioDTO filterObj)
@@ -313,6 +299,8 @@ namespace MVC.Presentacion.Controllers
                     }
                 if (Resp.MensajesError != null)
                     Mensaje = Resp.MensajesError[0];
+                else
+                    Mensaje = Resp.Mensaje;
             }
             return Mensaje;
         }
@@ -327,7 +315,7 @@ namespace MVC.Presentacion.Controllers
             {
                 model = (List<UsuariosModel>)TempData["DataSourceUsuarios"];
                 TempData["DataSourceUsuarios"] = model;
-               // TempData.Keep("DataSourceUsuarios");
+                // TempData.Keep("DataSourceUsuarios");
             }
             return PartialView("_CB_Usuarios", model);
         }
