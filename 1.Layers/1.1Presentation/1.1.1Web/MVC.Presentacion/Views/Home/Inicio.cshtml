@@ -143,12 +143,21 @@
                 }
                 @if (rol.CatProducto || rol.CompraOrdenCompra || rol.Almacen)
                 {
+
                     <div class="col-lg-4 col-md-6">
                         <div class="card text-center">
                             <div class="body">
                                 <p class="m-b-20"><i class="material-icons zmdi-hc-3x col-blue">queue_play_next</i></p>
                                 <span>Siguiente orden de compra</span>
-                                <h3 class="m-b-10 ">@ViewBag.Anden.OrdenCompra</h3>
+                                @if (@ViewBag.Anden != null)
+                                {
+                                    <h3 class="m-b-10 ">@ViewBag.Anden.OrdenCompra</h3>
+                                }
+                                else
+                                {
+                                    <h3 class="m-b-10 ">Sin Orden de Compra</h3>
+
+                                }
                                 <small class="text-muted">Autorizada</small>
                             </div>
                         </div>
@@ -158,13 +167,35 @@
                 {
                     <div class="col-lg-4 col-md-6">
                         <div class="card text-center">
-                            <div class="body">
-                                <span>Nivel de almacén principal (%)</span>
-                                <input type="text" class="knob" value="@ViewBag.Anden.NivelAlmacen" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
+                            @if (@ViewBag.Anden != null)
+                            {
+                                <div class="body">
+
+                                    <span>Nivel de almacén principal (%)</span>
+
+                                    <input type="text" class="knob" value="@ViewBag.Anden.NivelAlmacen" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
+                                    <div>
+                                        <small class="text-muted">@ViewBag.Anden.KilosAlmacen kg.</small>
+                                    </div>
+                                </div>
                                 <div>
                                     <small class="text-muted">@ViewBag.Anden.KilosAlmacen kg.</small>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="body">
+                                    <span>Nivel de almacén principal (%)</span>
+                                    <input type="text" class="knob" value="0" data-skin="tron" readonly data-width="125" data-height="125" data-thickness="0.25" data-angleArc="250" data-angleoffset="-125" data-fgColor="#ff598f">
+                                    <div>
+                                        <small class="text-muted">0 kg.</small>
+                                    </div>
+                                </div>
+                                <div>
+                                    <small class="text-muted">0 kg</small>
+                                </div>
+                            }
+
                         </div>
                     </div>
                 }
@@ -181,7 +212,7 @@
                                     <address>
                                         <strong>Últimas 5 ventas</strong>
                                         <br><strong>Nota importante:</strong>
-                                        <br>Las ventas, son mostradas conforme 
+                                        <br>Las ventas, son mostradas conforme
                                         <br>se sincroniza la información de los puntos de venta.
                                     </address>
                                 </div>
