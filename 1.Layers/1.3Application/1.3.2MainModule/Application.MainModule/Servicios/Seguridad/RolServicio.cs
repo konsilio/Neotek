@@ -174,7 +174,7 @@ namespace Application.MainModule.Servicios.Seguridad
                             lista.CCRecuperado = true;
                     }
                     if (rol.CatInsertarCuentaContable || rol.CatConsultarPuntoVenta || rol.CatConsultarPrecioVentaGas || rol.PedidoModificarPedido
-                        || rol.RequisicionGenerarNueva || rol.CompraGenerarOCompra || rol.ETRegistrarParqueVehicular || rol.CatLiquidarCajaGeneral || rol.CatConsultarCajaGeneral)
+                         || rol.RequisicionGenerarNueva || rol.CompraGenerarOCompra || rol.ETRegistrarParqueVehicular || rol.CatLiquidarCajaGeneral || rol.CatConsultarCajaGeneral)
                     {
                         lista.Reportes = true;
 

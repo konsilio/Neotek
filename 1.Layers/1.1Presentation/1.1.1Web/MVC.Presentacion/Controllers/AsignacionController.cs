@@ -67,9 +67,6 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
-
-
-
         public ActionResult CB_Asignaciones()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -83,11 +80,6 @@ namespace MVC.Presentacion.Controllers
             }
             return PartialView("_CB_Asignaciones", model);
         }
-
-
-      
-
-
     }
 }
 
