@@ -49,15 +49,15 @@ namespace Application.MainModule.Servicios.Mobile
             if (usuario.Roles != null)
             {
                 bool hayLectura = true, esEstacion = true;
-                
-                if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count!=0)
+
+                if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count != 0)
                 {
                     esChofer = true;
                     var operadorDTO = PuntoVentaServicio.ObtenerOperador(idUsuario);
                     var operador = OperadorChoferServicio.Obtener(operadorDTO.IdOperadorChofer);
                     //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
                     var puntoVenta = PuntoVentaServicio.Obtener(operador);
-                    
+
                     if (puntoVenta != null)
                     {
                         var unidadAlmacen = puntoVenta.UnidadesAlmacen;
@@ -74,14 +74,14 @@ namespace Application.MainModule.Servicios.Mobile
                         {
                             hayLectura = true;
                             esChofer = false;
-                        }                        
-                    }                    
+                        }
+                    }
                 }
                 else
                 {
                     hayLectura = true;
                 }
-                    
+
                 foreach (Rol rol in usuario.Roles)
                 {
                     if (rol.AppCompraEntraGas && !_AppCompraEntraGas)
@@ -108,18 +108,18 @@ namespace Application.MainModule.Servicios.Mobile
                         }
                         _AppCompraGasFinalizarDescarga = true;
                     }
-                    if(rol.AppCompraVerOCompra && !_AppCompraVerOCompra)
+                    if (rol.AppCompraVerOCompra && !_AppCompraVerOCompra)
                     {
                         if (hayLectura)
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraVerOCompra"]));
                         }
                         _AppCompraVerOCompra = true;
-                    }                                        
+                    }
                     //Estación Calibacion 
                     if (rol.AppTomaLecturaEstacionCarb && !_AppTomaLecturaEstacionCarb && esChofer && esEstacion)
                     {
-                        
+
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaEstacionCarbInicial"]));
                         if (hayLectura)
                         {
@@ -132,7 +132,8 @@ namespace Application.MainModule.Servicios.Mobile
                     {
 
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaAlmacenPralInicial"]));
-                        if (hayLectura) { 
+                        if (hayLectura)
+                        {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaAlmacenPralFinal"]));
                         }
                         _AppTomaLecturaAlmacenPral = true;
@@ -141,13 +142,14 @@ namespace Application.MainModule.Servicios.Mobile
                     if (rol.AppTomaLecturaPipa && !_AppTomaLecturaPipa && !esChofer)
                     {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaPipaInicial"]));
-                        if (hayLectura) { 
+                        if (hayLectura)
+                        {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaPipaFinal"]));
                         }
                         _AppTomaLecturaPipa = true;
                     }
                     //Camioneta
-                    if (rol.AppTomaLecturaCamionetaCilindro && !_AppTomaLecturaCamionetaCilindro &&  !esChofer)
+                    if (rol.AppTomaLecturaCamionetaCilindro && !_AppTomaLecturaCamionetaCilindro && !esChofer)
                     {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaCamionetaCilindroInicial"]));
                         if (hayLectura)
@@ -164,7 +166,7 @@ namespace Application.MainModule.Servicios.Mobile
                         {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaReporteDelDia"]));
                         }
-                        _AppTomaLecturaReporteDelDia = true;                        
+                        _AppTomaLecturaReporteDelDia = true;
                     }
                     //Auto-consumo Estacion Carb.
                     if (rol.AppAutoconsumoEstacionCarb && !_AppAutoconsumoEstacionCarb)
@@ -197,7 +199,7 @@ namespace Application.MainModule.Servicios.Mobile
                         _AppAutoconsumoPipa = true;
                     }
                     //Calibración Unidad de Gas Estación Carb. 
-                    if(rol.AppCalibracionEstacionCarb && !_AppCalibracionEstacionCarb)
+                    if (rol.AppCalibracionEstacionCarb && !_AppCalibracionEstacionCarb)
                     {
                         if (hayLectura)
                         {
@@ -223,7 +225,7 @@ namespace Application.MainModule.Servicios.Mobile
                         _AppCalibracionCamionetaCilindro = true;
                     }
                     //Recarga - Gas Estación Carb.
-                    if(rol.AppRecargaEstacionCarb && !_AppRecargaEstacionCarb)
+                    if (rol.AppRecargaEstacionCarb && !_AppRecargaEstacionCarb)
                     {
                         if (hayLectura)
                         {
@@ -272,27 +274,27 @@ namespace Application.MainModule.Servicios.Mobile
                         _AppTraspasoPipa = true;
                     }
                     //Diposición de efectivo
-                    if(rol.AppDisposicionEfectivo && !_AppDisposicionEfectivo)
+                    if (rol.AppDisposicionEfectivo && !_AppDisposicionEfectivo)
                     {
                         //if (unidadAlmacen.IdEstacionCarburacion > 0 && unidadAlmacen.IdEstacionCarburacion != 0)
                         //{
-                            
-                            if (hayLectura && esEstacion)
-                            {
-                                lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionAnticipoEstacionCarb"]));
-                                lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
-                            }else
-                            {
-                                if (hayLectura)
-                                {
-                                    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
 
-                                }
+                        if (hayLectura && esEstacion)
+                        {
+                            lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionAnticipoEstacionCarb"]));
+                            lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
+                        }
+                        else
+                        {
+                            if (hayLectura)
+                            {
+                                lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
                             }
+                        }
                         //}
                         //else
                         //{
-                           
+
                         //}
 
                         _AppDisposicionEfectivo = true;
@@ -300,16 +302,18 @@ namespace Application.MainModule.Servicios.Mobile
                     //Punto de venta - Camioneta
                     if (rol.AppCamionetaPuntoVenta && !_AppCamionetaPuntoVenta)
                     {
-                        if (hayLectura) { 
+                        if (hayLectura)
+                        {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCamionetaPuntoVenta"]));
                         }
                         _AppCamionetaPuntoVenta = true;
-                        
+
                     }
                     //Punto de venta - Estacion de carb.
                     if (rol.AppEstacionCarbPuntoVenta && !_AppEstacionCarbPuntoVenta)
                     {
-                        if (hayLectura) { 
+                        if (hayLectura)
+                        {
                             lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbPuntoVenta"]));
                         }
                         _AppEstacionCarbPuntoVenta = true;
