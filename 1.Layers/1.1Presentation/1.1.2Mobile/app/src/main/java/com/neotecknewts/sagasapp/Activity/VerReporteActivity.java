@@ -351,7 +351,7 @@ public class VerReporteActivity extends AppCompatActivity {
                     "<td>[{Cambio}]</td>" +
                     "</tr>";
         }
-        if(ventaDTO.isBonificación()) {
+        if(ventaDTO.isBonificacion()) {
             HtmlReporte += "<tr>" +
                     "<td>Efectivo recibido:</td>" +
                     "<td>[{Efectivo}]</td>" +
@@ -422,7 +422,7 @@ public class VerReporteActivity extends AppCompatActivity {
 
             StringReporte += "\tVenta Credito\n";
         }
-        if(ventaDTO.isBonificación()) {
+        if(ventaDTO.isBonificacion()) {
             StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
                     "\tCambio [{Cambio}]\n";
 

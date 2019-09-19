@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,7 +117,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             startActivity(intent);
         });
         SPuntoVentaActivityCredito.setChecked(ventaDTO.isCredito());
-        SPuntoVentaActivityBonificacion.setChecked(ventaDTO.isBonificación());
+        SPuntoVentaActivityBonificacion.setChecked(ventaDTO.isBonificacion());
         if(ventaDTO.isTieneCredito()){
 
             if (ventaDTO.isCredito()){
@@ -130,8 +131,6 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                 ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
                 SPuntoVentaActivityBonificacion.setVisibility(View.VISIBLE);
 
-                if(SPuntoVentaActivityBonificacion.isChecked()){
-                }
             }
             //SPuntoVentaActivityCredito.setVisibility(View.VISIBLE);
             //TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
@@ -150,10 +149,11 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         BtnPuntoVentaPagarActivityConfirmar.setOnClickListener(v->{
             ventaDTO.setFactura(SPuntoVentaPagarActivityFactura.isChecked());
             ventaDTO.setCredito(SPuntoVentaActivityCredito.isChecked());
+            //ventaDTO.setBonificacion(SPuntoVentaActivityBonificacion.isChecked());
             boolean error = false;
             //Verifica si esta habilitado la venta extraforanea
             presenter.verificarVentaExtraforanea(ventaDTO.getIdCliente(),session.getToken());
-
+            Log.d("VentaDTO", ventaDTO.toString());
             if(!SPuntoVentaActivityCredito.isChecked()) {
                 if(ETPuntoVentaPagarActivityEfectivo.getText().toString().trim().length()>0) {
 
@@ -161,8 +161,10 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                             .getText().toString());
                     if(efectivio<ventaDTO.getTotal()){
                         if(SPuntoVentaActivityBonificacion.isChecked()){
+                            ventaDTO.setBonificacion(true);
                             ventaDTO.setEfectivo(efectivio);
                             ventaDTO.setCambio(0);
+
                         }else{
                         error = true;
                         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
@@ -232,6 +234,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         tabla.agregarFila(lista);
         calcula_total(ventaDTO.getConcepto());
         presenter.puntoVentaAsignado(session.getToken());
+        Log.d("Ventadto2", ventaDTO.toString());
     }
     @Override
     public void calcula_total(List<ConceptoDTO> conceptoDTOS){
@@ -241,10 +244,11 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         }
 
         NumberFormat format = NumberFormat.getCurrencyInstance();
+        ventaDTO.setBonificacion(SPuntoVentaActivityBonificacion.isClickable());
         ventaDTO.setSubtotal(subtotal);
         TVPuntoVentaPagarActivitySubtotal.setText(format.format(subtotal));
 
-        double total = subtotal + (subtotal * 0.19) ;
+        double total = subtotal + (subtotal * 0.16) ;
         double iva = total * 0.16;
         ventaDTO.setIva(iva);
         double total2 = subtotal + iva ;

@@ -36,7 +36,7 @@ public class VentaDTO implements Serializable {
     private boolean Credito;
 
     @SerializedName("Bonificación")
-    private boolean Bonificación;
+    private boolean Bonificacion;
 
     @SerializedName("Efectivo")
     private double Efectivo;
@@ -154,12 +154,12 @@ public class VentaDTO implements Serializable {
         Credito = credito;
     }
 
-    public boolean isBonificación() {
-        return Bonificación;
+    public boolean isBonificacion() {
+        return Bonificacion;
     }
 
-    public void setBonificación(boolean bonificación) {
-        Bonificación = bonificación;
+    public void setBonificacion(boolean bonificacion) {
+        Bonificacion = bonificacion;
     }
 
     public double getEfectivo() {
@@ -288,5 +288,36 @@ public class VentaDTO implements Serializable {
 
     public void setVentaExtraforanea(boolean ventaExtraforanea) {
         VentaExtraforanea = ventaExtraforanea;
+    }
+
+    @Override
+    public String toString() {
+        return "VentaDTO{" +
+                "Concepto=" + Concepto +
+                ", IdCliente=" + IdCliente +
+                ", Subtotal=" + Subtotal +
+                ", Iva=" + Iva +
+                ", Total=" + Total +
+                ", Factura=" + Factura +
+                ", Credito=" + Credito +
+                ", Bonificacion=" + Bonificacion +
+                ", Efectivo=" + Efectivo +
+                ", Fecha='" + Fecha + '\'' +
+                ", Hora='" + Hora + '\'' +
+                ", Cambio=" + Cambio +
+                ", SinNumero=" + SinNumero +
+                ", FolioVenta='" + FolioVenta + '\'' +
+                ", Nombre='" + Nombre + '\'' +
+                ", RFC='" + RFC + '\'' +
+                ", TieneCredito=" + TieneCredito +
+                ", EsVentaGas=" + EsVentaGas +
+                ", RazonSocial='" + RazonSocial + '\'' +
+                ", VentaExtraforanea=" + VentaExtraforanea +
+                ", EsSinNumero=" + EsSinNumero +
+                ", EsBusqueda=" + EsBusqueda +
+                ", EsRegistro=" + EsRegistro +
+                ", Estacion='" + Estacion + '\'' +
+                ", LimiteCreditoCliente=" + LimiteCreditoCliente +
+                '}';
     }
 }

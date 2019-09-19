@@ -66,6 +66,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         Date actual = new Date();
         ventaDTO.setHora(new SimpleDateFormat("hh:mm:ss.SSS").format(actual));
         ventaDTO.setCredito(false);
+        ventaDTO.setBonificacion(false);
         /*SimpleDateFormat s =
                 new SimpleDateFormat("yyyyMMddhhmmss");*/
         SimpleDateFormat s =
@@ -101,8 +102,10 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
 
     @Override
     public void SeguirSinNumero() {
+
         ventaDTO.setIdCliente(Constantes.IdClienteGeneral);
         ventaDTO.setCredito(false);
+        ventaDTO.setBonificacion(true);
         ventaDTO.setFactura(false);
         ventaDTO.setFecha(Utilidades.getCurrentDate(Constantes.FORMATO_FECHA_API));
         ventaDTO.setRFC("");

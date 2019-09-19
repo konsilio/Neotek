@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -99,7 +100,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
 
         adapter = new CamionetasAdapter(cilindrosDTOS);
         RVConfiguracionCamionetasCilindros.setAdapter(adapter);
-
+        Log.d("Verificarform","entra");
     }
 
     @Override
@@ -107,26 +108,32 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         boolean error = false;
         lista_errores = new ArrayList<>();
         boolean flag = false;
-        if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta) {
+        Log.d("Verificarform",flag+"");
+        if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta || EsRecargaCamioneta) {
             //TextView textView;
             for (int x = 0; x < adapter.getItemCount(); x++) {
                 View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
                 EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
                 //textView = view.findViewById(R.id.TVLecturaAlmacenActivityTitulo);
-                if (!editText.getText().toString().equals("") && editText.getText()!=null) {
+                Log.d("if1",flag+"");
+                if (!editText.getText().toString().equals("") && editText.getText()!=null ) {
+                    Log.d("if2",flag+"");
                     if (Integer.parseInt(editText.getText().toString()) <= -1) {
+                        Log.d("if3",flag+"");
                         lista_errores.add("El valor para el cilindo del renglon "+
                                 String.valueOf(x+1)+" es requerido");
                         error = true;
                         break;
                     }else{
                         if(flag) {
-
+                            Log.d("if4",flag+"");
                         }else{
                             if(Integer.parseInt(editText.getText().toString())==0){
                                 flag = false;
+                                Log.d("if5",flag+"");
                             }else {
                                 flag = true;
+                                Log.d("if6",flag+"");
                             }
                         }
 
@@ -140,8 +147,11 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
                 }
             }
         }
+
         if (error || !flag) {
-            if(!flag){
+
+            if(!flag ){
+                Log.d("if7",flag+"");
                 lista_errores.add("Todos los campos están en 0");
             }
             DialogoError(lista_errores);
@@ -163,7 +173,6 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
                 List<CilindrosDTO> cilindrosDTOS = new ArrayList<>();
                 for (int x =0; x<adapter.getItemCount();x++){
                     View view = RVConfiguracionCamionetasCilindros.getLayoutManager().findViewByPosition(x);
-
                     EditText editText =  view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
                     /*int[] datos = new int[2];
                     datos[0] = adapter.getCilindro(x).getIdCilindro();
@@ -182,6 +191,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
 
     public void Registrar(){
         if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta) {
+            Log.d("Verificarform","entra1");
             Intent intent = new Intent(ConfiguracionCamionetaActivity.this,
                     EnviarDartosActivity.class);
             intent.putExtra("EsLecturaInicialCamioneta", EsLecturaInicialCamioneta);
@@ -189,6 +199,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
             intent.putExtra("lecturaCamionetaDTO", lecturaCamionetaDTO);
             startActivity(intent);
         }else if (EsRecargaCamioneta){
+            Log.d("Verificarform","entra2");
             Intent intent = new Intent(ConfiguracionCamionetaActivity.this,
                     EnviarDartosActivity.class);
             intent.putExtra("EsLecturaInicialCamioneta", EsLecturaInicialCamioneta);

@@ -72,6 +72,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
             ventaDTO.setRazonSocial("");
             ventaDTO.setNombre("");
             ventaDTO.setCredito(false);
+            ventaDTO.setBonificacion(false);
             ventaDTO.setFactura(false);
             intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
             intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);

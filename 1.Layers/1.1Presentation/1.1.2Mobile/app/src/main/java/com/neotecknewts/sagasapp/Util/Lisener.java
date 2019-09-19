@@ -983,6 +983,9 @@ public class Lisener{
                     ventaDTO.setCredito(cursor.getInt(
                             cursor.getColumnIndex("Credito"))>0
                     );
+                    ventaDTO.setBonificacion(cursor.getInt(
+                            cursor.getColumnIndex("Bonificacion"))>0
+                    );
                     ventaDTO.setEfectivo(cursor.getDouble(cursor.getColumnIndex("Efectivo")));
                     ventaDTO.setFecha(cursor.getString(cursor.getColumnIndex("Fecha")));
                     ventaDTO.setHora(cursor.getString(cursor.getColumnIndex("Hora")));
