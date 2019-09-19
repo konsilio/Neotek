@@ -396,8 +396,9 @@ namespace Application.MainModule.Flujos
             {
                 var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
                 var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
-
-                return AlmacenRecargaAdapter.ToDTO(pipas, estaciones, tipoMedidores);
+                var almacenesAlternos = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa(), true);
+                return AlmacenRecargaAdapter.ToDTO(pipas, estaciones, almacenesAlternos, tipoMedidores);
+                
             }
             return null;
         }
