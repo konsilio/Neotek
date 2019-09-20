@@ -153,8 +153,16 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
                 }
                 setTitle(R.string.recarga);
-            }else if(EsRecargaPipaInicial || EsRecargaPipaFinal){
-
+            }
+            else if(EsRecargaPipaInicial || EsRecargaPipaFinal){
+                recargaDTO = (RecargaDTO) b.getSerializable("recargaDTO");
+                if(EsPrimeraLectura) {
+                    max_p5000 = 99999;/*recargaDTO.getP5000Salida();*/
+                    p5000 = recargaDTO.getP5000Salida();
+                }else{
+                    max_p5000 = 99999;recargaDTO.getP5000Entrada();
+                    p5000 = recargaDTO.getP5000Entrada();
+                }
                 if(p5000<=0){
                     ETLecturaP5000CantidadNull.setVisibility(View.VISIBLE);
                     NPLecturaP500CantidadLectura.setVisibility(View.GONE);
@@ -163,8 +171,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     NPLecturaP500CantidadLectura.setVisibility(View.VISIBLE);
                 }
                 setTitle(R.string.recarga);
-            }
-            else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
+            }else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
                 autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
                 max_p5000 = 99999;/*autoconsumoDTO.getP5000Salida();*/
                 p5000 = autoconsumoDTO.getP5000Salida();
@@ -558,13 +565,8 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 intent.putExtra("recargaDTO",recargaDTO);
                 startActivity(intent);
             }else if(EsRecargaPipaInicial||EsRecargaPipaFinal){
-                if(EsPrimeraLectura) {
-                    recargaDTO.setP5000Salida(CantidadP500);
-                }else{
-                    recargaDTO.setP5000Entrada(CantidadP500);
-                }
-                intent.putExtra("EsRecargaEstacionInicial",EsRecargaPipaInicial);
-                intent.putExtra("EsRecargaEstacionFinal",EsRecargaPipaFinal);
+                intent.putExtra("EsRecargaPipaInicial",EsRecargaPipaInicial);
+                intent.putExtra("EsRecargaPipaFinal",EsRecargaPipaFinal);
                 intent.putExtra("EsPrimeraLectura",EsPrimeraLectura);
                 intent.putExtra("EsLecturaFinal",false);
                 intent.putExtra("EsLecturaInicial",false);

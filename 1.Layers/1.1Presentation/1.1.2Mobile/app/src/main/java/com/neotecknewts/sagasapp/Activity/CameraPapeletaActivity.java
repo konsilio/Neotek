@@ -94,7 +94,7 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
     public boolean EsLecturaInicialPipa, EsLecturaFinalPipa;
     public boolean EsLecturaInicialAlmacen, EsLecturaFinalAlmacen;
     public boolean EsRecargaEstacionInicial, EsRecargaEstacionFinal, EsPrimeraLectura;
-    public boolean EsRecargaPipaFinal;
+    public boolean EsRecargaPipaFinal, EsRecargaPipaInicial;
     public boolean EsAutoconsumoPipaInicial, EsAutoconsumoPipaFinal;
     public boolean EsTraspasoEstacionInicial, EsTraspasoEstacionFinal, EsPrimeraParteTraspaso;
     public boolean EsCalibracionEstacionInicial, EsCalibracionEstacionFinal;
@@ -299,23 +299,28 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
                 EsRecargaEstacionFinal = extras.getBoolean("EsRecargaEstacionFinal",
                         false);
                 setTitle(R.string.recarga);
-            } else if (extras.getBoolean("EsRecargaPipaFinal")) {
+            } else if (extras.getBoolean("EsRecargaPipaFinal")||
+                    extras.getBoolean("EsRecargaPipaInicial")) {
                 recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
                 cantidadFotos = recargaDTO.getCantidadFotosEntrada();
-                EsRecargaPipaFinal = extras.getBoolean("EsRecargaPipaFinal");
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
                 EsLecturaInicialPipa = false;
                 EsLecturaFinalPipa = false;
                 EsLecturaInicialAlmacen = false;
                 EsLecturaFinalAlmacen = false;
-                EsRecargaEstacionInicial = false;
-                EsRecargaEstacionFinal = false;
+                //EsRecargaEstacionInicial = false;
+                //EsRecargaEstacionFinal = false;
+                EsRecargaPipaInicial = extras.getBoolean("EsRecargaPipaInicial",
+                        false);
+                EsRecargaPipaFinal = extras.getBoolean("EsRecargaPipaFinal",
+                        false);
                // textViewTitulo.setText("Fotografia " + recargaDTO.getNombreMedidorEntrada());
                 setTitle(R.string.recarga);
             } else if (extras.getBoolean("EsAutoconsumoPipaInicial") ||
                     extras.getBoolean("EsAutoconsumoPipaFinal")) {
                 EsRecargaPipaFinal = false;
+                EsRecargaPipaInicial= false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
                 EsLecturaInicialPipa = false;
@@ -333,6 +338,7 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
             } else if (extras.getBoolean("EsTraspasoEstacionInicial", false) ||
                     extras.getBoolean("EsTraspasoEstacionFinal", false)) {
                 EsRecargaPipaFinal = false;
+                EsRecargaPipaInicial =false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
                 EsLecturaInicialPipa = false;
@@ -353,6 +359,7 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
             } else if (extras.getBoolean("EsCalibracionEstacionInicial", false) ||
                     extras.getBoolean("EsCalibracionEstacionFinal", false)) {
                 EsRecargaPipaFinal = false;
+                EsRecargaPipaInicial = false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
                 EsLecturaInicialPipa = false;
@@ -378,6 +385,7 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
             } else if (extras.getBoolean("EsCalibracionPipaInicial", false) ||
                     extras.getBoolean("EsCalibracionPipaFinal", false)) {
                 EsRecargaPipaFinal = false;
+                EsRecargaPipaInicial = false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
                 EsLecturaInicialPipa = false;
@@ -524,7 +532,6 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
                 if (papeleta) {
                     papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 } else if (iniciar) {
-
                     iniciarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
                 } else if (finalizar) {
                     Log.w("Boton", "finalizar" + cantidadFotos);
@@ -542,12 +549,13 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
                     Log.w("Lectura Almacen", "finalizar" + cantidadFotos);
                     lecturaAlmacenDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 } else if (EsRecargaEstacionInicial || EsRecargaEstacionFinal) {
-                    Log.v("Recarga estación", "finalizar " + cantidadFotos);
+                    Log.v("Recarga estación1", "finalizar " + cantidadFotos);
                     recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
-                } else if (EsRecargaPipaFinal) {
-                    Log.v("Recarga estación", "finalizar " + cantidadFotos);
-                    recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
-                } else if (EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal) {
+                } else if (EsRecargaPipaFinal || EsRecargaPipaInicial) {
+                    Log.d("recargapipafinalizar", "finalizar " + cantidadFotos);
+                        Log.v("Recarga estación", "finalizar " + cantidadFotos);
+                        recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                }else if (EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal) {
                     Log.v("Autoconsumo pipa", "finalizar " + cantidadFotos);
                     autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 } else if (EsTraspasoEstacionInicial || EsTraspasoEstacionFinal) {
@@ -621,10 +629,10 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
                     lecturaAlmacenDTO.getImagenesURI().add(new URI(imageUri.toString()));
                     startActivity();
                 } else if (EsRecargaEstacionInicial || EsRecargaEstacionFinal) {
-                    Log.w("Recarga estación", "finalizar" + cantidadFotos);
+                    Log.w("Recarga estación1", "finalizar" + cantidadFotos);
                     recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
                     startActivityRecarga();
-                } else if (EsRecargaPipaFinal) {
+                } else if (EsRecargaPipaFinal || EsRecargaPipaInicial) {
                     Log.w("Recarga estación", "finalizar" + cantidadFotos);
                     recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
                     startActivityRecarga();
@@ -817,7 +825,16 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
             intent.putExtra("EsRecargaEstacionFinal", EsRecargaEstacionFinal);
             intent.putExtra("recargaDTO", recargaDTO);
             startActivity(intent);
-        } else if (EsRecargaPipaFinal) {
+        }else if (EsRecargaPipaInicial) {
+            Log.d("recargapipasubir", "si entra");
+            Intent intent = new Intent(com.neotecknewts.sagasapp.Activity.CameraPapeletaActivity.this,
+                    SubirImagenesActivity.class);
+            intent.putExtra("EsRecargaPipaInicial", EsRecargaPipaInicial);
+            intent.putExtra("EsRecargaPipaFinal", EsRecargaPipaFinal);
+            intent.putExtra("recargaDTO", recargaDTO);
+            startActivity(intent);
+        }
+        else if (EsRecargaPipaFinal) {
             Intent intent = new Intent(com.neotecknewts.sagasapp.Activity.CameraPapeletaActivity.this,
                     SubirImagenesActivity.class);
             intent.putExtra("recargaDTO", recargaDTO);

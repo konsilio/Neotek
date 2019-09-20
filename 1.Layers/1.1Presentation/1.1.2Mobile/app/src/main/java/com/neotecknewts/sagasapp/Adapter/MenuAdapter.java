@@ -229,6 +229,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 }
                 else if(menuItem.getName().equals("Pipa (Inicial)") &&
                         menuItem.getHeaderMenu().equals("Recarga - Gas")){
+                    Log.d("recargapipamenuadapter", "si entro");
                     Intent intent = new Intent(view.getContext(),
                             RecargaPipaActivity.class);
                     intent.putExtra("EsRecargaPipaInicial",true);

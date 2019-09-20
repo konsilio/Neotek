@@ -301,6 +301,18 @@ public class DatosRecargaDto extends RespuestaDTO implements Serializable {
         public void setIdTipoMedidor(int idTipoMedidor) {
             IdTipoMedidor = idTipoMedidor;
         }
+
+        @Override
+        public String toString() {
+            return "PipasDTO{" +
+                    "Medidor=" + Medidor +
+                    ", IdAlmacenGas=" + IdAlmacenGas +
+                    ", NombreAlmacen='" + NombreAlmacen + '\'' +
+                    ", PorcentajeMedidor=" + PorcentajeMedidor +
+                    ", CantidadP5000=" + CantidadP5000 +
+                    ", IdTipoMedidor=" + IdTipoMedidor +
+                    '}';
+        }
     }
 
     public class EstacionesDTO extends RespuestaDTO implements Serializable{

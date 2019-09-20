@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -90,6 +91,10 @@ public class CameraLecturaActivity extends AppCompatActivity {
                     false);
             EsRecargaEstacionFinal = b.getBoolean("EsRecargaEstacionFinal",
                     false);
+            EsRecargaPipaInicial = b.getBoolean("EsRecargaPipaInicial",
+                    false);
+            EsRecargaPipaFinal = b.getBoolean("EsRecargaPipaFinal",
+                    false);
             EsPrimeraLectura = b.getBoolean("EsPrimeraLectura",false);
             recargaDTO = (RecargaDTO) b.getSerializable("recargaDTO");
             EsAutoconsumoEstacionFinal = b.getBoolean("EsAutoconsumoEstacionFinal",false);
@@ -162,8 +167,6 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }else{
                 TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)
                         +" - " +getString(R.string.Estacion));
-                NombreImagen = String.valueOf(recargaDTO.getIdCAlmacenGasSalida())+"|"+
-                        String.valueOf(recargaDTO.getIdTipoMedidorSalida())+"|"+"Inicial";
             }
             setTitle(R.string.recarga);
 
@@ -347,9 +350,11 @@ public class CameraLecturaActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }else if(EsRecargaEstacionInicial|| EsRecargaEstacionFinal){
+            Log.d("getimagenesuriestacion", recargaDTO.toString());
             try {
                 //recargaDTO.getImagenes().add(imageurl);
                 recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                Log.d("recargaestacion", "entraenrecarga");
                 if (EsPrimeraLectura) {
                     Intent intent = new Intent(CameraLecturaActivity.this,
                         LecturaP5000Activity.class);
@@ -372,7 +377,36 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }catch (URISyntaxException e){
                 e.printStackTrace();
             }
-        }else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
+        }else if(EsRecargaPipaInicial|| EsRecargaPipaFinal){
+            Log.d("getimagenesuri", recargaDTO.toString());
+            try {
+                //recargaDTO.getImagenes().add(imageurl);
+                recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                Log.d("recargaestacion", "entraenrecarga");
+                if (EsPrimeraLectura) {
+                    Intent intent = new Intent(CameraLecturaActivity.this,
+                            LecturaP5000Activity.class);
+                    intent.putExtra("EsRecargaPipaInicial",EsRecargaPipaInicial);
+                    intent.putExtra("EsRecargaPipaFinal",EsRecargaPipaFinal);
+                    intent.putExtra("recargaDTO",recargaDTO);
+                    intent.putExtra("EsPrimeraLectura",false);
+                    startActivity(intent);
+                }else{
+                    //Ir a la lectura del medidor
+                    Intent intent = new Intent(CameraLecturaActivity.this,
+                            CapturaPorcentajeActivity.class);
+                    intent.putExtra("EsRecargaPipaInicial",EsRecargaPipaInicial);
+                    intent.putExtra("EsRecargaPipaFinal",EsRecargaPipaFinal);
+                    intent.putExtra("recargaDTO",recargaDTO);
+                    intent.putExtra("EsPrimeraLectura",EsPrimeraLectura);
+                    startActivity(intent);
+
+                }
+            }catch (URISyntaxException e){
+                e.printStackTrace();
+            }
+        }
+        else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
             try {
                 //autoconsumoDTO.getImagenes().add(imageurl);
                 autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));

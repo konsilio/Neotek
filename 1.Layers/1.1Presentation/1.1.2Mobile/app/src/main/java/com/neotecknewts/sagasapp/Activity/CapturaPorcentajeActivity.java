@@ -245,9 +245,14 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 setTitle(R.string.recarga);
             }else if(extras.getBoolean("EsRecargaPipaFinal") ||
                     extras.getBoolean("EsRecargaPipaInicial")){
+                EsPrimeraLectura = extras.getBoolean("EsPrimeraLectura",false);
                 EsRecargaPipaFinal = extras.getBoolean("EsRecargaPipaFinal",false);
                 EsRecargaPipaInicial = extras.getBoolean("EsRecargaPipaInicial",false);
                 recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
+                textViewTitulo.setText("Recarga gas");
+                textView.setText("Registra el porcentaje de la pipa "+
+                        recargaDTO.getNombreMedidorEntrada()
+                );
                 setTitle(R.string.recarga);
             }else if(extras.getBoolean("EsAutoconsumoPipaInicial")|| extras.getBoolean("EsAutoconsumoPipaFinal")){
                 EsAutoconsumoPipaInicial = extras.getBoolean("EsAutoconsumoPipaInicial",false);
@@ -480,8 +485,9 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 intent.putExtra("EsRecargaEstacionFinal", EsRecargaEstacionFinal);
                 intent.putExtra("EsPrimeraLectura", EsPrimeraLectura);
                 intent.putExtra("recargaDTO", recargaDTO);
-            } else if (EsRecargaPipaFinal) {
+            } else if (EsRecargaPipaFinal || EsRecargaPipaInicial) {
                 intent.putExtra("EsRecargaPipaFinal", true);
+                intent.putExtra("EsRecargaPipaInicial", true);
                 intent.putExtra("EsLecturaFinal", false);
                 intent.putExtra("EsLecturaInicialPipa", false);
                 intent.putExtra("EsLecturaFinalPipa", false);

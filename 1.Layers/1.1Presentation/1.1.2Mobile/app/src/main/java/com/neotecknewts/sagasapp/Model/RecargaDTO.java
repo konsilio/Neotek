@@ -44,6 +44,32 @@ public class RecargaDTO implements Serializable {
     @SerializedName("Imagenes")
     private List<String> Imagenes;
 
+    @Override
+    public String toString() {
+        return "RecargaDTO{" +
+                "IdCAlmacenGasSalida=" + IdCAlmacenGasSalida +
+                ", IdCAlmacenGasEntrada=" + IdCAlmacenGasEntrada +
+                ", IdTipoMedidorSalida=" + IdTipoMedidorSalida +
+                ", IdTipoMedidorEntrada=" + IdTipoMedidorEntrada +
+                ", IdTipoEvento=" + IdTipoEvento +
+                ", P5000Salida=" + P5000Salida +
+                ", P5000Entrada=" + P5000Entrada +
+                ", ClaveOperacion='" + ClaveOperacion + '\'' +
+                ", Imagenes=" + Imagenes +
+                ", ImagenesUri=" + ImagenesUri +
+                ", Cilindros=" + Cilindros +
+                ", NombreMedidorEntrada='" + NombreMedidorEntrada + '\'' +
+                ", NombreMedidorSalida='" + NombreMedidorSalida + '\'' +
+                ", ProcentajeEntrada=" + ProcentajeEntrada +
+                ", ProcentajeSalida=" + ProcentajeSalida +
+                ", CantidadFotosEntrada=" + CantidadFotosEntrada +
+                ", CantidadFotosSalida=" + CantidadFotosSalida +
+                ", FechaApliacacion='" + FechaApliacacion + '\'' +
+                ", NombreEstacionSalida='" + NombreEstacionSalida + '\'' +
+                ", NombreEstacionEntrada='" + NombreEstacionEntrada + '\'' +
+                '}';
+    }
+
     @SerializedName("ImagenesUri")
     private List<URI> ImagenesUri;
 
