@@ -56,6 +56,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
     public CalibracionDTO calibracionDTO;
 
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
+    public boolean EsRecargaPipaInicial, EsRecargaPipaFinal;
     public boolean EsAutoconsumoEstacionInicial,EsAutoconsumoEstacionFinal;
     public boolean EsAutoconsumoInvetarioInicial, EsAutoconsumoInventarioFinal;
     public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
@@ -167,6 +168,20 @@ public class CameraLecturaActivity extends AppCompatActivity {
             setTitle(R.string.recarga);
 
         }
+        if(EsRecargaPipaInicial || EsRecargaPipaFinal){
+            if(EsPrimeraLectura){
+                TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_pipa)
+                        +" - " +getString(R.string.Pipa));
+                NombreImagen = String.valueOf(recargaDTO.getIdCAlmacenGasEntrada())+"|"+
+                        String.valueOf(recargaDTO.getIdTipoMedidorEntrada())+"|"+"Inicial";
+            }else{
+                TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_pipa)
+                        +" - " +getString(R.string.Estacion));
+            }
+            setTitle(R.string.recarga);
+
+        }
+
         if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)

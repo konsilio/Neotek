@@ -117,36 +117,36 @@ public class RecargaCamionetaActivity extends AppCompatActivity implements Recar
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(DatosTomaLecturaDto!=null){
-                    for (int x=0;x<DatosTomaLecturaDto.getAlmacenesAlternosDTOS().size();x++){
+                    for (int x=0;x<DatosTomaLecturaDto.getAlmaceneDTO().size();x++){
                         if(parent.getItemAtPosition(position).toString().equals(
-                                DatosTomaLecturaDto.getAlmacenesAlternosDTOS().get(x).getNombreAlmacen()
+                                DatosTomaLecturaDto.getAlmaceneDTO().get(x).getNombreAlmacen()
                         )) {
                             recargaDTO.setIdCAlmacenGasSalida(
-                                    DatosTomaLecturaDto.getAlmacenesAlternosDTOS().get(x)
+                                    DatosTomaLecturaDto.getAlmaceneDTO().get(x)
                                     .getIdAlmacenGas()
                             );
                             recargaDTO.setIdTipoMedidorSalida(
-                                    DatosTomaLecturaDto.getAlmacenesAlternosDTOS().get(x)
+                                    DatosTomaLecturaDto.getAlmaceneDTO().get(x)
                                     .getIdTipoMedidor()
                             );
                             recargaDTO.setP5000Salida(
-                                    DatosTomaLecturaDto.getAlmacenesAlternosDTOS().get(x)
+                                    DatosTomaLecturaDto.getAlmaceneDTO().get(x)
                                     .getCantidadP5000()
                             );
                             recargaDTO.setNombreEstacionSalida(
-                                    DatosTomaLecturaDto.getAlmacenesAlternosDTOS().get(x)
+                                    DatosTomaLecturaDto.getAlmaceneDTO().get(x)
                                     .getNombreAlmacen()
                             );
                             recargaDTO.setNombreMedidorSalida(
-                                    DatosTomaLecturaDto.getAlmacenesAlternosDTOS().get(x)
+                                    DatosTomaLecturaDto.getAlmaceneDTO().get(x)
                                     .getMedidor().getNombreTipoMedidor()
                             );
                             recargaDTO.setCantidadFotosSalida(
-                                    DatosTomaLecturaDto.getAlmacenesAlternosDTOS().get(x)
+                                    DatosTomaLecturaDto.getAlmaceneDTO().get(x)
                                     .getMedidor().getCantidadFotografias()
                             );
                             recargaDTO.setProcentajeSalida(
-                                    DatosTomaLecturaDto.getAlmacenesAlternosDTOS().get(x)
+                                    DatosTomaLecturaDto.getAlmaceneDTO().get(x)
                                     .getPorcentajeMedidor()
                             );
 
@@ -231,10 +231,10 @@ public class RecargaCamionetaActivity extends AppCompatActivity implements Recar
                         list_camionetas
                 ));
             }
-            if(data.getAlmacenesAlternosDTOS().size()>0){
-                list_estaciones = new String[data.getAlmacenesAlternosDTOS().size()];
-                for (int x=0;x<data.getAlmacenesAlternosDTOS().size();x++){
-                    list_estaciones[x] = data.getAlmacenesAlternosDTOS().get(x)
+            if(data.getAlmaceneDTO().size()>0){
+                list_estaciones = new String[data.getAlmaceneDTO().size()];
+                for (int x=0;x<data.getAlmaceneDTO().size();x++){
+                    list_estaciones[x] = data.getAlmaceneDTO().get(x)
                     .getNombreAlmacen();
                 }
                 SRecargaCamionetaActivityEstacion.setAdapter(

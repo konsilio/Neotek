@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
+import com.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Model.DatosRecargaDto;
 import com.neotecknewts.sagasapp.Model.RecargaDTO;
@@ -27,6 +31,8 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
     Spinner SRecargaPipaActivityAlmacen,SRecargaPipaActivityPipa,
             SRecargaPipaActivityMedidor;
     Button BtnRecargaPipaActivityAceptar;
+    public DatosTomaLecturaDto DatosTomaLecturaDtoList;
+    public LecturaAlmacenDTO lecturaAlmacenDTO;
 
     boolean EsRecargaPipaInicial,EsRecargaPipaFinal;
     RecargaDTO recargaDTO;
@@ -44,7 +50,6 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
         if(bundle!=null){
             EsRecargaPipaInicial = bundle.getBoolean("EsRecargaPipaInicial",false);
             EsRecargaPipaFinal = bundle.getBoolean("EsRecargaPipaFinal",false);
-
         }
         recargaDTO = new RecargaDTO();
         session = new Session(RecargaPipaActivity.this);
@@ -72,30 +77,30 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
         SRecargaPipaActivityAlmacen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(datosRecargaDto.getEstacionesDTOS().size()>0) {
-                    for (int x=0;x<datosRecargaDto.getEstacionesDTOS().size();x++) {
+                if(datosRecargaDto.getAlmaceneDTO().size()>0) {
+                    for (int x=0;x<datosRecargaDto.getAlmaceneDTO().size();x++) {
                         if(parent.getItemAtPosition(position).toString().equals(
-                                datosRecargaDto.getEstacionesDTOS().get(x).getNombreAlmacen()
+                                datosRecargaDto.getAlmaceneDTO().get(x).getNombreAlmacen()
                         )) {
                             recargaDTO.setIdCAlmacenGasSalida(
-                                    datosRecargaDto.getEstacionesDTOS().get(x).getIdAlmacenGas()
+                                    datosRecargaDto.getAlmaceneDTO().get(x).getIdAlmacenGas()
                             );
                             recargaDTO.setP5000Salida(
-                                    datosRecargaDto.getEstacionesDTOS().get(x).getCantidadP5000()
+                                    datosRecargaDto.getAlmaceneDTO().get(x).getCantidadP5000()
                             );
                             recargaDTO.setProcentajeSalida(
-                                    datosRecargaDto.getEstacionesDTOS().get(x)
+                                    datosRecargaDto.getAlmaceneDTO().get(x)
                                             .getPorcentajeMedidor()
                             );
                             recargaDTO.setNombreMedidorSalida(
-                                    datosRecargaDto.getEstacionesDTOS().get(x)
+                                    datosRecargaDto.getAlmaceneDTO().get(x)
                                             .getMedidor().getNombreTipoMedidor()
                             );
                             recargaDTO.setIdTipoMedidorSalida(
-                                    datosRecargaDto.getEstacionesDTOS().get(x).getIdTipoMedidor()
+                                    datosRecargaDto.getAlmaceneDTO().get(x).getIdTipoMedidor()
                             );
                             recargaDTO.setCantidadFotosSalida(
-                                    datosRecargaDto.getEstacionesDTOS().get(x).getMedidor()
+                                    datosRecargaDto.getAlmaceneDTO().get(x).getMedidor()
                                             .getCantidadFotografias()
                             );
                         }
@@ -110,6 +115,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
                 recargaDTO.setNombreMedidorSalida("");
             }
         });
+
 
         SRecargaPipaActivityPipa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -251,7 +257,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
         }else{
             if(EsRecargaPipaInicial) {
                 Intent intent = new Intent(RecargaPipaActivity.this,
-                        SubirImagenesActivity.class);
+                        LecturaP5000Activity.class);
                 intent.putExtra("recargaDTO", recargaDTO);
                 intent.putExtra("EsRecargaPipaInicial", EsRecargaPipaInicial);
                 intent.putExtra("EsRecargaPipaFinal", EsRecargaPipaFinal);
@@ -263,6 +269,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
                 intent.putExtra("EsRecargaPipaInicial", EsRecargaPipaInicial);
                 intent.putExtra("EsRecargaPipaFinal", EsRecargaPipaFinal);
                 startActivity(intent);
+
             }
         }
     }
@@ -271,7 +278,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
     public void onSuccessLista(DatosRecargaDto data) {
         if(data!=null){
             datosRecargaDto = data;
-            lista_almacen = new String[data.getEstacionesDTOS().size()];
+            lista_almacen = new String[data.getAlmaceneDTO().size()];
             lista_pipa = new String[data.getPipasDTOS().size()];
             lista_medidor = new String[data.getMedidorDTOS().size()];
             if(!data.getMedidorDTOS().isEmpty()){
@@ -284,9 +291,9 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
                         lista_medidor
                 ));
             }
-            if(!data.getEstacionesDTOS().isEmpty()){
-                for (int x=0;x<data.getEstacionesDTOS().size();x++){
-                    lista_almacen[x] = data.getEstacionesDTOS().get(x).getNombreAlmacen();
+            if(!data.getAlmaceneDTO().isEmpty()){
+                for (int x=0;x<data.getAlmaceneDTO().size();x++){
+                    lista_almacen[x] = data.getAlmaceneDTO().get(x).getNombreAlmacen();
                 }
                 SRecargaPipaActivityAlmacen.setAdapter(new ArrayAdapter<>(
                                 this,

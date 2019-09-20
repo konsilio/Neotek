@@ -10,7 +10,7 @@ public class DatosRecargaDto extends RespuestaDTO implements Serializable {
 
 
     @SerializedName("AlmacenesAlternos")
-    private List<AlmacenesAlternosDTO> almacenesAlternosDTOS;
+    private List<AlmacenesDTO> almacenesDTO;
 
     @SerializedName("Camionetas")
     private List<CamionetasDTO> camionetasDTOS;
@@ -25,19 +25,19 @@ public class DatosRecargaDto extends RespuestaDTO implements Serializable {
     private List<MedidorDTO> medidorDTOS;
 
     public DatosRecargaDto() {
-        this.almacenesAlternosDTOS = new ArrayList<>();
+        this.almacenesDTO = new ArrayList<>();
         this.camionetasDTOS = new ArrayList<>();
         this.pipasDTOS = new ArrayList<>();
         this.estacionesDTOS = new ArrayList<>();
         this.medidorDTOS = new ArrayList<>();
     }
 
-    public List<AlmacenesAlternosDTO> getAlmacenesAlternosDTOS() {
-        return almacenesAlternosDTOS;
+    public List<AlmacenesDTO> getAlmaceneDTO() {
+        return almacenesDTO;
     }
 
-    public void setAlmacenesAlternosDTOS(List<AlmacenesAlternosDTO> almacenesAlternosDTOS) {
-        this.almacenesAlternosDTOS = almacenesAlternosDTOS;
+    public void setAlmacenesDTO(List<AlmacenesDTO> almacenesDTO) {
+        this.almacenesDTO = almacenesDTO;
     }
 
     public List<CamionetasDTO> getCamionetasDTOS() {
@@ -72,7 +72,7 @@ public class DatosRecargaDto extends RespuestaDTO implements Serializable {
         this.medidorDTOS = medidorDTOS;
     }
 
-    public class AlmacenesAlternosDTO extends RespuestaDTO implements Serializable {
+    public class AlmacenesDTO extends RespuestaDTO implements Serializable {
         @SerializedName("Medidor")
         private MedidorDTO Medidor;
 
@@ -137,6 +137,18 @@ public class DatosRecargaDto extends RespuestaDTO implements Serializable {
 
         public void setIdTipoMedidor(int idTipoMedidor) {
             IdTipoMedidor = idTipoMedidor;
+        }
+
+        @Override
+        public String toString() {
+            return "AlmacenesDTO{" +
+                    "Medidor=" + Medidor +
+                    ", IdAlmacenGas=" + IdAlmacenGas +
+                    ", NombreAlmacen='" + NombreAlmacen + '\'' +
+                    ", PorcentajeMedidor=" + PorcentajeMedidor +
+                    ", CantidadP5000=" + CantidadP5000 +
+                    ", IdTipoMedidor=" + IdTipoMedidor +
+                    '}';
         }
     }
 
@@ -356,6 +368,18 @@ public class DatosRecargaDto extends RespuestaDTO implements Serializable {
 
         public void setIdTipoMedidor(int idTipoMedidor) {
             IdTipoMedidor = idTipoMedidor;
+        }
+
+        @Override
+        public String toString() {
+            return "EstacionesDTO{" +
+                    "Medidor=" + Medidor +
+                    ", IdAlmacenGas=" + IdAlmacenGas +
+                    ", NombreAlmacen='" + NombreAlmacen + '\'' +
+                    ", PorcentajeMedidor=" + PorcentajeMedidor +
+                    ", CantidadP5000=" + CantidadP5000 +
+                    ", IdTipoMedidor=" + IdTipoMedidor +
+                    '}';
         }
     }
 }

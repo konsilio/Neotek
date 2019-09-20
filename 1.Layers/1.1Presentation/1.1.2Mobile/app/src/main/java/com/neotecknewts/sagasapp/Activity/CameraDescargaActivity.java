@@ -570,7 +570,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            Log.d("Imagen", papeletaDTO.getImagenes()+"");
+          //  Log.d("Imagen", papeletaDTO.getImagenes()+"");
             //se pone visible el layout para tomar la siguiente fotografia
             layoutTitle.setVisibility(View.VISIBLE);
             layoutCameraButton.setVisibility(View.VISIBLE);
