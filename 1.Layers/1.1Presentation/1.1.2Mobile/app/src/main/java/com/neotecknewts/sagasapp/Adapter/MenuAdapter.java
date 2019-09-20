@@ -351,7 +351,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 }else if( menuItem.getName().equals("Estación Carburación")){
                     boolean esAnticipo = menuItem.getHeaderMenu().equals("Disposición de efectivo - Anticipo"),
                             esCorte = menuItem.getHeaderMenu().equals("Disposición de efectivo - Corte de caja");
-
+                    Log.d("adapteranticipo","si entra");
                     Intent intent = new Intent(view.getContext(), AnticipoEstacionCarburacionActivity.class);
                     intent.putExtra("EsAnticipo", esAnticipo);
                     intent.putExtra("EsCorte", esCorte);

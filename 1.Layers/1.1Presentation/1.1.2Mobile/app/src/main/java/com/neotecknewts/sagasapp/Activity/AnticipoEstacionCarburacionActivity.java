@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Adapter.EstacionesAdatper;
@@ -36,6 +37,7 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
 
         if(bundle!= null){
             EsAnticipo = bundle.getBoolean("EsAnticipo",false);
+            Log.d("bundleanticipo", "si entra");
             EsCorte = bundle.getBoolean("EsCorte",false);
         }
 
@@ -55,8 +57,10 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
         presenter.getEstaciones(session.getToken());
 
         setTitle((EsCorte)? getString(R.string.corte_de_caja): getString(R.string.Anticipo));
-
-        presenter.checkLecturas(session.getToken());
+        if(EsCorte){
+            presenter.checkLecturas(session.getToken());
+        }
+        //presenter.checkLecturas(session.getToken());
 
     }
 
@@ -142,6 +146,7 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
                 );
             }
             DatosEstacionesDTO header = new DatosEstacionesDTO();
+            Log.d("anticipoestacionesdatos", "entro");
             header.setNombreCAlmacen(getString(R.string.selecciona_la_estacion_de_carburacion));
             list.add(0,header);
             EstacionesAdatper adatper = new EstacionesAdatper(this,list,
