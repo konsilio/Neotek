@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.neotecknewts.sagasapp.Model.VentaDTO;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Model.DatosReporteDTO;
 import com.neotecknewts.sagasapp.Model.ReporteDto;
@@ -48,6 +49,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
     public String[] reporte_con_formato;
     public String[] datos;
     public String txt_date;
+    VentaDTO ventaDTO;
 
     public String tanquestxt;
     public String tanqueshtml;
@@ -262,7 +264,10 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "Importe contado:" +
                         "\t $ [{Importe-contado}] \n" +
                         "Importe credito:" +
-                        "\t $ [{Importe-credito}]";
+                        "\t $ [{Importe-credito}]" +
+                        "Bonificación:" +
+                        "\t [{Bonificacion}]";
+
 
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{Elemento}]",
@@ -308,6 +313,12 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "[{Importe-credito}]",
                         String.valueOf(reporteDTO.getImporteCredito())
                 );
+
+                formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
+                        "[{Bonificacion}]",
+                        String.valueOf(reporteDTO.isBonificacion())
+                );
+                Log.d("bonificacionreporte",reporteDTO.isBonificacion()+"");
 
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{Importe-credito}]",
@@ -376,6 +387,10 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td>Importe credito: </td>" +
                         "<td>$ [{Importe-credito}]</td>" +
                         "</tr>" +
+                       "<tr>" +
+                       "<td>Bonificación: </td>" +
+                       "<td>[{Bonificacion}]</td>" +
+                       "</tr>" +
                         "</tbody>" +
                         "</table>" +
                         "</div>" +
@@ -427,6 +442,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "[{Importe-credito}]",
                         String.valueOf(reporteDTO.getImporteCredito())
                 );
+                formato_reporte_pipa_html = formato_reporte_pipa_html.replace(
+                        "[{Bonificacion}]",
+                        String.valueOf(reporteDTO.isBonificacion())
+                );
+                Log.d("bonificacionreporte",reporteDTO.isBonificacion()+"");
                 Log.d("Reporte", "pre html: "+formato_reporte_pipa_html.replace("[{Elemento}]",
                         reporteDTO.getEstacion()));
                 reporte_con_formato = new String[2];
@@ -484,7 +504,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                 "\t $ [{importe-contado}]\n" +
 
                                 "Importe credito: " +
-                                "\t $ [{importe-credito}]\n";
+                                "\t $ [{importe-credito}]\n" +
+
+                                "Bonifiacion: " +
+                                "\t[{Bonificacion}]\n"
+                        ;
                 formato_reporte_camioneta_text = formato_reporte_camioneta_text.replace(
                         "[{Elemento}]",
                         reporteDTO.getEstacion()
@@ -561,6 +585,10 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "[{importe-credito}]",
                         String.valueOf(reporteDTO.getImporteCredito())
                 );
+                formato_reporte_camioneta_text = formato_reporte_camioneta_text.replace(
+                        "[{Bonificacion}]",
+                        String.valueOf(reporteDTO.isBonificacion())
+                );
 
                 String formato_reporte_camioneta_html = "<body>" +
                         "<h4>Reporte: [{Elemento}]</h4>" +
@@ -625,13 +653,17 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td>Importe credito: </td>" +
                         "<td>$ [{importe-credito}]</td>" +
                         "</tr>" +
+                        "<tr>" +
+                        "<td>Bonificacion: </td>" +
+                        "<td>[{Bonificacion}]</td>" +
+                        "</tr>" +
                         "</tbody>" +
                         "</table>" +
                         "</div>" +
                         "</body>";
                 formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
-                        "[{Elemento}]",
-                        reporteDTO.getEstacion()
+                        "[{Bonificacion}]",
+                        reporteDTO.isBonificacion() +""
                 );
                 formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
                         "[{ClaveReporte}]",
@@ -711,7 +743,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "[{importe-credito}]",
                         String.valueOf(reporteDTO.getImporteCredito())
                 );
-
+                formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
+                        "[{Bonificacion}]",
+                        String.valueOf(reporteDTO.isBonificacion())
+                );
+                Log.d("bonificacionreporte",reporteDTO.isBonificacion()+"");
                 reporte_con_formato = new String[2];
                 reporte_con_formato[0] = formato_reporte_camioneta_text;
                 reporte_con_formato[1] = formato_reporte_camioneta_html;
@@ -771,7 +807,9 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "Importe contado:" +
                         "\t $ [{Importe-contado}] \n" +
                         "Importe credito:" +
-                        "\t $ [{Importe-credito}]";
+                        "\t $ [{Importe-credito}]"+
+                        "Bonificacion:" +
+                        "\t[{Bonificacion}]";
                 String formato_reporte_pipa_html = "<body>" +
                         "<h4>Reporte: [{Elemento}]</h4>" +
                         "<div>" +
@@ -833,6 +871,10 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<tr>" +
                         "<td>Importe credito: </td>" +
                         "<td>$ [{Importe-credito}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>Bonificacion: </td>" +
+                        "<td>[{Bonificacion}]</td>" +
                         "</tr>" +
                         "</tbody>" +
                         "</table>" +
@@ -946,6 +988,10 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<tr>" +
                         "<td>Importe credito: </td>" +
                         "<td>$ [{importe-credito}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>Bonificacion: </td>" +
+                        "<td>[{Bonificacion}]</td>" +
                         "</tr>" +
                         "</tbody>" +
                         "</table>" +

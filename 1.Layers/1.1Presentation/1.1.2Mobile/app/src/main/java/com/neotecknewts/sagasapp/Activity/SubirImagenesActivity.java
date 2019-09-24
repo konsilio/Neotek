@@ -489,7 +489,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     e.printStackTrace();
                 }
             }
-        }else if(EsRecargaPipaFinal){
+        }else if(EsRecargaPipaInicial || EsRecargaPipaFinal){
             for (int i= 0; i<recargaDTO.getImagenesUri().size();i++){
                 try {
                     Uri uri = Uri.parse(recargaDTO.getImagenesUri().get(i).toString());

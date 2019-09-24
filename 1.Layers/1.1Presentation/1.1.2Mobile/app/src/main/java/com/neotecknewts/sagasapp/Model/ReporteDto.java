@@ -82,6 +82,9 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
     @SerializedName("EsCamioneta")
     private boolean EsCamioneta;
 
+    @SerializedName("Bonificacion")
+    private double Bonificacion;
+
     public ReporteDto(){
         this.tanques = new ArrayList<>();
         this.otrasVentas = new ArrayList<>();
@@ -252,6 +255,14 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
 
     public boolean isEsCamioneta() {
         return EsCamioneta;
+    }
+
+    public double isBonificacion() {
+        return Bonificacion;
+    }
+
+    public void setBonificacion(double bonificacion) {
+        Bonificacion = bonificacion;
     }
 
     public void setEsCamioneta(boolean esCamioneta) {

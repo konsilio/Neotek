@@ -166,6 +166,10 @@ public class VentaDTO implements Serializable {
         return Efectivo;
     }
 
+    public boolean getBonificacion(){
+        return Bonificacion;
+    }
+
     public void setEfectivo(double efectivo) {
         Efectivo = efectivo;
     }

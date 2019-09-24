@@ -1166,6 +1166,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (EsRecargaEstacionInicial)? "I":"F";
         clave_unica += s.format(new Date());
         recargaDTO.setClaveOperacion(clave_unica);
+        Log.d("claveoperacion", recargaDTO.getClaveOperacion()+ "");
+        Log.d("claveoperacion", clave_unica);
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         recargaDTO.setFechaApliacacion(sf.format(new Date()));
@@ -1288,6 +1290,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (esRecargaPipaFinal)? "F":"I";
         clave_unica += s.format(new Date());
         recargaDTO.setClaveOperacion(clave_unica);
+        Log.d("claveoperacion", recargaDTO.getClaveOperacion()+ "");
+        Log.d("recargadtopipa", recargaDTO.toString());
+        Log.d("claveoperacion", clave_unica);
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         recargaDTO.setFechaApliacacion(sf.format(new Date()));
@@ -1338,6 +1343,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             if(esRecargaPipaFinal) {
                 call= restClient.postRecargaFinal(
                         recargaDTO, token, "application/json");
+                Log.d("restclient pipafinal", restClient+"");
             }else{
                 call = restClient.postRecargaInicial(
                         recargaDTO,token,"application/json"
@@ -1376,7 +1382,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registrar_local_recarga(sagasSql,recargaDTO,recargaDTO.getClaveOperacion(),
                                 esRecargaPipaFinal);
                         Lisener lisener = new Lisener(sagasSql,token);
-                        lisener.CrearRunable(Lisener.Proceso.RecargaPipa);
+                        //lisener.CrearRunable(Lisener.Proceso.RecargaPipa);
+                        Log.d("", response.code()+"");
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }

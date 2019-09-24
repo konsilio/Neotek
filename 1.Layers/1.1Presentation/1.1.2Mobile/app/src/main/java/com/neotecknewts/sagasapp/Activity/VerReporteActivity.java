@@ -573,6 +573,12 @@ public class VerReporteActivity extends AppCompatActivity {
                     dformat.format(ventaDTO.getEfectivo())));
             HtmlReporte = HtmlReporte.replace("[{Efectivo}]", "$"+String.valueOf(dformat.format(ventaDTO.getEfectivo())));
         }
+        if(ventaDTO.isBonificacion()) {
+            StringReporte = StringReporte.replace("[{Efectivo}]", "$"+String.valueOf(
+                    dformat.format(ventaDTO.getEfectivo())));
+            HtmlReporte = HtmlReporte.replace("[{Efectivo}]", "$"+String.valueOf(dformat.format(ventaDTO.getEfectivo())));
+        }
+
         StringReporte = StringReporte.replace("[{iva}]","$"+String.valueOf(
                 dformat.format(ventaDTO.getIva())));
         HtmlReporte = HtmlReporte.replace("[{iva}]","$"+String.valueOf(

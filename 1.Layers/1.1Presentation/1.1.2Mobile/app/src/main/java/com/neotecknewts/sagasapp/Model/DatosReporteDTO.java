@@ -33,6 +33,13 @@ public class DatosReporteDTO extends RespuestaDTO implements Serializable {
         this.Almacenes = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "DatosReporteDTO{" +
+                "Almacenes=" + Almacenes +
+                '}';
+    }
+
     /**
      * AlmacenesDTO
      * Clase DTO para guardar el listado de almacenes o pipas

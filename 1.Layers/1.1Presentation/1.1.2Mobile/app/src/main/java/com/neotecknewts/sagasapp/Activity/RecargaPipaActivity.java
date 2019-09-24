@@ -242,6 +242,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
 
     @Override
     public void ValidateForm() {
+        Log.d("RecargaDTO", recargaDTO.toString());
         boolean error = false;
         ArrayList<String> mensajes = new ArrayList<>();
         if(SRecargaPipaActivityPipa.getSelectedItemPosition()<0){
@@ -255,7 +256,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
         if(error){
             mensajeError(mensajes);
         }else{
-            if(EsRecargaPipaInicial) {
+            if(EsRecargaPipaInicial ) {
                 Intent intent = new Intent(RecargaPipaActivity.this,
                         LecturaP5000Activity.class);
                 intent.putExtra("recargaDTO", recargaDTO);
@@ -280,7 +281,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
             datosRecargaDto = data;
             lista_almacen = new String[data.getAlmaceneDTO().size()];
             lista_pipa = new String[data.getPipasDTOS().size()];
-            lista_medidor = new String[data.getMedidorDTOS().size()];
+            //lista_medidor = new String[data.getMedidorDTOS().size()];
             if(!data.getMedidorDTOS().isEmpty()){
                 for (int x=0;x<data.getMedidorDTOS().size();x++){
                     lista_medidor[x] = data.getMedidorDTOS().get(x).getNombreTipoMedidor();
@@ -333,7 +334,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
         progressDialog.setMessage(getString(mensaje));
         progressDialog.setTitle(R.string.app_name);
         progressDialog.setIndeterminate(true);
-        progressDialog.show();
+        //progressDialog.show();
     }
 
     @Override
