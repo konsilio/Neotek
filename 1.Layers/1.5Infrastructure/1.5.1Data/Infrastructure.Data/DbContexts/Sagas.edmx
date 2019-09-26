@@ -4711,6 +4711,18 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pedido_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Pedido_PedidoEstatus">
           <End Role="PedidoEstatus" Type="Self.PedidoEstatus" Multiplicity="1" />
           <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
@@ -6254,6 +6266,10 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <AssociationSet Name="FK_OrdenCompraProducto_OrdenCompra" Association="Self.FK_OrdenCompraProducto_OrdenCompra">
             <End Role="OrdenCompra" EntitySet="OrdenCompra" />
             <End Role="OrdenCompraProducto" EntitySet="OrdenCompraProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_CCliente" Association="Self.FK_Pedido_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
           <AssociationSet Name="FK_Pedido_PedidoEstatus" Association="Self.FK_Pedido_PedidoEstatus">
             <End Role="PedidoEstatus" EntitySet="PedidoEstatus" />
@@ -7953,6 +7969,10 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <AssociationSet Name="FK_Egreso_CTipoEgreso" Association="Sagas.MainModuleModel.FK_Egreso_CTipoEgreso">
             <End Role="CTipoEgreso" EntitySet="CTipoEgreso" />
             <End Role="Egreso" EntitySet="Egreso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_CCliente" Association="Sagas.MainModuleModel.FK_Pedido_CCliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
           <!--<AssociationSet Name="FK_DetalleMantenimiento_CCuentaContable1" Association="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCuentaContable1">
             <End Role="CuentaContable" EntitySet="CuentaContable" />
@@ -10319,6 +10339,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <NavigationProperty Name="VentaPuntoDeVenta" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_CCliente" FromRole="Cliente" ToRole="VentaPuntoDeVenta" />
           <NavigationProperty Name="Cargo" Relationship="Sagas.MainModuleModel.FK_Cargo_CCliente" FromRole="Cliente" ToRole="Cargo" />
           <Property Name="EsFijo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Pedido" Relationship="Sagas.MainModuleModel.FK_Pedido_CCliente" FromRole="Cliente" ToRole="Pedido" />
 
 
           <!--<NavigationProperty Name="CClienteCondicion" Relationship="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" FromRole="CCliente" ToRole="CClienteCondicion" />
@@ -11829,6 +11850,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <NavigationProperty Name="PedidoDetalle" Relationship="Sagas.MainModuleModel.FK_PedidoDetalle_Pedido" FromRole="Pedido" ToRole="PedidoDetalle" />
           <NavigationProperty Name="RespuestaSatisfaccionPedido" Relationship="Sagas.MainModuleModel.FK_RespuestaSatisfaccionPedido_Pedido" FromRole="Pedido" ToRole="RespuestaSatisfaccionPedido" />
           <Property Name="FechaSurtido" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_Pedido_CCliente" FromRole="Pedido" ToRole="Cliente" />
 
         </EntityType>
         <EntityType Name="PedidoDetalle">
@@ -12513,6 +12535,18 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             </Principal>
             <Dependent Role="Egreso">
               <PropertyRef Name="IdTipoEgreso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_CCliente">
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
