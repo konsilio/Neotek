@@ -40,5 +40,6 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<PedidoDetalle> PedidoDetalle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RespuestaSatisfaccionPedido> RespuestaSatisfaccionPedido { get; set; }
+        public virtual Cliente CCliente { get; set; }
     }
 }

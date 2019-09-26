@@ -21,8 +21,8 @@ namespace Application.MainModule.Servicios.Pedidos
     {
         public static List<PedidoModelDto> Obtener()
         {
-            List<PedidoModelDto> lPedidos = PedidosAdapter.ToDTO(new PedidosDataAccess().Buscar());
-            return lPedidos;
+            var lPedidos = new PedidosDataAccess().Buscar();
+            return PedidosAdapter.ToDTO(lPedidos);
         }
         public static List<Pedido> Obtener(short IdEmpresa, PeriodoDTO dto)
         {

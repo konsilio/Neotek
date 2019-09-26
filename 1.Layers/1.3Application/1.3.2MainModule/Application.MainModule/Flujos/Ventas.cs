@@ -111,17 +111,17 @@ namespace Application.MainModule.Flujos
                 lects.P5000Inicial = li.P5000 ?? 0;
                 lects.P5000Final = lf.P5000 ?? 0;
                 lects.CantidadLt = CalculosGenerales.DiferenciaEntreDosNumero(lects.P5000Inicial, lects.P5000Final);
-                lects.Venta = lects.CantidadLt * precio.PrecioSalidaKg.Value;
+                lects.Venta = lects.CantidadLt * precio.PrecioSalidaKg ?? 0;
                 corte.Lecturas.Add(lects);
-                corte.TotalCantidad = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt.Value));
+                corte.TotalCantidad = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt ?? 0));
             }
-            corte.TotalVenta = corte.Tickets.Sum(x => x.Total);
-            corte.TotalOtros = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt.Value));
-            corte.TotalContado = corte.Tickets.Where(x => x.VentaACredito.Equals(false)).Sum(v => v.Total);
-            corte.TotalCredito = corte.Tickets.Where(x => x.VentaACredito.Equals(true)).Sum(v => v.Total);
+            corte.TotalVenta = ventas.Sum(x => x.Total);
+            corte.TotalOtros = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt ?? 0));
+            corte.TotalContado = ventas.Where(x => x.VentaACredito.Equals(false)).Sum(v => v.Total);
+            corte.TotalCredito = ventas.Where(x => x.VentaACredito.Equals(true)).Sum(v => v.Total);
             corte.Descuentos = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
-            corte.Bonidificaciones = ventas.Where(v => v.EsBonificacion).Sum(x => x.Bonificacion.Value);
-            corte.TotalEfectio = corte.TotalVenta + corte.TotalOtros - corte.TotalCredito -  corte.Descuentos - corte.Bonidificaciones;
+            corte.Bonidificaciones = ventas.Where(v => v.EsBonificacion).Sum(x => x.Bonificacion ?? 0);
+            corte.TotalEfectio = ventas.Sum(x => x.EfectivoRecibido ?? 0);
 
             return corte;
         }
