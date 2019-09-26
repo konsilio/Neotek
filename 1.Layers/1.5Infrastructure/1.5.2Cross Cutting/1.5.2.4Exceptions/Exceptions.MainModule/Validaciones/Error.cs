@@ -20,6 +20,8 @@ namespace Exceptions.MainModule.Validaciones
         public const string S0003 = "El usuario y la contraseña no coinciden";
         public const string S0004 = "No se logró {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
         public const string S0005 = "El usuario no tiene acciones permitida en la aplicación";
+        public const string S0007 = "No se a realizado lectura Inicial";
+        public const string S0006 = "Ya se realizo la lectura final";
 
         public const string R0001 = "Error al guardar la requisición";
         public const string R0002 = "El campo '{0}' es obligatorio.";

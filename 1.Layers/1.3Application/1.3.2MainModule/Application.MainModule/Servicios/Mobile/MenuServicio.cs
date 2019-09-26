@@ -40,48 +40,12 @@ namespace Application.MainModule.Servicios.Mobile
         private static bool _AppEstacionCarbPuntoVenta = false;
         private static bool _AppPipaPuntoVenta = false;
 
-        public static List<MenuDto> Crear(int idUsuario)
+        public static List<MenuDto> Crear(Usuario usuario, bool hayLectura = false,bool esEstacion = false, bool esChofer = false)
         {
-            List<MenuDto> lista = new List<MenuDto>();
-            var usuario = new UsuarioDataAccess().Buscar(idUsuario);
-            bool esChofer = false;
-
+            List<MenuDto> lista = new List<MenuDto>();     
             if (usuario.Roles != null)
-            {
-                bool hayLectura = true, esEstacion = true;
-
-                if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count != 0)
-                {
-                    esChofer = true;
-                    var operadorDTO = PuntoVentaServicio.ObtenerOperador(idUsuario);
-                    var operador = OperadorChoferServicio.Obtener(operadorDTO.IdOperadorChofer);
-                    //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
-                    var puntoVenta = PuntoVentaServicio.Obtener(operador);
-
-                    if (puntoVenta != null)
-                    {
-                        var unidadAlmacen = puntoVenta.UnidadesAlmacen;
-                        if (unidadAlmacen.IdEstacionCarburacion != null && unidadAlmacen.IdEstacionCarburacion != 0)
-                            esEstacion = true;
-                        else
-                            esEstacion = false;
-                        var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
-                        if (ultimaLectura != null)
-                            hayLectura = true;
-                        else
-                            hayLectura = false;
-                        if (unidadAlmacen.EsGeneral)
-                        {
-                            hayLectura = true;
-                            esChofer = false;
-                        }
-                    }
-                }
-                else
-                {
-                    hayLectura = true;
-                }
-
+            {            
+              
                 foreach (Rol rol in usuario.Roles)
                 {
                     if (rol.AppCompraEntraGas && !_AppCompraEntraGas)

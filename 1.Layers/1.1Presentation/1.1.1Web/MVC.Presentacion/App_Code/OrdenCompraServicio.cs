@@ -20,8 +20,8 @@ namespace MVC.Presentacion.App_Code
                 FechaRequeridaA = DateTime.Now,
                 FechaRegistroDe = DateTime.Now,
                 FechaRegistroA = DateTime.Now,
-                Requisiciones = RequisicionServicio.BuscarRequisicionesOC(tkn).OrderByDescending(or=> or.FechaRegistro).ToList(),
-                OrdenesCompra = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn).OrderByDescending(or=> or.NumeroRequisicion).ToList()
+                Requisiciones = RequisicionServicio.BuscarRequisicionesOC(tkn),
+                OrdenesCompra = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
             };
         }
         public static OrdenesCompraModel InitOrdenesCompraFiltros(string tkn, OrdenesCompraModel model)

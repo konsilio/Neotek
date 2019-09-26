@@ -110,9 +110,9 @@ namespace Application.MainModule.Servicios.Compras
         public static List<OrdenCompra> BuscarTodo(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
-                return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+                return new OrdenCompraDataAccess().BuscarTodos(idEmpresa).ToList();
             else
-                return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+                return new OrdenCompraDataAccess().BuscarTodos(TokenServicio.ObtenerIdEmpresa()).ToList();
         }
         public static List<OrdenCompra> BuscarTodo(short idEmpresa, DateTime fi, DateTime ff)
         {

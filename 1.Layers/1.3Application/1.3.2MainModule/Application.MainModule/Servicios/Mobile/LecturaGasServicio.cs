@@ -237,6 +237,10 @@ namespace Application.MainModule.Servicios.Mobile
         {
             return new AlmacenGasDataAccess().ObtenerUltimaLecturaInicial(idCAlmacenGas, fecha);
         }
+        public static AlmacenGasTomaLectura ObtenerUltimaLecturaFinal(short idCAlmacenGas, DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().ObtenerUltimaLecturaFinal(idCAlmacenGas, fecha);
+        }
         public static decimal ObtenerKilosGasCamioneta(short idCAlmacenGas, DateTime fecha, int idPuntoVenta)
         {
             decimal TotalKilosGas = 0;
