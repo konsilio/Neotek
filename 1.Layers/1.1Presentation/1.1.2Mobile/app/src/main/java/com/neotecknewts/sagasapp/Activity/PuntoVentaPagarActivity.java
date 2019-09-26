@@ -238,23 +238,21 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
     }
     @Override
     public void calcula_total(List<ConceptoDTO> conceptoDTOS){
-        double subtotal = 0;
+        double total = 0;
         for (ConceptoDTO conceptoDTO :conceptoDTOS){
-            subtotal += conceptoDTO.getSubtotal();
+            total += conceptoDTO.getPrecioUnitarioLt() - conceptoDTO.getDescuento() * conceptoDTO.getCantidad();
         }
 
         NumberFormat format = NumberFormat.getCurrencyInstance();
         ventaDTO.setBonificacion(SPuntoVentaActivityBonificacion.isClickable());
-        ventaDTO.setSubtotal(subtotal);
-        TVPuntoVentaPagarActivitySubtotal.setText(format.format(subtotal));
-
-        double total = subtotal + (subtotal * 0.16) ;
+        //double total = ventaDTO.getTotal();
         double iva = total * 0.16;
+        ventaDTO.setSubtotal(total - iva);
         ventaDTO.setIva(iva);
-        double total2 = subtotal + iva ;
+        ventaDTO.setTotal(total);
+        TVPuntoVentaPagarActivitySubtotal.setText(format.format(total - iva));
         TVPuntoVentaPagarActivityIva.setText(format.format(iva));
-        ventaDTO.setTotal(total2);
-        TVPuntoVentaActivityPagarTotal.setText(format.format(total2));
+        TVPuntoVentaActivityPagarTotal.setText(format.format(total));
     }
 
     @Override

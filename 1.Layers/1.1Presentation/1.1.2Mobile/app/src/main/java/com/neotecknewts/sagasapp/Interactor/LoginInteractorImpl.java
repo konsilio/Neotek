@@ -39,7 +39,7 @@ public class LoginInteractorImpl implements LoginInteractor {
     private String token;
 
     //constructor de la clase y se inicializa el presenter
-    public LoginInteractorImpl(LoginPresenter loginPresenter, SAGASSql sagasSql){
+    public LoginInteractorImpl(LoginPresenter loginPresenter, SAGASSql sagasSql) {
         this.loginPresenter = loginPresenter;
         this.sagasSql = sagasSql;
     }
@@ -47,7 +47,7 @@ public class LoginInteractorImpl implements LoginInteractor {
     //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados
     //obtiene todas las empresas para login
     @Override
-    public void getEmpresasLogin(){
+    public void getEmpresasLogin() {
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<EmpresaDTO>> call = restClient.getListEmpresas();
@@ -56,30 +56,41 @@ public class LoginInteractorImpl implements LoginInteractor {
             @Override
             public void onResponse(Call<List<EmpresaDTO>> call, Response<List<EmpresaDTO>> response) {
                 if (response.isSuccessful()) {
-                    Log.d("entro mensaje:", "Si entró" );
+                    Log.d("entro mensaje:", "Si entró");
                     List<EmpresaDTO> data = response.body();
-                    Log.w(TAG,"Success");
+                    Log.w(TAG, "Success");
                     loginPresenter.onSuccessGetEmpresas(data);
-                }
-                else {
-                    List<EmpresaDTO>  repon = response.body();
+                    Log.d("responsebody1", response.code()+"");
+                } else {
+                    List<EmpresaDTO> repon = response.body();
+                    Log.d("responsebody2", response.code()+"");
                     switch (response.code()) {
+                        case 400:
+                            Log.w(TAG, "sin lectura");
+                            loginPresenter.onError("es probable");
+                            Log.d("messageerror", response.code()+"");
+                            break;
                         case 404:
-                            Log.w(TAG,"not found");
+                            Log.w(TAG, "not found");
                             loginPresenter.onError(response.message());
+                            Log.d("messageerror", response.code()+"");
                             break;
                         case 500:
                             Log.w(TAG, "server broken");
                             loginPresenter.onError(response.message());
+                            Log.d("messageerror", response.code()+"");
                             break;
                         default:
                             Log.w(TAG, "desconocido");
                             loginPresenter.onError(response.message());
+                            Log.d("messageerrordef", response.message());
                             break;
                     }
                     loginPresenter.onError(response.message());
+                    Log.d("messageerror", response.code()+"");
                 }
 
+                Log.d("responsebody", response.code()+"");
             }
 
             @Override
@@ -90,7 +101,7 @@ public class LoginInteractorImpl implements LoginInteractor {
         });
     }
 
-    public LoginInteractorImpl(SAGASSql sagasSql,String token){
+    public LoginInteractorImpl(SAGASSql sagasSql, String token) {
         this.sagasSql = sagasSql;
         this.token = token;
     }
@@ -99,25 +110,24 @@ public class LoginInteractorImpl implements LoginInteractor {
     //hace el login
     @Override
     public void postLogin(UsuarioLoginDTO usuarioLoginDTO) {
-        Log.d("entro mensaje:", "Si entró" );
+        Log.d("entro mensaje:", "Si entró");
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
-        Call<UsuarioDTO> call = restClient.postLogin(usuarioLoginDTO,"application/json");
+        Call<UsuarioDTO> call = restClient.postLogin(usuarioLoginDTO, "application/json");
         Log.w(TAG, ApiClient.BASE_URL.toString());
 
         call.enqueue(new Callback<UsuarioDTO>() {
             @Override
             public void onResponse(Call<UsuarioDTO> call, Response<UsuarioDTO> response) {
-                try{
+                try {
                     UsuarioDTO data = response.body();
-                    //Log.d("Jimy", response.code()+"");
-                    //Log.d("Jimy", response.isSuccessful()+"");
+                    Log.d("jimmycode", response.code()+"");
+                    Log.d(".", response.isSuccessful()+"");
                     //loginPresenter.onSuccessLogin(UsuarioDTO);
-
                     if (response.isSuccessful()) {
-                        Log.d("Jimy", data.toString());
+                        //Log.d("Jimy", data.toString());
                         //Log.w(TAG,"Sucess");
-                        if(data.getIdUsuario()!= 0){
-                            if(data.getLengthListMenu()  > 0){
+                        if (data.getIdUsuario() != 0) {
+                            if (data.getLengthListMenu() > 0) {
                                 sagasSql.InsertMenuDTO(data.getListMenu());
                                 // Debería de guardar en bd
                                 // Log.d("Ali",data.getListMenu());
@@ -125,40 +135,39 @@ public class LoginInteractorImpl implements LoginInteractor {
                             } else {
                                 loginPresenter.onError(data.getMensaje());
                             }
-                        }else {
+                        } else {
                             loginPresenter.onError(data.getMensaje());
                         }
-                    }
-                    else {
-                        //UsuarioDTO data = response.body();
-                        Log.w(TAG,response.errorBody().string());
-
-                        if(data!=null){
+                    } else {
+                        //Log.w(TAG, response.errorBody().toString());
+                        //Log.d("message", response.message());
+                        if (data != null) {
                             loginPresenter.onError(data.getMensaje());
-                        }else {
+                        } else {
                             JSONObject respuesta = null;
                             try {
                                 respuesta = new JSONObject(response.errorBody().string());
+                                Log.d("errorbody", response.errorBody()+"");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            if(respuesta!=null){
+                            if (respuesta != null) {
                                 try {
-                                    Log.w("Error body",respuesta.toString());
+                                    Log.w("Error body", respuesta.toString());
                                     loginPresenter.onError(respuesta.getString("Mensaje"));
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
 
-                            }else {
+                            } else {
                                 loginPresenter.onError(response.message());
                             }
                         }
                     }
-                }catch(Exception error) {
+                } catch (Exception error) {
                     loginPresenter.onError("Usuario y/o contraseña incorrectos - try");
                 }
 
@@ -166,7 +175,7 @@ public class LoginInteractorImpl implements LoginInteractor {
 
             @Override
             public void onFailure(Call<UsuarioDTO> call, Throwable t) {
-                Log.d("entro mensaje:", "Si entró" );
+                Log.d("entro mensaje:", "Si entró");
                 Log.e("error", t.toString());
                 Log.e("error", t.getLocalizedMessage());
                 loginPresenter.onError(t.getMessage());

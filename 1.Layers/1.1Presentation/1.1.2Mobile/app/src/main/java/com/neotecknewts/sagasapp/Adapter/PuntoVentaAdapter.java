@@ -37,6 +37,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public TextView Total, Descuento, Subtotal, Iva, PrecioLitro;
     public boolean esVentaGas;
     public EditText cantidad;
+    public EditText descuento;
     public EditText Litro;
     private double precioSalidaLt;
     public ExistenciasDTO existencia;
@@ -156,11 +157,12 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                         }
 
-                        Log.d("precioltr", precioPorLitro + "");
-                        Log.d("existenciadescuento2",  existencia.getDescuento()+"");
                         //Descuento.setText(String.valueOf(existencia.getDescuento()));
                         Descuento.setText(String.valueOf(items.get(position).getDescuento()));
                         double descuento = items.get(position).getDescuento();
+                       /* if(descuento == 0){
+                            PrecioLitro - precioPorLitro;
+                        }*/
                         double cantidadSeleccionada = Double.parseDouble(editTextCantidad.getText().toString());
                         Log.d("Cntidadselec", cantidadSeleccionada + "");
                         Log.d("descuentopipa", descuento + "");
