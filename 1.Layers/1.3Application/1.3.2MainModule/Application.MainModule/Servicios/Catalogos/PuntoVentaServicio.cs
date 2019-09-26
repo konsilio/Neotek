@@ -50,7 +50,7 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static OperadorChoferDTO ObtenerOperador(int idUsuario)
         {
-            OperadorChoferDTO lPventas = AdaptadoresDTO.Catalogo.OperadorChoferAdapter.ToOperador(new PuntoVentaDataAccess().BuscarPorUsuario(idUsuario));
+            OperadorChoferDTO lPventas = OperadorChoferAdapter.ToOperador(new PuntoVentaDataAccess().BuscarPorUsuario(idUsuario));
             return lPventas;
         }
         public static List<OperadorChoferDTO> ObtenerUsuariosOperador(short idEmpresa)

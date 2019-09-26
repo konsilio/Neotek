@@ -111,7 +111,7 @@ namespace Application.MainModule.Flujos
                 lects.P5000Inicial = li.P5000 ?? 0;
                 lects.P5000Final = lf.P5000 ?? 0;
                 lects.CantidadLt = CalculosGenerales.DiferenciaEntreDosNumero(lects.P5000Inicial, lects.P5000Final);
-                lects.Venta = lects.CantidadLt * precio.PrecioSalidaKg ?? 0;
+                lects.Venta = lects.CantidadLt * precio.PrecioSalidaLt ?? 0;
                 corte.Lecturas.Add(lects);
                 corte.TotalCantidad = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt ?? 0));
             }
@@ -121,7 +121,7 @@ namespace Application.MainModule.Flujos
             corte.TotalCredito = ventas.Where(x => x.VentaACredito.Equals(true)).Sum(v => v.Total);
             corte.Descuentos = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
             corte.Bonidificaciones = ventas.Where(v => v.EsBonificacion).Sum(x => x.Bonificacion ?? 0);
-            corte.TotalEfectio = ventas.Sum(x => x.EfectivoRecibido ?? 0);
+            corte.TotalEfectio = (corte.TotalVenta + corte.TotalOtros) - (corte.TotalCredito - corte.Descuentos - corte.Bonidificaciones);
 
             return corte;
         }

@@ -1405,7 +1405,6 @@ namespace Application.MainModule.Servicios.Almacenes
             decimal KilosRecargados = CalcularGasServicio.ObtenerKilogramosDesdeLitros(LitrosRecargados, apReDto.Empresa.FactorLitrosAKilos);
 
             apReDto = AplicarRecarga(apReDto, LitrosRecargados, KilosRecargados);
-
             apReDto.AlmacenGasAnterior.CantidadActualLt = CalcularGasServicio.RestarLitros(apReDto.AlmacenGasAnterior.CantidadActualLt, LitrosRecargados);
             apReDto.AlmacenGasAnterior.CantidadActualKg = CalcularGasServicio.RestarKilogramos(apReDto.AlmacenGasAnterior.CantidadActualKg, KilosRecargados);
             apReDto.AlmacenGasAnterior.PorcentajeActual = CalcularGasServicio.ObtenerPorcentajeDesdeLitros(apReDto.AlmacenGasAnterior.CapacidadTotalLt, LitrosRecargados);

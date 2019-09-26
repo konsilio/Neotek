@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.Servicios.Mobile;
+using Application.MainModule.Servicios.Catalogos;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -61,7 +62,7 @@ namespace Application.MainModule.Servicios.Seguridad
                     Exito = false,
                     Mensaje = Error.S0003,
                     token = string.Empty
-                   
+
                 };
         }
 
@@ -69,14 +70,61 @@ namespace Application.MainModule.Servicios.Seguridad
         {
             var aut = AutenticarUsuario(autDto);
             var usuario = new UsuarioDataAccess().Buscar(aut.IdUsuario);
-            List<DTOs.Mobile.MenuDto> menu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : new List<DTOs.Mobile.MenuDto>();
+            bool esChofer = false, esEstacion = false, hayLectura = false, hayLecturaFinal = false;
+            List<DTOs.Mobile.MenuDto> menu = new List<DTOs.Mobile.MenuDto>();
             if (usuario != null)
             {
-                if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count != 0 && !menu.Any())
+                if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count != 0)
                 {
-                    aut.Mensaje = "No se ha realizado lectura inicial";
-                    //aut.Exito = false;
+                    esChofer = true;
+                    var operadorDTO = PuntoVentaServicio.ObtenerOperador(usuario.IdUsuario);
+                    var operador = usuario.OperadoresChoferes.FirstOrDefault(x => x.Activo);
+                    //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
+                    var puntoVenta = PuntoVentaServicio.Obtener(operador);
+
+                    if (puntoVenta != null)
+                    {
+                        var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+                        if (unidadAlmacen.IdEstacionCarburacion != null && unidadAlmacen.IdEstacionCarburacion != 0)
+                            esEstacion = true;
+                        var lecturaFinal = LecturaGasServicio.ObtenerUltimaLecturaFinal(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
+                        if (lecturaFinal != null && !esEstacion)
+                            return new RespuestaAutenticacionMobileDto()
+                            {
+                                IdUsuario = 0,
+                                Exito = false,
+                                Mensaje = Error.S0006,
+                                token = string.Empty,
+                                listMenu = new List<DTOs.Mobile.MenuDto>(),
+                            };
+                        var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
+                        if (ultimaLectura != null)
+                            hayLectura = true;
+                        else
+                        {
+                            if (!esEstacion)
+                                return new RespuestaAutenticacionMobileDto()
+                                {
+                                    IdUsuario = 0,
+                                    Exito = false,
+                                    Mensaje = Error.S0007,
+                                    token = string.Empty,
+                                    listMenu = new List<DTOs.Mobile.MenuDto>(),
+                                };
+                        }
+                        if (unidadAlmacen.EsGeneral)
+                        {
+                            hayLectura = true;
+                            esChofer = false;
+                        }
+                    }
+                    menu = MenuServicio.Crear(usuario, hayLectura, esEstacion, esChofer);
                 }
+                else
+                {
+                    hayLectura = true;
+                }
+                menu = MenuServicio.Crear(usuario, hayLectura, esEstacion, esChofer);
             }
             else
             {

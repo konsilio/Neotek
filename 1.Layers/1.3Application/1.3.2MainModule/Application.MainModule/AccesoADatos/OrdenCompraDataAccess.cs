@@ -33,7 +33,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                   || x.EsActivoVenta.Equals(EsActivoVenta)
                                                                   || x.EsTransporteGas.Equals(EsTransporteGas)
                                                                   || x.IdEmpresa.Equals(idEmpresa)
-                                                                  && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)).ToList();
+                                                                  && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)).OrderByDescending(x => x.FechaRegistro).ToList();
             //return uow.Repository<OrdenCompra>().GetAll().ToList();
         }
         public List<OrdenCompra>BuscarOrdenDescargas(short idEmpresa, byte idOrdenComprEstatus, bool EsGas,bool EsActivoVenta,bool EsTransporteGas)
@@ -61,11 +61,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<OrdenCompra> BuscarTodos()
         {
-            return uow.Repository<OrdenCompra>().Get(x => x.Activo).ToList();
+            return uow.Repository<OrdenCompra>().Get(x => x.Activo).OrderByDescending(y =>y.FechaRegistro).ToList();
+        }
+        public List<OrdenCompra> BuscarTodos(short idEmpresa)
+        {
+            return uow.Repository<OrdenCompra>().Get(x => x.Activo && x.IdEmpresa.Equals(idEmpresa)).OrderByDescending(y => y.FechaRegistro).ToList();
         }
         public List<OrdenCompra> BuscarTodos(short idEmpresa, DateTime fInicio, DateTime fFinal)
         {
-            return uow.Repository<OrdenCompra>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.FechaRegistro > fInicio && x.FechaRegistro < fFinal).ToList();
+            return uow.Repository<OrdenCompra>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.FechaRegistro > fInicio && x.FechaRegistro < fFinal).OrderByDescending(x => x.FechaRegistro).ToList();
         }
         public RespuestaDto InsertarNuevo(OrdenCompra oc)
         {
