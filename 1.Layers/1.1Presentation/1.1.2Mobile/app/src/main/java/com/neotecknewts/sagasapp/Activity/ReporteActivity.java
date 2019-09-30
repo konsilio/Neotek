@@ -259,15 +259,12 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "-------------------------------\n" +
                         "Litros de venta: " +
                         "\t  [{litros-venta}] \n" +
-                        "Precio prom día:" +
+                        "Precio día :" +
                         "\t $ [{Precio}]\n" +
                         "Importe contado:" +
                         "\t $ [{Importe-contado}] \n" +
                         "Importe credito:" +
-                        "\t $ [{Importe-credito}]" +
-                        "Bonificación:" +
-                        "\t [{Bonificacion}]";
-
+                        "\t $ [{Importe-credito}]";
 
                 formato_reporte_pipa_text = formato_reporte_pipa_text.replace(
                         "[{Elemento}]",
@@ -376,7 +373,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td> [{litros-venta}]</td>" +
                         "</tr>" +
                         "<tr>" +
-                        "<td>Precio prom día: </td>" +
+                        "<td>Precio día : </td>" +
                         "<td>$ [{Precio}]</td>" +
                         "</tr>" +
                         "<tr>" +
@@ -387,10 +384,6 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td>Importe credito: </td>" +
                         "<td>$ [{Importe-credito}]</td>" +
                         "</tr>" +
-                       "<tr>" +
-                       "<td>Bonificación: </td>" +
-                       "<td>[{Bonificacion}]</td>" +
-                       "</tr>" +
                         "</tbody>" +
                         "</table>" +
                         "</div>" +
@@ -494,7 +487,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                 "\t $ [{Carburacion}]\n" +
                                 "Kilos de venta: " +
                                 "\t $ [{Kilos-de-venta}]\n" +
-                                "Precio prom día: " +
+                                "Precio día : " +
                                 "\t $ [{Precio}]\n" +
 
                                 "Otras ventas: " +
@@ -504,10 +497,8 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                 "\t $ [{importe-contado}]\n" +
 
                                 "Importe credito: " +
-                                "\t $ [{importe-credito}]\n" +
+                                "\t $ [{importe-credito}]\n"
 
-                                "Bonifiacion: " +
-                                "\t[{Bonificacion}]\n"
                         ;
                 formato_reporte_camioneta_text = formato_reporte_camioneta_text.replace(
                         "[{Elemento}]",
@@ -638,7 +629,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td>$ [{Kilos-de-venta}]</td>" +
                         "</tr>" +
                         "<tr>" +
-                        "<td>Precio prom día: </td>" +
+                        "<td>Precio día : </td>" +
                         "<td>$ [{Precio}]</td>" +
                         "</tr>" +
                         "<tr>" +
@@ -652,10 +643,6 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<tr>" +
                         "<td>Importe credito: </td>" +
                         "<td>$ [{importe-credito}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<td>Bonificacion: </td>" +
-                        "<td>[{Bonificacion}]</td>" +
                         "</tr>" +
                         "</tbody>" +
                         "</table>" +
@@ -802,14 +789,12 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "-------------------------------\n" +
                         "Litros de venta: " +
                         "\t [{litros-venta}] \n" +
-                        "Precio prom día:" +
+                        "Precio día :" +
                         "\t $ [{Precio}]\n" +
                         "Importe contado:" +
                         "\t $ [{Importe-contado}] \n" +
                         "Importe credito:" +
-                        "\t $ [{Importe-credito}]"+
-                        "Bonificacion:" +
-                        "\t[{Bonificacion}]";
+                        "\t $ [{Importe-credito}]";
                 String formato_reporte_pipa_html = "<body>" +
                         "<h4>Reporte: [{Elemento}]</h4>" +
                         "<div>" +
@@ -861,7 +846,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td> [{litros-venta}]</td>" +
                         "</tr>" +
                         "<tr>" +
-                        "<td>Precio prom día: </td>" +
+                        "<td>Precio día : </td>" +
                         "<td>$ [{Precio}]</td>" +
                         "</tr>" +
                         "<tr>" +
@@ -871,10 +856,6 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<tr>" +
                         "<td>Importe credito: </td>" +
                         "<td>$ [{Importe-credito}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<td>Bonificacion: </td>" +
-                        "<td>[{Bonificacion}]</td>" +
                         "</tr>" +
                         "</tbody>" +
                         "</table>" +
@@ -911,7 +892,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                 "\t $ [{Carburacion}]\n" +
                                 "Kilos de venta: " +
                                 "\t $ [{Kilos-de-venta}]" +
-                                "Precio prom día: " +
+                                "Precio día : " +
                                 "\t $ [{Precio}]\n" +
 
                                 "Otras ventas: " +
@@ -974,7 +955,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<td>$ [{Kilos-de-venta}]</td>" +
                         "</tr>" +
                         "<tr>" +
-                        "<td>Precio prom día: </td>" +
+                        "<td>Precio día : </td>" +
                         "<td>$ [{Precio}]</td>" +
                         "</tr>" +
                         "<tr>" +
@@ -988,10 +969,6 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<tr>" +
                         "<td>Importe credito: </td>" +
                         "<td>$ [{importe-credito}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<td>Bonificacion: </td>" +
-                        "<td>[{Bonificacion}]</td>" +
                         "</tr>" +
                         "</tbody>" +
                         "</table>" +

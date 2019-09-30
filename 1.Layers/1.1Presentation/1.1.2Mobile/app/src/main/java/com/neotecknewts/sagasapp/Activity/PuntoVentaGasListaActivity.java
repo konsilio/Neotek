@@ -402,6 +402,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 adapter.Subtotal = TVFormularioVentaCamionetaYPipaSubtotal;
                 adapter.Iva = TVFormularioVentaCamionetaYPipaIva;
                 adapter.Total = TVFormularioVentaCamionetaYPipaTotal;
+                Log.d("total camioneta", adapter.Total+"");
                 adapter.precioVentaDTO = precioVentaDTO;
                 Log.d("textviewdescuento",adapter +"" );
 

@@ -56,7 +56,7 @@ public class Semaforo {
         if(sagasSql.GetLecturasFinales().getCount()>0)
             ban = true;
         if(sagasSql.GetLecturasIncialesPipas().getCount()>0)
-            ban = true;
+            ban = false;
         if(sagasSql.GetLecturasFinaesPipas().getCount()>0)
             ban = true;
         if(sagasSql.GetLecturasFinalesAlmacen().getCount()>0)

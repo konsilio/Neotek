@@ -401,19 +401,23 @@ public class VerReporteActivity extends AppCompatActivity {
                 "________________________________\n"+
                 "\tI.V.A. (16%) [{iva}]\n"+
                 "\tTotal [{Total}]\n";
-        if(!ventaDTO.isCredito()) {
+        if(ventaDTO.isCredito()) {
             StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
                     "\tCambio [{Cambio}]\n";
 
-            StringReporte += "\tVenta Contado\n";
-        }else{
-            StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
-                    "\tCambio [{Cambio}]\n";
-
-            StringReporte += "\tVenta Credito\n";
+            StringReporte += "\tEs credito\n";
         }
         if(ventaDTO.isBonificacion()) {
-            StringReporte += "\t Bonificación \n";
+            StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
+                    "\tCambio [{Cambio}]\n";
+
+            StringReporte += "\t Es Bonificacion \n";
+        }
+        if (!ventaDTO.isCredito() && !ventaDTO.isBonificacion()){
+            StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
+                    "\tCambio [{Cambio}]\n";
+
+            StringReporte += "\t Es venta contado \n";
         }
 
         StringReporte += "Le atendio [{Usuario}]"+

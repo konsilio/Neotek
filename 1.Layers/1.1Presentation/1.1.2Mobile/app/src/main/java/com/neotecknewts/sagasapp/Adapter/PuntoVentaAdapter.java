@@ -216,9 +216,9 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             double cantidadSeleccionada = Double.parseDouble(editTextCantidad.getText().toString());
                             Log.d("Cntidadselec", cantidadSeleccionada + "");
                             double sub = ((precioPorLitro - descuento) * cantidadSeleccionada );
-                            double subtotal = ((precioPorLitro - descuento) * cantidadSeleccionada - (sub * 0.16));
+                            double subtotal =  sub / 1.16 ;
                             Subtotal.setText(new DecimalFormat("#.##").format(subtotal));
-                            double iva = sub * 0.16;
+                            double iva = sub - (sub / 1.16 );
                             double total = (precioPorLitro * cantidadSeleccionada) + iva ;
 
                             Iva.setText(new DecimalFormat("#.##").format(iva));
