@@ -115,8 +115,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         }
         public static PrecioVenta FromTO(PrecioVentaDTO PVGasDTO)
         {
-            var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(PVGasDTO.IdEmpresa));
-            var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
+            //var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(PVGasDTO.IdEmpresa));
+            //var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
             var IdPreVenta = new PrecioVentaDataAccess().BuscarUltimoPrecio() + 1;//PrecioVentaGasServicio.ObtenerUltimoIdPrecioVenta() + 1;
             var flete = PVGasDTO.PrecioFlete != null ? (decimal)PVGasDTO.PrecioFlete : 0;
@@ -151,7 +151,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         }
         public static List<PrecioVenta> FromDTO(PrecioVentaDTO entidad)
         {
-            var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(entidad.IdEmpresa));
+            List<Producto> Prod = new List<Producto>();
+            if (entidad.IdProducto.Equals(0))
+                Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(entidad.IdEmpresa));
+            else
+                Prod.Add(ProductoServicio.ObtenerProducto(entidad.IdProducto));
             List<PrecioVentaDTO> _lst = new List<PrecioVentaDTO>();
             if (Prod.Count() >= 1)
             {
@@ -160,7 +164,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                     _lst.Add(EmpresaProds(entidad, p));
                 }
             }
-
             return _lst.Select(x => FromTO(x)).ToList();
         }
         public static PrecioVentaDTO EmpresaProds(PrecioVentaDTO entidad, Producto p)

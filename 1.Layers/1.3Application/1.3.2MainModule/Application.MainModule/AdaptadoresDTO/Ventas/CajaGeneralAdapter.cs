@@ -1279,6 +1279,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 VentaTotal = entidad.VentaTotal,
                 VentaTotalCredito = entidad.VentaTotalCredito,
                 VentaTotalContado = entidad.VentaTotalContado,
+                VentaTotalBonificaciones = entidad.VentaTotalBonificacion,
                 OtrasVentas = entidad.OtrasVentas,
                 DescuentoTotal = entidad.DescuentoTotal,
                 DescuentoCredito = entidad.DescuentoCredito,

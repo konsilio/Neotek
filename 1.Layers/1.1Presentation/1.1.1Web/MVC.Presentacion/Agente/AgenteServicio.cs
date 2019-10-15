@@ -1341,15 +1341,15 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-
-                if (idPV != 0)
-                {
-                    _listaPreciosV = (from x in lus where x.IdPrecioVenta == idPV select x).ToList();
-                }
-                else
-                {
-                    _listaPreciosV = lus;
-                }
+                _listaPreciosV = lus;
+                //if (idPV != 0)
+                //{
+                //    _listaPreciosV = (from x in lus where x.IdPrecioVenta == idPV select x).ToList();
+                //}
+                //else
+                //{
+                //    _listaPreciosV = lus;
+                //}
             }
         }
         public void BuscarListaEstatus(string tkn)

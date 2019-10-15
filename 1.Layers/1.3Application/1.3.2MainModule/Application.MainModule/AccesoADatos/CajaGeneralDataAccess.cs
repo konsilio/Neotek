@@ -178,7 +178,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<VentaPuntoDeVenta> BuscarTotalBonificaciones(DateTime fecha)
         {
-            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.Descuento > 0 // Cambiar a Bonificaciones cuando este el campo en la Tabla
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.EsBonificacion 
                                                                                 //&& x.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null
                                                                                 //&& x.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null
                                                              && x.FechaRegistro.Day.Equals(fecha.Day)
