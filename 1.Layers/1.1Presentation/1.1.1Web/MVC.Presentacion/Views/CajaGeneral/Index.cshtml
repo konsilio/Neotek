@@ -26,77 +26,7 @@
             $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
         }
     </script>
-    @*<script type="text/javascript">
-        function OnSelectedChangeFilterConcepto(s, e) {
-            debugger
-            $('#tblfilterable tbody tr').each(function () {
-                /*---------------------------------------*/
-                var valuec = s.GetValue();//get value to filter of selected
-                var hiderowc = $(this).find("td").eq(3).html();//get value of column concepto
-
-                if (valuec != 'Seleccione') {
-
-                    if (valuec != 'Seleccione') {
-                        if (valuec != hiderowc) {
-                            var rowindex = $(this).index();
-                            $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
-                        }
-                        if (valuec == hiderowc) {
-                            var rowindex = $(this).index();
-                            $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
-                        }
-                    }
-                }
-                else { $('#tblfilterable tbody tr').show(); }
-            });
-        }
-        function OnSelectedChangeFilter(s, e) {
-            debugger
-            $('#tblfilterable tbody tr').each(function () {
-                var value = s.GetValue();
-                var hiderow = $(this).find("td").eq(1).html();//get value of column entidad
-
-                if (value != 'Seleccione') {
-
-                    if (value != 'Seleccione') {
-                        if (value != hiderow) {
-                            var rowindex = $(this).index();
-                            $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
-                        }
-                        if (value == hiderow) {
-                            var rowindex = $(this).index();
-                            $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
-                        }
-                    }
-                }
-                else { $('#tblfilterable tbody tr').show(); }
-            });
-        }
-        function keyupDateEdit(s, e) {
-            var To = s.GetValue();
-            var index = 0;
-            if (from != "" && To != "") {
-                $('#tblfilterable tbody tr').each(function () {
-                    var filterdate = $(this).find("td").eq(index).html();//get value of column Fecha x
-                    var dateParts3 = filterdate.split("/");
-                    var datefilter = new Date(dateParts3[2].split(" ", 1), dateParts3[1] - 1, dateParts3[0]);
-
-                    if (datefilter >= from && datefilter <= To) {
-                        var rowindex = $(this).index();
-                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
-                    }
-                    else {
-                        var rowindex = $(this).index();
-                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
-                    }
-                });
-            }
-            else {
-                $('#tblfilterable tbody tr').show();
-            }
-        };
-    </script>*@
-</head>
+    </head>
 <body style="height:100%">
     @using (Html.BeginForm("Liquidar", "CajaGeneral", FormMethod.Post))
     {

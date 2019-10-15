@@ -265,14 +265,14 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        Kilos de Credito<input name="limiteCreditoMonto" class="form-control" type="number" />
+                                        Kilos de Credito<input name="limiteCreditoMonto" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].limiteCreditoMonto)" type="number" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <div>
                                             Días para pagar
-                                            <input name="limiteCreditoDias" class="form-control" type="number" />
+                                            <input name="limiteCreditoDias" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].limiteCreditoDias)" class="form-control" type="number" />
                                         </div>
                                     </div>
                                 </div>
@@ -280,7 +280,7 @@
                                     <div class="form-group">
                                         <div>
                                             Credito disponible:
-                                            <input name="CreditoDisponibleMonto" class="form-control" type="number" />
+                                            <input name="CreditoDisponibleMonto" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].CreditoDisponibleMonto)" class="form-control" type="number" />
                                         </div>
                                     </div>
                                 </div>
@@ -290,7 +290,7 @@
                                     <div class="form-group">
                                         <div>
                                             Descuento:
-                                            <input name="DescuentoXKilo" class="form-control" type="number" />
+                                            <input name="DescuentoXKilo" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].CreditoDisponibleMonto)"  class="form-control" type="number" />
                                         </div>
                                     </div>
                                 </div>

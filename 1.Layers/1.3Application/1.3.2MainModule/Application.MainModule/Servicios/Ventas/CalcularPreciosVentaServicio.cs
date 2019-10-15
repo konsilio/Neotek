@@ -601,23 +601,25 @@ namespace Application.MainModule.Servicios.Ventas
         public static decimal CalcularComisionCamioneta(List<VentaPuntoDeVenta> ventas, PeriodoDTO Periodo)
         {
             decimal Respuesta = 0;
+            decimal ventaDia = 0;
             for (DateTime date = Periodo.FechaInicio; Periodo.FechaFin.CompareTo(date) > 0; date = date.AddDays(1.0))
             {
-                var ventaDia = ventas.Where(x => x.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())).Sum(v => v.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadKg ?? 0));
-                if (ventaDia >= 400)                
-                    Respuesta += ventaDia * (decimal)0.4;                
+                ventaDia += ventas.Where(x => x.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())).Sum(v => v.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadKg ?? 0));
             }
+            if (ventaDia >= 400)
+                Respuesta = ventaDia * (decimal)0.4;
             return Respuesta;
         }
         public static decimal CalcularComisionPipas(List<VentaPuntoDeVenta> ventas, PeriodoDTO Periodo)
         {
             decimal Respuesta = 0;
+            decimal ventaDia = 0;
             for (DateTime date = Periodo.FechaInicio; Periodo.FechaFin.CompareTo(date) > 0; date = date.AddDays(1.0))
             {
-                var ventaDia = ventas.Where(x => x.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())).Sum(v => v.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadLt ?? 0));
-                if (ventaDia >= 2500)
-                    Respuesta += ventaDia * (decimal)0.15;
+                ventaDia +=  ventas.Where(x => x.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())).Sum(v => v.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadLt ?? 0));
             }
+            if(ventaDia >= 2500)
+                Respuesta = ventaDia * (decimal)0.15;
             return Respuesta;
         }
         public static double CalclarTotalCaja(decimal TotalCamionetas, decimal TotalPipas, decimal TotalEstaciones, decimal OtrosIngresos, decimal Descuentos, decimal Bonificaciones)

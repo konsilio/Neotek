@@ -41,7 +41,6 @@ namespace Application.MainModule.Flujos
                 Exito = true,
                 Mensaje = "OK"
             };
-
         }
         public List<MenuDto> ObtenerMenu()
         {
