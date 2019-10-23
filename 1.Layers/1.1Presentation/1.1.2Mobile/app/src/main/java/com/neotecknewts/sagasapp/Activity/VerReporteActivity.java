@@ -22,6 +22,7 @@ import com.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.neotecknewts.sagasapp.Model.CorteDTO;
 import com.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.neotecknewts.sagasapp.Model.ReporteDto;
 import com.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.neotecknewts.sagasapp.Model.VentaDTO;
 import com.neotecknewts.sagasapp.R;
@@ -76,12 +77,14 @@ public class VerReporteActivity extends AppCompatActivity {
     NumberFormat format;
     Session session;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_reporte);
         Bundle bundle = getIntent().getExtras();
         session = new Session(this);
+
         if(bundle!=null){
             EsReporteDelDia = bundle.getBoolean("EsReporteDelDia",false);
             EsRecargaEstacionInicial = bundle.getBoolean("EsRecargaEstacionInicial",
@@ -402,23 +405,31 @@ public class VerReporteActivity extends AppCompatActivity {
                 "\tI.V.A. (16%) [{iva}]\n"+
                 "\tTotal [{Total}]\n";
         if(ventaDTO.isCredito()) {
-            StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
+            StringReporte += "\tEfectivo recibido: 0 \n" +
                     "\tCambio [{Cambio}]\n";
 
             StringReporte += "\tEs credito\n";
         }
-        if(ventaDTO.isBonificacion()) {
+
+        if (!ventaDTO.isCredito() && !ventaDTO.isBonificacion()){
             StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
                     "\tCambio [{Cambio}]\n";
-
             StringReporte += "\t Es Bonificacion \n";
+
         }
-        if (!ventaDTO.isCredito() && !ventaDTO.isBonificacion()){
+
+        if(ventaDTO.isBonificacion() && !ventaDTO.isCredito()) {
             StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
                     "\tCambio [{Cambio}]\n";
 
             StringReporte += "\t Es venta contado \n";
         }
+       /* if(ventaDTO.isBonificacion()) {
+            StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
+                    "\tCambio [{Cambio}]\n";
+        }*/
+
+
 
         StringReporte += "Le atendio [{Usuario}]"+
                 "\n--------------------------------\n"+
@@ -564,7 +575,7 @@ public class VerReporteActivity extends AppCompatActivity {
                     dformat.format(ventaDTO.getEfectivo())));
             HtmlReporte = HtmlReporte.replace("[{Efectivo}]", "$"+String.valueOf(dformat.format(ventaDTO.getEfectivo())));
         }
-        if(ventaDTO.isBonificacion()) {
+        if(!ventaDTO.isBonificacion()) {
             StringReporte = StringReporte.replace("[{Efectivo}]", "$"+String.valueOf(
                     dformat.format(ventaDTO.getEfectivo())));
             HtmlReporte = HtmlReporte.replace("[{Efectivo}]", "$"+String.valueOf(dformat.format(ventaDTO.getEfectivo())));
@@ -693,7 +704,7 @@ public class VerReporteActivity extends AppCompatActivity {
                         "[{Monto-corte}]\n" +
                         "-----------------------\n";
         if(!corteDTO.isCamioneta()) {
-            StringReporte +="\tP5000" +
+            StringReporte +="\tP5000" + "\n" +
                     "Inicial: \t" +
                     "[{Inicial}]\n" +
                     "Final: \t" +
@@ -710,10 +721,10 @@ public class VerReporteActivity extends AppCompatActivity {
                 "________________________\n"+
                 "Firma\n\n"
         ;
-        /*HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",
+        HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",
                 corteDTO.getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",
-                corteDTO.getClaveOperacion());*/
+                corteDTO.getClaveOperacion());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sfdate =
@@ -787,7 +798,7 @@ public class VerReporteActivity extends AppCompatActivity {
             );
 
             StringReporte = StringReporte.replace("[{Litros-vendidos}]",
-                    String.valueOf(corteDTO.getP5000Final())
+                    String.valueOf(corteDTO.getLitrosCorte())
             );
 
             HtmlReporte = HtmlReporte.replace("[{Litros-vendidos}]",
@@ -862,8 +873,8 @@ public class VerReporteActivity extends AppCompatActivity {
                         "Recibe\n"+
                         "[{Usuario-recibi}]\n____________________________\n"+
                         "Firma\n\n";
-        /*HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
-        StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());*/
+        HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
+        StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter6 =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         try {
@@ -925,8 +936,9 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tr>" +
                 "<tr>" +
                 "<td>[{PipaNombre}]</td>" +
-                "<td>[{P5000Inicial}]</td>" +
-                "<td>[{P5000Final}]</td>" +
+                "<td>P500</td>" + "tr" +
+                "<td>[{Inicial}]</td>" +
+                "<td>[{Final}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td>[{PipaNombre2}]</td>" +
@@ -955,8 +967,10 @@ public class VerReporteActivity extends AppCompatActivity {
                 "\t Inicial: " +
                 "\t Final " +
                 "\n[{PipaNombre}] | "+
-                "\t[{P5000Inicial}] | " +
-                "\t[{P5000Final}] | " +
+                "\n P5000 " +
+                "\n" +
+                "\t[{Inicial}] | " +
+                "\t[{Final}] | " +
                 "\n[{PipaNombre2}] | "+
                 "\t[{P5000Inicial2}] | " +
                 "\t[{P5000Final2}] | " +
@@ -973,10 +987,10 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte = StringReporte.replace("[{Estacion}]",
                 traspasoDTO.getNombreEstacionTraspaso());
 
-        /*HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",traspasoDTO.
+        HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",traspasoDTO.
                 getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",traspasoDTO.
-                getClaveOperacion());*/
+                getClaveOperacion());
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
                 new SimpleDateFormat("dd/MM/yyyy");
@@ -1000,14 +1014,14 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte = StringReporte.replace("[{PipaNombre}]",
                 traspasoDTO.getNombreEstacionTraspaso());
 
-        HtmlReporte = HtmlReporte.replace("[{P5000Inicial}]",
+        HtmlReporte = HtmlReporte.replace("[{Inicial}]",
                 String.valueOf(traspasoDTO.getP5000SalidaInicial()));
-        StringReporte = StringReporte.replace("[{P5000Inicial}]",
+        StringReporte = StringReporte.replace("[{Inicial}]",
                 String.valueOf(traspasoDTO.getP5000SalidaInicial()));
 
-        HtmlReporte = HtmlReporte.replace("[{P5000Final}]",
+        HtmlReporte = HtmlReporte.replace("[{Final}]",
                 String.valueOf(traspasoDTO.getP5000Salida()));
-        StringReporte = StringReporte.replace("[{P5000Final}]",
+        StringReporte = StringReporte.replace("[{Final}]",
                 String.valueOf(traspasoDTO.getP5000Salida()));
 
         HtmlReporte = HtmlReporte.replace("[{PipaNombre2}]",
@@ -1307,10 +1321,10 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{Estacion}]",
                 traspasoDTO.getNombreEstacionTraspaso());
 
-        /*StringReporte = StringReporte.replace("[{ClaveTraspaso}]",traspasoDTO
+        StringReporte = StringReporte.replace("[{ClaveTraspaso}]",traspasoDTO
                 .getClaveOperacion());
         HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",traspasoDTO
-                .getClaveOperacion());*/
+                .getClaveOperacion());
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
                 new SimpleDateFormat("dd/MM/yyyy");

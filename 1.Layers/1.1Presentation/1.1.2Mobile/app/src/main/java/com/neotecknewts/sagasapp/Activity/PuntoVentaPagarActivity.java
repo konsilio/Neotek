@@ -161,13 +161,14 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                             .getText().toString());
                     if (efectivio < ventaDTO.getTotal()) {
                         if (SPuntoVentaActivityBonificacion.isChecked()) {
-                            ventaDTO.setBonificacion(true);
+                            ventaDTO.setBonificacion(false);
                             ventaDTO.setEfectivo(efectivio);
                             ventaDTO.setCambio(0);
 
                         } else {
                             error = true;
                             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
+
                             builder.setTitle(R.string.info);
                             builder.setMessage("El monto es menor al pago requerido");
                             builder.setPositiveButton(R.string.regresar, (dialogInterface, i) ->

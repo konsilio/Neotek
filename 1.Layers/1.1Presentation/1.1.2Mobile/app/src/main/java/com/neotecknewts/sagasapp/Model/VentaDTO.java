@@ -155,7 +155,7 @@ public class VentaDTO implements Serializable {
     }
 
     public boolean isBonificacion() {
-        return Bonificacion;
+        return Bonificacion ;
     }
 
     public void setBonificacion(boolean bonificacion) {
