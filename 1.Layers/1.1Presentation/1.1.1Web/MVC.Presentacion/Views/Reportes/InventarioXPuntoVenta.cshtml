@@ -62,8 +62,8 @@
 
     function openFile(e) {
         var image = new Image();
-        image.width= 480;
-        image.height=320;
+        image.width= 500;
+        image.height=500;
         image.src = e.src;
         $("#imgdialog").html(image.outerHTML);
         $("#dialog").dialog();
@@ -81,7 +81,7 @@
 </style>
 
 <body>
-    <div id="dialog" title="Fotógragia">
+    <div id="dialog" title="Fotografía">
         <div id="imgdialog"></div>
     </div>
 

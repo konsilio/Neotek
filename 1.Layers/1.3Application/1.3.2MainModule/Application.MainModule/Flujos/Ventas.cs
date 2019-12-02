@@ -65,13 +65,19 @@ namespace Application.MainModule.Flujos
         public CorteCajaDTO CajaGeneral(string cveReporte)
         {
             CorteCajaDTO corte = new CorteCajaDTO();
+            var reporteDia = CajaGeneralServicio.ObtenerReporteDia(cveReporte);
+            if (reporteDia == null)
+            {
+                reporteDia = CajaGeneralServicio.ObtenerReporteDiaCorteCaja(cveReporte);
+                if (reporteDia == null)
+                    return corte;
+            }              
+
             var productoGas = ProductoServicio.ObtenerProductoGasVenta(TokenServicio.ObtenerIdEmpresa());
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             var precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             if (!resp.Exito) return null;
-            var reporteDia = CajaGeneralServicio.ObtenerReporteDia(cveReporte);
-            if (reporteDia == null)
-                return corte;
+          
             var ventas = CajaGeneralServicio.ObtenerVPV(reporteDia).ToList();
             corte.Tickets = CajaGeneralAdapter.ToDTOC(ventas);
             var lecturas = AlmacenGasServicio.ObtenerLecturas(reporteDia.IdCAlmacenGas.Value, reporteDia.FechaReporte);
@@ -132,6 +138,14 @@ namespace Application.MainModule.Flujos
             var reporteDia = CajaGeneralServicio.ObtenerReporteDia(cveReporte);
             if (reporteDia == null)
                 return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.NoExiste, "El reporte") };
+            // if (reporteDia == null)
+            //{
+            //    reporteDia = CajaGeneralServicio.ObtenerReporteDiaCorteCaja(cveReporte);
+            //    if (reporteDia == null)
+            //        return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.NoExiste, "El reporte") };
+            //    else
+            //        return new RespuestaDto() { Exito = true, Mensaje = Exito.OK };
+            //}  
 
             var productoGas = ProductoServicio.ObtenerProductoGasVenta(TokenServicio.ObtenerIdEmpresa());
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();

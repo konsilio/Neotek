@@ -1296,5 +1296,79 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         {
             return lista.Select(x => ToDTO(x)).ToList();
         }
+        public static List<VentaPuntoDeVenta> ToDTO(List<VentaPuntoVentaDTO> lu)
+        {
+            return lu.Select(x => ToDTO(x)).ToList();
+        }
+        public static VentaPuntoDeVenta ToDTO(VentaPuntoVentaDTO pv)
+        {
+            VentaPuntoDeVenta usDTO = new VentaPuntoDeVenta()
+            {
+                IdEmpresa = pv.IdEmpresa,
+                Year = pv.Year,
+                Mes = pv.Mes,
+                Dia = pv.Dia,
+                Orden = pv.Orden,
+                IdPuntoVenta = pv.IdPuntoVenta,
+                IdCliente = pv.IdCliente,
+                IdOperadorChofer = pv.IdOperadorChofer,
+                IdTipoVenta = pv.IdTipoVenta,
+                IdFactura = pv.IdFactura,
+                FolioOperacionDia = pv.FolioOperacionDia,
+                FolioVenta = pv.FolioVenta,
+                RequiereFactura = pv.RequiereFactura,
+                VentaACredito = pv.VentaACredito,
+                Subtotal = pv.Subtotal,
+                Descuento = pv.Descuento,
+                Iva = pv.Iva,
+                Total = pv.Total,
+                PorcentajeIva = pv.PorcentajeIva,
+                EfectivoRecibido = pv.EfectivoRecibido,
+                CambioRegresado = pv.CambioRegresado,
+                PuntoVenta = pv.PuntoVenta,
+                RazonSocial = pv.RazonSocial,
+                RFC = pv.RFC,
+                ClienteConCredito = pv.ClienteConCredito,
+                OperadorChofer = pv.OperadorChofer,
+                DatosProcesados = pv.DatosProcesados,
+                FechaRegistro = pv.FechaRegistro,
+                //DescuentoAcumAnio = pv.DescuentoAcumAnio,
+                //DescuentoAcumDia = pv.DescuentoAcumDia,
+                //DescuentoAcumMes = pv.DescuentoAcumMes,
+                //DescuentoDia = pv.DescuentoDia,
+                //DescuentoAnio = pv.DescuentoAnio,
+                //DescuentoMes = pv.DescuentoMes,
+                //EsBonificacion = pv.EsBonificacion,
+                //Bonificacion = pv.Bonificacion,
+                //EfectivoRecibidoAcumAnio = pv.EfectivoRecibidoAcumAnio,
+                //EfectivoRecibidoAcumDia = pv.EfectivoRecibidoAcumDia,
+                //EfectivoRecibidoAcumMes = pv.EfectivoRecibidoAcumMes,
+                //EfectivoRecibidoAnio = pv.EfectivoRecibidoAnio,
+                //EfectivoRecibidoDia = pv.EfectivoRecibidoDia,
+                //EfectivoRecibidoMes = pv.EfectivoRecibidoMes,
+                //FechaAplicacion = pv.FechaAplicacion,
+                //IvaAcumAnio = pv.IvaAcumAnio,
+                //IvaAcumDia = pv.IvaAcumDia,
+                //IvaAcumMes = pv.IvaAcumMes,
+                //IvaAnio = pv.IvaAnio,
+                //IvaDia = pv.IvaDia,
+                //IvaMes = pv.IvaMes,
+                //SubtotalAcumAnio = pv.SubtotalAcumAnio,
+                //SubtotalAcumDia = pv.SubtotalAcumDia,
+                //SubtotalAcumMes = pv.SubtotalAcumMes,
+                //SubtotalAnio = pv.SubtotalAnio,
+                //SubtotalDia = pv.SubtotalDia,
+                //SubtotalMes = pv.SubtotalMes,
+                //TotalAcumAnio = pv.TotalAcumAnio,
+                //TotalAcumDia = pv.TotalAcumDia,
+                //TotalAcumMes = pv.TotalAcumMes,
+                //TotalAnio = pv.TotalAnio,
+                //TotalDia = pv.TotalDia,
+                //TotalMes = pv.TotalMes,
+
+
+            };
+            return usDTO;
+        }
     }
 }

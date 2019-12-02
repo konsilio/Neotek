@@ -48,7 +48,7 @@ namespace Application.MainModule.Flujos
             var camionetas = CamionetaServicio.Obtener(dto.Camionetas);
             return new Almacenes().BuscarInvetarioPorPuntoDeVenta(camionetas, pipas, estaciones, dto.Fecha);
         }
-        public List<RepHistorioPrecioDTO> RepHistorioPrecios(HistoricoPrecioDTO dto)
+        public List<RepHistorioPrecioDTO> RepHistorioPrecios(HistoricoPrecioDTO dto) 
         {
             var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
             if (!resp.Exito) return null;
