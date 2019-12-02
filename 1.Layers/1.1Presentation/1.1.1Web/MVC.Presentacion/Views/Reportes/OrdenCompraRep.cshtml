@@ -13,11 +13,14 @@
     )
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
 <script type="text/javascript">
     var mensaje = '@ViewBag.Msj';
     if (mensaje != '') {
         $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
     }
+
+
 
 </script>
 <body>
@@ -71,10 +74,15 @@
                                         }).Bind(Model.FechaFinal).GetHtml()
                                     </div>
                                 </div>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(m=> m.EsGas) Es Gas?
+                                </div>
                                 <div class="col-md-3">
                                     <strong>&emsp;</strong>
+                                   
                                     <div class="form-group">
-                                        <input type="submit" value="Crear reporte" class="btn btn-default btn-round" />
+
+                                        <input id="submit" type="submit" value="Crear reporte" class="btn btn-default btn-round" />
                                     </div>
                                 </div>
                             </div>
@@ -98,3 +106,17 @@
         </div>
     </section>
 </body>
+<script>
+
+    //$(document).ready(function () {
+    //    $("#submit").on("click", function () {
+    //        var condiciones = $("#Gas").is(":checked");
+    //        if (!condiciones) {
+         
+    //            event.preventDefault();
+    //        }
+    //    });
+    //});
+
+
+</script>

@@ -42,6 +42,7 @@ namespace MVC.Presentacion.Agente
         public RequisicionSalidaDTO _RequisicionSalida;
         public CargosModel _Cargo;
         public ReporteModel _repCartera;
+        public ReporteCreditosRecuperado _repAbonos;
         public PedidoModel _Pedido;
         public RegistrarPedidoModel _RegPedido;
         public CombustibleModel _Combustible;
@@ -131,9 +132,21 @@ namespace MVC.Presentacion.Agente
         public List<InventarioPorPuntoVentaDTO> _ListaInventarioPuntoVenta;
         public List<HistoricoPrecioVentaDTO> _ListaHistoricoPrecioVenta;
         public List<CallCenterDTO> _ListaCallCenter;
+        public List<VentasDTO> _ListaVentas;
         public List<RequisicionRepDTO> _ListaRequisicion;
         public List<OrdenCompraRepDTO> _ListaOrdenCompra;
         public List<RendimientoVehicularDTO> _ListaRendimientoVehicular;
+        public List<RendimientoCamionetaDTO> _ListaRendimientoVehicularCamioneta;
+        public List<RendimientoVehicularPipasModel> _ListaRendimientoVehicularPipas;
+        public List<AutoConsumoModel> _ListaAutoConsumos;
+        public List<DescuentosXClientes> _ListDescuentosXClientes;
+        public List<CreditoRecuperadoDTO> _ListCreditoRecuperadoClientes;
+        public List<CreditoOtorgadoModel> _ListCreditoOtorgadoClientes;
+        public List<CreditoXCliente> _ListCreditoCreditoXCliente;
+        public List<CreditoXClienteMensualModel> _ListCreditoCreditoXClienteMensual;
+        public List<VentasXPuntoVentaModel> _ListaVentasXPuntoVenta;
+        public List<PeriodoDTO> _ListaEquipoDeTransporte;
+    
         public List<InventarioXConceptoDTO> _ListaInventarioConcepto;
         public List<Models.CorteCajaDTO> _ListaCorteCaja;
         public List<GastoVehiculoDTO> _ListaGastoVehicular;
@@ -634,7 +647,7 @@ namespace MVC.Presentacion.Agente
                         _lstUserEmp = (from x in lus where x.IdUsuario == idUser select x).ToList();
 
                     }
-                    if (!String.IsNullOrEmpty(mail) && mail != "0" && mail!= "Seleccione uno")
+                    if (!String.IsNullOrEmpty(mail) && mail != "0" && mail != "Seleccione uno")
                     {
                         _lstUserEmp = (from x in lus where x.Email1 == mail select x).ToList();
 
@@ -1340,15 +1353,15 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-
-                if (idPV != 0)
-                {
-                    _listaPreciosV = (from x in lus where x.IdPrecioVenta == idPV select x).ToList();
-                }
-                else
-                {
-                    _listaPreciosV = lus;
-                }
+                _listaPreciosV = lus;
+                //if (idPV != 0)
+                //{
+                //    _listaPreciosV = (from x in lus where x.IdPrecioVenta == idPV select x).ToList();
+                //}
+                //else
+                //{
+                //    _listaPreciosV = lus;
+                //}
             }
         }
         public void BuscarListaEstatus(string tkn)
@@ -3712,6 +3725,11 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutAutorizarProductoOordenCompra"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
+        public void ActualizarTikets(List<VentaPuntoVentaDTO> dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutActualizarTikets"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
         private async Task GetListaPago(int idoc, string Token)
         {
             using (var client = new HttpClient())
@@ -4309,7 +4327,8 @@ namespace MVC.Presentacion.Agente
         {
             using (var client = new HttpClient())
             {
-                List<CargosModel> cargos = new List<CargosModel>();
+                //List<CargosModel> cargos = new List<CargosModel>(); 
+                ReporteCreditosRecuperado cargos = new ReporteCreditosRecuperado();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 if (!string.IsNullOrEmpty(token))
@@ -4319,7 +4338,7 @@ namespace MVC.Presentacion.Agente
                     // HttpResponseMessage response = await client.GetAsync(api + id.ToString()).ConfigureAwait(false);
                     HttpResponseMessage response = await client.PutAsJsonAsync(api, _mod).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        cargos = await response.Content.ReadAsAsync<List<CargosModel>>();
+                        cargos = await response.Content.ReadAsAsync<ReporteCreditosRecuperado>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -4328,7 +4347,7 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    cargos = new List<CargosModel>();
+                    cargos = new ReporteCreditosRecuperado();
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
@@ -4352,7 +4371,7 @@ namespace MVC.Presentacion.Agente
                 //{
                 //    cargos = (from x in cargos where x.Ticket == ticket select x).ToList();
                 //}
-                _ListaCargos = cargos;
+                _repAbonos = cargos;
             }
         }
         public void ListaCargos(short id, string token)
@@ -4636,7 +4655,7 @@ namespace MVC.Presentacion.Agente
         }
         public void EliminarMantenimiento(int id, string tkn)
         {
-          
+
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaMantenimientoDetalle"];
             EliminarMantenimientoDetalle(id, tkn).Wait();
         }
@@ -5507,6 +5526,41 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
+        #region Ventas 
+        public void BuscarVentas(PeriodoDTO model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostVentas"];
+            Ventas(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task Ventas(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<VentasDTO> list = new List<VentasDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<VentasDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<VentasDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaVentas = list;
+            }
+        }
+        #endregion
         #region Requisicion
         public void BuscarRequisicion(Models.RequisicionModel model, string tkn)
         {
@@ -5614,6 +5668,382 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
+        #region BuscarPuntoDeEqulibrio
+        public void BuscarPuntoEqulibrio(PeriodoDTO model, string tkn, bool EsPipa = false)
+        {           
+            if (EsPipa)
+            {
+             this.ApiCatalgos = ConfigurationManager.AppSettings["PostRendimientovehicularPipas"];
+             PostRendimientoVehicularPipas(model, this.ApiCatalgos, tkn).Wait();
+            }
+            else
+            {
+                this.ApiCatalgos = ConfigurationManager.AppSettings["PostRendimientoVehicularCamioneta"];
+                PostRendimientoVehicularCamioneta(model, this.ApiCatalgos, tkn).Wait();
+            }
+
+        }
+        private async Task PostRendimientoVehicularCamioneta(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RendimientoCamionetaDTO> list = new List<RendimientoCamionetaDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<RendimientoCamionetaDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<RendimientoCamionetaDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaRendimientoVehicularCamioneta = list;
+            }
+        }
+
+        private async Task PostRendimientoVehicularPipas(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RendimientoVehicularPipasModel> list = new List<RendimientoVehicularPipasModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<RendimientoVehicularPipasModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<RendimientoVehicularPipasModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaRendimientoVehicularPipas = list;
+            }
+        }
+        #endregion
+        #region BuscarAutoconsumos
+        public void BuscarAutoConsumos(PeriodoDTO model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostAutoConsumos"];
+            BuscarAutoConsumos(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task BuscarAutoConsumos(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<AutoConsumoModel> list = new List<AutoConsumoModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<AutoConsumoModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<AutoConsumoModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaAutoConsumos = list;
+            }
+        }
+        #endregion
+        #region DescuentosXClientes
+        public void BuscarDescuentosXClientes(PeriodoDTO model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostDescuentosXClientes"];
+            DescuentosXClientes(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task DescuentosXClientes(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<DescuentosXClientes> list = new List<DescuentosXClientes>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<DescuentosXClientes>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<DescuentosXClientes>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListDescuentosXClientes = list;
+            }
+        }
+        #endregion
+        #region CreditoClientes
+        public void BuscarCreditoRecuperadoClientes(PeriodoDTO model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostCreditoRecuperadoClientes"];
+            BuscarCreditoClientes(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task BuscarCreditoClientes(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CreditoRecuperadoDTO> list = new List<CreditoRecuperadoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<CreditoRecuperadoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    list = new List<CreditoRecuperadoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListCreditoRecuperadoClientes = list;
+            }
+        }
+        #endregion
+        #region CreditoClientesOtorgado
+        public void BuscarCreditoOtorgadoClientes(PeriodoDTO model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostCreditoOtorgadoClientes"];
+            BuscarCreditoOtorgadoClientes(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task BuscarCreditoOtorgadoClientes(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CreditoOtorgadoModel> list = new List<CreditoOtorgadoModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<CreditoOtorgadoModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    list = new List<CreditoOtorgadoModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListCreditoOtorgadoClientes = list;
+            }
+        }
+        #endregion
+
+        #region CreditoXClientes
+        public void BuscarCreditoXCliente(PeriodoDTO model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostCreditoXCliente"];
+            BuscarCreditoXCliente(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task BuscarCreditoXCliente(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CreditoXCliente> list = new List<CreditoXCliente>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<CreditoXCliente>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    list = new List<CreditoXCliente>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListCreditoCreditoXCliente = list;
+            }
+        }
+        #endregion
+
+        #region CreditoXClientesMensual
+        public void BuscarCreditoXClienteMensual(PeriodoDTO model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostCreditoXClienteMensual"];
+            BuscarCreditoXClienteMensual(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task BuscarCreditoXClienteMensual(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CreditoXClienteMensualModel> list = new List<CreditoXClienteMensualModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<CreditoXClienteMensualModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    list = new List<CreditoXClienteMensualModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListCreditoCreditoXClienteMensual = list;
+            }
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #region VentasXPuntoVenta
+        public void VentasXPuntoVenta(VentasXPuntoVentaModel model, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostVentasXPuntoVenta"];
+            LLamada(model, tkn, MetodoRestConst.Post).Wait();
+        }
+        private async Task VentasXPuntoVenta(VentasXPuntoVentaModel model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<VentasXPuntoVentaModel> list = new List<VentasXPuntoVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<VentasXPuntoVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<VentasXPuntoVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaVentasXPuntoVenta = list;
+            }
+        }
+        #endregion
+        #region EquipoDeTransporte
+        public void EquipoDeTransporte(PeriodoDTO model, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostEquipoDeTransporte"];
+            LLamada(model, tkn, MetodoRestConst.Post).Wait();
+        }
+        private async Task EquipoDeTransporte(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PeriodoDTO> list = new List<PeriodoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<PeriodoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<PeriodoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ListaEquipoDeTransporte = list;
+            }
+        }
+        #endregion
+
+
+
+
         #region Inventario Por Concepto
         public void BuscarInventarioPorConcepto(InventarioXConceptoModel model, string tkn)
         {

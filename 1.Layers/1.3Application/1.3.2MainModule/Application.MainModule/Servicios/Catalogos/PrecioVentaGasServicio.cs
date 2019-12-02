@@ -22,8 +22,8 @@ namespace Application.MainModule.Servicios.Catalogos
 
         public static List<PrecioVentaDTO> Obtener()
         { 
-            List<PrecioVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PrecioVentaGasAdapter.ToDTO(new PrecioVentaDataAccess().BuscarTodos());
-            return lPventas;
+            var lPventas = new PrecioVentaDataAccess().BuscarTodos();
+            return AdaptadoresDTO.Catalogo.PrecioVentaGasAdapter.ToDTO(lPventas);
         }
         public static PrecioVenta Obtener(short idPrecioVenta)
         {

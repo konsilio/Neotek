@@ -22,7 +22,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<PrecioVenta> BuscarTodos()
         {
-            return uow.Repository<PrecioVenta>().Get(x => x.Activo).ToList();
+            return uow.Repository<PrecioVenta>().Get(x => x.Activo).OrderByDescending(x => x.FechaRegistro).ToList();
         }
         public List<PrecioVenta> BuscarTodos(short idEmpresa)
         {

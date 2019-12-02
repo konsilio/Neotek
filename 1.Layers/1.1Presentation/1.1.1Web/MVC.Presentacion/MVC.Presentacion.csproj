@@ -45,14 +45,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Printing.v18.2.Core, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Office.v18.2.Core, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.RichEdit.v18.2.Core, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Utils.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.ASPxThemes.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.Mvc5.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v18.2.Core, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v18.2.Core, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v18.2.Core, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Mvc5.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="Echovoice.JSON, Version=2.0.15151.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Echovoice.JSON.2.0.15151.1\lib\Echovoice.JSON.dll</HintPath>
       <Private>True</Private>
@@ -373,6 +373,7 @@
     <Compile Include="Models\Cobranza\CargosModel.cs" />
     <Compile Include="Models\Cobranza\CarteraVencidaModel.cs" />
     <Compile Include="Models\Cobranza\FacturacionGlobalModel.cs" />
+    <Compile Include="Models\Cobranza\ReporteCreditosRecuperado.cs" />
     <Compile Include="Models\Cobranza\ReporteModel.cs" />
     <Compile Include="Models\Facturacion\CFDIDTO.cs" />
     <Compile Include="Models\Facturacion\FacturacionModel.cs" />
@@ -408,17 +409,23 @@
     <Compile Include="Models\Pedidos\PedidoDetalleDto.cs" />
     <Compile Include="Models\Pedidos\PedidoModel.cs" />
     <Compile Include="Models\Pedidos\RegistrarPedidoModel.cs" />
+    <Compile Include="Models\Reporte\Autoconsumos\AutoConsumoModel.cs" />
     <Compile Include="Models\Reporte\CallCenter\CallCenterDTO.cs" />
     <Compile Include="Models\Reporte\CallCenter\CallCenterModel.cs" />
     <Compile Include="Models\Reporte\Comision\ComisionDTO.cs" />
     <Compile Include="Models\Reporte\CorteCaja\CorteCajaDTO.cs" />
     <Compile Include="Models\Reporte\CorteCaja\CorteCajaModel.cs" />
+    <Compile Include="Models\Reporte\CreditoOtorgado\CreditoOtorgadoModel.cs" />
+    <Compile Include="Models\Reporte\CreditoRecuperado\CreditoRecuperadoDTO.cs" />
+    <Compile Include="Models\Reporte\CreditoXClienteMensual\CreditoXClienteMensualModel.cs" />
+    <Compile Include="Models\Reporte\CreditoXCliente\CreditoXCliente.cs" />
     <Compile Include="Models\Reporte\CuentasConsolodadas\CuentaConsolodadaDTO.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarDTO.cs" />
     <Compile Include="Models\Reporte\CuentasPorPagar\CuentasPorPagarModel.cs" />
     <Compile Include="Models\Reporte\DashBoard\AdministracionDTO.cs" />
     <Compile Include="Models\Reporte\DashBoard\AndenDTO.cs" />
     <Compile Include="Models\Reporte\DashBoard\CarteraDTO.cs" />
+    <Compile Include="Models\Reporte\DescuentosXClientes\DescuentosXClientes.cs" />
     <Compile Include="Models\Reporte\GastoPorVehiculo\GastoVehiculoDTO.cs" />
     <Compile Include="Models\Reporte\GastoPorVehiculo\GastoVehiculoModel.cs" />
     <Compile Include="Models\Reporte\HistoricoPrecioVenta\HisotricoPrecioVentaDTO.cs" />
@@ -430,11 +437,16 @@
     <Compile Include="Models\Reporte\OrdenCompra\OrdenCompraModel.cs" />
     <Compile Include="Models\Reporte\OrdenCompra\OrdenCompraRepDTO.cs" />
     <Compile Include="Models\Reporte\RangoDTO.cs" />
+    <Compile Include="Models\Reporte\RendimientoVehicularCamioneta\RendimientoCamionetaDTO.cs" />
+    <Compile Include="Models\Reporte\RendimientoVehicularPipas\RendimientoVehicularPipasModel.cs" />
     <Compile Include="Models\Reporte\RendimientoVehicular\RendimientoVehicularDTO.cs" />
     <Compile Include="Models\Reporte\RendimientoVehicular\RendimientoVehicularModel.cs" />
     <Compile Include="Models\Reporte\Requisicion\RequisicionModel.cs" />
     <Compile Include="Models\Reporte\Requisicion\RequisicionRepDTO.cs" />
     <Compile Include="Models\Reporte\TiposReporteConst.cs" />
+    <Compile Include="Models\Reporte\VentasXPuntoVenta\VentasXPuntoVenta.cs" />
+    <Compile Include="Models\Reporte\Ventas\VentasDTO.cs" />
+    <Compile Include="Models\Reporte\Ventas\VentasModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
