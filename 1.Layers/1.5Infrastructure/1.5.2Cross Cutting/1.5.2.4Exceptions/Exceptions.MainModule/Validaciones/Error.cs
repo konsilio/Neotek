@@ -20,6 +20,8 @@ namespace Exceptions.MainModule.Validaciones
         public const string S0003 = "El usuario y la contraseña no coinciden";
         public const string S0004 = "No se logró {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
         public const string S0005 = "El usuario no tiene acciones permitida en la aplicación";
+        public const string S0007 = "No se a realizado lectura Inicial";
+        public const string S0006 = "Ya se realizo la lectura final";
 
         public const string R0001 = "Error al guardar la requisición";
         public const string R0002 = "El campo '{0}' es obligatorio.";
@@ -35,7 +37,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string R0012 = "Verifique que los datos esten completos";
         public const string R0013 = "Debes revisar todos los productos en el almacen";
         public const string R0014 = "Falta la opinion de almacen";
-        
+
 
         public const string OC0001 = "La orden de compra no se actualizo correctamente";
         public const string OC0002 = "Debes asignar un Proveedor, una Cuenta contable y un precio como minimo a todos los producto";
@@ -60,6 +62,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string P0002 = "No cuentas con los permisos necesario para modificar {0}.";
         public const string P0003 = "No cuentas con los permisos necesario para eliminar {0}.";
         public const string P0004 = "No cuentas con los permisos necesario para consultar {0}.";
+        public const string P0005 = "No cuentas con los permisos necesario para generar {0}.";
 
         public const string A0001 = "No se logró hacer el registro {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
         public const string A0002 = "La cantidad a entregar supera las existencias en almacén";

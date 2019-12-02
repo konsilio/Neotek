@@ -38,6 +38,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCallCenter(dto));
         }
+        [Route("ventas")]
+        public HttpResponseMessage PostVentas(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepVentas(dto));
+        }
         [Route("requisicion")]
         public HttpResponseMessage PostRequisicion(RequisicionModelDTO dto)
         {
@@ -52,6 +57,58 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostRendimientoVehicular(RendimientoVehicularDTO dto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepRendimientoVehicular(dto));
+        }
+        [Route("rendimientovehicularCamioneta")]
+        public HttpResponseMessage PostRendimientoVehicularCamionetas(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepRendimientoVehicularCamionetas(dto));
+        }
+        [Route("Autoconsumos")]
+        public HttpResponseMessage PostAutoConsumos(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepAutoConsumos(dto));
+        }
+        [Route("DescuentosXClientes")]
+        public HttpResponseMessage PostDescuentosXClientes(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepDescuentosXClientes(dto));
+        }
+        [Route("CreditoRecuperadoClientes")]
+        public HttpResponseMessage PostCreditoRecuperadoClientes(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCreditoRecuperadoClientes(dto));
+        }
+        [Route("CreditoOtorgadoClientes")]
+        public HttpResponseMessage PostCreditoOtorgadoClientes(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCreditoOtorgadoClientes(dto));
+        }
+      
+        [Route("CreditoXCliente")]
+        public HttpResponseMessage PostCreditoXCliente(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCreditoXCliente(dto));
+        }
+        [Route("CreditoXClienteMensual")]
+        public HttpResponseMessage PostCreditoXClienteMensual(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCreditoXClienteMensual(dto));
+        }
+        
+        [Route("VentasXPuntoVenta")]
+        public HttpResponseMessage PostVentasXPuntoVenta(VentasXPuntoVenta dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.VentasXPuntoVenta(dto));
+        }
+        [Route("EquipoDeTransporte")]
+        public HttpResponseMessage PostEquipoDeTransporte(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.EquipoDeTransporte(dto));
+        }
+        [Route("rendimientovehicularPipas")]
+        public HttpResponseMessage PostRendimientoVehicularPipas(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepRendimientoVehicularPipas(dto));
         }
         [Route("inventarioxconcepto")]
         public HttpResponseMessage PostInventarioPorConcepto(InventarioXConceptoDTO dto)
@@ -82,7 +139,7 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetDashRemanente()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.DashAdministracionVentaVSRema());
-        }       
+        }
         [Route("dashboard/callcenter")]
         public HttpResponseMessage GetDashCallCenter()
         {

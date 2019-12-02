@@ -42,9 +42,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Requisicion> BuscarTodas(short IdEmpresa)
         {
-            return uow.Repository<Requisicion>().Get(x => x.IdEmpresa.Equals(IdEmpresa)).ToList();
+            return uow.Repository<Requisicion>().Get(x => x.IdEmpresa.Equals(IdEmpresa)).OrderByDescending(y => y.FechaRegistro).ToList();
         }
-
         public List<Requisicion> BuscarTodasAlmacenPorIdEmpresa(short IdEmpresa)
         {
             return uow.Repository<Requisicion>().Get(
@@ -52,12 +51,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 x.IdRequisicionEstatus == RequisicionEstatusEnum.Autoriza_entrega &&
                 x.OrdenesCompra.Where(oc => oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_exitosa)).Count() > 0).ToList();
         }
-
-
-
         public List<Requisicion> BuscarTodas(short IdEmpresa, DateTime p)
         {
-            return uow.Repository<Requisicion>().Get(x => x.IdEmpresa.Equals(IdEmpresa) && x.FechaRegistro.Month.Equals(p.Month) && x.FechaRegistro.Year.Equals(p.Year)).ToList();
+            return uow.Repository<Requisicion>().Get(x => x.IdEmpresa.Equals(IdEmpresa) && x.FechaRegistro.Month.Equals(p.Month) && x.FechaRegistro.Year.Equals(p.Year)).OrderByDescending(y => y.FechaRegistro).ToList();
         }
         public List<Requisicion> BuscarTodas(short IdEmpresa, DateTime fi, DateTime ff)
         {

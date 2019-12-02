@@ -111,16 +111,17 @@ namespace Application.MainModule.Flujos
                 lects.P5000Inicial = li.P5000 ?? 0;
                 lects.P5000Final = lf.P5000 ?? 0;
                 lects.CantidadLt = CalculosGenerales.DiferenciaEntreDosNumero(lects.P5000Inicial, lects.P5000Final);
-                lects.Venta = lects.CantidadLt * precio.PrecioSalidaKg.Value;
+                lects.Venta = lects.CantidadLt * precio.PrecioSalidaLt ?? 0;
                 corte.Lecturas.Add(lects);
-                corte.TotalCantidad = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt.Value));
+                corte.TotalCantidad = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt ?? 0));
             }
-            corte.TotalVenta = corte.Tickets.Sum(x => x.Total);
-            corte.TotalOtros = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt.Value));
-            corte.TotalContado = corte.Tickets.Where(x => x.VentaACredito.Equals(false)).Sum(v => v.Total);
-            corte.TotalCredito = corte.Tickets.Where(x => x.VentaACredito.Equals(true)).Sum(v => v.Total);
-            corte.Descuentos = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
-            corte.TotalEfectio = corte.TotalContado + corte.TotalOtros - corte.Descuentos;
+            corte.TotalVenta = ventas.Sum(x => x.Total);
+            corte.TotalOtros = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt ?? 0));
+            corte.TotalContado = ventas.Where(x => x.VentaACredito.Equals(false)).Sum(v => v.Total);
+            corte.TotalCredito = ventas.Where(x => x.VentaACredito.Equals(true)).Sum(v => v.Total);
+            corte.Descuentos = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
+            corte.Bonidificaciones = ventas.Where(v => v.EsBonificacion).Sum(x => x.Bonificacion ?? 0);
+            corte.TotalEfectio = (corte.TotalVenta + corte.TotalOtros) - (corte.TotalCredito - corte.Descuentos - corte.Bonidificaciones);
 
             return corte;
         }
@@ -159,9 +160,10 @@ namespace Application.MainModule.Flujos
             corte.OtrasVentas = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt.Value));
             corte.VentaTotalContado = ventas.Where(x => x.VentaACredito.Equals(false)).Sum(v => v.Total);
             corte.VentaTotalCredito = ventas.Where(x => x.VentaACredito.Equals(true)).Sum(v => v.Total);
-            corte.DescuentoTotal = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
-            corte.DescuentoCredito = ventas.Where(v => v.VentaACredito.Equals(true)).Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
-            corte.DescuentoContado = ventas.Where(v => v.VentaACredito.Equals(false)).Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
+            corte.VentaTotalBonificacion = ventas.Where(v => v.EsBonificacion.Equals(true)).Sum(x => x.Bonificacion ?? 0);
+            corte.DescuentoTotal = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
+            corte.DescuentoCredito = ventas.Where(v => v.VentaACredito.Equals(true)).Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
+            corte.DescuentoContado = ventas.Where(v => v.VentaACredito.Equals(false)).Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
             corte.DescuentoOtrasVentas = 0;
 
             if (CajaGeneralServicio.ExisteCorteUltimo(corte.IdCAlmacenGas, corte.IdEmpresa, corte.Year, corte.Mes, corte.Dia))
@@ -231,5 +233,13 @@ namespace Application.MainModule.Flujos
             var liquis = CajaGeneralServicio.Obtener(DateTime.Now);
             return CajaGeneralAdapter.ToDTO(liquis);
         }
+        //public RespuestaDto ActualizarTikets(List<PuntoVentaDTO> listatikets)
+        //{
+        // ////   var lista = PuntoVentaAdapter.ToDTO(listatikets); 
+        // //  return CajaGeneralServicio.ActualizarVentas();
+
+
+        //}
+        
     }
 }

@@ -20,6 +20,7 @@ namespace Sagas.MainModule.Entidades
             this.Locaciones = new HashSet<ClienteLocacion>();
             this.VentaPuntoDeVenta = new HashSet<VentaPuntoDeVenta>();
             this.Cargo = new HashSet<Cargo>();
+            this.Pedido = new HashSet<Pedido>();
         }
     
         public int IdCliente { get; set; }
@@ -71,5 +72,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<VentaPuntoDeVenta> VentaPuntoDeVenta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cargo> Cargo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pedido> Pedido { get; set; }
     }
 }

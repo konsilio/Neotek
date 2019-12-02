@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile;
+using Application.MainModule.DTOs;
+using Application.MainModule.Servicios.Seguridad;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -151,6 +153,70 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 && x.Activo
             ).ToList();
         }
+        public List<Cliente> BuscadorClientes(short idEmpresa)
+        {
+            return uow.Repository<Cliente>().Get(
+                x =>                
+                x.IdEmpresa.Equals(idEmpresa)     
+            ).ToList();
+        }
+
+        public List<Cliente> BuscadorClientesDescuentos(PeriodoDTO dto, short IdEmpresa)
+        {
+
+            var resp = uow.Repository<Cliente>().Get(
+                  x => x.VentaPuntoDeVenta.Where(y =>
+                 x.IdEmpresa.Equals(IdEmpresa) &&
+                    (y.FechaRegistro >= dto.FechaInicio && 
+                    y.FechaRegistro <= dto.FechaFin)
+                    && y.Descuento > 0).Count() != 0 ).ToList();
+
+
+            return resp;
+        }
+
+        public List<Cliente> BuscarClientesAbonos(PeriodoDTO dto, short IdEmpresa)
+        {
+
+            var resp = uow.Repository<Cliente>().Get(x => x.Cargo.Where(y => y.Abono.Where(z => z.FechaRegistro >= dto.FechaInicio
+                                                     && z.FechaRegistro <= dto.FechaFin).Count() > 0).Count() > 0).ToList();
+                 
+
+
+            return resp;
+        }
+        public List<Cliente> BuscarClientesCargos(PeriodoDTO dto, short IdEmpresa)
+        {
+
+            var resp = uow.Repository<Cliente>().Get(x => x.Cargo.Where(z => z.FechaRegistro >= dto.FechaInicio
+                                                     && z.FechaRegistro <= dto.FechaFin).Count() > 0).ToList();
+
+
+
+            return resp;
+        }
+        public List<Cliente> BuscarClientesSaldoPendiente(PeriodoDTO dto, short IdEmpresa)
+        {
+
+            var resp = uow.Repository<Cliente>().Get(x => x.Cargo.Where(z => z.FechaRegistro <= dto.FechaInicio).Count() > 0).ToList();
+
+
+
+            return resp;
+        }
+        public List<Cliente> BuscarClientesSaldoPendienteMensual(PeriodoDTO dto, short IdEmpresa)
+        {
+            var resp = uow.Repository<Cliente>().Get(x => x.Cargo.Where(z => z.FechaRegistro >= dto.FechaInicio
+                                                   && z.FechaRegistro <= dto.FechaFin).Count() > 0).ToList();
+
+
+
+            return resp;
+        }
+
+
+
+
         public RespuestaDto Insertar(Cliente cte)
         {
             RespuestaDto _respuesta = new RespuestaDto();

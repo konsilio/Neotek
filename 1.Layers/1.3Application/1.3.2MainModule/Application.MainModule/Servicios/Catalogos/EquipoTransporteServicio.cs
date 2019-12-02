@@ -291,6 +291,7 @@ namespace Application.MainModule.Servicios.Catalogos
             else
                 return 0;
         }
+
         public static int ObtenerIdCentroCosto(int Id_Vehiculo)
         {
             try

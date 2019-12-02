@@ -23,29 +23,18 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
     {
         public static PedidoModelDto ToDTO(Pedido p)
         {
-            var cant = "";
-            var cant20 = "";
-            var cant30 = "";
-            var cant45 = "";
+            var cant = "";          
             if (p.PedidoDetalle != null && !p.PedidoDetalle.Count.Equals(0))
             {
                 if (p.IdCamioneta > 0)
                 {
                     cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro20 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 20Kg" + ", ";
-                    cant20 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
-
                     cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro30 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 30Kg" + ", ";
-                    cant30 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
-
                     cant += CalculosGenerales.Truncar(p.PedidoDetalle.Where(x => x.Cilindro45 ?? false).Sum(y => y.Cantidad.Value), 2).ToString() + " " + "Cilindro(s) 45Kg" + ", ";
-                    cant45 = CalculosGenerales.Truncar(p.PedidoDetalle.Sum(x => x.Cantidad.Value), 2).ToString();
                 }
                 else
                     cant = string.Concat(CalculosGenerales.Truncar(PedidosServicio.ObtenerCantidadVentaPipaEstacion(p.PedidoDetalle.ToList()), 2).ToString(), " Lts.");
             }
-
-            var cliente = ClienteServicio.Obtener(p.IdCliente);
-
             PedidoModelDto usDTO = new PedidoModelDto()
             {
                 IdPedido = p.IdPedido,
@@ -55,7 +44,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 Cantidad = cant,
                 MotivoCancelacion = p.MotivoCancelacion ?? string.Empty,
                 Unidad = AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(p),
-                NombreRfc = cliente != null ? ClienteServicio.ObtenerNomreCliente(cliente) : string.Empty,
+                NombreRfc = ClienteServicio.ObtenerNomreCliente(p.CCliente),
                 IdPipa = p.IdPipa ?? 0,
                 IdCamioneta = p.IdCamioneta ?? 0,
                 IdDireccion = p.IdDireccion,
@@ -63,7 +52,7 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 FechaRegistroPedido = p.FechaRegistro,
                 FechaEntregaPedido = p.FechaPedido.Value,
                 FechaSurtido = p.FechaSurtido,
-                Telefono = cliente != null ? ClienteServicio.ObtenerTelefono(cliente) : string.Empty,
+                Telefono = ClienteServicio.ObtenerTelefono(p.CCliente),
 
             };
             return usDTO;
@@ -100,14 +89,14 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                     }
                 }
             }
-            var cliente = ClienteServicio.Obtener(p.IdCliente);
-            var clienteL = cliente.Locaciones.FirstOrDefault();
+          
+            var clienteL = p.CCliente.Locaciones.FirstOrDefault();
             List<RespuestaSatisfaccionPedido> pe = p.RespuestaSatisfaccionPedido.ToList();
             RegistraPedidoDto usDTO = new RegistraPedidoDto()
             {
                 IdPedido = p.IdPedido,
                 IdEmpresa = p.IdEmpresa,
-                IdCliente = cliente != null ? cliente.IdCliente : 0,
+                IdCliente = p.CCliente.IdCliente,
                 IdPedidoDetalle = p.PedidoDetalle != null ? p.PedidoDetalle.FirstOrDefault().IdPedidoDetalle : 0,
                 IdEstatusPedido = p.IdEstatusPedido,
                 EstatusPedido = EstatusPedidoConst.ObtenerString(p.IdEstatusPedido),
@@ -126,14 +115,13 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
                 Cantidad30 = cant30,
                 Cantidad45 = cant45,
                 MotivoCancelacion = p.MotivoCancelacion,
-                Telefono1 = cliente != null ? cliente.Telefono1 ?? cliente.Telefono : Error.NoEncontrado,
-                Rfc = cliente != null ? cliente.Rfc : Error.NoEncontrado,
+                Telefono1 = ClienteServicio.ObtenerTelefono(p.CCliente),
+                Rfc = p.CCliente.Rfc,
                 Calle = clienteL != null ? string.Concat(clienteL.Calle, " Num. Ext: ", clienteL.NumExt, " Nun. Int: ", clienteL.NumInt) : Error.NoEncontrado,
                 Colonia = clienteL != null ? clienteL.Colonia : Error.NoEncontrado,
-                NombreRfc = cliente != null ? cliente.Nombre + " " + cliente.Apellido1 + " " + cliente.Apellido2 : Error.NoEncontrado,
-                ReferenciaUbicacion = cliente != null ? cliente.Locaciones.FirstOrDefault().formatted_address : Error.NoEncontrado,
+                NombreRfc = ClienteServicio.ObtenerNomreCliente(p.CCliente),
+                ReferenciaUbicacion = clienteL.formatted_address,
                 encuesta = pe.Count > 0 ? FromDto(pe) : FromInit(p.IdPedido),
-
             };
             return usDTO;
         }
@@ -434,31 +422,26 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
 
         public static RepCallCenterDTO FromDTO(Pedido entidad)
         {
-            var cant20 = string.Empty;
-            var cant30 = string.Empty;
-            var cant45 = string.Empty;
-            var lts = string.Empty;
+            var cant20 = "0";
+            var cant30 = "0";
+            var cant45 = "0";
+            var lts = "0";
             if (entidad.PedidoDetalle != null && !entidad.PedidoDetalle.Count.Equals(0))
             {
                 if (entidad.IdCamioneta > 0)
                 {
                     cant20 = decimal.ToInt32(entidad.PedidoDetalle.Where(x => x.Cilindro20 ?? false).Sum(y => y.Cantidad.Value)).ToString();
                     cant30 = decimal.ToInt32(entidad.PedidoDetalle.Where(x => x.Cilindro30 ?? false).Sum(y => y.Cantidad.Value)).ToString();
-                    cant45 = decimal.ToInt32(entidad.PedidoDetalle.Where(x => x.Cilindro45 ?? false).Sum(y => y.Cantidad.Value)).ToString();
-                    lts = "0";
+                    cant45 = decimal.ToInt32(entidad.PedidoDetalle.Where(x => x.Cilindro45 ?? false).Sum(y => y.Cantidad.Value)).ToString();                    
                 }
-                else
-                {
-                    cant20 = "0";
-                    cant30 = "0";
-                    cant45 = "0";
+                else                               
                     lts = decimal.ToInt32(PedidosServicio.ObtenerCantidadVentaPipaEstacion(entidad.PedidoDetalle.ToList())).ToString();
-                }
+                
             }
             return new RepCallCenterDTO()
             {
                 IdPedido = entidad.IdPedido,
-                RFC = ClienteServicio.Obtener(entidad.IdCliente).Rfc,
+                RFC = entidad.CCliente.Rfc,
                 Estatus = EstatusPedidoConst.ObtenerString(entidad.IdEstatusPedido),
                 Observaciones = string.IsNullOrEmpty(entidad.MotivoCancelacion) ? "N/A" : entidad.MotivoCancelacion,
                 Fecha = entidad.FechaRegistro,

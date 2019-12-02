@@ -14,6 +14,8 @@ using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.DTOs.Mobile;
+using Application.MainModule.DTOs;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -27,20 +29,20 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static List<PuntoVenta> ObtenerTodos()
         {
-            return new PuntoVentaDataAccess().BuscarTodos();        
+            return new PuntoVentaDataAccess().BuscarTodos();
         }
         public static List<PuntoVenta> ObtenerTodosLiquidacion()
         {
             var ptoVenta = ObtenerTodos();
-            return ptoVenta.Where(x => 
-                x.ReporteDelDia.SingleOrDefault(r => 
+            return ptoVenta.Where(x =>
+                x.ReporteDelDia.SingleOrDefault(r =>
                     r.FechaReporte.ToShortDateString().Equals(DateTime.Now.ToShortDateString())) != null
-                && x.VentaCorteAnticipoEC.Where(c => 
+                && x.VentaCorteAnticipoEC.Where(c =>
                     c.FechaCorteAnticipo.ToShortDateString().Equals(DateTime.Now.ToShortDateString())).Count().Equals(0)
                 ).ToList();
         }
         public static List<VentaPuntoDeVenta> ObtenerVentas(DateTime fi, DateTime ff)
-        {           
+        {
             return new PuntoVentaDataAccess().BuscarVentas(fi, ff);
         }
         public static PuntoVenta Obtener(int idPuntoVenta)
@@ -49,7 +51,7 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static OperadorChoferDTO ObtenerOperador(int idUsuario)
         {
-            OperadorChoferDTO lPventas = AdaptadoresDTO.Catalogo.OperadorChoferAdapter.ToOperador(new PuntoVentaDataAccess().BuscarPorUsuario(idUsuario));
+            OperadorChoferDTO lPventas = OperadorChoferAdapter.ToOperador(new PuntoVentaDataAccess().BuscarPorUsuario(idUsuario));
             return lPventas;
         }
         public static List<OperadorChoferDTO> ObtenerUsuariosOperador(short idEmpresa)
@@ -73,6 +75,10 @@ namespace Application.MainModule.Servicios.Catalogos
         public static PuntoVenta Obtener(UnidadAlmacenGas unidadAlmacen)
         {
             return new PuntoVentaDataAccess().BuscarPorUnidadAlmacenGas(unidadAlmacen.IdCAlmacenGas);
+        }
+        public static PuntoVenta Obtener(DetalleRecargaCombustible recarga)
+        {
+            return new PuntoVentaDataAccess().BuscarPorUnidadAlmacenGas(recarga);
         }
         public static PuntoVenta Obtener(short unidadAlmacen)
         {
@@ -140,7 +146,7 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static List<VentaPuntoDeVenta> ObtenerVentasTOP(int TOP, DateTime fecha)
         {
-            return new PuntoVentaDataAccess().BuscarVentasTOP(TOP, fecha);          
+            return new PuntoVentaDataAccess().BuscarVentasTOP(TOP, fecha);
         }
         public static List<VentaPuntoVentaDTO> ObtenerVentasTOPDTO(int TOP, DateTime fecha)
         {
@@ -187,7 +193,7 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarVentasPorPeriodo(id, Periodo);
         }
-        public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(int id,DateTime fi, DateTime ff)
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorCliente(int id, DateTime fi, DateTime ff)
         {
             return new PuntoVentaDataAccess().BuscarVentasPorCliente(id).Where(x => (x.FechaRegistro > fi) && (x.FechaRegistro < ff)).ToList();
         }
@@ -279,7 +285,7 @@ namespace Application.MainModule.Servicios.Catalogos
                 estacion.Folio++;
                 return EstacionCarburacionServicio.Modificar(estacion);
             }
-            return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.NoExiste, "El punto de venta" )};
+            return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.NoExiste, "El punto de venta") };
         }
         public static PuntoVentaDTO PuntoVentaCero()
         {
@@ -290,5 +296,54 @@ namespace Application.MainModule.Servicios.Catalogos
                 PuntoVenta = "Todos",
             };
         }
+        public static bool CalcularBonificacion(VentaDTO dto)
+        {
+            if (!dto.Credito)
+                if (dto.Total > dto.Efectivo)
+                    return true;
+            return false;
+        }
+
+        public static RendimientoVehicularCamionetaDTO SumaPuntoEquilibrio(List<RendimientoVehicularCamionetaDTO> lista)
+        {
+
+            return new RendimientoVehicularCamionetaDTO()
+            {
+                Unidad = "SUMA",
+                MantenimientoMensual = lista.Sum(x=> x.MantenimientoMensual),
+                CarburacionMensualKg = lista.Sum(x=> x.CarburacionMensualKg),
+                CombustibleDiarioKg = lista.Sum(x => x.CombustibleDiarioKg),
+                MantenimientoDiario = lista.Sum(x => x.MantenimientoDiario),
+                CombustibleDiario = lista.Sum(x => x.CombustibleDiario),
+                Comisiones = lista.Sum(x => x.Comisiones),
+                GastosDiarios = lista.Sum(x => x.GastosDiarios),
+                //sumar punto de equilibrio diario en Kg
+                VentaDiariaKg = lista.Sum(x => x.VentaDiariaKg),
+                //sumar utilidad diaria en kilos
+                KgVendidos = lista.Sum(x => x.KgVendidos),
+
+            };
+        }
+        public static RendimientoVehicularPipasDTO SumaPuntoEquilibrioPipas(List<RendimientoVehicularPipasDTO> lista)
+        {
+
+            return new RendimientoVehicularPipasDTO()
+            {
+                Unidad = "SUMA",
+                MantenimientoMensual = lista.Sum(x => x.MantenimientoMensual),
+                CarburacionMensualLt = lista.Sum(x => x.CarburacionMensualLt),
+                CombustibleDiarioLt = lista.Sum(x => x.CombustibleDiarioLt),
+                MantenimientoDiario = lista.Sum(x => x.MantenimientoDiario),
+                CombustibleDiario = lista.Sum(x => x.CombustibleDiario),
+                Comisiones = lista.Sum(x => x.Comisiones),
+                GastosDiarios = lista.Sum(x => x.GastosDiarios),
+                //sumar punto de equilibrio diario en Kg
+                VentaDiariaKg = lista.Sum(x => x.VentaDiariaKg),
+                //sumar utilidad diaria en kilos
+                KgVendidos = lista.Sum(x => x.KgVendidos),
+
+            };
+        }
+
     }
 }
