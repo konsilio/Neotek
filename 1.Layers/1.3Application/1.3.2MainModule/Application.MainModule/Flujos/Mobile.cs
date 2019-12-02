@@ -1407,7 +1407,6 @@ namespace Application.MainModule.Flujos
             short idCAlmacenGas = puntoVentaBusqueda.IdCAlmacenGas;
             var almacen = AlmacenGasServicio.ObtenerAlmacen(idCAlmacenGas);
 
-
             var cortes = VentaServicio.ObtenerCortes(TokenServicio.ObtenerIdEmpresa());
             var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
             var estacion = estaciones.Find(x => x.IdEstacionCarburacion.Equals(almacen.IdEstacionCarburacion));

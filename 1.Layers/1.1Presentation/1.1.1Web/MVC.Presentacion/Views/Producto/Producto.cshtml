@@ -132,6 +132,7 @@
                                                 settings.Properties.TextField = "Descripcion";
                                                 settings.Properties.ValueField = "IdCuentaContable";
                                             }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
+
                                             @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
