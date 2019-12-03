@@ -41,12 +41,48 @@ namespace Application.MainModule.Flujos
                 Exito = true,
                 Mensaje = "OK"
             };
-
         }
         public List<MenuDto> ObtenerMenu()
         {
-            int idUsuario = TokenServicio.ObtenerIdUsuario();
-            return MenuServicio.Crear(idUsuario);
+            var usuario = UsuarioServicio.Obtener( TokenServicio.ObtenerIdUsuario());
+            bool esChofer = false, esEstacion = false, hayLectura = false;
+            List<MenuDto> menu = new List<MenuDto>();
+            if (usuario != null)
+            {
+                if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count != 0)
+                {
+                    esChofer = true;
+                    var operadorDTO = PuntoVentaServicio.ObtenerOperador(usuario.IdUsuario);
+                    var operador = usuario.OperadoresChoferes.FirstOrDefault(x => x.Activo);                 
+                    var puntoVenta = PuntoVentaServicio.Obtener(operador);
+
+                    if (puntoVenta != null)
+                    {
+                        var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+                        if (unidadAlmacen.IdEstacionCarburacion != null && unidadAlmacen.IdEstacionCarburacion != 0)
+                            esEstacion = true;
+                        var lecturaFinal = LecturaGasServicio.ObtenerUltimaLecturaFinal(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
+                        if (lecturaFinal != null && !esEstacion)
+                            return new List<MenuDto>();
+                        var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
+                        if (ultimaLectura != null)
+                            hayLectura = true;
+                        
+                        if (unidadAlmacen.EsGeneral)
+                        {
+                            hayLectura = true;
+                            esChofer = false;
+                        }
+                    }
+                    menu = MenuServicio.Crear(usuario, hayLectura, esEstacion, esChofer);
+                }
+                else
+                {
+                    hayLectura = true;
+                }
+                menu = MenuServicio.Crear(usuario, hayLectura, esEstacion, esChofer);
+            }
+            return menu;
         }
         public List<MedidorDto> ObtenerMedidores()
         {
@@ -396,8 +432,9 @@ namespace Application.MainModule.Flujos
             {
                 var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
                 var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
-
-                return AlmacenRecargaAdapter.ToDTO(pipas, estaciones, tipoMedidores);
+                var almacenesAlternos = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa(), true);
+                return AlmacenRecargaAdapter.ToDTO(pipas, estaciones, almacenesAlternos, tipoMedidores);
+                
             }
             return null;
         }

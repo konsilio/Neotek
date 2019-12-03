@@ -26,6 +26,26 @@ namespace Application.MainModule.Servicios.Equipo
                                         && x.FechaMtto < dto.FechaFin)
                                     .Sum(recarga => recarga.Monto) ?? 0;
         }
+
+        public static decimal CalcularMantenimientoDiario (List<DetalleMantenimiento> mantenimientos, GastoVehicularDTO dto, Pipa p)
+        {
+            return mantenimientos.Where(x => x.EsPipa
+                                        && x.id_vehiculo.Equals(p.IdPipa)
+                                        && x.FechaMtto > dto.FechaInicio
+                                        && x.FechaMtto < dto.FechaFin)
+                                    .Sum(recarga => recarga.Monto) ?? 0;
+        }
+        public static int CombustibleDiario(DetalleRecargaCombustible entidad, RendimientoVehicularDTO dto )
+        {
+
+            
+
+            return 0;
+
+
+
+        }
+
         public static decimal CalcularCostoMantenimientosCamioneta(List<DetalleMantenimiento> mantenimientos, GastoVehicularDTO dto, Camioneta c)
         {
             return mantenimientos.Where(x => x.EsCamioneta

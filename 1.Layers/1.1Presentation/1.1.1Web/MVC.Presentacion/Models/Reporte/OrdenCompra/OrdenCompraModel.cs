@@ -9,5 +9,6 @@ namespace MVC.Presentacion.Models
     {
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFinal { get; set; }
+        public bool EsGas { get; set; }
     }
 }

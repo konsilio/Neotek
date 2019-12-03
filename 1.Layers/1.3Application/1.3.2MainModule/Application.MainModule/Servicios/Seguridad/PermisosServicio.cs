@@ -404,6 +404,14 @@ namespace Application.MainModule.Servicios.Seguridad
             return EvaluarPermiso(roles, Error.P0004, "Orden de Compra");
         }
 
+        public static RespuestaDto PuedeCompraAtiendeServicioOCompra()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CompraAtiendeServicioOCompra).ToList();
+
+            return EvaluarPermiso(roles, Error.P0005, "el Pago de la Compra");
+        }
+
         //public static RespuestaDto PuedeEliminarOrdenCompra()
         //{
         //    var usuario = UsuarioAplicacionServicio.Obtener();
@@ -413,6 +421,7 @@ namespace Application.MainModule.Servicios.Seguridad
         //}
 
         #endregion
+
 
         #region Pedido
         public static RespuestaDto PuedeRegistrarPedido()

@@ -178,7 +178,7 @@ namespace Application.MainModule.Flujos
             List<RemanenteGeneralDTO> remaGeneral = new List<RemanenteGeneralDTO>();
 
             var AlmacenPrincipal = AlmacenGasServicio.ObtenerAlmacenPrincipal(dto.IdEmpresa == (short)0 ? TokenServicio.ObtenerIdEmpresa() : dto.IdEmpresa);
-            var lectura = AlmacenGasServicio.ObtenerLecturaIncialdelMes(AlmacenPrincipal.IdCAlmacenGas, dto.Fecha.Month, dto.Fecha.Year).OrderByDescending(x => x.FechaAplicacion).FirstOrDefault();
+            var lectura = AlmacenGasServicio.ObtenerLecturaIncialdelMes(AlmacenPrincipal != null ? AlmacenPrincipal.IdCAlmacenGas :(short)0, dto.Fecha.Month, dto.Fecha.Year).OrderByDescending(x => x.FechaAplicacion).FirstOrDefault();
             var descargas = AlmacenGasServicio.ObtenerDescargasTodas(dto.Fecha);
             var pventas = PuntoVentaServicio.ObtenerIdEmp(dto.IdEmpresa);
             int Dias = dto.Fecha.Month.Equals(DateTime.Now.Month) && dto.Fecha.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month);

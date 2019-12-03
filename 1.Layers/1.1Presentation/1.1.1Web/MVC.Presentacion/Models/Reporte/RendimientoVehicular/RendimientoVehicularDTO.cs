@@ -15,5 +15,6 @@ namespace MVC.Presentacion.Models
         public decimal LitrosCargados { get; set; }
         public decimal Rendimiento { get; set; }
         public DateTime Fecha { get; set; }
+       
     }
 }

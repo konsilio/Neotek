@@ -1,0 +1,27 @@
+﻿@Html.DevExpress().GridView(settings => {
+    settings.Name = "CreditoXClienteDetalle_" + ViewData["CustomerID"];
+    settings.SettingsDetail.MasterGridName = "CreditoXCliente";
+    settings.CallbackRouteValues = new { Controller = "Reportes", Action = "DetalleCreditoXCliente", id = ViewData["CustomerID"] };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    settings.KeyFieldName = "Id";
+    settings.Columns.Add("FechaRegistro");
+    settings.Columns.Add("FechaVencimiento");
+    settings.Columns.Add("Ticket");
+    settings.Columns.Add("Serie");
+    settings.Columns.Add("SaldoActual");
+    settings.Columns.Add("SaldoCorriente");
+    settings.Columns.Add("SaldoVencido");
+    settings.Columns.Add("Dias1a7", "Dias 1 a 7");
+    settings.Columns.Add("Dias8a16", "Dias 8 a 16");
+    settings.Columns.Add("Dias17a31", "Dias 17 a 31");
+    settings.Columns.Add("Dias32a61", "Dias 32 a 61");
+    settings.Columns.Add("Dias62a91", "Dias 62 a 91");
+    settings.Columns.Add("Mas91", "Mas 91");
+
+
+    settings.Settings.ShowFooter = true;
+    settings.Settings.ShowFilterRow = true;
+
+
+}).Bind(Model).GetHtml()

@@ -35,6 +35,26 @@ namespace Application.MainModule.Servicios.Equipo
         {
             return new MantenimientoDetDataAccess().Obtener(fi, ff);
         }
+        public static List<DetalleMantenimiento> Buscar(DateTime fi, DateTime ff, int id_vehiculo, bool EsCamioneta, bool EsPipa, bool EsUtilitario)
+        {
+            return new MantenimientoDetDataAccess().Obtener(fi, ff, id_vehiculo, EsCamioneta, EsPipa, EsUtilitario);
+        }
+        public static List<DetalleMantenimiento> Buscar(DateTime fi, DateTime ff, PuntoVenta pv)
+        {
+            int id_vehiculo = 0;
+            bool EsCamioneta = false, EsPipa = false, EsUtilitario = false;
+            if (pv.UnidadesAlmacen.IdPipa != null)
+            {
+                id_vehiculo = pv.UnidadesAlmacen.IdPipa.Value;
+                EsPipa = true;
+            }
+            if (pv.UnidadesAlmacen.IdCamioneta != null)
+            {
+                id_vehiculo = pv.UnidadesAlmacen.IdCamioneta.Value;
+                EsCamioneta = true;
+            }
+            return Buscar(fi, ff, id_vehiculo, EsCamioneta, EsPipa, EsUtilitario);
+        }
         public static DetalleMantenimiento Buscar(int id)
         {
             return new MantenimientoDetDataAccess().Obtener(id);

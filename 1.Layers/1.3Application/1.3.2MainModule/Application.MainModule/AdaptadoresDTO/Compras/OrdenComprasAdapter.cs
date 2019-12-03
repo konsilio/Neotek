@@ -25,7 +25,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             Req.FechaRequerida = _req.FechaRequerida;
             Req.ProductosOC = ProductosOCAdapter.ToDTO(_req.Productos.ToList());
             return Req;
-        }      
+        }
         public static List<OrdenCompraDTO> ToDTO(List<OrdenCompra> ocDTO)
         {
             List<OrdenCompraDTO> oc = ocDTO.Select(x => ToDTO(x)).ToList();
@@ -116,14 +116,14 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 IdEmpresa = oc.IdEmpresa,
                 IdOrdenCompraEstatus = oc.IdOrdenCompraEstatus,
                 IdRequisicion = oc.IdRequisicion,
-                IdOrdenCompra = oc.IdOrdenCompra,                
+                IdOrdenCompra = oc.IdOrdenCompra,
                 IdProveedor = oc.IdProveedor,
                 IdUsuarioGenerador = oc.IdUsuarioGenerador,
                 IdUsuarioAutorizador = oc.IdUsuarioAutorizador,
                 IdCentroCosto = oc.IdCentroCosto,
                 IdCuentaContable = oc.IdCuentaContable,
                 FechaRegistro = oc.FechaRegistro,
-                NumOrdenCompra = oc.NumOrdenCompra,                
+                NumOrdenCompra = oc.NumOrdenCompra,
                 EsActivoVenta = oc.EsActivoVenta,
                 EsGas = oc.EsGas,
                 Activo = oc.Activo,
@@ -133,7 +133,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Ieps = oc.Ieps,
                 Total = oc.Total,
                 EsTransporteGas = oc.EsTransporteGas,
-                FechaAutorizacion = oc.FechaAutorizacion,                
+                FechaAutorizacion = oc.FechaAutorizacion,
                 Casetas = oc.Casetas,
                 FactorCompraLitrosAKilos = oc.FactorCompraLitrosAKilos,
                 FactorConvTransporte = oc.FactorConvTransporte,
@@ -143,13 +143,13 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 FolioFiscalUUID = oc.FolioFiscalUUID,
                 FechaComplemento = oc.FechaComplemento,
                 ImporteEnLitros = oc.ImporteEnLitros,
-                MontBelvieuDlls = oc.MontBelvieuDlls, 
+                MontBelvieuDlls = oc.MontBelvieuDlls,
                 PrecioPorGalon = oc.PrecioPorGalon,
                 PrecioTransporte = oc.PrecioTransporte,
                 PVPM = oc.PVPM,
                 TarifaServicioPorGalonDlls = oc.TarifaServicioPorGalonDlls,
                 TipoDeCambioDOF = oc.TipoDeCambioDOF,
-            };            
+            };
         }
         public static OrdenCompraEstatusDTO ToDTO(OrdenCompraEstatus est)
         {
@@ -174,11 +174,36 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Pagado = OrdenCompraServicio.DeterminarEstatusPago(entidad.OrdenCompraPago.ToList()),
                 Estatus = entidad.OrdenCompraEstatus.Descripcion,
                 Fecha = entidad.FechaRegistro,
+                Kilos = OrdenCompraServicio.ObtenerKilosCompra(entidad),
+                Importe = Math.Truncate( entidad.Total ?? 2),
+
+
             };
         }
         public static List<RepOrdenCompraDTO> ToRepDTO(List<OrdenCompra> entidades)
         {
             return entidades.Select(x => ToRepDTO(x)).ToList();
-        } 
+        }
+
+
+        //public static string ObtenerKilosCompra(OrdenCompra entidad)
+        //{
+        //   decimal ObtenerKilogramosDesdeLitros = 0;
+        //    if (entidad.EsTransporteGas)
+        //    {
+        //        foreach (var item in entidad.AlmacenGasDescarga)
+        //        {
+        //          var litros = item.CapacidadTanqueLt ?? 0 * (item.PorcenMagnatelOcularTractorINI ?? 0 / 100);
+        //            ObtenerKilogramosDesdeLitros = litros;
+        //            return ((double)litros * 0.54).ToString();
+
+
+        //        }
+
+        //    }
+        //    return ObtenerKilogramosDesdeLitros.ToString();
+
+
+        //}
     }
 }
