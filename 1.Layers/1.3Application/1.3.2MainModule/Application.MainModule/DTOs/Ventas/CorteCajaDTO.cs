@@ -28,7 +28,7 @@ namespace Application.MainModule.DTOs
         public decimal Descuentos { get; set; }
         public decimal Bonidificaciones { get; set; }
         public string Mensaje { get; set; }
-        public decimal Bonidificaciones { get; set; }
+        //public decimal Bonidificaciones { get; set; }
 
         public CorteCajaDTO()
         {

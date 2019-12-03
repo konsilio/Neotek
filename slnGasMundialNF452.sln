@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Layers", "1.Layers", "{299035F4-6BB4-429F-B540-A939D8416776}"
 EndProject
@@ -30,6 +30,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1.2Mobile", "1.1.2Mobile", "{CC8A7593-3132-462F-B8C6-F9070525956C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.MainModule", "1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\DS.MainModule.csproj", "{C95A6C3B-0CBA-4568-B1EF-EF2948AD21B1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1751630E-103C-41AD-A84C-DAE1B576F0A5} = {1751630E-103C-41AD-A84C-DAE1B576F0A5}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS.MainModule.Tests", "1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule.Tests\DS.MainModule.Tests.csproj", "{2E0ED8B8-FB1A-4E52-A691-956B5253FA10}"
 EndProject
@@ -229,5 +232,8 @@ Global
 		{4665E949-2392-4A01-8AF5-3EE83A85B903} = {1E961BD1-B23F-4D4E-9711-9D9F9460A712}
 		{1751630E-103C-41AD-A84C-DAE1B576F0A5} = {4204EB7D-0551-41FA-AE91-960A557992A1}
 		{9467CC3E-9F06-4A7D-A845-B88939008EDF} = {7405EF1E-8F0B-4C98-8DE0-DB2DFACB9662}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01D9BB23-85E1-4F58-A52B-801359A2D092}
 	EndGlobalSection
 EndGlobal
