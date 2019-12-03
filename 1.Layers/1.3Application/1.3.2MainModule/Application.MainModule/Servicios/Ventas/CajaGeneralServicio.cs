@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Almacenes;
 using Application.MainModule.AdaptadoresDTO.Ventas;
+using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
@@ -7,6 +8,8 @@ using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Equipo;
+using Application.MainModule.Servicios.Seguridad;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
@@ -16,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities.MainModule;
 
 namespace Application.MainModule.Servicios.Ventas
 {
@@ -28,7 +32,7 @@ namespace Application.MainModule.Servicios.Ventas
         }
         public static List<VentaCajaGeneral> Obtener(DateTime fecha)
         {
-            return new CajaGeneralDataAccess().ObtenerLiquidaciones((short)fecha.Year, Convert.ToByte(fecha.Month), Convert.ToByte(fecha.Day));            
+            return new CajaGeneralDataAccess().ObtenerLiquidaciones((short)fecha.Year, Convert.ToByte(fecha.Month), Convert.ToByte(fecha.Day));
         }
         public static List<VPuntoVentaDetalleDTO> ObtenerVentas(short empresa, short year, byte month, byte dia, short? orden)
         {
@@ -129,8 +133,8 @@ namespace Application.MainModule.Servicios.Ventas
             }
             catch (Exception ex)
             {
-               return 0;
-            }            
+                return 0;
+            }
         }
         public static int ObtenerCorteUltimo(short empresa, short year, byte month, byte dia)
         {
@@ -147,7 +151,7 @@ namespace Application.MainModule.Servicios.Ventas
         {
             try
             {
-                return new CajaGeneralDataAccess().ObtenerCorteUltimo(unidad, empresa, year, month, dia).Count().Equals(0) ? false: true;
+                return new CajaGeneralDataAccess().ObtenerCorteUltimo(unidad, empresa, year, month, dia).Count().Equals(0) ? false : true;
             }
             catch (Exception ex)
             {
@@ -197,19 +201,19 @@ namespace Application.MainModule.Servicios.Ventas
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasCamioneta(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetas(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetas(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasCamionetaMes(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetasMes(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasCamionetasMes(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasPipas(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasPipas(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasPipas(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasPipasMes(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasPipasMes(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasPipasMes(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalBonificaciones(DateTime f)
         {
@@ -225,15 +229,15 @@ namespace Application.MainModule.Servicios.Ventas
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstacionesMes(DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasEstacionesMes(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasEstacionesMes(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(EstacionCarburacion entidad, DateTime f)
         {
-            return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f);
+            return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<VentaCorteAnticipoDTO> ObtenerCE(string cve)
         {
@@ -337,6 +341,7 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 var lst = y.GroupBy(x => x.FechaAplicacion.Value.ToShortDateString()).ToList(); //VentaspuntosDeVentaAgrupados- por fecha
                                                                                                 // var _lMovFecha = _lMov.GroupBy(x => x.FechaAplicacion.ToShortDateString()).ToList();
+
                 //Actualizar Total Dia   
                 int posList = 0;
                 foreach (var _lst in lst)
@@ -762,7 +767,238 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().Actualizar(ventas);
         }
+        public static string RepVentasXPuntoVenta(List<PuntoVenta> pventas, VentasXPuntoVenta dto)
+        {
+            // Diferencia entre dias, horas y minutos
+            TimeSpan ts = dto.PeriodoDTO.FechaFin - dto.PeriodoDTO.FechaInicio;
+            // Differencia entre dias.
+            int differenceInDays = ts.Days + 1;
+            string respuesta = "[";
+            for (DateTime date = dto.PeriodoDTO.FechaInicio; date <= dto.PeriodoDTO.FechaFin; date = date.AddDays(1.0))
+            {
+                respuesta += string.Concat("{'Día':'", date.ToString("dd"), "-", date.ToString("MMM"), "',");
+                foreach (var pv in pventas)
+                {
+                    respuesta += string.Concat("'", pv.UnidadesAlmacen.Numero, "':'",
+                         Math.Truncate(pv.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                                .Sum(x => x.VentaPuntoDeVentaDetalle
+                                                                .Sum(y => y.CantidadLt ?? 0))).ToString(), "',");
+                }
+                respuesta += string.Concat("'Litros':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                               .Sum(y => y.VentaPuntoDeVentaDetalle
+                                                               .Sum(z => z.CantidadLt ?? 0)))).ToString(), "',");
+                respuesta += string.Concat("'Kilos':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                              .Sum(y => y.VentaPuntoDeVentaDetalle
+                                                              .Sum(z => z.CantidadKg ?? 0)))).ToString(), "',");
+                respuesta += string.Concat("'Total Real':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                              .Sum(y => y.Total)).ToString(), "',");
+                respuesta += string.Concat("'Total c/Desc':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                            .Sum(y => y.Total - y.Descuento)).ToString(), "',");
+                respuesta += string.Concat("'Crédito':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())
+                                                             && v.VentaACredito).Sum(y => y.Total)).ToString(), "',");
+                respuesta += string.Concat("'Bonificación':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())
+                                                            && v.EsBonificacion).Sum(y => y.Bonificacion ?? 0))).ToString(), "',");
+                respuesta += string.Concat("'Efectivo en caja':'", ((pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                            .Sum(y => y.Total))) - (pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())
+                                                            && v.VentaACredito).Sum(y => y.Total)))).ToString(), "',");
+                respuesta += string.Concat("'Descuentos':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                            .Sum(y => y.Descuento)).ToString(), "'");
+                //respuesta = respuesta.TrimEnd(',');
+                respuesta += "},";
+            }
 
+            respuesta += string.Concat("{'Día':'Sumas',");
+
+            foreach (var pv in pventas)
+            {
+                respuesta += string.Concat("'", pv.UnidadesAlmacen.Numero, "':'",
+                     Math.Truncate(pv.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                            .Sum(x => x.VentaPuntoDeVentaDetalle
+                                                           .Sum(y => y.CantidadLt ?? 0))).ToString(), "',");
+            }
+            respuesta += string.Concat("'Litros':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                          .Sum(y => y.VentaPuntoDeVentaDetalle
+                                                          .Sum(z => z.CantidadLt ?? 0)))).ToString(), "',");
+            respuesta += string.Concat("'Kilos':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                             .Sum(y => y.VentaPuntoDeVentaDetalle
+                                                             .Sum(z => z.CantidadKg ?? 0)))).ToString(), "',");
+            respuesta += string.Concat("'Total Real':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                          .Sum(y => y.Total)).ToString(), "',");
+            respuesta += string.Concat("'Total c/Desc':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                        .Sum(y => y.Total - y.Descuento)).ToString(), "',");
+            respuesta += string.Concat("'Crédito':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin
+                                                         && v.VentaACredito).Sum(y => y.Total)).ToString(), "',");
+            respuesta += string.Concat("'Bonificación':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin
+                                                        && v.EsBonificacion).Sum(y => y.Bonificacion ?? 0))).ToString(), "',");
+            respuesta += string.Concat("'Efectivo en caja':'", ((pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                        .Sum(y => y.Total))) - (pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin
+                                                        && v.VentaACredito).Sum(y => y.Total)))).ToString(), "',");
+            respuesta += string.Concat("'Descuentos':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                        .Sum(y => y.Descuento)).ToString(), "'},");
+
+            respuesta += string.Concat("{'Día':'KILOS',");
+
+            foreach (var pv in pventas)
+            {
+                respuesta += string.Concat("'", pv.UnidadesAlmacen.Numero, "':'",
+                   Math.Truncate(pv.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                            .Sum(x => x.VentaPuntoDeVentaDetalle
+                                                           .Sum(y => y.CantidadKg ?? 0))).ToString(), "',");
+            }
+            respuesta = respuesta.TrimEnd(',');
+            respuesta += "},";
+
+            respuesta += string.Concat("{'Día':'PROM VTA',");
+            foreach (var pv in pventas)
+            {
+                respuesta += string.Concat("'", pv.UnidadesAlmacen.Numero, "':'",
+                   Math.Truncate(pv.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                            .Sum(x => x.VentaPuntoDeVentaDetalle
+                                                           .Sum(y => y.CantidadLt / differenceInDays ?? 0))).ToString(), "',");
+            }
+
+
+
+
+            respuesta = respuesta.TrimEnd(',');
+            respuesta += "}]";
+            return respuesta;
+        }
+
+        public static string RepVentasXPuntoVentaCamionetas(List<PuntoVenta> pventas, VentasXPuntoVenta dto)
+        {
+            // Diferencia entre dias, horas y minutos
+            TimeSpan ts = dto.PeriodoDTO.FechaFin - dto.PeriodoDTO.FechaInicio;
+            // Differencia entre dias.
+            int differenceInDays = ts.Days + 1;
+
+            string respuesta = "[";
+            for (DateTime date = dto.PeriodoDTO.FechaInicio; date <= dto.PeriodoDTO.FechaFin; date = date.AddDays(1.0))
+            {
+                respuesta += string.Concat("{'Día':'", date.ToString("dd"), "-", date.ToString("MMM"), "',");
+                foreach (var pv in pventas)
+                {
+                    respuesta += string.Concat("'", pv.UnidadesAlmacen.Numero, "':'",
+                       Math.Truncate(pv.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                                .Sum(x => x.VentaPuntoDeVentaDetalle
+                                                                .Sum(y => y.CantidadKg ?? 0))).ToString(), "',");
+                }
+                respuesta += string.Concat("'Kilos':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                              .Sum(y => y.VentaPuntoDeVentaDetalle
+                                                              .Sum(z => z.CantidadKg ?? 0))).ToString(), "',");
+                respuesta += string.Concat("'Total':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                              .Sum(y => y.Total)).ToString(), "',");
+                respuesta += string.Concat("'Efectivo en caja':'", ((pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                            .Sum(y => y.Total))) - (pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())
+                                                            && v.VentaACredito).Sum(y => y.Total)))).ToString(), "',");
+                respuesta += string.Concat("'Descuento':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                         .Sum(y => y.Descuento)).ToString(), "',");
+                respuesta += string.Concat("'Bonificación':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())
+                                                            && v.EsBonificacion).Sum(y => y.Bonificacion)).ToString(), "',");
+
+
+                respuesta += string.Concat("'20 KG':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                       .Sum(y => y.VentaPuntoDeVentaDetalle.Where(vd => vd.ProductoDescripcion.Contains("20"))
+                                                       .Sum(z => z.CantidadProducto ?? 0)))).ToString(), "',");
+                respuesta += string.Concat("'30 KG':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                       .Sum(y => y.VentaPuntoDeVentaDetalle.Where(vd => vd.ProductoDescripcion.Contains("30"))
+                                                       .Sum(z => z.CantidadProducto ?? 0)))).ToString(), "',");
+                respuesta += string.Concat("'45 KG':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString()))
+                                                       .Sum(y => y.VentaPuntoDeVentaDetalle.Where(vd => vd.ProductoDescripcion.Contains("45"))
+                                                       .Sum(z => z.CantidadProducto ?? 0)))).ToString(), "'");
+
+
+
+                //respuesta = respuesta.TrimEnd(',');
+                respuesta += "},";
+            }
+
+            respuesta += string.Concat("{'Día':'Sumas',");
+
+            foreach (var pv in pventas)
+            {
+                respuesta += string.Concat("'", pv.UnidadesAlmacen.Numero, "':'",
+                     Math.Truncate(pv.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                            .Sum(x => x.VentaPuntoDeVentaDetalle
+                                                           .Sum(y => y.CantidadKg ?? 0))).ToString(), "',");
+            }
+            respuesta += string.Concat("'Kilos':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                             .Sum(y => y.VentaPuntoDeVentaDetalle
+                                                             .Sum(z => z.CantidadKg ?? 0))).ToString(), "',");
+            respuesta += string.Concat("'Total':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                          .Sum(y => y.Total)).ToString(), "',");
+            respuesta += string.Concat("'Efectivo en caja':'", ((pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                            .Sum(y => y.Total))) - (pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin
+                                            && v.VentaACredito).Sum(y => y.Total)))).ToString(), "',");
+            respuesta += string.Concat("'Descuento':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                    .Sum(y => y.Descuento)).ToString(), "',");
+            respuesta += string.Concat("'Bonificación':'", pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin
+                                                        && v.EsBonificacion).Sum(y => y.Bonificacion)).ToString(), "',");
+
+
+
+            respuesta += string.Concat("'20 KG':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                    .Sum(y => y.VentaPuntoDeVentaDetalle.Where(vd => vd.ProductoDescripcion.Contains("20"))
+                                                    .Sum(z => z.CantidadProducto ?? 0)))).ToString(), "',");
+            respuesta += string.Concat("'30 KG':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                   .Sum(y => y.VentaPuntoDeVentaDetalle.Where(vd => vd.ProductoDescripcion.Contains("30"))
+                                                   .Sum(z => z.CantidadProducto ?? 0)))).ToString(), "',");
+            respuesta += string.Concat("'45 KG':'", Math.Truncate(pventas.Sum(x => x.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                   .Sum(y => y.VentaPuntoDeVentaDetalle.Where(vd => vd.ProductoDescripcion.Contains("45"))
+                                                   .Sum(z => z.CantidadProducto ?? 0)))).ToString(), "'},");
+
+
+            respuesta += string.Concat("{'Día':'PROM VTA',");
+
+            foreach (var pv in pventas)
+            {
+                respuesta += string.Concat("'", pv.UnidadesAlmacen.Numero, "':'",
+                   Math.Truncate(pv.VentaPuntoDeVenta.Where(v => v.FechaRegistro >= dto.PeriodoDTO.FechaInicio && v.FechaRegistro <= dto.PeriodoDTO.FechaFin)
+                                                            .Sum(x => x.VentaPuntoDeVentaDetalle
+                                                           .Sum(y => y.CantidadKg / differenceInDays ?? 0))).ToString(), "',");
+            }
+
+
+
+
+            respuesta = respuesta.TrimEnd(',');
+            respuesta += "}]";
+            return respuesta;
+
+        }
+        public static string RepEquipoDeTransporte(List<PuntoVenta> pventas, PeriodoDTO dto)
+        {
+            // Diferencia entre dias, horas y minutos
+            TimeSpan ts = dto.FechaFin - dto.FechaInicio;
+            // Differencia entre dias.
+            int differenceInDays = ts.Days + 1;
+
+            string respuesta = "[";
+
+            foreach (var Unidad in pventas)
+            {
+
+                int idPunt = Unidad.UnidadesAlmacen.Pipa != null ? Unidad.UnidadesAlmacen.Pipa.CDetalleEquipoTransporte.FirstOrDefault().IdEquipoTransporteDetalle : Unidad.UnidadesAlmacen.Camioneta.CDetalleEquipoTransporte.FirstOrDefault().IdEquipoTransporteDetalle;
+                var listaRecargas = RecargaCombustibleServicio.Buscar(dto.FechaInicio, dto.FechaFin, idPunt, Unidad.UnidadesAlmacen.IdPipa == null ? false : true, Unidad.UnidadesAlmacen.IdCamioneta == null ? false : true, false);
+                var nombre = Unidad.UnidadesAlmacen.Numero;
+                respuesta += string.Concat("{'Unidades':'", Unidad.UnidadesAlmacen.Numero, "',");
+
+                for (DateTime date = dto.FechaInicio; date <= dto.FechaFin; date = date.AddDays(1.0))
+                {
+                    respuesta += string.Concat("'Día ", date.ToString("dd"), "-", date.ToString("MMM"), "':'",
+                       Math.Truncate(listaRecargas.Where(y => y.FechaRecarga.ToShortDateString().Equals(date.ToShortDateString())).Sum(x => x.Monto ?? 0)).ToString(), "',");                   
+                }
+                respuesta += string.Concat("'Total':'", listaRecargas.Sum(y => y.Monto).ToString(), "',");
+
+                respuesta += string.Concat("'Litros':'", Math.Truncate(listaRecargas.Sum(z => z.LitrosRecargados)).ToString(), "'},");
+            }
+            respuesta = respuesta.TrimEnd(',');
+            respuesta += "]";
+
+
+            return respuesta;
+
+        }
     }
 }
 

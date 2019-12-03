@@ -312,6 +312,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarTodosAutoConsumosNoProcesadas();
         }
+        public static List<AlmacenGasAutoConsumo> ObtenerAutoConsumos(DateTime fi)
+        {
+            return new AlmacenGasDataAccess().BuscarTodosAutoConsumos(fi);
+        }
         public static List<AlmacenGasCalibracion> ObtenerCalibracionesNoProcesadas()
         {
             return new AlmacenGasDataAccess().BuscarTodasCalibracionesNoProcesadas();
@@ -538,7 +542,7 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static List<AlmacenGasDescarga> ObtenerDescargasTodas(DateTime periodo)
         {
-            return new AlmacenGasDescargaDataAccess().BuscarTodas(periodo);
+            return new AlmacenGasDescargaDataAccess().BuscarTodas(periodo, TokenServicio.ObtenerIdEmpresa());
         }
         public static List<string> ObtenerRutaImagenesSinVigencia(DateTime fechaVigencia)
         {
@@ -1405,7 +1409,6 @@ namespace Application.MainModule.Servicios.Almacenes
             decimal KilosRecargados = CalcularGasServicio.ObtenerKilogramosDesdeLitros(LitrosRecargados, apReDto.Empresa.FactorLitrosAKilos);
 
             apReDto = AplicarRecarga(apReDto, LitrosRecargados, KilosRecargados);
-
             apReDto.AlmacenGasAnterior.CantidadActualLt = CalcularGasServicio.RestarLitros(apReDto.AlmacenGasAnterior.CantidadActualLt, LitrosRecargados);
             apReDto.AlmacenGasAnterior.CantidadActualKg = CalcularGasServicio.RestarKilogramos(apReDto.AlmacenGasAnterior.CantidadActualKg, KilosRecargados);
             apReDto.AlmacenGasAnterior.PorcentajeActual = CalcularGasServicio.ObtenerPorcentajeDesdeLitros(apReDto.AlmacenGasAnterior.CapacidadTotalLt, LitrosRecargados);
@@ -1828,19 +1831,20 @@ namespace Application.MainModule.Servicios.Almacenes
         public static List<AlmacenGasTraspasoFoto> GenerarImagenes(AlmacenGasTraspaso Traspaso)
         {
             List<AlmacenGasTraspasoFoto> imagenes = ObtenerImagenes(Traspaso);
-
             var fotos = new List<AlmacenGasTraspasoFoto>();
-
             if (imagenes != null && imagenes.Count > 0)
             {
                 foreach (var imagen in imagenes)
                 {
                     var img = ImagenServicio.ObtenerImagen(imagen);
-                    var foto = AlmacenGasAdapter.FromEntity(img);
-                    fotos.Add(foto);
+                    if (img != null)
+                    {
+                        var foto = AlmacenGasAdapter.FromEntity(img);
+                        fotos.Add(foto);
+                    }                   
+                  
                 }
             }
-
             return fotos;
         }
         public static List<AplicaAutoConsumoDto> AplicarAutoConsumo()

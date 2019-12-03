@@ -1,0 +1,19 @@
+﻿@Html.DevExpress().GridView(settings => {
+    settings.Name = "CreditoOtorgadoDetalle_" + ViewData["CustomerID"];
+    settings.SettingsDetail.MasterGridName = "CreditoOtorgado";
+    settings.CallbackRouteValues = new { Controller = "Reportes", Action = "DetalleCreditoOtorgado", id = ViewData["CustomerID"] };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    settings.KeyFieldName = "Id";
+    settings.Columns.Add("Nota");
+    settings.Columns.Add("FechaCarga");
+    settings.Columns.Add("Importe");
+    settings.Columns.Add("Litros");
+    settings.Columns.Add("Vendedor");
+
+
+    settings.Settings.ShowFooter = true;
+    settings.Settings.ShowFilterRow = true;
+
+
+}).Bind(Model).GetHtml()

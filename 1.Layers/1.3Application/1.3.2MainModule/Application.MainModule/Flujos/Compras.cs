@@ -200,12 +200,27 @@ namespace Application.MainModule.Flujos
         }
         public List<OrdenCompraDTO> ListaOrdenCompra(short IdEmpresa)
         {
-            var resp = PermisosServicio.PuedeConsultarOrdenCompra();
-            if (!resp.Exito) return new List<OrdenCompraDTO>();
+            var esAdmin = TokenServicio.ObtenerEsAdministracionCentral();
+            var esSuper = TokenServicio.EsSuperUsuario();
+            if (esAdmin || esSuper)
+            {
+                var compras = OrdenCompraServicio.BuscarTodo(IdEmpresa);
+                List<OrdenCompraDTO> _loc = OrdenComprasAdapter.ToDTO(compras);
+                return _loc;
+            }
+            else
+            {
+                var resp = PermisosServicio.PuedeConsultarOrdenCompra();
+                if (!resp.Exito) return new List<OrdenCompraDTO>();
 
-            var _locEntity = OrdenCompraServicio.BuscarTodo(IdEmpresa);
-            List<OrdenCompraDTO> loc = OrdenComprasAdapter.ToDTO(_locEntity);
-            return loc;
+                var _locEntity = OrdenCompraServicio.BuscarTodo(IdEmpresa);
+                List<OrdenCompraDTO> loc = OrdenComprasAdapter.ToDTO(_locEntity);
+
+                var tesoreria = PermisosServicio.PuedeCompraAtiendeServicioOCompra();
+                if (tesoreria.Exito) return loc.Where(x => x.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.SolicitudPago)).ToList();
+
+                return loc;
+            }          
         }
         public OrdenCompraDTO BuscarOrdenCompra(int idOrdeCompra)
         {

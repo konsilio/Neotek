@@ -16,5 +16,8 @@ namespace Application.MainModule.DTOs
         public decimal LitrosCargados { get; set; }
         public decimal Rendimiento { get; set; }
         public DateTime Fecha { get; set; }
+      
+
+       
     }
 }

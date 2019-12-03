@@ -13,7 +13,7 @@ using Application.MainModule.DTOs.Mobile.PuntoVenta;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.DTOs.Mobile;
 
-namespace Application.MainModule.AdaptadoresDTO.Catalogo
+namespace Application.MainModule.AdaptadoresDTO.Catalogo                            
 {
     public class PuntoVentaAdapter
     {
@@ -144,5 +144,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Tipo = entidad.ProductoDescripcion
             };
         }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿using Application.MainModule.DTOs.Catalogo;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.DTOs.Cobranza;
 using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using System;
@@ -356,5 +358,275 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
             };
         }
+        public static List<DescuentosXClientesDTO> ToDTOC(List<Cliente> ListaClientes, PeriodoDTO dtop)
+        {
+            List<DescuentosXClientesDTO> respuesta = new List<DescuentosXClientesDTO>();
+
+            foreach (var item in ListaClientes)
+            {
+                decimal num = 0.00M;
+                if (item.VentaPuntoDeVenta.Count > 0 && item.VentaPuntoDeVenta.Sum(x => x.Descuento) > num)
+                {
+
+
+                    foreach (var ticket in item.VentaPuntoDeVenta.Where(x => x.Descuento > 0))
+                    {
+
+
+                        if (ticket.FechaRegistro >= dtop.FechaInicio && ticket.FechaRegistro <= dtop.FechaFin)
+                        {
+                            DescuentosXClientesDTO newDesc = new DescuentosXClientesDTO();
+                            newDesc.Id = item.IdCliente;
+                            newDesc.Cliente = item.Nombre;
+                            newDesc.PrecioDeVenta = ticket.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioProducto ?? 0;
+                            newDesc.DescuentoTotal = ticket.Descuento;
+                            newDesc.DescuentoLt = item.DescuentoXKilo;
+                            newDesc.Diferencia = ticket.Total;
+                            newDesc.Total = ticket.Total + ticket.Descuento;
+
+                            respuesta.Add(newDesc);
+                        }
+                    }
+
+                }
+            }
+
+            return respuesta;
+        }
+        //public static DescuentosXClientesDTO ToDTOC(Cliente Clte)
+        //{
+
+        //    return new DescuentosXClientesDTO()
+        //    {
+        //        Id = Clte.IdCliente,
+        //        Cliente = Clte.Nombre,
+        //        DescuentoTotal = Clte.VentaPuntoDeVenta.Sum(x => x.Descuento),
+        //        DescuentoLt = Clte.DescuentoXKilo,
+        //        Total = Clte.VentaPuntoDeVenta.Sum(x => x.Total),
+
+
+
+        //    };
+
+
+        //}
+
+
+
+
+
+
+        public static List<CreditoRecuperadoDTO> ToDTOCR(List<Cliente> ListaClientes)
+        {
+
+            return ListaClientes.Select(x => ToDTOCR(x)).ToList();
+        }
+
+        public static CreditoRecuperadoDTO ToDTOCR(Cliente Clte)
+        {
+            List<Abono> abonos = Clte.Cargo.SelectMany(x => x.Abono).ToList();
+            //var tiket = Clte.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(new Abono().Cargo.Ticket));
+            return new CreditoRecuperadoDTO()
+            {
+                Nombre = ClienteServicio.ObtenerNomreCliente(Clte),
+                Id = Clte.IdCliente.ToString(),
+                Total = abonos.Sum(x => x.MontoAbono),
+                Abonos = ToDTOCA(abonos),
+            };
+
+
+        }
+
+        public static List<CreditoRecuperadoAbonoDTO> ToDTOCA(List<Abono> Abono)
+        {
+            return Abono.Select(x => ToDTOCA(x)).ToList();
+        }
+        public static CreditoRecuperadoAbonoDTO ToDTOCA(Abono Abono)
+        {
+
+            var tiket = Abono.Cargo.CCliente.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(Abono.Cargo.Ticket));
+
+            return new CreditoRecuperadoAbonoDTO()
+            {
+
+                Nota = Abono.Cargo.Ticket,
+                FechaAbono = Abono.FechaAbono,
+                Importe = Abono.MontoAbono,
+                FormaDePago = Abono.CFormaPago.Descripcion,
+                FechaCarga = tiket != null ? tiket.FechaRegistro.ToShortDateString() : "Ticket borrado",
+
+
+
+            };
+
+
+
+
+        }
+
+
+
+        public static List<CreditoOtorgadoDTO> ToDTOCO(List<Cliente> ListaClientes)
+        {
+
+            return ListaClientes.Select(x => ToDTOCO(x)).ToList();
+        }
+
+        public static CreditoOtorgadoDTO ToDTOCO(Cliente Clte)
+        {
+            //List<Abono> Cargos = Clte.Cargo.SelectMany(x=> x.Abono).ToList();
+            List<Cargo> Cargos = Clte.Cargo.ToList();
+            var Litros = Clte.VentaPuntoDeVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadLt ?? 0));
+            return new CreditoOtorgadoDTO()
+            {
+                Nombre = ClienteServicio.ObtenerNomreCliente(Clte),
+                Id = Clte.IdCliente.ToString(),
+                Total = Cargos.Sum(x => x.TotalCargo),
+                Litros = Clte.VentaPuntoDeVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadLt ?? 0)),
+                Abonos = ToDTOCC(Cargos),
+            };
+
+
+        }
+        public static List<CreditoOtorgadoCargosDTO> ToDTOCC(List<Cargo> Cargo)
+        {
+            return Cargo.Select(x => ToDTOCC(x)).ToList();
+        }
+        public static CreditoOtorgadoCargosDTO ToDTOCC(Cargo Cargo)
+        {
+
+            var tiket = Cargo.CCliente.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(Cargo.Ticket));
+            var Unidad = string.Concat(tiket != null ? tiket.CPuntoVenta.UnidadesAlmacen.Pipa != null ? tiket.CPuntoVenta.UnidadesAlmacen.Pipa.Serie + " " : "P-- " : "0", Cargo.Ticket);
+            return new CreditoOtorgadoCargosDTO()
+            {
+
+                Nota = Unidad,
+                FechaCarga = tiket != null ? tiket.FechaRegistro.ToShortDateString() : "Ticket borrado",
+                Importe = Cargo.TotalCargo,
+                Vendedor = tiket != null ? tiket.OperadorChofer : "Ticket borrado",
+                Litros = tiket != null ? Convert.ToString(tiket.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt)) : "0",
+
+
+
+
+
+            };
+
+
+
+
+        }
+
+
+
+        public static List<CreditoXClienteDTO> ToDTOCXC(List<Cliente> ListaClientes)
+        {
+
+            return ListaClientes.Select(x => ToDTOCXC(x)).ToList();
+        }
+
+        public static CreditoXClienteDTO ToDTOCXC(Cliente Clte)
+        {
+            var cargo = Clte.Cargo.ToList();
+            return new CreditoXClienteDTO()
+            {
+                Id = Clte.IdCliente.ToString(),
+                Nombre = Clte.Nombre,
+                SaldoActual = cargo.Sum(x => x.TotalCargo),
+                SaldoCorriente = cargo.Sum(x => DateTime.Now.Date < x.FechaVencimiento ? 0 : x.TotalCargo),
+                Vencido = cargo.Sum(x => DateTime.Now.Date > x.FechaVencimiento ? 0 : x.TotalCargo),
+                Dias1a7 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 1 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 7 ? x.TotalCargo : 0),
+                Dias8a16 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 8 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 16 ? x.TotalCargo : 0),
+                Dias17a31 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 17 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 31 ? x.TotalCargo : 0),
+                Dias32a61 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 32 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 61 ? x.TotalCargo : 0),
+                Dias62a91 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 62 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 91 ? x.TotalCargo : 0),
+                Mas91 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days > 91 ? x.TotalCargo : 0),
+                CargosDetallados = ToDTOCX(cargo),
+
+            };
+
+
+        }
+
+        public static List<CargosDTO> ToDTOCX(List<Cargo> Cargo)
+        {
+            return Cargo.Select(x => ToDTOCX(x)).ToList();
+        }
+        public static CargosDTO ToDTOCX(Cargo cargo)
+        {
+            var tikett = cargo.CCliente.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(cargo.Ticket));
+
+            return new CargosDTO()
+            {
+                FechaRegistro = cargo.FechaRegistro,
+                FechaVencimiento = cargo.FechaVencimiento,
+                Ticket = cargo.Ticket,
+                Serie = string.Concat(tikett != null ? tikett.CPuntoVenta.UnidadesAlmacen.Pipa != null ? tikett.CPuntoVenta.UnidadesAlmacen.Pipa.Serie + " " : "P-" : "0", cargo.Ticket),
+                SaldoActual = cargo.TotalCargo,
+                SaldoCorriente = (DateTime.Now.Date < cargo.FechaVencimiento ? 0 : cargo.TotalCargo),
+                SaldoVencido = (DateTime.Now.Date > cargo.FechaVencimiento ? 0 : cargo.TotalCargo),
+                Dias1a7 = (DateTime.Now.Date - cargo.FechaVencimiento).Days >= 1 && (DateTime.Now.Date - cargo.FechaVencimiento).Days <= 7 ? cargo.TotalCargo : 0,
+                Dias8a16 = (DateTime.Now.Date - cargo.FechaVencimiento).Days >= 8 && (DateTime.Now.Date - cargo.FechaVencimiento).Days <= 16 ? cargo.TotalCargo : 0,
+                Dias17a31 = (DateTime.Now.Date - cargo.FechaVencimiento).Days >= 17 && (DateTime.Now.Date - cargo.FechaVencimiento).Days <= 31 ? cargo.TotalCargo : 0,
+                Dias32a61 = (DateTime.Now.Date - cargo.FechaVencimiento).Days >= 32 && (DateTime.Now.Date - cargo.FechaVencimiento).Days <= 61 ? cargo.TotalCargo : 0,
+                Dias62a91 = (DateTime.Now.Date - cargo.FechaVencimiento).Days >= 62 && (DateTime.Now.Date - cargo.FechaVencimiento).Days <= 91 ? cargo.TotalCargo : 0,
+                Mas91 = (DateTime.Now.Date - cargo.FechaVencimiento).Days > 91 ? cargo.TotalCargo : 0,
+            };
+        }
+
+
+        public static List<CreditoXClienteMensualDTO> ToDTOCXCM(List<Cliente> ListaClientes)
+        {
+
+
+            return ListaClientes.Select(x => ToDTOCXCM(x)).ToList();
+        }
+
+        public static CreditoXClienteMensualDTO ToDTOCXCM(Cliente Clte)
+        {
+
+            var cargo = Clte.Cargo.ToList();
+            return new CreditoXClienteMensualDTO()
+            {
+
+                Nombre = Clte.Nombre,
+                SaldoActual = cargo.Sum(x => x.TotalCargo),
+                SaldoCorriente = cargo.Sum(x => DateTime.Now.Date < x.FechaVencimiento ? 0 : x.TotalCargo),
+                Vencido = cargo.Sum(x => DateTime.Now.Date > x.FechaVencimiento ? 0 : x.TotalCargo),
+                Dias1a7 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 1 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 7 ? x.TotalCargo : 0),
+                Dias8a16 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 8 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 16 ? x.TotalCargo : 0),
+                Dias17a31 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 17 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 31 ? x.TotalCargo : 0),
+                Dias32a61 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 32 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 61 ? x.TotalCargo : 0),
+                Dias62a91 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 62 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 91 ? x.TotalCargo : 0),
+                Mas91 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days > 91 ? x.TotalCargo : 0),
+
+
+
+            };
+
+
+
+
+        }
+
+        public static CreditoXClienteMensualDTO SumaCreditoMensual(List<CreditoXClienteMensualDTO> lista)
+        {
+
+            return new CreditoXClienteMensualDTO()
+            {
+                Nombre = "Total",
+                SaldoActual = lista.Sum(x => x.SaldoActual),
+                SaldoCorriente = lista.Sum(x => x.SaldoCorriente),
+                Vencido = lista.Sum(x => x.Vencido),
+                Dias1a7 = lista.Sum(x => x.Dias1a7),
+                Dias8a16 = lista.Sum(x => x.Dias8a16),
+                Dias17a31 = lista.Sum(x => x.Dias17a31),
+                Dias32a61 = lista.Sum(x => x.Dias32a61),
+                Dias62a91 = lista.Sum(x => x.Dias62a91),
+                Mas91 = lista.Sum(x => x.Mas91),
+
+            };
+        }
+
     }
 }
