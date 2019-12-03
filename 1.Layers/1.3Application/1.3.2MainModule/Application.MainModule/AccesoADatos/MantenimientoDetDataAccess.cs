@@ -128,5 +128,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<DetalleMantenimiento>().Get(x => x.FechaMtto > fi && x.FechaMtto < ff).ToList();
         }
+        public List<DetalleMantenimiento> Obtener(DateTime fi, DateTime ff, int id_vehiculo, bool EsCamioneta, bool EsPipa, bool EsUtilitario)
+        {
+            return uow.Repository<DetalleMantenimiento>().Get(x => x.FechaMtto > fi
+                                                                && x.FechaMtto < ff
+                                                                && x.id_vehiculo.Equals(id_vehiculo)
+                                                                && x.EsCamioneta.Equals(EsCamioneta)
+                                                                && x.EsPipa.Equals(EsPipa)
+                                                                && x.EsUtilitario.Equals(EsUtilitario)).ToList();
+        }
+
     }
 }

@@ -1,0 +1,63 @@
+﻿@Html.DevExpress().GridView(settings => {
+    settings.Name = "CreditoOtorgado";
+    settings.CallbackRouteValues = new { Controller = "Reportes", Action = "CreditoOtorgadoPartial" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.KeyFieldName = "Id";
+    settings.Columns.Add("Id", "ID");
+    settings.Columns.Add("Nombre").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Columns.Add("Total").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Columns.Add("Litros").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+    settings.SettingsDetail.ShowDetailRow = true;
+    settings.SettingsExport.EnableClientSideExportAPI = true;
+    settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+    settings.SettingsDetail.ExportMode = GridViewDetailExportMode.All;
+    settings.Toolbars.Add(i =>
+    {
+        i.EnableAdaptivity = true;
+        i.Items.Add(exportitem =>
+        {
+            exportitem.Command = GridViewToolbarCommand.ExportToXls;
+            exportitem.Name = "CustomExportToXLS";
+            exportitem.Text = "Expotar a XLS";
+            exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
+        });
+        i.Items.Add(exportitem =>
+        {
+            exportitem.Command = GridViewToolbarCommand.ExportToXlsx;
+            exportitem.Name = "CustomExportToXLSX";
+            exportitem.Text = "Exportar a XLSX";
+            exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
+        });
+        i.ItemAlign = GridToolbarItemAlign.Left;
+    });
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.Settings.ShowFooter = true;
+
+
+
+    settings.SetDetailRowTemplateContent(c => {
+        ViewContext.Writer.Write(
+            "<strong>Credito Otorgado</strong>"+
+            "<br />" +
+            "<br />"
+        );
+        Html.RenderAction("DetalleCreditoOtorgado", new { id = DataBinder.Eval(c.DataItem, "Id") });
+    });
+    settings.PreRender = (sender, e) =>
+    {
+
+        ((MVCxGridView)sender).DetailRows.ExpandRow(-1);
+    };
+    settings.SettingsExport.GetExportDetailGridViews = (s, e) =>
+    {
+        string id = (string)DataBinder.Eval(e.DataItem, "Id");
+        GridViewExtension grid = new GridViewExtension(MVC.Presentacion.Controllers.ReportesController.CreateGeneralDetailGridSettingsCreditoOtorgado(id));
+        grid.Bind(((List<MVC.Presentacion.Models.CreditoOtorgadoModel>)Model).SingleOrDefault(x => x.Id.Equals(id.ToString())).Abonos);
+        e.DetailGridViews.Add(grid);
+    };
+    //settings.ClientSideEvents.BeginCallback = "onBeginCallback";
+
+
+}).Bind(Model).GetHtml()

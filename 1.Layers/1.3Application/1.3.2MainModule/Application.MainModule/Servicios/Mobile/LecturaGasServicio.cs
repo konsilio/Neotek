@@ -254,5 +254,9 @@ namespace Application.MainModule.Servicios.Mobile
             }
             return CalcularPreciosVentaServicio.ObtenerKilosCamioneta(TotalKilosGas, TotalKilosVenta);
         }
+        public static AlmacenGasTomaLectura ObtenerUltimaLecturaFinal(short idCAlmacenGas, DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().ObtenerUltimaLecturaFinal(idCAlmacenGas, fecha);
+        }
     }
 }

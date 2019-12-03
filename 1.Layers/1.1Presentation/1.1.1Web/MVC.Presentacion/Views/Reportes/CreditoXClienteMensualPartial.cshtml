@@ -1,0 +1,70 @@
+﻿@Html.DevExpress().GridView(settings => {
+    settings.Name = "CreditoXClienteMensual";
+    settings.CallbackRouteValues = new { Controller = "Reportes", Action = "CreditoXClienteMensualPartial" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.KeyFieldName = "Id";
+    settings.Columns.Add("Id", "ID");
+    settings.Columns.Add("Nombre").Width = System.Web.UI.WebControls.Unit.Percentage(50);
+    settings.Columns.Add("SaldoActual").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Columns.Add("SaldoCorriente").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Columns.Add("Vencido").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Columns.Add("Dias1a7", "Dias 1 a 7").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Columns.Add("Dias8a16", "Dias 8 a 16").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Columns.Add("Dias17a31", "Dias 17 a 31").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Columns.Add("Dias32a61", "Dias 32 a 61").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Columns.Add("Dias62a91", "Dias 62 a 91").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Columns.Add("Mas91", "Mas 91").Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+    settings.SettingsDetail.ShowDetailRow = true;
+    settings.SettingsExport.EnableClientSideExportAPI = true;
+    settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+    settings.SettingsDetail.ExportMode = GridViewDetailExportMode.All;
+    settings.Toolbars.Add(i =>
+    {
+        i.EnableAdaptivity = true;
+        i.Items.Add(exportitem =>
+        {
+            exportitem.Command = GridViewToolbarCommand.ExportToXls;
+            exportitem.Name = "CustomExportToXLS";
+            exportitem.Text = "Expotar a XLS";
+            exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
+        });
+        i.Items.Add(exportitem =>
+        {
+            exportitem.Command = GridViewToolbarCommand.ExportToXlsx;
+            exportitem.Name = "CustomExportToXLSX";
+            exportitem.Text = "Exportar a XLSX";
+            exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
+        });
+        i.ItemAlign = GridToolbarItemAlign.Left;
+    });
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowGroupPanel = true;
+    settings.Settings.ShowFooter = true;
+
+
+
+    settings.SetDetailRowTemplateContent(c => {
+        ViewContext.Writer.Write(
+            "<strong>Credito</strong>"+
+            "<br />" +
+            "<br />"
+        );
+        Html.RenderAction("DetalleCreditoXCliente", new { id = DataBinder.Eval(c.DataItem, "Id") });
+    });
+    settings.PreRender = (sender, e) =>
+    {
+
+        ((MVCxGridView)sender).DetailRows.ExpandRow(-1);
+    };
+    settings.SettingsExport.GetExportDetailGridViews = (s, e) =>
+    {
+        string id = (string)DataBinder.Eval(e.DataItem, "Id");
+        GridViewExtension grid = new GridViewExtension(MVC.Presentacion.Controllers.ReportesController.CreateGeneralDetailGridSettingsCreditoXCliente(id));
+        grid.Bind(((List<MVC.Presentacion.Models.CreditoXCliente>)Model).SingleOrDefault(x => x.Id.Equals(id.ToString())).CargosDetallados);
+        e.DetailGridViews.Add(grid);
+    };
+    //settings.ClientSideEvents.BeginCallback = "onBeginCallback";
+
+
+}).Bind(Model).GetHtml()
