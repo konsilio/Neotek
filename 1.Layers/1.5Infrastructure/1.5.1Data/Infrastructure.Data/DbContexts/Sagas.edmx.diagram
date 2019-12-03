@@ -343,6 +343,7 @@
         <EntityTypeShape EntityType="Sagas.MainModuleModel.Bitacora" Width="1.5" PointX="10.5" PointY="63.75" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_Bitacora_Usuario" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.CuentaContableAutorizado" Width="1.5" PointX="3.375" PointY="0.75" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Egreso_CTipoEgreso" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

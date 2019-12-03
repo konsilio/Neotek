@@ -305,6 +305,18 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 && x.IdOrden > 0
                 );
         }
+        public AlmacenGasTomaLectura ObtenerUltimaLecturaFinal(short idCAlmacenGas, DateTime fecha)
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().
+                GetSingle(
+                x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                && x.FechaAplicacion.Day.Equals(fecha.Day)
+                && x.FechaAplicacion.Month.Equals(fecha.Month)
+                && x.FechaAplicacion.Year.Equals(fecha.Year)
+                && x.IdTipoEvento.Equals(TipoEventoEnum.Final)
+                && x.IdOrden > 0
+                );
+        }
         public RespuestaDto Actualizar(AlmacenGas _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -1020,6 +1032,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<AlmacenGasAutoConsumo> BuscarTodosAutoConsumosNoProcesadas()
         {
             return uow.Repository<AlmacenGasAutoConsumo>().Get(x => !x.DatosProcesados).ToList();
+        }
+        public List<AlmacenGasAutoConsumo> BuscarTodosAutoConsumos(DateTime fi)
+        {
+            return uow.Repository<AlmacenGasAutoConsumo>().GetAll().Where(x => x.FechaRegistro > fi ).ToList();
         }
         public List<AlmacenGasAutoConsumoFoto> BuscarImagenesAutoConsumo(short idEmpresa, short anio, byte mes, byte dia, short orden)
         {

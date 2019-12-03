@@ -75,6 +75,20 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Medidores = TipoMedidorAdapter.ToDto(tipoMedidores)
             };
         }
+        public static DatosRecargaDto ToDTO(List<UnidadAlmacenGas> pipas, List<UnidadAlmacenGas> estaciones, List<UnidadAlmacenGas> almacenes, List<TipoMedidorUnidadAlmacenGas> tipoMedidores)
+        {
+            List<PipaDto> pipasDto = new List<PipaDto>();
+            List<EstacionesDto> estacionesDto = new List<EstacionesDto>();
+            pipasDto = pipas.Select(x => ToDTOPipa(x, tipoMedidores)).ToList();
+            estacionesDto = estaciones.Select(x => ToDTOEstaciones(x, tipoMedidores)).ToList();
+            return new DatosRecargaDto()
+            {
+                Pipas = pipasDto,
+                Estaciones = estacionesDto,
+                AlmacenesAlternos = almacenes.Select(x => ToDTO(x, tipoMedidores)).ToList(),
+                Medidores = TipoMedidorAdapter.ToDto(tipoMedidores)
+            };
+        }
 
         public static AlmacenAlternoDto ToDTO(UnidadAlmacenGas almacenAlterno, List<TipoMedidorUnidadAlmacenGas> tipoMedidores)
         {
