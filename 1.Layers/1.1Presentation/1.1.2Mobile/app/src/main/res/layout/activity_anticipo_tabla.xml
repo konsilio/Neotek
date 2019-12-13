@@ -99,17 +99,22 @@
 
                     <TextView
                         android:id="@+id/TVAnticipoTablaActivityTituloUsuario"
-                        android:layout_width="0dp"
+                        android:layout_width="113dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/recibi_de"
                         android:textSize="18sp" />
 
-                    <Spinner
+                   <!-- <Spinner
+
+                         />-->
+
+                    <EditText
                         android:id="@+id/SPAnticipoTablaActvityUsuario"
-                        android:layout_width="20sp"
+                        android:layout_width="305dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2" />
+                        android:layout_weight="2"
+                        android:textColor="@color/colorPrimaryDark"/>
                 </TableRow>
 
                 <TableRow
@@ -130,7 +135,7 @@
 
                     <TextView
                         android:id="@+id/textView2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="321dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"

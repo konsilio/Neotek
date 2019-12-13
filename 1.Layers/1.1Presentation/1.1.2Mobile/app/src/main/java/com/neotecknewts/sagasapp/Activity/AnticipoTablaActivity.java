@@ -52,7 +52,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         TVAnticipoTableMontoDeCorte,TVAnticipoTableActivityAnticipos,
             TVAnticipoTablaActivityFecha,TVAnticipoTablaActivityTituloUsuario;
     //Spinner SPAnticipoTablaActivityFechaCorte;
-    Spinner SPAnticipoTablaActvityUsuario;
+    EditText SPAnticipoTablaActvityUsuario;
     TableRow TRAnticipoTablaActivityTituloAnticipo,TRAnticipoTablaActivityFormAnticipar;
     EditText ETAnticipoTablaActivityAnticipo;
     ImageButton IBAnticipotABLAactivityFecha;
@@ -73,6 +73,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     public Date fecha;
     public boolean hasFecha;
     public UsuariosCorteDTO dataUsariosCorte;
+    UsuariosDTO usuariosDTO;
     public String[] listUsuarios;
     boolean EsCamioneta,EsEstacion,EsPipa;
     DatosBusquedaCortesDTO datosBusqueda;
@@ -93,8 +94,6 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 setFecha();
             };
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -106,6 +105,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             EsCorte = bundle.getBoolean("EsCorte",false);
             anticiposDTO = (AnticiposDTO) bundle.getSerializable("anticiposDTO");
             corteDTO = (CorteDTO) bundle.getSerializable("corteDTO");
+            usuariosDTO =(UsuariosDTO) bundle.getSerializable("usuariosDTO");
             EsCamioneta = bundle.getBoolean("EsCamioneta",false);
             EsEstacion = bundle.getBoolean("EsEstacion",false);
             EsPipa = bundle.getBoolean("EsPipa");
@@ -114,6 +114,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         Log.d("CorteDTO", corteDTO.toString());
         hasFecha = false;
         dataUsariosCorte = new UsuariosCorteDTO();
+        usuariosDTO = new UsuariosDTO();
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
@@ -123,6 +124,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         session = new Session(AnticipoTablaActivity.this);
         dformat  = new DecimalFormat("#.00");
         BtnAnticipoTablaActivityRegresar = findViewById(R.id.BtnAnticipoTablaActivityRegresar);
+        SPAnticipoTablaActvityUsuario = (EditText) findViewById(R.id.SPAnticipoTablaActvityUsuario);
         BtnAnticipoTablaActivityHacerAnticipo = findViewById(R.id.
                 BtnAnticipoTablaActivityHacerAnticipo);
         TVAnticipoTablaActivityTotal = findViewById(R.id.TVAnticipoTablaActivityTotal);
@@ -173,7 +175,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         tabla = new Tabla(this, TLAnticipoTablaActivityTabla);
         tabla.Cabecera(R.array.header_tabla_anticipo);
         elementos = new ArrayList<>();
-        SPAnticipoTablaActvityUsuario = findViewById(R.id.SPAnticipoTablaActvityUsuario);
+        //**
         if(EsCorte) {
             presenter.usuariosCorte(session.getToken());
         }else if (EsAnticipo){
@@ -183,10 +185,31 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 TVAnticipoTablaActivityTituloUsuario);
         TVAnticipoTablaActivityTituloUsuario.setText(EsAnticipo? R.string.recibi_de:
         R.string.Recibe);
-        //SPAnticipoTablaActvityUsuario.setVisibility(EsAnticipo? View.VISIBLE:View.GONE);
-        SPAnticipoTablaActvityUsuario.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-            @Override
+        // SPAnticipoTablaActvityUsuario.setVisibility(EsAnticipo? View.VISIBLE:View.GONE);
+        // SPAnticipoTablaActvityUsuario.getText();
+
+        UsuariosDTO usuario = usuariosDTO;
+        usuario.setNombre(SPAnticipoTablaActvityUsuario.getText().toString());
+        System.out.println(usuario.getNombre());
+
+
+        if(EsAnticipo) {
+            System.out.println("anticipo");
+            Log.d("AnticipoEditText", SPAnticipoTablaActvityUsuario.getText().toString());
+            //anticiposDTO.setNombreEntrega(usuario.getNombre());
+            //anticiposDTO.setIdEntrega(usuario.getIdUsuario());
+            anticiposDTO.setIdRecibe(usuario.getIdUsuario());
+            anticiposDTO.setRecibe(usuario.getNombre());
+            System.out.println(usuario.getNombre());
+        }else if (EsCorte){
+            System.out.println("corte");
+            corteDTO.setRecibe(usuario.getNombre());
+            corteDTO.setIdRecibio(usuario.getIdUsuario());
+            System.out.println(usuario.getNombre());
+        }
+
+               // new AdapterView.OnItemSelectedListener() {
+           /* @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position>=0) {
                     if (dataUsariosCorte.isExito()) {
@@ -196,12 +219,15 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                                 if (dataUsariosCorte.getUsuarios().get(x).getNombre().equals(
                                         listUsuarios[position]
                                 )) {
+                                    // UsuariosDTO usuario = SPAnticipoTablaActvityUsuario.setText();
                                     UsuariosDTO usuario = dataUsariosCorte.getUsuarios().get(x);
+                                    Log.d("usuarioanticipo",dataUsariosCorte.getUsuarios().get(x).toString());
                                     if(EsAnticipo) {
                                         //anticiposDTO.setNombreEntrega(usuario.getNombre());
                                         //anticiposDTO.setIdEntrega(usuario.getIdUsuario());
                                         anticiposDTO.setIdRecibe(usuario.getIdUsuario());
                                         anticiposDTO.setRecibe(usuario.getNombre());
+                                        Log.d("getnombreanticipo", usuario.getNombre());
                                     }else if (EsCorte){
                                         corteDTO.setRecibe(usuario.getNombre());
                                         corteDTO.setIdRecibio(usuario.getIdUsuario());
@@ -211,9 +237,9 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                         }
                     }
                 }
-            }
+            }*/
 
-            @Override
+         /*   @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 if (EsAnticipo) {
                     anticiposDTO.setNombreEntrega("");
@@ -223,7 +249,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     corteDTO.setIdEntrega(0);
                 }
             }
-        });
+        };*/
         NumberFormat format = NumberFormat.getCurrencyInstance();
         session = new Session(this);
         sagasSql = new SAGASSql(this);
@@ -636,10 +662,10 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     for (int x = 0; x<data.getUsuarios().size();x++){
                         listUsuarios[x] = data.getUsuarios().get(x).getNombre();
                     }
-                    SPAnticipoTablaActvityUsuario.setAdapter(new ArrayAdapter<>(
-                            this,R.layout.custom_spinner,
-                            listUsuarios
-                    ));
+//                    SPAnticipoTablaActvityUsuario.setAdapter(new ArrayAdapter<>(
+//                            this,R.layout.custom_spinner,
+//                            listUsuarios
+//                    ));
                 }else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(this,
                             R.style.AlertDialog);

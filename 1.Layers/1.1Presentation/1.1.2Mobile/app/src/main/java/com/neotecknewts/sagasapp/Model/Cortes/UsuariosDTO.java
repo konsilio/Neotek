@@ -30,7 +30,7 @@ public class UsuariosDTO implements Serializable {
      * Id de la empresa
      */
     @SerializedName("IdEmpresa")
-    private  int IdEmpresa;
+    private int IdEmpresa;
 
     public int getIdUsuario() {
         return IdUsuario;

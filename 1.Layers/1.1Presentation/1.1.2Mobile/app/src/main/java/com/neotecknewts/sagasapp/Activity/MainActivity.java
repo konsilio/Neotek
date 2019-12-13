@@ -1,11 +1,17 @@
 package com.neotecknewts.sagasapp.Activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -19,6 +25,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.neotecknewts.sagasapp.Model.Cortes.UsuariosDTO;
 import com.neotecknewts.sagasapp.R;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.neotecknewts.sagasapp.Model.EmpresaDTO;
@@ -42,17 +49,22 @@ import java.util.List;
  */
 
 public class MainActivity extends AppCompatActivity implements MainView {
+    //variables latitud y longitud
+    private Double tvLatitud, tvLongitud, tvAltura, tvPrecision;
+
+    private LocationManager locManager;
+    private Location loc;
 
     //variables relacionadas con la vista
     private EditText editTextCorreoElectronico;
     private EditText editTextContraseña;
     private Spinner spinnerGaseras;
 
-
-
     //variable para usuario y contraseña
     public String contraseña;
     public String usuario;
+
+    UsuarioLoginDTO usuarioLoginDTO;
 
     //variable para id de empresa y la lista de empresas a seleccionar
     public int IdEmpresa;
@@ -87,6 +99,24 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
         //se inicializa la session
         session = new Session(getApplicationContext());
+        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            // usuarioLoginDTO.setCoordenadas(tvLatitud + tvLongitud + "");
+            Log.d("localizacion", loc.toString());
+            Log.d("latitud", tvLatitud.toString());
+            Log.d("longitud", tvLongitud.toString());
+            return;
+        }else
+        {
+            // usuarioLoginDTO.setCoordenadas(loc.toString());
+            /*Se asigna a la clase LocationManager el servicio a nivel de sistema a partir del nombre.*/
+            locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Log.d("localizacion", loc.toString());
+        }
+
 
         if(session.isLogin())
             startActivity();

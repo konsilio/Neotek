@@ -19,6 +19,9 @@ public class UsuarioLoginDTO {
     @SerializedName("FbToken")
     private String FbToken;
 
+    @SerializedName("Coordenadas")
+    private String Coordenadas;
+
     public int getIdEmpresa() {
         return IdEmpresa;
     }
@@ -49,5 +52,13 @@ public class UsuarioLoginDTO {
 
     public void setFbToken(String fbToken) {
         FbToken = fbToken;
+    }
+
+    public String getCoordenadas() {
+        return Coordenadas;
+    }
+
+    public void setCoordenadas(String coordenadas) {
+        Coordenadas = coordenadas;
     }
 }
