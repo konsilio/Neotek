@@ -1,6 +1,8 @@
 package com.neotecknewts.sagasapp.Activity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,9 +10,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.renderscript.RenderScript;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 
 import com.neotecknewts.sagasapp.Model.Cortes.UsuariosDTO;
 import com.neotecknewts.sagasapp.R;
@@ -54,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     private LocationManager locManager;
     private Location loc;
+    public String bestProvider;
+    public Criteria criteria;
+    private LocationManager locationManager;
+    double longitudeNetwork = 0, latitudeNetwork = 0;
 
     //variables relacionadas con la vista
     private EditText editTextCorreoElectronico;
@@ -84,9 +95,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(Utilidades.checkAndRequestPermissions(this).size()>0){
+        if (Utilidades.checkAndRequestPermissions(this).size() > 0) {
             Permisos permisos = new Permisos(this);
             permisos.permisos();
         }
@@ -99,26 +111,23 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
         //se inicializa la session
         session = new Session(getApplicationContext());
-        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            // usuarioLoginDTO.setCoordenadas(tvLatitud + tvLongitud + "");
+
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            usuarioLoginDTO.setCoordenadas(loc.getLatitude() + "," + loc.getLongitude());
+            // hAcc= precision en metros
             Log.d("localizacion", loc.toString());
-            Log.d("latitud", tvLatitud.toString());
-            Log.d("longitud", tvLongitud.toString());
             return;
-        }else
-        {
-            // usuarioLoginDTO.setCoordenadas(loc.toString());
-            /*Se asigna a la clase LocationManager el servicio a nivel de sistema a partir del nombre.*/
-            locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            Log.d("localizacion", loc.toString());
+        } else {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10 * 900, 1, locationListenerNetwork);
+            //Se asigna a la clase LocationManager el servicio a nivel de sistema a partir del nombre.
+           Log.d("localizacion", loc.toString());
         }
-
-
-        if(session.isLogin())
+        if (session.isLogin())
             startActivity();
         //se inicializan las variables de la vista
         editTextContraseña = (EditText) findViewById(R.id.input_password);
@@ -146,15 +155,41 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         //onclick del boton
         final Button buttonLogin = (Button) findViewById(R.id.login_button);
+        Float precision = loc.getAccuracy();
+        Log.d("precision", precision+"");
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onClickLogin();
+                if (precision < 5) {
+                    Log.d("precision", precision + "");
+                    onClickLogin();
+                    buttonLogin.setEnabled(true);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
+                    // builder.setTitle(R.string.error_titulo);
+                    builder.setMessage("Error de posicion gps" + precision);
+                    builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
+                        dialogInterface.dismiss();
+                    });
+                    builder.create().show();
+                } else {
+                    buttonLogin.setEnabled(true);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
+                    // builder.setTitle(R.string.error_titulo);
+                    builder.setMessage("Error de posicion gps" + precision);
+                    builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
+                        dialogInterface.dismiss();
+                    });
+                    builder.create().show();
+
+                }
             }
         });
+
         editTextContraseña.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_DONE) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     buttonLogin.performClick();
                     return true;
                 }
@@ -168,13 +203,64 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 
     }
-//al hacer click en el boton entra en este metodo
-    private void onClickLogin(){
+
+    private final LocationListener locationListenerNetwork = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            longitudeNetwork = location.getLongitude();
+            latitudeNetwork = location.getLatitude();
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+
+
+    };
+
+    private boolean isLocationEnabled() {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    private void showAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Enable Location")
+                .setMessage("Su ubicación esta desactivada.\npor favor active su ubicación " +
+                        "usa esta app")
+                .setPositiveButton("Configuración de ubicación", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+        dialog.show();
+    }
+
+
+    //al hacer click en el boton entra en este metodo
+    private void onClickLogin() {
         //se obtienen los datos de la vista
         usuario = editTextCorreoElectronico.getText().toString();
         contraseña = editTextContraseña.getText().toString();
-        if(empresaDTOs.size()==0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+        if (empresaDTOs.size() == 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
             builder.setTitle(R.string.error_titulo);
             builder.setMessage("No se ha especificado la empresa, o se perdio la conexión al " +
                     getString(R.string.error_conexion_lista_login));
@@ -183,14 +269,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 dialogInterface.dismiss();
             });
             builder.create().show();
-        }else {
+        } else {
             IdEmpresa = empresaDTOs.get(spinnerGaseras.getSelectedItemPosition()).getIdEmpresa();
             //se verifica que no haya campos vacios y que sea un correo valido, y en caso contrario se muestra un mensaje
             if (TextUtils.isEmpty(usuario) || TextUtils.isEmpty(contraseña)) {
-                Log.d("mensaje:","campos vacios");
+                Log.d("mensaje:", "campos vacios");
                 showDialog(getResources().getString(R.string.empty_field));
             } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(usuario).matches()) {
-                Log.d("mensaje:","correo invalido");
+                Log.d("mensaje:", "correo invalido");
                 showDialog(getResources().getString(R.string.invalid_email));
             } else {
                 //String fb_token = "";
@@ -221,9 +307,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
 
-/// funcion que muestra el dialogo
-    private void showDialog(String mensaje){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this,R.style.AlertDialog);
+    /// funcion que muestra el dialogo
+    private void showDialog(String mensaje) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this, R.style.AlertDialog);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
 
@@ -242,16 +328,16 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     //funcion que inicia el activity del menu y le envia la lista para construirlo
-    public void startActivity(ArrayList<MenuDTO> menuDTOs){
+    public void startActivity(ArrayList<MenuDTO> menuDTOs) {
         //Cursor cursor = sagasSql.GetMenu();
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-        intent.putExtra("lista",menuDTOs);
+        intent.putExtra("lista", menuDTOs);
         startActivity(intent);
 
     }
 
     //funcion que inicia el activity del menu si ya tiene una sesion iniciada
-    public void startActivity(){
+    public void startActivity() {
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         startActivity(intent);
     }
@@ -260,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     //metodo que muestra el progreso de la obtencion/ envio de datos
     @Override
     public void showProgress(int mensaje) {
-        progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
+        progressDialog = ProgressDialog.show(this, getResources().getString(R.string.app_name),
                 getResources().getString(mensaje), true);
     }
 
@@ -268,7 +354,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void hideProgress() {
         Log.e("error", "ocultar");
-        if(progressDialog != null){
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
@@ -276,8 +362,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
     //metodo que envia un mensaje de error
     @Override
     public void messageError(String mensaje) {
-        if(mensaje==null) {
-            Log.d("mensaje:","error conexion");
+        if (mensaje == null) {
+            Log.d("mensaje:", "error conexion");
             mensaje = getResources().getString(R.string.error_conexion);
         }
         showDialog(mensaje);
@@ -289,13 +375,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
         //linearLayoutLogin.setVisibility(View.GONE);
         this.empresaDTOs = empresaDTOs;
         String[] empresas = new String[empresaDTOs.size()];
-        for (int i =0; i<empresaDTOs.size(); i++){
-            empresas[i]=empresaDTOs.get(i).getNombreComercial();
+        for (int i = 0; i < empresaDTOs.size(); i++) {
+            empresas[i] = empresaDTOs.get(i).getNombreComercial();
         }
 
         spinnerGaseras.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, empresas));
-        if(session!= null) {
-            if(session.getIdEmpresa()>0) {
+        if (session != null) {
+            if (session.getIdEmpresa() > 0) {
                 for (EmpresaDTO empresa : empresaDTOs) {
                     if (empresa.getIdEmpresa() == session.getIdEmpresa())
                         spinnerGaseras.setSelection(empresaDTOs.indexOf(empresa));
@@ -303,21 +389,21 @@ public class MainActivity extends AppCompatActivity implements MainView {
             }
         }
     }
-    
+
 
     //funcion que se ejecuta cuando el login fue correcto
     @Override
     public void onSuccessLogin(UsuarioDTO usuarioDTO) {
-        if(usuarioDTO.isExito()){
-            Log.w("TOKEN",usuarioDTO.getToken()+"");
-            Log.w("USUARIO",usuarioDTO.getIdUsuario()+"");
-            Log.w("LISTA",usuarioDTO.getListMenu().length+"");
-            if(usuarioDTO.getListMenu().length==0){
-                Log.d("mensaje:","sin permisos");
+        if (usuarioDTO.isExito()) {
+            Log.w("TOKEN", usuarioDTO.getToken() + "");
+            Log.w("USUARIO", usuarioDTO.getIdUsuario() + "");
+            Log.w("LISTA", usuarioDTO.getListMenu().length + "");
+            if (usuarioDTO.getListMenu().length == 0) {
+                Log.d("mensaje:", "sin permisos");
                 showDialog(getResources().getString(R.string.usuario_sin_permisos));
-            }else{
+            } else {
                 //showDialog(getResources().getString(R.string.login_sucess));
-                Log.w("success",getResources().getString(R.string.login_sucess));
+                Log.w("success", getResources().getString(R.string.login_sucess));
                 //se crea la sesion
 
                 String[] datos = usuarioDTO.getMensaje().trim().split("\\|");
@@ -330,11 +416,82 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 startActivity(menuDTOs);
                 finish();
             }
-        }else{
-            Log.d("mensaje:","contraseña incorrecta");
+        } else {
+            Log.d("mensaje:", "contraseña incorrecta");
             showDialog(getResources().getString(R.string.usuario_incorrecto));
         }
 
     }
-
 }
+
+/*
+package com.neotecknewts.sagasapp.Activity;
+
+public class x {
+
+    LocationManager locationManager;
+    double longitudeNetwork=0, latitudeNetwork=0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER, 10 * 900, 1,
+                locationListenerNetwork);
+    }
+    private boolean checkLocation() {
+        if (!isLocationEnabled())
+            showAlert();
+        return isLocationEnabled();
+    }
+
+    private void showAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Enable Location")
+                .setMessage("Su ubicación esta desactivada.\npor favor active su ubicación " +
+                        "usa esta app")
+                .setPositiveButton("Configuración de ubicación", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+        dialog.show();
+    }
+
+    private boolean isLocationEnabled() {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+    private final LocationListener locationListenerNetwork = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            longitudeNetwork = location.getLongitude();
+            latitudeNetwork = location.getLatitude();
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+
+
+    };
+}
+
+*/
