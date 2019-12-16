@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
         //se inicializa la session
         session = new Session(getApplicationContext());
 
-
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -161,14 +160,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onClickLogin();
                 if (precision < 5) {
                     Log.d("precision", precision + "");
                     onClickLogin();
-                    buttonLogin.setEnabled(true);
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
-                    // builder.setTitle(R.string.error_titulo);
-                    builder.setMessage("Error de posicion gps" + precision);
+                    builder.setMessage("La precision es de:" + precision);
                     builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
                         dialogInterface.dismiss();
                     });
@@ -176,13 +172,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 } else {
                     buttonLogin.setEnabled(true);
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
-                    // builder.setTitle(R.string.error_titulo);
                     builder.setMessage("Error de posicion gps" + precision);
                     builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
                         dialogInterface.dismiss();
                     });
                     builder.create().show();
-
                 }
             }
         });
