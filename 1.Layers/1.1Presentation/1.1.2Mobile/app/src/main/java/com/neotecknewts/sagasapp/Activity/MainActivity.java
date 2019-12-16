@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     //variables latitud y longitud
     private Double tvLatitud, tvLongitud, tvAltura, tvPrecision;
 
+    private LocationListener locationListener;
     private LocationManager locManager;
     private Location loc;
     public String bestProvider;

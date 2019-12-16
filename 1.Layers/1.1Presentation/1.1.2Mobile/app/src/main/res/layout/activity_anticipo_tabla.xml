@@ -108,7 +108,6 @@
                    <!-- <Spinner
 
                          />-->
-
                     <EditText
                         android:id="@+id/SPAnticipoTablaActvityUsuario"
                         android:layout_width="305dp"

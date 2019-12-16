@@ -195,6 +195,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
 
         if(EsAnticipo) {
             System.out.println("anticipo");
+            usuario.setNombre(SPAnticipoTablaActvityUsuario.getText().toString());
             Log.d("AnticipoEditText", SPAnticipoTablaActvityUsuario.getText().toString());
             //anticiposDTO.setNombreEntrega(usuario.getNombre());
             //anticiposDTO.setIdEntrega(usuario.getIdUsuario());
