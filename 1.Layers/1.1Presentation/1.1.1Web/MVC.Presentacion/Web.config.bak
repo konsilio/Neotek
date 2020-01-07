@@ -198,8 +198,8 @@
     <add key="PutLiquidar" value="api/ventas/generar/liquidar/" />
     <add key="PutActualizarTikets" value="api/ventas/modificar/tikets/" />
     
-    <add key ="GetPuntosVentaLiquidacion" value="api/ventas/buscar/listapuntosventaliquidacion"/>
-    <add key ="GetLiquidacionesDelDia" value="api/ventas/buscar/listaliquidaciones"/>
+    <add key="GetPuntosVentaLiquidacion" value="api/ventas/buscar/listapuntosventaliquidacion" />
+    <add key="GetLiquidacionesDelDia" value="api/ventas/buscar/listaliquidaciones" />
     <!-- Ventas -->
     <!-- Pedidos -->
     <add key="GetListaPedidos" value="api/pedidos/buscar/listapedidos/" />
@@ -216,7 +216,7 @@
     <add key="GetListaCargos" value="api/cobranza/buscar/listacargos/" />
     <add key="GetListaCRecuperada" value="api/cobranza/buscar/listacrecuperada/" />
     <add key="GetCargoId" value="api/cobranza/buscar/cargos/" />
-    <add key="PostRegistrarAbono" value= "api/cobranza/registrar/abono" />
+    <add key="PostRegistrarAbono" value="api/cobranza/registrar/abono" />
     <add key="PostRegistrarAbonosLst" value="api/cobranza/registrar/abonos" />
     <add key="PutListaCartera" value="api/cobranza/buscar/carteravencida" />
     <add key="PutCreditoRecuperado" value="api/cobranza/buscar/carterarecuperada" />
@@ -278,7 +278,7 @@
     <add key="DeleteHistorico" value="api/historico/eleiminar/historicoventas/" />
     <add key="GetJsonConsulta" value="api/historico/consultar/json" />
     <add key="GetYears" value="api/historico/consultar/years" />
-    <add key="GetYearsTotales" value="api/historico/consultar/yearstotales"/> 
+    <add key="GetYearsTotales" value="api/historico/consultar/yearstotales" /> 
     <!-- HistoricoVentas -->
     <!--Reportes-->
     <add key="PostRepoCuentasPorPagar" value="api/reportes/cuentasxpagar" />
@@ -303,9 +303,9 @@
     
     
     <add key="PostInventarioPorConcepto" value="api/reportes/inventarioxconcepto" />
-    <add key="PostCorteCaja" value="api/reportes/cortecaja"/>
-    <add key="PostGastoXVehiculo" value="api/reportes/gastoxvehiculo"/>
-    <add key="GetDashRemanente" value="api/reportes/dashboard/remanente"/>
+    <add key="PostCorteCaja" value="api/reportes/cortecaja" />
+    <add key="PostGastoXVehiculo" value="api/reportes/gastoxvehiculo" />
+    <add key="GetDashRemanente" value="api/reportes/dashboard/remanente" />
     <add key="GetDashCallCenter" value="api/reportes/dashboard/callcenter" />
     <add key="GetDashAnden" value="api/reportes/dashboard/anden" />
     <add key="GetCartera" value="api/reportes/dashboard/cartera" />
