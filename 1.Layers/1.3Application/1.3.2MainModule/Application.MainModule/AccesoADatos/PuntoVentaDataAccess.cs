@@ -112,6 +112,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<PuntoVenta>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                       && x.Activo).FirstOrDefault();
         }
+        public PuntoVenta BuscarPorUnidadAlmacenGas(DetalleRecargaCombustible recarga)
+        {
+            PuntoVenta resp = new PuntoVenta();
+            if (recarga.EsCamioneta)            
+                resp = uow.Repository<PuntoVenta>().GetSingle(x => x.UnidadesAlmacen.IdCamioneta.Equals(recarga.Id_Vehiculo));            
+            if (recarga.EsPipa)            
+                resp = uow.Repository<PuntoVenta>().GetSingle(x => x.UnidadesAlmacen.IdPipa.Equals(recarga.Id_Vehiculo));            
+            return resp;
+        }
+
         public RespuestaDto InesertarVentaGeneral(VentaCajaGeneral corteCajaGeneral)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -326,7 +336,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     foreach (var venta in Ventas)
                         uow.Repository<VentaPuntoDeVenta>().Update(venta);
                     uow.SaveChanges();
-                    _respuesta.EsInsercion = true;                    
+                    _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
                     _respuesta.Mensaje = Exito.OK;

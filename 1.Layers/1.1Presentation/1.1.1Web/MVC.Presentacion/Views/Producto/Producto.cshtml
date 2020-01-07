@@ -132,7 +132,6 @@
                                                 settings.Properties.TextField = "Descripcion";
                                                 settings.Properties.ValueField = "IdCuentaContable";
                                             }).BindList(ViewBag.CuentasContables).Bind(Model.IdCuentaContable).GetHtml()
-
                                             @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -221,7 +220,7 @@
                                         </div>
                                         <div id="divServ" style="display:none">
                                             <div class="form-group">
-                                                @Html.CheckBoxFor(m => m.EsTransporteGas ,new { id = "cbServicioTransporte" })
+                                                @Html.CheckBoxFor(m => m.EsTransporteGas, new { id = "cbServicioTransporte" })
                                                 @*<input id="cbServicioTransporte" name="EsTransporteGas" type="checkbox">*@
                                                 <label for="cbServicioTransporte" class="z-index:8">
                                                     ¿Es Servicio de transporte?

@@ -130,6 +130,27 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<DetalleRecargaCombustible>().Get(x => x.FechaRecarga > fi && x.FechaRecarga < ff).ToList();
         }
+        public List<DetalleRecargaCombustible> Obtener(DateTime fi, DateTime ff, int id_vehiculo, bool EsCamioneta, bool EsPipa, bool EsUtilitario)
+        {
+
+            return  uow.Repository<DetalleRecargaCombustible>().Get(y => (y.FechaRecarga >= fi
+                                                                && y.FechaRecarga <= ff)
+                                                                && y.Id_Vehiculo.Equals(id_vehiculo)).ToList();
+            //return uow.Repository<DetalleRecargaCombustible>().Get(x => x.FechaRecarga > fi
+            //                                                    && x.FechaRecarga < ff
+            //                                                    && x.Id_Vehiculo.Equals(id_vehiculo)
+            //                                                    && x.EsCamioneta.Equals(EsCamioneta)
+            //                                                    && x.EsPipa.Equals(EsPipa)
+            //                                                    && x.EsUtilitario.Equals(EsUtilitario)).ToList();
+        }
+        public List<DetalleRecargaCombustible> Obtener(DateTime f, int id_vehiculo, bool EsCamioneta, bool EsPipa, bool EsUtilitario)
+        {
+            return uow.Repository<DetalleRecargaCombustible>().Get(x => x.FechaRecarga.ToShortDateString().Equals(f.ToShortDateString())
+                                                                && x.Id_Vehiculo.Equals(id_vehiculo)
+                                                                && x.EsCamioneta.Equals(EsCamioneta)
+                                                                && x.EsPipa.Equals(EsPipa)
+                                                                && x.EsUtilitario.Equals(EsUtilitario)).ToList();
+        }
         public List<DetalleRecargaCombustible> Obtener()
         {
             return uow.Repository<DetalleRecargaCombustible>().GetAll().ToList();

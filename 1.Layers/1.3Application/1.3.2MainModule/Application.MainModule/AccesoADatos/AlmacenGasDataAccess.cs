@@ -1033,6 +1033,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasAutoConsumo>().Get(x => !x.DatosProcesados).ToList();
         }
+        public List<AlmacenGasAutoConsumo> BuscarTodosAutoConsumos(DateTime fi)
+        {
+            return uow.Repository<AlmacenGasAutoConsumo>().GetAll().Where(x => x.FechaRegistro > fi ).ToList();
+        }
         public List<AlmacenGasAutoConsumoFoto> BuscarImagenesAutoConsumo(short idEmpresa, short anio, byte mes, byte dia, short orden)
         {
             return uow.Repository<AlmacenGasAutoConsumoFoto>().Get(x => x.IdEmpresa.Equals(idEmpresa)

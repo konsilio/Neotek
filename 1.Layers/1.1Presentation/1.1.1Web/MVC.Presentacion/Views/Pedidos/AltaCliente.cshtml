@@ -129,15 +129,15 @@
                                    settings.Theme = "Material";
                                    settings.Properties.TextField = "Descripcion";
                                    settings.Properties.ValueField = "IdTipoPersona";
-                                   //settings.PreRender = (s, e) =>
-                                   //{
-                                   //    MVCxComboBox combo = s as MVCxComboBox;
-                                   //    combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno", string.Empty));
-                                   //    combo.Properties.ValueType = typeof(short);
-                                   //    combo.SelectedIndex = 0;
-                                   //};
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno", string.Empty));
+                                       combo.Properties.ValueType = typeof(short);
+                                       combo.SelectedIndex = 0;
+                                   };
                                    settings.ClientEnabled = true;
-                                   settings.SelectedIndex = 1;
+                                   settings.SelectedIndex = 0;
                                    settings.Properties.ValueType = typeof(byte);
                                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
                                }).BindList(ViewBag.TipoPersona).Bind(Model.cliente.IdTipoPersona).GetHtml()
@@ -153,20 +153,19 @@
                                {
                                    settings.Name = "cliente.IdRegimenFiscal";
                                    settings.Width = 180;
-                                   settings.SelectedIndex = 612;
                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                    settings.Theme = "Material";
                                    settings.Properties.TextField = "Descripcion";
                                    settings.Properties.ValueField = "IdRegimenFiscal";
                                    //settings.Properties.ValueType = typeof(int);
-                                   //settings.PreRender = (s, e) =>
-                                   //{
-                                   //    MVCxComboBox combo = s as MVCxComboBox;
-                                   //    combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno",string.Empty));
-                                   //    combo.Properties.ValueType = typeof(short);
-                                   //    combo.SelectedIndex = 0;
-                                   //};
+                                   settings.PreRender = (s, e) =>
+                                   {
+                                       MVCxComboBox combo = s as MVCxComboBox;
+                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno",string.Empty));
+                                       combo.Properties.ValueType = typeof(short);
+                                       combo.SelectedIndex = 0;
+                                   };
                                }).BindList(ViewBag.Regimen).GetHtml()
                                     @Html.ValidationMessageFor(m => m.cliente.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                 </div>
