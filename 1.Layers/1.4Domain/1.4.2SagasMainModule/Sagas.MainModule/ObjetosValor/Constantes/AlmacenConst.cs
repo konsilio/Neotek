@@ -15,4 +15,4 @@ namespace Sagas.MainModule.ObjetosValor.Constantes
         public const string SinLectura = "No hay lectura registrada";
         public const string FaltaInformacion = "Falta información";
     }
-}
+}   

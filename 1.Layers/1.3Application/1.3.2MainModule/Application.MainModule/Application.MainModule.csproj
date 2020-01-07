@@ -418,6 +418,7 @@
     <Compile Include="DTOs\Requisicion\RequisicionAutPutDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionCancelaDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionCrearDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionProdAutPutDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionProdReviPutDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionProductoAutorizacionDTO.cs" />

@@ -65,6 +65,14 @@ namespace Application.MainModule.Flujos
         public CorteCajaDTO CajaGeneral(string cveReporte)
         {
             CorteCajaDTO corte = new CorteCajaDTO();
+            var reporteDia = CajaGeneralServicio.ObtenerReporteDia(cveReporte);
+            if (reporteDia == null)
+            {
+                reporteDia = CajaGeneralServicio.ObtenerReporteDiaCorteCaja(cveReporte);
+                if (reporteDia == null)
+                    return corte;
+            }              
+
             var productoGas = ProductoServicio.ObtenerProductoGasVenta(TokenServicio.ObtenerIdEmpresa());
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             var precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
