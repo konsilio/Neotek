@@ -538,5 +538,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Mas91 = lista.Sum(x => x.Mas91),
             };
         }
+
     }
 }

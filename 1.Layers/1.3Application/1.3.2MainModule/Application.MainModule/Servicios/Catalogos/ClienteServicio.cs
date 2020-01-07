@@ -10,6 +10,7 @@ using Sagas.MainModule.Entidades;
 using Exceptions.MainModule.Validaciones;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.DTOs;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -143,6 +144,33 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new ClientesDataAccess().BuscadorClientes(criterio, TokenServicio.ObtenerIdEmpresa());
         }
+        public static List<Cliente> BuscadorClientes(PeriodoDTO dto)
+        {
+            return new ClientesDataAccess().BuscadorClientesDescuentos(dto, TokenServicio.ObtenerIdEmpresa());
+        }
+        public static List<Cliente> BuscarClientesConAbonos(PeriodoDTO dto)
+        {
+            return new ClientesDataAccess().BuscarClientesAbonos(dto, TokenServicio.ObtenerIdEmpresa());
+        }
+        public static List<Cliente> BuscarClientesConCargos(PeriodoDTO dto)
+        {
+            return new ClientesDataAccess().BuscarClientesCargos(dto, TokenServicio.ObtenerIdEmpresa());
+        }
+        public static List<Cliente> BuscarClientesConSaldoPendiente(PeriodoDTO dto)
+        {
+            return new ClientesDataAccess().BuscarClientesSaldoPendiente(dto, TokenServicio.ObtenerIdEmpresa());
+        }
+        public static List<Cliente> BuscarClientesConSaldoPendienteMensual(PeriodoDTO dto)
+        {
+            return new ClientesDataAccess().BuscarClientesSaldoPendienteMensual(dto, TokenServicio.ObtenerIdEmpresa());
+        }
+        public static List<Cliente> BuscadorTodosClientes()
+        {
+            return new ClientesDataAccess().BuscadorClientes(TokenServicio.ObtenerIdEmpresa());
+        }
+
+
+
         public static List<ClienteLocacionDTO> ObtenerLoc(int IdCliente)
         {
             List<ClienteLocacionDTO> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTOLoc(new ClientesDataAccess().BuscarLocacion(IdCliente));

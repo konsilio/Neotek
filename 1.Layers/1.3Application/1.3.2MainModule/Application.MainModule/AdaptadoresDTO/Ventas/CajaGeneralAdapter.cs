@@ -602,6 +602,40 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             return usDTO;
         }
+
+
+        public static List<VentasDTO> ToDTO(List<VentaPuntoDeVenta> dtos)
+        {
+            return dtos.Select(x => ToDTO(x)).ToList();
+
+        }
+        public static VentasDTO ToDTO(VentaPuntoDeVenta pv)
+        {
+            VentasDTO usDTO = new VentasDTO()
+            {
+
+              FolioVenta = pv.FolioVenta,
+                RFC = pv.RFC,
+                OperadorChofer = pv.OperadorChofer,
+                PuntoVenta = pv.PuntoVenta,
+                Subtotal = pv.Subtotal,
+                Iva = pv.Iva,
+                Descuento = pv.Descuento,
+                Total = pv.Total,
+                EfectivoRecibido = pv.EfectivoRecibido,
+                CambioRegresado = pv.CambioRegresado,
+                Bonificacion = pv.Bonificacion,
+                FechaRegistro = pv.FechaRegistro,
+
+            };
+           
+          
+
+            return usDTO;
+        }
+
+
+
         public static RegistrarVentasMovimientosDTO ToDTO(VentaCorteAnticipoEC v)
         {
             RegistrarVentasMovimientosDTO lstFinal = new RegistrarVentasMovimientosDTO();
@@ -723,6 +757,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 FechaRegistro = DateTime.Now
             };
         }
+
         public static VentaMovimiento FromDtoVtaMov(RegistrarVentasMovimientosDTO pvDTO)
         {
             return new VentaMovimiento()
@@ -1296,10 +1331,12 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         {
             return lista.Select(x => ToDTO(x)).ToList();
         }
+
         public static List<VentaPuntoDeVenta> ToDTO(List<VentaPuntoVentaDTO> lu)
         {
             return lu.Select(x => ToDTO(x)).ToList();
         }
+
         public static VentaPuntoDeVenta ToDTO(VentaPuntoVentaDTO pv)
         {
             VentaPuntoDeVenta usDTO = new VentaPuntoDeVenta()
@@ -1332,6 +1369,57 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 OperadorChofer = pv.OperadorChofer,
                 DatosProcesados = pv.DatosProcesados,
                 FechaRegistro = pv.FechaRegistro,
+                //DescuentoAcumAnio = pv.DescuentoAcumAnio,
+                //DescuentoAcumDia = pv.DescuentoAcumDia,
+                //DescuentoAcumMes = pv.DescuentoAcumMes,
+                //DescuentoDia = pv.DescuentoDia,
+                //DescuentoAnio = pv.DescuentoAnio,
+                //DescuentoMes = pv.DescuentoMes,
+                //EsBonificacion = pv.EsBonificacion,
+                //Bonificacion = pv.Bonificacion,
+                //EfectivoRecibidoAcumAnio = pv.EfectivoRecibidoAcumAnio,
+                //EfectivoRecibidoAcumDia = pv.EfectivoRecibidoAcumDia,
+                //EfectivoRecibidoAcumMes = pv.EfectivoRecibidoAcumMes,
+                //EfectivoRecibidoAnio = pv.EfectivoRecibidoAnio,
+                //EfectivoRecibidoDia = pv.EfectivoRecibidoDia,
+                //EfectivoRecibidoMes = pv.EfectivoRecibidoMes,
+                //FechaAplicacion = pv.FechaAplicacion,
+                //IvaAcumAnio = pv.IvaAcumAnio,
+                //IvaAcumDia = pv.IvaAcumDia,
+                //IvaAcumMes = pv.IvaAcumMes,
+                //IvaAnio = pv.IvaAnio,
+                //IvaDia = pv.IvaDia,
+                //IvaMes = pv.IvaMes,
+                //SubtotalAcumAnio = pv.SubtotalAcumAnio,
+                //SubtotalAcumDia = pv.SubtotalAcumDia,
+                //SubtotalAcumMes = pv.SubtotalAcumMes,
+                //SubtotalAnio = pv.SubtotalAnio,
+                //SubtotalDia = pv.SubtotalDia,
+                //SubtotalMes = pv.SubtotalMes,
+                //TotalAcumAnio = pv.TotalAcumAnio,
+                //TotalAcumDia = pv.TotalAcumDia,
+                //TotalAcumMes = pv.TotalAcumMes,
+                //TotalAnio = pv.TotalAnio,
+                //TotalDia = pv.TotalDia,
+                //TotalMes = pv.TotalMes,
+
+
+            };
+            return usDTO;
+        }
+
+
+        public static List<VentaPuntoDeVenta> ToDTODc(List<VentaPuntoVentaDTO> lu)
+        {
+            return lu.Select(x => ToDTODc(x)).ToList();
+        }
+
+        public static VentaPuntoDeVenta ToDTODc(VentaPuntoVentaDTO pv)
+        {
+            VentaPuntoDeVenta usDTO = new VentaPuntoDeVenta()
+            {
+            
+              
                 //DescuentoAcumAnio = pv.DescuentoAcumAnio,
                 //DescuentoAcumDia = pv.DescuentoAcumDia,
                 //DescuentoAcumMes = pv.DescuentoAcumMes,

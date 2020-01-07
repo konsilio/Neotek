@@ -411,15 +411,8 @@ namespace Application.MainModule.Servicios.Seguridad
             return EvaluarPermiso(roles, Error.P0005, "el Pago de la Compra");
         }
 
-        //public static RespuestaDto PuedeEliminarOrdenCompra()
-        //{
-        //    var usuario = UsuarioAplicacionServicio.Obtener();
-        //    var rol = usuario.Roles.FirstOrDefault(x => x.Compra);
-
-        //    return EvaluarPermiso(rol, Error.P0003, "Proveedores");
-        //}
-
         #endregion
+
 
         #region Pedido
         public static RespuestaDto PuedeRegistrarPedido()

@@ -616,10 +616,38 @@ namespace Application.MainModule.Servicios.Ventas
             decimal ventaDia = 0;
             for (DateTime date = Periodo.FechaInicio; Periodo.FechaFin.CompareTo(date) > 0; date = date.AddDays(1.0))
             {
-                ventaDia +=  ventas.Where(x => x.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())).Sum(v => v.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadLt ?? 0));
+                ventaDia += ventas.Where(x => x.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())).Sum(v => v.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadLt ?? 0));
             }
-            if(ventaDia >= 2500)
+            if (ventaDia >= 2500)
                 Respuesta = ventaDia * (decimal)0.15;
+            return Respuesta;
+        }
+        public static decimal CalcularComision(List<VentaPuntoDeVenta> ventas, PeriodoDTO Periodo)
+        {
+            decimal Respuesta = 0;
+            decimal ventaDia = 0;
+            if (ventas.Count != 0)
+            {
+                if (ventas.FirstOrDefault().CPuntoVenta.UnidadesAlmacen.IdCamioneta != null)
+                {
+                    for (DateTime date = Periodo.FechaInicio; Periodo.FechaFin.CompareTo(date) > 0; date = date.AddDays(1.0))
+                    {
+                        ventaDia += ventas.Where(x => x.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())).Sum(v => v.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadKg ?? 0));
+                    }
+                    if (ventaDia >= 400)
+                        Respuesta = ventaDia * (decimal)0.4;
+                }
+
+                if (ventas.FirstOrDefault().CPuntoVenta.UnidadesAlmacen.IdPipa != null)
+                {
+                    for (DateTime date = Periodo.FechaInicio; Periodo.FechaFin.CompareTo(date) > 0; date = date.AddDays(1.0))
+                    {
+                        ventaDia += ventas.Where(x => x.FechaRegistro.ToShortDateString().Equals(date.ToShortDateString())).Sum(v => v.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadLt ?? 0));
+                    }
+                    if (ventaDia >= 2500)
+                        Respuesta = ventaDia * (decimal)0.15;
+                }
+            }
             return Respuesta;
         }
         public static double CalclarTotalCaja(decimal TotalCamionetas, decimal TotalPipas, decimal TotalEstaciones, decimal OtrosIngresos, decimal Descuentos, decimal Bonificaciones)

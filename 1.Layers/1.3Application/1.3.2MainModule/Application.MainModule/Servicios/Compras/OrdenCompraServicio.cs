@@ -430,5 +430,34 @@ namespace Application.MainModule.Servicios.Compras
             else
                 return "Por Pagar";
         }
+        public static string ObtenerKilosCompra(OrdenCompra entidad)
+        {
+            decimal ObtenerKilogramosDesdeLitros = 0;
+            if (entidad.EsGas)
+            {
+                foreach (var item in entidad.AlmacenGasDescarga)
+                {
+                   var litros = item.CapacidadTanqueLt ?? 0 * (item.PorcenMagnatelOcularTractorINI ?? 0 / 100);
+                   ObtenerKilogramosDesdeLitros  = Math.Truncate( litros);
+                    return  ((double)litros * 0.54).ToString();
+                }
+            }
+            if (entidad.EsTransporteGas)
+            {
+                foreach (var item in entidad.AlmacenGasDescarga1)
+                {
+                    return Math.Truncate( item.MasaKg ?? 2 ).ToString();
+                   
+                }
+            }
+            else if (!entidad.EsTransporteGas && !entidad.EsGas)
+            {
+                return "N/A";
+
+            }
+            return ObtenerKilogramosDesdeLitros.ToString();
+
+
+        }
     }
 }

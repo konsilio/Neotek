@@ -5,8 +5,10 @@ using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.EquipoTrasnporteServicio;
 using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
 using Application.MainModule.AdaptadoresDTO.Pedidos;
+using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
@@ -76,8 +78,11 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeRegistrarOrdenCompra();
             if (!resp.Exito) return null;
             var ordenes = OrdenCompraServicio.BuscarTodo(TokenServicio.ObtenerIdEmpresa(), dto.FechaInicio, dto.FechaFinal);
+            if (dto.EsGas)
+                return OrdenComprasAdapter.ToRepDTO(ordenes.Where(x => x.EsGas).ToList());
             return OrdenComprasAdapter.ToRepDTO(ordenes);
-        } 
+
+        }
         public List<RepRendimientoVehicularDTO> RepRendimientoVehicular(RendimientoVehicularDTO dto)
         {
             var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
@@ -85,6 +90,82 @@ namespace Application.MainModule.Flujos
             var recargas = RecargaCombustibleServicio.Buscar(dto.FechaInicio, dto.FechaFinal);
             return RecargaCombustibleAdapter.FormRepDTO(recargas);
         }
+
+        public List<RendimientoVehicularCamionetaDTO> RepRendimientoVehicularCamionetas(PeriodoDTO dto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
+            if (!resp.Exito) return null;
+            var pvs = PuntoVentaServicio.ObtenerTodos().Where(x => x.UnidadesAlmacen.IdCamioneta != null).ToList();
+            var List = RecargaCombustibleAdapter.FormRepDTOCamioneta(pvs, dto);
+            List.Add(PuntoVentaServicio.SumaPuntoEquilibrio(List));
+            return List;
+        }
+
+        public List<AutoConsumoDTO> RepAutoConsumos(PeriodoDTO dto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
+            if (!resp.Exito) return null;
+            var AutoConsumo = AlmacenGasServicio.ObtenerAutoConsumos(dto.FechaInicio).ToList();
+
+            return AlmacenGasAdapter.ToDTOC(AutoConsumo);
+        }
+
+        public List<DescuentosXClientesDTO> RepDescuentosXClientes(PeriodoDTO dto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
+            if (!resp.Exito) return null;
+            var ClientesDes = ClienteServicio.BuscadorTodosClientes().ToList();
+            var List = ClientesAdapter.ToDTOC(ClientesDes, dto);
+            return List;
+        }
+        public List<CreditoRecuperadoDTO> RepCreditoRecuperadoClientes(PeriodoDTO dto)
+        {
+            var resp = PermisosServicio.PuedeConsultarAbonos();
+            if (!resp.Exito) return null;
+            var CreditosCliente = ClienteServicio.BuscarClientesConAbonos(dto).ToList();
+            var List = ClientesAdapter.ToDTOCR(CreditosCliente);   
+            return List;
+        }
+        public List<CreditoOtorgadoDTO> RepCreditoOtorgadoClientes(PeriodoDTO dto)
+        {
+            var resp = PermisosServicio.PuedeConsultarAbonos();
+            if (!resp.Exito) return null;
+            var CreditosCliente = ClienteServicio.BuscarClientesConCargos(dto).ToList();
+            var List = ClientesAdapter.ToDTOCO(CreditosCliente);  
+            return List;
+        }
+        public List<CreditoXClienteDTO> RepCreditoXCliente(PeriodoDTO dto)
+        {
+            var resp = PermisosServicio.PuedeConsultarAbonos();
+            if (!resp.Exito) return null;
+            var CreditosXCliente = ClienteServicio.BuscarClientesConSaldoPendiente(dto).ToList();
+            var List = ClientesAdapter.ToDTOCXC(CreditosXCliente);          
+            return List;
+        }
+        public List<CreditoXClienteMensualDTO> RepCreditoXClienteMensual(PeriodoDTO dto)
+        {
+           
+            var resp = PermisosServicio.PuedeConsultarAbonos();
+            if (!resp.Exito) return null;
+            var CreditosXClienteMensual = ClienteServicio.BuscarClientesConSaldoPendienteMensual(dto).ToList();
+            var List = ClientesAdapter.ToDTOCXCM(CreditosXClienteMensual);
+            List.Add(ClientesAdapter.SumaCreditoMensual(List));
+            return List;
+        }
+
+
+        public List<RendimientoVehicularPipasDTO> RepRendimientoVehicularPipas(PeriodoDTO dto)
+        {
+            
+         
+            var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
+            if (!resp.Exito) return null;
+            var pvs = PuntoVentaServicio.ObtenerTodos().Where(x => x.UnidadesAlmacen.IdPipa != null).ToList();
+            var List = RecargaCombustibleAdapter.FormRepDTOPipas(pvs, dto);
+            List.Add(PuntoVentaServicio.SumaPuntoEquilibrioPipas(List));
+            return List;
+        }
+
         public List<RepInventarioXConceptorDTO> RepInventarioPorConcepto(InventarioXConceptoDTO dto)
         {
             var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
@@ -114,7 +195,7 @@ namespace Application.MainModule.Flujos
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCredito(VFacturasCredito));
             respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones));
             respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaDescuentos(VDescuentos));
-            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaTotalCaja(VEstaciones,VPipas, VCilindros, VFacturasCredito, VBonificaciones, VDescuentos));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaTotalCaja(VEstaciones, VPipas, VCilindros, VFacturasCredito, VBonificaciones, VDescuentos));
 
             return respuesta;
         }
@@ -132,6 +213,17 @@ namespace Application.MainModule.Flujos
             respuesta.AddRange(TransporteAdapter.ToRepoUtilitario(Utilitarios, RecCombustible, dto));
 
             return respuesta.Where(x => !x.Total.Equals(0)).ToList();
+        }
+        public List<VentasDTO> RepVentas(PeriodoDTO periodo)
+        {
+            periodo.FechaInicio = DateTime.Parse(string.Concat(periodo.FechaInicio.ToShortDateString(), " 00:00:00"));
+            periodo.FechaFin = DateTime.Parse(string.Concat(periodo.FechaFin.ToShortDateString(), " 23:59:59"));
+            var ventas = PuntoVentaServicio.ObtenerVentas(periodo.FechaInicio, periodo.FechaFin);
+
+            return CajaGeneralAdapter.ToDTO(ventas);
+
+
+
         }
         public List<ComisionDTO> RepComisiones(PeriodoDTO periodo)
         {
@@ -193,6 +285,67 @@ namespace Application.MainModule.Flujos
                 respuesta.Add(dto);
             }
             return respuesta;
+        }
+        public List<RendimientoVehicularCamionetaDTO> RepPuntoEquilibrio(PeriodoDTO dto)
+        {
+            var unidades = PuntoVentaServicio.ObtenerTodos();
+
+
+            return new List<RendimientoVehicularCamionetaDTO>();
+        }
+
+        public RespuestaDto VentasXPuntoVenta(VentasXPuntoVenta dto)
+        {
+            dto.PeriodoDTO.FechaInicio = DateTime.Parse(string.Concat(dto.PeriodoDTO.FechaInicio.ToShortDateString(), " 00:00:00"));
+            dto.PeriodoDTO.FechaFin = DateTime.Parse(string.Concat(dto.PeriodoDTO.FechaFin.ToShortDateString(), " 23:59:59"));
+            var respuesta = string.Empty;
+            List<PuntoVenta> lpv = new List<PuntoVenta>();
+            if (dto.IdTipo.Equals(1))
+            {
+                lpv = PuntoVentaServicio.ObtenerTodos().Where(x => x.UnidadesAlmacen.IdPipa != null).ToList();
+                var respuesta1 = CajaGeneralServicio.RepVentasXPuntoVenta(lpv, dto);
+                respuesta = respuesta1;
+            }
+            if (dto.IdTipo.Equals(2))
+            {
+                lpv = PuntoVentaServicio.ObtenerTodos().Where(x => x.UnidadesAlmacen.IdEstacionCarburacion != null).ToList();
+                var respuesta2 = CajaGeneralServicio.RepVentasXPuntoVenta(lpv, dto);
+                respuesta = respuesta2;
+            }
+            if (dto.IdTipo.Equals(3))
+            {
+                lpv = PuntoVentaServicio.ObtenerTodos().Where(x => x.UnidadesAlmacen.IdCamioneta != null).ToList();
+                var respuesta3 = CajaGeneralServicio.RepVentasXPuntoVentaCamionetas(lpv, dto);
+                respuesta = respuesta3;
+            }
+            return new RespuestaDto()
+            {
+                Mensaje = respuesta,
+                Exito = true,
+
+            };
+
+        }
+        public RespuestaDto EquipoDeTransporte(PeriodoDTO dto)
+        {
+            dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:00"));
+            dto.FechaFin = DateTime.Parse(string.Concat(dto.FechaFin.ToShortDateString(), " 23:59:59"));
+            var respuesta = string.Empty;
+            List<PuntoVenta> lpv = new List<PuntoVenta>();
+            if (dto != null)
+            {
+                lpv = PuntoVentaServicio.ObtenerTodos().Where(x => x.UnidadesAlmacen.IdPipa != null || x.UnidadesAlmacen.IdCamioneta != null).ToList();
+                var respuesta1 = CajaGeneralServicio.RepEquipoDeTransporte(lpv, dto);
+                respuesta = respuesta1;
+            }
+            
+            return new RespuestaDto()
+            {
+                Mensaje = respuesta,
+                Exito = true,
+
+            };
+
         }
 
         #region Dash Board (Pruebas)
@@ -302,7 +455,7 @@ namespace Application.MainModule.Flujos
             var respuesta = new AndenDTO()
             {
                 TotalProduto = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa()).Sum(x => x.CantidadActualKg),
-                NivelAlmacen = Convert.ToInt32(alm != null? alm.PorcentajeActual : 0),
+                NivelAlmacen = Convert.ToInt32(alm != null ? alm.PorcentajeActual : 0),
                 KilosAlmacen = alm != null ? alm.CantidadActualKg : 0,
                 OrdenCompra = oc == null ? OrdenCompraConst.SinOCProxima : oc.NumOrdenCompra,
                 Ventas = PuntoVentaServicio.ObtenerVentasTOPDTO(5, DateTime.Now)
