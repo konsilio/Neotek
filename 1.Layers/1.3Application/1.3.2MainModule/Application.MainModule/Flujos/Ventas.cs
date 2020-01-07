@@ -77,9 +77,9 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             var precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             if (!resp.Exito) return null;
-            var reporteDia = CajaGeneralServicio.ObtenerReporteDia(cveReporte);
-            if (reporteDia == null)
-                return corte;
+            //var reporteDia = CajaGeneralServicio.ObtenerReporteDia(cveReporte);
+            //if (reporteDia == null)
+            //    return corte;
             var ventas = CajaGeneralServicio.ObtenerVPV(reporteDia).ToList();
             corte.Tickets = CajaGeneralAdapter.ToDTOC(ventas);
             var lecturas = AlmacenGasServicio.ObtenerLecturas(reporteDia.IdCAlmacenGas.Value, reporteDia.FechaReporte);
