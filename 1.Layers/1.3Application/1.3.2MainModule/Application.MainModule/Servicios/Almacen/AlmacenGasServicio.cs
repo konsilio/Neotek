@@ -312,6 +312,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarTodosAutoConsumosNoProcesadas();
         }
+        public static List<AlmacenGasAutoConsumo> ObtenerAutoConsumos(DateTime fi)
+        {
+            return new AlmacenGasDataAccess().BuscarTodosAutoConsumos(fi);
+        }
         public static List<AlmacenGasCalibracion> ObtenerCalibracionesNoProcesadas()
         {
             return new AlmacenGasDataAccess().BuscarTodasCalibracionesNoProcesadas();
