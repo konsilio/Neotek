@@ -26,7 +26,6 @@ namespace Application.MainModule.DTOs
         public decimal VentaTotalBonificaciones { get; set; }
         public decimal OtrasVentas { get; set; }
         public decimal DescuentoTotal { get; set; }
-        public decimal VentaTotalBonificaciones { get; set; }
         public decimal DescuentoCredito { get; set; }
         public decimal DescuentoContado { get; set; }
         public decimal DescuentoOtrasVentas { get; set; }
