@@ -144,10 +144,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<ReporteDelDia>().GetSingle(x => x.FolioOperacionDia.Equals(claveReporte.ToUpper()));
         }
-        public VentaCorteAnticipoEC BuscarPorClaveReporteCorteCaja(string claveReporte)
-        {
-            return uow.Repository<VentaCorteAnticipoEC>().GetSingle(x => x.FolioOperacionDia.Equals(claveReporte.ToUpper()));
-        }
         public List<VentaPuntoDeVenta> BuscarTotalVentasCamionetas(DateTime fecha, short idEmpresa)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null
@@ -199,6 +195,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.FechaRegistro.Month.Equals(fecha.Month)
                                                             && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
+
         public List<VentaPuntoDeVenta> BuscarTotalVentasEstaciones(DateTime fecha, short idEmpresa)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null

@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Almacen;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Catalogo;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities.MainModule;
 
 namespace Application.MainModule.AdaptadoresDTO.Almacenes
 {
@@ -91,6 +93,27 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
         {
             return unidad.Select(x => ToDTO(x)).ToList();
         }
+
+
+        public static AutoConsumoDTO ToDTOC(AlmacenGasAutoConsumo AC)
+        {
+            return new AutoConsumoDTO()
+            {
+                AlmacenGasEntrada = AC.UnidadEntrada.Numero,
+                AlmacenGasSalida = AC.UnidadSalida.Numero,
+                TipoEvento = AC.TipoEvento.Evento,
+                SalidaP5000 = CalculosGenerales.Truncar(AC.P5000Salida ,2), 
+                ClaveOperacion = AC.ClaveOperacion,
+                FechaRegistro = AC.FechaRegistro,
+
+           
+            };
+        }
+        public static List<AutoConsumoDTO> ToDTOC(List<AlmacenGasAutoConsumo> AC)
+        {
+            return AC.Select(x => ToDTOC(x)).ToList();
+        }
+
 
         public static AlmacenGas FromInit(Empresa emp)
         {

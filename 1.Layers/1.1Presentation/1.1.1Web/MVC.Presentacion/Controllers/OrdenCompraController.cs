@@ -101,7 +101,7 @@ namespace MVC.Presentacion.Controllers
 
             if (pageO == null) pageO = 1;
             if (pageR == null) pageR = 1;
-            ViewBag.Ordenes = model.OrdenesCompra;
+            ViewBag.Ordenes = model.OrdenesCompra.OrderByDescending(x => x.IdRequisicion).ToList();
             ViewBag.Requisiciones = model.Requisiciones.ToPagedList(pageR.Value, 10);
             return View(model);
         }

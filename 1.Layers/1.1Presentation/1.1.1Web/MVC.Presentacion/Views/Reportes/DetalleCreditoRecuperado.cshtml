@@ -1,0 +1,19 @@
+﻿@Html.DevExpress().GridView(settings => {
+    settings.Name = "CreditoRecuperadoDetalle_" + ViewData["CustomerID"];
+    settings.SettingsDetail.MasterGridName = "CreditoRecuperado";
+    settings.CallbackRouteValues = new { Controller = "Reportes", Action = "DetalleCreditoRecuperado", id = ViewData["CustomerID"] };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    settings.KeyFieldName = "Id";
+    settings.Columns.Add("FechaAbono");
+    settings.Columns.Add("FechaCarga");
+    settings.Columns.Add("FormaDePago");
+    settings.Columns.Add("Importe");
+    settings.Columns.Add("Nota");
+
+
+    settings.Settings.ShowFooter = true;
+    settings.Settings.ShowFilterRow = true;
+
+
+}).Bind(Model).GetHtml()

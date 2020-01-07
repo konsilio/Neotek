@@ -1,5 +1,5 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
-@model  PrecioVentaModel
+@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
 <!-- Otros-->
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
@@ -200,10 +200,7 @@
 <body style="height:100%">
     @using (Html.BeginForm("Registrar", "PrecioVentaOtro", FormMethod.Post))
     {
-        @Html.HiddenFor(m => m.PrecioPemexKg, 0)
-        @Html.HiddenFor(m => m.PrecioPemexLt, 0)
-        @Html.HiddenFor(m => m.PrecioSalidaKg, 0)
-        @Html.HiddenFor(m => m.PrecioSalidaLt, 0)
+       
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -230,16 +227,16 @@
                                         <div>
                                             @if (ViewBag.EsAdmin)
                                             {
-                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                @foreach (var lst in ViewBag.Empresas)
+                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                    @foreach (var lst in ViewBag.Empresas)
                                                     {
-                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                     }
-                                            </select>
+                                                </select>
                                             }
                                             else
                                             {
-                                            @ViewBag.Empresas
+                                                @ViewBag.Empresas
                                             }
                                         </div>
                                     </div>
@@ -253,55 +250,80 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                @*<div class="col-lg-4 col-md-4 col-sm-4">
-
-                                        <strong>Categoría:</strong>
-
-                                        @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "IdCategoria";
-                                           settings.Width = 180;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Properties.TextField = "Categoria";
-                                           settings.Properties.ValueField = "IdCategoria";
-                                           settings.Theme = "Material";
-                                           settings.PreRender = (s, e) =>
-                                           {
-                                               MVCxComboBox combo = s as MVCxComboBox;
-                                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione",string.Empty));
-                                               combo.SelectedIndex = 0;
-                                           };
-                                       }).BindList(ViewBag.Categoria).GetHtml()
-                                        @Html.ValidationMessageFor(m => m.IdCategoria, "", new { @class = "alert-danger" })
-
-                                    </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-
-                                        <strong>Línea:</strong>
-                                        <div class="form-group">
-                                            @Html.DevExpress().ComboBox(settings =>
-                                       {
-                                           settings.Name = "IdProductoLinea";
-                                           settings.Width = 180;
-                                           settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                           settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                           settings.Properties.TextField = "Linea";
-                                           settings.Properties.ValueField = "IdProductoLinea";
-                                           settings.Theme = "Material";
-                                           settings.PreRender = (s, e) =>
-                                           {
-                                               MVCxComboBox combo = s as MVCxComboBox;
-                                               combo.Properties.Items.Insert(0, new ListEditItem("Seleccione",string.Empty));
-                                               combo.SelectedIndex = 8;
-
-                                            };
-                                       }).BindList(ViewBag.Linea).GetHtml()
-                                        </div>
-                                        @Html.ValidationMessageFor(m => m.IdProductoLinea, "", new { @class = "alert-danger" })
-
-                                    </div>*@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    <strong>Categoría:</strong>
+                                    @*<select name="IdCategoria" class="form-control selectpicker z-index show-tick">
+            <option value="0">Seleccione..</option>
+            @foreach (var lst in ViewBag.Categoria)
+            {
+                <option value="@lst.IdCategoria">@lst.Categoria</option>
+            }
+        </select>*@
+                                    @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "IdCategoria";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Categoria";
+                                       settings.Properties.ValueField = "IdCategoria";
+                                       settings.Theme = "Material";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione",string.Empty));
+                                           combo.SelectedIndex = 0;
+                                       };
+                                   }).BindList(ViewBag.Categoria).GetHtml()
+                                    @Html.ValidationMessageFor(m => m.IdCategoria, "", new { @class = "alert-danger" })
+                                   
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    @*<div class="form-group">
+                                            Línea:
+                                            <select name="IdProductoLinea" class="form-control selectpicker z-index show-tick">
+                                                <option value="0">Seleccione..</option>
+                                                @foreach (var lst in ViewBag.Linea)
+                                                {
+                                                <option value="@lst.IdProductoLinea">@lst.Linea</option>
+                                                }
+                                            </select>
+                                        </div>*@
+                                    <strong>Línea:</strong>
+                                    <div class="form-group">
+                                        @Html.DevExpress().ComboBox(settings =>
+                                   {
+                                       settings.Name = "IdProductoLinea";
+                                       settings.Width = 180;
+                                       settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                       settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                       settings.Properties.TextField = "Linea";
+                                       settings.Properties.ValueField = "IdProductoLinea";
+                                       settings.Theme = "Material";
+                                       settings.PreRender = (s, e) =>
+                                       {
+                                           MVCxComboBox combo = s as MVCxComboBox;
+                                           combo.Properties.Items.Insert(0, new ListEditItem("Seleccione",string.Empty));
+                                           combo.SelectedIndex = 8;
+                                     
+                                        };
+                                   }).BindList(ViewBag.Linea).GetHtml()
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.IdProductoLinea, "", new { @class = "alert-danger" })
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    @*<div class="form-group">
+                                            Producto:
+                                            <select name="IdProducto" class="form-control selectpicker z-index show-tick">
+                                                <option value="0">Seleccione..</option>
+                                                @foreach (var lst in ViewBag.Producto)
+                                                {
+                                                <option value="@lst.IdProducto">@lst.Producto</option>
+                                                }
+                                            </select>
+                                        </div>*@
                                     <strong>Producto:</strong>
                                     @Html.DevExpress().ComboBox(settings =>
                                {
@@ -309,15 +331,16 @@
                                    settings.Width = 180;
                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                   settings.Properties.TextField = "Descripcion";
+                                   settings.Properties.TextField = "Producto";
                                    settings.Properties.ValueField = "IdProducto";
+                                   settings.Theme = "Material";
                                    settings.PreRender = (s, e) =>
                                    {
                                        MVCxComboBox combo = s as MVCxComboBox;
 
                                        combo.Properties.Items.Insert(0, new ListEditItem("Seleccione", string.Empty));
                                        combo.SelectedIndex = 0;
-
+                                       
 
                                    };
                                }).BindList(ViewBag.Producto).GetHtml()
@@ -437,26 +460,25 @@
                         </div>
                         @if (ViewBag.MessageError != null)
                         {
-                        <div class="row clearfix">
-                            <div id="divMensajeError" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
+                            <div class="row clearfix">
+                                <div id="divMensajeError" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            <label>@ViewBag.MessageError</label>
+                                        </strong>
                                     </div>
-                                    <strong>
-                                        <label>@ViewBag.MessageError</label>
-                                    </strong>
                                 </div>
                             </div>
-                        </div>
                         }
                     </div>
                 </div>
             </div>
         </section>
     }
-</body>
-    @*
+    @*</body>
         @Scripts.Render("~/Scripts/jquery-1.10.2.min.js")*@
     @Scripts.Render("~/Scripts/jquery-ui.js")
     @*<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>

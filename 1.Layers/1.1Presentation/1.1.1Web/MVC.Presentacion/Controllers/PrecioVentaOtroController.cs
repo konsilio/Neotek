@@ -23,44 +23,48 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsAdmin)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.ListaPV = CatalogoServicio.ListaPrecioVenta(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                ViewBag.ListaPV = CatalogoServicio.ListaPrecioVenta(0, _tkn);
             }
             else
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
                 ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).Where(w=> w.EsGas==false).ToList();
             }
+
             TempData["DataSourcePrecioVentasOtro"] = ViewBag.ListaPV;
             TempData.Keep("DataSourcePrecioVentasOtro");
 
             ViewBag.ListaStatus = CatalogoServicio.ListaTipoFecha(_tkn);
-            if (TempData["RespuestaDTO"] != null)            
-                ViewBag.MessageExito = TempData["RespuestaDTO"];            
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.MessageExito = TempData["RespuestaDTO"];
+            }
             if (TempData["RespuestaDTOError"] != null)
-                ViewBag.MessageError = TempData["RespuestaDTOError"];            
+            {
+                ViewBag.MessageError = TempData["RespuestaDTOError"];
+            }
             ViewBag.MessageError = TempData["RespuestaDTOError"];
 
-            //ViewBag.Categoria = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Categoria).Select(x => x.FirstOrDefault());
-            //ViewBag.Linea = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Linea).Select(x => x.FirstOrDefault());
-            //ViewBag.Producto = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Producto).Select(x => x.FirstOrDefault()).Where(x=> x.Producto !="GAS");
-            //ViewBag.Categoria = CatalogoServicio.ListaCategorias(_tkn);
-            //ViewBag.Linea = CatalogoServicio.ListaLineasProducto(_tkn);
-            ViewBag.Producto = CatalogoServicio.ListaProductos(_tkn).Where(x => !x.EsGas && x.EsActivoVenta && x.Activo);
+            ViewBag.Categoria = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Categoria).Select(x => x.FirstOrDefault());
+            ViewBag.Linea = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Linea).Select(x => x.FirstOrDefault());
+            ViewBag.Producto = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Producto).Select(x => x.FirstOrDefault()).Where(x=> x.Producto !="GAS");
             if (TempData["RespuestaDTOError"] != null) {
                 ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
                     return View(_ObjModel);
             }
             else {
                 return View();
-            }   
+            }
+            
+            
         }
+
         [HttpPost]
         public ActionResult Registrar(PrecioVentaModel _ObjModel)
-        {        
+        {
+        
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             string _tok = Session["StringToken"].ToString();
-            if (_ObjModel.PrecioSalidaKg == null) _ObjModel.PrecioSalidaKg = 0;
-            if (_ObjModel.PrecioSalidaLt == null) _ObjModel.PrecioSalidaLt = 0;
             var respuesta = CatalogoServicio.RegistrarPrecio(_ObjModel, _tok);
             if (respuesta.Exito)      
                 return RedirectToAction("Index", _ObjModel); 
@@ -69,6 +73,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = respuesta;//.Mensaje;             
                 return RedirectToAction("Index", _ObjModel);           
             }
+
         }
         public ActionResult EditarPrecioVentaOtro(short id)
         {
@@ -83,6 +88,7 @@ namespace MVC.Presentacion.Controllers
 
             return View();
         }
+
         [HttpPost]
         public ActionResult ActualizarPrecioVentaOtro(PrecioVentaModel _Obj)
         {
@@ -117,6 +123,8 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+
+
         public ActionResult CB_PrecioVentasOtro()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
