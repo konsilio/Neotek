@@ -403,7 +403,6 @@ namespace Application.MainModule.Servicios.Seguridad
 
             return EvaluarPermiso(roles, Error.P0004, "Orden de Compra");
         }
-
         public static RespuestaDto PuedeCompraAtiendeServicioOCompra()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();

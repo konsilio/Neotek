@@ -7985,6 +7985,10 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             <End Role="CTipoEgreso" EntitySet="CTipoEgreso" />
             <End Role="Egreso" EntitySet="Egreso" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pedido_CCliente" Association="Sagas.MainModuleModel.FK_Pedido_CCliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
           <!--<AssociationSet Name="FK_DetalleMantenimiento_CCuentaContable1" Association="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCuentaContable1">
             <End Role="CuentaContable" EntitySet="CuentaContable" />
             <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
@@ -12558,6 +12562,18 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             </Principal>
             <Dependent Role="Egreso">
               <PropertyRef Name="IdTipoEgreso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_CCliente">
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
