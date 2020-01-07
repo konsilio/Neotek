@@ -478,5 +478,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public VentaCorteAnticipoEC BuscarPorClaveReporteCorteCaja(string claveReporte)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().GetSingle(x => x.FolioOperacionDia.Equals(claveReporte.ToUpper()));
+        }
     }
 }
