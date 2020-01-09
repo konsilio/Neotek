@@ -1,0 +1,63 @@
+LocationManager locationManager;
+    double longitudeNetwork=0, latitudeNetwork=0;
+
+	   @Override
+    protected void onCreate(Bundle savedInstanceState) {
+   locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+         locationManager.requestLocationUpdates(
+                                        LocationManager.NETWORK_PROVIDER, 10 * 900, 1,
+                                        locationListenerNetwork);
+	}
+	    private boolean checkLocation() {
+        if (!isLocationEnabled())
+            showAlert();
+        return isLocationEnabled();
+    }
+
+    private void showAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Enable Location")
+                .setMessage("Su ubicación esta desactivada.\npor favor active su ubicación " +
+                        "usa esta app")
+                .setPositiveButton("Configuración de ubicación", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+        dialog.show();
+    }
+
+    private boolean isLocationEnabled() {
+             return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                     locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+         }
+    private final LocationListener locationListenerNetwork = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            longitudeNetwork = location.getLongitude();
+            latitudeNetwork = location.getLatitude();
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+
+
+    };
