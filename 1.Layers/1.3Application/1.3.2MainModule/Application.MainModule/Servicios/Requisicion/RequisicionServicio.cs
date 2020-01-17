@@ -21,7 +21,8 @@ namespace Application.MainModule.Servicios.Requisiciones
         }
         public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(short _IdEmpresa)
         {
-            return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas(_IdEmpresa));
+            var requisiciones =new RequisicionDataAccess().BuscarTodas(_IdEmpresa);
+            return RequisicionAdapter.ToDTO(requisiciones);
         }
 
         public static List<RequisicionDTO> BuscarRequisicionAlmacenPorIdEmpresa(short _IdEmpresa)

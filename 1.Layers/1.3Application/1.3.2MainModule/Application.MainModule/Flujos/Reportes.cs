@@ -50,7 +50,7 @@ namespace Application.MainModule.Flujos
             var camionetas = CamionetaServicio.Obtener(dto.Camionetas);
             return new Almacenes().BuscarInvetarioPorPuntoDeVenta(camionetas, pipas, estaciones, dto.Fecha);
         }
-        public List<RepHistorioPrecioDTO> RepHistorioPrecios(HistoricoPrecioDTO dto)
+        public List<RepHistorioPrecioDTO> RepHistorioPrecios(HistoricoPrecioDTO dto) 
         {
             var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
             if (!resp.Exito) return null;
@@ -465,7 +465,7 @@ namespace Application.MainModule.Flujos
             var respuesta = new AndenDTO()
             {
                 TotalProduto = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa()).Sum(x => x.CantidadActualKg),
-                NivelAlmacen = Convert.ToInt32(alm != null ? alm.PorcentajeActual : 0),
+                NivelAlmacen = Convert.ToInt32(alm != null? alm.PorcentajeActual : 0),
                 KilosAlmacen = alm != null ? alm.CantidadActualKg : 0,
                 OrdenCompra = oc == null ? OrdenCompraConst.SinOCProxima : oc.NumOrdenCompra,
                 Ventas = PuntoVentaServicio.ObtenerVentasTOPDTO(5, DateTime.Now)

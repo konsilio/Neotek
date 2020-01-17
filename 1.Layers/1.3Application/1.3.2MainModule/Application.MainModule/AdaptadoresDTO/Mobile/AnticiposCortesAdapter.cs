@@ -39,18 +39,16 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         }
         public static EstacionesDto ToDTO(EstacionCarburacion estacion, UnidadAlmacenGas unidad)
         {
-
-            var lecturaInicial = unidad.TomasLectura.Where(
-                x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)
-                ).OrderBy(x => x.FechaRegistro).Last();
+            var lecturaInicial = unidad.TomasLectura.Where(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)).OrderBy(x => x.FechaRegistro).Last();
+            var lecturaFinal = unidad.TomasLectura.Where(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final)).OrderBy(x => x.FechaRegistro).Last();
             return new EstacionesDto()
             {
                 Medidor = TipoMedidorAdapter.ToDto(TipoMedidorGasServicio.Obtener(unidad.IdTipoMedidor.Value)),
                 IdTipoMedidor = unidad.IdTipoMedidor.Value,
                 IdAlmacenGas = (short)estacion.IdEstacionCarburacion,
                 NombreAlmacen = estacion.Nombre,
-                P5000Inicial = lecturaInicial.P5000 != null ? lecturaInicial.P5000.Value : 0,
-                P5000Final = unidad.P5000Actual != null ? unidad.P5000Actual.Value : 0,
+                P5000Inicial = lecturaInicial != null ? lecturaInicial.P5000 ?? 0 : 0,
+                P5000Final = lecturaFinal != null ? lecturaFinal.P5000 ?? 0 : 0,
                 AnticiposEstacion = ToDTO(unidad),
             };
         }
@@ -65,7 +63,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Medidor = TipoMedidorAdapter.ToDto(TipoMedidorGasServicio.Obtener(unidad.IdTipoMedidor.Value)),
                 IdTipoMedidor = unidad.IdTipoMedidor.Value,
                 IdAlmacenGas = (short)camioneta.IdCamioneta,
-                IdCAlmacen = (short) camioneta.IdCamioneta,
+                IdCAlmacen = (short)camioneta.IdCamioneta,
                 Numero = camioneta.Nombre,
                 NombreAlmacen = camioneta.Nombre,
                 //P5000Inicial = lecturaInicial.P5000.Value,
@@ -321,8 +319,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         public static DatosAnticiposCorteDto ToDTOPipa(List<VentaPuntoDeVenta> ventas, List<VentaCorteAnticipoEC> anticipos, UnidadAlmacenGas unidadAlmacen, bool esAnticipos)
         {
 
-            if (esAnticipos) { 
-                decimal cantidadVentas = ventas.Count>0? ventas.Sum(x => x.Total):0;
+            if (esAnticipos)
+            {
+                decimal cantidadVentas = ventas.Count > 0 ? ventas.Sum(x => x.Total) : 0;
 
                 return new DatosAnticiposCorteDto()
                 {
@@ -330,22 +329,24 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     fechasCorte = EstraerFechas(ventas),
                     TotalAnticiposCorte = cantidadVentas
                 };
-            }else {
+            }
+            else
+            {
                 decimal cantidadAnticipos = 0;
-                if (unidadAlmacen.IdPipa!=null ||unidadAlmacen.IdPipa!=0  || unidadAlmacen.IdCamioneta!=null||unidadAlmacen.IdPipa!=0)
-                    cantidadAnticipos = ventas.Count > 0 ?ventas.Sum(x=>x.Total): 0;
+                if (unidadAlmacen.IdPipa != null || unidadAlmacen.IdPipa != 0 || unidadAlmacen.IdCamioneta != null || unidadAlmacen.IdPipa != 0)
+                    cantidadAnticipos = ventas.Count > 0 ? ventas.Sum(x => x.Total) : 0;
                 else
                     cantidadAnticipos = ventas.Count > 0 ? anticipos.Sum(x => x.TotalAnticipado) : 0;
                 return new DatosAnticiposCorteDto()
                 {
-                   
+
                     cortes = ToDTOCortes(ventas, unidadAlmacen),
                     fechasCorte = EstraerFechas(ventas),
                     TotalAnticiposCorte = cantidadAnticipos
                 };
             }
         }
-       # region Adaptador de DatosBusquedaCortesDTO para las pipas
+        #region Adaptador de DatosBusquedaCortesDTO para las pipas
         /// <summary>
         /// ToDTOBuscador
         /// Permite generar el dto para el buscador de fecvha para la tabla de cortes y anticipos,
@@ -359,15 +360,15 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="pipa">Entidad con los datos de la pipa</param>
         /// <param name="esAnticipos">Bandera que determina si se esta realizando un corte o anticipo</param>
         /// <returns>Objeto de tipo DatosBusquedaCortesDTO con la respuesta de los datos para realizar el corte o anticipo</returns>
-        public static DatosBusquedaCortesDTO ToDTOBuscador(UnidadAlmacenGas unidadAlmacen, List<VentaCorteAnticipoEC> anticipos, List<VentaCorteAnticipoEC> cortes, List<VentaPuntoDeVenta> ventasSinCorte, Pipa pipa, bool esAnticipos,AlmacenGasTomaLectura lectura,AlmacenGasTomaLectura lecturaFinal)
+        public static DatosBusquedaCortesDTO ToDTOBuscador(UnidadAlmacenGas unidadAlmacen, List<VentaCorteAnticipoEC> anticipos, List<VentaCorteAnticipoEC> cortes, List<VentaPuntoDeVenta> ventasSinCorte, Pipa pipa, bool esAnticipos, AlmacenGasTomaLectura lectura, AlmacenGasTomaLectura lecturaFinal)
         {
-                return new DatosBusquedaCortesDTO()
-                {
-                    anticipo = ToDTOAnticipos(anticipos),
-                    corte = ToDTOCortes(cortes),
-                    venta = ToDTOVentas(ventasSinCorte),
-                    estacion = esAnticipos? ToDTOPipa(pipa, unidadAlmacen) : ToDTOPipa(pipa,unidadAlmacen,lectura,lecturaFinal)
-                };
+            return new DatosBusquedaCortesDTO()
+            {
+                anticipo = ToDTOAnticipos(anticipos),
+                corte = ToDTOCortes(cortes),
+                venta = ToDTOVentas(ventasSinCorte),
+                estacion = esAnticipos ? ToDTOPipa(pipa, unidadAlmacen) : ToDTOPipa(pipa, unidadAlmacen, lectura, lecturaFinal)
+            };
         }
         #endregion
         #region Adaptador de DatosBusquedaCortesDTO para las estaciones
@@ -386,11 +387,12 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <returns>Objeto de tipo DatosBusquedaCortesDTO adaptado con los datos enviados </returns>
         public static DatosBusquedaCortesDTO ToDTOBuscador(UnidadAlmacenGas unidadAlmacen, List<VentaCorteAnticipoEC> anticipos, List<VentaCorteAnticipoEC> cortes, List<VentaPuntoDeVenta> ventasSinCorte, EstacionCarburacion estacion, bool esAnticipos, AlmacenGasTomaLectura lectura, AlmacenGasTomaLectura lecturaFinal)
         {
-            return new DatosBusquedaCortesDTO() {
+            return new DatosBusquedaCortesDTO()
+            {
                 anticipo = ToDTOAnticipos(anticipos),
                 corte = ToDTOCortes(cortes),
                 venta = ToDTOVentas(ventasSinCorte),
-                estacion = esAnticipos? ToDTOEstacion(estacion,unidadAlmacen) :ToDTOEstacion(estacion, unidadAlmacen,lectura,lecturaFinal)
+                estacion = esAnticipos ? ToDTOEstacion(estacion, unidadAlmacen) : ToDTOEstacion(estacion, unidadAlmacen, lectura, lecturaFinal)
             };
         }
         #endregion
@@ -417,7 +419,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 anticipo = ToDTOAnticipos(anticipos),
                 corte = ToDTOCortes(cortes),
                 venta = ToDTOVentas(ventasSinCorte),
-                estacion =  ToDTOEstacion(camioneta, unidadAlmacen)
+                estacion = ToDTOEstacion(camioneta, unidadAlmacen)
             };
         }
         #endregion
@@ -435,8 +437,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new AnticipoInfoDTO()
             {
-                totalAnticipos = (anticipos!=null && anticipos.Count>0) ? anticipos.Sum(x=>x.TotalAnticipado):0,
-                anticipos = anticipos.Select(x=>ToDTOAnticiposList(x)).ToList()
+                totalAnticipos = (anticipos != null && anticipos.Count > 0) ? anticipos.Sum(x => x.TotalAnticipado) : 0,
+                anticipos = anticipos.Select(x => ToDTOAnticiposList(x)).ToList()
             };
         }
         /// <summary>
@@ -466,8 +468,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new CorteInfoDTO()
             {
-                totalCortes = (cortes != null && cortes.Count > 0) ? cortes.Sum(x => x.TotalAnticipado):0,
-                cortes = cortes.Select(x=>ToDTOCorteList(x)).ToList()
+                totalCortes = (cortes != null && cortes.Count > 0) ? cortes.Sum(x => x.TotalAnticipado) : 0,
+                cortes = cortes.Select(x => ToDTOCorteList(x)).ToList()
             };
         }
         /// <summary>
@@ -503,8 +505,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new VentasInfoDTO()
             {
-                totalVentas = (ventasSinCorte!=null && ventasSinCorte.Count>0)? ventasSinCorte.Sum(x=>x.Total):0,
-                ventas = ventasSinCorte.Select(x=>ToDTOVentasList(x)).ToList()
+                totalVentas = (ventasSinCorte != null && ventasSinCorte.Count > 0) ? ventasSinCorte.Sum(x => x.Total) : 0,
+                ventas = ventasSinCorte.Select(x => ToDTOVentasList(x)).ToList()
             };
         }
         /// <summary>
@@ -528,9 +530,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Iva = venta.Iva,
                 Factura = venta.RequiereFactura,
                 Credito = venta.VentaACredito,
-                Efectivo = venta.EfectivoRecibido??0,
-                Cambio = venta.CambioRegresado??0,
-                
+                Efectivo = venta.EfectivoRecibido ?? 0,
+                Cambio = venta.CambioRegresado ?? 0,
+
             };
         }
         #endregion
@@ -541,16 +543,16 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="pipa">Entidad de tipo Pipa con los datos de la Pipa</param>
         /// <param name="unidadAlmacen">Entidad de tipo UnidadAlmacenGas que le corresponde a la pipa</param>
         /// <returns>Objeto de tipo EstacionesDto con los datos adaptados</returns>
-        public static EstacionesDto ToDTOPipa(Pipa pipa, UnidadAlmacenGas unidadAlmacen,AlmacenGasTomaLectura lecturaInicial,AlmacenGasTomaLectura lecturaFinal)
+        public static EstacionesDto ToDTOPipa(Pipa pipa, UnidadAlmacenGas unidadAlmacen, AlmacenGasTomaLectura lecturaInicial, AlmacenGasTomaLectura lecturaFinal)
         {
             return new EstacionesDto()
             {
                 IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
                 NombreAlmacen = pipa.Nombre,
                 NombrePipa = pipa.Nombre,
-                PorcentajeMedidor = lecturaInicial.Porcentaje??0,
-                P5000Inicial = lecturaInicial.P5000??0,
-                P5000Final = lecturaFinal.P5000??0
+                PorcentajeMedidor = lecturaInicial.Porcentaje ?? 0,
+                P5000Inicial = lecturaInicial.P5000 ?? 0,
+                P5000Final = lecturaFinal.P5000 ?? 0
 
             };
         }
@@ -561,9 +563,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
                 NombreAlmacen = pipa.Nombre,
                 NombrePipa = pipa.Nombre,
-                PorcentajeMedidor =  0,
-                P5000Inicial =  0,
-                P5000Final =  0
+                PorcentajeMedidor = 0,
+                P5000Inicial = 0,
+                P5000Final = 0
 
             };
         }
@@ -579,16 +581,16 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         /// <param name="estacion">Entidad de la estación de carburación para el corte o anticipo</param>
         /// <param name="unidadAlmacen">Entidad de la UnidadAlmacenGas de la estación para el corte o anticipo</param>
         /// <returns>Objeto de tipo EstacionesDto adaptado con los datos </returns>
-        public static EstacionesDto ToDTOEstacion(EstacionCarburacion estacion, UnidadAlmacenGas unidadAlmacen,AlmacenGasTomaLectura lecturaInicial,AlmacenGasTomaLectura lecturaFinal)
+        public static EstacionesDto ToDTOEstacion(EstacionCarburacion estacion, UnidadAlmacenGas unidadAlmacen, AlmacenGasTomaLectura lecturaInicial, AlmacenGasTomaLectura lecturaFinal)
         {
             return new EstacionesDto()
             {
                 IdAlmacenGas = unidadAlmacen.IdCAlmacenGas,
                 NombreAlmacen = estacion.Nombre,
                 NombrePipa = estacion.Nombre,
-                PorcentajeMedidor = lecturaFinal.Porcentaje??0,
-                P5000Inicial = lecturaInicial.P5000??0,
-                P5000Final = lecturaFinal.P5000??0
+                PorcentajeMedidor = lecturaFinal.Porcentaje ?? 0,
+                P5000Inicial = lecturaInicial.P5000 ?? 0,
+                P5000Final = lecturaFinal.P5000 ?? 0
             };
         }
         public static EstacionesDto ToDTOEstacion(EstacionCarburacion estacion, UnidadAlmacenGas unidadAlmacen)

@@ -361,18 +361,13 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         public static List<DescuentosXClientesDTO> ToDTOC(List<Cliente> ListaClientes, PeriodoDTO dtop)
         {
             List<DescuentosXClientesDTO> respuesta = new List<DescuentosXClientesDTO>();
-
             foreach (var item in ListaClientes)
             {
                 decimal num = 0.00M;
                 if (item.VentaPuntoDeVenta.Count > 0 && item.VentaPuntoDeVenta.Sum(x => x.Descuento) > num)
                 {
-
-
                     foreach (var ticket in item.VentaPuntoDeVenta.Where(x => x.Descuento > 0))
                     {
-
-
                         if (ticket.FechaRegistro >= dtop.FechaInicio && ticket.FechaRegistro <= dtop.FechaFin)
                         {
                             DescuentosXClientesDTO newDesc = new DescuentosXClientesDTO();
@@ -383,42 +378,15 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                             newDesc.DescuentoLt = item.DescuentoXKilo;
                             newDesc.Diferencia = ticket.Total;
                             newDesc.Total = ticket.Total + ticket.Descuento;
-
                             respuesta.Add(newDesc);
                         }
                     }
-
                 }
             }
-
             return respuesta;
         }
-        //public static DescuentosXClientesDTO ToDTOC(Cliente Clte)
-        //{
-
-        //    return new DescuentosXClientesDTO()
-        //    {
-        //        Id = Clte.IdCliente,
-        //        Cliente = Clte.Nombre,
-        //        DescuentoTotal = Clte.VentaPuntoDeVenta.Sum(x => x.Descuento),
-        //        DescuentoLt = Clte.DescuentoXKilo,
-        //        Total = Clte.VentaPuntoDeVenta.Sum(x => x.Total),
-
-
-
-        //    };
-
-
-        //}
-
-
-
-
-
-
         public static List<CreditoRecuperadoDTO> ToDTOCR(List<Cliente> ListaClientes)
         {
-
             return ListaClientes.Select(x => ToDTOCR(x)).ToList();
         }
 
@@ -433,45 +401,27 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Total = abonos.Sum(x => x.MontoAbono),
                 Abonos = ToDTOCA(abonos),
             };
-
-
         }
-
         public static List<CreditoRecuperadoAbonoDTO> ToDTOCA(List<Abono> Abono)
         {
             return Abono.Select(x => ToDTOCA(x)).ToList();
         }
         public static CreditoRecuperadoAbonoDTO ToDTOCA(Abono Abono)
         {
-
             var tiket = Abono.Cargo.CCliente.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(Abono.Cargo.Ticket));
-
             return new CreditoRecuperadoAbonoDTO()
-            {
-
+            { 
                 Nota = Abono.Cargo.Ticket,
                 FechaAbono = Abono.FechaAbono,
                 Importe = Abono.MontoAbono,
                 FormaDePago = Abono.CFormaPago.Descripcion,
                 FechaCarga = tiket != null ? tiket.FechaRegistro.ToShortDateString() : "Ticket borrado",
-
-
-
             };
-
-
-
-
         }
-
-
-
         public static List<CreditoOtorgadoDTO> ToDTOCO(List<Cliente> ListaClientes)
         {
-
             return ListaClientes.Select(x => ToDTOCO(x)).ToList();
         }
-
         public static CreditoOtorgadoDTO ToDTOCO(Cliente Clte)
         {
             //List<Abono> Cargos = Clte.Cargo.SelectMany(x=> x.Abono).ToList();
@@ -485,8 +435,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Litros = Clte.VentaPuntoDeVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadLt ?? 0)),
                 Abonos = ToDTOCC(Cargos),
             };
-
-
         }
         public static List<CreditoOtorgadoCargosDTO> ToDTOCC(List<Cargo> Cargo)
         {
@@ -494,37 +442,21 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         }
         public static CreditoOtorgadoCargosDTO ToDTOCC(Cargo Cargo)
         {
-
             var tiket = Cargo.CCliente.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(Cargo.Ticket));
             var Unidad = string.Concat(tiket != null ? tiket.CPuntoVenta.UnidadesAlmacen.Pipa != null ? tiket.CPuntoVenta.UnidadesAlmacen.Pipa.Serie + " " : "P-- " : "0", Cargo.Ticket);
             return new CreditoOtorgadoCargosDTO()
             {
-
                 Nota = Unidad,
                 FechaCarga = tiket != null ? tiket.FechaRegistro.ToShortDateString() : "Ticket borrado",
                 Importe = Cargo.TotalCargo,
                 Vendedor = tiket != null ? tiket.OperadorChofer : "Ticket borrado",
                 Litros = tiket != null ? Convert.ToString(tiket.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt)) : "0",
-
-
-
-
-
             };
-
-
-
-
         }
-
-
-
         public static List<CreditoXClienteDTO> ToDTOCXC(List<Cliente> ListaClientes)
         {
-
             return ListaClientes.Select(x => ToDTOCXC(x)).ToList();
         }
-
         public static CreditoXClienteDTO ToDTOCXC(Cliente Clte)
         {
             var cargo = Clte.Cargo.ToList();
@@ -542,10 +474,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Dias62a91 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 62 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 91 ? x.TotalCargo : 0),
                 Mas91 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days > 91 ? x.TotalCargo : 0),
                 CargosDetallados = ToDTOCX(cargo),
-
             };
-
-
         }
 
 
@@ -583,7 +512,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         public static CargosDTO ToDTOCX(Cargo cargo)
         {
             var tikett = cargo.CCliente.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(cargo.Ticket));
-
             return new CargosDTO()
             {
                 FechaRegistro = cargo.FechaRegistro,
@@ -601,22 +529,15 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Mas91 = (DateTime.Now.Date - cargo.FechaVencimiento).Days > 91 ? cargo.TotalCargo : 0,
             };
         }
-
-
         public static List<CreditoXClienteMensualDTO> ToDTOCXCM(List<Cliente> ListaClientes)
         {
-
-
             return ListaClientes.Select(x => ToDTOCXCM(x)).ToList();
         }
-
         public static CreditoXClienteMensualDTO ToDTOCXCM(Cliente Clte)
         {
-
             var cargo = Clte.Cargo.ToList();
             return new CreditoXClienteMensualDTO()
             {
-
                 Nombre = Clte.Nombre,
                 SaldoActual = cargo.Sum(x => x.TotalCargo),
                 SaldoCorriente = cargo.Sum(x => DateTime.Now.Date < x.FechaVencimiento ? 0 : x.TotalCargo),
@@ -627,19 +548,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Dias32a61 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 32 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 61 ? x.TotalCargo : 0),
                 Dias62a91 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 62 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 91 ? x.TotalCargo : 0),
                 Mas91 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days > 91 ? x.TotalCargo : 0),
-
-
-
             };
-
-
-
-
         }
 
         public static CreditoXClienteMensualDTO SumaCreditoMensual(List<CreditoXClienteMensualDTO> lista)
         {
-
             return new CreditoXClienteMensualDTO()
             {
                 Nombre = "Total",
@@ -652,7 +565,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Dias32a61 = lista.Sum(x => x.Dias32a61),
                 Dias62a91 = lista.Sum(x => x.Dias62a91),
                 Mas91 = lista.Sum(x => x.Mas91),
-
             };
         }
 

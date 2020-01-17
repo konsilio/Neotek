@@ -55,6 +55,26 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarPorClaveReporte(ClaveRporte);
         }
+        public static ReporteDelDia ObtenerReporteDiaCorteCaja(string ClaveRporte)
+        {
+            var cc =new  CajaGeneralDataAccess().BuscarPorClaveReporteCorteCaja(ClaveRporte);
+            return new ReporteDelDia()
+            {
+                Dia = cc.Dia,
+                Mes = cc.Mes,
+                Year = cc.Year,
+                Orden = cc.Orden,
+                FolioOperacionDia = cc.FolioOperacionDia,
+                FechaRegistro = cc.FechaRegistro,
+                IdPuntoVenta = cc.IdPuntoVenta,
+                CPuntoVenta = cc.CPuntoVenta,
+                IdCAlmacenGas = cc.IdCAlmacenGas,
+                CAlmacenGas = cc.CAlmacenGas,
+                IdEmpresa = cc.IdEmpresa,
+                FechaReporte = cc.FechaCorteAnticipo,
+                COperadorChofer = cc.COperadorChofer,
+            };
+        }
         //Camioneta Reporte del dia
         public static List<ReporteDiaDTO> ObtenerRepCamionetas(short unidad, DateTime fecha)
         {

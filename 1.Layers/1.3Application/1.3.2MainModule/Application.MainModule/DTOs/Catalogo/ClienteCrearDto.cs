@@ -55,7 +55,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public short limiteCreditoDias { get; set; }
         public decimal CreditoDisponibleMonto { get; set; }
  
-        [StringLength(12, MinimumLength = 7, ErrorMessage = Error.R0004)]
+        //[StringLength(12, MinimumLength = 7, ErrorMessage = Error.R0004)]
         [Display(Name = "Teléfono 1")]
         public string Telefono1 { get; set; }
 
@@ -114,7 +114,7 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "AccesoPortal")]
         public bool AccesoPortal { get; set; }
     
-        [StringLength(13, MinimumLength = 13, ErrorMessage = Error.R0004)]
+        //[StringLength(13, MinimumLength = 13, ErrorMessage = Error.R0004)]
         [Display(Name = "Rfc")]
         public string Rfc { get; set; }
 
