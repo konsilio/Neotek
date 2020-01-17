@@ -70,7 +70,7 @@ namespace Application.MainModule.Servicios.Seguridad
         {
             var aut = AutenticarUsuario(autDto);
             var usuario = new UsuarioDataAccess().Buscar(aut.IdUsuario);
-            bool esChofer = false, esEstacion = false, hayLectura = false, hayLecturaFinal = false;
+            bool esChofer = false, esEstacion = false, hayLectura = false/*, hayLecturaFinal = false*/;
             List<DTOs.Mobile.MenuDto> menu = new List<DTOs.Mobile.MenuDto>();
             if (usuario != null)
             {

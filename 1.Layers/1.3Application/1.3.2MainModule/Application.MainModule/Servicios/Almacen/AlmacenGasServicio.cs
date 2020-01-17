@@ -1404,7 +1404,7 @@ namespace Application.MainModule.Servicios.Almacenes
             if (apReDto.RecargaLecturaFinal == null)
                 return new AplicaRecargaDto();
 
-            decimal porcentajeRecargadoEnUnidadEntrada = CalcularGasServicio.ObtenerDiferenciaPorcentaje(apReDto.RecargaLecturaFinal.ProcentajeEntrada.Value, apReDto.RecargaLecturaInicial.ProcentajeEntrada.Value);
+            decimal porcentajeRecargadoEnUnidadEntrada = CalcularGasServicio.ObtenerDiferenciaPorcentaje(apReDto.RecargaLecturaFinal.ProcentajeEntrada ?? 0, apReDto.RecargaLecturaInicial.ProcentajeEntrada ?? 0);
             decimal LitrosRecargados = CalcularGasServicio.ObtenerLitrosDesdePorcentaje(apReDto.unidadEntrada.CapacidadTanqueLt.Value, porcentajeRecargadoEnUnidadEntrada);
             decimal KilosRecargados = CalcularGasServicio.ObtenerKilogramosDesdeLitros(LitrosRecargados, apReDto.Empresa.FactorLitrosAKilos);
 
@@ -1485,7 +1485,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 EntradaLt = LitrosRecargados,
                 CantidadAnteriorKg = ulMovUnidadEntrada.CantidadActualKg,
                 CantidadAnteriorLt = ulMovUnidadEntrada.CantidadActualLt,
-                PorcentajeAnterior = ulMovUnidadEntrada.PorcentajeActual.Value,
+                PorcentajeAnterior = ulMovUnidadEntrada.PorcentajeActual ?? 0,
                 P5000Anterior = ulMovUnidadEntrada.P5000Actual,
 
                 CAlmEntradaDiaKg = CalcularGasServicio.SumarKilogramos(ulMovUnidadEntrada.CAlmEntradaDiaKg, KilosRecargados),
@@ -1538,7 +1538,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 SalidaLt = LitrosRecargados,
                 CantidadAnteriorKg = ulMovUnidadSalida.CantidadActualKg,
                 CantidadAnteriorLt = ulMovUnidadSalida.CantidadActualLt,
-                PorcentajeAnterior = ulMovUnidadSalida.PorcentajeActual.Value,
+                PorcentajeAnterior = ulMovUnidadSalida.PorcentajeActual ?? 0,
                 P5000Anterior = ulMovUnidadSalida.P5000Actual,
 
                 CAlmSalidaDiaKg = CalcularGasServicio.SumarKilogramos(ulMovUnidadSalida.CAlmSalidaDiaKg, KilosRecargados),
@@ -1588,7 +1588,7 @@ namespace Application.MainModule.Servicios.Almacenes
 
             if (apReDto.identidadUE != identidadUnidadAlmacenGas.Camioneta)
             {
-                apReDto.unidadEntrada.PorcentajeActual = apReDto.RecargaLecturaFinal.ProcentajeEntrada.Value;
+                apReDto.unidadEntrada.PorcentajeActual = apReDto.RecargaLecturaFinal.ProcentajeEntrada?? 0;
                 apReDto.RecargaLecturaFinalFotos = GenerarImagenes(apReDto.RecargaLecturaFinal);
                 apReDto.RecargaLecturaFinal.DatosProcesados = true;
                 apReDto.RecargaLecturaFinalSinNavProp = AlmacenGasAdapter.FromEntity(apReDto.RecargaLecturaFinal);

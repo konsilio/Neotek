@@ -104,7 +104,7 @@ namespace MVC.Presentacion.App_Code
         {
             OrdenCompraCrearDTO oc = new OrdenCompraCrearDTO();
             oc.IdRequisicion = model.IdRequisicion;
-            oc.Productos = ObtenerProductosGrid(model, Tkn);
+            oc.ProductosDTO = ObtenerProductosGrid(model, Tkn);
             oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Espera_autorizacion;
             oc.FechaAutorizacion = Convert.ToDateTime(DateTime.Today.ToShortDateString());
             return GenerarOrdenesCompra(oc, Tkn);

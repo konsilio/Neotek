@@ -8,6 +8,6 @@ namespace MVC.Presentacion.Models.OrdenCompra
     [Serializable]
     public class OrdenCompraCrearDTO : OrdenCompraDTO
     {
-        public List<OrdenCompraProductoCrearDTO> Productos { get; set; }
+        public List<OrdenCompraProductoCrearDTO> ProductosDTO { get; set; }
     }
 }

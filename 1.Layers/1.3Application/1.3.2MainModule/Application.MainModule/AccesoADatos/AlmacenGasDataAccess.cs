@@ -597,7 +597,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     //_respuesta.Mensaje = Exito.OK;
                 }
 
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //_respuesta.Exito = false;
                     //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;

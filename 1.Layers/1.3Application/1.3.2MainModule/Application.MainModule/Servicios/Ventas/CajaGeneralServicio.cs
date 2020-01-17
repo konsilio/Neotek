@@ -151,7 +151,7 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 return new CajaGeneralDataAccess().ObtenerCorteUltimo(unidad, empresa, year, month, dia).LastOrDefault().Orden;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return 0;
             }
@@ -162,7 +162,7 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 return new CajaGeneralDataAccess().ObtenerCorteUltimo(empresa, year, month, dia).LastOrDefault().Orden;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return 0;
             }
@@ -173,7 +173,7 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 return new CajaGeneralDataAccess().ObtenerCorteUltimo(unidad, empresa, year, month, dia).Count().Equals(0) ? false : true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -184,7 +184,7 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 return new CajaGeneralDataAccess().ObtenerCorteUltimo(empresa, year, month, dia).Count().Equals(0) ? false : true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

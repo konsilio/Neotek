@@ -58,16 +58,7 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-5">
                                       @if (ViewBag.Usuarios != null)
-                                                        {
-                                                          
-                                                                @*<select name="IdUsuario" class="form-control show-tick">
-        <option value="0">Seleccione...</option>
-        @foreach (var lst in ViewBag.Usuarios)
-        {
-            <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1 @lst.Apellido2</option>
-        }
-    </select>*@
-                                        @Html.DevExpress().ComboBox(settings =>
+                                                        {@Html.DevExpress().ComboBox(settings =>
                                    {
                                        settings.Name = "IdUsuario";
                                        settings.Width = 180;

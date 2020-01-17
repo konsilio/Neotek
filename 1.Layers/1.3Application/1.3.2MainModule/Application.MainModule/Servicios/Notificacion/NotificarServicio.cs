@@ -53,7 +53,7 @@ namespace Application.MainModule.Servicios.Notificacion
                     };
                     Enviar(js, Autorizacion);
                 }
-                catch (Exception ex){                   
+                catch (Exception ){                   
                 }
                
             }

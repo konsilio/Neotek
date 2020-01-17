@@ -73,7 +73,7 @@ namespace MVC.Presentacion.Controllers
             return PartialView("_gvProductosPartial", model);
         }
         [HttpPost, ValidateInput(false)]
-        public ActionResult gvProductosPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] MVC.Presentacion.Models.AlmacenDTO item)
+        public ActionResult gvProductosPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] AlmacenDTO item)
         {
             var model = new object[0];
             if (ModelState.IsValid)

@@ -5300,7 +5300,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     client.CancelPendingRequests();
                     client.Dispose();
@@ -5836,7 +5836,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     list = new List<CreditoRecuperadoDTO>();
                     client.CancelPendingRequests();
@@ -5871,7 +5871,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     list = new List<CreditoOtorgadoModel>();
                     client.CancelPendingRequests();
@@ -5907,7 +5907,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     list = new List<CreditoXCliente>();
                     client.CancelPendingRequests();
@@ -5943,7 +5943,7 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     list = new List<CreditoXClienteMensualModel>();
                     client.CancelPendingRequests();

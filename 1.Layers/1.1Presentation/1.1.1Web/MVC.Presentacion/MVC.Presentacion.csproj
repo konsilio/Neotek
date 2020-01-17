@@ -45,7 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\DevExpress.Data.18.2.7\lib\net452\DevExpress.Data.v18.2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DevExpress.Printing.v18.2.Core, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Office.v18.2.Core, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.RichEdit.v18.2.Core, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -10851,6 +10854,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="LogosEmpresa\Empresas.txt" />
+    <Content Include="packages.config" />
     <Content Include="Resources\css\Clientes.css" />
     <Content Include="Resources\css\CreateForm.css" />
     <Content Include="Resources\css\DevExpressCss.css" />
@@ -11507,8 +11511,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="assets\js\chosen\composer.json" />
     <Content Include="assets\js\chosen\LICENSE.md" />
-    <None Include="Properties\PublishProfiles\Presentacion.pubxml" />
-    <None Include="Properties\PublishProfiles\SaGas.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DatePickerReady.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -11736,15 +11738,32 @@
     <Content Include="Views\Cobranza\_CarteraVencidaPartial.cshtml" />
     <Content Include="Views\Cobranza\_CreditoRecuperadoPartial.cshtml" />
     <Content Include="Views\Cobranza\lstCreditoR.cshtml" />
+    <Content Include="Views\Reportes\AutoConsumos.cshtml" />
+    <Content Include="Views\Reportes\CreditoOtorgado.cshtml" />
+    <Content Include="Views\Reportes\CreditoOtorgadoPartial.cshtml" />
+    <Content Include="Views\Reportes\CreditoRecuperado.cshtml" />
+    <Content Include="Views\Reportes\CreditoRecuperadoPartial.cshtml" />
+    <Content Include="Views\Reportes\CreditoXCliente.cshtml" />
+    <Content Include="Views\Reportes\CreditoXClienteMensual.cshtml" />
+    <Content Include="Views\Reportes\CreditoXClienteMensualPartial.cshtml" />
+    <Content Include="Views\Reportes\CreditoXClientePartial.cshtml" />
+    <Content Include="Views\Reportes\DescuentosXClientes.cshtml" />
+    <Content Include="Views\Reportes\DetalleCreditoOtorgado.cshtml" />
+    <Content Include="Views\Reportes\DetalleCreditoRecuperado.cshtml" />
+    <Content Include="Views\Reportes\DetalleCreditoXCliente.cshtml" />
+    <Content Include="Views\Reportes\EquipoDeTransporte.cshtml" />
+    <Content Include="Views\Reportes\RendimientoVehicularCamionetas.cshtml" />
+    <Content Include="Views\Reportes\Ventas.cshtml" />
+    <Content Include="Views\Reportes\VentasXPuntoVenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Servicios\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
@@ -11766,6 +11785,9 @@
       <Name>Utilities.MainModule</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -11780,7 +11802,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57857</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

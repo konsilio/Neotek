@@ -45,7 +45,7 @@ namespace Application.MainModule.Servicios.Compras
         public static List<OrdenCompra> IdentificarOrdenes(OrdenCompraCrearDTO ocInicial)
         {
             List<OrdenCompra> nlist = new List<OrdenCompra>();
-            foreach (var _prod in ocInicial.Productos)
+            foreach (var _prod in ocInicial.ProductosDTO)
             {
                 var p = ProductoServicio.ObtenerProducto(_prod.IdProducto);
                 if (!nlist.Exists(x => x.IdProveedor.Equals(_prod.IdProveedor)))

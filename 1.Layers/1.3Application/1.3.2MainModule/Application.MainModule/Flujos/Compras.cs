@@ -60,10 +60,10 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var Prods = BuscarRequisicion(oc.IdRequisicion).ProductosOC;
-            if (Prods.Count != oc.Productos.Count) return OrdenCompraServicio.NoSeAsignoValorATotosLosProductos();
+            if (Prods.Count != oc.ProductosDTO.Count) return OrdenCompraServicio.NoSeAsignoValorATotosLosProductos();
             //oc.Productos = OrdenCompraServicio.AsignarNuevos(oc)
             List<OrdenCompra> locDTO = OrdenCompraServicio.IdentificarOrdenes(oc);
-            locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
+            locDTO = OrdenCompraServicio.AsignarProductos(oc.ProductosDTO, locDTO);
             locDTO = CalcularOrdenCompraServicio.CalcularTotales(locDTO);
 
             RespuestaDto respuesta = new RespuestaDto();
