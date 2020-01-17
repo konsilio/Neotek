@@ -135,7 +135,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdUsuarioRecibe = idUsario,
                 IdOperadorChofer = puntoventa.IdOperadorChofer,
                 IdPuntoVenta = puntoventa.IdPuntoVenta,
-                UsuarioRecibe = dto.Recibe
+                UsuarioRecibe = dto.Recibe,
             };
         }
 

@@ -12,6 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     @{
         ViewBag.Title = "Liquidación";
     }
@@ -19,8 +20,10 @@
     <script src="~/assets/js/pages/ui/notifications.js"></script>
     <script src="~/Resources/js/CajaGeneral.js" type="text/javascript"></script>
     <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
-  
+    <script src="~/Scripts/js/LiquidarTiket.js"></script>
+
 </head>
+
 <body style="height:100%">
     @using (Html.BeginForm("GuardarLiquidar", "CajaGeneral", FormMethod.Post))
     {
@@ -49,19 +52,19 @@
                                     <input type="text" name="FolioOperacionDia" class="form-control" value="@Model.FolioOperacionDia" />
                                 </div>
                                 @*<div class="col-md-4">
-                                    @Html.DevExpress().ComboBox(settings =>
-                                    {
-                                        settings.Name = "IdPuntoVenta";
-                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                        settings.SelectedIndex = 0;
-                                        settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                        settings.Properties.TextField = "PuntoVenta";
-                                        settings.Properties.ValueField = "IdPuntoVenta";
-                                        settings.Properties.ValueType = typeof(int);
-                                    }).BindList(ViewBag.PuntosVentas).GetHtml()
-                                    @Html.ValidationMessageFor(m => m.IdPuntoVenta, "", new { @class = "alert-danger" })
-                                </div>*@
+                                        @Html.DevExpress().ComboBox(settings =>
+                                        {
+                                            settings.Name = "IdPuntoVenta";
+                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                            settings.SelectedIndex = 0;
+                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                            settings.Properties.TextField = "PuntoVenta";
+                                            settings.Properties.ValueField = "IdPuntoVenta";
+                                            settings.Properties.ValueType = typeof(int);
+                                        }).BindList(ViewBag.PuntosVentas).GetHtml()
+                                        @Html.ValidationMessageFor(m => m.IdPuntoVenta, "", new { @class = "alert-danger" })
+                                    </div>*@
                                 <div class="col-sm-2">
                                     <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-round btn-primary float-left" />
                                 </div>
@@ -201,41 +204,14 @@
                                     </div>
                                 }
                                 <hr />
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th># Ticket</th>
-                                                    <th>Tipo</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Precio Unitario</th>
-                                                    <th>Descuento</th>
-                                                    <th>Subtotal</th>
-                                                    <th>IVA</th>
-                                                    <th>Total</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if (Model.Tickets != null)
-                                                {
-                                                    foreach (var item in Model.Tickets)
-                                                    {
-                                                        <tr>
-                                                            <td>@item.FolioVenta</td>
-                                                            <td>@item.Tipo</td>
-                                                            <td>@Math.Truncate(item.CantidadVendida)</td>
-                                                            <td>@item.PrecioUnitario</td>
-                                                            <td>@item.Descuento</td>
-                                                            <td>@item.Subtotal</td>
-                                                            <td>@item.Iva</td>
-                                                            <td>@item.Total</td>
-                                                        </tr>
-                                                    }
-                                                }
-                                            </tbody>
-                                        </table>
+                                <div class="card">
+                                    <div class="body">
+                                        <div class="row clearfix blockquote blockquote-info btn-round">
+                                            @if (TempData["FolioVenta"] != null)
+                                            {
+                                                @Html.Partial("_tikets", Model.Tickets)
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                                 <hr />
@@ -312,5 +288,45 @@
             </div>
         </section>
     }
+    @*<script type="text/javascript">
+
+        $(document).ready(function () {
+
+
+
+            MVCxClientGlobalEvents.AddControlsInitializedEventHandler(AttachEditorValueChangedEvent);
+
+            function AttachEditorValueChangedEvent() {
+                var demoOptionNames = ["EditMode", "StartEditAction", "HighlightDeletedRows"];
+                $.each(demoOptionNames, function (i, name) {
+                    var editor = ASPxClientControl.GetControlCollection().GetByName(name);
+                });
+            }
+            function OnBatchEditEndEditing(s, e) {
+                s.batchEditApi.SetCellValue(e.visibleIndex, null, true);
+            }
+            function OnBeginGridCallback(s, e) {
+                e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
+            }
+
+
+            MVCxClientGlobalEvents.AddControlsInitializedEventHandler(AttachEditorValueChangedEvent);
+
+            function AttachEditorValueChangedEvent() {
+                var demoOptionNames = ["EditMode", "StartEditAction", "HighlightDeletedRows"];
+                $.each(demoOptionNames, function (i, name) {
+                    var editor = ASPxClientControl.GetControlCollection().GetByName(name);
+                });
+            }
+            function OnBatchEditEndEditing(s, e) {
+                s.batchEditApi.SetCellValue(e.visibleIndex, null, true);
+            }
+            function OnBeginGridCallback(s, e) {
+                e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
+            }
+
+        });
+
+    </script>*@
 </body>
 </html>

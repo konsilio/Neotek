@@ -30,6 +30,7 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<Pais> Pais { get; set; }
         public virtual DbSet<Empresa> Empresa { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Requisicion> Requisicion { get; set; }
         public virtual DbSet<RequisicionEstatus> RequisicionEstatus { get; set; }

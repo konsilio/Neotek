@@ -3211,5 +3211,13 @@ namespace MVC.Presentacion.App_Code
             };
         }
 
+        public static List<SelectListItem> ListaFormaPago()
+        {
+            List<SelectListItem> Pago = new List<SelectListItem>();
+            Pago.Add(new SelectListItem { Value = "Cheques", Text = "Cheques" });
+            Pago.Add(new SelectListItem { Value = "Transferencias", Text = "Transferencias" });         
+            return Pago;
+        }
+
     }
 }

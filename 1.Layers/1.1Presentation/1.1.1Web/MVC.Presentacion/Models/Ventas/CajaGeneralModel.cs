@@ -33,6 +33,7 @@ namespace MVC.Presentacion.Models.Ventas
         public System.DateTime FechaRegistro { get; set; }
         public System.DateTime IdDe { get; set; }
         public System.DateTime IdA { get; set; }
+        public string NombreRecibe { get; set; }
 
         public string CAlmacenGas { get; set; }
         public string COperadorChofer { get; set; }

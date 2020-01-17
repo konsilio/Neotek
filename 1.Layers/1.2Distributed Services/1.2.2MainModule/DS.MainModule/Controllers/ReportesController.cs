@@ -89,6 +89,12 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _repo.RepCreditoXCliente(dto));
         }
+        [Route("UsuarioAsistencia")]
+        public HttpResponseMessage PostUsuarioAsistencia(PeriodoDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _repo.RepUsuarioAsistencia(dto));
+        }
+        
         [Route("CreditoXClienteMensual")]
         public HttpResponseMessage PostCreditoXClienteMensual(PeriodoDTO dto)
         {

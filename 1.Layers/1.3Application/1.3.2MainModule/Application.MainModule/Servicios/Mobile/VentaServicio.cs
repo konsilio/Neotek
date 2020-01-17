@@ -72,6 +72,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.IdTipoOperacion = 1;
             adapter.PuntoVenta = punto.UnidadesAlmacen.Numero;
             adapter.OperadorChofer = entrega;
+         
 
             var anticipo = GasServicio.Anticipo(adapter);
             ////Insert en la tabla de VentaCajaGeneral

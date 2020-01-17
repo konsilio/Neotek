@@ -1127,6 +1127,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.Bitacora' no tiene def
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
           <Property Name="FechaVencimiento" Type="smalldatetime" />
           <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="IdEstacion" Type="int" />
         </EntityType>
         <EntityType Name="CPrecioVentaEstatus">
           <Key>
@@ -2165,6 +2166,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <Property Name="FechaCorteAnticipo" Type="smalldatetime" Nullable="false" />
           <Property Name="FechaAplicacion" Type="smalldatetime" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="NombreRecibe" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="VentaMovimiento">
           <Key>
@@ -3894,6 +3896,18 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             </Principal>
             <Dependent Role="CPipa">
               <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPrecioVenta_CEstacionCarburacion">
+          <End Role="CEstacionCarburacion" Type="Self.CEstacionCarburacion" Multiplicity="0..1" />
+          <End Role="CPrecioVenta" Type="Self.CPrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CEstacionCarburacion">
+              <PropertyRef Name="IdEstacionCarburacion" />
+            </Principal>
+            <Dependent Role="CPrecioVenta">
+              <PropertyRef Name="IdEstacion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6014,6 +6028,10 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CPipa" EntitySet="CPipa" />
           </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_CEstacionCarburacion" Association="Self.FK_CPrecioVenta_CEstacionCarburacion">
+            <End Role="CEstacionCarburacion" EntitySet="CEstacionCarburacion" />
+            <End Role="CPrecioVenta" EntitySet="CPrecioVenta" />
+          </AssociationSet>
           <AssociationSet Name="FK_CPrecioVenta_CPrecioVentaEstatus" Association="Self.FK_CPrecioVenta_CPrecioVentaEstatus">
             <End Role="CPrecioVentaEstatus" EntitySet="CPrecioVentaEstatus" />
             <End Role="CPrecioVenta" EntitySet="CPrecioVenta" />
@@ -7985,6 +8003,10 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             <End Role="CTipoEgreso" EntitySet="CTipoEgreso" />
             <End Role="Egreso" EntitySet="Egreso" />
           </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_CEstacionCarburacion" Association="Sagas.MainModuleModel.FK_CPrecioVenta_CEstacionCarburacion">
+            <End Role="EstacionCarburacion" EntitySet="EstacionCarburacion" />
+            <End Role="PrecioVenta" EntitySet="PrecioVenta" />
+          </AssociationSet>
           <!--<AssociationSet Name="FK_DetalleMantenimiento_CCuentaContable1" Association="Sagas.MainModuleModel.FK_DetalleMantenimiento_CCuentaContable1">
             <End Role="CuentaContable" EntitySet="CuentaContable" />
             <End Role="DetalleMantenimiento" EntitySet="DetalleMantenimiento" />
@@ -8886,6 +8908,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CEstacionCarburacion" FromRole="EstacionCarburacion" ToRole="CentroCosto" />
           <Property Name="Serie" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <Property Name="Folio" Type="Int32" />
+          <NavigationProperty Name="CPrecioVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CEstacionCarburacion" FromRole="EstacionCarburacion" ToRole="PrecioVenta" />
         </EntityType>
         <EntityType Name="FormaPago">
           <Key>
@@ -10794,6 +10817,8 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <NavigationProperty Name="CCategoria" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProductoCategoria" FromRole="PrecioVenta" ToRole="CategoriaProducto" />
           <NavigationProperty Name="CLinea" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProductoLinea" FromRole="PrecioVenta" ToRole="LineaProducto" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa" FromRole="PrecioVenta" ToRole="Empresa" />
+          <Property Name="IdEstacion" Type="Int32" />
+          <NavigationProperty Name="CEstacionCarburacion" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CEstacionCarburacion" FromRole="PrecioVenta" ToRole="EstacionCarburacion" />
         </EntityType>
         <EntityType Name="PrecioVentaEstatus">
           <Key>
@@ -11312,6 +11337,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <NavigationProperty Name="COperadorChofer" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_COperadorChofer" FromRole="VentaCorteAnticipoEC" ToRole="OperadorChofer" />
           <NavigationProperty Name="CPuntoVenta" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_CPuntoVenta" FromRole="VentaCorteAnticipoEC" ToRole="PuntoVenta" />
           <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario" FromRole="VentaCorteAnticipoEC" ToRole="Usuario" />
+          <Property Name="NombreRecibe" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="VentaMovimiento">
           <Key>
@@ -12558,6 +12584,18 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             </Principal>
             <Dependent Role="Egreso">
               <PropertyRef Name="IdTipoEgreso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPrecioVenta_CEstacionCarburacion">
+          <End Type="Sagas.MainModuleModel.EstacionCarburacion" Role="EstacionCarburacion" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.PrecioVenta" Role="PrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstacionCarburacion">
+              <PropertyRef Name="IdEstacionCarburacion" />
+            </Principal>
+            <Dependent Role="PrecioVenta">
+              <PropertyRef Name="IdEstacion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13859,6 +13897,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <EntitySetMapping Name="PrecioVenta">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.PrecioVenta">
               <MappingFragment StoreEntitySet="CPrecioVenta">
+                <ScalarProperty Name="IdEstacion" ColumnName="IdEstacion" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
@@ -14242,6 +14281,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <EntitySetMapping Name="VentaCorteAnticipoEC">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.VentaCorteAnticipoEC">
               <MappingFragment StoreEntitySet="VentaCorteAnticipoEC">
+                <ScalarProperty Name="NombreRecibe" ColumnName="NombreRecibe" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
                 <ScalarProperty Name="FechaCorteAnticipo" ColumnName="FechaCorteAnticipo" />

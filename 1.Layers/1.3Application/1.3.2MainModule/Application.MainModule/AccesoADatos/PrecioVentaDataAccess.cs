@@ -44,9 +44,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente));
         }
         public PrecioVenta BuscarIdPV(short IdPrecioVenta)
-        {
+        {           
             return uow.Repository<PrecioVenta>().GetSingle(x => x.IdPrecioVenta.Equals(IdPrecioVenta)
                                                          && x.Activo);
+            
         }
         public PrecioVentaEstatus Buscar(byte IdPrecioVentaEstatus)
         {
@@ -109,7 +110,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 {
                     uow.Repository<Sagas.MainModule.Entidades.PrecioVenta>().Update(_pro);
                     uow.SaveChanges();
-                    _respuesta.Id = _pro.IdPrecioVenta;
+                    _respuesta.Id = _pro.IdPrecioVenta;                    
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;
                     _respuesta.ModeloValido = true;

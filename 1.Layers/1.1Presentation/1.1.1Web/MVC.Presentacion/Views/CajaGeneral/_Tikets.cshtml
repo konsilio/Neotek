@@ -1,0 +1,149 @@
+﻿
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "_Tikets";
+        settings.CallbackRouteValues = new { Controller = "CajaGeneral", Action = "BatchEditingPartial" };
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "CajaGeneral", Action = "FormaDePagoPartialUpdate" };
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.KeyFieldName = "FolioVenta";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+        settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+        settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.False;
+        settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
+        settings.Styles.Table.CssClass = "table";
+        settings.SettingsCommandButton.UpdateButton.Text = "Guardar cambios";
+        //settings.SettingsCommandButton.UpdateButton.Styles.CssPostfix = "btn btn-raised btn-primary btn-round btn-md";
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FolioVenta";
+            c.Caption = "# Ticket";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Tipo";
+            c.Caption = "Tipo";
+            c.Visible = true;
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FormaDePago";
+            c.Caption = "Forma De Pago";
+            c.Visible = true;
+            c.Settings.AllowSort = DefaultBoolean.False;
+            // c.SetDataItemTemplateContent(d =>
+            // {
+
+            if (TempData["Tipo"].ToString() == "Contado")
+            {
+                c.Settings.AllowSort = DefaultBoolean.False;
+                c.EditorProperties().ComboBox(p =>
+                {
+                    p.TextField = "Text";
+                    p.ValueField = "Value";
+                    p.ValueType = typeof(string);
+                    p.DataSource = TempData["FormaPago"];
+                });
+            }
+            else
+            {
+                c.Visible = false;
+
+            }
+            //});
+
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Referencia";
+            c.Caption = "Referencia";
+            c.Visible = true;
+            if (TempData["Tipo"].ToString() == "Contado")
+            {
+                c.Visible = true;
+            }
+            else
+            {
+                c.Visible = false;
+
+            }
+
+
+
+        });
+
+
+
+        settings.Columns.Add(c=>
+        {
+            c.FieldName = "CantidadVendida";
+            c.Caption = "Cantidad";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "PrecioUnitario";
+            c.Caption = "Precio Unitario";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descuento";
+            c.Caption = "Descuento";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Iva";
+            c.Caption = "Iva";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.EditorProperties().SpinEdit(p =>
+            {
+                p.DisplayFormatString = "{0} %";
+                p.MinValue = 0;
+                p.MaxValue = 100;
+
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Total";
+            c.Caption = "Total";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+
+
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+            editor.ValidationSettings.Display = Display.None;
+        };
+        settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
+    });
+    }
+    @grid.Bind(Model).GetHtml()

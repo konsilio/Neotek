@@ -160,6 +160,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new ClientesDataAccess().BuscarClientesSaldoPendiente(dto, TokenServicio.ObtenerIdEmpresa());
         }
+        public static List<Usuario> BuscarUsuarioAsistencia(PeriodoDTO dto)
+        {
+            return new UsuarioDataAccess().BuscarTodos();
+        }
         public static List<Cliente> BuscarClientesConSaldoPendienteMensual(PeriodoDTO dto)
         {
             return new ClientesDataAccess().BuscarClientesSaldoPendienteMensual(dto, TokenServicio.ObtenerIdEmpresa());

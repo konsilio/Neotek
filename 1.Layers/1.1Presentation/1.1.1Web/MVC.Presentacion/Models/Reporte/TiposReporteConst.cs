@@ -11,6 +11,7 @@ namespace MVC.Presentacion.Models
         public static string _CreditoRecuperadoPartial = "_CreditoRecuperadoPartial";
         public static string _CreditoOtorgadoPartial = "_CreditoOtorgadoPartial";
         public static string _CreditoXClientePartial = "_CreditoXClientePartial";
+        public static string _ControlAsistenciaPartial = "_ControlAsistenciaPartial";
         public static string CuboInvXPunVen = "_CuboInvXPunVen";
         public static string CuentasXCobrar = "CuentasXCobrar";
         public static string InventarioPorPuntoVenta = "InventarioPorPuntoVenta";
@@ -28,6 +29,7 @@ namespace MVC.Presentacion.Models
         public static string CreditoRecuperado = "CreditoRecuperado";
         public static string CreditoOtorgado = "CreditoOtorgado";
         public static string CreditoXCliente = "CreditoXCliente";
+        public static string ControlDeAsistencia = "ControlDeAsistencia";
         public static string CreditoXClienteMensual = "CreditoXClienteMensual";
         public static string InventarioXConcepto = "InventarioPorConcepto";
         public static string HistoricoVsVentas = "Histrico_VS_Ventas";

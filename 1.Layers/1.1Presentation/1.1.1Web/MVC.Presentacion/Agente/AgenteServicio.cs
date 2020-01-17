@@ -143,6 +143,7 @@ namespace MVC.Presentacion.Agente
         public List<CreditoRecuperadoDTO> _ListCreditoRecuperadoClientes;
         public List<CreditoOtorgadoModel> _ListCreditoOtorgadoClientes;
         public List<CreditoXCliente> _ListCreditoCreditoXCliente;
+        public List<ControlAsistenciaModel> _ListControlAsistencia;
         public List<CreditoXClienteMensualModel> _ListCreditoCreditoXClienteMensual;
         public List<VentasXPuntoVentaModel> _ListaVentasXPuntoVenta;
         public List<PeriodoDTO> _ListaEquipoDeTransporte;
@@ -3724,7 +3725,7 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutAutorizarProductoOordenCompra"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();
-        }
+        }    
         public void ActualizarTikets(List<VentaPuntoVentaDTO> dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutActualizarTikets"];
@@ -6290,6 +6291,42 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
+        #region CreditoXClientes
+        public void BuscarUsuarioAsistencia(PeriodoDTO model, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostUsuarioAsistencia"];
+            BuscarUsuarioAsistencia(model, this.ApiCatalgos, tkn).Wait();
+        }
+        private async Task BuscarUsuarioAsistencia(PeriodoDTO model, string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ControlAsistenciaModel> list = new List<ControlAsistenciaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(api, model).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<ControlAsistenciaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    list = new List<ControlAsistenciaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+               _ListControlAsistencia = list;
+            }
+        }
+        #endregion
+
         #endregion
 
         private async Task LLamada<T>(T _dto, string token, string Tipo, bool EsAnonimo = false)

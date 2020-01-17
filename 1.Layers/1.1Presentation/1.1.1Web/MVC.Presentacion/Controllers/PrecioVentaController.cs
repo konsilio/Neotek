@@ -20,7 +20,7 @@ namespace MVC.Presentacion.Controllers
 
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-
+            ViewBag.EstacionesCarburacion = CatalogoServicio.GetListaEstacionCarburacion(_tkn);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
             ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
             if (ViewBag.EsAdmin)
@@ -81,9 +81,24 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
+            TempData.Remove("IdEstacion");
             ViewBag.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tkn);
-            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);//ViewBag.ListaPV
-            PrecioVentaModel ent = CatalogoServicio.ListaPrecioVenta(id, _tkn).FirstOrDefault();
+            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);//ViewBag.ListaPV      
+            PrecioVentaModel ent = CatalogoServicio.ListaPrecioVenta(id, _tkn).FirstOrDefault(x => x.IdPrecioVenta == id);
+
+            if (ent.IdEstacion != 0)
+            {
+                TempData["IdEstacion"] = ent.IdEstacion;
+                TempData.Keep("IdEstacion");
+            }
+            else
+            {
+                TempData["IdEstacion"] = 0;
+                TempData.Keep("IdEstacion");
+            }
+            ent.IdEstacion = (int)TempData["IdEstacion"];
+
+
 
             return View(ent);
         }
@@ -119,6 +134,7 @@ namespace MVC.Presentacion.Controllers
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta;
+                _Obj.IdEstacion = (int)TempData["IdEstacion"];
                 return RedirectToAction("Index", new { msj = respuesta.Mensaje });
             }
             else

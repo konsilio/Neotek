@@ -8,6 +8,7 @@ using Application.MainModule.UnitOfWork;
 using Sagas.MainModule.Entidades;
 using Exceptions.MainModule.Validaciones;
 using Exceptions.MainModule;
+using Application.MainModule.DTOs;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -48,7 +49,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<Usuario> BuscarTodos()
         {
             return IntegrarRoles(uow.Repository<Usuario>().Get(x => x.Activo));
-        }
+        }      
         public RespuestaDto Actualizar(Usuario usuario)
         {
             RespuestaDto _respuesta = new RespuestaDto();

@@ -145,6 +145,7 @@
     <Compile Include="DTOs\Reportes\CajaGeneral\RepCorteCajaDTO.cs" />
     <Compile Include="DTOs\Reportes\Comisiones\ComisionDiaDTO.cs" />
     <Compile Include="DTOs\Reportes\Comisiones\ComisionDTO.cs" />
+    <Compile Include="DTOs\Reportes\ControlDeAsistencia\ControlDeAsistenciaDTO.cs" />
     <Compile Include="DTOs\Reportes\CreditoOtorgado\CreditoOtorgadoDTO.cs" />
     <Compile Include="DTOs\Reportes\CreditoRecuperado\CreditoRecuperado.cs" />
     <Compile Include="DTOs\Reportes\CreditoXClienteMensual\CreditoXClienteMensualDTO.cs" />
@@ -550,7 +551,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

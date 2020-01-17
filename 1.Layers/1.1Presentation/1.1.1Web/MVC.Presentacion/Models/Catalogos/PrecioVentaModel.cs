@@ -41,5 +41,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public string CategoriaProducto  { get; set; }
         public string LineaProducto  { get; set; }
         public string Empresa  { get; set; }
+        public Nullable<int> IdEstacion { get; set; }
+        public string Estacion { get; set; }
     }
 }

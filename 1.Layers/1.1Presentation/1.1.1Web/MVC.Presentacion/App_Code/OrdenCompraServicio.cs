@@ -3,6 +3,7 @@ using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.OrdenCompra;
 using MVC.Presentacion.Models.Requisicion;
 using MVC.Presentacion.Models.Seguridad;
+using MVC.Presentacion.Models.Ventas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -216,7 +217,7 @@ namespace MVC.Presentacion.App_Code
             AgenteServicio agente = new AgenteServicio();
             agente.ActualizarProductosOC(prods, tkn);
             return agente._RespuestaDTO;
-        }
+        }     
         public static RespuestaDTO SolicitarPagoExpedidor(OrdenCompraComplementoGasDTO dto, string tkn)
         {
             AgenteServicio agente = new AgenteServicio();

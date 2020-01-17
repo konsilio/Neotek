@@ -36,11 +36,13 @@ namespace Sagas.MainModule.Entidades
         public System.DateTime FechaRegistro { get; set; }
         public Nullable<System.DateTime> FechaVencimiento { get; set; }
         public bool Activo { get; set; }
+        public Nullable<int> IdEstacion { get; set; }
     
         public virtual PrecioVentaEstatus Estatus { get; set; }
         public virtual Producto CProducto { get; set; }
         public virtual CategoriaProducto CCategoria { get; set; }
         public virtual LineaProducto CLinea { get; set; }
         public virtual Empresa Empresa { get; set; }
+        public virtual EstacionCarburacion CEstacionCarburacion { get; set; }
     }
 }

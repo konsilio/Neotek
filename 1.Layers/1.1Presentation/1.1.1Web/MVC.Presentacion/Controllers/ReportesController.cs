@@ -493,6 +493,30 @@ namespace MVC.Presentacion.Controllers
             return View(model);
         }
 
+        public ActionResult ControlDeAsistencia(PeriodoDTO model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            if (TempData["DataSource"] != null)
+                TempData["DataSource"] = null;
+            if (!model.FechaInicio.Equals(DateTime.MinValue))
+            {
+                ViewData["Reporte"] = TiposReporteConst.ControlDeAsistencia;
+                TempData["DataSource"] = ReporteServicio.BuscarUsuarioAsistencia(model, tkn);
+            }
+            return View(model);
+        }
+
+        public ActionResult _ControlDeAsistencia()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(tkn);
+            var model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            return PartialView(model);
+        }
+
+
 
         //Cubo de inforamcion
         public ActionResult GetGridView(string Tipo)
@@ -550,8 +574,11 @@ namespace MVC.Presentacion.Controllers
                     return View(TiposReporteConst.CuboInformacionGeneral, TempData["DataSource"]);
                 if (Tipo.Equals(TiposReporteConst.CreditoXClienteMensual))
                     return View(TiposReporteConst.CuboInformacionGeneral, (List<CreditoXClienteMensualModel>)TempData["DataSource"]);
+                if (Tipo.Equals(TiposReporteConst.ControlDeAsistencia))
+                    return View(TiposReporteConst.CuboInformacionGeneral, (List<ControlAsistenciaModel>)TempData["DataSource"]);
 
-                
+
+
                 return View(TiposReporteConst.CuboInformacionGeneral);
             }
             return View(TiposReporteConst.CuboInformacionGeneral, new List<string>());

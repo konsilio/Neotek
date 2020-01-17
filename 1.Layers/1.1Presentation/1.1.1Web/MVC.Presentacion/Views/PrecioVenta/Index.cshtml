@@ -131,7 +131,14 @@
                     }
                 });
             });
-            $('select').on('change', function () {
+            $('#Estacion').on('change', function () {
+
+                $("#Estacion").val();
+                debugger;
+
+            });
+
+            $('selectnull').on('change', function () {
                 var from = $("#IdDe").val();
                 var To = $("#IdA").val();
                 var value = $('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
@@ -443,11 +450,11 @@
                                 <div class="col-sm-005">
                                     <div class="form-group" style="top:-10px">
                                         @*<input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="number" class="form-control" required />
-                                                 @Html.ValidationMessageFor(m => m.PrecioSalidaKg, "", new { @class = "alert-danger",
+                     @Html.ValidationMessageFor(m => m.PrecioSalidaKg, "", new { @class = "alert-danger",
 
-                                                @type = "number",
-                                                @min = "0"
-                                            })*@
+                    @type = "number",
+                    @min = "0"
+                })*@
                                         @Html.TextBoxFor(m => m.PrecioSalidaKg, Model.PrecioSalidaKg.ToString(), new
                                               {
                                                   @class = "form-control",
@@ -466,7 +473,7 @@
                                 <div class="col-sm-005">
                                     <div class="form-group" style="top:-10px">
                                         @*<input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="number" class="form-control" required />
-        @Html.ValidationMessageFor(m => m.PrecioSalidaLt, "", new { @class = "alert-danger" })*@
+                @Html.ValidationMessageFor(m => m.PrecioSalidaLt, "", new { @class = "alert-danger" })*@
                                         @Html.TextBoxFor(m => m.PrecioSalidaLt, Model.PrecioSalidaLt.ToString(), new
                                              {
                                                  @class = "form-control",
@@ -503,9 +510,35 @@
                                    //settings.Attributes.Clear();
                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                    settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                  
+
                                }).GetHtml()
                                     @Html.ValidationMessageFor(m => m.FechaProgramada, "", new { @class = "alert-danger", })
+                                </div>
+
+                                <div class="col-md-3 form-control-label" style="border-radius:20px;">
+                                    <label for="ddlEstacionCarburacion">Estación de carburación</label>
+                                    <div class="form-group" >
+                                        <select id="Estacion" name="Estacion" class="form-control z-index" data-live-search="true">
+                                            <option value="0">Seleccione uno</option>
+                                            @if (ViewBag.EstacionesCarburacion != null)
+                                            {
+                                                foreach (var tp in ViewBag.EstacionesCarburacion)
+                                                {
+                                                    if (tp.IdEstacionCarburacion == Model.IdEstacion)
+                                                    {
+                                                       
+                                                        <option value="@tp.IdEstacionCarburacion" selected>@tp.Nombre</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@tp.IdEstacionCarburacion">@tp.Nombre</option>
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                   @Html.HiddenFor(m => m.IdEstacion)
+                                    @Html.ValidationMessageFor(m => m.IdEstacion, "", new { @class = "alert-danger" })
                                 </div>
 
                                 <div class="col-sm-7">

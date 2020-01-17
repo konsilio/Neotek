@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using PagedList;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using DevExpress.Web.Mvc;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -52,6 +53,7 @@ namespace MVC.Presentacion.Controllers
             if (_model.Tickets == null || _model.Tickets.Count.Equals(0))
                 if (TempData["DatosLiquidacion"] != null)
                     _model = (CorteCajaDTO)TempData["DatosLiquidacion"];
+
             return View(_model);
         }
         public ActionResult CallBackLiquidaciones()
@@ -68,12 +70,31 @@ namespace MVC.Presentacion.Controllers
             if (_model != null && _model.FolioOperacionDia != null)
                 TempData["Model"] = _model;
             _model = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia, _tkn);
+            if (_model!= null)
+            {                
             TempData["DatosLiquidacion"] = _model;
+            }
             if (_model.Tickets != null && _model.Tickets.Count == 0)
                 TempData["RespuestaDTOError"] = "No existe la clave solicitada";
+            var id = _model.Tickets.FirstOrDefault().FolioVenta;
+            var Tipo = _model.Tickets.FirstOrDefault().Tipo;
+            if (_model.Tickets != null)
+            {
+                TempData["FolioVenta"] = id;
+                TempData["Tipo"] = Tipo;
+                TempData["FormaPago"] = CatalogoServicio.ListaFormaPago();
+                TempData.Keep("DatosLiquidacion");
 
+            }
+            
             return RedirectToAction("Liquidar", _model);
         }
+        public ActionResult BatchEditingPartial()
+        {
+            TempData.Keep("DatosLiquidacion");
+            return PartialView("_Tikets", ((CorteCajaDTO)TempData["DatosLiquidacion"]).Tickets);
+        }
+
         public ActionResult Consultar(CajaGeneralModel _model, int? page)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
@@ -201,6 +222,21 @@ namespace MVC.Presentacion.Controllers
                     Mensaje += Resp.MensajesError[0];
             }
             return Mensaje;
+        }
+        public ActionResult FormaDePagoPartialUpdate(MVCxGridViewBatchUpdateValues<CorteCajaDTO, string> updateValues)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+          
+            var model = (CorteCajaDTO)TempData["DatosLiquidacion"];                      
+            model.Tickets = new List<VentaPuntoVentaDTO>();
+
+            foreach (var product in updateValues.Update.FirstOrDefault().Tickets)
+            {
+                if (updateValues.IsValid(model))
+                    model.Tickets.Add(product);
+            }
+            return View(model);
         }
     }
 }

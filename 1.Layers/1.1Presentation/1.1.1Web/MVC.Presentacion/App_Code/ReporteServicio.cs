@@ -111,6 +111,12 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscarCreditoXCliente(model, token);
             return respuestaReq._ListCreditoCreditoXCliente;
         }
+        public static List<ControlAsistenciaModel> BuscarUsuarioAsistencia(PeriodoDTO model, string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscarUsuarioAsistencia(model, token);
+            return respuestaReq._ListControlAsistencia;
+        }
         public static List<CreditoXClienteMensualModel> BuscarCreditoXClienteMensual(PeriodoDTO model, string token)
         {
             var respuestaReq = new AgenteServicio();

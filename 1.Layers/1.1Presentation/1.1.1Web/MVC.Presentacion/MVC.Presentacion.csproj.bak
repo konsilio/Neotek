@@ -45,14 +45,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Printing.v18.2.Core, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Office.v18.2.Core, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.RichEdit.v18.2.Core, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Utils.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.ASPxThemes.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.Mvc5.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.v18.2, Version=18.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v18.2.Core, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v18.2.Core, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v18.2.Core, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Mvc5.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.v18.2, Version=18.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="Echovoice.JSON, Version=2.0.15151.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Echovoice.JSON.2.0.15151.1\lib\Echovoice.JSON.dll</HintPath>
       <Private>True</Private>
@@ -373,6 +373,7 @@
     <Compile Include="Models\Cobranza\CargosModel.cs" />
     <Compile Include="Models\Cobranza\CarteraVencidaModel.cs" />
     <Compile Include="Models\Cobranza\FacturacionGlobalModel.cs" />
+    <Compile Include="Models\Cobranza\ReporteCreditosRecuperado.cs" />
     <Compile Include="Models\Cobranza\ReporteModel.cs" />
     <Compile Include="Models\Facturacion\CFDIDTO.cs" />
     <Compile Include="Models\Facturacion\FacturacionModel.cs" />
@@ -412,6 +413,7 @@
     <Compile Include="Models\Reporte\CallCenter\CallCenterDTO.cs" />
     <Compile Include="Models\Reporte\CallCenter\CallCenterModel.cs" />
     <Compile Include="Models\Reporte\Comision\ComisionDTO.cs" />
+    <Compile Include="Models\Reporte\ControlAsistenciaModel\ControlAsistenciaModel.cs" />
     <Compile Include="Models\Reporte\CorteCaja\CorteCajaDTO.cs" />
     <Compile Include="Models\Reporte\CorteCaja\CorteCajaModel.cs" />
     <Compile Include="Models\Reporte\CreditoOtorgado\CreditoOtorgadoModel.cs" />
@@ -10875,6 +10877,7 @@
     <Content Include="Scripts\bootstrap-material-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\js\LiquidarTiket.js" />
     <Content Include="Views\ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -11735,6 +11738,12 @@
     <Content Include="Views\Cobranza\_CarteraVencidaPartial.cshtml" />
     <Content Include="Views\Cobranza\_CreditoRecuperadoPartial.cshtml" />
     <Content Include="Views\Cobranza\lstCreditoR.cshtml" />
+    <Content Include="Views\CajaGeneral\_Tikets.cshtml" />
+    <Content Include="Views\Reportes\ControlDeAsistencia.cshtml" />
+    <Content Include="Views\Reportes\CreditoXClientePartial.cshtml" />
+    <Content Include="Views\Reportes\CreditoXClienteMensualPartial.cshtml" />
+    <Content Include="Views\Reportes\CreditoXCliente.cshtml" />
+    <Content Include="Views\Reportes\ControlDeAsistenciaPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

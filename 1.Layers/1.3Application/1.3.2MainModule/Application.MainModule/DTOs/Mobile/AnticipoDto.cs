@@ -13,5 +13,6 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal Total { get; set; }
         public string Recibe { get; set; }
         public DateTime FechaAnticipo { get; set; }
+      
     }
 }

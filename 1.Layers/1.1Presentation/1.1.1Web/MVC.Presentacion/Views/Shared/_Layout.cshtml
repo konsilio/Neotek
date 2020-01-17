@@ -276,6 +276,11 @@
                                     {
                                         <li>@Html.ActionLink("Crédito por cliente Mensual", "CreditoXClienteMensual", "Reportes")</li>
                                     }
+                                    @if (rol.Reportes)
+                                    {
+                                        <li>@Html.ActionLink("Control de Asistencia", "ControlDeAsistencia", "Reportes")</li>
+                                    }
+
                                     @if (rol.ReporteRendimientoVehicular)
                                     {
                                         <li>@Html.ActionLink("Inv. Concepto", "InventarioXConcepto", "Reportes")</li>
