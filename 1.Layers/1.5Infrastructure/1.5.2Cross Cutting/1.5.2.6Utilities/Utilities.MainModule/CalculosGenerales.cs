@@ -29,7 +29,7 @@ namespace Utilities.MainModule
         public static decimal Truncar(decimal cantidad, decimal digitos)
         {
             decimal decimales = 1;
-            for (int i = 0; i < digitos; i++)            
+            for (int i = 0; i < digitos; i++)
                 decimales = decimales * 10;
 
             return Math.Truncate(cantidad * decimales) / decimales;
@@ -54,5 +54,6 @@ namespace Utilities.MainModule
         {
             return total / cantidad;
         }
+      
     }
 }

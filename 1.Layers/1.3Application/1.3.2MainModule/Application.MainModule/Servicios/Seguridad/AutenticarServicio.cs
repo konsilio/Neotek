@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.DTOs;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -173,6 +174,30 @@ namespace Application.MainModule.Servicios.Seguridad
                 {
                     autenticado = false,
                 };
+        }
+        public static double CalcularDistancia(CoordenadasDTO point1, CoordenadasDTO point2)
+        {
+            //Retorna Km
+            double EarthRadius = 6371;
+            double distance = 0;
+            double Lat = (point2.Latitud - point1.Latitud) * (Math.PI / 180);
+            double Lon = (point2.Longitud - point1.Longitud) * (Math.PI / 180);
+            double a = Math.Sin(Lat / 2) * Math.Sin(Lat / 2) + Math.Cos(point1.Latitud * (Math.PI / 180)) * Math.Cos(point2.Latitud * (Math.PI / 180)) * Math.Sin(Lon / 2) * Math.Sin(Lon / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            distance = EarthRadius * c;
+            return distance;
+        }
+        public static double CalcularDistanciaEnMetros(CoordenadasDTO point1, CoordenadasDTO point2)
+        {
+            //Retorna Km
+            double EarthRadius = 6371;
+            double distance = 0;
+            double Lat = (point2.Latitud - point1.Latitud) * (Math.PI / 180);
+            double Lon = (point2.Longitud - point1.Longitud) * (Math.PI / 180);
+            double a = Math.Sin(Lat / 2) * Math.Sin(Lat / 2) + Math.Cos(point1.Latitud * (Math.PI / 180)) * Math.Cos(point2.Latitud * (Math.PI / 180)) * Math.Sin(Lon / 2) * Math.Sin(Lon / 2);
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            distance = EarthRadius * c;
+            return distance * 1000;
         }
     }
 }

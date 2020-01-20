@@ -60,7 +60,7 @@ namespace Application.MainModule.Servicios
             }
             catch (Exception)
             {
-                throw;
+                return new AlmacenGasTraspasoFoto();
             }
         }
         public static AlmacenGasAutoConsumoFoto ObtenerImagen(AlmacenGasAutoConsumoFoto foto)

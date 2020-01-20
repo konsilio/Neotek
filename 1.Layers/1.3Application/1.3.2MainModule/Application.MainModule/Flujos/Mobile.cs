@@ -311,7 +311,7 @@ namespace Application.MainModule.Flujos
                 else
                 {
                     #region Verifica si tiene credito disponible
-                    if (cliente.CreditoDisponibleMonto > 0 && cliente.CreditoDisponibleMonto >= venta.Total)
+                    if (cliente.CreditoDisponibleMonto > 0 && cliente.CreditoDisponibleMonto >= venta.Concepto.Sum(x => x.LitrosDespachados))
                     {
 
                         int dias = Convert.ToInt32(cliente.limiteCreditoDias);
@@ -321,12 +321,12 @@ namespace Application.MainModule.Flujos
                         {
                             if (cliente.CreditoDisponibleMonto == 0)
                             {
-                                decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Total;
+                                decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Concepto.Sum(x => x.LitrosDespachados);
                                 cliente.CreditoDisponibleMonto = creditoDisponible;
                             }
                             if (cliente.CreditoDisponibleMonto > 0)
                             {
-                                decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Total;
+                                decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Concepto.Sum(x => x.LitrosDespachados);
                                 cliente.CreditoDisponibleMonto = creditoDisponibleMonto;
                             }
 

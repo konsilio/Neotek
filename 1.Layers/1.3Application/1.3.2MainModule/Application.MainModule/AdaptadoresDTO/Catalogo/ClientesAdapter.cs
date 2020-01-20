@@ -29,6 +29,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 DescuentoXKilo = us.DescuentoXKilo,
                 limiteCreditoMonto = us.limiteCreditoMonto,
                 limiteCreditoDias = us.limiteCreditoDias,
+                CreditoDisponibleMonto = us.CreditoDisponibleMonto,
                 Telefono1 = ClienteServicio.ObtenerTelefono(us),
                 Telefono2 = us.Telefono2 ?? string.Empty,
                 Telefono3 = us.Telefono3 ?? string.Empty,
@@ -199,6 +200,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             if (Ctedto.Apellido2 != null) catCliente.Apellido2 = Ctedto.Apellido2; else catCliente.Apellido2 = catCliente.Apellido2;
             if (Ctedto.DescuentoXKilo != 0) catCliente.DescuentoXKilo = Ctedto.DescuentoXKilo; else catCliente.DescuentoXKilo = catCliente.DescuentoXKilo;
             if (Ctedto.limiteCreditoMonto != 0) catCliente.limiteCreditoMonto = Ctedto.limiteCreditoMonto; else catCliente.limiteCreditoMonto = catCliente.limiteCreditoMonto;
+            if (Ctedto.CreditoDisponibleMonto != 0) catCliente.CreditoDisponibleMonto= Ctedto.CreditoDisponibleMonto; else catCliente.CreditoDisponibleMonto= catCliente.CreditoDisponibleMonto;
             if (Ctedto.limiteCreditoDias != 0) catCliente.limiteCreditoDias = Ctedto.limiteCreditoDias; else catCliente.limiteCreditoDias = catCliente.limiteCreditoDias;
             if (Ctedto.Telefono1 != null) catCliente.Telefono1 = Ctedto.Telefono1; else catCliente.Telefono1 = catCliente.Telefono1;
             if (Ctedto.Telefono2 != null) catCliente.Telefono2 = Ctedto.Telefono2; else catCliente.Telefono2 = catCliente.Telefono2;

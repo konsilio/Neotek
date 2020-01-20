@@ -59,11 +59,11 @@
                             <div class="col-sm-3">
                                 <b>Gasera</b>
                                 @*<select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                    @foreach (var lst in ViewBag.Empresas)
-                                    {
-                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                    }
-                                </select>*@
+                                        @foreach (var lst in ViewBag.Empresas)
+                                        {
+                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                        }
+                                    </select>*@
                                 @Html.DevExpress().ComboBox(settings =>
                        {
                            settings.Name = "IdEmpresa";
@@ -156,7 +156,6 @@
                                     </div>
                                 </div>
                                 <div class="row clearfix">
-
                                     <div class="col-lg-8 col-md-8 col-sm-8">
                                         <div class="form-group" id="hide_razonS">
                                             Razón Social:*
@@ -171,7 +170,6 @@
                                             @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="row clearfix" id="div_hideRP">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -185,8 +183,8 @@
                                                         <div class="form-group">
                                                             Nombre completo: <input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].RepresentanteLegal)" />
                                                         </div>
-                                                   </div>
-                                                                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
                                                         <div class="form-group">
                                                             <div>
                                                                 Teléfono:
@@ -265,22 +263,22 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        Kilos de Credito<input name="limiteCreditoMonto" class="form-control" type="number" />
+                                        Litros de Credito<input name="limiteCreditoMonto" class="form-control" value="@Model.limiteCreditoMonto" type="number" />
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <div>
                                             Días para pagar
-                                            <input name="limiteCreditoDias" class="form-control" type="number" />
+                                            <input name="limiteCreditoDias" class="form-control" value="@Model.limiteCreditoDias" type="number" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <div>
-                                            Credito disponible:
-                                            <input name="CreditoDisponibleMonto" class="form-control" type="number" />
+                                            Credito disponible (En litros):
+                                            <input name="CreditoDisponibleMonto" class="form-control" value="@Model.CreditoDisponibleMonto" type="number" />
                                         </div>
                                     </div>
                                 </div>
@@ -294,7 +292,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-md-2">
                                     ¿Es Precio fijo?
                                     <div class="form-group">
@@ -316,7 +313,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -354,7 +350,6 @@
                                             Teléfono 1: <input id="txtTel1" name="Telefono1" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono1)" />
                                         </div>
                                     </div>
-
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <div>

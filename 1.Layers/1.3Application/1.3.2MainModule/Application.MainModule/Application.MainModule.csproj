@@ -166,6 +166,7 @@
     <Compile Include="DTOs\Reportes\Ventas\VentasDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionDTO.cs" />
     <Compile Include="DTOs\Seguridad\AutenticacionDto.cs" />
+    <Compile Include="DTOs\Seguridad\CoordenadasDTO.cs" />
     <Compile Include="DTOs\Seguridad\MenuDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionMobileDto.cs" />
