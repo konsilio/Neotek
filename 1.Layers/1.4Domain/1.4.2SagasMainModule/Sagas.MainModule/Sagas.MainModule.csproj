@@ -154,6 +154,9 @@
     <Compile Include="Entidades\CMantenimiento.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\ControlAsistencia.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\CTipoEgreso.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -278,9 +281,6 @@
     <Compile Include="Entidades\Sagas1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Sagas.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entidades\sysdiagrams.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\TipoCentroCosto.cs">

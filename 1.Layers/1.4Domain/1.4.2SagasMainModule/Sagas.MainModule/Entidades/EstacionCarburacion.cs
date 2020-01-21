@@ -30,6 +30,8 @@ namespace Sagas.MainModule.Entidades
         public System.DateTime FechaRegistro { get; set; }
         public string Serie { get; set; }
         public Nullable<int> Folio { get; set; }
+        public Nullable<decimal> CoordenadaLat { get; set; }
+        public Nullable<decimal> CoordenadaLong { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnidadAlmacenGas> UnidadAlmacenGas { get; set; }

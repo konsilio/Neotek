@@ -47,6 +47,7 @@ namespace Sagas.MainModule.Entidades
             this.CUtilitario = new HashSet<CUtilitario>();
             this.AsignacionUtilitarios = new HashSet<AsignacionUtilitarios>();
             this.CDetalleEquipoTransporte = new HashSet<CDetalleEquipoTransporte>();
+            this.ControlAsistencia = new HashSet<ControlAsistencia>();
         }
     
         public short IdEmpresa { get; set; }
@@ -96,6 +97,8 @@ namespace Sagas.MainModule.Entidades
         public string UrlLogotipo180px { get; set; }
         public string UrlLogotipo500px { get; set; }
         public string UrlLogotipo1000px { get; set; }
+        public Nullable<decimal> CoordenadaLat { get; set; }
+        public Nullable<decimal> CoordenadaLong { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
@@ -159,5 +162,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<AsignacionUtilitarios> AsignacionUtilitarios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CDetalleEquipoTransporte> CDetalleEquipoTransporte { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ControlAsistencia> ControlAsistencia { get; set; }
     }
 }

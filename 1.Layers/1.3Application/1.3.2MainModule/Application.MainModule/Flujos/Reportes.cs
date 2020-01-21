@@ -90,7 +90,6 @@ namespace Application.MainModule.Flujos
             var recargas = RecargaCombustibleServicio.Buscar(dto.FechaInicio, dto.FechaFinal);
             return RecargaCombustibleAdapter.FormRepDTO(recargas);
         }
-
         public List<RendimientoVehicularCamionetaDTO> RepRendimientoVehicularCamionetas(PeriodoDTO dto)
         {
             var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
@@ -100,7 +99,6 @@ namespace Application.MainModule.Flujos
             List.Add(PuntoVentaServicio.SumaPuntoEquilibrio(List));
             return List;
         }
-
         public List<AutoConsumoDTO> RepAutoConsumos(PeriodoDTO dto)
         {
             var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
@@ -109,7 +107,6 @@ namespace Application.MainModule.Flujos
 
             return AlmacenGasAdapter.ToDTOC(AutoConsumo);
         }
-
         public List<DescuentosXClientesDTO> RepDescuentosXClientes(PeriodoDTO dto)
         {
             var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
@@ -162,8 +159,6 @@ namespace Application.MainModule.Flujos
             List.Add(ClientesAdapter.SumaCreditoMensual(List));
             return List;
         }
-
-
         public List<RendimientoVehicularPipasDTO> RepRendimientoVehicularPipas(PeriodoDTO dto)
         {
             
@@ -175,7 +170,6 @@ namespace Application.MainModule.Flujos
             List.Add(PuntoVentaServicio.SumaPuntoEquilibrioPipas(List));
             return List;
         }
-
         public List<RepInventarioXConceptorDTO> RepInventarioPorConcepto(InventarioXConceptoDTO dto)
         {
             var resp = PermisosServicio.PuedeRegistrarParqueVehicular();
@@ -303,7 +297,6 @@ namespace Application.MainModule.Flujos
 
             return new List<RendimientoVehicularCamionetaDTO>();
         }
-
         public RespuestaDto VentasXPuntoVenta(VentasXPuntoVenta dto)
         {
             dto.PeriodoDTO.FechaInicio = DateTime.Parse(string.Concat(dto.PeriodoDTO.FechaInicio.ToShortDateString(), " 00:00:00"));

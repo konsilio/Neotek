@@ -22,6 +22,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string S0005 = "El usuario no tiene acciones permitida en la aplicación";
         public const string S0007 = "No se a realizado lectura Inicial";
         public const string S0006 = "Ya se realizo la lectura final";
+        public const string S0008 = "No te encunetras en el area de login";
 
         public const string R0001 = "Error al guardar la requisición";
         public const string R0002 = "El campo '{0}' es obligatorio.";

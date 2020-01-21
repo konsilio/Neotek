@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccesoADatos\ControlAsistenciaDataAccess.cs" />
     <Compile Include="AccesoADatos\CuentaContableAutorizadoDataAcces.cs" />
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenGasAdapter.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="AdaptadoresDTO\Mobile\VentaExtraordinaria\CargoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\VentasEstacionesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Pedidos\PedidosAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Seguridad\ControlAsistenciaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenGasMovimientoDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaAutoConsumoDto.cs" />
@@ -166,6 +168,7 @@
     <Compile Include="DTOs\Reportes\Ventas\VentasDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionDTO.cs" />
     <Compile Include="DTOs\Seguridad\AutenticacionDto.cs" />
+    <Compile Include="DTOs\Seguridad\ControlAsistenciaDTO.cs" />
     <Compile Include="DTOs\Seguridad\CoordenadasDTO.cs" />
     <Compile Include="DTOs\Seguridad\MenuDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionDto.cs" />
@@ -491,6 +494,7 @@
     <Compile Include="Servicios\Catalogos\TipoPersonaServicio.cs" />
     <Compile Include="Servicios\Catalogos\TipoProveedorServicio.cs" />
     <Compile Include="Servicios\Pedidos\PedidosServicio.cs" />
+    <Compile Include="Servicios\Seguridad\ControlAsistenciaServicio.cs" />
     <Compile Include="Servicios\Seguridad\UsuarioServicio.cs" />
     <Compile Include="Servicios\Catalogos\ValidarCatalogoServicio.cs" />
     <Compile Include="Servicios\Compras\CalcularOrdenCompraServicio.cs" />

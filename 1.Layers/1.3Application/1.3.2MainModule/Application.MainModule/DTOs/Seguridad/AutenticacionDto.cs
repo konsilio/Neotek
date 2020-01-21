@@ -23,5 +23,6 @@ namespace Application.MainModule.DTOs.Seguridad
         [StringLength(250, MinimumLength = 8, ErrorMessage = Error.S0002)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
+        public string Coordenadas { get; set; }
     }
 }

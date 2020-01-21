@@ -56,8 +56,8 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 UrlLogotipoLogin = empresa.UrlLogotipoLogin,
                 UrlLogotipo180px = empresa.UrlLogotipo180px,
                 UrlLogotipo500px = empresa.UrlLogotipo500px,
-                UrlLogotipo1000px = empresa.UrlLogotipo1000px
-
+                UrlLogotipo1000px = empresa.UrlLogotipo1000px,
+                Coordenadas = empresa.CoordenadaLat != null && empresa.CoordenadaLong != null ? new DTOs.CoordenadasDTO() { Latitud = empresa.CoordenadaLat.Value, Longitud = empresa.CoordenadaLong.Value } : new DTOs.CoordenadasDTO(),
             };
             return empresaDto;
         }
@@ -66,7 +66,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             List<EmpresaDTO> empreasDT = empresas.ToList().Select(x => ToDTO(x)).ToList();
             return empreasDT;
         }
-                
+
         public static Empresa FromDTO(EmpresaDTO empresadto)
         {
             Empresa empresa = new Empresa()
@@ -156,8 +156,8 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 NombreComercial = empresa.NombreComercial,
                 IdPais = empresa.IdPais,
                 IdEstadoRep = empresa.IdEstadoRep,
-               // if (empresa.EstadoProvincia == "") { IdEstadoRep = null} else { IdEstadoRep = empresa.IdEstadoRep },//,
-              //  empresa.EstadoProvincia != "" ? IdEstadoRep = null : IdEstadoRep = empresa.IdEstadoRep,
+                // if (empresa.EstadoProvincia == "") { IdEstadoRep = null} else { IdEstadoRep = empresa.IdEstadoRep },//,
+                //  empresa.EstadoProvincia != "" ? IdEstadoRep = null : IdEstadoRep = empresa.IdEstadoRep,
                 EstadoProvincia = empresa.EstadoProvincia,
                 Municipio = empresa.Municipio,
                 CodigoPostal = empresa.CodigoPostal,

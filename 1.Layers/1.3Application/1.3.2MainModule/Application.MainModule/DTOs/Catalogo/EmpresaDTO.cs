@@ -142,6 +142,8 @@ namespace Application.MainModule.DTOs.Catalogo
         public string UrlLogotipo180px { get; set; }
         public string UrlLogotipo500px { get; set; }
         public string UrlLogotipo1000px { get; set; }
+        public CoordenadasDTO Coordenadas { get; set; }
+
 
     }
 }

@@ -14,6 +14,6 @@ namespace Application.MainModule.DTOs.Catalogo
         public string Nombre { get; set; }
         public bool Activo { get; set; }
         public DateTime FechaRegistro { get; set; }
-
+        public CoordenadasDTO Coordenadas { get; set; }
     }
 }
