@@ -67,7 +67,7 @@ namespace Application.MainModule.Servicios.Seguridad
                 };
         }
 
-        public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(AutenticacionDto autDto)
+        public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(DTOs.Mobile.LoginFbDTO autDto)
         {
             var aut = AutenticarUsuario(autDto);
             var usuario = new UsuarioDataAccess().Buscar(aut.IdUsuario);
@@ -85,9 +85,15 @@ namespace Application.MainModule.Servicios.Seguridad
 
                     if (puntoVenta != null)
                     {
+
                         var unidadAlmacen = puntoVenta.UnidadesAlmacen;
                         if (unidadAlmacen.IdEstacionCarburacion != null && unidadAlmacen.IdEstacionCarburacion != 0)
                             esEstacion = true;
+
+                        var ca = ControlAsistenciaServicio.CalcularEntrada(usuario, autDto, puntoVenta, esEstacion);
+                        if (!ca.Exito)
+                            return ca;
+
                         var lecturaFinal = LecturaGasServicio.ObtenerUltimaLecturaFinal(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
                         if (lecturaFinal != null && !esEstacion)
                             return new RespuestaAutenticacionMobileDto()
@@ -119,11 +125,21 @@ namespace Application.MainModule.Servicios.Seguridad
                             esChofer = false;
                         }
                     }
+                    else
+                    {
+                        var ca = ControlAsistenciaServicio.CalcularEntrada(usuario, autDto);
+                        if (!ca.Exito)
+                            return ca;
+
+                    }
                     menu = MenuServicio.Crear(usuario, hayLectura, esEstacion, esChofer);
                 }
                 else
                 {
                     hayLectura = true;
+                    var ca = ControlAsistenciaServicio.CalcularEntrada(usuario, autDto);
+                    if (!ca.Exito)
+                        return ca;
                 }
                 menu = MenuServicio.Crear(usuario, hayLectura, esEstacion, esChofer);
             }

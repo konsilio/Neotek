@@ -25,34 +25,94 @@ namespace Application.MainModule.Servicios
             var entidad = ControlAsistenciaAdapter.FromDTO(dto);
             return new ControlAsistenciaDataAccess().Actualizar(entidad);
         }
+        public static ControlAsistenciaDTO ObtenerHoy(int idUsuario)
+        {
+            var entidad = new ControlAsistenciaDataAccess().Buscar(idUsuario, DateTime.Now);
+            if (entidad != null) return ControlAsistenciaAdapter.toDTO(entidad);
+            else return null;
+        }
         public static RespuestaAutenticacionMobileDto CalcularEntrada(Usuario usu, AutenticacionDto autDto, PuntoVenta pv = null, bool esEstacion = false)
         {
-            if (usu.Empresa.CoordenadaLat != null && usu.Empresa.CoordenadaLong != null)
+
+            RespuestaAutenticacionMobileDto respuesta = new RespuestaAutenticacionMobileDto();
+            if (ObtenerHoy(usu.IdUsuario) == null)
             {
-                if (!esEstacion)
+                if (usu.Empresa.CoordenadaLat != null && usu.Empresa.CoordenadaLong != null)
                 {
-                    var distancia = CalcularDistanciaEnMetros(new CoordenadasDTO(usu.Empresa), new CoordenadasDTO(autDto));
-                    if (distancia > 40)
-                        return new RespuestaAutenticacionMobileDto()
+                    if (!esEstacion)
+                    {
+                        var distancia = CalcularDistanciaEnMetros(new CoordenadasDTO(usu.Empresa), new CoordenadasDTO(autDto));
+                        if (distancia > 40)
+                            respuesta = new RespuestaAutenticacionMobileDto()
+                            {
+                                IdUsuario = 0,
+                                Exito = false,
+                                Mensaje = Error.S0008,
+                                token = string.Empty
+                            };
+                        else
                         {
-                            IdUsuario = 0,
-                            Exito = false,
-                            Mensaje = Error.S0008,
-                            token = string.Empty
+                            respuesta = new RespuestaAutenticacionMobileDto()
+                            {
+                                Exito = true
+                            };
                         };
+                    }
                     else
                     {
-                        return new RespuestaAutenticacionMobileDto()
+                        if (pv.UnidadesAlmacen.EstacionCarburacion.CoordenadaLat != null && pv.UnidadesAlmacen.EstacionCarburacion.CoordenadaLong != null)
                         {
-                            Exito = true
-                        };
-                    };
+                            var distancia = CalcularDistanciaEnMetros(new CoordenadasDTO(pv.UnidadesAlmacen.EstacionCarburacion), new CoordenadasDTO(autDto));
+                            if (distancia > 40)
+                            {
+                                respuesta = new RespuestaAutenticacionMobileDto()
+                                {
+                                    IdUsuario = 0,
+                                    Exito = false,
+                                    Mensaje = Error.S0008,
+                                    token = string.Empty
+                                };
+                            }
+                            else
+                            {
+                                respuesta = new RespuestaAutenticacionMobileDto()
+                                {
+                                    Exito = true
+                                };
+                            }
+                        }
+                        else
+                        {
+                            respuesta = new RespuestaAutenticacionMobileDto()
+                            {
+                                IdUsuario = 0,
+                                Exito = false,
+                                Mensaje = Error.S0010,
+                                token = string.Empty
+                            };
+                        }
+                    }
                 }
                 else
                 {
-
+                    respuesta = new RespuestaAutenticacionMobileDto()
+                    {
+                        Exito = false,
+                    };
                 }
+                Crear(new ControlAsistenciaDTO() { IdUsuario = usu.IdUsuario, Estatus = respuesta.Exito, Coordenadas = autDto.Coordenadas, IdEmpresa = usu.IdEmpresa });
             }
+            else
+            {
+                respuesta = new RespuestaAutenticacionMobileDto()
+                {
+                    IdUsuario = 0,
+                    Exito = true,
+                    Mensaje = Error.S0009,
+                    token = string.Empty
+                };
+            }
+            return respuesta;
         }
         public static double CalcularDistancia(CoordenadasDTO point1, CoordenadasDTO point2)
         {

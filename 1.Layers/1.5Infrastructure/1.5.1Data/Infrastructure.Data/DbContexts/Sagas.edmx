@@ -1073,7 +1073,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene defi
           <Key>
             <PropertyRef Name="IdControlAsistencia" />
           </Key>
-          <Property Name="IdControlAsistencia" Type="int" Nullable="false" />
+          <Property Name="IdControlAsistencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdUsuario" Type="int" Nullable="false" />
           <Property Name="Estatus" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
@@ -3928,6 +3928,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CPrecioVenta_CEstacionCarburacion">
+          <End Role="CEstacionCarburacion" Type="Self.CEstacionCarburacion" Multiplicity="0..1" />
+          <End Role="CPrecioVenta" Type="Self.CPrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CEstacionCarburacion">
+              <PropertyRef Name="IdEstacionCarburacion" />
+            </Principal>
+            <Dependent Role="CPrecioVenta">
+              <PropertyRef Name="IdEstacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CPrecioVenta_CPrecioVentaEstatus">
           <End Role="CPrecioVentaEstatus" Type="Self.CPrecioVentaEstatus" Multiplicity="1" />
           <End Role="CPrecioVenta" Type="Self.CPrecioVenta" Multiplicity="*" />
@@ -6052,6 +6064,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_CPipa_Empresa" Association="Self.FK_CPipa_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CPipa" EntitySet="CPipa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_CEstacionCarburacion" Association="Self.FK_CPrecioVenta_CEstacionCarburacion">
+            <End Role="CEstacionCarburacion" EntitySet="CEstacionCarburacion" />
+            <End Role="CPrecioVenta" EntitySet="CPrecioVenta" />
           </AssociationSet>
           <AssociationSet Name="FK_CPrecioVenta_CPrecioVentaEstatus" Association="Self.FK_CPrecioVenta_CPrecioVentaEstatus">
             <End Role="CPrecioVentaEstatus" EntitySet="CPrecioVentaEstatus" />
@@ -10855,7 +10871,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CLinea" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProductoLinea" FromRole="PrecioVenta" ToRole="LineaProducto" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa" FromRole="PrecioVenta" ToRole="Empresa" />
           <NavigationProperty Name="CEstacionCarburacion" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CEstacionCarburacion" FromRole="PrecioVenta" ToRole="EstacionCarburacion" />
-          <Property Name="IdEstacion1" Type="Int32" />
+          <!--<Property Name="IdEstacion1" Type="Int32" />-->
         </EntityType>
         <EntityType Name="PrecioVentaEstatus">
           <Key>
@@ -13964,7 +13980,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="PrecioVenta">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.PrecioVenta">
               <MappingFragment StoreEntitySet="CPrecioVenta">
-                <ScalarProperty Name="IdEstacion1" ColumnName="IdEstacion" />
+                <ScalarProperty Name="IdEstacion" ColumnName="IdEstacion" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />

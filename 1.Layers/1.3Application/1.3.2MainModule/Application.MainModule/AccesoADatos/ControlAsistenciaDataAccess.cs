@@ -15,6 +15,10 @@ namespace Application.MainModule.AccesoADatos
     public class ControlAsistenciaDataAccess
     {
         private SagasDataUow uow;
+        public ControlAsistenciaDataAccess()
+        {
+            uow = new SagasDataUow();
+        }
         public RespuestaDto Insertar(ControlAsistencia entidad)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -22,6 +26,7 @@ namespace Application.MainModule.AccesoADatos
             {
                 try
                 {
+                    entidad.FechaRegistro = DateTime.Now;
                     uow.Repository<ControlAsistencia>().Insert(entidad);
                     uow.SaveChanges();
                     _respuesta.Id = entidad.IdControlAsistencia;
@@ -84,7 +89,8 @@ namespace Application.MainModule.AccesoADatos
             return uow.Repository<ControlAsistencia>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
             && x.FechaRegistro.Year.Equals(fecha.Year)
             && x.FechaRegistro.Month.Equals(fecha.Month)
-            && x.FechaRegistro.Day.Equals(fecha.Day));
+            && x.FechaRegistro.Day.Equals(fecha.Day)
+            && x.Estatus);
         }
 
     }

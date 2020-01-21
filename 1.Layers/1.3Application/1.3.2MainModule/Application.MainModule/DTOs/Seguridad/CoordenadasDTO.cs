@@ -20,6 +20,11 @@ namespace Application.MainModule.DTOs
             this.Latitud = Convert.ToDouble(dto.Coordenadas.Split(',')[0]);
             this.Longitud = Convert.ToDouble(dto.Coordenadas.Split(',')[1]);
         }
+        public CoordenadasDTO(EstacionCarburacion ec)
+        {
+            this.Latitud = Convert.ToDouble(ec.CoordenadaLat ?? 0);
+            this.Longitud = Convert.ToDouble(ec.CoordenadaLong ?? 0);
+        }
         public double Latitud { get; set; }
 
         public double Longitud { get; set; }

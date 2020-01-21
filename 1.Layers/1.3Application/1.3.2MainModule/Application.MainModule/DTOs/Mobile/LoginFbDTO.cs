@@ -14,6 +14,5 @@ namespace Application.MainModule.DTOs.Mobile
         [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "FbToken")]
         public String FbToken { get; set; }
-        public string Coordenadas { get; set; }
     }
 }

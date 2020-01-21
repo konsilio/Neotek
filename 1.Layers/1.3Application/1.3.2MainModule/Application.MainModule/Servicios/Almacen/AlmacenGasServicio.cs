@@ -1588,7 +1588,7 @@ namespace Application.MainModule.Servicios.Almacenes
 
             if (apReDto.identidadUE != identidadUnidadAlmacenGas.Camioneta)
             {
-                apReDto.unidadEntrada.PorcentajeActual = apReDto.RecargaLecturaFinal.ProcentajeEntrada.Value;
+                apReDto.unidadEntrada.PorcentajeActual = apReDto.RecargaLecturaFinal.ProcentajeEntrada ?? 0;
                 apReDto.RecargaLecturaFinalFotos = GenerarImagenes(apReDto.RecargaLecturaFinal);
                 apReDto.RecargaLecturaFinal.DatosProcesados = true;
                 apReDto.RecargaLecturaFinalSinNavProp = AlmacenGasAdapter.FromEntity(apReDto.RecargaLecturaFinal);

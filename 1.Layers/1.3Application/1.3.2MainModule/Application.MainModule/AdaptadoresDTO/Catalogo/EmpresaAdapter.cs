@@ -57,7 +57,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 UrlLogotipo180px = empresa.UrlLogotipo180px,
                 UrlLogotipo500px = empresa.UrlLogotipo500px,
                 UrlLogotipo1000px = empresa.UrlLogotipo1000px,
-                Coordenadas = empresa.CoordenadaLat != null && empresa.CoordenadaLong != null ? new DTOs.CoordenadasDTO() { Latitud = empresa.CoordenadaLat.Value, Longitud = empresa.CoordenadaLong.Value } : new DTOs.CoordenadasDTO(),
+                Coordenadas = new DTOs.CoordenadasDTO(empresa),
             };
             return empresaDto;
         }
