@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
             permisos.permisos();
         }
 
-        prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
-        String tokenpref = prefs.getString("fb_token", fb_token);
+        // prefs = getSharedPreferences("token", Context.MODE_PRIVATE);
+        // String tokenpref = prefs.getString("fb_token", fb_token);
 
         SAGASSql dbHelper = new SAGASSql(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            usuarioLoginDTO.setCoordenadas(loc.getLatitude() + "," + loc.getLongitude());
             // hAcc= precision en metros
             checkLocation();
             Log.d("localizacion", loc.toString());
@@ -130,10 +129,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
         } else {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            Log.d("localizacion", loc.toString());
+
             if (ActivityCompat.checkSelfPermission( MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
                     (MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
+                // usuarioLoginDTO.setCoordenadas(loc.getLatitude() + "," + loc.getLongitude());
                 return;
             }
 
@@ -177,19 +179,19 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 // loc.setAccuracy(Criteria.ACCURACY_COARSE);
                 // Float precision = loc.getAccuracy();
 
-                if (accuracy < 23.500) {
+                if (accuracy != 0) {
                     Log.d("precision", accuracy + "");
-                    onClickLogin();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
+                   /* AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
                     builder.setMessage("La precision es de:" + accuracy);
                     builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
                         dialogInterface.dismiss();
                     });
-                    builder.create().show();
+                    builder.create().show();*/
+                    onClickLogin();
                 } else {
                     buttonLogin.setEnabled(true);
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
-                    builder.setMessage("Error de posicion gps" + accuracy);
+                    builder.setMessage("No se puede establecer tu ubicación, vuelve a intentarlo" + accuracy);
                     builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
                         dialogInterface.dismiss();
                     });
@@ -244,8 +246,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
         public void onProviderDisabled(String s) {
 
         }
-
-
     };
 
     private boolean isLocationEnabled() {
@@ -320,6 +320,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 usuarioLoginDTO.setPassword(this.contraseña);
                 usuarioLoginDTO.setUsuario(usuario);
                 usuarioLoginDTO.setFbToken(fb_token);
+                usuarioLoginDTO.setCoordenadas(loc.getLatitude() + "," + loc.getLongitude());
+                Log.d("usuarioLoginDTO", usuarioLoginDTO + usuarioLoginDTO.getCoordenadas()+ "" +
+                        usuarioLoginDTO.getIdEmpresa()+ "" + usuarioLoginDTO.getFbToken() + "" +
+                        usuarioLoginDTO.getUsuario() +""
+                + usuarioLoginDTO.getPassword()+ "");
                 //usuarioLoginDTO.setFBToken(FirebaseInstanceId.getInstance().getToken());
                 //por medio del presenter se llama al web service con el objeto de usuario
                 loginPresenter.doLogin(usuarioLoginDTO);

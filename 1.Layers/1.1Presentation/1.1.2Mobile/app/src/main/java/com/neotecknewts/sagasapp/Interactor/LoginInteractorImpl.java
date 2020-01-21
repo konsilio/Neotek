@@ -144,9 +144,11 @@ public class LoginInteractorImpl implements LoginInteractor {
                         if (data != null) {
                             loginPresenter.onError(data.getMensaje());
                         } else {
+                            Log.d("else", "");
                             JSONObject respuesta = null;
                             try {
                                 respuesta = new JSONObject(response.errorBody().string());
+                                Log.d("try", respuesta+ "");
                                 Log.d("errorbody", response.errorBody()+"");
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -157,13 +159,14 @@ public class LoginInteractorImpl implements LoginInteractor {
                                 try {
                                     Log.w("Error body", respuesta.toString());
                                     loginPresenter.onError(respuesta.getString("Mensaje"));
-
                                 } catch (JSONException e) {
+                                    Log.d("catch", "");
                                     e.printStackTrace();
                                 }
 
                             } else {
                                 loginPresenter.onError(response.message());
+                                Log.d("elseerror", response.message());
                             }
                         }
                     }
