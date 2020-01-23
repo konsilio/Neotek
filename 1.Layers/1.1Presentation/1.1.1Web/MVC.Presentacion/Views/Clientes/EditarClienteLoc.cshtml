@@ -3,12 +3,22 @@
 @{
     ViewBag.Title = "Catálogo / Clientes / Locaciones";
 }
-
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 <script src="~/Resources/js/Clientes.js"></script>
 <link href="~/Resources/css/Clientes.css" rel="stylesheet" />
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#txtEdoP').hide();
         $("#btnRegresarIndex").click(function () {
 
             var form = $(this).parent("form");
@@ -16,18 +26,29 @@
             form.attr('method', 'post');
         });
     });
+    function OnSelectedChangeCountry(s, e) {
+        var value = s.GetValue();
+        if (value == 1)//Mexico
+        {
+            $('#txtEdoP').hide();
+            $('#IdEstadoRep').show();
+        }
+        if (value == 2)//EU
+        {
+            $('#IdEstadoRep').hide();
+            $('#txtEdoP').show();
+        }
+    }
 </script>
 @using (Html.BeginForm("ActualizarLocacion", "Clientes", FormMethod.Post))
 {
     <section class="content home">
         <div class="container-fluid">
-
             <div class="row clearfix">
                 <div class="col-lg-7 col-md-7 col-sm-12">
                     <h3>&nbsp;Catálogo / Clientes / Locaciones</h3>
                 </div>
             </div>
-
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
@@ -40,7 +61,6 @@
                                                 <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdCliente[0].RazonSocial=="")?ViewBag.IdCliente[0].Nombre + " " +ViewBag.IdCliente[0].Apellido1 + " " +ViewBag.IdCliente[0].Apellido2:ViewBag.IdCliente[0].RazonSocial )" />
                                                 <input type="text" name="IdCliente" hidden="hidden" value="@ViewBag.IdCliente[0].IdCliente" readonly="readonly" class="form-control" />
                                                 <input type="text" name="Orden" hidden="hidden" value="@ViewBag.Locaciones.Orden" readonly="readonly" class="form-control" />
-
                                             </div>
                                         </div>
                                     </div>
@@ -60,7 +80,7 @@
                                     <div class="form-group">
                                         <input type="text" name="TipoLocacion" class="form-control" value="@ViewBag.Locaciones.TipoLocacion">
                                     </div>
-                                </div>                               
+                                </div>
                             </div>
                             <div class="row clearfix" id="Dir">
                                 <div class="col-lg-2 col-md-2 col-sm-2">
@@ -90,14 +110,6 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        @*<div class="form-group">
-                                            <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
-                                                @foreach (var lst in ViewBag.ListaPaises)
-                                                {
-                                                    <option value="@lst.IdPais">@lst.Pais</option>
-                                                }
-                                            </select>
-                                        </div>*@
                                         <div class="form-group">
                                             @Html.DevExpress().ComboBox(settings =>
                                        {
@@ -114,9 +126,7 @@
                                            settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
                                        }).BindList(ViewBag.ListaPaises).Bind(Model.IdPais).GetHtml()
                                             @Html.ValidationMessageFor(model => model.IdPais, "", new { @class = "text-danger" })
-
                                         </div>
-                                       
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                         <div class="form-group">
@@ -129,12 +139,21 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
-                                            <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                                @foreach (var lst in ViewBag.ListaEstados)
-                                                {
-                                                    <option value="@lst.IdEstadoRep">@lst.Estado</option>
-                                                }
-                                            </select>
+                                            @Html.TextBoxFor(m => m.EstadoProvincia, new { @id = "txtEdoP", @class = "form-control hid", @placeholder = "Estado" })
+                                            @Html.DevExpress().ComboBox(settings =>
+                                               {
+                                                   settings.Name = "IdEstadoRep";
+                                                   settings.Width = 180;
+                                                   settings.SelectedIndex = Model.IdEstadoRep;
+                                                   settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                                                   settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                                   settings.Theme = "Material";
+                                                   settings.Properties.TextField = "Estado";
+                                                   settings.Properties.ValueField = "IdEstadoRep";
+                                                   settings.Properties.ValueType = typeof(byte?);
+                                               }).BindList(ViewBag.ListaEstados).Bind(Model.IdEstadoRep).GetHtml()
+
+                                            @Html.ValidationMessageFor(m => m.IdEstadoRep, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
@@ -243,7 +262,7 @@
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-10">
                                         <div class="form-group">
-                                            <input type="text" name="formatted_address" class="form-control" />
+                                            <input type="text" name="formatted_address" value="@Model.formatted_address" class="form-control" />
                                         </div>
                                         @Html.ValidationMessageFor(m => m.formatted_address, "", new { @class = "alert-danger" })
                                     </div>

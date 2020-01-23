@@ -56,7 +56,7 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static List<OperadorChoferDTO> ObtenerUsuariosOperador(short idEmpresa)
         {
-            List<OperadorChoferDTO> lPventas = AdaptadoresDTO.Catalogo.OperadorChoferAdapter.ToUsuariosOpe(new OperadorChoferDataAccess().BuscarTodos(idEmpresa));
+            List<OperadorChoferDTO> lPventas = OperadorChoferAdapter.ToUsuariosOpe(new OperadorChoferDataAccess().BuscarTodos(idEmpresa));
             return lPventas;
         }
         public static List<PuntoVenta> ObtenerIdEmp(short IdEmpresa)
@@ -92,6 +92,15 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             var operadorChofer = OperadorChoferServicio.ObtenerPorUsuarioAplicacion();
             return operadorChofer != null ? Obtener(operadorChofer) : null;
+        }
+        public static UnidadAlmacenGas ObtenerPorUsuario(int idusuario)
+        {
+            var chof = new PuntoVentaDataAccess().BuscarPorUsuario(idusuario);
+            if (chof != null)
+                return Obtener(chof).UnidadesAlmacen;
+            else
+                return new UnidadAlmacenGas { Numero = "Operativo" };
+          
         }
         public static RespuestaDto Insertar(PuntoVenta pv)
         {

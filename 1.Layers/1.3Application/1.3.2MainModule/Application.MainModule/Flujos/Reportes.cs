@@ -144,9 +144,8 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarCliente();
             if (!resp.Exito) return null;       
             
-            var Usuarios = ClienteServicio.BuscarUsuarioAsistencia(dto).ToList();
-            var Usuario = Usuarios.Where(x => x.Nombre == "Alejandro" && x.Apellido1 == "Basilio" || x.Nombre == "GERARDO").ToList();
-            var List = ClientesAdapter.ToDTOCA(Usuario);
+            var reporte = ControlAsistenciaServicio.Obtener(TokenServicio.ObtenerIdEmpresa() ,dto).ToList();                
+            var List = ControlAsistenciaAdapter.ToDTOr(reporte);
             return List;
         }
         public List<CreditoXClienteMensualDTO> RepCreditoXClienteMensual(PeriodoDTO dto)

@@ -11744,6 +11744,20 @@
     <Content Include="Views\Reportes\CreditoXClienteMensualPartial.cshtml" />
     <Content Include="Views\Reportes\CreditoXCliente.cshtml" />
     <Content Include="Views\Reportes\ControlDeAsistenciaPartial.cshtml" />
+    <Content Include="Views\Reportes\AutoConsumos.cshtml" />
+    <Content Include="Views\Reportes\CreditoOtorgado.cshtml" />
+    <Content Include="Views\Reportes\CreditoOtorgadoPartial.cshtml" />
+    <Content Include="Views\Reportes\CreditoRecuperado.cshtml" />
+    <Content Include="Views\Reportes\CreditoRecuperadoPartial.cshtml" />
+    <Content Include="Views\Reportes\CreditoXClienteMensual.cshtml" />
+    <Content Include="Views\Reportes\DescuentosXClientes.cshtml" />
+    <Content Include="Views\Reportes\DetalleCreditoOtorgado.cshtml" />
+    <Content Include="Views\Reportes\DetalleCreditoRecuperado.cshtml" />
+    <Content Include="Views\Reportes\DetalleCreditoXCliente.cshtml" />
+    <Content Include="Views\Reportes\EquipoDeTransporte.cshtml" />
+    <Content Include="Views\Reportes\RendimientoVehicularCamionetas.cshtml" />
+    <Content Include="Views\Reportes\Ventas.cshtml" />
+    <Content Include="Views\Reportes\VentasXPuntoVenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

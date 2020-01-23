@@ -29,7 +29,7 @@
     </div>
     <section class="content home">
         <div class="container-fluid">
-            @Html.HiddenFor(m => m.FechaFin);
+            @Html.HiddenFor(m => m.FechaFin)
             @using (Html.BeginForm("ControlDeAsistencia", "Reportes", FormMethod.Post))
             {
                 <div class="block-header">
@@ -70,11 +70,11 @@
                                 <div class="table-responsive">
                                     @if (TempData["DataSource"] != null)
                                     {
-                                        @Html.Partial("_CuboDeInformacionPartial", (List<ControlAsistenciaModel>)TempData["DataSource"])
+                                        @Html.Partial("ControlDeAsistenciaPartial", (List<ControlAsistenciaModel>)TempData["DataSource"])
                                     }
                                     else
                                     {
-                                        @Html.Partial("_CuboDeInformacionPartial", new List<ControlAsistenciaModel>())
+                                        @Html.Partial("ControlDeAsistenciaPartial", new List<ControlAsistenciaModel>())
                                     }
                                     <span>Intencionalmente sin acentos</span>
                                 </div>

@@ -493,20 +493,13 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             DateTime fechaPasada = Us.FechaRegistro;
             return new ControlDeAsistenciaDTO()
             {
-                IdUsuario = Us.IdUsuario.ToString(),
+                //IdUsuario = Us.IdUsuario.ToString(),
                 Nombre = Us.Nombre +" "+ Us.Apellido1,
                 PtoVenta = Us.Nombre == "Alejandro" ? "ISLA" : "LIBRAMIENTO",
                 FechaRegistro = Us.Nombre == "Alejandro" ? DateTime.Now : fechaPasada,
-                Estatus = Us.Nombre =="Alejandro" ? "Exitoso" : "No exitoso",
-
-                
-
+                Estatus = Us.Nombre =="Alejandro" ? "Exitoso" : "No exitoso",          
             };
-
-
         }
-
-
         public static List<CargosDTO> ToDTOCX(List<Cargo> Cargo)
         {
             return Cargo.Select(x => ToDTOCX(x)).ToList();

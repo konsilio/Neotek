@@ -79,7 +79,7 @@ namespace MVC.Presentacion.Controllers
         public ActionResult EditarCliente(int id)
        {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            string _tkn = Session["StringToken"].ToString();
+            string _tkn = Session["StringToken"].ToString();         
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);          
@@ -97,17 +97,14 @@ namespace MVC.Presentacion.Controllers
         public ActionResult GuardaEdicionCliente(ClientesDto _Obj)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            _tok = Session["StringToken"].ToString();
-            
-            var respuesta = CatalogoServicio.ModificarCliente(_Obj, _tok);
-          
+            _tok = Session["StringToken"].ToString();            
+            var respuesta = CatalogoServicio.ModificarCliente(_Obj, _tok);          
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
-
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;              
@@ -126,7 +123,6 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
-
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;
@@ -137,9 +133,9 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-            ViewBag.IdCliente = CatalogoServicio.ListaClientes(id, 0, 0, "", "", _tkn);
-            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
+            ViewBag.IdCliente = CatalogoServicio.ListaClientes(id, 0, 0, "", "", _tkn);          
             //Se obtienen los estados 
+            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
             //llenar locaciones
             ViewBag.Locaciones = CatalogoServicio.ObtenerLocaciones(id, _tkn);
@@ -201,7 +197,7 @@ namespace MVC.Presentacion.Controllers
             }
 
             ViewBag.MessageError = TempData["RespuestaDTOError"];
-            return View();
+            return View(ViewBag.Locaciones);
         }
         [HttpPost]
         public ActionResult ActualizarLocacion(ClienteLocacionMod _ObjModel)

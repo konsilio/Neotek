@@ -82,10 +82,8 @@ namespace Application.MainModule.Servicios.Seguridad
                     var operador = usuario.OperadoresChoferes.FirstOrDefault(x => x.Activo);
                     //var puntoVenta = PuntoVentaServicio.Obtener(operador.IdOperadorChofer);
                     var puntoVenta = PuntoVentaServicio.Obtener(operador);
-
                     if (puntoVenta != null)
                     {
-
                         var unidadAlmacen = puntoVenta.UnidadesAlmacen;
                         if (unidadAlmacen.IdEstacionCarburacion != null && unidadAlmacen.IdEstacionCarburacion != 0)
                             esEstacion = true;
@@ -163,7 +161,6 @@ namespace Application.MainModule.Servicios.Seguridad
                 listMenu = menu,
             };
         }
-
         private static UsuarioAplicacionDto AutenticarUsuarioDeEmpresa(AutenticacionDto autDto)
         {
             var usuario = new UsuarioDataAccess().Buscar(autDto.IdEmpresa, autDto.Usuario, autDto.Password);

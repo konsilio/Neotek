@@ -7,24 +7,26 @@
         settings.KeyFieldName = "IdControlAsistencia";
         settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
         settings.CallbackRouteValues = new { Controller = "Reportes", Action = "_ControlDeAsistencia" };
-        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        //settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Cobranza", Action = "EditingUpdate" };
-        settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = false;
-        settings.CommandColumn.ShowDeleteButton = false;
-        settings.CommandColumn.ShowEditButton = true;
+        settings.CommandColumn.Visible = false;
         settings.Settings.ShowFilterRow = true;
         settings.Settings.ShowGroupPanel = true;
         settings.Settings.ShowFooter = true;
         settings.Theme = "Material";
-        settings.SettingsCommandButton.UpdateButton.Text = "GPS";
-        settings.SettingsCommandButton.EditButton.Text = "GPS";
         //settings.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdRegistro";
+            c.Caption = "#";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(7);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
         settings.Columns.Add(c =>
         {
             c.FieldName = "Nombre";
             c.Caption = "Nombre";
-            c.GroupIndex = 1;
             c.Width = System.Web.UI.WebControls.Unit.Percentage(7);
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
@@ -33,7 +35,7 @@
         settings.Columns.Add(c =>
         {
             c.FieldName = "PtoVenta";
-            c.Caption = "PtoVenta";
+            c.Caption = "Punto Venta";
             c.Width = System.Web.UI.WebControls.Unit.Percentage(15);
             //c.Settings.AllowSort = DefaultBoolean.False;        
             c.EditFormSettings.Visible = DefaultBoolean.False;
@@ -41,7 +43,7 @@
         settings.Columns.Add(c =>
         {
             c.FieldName = "FechaRegistro";
-            c.Caption = "FechaRegistro";
+            c.Caption = "Fecha Registro";
             //c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
             //c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
@@ -57,7 +59,15 @@
             c.ReadOnly = true;
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
-
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Ubicación";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(string.Format("<a target='_blank' href=https://maps.google.com/?q=" + DataBinder.Eval(d.DataItem, "Coordenadas").ToString() + "><i class='material-icons'>room</i> <span class='icon-name'></span></a>"));
+            });
+        });
 
     }
 ).Bind(Model).GetHtml()

@@ -1,4 +1,6 @@
 ﻿using Application.MainModule.DTOs;
+using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -29,9 +31,9 @@ namespace Application.MainModule.AdaptadoresDTO
         }
         public static List<ControlAsistenciaDTO> toDTO(List<ControlAsistencia> entidades)
         {
-            return entidades.Select(x => toDTO(x)).ToList();
+            return entidades.Select(x => ToDTO(x)).ToList();
         }
-        public static ControlAsistenciaDTO toDTO(ControlAsistencia entidad)
+        public static ControlAsistenciaDTO ToDTO(ControlAsistencia entidad)
         {
             return new ControlAsistenciaDTO()
             {
@@ -42,6 +44,22 @@ namespace Application.MainModule.AdaptadoresDTO
                 Coordenadas = entidad.Coordenadas,
                 IdEmpresa = entidad.IdEmpresa,
             };
+        }
+        public static ControlDeAsistenciaDTO ToDTOr(ControlAsistencia entidad)
+        {
+            return new ControlDeAsistenciaDTO()
+            {
+                IdRegistro = entidad.IdControlAsistencia,
+                Nombre = UsuarioServicio.ObtenerNombreCompleto(entidad.Usuario),
+                Estatus = entidad.Estatus ? "Exitoso" : "No exitoso",
+                FechaRegistro = entidad.FechaRegistro,
+                Coordenadas = entidad.Coordenadas,
+                PtoVenta = PuntoVentaServicio.ObtenerPorUsuario(entidad.IdUsuario).Numero,
+            };
+        }
+        public static List<ControlDeAsistenciaDTO> ToDTOr(List<ControlAsistencia> entidades)
+        {
+            return entidades.Select(x => ToDTOr(x)).ToList();
         }
     }
 }

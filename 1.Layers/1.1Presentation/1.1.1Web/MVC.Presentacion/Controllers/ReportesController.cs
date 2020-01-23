@@ -107,7 +107,6 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
         public ActionResult Ventas(PeriodoDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -121,7 +120,6 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
         public ActionResult RendimientoVehicular(RendimientoVehicularModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -135,7 +133,6 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
         public ActionResult RendimientoVehicularCamionetas(PeriodoDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -161,7 +158,6 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
         public ActionResult AutoConsumos(PeriodoDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -175,7 +171,6 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
         public ActionResult DescuentosXClientes(PeriodoDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -189,7 +184,6 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
         public ActionResult VentasXPuntoVenta(VentasXPuntoVentaModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -203,7 +197,6 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
         public ActionResult EquipoDeTransporte(PeriodoDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -237,7 +230,6 @@ namespace MVC.Presentacion.Controllers
             TempData.Keep("DataSourceDetallado");  
             return PartialView("CreditoRecuperadoPartial", model);
         }
-
         public ActionResult DetalleCreditoRecuperado(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -247,7 +239,6 @@ namespace MVC.Presentacion.Controllers
             TempData.Keep("DataSourceDetallado");
             return PartialView("DetalleCreditoRecuperado", Detalles);
         }
-
         public ActionResult InventarioXConcepto(InventarioXConceptoModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -260,8 +251,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["DataSource"] = ReporteServicio.BuscarInventarioConcepto(model, tkn);
             }
             return View(model);
-        }
-        
+        }        
         public ActionResult HistoricoVsVentas(HistoricoVentasConsulta model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -331,7 +321,6 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
         public static GridViewSettings CreateGeneralDetailGridSettings(string _id)
         {
             GridViewSettings settings = new GridViewSettings();
@@ -339,22 +328,16 @@ namespace MVC.Presentacion.Controllers
             settings.SettingsDetail.MasterGridName = "CreditoRecuperado";
             settings.CallbackRouteValues = new { Controller = "Reportes", Action = "DetalleCreditoRecuperado", id = _id };
             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-
             settings.KeyFieldName = "Id";
             settings.Columns.Add("FechaAbono");
             settings.Columns.Add("FechaCarga");
             settings.Columns.Add("FormaDePago");
             settings.Columns.Add("Importe");
             settings.Columns.Add("Nota");
-
-
             settings.Settings.ShowFooter = true;
             settings.Settings.ShowFilterRow = true;
-
-
             return settings;
         }
-
         public ActionResult CreditoOtorgado(PeriodoDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -365,8 +348,7 @@ namespace MVC.Presentacion.Controllers
                 ViewData["Reporte"] = TiposReporteConst.CreditoOtorgado;
                 TempData["DataSourceDetallado"] = TempData["DataSourceDetallado"] ?? ReporteServicio.BuscarCreditoOtorgadoClientes(model, tkn);
                 TempData.Keep("DataSourceDetallado");
-            }
-           
+            }           
             return View(model);
         }
         public ActionResult CreditoOtorgadoPartial()
@@ -375,7 +357,6 @@ namespace MVC.Presentacion.Controllers
             TempData.Keep("DataSourceDetallado");
             return PartialView("CreditoOtorgadoPartial", model);
         }
-
         public ActionResult DetalleCreditoOtorgado(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -392,24 +373,16 @@ namespace MVC.Presentacion.Controllers
             settings.SettingsDetail.MasterGridName = "CreditoOtorgado";
             settings.CallbackRouteValues = new { Controller = "Reportes", Action = "DetalleCreditoOtorgado", id = _id };
             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-
             settings.KeyFieldName = "Id";      
             settings.Columns.Add("FechaCarga");
             settings.Columns.Add("Importe");
             settings.Columns.Add("Litros");
             settings.Columns.Add("Nota");
             settings.Columns.Add("Vendedor");
-
-
             settings.Settings.ShowFooter = true;
             settings.Settings.ShowFilterRow = true;
-
-
             return settings;
         }
-
-
-
         public ActionResult CreditoXCliente(PeriodoDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -421,11 +394,7 @@ namespace MVC.Presentacion.Controllers
                 ViewData["Reporte"] = TiposReporteConst.CreditoXCliente;
                 TempData["DataSourceDetallado"] = TempData["DataSourceDetallado"] ?? ReporteServicio.BuscarCreditoXCliente(model, tkn);               
                 TempData.Keep("DataSourceDetallado");
-                
-               
             }
-         
-         
             return View(model);
         }
         public ActionResult CreditoXClientePartial()
@@ -434,7 +403,6 @@ namespace MVC.Presentacion.Controllers
             TempData.Keep("DataSourceDetallado");
             return PartialView("CreditoXClientePartial", model);
         }
-
         public ActionResult DetalleCreditoXCliente(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -451,7 +419,6 @@ namespace MVC.Presentacion.Controllers
             settings.SettingsDetail.MasterGridName = "CreditoXCliente";
             settings.CallbackRouteValues = new { Controller = "Reportes", Action = "DetalleCreditoXCliente", id = _id };
             settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-
             settings.KeyFieldName = "Id";
             settings.Columns.Add("FechaRegistro");
             settings.Columns.Add("FechaVencimiento");
@@ -466,15 +433,10 @@ namespace MVC.Presentacion.Controllers
             settings.Columns.Add("Dias32a61", "Dias 32 a 61");
             settings.Columns.Add("Dias62a91", "Dias 62 a 91");
             settings.Columns.Add("Mas91", "Mas 91");
-
-
             settings.Settings.ShowFooter = true;
             settings.Settings.ShowFilterRow = true;
-
-
             return settings;
         }
-
         public ActionResult CreditoXClienteMensual(PeriodoDTO model = null)
         {
             string FechaI = "01/01/219";
@@ -492,7 +454,6 @@ namespace MVC.Presentacion.Controllers
             }
             return View(model);
         }
-
         public ActionResult ControlDeAsistencia(PeriodoDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -503,21 +464,17 @@ namespace MVC.Presentacion.Controllers
             {
                 ViewData["Reporte"] = TiposReporteConst.ControlDeAsistencia;
                 TempData["DataSource"] = ReporteServicio.BuscarUsuarioAsistencia(model, tkn);
+                TempData.Keep("DataSource");
             }
             return View(model);
         }
-
         public ActionResult _ControlDeAsistencia()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(tkn);
-            var model = CobranzaServicio.ObtenerCargos(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            return PartialView(model);
+            TempData.Keep("DataSource");
+            return PartialView("ControlDeAsistenciaPartial", (List<ControlAsistenciaModel>)TempData["DataSource"]);
         }
-
-
-
         //Cubo de inforamcion
         public ActionResult GetGridView(string Tipo)
         {

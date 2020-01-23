@@ -24,17 +24,20 @@ namespace Application.MainModule.Servicios
             //                  0         1     2       3       4      5     6
             //string a = "CadenaBase64|EstacionNo1|IdUa|Magnatel|Inicial|60-5|.jpg"
             List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
-            string nombre = string.Concat(campos.ElementAt(1), "_", campos.ElementAt(2), "_", foto.IdOrden, "_", campos.ElementAt(3), "_", campos.ElementAt(4), "_", campos.ElementAt(5));
-            string extension = campos.ElementAt(6);
-            foto.CadenaBase64 = campos.ElementAt(0);
+            if (campos.Count > 1)
+            {
+                string nombre = string.Concat(campos.ElementAt(1), "_", campos.ElementAt(2), "_", foto.IdOrden, "_", campos.ElementAt(3), "_", campos.ElementAt(4), "_", campos.ElementAt(5));
+                string extension = campos.ElementAt(6);
+                foto.CadenaBase64 = campos.ElementAt(0);
 
-            foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
-            foto.PathImagen = GenerarNombre(nombre, extension, foto.PathImagen);
-            foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);
+                foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
+                foto.PathImagen = GenerarNombre(nombre, extension, foto.PathImagen);
+                foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);
 
-            FileUtilities.GuardarImagen(foto.CadenaBase64, foto.PathImagen);
-            foto.CadenaBase64 = null;
-            campos.Clear();
+                FileUtilities.GuardarImagen(foto.CadenaBase64, foto.PathImagen);
+                foto.CadenaBase64 = null;
+                campos.Clear();
+            }
             return foto;
         }
         public static AlmacenGasTraspasoFoto ObtenerImagen(AlmacenGasTraspasoFoto foto)

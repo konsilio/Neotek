@@ -21,19 +21,19 @@
     if (message != '') {
         $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
     }
-    $(function () {
-        $('table[id=IdPais] td').on('click', function () {
-            if (IdPais.GetValue() !== "1") {
-                $('table[id=IdEstadoRep]').parent().hide();
-                $('#txtEdoP').show();
-            }
-
-            if ($('#ddlPais').find('option:selected').val() == "1" || $('#ddlPais').find('option:selected').val() == "0") {
-                $('#ddlEdo').parent().show();
-                $('#txtEdoP').hide();
-            }
-        });
-    });
+    function OnSelectedChangeCountry(s, e) {
+        var value = s.GetValue();
+        if (value == 1)//Mexico
+        {
+            $('#txtEdoP').hide();
+            $('#IdEstadoRep').show();
+        }
+        if (value == 2)//EU
+        {
+            $('#IdEstadoRep').hide();
+            $('#txtEdoP').show();
+        }
+    }
 </script>
 <style type="text/css">
     .hid {
@@ -132,20 +132,20 @@
                                         </div>
                                      
                                         <div class="col-lg-3 col-md-3 col-sm-3">
-                                            <div class="form-group">
+                                            @*<div class="form-group">
                                                     <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
                                                         @foreach (var lst in ViewBag.ListaPaises)
                                                         {
                                                             <option value="@lst.IdPais">@lst.Pais</option>
                                                         }
                                                     </select>
-                                                </div>
-                                            @*<div class="form-group">
+                                                </div>*@
+                                            <div class="form-group">
                                                 @Html.DevExpress().ComboBox(settings =>
                                                {
                                                    settings.Name = "IdPais";
-                                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                                 
+                                                   settings.SelectedIndex = 1;
+                                                   settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);                                                 
                                                    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                    settings.Properties.DropDownStyle = DropDownStyle.DropDown;
                                                    settings.Theme = "Material";
@@ -155,9 +155,8 @@
                                                    settings.ClientEnabled = true;
                                                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
                                                }).BindList(ViewBag.ListaPaises).GetHtml()
-                                                @Html.ValidationMessageFor(model => model.IdPais, "", new { @class = "text-danger" })*@
-
-                                            @*</div>*@
+                                                @Html.ValidationMessageFor(model => model.IdPais, "", new { @class = "text-danger" })
+                                            </div>
 
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1">
@@ -172,25 +171,26 @@
                                         <div class="col-lg-3 col-md-3 col-sm-3">
                                             <div class="form-group">
                                                 <input type="text" name="EstadoProvincia" id="txtEdoP" class="form-control hid" placeholder="Estado" />
-                                                @*@Html.DevExpress().ComboBox(settings =>
+                                                @Html.DevExpress().ComboBox(settings =>
                                            {
                                                settings.Name = "IdEstadoRep";                                              
                                                 settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
                                                settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+                                               settings.SelectedIndex = 12;
                                                settings.Theme = "Material";
                                                settings.Properties.TextField = "Estado";
                                                settings.Properties.ValueField = "IdEstadoRep";
                                                settings.Properties.ValueType = typeof(int);
                                                settings.ClientEnabled = true;
-                                               //settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
-                                           }).BindList(ViewBag.ListaEstados).GetHtml()*@
-                                                <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                               settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeCountry";
+                                           }).BindList(ViewBag.ListaEstados).GetHtml()
+                                                @*<select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                     @foreach (var lst in ViewBag.ListaEstados)
                                                     {
                                                         <option value="@lst.IdEstadoRep">@lst.Estado</option>
                                                     }
-                                                </select>
+                                                </select>*@
                                             </div>
                                         </div>
                                         <div class="col-lg-1 col-md-1 col-sm-1">

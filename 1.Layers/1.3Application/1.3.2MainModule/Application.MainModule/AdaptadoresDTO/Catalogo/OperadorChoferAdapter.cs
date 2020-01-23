@@ -12,7 +12,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
    public class OperadorChoferAdapter
     {
         public static OperadorChoferDTO ToOperador(OperadorChofer lu)
-        {
+        {        
             Usuario _objUser = UsuarioServicio.Obtener(lu.IdUsuario);
             OperadorChoferDTO _opeDTO = new OperadorChoferDTO()
             {

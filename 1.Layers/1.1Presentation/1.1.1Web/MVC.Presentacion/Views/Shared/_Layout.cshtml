@@ -21,7 +21,7 @@
     <script src="~/assets/plugins/chartjs/Chart.min.js"></script>
     <link href="~/Content/Site.css" rel="stylesheet" />
     <script src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
-  
+
 
 </head>
 <body class="theme-black menu_dark">
@@ -99,11 +99,11 @@
                         {
                             <li class="menu_dark"><a href="@Url.Action("Ordenes", "OrdenCompra")"><i class="material-icons">shopping_cart </i><span class="icon-name">Compras</span> </a></li>
                             @*<li>
-                    <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
-                    <ul class="ml-menu">
-                        <li><a href="@Url.Action("Ordenes", "OrdenCompra")">Orden de Compra </a></li>
-                    </ul>
-                </li>*@
+                                    <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
+                                    <ul class="ml-menu">
+                                        <li><a href="@Url.Action("Ordenes", "OrdenCompra")">Orden de Compra </a></li>
+                                    </ul>
+                                </li>*@
                         }
                         if (rol.VentasCajaGeneral)
                         {
@@ -118,15 +118,15 @@
                         if (rol.HistoricoVentas)
                         {
 
-                        <li class="menu_dark"><a href="@Url.Action("Index", "Historico")"><i class="material-icons">receipt </i><span class="icon-name">Historico Ventas</span> </a></li>
+                            <li class="menu_dark"><a href="@Url.Action("Index", "Historico")"><i class="material-icons">receipt </i><span class="icon-name">Historico Ventas</span> </a></li>
 
-                        @*<li>
-                            <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">receipt</i><span>Historico Ventas</span> </a>
-                            <ul class="ml-menu">
-                                <li>@Html.ActionLink("Carga Informacion", "Index", "Historico")</li>
+                            @*<li>
+                                    <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">receipt</i><span>Historico Ventas</span> </a>
+                                    <ul class="ml-menu">
+                                        <li>@Html.ActionLink("Carga Informacion", "Index", "Historico")</li>
 
-                            </ul>
-                        </li>*@
+                                    </ul>
+                                </li>*@
                         }
                         if (rol.CreditoCobranza)
                         {
@@ -334,10 +334,10 @@
                                     {
                                         <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
                                     }
-                                    @*@if (rol.CatEgresos)
-                        {*@
-                                    <li>@Html.ActionLink("Egresos", "Index", "Egreso")</li>
-                                    @*}*@
+                                    @if (rol.CatEgresos)
+                                    {
+                                        <li>@Html.ActionLink("Egresos", "Index", "Egreso")</li>
+                                    }
                                     @if (rol.CatUsuarios)
                                     {
                                         <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
@@ -352,11 +352,8 @@
                                     }
                                     @if (rol.CatCombustibles)
                                     {
-                                        <li>@Html.ActionLink("Combustibles", "Index", "Combustible")</li>}
-                                    @*@if (rol.CatPuntosVenta)
-                        {
-                        <li>@Html.ActionLink("Puntos de venta", "Index", "PuntoVenta")</li>
-                        }*@
+                                        <li>@Html.ActionLink("Combustibles", "Index", "Combustible")</li>
+                                    }
                                     @if (rol.CatPrecioVenta)
                                     {
                                         <li>@Html.ActionLink("Precio de venta", "Index", "PrecioVenta")</li>}

@@ -28,8 +28,13 @@ namespace Application.MainModule.Servicios
         public static ControlAsistenciaDTO ObtenerHoy(int idUsuario)
         {
             var entidad = new ControlAsistenciaDataAccess().Buscar(idUsuario, DateTime.Now);
-            if (entidad != null) return ControlAsistenciaAdapter.toDTO(entidad);
+            if (entidad != null) return ControlAsistenciaAdapter.ToDTO(entidad);
             else return null;
+        }
+        public static List<ControlAsistencia> Obtener(short idEmpresa, PeriodoDTO p)
+        {
+            return new ControlAsistenciaDataAccess().Buscar(idEmpresa, p);
+            //return ControlAsistenciaAdapter.toDTO(respuesta);
         }
         public static RespuestaAutenticacionMobileDto CalcularEntrada(Usuario usu, AutenticacionDto autDto, PuntoVenta pv = null, bool esEstacion = false)
         {
@@ -63,7 +68,7 @@ namespace Application.MainModule.Servicios
                         if (pv.UnidadesAlmacen.EstacionCarburacion.CoordenadaLat != null && pv.UnidadesAlmacen.EstacionCarburacion.CoordenadaLong != null)
                         {
                             var distancia = CalcularDistanciaEnMetros(new CoordenadasDTO(pv.UnidadesAlmacen.EstacionCarburacion), new CoordenadasDTO(autDto));
-                            if (distancia > 40)
+                            if (distancia > 20)
                             {
                                 respuesta = new RespuestaAutenticacionMobileDto()
                                 {
