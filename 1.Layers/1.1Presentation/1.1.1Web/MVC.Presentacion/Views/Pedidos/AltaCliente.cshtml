@@ -129,21 +129,21 @@
                                    settings.Theme = "Material";
                                    settings.Properties.TextField = "Descripcion";
                                    settings.Properties.ValueField = "IdTipoPersona";
-                                   settings.PreRender = (s, e) =>
-                                   {
-                                       MVCxComboBox combo = s as MVCxComboBox;
-                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno", string.Empty));
-                                       combo.Properties.ValueType = typeof(short);
-                                       combo.SelectedIndex = 0;
-                                   };
+                                   //settings.PreRender = (s, e) =>
+                                   //{
+                                   //    MVCxComboBox combo = s as MVCxComboBox;
+                                   //    combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno", string.Empty));
+                                   //    combo.Properties.ValueType = typeof(short);
+                                   //    combo.SelectedIndex = 0;
+                                   //};
+                                   settings.SelectedIndex = 1;
                                    settings.ClientEnabled = true;
-                                   settings.SelectedIndex = 0;
                                    settings.Properties.ValueType = typeof(byte);
                                    settings.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedChangeFilter";
                                }).BindList(ViewBag.TipoPersona).Bind(Model.cliente.IdTipoPersona).GetHtml()
                                     @Html.ValidationMessageFor(m => m.cliente.IdTipoPersona, "", new { @class = "alert-danger" })
                                 </div>
-                    
+
                             </div>
 
                             <div class="col-lg-4 col-md-4 col-sm-4">
@@ -158,26 +158,27 @@
                                    settings.Theme = "Material";
                                    settings.Properties.TextField = "Descripcion";
                                    settings.Properties.ValueField = "IdRegimenFiscal";
+                                   settings.SelectedIndex = 612;
                                    //settings.Properties.ValueType = typeof(int);
-                                   settings.PreRender = (s, e) =>
-                                   {
-                                       MVCxComboBox combo = s as MVCxComboBox;
-                                       combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno",string.Empty));
-                                       combo.Properties.ValueType = typeof(short);
-                                       combo.SelectedIndex = 0;
-                                   };
+                                   //settings.PreRender = (s, e) =>
+                                   //{
+                                   //    MVCxComboBox combo = s as MVCxComboBox;
+                                   //    combo.Properties.Items.Insert(0, new ListEditItem("Seleccione uno",string.Empty));
+                                   //    combo.Properties.ValueType = typeof(short);
+                                   //    combo.SelectedIndex = 0;
+                                   //};
                                }).BindList(ViewBag.Regimen).GetHtml()
                                     @Html.ValidationMessageFor(m => m.cliente.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
-                      <div class="col-lg-4 col-md-4 col-sm-4">
-                          <div class="form-group">
-                              <div>
-                                  Teléfono:@Html.TextBoxFor(m => m.cliente.Telefono, new { @class = "form-control", @id = "txtTel", })
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    <div>
+                                        Teléfono:@Html.TextBoxFor(m => m.cliente.Telefono, new { @class = "form-control", @id = "txtTel", })
 
-                              </div>
-                              @Html.ValidationMessageFor(m => m.cliente.Telefono1, "", new { @class = "alert-danger" })
-                          </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.cliente.Telefono1, "", new { @class = "alert-danger" })
+                                </div>
                             </div>
                         </div>
                         <div class="row clearfix">
@@ -263,66 +264,66 @@
                         </div>
                     </div>
                 </div>
-               
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong>Condición del crédito y descuento</strong></h2>
-                            </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-2">
-                                        <div class="form-group">
-                                            <div>
-                                                Autorizar ventas con límite de crédito excedido
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                        <div class="form-group">
-                                            <label class="switch">
-                                                @Html.CheckBoxFor(m => m.cliente.VentaExtraordinaria, new { @class = "form-control" })
-                                                <span class="slider round" id="onfire"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:12.666667%">
-                                        <div class="form-group">
-                                            Límite de crédito:
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            Monto $ <input name="cliente.limiteCreditoMonto" class="form-control" type="number" />
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            <div>
-                                                Días <input name="cliente.limiteCreditoDias" class="form-control" type="number" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            <div>
-                                                Credito disponible:
-                                                <input name="cliente.CreditoDisponibleMonto" class="form-control" type="text" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
-                                        <div class="form-group">
-                                            <div>
-                                                Descuento %:
-                                                <input name="cliente.DescuentoXKilo" class="form-control" type="number" />
-                                            </div>
-                                        </div>
-                                    </div>
 
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Condición del crédito y descuento</strong></h2>
+                    </div>
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <div>
+                                        Autorizar ventas con límite de crédito excedido
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                <div class="form-group">
+                                    <label class="switch">
+                                        @Html.CheckBoxFor(m => m.cliente.VentaExtraordinaria, new { @class = "form-control" })
+                                        <span class="slider round" id="onfire"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:12.666667%">
+                                <div class="form-group">
+                                    Límite de crédito:
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                <div class="form-group">
+                                    Monto $ <input name="cliente.limiteCreditoMonto" class="form-control" type="number" />
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                <div class="form-group">
+                                    <div>
+                                        Días <input name="cliente.limiteCreditoDias" class="form-control" type="number" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                <div class="form-group">
+                                    <div>
+                                        Credito disponible:
+                                        <input name="cliente.CreditoDisponibleMonto" class="form-control" type="text" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 credit" style="max-width:15.666667%">
+                                <div class="form-group">
+                                    <div>
+                                        Descuento %:
+                                        <input name="cliente.DescuentoXKilo" class="form-control" type="number" />
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                    
+                    </div>
+                </div>
+
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">

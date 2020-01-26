@@ -441,7 +441,9 @@ namespace Application.MainModule.AdaptadoresDTO.Pedidos
             return new RepCallCenterDTO()
             {
                 IdPedido = entidad.IdPedido,
-                RFC = entidad.CCliente.Rfc,
+                //RFC = entidad.CCliente.Rfc,
+                Telefono = ClienteServicio.ObtenerTelefono(entidad.CCliente),
+                Nombre = ClienteServicio.ObtenerNomreCliente(entidad.CCliente),
                 Estatus = EstatusPedidoConst.ObtenerString(entidad.IdEstatusPedido),
                 Observaciones = string.IsNullOrEmpty(entidad.MotivoCancelacion) ? "N/A" : entidad.MotivoCancelacion,
                 Fecha = entidad.FechaRegistro,

@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities.MainModule;
 
 namespace Application.MainModule.AdaptadoresDTO.Ventas
 {
@@ -382,7 +383,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 VentaACredito = pv.VentaACredito,
                 Subtotal = pv.Subtotal,
                 Descuento = pv.Descuento,
-                Iva = pv.Iva,
+                Iva = CalculosGenerales.Truncar( (pv.Subtotal * IvaEnum.p16), 2),
                 Total = pv.Total,
                 PorcentajeIva = pv.PorcentajeIva,
                 EfectivoRecibido = pv.EfectivoRecibido,

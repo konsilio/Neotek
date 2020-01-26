@@ -11511,6 +11511,7 @@
     <Content Include="assets\js\chosen\LICENSE.md" />
     <None Include="Properties\PublishProfiles\Presentacion.pubxml" />
     <None Include="Properties\PublishProfiles\SaGas.pubxml" />
+    <None Include="Properties\PublishProfiles\WebSAGAS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DatePickerReady.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -11758,6 +11759,8 @@
     <Content Include="Views\Reportes\RendimientoVehicularCamionetas.cshtml" />
     <Content Include="Views\Reportes\Ventas.cshtml" />
     <Content Include="Views\Reportes\VentasXPuntoVenta.cshtml" />
+    <Content Include="Views\Cobranza\MasterDetailDetailCRPartial.cshtml" />
+    <Content Include="Views\Cobranza\MasterDetailMasterPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -11787,6 +11790,9 @@
       <Project>{80053147-4263-454b-ba2d-c7ef6a507c0b}</Project>
       <Name>Utilities.MainModule</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

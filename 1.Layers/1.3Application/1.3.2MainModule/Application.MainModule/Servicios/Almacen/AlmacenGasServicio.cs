@@ -435,7 +435,7 @@ namespace Application.MainModule.Servicios.Almacenes
             if (!deSalida)
                 return ObtenerUnidadAlamcenGas(recarga.IdCAlmacenGasEntrada);
             else
-                return ObtenerUnidadAlamcenGas(recarga.IdCAlmacenGasSalida.Value);
+                return ObtenerUnidadAlamcenGas(recarga.IdCAlmacenGasSalida ?? 0);
         }
         public static UnidadAlmacenGas ObtenerUnidadAlamcenGas(AlmacenGasTraspaso traspaso, bool deSalida)
         {
@@ -1089,7 +1089,7 @@ namespace Application.MainModule.Servicios.Almacenes
             return cilindros;
         }
         public static identidadUnidadAlmacenGas IdentificarTipoUnidadAlamcenGas(UnidadAlmacenGas unidad)
-        {
+        {          
             if (unidad.EsGeneral && unidad.EsAlterno)
                 return identidadUnidadAlmacenGas.AlmacenAlterno;
 

@@ -729,7 +729,7 @@
           <Property Name="FechaCreacion" Type="date" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.Bitacora' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Bitacora">
           <Key>
             <PropertyRef Name="Id" />
@@ -1176,7 +1176,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.Bitacora' no tiene defi
           <Property Name="ClaveProdServ" Type="varchar" MaxLength="10" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="CProductoAsociado">
           <Key>
             <PropertyRef Name="IdProducto" />
@@ -2171,7 +2171,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="FechaCorteAnticipo" Type="smalldatetime" Nullable="false" />
           <Property Name="FechaAplicacion" Type="smalldatetime" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
-          <Property Name="NombreRecibe" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="VentaMovimiento">
           <Key>
@@ -11390,7 +11389,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="COperadorChofer" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_COperadorChofer" FromRole="VentaCorteAnticipoEC" ToRole="OperadorChofer" />
           <NavigationProperty Name="CPuntoVenta" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_CPuntoVenta" FromRole="VentaCorteAnticipoEC" ToRole="PuntoVenta" />
           <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario" FromRole="VentaCorteAnticipoEC" ToRole="Usuario" />
-          <Property Name="NombreRecibe" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="VentaMovimiento">
           <Key>
@@ -14364,7 +14362,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="VentaCorteAnticipoEC">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.VentaCorteAnticipoEC">
               <MappingFragment StoreEntitySet="VentaCorteAnticipoEC">
-                <ScalarProperty Name="NombreRecibe" ColumnName="NombreRecibe" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
                 <ScalarProperty Name="FechaCorteAnticipo" ColumnName="FechaCorteAnticipo" />

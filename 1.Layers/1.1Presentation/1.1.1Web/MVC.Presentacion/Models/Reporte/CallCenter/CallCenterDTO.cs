@@ -8,7 +8,9 @@ namespace MVC.Presentacion.Models
     public class CallCenterDTO
     {
         public int IdPedido { get; set; }
-        public string RFC { get; set; }
+        //public string RFC { get; set; }
+        public string Telefono { get; set; }
+        public string Nombre { get; set; }
         public string Estatus { get; set; }
         public string Observaciones { get; set; }
         public string AtendidoPor { get; set; }

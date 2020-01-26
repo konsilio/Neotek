@@ -85,15 +85,8 @@
             else
             {
                 c.Visible = false;
-
             }
-
-
-
         });
-
-
-
         settings.Columns.Add(c=>
         {
             c.FieldName = "CantidadVendida";
@@ -121,13 +114,6 @@
             c.Caption = "Iva";
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
-            c.EditorProperties().SpinEdit(p =>
-            {
-                p.DisplayFormatString = "{0} %";
-                p.MinValue = 0;
-                p.MaxValue = 100;
-
-            });
         });
         settings.Columns.Add(c =>
         {
