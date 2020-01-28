@@ -2,6 +2,7 @@
     <string name="app_name">SagasApp</string>
 
     <string name="activity_menu">Menú</string>
+    <string name="registrar_entrada">Registrar entrada</string>
     <string name="title_iniciar_descarga">Iniciar descarga</string>
     <string name="title_finalizar_descarga">Finalizar descarga</string>
     <string name="title_registro_papeleta">Registro de papeleta</string>
@@ -89,7 +90,6 @@
 
     <string name="punto">.</string>
     <string name="porcentaje">%</string>
-
 
     <string-array name="gaseras_array">
         <item>Gas 1</item>

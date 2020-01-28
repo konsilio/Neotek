@@ -1,15 +1,23 @@
 package com.neotecknewts.sagasapp.Activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -22,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Adapter.MenuAdapter;
 import com.neotecknewts.sagasapp.Model.MenuDTO;
@@ -43,7 +52,12 @@ import it.sephiroth.android.library.tooltip.Tooltip;
 
 public class MenuActivity extends AppCompatActivity implements MenuView {
 
+    private Location loc;
+    private LocationManager locationManager;
+    double longitudeNetwork = 0, latitudeNetwork = 0, accuracy = 0;
+
     private SAGASSql sagasSql;
+
     //lista que se usa para llenar el recycler view que crea el menu
     ArrayList<MenuDTO> menu;
 
@@ -66,6 +80,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     Point size;
     Context context;
     ProgressDialog progressSincronizar;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +96,31 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
 
         this.sagasSql = new SAGASSql(this);
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // hAcc= precision en metros
+            checkLocation();
+            Log.d("localizacion", loc.toString());
+            return;
+        } else {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            Log.d("localizacion", loc.toString());
+
+            if (ActivityCompat.checkSelfPermission(MenuActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                    (MenuActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                // usuarioLoginDTO.setCoordenadas(loc.getLatitude() + "," + loc.getLongitude());
+                return;
+            }
+
+            checkLocation();
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1, locationListenerNetwork);
+            // Se asigna a la clase LocationManager el servicio a nivel de sistema a partir del nombre.
+            // Log.d("localizacion", loc.toString());
+            // Log.d("accuracy", loc.getAccuracy()+"");
+        }
+
 
         menu = new ArrayList<>();
 /*        menu.add("Iniciar Descarga");
@@ -92,18 +132,18 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            menu =  (ArrayList<MenuDTO>) extras.getSerializable("lista");
+            menu = (ArrayList<MenuDTO>) extras.getSerializable("lista");
             menu.get(0).getName();
             // and get whatever type user account id is
-        }else{
-            if(session.isLogin()){
-                if(isOnline()){
+        } else {
+            if (session.isLogin()) {
+                if (isOnline()) {
                     presenter.getMenu(session.getTokenWithBearer());
-                }else{
+                } else {
                     Cursor cursor = sagasSql.getMenuDTO();
-                    if(cursor.moveToFirst()){
+                    if (cursor.moveToFirst()) {
                         menu = new ArrayList<MenuDTO>();
-                        while (cursor.moveToNext()){
+                        while (cursor.moveToNext()) {
                             menu.add(new MenuDTO(
                                     cursor.getString(cursor.getColumnIndex("headerMenu")),
                                     cursor.getString(cursor.getColumnIndex("name")),
@@ -111,7 +151,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                         }
                     }
                 }
-            }else{
+            } else {
 
             }
 
@@ -146,49 +186,106 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         adapter = new MenuAdapter(menu);
         recyclerView.setAdapter(adapter);
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.HORIZONTAL);
-        DividerItemDecoration decoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.HORIZONTAL                                                                                                                           );
+        DividerItemDecoration decoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.HORIZONTAL);
         recyclerView.addItemDecoration(decoration);
         semaforo = new Semaforo(this);
         Display display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        context =this;
+        context = this;
         enviarDatos();
     }
+
+    private boolean isLocationEnabled() {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    private void showAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Localizacion desactivada")
+                .setMessage("Su ubicación esta desactivada.\nPor favor active su ubicación " +
+                        "vaya a configuración")
+                .setPositiveButton("Configuración de ubicación", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+        dialog.show();
+    }
+
+    private boolean checkLocation() {
+        if (!isLocationEnabled())
+            showAlert();
+        return isLocationEnabled();
+    }
+
+    private final LocationListener locationListenerNetwork = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            longitudeNetwork = location.getLongitude();
+            latitudeNetwork = location.getLatitude();
+            accuracy = location.getAccuracy();
+            Log.d("precision changed", accuracy + "");
+            Log.d("coordenadas: ", longitudeNetwork + "," + latitudeNetwork + "");
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+    };
+
 
     public boolean isOnline() {
         Runtime runtime = Runtime.getRuntime();
         try {
             Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
-            int     exitValue = ipProcess.waitFor();
+            int exitValue = ipProcess.waitFor();
             return (exitValue == 0);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        catch (InterruptedException e) { e.printStackTrace(); }
 
         return false;
     }
 
     private void enviarDatos() {
         List<String> mensajes = semaforo.obtenerCantidadesRestantes();
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this,R.style.AlertDialog);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this, R.style.AlertDialog);
         alertDialog.setTitle("Pendietes");
-        String men ="";
-        for (String mensaje:mensajes) {
-            men+=mensaje+"\n";
+        String men = "";
+        for (String mensaje : mensajes) {
+            men += mensaje + "\n";
         }
-        if(mensajes.size()>0) {
-            Log.d("sincronizando","sincronizando");
+        if (mensajes.size() > 0) {
+            Log.d("sincronizando", "sincronizando");
             alertDialog.setMessage(men);
             alertDialog.setPositiveButton("Sincronizar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
-                            progressSincronizar = new ProgressDialog(MenuActivity.this,R.style.AlertDialog);
+                            progressSincronizar = new ProgressDialog(MenuActivity.this, R.style.AlertDialog);
                             progressSincronizar.setIndeterminate(true);
-                            progressSincronizar.setMessage(getString( R.string.message_cargando));
+                            progressSincronizar.setMessage(getString(R.string.message_cargando));
                             progressSincronizar.setTitle(R.string.app_name);
                             progressSincronizar.show();
                             //semaforo.sincronizar(session.getToken(),progressSincronizar);
@@ -206,6 +303,16 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.RegistrarEntrada:
+                UsuarioLoginDTO usuarioLoginDTO = new UsuarioLoginDTO();
+                usuarioLoginDTO.setCoordenadas(latitudeNetwork + "," + longitudeNetwork);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this, R.style.AlertDialog);
+                builder.setMessage("Se ha registado su ubicación: " + latitudeNetwork + "," + longitudeNetwork);
+                builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
+                    dialogInterface.dismiss();
+                });
+                builder.create().show();
+                return true;
             case R.id.pendientes:
                 /*for (String mensaje:semaforo.obtenerCantidadesRestantes()){
                     Log.w("Mensaje",mensaje);
@@ -214,7 +321,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                 Tooltip.make(this,
                         new Tooltip.Builder(101)
                                 .withStyleId(R.style.TooltipError)
-                                .anchor(new Point(size.x - 120,55), Tooltip.Gravity.BOTTOM)
+                                .anchor(new Point(size.x - 120, 55), Tooltip.Gravity.BOTTOM)
                                 .closePolicy(new Tooltip.ClosePolicy()
                                         .insidePolicy(true, false)
                                         .outsidePolicy(true, false), 3000)
@@ -235,7 +342,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                 Tooltip.make(this,
                         new Tooltip.Builder(101)
                                 .withStyleId(R.style.TooltipGood)
-                                .anchor(new Point(size.x - 120,55), Tooltip.Gravity.BOTTOM)
+                                .anchor(new Point(size.x - 120, 55), Tooltip.Gravity.BOTTOM)
                                 .closePolicy(new Tooltip.ClosePolicy()
                                         .insidePolicy(true, false)
                                         .outsidePolicy(true, false), 3000)
@@ -263,9 +370,10 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         }
 
     }
+
     //metodo que muestra algun mensaje
-    private void showDialog(String mensaje){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this,R.style.AlertDialog);
+    private void showDialog(String mensaje) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this, R.style.AlertDialog);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
         builder1.setNegativeButton(
@@ -283,18 +391,19 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     //metodo que muestra el progreso de la obtencion de datos
     @Override
     public void showProgress(int mensaje) {
-        progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
+        progressDialog = ProgressDialog.show(this, getResources().getString(R.string.app_name),
                 getResources().getString(mensaje), true);
     }
+
     @SuppressLint("NewApi")
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
 
         MenuItem pendientes = menu.findItem(R.id.pendientes);
         MenuItem libres = menu.findItem(R.id.libres);
         //semaforo.sincronizar(session.getToken(),progressDialog);
-        if(semaforo.VerificarEstatus()) {
+        if (semaforo.VerificarEstatus()) {
            /* for (String mensaje:semaforo.obtenerCantidadesRestantes()){
                 Log.w("Mensaje",mensaje);
             }*/
@@ -303,7 +412,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             Tooltip.make(this,
                     new Tooltip.Builder(101)
                             .withStyleId(R.style.TooltipError)
-                            .anchor(new Point(size.x - 120,55), Tooltip.Gravity.BOTTOM)
+                            .anchor(new Point(size.x - 120, 55), Tooltip.Gravity.BOTTOM)
                             .closePolicy(new Tooltip.ClosePolicy()
                                     .insidePolicy(true, false)
                                     .outsidePolicy(true, false), 3000)
@@ -317,14 +426,14 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                             .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
                             .build()
             ).show();
-        }else {
-            Log.w("procesoSinc", semaforo.VerificarEstatus()+"" );
+        } else {
+            Log.w("procesoSinc", semaforo.VerificarEstatus() + "");
             libres.setVisible(true);
 
             Tooltip.make(this,
                     new Tooltip.Builder(101)
                             .withStyleId(R.style.TooltipGood)
-                            .anchor(new Point(size.x - 120,55), Tooltip.Gravity.BOTTOM)
+                            .anchor(new Point(size.x - 120, 55), Tooltip.Gravity.BOTTOM)
                             .closePolicy(new Tooltip.ClosePolicy()
                                     .insidePolicy(true, false)
                                     .outsidePolicy(true, false), 3000)
@@ -345,7 +454,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     //metodo que oculta el progreso
     @Override
     public void hideProgress() {
-        if(progressDialog != null){
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
@@ -361,7 +470,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     public void onSuccessGetMenu(List<MenuDTO> menuDTOs) {
         ArrayList<MenuDTO> menus = new ArrayList<>(menuDTOs.size());
         menus.addAll(menuDTOs);
-       menu.clear();
+        menu.clear();
         menu.addAll(menuDTOs);
         adapter.notifyDataSetChanged();
     }

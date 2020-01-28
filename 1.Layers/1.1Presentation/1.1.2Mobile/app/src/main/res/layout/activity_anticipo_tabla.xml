@@ -355,18 +355,18 @@
                     tools:ignore="UselessParent">
 
                     <Button
-                        android:id="@+id/BtnAnticipoTablaActivityRegresar"
-                        style="@style/SagasTheme.Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5sp"
-                        android:layout_marginRight="5sp"
-                        android:layout_weight="1"
-                        android:background="@drawable/ripple_effect"
-                        android:text="@string/regresar"
-                        android:textColor="@color/colorTextButtonLogin"
-                        android:textSize="18sp"
-                        tools:ignore="ButtonStyle,UnusedAttribute" />
+                    android:id="@+id/BtnAnticipoTablaActivityRegresar"
+                    style="@style/SagasTheme.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:layout_marginRight="5sp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ripple_effect"
+                    android:text="@string/regresar"
+                    android:textColor="@color/colorTextButtonLogin"
+                    android:textSize="18sp"
+                    tools:ignore="ButtonStyle,UnusedAttribute" />
 
                     <Button
                         android:id="@+id/BtnAnticipoTablaActivityHacerAnticipo"

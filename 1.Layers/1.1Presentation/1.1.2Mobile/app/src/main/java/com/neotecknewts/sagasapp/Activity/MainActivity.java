@@ -57,7 +57,7 @@ import java.util.Timer;
  */
 
 public class MainActivity extends AppCompatActivity implements MainView {
-    //variables latitud y longitud
+    // variables latitud y longitud
     private Double tvLatitud, tvLongitud, tvAltura, tvPrecision;
 
     private LocationListener locationListener;
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
             loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             Log.d("localizacion", loc.toString());
 
-            if (ActivityCompat.checkSelfPermission( MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
                     (MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
             }
 
             checkLocation();
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1  , 1, locationListenerNetwork);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1, locationListenerNetwork);
             // Se asigna a la clase LocationManager el servicio a nivel de sistema a partir del nombre.
             // Log.d("localizacion", loc.toString());
             // Log.d("accuracy", loc.getAccuracy()+"");
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
             longitudeNetwork = location.getLongitude();
             latitudeNetwork = location.getLatitude();
             accuracy = location.getAccuracy();
-            Log.d("precision changed", accuracy+"");
+            Log.d("precision changed", accuracy + "");
         }
 
         @Override
@@ -320,11 +320,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 usuarioLoginDTO.setPassword(this.contraseña);
                 usuarioLoginDTO.setUsuario(usuario);
                 usuarioLoginDTO.setFbToken(fb_token);
-                usuarioLoginDTO.setCoordenadas(loc.getLatitude() + "," + loc.getLongitude());
-                Log.d("usuarioLoginDTO", usuarioLoginDTO + usuarioLoginDTO.getCoordenadas()+ "" +
-                        usuarioLoginDTO.getIdEmpresa()+ "" + usuarioLoginDTO.getFbToken() + "" +
-                        usuarioLoginDTO.getUsuario() +""
-                + usuarioLoginDTO.getPassword()+ "");
+                usuarioLoginDTO.setCoordenadas("17.599863,-99.5208956");
+                // usuarioLoginDTO.setCoordenadas(latitudeNetwork + "," + longitudeNetwork);
+                Log.d("usuarioLoginDTO ", "coordenadas: " + usuarioLoginDTO.getCoordenadas() + " IdEmpresa: " +
+                        usuarioLoginDTO.getIdEmpresa() + " token: " + usuarioLoginDTO.getFbToken() + " usuario:" +
+                        usuarioLoginDTO.getUsuario() + " password: "
+                        + usuarioLoginDTO.getPassword() + "");
                 //usuarioLoginDTO.setFBToken(FirebaseInstanceId.getInstance().getToken());
                 //por medio del presenter se llama al web service con el objeto de usuario
                 loginPresenter.doLogin(usuarioLoginDTO);
