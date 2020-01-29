@@ -198,10 +198,18 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             if (Ctedto.Nombre != null) catCliente.Nombre = Ctedto.Nombre; else catCliente.Nombre = catCliente.Nombre;
             if (Ctedto.Apellido1 != null) catCliente.Apellido1 = Ctedto.Apellido1; else catCliente.Apellido1 = catCliente.Apellido1;
             if (Ctedto.Apellido2 != null) catCliente.Apellido2 = Ctedto.Apellido2; else catCliente.Apellido2 = catCliente.Apellido2;
-            if (Ctedto.DescuentoXKilo != 0) catCliente.DescuentoXKilo = Ctedto.DescuentoXKilo; else catCliente.DescuentoXKilo = catCliente.DescuentoXKilo;
-            if (Ctedto.limiteCreditoMonto != 0) catCliente.limiteCreditoMonto = Ctedto.limiteCreditoMonto; else catCliente.limiteCreditoMonto = catCliente.limiteCreditoMonto;
-            if (Ctedto.CreditoDisponibleMonto != 0) catCliente.CreditoDisponibleMonto= Ctedto.CreditoDisponibleMonto; else catCliente.CreditoDisponibleMonto= catCliente.CreditoDisponibleMonto;
-            if (Ctedto.limiteCreditoDias != 0) catCliente.limiteCreditoDias = Ctedto.limiteCreditoDias; else catCliente.limiteCreditoDias = catCliente.limiteCreditoDias;
+            //if (Ctedto.DescuentoXKilo != 0)
+                catCliente.DescuentoXKilo = Ctedto.DescuentoXKilo;
+            //else catCliente.DescuentoXKilo = catCliente.DescuentoXKilo;
+            //if (Ctedto.limiteCreditoMonto != 0)
+                catCliente.limiteCreditoMonto = Ctedto.limiteCreditoMonto;
+            //else catCliente.limiteCreditoMonto = catCliente.limiteCreditoMonto;
+            //if (Ctedto.CreditoDisponibleMonto != 0)
+                catCliente.CreditoDisponibleMonto= Ctedto.CreditoDisponibleMonto; 
+            //else catCliente.CreditoDisponibleMonto= catCliente.CreditoDisponibleMonto;
+            //if (Ctedto.limiteCreditoDias != 0)
+                catCliente.limiteCreditoDias = Ctedto.limiteCreditoDias; 
+            //else catCliente.limiteCreditoDias = catCliente.limiteCreditoDias;
             if (Ctedto.Telefono1 != null) catCliente.Telefono1 = Ctedto.Telefono1; else catCliente.Telefono1 = catCliente.Telefono1;
             if (Ctedto.Telefono2 != null) catCliente.Telefono2 = Ctedto.Telefono2; else catCliente.Telefono2 = catCliente.Telefono2;
             if (Ctedto.Telefono3 != null) catCliente.Telefono3 = Ctedto.Telefono3; else catCliente.Telefono3 = catCliente.Telefono3;

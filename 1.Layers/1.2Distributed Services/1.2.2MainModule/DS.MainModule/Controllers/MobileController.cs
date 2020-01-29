@@ -56,6 +56,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_seguridad.AutenticacionMobile(autenticacionDto), Request);
         }
+        [Route("registrarentrada")]
+        public HttpResponseMessage PostRegistrar(LoginFbDTO autenticacionDto)
+        {
+            return RespuestaHttp.crearRespuesta(_seguridad.RegistrarEntradaMovile(autenticacionDto), Request);
+        }
         #endregion
 
         #region Ordenes de compra

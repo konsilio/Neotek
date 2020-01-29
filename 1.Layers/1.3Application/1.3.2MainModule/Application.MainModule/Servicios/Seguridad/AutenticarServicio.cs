@@ -88,10 +88,6 @@ namespace Application.MainModule.Servicios.Seguridad
                         if (unidadAlmacen.IdEstacionCarburacion != null && unidadAlmacen.IdEstacionCarburacion != 0)
                             esEstacion = true;
 
-                        var ca = ControlAsistenciaServicio.CalcularEntrada(usuario, autDto, puntoVenta, esEstacion);
-                        if (!ca.Exito)
-                            return ca;
-
                         var lecturaFinal = LecturaGasServicio.ObtenerUltimaLecturaFinal(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
                         if (lecturaFinal != null && !esEstacion)
                             return new RespuestaAutenticacionMobileDto()
@@ -123,21 +119,11 @@ namespace Application.MainModule.Servicios.Seguridad
                             esChofer = false;
                         }
                     }
-                    else
-                    {
-                        var ca = ControlAsistenciaServicio.CalcularEntrada(usuario, autDto);
-                        if (!ca.Exito)
-                            return ca;
-
-                    }
                     menu = MenuServicio.Crear(usuario, hayLectura, esEstacion, esChofer);
                 }
                 else
                 {
                     hayLectura = true;
-                    var ca = ControlAsistenciaServicio.CalcularEntrada(usuario, autDto);
-                    if (!ca.Exito)
-                        return ca;
                 }
                 menu = MenuServicio.Crear(usuario, hayLectura, esEstacion, esChofer);
             }
@@ -211,6 +197,34 @@ namespace Application.MainModule.Servicios.Seguridad
             double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
             distance = EarthRadius * c;
             return distance * 1000;
+        }
+        public static RespuestaAutenticacionMobileDto RegistratarEntrada(DTOs.Mobile.LoginFbDTO autDto)
+        {
+            var usuario = TokenServicio.ObtenerUsuarioAplicacion();
+            bool esEstacion = false;
+            if (usuario.OperadoresChoferes != null && usuario.OperadoresChoferes.Count != 0)
+            {
+
+                var operadorDTO = PuntoVentaServicio.ObtenerOperador(usuario.IdUsuario);
+                var operador = usuario.OperadoresChoferes.FirstOrDefault(x => x.Activo);
+                var puntoVenta = PuntoVentaServicio.Obtener(operador);
+                if (puntoVenta != null)
+                {
+                    var unidadAlmacen = puntoVenta.UnidadesAlmacen;
+                    if (unidadAlmacen.IdEstacionCarburacion != null && unidadAlmacen.IdEstacionCarburacion != 0)
+                        esEstacion = true;
+
+                    return ControlAsistenciaServicio.CalcularEntrada(usuario, autDto, puntoVenta, esEstacion);
+                }
+                else
+                {
+                    return ControlAsistenciaServicio.CalcularEntrada(usuario, autDto);
+                }
+            }
+            else
+            {
+                return ControlAsistenciaServicio.CalcularEntrada(usuario, autDto);
+            }
         }
     }
 }

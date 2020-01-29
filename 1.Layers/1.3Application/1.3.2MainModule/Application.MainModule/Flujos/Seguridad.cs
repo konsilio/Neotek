@@ -55,10 +55,12 @@ namespace Application.MainModule.Flujos
                 responce.Mensaje = respuesta.Mensaje;
                 responce.MensajesError = respuesta.MensajesError;
             }
-
             return responce;
         }
-
+        public RespuestaAutenticacionMobileDto RegistrarEntradaMovile(LoginFbDTO autenticacionDto)
+        {
+            return AutenticarServicio.RegistratarEntrada(autenticacionDto);
+        }
         #region Usuarios
         public List<UsuariosModel> AllUsers()
         {

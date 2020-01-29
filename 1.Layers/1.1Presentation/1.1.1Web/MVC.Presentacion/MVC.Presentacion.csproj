@@ -10848,6 +10848,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\Logo GMG.JPG" />
+    <Content Include="fonts\mantenimiento.jpg" />
     <Content Include="fonts\notification_error.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -11761,6 +11762,7 @@
     <Content Include="Views\Reportes\VentasXPuntoVenta.cshtml" />
     <Content Include="Views\Cobranza\MasterDetailDetailCRPartial.cshtml" />
     <Content Include="Views\Cobranza\MasterDetailMasterPartial.cshtml" />
+    <Content Include="Views\Home\Mantenimiento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -296,7 +296,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 //PrecioSalida =  usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalida ?? 0,
                 //PrecioSalidaKg = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalidaKg ?? 0,
                 //PrecioSalidaLt = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != null ? Convert.ToDecimal(10.20) : pv.PrecioSalidaLt ?? 0,
-
                 PrecioSalida = pv.PrecioSalida ?? 0,
                 PrecioSalidaKg = pv.PrecioSalidaKg ?? 0,
                 PrecioSalidaLt = pv.PrecioSalidaLt ?? 0,
@@ -317,10 +316,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 var PrecioSalidaLt = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.EstacionCarburacion;
                 if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion.Equals(id) && PrecioSalidaKg != null && PrecioSalidaLt != null)
                 {
-                    //usDTO.PrecioSalida = Convert.ToDecimal(8.88);
-                    usDTO.IdEstacion = id ?? 0;                    
-                    usDTO.PrecioSalidaKg = Convert.ToDecimal(PrecioSalidaKg.CPrecioVenta.FirstOrDefault().PrecioSalidaKg);
-                    usDTO.PrecioSalidaLt = Convert.ToDecimal(PrecioSalidaLt.CPrecioVenta.FirstOrDefault().PrecioSalidaLt);
+                    usDTO.IdEstacion = id ?? 0;
+                    if (PrecioSalidaKg.CPrecioVenta.Count > 0 )               
+                        usDTO.PrecioSalidaKg = Convert.ToDecimal(PrecioSalidaKg.CPrecioVenta.FirstOrDefault().PrecioSalidaKg);
+                    if (PrecioSalidaLt.CPrecioVenta.Count > 0)
+                        usDTO.PrecioSalidaLt = Convert.ToDecimal(PrecioSalidaLt.CPrecioVenta.FirstOrDefault().PrecioSalidaLt);      
                 }
             }
             return usDTO;

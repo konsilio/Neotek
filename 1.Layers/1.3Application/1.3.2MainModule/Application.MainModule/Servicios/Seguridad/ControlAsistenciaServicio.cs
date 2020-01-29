@@ -31,6 +31,12 @@ namespace Application.MainModule.Servicios
             if (entidad != null) return ControlAsistenciaAdapter.ToDTO(entidad);
             else return null;
         }
+        public static bool ObtenerHoybool(int idUsuario)
+        {
+            var entidad = new ControlAsistenciaDataAccess().Buscar(idUsuario, DateTime.Now);
+            if (entidad != null) return true;
+            else return false;
+        }
         public static List<ControlAsistencia> Obtener(short idEmpresa, PeriodoDTO p)
         {
             return new ControlAsistenciaDataAccess().Buscar(idEmpresa, p);
@@ -38,9 +44,8 @@ namespace Application.MainModule.Servicios
         }
         public static RespuestaAutenticacionMobileDto CalcularEntrada(Usuario usu, AutenticacionDto autDto, PuntoVenta pv = null, bool esEstacion = false)
         {
-
             RespuestaAutenticacionMobileDto respuesta = new RespuestaAutenticacionMobileDto();
-            if (ObtenerHoy(usu.IdUsuario) == null)
+            if (!ObtenerHoybool(usu.IdUsuario))
             {
                 if (usu.Empresa.CoordenadaLat != null && usu.Empresa.CoordenadaLong != null)
                 {
@@ -59,7 +64,8 @@ namespace Application.MainModule.Servicios
                         {
                             respuesta = new RespuestaAutenticacionMobileDto()
                             {
-                                Exito = true
+                                Exito = true,
+                                Mensaje = Exito.S0002,
                             };
                         };
                     }
@@ -102,7 +108,10 @@ namespace Application.MainModule.Servicios
                 {
                     respuesta = new RespuestaAutenticacionMobileDto()
                     {
+                        IdUsuario = 0,
                         Exito = false,
+                        Mensaje = Error.S0009,
+                        token = string.Empty
                     };
                 }
                 Crear(new ControlAsistenciaDTO() { IdUsuario = usu.IdUsuario, Estatus = respuesta.Exito, Coordenadas = autDto.Coordenadas, IdEmpresa = usu.IdEmpresa });
@@ -113,15 +122,15 @@ namespace Application.MainModule.Servicios
                 {
                     IdUsuario = 0,
                     Exito = true,
-                    Mensaje = Error.S0009,
+                    Mensaje = Exito.S0001,
                     token = string.Empty
                 };
             }
-            return respuesta;
+            return respuesta;    
         }
         public static double CalcularDistancia(CoordenadasDTO point1, CoordenadasDTO point2)
         {
-            //Retorna Km
+            //Retorna Kilometros
             double EarthRadius = 6371;
             double distance = 0;
             double Lat = (point2.Latitud - point1.Latitud) * (Math.PI / 180);
@@ -133,7 +142,7 @@ namespace Application.MainModule.Servicios
         }
         public static double CalcularDistanciaEnMetros(CoordenadasDTO point1, CoordenadasDTO point2)
         {
-            //Retorna Km
+            //Retorna Metros
             double EarthRadius = 6371;
             double distance = 0;
             double Lat = (point2.Latitud - point1.Latitud) * (Math.PI / 180);

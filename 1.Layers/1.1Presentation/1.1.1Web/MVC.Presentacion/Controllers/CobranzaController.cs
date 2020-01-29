@@ -81,55 +81,63 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
-            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
-            ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(_tkn);
-            if (ViewBag.EsAdmin)
-                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-            else
-                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
             ReporteCreditosRecuperado _modelList = new ReporteCreditosRecuperado();
-            List<CargosModel> _model = new List<CargosModel>();
-            CargosModel _mod = new CargosModel();
+            try
+            {
+                ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+                //ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(_tkn);
+                if (ViewBag.EsAdmin)
+                    ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+                else
+                    ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
+                //ReporteCreditosRecuperado _modelList = new ReporteCreditosRecuperado();
+                List<CargosModel> _model = new List<CargosModel>();
+                CargosModel _mod = new CargosModel();
 
-            if ((fecha1 != null && fecha1.Value.Year != 1) || (fecha1 != null && fecha2.Value.Year != 1) || (Cliente != null && Cliente != 0) || ticket != null)
-            {
-                _mod.FechaRango1 = fecha1.Value;
-                _mod.FechaRango2 = fecha2.Value;
-                _mod.IdCliente = Cliente.Value;
-                _mod.Ticket = ticket; _mod.IdEmpresa = empresa.Value;
-                _modelList = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
-                if (_modelList.reporteCargos.Count() == 0)
+                if ((fecha1 != null && fecha1.Value.Year != 1) || (fecha1 != null && fecha2.Value.Year != 1) || (Cliente != null && Cliente != 0) || ticket != null)
                 {
-                    _modelList.reporteCargos.Add(_mod);
-                    ViewBag.MensajeError = "No se encontraron resultados..";
-                }
-            }
-            else
-                _modelList = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
-
-            if (_modelList.reporteCargos.Count() == 0)
-            {
-                DateTime dt = new DateTime();
-                _mod.FechaRango1 = dt; _mod.FechaRango2 = dt;
-                _modelList.reporteCargos.Add(_mod);
-            }
-            if (TempData["RespuestaDTO"] != null)
-            {
-                if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
-                {
-                    ViewBag.Tipo = "alert-danger";
-                    ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+                    _mod.FechaRango1 = fecha1.Value;
+                    _mod.FechaRango2 = fecha2.Value;
+                    _mod.IdCliente = Cliente.Value;
+                    _mod.Ticket = ticket; _mod.IdEmpresa = empresa.Value;
+                    _modelList = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
+                    if (_modelList.reporteCargos.Count() == 0)
+                    {
+                        _modelList.reporteCargos.Add(_mod);
+                        ViewBag.MensajeError = "No se encontraron resultados..";
+                    }
                 }
                 else
-                {
-                    ViewBag.Tipo = "alert-success";
-                    ViewBag.Msj = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
-                }
-            }
-            TempData["LstCargos"] = _modelList.reporteCargos;
-            TempData["LstAbonos"] = _modelList.reporteAbonos;
+                    _modelList = CobranzaServicio.ObtenerCargosFilter(_mod, _tkn);
 
-            return View(_modelList);
+                if (_modelList.reporteCargos.Count() == 0)
+                {
+                    DateTime dt = new DateTime();
+                    _mod.FechaRango1 = dt; _mod.FechaRango2 = dt;
+                    _modelList.reporteCargos.Add(_mod);
+                }
+                if (TempData["RespuestaDTO"] != null)
+                {
+                    if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
+                    {
+                        ViewBag.Tipo = "alert-danger";
+                        ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+                    }
+                    else
+                    {
+                        ViewBag.Tipo = "alert-success";
+                        ViewBag.Msj = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
+                    }
+                }
+                TempData["LstCargos"] = _modelList.reporteCargos;
+                TempData["LstAbonos"] = _modelList.reporteAbonos;
+                return View(_modelList);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.MensajeError = ObtenerString(ex);
+                return View(_modelList);
+            }
         }
         public ActionResult MasterDetailMasterPartial()
         {
@@ -149,7 +157,6 @@ namespace MVC.Presentacion.Controllers
             else
                 return PartialView(new List<AbonosModel>());
         }
-
         public ActionResult MasterDetailDetailCRPartial(string customerID)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -191,12 +198,12 @@ namespace MVC.Presentacion.Controllers
             DateTime dt = new DateTime();
             CargosModel m = new CargosModel();
             if (model.reportedet == null)
-             m.IdEmpresa = ViewBag.IdEmpresa; 
+                m.IdEmpresa = ViewBag.IdEmpresa;
             if (idCliente != null || fecha != null)
             {
                 m.IdCliente = idCliente ?? 0;
                 if (idCliente != null && idCliente != 0)
-                    ViewBag.IdCliente = idCliente; 
+                    ViewBag.IdCliente = idCliente;
                 m.FechaRango1 = fecha ?? dt;
             }
 
@@ -204,7 +211,7 @@ namespace MVC.Presentacion.Controllers
             if (_model.reportedet.Count > 0)
             {
                 if (fecha != null)
-                    _model.reportedet[0].FechaRango1 = fecha.Value; 
+                    _model.reportedet[0].FechaRango1 = fecha.Value;
                 _model.reportedet[0].IdEmpresa = ViewBag.IdEmpresa;
             }
             else
@@ -216,7 +223,7 @@ namespace MVC.Presentacion.Controllers
             }
 
             if (ViewBag.IdCliente != null && idCliente.Value != 0 && idCliente != null)
-                ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet[0].Cliente ?? _model.reportedet[0].Nombre; 
+                ViewBag.IdCliente = ViewBag.IdCliente + " " + _model.reportedet[0].Cliente ?? _model.reportedet[0].Nombre;
             TempData["CarteraVencida"] = _model.reportedet;
             return View(_model);
         }
@@ -225,7 +232,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tkn = Session["StringToken"].ToString();
 
-           
+
 
             if (TempData["CarteraVencida"] != null)
             {
@@ -360,6 +367,18 @@ namespace MVC.Presentacion.Controllers
                     Mensaje = Resp.Mensaje;
             }
             return Mensaje;
+        }
+        public static string ObtenerString(Exception ex)
+        {
+            string lista = string.Empty;
+            var inn = ex.InnerException;
+
+            while (inn != null)
+            {
+                lista = string.Concat(lista, inn.Message);
+                inn = inn.InnerException;
+            }
+            return lista;
         }
     }
 }

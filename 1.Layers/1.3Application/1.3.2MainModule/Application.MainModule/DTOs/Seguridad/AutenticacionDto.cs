@@ -24,5 +24,7 @@ namespace Application.MainModule.DTOs.Seguridad
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
         public string Coordenadas { get; set; }
+
+
     }
 }

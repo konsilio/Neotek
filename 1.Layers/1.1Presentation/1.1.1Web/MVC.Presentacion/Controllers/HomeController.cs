@@ -59,15 +59,15 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 //if (EsAdmin)
-                    ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
+                ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
                 //if (EsCallCenter)
-                    ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
+                ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
                 //if (EsAnden)
-                    ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());
+                ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());
                 //if (EsAnden)
-                    ViewBag.Cartera = DashBoardServicio.DashBoardCartera(Session["StringToken"].ToString());
+                ViewBag.Cartera = DashBoardServicio.DashBoardCartera(Session["StringToken"].ToString());
                 //if (EsCajaGeneral)
-                    ViewBag.Caja = DashBoardServicio.DashBoardCajaGeneral(Session["StringToken"].ToString());
+                ViewBag.Caja = DashBoardServicio.DashBoardCajaGeneral(Session["StringToken"].ToString());
             }
             return View();
         }
@@ -76,6 +76,10 @@ namespace MVC.Presentacion.Controllers
             return View();
         }
         public ActionResult Ordenes()
+        {
+            return View();
+        }
+        public ActionResult Mantenimiento()
         {
             return View();
         }
