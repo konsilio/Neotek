@@ -335,6 +335,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                                 Locale.getDefault());
                         String hour = format.format(new Date());
                         corteDTO.setHora(hour);
+                        corteDTO.setRecibe(SPAnticipoTablaActvityUsuario.getText().toString());
                         String clave_unica = "CC" + s.format(new Date());
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
                                 "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -353,6 +354,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                             ventasCorteDTO.setIdVenta(itemCorte.getId());
                             corteDTO.getConceptos().add(ventasCorteDTO);
                         }*/
+                        Log.d("conceptosdto", datosBusqueda.venta.getVentas()+"");
                         for (VentaDTO itemCorte: datosBusqueda.venta.getVentas()) {
                             VentasCorteDTO ventasCorteDTO = new VentasCorteDTO();
                             ventasCorteDTO.setCorte(clave_unica);

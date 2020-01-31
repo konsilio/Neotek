@@ -2570,7 +2570,7 @@ public class Lisener{
                             }while (cantidad.moveToNext());
 
                         }
-                    Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
+                    // Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
                     registrado = RegistrarPapeleta(lecturaDTO);
                     if (registrado){
                         sagasSql.Eliminar(lecturaDTO.getClaveOperacion());

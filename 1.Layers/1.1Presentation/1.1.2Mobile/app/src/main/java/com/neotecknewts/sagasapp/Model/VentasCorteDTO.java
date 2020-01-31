@@ -9,6 +9,8 @@
  */
 package com.neotecknewts.sagasapp.Model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -33,6 +35,15 @@ public class VentasCorteDTO implements Serializable {
 
     public String getTiketVenta() {
         return TiketVenta;
+    }
+
+    @Override
+    public String toString() {
+        return "VentasCorteDTO{" +
+                "Corte='" + Corte + '\'' +
+                ", TiketVenta='" + TiketVenta + '\'' +
+                ", IdVenta=" + IdVenta +
+                '}';
     }
 
     public void setTiketVenta(String tiketVenta) {

@@ -9,5 +9,5 @@ import com.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 public interface LoginInteractor {
     void getEmpresasLogin();
     void postLogin(UsuarioLoginDTO usuarioLoginDTO);
-
+    void postRegistrar(UsuarioLoginDTO usuarioLoginDTO, String token);
 }

@@ -636,7 +636,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "<table style='font-size:14px; width:100%;margin-left:5px;margin-rigth:5px;'>" +
                 "<tbody>" +
                 "<tr>" +
-                "<td>Estación</td>"+
+                "<td>Estacion</td>"+
                 "<td style='text-align: right; font-weight:bold;'>[{Estacion}]</td>" +
                 "</tr>" +
                 "<tr>" +
@@ -844,7 +844,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "<table width='100%'  style='margin:5px;'>" +
                 "<tbody>" +
                 "<tr>" +
-                "<td style='width:20%;'>Estación</td>"+
+                "<td style='width:20%;'>Estacion</td>"+
                 "<td style='text-align: right; font-weight: bold;'>[{Estacion}]</td>" +
                 "</tr>" +
                 "<tr>" +
@@ -1100,7 +1100,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tbody>" +
                 "</table>" +
                 "<hr>" +
-                "<h4>Porcentaje Estación (%)</h4>" +
+                "<h4>Porcentaje Estacion (%)</h4>" +
                 "<table>" +
                 "<tbody>" +
                 "<tr>" +
@@ -1146,11 +1146,11 @@ public class VerReporteActivity extends AppCompatActivity {
                 "\n Hora" +
                 "\t [{Hora}]\n" +
                 "------------------------------------" +
-                "\n Porcentaje Estación (%) " +
-                "\n Inicial: " +
-                "\t Final</td>" +
-                "\n[{PorcentajeInicial}]" +
-                "\t[{PorcentajeFinal}]" +
+                "\n Porcentaje Estacion (%) " +
+                "\n Inicial: \t " +
+                "\t Final: " +
+                "\t[{PorcentajeInicial}]  \t " +
+                "\t[{PorcentajeFinal}] \n" +
                 "------------------------------------" +
                 "\n Lectura P5000" +
                 "\n\t" +
@@ -1161,9 +1161,9 @@ public class VerReporteActivity extends AppCompatActivity {
                 "[{LecturaFinalPipa}] \n" +
                 "[{NombreEstacion}] \t" +
                 "[{LecturaIncialEstacion}] \t" +
-                "[{LecturaFinalEstacion}] \n" +
-                "Litros recargados: \t" +
-                "[{LitrosRecargados}]";
+                "[{LecturaFinalEstacion}] \n" ;
+              /*  "Litros recargados: \t" +
+                "[{LitrosRecargados}]";*/
 
         StringReporte = StringReporte.replace("[{Pipa}]","");
         HtmlReporte = HtmlReporte.replace("[{Pipa}]","");
@@ -1176,11 +1176,14 @@ public class VerReporteActivity extends AppCompatActivity {
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
                 new SimpleDateFormat("dd/MM/yyyy");
-        StringReporte = StringReporte.replace("[{Fecha}]","");
-        HtmlReporte = HtmlReporte.replace("[{Fecha}]","");
+        StringReporte = StringReporte.replace("[{Fecha}]",fdate.format(new Date()));
+        HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(new Date()));
 
-        StringReporte = StringReporte.replace("[{Hora}]","");
-        HtmlReporte = HtmlReporte.replace("[{Hora}]","");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat fhour=
+                new SimpleDateFormat("hh:mm:ss a");
+
+        StringReporte = StringReporte.replace("[{Hora}]", fhour.format(new Date()));
+        HtmlReporte = HtmlReporte.replace("[{Hora}]", fhour.format(new Date()));
 
        /* StringReporte = StringReporte.replace("[{Hora}]",(recargaDTO
                 .getClaveOperacion()));*/
@@ -1197,29 +1200,29 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{PorcentajeFinal}]",
                 String.valueOf(recargaDTO.getProcentajeEntrada()));
 
-        StringReporte = StringReporte.replace("[{NombrePipa}]","");
-        HtmlReporte = HtmlReporte.replace("[{PorcentajeFinal}]", "");
+        StringReporte = StringReporte.replace("[{NombrePipa}]",recargaDTO.getNombreEstacionSalida());
+        HtmlReporte = HtmlReporte.replace("[{PorcentajeFinal}]", recargaDTO.getP5000Entrada()+"");
 
-        StringReporte = StringReporte.replace("[{LecturaInicialPipa}]","");
-        HtmlReporte = HtmlReporte.replace("[{LecturaFinalPipa}]", "");
+            StringReporte = StringReporte.replace("[{LecturaInicialPipa}]",recargaDTO.getP5000Entrada()+"");
+        HtmlReporte = HtmlReporte.replace("[{LecturaFinalPipa}]", recargaDTO.getP5000Salida()+"");
 
-        StringReporte = StringReporte.replace("[{LecturaInicialPipa}]","");
-        HtmlReporte = HtmlReporte.replace("[{LecturaInicialPipa}]", "");
+        StringReporte = StringReporte.replace("[{LecturaInicialPipa}]",recargaDTO.getP5000Salida()+"");
+        HtmlReporte = HtmlReporte.replace("[{LecturaInicialPipa}]", recargaDTO.getP5000Entrada()+"");
 
-        StringReporte = StringReporte.replace("[{LecturaFinalPipa}]","");
-        HtmlReporte = HtmlReporte.replace("[{LecturaFinalPipa}]", "");
+        StringReporte = StringReporte.replace("[{LecturaFinalPipa}]",recargaDTO.getP5000Salida()+"");
+        HtmlReporte = HtmlReporte.replace("[{LecturaFinalPipa}]", recargaDTO.getP5000Salida()+"");
 
-        StringReporte = StringReporte.replace("[{NombreEstacion}]","");
-        HtmlReporte = HtmlReporte.replace("[{NombreEstacion}]", "");
+        StringReporte = StringReporte.replace("[{NombreEstacion}]",recargaDTO.getNombreEstacionSalida());
+        HtmlReporte = HtmlReporte.replace("[{NombreEstacion}]", recargaDTO.getNombreEstacionSalida());
 
-        StringReporte = StringReporte.replace("[{LecturaIncialEstacion}]","");
-        HtmlReporte = HtmlReporte.replace("[{LecturaIncialEstacion}]", "");
+        StringReporte = StringReporte.replace("[{LecturaIncialEstacion}]",recargaDTO.getP5000Salida()+"");
+        HtmlReporte = HtmlReporte.replace("[{LecturaIncialEstacion}]", recargaDTO.getP5000Entrada()+"");
 
         StringReporte = StringReporte.replace("[{LecturaFinalEstacion}]","");
         HtmlReporte = HtmlReporte.replace("[{LecturaFinalEstacion}]", "");
 
-        StringReporte = StringReporte.replace("[{LitrosRecargados}]","");
-        HtmlReporte = HtmlReporte.replace("[{LitrosRecargados}]", "");
+        StringReporte = StringReporte.replace("[{LitrosRecargados}]",recargaDTO.getP5000Entrada()-recargaDTO.getP5000Salida()+"");
+        HtmlReporte = HtmlReporte.replace("[{LitrosRecargados}]", recargaDTO.getP5000Entrada()-recargaDTO.getP5000Salida()+"");
     }
 
     private void GenerarReporteTraspaso(TraspasoDTO traspasoDTO){
@@ -1242,7 +1245,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tbody>" +
                 "</table>" +
                 "<hr>" +
-                "<h4>Porcentaje Estación (%)</h4>" +
+                "<h4>Porcentaje Estacion (%)</h4>" +
                 "<table>" +
                 "<tbody>" +
                 "<tr>" +

@@ -9,6 +9,7 @@ import com.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
 import com.neotecknewts.sagasapp.Model.RespuestaCorteDto;
 import com.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.neotecknewts.sagasapp.Model.UsuariosCorteDTO;
+import com.neotecknewts.sagasapp.Model.VentasCorteDTO;
 import com.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenter;
 import com.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.neotecknewts.sagasapp.Presenter.Rest.RestClient;
@@ -121,9 +122,12 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
                 public void onResponse(Call<RespuestaCorteDto> call,
                                        Response<RespuestaCorteDto> response) {
                     RespuestaCorteDto data = response.body();
-                    if(response.isSuccessful() && data.isExito())
+                    if(response.isSuccessful() && data.isExito()) {
                         presenter.onSuccess();
-                    else
+                        //presenter.onError(response.message());
+                        Log.d("responsebodycorte" ,response.body()+"");
+                        Log.d("cortedto" ,corteDTO.toString());
+                    }/*else
                     if(data!=null)
                         Log.e("Error anticipo",data.getMensaje());
                     else
@@ -132,7 +136,8 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
                     if(response.code()>=300) {
                         registra_local(corteDTO,sagasSql,token);
                         presenter.onSuccessAndroid();
-                    }
+                        Log.d("errorcorte" ,response+"");
+                    }*/
                 }
 
                 @Override

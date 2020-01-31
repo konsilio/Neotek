@@ -528,9 +528,10 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
         //si aun faltan fotos por tomar
         if (cantidadFotos != 1) {
             try {
-                //se cehca que objeto se esta usando y se agrega la uri de la imagen a su lista
+                //se cecha que objeto se esta usando y se agrega la uri de la imagen a su lista
                 if (papeleta) {
                     papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                    papeletaDTO.setImagenesURI(papeletaDTO.getImagenesURI());
                 } else if (iniciar) {
                     iniciarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
                 } else if (finalizar) {

@@ -6,6 +6,7 @@ import com.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.neotecknewts.sagasapp.Model.ClienteDTO;
 import com.neotecknewts.sagasapp.Model.CorteDTO;
+import com.neotecknewts.sagasapp.Model.Cortes.CoordenadasDTO;
 import com.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.neotecknewts.sagasapp.Model.DatosBusquedaCortesDTO;
 import com.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
@@ -72,7 +73,6 @@ import retrofit2.http.Query;
 //interfaz que describe como seran las llamas a los web service
 public interface RestClient {
 
-
     //la llamada para obtener empresas es por get no requiere parametros y usa la ruta declarada en constantes
     @GET(Constantes.LISTA_EMPRESAS)
     Call<List<EmpresaDTO>> getListEmpresas();
@@ -81,6 +81,11 @@ public interface RestClient {
     @POST(Constantes.LOGIN_URL)
     Call<UsuarioDTO> postLogin(@Body UsuarioLoginDTO loginBody,
                                @Header("Content-Type") String contentType);
+
+    @POST(Constantes.REGISTRAR_LOGIN_URL)
+    Call<UsuarioDTO> postRegistrar(@Body UsuarioLoginDTO loginBody,
+                                   @Header("Authorization") String token,
+                                   @Header("Content-Type") String contentType);
 
     //la llamada para obtener ordenes decompra es por post requiere parametros de idempresa, si es gas, si es activo de venta y
     // si es transporte de gas y usa la ruta declarada en constantes

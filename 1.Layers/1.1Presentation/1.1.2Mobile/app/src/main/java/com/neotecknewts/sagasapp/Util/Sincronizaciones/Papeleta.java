@@ -11,6 +11,7 @@ import com.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 import com.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.neotecknewts.sagasapp.Util.Sincronizacion;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -60,6 +61,7 @@ public class Papeleta {
                         )
                 );
                 /* Coloco los valores de la base de datos en el DTO */
+                Log.d("getclaveoperacion",dto.getClaveOperacion());
                 dto.setClaveOperacion(papeletas.getString(
                         papeletas.getColumnIndex("ClaveOperacion")));
                 dto.setIdOrdenCompraExpedidor(papeletas.getInt(
@@ -108,6 +110,8 @@ public class Papeleta {
                         papeletas.getColumnIndex("CantidadFotosTractor")));
                 papeletas.moveToNext();
                 Cursor imagenes = db.GetRecordsByCalveUnica(dto.getClaveOperacion());
+                dto.setClaveOperacion(papeletas.getString(
+                        papeletas.getColumnIndex("ClaveOperacion")));
                 //Obtener imagenes papeleta
                 while (!imagenes.isAfterLast()) {
                     dto.getImagenes().add(

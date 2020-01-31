@@ -123,13 +123,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // hAcc= precision en metros
-            checkLocation();
-            Log.d("localizacion", loc.toString());
+            // checkLocation();
+           //  Log.d("localizacion", loc.toString());
             return;
         } else {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            Log.d("localizacion", loc.toString());
+            // Log.d("localizacion", loc.toString());
 
             if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 return;
             }
 
-            checkLocation();
+            // checkLocation();
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 1, locationListenerNetwork);
             // Se asigna a la clase LocationManager el servicio a nivel de sistema a partir del nombre.
             // Log.d("localizacion", loc.toString());
@@ -179,14 +179,15 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 // loc.setAccuracy(Criteria.ACCURACY_COARSE);
                 // Float precision = loc.getAccuracy();
 
-                if (accuracy != 0) {
+                onClickLogin();
+                /*if (accuracy != 0) {
                     Log.d("precision", accuracy + "");
-                   /* AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
+                   *//* AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog);
                     builder.setMessage("La precision es de:" + accuracy);
                     builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
                         dialogInterface.dismiss();
                     });
-                    builder.create().show();*/
+                    builder.create().show();*//*
                     onClickLogin();
                 } else {
                     buttonLogin.setEnabled(true);
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                         dialogInterface.dismiss();
                     });
                     builder.create().show();
-                }
+                }*/
             }
         });
 
@@ -218,11 +219,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     }
 
-    private boolean checkLocation() {
+  /*  private boolean checkLocation() {
         if (!isLocationEnabled())
             showAlert();
         return isLocationEnabled();
-    }
+    }*/
 
     private final LocationListener locationListenerNetwork = new LocationListener() {
         public void onLocationChanged(Location location) {
@@ -248,10 +249,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
     };
 
-    private boolean isLocationEnabled() {
+   /* private boolean isLocationEnabled() {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-    }
+    }*/
 
     private void showAlert() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -309,7 +310,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
                     fb_token = FirebaseInstanceId.getInstance().getToken();
                     Log.w("FireBaseToken", fb_token);
 
-
                 } catch (NoSuchAlgorithmException ex) {
                     ex.printStackTrace();
                 }
@@ -320,12 +320,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 usuarioLoginDTO.setPassword(this.contraseña);
                 usuarioLoginDTO.setUsuario(usuario);
                 usuarioLoginDTO.setFbToken(fb_token);
-                usuarioLoginDTO.setCoordenadas("17.599863,-99.5208956");
+                //Log.d("usuariodto", usuarioLoginDTO.toString());
+                //usuarioLoginDTO.setCoordenadas("17.599863,-99.5208956");
                 // usuarioLoginDTO.setCoordenadas(latitudeNetwork + "," + longitudeNetwork);
-                Log.d("usuarioLoginDTO ", "coordenadas: " + usuarioLoginDTO.getCoordenadas() + " IdEmpresa: " +
-                        usuarioLoginDTO.getIdEmpresa() + " token: " + usuarioLoginDTO.getFbToken() + " usuario:" +
-                        usuarioLoginDTO.getUsuario() + " password: "
-                        + usuarioLoginDTO.getPassword() + "");
                 //usuarioLoginDTO.setFBToken(FirebaseInstanceId.getInstance().getToken());
                 //por medio del presenter se llama al web service con el objeto de usuario
                 loginPresenter.doLogin(usuarioLoginDTO);

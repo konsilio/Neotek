@@ -5,6 +5,7 @@ import android.util.Log;
 import com.neotecknewts.sagasapp.Model.PuntoVentaAsignadoDTO;
 import com.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.neotecknewts.sagasapp.Model.RespuestaVentaExtraforaneaDTO;
+import com.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.neotecknewts.sagasapp.Model.VentaDTO;
 import com.neotecknewts.sagasapp.Presenter.PuntoVentaPagarPresenter;
 import com.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
@@ -24,6 +25,7 @@ import retrofit2.Response;
 public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor {
     PuntoVentaPagarPresenter presenter;
     private boolean registro_local = false;
+
     public PuntoVentaPagarInteractorImpl(PuntoVentaPagarPresenter presenter) {
         this.presenter = presenter;
     }
@@ -31,9 +33,6 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
     @Override
     public void pagar(VentaDTO ventaDTO, String token, boolean esCamioneta, boolean esEstacion,
                       boolean esPipa, SAGASSql sagasSql) {
-
-
-
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         ventaDTO.setFecha(ventaDTO.getFecha());
         Call<RespuestaPuntoVenta> call = restClient.pagar(
@@ -45,27 +44,39 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                 "application/json"
         );
         Log.w("Url base", ApiClient.BASE_URL);
-
         call.enqueue(new Callback<RespuestaPuntoVenta>() {
             @Override
             public void onResponse(Call<RespuestaPuntoVenta> call, Response<RespuestaPuntoVenta> response) {
                 RespuestaPuntoVenta data = response.body();
+                Log.d("ali",  "onresponse");
                 if (response.isSuccessful()) {
-
+                    Log.d("ali",  "successful");
                     presenter.onSuccess(data);
                     registro_local = false;
+                    RespuestaPuntoVenta dataresponse = response.body();
+                    presenter.onError(dataresponse.getMensaje());
+                    // presenter.onError(dataresponse.getMensaje());
+                }else{
+                    RespuestaPuntoVenta dataresponse = response.body();
+                    presenter.onError(dataresponse.getMensaje());
                 }
+/*
                 else {
-                    JSONObject respuesta = null;
+                   // JSONObject respuesta = null;
+*/
+/*
                     try {
-                        respuesta = new JSONObject(response.errorBody().string());
+                       respuesta = new JSONObject(response.errorBody().string());
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    String mensaje = "";
+*//*
+
+                 */
+/* String mensaje = "";
                     switch (response.code()) {
                         case 404:
                             Log.w("Error","not found");
@@ -79,12 +90,17 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                             Log.w("Error", "Error desconocido: "+response.code());
 
                             break;
-                    }
-                    Log.d("ErrorVentaPagar", mensaje = "Se ha generado un error: "+response.message());
-                    mensaje = "Se ha generado un error: "+response.message();
+                    }*//*
+
+                 */
+/* Log.d("ErrorVentaPagar", mensaje = "Se ha generado un error: "+response.message());
+                    mensaje = "Se ha generado un error: "+ response.message();*//*
+
                     registro_local = true;
-                    if(respuesta!=null){
-                        presenter.onErrorInternalServer(respuesta);
+*/
+/*
+                    if(response.body()!=null){
+                        presenter.onError(response.errorBody().toString());
                     }else {
                         if (data != null) {
                             presenter.onError(data);
@@ -99,19 +115,22 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                             lisener.CrearRunable(Lisener.Proceso.Venta);
                         }
                     }
-                }
+*//*
 
+                }
+*/
             }
 
             @Override
             public void onFailure(Call<RespuestaPuntoVenta> call, Throwable t) {
-                Log.e("error", "Error desconocido: "+t.toString());
+                presenter.onError("Error en el servidor");
+              /*  Log.e("error", "Error desconocido: "+t.toString());
                 registro_local = true;
                 presenter.onError("Se ha generado un error: "+t.getMessage());
                 local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
                 presenter.onSuccessAndroid();
                 Lisener lisener = new Lisener(sagasSql,token);
-                lisener.CrearRunable(Lisener.Proceso.Venta);
+                lisener.CrearRunable(Lisener.Proceso.Venta);*/
 
             }
 
@@ -140,15 +159,14 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
             public void onResponse(Call<PuntoVentaAsignadoDTO> call, Response<PuntoVentaAsignadoDTO> response) {
                 PuntoVentaAsignadoDTO data = response.body();
                 if (response.isSuccessful()) {
-                    Log.w("Estatus","Success");
+                    Log.w("Estatus", "Success");
                     presenter.onSuccessPuntoVentaAsignado(data);
                     registro_local = false;
-                }
-                else {
+                } else {
                     String mensaje = "";
                     switch (response.code()) {
                         case 404:
-                            Log.w("Error","not found");
+                            Log.w("Error", "not found");
 
                             break;
                         case 500:
@@ -156,12 +174,12 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
 
                             break;
                         default:
-                            Log.w("Error", "Error desconocido: "+response.code());
+                            Log.w("Error", "Error desconocido: " + response.code());
 
                             break;
                     }
                     presenter.onErrorPuntoVenta("No se ha podido identificar el punto de venta");
-                    Log.d("Proceso","sincronizarpuntoventa");
+                    Log.d("Proceso", "sincronizarpuntoventa");
                 }
 
             }
@@ -192,11 +210,10 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
 
                 RespuestaVentaExtraforaneaDTO data = response.body();
                 if (response.isSuccessful()) {
-                    Log.w("Estatus","Success");
+                    Log.w("Estatus", "Success");
                     presenter.onSuccessVentaExtraforanea(data);
                     registro_local = false;
-                }
-                else {
+                } else {
                     JSONObject respuesta = null;
                     try {
                         respuesta = new JSONObject(response.errorBody().string());
@@ -208,7 +225,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                     }
                     switch (response.code()) {
                         case 404:
-                            Log.w("Error","not found");
+                            Log.w("Error", "not found");
 
                             break;
                         case 500:
@@ -216,19 +233,19 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
 
                             break;
                         default:
-                            Log.w("Error", "Error desconocido: "+response.code());
+                            Log.w("Error", "Error desconocido: " + response.code());
 
                             break;
                     }
-                    if(respuesta!=null){
+                    if (respuesta != null) {
                         try {
-                            Log.w("Error body",respuesta.toString());
+                            Log.w("Error body", respuesta.toString());
                             presenter.onError(respuesta.getString("Mensaje"));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                    }else{
+                    } else {
                         presenter.onError(response.message());
                     }
 
@@ -249,13 +266,13 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
         try {
             if (sagasSql.GetVenta(ventaDTO.getFolioVenta()).getCount() == 0) {
                 sagasSql.InsertarVenta(ventaDTO, esCamioneta, esEstacion, esPipa);
-                if(sagasSql.GetVentaConcepto(ventaDTO.getFolioVenta()).getCount()==0) {
+                if (sagasSql.GetVentaConcepto(ventaDTO.getFolioVenta()).getCount() == 0) {
                     sagasSql.InsertarConcepto(ventaDTO);
                 }
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
-            Log.e("Mensaje excepcion",ex.getMessage());
+            Log.e("Mensaje excepcion", ex.getMessage());
         }
 
     }

@@ -27,6 +27,17 @@ abstract class RespuestaDTO {
         return Exito;
     }
 
+    @Override
+    public String toString() {
+        return "RespuestaDTO{" +
+                "Exito=" + Exito +
+                ", Error=" + Error +
+                ", Mensaje='" + Mensaje + '\'' +
+                ", MensajesError='" + MensajesError + '\'' +
+                ", Id=" + Id +
+                '}';
+    }
+
     public boolean isError() {
         return Error;
     }

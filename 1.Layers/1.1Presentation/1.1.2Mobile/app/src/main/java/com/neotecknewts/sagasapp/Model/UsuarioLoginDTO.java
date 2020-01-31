@@ -61,4 +61,15 @@ public class UsuarioLoginDTO {
     public void setCoordenadas(String coordenadas) {
         Coordenadas = coordenadas;
     }
+
+    @Override
+    public String toString() {
+        return "UsuarioLoginDTO{" +
+                "IdEmpresa=" + IdEmpresa +
+                ", Usuario='" + Usuario + '\'' +
+                ", Password='" + Password + '\'' +
+                ", FbToken='" + FbToken + '\'' +
+                ", Coordenadas='" + Coordenadas + '\'' +
+                '}';
+    }
 }

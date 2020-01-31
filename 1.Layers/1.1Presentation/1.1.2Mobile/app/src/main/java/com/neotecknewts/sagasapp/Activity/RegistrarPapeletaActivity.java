@@ -410,6 +410,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         papeletaDTO.setPresionTanque(Double.parseDouble(editTextPresionTanque.getText().toString()));
         papeletaDTO.setPorcentajeTanque(Double.parseDouble(editTextPorcentajeTanque.getText().toString()));
         papeletaDTO.setMasa(Double.parseDouble(editTextMasa.getText().toString()));
+        papeletaDTO.setClaveOperacion("1234");
         papeletaDTO.setSello(editTextSello.getText().toString());
         papeletaDTO.setValorCarga(Double.parseDouble(editTextValorCarga.getText().toString()));
         papeletaDTO.setNombreResponsable(editTextNombreResponsable.getText().toString());

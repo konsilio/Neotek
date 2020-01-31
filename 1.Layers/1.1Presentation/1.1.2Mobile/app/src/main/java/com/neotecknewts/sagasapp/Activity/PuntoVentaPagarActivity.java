@@ -277,14 +277,16 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
     public void onHiddeProgress() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.hide();
+
             progressDialog.dismiss();
         }
     }
 
     @Override
     public void onError(String mensaje) {
+        Log.d("ali", "errorInternal");
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
-        builder.setTitle(R.string.error_titulo);
+        // builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept, ((dialog, which) -> dialog.dismiss()));
         builder.create();
@@ -370,7 +372,9 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
     @Override
     public void onErrorInternalServer(JSONObject respuesta) {
         if (respuesta != null) {
+            Log.d("ali", "errorInternal");
             try {
+                Log.d("ali", "errorInternal");
                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
                 builder.setTitle(R.string.error_titulo);
                 builder.setMessage(respuesta.getString("Mensaje"));

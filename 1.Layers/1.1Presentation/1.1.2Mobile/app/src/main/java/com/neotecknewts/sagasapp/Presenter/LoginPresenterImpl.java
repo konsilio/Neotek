@@ -2,6 +2,7 @@ package com.neotecknewts.sagasapp.Presenter;
 
 import android.util.Log;
 
+import com.neotecknewts.sagasapp.Activity.MenuView;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Activity.MainView;
 import com.neotecknewts.sagasapp.Interactor.LoginInteractor;
@@ -20,10 +21,15 @@ public class LoginPresenterImpl implements LoginPresenter {
     //se delcaran la vista y el interactor
     LoginInteractor interactor;
     MainView mainView;
+    MenuView menuView;
 
     //se obtiene la vista al ser contruido y se inicializa el interactor
     public LoginPresenterImpl(MainView view, SAGASSql sagasSql){
         this.mainView = view;
+        this.interactor = new LoginInteractorImpl(this, sagasSql);
+    }
+    public LoginPresenterImpl(MenuView view, SAGASSql sagasSql){
+        this.menuView = view;
         this.interactor = new LoginInteractorImpl(this, sagasSql);
     }
     //metodo para obtener empresas
@@ -38,8 +44,14 @@ public class LoginPresenterImpl implements LoginPresenter {
     public void doLogin(UsuarioLoginDTO usuarioLoginDTO) {
         mainView.showProgress(R.string.message_cargando);
         interactor.postLogin(usuarioLoginDTO);
-
     }
+
+    @Override
+    public void doRegistrar(UsuarioLoginDTO usuarioLoginDTO, String token) {
+        // menuView.showProgress(R.string.message_cargando);
+        interactor.postRegistrar(usuarioLoginDTO, token);
+    }
+
 
     //metodo que se llama al obtener empresas
     @Override
@@ -58,11 +70,13 @@ public class LoginPresenterImpl implements LoginPresenter {
     //metodo de error
     @Override
     public void onError(String mensaje) {
-        Log.e("error", "onerror");
         mainView.hideProgress();
         mainView.messageError(mensaje);
-
     }
 
-
+    @Override
+    public void onError(String mensaje, String msj) {
+        menuView.hideProgress();
+        menuView.messageError(mensaje);
+    }
 }

@@ -29,8 +29,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
+import com.neotecknewts.sagasapp.Presenter.LoginPresenter;
+import com.neotecknewts.sagasapp.Presenter.LoginPresenterImpl;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Adapter.MenuAdapter;
 import com.neotecknewts.sagasapp.Model.MenuDTO;
@@ -52,6 +55,7 @@ import it.sephiroth.android.library.tooltip.Tooltip;
 
 public class MenuActivity extends AppCompatActivity implements MenuView {
 
+    String fb_token;
     private Location loc;
     private LocationManager locationManager;
     double longitudeNetwork = 0, latitudeNetwork = 0, accuracy = 0;
@@ -64,8 +68,16 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     //clase de la session
     Session session;
 
+    //variable para usuario y contraseña y empresa
+    public String contraseña;
+    public String usuario;
+    public int IdEmpresa;
+
     //objeto del recycler view
     RecyclerView recyclerView;
+
+    //mainActivity
+    MainActivity mainActivity;
 
     //adapter para el reclycler view
     MenuAdapter adapter;
@@ -81,10 +93,15 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     Context context;
     ProgressDialog progressSincronizar;
 
+    LoginPresenter loginPresenter;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+
+        SAGASSql dbHelper = new SAGASSql(this);
+        loginPresenter = new LoginPresenterImpl(this, dbHelper);
 
         //se inicializa menu y presenter
         session = new Session(getApplicationContext());
@@ -305,9 +322,18 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                 return true;
             case R.id.RegistrarEntrada:
                 UsuarioLoginDTO usuarioLoginDTO = new UsuarioLoginDTO();
+                fb_token = FirebaseInstanceId.getInstance().getToken();
+                usuarioLoginDTO.setFbToken(fb_token);
+                Log.d("token menu", fb_token);
+                usuarioLoginDTO.setPassword("1A6FF8F796ED193A72C5D8A3F8A4E173CED67372FD4A282F6F5C38C1DA8AF010");
+                usuarioLoginDTO.setIdEmpresa(2);
+                usuarioLoginDTO.setUsuario("planta.anden@gmail.com");
                 usuarioLoginDTO.setCoordenadas(latitudeNetwork + "," + longitudeNetwork);
+                Log.d("usuariodto", usuarioLoginDTO.toString());
+
+                loginPresenter.doRegistrar(usuarioLoginDTO, session.getToken());
                 AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this, R.style.AlertDialog);
-                builder.setMessage("Se ha registado su ubicación: " + latitudeNetwork + "," + longitudeNetwork);
+                //builder.setMessage("Se ha registado su ubicación: " + latitudeNetwork + "," + longitudeNetwork);
                 builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                 });
@@ -463,6 +489,11 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     @Override
     public void messageError(int mensaje) {
         showDialog(getResources().getString(mensaje));
+    }
+
+    @Override
+    public void messageError(String mensaje) {
+        showDialog(mensaje);
     }
 
     //metodo que se llama al obtener el menu desde web service

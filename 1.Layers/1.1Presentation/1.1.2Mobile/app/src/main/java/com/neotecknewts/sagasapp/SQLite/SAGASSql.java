@@ -173,6 +173,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Imagen TEXT," +
                 "Url TEXT," +
                 "ClaveUnica TEXT," +
+                "CalveUnica TEXT," +
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
@@ -780,7 +781,7 @@ public class SAGASSql extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("CompraEntraGas", clave_operacion);
+        // contentValues.put("CompraEntraGas", clave_operacion);
         contentValues.put("IdOrdenCompraExpedidor", papeletaDTO.getIdOrdenCompraExpedidor());
         contentValues.put("IdOrdenCompraPorteador", papeletaDTO.getIdOrdenCompraPorteador());
         contentValues.put("IdProveedorPorteador", papeletaDTO.getIdProveedorPorteador());
@@ -883,7 +884,7 @@ public class SAGASSql extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             //contentValues.put("IMAGEN",imagen.get(x).toString());
             contentValues.put("Imagen", imagen.get(x).toString());
-            contentValues.put("Url", url.get(x));
+            // contentValues.put("Url", url.get(x));
             contentValues.put("CalveUnica", CalveUnica);
             inserts[x] = db.insert(TABLE_PAPELETAS_IMAGENES, null, contentValues);
             Log.w("Imagenes", String.valueOf(inserts[x]));
@@ -937,7 +938,7 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Integer EliminarImagenes(String ClaveOperacion) {
         return this.getWritableDatabase().delete(TABLE_PAPELETAS_IMAGENES,
-                "ClaveUnica = '" + ClaveOperacion + "'", null);
+                "CalveUnica = '" + ClaveOperacion + "'", null);
     }
     //endregion
 

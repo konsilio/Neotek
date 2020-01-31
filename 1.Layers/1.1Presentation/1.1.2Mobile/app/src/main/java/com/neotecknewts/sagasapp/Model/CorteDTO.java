@@ -252,7 +252,7 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
     }
 
     public void setIdRecibio(int idRecibio) {
-        IdRecibio = idRecibio;
+        IdRecibio = 14;
     }
 
     @Override

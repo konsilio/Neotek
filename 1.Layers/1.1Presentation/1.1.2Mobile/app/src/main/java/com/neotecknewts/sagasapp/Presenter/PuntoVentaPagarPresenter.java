@@ -31,4 +31,5 @@ public interface PuntoVentaPagarPresenter {
     void onSuccessVentaExtraforanea(RespuestaVentaExtraforaneaDTO data);
 
     void onErrorInternalServer(JSONObject respuesta);
+
 }

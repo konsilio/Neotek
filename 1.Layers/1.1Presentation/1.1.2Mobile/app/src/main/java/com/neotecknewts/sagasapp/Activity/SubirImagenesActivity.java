@@ -302,14 +302,16 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(papeletaDTO.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
+                    Log.d("imagenpapeleta", bitmap +"");
                     bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    Log.d("imagenpapeleta", bitmap +"");
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     papeletaDTO.getImagenes().add(image.trim());
-
-                    Log.w("Imagenes"+i,""+uri.toString());
+                    Log.w("Imagenespapeleta"+i,""+uri.toString());
+                    // papeletaDTO.setImagenes();
                 }catch (Exception e){
 
                 }

@@ -251,7 +251,7 @@ public class PrecargaPapeletaDTO implements Serializable {
     }
 
     public void setImagenesURI(List<URI> imagenesURI) {
-        ImagenesURI = imagenesURI;
+        ImagenesURI = new ArrayList<>();
     }
 
     public Double getPorcentajeMedidor() {
@@ -291,7 +291,7 @@ public class PrecargaPapeletaDTO implements Serializable {
     }
 
     public void setClaveOperacion(String Clave) {
-        ClaveOperacion = Clave;
+        ClaveOperacion = "0130000000";
     }
 
     public Double getCapacidadTanqueKg() {

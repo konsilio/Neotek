@@ -13,6 +13,7 @@ public class Constantes {
     //public static final String BASE_URL = "http://sagasapi.ddns.net:7011/api/";//DEV
     public static final int IdClienteGeneral = 0;
     public static final String LOGIN_URL = "mobile/login";
+    public static final String REGISTRAR_LOGIN_URL = "mobile/registrarentrada";
     public static final String LISTA_EMPRESAS   = "catalogos/empresas/listaempresaslogin";
     public static final String LISTA_ORDENESCOMPRA_GAS = "mobile/lista/ordenes/compra";
     public static final String LISTA_MENU = "mobile/obtener/menu";

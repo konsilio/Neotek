@@ -127,7 +127,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(precargaPapeletaDTO,
                     token, "application/json");
 
-            Log.w(TAG, ApiClient.BASE_URL);
+            Log.w("imagen", ApiClient.BASE_URL);
             //Log.w("Numero ", precargaPapeletaDTO.toString());
 
             call.enqueue(new Callback<RespuestaPapeletaDTO>() {
@@ -137,11 +137,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
                     if (response.isSuccessful()) {
                         RespuestaPapeletaDTO data = response.body();
+                        Log.d("responsebodypapeleta", response.body()+"");
                         Log.w(TAG, "Success");
                         registra_papeleta = true;
                         //subirImagenesPresenter.onSuccessRegistrarPapeleta();
                         subirImagenesPresenter.onSuccessRegistroPapeleta();
-                    } else {
+                    } /*else {
                         RespuestaPapeletaDTO data = response.body();
                         //Log.w("Respuesta",data.getMensaje());
                         switch (response.code()) {
@@ -154,7 +155,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 //subirImagenesPresenter.onError();
                                 break;
                             default:
-                                Log.w(TAG, "" + response.code());
+                                Log.w("responseSubirimagen", "" + response.code());
                                 Log.w(" Error", response.message() + " " +
                                         response.raw().toString());
 
@@ -168,9 +169,13 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registra_papeleta = false;
 
                     }
-                    if(response.code()>=300){
+*/                    if(response.code()>=300){
+                        subirImagenesPresenter.onSuccessRegistroPapeleta();
+                        Log.d("responsesubirimagen", response.body()+"");
+                        Log.w(" Errorsubirimagen", response.message() + " " +
+                                response.raw().toString());
                         registrar_local(sagasSql,precargaPapeletaDTO,clave_unica);
-                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        // subirImagenesPresenter.onSuccessRegistroAndroid();
                         //Lisener lisener = new Lisener(sagasSql,token,applicationContext);
                         Lisener lisener = new Lisener(sagasSql,token);
                             lisener.context = applicationContext;

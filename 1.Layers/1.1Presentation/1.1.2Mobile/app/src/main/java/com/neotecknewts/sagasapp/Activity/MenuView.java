@@ -14,5 +14,6 @@ public interface MenuView {
     void showProgress(int mensaje);
     void hideProgress();
     void messageError(int mensaje);
+    void messageError(String mensaje);
     void onSuccessGetMenu(List<MenuDTO> menuDTOs);
 }
