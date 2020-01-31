@@ -623,7 +623,6 @@ namespace Application.MainModule.Servicios.Almacenes
             if (p.IdPipa != 0)
                 return ObtenerPipa(p.IdPipa.Value).Nombre;
             return "Sin Asignar";
-
         }
         public static string ObtenerCantidad(Pedido p, string cant)
         {

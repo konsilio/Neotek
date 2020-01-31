@@ -76,7 +76,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                     CantidadAnterior = dto.CantidadAnterior,
                     CantidadFinal = dto.CantidadFinal,
                     Observaciones_ = idOC.Equals(0) ? dto.Observaciones : oc.NumOrdenCompra,
-                    FechaEntrada = dto.FechaEntrada,
+                    FechaEntrada = DateTime.Now,
                     FechaRegistro = DateTime.Now
                 };
             }

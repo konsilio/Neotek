@@ -41,6 +41,5 @@ namespace Sagas.MainModule.Entidades
         public virtual UnidadAlmacenGas CAlmacenGas { get; set; }
         public virtual OperadorChofer COperadorChofer { get; set; }
         public virtual PuntoVenta CPuntoVenta { get; set; }
-        public virtual Usuario Usuario { get; set; }
     }
 }

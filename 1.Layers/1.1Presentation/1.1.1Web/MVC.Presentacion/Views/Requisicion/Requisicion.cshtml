@@ -92,10 +92,7 @@
                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                            settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
                                            settings.Theme = "Material";
-                                       }).Bind(Model.FechaRequerida).GetHtml()
-
-
-
+                                       }).Bind(DateTime.Now).GetHtml()
                                         </div>
                                         @Html.HiddenFor(m => m.FechaRequerida)
                                         @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })

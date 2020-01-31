@@ -52,8 +52,10 @@ namespace MVC.Presentacion.Controllers
                 _model = new CorteCajaDTO();
             if (_model.Tickets == null || _model.Tickets.Count.Equals(0))
                 if (TempData["DatosLiquidacion"] != null)
+                {
                     _model = (CorteCajaDTO)TempData["DatosLiquidacion"];
-
+                    TempData.Keep("DatosLiquidacion");
+                }
             return View(_model);
         }
         public ActionResult CallBackLiquidaciones()
@@ -76,12 +78,13 @@ namespace MVC.Presentacion.Controllers
             }
             if (_model.Tickets != null && _model.Tickets.Count == 0)
                 TempData["RespuestaDTOError"] = "No existe la clave solicitada";
-            var id = _model.Tickets.FirstOrDefault().FolioVenta;
-            var Tipo = _model.Tickets.FirstOrDefault().Tipo;
+            
+                //var id = _model.Tickets.FirstOrDefault().FolioVenta;
+            //var Tipo = _model.Tickets.FirstOrDefault().Tipo;
             if (_model.Tickets != null)
             {
-                TempData["FolioVenta"] = id;
-                TempData["Tipo"] = Tipo;
+                TempData["FolioVenta"] = _model.Tickets.FirstOrDefault().FolioVenta;
+                TempData["Tipo"] = _model.Tickets.FirstOrDefault().Tipo;
                 TempData["FormaPago"] = CatalogoServicio.ListaFormaPago();
                 TempData.Keep("DatosLiquidacion");
 
@@ -120,92 +123,6 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Liquidar", dto);
 
         }
-        //public ActionResult Estacion()
-        //{
-        //    if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
-        //    string _tkn = Session["StringToken"].ToString();
-
-        //    if (TempData["RespuestaCajaGralEst"] != null)
-        //    {
-        //        ViewBag.CajaGeneralEstacion = TempData["RespuestaCajaGralEst"];
-        //    }
-        //    if (TempData["RespuestaDTO"] != null)
-        //    {
-        //        ViewBag.MessageExito = TempData["RespuestaDTO"];
-        //    }
-        //    if (TempData["RespuestaDTOError"] != null)
-        //    {
-        //        ViewBag.MensajeError = TempData["RespuestaDTOError"];
-        //    }
-        //    ViewBag.MessageError = TempData["RespuestaDTOError"];
-        //    return View();
-        //}
-        //public ActionResult BuscarEstacion(VentaCorteAnticipoModel _model, int? page)
-        //{
-        //    if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
-        //    string _tkn = Session["StringToken"].ToString();
-        //    var Pagina = page ?? 1;
-        //    ViewBag.CajaGeneralEstacion = VentasServicio.ListaVentasCajaGralEstacion(_model.FolioOperacion, _tkn).ToPagedList(Pagina, 10);
-
-        //    if (ViewBag.CajaGeneralEstacion.Count == 0)
-        //    {
-        //        TempData["RespuestaDTOError"] = "No existe la clave solicitada";
-        //    }
-        //    else { TempData["RespuestaCajaGralEst"] = ViewBag.CajaGeneralEstacion; }
-        //    return RedirectToAction("Estacion");
-
-        //}
-        //public ActionResult GuardarLiquidaEstacion(VentaCorteAnticipoModel _ObjModel)
-        //{
-        //    if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
-        //    string _tok = Session["StringToken"].ToString();
-
-        //    var respuesta = VentasServicio.GuardarLiquidacionEstacion(_ObjModel, _tok);
-
-        //    if (respuesta.Exito)
-        //    {
-        //        TempData["RespuestaDTO"] = respuesta.Mensaje;
-        //        TempData["RespuestaDTOError"] = null;
-        //        return RedirectToAction("Estacion");
-        //    }
-
-        //    else
-        //    {
-        //        TempData["RespuestaDTOError"] = respuesta;
-        //        return RedirectToAction("Estacion");
-        //    }
-        //}
-        //public ActionResult Pipa(int? page)
-        //{
-        //    if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
-        //    string _tkn = Session["StringToken"].ToString();
-
-        //    ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
-        //    var Pagina = page ?? 1;
-        //    if (ViewBag.EsSuperUser)
-        //    {
-        //        ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-        //        ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn, "").ToPagedList(Pagina, 20);
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
-        //        ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).ToPagedList(Pagina, 20);
-        //    }
-
-        //    if (TempData["RespuestaDTO"] != null)
-        //    {
-        //        ViewBag.MessageExito = TempData["RespuestaDTO"];
-        //    }
-        //    if (TempData["RespuestaDTOError"] != null)
-        //    {
-        //        ViewBag.MessageError = TempData["RespuestaDTOError"];
-        //    }
-
-        //    ViewBag.MessageError = TempData["RespuestaDTOError"];
-
-        //    return View();
-        //}
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;
@@ -223,20 +140,20 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
+        [ValidateInput(false)]
         public ActionResult FormaDePagoPartialUpdate(MVCxGridViewBatchUpdateValues<CorteCajaDTO, string> updateValues)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            _tkn = Session["StringToken"].ToString();
-          
+            _tkn = Session["StringToken"].ToString();          
             var model = (CorteCajaDTO)TempData["DatosLiquidacion"];                      
             model.Tickets = new List<VentaPuntoVentaDTO>();
-
-            foreach (var product in updateValues.Update.FirstOrDefault().Tickets)
+            foreach (var product in updateValues.Update.Select(x => x.Tickets))
             {
                 if (updateValues.IsValid(model))
-                    model.Tickets.Add(product);
+                    model.Tickets.AddRange(product);
             }
-            return View(model);
+
+            return RedirectToAction("Liquidar", model);          
         }
     }
 }

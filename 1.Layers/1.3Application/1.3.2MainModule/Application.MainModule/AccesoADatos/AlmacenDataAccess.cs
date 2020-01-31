@@ -116,7 +116,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Format(Error.A0001, "de la Salida de producto");
+                    _respuesta.Mensaje = string.Format(Error.A0001, "de la entrada de producto");
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }

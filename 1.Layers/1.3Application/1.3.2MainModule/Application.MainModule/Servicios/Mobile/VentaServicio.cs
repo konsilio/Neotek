@@ -160,7 +160,6 @@ namespace Application.MainModule.Servicios.Mobile
             //var PuntoVenta = puntos.Find(x => x.IdCAlmacenGas.Equals(dto.IdCAlmacenGas));
 
             var adapter = AnticiposCortesAdapter.FromDto(dto, idEmpresa, idUsuario, puntoVenta);
-
             adapter.IdCAlmacenGas = almacen.IdCAlmacenGas;
             adapter.Orden = (short)idOrden;
             adapter.FechaAplicacion = dto.Fecha;

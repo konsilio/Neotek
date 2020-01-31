@@ -52,7 +52,7 @@ namespace Application.MainModule.Servicios.Compras
                 {
                     OrdenCompra nOC = new OrdenCompra();
                     nOC.IdProveedor = _prod.IdProveedor;
-                    nOC.IdEmpresa = TokenServicio.ObtenerEsAdministracionCentral() == true ? ocInicial.IdEmpresa : TokenServicio.ObtenerIdEmpresa();
+                    nOC.IdEmpresa = TokenServicio.ObtenerEsAdministracionCentral() == true && ocInicial.IdEmpresa != 0 ? ocInicial.IdEmpresa : TokenServicio.ObtenerIdEmpresa();
                     nOC.IdRequisicion = ocInicial.IdRequisicion;
                     nOC.IdCentroCosto = _prod.IdCentroCosto;
                     nOC.IdCuentaContable = _prod.IdCuentaContable;

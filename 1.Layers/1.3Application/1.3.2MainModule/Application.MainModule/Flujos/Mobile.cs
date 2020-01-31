@@ -23,6 +23,8 @@ using Application.MainModule.DTOs.Mobile.Cortes;
 using System.Net.Http;
 using Application.MainModule.AdaptadoresDTO.Mobile.VentaExtraordinaria;
 using Utilities.MainModule;
+using Exceptions.MainModule.Validaciones;
+using Exceptions.MainModule;
 
 namespace Application.MainModule.Flujos
 {
@@ -94,29 +96,33 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaDto RegistrarPapeleta(PapeletaDTO papeletaDto)
         {
-            var resp = EntradaGasServicio.EvaluarClaveOperacion(papeletaDto);
-            if (resp.Exito) return resp;
+            try
+            {
+                var resp = EntradaGasServicio.EvaluarClaveOperacion(papeletaDto);
+                if (resp.Exito) return resp;
 
-            resp = EntradaGasServicio.EvaluarExistenciaRegistro(papeletaDto);
-            if (resp.Exito) return resp;
+                resp = EntradaGasServicio.EvaluarExistenciaRegistro(papeletaDto);
+                if (resp.Exito) return resp;
 
-            /*Se genera lista de ordenes de compra para actualizar el estatus de estas */
-            //List<OrdenCompra> ocs = new List<OrdenCompra>();
-            //var ocp = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(papeletaDto.IdOrdenCompraPorteador));
-            var oce = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(papeletaDto.IdOrdenCompraExpedidor));
-            //ocp.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Proceso_compra;
-            //oce.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
-            //ocs.Add(ocp);
-            //ocs.Add(oce);
-
-            var papeleta = AlmacenAdapter.FromDto(papeletaDto);
-            papeleta.IdRequisicion = oce.IdRequisicion;
-            var almacen = CentroCostoServicio.Obtener(oce.IdCentroCosto).UnidadAlmacenGas;
-            papeleta.IdCAlmacenGas = almacen.IdCAlmacenGas;
-            papeleta.IdAlmacenGas = almacen.IdAlmacenGas;
-            papeleta.IdTipoMedidorAlmacen = almacen.IdTipoMedidor;
-            /* Fin cambio: JSA*/
-            return EntradaGasServicio.RegistrarPapeleta(papeleta);
+                /*Se genera lista de ordenes de compra para actualizar el estatus de estas */
+                var oce = OrdenComprasAdapter.FromEntity(OrdenCompraServicio.Buscar(papeletaDto.IdOrdenCompraExpedidor));
+                var papeleta = AlmacenAdapter.FromDto(papeletaDto);
+                papeleta.IdRequisicion = oce.IdRequisicion;
+                var almacen = CentroCostoServicio.Obtener(oce.IdCentroCosto).UnidadAlmacenGas;
+                papeleta.IdCAlmacenGas = almacen.IdCAlmacenGas;
+                papeleta.IdAlmacenGas = almacen.IdAlmacenGas;
+                papeleta.IdTipoMedidorAlmacen = almacen.IdTipoMedidor;
+                /* Fin cambio: JSA*/
+                return EntradaGasServicio.RegistrarPapeleta(papeleta);
+            }
+            catch (Exception ex)
+            {
+                return new RespuestaDto()
+                {
+                    Exito = false,
+                    Mensaje = CatchInnerException.ObtenerString(ex),
+                };
+            }           
         }
         public RespuestaDto InicializarDescarga(DescargaDto desDto)
         {
@@ -1410,6 +1416,7 @@ namespace Application.MainModule.Flujos
             var cortes = VentaServicio.ObtenerCortes(TokenServicio.ObtenerIdEmpresa());
             var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
             var estacion = estaciones.Find(x => x.IdEstacionCarburacion.Equals(almacen.IdEstacionCarburacion));
+
             //var almacenes = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
             //var almacen = almacenes.Find(x => x.IdEstacionCarburacion.Value.Equals(puntoVentaBusqueda.IdCAlmacenGas));
             //var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());

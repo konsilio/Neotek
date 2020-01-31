@@ -241,5 +241,9 @@ namespace Application.MainModule.Flujos
             var liquis = CajaGeneralServicio.Obtener(DateTime.Now);
             return CajaGeneralAdapter.ToDTO(liquis);
         }
+        //public RespuestaDto ActualizarTikectsLiq(List<VentaPuntoVentaDTO> lista)
+        //{
+        //    return PuntoVentaServicio.ActualizarVentasLique
+        //}
     }
 }

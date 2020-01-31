@@ -5305,18 +5305,6 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VentaCorteAnticipoEC_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="VentaCorteAnticipoEC" Type="Self.VentaCorteAnticipoEC" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="VentaCorteAnticipoEC">
-              <PropertyRef Name="IdUsuarioRecibe" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_VentaMovimiento_CAlmacenGas">
           <End Role="CAlmacenGas" Type="Self.CAlmacenGas" Multiplicity="1" />
           <End Role="VentaMovimiento" Type="Self.VentaMovimiento" Multiplicity="*" />
@@ -6500,10 +6488,6 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             <End Role="CPuntoVenta" EntitySet="CPuntoVenta" />
             <End Role="VentaCorteAnticipoEC" EntitySet="VentaCorteAnticipoEC" />
           </AssociationSet>
-          <AssociationSet Name="FK_VentaCorteAnticipoEC_Usuario" Association="Self.FK_VentaCorteAnticipoEC_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="VentaCorteAnticipoEC" EntitySet="VentaCorteAnticipoEC" />
-          </AssociationSet>
           <AssociationSet Name="FK_VentaMovimiento_CAlmacenGas" Association="Self.FK_VentaMovimiento_CAlmacenGas">
             <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
             <End Role="VentaMovimiento" EntitySet="VentaMovimiento" />
@@ -6887,7 +6871,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <NavigationProperty Name="ReporteDelDia" Relationship="Sagas.MainModuleModel.FK_ReporteDelDia_Usuario" FromRole="Usuario" ToRole="ReporteDelDia" />
           <NavigationProperty Name="VentaCajaGeneral" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario" FromRole="Usuario" ToRole="VentaCajaGeneral" />
           <NavigationProperty Name="VentaCajaGeneral1" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario1" FromRole="Usuario" ToRole="VentaCajaGeneral" />
-          <NavigationProperty Name="VentaCorteAnticipoEC" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario" FromRole="Usuario" ToRole="VentaCorteAnticipoEC" />
+          <!--<NavigationProperty Name="VentaCorteAnticipoEC" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario" FromRole="Usuario" ToRole="VentaCorteAnticipoEC" />-->
           <NavigationProperty Name="AsignacionUtilitarios" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_Usuario" FromRole="Usuario" ToRole="AsignacionUtilitarios" />
           <NavigationProperty Name="Bitacora" Relationship="Sagas.MainModuleModel.FK_Bitacora_Usuario" FromRole="Usuario" ToRole="Bitacora" />
           <NavigationProperty Name="ControlAsistencia" Relationship="Sagas.MainModuleModel.FK_ControlAsistencia_Usuario" FromRole="Usuario" ToRole="ControlAsistencia" />
@@ -7857,10 +7841,10 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="VentaCajaGeneral" EntitySet="VentaCajaGeneral" />
           </AssociationSet>
-          <AssociationSet Name="FK_VentaCorteAnticipoEC_Usuario" Association="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario">
+          <!--<AssociationSet Name="FK_VentaCorteAnticipoEC_Usuario" Association="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="VentaCorteAnticipoEC" EntitySet="VentaCorteAnticipoEC" />
-          </AssociationSet>
+          </AssociationSet>-->
           <AssociationSet Name="FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta" Association="Sagas.MainModuleModel.FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta">
             <End Role="VentaPuntoDeVenta" EntitySet="VentaPuntoDeVenta" />
             <End Role="VentaPuntoDeVentaDetalle" EntitySet="VentaPuntoDeVentaDetalle" />
@@ -11388,7 +11372,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <NavigationProperty Name="CAlmacenGas" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_CAlmacenGas" FromRole="VentaCorteAnticipoEC" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="COperadorChofer" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_COperadorChofer" FromRole="VentaCorteAnticipoEC" ToRole="OperadorChofer" />
           <NavigationProperty Name="CPuntoVenta" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_CPuntoVenta" FromRole="VentaCorteAnticipoEC" ToRole="PuntoVenta" />
-          <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario" FromRole="VentaCorteAnticipoEC" ToRole="Usuario" />
+          <!--<NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario" FromRole="VentaCorteAnticipoEC" ToRole="Usuario" />-->
         </EntityType>
         <EntityType Name="VentaMovimiento">
           <Key>
@@ -11767,7 +11751,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VentaCorteAnticipoEC_Usuario">
+        <!--<Association Name="FK_VentaCorteAnticipoEC_Usuario">
           <End Type="Sagas.MainModuleModel.Usuario" Role="Usuario" Multiplicity="1" />
           <End Type="Sagas.MainModuleModel.VentaCorteAnticipoEC" Role="VentaCorteAnticipoEC" Multiplicity="*" />
           <ReferentialConstraint>
@@ -11778,7 +11762,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
               <PropertyRef Name="IdUsuarioRecibe" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
+        </Association>-->
         <Association Name="FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta">
           <End Type="Sagas.MainModuleModel.VentaPuntoDeVenta" Role="VentaPuntoDeVenta" Multiplicity="1">
             <OnDelete Action="Cascade" />

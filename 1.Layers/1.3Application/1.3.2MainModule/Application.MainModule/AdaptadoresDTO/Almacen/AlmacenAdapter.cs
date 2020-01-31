@@ -21,8 +21,8 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 IdProduto = _alm.IdProduto,
                 Cantidad = _alm.Cantidad,
                 Ubicacion = _alm.Ubicacion,
-                FechaActualizacion = _alm.FechaActualizacion,
-                FechaRegistro = _alm.FechaRegistro
+                FechaActualizacion = Convert.ToDateTime(_alm.FechaActualizacion.ToShortDateString()),
+                FechaRegistro = Convert.ToDateTime(_alm.FechaRegistro.ToShortDateString())
             };
         }
         public static RequisicionSalidaDTO FromDTO(Requisicion r)

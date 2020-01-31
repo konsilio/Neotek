@@ -50,21 +50,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <input type="text" name="FolioOperacionDia" class="form-control" value="@Model.FolioOperacionDia" />
-                                </div>
-                                @*<div class="col-md-4">
-                                        @Html.DevExpress().ComboBox(settings =>
-                                        {
-                                            settings.Name = "IdPuntoVenta";
-                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.SelectedIndex = 0;
-                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                            settings.Properties.DropDownStyle = DropDownStyle.DropDown;
-                                            settings.Properties.TextField = "PuntoVenta";
-                                            settings.Properties.ValueField = "IdPuntoVenta";
-                                            settings.Properties.ValueType = typeof(int);
-                                        }).BindList(ViewBag.PuntosVentas).GetHtml()
-                                        @Html.ValidationMessageFor(m => m.IdPuntoVenta, "", new { @class = "alert-danger" })
-                                    </div>*@
+                                </div>    
                                 <div class="col-sm-2">
                                     <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-round btn-primary float-left" />
                                 </div>
@@ -207,10 +193,12 @@
                                 <div class="card">
                                     <div class="body">
                                         <div class="row clearfix blockquote blockquote-info btn-round">
-                                            @if (TempData["FolioVenta"] != null)
-                                            {
-                                                @Html.Partial("_tikets", Model.Tickets)
-                                            }
+                                            <div class="table-responsive">
+                                                @if (TempData["FolioVenta"] != null)
+                                                {
+                                                    @Html.Partial("_tikets", Model.Tickets)
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
