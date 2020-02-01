@@ -15,8 +15,6 @@ namespace Application.MainModule.DTOs.Catalogo
         [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
         [Display(Name = "Tipo centro de costo")]
         public byte IdTipoCentroCosto { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-        [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
         
         public Nullable<int> IdEquipoTransporte { get; set; }
       

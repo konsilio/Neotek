@@ -626,7 +626,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             unidadAlm.IdEmpresa = emp.IdEmpresa;
             unidadAlm.IdAlmacenGas = almGas.IdAlmacenGas;
             unidadAlm.IdTipoAlmacen = TipoUnidadAlmacenGasEnum.Arranque;
-
+            unidadAlm.IdTipoMedidor = (short)1;
             return unidadAlm;
         }
 

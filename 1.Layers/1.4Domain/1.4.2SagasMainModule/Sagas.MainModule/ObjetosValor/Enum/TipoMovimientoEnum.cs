@@ -17,11 +17,11 @@ namespace Sagas.MainModule.ObjetosValor.Enum
 
     enum tipoMovimiento : byte
     {
-        Entrada = 1,
-        Salida = 2,
-        LectInicial = 3,
-        LectFinal = 4,
-        Arranque = 5,
+        Entrada = 0,
+        Salida = 1,
+        LectInicial = 2,
+        LectFinal = 3,
+        Arranque = 4,
     }
 
     public enum stringMovimiento { Entrada, Salida };

@@ -28,9 +28,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    uow.Repository<AlmacenGasDescarga>().Insert(_AlmDes);
-                    //foreach (var oc in ocs)                    
-                    //    uow.Repository<OrdenCompra>().Update(oc);                    
+                    uow.Repository<AlmacenGasDescarga>().Insert(_AlmDes);                   
                     uow.SaveChanges();
                     _respuesta.Id = _AlmDes.IdAlmacenEntradaGasDescarga;
                     _respuesta.EsInsercion = true;

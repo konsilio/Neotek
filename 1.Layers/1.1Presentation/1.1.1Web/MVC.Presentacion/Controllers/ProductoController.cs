@@ -14,20 +14,25 @@ namespace MVC.Presentacion.Controllers
     {
         string tkn = string.Empty;
         #region Categorías Producto
-        public ActionResult Categoria(int? page, CategoriaProductoDTO model = null)
+        public ActionResult Categoria(CategoriaProductoDTO model = null)
         {
             TokenServicio.ClearTemp(TempData);
 
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");           
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ModelState.Clear();
-            var Pagina = page ?? 1;
-            //ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn).ToPagedList(Pagina, 20); ;
             TempData["DataSourceCategorias"] = CatalogoServicio.ListaCategorias(tkn).ToList();
             TempData.Keep("DataSourceCategorias");
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-            if (model != null && model.IdCategoria != 0) ViewBag.EsEdicion = true;            
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var resp = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (resp.Exito)
+                    ViewBag.Msj = resp.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(resp);
+            }
+            if (model != null && model.IdCategoria != 0) ViewBag.EsEdicion = true;
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -40,29 +45,20 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.CrearCategoriaProducto(model, tkn);
+            TempData["RespuestaDTO"] = respuesta;
             if (respuesta.Exito)
                 return RedirectToAction("Categoria");
             else
-            {
-                TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Categoria", new { respuesta, model });
-            }
         }
         public ActionResult EliminarCategoria(short id)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.EliminiarCategoriaProducto(new CategoriaProductoDTO { IdCategoria = id }, tkn);
-            if (respuesta.Exito)
-            {
 
-                return RedirectToAction("Categoria");
-            }
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Categoria");
-            }
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Categoria");
         }
         public ActionResult EditarCategoria(short? id, CategoriaProductoDTO model)
         {
@@ -73,31 +69,35 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 var respuesta = CatalogoServicio.ModificarCategoriaProducto(model, tkn);
+                TempData["RespuestaDTO"] = respuesta;
                 if (respuesta.Exito)
                     return RedirectToAction("Categoria");
                 else
-                {
-                    TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("Categoria");
-                }
+                    return RedirectToAction("Categoria", CatalogoServicio.ActivarEditarCategoria(id.Value, tkn));
+
             }
         }
         #endregion
         #region Linea Producto
-        public ActionResult LineaProducto(int? page, LineaProductoDTO model = null)
+        public ActionResult LineaProducto(LineaProductoDTO model = null)
         {
             TokenServicio.ClearTemp(TempData);
 
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ModelState.Clear();
-            var Pagina = page ?? 1;
-            //ViewBag.Lineas = CatalogoServicio.ListaLineasProducto(tkn).ToPagedList(Pagina, 20); ;
             TempData["DataSourceLineas"] = CatalogoServicio.ListaLineasProducto(tkn).ToList();
             TempData.Keep("DataSourceLineas");
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-            if (model != null && model.IdProductoLinea != 0) ViewBag.EsEdicion = true;            
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var resp = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (resp.Exito)
+                    ViewBag.Msj = resp.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(resp);
+            }
+            if (model != null && model.IdProductoLinea != 0) ViewBag.EsEdicion = true;
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -110,29 +110,19 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.CrearLineaProducto(model, tkn);
+            TempData["RespuestaDTO"] = respuesta;
             if (respuesta.Exito)
                 return RedirectToAction("LineaProducto");
             else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("LineaProducto", new { respuesta, model });
-            }
+                return RedirectToAction("LineaProducto", model);
         }
         public ActionResult EliminarLineaProducto(short id)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.EliminiarLineaProducto(new LineaProductoDTO { IdProductoLinea = id }, tkn);
-            if (respuesta.Exito)
-            {
-
-                return RedirectToAction("LineaProducto");
-            }
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("LineaProducto");
-            }
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("LineaProducto");
         }
         public ActionResult EditarLineaProducto(short? id, LineaProductoDTO model)
         {
@@ -143,30 +133,33 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 var respuesta = CatalogoServicio.ModificarLineaProducto(model, tkn);
+                TempData["RespuestaDTO"] = respuesta;
                 if (respuesta.Exito)
                     return RedirectToAction("LineaProducto");
                 else
-                {
-                    TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("LineaProducto");
-                }
+                    return RedirectToAction("LineaProducto", CatalogoServicio.ActivarEditarLineaProducto(model.IdProductoLinea, tkn));
             }
         }
         #endregion
         #region Unidada de Medida
-        public ActionResult UnidadMedida(int? page, UnidadMedidaDTO model = null)
+        public ActionResult UnidadMedida(UnidadMedidaDTO model = null)
         {
             TokenServicio.ClearTemp(TempData);
 
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ModelState.Clear();
-            var Pagina = page ?? 1;
-            // ViewBag.Unidades = CatalogoServicio.ListaUnidadesMedida(tkn).ToPagedList(Pagina, 20); ;
-            TempData["DataSourceUnidades"]= CatalogoServicio.ListaUnidadesMedida(tkn).ToList();
+            TempData["DataSourceUnidades"] = CatalogoServicio.ListaUnidadesMedida(tkn).ToList();
             TempData.Keep("DataSourceUnidades");
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var resp = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (resp.Exito)
+                    ViewBag.Msj = resp.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(resp);
+            }
             if (model != null && model.IdUnidadMedida != 0) ViewBag.EsEdicion = true;
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
@@ -180,29 +173,22 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.CrearUnidadMedida(model, tkn);
+            TempData["RespuestaDTO"] = respuesta;
             if (respuesta.Exito)
                 return RedirectToAction("UnidadMedida");
             else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("UnidadMedida", new { respuesta, model });
-            }
+                return RedirectToAction("UnidadMedida", model);
         }
         public ActionResult EliminarUnidadMedida(short id)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.EliminiarUnidadMedida(new UnidadMedidaDTO { IdUnidadMedida = id }, tkn);
+            TempData["RespuestaDTO"] = respuesta;
             if (respuesta.Exito)
-            {
-
                 return RedirectToAction("UnidadMedida");
-            }
             else
-            {
-                TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("UnidadMedida");
-            }
         }
         public ActionResult EditarUnidadMedida(short? id, UnidadMedidaDTO model)
         {
@@ -213,36 +199,31 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 var respuesta = CatalogoServicio.ModificarUnidadMedida(model, tkn);
+                TempData["RespuestaDTO"] = respuesta;
                 if (respuesta.Exito)
                     return RedirectToAction("UnidadMedida");
                 else
-                {
-                    TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("UnidadMedida");
-                }
+                    return RedirectToAction("UnidadMedida", CatalogoServicio.ActivarEditarUnidadMedida(model.IdUnidadMedida, tkn));
             }
         }
         #endregion
         #region Producto
-        public ActionResult Producto(int? page, short? idempresa, ProductoDTO model = null)
+        public ActionResult Producto(short? idempresa, ProductoDTO model = null)
         {
             TokenServicio.ClearTemp(TempData);
 
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var Pagina = page ?? 1;
             var _idEmpresa = idempresa ?? 0;
             if (!_idEmpresa.Equals(0))
             {
                 TempData["DataSourceProductos"] = CatalogoServicio.ListaProductos(tkn).Where(x => x.IdEmpresa.Equals(_idEmpresa)).ToList();
                 TempData.Keep("DataSourceProductos");
-                //ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).Where(x => x.IdEmpresa.Equals(_idEmpresa)).ToPagedList(Pagina, 20);
             }
             else
             {
                 TempData["DataSourceProductos"] = CatalogoServicio.ListaProductos(tkn);
                 TempData.Keep("DataSourceProductos");
-                //ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).ToPagedList(Pagina, 20);
             }
             if (idempresa != null)
                 ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Where(x => x.IdEmpresa.Equals(idempresa)).ToList();
@@ -254,7 +235,14 @@ namespace MVC.Presentacion.Controllers
             ViewBag.UnidadesMedida = CatalogoServicio.ListaUnidadesMedida(tkn);
             ViewBag.UnidadesMedida2 = CatalogoServicio.ListaUnidadesMedida(tkn);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var resp = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (resp.Exito)
+                    ViewBag.Msj = resp.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(resp);
+            }
             if (model != null && model.IdProducto != 0) ViewBag.EsEdicion = true;
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
@@ -269,9 +257,6 @@ namespace MVC.Presentacion.Controllers
             var list = CatalogoServicio.ListaCtaCtble(tkn).Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
             var JsonInfo = JsonConvert.SerializeObject(list);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
-            
-           
-      
         }
         [HttpPost]
         public ActionResult CrearProducto(ProductoDTO model)
@@ -279,31 +264,18 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.CrearProducto(model, tkn);
-            if (respuesta.Exito)
-                return RedirectToAction("Producto");
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Producto", model);
-            }
-
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Producto", model);
         }
         public ActionResult EliminarProducto(short id)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.EliminiarProducto(new ProductoDTO { IdProducto = id }, tkn);
-            if (respuesta.Exito)
-            { 
-                return RedirectToAction("Producto");
-            }
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Producto");
-            }
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Producto");
         }
-        public ActionResult EditarProducto(short? id, ProductoDTO model)
+        public ActionResult EditarProducto(int? id, ProductoDTO model)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
@@ -312,25 +284,22 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 var respuesta = CatalogoServicio.ModificarProducto(model, tkn);
+                TempData["RespuestaDTO"] = respuesta;
                 if (respuesta.Exito)
                     return RedirectToAction("Producto");
                 else
-                {
-                    TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("Producto");
-                }
+                    return RedirectToAction("Producto", CatalogoServicio.ActivarEditarProducto(model.IdProducto, tkn));
+
             }
         }
         #endregion
         #region Proveedor
-        public ActionResult Proveedores(int? page, ProveedorDTO model = null)
+        public ActionResult Proveedores(ProveedorDTO model = null)
         {
             TokenServicio.ClearTemp(TempData);
 
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
-            var Pagina = page ?? 1;
-            //ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).ToPagedList(Pagina, 20);
             TempData["DataSourceProveedores"] = CatalogoServicio.ListaProveedores(tkn).ToList();
             TempData.Keep("DataSourceProveedores");
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
@@ -357,10 +326,14 @@ namespace MVC.Presentacion.Controllers
             ViewBag.RegimenesFiscales = CatalogoServicio.ObtenerRegimenFiscal(tkn);
             ViewBag.TipoPersonas = CatalogoServicio.ObtenerTiposPersona(tkn);
             if (TempData["RespuestaDTO"] != null)
-                Resp = (RespuestaDTO)TempData["RespuestaDTO"];
-            if (model != null)
-                if (model.IdProveedor != 0)
-                    ViewBag.EsEdicion = true;
+            {
+                var resp = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (resp.Exito)
+                    ViewBag.Msj = resp.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(resp);
+            }
+            if (model != null) if (model.IdProveedor != 0) ViewBag.EsEdicion = true;
             ViewBag.MensajeError = Validar(Resp);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
@@ -374,30 +347,21 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.CrearProveedor(model, tkn);
+            TempData["RespuestaDTO"] = respuesta;
             if (respuesta.Exito)
                 return RedirectToAction("Proveedores");
             else
-            {
-                TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Proveedor", model);
-            }
         }
         public ActionResult EliminarProveedor(short id)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.EliminiarProveedor(new ProveedorDTO { IdProveedor = id }, tkn);
-            if (respuesta.Exito)
-            {
-                return RedirectToAction("Proveedores");
-            }
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Proveedor");
-            }
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("Proveedor");
         }
-        public ActionResult EditarProveedor(short? id, ProveedorDTO model)
+        public ActionResult EditarProveedor(int? id, ProveedorDTO model)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
@@ -406,13 +370,11 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 var respuesta = CatalogoServicio.ModificarProveedor(model, tkn);
+                TempData["RespuestaDTO"] = respuesta;
                 if (respuesta.Exito)
                     return RedirectToAction("Proveedores");
                 else
-                {
-                    TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("Proveedor", model);
-                }
+                    return RedirectToAction("Proveedor", CatalogoServicio.ActivarEditarProveedor(model.IdProveedor, tkn));
             }
         }
         #endregion
@@ -477,7 +439,7 @@ namespace MVC.Presentacion.Controllers
             {
                 model = (List<CategoriaProductoDTO>)TempData["DataSourceCategorias"];
                 TempData["DataSourceCategorias"] = model;
-               //TempData.Keep("DataSourceCategorias");
+                //TempData.Keep("DataSourceCategorias");
             }
             return PartialView("_CB_Categorias", model);
         }
@@ -491,7 +453,7 @@ namespace MVC.Presentacion.Controllers
             {
                 model = (List<UnidadMedidaDTO>)TempData["DataSourceUnidades"];
                 TempData["DataSourceUnidades"] = model;
-               // TempData.Keep("DataSourceUnidades");
+                // TempData.Keep("DataSourceUnidades");
             }
             return PartialView("_CB_Unidades", model);
         }
@@ -507,7 +469,7 @@ namespace MVC.Presentacion.Controllers
             {
                 model = (List<ProveedorDTO>)TempData["DataSourceProveedores"];
                 TempData["DataSourceProveedores"] = model;
-               // TempData.Keep("DataSourceProveedores");
+                // TempData.Keep("DataSourceProveedores");
             }
             return PartialView("_CB_Proveedores", model);
         }

@@ -33,7 +33,6 @@ namespace Application.MainModule.Servicios.Catalogos
                 if (ccDto.IdCamioneta != 0)
                     unidadMensaje.Add("Camioneta");
 
-
                 if (ccDto.IdCilindro != 0)
                     unidadMensaje.Add("Cilindros de gas");
 

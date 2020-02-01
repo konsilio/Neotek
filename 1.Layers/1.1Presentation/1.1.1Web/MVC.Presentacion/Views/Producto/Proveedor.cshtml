@@ -8,7 +8,15 @@
         display: none;
     }
 </style>
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+
 <script type="text/javascript">
+    var mensaje = '@ViewBag.Msj';
+    if (mensaje != '') {
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+    };
+
     $(function () {
         $('select').on('change', function () {
             if ($('#ddlPais').val() !== "1") {

@@ -2686,7 +2686,7 @@ namespace MVC.Presentacion.App_Code
             agente.EliminarProducto(dto, tkn);
             return agente._RespuestaDTO;
         }
-        public static ProductoDTO ActivarEditarProducto(short id, string tkn)
+        public static ProductoDTO ActivarEditarProducto(int id, string tkn)
         {
             return ListaProductos(tkn).SingleOrDefault(x => x.IdProducto.Equals(id));
         }
@@ -2728,7 +2728,7 @@ namespace MVC.Presentacion.App_Code
             agente.EliminarProveedor(dto, tkn);
             return agente._RespuestaDTO;
         }
-        public static ProveedorDTO ActivarEditarProveedor(short id, string tkn)
+        public static ProveedorDTO ActivarEditarProveedor(int id, string tkn)
         {
             return ListaProveedores(tkn).SingleOrDefault(x => x.IdProveedor.Equals(id));
         }
@@ -2804,11 +2804,10 @@ namespace MVC.Presentacion.App_Code
             return new CuentaContableModel()
             { CuentasContables = ListaCtaCtble(tkn) };
         }
-        public static CuentaContableModel ActivarModifiarCuentaContable(int idcc, CuentaContableModel model, string tkn)
+        public static CuentaContableModel ActivarModifiarCuentaContable(int idcc, string tkn)
         {
-            if (model.CuentasContables == null)
-                model = InitCtaContable(tkn);
-            var cc = model.CuentasContables.SingleOrDefault(x => x.IdCuentaContable.Equals(idcc));
+            CuentaContableModel model = new CuentaContableModel();
+            var cc = ListaCtaCtble(tkn).SingleOrDefault(x => x.IdCuentaContable.Equals(idcc));
             model.IdCuentaContable = cc.IdCuentaContable;
             model.Numero = cc.Numero;
             model.Descripcion = cc.Descripcion;

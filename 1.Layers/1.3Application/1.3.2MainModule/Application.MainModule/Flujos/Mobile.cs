@@ -100,7 +100,6 @@ namespace Application.MainModule.Flujos
             {
                 var resp = EntradaGasServicio.EvaluarClaveOperacion(papeletaDto);
                 if (resp.Exito) return resp;
-
                 resp = EntradaGasServicio.EvaluarExistenciaRegistro(papeletaDto);
                 if (resp.Exito) return resp;
 

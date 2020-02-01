@@ -19,7 +19,7 @@ namespace MVC.Presentacion.Controllers
     public class RequisicionController : MainController
     {
         string tkn = string.Empty;
-        public ActionResult Requisiciones(int? page, string msj = null)
+        public ActionResult Requisiciones(int id = 0, string msj = null)
         {
             TokenServicio.ClearTemp(TempData);
 
@@ -40,11 +40,13 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
-            var Pagina = page ?? 1;
+
             var model = RequisicionServicio.InitRequisiciones(Session["StringToken"].ToString());
-            TempData["DataSourceRequisiciones"] = model.Requisiciones;
+            if (id != 0)
+                TempData["DataSourceRequisiciones"] = model.Requisiciones.Where(x => x.IdEmpresa.Equals((short)id)).ToList() ;
+            else
+                TempData["DataSourceRequisiciones"] = model.Requisiciones;
             TempData.Keep("DataSourceRequisiciones");
-            //ViewBag.Requisiciones = model.Requisiciones.ToPagedList(Pagina, 20);
             return View(model);
         }
         public ActionResult Requisicion(RequisicionDTO model = null)
@@ -69,7 +71,7 @@ namespace MVC.Presentacion.Controllers
             if (TempData["ListProductos"] != null)
             {
                 ViewBag.ProductoEdit = TempData["ListProductos"];
-            }           
+            }
             if (model == null) model = RequisicionServicio.InitRequisicion(tkn);
             else if (model.IdEmpresa == 0) model = RequisicionServicio.InitRequisicion(tkn);
 
@@ -229,7 +231,7 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
-              
+
                 TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Requisicion", model);
             }
@@ -316,12 +318,12 @@ namespace MVC.Presentacion.Controllers
             List<RequisicionDTO> model = new List<RequisicionDTO>();
             //List<RequisicionDTO> model =  RequisicionServicio.InitRequisiciones(tkn).Requisiciones.OrderByDescending(x => x.IdRequisicion).ToList();
             if (TempData["DataSourceRequisiciones"] != null)
-            { 
-                 model = (List<RequisicionDTO>)TempData["DataSourceRequisiciones"];
+            {
+                model = (List<RequisicionDTO>)TempData["DataSourceRequisiciones"];
                 TempData["DataSourceRequisiciones"] = model;
                 //TempData.Keep("DataSourceRequisiciones");
             }
-            
+
             return PartialView("_CB_Requisiciones", model);
         }
 

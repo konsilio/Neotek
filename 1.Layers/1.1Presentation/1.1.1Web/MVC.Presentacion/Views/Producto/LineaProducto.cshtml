@@ -20,22 +20,14 @@
 <meta name="viewport" content="width=device-width" />
 <title>Categoría</title>
 <script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $(".filterable tr:has(td)").each(function () {
-            var t = $(this).text().toLowerCase();
-            $("<td class='indexColumn'></td>")
-                .hide().text(t).appendTo(this);
-        });
-        $("#txtNumeroFiltro").keyup(function () {
-            var s = $(this).val().toLowerCase().split(" ");
-            $(".filterable tr:hidden").show();
-            $.each(s, function () {
-                $(".filterable tr:visible .indexColumn:not(:contains('"
-                    + this + "'))").parent().hide();
-            });//each
-        });//key up.
-    });//document.ready
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+
+<script type="text/javascript">
+    var mensaje = '@ViewBag.Msj';
+    if (mensaje != '') {
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+    };
 </script>
 
 <div class="page-loader-wrapper">
@@ -135,7 +127,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
@@ -157,54 +148,11 @@
                                         {
                                             <input type="text" class="form-control" disabled value="@ViewBag.Empresas" />
                                         }
-                                    </div>
-                                    <div class="col-md-4">
-                                        @*<div class="form-group">
-                                                <input type="text" placeholder="Número" id="txtNumeroFiltro" class="form-control" />
-                                            </div>*@
-                                    </div>
+                                    </div>                                   
                                 </div><br />
                                 <div class="row clearfix blockquote blockquote-info btn-round">
                                     @Html.Partial("_CB_Lineas", (List<LineaProductoDTO>)TempData["DataSourceLineas"])
-                                    @*<div class="table-responsive">
-                                            <table class="table table table-striped table-hover " name="RequisicionProductos">
-                                                <thead>
-                                                    <tr>
-                                                        <td><b>Nombre</b></td>
-                                                        <td><b>Descripción</b></td>
-                                                        <td><b>Acción</b></td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (var cat in ViewBag.Lineas)
-                                                    {
-                                                        <tr>
-                                                            <td>@cat.Linea </td>
-                                                            <td>@cat.Descripcion </td>
-                                                            <td>
-                                                                <a href="@Url.Action("EditarLineaProducto", "Producto", new { Id = cat.IdProductoLinea })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                    <i class="material-icons">edit</i>
-                                                                    <span>Editar linea producto</span>
-                                                                </a>
-                                                                <a href="@Url.Action("EliminarLineaProducto", "Producto", new { Id = cat.IdProductoLinea })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
-                                                                    <i class="material-icons">delete</i>
-                                                                    <span>Eliminar linea producto</span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
-                                        </div>*@
-                                </div>
-                                @*<div class="row clearfix">
-                                        <div class="col-md-6">
-                                            Página @(ViewBag.Lineas.PageCount < ViewBag.Lineas.PageNumber ? 0 : ViewBag.Lineas.PageNumber) de @ViewBag.Lineas.PageCount
-                                        </div>
-                                        <div class="col-md-6 text-right">
-                                            @Html.PagedListPager((IPagedList)ViewBag.Lineas, page => Url.Action("LineaProducto", new { page, @class = "btn btn-primary btn-simple" }))
-                                        </div>
-                                    </div>*@
+                                </div>                              
                             </div>
                         </div>
                     </div>

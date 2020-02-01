@@ -19,25 +19,21 @@ namespace Application.MainModule.Servicios.Mobile
             var alm = AlmacenGasServicio.ObtenerDescargaPorClaveOperacion(papeleta.ClaveOperacion);
             return EvaluarClaveOperacion(alm);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(AutoconsumoDTO dto)
         {
             var autoconsumo = AlmacenGasServicio.ObtenerAutoconsumo(dto.ClaveOperacion);
             return EvaluarClaveOperacion(autoconsumo);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(DescargaDto descarga)
         {
             var alm = AlmacenGasServicio.ObtenerDescargaPorClaveOperacion(descarga.ClaveOperacion);
             return EvaluarClaveOperacion(alm);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(LecturaDTO lectura)
         {
             var alm = AlmacenGasServicio.ObtenerLecturaPorClaveOperacion(lectura.ClaveProceso);
             return EvaluarClaveOperacion(alm);
-        }
-        
+        }        
         private static RespuestaDto EvaluarClaveOperacion<T>(T entidad)
         {
             return new RespuestaDto()
@@ -46,68 +42,52 @@ namespace Application.MainModule.Servicios.Mobile
                 Mensaje = entidad != null ? Exito.OK : string.Format(Error.M0002, "la clave de operación"),
             };
         }
-
-
         public static RespuestaDto EvaluarClaveOperacion(LecturaCamionetaDTO lcdto)
         {
             var alm = AlmacenGasServicio.ObtenerLecturaPorClaveOperacion(lcdto.ClaveProceso);
             return EvaluarClaveOperacion(alm);
         }
-
-
         public static RespuestaDto EvaluarClaveOperacion(RecargaDTO rdto)
         {
             var alm = AlmacenGasServicio.ObtenerRecargaPorClaveOperacion(rdto.ClaveOperacion);
-
             return EvaluarClaveOperacion(alm);
         }
         public static RespuestaDto EvaluarClaveOperacion(CalibracionDto dto)
         {
             var cal = AlmacenGasServicio.ObtenerCalibracion(dto.ClaveOperacion);
-
             return EvaluarClaveOperacion(cal);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(TraspasoDto dto)
         {
             var tras = AlmacenGasServicio.ObtenerTraspaso(dto.ClaveOperacion);
             return EvaluarClaveOperacion(tras); 
         }
-
         public static RespuestaDto EvaluarClaveOperacion(AnticipoDto dto)
         {
             var anti = AlmacenGasServicio.ObtenerAnticipo(dto.ClaveOperacion);
-
             return EvaluarClaveOperacion(anti);
         }
-
         public static List<VentaCorteAnticipoEC> ObtenerAnticipos(short idEmpresa)
         {
             return AlmacenGasServicio.ObetnerAnticipos(idEmpresa); 
         }
-
         public static RespuestaDto Anticipo(VentaCorteAnticipoEC adapter)
         {
             return AlmacenGasServicio.InsertarAnticipo(adapter);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(CorteDto dto)
         {
             var cort = AlmacenGasServicio.ObtenerCorte(dto.ClaveOperacion);
             return EvaluarClaveOperacion(cort);
         }
-
         public static List<VentaCorteAnticipoEC> ObtenerCortes(short idEmpresa)
         {
             return AlmacenGasServicio.ObtenerCortes(idEmpresa);
         }
-
         public static RespuestaDto Corte(VentaCorteAnticipoEC adapter)
         {
             return AlmacenGasServicio.InsertCorte(adapter);
         }
-
-
         public static RespuestaDto EvaluarClaveOperacion(VentaDTO venta)
         {
             var vent = PuntoVentaServicio.EvaluarFolio(venta.FolioVenta);

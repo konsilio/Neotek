@@ -17,98 +17,63 @@ namespace MVC.Presentacion.Controllers
     public class CuentaContableController : Controller
     {
         string tkn = string.Empty;
-        public ActionResult CuentaContable()
+        public ActionResult CuentaContable(CuentaContableModel model = null)
         {
-            if (Session["StringToken"] != null)
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            string token = Session["StringToken"].ToString();
+            ViewBag.Empresas = CatalogoServicio.Empresas(token);
+            if (TempData["RespuestaDTO"] != null)
             {
-                string token = Session["StringToken"].ToString();
-                ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                return View(CatalogoServicio.InitCtaContable(token));
+                var resp = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (resp.Exito)
+                    ViewBag.Msj = resp.Mensaje;
+                else
+                    ViewBag.MensajeError = Validar(resp);
             }
-            else
-                return View(AutenticacionServicio.InitIndex(new LoginModel()));
-
+            return View(model);
         }
         public ActionResult Crear(CuentaContableModel model)
         {
-            if (Session["StringToken"] != null)
-            {
-                string token = Session["StringToken"].ToString();
-                var respuesta = CatalogoServicio.GuardarCuentaContable(model, token);
-                if (respuesta.Exito)
-                {
-                    ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                    return View("CuentaContable", CatalogoServicio.InitCtaContable(token));
-                }
-                else
-                {
-                    ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                    ViewBag.MensajeError = respuesta.Mensaje;
-                    return View("CuentaContable", model);
-                }
-            }
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            tkn = Session["StringToken"].ToString();
+            var respuesta = CatalogoServicio.GuardarCuentaContable(model, tkn);
+            TempData["RespuestaDTO"] = respuesta;
+            if (respuesta.Exito)
+                return RedirectToAction("CuentaContable");
             else
-                return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+                return RedirectToAction("CuentaContable", model);
         }
         public ActionResult ActivarEditar(int? id, CuentaContableModel model)
         {
-            if (Session["StringToken"] != null)
-            {
-                string token = Session["StringToken"].ToString();
-                if (id != null)
-                {
-                    ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                    ViewBag.EsEdicion = true;
-                    return View("CuentaContable", CatalogoServicio.ActivarModifiarCuentaContable(id.Value, model, token));
-                }
-                else
-                {
-                    var respuesta = CatalogoServicio.EditarCuentaContable(model, token);
-                    if (respuesta.Exito)
-                    {
-                        model.Numero = string.Empty;
-                        model.Descripcion = string.Empty;
-                        ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                        return RedirectToAction("CuentaContable");
-                    }
-                    else
-                    {
-                        ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                        ViewBag.MensajeError = respuesta.Mensaje;
-                        return View("CuentaContable", model);
-
-                    }
-                }
-            }
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            tkn = Session["StringToken"].ToString();
+            if (id != null)
+                return RedirectToAction("CuentaContable", CatalogoServicio.ActivarModifiarCuentaContable(id.Value, tkn));
             else
-                return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            {
+                var respuesta = CatalogoServicio.EditarCuentaContable(model, tkn);
+                TempData["RespuestaDTO"] = respuesta;
+                if (respuesta.Exito)
+                    return RedirectToAction("CuentaContable");
+                else
+                    return View("CuentaContable", model);
+            }
         }
         public ActionResult Eliminar(int id)
         {
-            if (Session["StringToken"] != null)
-            {
-                string token = Session["StringToken"].ToString();
-                var resp = CatalogoServicio.BorrarCuentaContable(id, token);
-                if (resp.Exito)
-                {
-                    ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                    return View("CuentaContable", CatalogoServicio.InitCtaContable(token));
-                }
-                else
-                {
-                    ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                    ViewBag.MensajeError = resp.MensajesError[0] != null ? resp.MensajesError[0] : "Ocurrio un error";
-                    return View(CatalogoServicio.InitCtaContable(token));
-                }
-            }
-            else
-                return View(AutenticacionServicio.InitIndex(new LoginModel()));
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            tkn = Session["StringToken"].ToString();
+            var respuesta = CatalogoServicio.BorrarCuentaContable(id, tkn);
+            TempData["RespuestaDTO"] = respuesta;
+            return RedirectToAction("CuentaContable");
+
         }
         public ActionResult CuentaContableAutorizado(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             if (id.Equals(0))
                 return RedirectToAction("CuentaContable", CatalogoServicio.InitCtaContable(tkn));
             else
@@ -127,26 +92,19 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult CrearAutorizado(CuentaContableAutorizadoDTO model)
         {
-            if (Session["StringToken"] != null)
-            {
-                string token = Session["StringToken"].ToString();
-                var respuesta = CatalogoServicio.GuardarCtaCtbleAutorizado(model, token);
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var respuesta = CatalogoServicio.GuardarCtaCtbleAutorizado(model, tkn);
+                TempData["RespuestaDTO"] = respuesta;
                 if (respuesta.Exito)
-                    return RedirectToAction("CuentaContable", CatalogoServicio.InitCtaContable(token));
-                else
-                {
-                    TempData["RespuestaDTOError"] = respuesta;
-                    return View("CuentaContableAutorizado", model);
-                }
-            }
-            else
-                return View(AutenticacionServicio.InitIndex(new LoginModel()));
+                    return RedirectToAction("CuentaContable", CatalogoServicio.InitCtaContable(tkn));
+                else     
+                    return View("CuentaContableAutorizado", model);         
         }
         public ActionResult Grid()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-       
             return PartialView("_CuentasContables", CatalogoServicio.ListaCtaCtble(tkn));
         }
         private string Validar(RespuestaDTO Resp = null)

@@ -77,8 +77,7 @@ namespace MVC.Presentacion.Controllers
                     var respuesta = CatalogoServicio.EditarCentroCosto(model, tkn);
                     if (!respuesta.Exito)
                     {
-                        //ViewBag.MensajeError = respuesta.Mensaje;
-                        //return View("CentroCosto", CatalogoServicio.InitCentroCosto(tkn));
+                        
                         TempData["RespuestaDTO"] = respuesta;
                         TempData["Model"] = model;
                         return RedirectToAction("CentroCosto");

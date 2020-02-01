@@ -15,8 +15,8 @@ namespace Sagas.MainModule.ObjetosValor.Enum
 
     public enum TipoUnidadAlmacenGas
     {
-        Movil = 1,
-        Fijo = 2,
-        Arranque = 3,
+        Movil = 0,
+        Fijo = 1,
+        Arranque = 2,
     }
 }
