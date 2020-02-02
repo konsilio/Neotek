@@ -274,25 +274,17 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         {
             var Nombre = "";
             if (pv.CantidadKg == 20)
-            {
                 Nombre = "20 kg";
-            }
             if (pv.CantidadKg == 30)
-            {
                 Nombre = "30 kg";
-            }
             else
-            {
                 Nombre = "45 kg";
-            }
             TanquesDto usDTO = new TanquesDto()
             {
                 NombreTanque = Nombre,
                 Normal = (int)cilindrosVendidos,
                 Venta = 0,
             };
-
-
             return usDTO;
         }
         public static List<TanquesDto> ToDTOT(List<VentaPuntoDeVentaDetalle> lu)
@@ -302,8 +294,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             {
                 totalVentas += x.CantidadProducto.Value;
             }
-            //List<TanquesDto> luDTO = lu.ToList().Select(x => ToDTO(x, totalVentas)).ToList();
-            //return luDTO;
             return lu.Select(x => ToDTO(x, totalVentas)).ToList();
         }
 
@@ -341,7 +331,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 FechaRegistro = pv.FechaRegistro,
                 /********************/
                 venta = pv.SalidaLt * precioLt,
-
             };
             return usDTO;
         }
@@ -355,7 +344,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         {
             VentaCajaGeneral ObtenerTotalVenta = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia);
             var vt = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotal : 0;
-
             var vtc = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotalCredito : 0;
             var vtco = ObtenerTotalVenta != null ? ObtenerTotalVenta.VentaTotalContado : 0;
             var ov = ObtenerTotalVenta != null ? ObtenerTotalVenta.OtrasVentas : 0;
@@ -363,8 +351,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             var EsPipa = AlmacenGasServicio.ObtenerAlmacen(almacen);
             var EsCamioneta = AlmacenGasServicio.ObtenerAlmacen(almacen);
             //var concepto = CajaGeneralServicio.ObtenerVentaMovimiento(pv.IdPuntoVenta, pv.Orden).Descripcion;
-
-
             VentaPuntoVentaDTO usDTO = new VentaPuntoVentaDTO()
             {
                 IdEmpresa = pv.IdEmpresa,
@@ -383,7 +369,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 VentaACredito = pv.VentaACredito,
                 Subtotal = pv.Subtotal,
                 Descuento = pv.Descuento,
-                Iva = CalculosGenerales.Truncar( (pv.Subtotal * IvaEnum.p16), 2),
+                Iva = CalculosGenerales.Truncar((pv.Subtotal * IvaEnum.p16), 2),
                 Total = pv.Total,
                 PorcentajeIva = pv.PorcentajeIva,
                 EfectivoRecibido = pv.EfectivoRecibido,
@@ -404,14 +390,14 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 Descripcion = "",
                 Concepto = "Venta",
                 Tipo = pv.VentaACredito == false ? "Contado" : "Credito",
-                PrecioUnitario=(EsCamioneta.IdCamioneta!=null)?pv.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioProducto??0: pv.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioLt??0,
-                CantidadVendida= GetCantidad(pv.VentaPuntoDeVentaDetalle.ToList(), EsCamioneta.IdCamioneta),
+                PrecioUnitario = (EsCamioneta.IdCamioneta != null) ? pv.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioProducto ?? 0 : pv.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioLt ?? 0,
+                CantidadVendida = GetCantidad(pv.VentaPuntoDeVentaDetalle.ToList(), EsCamioneta.IdCamioneta),
 
             };
             return usDTO;
         }
-
-        public static decimal GetCantidad(List<VentaPuntoDeVentaDetalle> ventasDetalles,int? IdCaminoeta) {
+        public static decimal GetCantidad(List<VentaPuntoDeVentaDetalle> ventasDetalles, int? IdCaminoeta)
+        {
             decimal result = 0;
             if (IdCaminoeta != null)
             {
@@ -419,15 +405,13 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 {
                     result += (det.CantidadKg ?? 0) * (det.CantidadProducto ?? 0);
                 }
-
             }
-            else {
+            else
+            {
                 result = ventasDetalles.Sum(s => s.CantidadProducto) ?? 0;
             }
-
             return result;
         }
-
         public static List<VentaPuntoVentaDTO> ToDTOC(List<VentaPuntoDeVenta> lu)
         {
             return lu.Select(x => ToDTOC(x)).ToList();
@@ -497,8 +481,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 TotalAnio = pv.TotalAnio,
                 TotalDia = pv.TotalDia,
                 TotalMes = pv.TotalMes,
-
-
             };
             return usDTO;
         }
@@ -506,8 +488,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         {
             return lu.Select(x => FromEmtity(x)).ToList();
         }
-
-
         public static VentaCorteAnticipoDTO ToDTOCE(VentaCorteAnticipoEC pv)
         {
             VentaCorteAnticipoDTO usDTO = new VentaCorteAnticipoDTO()
@@ -541,12 +521,10 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         public static List<VentaCorteAnticipoDTO> ToDTOCE(List<VentaCorteAnticipoEC> lu)
         {
             return lu.Select(x => ToDTOCE(x)).ToList();
-
         }
         public static List<VentaPuntoVentaDTO> ToDTOP(List<VentaPuntoDeVenta> dtos)
         {
             return dtos.Select(x => ToDTOP(x)).ToList();
-
         }
         public static VentaPuntoVentaDTO ToDTOP(VentaPuntoDeVenta pv)
         {
@@ -596,26 +574,18 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 else
                     usDTO.VentaTotal = pv.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt.Value);
             }
-            //usDTO.VentaTotal = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal;
-            //usDTO.VentaTotalCredito = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito;
-            //usDTO.VentaTotalContado = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalContado;
-            //usDTO.OtrasVentas = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).OtrasVentas;
-
             return usDTO;
         }
-
-
         public static List<VentasDTO> ToDTO(List<VentaPuntoDeVenta> dtos)
         {
             return dtos.Select(x => ToDTO(x)).ToList();
-
         }
         public static VentasDTO ToDTO(VentaPuntoDeVenta pv)
         {
             VentasDTO usDTO = new VentasDTO()
             {
 
-              FolioVenta = pv.FolioVenta,
+                FolioVenta = pv.FolioVenta,
                 RFC = pv.RFC,
                 OperadorChofer = pv.OperadorChofer,
                 PuntoVenta = pv.PuntoVenta,
@@ -627,16 +597,9 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 CambioRegresado = pv.CambioRegresado,
                 Bonificacion = pv.Bonificacion,
                 FechaRegistro = pv.FechaRegistro,
-
             };
-           
-          
-
             return usDTO;
         }
-
-
-
         public static RegistrarVentasMovimientosDTO ToDTO(VentaCorteAnticipoEC v)
         {
             RegistrarVentasMovimientosDTO lstFinal = new RegistrarVentasMovimientosDTO();
@@ -1233,14 +1196,14 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         {
             List<RepCorteCajaDTO> Respuesta = new List<RepCorteCajaDTO>();
             //Pipas
-            Respuesta.Add( new RepCorteCajaDTO()
+            Respuesta.Add(new RepCorteCajaDTO()
             {
                 Descripcion = CajaGeneralConst.NombreRepoBonificacionesPipas,
                 Cantidad = 0,
                 TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdPipa != null && v.EsBonificacion).Sum(x => x.Bonificacion ?? 0)), //Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
                 Unidad = "-",
             });
-           //Estaciones
+            //Estaciones
             Respuesta.Add(new RepCorteCajaDTO()
             {
                 Descripcion = CajaGeneralConst.NombreRepoBonificacionesCarburadoras,
@@ -1248,7 +1211,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 TotalVenta = Convert.ToDouble(entidadVenta.Where(v => v.CPuntoVenta.UnidadesAlmacen.IdEstacionCarburacion != null && v.EsBonificacion).Sum(x => x.Bonificacion ?? 0)),//Cambiar descuento por bonificaciones cuando este el campo en la base de datos 
                 Unidad = "-",
             });
-          //Camionetas
+            //Camionetas
             Respuesta.Add(new RepCorteCajaDTO()
             {
                 Descripcion = CajaGeneralConst.NombreRepoBonificacionesCamionetas,
@@ -1408,56 +1371,18 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             };
             return usDTO;
         }
-
-
         public static List<VentaPuntoDeVenta> ToDTODc(List<VentaPuntoVentaDTO> lu)
         {
             return lu.Select(x => ToDTODc(x)).ToList();
         }
-
-        public static VentaPuntoDeVenta ToDTODc(VentaPuntoVentaDTO pv)
+        public static VentaPuntoDeVenta ToDTODc(VentaPuntoVentaDTO dto)
         {
-            VentaPuntoDeVenta usDTO = new VentaPuntoDeVenta()
+            VentaPuntoDeVenta entidad = new VentaPuntoDeVenta()
             {
-            
-              
-                //DescuentoAcumAnio = pv.DescuentoAcumAnio,
-                //DescuentoAcumDia = pv.DescuentoAcumDia,
-                //DescuentoAcumMes = pv.DescuentoAcumMes,
-                //DescuentoDia = pv.DescuentoDia,
-                //DescuentoAnio = pv.DescuentoAnio,
-                //DescuentoMes = pv.DescuentoMes,
-                //EsBonificacion = pv.EsBonificacion,
-                //Bonificacion = pv.Bonificacion,
-                //EfectivoRecibidoAcumAnio = pv.EfectivoRecibidoAcumAnio,
-                //EfectivoRecibidoAcumDia = pv.EfectivoRecibidoAcumDia,
-                //EfectivoRecibidoAcumMes = pv.EfectivoRecibidoAcumMes,
-                //EfectivoRecibidoAnio = pv.EfectivoRecibidoAnio,
-                //EfectivoRecibidoDia = pv.EfectivoRecibidoDia,
-                //EfectivoRecibidoMes = pv.EfectivoRecibidoMes,
-                //FechaAplicacion = pv.FechaAplicacion,
-                //IvaAcumAnio = pv.IvaAcumAnio,
-                //IvaAcumDia = pv.IvaAcumDia,
-                //IvaAcumMes = pv.IvaAcumMes,
-                //IvaAnio = pv.IvaAnio,
-                //IvaDia = pv.IvaDia,
-                //IvaMes = pv.IvaMes,
-                //SubtotalAcumAnio = pv.SubtotalAcumAnio,
-                //SubtotalAcumDia = pv.SubtotalAcumDia,
-                //SubtotalAcumMes = pv.SubtotalAcumMes,
-                //SubtotalAnio = pv.SubtotalAnio,
-                //SubtotalDia = pv.SubtotalDia,
-                //SubtotalMes = pv.SubtotalMes,
-                //TotalAcumAnio = pv.TotalAcumAnio,
-                //TotalAcumDia = pv.TotalAcumDia,
-                //TotalAcumMes = pv.TotalAcumMes,
-                //TotalAnio = pv.TotalAnio,
-                //TotalDia = pv.TotalDia,
-                //TotalMes = pv.TotalMes,
-
-
+                entidad.IdFormaDePago = dto.FormaDePago,
+                entidad.Referencia = dto.Referencia,
             };
-            return usDTO;
+            return entidad;
         }
     }
 }

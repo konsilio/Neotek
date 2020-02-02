@@ -47,6 +47,9 @@ namespace Application.MainModule.DTOs.Ventas
         public string Tipo { get; set; }
         public decimal PrecioUnitario { get; set; }
         public decimal CantidadVendida { get; set; }
+        public int IdFormaDePago { get; set; }
+        public string FormaDePago { get; set; }
+        public string Referencia { get; set; }
     }
 
     public class VentaPuntoVentaComparer : IEqualityComparer<VentaPuntoVentaDTO>

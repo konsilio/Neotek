@@ -15,7 +15,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public short Orden { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdEmpresa")]
+        [Display(Name = "Empresa")]
         public short IdEmpresa { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
@@ -116,6 +116,7 @@ namespace Application.MainModule.DTOs.Catalogo
     
         //[StringLength(13, MinimumLength = 13, ErrorMessage = Error.R0004)]
         [Display(Name = "Rfc")]
+        [RegularExpression(@"^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))((-)?([A-Z\d]{3}))?$", ErrorMessage = "RFC invalido")]
         public string Rfc { get; set; }
 
         [StringLength(350, MinimumLength = 1, ErrorMessage = Error.R0004)]
