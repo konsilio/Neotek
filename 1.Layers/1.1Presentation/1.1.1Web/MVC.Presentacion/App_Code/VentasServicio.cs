@@ -100,7 +100,10 @@ namespace MVC.Presentacion.App_Code
         public static RespuestaDTO ActualizarTicketsLiquidacion(List<VentaPuntoVentaDTO> tickets, string tkn)
         {
             var agente = new AgenteServicio();
-            agente.ActualizarTikets(tickets, tkn);
+            foreach (var item in tickets)
+            {
+                agente.ActualizarTikets(item, tkn);
+            }           
             return agente._RespuestaDTO;
         }
         #endregion

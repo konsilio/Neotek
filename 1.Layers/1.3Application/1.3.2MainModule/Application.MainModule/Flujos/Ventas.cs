@@ -71,7 +71,7 @@ namespace Application.MainModule.Flujos
                 reporteDia = CajaGeneralServicio.ObtenerReporteDiaCorteCaja(cveReporte);
                 if (reporteDia == null)
                     return corte;
-            }              
+            }
 
             var productoGas = ProductoServicio.ObtenerProductoGasVenta(TokenServicio.ObtenerIdEmpresa());
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
@@ -240,10 +240,15 @@ namespace Application.MainModule.Flujos
         {
             var liquis = CajaGeneralServicio.Obtener(DateTime.Now);
             return CajaGeneralAdapter.ToDTO(liquis);
+        }     
+        public RespuestaDto ActaualizarTickets(VentaPuntoVentaDTO item)
+        {
+            var ticket = PuntoVentaServicio.Obtener(item.FolioVenta);
+            var emty = CajaGeneralAdapter.FromEntity(ticket);
+            emty.FormaDePago = item.FormaDePago;
+            emty.Referencia = string.IsNullOrEmpty(item.FormaDePago) ? string.Empty : item.Referencia;
+            PuntoVentaServicio.ActualizarVentasCorte(emty);
+            return new RespuestaDto() { Exito = true, Mensaje = Exito.OK };
         }
-        //public RespuestaDto ActualizarTikectsLiq(List<VentaPuntoVentaDTO> lista)
-        //{
-        //    return PuntoVentaServicio.ActualizarVentasLique
-        //}
     }
 }

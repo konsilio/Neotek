@@ -81,6 +81,8 @@ namespace Sagas.MainModule.Entidades
         public decimal EfectivoRecibidoAcumAnio { get; set; }
         public bool EsBonificacion { get; set; }
         public Nullable<decimal> Bonificacion { get; set; }
+        public string FormaDePago { get; set; }
+        public string Referencia { get; set; }
     
         public virtual Cliente CCliente { get; set; }
         public virtual OperadorChofer COperadorChofer { get; set; }

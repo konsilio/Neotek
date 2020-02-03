@@ -392,6 +392,8 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 Tipo = pv.VentaACredito == false ? "Contado" : "Credito",
                 PrecioUnitario = (EsCamioneta.IdCamioneta != null) ? pv.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioProducto ?? 0 : pv.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioLt ?? 0,
                 CantidadVendida = GetCantidad(pv.VentaPuntoDeVentaDetalle.ToList(), EsCamioneta.IdCamioneta),
+                FormaDePago = pv.FormaDePago ?? string.Empty,
+                Referencia = pv.Referencia ?? string.Empty,
 
             };
             return usDTO;
@@ -481,6 +483,8 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 TotalAnio = pv.TotalAnio,
                 TotalDia = pv.TotalDia,
                 TotalMes = pv.TotalMes,
+                FormaDePago = pv.FormaDePago ?? string.Empty,
+                Referencia = pv.Referencia ?? string.Empty,
             };
             return usDTO;
         }
@@ -1182,6 +1186,27 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 Unidad = "-",
             };
         }
+        public static RepCorteCajaDTO ToRepoCorteCajaCheques(List<VentaPuntoDeVenta> entidadVenta)
+        {
+            return new RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoCheque,
+                Cantidad = Convert.ToDouble(entidadVenta.Where(y => y.FormaDePago.ToString().Contains("Cheques")).Sum(x => x.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadLt))),
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(y => y.FormaDePago.ToString().Contains("Cheques")).Sum(x => x.Total)),
+                Unidad = "Lts",
+            };
+        }
+        public static RepCorteCajaDTO ToRepoCorteCajaTransferencias(List<VentaPuntoDeVenta> entidadVenta)
+        {
+            return new RepCorteCajaDTO()
+            {
+                Descripcion = CajaGeneralConst.NombreRepoTranferencia,
+                Cantidad = Convert.ToDouble(entidadVenta.Where(y => y.FormaDePago.ToString().Contains("Transferencias")).Sum(x => x.VentaPuntoDeVentaDetalle.Sum(d => d.CantidadLt))),
+                TotalVenta = Convert.ToDouble(entidadVenta.Where(y => y.FormaDePago.ToString().Contains("Transferencias")).Sum(x => x.Total)),
+                Unidad = "Lts",
+            };
+        }
+
         public static RepCorteCajaDTO ToRepoCorteCajaCredito(List<VentaPuntoDeVenta> entidadVenta)
         {
             return new RepCorteCajaDTO()
@@ -1370,19 +1395,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             };
             return usDTO;
-        }
-        public static List<VentaPuntoDeVenta> ToDTODc(List<VentaPuntoVentaDTO> lu)
-        {
-            return lu.Select(x => ToDTODc(x)).ToList();
-        }
-        public static VentaPuntoDeVenta ToDTODc(VentaPuntoVentaDTO dto)
-        {
-            VentaPuntoDeVenta entidad = new VentaPuntoDeVenta()
-            {
-                entidad.IdFormaDePago = dto.FormaDePago,
-                entidad.Referencia = dto.Referencia,
-            };
-            return entidad;
-        }
+        }       
     }
 }

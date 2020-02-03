@@ -21,7 +21,12 @@
     <script src="~/Resources/js/CajaGeneral.js" type="text/javascript"></script>
     <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
     <script src="~/Scripts/js/LiquidarTiket.js"></script>
-
+    <script type="text/javascript">
+        var mensaje = '@ViewBag.Mensaje';
+        if (mensaje != '') {
+            $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+        };
+    </script>
 </head>
 
 <body style="height:100%">
@@ -50,7 +55,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <input type="text" name="FolioOperacionDia" class="form-control" value="@Model.FolioOperacionDia" />
-                                </div>    
+                                </div>
                                 <div class="col-sm-2">
                                     <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-round btn-primary float-left" />
                                 </div>
@@ -278,43 +283,43 @@
     }
     @*<script type="text/javascript">
 
-        $(document).ready(function () {
+            $(document).ready(function () {
 
 
 
-            MVCxClientGlobalEvents.AddControlsInitializedEventHandler(AttachEditorValueChangedEvent);
+                MVCxClientGlobalEvents.AddControlsInitializedEventHandler(AttachEditorValueChangedEvent);
 
-            function AttachEditorValueChangedEvent() {
-                var demoOptionNames = ["EditMode", "StartEditAction", "HighlightDeletedRows"];
-                $.each(demoOptionNames, function (i, name) {
-                    var editor = ASPxClientControl.GetControlCollection().GetByName(name);
-                });
-            }
-            function OnBatchEditEndEditing(s, e) {
-                s.batchEditApi.SetCellValue(e.visibleIndex, null, true);
-            }
-            function OnBeginGridCallback(s, e) {
-                e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
-            }
+                function AttachEditorValueChangedEvent() {
+                    var demoOptionNames = ["EditMode", "StartEditAction", "HighlightDeletedRows"];
+                    $.each(demoOptionNames, function (i, name) {
+                        var editor = ASPxClientControl.GetControlCollection().GetByName(name);
+                    });
+                }
+                function OnBatchEditEndEditing(s, e) {
+                    s.batchEditApi.SetCellValue(e.visibleIndex, null, true);
+                }
+                function OnBeginGridCallback(s, e) {
+                    e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
+                }
 
 
-            MVCxClientGlobalEvents.AddControlsInitializedEventHandler(AttachEditorValueChangedEvent);
+                MVCxClientGlobalEvents.AddControlsInitializedEventHandler(AttachEditorValueChangedEvent);
 
-            function AttachEditorValueChangedEvent() {
-                var demoOptionNames = ["EditMode", "StartEditAction", "HighlightDeletedRows"];
-                $.each(demoOptionNames, function (i, name) {
-                    var editor = ASPxClientControl.GetControlCollection().GetByName(name);
-                });
-            }
-            function OnBatchEditEndEditing(s, e) {
-                s.batchEditApi.SetCellValue(e.visibleIndex, null, true);
-            }
-            function OnBeginGridCallback(s, e) {
-                e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
-            }
+                function AttachEditorValueChangedEvent() {
+                    var demoOptionNames = ["EditMode", "StartEditAction", "HighlightDeletedRows"];
+                    $.each(demoOptionNames, function (i, name) {
+                        var editor = ASPxClientControl.GetControlCollection().GetByName(name);
+                    });
+                }
+                function OnBatchEditEndEditing(s, e) {
+                    s.batchEditApi.SetCellValue(e.visibleIndex, null, true);
+                }
+                function OnBeginGridCallback(s, e) {
+                    e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
+                }
 
-        });
+            });
 
-    </script>*@
+        </script>*@
 </body>
 </html>

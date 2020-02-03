@@ -366,8 +366,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     uow.Repository<VentaPuntoDeVenta>().Update(item);
-                    //uow.Repository<AlmacenGas>().Update(_alm);
-
                     uow.SaveChanges();
                     _respuesta.EsInsercion = true;
                     _respuesta.Id = item.IdPuntoVenta;

@@ -3726,7 +3726,7 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutAutorizarProductoOordenCompra"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();
         }    
-        public void ActualizarTikets(List<VentaPuntoVentaDTO> dto, string token)
+        public void ActualizarTikets(VentaPuntoVentaDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutActualizarTikets"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();

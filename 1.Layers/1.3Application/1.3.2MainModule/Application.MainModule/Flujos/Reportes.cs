@@ -188,7 +188,7 @@ namespace Application.MainModule.Flujos
             var VFacturasCredito = CajaGeneralServicio.ObtenerTotalVentasACredito(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VBonificaciones = CajaGeneralServicio.ObtenerTotalBonificaciones(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             var VDescuentos = CajaGeneralServicio.ObtenerTotalDescuentos(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
-
+            var VChequesTransferencias = CajaGeneralServicio.ObtenerTotalVentasChequesTransferencias(dto.Fecha) ?? new List<VentaPuntoDeVenta>();
             List<RepCorteCajaDTO> respuesta = new List<RepCorteCajaDTO>();
             //respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones, Estaciones));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaEstaciones(VEstaciones));
@@ -198,6 +198,8 @@ namespace Application.MainModule.Flujos
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCredito(VFacturasCredito));
             respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaBonificaciones(VBonificaciones));
             respuesta.AddRange(CajaGeneralAdapter.ToRepoCorteCajaDescuentos(VDescuentos));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaCheques(VChequesTransferencias));
+            respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaTransferencias(VChequesTransferencias));
             respuesta.Add(CajaGeneralAdapter.ToRepoCorteCajaTotalCaja(VEstaciones, VPipas, VCilindros, VFacturasCredito, VBonificaciones, VDescuentos));
 
             return respuesta;

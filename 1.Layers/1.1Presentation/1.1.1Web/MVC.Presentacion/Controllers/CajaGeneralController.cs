@@ -30,7 +30,7 @@ namespace MVC.Presentacion.Controllers
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
             //ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGralId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).OrderByDescending(x => x.FechaAplicacion).OrderByDescending(y => y.Orden).ToList().ToPagedList(Pagina, 20);
-            if (TempData["RespuestaDTO"] != null)             
+            if (TempData["RespuestaDTO"] != null)
                 ViewBag.MessageExito = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
 
             return View();
@@ -72,14 +72,14 @@ namespace MVC.Presentacion.Controllers
             if (_model != null && _model.FolioOperacionDia != null)
                 TempData["Model"] = _model;
             _model = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia, _tkn);
-            if (_model!= null)
-            {                
-            TempData["DatosLiquidacion"] = _model;
+            if (_model != null)
+            {
+                TempData["DatosLiquidacion"] = _model;
             }
             if (_model.Tickets != null && _model.Tickets.Count == 0)
                 TempData["RespuestaDTOError"] = "No existe la clave solicitada";
-            
-                //var id = _model.Tickets.FirstOrDefault().FolioVenta;
+
+            //var id = _model.Tickets.FirstOrDefault().FolioVenta;
             //var Tipo = _model.Tickets.FirstOrDefault().Tipo;
             if (_model.Tickets != null)
             {
@@ -89,7 +89,7 @@ namespace MVC.Presentacion.Controllers
                 TempData.Keep("DatosLiquidacion");
 
             }
-            
+
             return RedirectToAction("Liquidar", _model);
         }
         public ActionResult BatchEditingPartial()
@@ -141,19 +141,19 @@ namespace MVC.Presentacion.Controllers
             return Mensaje;
         }
         [ValidateInput(false)]
-        public ActionResult FormaDePagoPartialUpdate(MVCxGridViewBatchUpdateValues<CorteCajaDTO, string> updateValues)
+        public ActionResult FormaDePagoPartialUpdate(MVCxGridViewBatchUpdateValues<VentaPuntoVentaDTO, string> updateValues)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            _tkn = Session["StringToken"].ToString();          
-            var model = (CorteCajaDTO)TempData["DatosLiquidacion"];                      
-            model.Tickets = new List<VentaPuntoVentaDTO>();
-            foreach (var product in updateValues.Update.Select(x => x.Tickets))
+            _tkn = Session["StringToken"].ToString();
+            List<VentaPuntoVentaDTO> update = new List<VentaPuntoVentaDTO>();
+            var model = (CorteCajaDTO)TempData["DatosLiquidacion"];
+            foreach (var product in updateValues.Update)
             {
-                if (updateValues.IsValid(model))
-                    model.Tickets.AddRange(product);
+                if (updateValues.IsValid(product))
+                    update.Add(product);
             }
-
-            return RedirectToAction("Liquidar", model);          
+            TempData["RespuestaDTO"] = VentasServicio.ActualizarTicketsLiquidacion(update, _tkn);
+            return RedirectToAction("Buscar", model);
         }
     }
 }

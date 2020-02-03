@@ -2243,6 +2243,8 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
           <Property Name="EsBonificacion" Type="bit" Nullable="false" />
           <Property Name="Bonificacion" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="FormaDePago" Type="nvarchar" MaxLength="100" />
+          <Property Name="Referencia" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="VentaPuntoDeVentaDetalle">
           <Key>
@@ -11477,14 +11479,14 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <Property Name="EfectivoRecibidoAcumDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="EfectivoRecibidoAcumMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="EfectivoRecibidoAcumAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-
+          <Property Name="EsBonificacion" Type="Boolean" Nullable="false" />
+          <Property Name="Bonificacion" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FormaDePago" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Referencia" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_CCliente" FromRole="VentaPuntoDeVenta" ToRole="Cliente" />
           <NavigationProperty Name="COperadorChofer" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_COperadorChofer" FromRole="VentaPuntoDeVenta" ToRole="OperadorChofer" />
           <NavigationProperty Name="CPuntoVenta" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_CPuntoVenta" FromRole="VentaPuntoDeVenta" ToRole="PuntoVenta" />
           <NavigationProperty Name="VentaPuntoDeVentaDetalle" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta" FromRole="VentaPuntoDeVenta" ToRole="VentaPuntoDeVentaDetalle" />
-          <Property Name="EsBonificacion" Type="Boolean" Nullable="false" />
-          <Property Name="Bonificacion" Type="Decimal" Precision="18" Scale="2" />
-          <!--<NavigationProperty Name="VentaPuntoDeVentaEfectivo" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVentaEfectivo_VentaPuntoDeVenta" FromRole="VentaPuntoDeVenta" ToRole="VentaPuntoDeVentaEfectivo" />-->
         </EntityType>
         <EntityType Name="VentaPuntoDeVentaDetalle">
           <Key>
@@ -14404,6 +14406,8 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <EntitySetMapping Name="VentaPuntoDeVenta">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.VentaPuntoDeVenta">
               <MappingFragment StoreEntitySet="VentaPuntoDeVenta">
+                <ScalarProperty Name="Referencia" ColumnName="Referencia" />
+                <ScalarProperty Name="FormaDePago" ColumnName="FormaDePago" />
                 <ScalarProperty Name="Bonificacion" ColumnName="Bonificacion" />
                 <ScalarProperty Name="EsBonificacion" ColumnName="EsBonificacion" />
                 <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />

@@ -83,6 +83,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.ObtenerLiquidaciones());
         }
+        [Route("modificar/tiket")]
+        public HttpResponseMessage PutActualizarTikets(VentaPuntoVentaDTO dto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.ActaualizarTickets(dto));
+        }
         #endregion
     }
 }

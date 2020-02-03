@@ -50,10 +50,7 @@
             c.FieldName = "FormaDePago";
             c.Caption = "Forma De Pago";
             c.Visible = true;
-            c.Settings.AllowSort = DefaultBoolean.False;
-            // c.SetDataItemTemplateContent(d =>
-            // {
-
+            c.Settings.AllowSort = DefaultBoolean.False;   
             if (TempData["Tipo"].ToString() == "Contado")
             {
                 c.Settings.AllowSort = DefaultBoolean.False;

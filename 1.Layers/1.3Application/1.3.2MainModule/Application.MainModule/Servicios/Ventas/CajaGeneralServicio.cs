@@ -247,6 +247,10 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarTotalVentasACredito(f);
         }
+        public static List<VentaPuntoDeVenta> ObtenerTotalVentasChequesTransferencias(DateTime f)
+        {
+            return new CajaGeneralDataAccess().BuscarTotalVentasChequesTransferencias(f);
+        }
         public static List<VentaPuntoDeVenta> ObtenerTotalVentasEstaciones(DateTime f)
         {
             return new CajaGeneralDataAccess().BuscarTotalVentasEstaciones(f, TokenServicio.ObtenerIdEmpresa());

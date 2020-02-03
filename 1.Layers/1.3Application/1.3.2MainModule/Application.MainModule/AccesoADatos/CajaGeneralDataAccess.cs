@@ -218,9 +218,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                 && x.FechaRegistro.Year.Equals(fecha.Year)
                                                                 && x.FechaRegistro.Day.Equals(fecha.Day)).ToList();
         }
+        
         public List<VentaPuntoDeVenta> BuscarTotalVentasACredito(DateTime fecha)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.VentaACredito
+                                                            && x.FechaRegistro.Day.Equals(fecha.Day)
+                                                            && x.FechaRegistro.Month.Equals(fecha.Month)
+                                                            && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
+        }
+        public List<VentaPuntoDeVenta> BuscarTotalVentasChequesTransferencias(DateTime fecha)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => !string.IsNullOrEmpty(x.Referencia)
                                                             && x.FechaRegistro.Day.Equals(fecha.Day)
                                                             && x.FechaRegistro.Month.Equals(fecha.Month)
                                                             && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();

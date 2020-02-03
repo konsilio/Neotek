@@ -299,7 +299,6 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View(ocp);
         }
-
         public ActionResult ConfirmarPago(OrdenCompraPagoDTO dto = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
