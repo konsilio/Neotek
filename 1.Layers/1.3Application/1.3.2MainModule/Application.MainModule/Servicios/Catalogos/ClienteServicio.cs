@@ -41,8 +41,8 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             if (cliente.Telefono1.Equals("1"))
                 cliente.Telefono1 = null;
-            if (cliente.Rfc.Equals("1"))
-                cliente.Rfc = null;
+            if (cliente.RazonSocial.Equals("1"))
+                cliente.RazonSocial = null;
             List<ClientesDto> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTO(new ClientesDataAccess().BuscarRfcTel(cliente, TokenServicio.ObtenerIdEmpresa()));
             return lClientes;
 

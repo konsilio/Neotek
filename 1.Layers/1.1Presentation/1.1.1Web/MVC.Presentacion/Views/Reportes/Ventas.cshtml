@@ -3,7 +3,6 @@
 @Html.DevExpress().GetStyleSheets(
         new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
         new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
-        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" },
         new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
     )
 @Html.DevExpress().GetScripts(
@@ -13,14 +12,11 @@
     )
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
-<script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
 <script type="text/javascript">
     var mensaje = '@ViewBag.Msj';
     if (mensaje != '') {
         $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
     }
-
-
 
 </script>
 <body>
@@ -49,36 +45,34 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-md-3">
-                                    <strong>Del dia</strong>
+                                    <strong>Del día</strong>
                                     <div class="form-group">
                                         @Html.DevExpress().DateEdit(settings =>
-                                        {
-                                            settings.Name = "FechaInicio";
-                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
-                                            settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
-                                            settings.Date = DateTime.Today;
-                                        }).Bind(Model.FechaInicio).GetHtml()
+                                   {
+                                       settings.Name = "FechaInicio";
+                                       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                       settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                       settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                       settings.Date = DateTime.Today;
+                                   }).Bind(Model.FechaInicio).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <strong>Al dia</strong>
+                                    <strong>Al día</strong>
                                     <div class="form-group">
                                         @Html.DevExpress().DateEdit(settings =>
-                                        {
-                                            settings.Name = "FechaFin";
-                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                            settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
-                                            settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
-                                            settings.Date = DateTime.Today;
-                                        }).Bind(Model.FechaFin).GetHtml()
+                                           {
+                                               settings.Name = "FechaFin";
+                                               settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                               settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                               settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                               settings.Date = DateTime.Today;
+                                           }).Bind(Model.FechaFin).GetHtml()
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <strong>&emsp;</strong>
-                                   
                                     <div class="form-group">
-
                                         <input id="submit" type="submit" value="Crear reporte" class="btn btn-default btn-round" />
                                     </div>
                                 </div>
@@ -103,17 +97,3 @@
         </div>
     </section>
 </body>
-<script>
-
-    //$(document).ready(function () {
-    //    $("#submit").on("click", function () {
-    //        var condiciones = $("#Gas").is(":checked");
-    //        if (!condiciones) {
-         
-    //            event.preventDefault();
-    //        }
-    //    });
-    //});
-
-
-</script>

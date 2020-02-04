@@ -41,19 +41,19 @@
     }
     $(document).ready(function () {
         var checkAllBox = $("#checkall");
-        checkAllBox.prop('checked', true);
+        //checkAllBox.prop('checked', true);
         checkAllBox.click(function () {
             var status = checkAllBox.prop('checked');
             toggleChecked(status);
         });
         var checkAllBoxPipa = $("#checkallpipa");
-        checkAllBoxPipa.prop('checked', true);
+        //checkAllBoxPipa.prop('checked', true);
         checkAllBoxPipa.click(function () {
             var status = checkAllBoxPipa.prop('checked');
             toggleCheckedPipa(status);
         });
         var checkAllBoxCamion = $("#checkallcamion");
-        checkAllBoxCamion.prop('checked', true);
+        //checkAllBoxCamion.prop('checked', true);
         checkAllBoxCamion.click(function () {
             var status = checkAllBoxCamion.prop('checked');
             toggleCheckedCamion(status);
@@ -127,7 +127,7 @@
                                     <strong>Camionetas</strong>
                                     <div class="form-group" id="checkboxescamion">
                                         <ul>
-                                            <li style="list-style:none"><input type="checkbox" class="checkbox" style="width: 20px; height: 20px;" id="checkallcamion" />Todos </li>
+                                            <li style="list-style:none"><input type="checkbox"  class="checkbox" style="width: 20px; height: 20px;" id="checkallcamion" />Todos </li>
                                             @Html.EditorFor(m => m.Camionetas)
                                         </ul>
                                     </div>
@@ -136,7 +136,7 @@
                                     <strong>Pipas</strong>
                                     <div class="form-group" id="checkboxespipa">
                                         <ul>
-                                            <li style="list-style:none"><input type="checkbox" class="checkbox" style="width: 20px; height: 20px;" id="checkallpipa" />Todos </li>
+                                            <li style="list-style:none"><input type="checkbox"  class="checkbox" style="width: 20px; height: 20px;" id="checkallpipa" />Todos </li>
                                             @Html.EditorFor(m => m.Pipas)
                                         </ul>
                                     </div>

@@ -34,7 +34,7 @@ namespace MVC.Presentacion.Models
         public static string InventarioXConcepto = "InventarioPorConcepto";
         public static string HistoricoVsVentas = "Histrico_VS_Ventas";
         public static string CorteCaja = "CorteCaja";
-        public static string Ventas = "Ventas";
+        public static string Ventas = "ReporteVentas";
         public static string GastoVehicular = "GastoXVehiculo";
         public static string Comision = "Comisiones";
         public static string CuentaConsolidada = "CuentaConsolidada";

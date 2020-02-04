@@ -41,15 +41,15 @@
                 exportitem.Text = "Exportar a XLSX";
                 exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
             });
-            i.ItemAlign = GridToolbarItemAlign.Right;
+            i.ItemAlign = GridToolbarItemAlign.Left;
         });
-        settings.GroupSummary.Add(new ASPxSummaryItem
-        {
-            FieldName = "CunentaContable",
-            SummaryType = DevExpress.Data.SummaryItemType.Count,
-            DisplayFormat = "Total={0}"
-        });
-        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total");
+        //settings.GroupSummary.Add(new ASPxSummaryItem
+        //{
+        //    FieldName = "CunentaContable",
+        //    SummaryType = DevExpress.Data.SummaryItemType.Count,
+        //    DisplayFormat = "Total={0}"
+        //});
+        //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total");
     }
 ).Bind(Model).GetHtml()
                                             

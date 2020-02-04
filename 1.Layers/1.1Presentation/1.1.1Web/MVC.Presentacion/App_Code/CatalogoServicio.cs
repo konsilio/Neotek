@@ -2346,7 +2346,8 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             ClientesDto mod = new ClientesDto();
             mod.Telefono1 = tel1 != "" ? tel1 : "1";
-            mod.Rfc = rfc != "" ? rfc : "1";
+            mod.Rfc = "XEXX010101000";
+            mod.RazonSocial = rfc != "" ? rfc : "1";
             mod.IdEmpresa = TokenServicio.ObtenerIdEmpresa(token);
             mod.IdTipoPersona = 1;
             mod.IdRegimenFiscal = 1;
@@ -2366,7 +2367,7 @@ namespace MVC.Presentacion.App_Code
             mod.SitioWeb3 = "1";
             mod.Usuario = "1";
             mod.Password = "1";
-            mod.RazonSocial = "1";
+            //mod.RazonSocial = "1";
             mod.RepresentanteLegal = "1";
             mod.Telefono = "1";
             mod.Celular = "1";

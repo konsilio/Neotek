@@ -14,6 +14,27 @@
         settings.Settings.ShowGroupPanel = true;
         settings.Settings.ShowFooter = true;
         settings.Theme = "Material";
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        settings.Toolbars.Add(i =>
+        {
+            i.EnableAdaptivity = true;
+            i.Items.Add(exportitem =>
+            {
+                exportitem.Command = GridViewToolbarCommand.ExportToXls;
+                exportitem.Name = "CustomExportToXLS";
+                exportitem.Text = "Exportar a XLS";
+                exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
+            });
+            i.Items.Add(exportitem =>
+            {
+                exportitem.Command = GridViewToolbarCommand.ExportToXlsx;
+                exportitem.Name = "CustomExportToXLSX";
+                exportitem.Text = "Exportar a XLSX";
+                exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
+            });
+            i.ItemAlign = GridToolbarItemAlign.Left;
+        });
         //settings.Width = System.Web.UI.WebControls.Unit.Percentage(10);
         settings.Columns.Add(c =>
         {
