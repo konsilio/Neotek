@@ -27,6 +27,9 @@ public class PrecargaPapeletaDTO implements Serializable {
     @SerializedName("Fecha")
     private String Fecha;
 
+    @SerializedName("Mes")
+    private int Mes;
+
     @SerializedName("FechaEmbarque")
     private String FechaEmbarque;
 
@@ -116,6 +119,14 @@ public class PrecargaPapeletaDTO implements Serializable {
 
     public void setIdProveedorPorteador(int idProveedorPorteador) {
         IdProveedorPorteador = idProveedorPorteador;
+    }
+
+    public int getMes() {
+        return Mes;
+    }
+
+    public void setMes(int mes) {
+        Mes = mes;
     }
 
     public String getFecha() {
@@ -291,7 +302,7 @@ public class PrecargaPapeletaDTO implements Serializable {
     }
 
     public void setClaveOperacion(String Clave) {
-        ClaveOperacion = "0130000000";
+        ClaveOperacion = Clave;
     }
 
     public Double getCapacidadTanqueKg() {

@@ -34,7 +34,7 @@ public class AlmacenDTO extends RespuestaDTO implements Serializable {
 
     public AlmacenDTO (){
         Cilindros = new ArrayList<>();
-    }
+}
 
     public String getNombreAlmacen() {
         return NombreAlmacen;
@@ -81,7 +81,7 @@ public class AlmacenDTO extends RespuestaDTO implements Serializable {
     }
 
     public void setCilindros(List<CilindrosDTO> cilindros) {
-        Cilindros = cilindros;
+        Cilindros = new ArrayList<>();
     }
 
     public double getCapacidad() {

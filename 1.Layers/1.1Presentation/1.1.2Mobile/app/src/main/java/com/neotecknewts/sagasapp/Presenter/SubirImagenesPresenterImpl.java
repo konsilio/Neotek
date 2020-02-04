@@ -1,6 +1,7 @@
 package com.neotecknewts.sagasapp.Presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Activity.RegistrarPapeletaView;
@@ -39,8 +40,9 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     @Override
     /*public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token,
                                   SAGASSql sagasSql, Context applicationContext) {*/
-    public  void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token,
+    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token,
                                    SAGASSql sagasSql, Context applicationContext){
+        Log.d("ali", "registrarpapeleta");
         //crear show progress en vista igual que en otras vistas
         subirImagenesView.showProgress(R.string.message_cargando);
         //interactor.registrarPapeleta(precargaPapeletaDTO,token,papeletaSQL,applicationContext);

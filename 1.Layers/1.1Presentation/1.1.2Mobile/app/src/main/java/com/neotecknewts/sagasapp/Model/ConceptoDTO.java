@@ -182,7 +182,6 @@ public class ConceptoDTO implements Serializable {
     public void setYear(int year) {
         Year = year;
     }
-
     public int getMes() {
         return Mes;
     }

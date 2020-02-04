@@ -76,11 +76,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                   String token, SAGASSql sagasSql, Context applicationContext) {
         registro_local =false;
         Log.w("Entra", String.valueOf(precargaPapeletaDTO.getImagenes().size()));
-
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
-        String clave_unica = "O"+s.format(new Date());
-        Log.w("Genero_clave",clave_unica);
+        String clave_unica = "O" +s.format(new Date());
+        Log.w("Genero_clave", clave_unica);
         Log.w("Consulta","Consulto si el servicio esta disponible");
         precargaPapeletaDTO.setClaveOperacion(clave_unica);
 
@@ -122,6 +121,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         int intentos_post = 0;
+        Log.d("ali", "fer-" + precargaPapeletaDTO.getClaveOperacion());
         registra_papeleta = true;
         /*while(intentos_post<3) {*/
             Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(precargaPapeletaDTO,
@@ -138,6 +138,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     if (response.isSuccessful()) {
                         RespuestaPapeletaDTO data = response.body();
                         Log.d("responsebodypapeleta", response.body()+"");
+                        Log.d("responsebodypapeleta2", response+"");
                         Log.w(TAG, "Success");
                         registra_papeleta = true;
                         //subirImagenesPresenter.onSuccessRegistrarPapeleta();
@@ -170,12 +171,13 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
                     }
 */                    if(response.code()>=300){
-                        subirImagenesPresenter.onSuccessRegistroPapeleta();
-                        Log.d("responsesubirimagen", response.body()+"");
-                        Log.w(" Errorsubirimagen", response.message() + " " +
+                        Log.d("responsebodypapeleta", response.code()+"");
+                        Log.d("responsebodypapeleta2", response.errorBody()+"");
+                        Log.d("responsepapeleta", response.toString());
+                        Log.w(" Errorpapeleta", response.message() + " " +
                                 response.raw().toString());
                         registrar_local(sagasSql,precargaPapeletaDTO,clave_unica);
-                        // subirImagenesPresenter.onSuccessRegistroAndroid();
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
                         //Lisener lisener = new Lisener(sagasSql,token,applicationContext);
                         Lisener lisener = new Lisener(sagasSql,token);
                             lisener.context = applicationContext;
@@ -226,6 +228,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         iniciarDescargaDTO.setFechaDescarga(formato_fecha_operacion);
         //region Verifica si el servcio esta disponible
 
+        Log.d("fechadescarga", formato_fecha_operacion);
+        Log.d("clavedescarga", clave_unica);
 
         RestClient restClientS = ApiClient.getClient().create(RestClient.class);
 
@@ -279,7 +283,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
                                        Response<RespuestaIniciarDescargaDTO> response) {
                     RespuestaIniciarDescargaDTO data = response.body();
-                    Log.d("Ali","Estatus: " + response.code());
+                    Log.d("Ali11111","Estatus: " + response.code());
+                    Log.d("Ali11111",  response.toString());
+                    Log.d("Ali11111",  response.errorBody()+"");
+                    Log.d("Ali11111",  response.message());
 
                     if (response.isSuccessful()&& data.isExito()) {
                         Log.w("IniciarDescarga", "Success");
@@ -291,7 +298,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 Log.w("IniciarDescarga", "not found");
                                 break;
                             case 500:
-                                Log.w("IniciarDescarga", "server broken");
+                                Log.w("IniciarDescarga1", "server broken");
                                 break;
                             default:
                                 Log.w("IniciarDescarga", "" + response.code());

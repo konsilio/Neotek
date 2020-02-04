@@ -108,7 +108,7 @@ public class IniciarDescargaDTO implements Serializable {
     }
 
     public void setImagenes(List<String> imagenes) {
-        Imagenes = imagenes;
+        Imagenes = new ArrayList<>();
     }
 
     public List<URI> getImagenesURI() {
@@ -116,7 +116,7 @@ public class IniciarDescargaDTO implements Serializable {
     }
 
     public void setImagenesURI(List<URI> imagenesURI) {
-        ImagenesURI = imagenesURI;
+        ImagenesURI = new ArrayList<>();
     }
 
     public Double getPorcentajeMedidorTractor() {

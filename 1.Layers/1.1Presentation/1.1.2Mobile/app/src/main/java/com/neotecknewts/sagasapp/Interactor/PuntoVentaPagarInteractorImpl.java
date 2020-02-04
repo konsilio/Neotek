@@ -58,7 +58,8 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                     // presenter.onError(dataresponse.getMensaje());
                 }else{
                     RespuestaPuntoVenta dataresponse = response.body();
-                    presenter.onError(dataresponse.getMensaje());
+                    //presenter.onError(dataresponse.getMensaje());
+                    presenter.onError("no cuenta con credito");
                 }
 /*
                 else {

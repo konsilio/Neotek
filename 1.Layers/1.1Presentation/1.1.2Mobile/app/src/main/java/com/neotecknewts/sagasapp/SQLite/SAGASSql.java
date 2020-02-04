@@ -31,6 +31,7 @@ import java.lang.reflect.Array;
 import java.net.URI;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -786,7 +787,12 @@ public class SAGASSql extends SQLiteOpenHelper {
         contentValues.put("IdOrdenCompraPorteador", papeletaDTO.getIdOrdenCompraPorteador());
         contentValues.put("IdProveedorPorteador", papeletaDTO.getIdProveedorPorteador());
         contentValues.put("IdProveedorExpedidor", papeletaDTO.getIdProveedorExpedidor());
+
+        /**fecha**/
+        Calendar calendar = Calendar.getInstance();
+        papeletaDTO.setMes(calendar.get(Calendar.MONTH) + 1);
         contentValues.put("Fecha", papeletaDTO.getFecha().toString());
+
         contentValues.put("FechaEmbarque", papeletaDTO.getFechaEmbarque().toString());
         contentValues.put("NumeroEmbarque", papeletaDTO.getNumeroEmbarque());
         contentValues.put("PlacasTractor", papeletaDTO.getPlacasTractor());

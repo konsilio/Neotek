@@ -202,7 +202,6 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
                 } else if (!extras.getBoolean("Almacen")) {
                     cantidadFotos = iniciarDescarga.getCantidadFotosTractor();
                     //textViewTitulo.setText("Fotografia " + iniciarDescarga.getNombreTipoMedidorTractor() + " - Tractor");
-
                 }
                 iniciar = extras.getBoolean("EsDescargaIniciar");
                 almacen = extras.getBoolean("Almacen");
@@ -428,12 +427,9 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
                 checarboton();
             }
         });
-
-
     }
 
     public void onResume() {
-
         super.onResume();
         System.out.println(321);
         if (mCamera == null) {
@@ -445,7 +441,6 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
         } else {
             Log.d("nu", "no null");
         }
-
     }
 
     @Override
@@ -534,6 +529,7 @@ public class CameraPapeletaActivity extends AppCompatActivity implements CameraD
                     papeletaDTO.setImagenesURI(papeletaDTO.getImagenesURI());
                 } else if (iniciar) {
                     iniciarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
+                    iniciarDescarga.setImagenesURI(iniciarDescarga.getImagenesURI());
                 } else if (finalizar) {
                     Log.w("Boton", "finalizar" + cantidadFotos);
                     finalizarDescarga.getImagenesURI().add(new URI(imageUri.toString()));

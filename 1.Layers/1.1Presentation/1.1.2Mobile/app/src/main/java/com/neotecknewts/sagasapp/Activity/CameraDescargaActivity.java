@@ -398,8 +398,6 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsPrimeraParteTraspaso = false;
                 EsCalibracionEstacionInicial = false;
                 EsCalibracionEstacionFinal = false;
-                EsCalibracionPipaInicial = true;
-                EsCalibracionPipaFinal = true;
                 EsCalibracionPipaInicial = extras.getBoolean("EsCalibracionPipaInicial",
                         false);
                 EsCalibracionPipaFinal = extras.getBoolean("EsCalibracionPipaFinal",
@@ -412,14 +410,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             }
 
         }
-
-
 //            layoutTitle.setVisibility(View.VISIBLE);
         layoutCameraButton.setVisibility(View.VISIBLE);
         layoutNitidez.setVisibility(View.GONE);
         textViewMensaje.setVisibility(View.VISIBLE);
-
-
         final Button buttonFotoCorrecta = (Button) findViewById(R.id.button_foto_correcta);
         buttonFotoCorrecta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -517,7 +511,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
                 imageUri = getContentResolver().insert(
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                //imageurl = saveToInternalStorage(data);
+                imageurl = saveToInternalStorage(data);
             }
         };
         return picture;
@@ -533,6 +527,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 //se cehca que objeto se esta usando y se agrega la uri de la imagen a su lista
                 if (papeleta) {
                     papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                    startActivity();
                 } else if (iniciar) {
                     iniciarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
                 } else if (finalizar) {
@@ -566,14 +561,16 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                     Log.v("calibracion estacion", "finalizar " + cantidadFotos);
                     calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
                 } else if (EsCalibracionPipaInicial || EsCalibracionPipaFinal) {
-                    Log.v("calibracion pipa", "finalizar " + cantidadFotos);
+                   /* Log.v("calibracion pipa", "finalizar " + cantidadFotos);
+                    calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));*/
                     calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                    startActivityCalibracion();
                 } else {
                     Log.d("Checar boton", "Else");
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                Log.d("exception camara",ex+"");
+                Log.d("exception camara", ex + "");
             }
             //  Log.d("Imagen", papeletaDTO.getImagenes()+"");
             //se pone visible el layout para tomar la siguiente fotografia
@@ -660,7 +657,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
-                Log.d("exception", ex+"");
+                Log.d("exception", ex + "");
             }
 
         }
@@ -856,7 +853,6 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     }
 
     private void startActivityTraspaso() {
-
         if (EsTraspasoEstacionInicial || EsTraspasoEstacionFinal) {
             EsPrimeraParteTraspaso = false;
             Intent intent = new Intent(CameraDescargaActivity.this, LecturaP5000Activity.class);
@@ -870,6 +866,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
     private void startActivityCalibracion() {
         if (EsCalibracionEstacionInicial || EsCalibracionEstacionFinal) {
+            Log.d("escalibracionestacion", EsCalibracionEstacionInicial + "" + EsCalibracionEstacionFinal + "");
             Intent intent = new Intent(CameraDescargaActivity.this,
                     SubirImagenesActivity.class);
             intent.putExtra("EsCalibracionEstacionInicial", EsCalibracionEstacionInicial);
@@ -877,8 +874,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             intent.putExtra("calibracionDTO", calibracionDTO);
             startActivity(intent);
         } else if (EsCalibracionPipaInicial || EsCalibracionPipaFinal) {
+            Log.d("escalibracionpipa", EsCalibracionPipaInicial + "" + EsCalibracionPipaFinal + "");
             Log.d("startEscalibracionPipa", "calibracionpipa");
-
             Intent intent = new Intent(CameraDescargaActivity.this,
                     SubirImagenesActivity.class);
             intent.putExtra("EsCalibracionPipaInicial", EsCalibracionPipaInicial);

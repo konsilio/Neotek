@@ -261,7 +261,6 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
         for (int i =0; i<almacenes.length; i++){
             almacenes[i]=almacenDTOs.get(i).getNombreAlmacen();
         }
-
         spinnerAlmacenes.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, almacenes));
     }
 }

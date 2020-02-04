@@ -426,6 +426,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
                     spinnerOrdenCompraExpedidor.setFocusable(true));
             builder.create().show();
         }else{
+            Log.d("ali", papeletaDTO.getClaveOperacion());
             startActivity();
         }
     }

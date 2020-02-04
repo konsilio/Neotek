@@ -123,7 +123,7 @@ public class Descarga {
      * @return boolean con el repsutado de la solicitud
      */
     private boolean Registro(IniciarDescargaDTO dto){
-        Log.w("Registro","Registrando en servicio "+dto.getClaveOperacion());
+        Log.w("Registro","Registrando en servicio "+ dto.getClaveOperacion());
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(dto,token,

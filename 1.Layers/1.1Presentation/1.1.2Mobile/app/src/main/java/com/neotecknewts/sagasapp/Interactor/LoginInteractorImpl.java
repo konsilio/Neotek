@@ -197,7 +197,7 @@ public class LoginInteractorImpl implements LoginInteractor {
                 Log.d("ali",  "Si entro");
                 if(response.isSuccessful()){
                     UsuarioDTO data = response.body();
-                    Log.d("ali", data.toString());
+                    Log.d("ali111", data.toString());
                     loginPresenter.onError(data.getMensaje(), "");
                 }
                 /*try {

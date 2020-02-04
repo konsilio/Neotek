@@ -48,6 +48,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
     Session session;
     SAGASSql sagasSql;
     PuntoVentaAsignadoDTO puntoVentaAsignadoDTO;
+    ConceptoDTO conceptoDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,7 +191,10 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                 }
             } else {
                 if (!ventaDTO.isVentaExtraforanea()) {
-                    if (ventaDTO.getLimiteCreditoCliente() < ventaDTO.getTotal()) {
+                    double TotalLitros = 0;
+                    for (ConceptoDTO c : ventaDTO.getConcepto())
+                        TotalLitros = TotalLitros + c.getCantidadLt();
+                    if (ventaDTO.getLimiteCreditoCliente() < TotalLitros) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(this,
                                 R.style.AlertDialog);
                         builder.setTitle(R.string.info);

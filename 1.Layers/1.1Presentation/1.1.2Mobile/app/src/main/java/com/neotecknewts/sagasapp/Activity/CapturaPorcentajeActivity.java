@@ -212,8 +212,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 EsLecturaFinalAlmacen = extras.getBoolean("EsLecturaFinalAlmacen");
                 porcentaje_inicial = lecturaAlmacenDTO.getPorcentajeMedidor();
                 //porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
-                Log.d("CapturaPorcentaje: ", lecturaPipaDTO.getPorcentajeMedidor() + "");
-                Log.d("CapturaPorcentaje: ", lecturaDTO.getPorcentajeMedidor() + "");
+                // Log.d("CapturaPorcentaje: ", lecturaPipaDTO.getPorcentajeMedidor() + "");
+               // Log.d("CapturaPorcentaje: ", lecturaDTO.getPorcentajeMedidor() + "");
                 if (porcentaje_inicial > 0) {
                     int parte_entera = porcentaje_inicial.intValue();
                     int parte_decimal = (int) (porcentaje_inicial - parte_entera);
@@ -358,7 +358,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
 
                     double porcentajeCalculo = (numberPickerProcentaje.getValue())
                             + (numberPickerDecimal.getValue() * .10);
-                    Log.d("porcentajeCalculo", porcentajeCalculo + "");
+                    // Log.d("porcentajeCalculo", porcentajeCalculo + "");
                     if (EsLecturaInicial || EsLecturaFinal) {
                         Log.v("NumberPicker", numberPickerProcentaje.getValue() + "");
                         Log.v("NumberPicker", numberPickerDecimal.getValue() + "");
