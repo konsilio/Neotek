@@ -2661,7 +2661,7 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
 
-        #region Porductos
+        #region Productos
         public static List<ProductoDTO> ListaProductos(string Token)
         {
             var agente = new AgenteServicio();
@@ -2691,6 +2691,7 @@ namespace MVC.Presentacion.App_Code
         {
             return ListaProductos(tkn).SingleOrDefault(x => x.IdProducto.Equals(id));
         }
+
 
         #endregion
 

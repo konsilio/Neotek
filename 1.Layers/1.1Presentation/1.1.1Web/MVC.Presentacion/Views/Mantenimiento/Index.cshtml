@@ -67,7 +67,7 @@
                                        settings.Properties.DisplayFormatString = "dd, MMMM yyyy";
                                        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
                                        settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-                                   }).Bind(Model.FechaMtto).GetHtml()
+                                   }).Bind(DateTime.Now).GetHtml()
                                         @Html.ValidationMessageFor(m => m.FechaMtto, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>

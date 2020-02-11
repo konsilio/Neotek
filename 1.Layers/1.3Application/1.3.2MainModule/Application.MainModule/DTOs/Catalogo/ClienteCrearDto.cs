@@ -26,7 +26,7 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "Regimen Fiscal")]
         public Nullable<short> IdRegimenFiscal { get; set; }
 
-        [Display(Name = "IdCuentaContable")]
+        [Display(Name = "Cuenta Contable")]
         public Nullable<int> IdCuentaContable { get; set; }
 
         //[Required(ErrorMessage = Error.R0002)]

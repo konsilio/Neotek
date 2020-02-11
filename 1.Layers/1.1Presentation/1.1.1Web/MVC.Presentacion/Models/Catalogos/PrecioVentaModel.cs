@@ -32,7 +32,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public Nullable<decimal> PrecioSalidaLt { get; set; }
         public Nullable<decimal> PrecioFlete { get; set; }
         public bool EsGas { get; set; }
-        [Required(ErrorMessage =Error.R0002)]
+        [Required(ErrorMessage =Error.R0002)]    
         public System.DateTime FechaProgramada { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public Nullable<System.DateTime> FechaVencimiento { get; set; }

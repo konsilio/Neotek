@@ -31,12 +31,10 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
-                ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).Where(w=> w.EsGas==true).ToList();
+                ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).Where(w => w.EsGas == true).ToList();
             }
-
             TempData["DataSourcePrecioVentas"] = ViewBag.ListaPV;
             TempData.Keep("DataSourcePrecioVentas");
-
             ViewBag.ListaStatus = CatalogoServicio.ListaTipoFecha(_tkn);
             if (TempData["RespuestaDTO"] != null)
             {
@@ -60,23 +58,14 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tok = Session["StringToken"].ToString();
-
             var respuesta = CatalogoServicio.RegistrarPrecio(_ObjModel, _tok);
+            TempData["RespuestaDTO"] = respuesta;
 
             if (respuesta.Exito)
-            {
-                TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Index", new { msj = respuesta.Mensaje });
-            }
-
             else
-            {
-                TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Index");
-            }
-
         }
-
         public ActionResult EditarPrecioVenta(short id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -86,54 +75,35 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);//ViewBag.ListaPV      
             PrecioVentaModel ent = CatalogoServicio.ListaPrecioVenta(id, _tkn).FirstOrDefault(x => x.IdPrecioVenta == id);
 
-            if (ent.IdEstacion != 0)
-            {
-                TempData["IdEstacion"] = ent.IdEstacion;
-                TempData.Keep("IdEstacion");
-            }
-            else
-            {
+            if (ent.IdEstacion != 0)            
+                TempData["IdEstacion"] = ent.IdEstacion;       
+            else            
                 TempData["IdEstacion"] = 0;
-                TempData.Keep("IdEstacion");
-            }
+            TempData.Keep("IdEstacion");
             ent.IdEstacion = (int)TempData["IdEstacion"];
-
-
-
             return View(ent);
         }
-
         public ActionResult BorrarPrecioVenta(PrecioVentaModel _Obj, short id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             _Obj = CatalogoServicio.ListaPrecioVenta(id, _tkn)[0];
             var respuesta = CatalogoServicio.EliminarPrecioVenta(_Obj, _tkn);
-
-            if (respuesta.Exito)
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Index", new { msj = respuesta.Mensaje });
-            }
-
+            TempData["RespuestaDTO"] = respuesta;
+            if (respuesta.Exito)           
+                return RedirectToAction("Index", new { msj = respuesta.Mensaje });            
             else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Index");
-            }
+                return RedirectToAction("Index");            
         }
-
         [HttpPost]
         public ActionResult ActualizarPrecioVenta(PrecioVentaModel _Obj)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tok = Session["StringToken"].ToString();
-
             var respuesta = CatalogoServicio.ModificarPrecioVenta(_Obj, _tok);
-
+            TempData["RespuestaDTO"] = respuesta;
             if (respuesta.Exito)
-            {
-                TempData["RespuestaDTO"] = respuesta;
+            {              
                 _Obj.IdEstacion = (int)TempData["IdEstacion"];
                 return RedirectToAction("Index", new { msj = respuesta.Mensaje });
             }
@@ -170,7 +140,7 @@ namespace MVC.Presentacion.Controllers
                         Mensaje = Resp.MensajesError[0] + " " + Resp.MensajesError[1] != null ? Resp.MensajesError[1] : "";
                     else
                         Mensaje = Resp.MensajesError[0];
-                        }
+                }
 
                 if (Mensaje == "")
                     Mensaje = Resp.Mensaje;

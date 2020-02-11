@@ -23,7 +23,6 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<PrecioVentaDTO> Obtener()
         { 
             var lPventas = new PrecioVentaDataAccess().BuscarTodos();
-
             return AdaptadoresDTO.Catalogo.PrecioVentaGasAdapter.ToDTO(lPventas);
         }
         public static PrecioVenta Obtener(short idPrecioVenta)
@@ -59,6 +58,14 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PrecioVentaDataAccess().BuscarPrecioVentaVigente(idEmpresa);
         }
+        public static PrecioVenta ObtenerPrecioVigenteEstaciones(short idEmpresa)
+        {
+            return new PrecioVentaDataAccess().BuscarPrecioVentaVigenteEstaciones(idEmpresa);
+        }
+        public static PrecioVenta ObtenerPrecioVigenteEstacion(short idEmpresa, int idestacion)
+        {
+            return new PrecioVentaDataAccess().BuscarPrecioVentaVigenteEstaciones(idEmpresa, idestacion);
+        }
         public static RespuestaDto Eliminar(PrecioVenta cteLoc)
         {
             return new PrecioVentaDataAccess().Eliminar(cteLoc);
@@ -78,7 +85,6 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
-
         public static int ObtenerUltimoIdPrecioVenta()
         {
             return new PrecioVentaDataAccess().BuscarUltimoRegistro().IdPrecioVenta;

@@ -133,13 +133,13 @@
                                     <li>@Html.ActionLink("Captura de abonos", "Index", "Cobranza")</li>
                                     @if (rol.CCRecuperado)
                                     {
-                                        <li>@*@Html.ActionLink("Crédito recuperado", "CreditoRecuperado", "Cobranza")*@</li>
-                                        <li>@Html.ActionLink("Crédito recuperado", "Mantenimiento", "Home")</li>
+                                        <li>@Html.ActionLink("Crédito recuperado", "CreditoRecuperado", "Cobranza")</li>
+                                       @*<li>@Html.ActionLink("Crédito recuperado", "Mantenimiento", "Home")</li>*@
                                     }
                                     @if (rol.CCVencida)
                                     {
-                                        <li>@*@Html.ActionLink("Cartera vencida", "CarteraVencida", "Cobranza")*@</li>
-                                        <li>@Html.ActionLink("Cartera vencida", "Mantenimiento", "Home")</li>
+                                        <li>@Html.ActionLink("Cartera vencida", "CarteraVencida", "Cobranza")</li>
+                                        @*<li>@Html.ActionLink("Cartera vencida", "Mantenimiento", "Home")</li>*@
                                     }
                                     @if (rol.CCFacturaGlobal)
                                     {

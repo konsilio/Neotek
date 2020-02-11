@@ -149,7 +149,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         }
         public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios, decimal CantidadKgGas, decimal descuento = 0, decimal precio = 0)
         {
-            var _precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
+            var _precio = precios.Find(x => x.IdPrecioVentaEstatus.Equals() && x.IdProducto.Equals(productoGas.IdProducto));
             if (productoGas.EsGas)
             {
                 return new DatosGasVentaDto()

@@ -19,23 +19,20 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-
         public List<PrecioVenta> BuscarTodos()
         {
             return uow.Repository<PrecioVenta>().Get(x => x.Activo).OrderByDescending(x => x.FechaRegistro).ToList();
         }
         public List<PrecioVenta> BuscarTodos(short idEmpresa)
         {
-            //return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-            //                                             && x.Activo)
-            //                                             .ToList();
-            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.CProducto.Activo).ToList();
         }
         public List<PrecioVenta> BuscarTodos(short idEmpresa, DateTime fi, DateTime ff)
         {
             return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                          && (x.FechaRegistro > fi
-                                                         && x.FechaRegistro < ff))
+                                                         && x.FechaRegistro < ff)
+                                                         && x.CProducto.Activo)
                                                          .ToList();
         }
         public PrecioVenta BuscarPrecioVentaVigente(short idEmpresa)
@@ -43,11 +40,23 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<PrecioVenta>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
                                                          && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente));
         }
+        public PrecioVenta BuscarPrecioVentaVigenteEstaciones(short idEmpresa)
+        {
+            return uow.Repository<PrecioVenta>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
+                                                            && x.EsEstaciones
+                                                            && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente));
+        }
+        public PrecioVenta BuscarPrecioVentaVigenteEstaciones(short idEmpresa, int idEstaciones)
+        {
+            return uow.Repository<PrecioVenta>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
+                                                            && x.IdEstacion.Equals(idEstaciones)
+                                                            && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente));
+        }
         public PrecioVenta BuscarIdPV(short IdPrecioVenta)
-        {           
+        {
             return uow.Repository<PrecioVenta>().GetSingle(x => x.IdPrecioVenta.Equals(IdPrecioVenta)
                                                          && x.Activo);
-            
+
         }
         public PrecioVentaEstatus Buscar(byte IdPrecioVentaEstatus)
         {
@@ -73,24 +82,35 @@ namespace Application.MainModule.Servicios.AccesoADatos
             else
                 return uow.Repository<PrecioVenta>().GetAll().ToList().Last().IdPrecioVenta;
         }
-        public RespuestaDto Insertar(List<PrecioVenta> cte)
+        public RespuestaDto Insertar(List<PrecioVenta> pvs)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    foreach (var item in cte)
+                    foreach (var cte in pvs)
                     {
-                        uow.Repository<PrecioVenta>().Insert(item);
-
-                        uow.SaveChanges();
-                        _respuesta.Id = item.IdPrecioVenta;
-                        _respuesta.EsInsercion = true;
-                        _respuesta.Exito = true;
-                        _respuesta.ModeloValido = true;
-                        _respuesta.Mensaje = Exito.OK;
+                        if (cte.IdProducto.Equals(0))
+                        {
+                            PrecioVenta PrecioActual = new PrecioVenta();
+                            if (!cte.EsEstaciones && cte.IdEstacion == null)
+                                PrecioActual = BuscarPrecioVentaVigente(cte.IdEmpresa);
+                            if (cte.EsEstaciones && cte.IdEstacion == null)
+                                PrecioActual = BuscarPrecioVentaVigenteEstaciones(cte.IdEmpresa);
+                            if (cte.IdEstacion != null)
+                                PrecioActual = BuscarPrecioVentaVigenteEstaciones(cte.IdEmpresa, cte.IdEstacion.Value);
+                            if (PrecioActual != null && PrecioActual.IdPrecioVenta > 0)
+                                if (cte.FechaProgramada == null)
+                                    PrecioActual.IdPrecioVentaEstatus = EstatusPrecioVentaEnum.Vencido;
+                        }                        
+                        uow.Repository<PrecioVenta>().Insert(cte);
                     }
+                    uow.SaveChanges();
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
                 }
                 catch (Exception ex)
                 {
@@ -108,9 +128,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.PrecioVenta>().Update(_pro);
+                    uow.Repository<PrecioVenta>().Update(_pro);
                     uow.SaveChanges();
-                    _respuesta.Id = _pro.IdPrecioVenta;                    
+                    _respuesta.Id = _pro.IdPrecioVenta;
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;
                     _respuesta.ModeloValido = true;

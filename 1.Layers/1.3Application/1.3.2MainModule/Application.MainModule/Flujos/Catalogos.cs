@@ -22,6 +22,9 @@ using Application.MainModule.AdaptadoresDTO;
 using Application.MainModule.Servicios.Facturacion;
 using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
 using Application.MainModule.Servicios.IngresoGasto;
+using System.Dynamic;
+using Exceptions.MainModule;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.Flujos
 {
@@ -428,7 +431,6 @@ namespace Application.MainModule.Flujos
                             }
                         }
                     }
-
                 }
             }
         }
@@ -467,11 +469,16 @@ namespace Application.MainModule.Flujos
         {
             try
             {
-                var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
-                var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
-                var pvs = PrecioVentaGasAdapter.ToDTO(pv, producto);
+
                 var us = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
                 var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(us.IdCAlmacenGas);
+                PrecioVenta pv = new PrecioVenta();
+                if (unidad.IdEstacionCarburacion != null)
+                    pv = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(TokenServicio.ObtenerIdEmpresa());
+                else
+                    pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+                var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
+                var pvs = PrecioVentaGasAdapter.ToDTO(pv, producto);
                 if (unidad.IdCamioneta > 0)
                     pvs.PrecioActual = pvs.PrecioSalidaKg ?? 0;
                 else
@@ -498,7 +505,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeRegistrarPrecioVentaGas();
             if (!resp.Exito) return resp;
-            //  var precio = PrecioVentaGasAdapter.FromTo(cteDto);          
+
             var precio = PrecioVentaGasAdapter.FromDTO(cteDto);
             return PrecioVentaGasServicio.AltaPrecioVentaGas(precio);
         }
@@ -513,6 +520,119 @@ namespace Application.MainModule.Flujos
             var cte = PrecioVentaGasAdapter.FromDtoEditar(cteDto, precioventa);
             cte.FechaRegistro = cte.FechaRegistro;
             return PrecioVentaGasServicio.Modificar(cte);
+        }
+        public void ActualizarProgramados(short IdEmpresa)
+        {
+            try
+            {
+                if (IdEmpresa.Equals(0))
+                    IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+                var programados = PrecioVentaGasServicio.ObtenerListaPreciosVentaIdEmp(IdEmpresa).OrderByDescending(x => x.FechaRegistro).Where(x => x.FechaProgramada != null && x.FechaProgramada.Date <= DateTime.Now.Date).ToList();
+                List<dynamic> ListaDinamicaProductos = new List<dynamic>();
+                foreach (var item in programados.Where(x => x.IdEstacion == null && !x.EsEstaciones && !x.EsGas))
+                {
+                    dynamic cust = new ExpandoObject();
+                    cust.IdPV = item.IdPrecioVenta;
+                    cust.Dias = (DateTime.Now - item.FechaProgramada).Days;
+                    ListaDinamicaProductos.Add(cust);
+                }
+                List<dynamic> ListaDinamicaGeneral = new List<dynamic>();
+                foreach (var item in programados.Where(x => x.IdEstacion == null && !x.EsEstaciones && x.EsGas))
+                {
+                    dynamic cust = new ExpandoObject();
+                    cust.IdPV = item.IdPrecioVenta;
+                    cust.Dias = (DateTime.Now - item.FechaProgramada).Days;
+                    ListaDinamicaGeneral.Add(cust);
+                }
+                List<dynamic> ListaDinamicaEstacionesGeneral = new List<dynamic>();
+                foreach (var item in programados.Where(x => x.IdEstacion == null && x.EsEstaciones && x.EsGas))
+                {
+                    dynamic cust = new ExpandoObject();
+                    cust.IdPV = item.IdPrecioVenta;
+                    cust.Dias = (DateTime.Now - item.FechaProgramada).Days;
+                    ListaDinamicaEstacionesGeneral.Add(cust);
+                }
+                List<dynamic> ListaDinamicaEstaciones = new List<dynamic>();
+                foreach (var item in programados.Where(x => x.IdEstacion != null && x.CProducto.EsGas))
+                {
+                    dynamic cust = new ExpandoObject();
+                    cust.IdPV = item.IdPrecioVenta;
+                    cust.Dias = (DateTime.Now - item.FechaProgramada).Days;
+                    ListaDinamicaEstaciones.Add(cust);
+                }
+                var siguienteGeneral = ListaDinamicaGeneral.Where(x => x.Dias >= 0).OrderBy(x => x.Dias).FirstOrDefault();
+                var siguienteEstacionesGeneral = ListaDinamicaEstacionesGeneral.Where(x => x.Dias >= 0).OrderBy(x => x.Dias).FirstOrDefault();
+                var siguientesEstaciones = ListaDinamicaEstaciones.Where(x => x.Dias >= 0).OrderBy(x => x.Dias).Distinct().ToList();
+                var siguientesProductos = ListaDinamicaProductos.Where(x => x.Dias >= 0).OrderBy(x => x.Dias).Distinct().ToList();
+
+                var actualGeneral = PrecioVentaGasServicio.ObtenerPrecioVigente(IdEmpresa);
+                if (siguienteGeneral != null)
+                {
+                    if (actualGeneral != null)
+                    {
+                        actualGeneral.IdPrecioVentaEstatus = EstatusPrecioVentaEnum.Vencido;
+                        actualGeneral.FechaVencimiento = DateTime.Now;
+                        var respuesta = PrecioVentaGasServicio.Modificar(PrecioVentaGasAdapter.FromEntity(actualGeneral));
+                    }
+                    var siguienteGeneralPV = PrecioVentaGasServicio.Obtener(siguienteGeneral.IdPV);
+                    if (siguienteGeneralPV != null)
+                    {
+                        siguienteGeneralPV.IdPrecioVentaEstatus = EstatusPrecioVentaEnum.Vigente;
+                        PrecioVentaGasServicio.Modificar(PrecioVentaGasAdapter.FromEntity(siguienteGeneralPV));
+                    }
+                }
+                var actualGeneralEstaciones = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(IdEmpresa);
+                if (siguienteEstacionesGeneral != null)
+                {
+                    if (actualGeneralEstaciones != null)
+                    {
+                        actualGeneralEstaciones.IdPrecioVentaEstatus = EstatusPrecioVentaEnum.Vencido;
+                        actualGeneralEstaciones.FechaVencimiento = DateTime.Now;
+                        PrecioVentaGasServicio.Modificar(PrecioVentaGasAdapter.FromEntity(actualGeneralEstaciones));
+                    }
+                    var siguienteGeneralPV = PrecioVentaGasServicio.Obtener(siguienteEstacionesGeneral.IdPV);
+                    if (siguienteGeneralPV != null)
+                    {
+                        siguienteGeneralPV.IdPrecioVentaEstatus = EstatusPrecioVentaEnum.Vigente;
+                        PrecioVentaGasServicio.Modificar(PrecioVentaGasAdapter.FromEntity(siguienteGeneralPV));
+                    }
+                }
+                foreach (var item in siguientesEstaciones)
+                {
+                    var actualGeneralEstacion = PrecioVentaGasServicio.ObtenerPrecioVigenteEstacion(IdEmpresa, item.IdPV);
+                    if (actualGeneralEstacion != null)
+                    {
+                        actualGeneralEstacion.IdPrecioVentaEstatus = EstatusPrecioVentaEnum.Vencido;
+                        actualGeneralEstacion.FechaVencimiento = DateTime.Now;
+                        PrecioVentaGasServicio.Modificar(PrecioVentaGasAdapter.FromEntity(actualGeneralEstacion));
+                    }
+                    var siguienteEstacion = programados.SingleOrDefault(x => x.IdPrecioVenta.Equals(item.IdPV));
+                    siguienteEstacion.IdPrecioVentaEstatus = EstatusPrecioVentaEnum.Vigente;
+                    PrecioVentaGasServicio.Modificar(PrecioVentaGasAdapter.FromEntity(siguienteEstacion));
+                }
+                foreach (var item in siguientesProductos)
+                {
+                    var actualProducto = PrecioVentaGasServicio.Obtener(item.IdPV);
+                    if (actualProducto != null)
+                    {
+                        actualProducto.IdPrecioVentaEstatus = EstatusPrecioVentaEnum.Vencido;
+                        actualProducto.FechaVencimiento = DateTime.Now;
+                        PrecioVentaGasServicio.Modificar(PrecioVentaGasAdapter.FromEntity(actualProducto));
+                    }
+                    var siguienteProd = programados.SingleOrDefault(x => x.IdPrecioVenta.Equals(item.IdPV));
+                    siguienteProd.IdPrecioVentaEstatus = EstatusPrecioVentaEnum.Vigente;
+                    PrecioVentaGasServicio.Modificar(PrecioVentaGasAdapter.FromEntity(siguienteProd));
+                }
+            }
+            catch (Exception ex)
+            {
+                new RespuestaDto()
+                {
+                    Exito = false,
+                    Mensaje = ex.Message,
+                    MensajesError = CatchInnerException.Obtener(ex),
+                };
+            }
         }
         #endregion
 
@@ -699,7 +819,7 @@ namespace Application.MainModule.Flujos
 
             var almacen = ProductoAlmacenServicio.GenaraAlmacenNuevo(respP.Id, TokenServicio.ObtenerIdEmpresa());
             return ProductoAlmacenServicio.InsertarAlmacen(almacen);
-            
+
         }
         public RespuestaDto ModificaProducto(ProductoModificarDto pDto)
         {
@@ -1398,8 +1518,8 @@ namespace Application.MainModule.Flujos
             if (combustible == null) return CombustibleServicio.NoExiste();
 
             var Dtovehiculo = CombustibleAdapter.FromEntity(combustible);
-
-            return CombustibleServicio.Eliminar(Dtovehiculo);
+            Dtovehiculo.Activo = false;
+            return CombustibleServicio.Modificar(Dtovehiculo);
         }
 
         #endregion

@@ -100,6 +100,8 @@ namespace Application.MainModule.Servicios.Requisiciones
                 {
                     var req = RequisicionAdapter.FromEntity(_req, productos);
                     req.IdRequisicionEstatus = RequisicionEstatusEnum.Creada;
+                    if (productos.Select(x=> x.IdTipoProducto.Equals(3)).Count() == productos.Count)
+                        req.IdRequisicionEstatus = RequisicionEstatusEnum.Revision_exitosa;                    
                     lRequi.Add(req);
                 }
             }

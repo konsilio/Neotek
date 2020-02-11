@@ -226,8 +226,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public Producto BuscarProducto(int idProducto)
         {
-            return uow.Repository<Producto>().GetSingle(x => x.IdProducto.Equals(idProducto)
-                                                          && x.Activo);
+            return uow.Repository<Producto>().GetSingle(x => x.IdProducto.Equals(idProducto));
         }
         public CategoriaProducto BuscarCategoria(short idCategoria)
         {

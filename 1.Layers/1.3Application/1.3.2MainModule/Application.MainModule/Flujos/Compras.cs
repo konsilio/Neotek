@@ -158,9 +158,9 @@ namespace Application.MainModule.Flujos
                 var prodOC = ProductosOCAdapter.FromDTO(listDTO);
                 var oc = OrdenCompraServicio.Buscar(OC.IdOrdenCompra);
                 oc.Total = prodOC.Sum(x => x.Importe);
-                var entity = OrdenComprasAdapter.FromEntity(oc);              
+                var entity = OrdenComprasAdapter.FromEntity(oc);
                 var lProds = OrdenCompraServicio.AplicarCambiosOrdenCompraProducto(prodOC, prodsEntity);
-                return OrdenCompraServicio.ActualzarProductos(lProds, entity);            
+                return OrdenCompraServicio.ActualzarProductos(lProds, entity);
             }
             else
             {
@@ -173,13 +173,13 @@ namespace Application.MainModule.Flujos
                     var entity = OrdenComprasAdapter.FromEntity(oc);
                     lOC.Add(entity);
 
-                    var prodsEntity      = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(p.IdOrdenCompra));
+                    var prodsEntity = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(p.IdOrdenCompra));
                     var prodOC = ProductosOCAdapter.FromDTO(listDTO);
                     lOCP = OrdenCompraServicio.AplicarCambiosOrdenCompraProducto(prodOC, prodsEntity);
-                }                
+                }
                 return OrdenCompraServicio.ActualzarProductos(lOCP, lOC);
             }
-           
+
         }
         public RespuestaDto SolicitarPago(OrdenCompraDTO dto)
         {
@@ -220,7 +220,7 @@ namespace Application.MainModule.Flujos
                 if (tesoreria.Exito) return loc.Where(x => x.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.SolicitudPago)).ToList();
 
                 return loc;
-            }          
+            }
         }
         public OrdenCompraDTO BuscarOrdenCompra(int idOrdeCompra)
         {
@@ -275,6 +275,9 @@ namespace Application.MainModule.Flujos
 
             var req = RequisicionAdapter.FromEntity(RequisicionServicio.Buscar(oc.IdRequisicion));
             req.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_entrega;
+            var Pords = OrdenCompraServicio.BuscarProductosPorOrdenCompra(oc.IdOrdenCompra);
+            if (Pords.Where(x => x.ProductoServicioTipo.Equals("Servicio")).Count().Equals(Pords.Count))
+                req.IdRequisicionEstatus = RequisicionEstatusEnum.Cerrada;
             return OrdenCompraPagoServicio.Actualiza(entity, oc, req);
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
@@ -327,7 +330,7 @@ namespace Application.MainModule.Flujos
             papeleta.IdAlmacenGas = almacen.IdAlmacenGas;
             papeleta.IdTipoMedidorAlmacen = almacen.IdTipoMedidor;
 
-            var ocPapeleta =  AlmacenAdapter.FromEntity(papeleta);
+            var ocPapeleta = AlmacenAdapter.FromEntity(papeleta);
             ocPapeleta.FechaPapeleta = dto.Fecha;
             ocPapeleta.FechaEmbarque = dto.FechaEmbarque;
             ocPapeleta.NumeroEmbarque = dto.NumeroEmbarque;
@@ -364,7 +367,7 @@ namespace Application.MainModule.Flujos
             dto.OrdenCompraPorteador.PrecioTransporte = PT;
             dto.OrdenCompraPorteador.SubtotalSinIva = ST;
             dto.OrdenCompraPorteador.Total = t;
-           
+
             ocPorteador = OrdenCompraServicio.CompletarDatosPorteador(dto, ocPorteador);
 
             return OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocPorteador));

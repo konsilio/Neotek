@@ -1141,6 +1141,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.Bitacora' no tiene def
           <Property Name="FechaVencimiento" Type="smalldatetime" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="IdEstacion" Type="int" />
+          <Property Name="EsEstaciones" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CPrecioVentaEstatus">
           <Key>
@@ -10856,6 +10857,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <NavigationProperty Name="CLinea" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProductoLinea" FromRole="PrecioVenta" ToRole="LineaProducto" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa" FromRole="PrecioVenta" ToRole="Empresa" />
           <NavigationProperty Name="CEstacionCarburacion" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CEstacionCarburacion" FromRole="PrecioVenta" ToRole="EstacionCarburacion" />
+          <Property Name="EsEstaciones" Type="Boolean" Nullable="false" />
           <!--<Property Name="IdEstacion1" Type="Int32" />-->
         </EntityType>
         <EntityType Name="PrecioVentaEstatus">
@@ -13964,6 +13966,7 @@ advertencia 6002: La tabla o vista 'SagasN.MainModule.dbo.CProductoAsociado' no 
           <EntitySetMapping Name="PrecioVenta">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.PrecioVenta">
               <MappingFragment StoreEntitySet="CPrecioVenta">
+                <ScalarProperty Name="EsEstaciones" ColumnName="EsEstaciones" />
                 <ScalarProperty Name="IdEstacion" ColumnName="IdEstacion" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />

@@ -30,15 +30,21 @@
             c.FieldName = "IdPrecioVenta";
             c.Caption = "ID";
             c.Visible = false;
-        });      
-        settings.Columns.Add("Empresa", "Gasera"); 
-        settings.Columns.Add("Estacion", "Estacion");
+        });
+        settings.Columns.Add("Empresa", "Gasera");
+        settings.Columns.Add("Estacion", "Estación");
         settings.Columns.Add("PrecioSalidaKg", "Precio Salida Kg");
         settings.Columns.Add("PrecioSalidaLt", "Precio Salida Lts");
-        settings.Columns.Add("FechaProgramada", "Fecha Programada");
-        settings.Columns.Add("FechaVencimiento", "Fecha Vencimiento");
+        settings.Columns.Add("FechaProgramada", "Fecha Programada").PropertiesEdit.DisplayFormatString = "d";
+        settings.Columns.Add("FechaVencimiento", "Fecha Vencimiento").PropertiesEdit.DisplayFormatString = "d";
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "FechaProgramada";
+        //    c.Caption = "Fecha Programada";
+        //    c.PropertiesEdit.DisplayFormatString = "d";
+        //});
         settings.Columns.Add("PrecioVentaEstatus", "Estatus");
-        settings.Columns.Add("FechaRegistro", "FechaRegistro");
+        settings.Columns.Add("FechaRegistro", "Fecha Registro");
 
 
         settings.Columns.Add(c =>
@@ -47,7 +53,8 @@
             c.Width = System.Web.UI.WebControls.Unit.Percentage(9);
             c.SetDataItemTemplateContent(d =>
             {
-                if (d.Grid.GetRowValues(d.VisibleIndex, "PrecioVentaEstatus").ToString()== "Programado") {
+                if (d.Grid.GetRowValues(d.VisibleIndex, "PrecioVentaEstatus").ToString() == "Programado")
+                {
 
                     ViewContext.Writer.Write(string.Format("<a href='" + Url.Action("EditarPrecioVenta", "PrecioVenta", new { Id = d.KeyValue }) + "' class='tip' role='button' aria-haspopup='true' aria-expanded='false'><i class='material-icons'>edit</i></a>"));
 

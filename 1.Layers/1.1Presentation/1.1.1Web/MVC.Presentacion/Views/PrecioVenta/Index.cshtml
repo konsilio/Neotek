@@ -455,12 +455,7 @@
                     @type = "number",
                     @min = "0"
                 })*@
-                                        @Html.TextBoxFor(m => m.PrecioSalidaKg, Model.PrecioSalidaKg.ToString(), new
-                                              {
-                                                  @class = "form-control",
-                                                  @type = "number",
-                                                  @min = "0"
-                                              })
+                                        @Html.TextBoxFor(m => m.PrecioSalidaKg, Model.PrecioSalidaKg.ToString(), new { @class = "form-control", @type = "number", @min = "0" })
                                         @Html.ValidationMessageFor(m => m.PrecioSalidaKg, "", new { @class = "alert-danger" })
                                     </div>
 
@@ -506,11 +501,8 @@
                                    settings.Properties.EditFormat = EditFormat.Custom;
                                    settings.Theme = "Material";
                                    settings.Properties.EditFormatString = "dd/MM/yyyy";
-                                  // settings.Properties.NullText = "dd/MM/yyyy";
-                                   //settings.Attributes.Clear();
                                    settings.Width = System.Web.UI.WebControls.Unit.Percentage(80);
                                    settings.Properties.CalendarProperties.FastNavProperties.DisplayMode = FastNavigationDisplayMode.Inline;
-
                                }).GetHtml()
                                     @Html.ValidationMessageFor(m => m.FechaProgramada, "", new { @class = "alert-danger", })
                                 </div>
@@ -519,14 +511,14 @@
                                     <label for="ddlEstacionCarburacion">Estación de carburación</label>
                                     <div class="form-group" >
                                         <select id="Estacion" name="Estacion" class="form-control z-index" data-live-search="true">
-                                            <option value="0">Seleccione uno</option>
+                                            <option value="-1">Seleccione uno</option>
+                                            <option value="0">PRECIO PARA ESTACIONES</option>
                                             @if (ViewBag.EstacionesCarburacion != null)
                                             {
                                                 foreach (var tp in ViewBag.EstacionesCarburacion)
                                                 {
                                                     if (tp.IdEstacionCarburacion == Model.IdEstacion)
-                                                    {
-                                                       
+                                                    {                                                       
                                                         <option value="@tp.IdEstacionCarburacion" selected>@tp.Nombre</option>
                                                     }
                                                     else

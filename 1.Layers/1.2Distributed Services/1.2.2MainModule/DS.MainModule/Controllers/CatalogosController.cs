@@ -287,11 +287,19 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Precio de Venta
+        [Route("actualizar/listaprecioventa/{idEmpresa}")]
+        public HttpResponseMessage GetActualizar(short idEmpresa)
+        {
+            /*******first Update Table Estatus*********/
+            _catalogos.ActualizarProgramados(idEmpresa);
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.PreciosVentaIdEmpresa(idEmpresa));
+        }
         [Route("consulta/listaprecioventa/{idEmpresa}")]
         public HttpResponseMessage GetListaPreciosVentaIdEmpresa(short idEmpresa)
         {
             /*******first Update Table Estatus*********/
-            _catalogos.UpdateStatus(idEmpresa);
+            //_catalogos.UpdateStatus(idEmpresa);
+            _catalogos.ActualizarProgramados(idEmpresa);
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.PreciosVentaIdEmpresa(idEmpresa));
         }
         [Route("consulta/precioventa/vigente")]
@@ -302,6 +310,7 @@ namespace DS.MainModule.Controllers
         [Route("consulta/estatustipofecha")]
         public HttpResponseMessage GetTiposFecha()
         {
+
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.TipoFecha());
         }
 
@@ -309,7 +318,8 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaPreciosVenta()
         {
             /*******first Update Table Estatus*********/
-            _catalogos.UpdateStatus(0);
+            //_catalogos.UpdateStatus(0);
+            _catalogos.ActualizarProgramados(0);
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPreciosVenta());
         }
 

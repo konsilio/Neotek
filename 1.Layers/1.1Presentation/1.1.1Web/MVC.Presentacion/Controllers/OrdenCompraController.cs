@@ -339,7 +339,7 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Expedidor = true;
             }
 
-           //ViewBag.Complemeto = complemeto;
+            //ViewBag.Complemeto = complemeto;
             TempData["intIdOrdenCompra"] = id ?? 0;
             if (TempData["RespuestaDTO"] != null)
             {
@@ -363,7 +363,8 @@ namespace MVC.Presentacion.Controllers
                         ModelState.AddModelError(error.Key, error.Value);
                     }
                 if (Resp.MensajesError != null)
-                    Mensaje = Resp.MensajesError[0];
+                    if (Resp.MensajesError.Count != 0)
+                        Mensaje = Resp.MensajesError[0];
             }
             return Mensaje;
         }

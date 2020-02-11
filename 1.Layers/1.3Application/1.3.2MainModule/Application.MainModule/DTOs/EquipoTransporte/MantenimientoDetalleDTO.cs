@@ -19,7 +19,7 @@ namespace Application.MainModule.DTOs.EquipoTransporte
         public bool EsUtilitario { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
-        [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
+        //[StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Id_tipomtto")]
         public int Id_tipomtto { get; set; }
         [Required(ErrorMessage = Error.R0002)]

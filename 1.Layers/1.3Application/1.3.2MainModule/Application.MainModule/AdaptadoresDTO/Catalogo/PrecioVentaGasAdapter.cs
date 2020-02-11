@@ -26,7 +26,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                     IdPrecioVenta = pv.IdPrecioVenta,
                     IdEmpresa = pv.IdEmpresa,
                     IdEstacion = pv.IdEstacion ?? 0,
-                    Estacion = pv.CEstacionCarburacion != null ? pv.CEstacionCarburacion.Nombre : "General",
+                    Estacion = pv.CEstacionCarburacion != null ? pv.CEstacionCarburacion.Nombre : pv.EsEstaciones ? "General de Estaciones" : "General",
                     IdPrecioVentaEstatus = pv.IdPrecioVentaEstatus,
                     IdCategoria = pv.IdCategoria,
                     IdProductoLinea = pv.IdProductoLinea,
@@ -62,15 +62,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         }
         public static List<PrecioVentaDTO> ToDTO(List<PrecioVenta> lu)
         {
-            
-            List<PrecioVentaDTO> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();            
-            
+            List<PrecioVentaDTO> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
-        }
-      
+        }      
         public static PrecioVentaEstatusDTO ToDTOs(PrecioVentaEstatus pv)
         {
-
             PrecioVentaEstatusDTO usDTO = new PrecioVentaEstatusDTO()
             {
                 IdPrecioVentaEstatus = pv.IdPrecioVentaEstatus,
@@ -115,7 +111,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaProgramada = PVGasDTO.FechaProgramada,
                 FechaVencimiento = PVGasDTO.FechaVencimiento,
                 Activo = true,
-                FechaRegistro = DateTime.Now
+                FechaRegistro = DateTime.Now,
+                IdEstacion = PVGasDTO.IdEstacion != 0 ? PVGasDTO.IdEstacion : null,
+                EsEstaciones = PVGasDTO.IdEstacion.Equals(0) ? false : true,
 
             };
         }
@@ -125,12 +123,13 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             //var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
             var IdPreVenta = new PrecioVentaDataAccess().BuscarUltimoPrecio() + 1;//PrecioVentaGasServicio.ObtenerUltimoIdPrecioVenta() + 1;
-            var flete = PVGasDTO.PrecioFlete != null ? (decimal)PVGasDTO.PrecioFlete : 0;         
-             return new PrecioVenta()
+            var flete = PVGasDTO.PrecioFlete != null ? (decimal)PVGasDTO.PrecioFlete : 0;
+
+            return new PrecioVenta()
             {
                 IdPrecioVenta = (short)IdPreVenta,
                 IdEmpresa = PVGasDTO.IdEmpresa,
-                IdEstacion = PVGasDTO.IdEstacion != 0 ? PVGasDTO.IdEstacion : null,
+                IdEstacion = PVGasDTO.IdEstacion > 0 ? PVGasDTO.IdEstacion : null,
                 IdPrecioVentaEstatus = IdStatus,
                 IdCategoria = PVGasDTO.IdCategoria,
                 IdProductoLinea = PVGasDTO.IdProductoLinea,
@@ -152,8 +151,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaProgramada = PVGasDTO.FechaProgramada,
                 FechaVencimiento = PVGasDTO.FechaVencimiento,
                 Activo = true,
-                FechaRegistro = DateTime.Now
-
+                FechaRegistro = DateTime.Now,
+                EsEstaciones = PVGasDTO.IdEstacion > -1 ? false : true,
             };
         }
         public static List<PrecioVenta> FromDTO(PrecioVentaDTO entidad)
@@ -248,6 +247,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return new PrecioVenta()
             {
+                IdPrecioVenta = pv.IdPrecioVenta,
                 IdEmpresa = pv.IdEmpresa,
                 IdPrecioVentaEstatus = pv.IdPrecioVentaEstatus,
                 IdCategoria = pv.IdCategoria,
@@ -269,6 +269,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaVencimiento = pv.FechaVencimiento,
                 Activo = pv.Activo,
                 FechaRegistro = pv.FechaRegistro,
+                IdEstacion = pv.IdEstacion,
+                EsEstaciones = pv.EsEstaciones,
+                
 
             };
         }

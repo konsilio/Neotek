@@ -17,7 +17,7 @@ function AttachEditorValueChangedEvent() {
 }
 function OnBatchEditEndEditing(s, e) {
     var precioindex = s.GetColumnByField("Precio").index;
-    var cantidadindex = s.GetColumnByField("CantidadAComprar").index;
+    var cantidadindex = s.GetColumnByField("Cantidad").index;
     var descuentoindex = s.GetColumnByField("Descuento").index;
     var ivaindex = s.GetColumnByField("IVA").index;
     var iepsindex = s.GetColumnByField("IEPS").index;

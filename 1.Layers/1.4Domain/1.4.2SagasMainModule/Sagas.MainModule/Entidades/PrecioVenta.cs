@@ -37,6 +37,7 @@ namespace Sagas.MainModule.Entidades
         public Nullable<System.DateTime> FechaVencimiento { get; set; }
         public bool Activo { get; set; }
         public Nullable<int> IdEstacion { get; set; }
+        public bool EsEstaciones { get; set; }
     
         public virtual PrecioVentaEstatus Estatus { get; set; }
         public virtual Producto CProducto { get; set; }

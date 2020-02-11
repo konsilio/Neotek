@@ -99,6 +99,11 @@ namespace Application.MainModule.Servicios.Compras
                         _oc.Productos.Add(ProductosOCAdapter.FromDTO(_prod));
                 }
             }
+            foreach (var _oc in _ocs)
+            {
+                if (_oc.Productos.Where(x => x.ProductoServicioTipo.Equals("Servicio")).Count().Equals(_oc.Productos.Count))/*Se determina si todos los productos son Servicios*/
+                    _oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra; /*Se cambia el estatus por que los servicios no entran a Almacen*/
+            }
             return _ocs;
         }
         /// <summary>
