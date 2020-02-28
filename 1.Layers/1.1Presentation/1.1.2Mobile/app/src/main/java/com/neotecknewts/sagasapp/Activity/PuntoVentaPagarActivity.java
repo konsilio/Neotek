@@ -155,6 +155,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             //Verifica si esta habilitado la venta extraforanea
             presenter.verificarVentaExtraforanea(ventaDTO.getIdCliente(), session.getToken());
             Log.d("VentaDTO", ventaDTO.toString());
+            Log.d("ventadto", ventaDTO.toString());
             if (!SPuntoVentaActivityCredito.isChecked()) {
                 if (ETPuntoVentaPagarActivityEfectivo.getText().toString().trim().length() > 0) {
 
@@ -162,6 +163,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                             .getText().toString());
                     if (efectivio < ventaDTO.getTotal()) {
                         if (SPuntoVentaActivityBonificacion.isChecked()) {
+                            Log.d("Ventadto3", ventaDTO.toString());
                             ventaDTO.setBonificacion(false);
                             ventaDTO.setEfectivo(efectivio);
                             ventaDTO.setCambio(0);
@@ -177,6 +179,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                             builder.create().show();
                         }
                     } else {
+                        Log.d("Ventadto2", ventaDTO.toString());
                         ventaDTO.setEfectivo(efectivio);
                         ventaDTO.setCambio(ventaDTO.getEfectivo() - ventaDTO.getTotal());
                     }
@@ -189,8 +192,19 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                             dialogInterface.dismiss());
                     builder.create().show();
                 }
-            } else {
+            }else if(conceptoDTO.getPrecioUnitarioLt() == 0){
+                Log.d("Ventadto4", ventaDTO.toString());
+                AlertDialog.Builder builder = new AlertDialog.Builder(this,
+                        R.style.AlertDialog);
+                builder.setTitle(R.string.error_titulo);
+                builder.setMessage("El precio se encuentra en 0");
+                builder.setPositiveButton(R.string.message_acept,
+                        ((dialog, which) -> dialog.dismiss()));
+                builder.create().show();
+            }
+            else {
                 if (!ventaDTO.isVentaExtraforanea()) {
+                    Log.d("Ventadto2", ventaDTO.toString());
                     double TotalLitros = 0;
                     for (ConceptoDTO c : ventaDTO.getConcepto())
                         TotalLitros = TotalLitros + c.getCantidadLt();

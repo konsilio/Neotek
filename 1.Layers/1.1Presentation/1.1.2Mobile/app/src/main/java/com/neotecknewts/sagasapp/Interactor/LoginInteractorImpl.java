@@ -131,7 +131,7 @@ public class LoginInteractorImpl implements LoginInteractor {
                             if (data.getLengthListMenu() > 0) {
                                 sagasSql.InsertMenuDTO(data.getListMenu());
                                 // Debería de guardar en bd
-                                // Log.d("Ali",data.getListMenu());
+                                Log.d("Ali-LOGIN",data.toString());
                                 loginPresenter.onSuccessLogin(data);
                             } else {
                                 loginPresenter.onError(data.getMensaje());

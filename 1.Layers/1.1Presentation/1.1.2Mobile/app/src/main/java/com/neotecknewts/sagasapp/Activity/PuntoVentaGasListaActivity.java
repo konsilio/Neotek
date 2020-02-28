@@ -145,6 +145,8 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
                 intent.putExtra("EsVentaPipa", EsVentaPipa);
 
+                Log.d("fer", ventaDTO.toString());
+
                 startActivity(intent);
 
             } else {
@@ -221,6 +223,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                     session.getToken()
             );
         } else {
+            Log.d("fer", ventaDTO.toString());
             Log.d("Jimmy", "EsVentaCamioneta false");
             presenter.getCamionetaCilindros(
                     esGasLP,
@@ -525,6 +528,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      * @param conceptoDTO Objeto con el cocepto de venta a agregar
      */
     private void actualizarConceptos(ConceptoDTO conceptoDTO) {
+        Log.d("fer", "conceptos");
         double precio = conceptoDTO.getPUnitario();
         if (conceptoDTO.getDescuento() > 0) {
             precio = conceptoDTO.getPUnitario() - conceptoDTO.getDescuento();

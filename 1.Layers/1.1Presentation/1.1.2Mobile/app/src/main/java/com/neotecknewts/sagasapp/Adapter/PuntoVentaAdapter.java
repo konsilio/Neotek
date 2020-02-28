@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.neotecknewts.sagasapp.Activity.PuntoVentaGasListaActivity;
+import com.neotecknewts.sagasapp.Model.VentaDTO;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.neotecknewts.sagasapp.Model.PrecioVentaDTO;
@@ -47,7 +48,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public PuntoVentaAdapter(List<ExistenciasDTO> items, boolean EsVentaCamioneta, Context context) {
 
         //ExistenciaDTObien
-        Log.d("Item: ", items + "");
+        Log.d("fer: ", items + "");
         Log.d("Existencias: ", new ExistenciasDTO()+"");
         this.items = items;
         this.EsVentaCamioneta = EsVentaCamioneta;
@@ -126,9 +127,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             editTextPrecioLitro.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-
                     Log.d("Precio", charSequence.toString());
-
                 }
 
                 @Override
@@ -175,9 +174,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         cantidad = editTextCantidad;
                         Litro = editTextPrecioLitro;
                         existencia = items.get(position);
-
                     }
-
 
                 }
             });
@@ -194,6 +191,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 @Override
                 public void afterTextChanged(Editable editable) {
+                    Log.d("fer", "aftertextchanged");
                     if (esVentaGas) {
                         if (!editTextCantidad.getText().toString().isEmpty() && editTextCantidad.getText() != null) {
                             double precioPorLitro;
@@ -232,8 +230,10 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Log.d("preciolitro", precioPorLitro + "");
                             Log.d("preciosalida", precioVentaDTO + "");
                             Log.d("cantidad", editTextCantidad + "");
+                            Log.d("ventadto",precioVentaDTO.toString());
+                            Log.d("ventadto",existencia.toString());
+                            Log.d("existenciadto", items+"");
                         }
-
                     }
                 }
             });

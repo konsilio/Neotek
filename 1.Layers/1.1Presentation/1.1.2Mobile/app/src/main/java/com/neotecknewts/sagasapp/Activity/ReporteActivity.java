@@ -484,9 +484,9 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                 "--------------------------------\n" +
 
                                 "Carburacion: " +
-                                "\t $ [{Carburacion}]\n" +
+                                "\t  [{Carburacion}]\n" +
                                 "Kilos de venta: " +
-                                "\t $ [{Kilos-de-venta}]\n" +
+                                "\t  [{Kilos-de-venta}]\n" +
                                 "Precio día : " +
                                 "\t $ [{Precio}]\n" +
 
@@ -622,11 +622,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<tbody>" +
                         "<tr>" +
                         "<td>Carburación: </td>" +
-                        "<td>$ [{Carburacion}]</td>" +
+                        "<td> [{Carburacion}]</td>" +
                         "</tr>" +
                         "<tr>" +
                         "<td>Kilos de venta: </td>" +
-                        "<td>$ [{Kilos-de-venta}]</td>" +
+                        "<td> [{Kilos-de-venta}]</td>" +
                         "</tr>" +
                         "<tr>" +
                         "<td>Precio día : </td>" +
@@ -889,9 +889,9 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                                 "---------------------------------\n" +
 
                                 "Carburación: " +
-                                "\t $ [{Carburacion}]\n" +
+                                "\t  [{Carburacion}]\n" +
                                 "Kilos de venta: " +
-                                "\t $ [{Kilos-de-venta}]" +
+                                "\t  [{Kilos-de-venta}]" +
                                 "Precio día : " +
                                 "\t $ [{Precio}]\n" +
 
@@ -948,11 +948,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "<tbody>" +
                         "<tr>" +
                         "<td>Carburación: </td>" +
-                        "<td>$ [{Carburacion}]</td>" +
+                        "<td> [{Carburacion}]</td>" +
                         "</tr>" +
                         "<tr>" +
                         "<td>Kilos de venta: </td>" +
-                        "<td>$ [{Kilos-de-venta}]</td>" +
+                        "<td> [{Kilos-de-venta}]</td>" +
                         "</tr>" +
                         "<tr>" +
                         "<td>Precio día : </td>" +

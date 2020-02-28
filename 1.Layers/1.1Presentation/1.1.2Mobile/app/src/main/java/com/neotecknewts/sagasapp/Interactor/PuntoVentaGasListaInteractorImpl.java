@@ -207,7 +207,7 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
                 List<ExistenciasDTO> data = response.body();
                 if (response.isSuccessful()) {
 
-                    Log.w("Estatus","Success");
+                    Log.w("fer",data.toString());
                     presenter.onSuccessDatosCamioneta(data);
                 }
                 else {

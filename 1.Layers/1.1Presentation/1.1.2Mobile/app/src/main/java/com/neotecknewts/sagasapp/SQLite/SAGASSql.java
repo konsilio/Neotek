@@ -2937,7 +2937,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         );
     }
 
-    /*public Cursor GetMenu() {
+   /* public Cursor GetMenu() {
     return  this.getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_MENU, null);
     }*/
 

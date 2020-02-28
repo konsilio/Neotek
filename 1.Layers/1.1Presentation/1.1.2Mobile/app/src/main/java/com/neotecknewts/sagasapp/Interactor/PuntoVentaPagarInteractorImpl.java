@@ -35,6 +35,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                       boolean esPipa, SAGASSql sagasSql) {
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         ventaDTO.setFecha(ventaDTO.getFecha());
+        Log.d("ali", ventaDTO.toString());
         Call<RespuestaPuntoVenta> call = restClient.pagar(
                 ventaDTO,
                 /*esCamioneta,
@@ -43,11 +44,13 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                 token,
                 "application/json"
         );
+        Log.d("Ventadto", ventaDTO.toString());
         Log.w("Url base", ApiClient.BASE_URL);
         call.enqueue(new Callback<RespuestaPuntoVenta>() {
             @Override
             public void onResponse(Call<RespuestaPuntoVenta> call, Response<RespuestaPuntoVenta> response) {
                 RespuestaPuntoVenta data = response.body();
+                Log.d("Ventadto2", ventaDTO.toString());
                 Log.d("ali",  "onresponse");
                 if (response.isSuccessful()) {
                     Log.d("ali",  "successful");
@@ -58,7 +61,8 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                     // presenter.onError(dataresponse.getMensaje());
                 }else{
                     RespuestaPuntoVenta dataresponse = response.body();
-                    //presenter.onError(dataresponse.getMensaje());
+                    // presenter.onError(dataresponse.getMensaje());
+                    Log.d("fer:", response.errorBody()+"");
                     presenter.onError("no cuenta con credito");
                 }
 /*

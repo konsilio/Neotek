@@ -158,14 +158,30 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                     presenter.getMenu(session.getTokenWithBearer());
                 } else {
                     Cursor cursor = sagasSql.getMenuDTO();
+                    Log.d("Cursor", cursor.toString());
                     if (cursor.moveToFirst()) {
+                        Log.d("ali", cursor.moveToFirst()+"" );
                         menu = new ArrayList<MenuDTO>();
-                        while (cursor.moveToNext()) {
+                        for (int i=0; i<cursor.getCount(); i++){
+                            cursor.moveToPosition(i);
+                            Log.d("getstring", cursor.getString(cursor.getColumnIndex("headerMenu")));
                             menu.add(new MenuDTO(
                                     cursor.getString(cursor.getColumnIndex("headerMenu")),
                                     cursor.getString(cursor.getColumnIndex("name")),
                                     cursor.getString(cursor.getColumnIndex("imageRef"))));
                         }
+                        Log.d("getcount", cursor.getCount()+"");
+/*
+                        while (cursor.moveToNext() || cursor.isLast()) {
+                            Log.d("islast", cursor.isLast()+"");
+                            Log.d("afterlast", cursor.isAfterLast()+"");
+                            Log.d("beforefirst", cursor.isBeforeFirst()+"");
+                            menu.add(new MenuDTO(
+                                    cursor.getString(cursor.getColumnIndex("headerMenu")),
+                                    cursor.getString(cursor.getColumnIndex("name")),
+                                    cursor.getString(cursor.getColumnIndex("imageRef"))));
+                        }
+*/
                     }
                 }
             } else {
