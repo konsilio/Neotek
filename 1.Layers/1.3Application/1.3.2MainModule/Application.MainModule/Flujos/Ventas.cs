@@ -129,7 +129,7 @@ namespace Application.MainModule.Flujos
             corte.TotalCredito = ventas.Where(x => x.VentaACredito.Equals(true)).Sum(v => v.Total);
             corte.Descuentos = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
             corte.Bonidificaciones = ventas.Where(v => v.EsBonificacion).Sum(x => x.Bonificacion ?? 0);
-            corte.TotalEfectio = (corte.TotalVenta + corte.TotalOtros) - (corte.TotalCredito - corte.Descuentos - corte.Bonidificaciones);
+            corte.TotalEfectio = (corte.TotalVenta + corte.TotalOtros) - (corte.TotalCredito + corte.Descuentos + corte.Bonidificaciones);
 
             return corte;
         }

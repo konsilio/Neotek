@@ -152,7 +152,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaVencimiento = PVGasDTO.FechaVencimiento,
                 Activo = true,
                 FechaRegistro = DateTime.Now,
-                EsEstaciones = PVGasDTO.IdEstacion > -1 ? false : true,
+                EsEstaciones = PVGasDTO.IdEstacion == -1 ? false : true,
             };
         }
         public static List<PrecioVenta> FromDTO(PrecioVentaDTO entidad)

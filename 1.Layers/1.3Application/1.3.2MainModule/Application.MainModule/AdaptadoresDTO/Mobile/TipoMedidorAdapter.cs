@@ -12,14 +12,21 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
     {
         public static MedidorDto ToDto(TipoMedidorUnidadAlmacenGas med)
         {
-            return new MedidorDto()
+            try
             {
-                IdTipoMedidor = med.IdTipoMedidor,
-                NombreTipoMedidor = med.Medidor,
-                CantidadFotografias = med.NumeroFotografias
-            };
-        }
+                return new MedidorDto()
+                {
+                    IdTipoMedidor = med.IdTipoMedidor,
+                    NombreTipoMedidor = med.Medidor,
+                    CantidadFotografias = med.NumeroFotografias
+                };
+            }
+            catch (Exception ex)
+            {
 
+                throw ex;
+            }
+        }
         public static List<MedidorDto> ToDto(List<TipoMedidorUnidadAlmacenGas> med)
         {
             return med.ToList().Select(x => ToDto(x)).ToList();

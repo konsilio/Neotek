@@ -333,10 +333,10 @@
                                     {
                                         <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
                                     }
-                                    @if (rol.CatEgresos)
-                                    {
+                                    @*@if (rol.CatEgresos)
+                                    {*@
                                         <li>@Html.ActionLink("Egresos", "Index", "Egreso")</li>
-                                    }
+                                    @*}*@
                                     @if (rol.CatUsuarios)
                                     {
                                         <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
@@ -355,10 +355,12 @@
                                     }
                                     @if (rol.CatPrecioVenta)
                                     {
-                                        <li>@Html.ActionLink("Precio de venta", "Index", "PrecioVenta")</li>}
+                                        <li>@Html.ActionLink("Precio de venta", "Index", "PrecioVenta")</li>
+                                    }
                                     @if (rol.CatPrecioVenta)
                                     {
-                                        <li>@Html.ActionLink("Precio de venta Otros", "Index", "PrecioVentaOtro")</li>}
+                                        <li>@Html.ActionLink("Precio de venta Otros", "Index", "PrecioVentaOtro")</li>
+                                    }
                                 </ul>
                             </li>
                         }

@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Compras;
+using Application.MainModule.AdaptadoresDTO.IngresoEgreso;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.DTOs;
@@ -10,6 +11,7 @@ using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Compras;
+using Application.MainModule.Servicios.IngresoGasto;
 using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.Requisiciones;
 using Application.MainModule.Servicios.Seguridad;
@@ -145,6 +147,7 @@ namespace Application.MainModule.Flujos
             var entity = OrdenComprasAdapter.FromEntity(oc);
             entity.FolioFactura = dto.FolioFactura;
             entity.FolioFiscalUUID = dto.FolioFiscalUUID;
+            entity.IdProveedor = dto.IdProveedor;
             entity.FechaResgistroFactura = Convert.ToDateTime(DateTime.Today.ToShortDateString());
 
             return OrdenCompraServicio.Actualizar(entity);
@@ -194,7 +197,7 @@ namespace Application.MainModule.Flujos
             ocEntity.OrdenCompraPago.Add(OrdenCompraServicio.GenerarPago(oc, ordenPago));
 
             var respActualiza = OrdenCompraServicio.Actualizar(ocEntity);
-            if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(oc);
+            if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(oc);         
 
             return respActualiza;
         }
@@ -217,7 +220,7 @@ namespace Application.MainModule.Flujos
                 List<OrdenCompraDTO> loc = OrdenComprasAdapter.ToDTO(_locEntity);
 
                 var tesoreria = PermisosServicio.PuedeCompraAtiendeServicioOCompra();
-                if (tesoreria.Exito) return loc.Where(x => x.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.SolicitudPago)).ToList();
+                if (!tesoreria.Exito) return loc.Where(x => x.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.SolicitudPago)).ToList();
 
                 return loc;
             }
@@ -278,6 +281,10 @@ namespace Application.MainModule.Flujos
             var Pords = OrdenCompraServicio.BuscarProductosPorOrdenCompra(oc.IdOrdenCompra);
             if (Pords.Where(x => x.ProductoServicioTipo.Equals("Servicio")).Count().Equals(Pords.Count))
                 req.IdRequisicionEstatus = RequisicionEstatusEnum.Cerrada;
+
+            var egreso = EgresoAdapter.FromDTO(oc, dto);
+            var respuestaEgreso = EgresoServicio.Registrar(egreso);
+
             return OrdenCompraPagoServicio.Actualiza(entity, oc, req);
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)

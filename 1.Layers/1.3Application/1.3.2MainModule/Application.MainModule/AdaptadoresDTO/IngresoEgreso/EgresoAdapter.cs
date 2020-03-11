@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.EquipoTransporte;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Seguridad;
@@ -50,6 +51,22 @@ namespace Application.MainModule.AdaptadoresDTO.IngresoEgreso
                 GastoMensual = dto.GastoMensual,
                 EsFiscal = dto.EsFiscal,
                 Activo = dto.Activo,
+            };
+        }
+        public static Egreso FromDTO(OrdenCompra entity, OrdenCompraPagoDTO dto)
+        {
+            return new Egreso()
+            {
+                IdEmpresa = entity.IdEmpresa,
+                FechaRegistro = entity.FechaRegistro,
+                IdCentroCosto = entity.IdCentroCosto,
+                IdCuentaContable = entity.IdCuentaContable,
+                Monto = dto.MontoPagado,
+                Descripcion = entity.NumOrdenCompra,
+                EsExterno =false,
+                GastoMensual = false,
+                EsFiscal = true,
+                Activo = true,
             };
         }
         public static Egreso FromDTO(RecargaCombustibleDTO dto)

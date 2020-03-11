@@ -644,7 +644,8 @@ namespace Application.MainModule.Servicios.Almacenes
             var ventasCredito = PuntoVentaServicio.ObtenerVentasCredito(puntoVenta.IdPuntoVenta, fecha);
             var TotalVentas = new PuntoVentaDataAccess().ObtenerVentas(puntoVenta.IdPuntoVenta, fecha);
             var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
-            decimal precioVentaGas = precioVenta.PrecioSalidaKg ?? 0;
+            var precioVentaEst = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(TokenServicio.ObtenerIdEmpresa());
+            //decimal precioVentaGas = precioVenta.PrecioSalidaKg ?? 0;
             #region Camioneta
             if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
             {
@@ -665,7 +666,8 @@ namespace Application.MainModule.Servicios.Almacenes
                     reporteDTO.OtrasVentasTotal = TotalVentas.Sum(tv => tv.VentaPuntoDeVentaDetalle.Where(vd => !vd.IdProducto.Equals(precioVenta.IdProducto)
                                                                                                         && !vd.IdProductoLinea.Equals(precioVenta.IdProductoLinea)
                                                                                                         && !vd.IdCategoria.Equals(precioVenta.IdCategoria)).Sum(x => x.Subtotal));
-                    reporteDTO.Precio = reporteDTO.Precio = CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), ventasContado.Count);
+                    //reporteDTO.Precio = reporteDTO.Precio = CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), ventasContado.Count);
+                    reporteDTO.Precio = precioVenta.PrecioSalidaKg ?? 0;
                     reporteDTO.Error = false;
                     reporteDTO.Mensaje = Exito.OK;
                     reporteDTO.IdCAlmacenGas = almacen.IdCAlmacenGas;
@@ -693,7 +695,15 @@ namespace Application.MainModule.Servicios.Almacenes
                     reporteDTO.Error = false;
                     reporteDTO.Fecha = fecha;
                     reporteDTO.Mensaje = "Exito";
-                    reporteDTO.Precio = precioVentaGas;//CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), TotalVentas.Count);
+                    reporteDTO.Precio = precioVenta.PrecioSalidaLt ?? 0;//CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), TotalVentas.Count);
+                    if (almacen.IdEstacionCarburacion != null)
+                    {
+                        var pvestacion = PrecioVentaGasServicio.ObtenerPrecioVigenteEstacion(TokenServicio.ObtenerIdEmpresa(), almacen.IdEstacionCarburacion.Value);
+                        if (pvestacion != null)
+                            reporteDTO.Precio = pvestacion.PrecioSalidaLt ?? 0;
+                        else
+                            reporteDTO.Precio = precioVentaEst.PrecioSalidaLt ?? 0;
+                    }
                     reporteDTO.Importe = TotalVentas.Where(t => !t.VentaACredito).Sum(x => x.Total);
                     reporteDTO.LitrosVenta = TotalVentas.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(v => v.CantidadLt ?? 0));
                     reporteDTO.ClaveReporte = fecha.Year + "R" + FechasFunciones.ObtenerClaveUnica();
@@ -1088,7 +1098,7 @@ namespace Application.MainModule.Servicios.Almacenes
             return cilindros;
         }
         public static identidadUnidadAlmacenGas IdentificarTipoUnidadAlamcenGas(UnidadAlmacenGas unidad)
-        {          
+        {
             if (unidad.EsGeneral && unidad.EsAlterno)
                 return identidadUnidadAlmacenGas.AlmacenAlterno;
 
@@ -1840,8 +1850,8 @@ namespace Application.MainModule.Servicios.Almacenes
                     {
                         var foto = AlmacenGasAdapter.FromEntity(img);
                         fotos.Add(foto);
-                    }                   
-                  
+                    }
+
                 }
             }
             return fotos;
@@ -2768,7 +2778,7 @@ namespace Application.MainModule.Servicios.Almacenes
             //cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad), 2).ToString() + " Cilindro(s) 30Kg -";
             //cantinIcial += CalculosGenerales.Truncar(CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad), 2).ToString() + " Cilindro(s) 45Kg ";
 
-            cantinIcial += CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad)*20;
+            cantinIcial += CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(2)).Cantidad) * 20;
             cantinIcial += CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad) * 30;
             cantinIcial += CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad) * 45;
             return cantinIcial.ToString();

@@ -123,6 +123,11 @@ namespace Application.MainModule.Servicios.Compras
         {
             return new OrdenCompraDataAccess().BuscarTodos(idEmpresa, fi, ff);
         }
+        public static List<OrdenCompra> BuscarTodo(short idEmpresa, DateTime periodo)
+        {
+            return new OrdenCompraDataAccess().BuscarTodos(idEmpresa, periodo);
+        }
+
         public static OrdenCompra Buscar(int idOrdenCompra)
         {
             return new OrdenCompraDataAccess().Buscar(idOrdenCompra);

@@ -38,7 +38,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public PrecioVenta BuscarPrecioVentaVigente(short idEmpresa)
         {
             return uow.Repository<PrecioVenta>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
-                                                         && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente));
+                                                         && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente)
+                                                         && !x.EsEstaciones);
         }
         public PrecioVenta BuscarPrecioVentaVigenteEstaciones(short idEmpresa)
         {

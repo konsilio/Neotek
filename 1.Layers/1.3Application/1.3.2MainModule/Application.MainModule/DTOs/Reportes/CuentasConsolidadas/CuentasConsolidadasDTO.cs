@@ -11,6 +11,7 @@ namespace Application.MainModule.DTOs
         public string Concepto { get; set; }
         public decimal CantidadAutorizada { get; set; }
         public decimal CantidadGastada { get; set; }
+        public decimal CantidadPagada { get; set; }
         public decimal Diferencia { get; set; }
     }
 }

@@ -33,54 +33,62 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
         }
         public static OrdenCompraDTO ToDTO(OrdenCompra oc)
         {
-            OrdenCompraDTO ocDTO = new OrdenCompraDTO
+            try
             {
-                IdOrdenCompra = oc.IdOrdenCompra,
-                IdEmpresa = oc.IdEmpresa,
-                Empresa = oc.Empresa.NombreComercial,
-                IdOrdenCompraEstatus = oc.IdOrdenCompraEstatus,
-                NumOrdenCompra = oc.NumOrdenCompra,
-                OrdenCompraEstatus = oc.OrdenCompraEstatus.Descripcion,
-                IdRequisicion = oc.IdRequisicion,
-                NumeroRequisicion = oc.Requisicion.NumeroRequisicion,
-                IdProveedor = oc.IdProveedor,
-                Proveedor = oc.Proveedor.NombreComercial,
-                IdCentroCosto = oc.IdCentroCosto,
-                IdCuentaContable = oc.IdCuentaContable,
-                IdUsuarioGenerador = oc.IdUsuarioGenerador,
-                Solicitante = string.Concat(oc.UsuarioGenerador.Nombre, " ", oc.UsuarioGenerador.Apellido1),
-                IdUsuarioAutorizador = oc.IdUsuarioAutorizador,
-                EsActivoVenta = oc.EsActivoVenta,
-                EsGas = oc.EsGas,
-                Activo = oc.Activo,
-                FechaRegistro = oc.FechaRegistro,
-                FechaAutorizacion = oc.FechaAutorizacion != null ? oc.FechaAutorizacion.Value : DateTime.MinValue,
-                FechaRequerida = oc.Requisicion.FechaRequerida,
-                SubtotalSinIva = oc.SubtotalSinIva != null ? oc.SubtotalSinIva.Value : 0,
-                SubtotalSinIeps = oc.SubtotalSinIeps != null ? oc.SubtotalSinIeps.Value : 0,
-                Iva = oc.Iva != null ? oc.Iva.Value : 0,
-                Ieps = oc.Ieps != null ? oc.Ieps.Value : 0,
-                Total = oc.Total != null ? oc.Total.Value : 0,
-                EsTransporteGas = oc.EsTransporteGas,
-                Productos = ProductosOCAdapter.ToDTOx(oc.Productos.ToList()),
-                FolioFiscalUUID = oc.FolioFiscalUUID,
-                FolioFactura = oc.FolioFactura,
-                //Expedidor
-                MontBelvieuDlls = oc.MontBelvieuDlls,
-                TarifaServicioPorGalonDlls = oc.TarifaServicioPorGalonDlls,
-                TipoDeCambioDOF = oc.TipoDeCambioDOF,
-                PrecioPorGalon = oc.PrecioPorGalon,
-                FactorGalonALitros = oc.FactorGalonALitros,
-                ImporteEnLitros = oc.ImporteEnLitros,
-                FactorCompraLitrosAKilos = oc.FactorCompraLitrosAKilos,
-                PVPM = oc.PVPM,
-                //Porteador
-                FactorConvTransporte = oc.FactorConvTransporte,
-                PrecioTransporte = oc.PrecioTransporte,
-                Casetas = oc.Casetas,
+                OrdenCompraDTO ocDTO = new OrdenCompraDTO
+                {
+                    IdOrdenCompra = oc.IdOrdenCompra,
+                    IdEmpresa = oc.IdEmpresa,
+                    Empresa = oc.Empresa.NombreComercial,
+                    IdOrdenCompraEstatus = oc.IdOrdenCompraEstatus,
+                    NumOrdenCompra = oc.NumOrdenCompra,
+                    OrdenCompraEstatus = oc.OrdenCompraEstatus.Descripcion,
+                    IdRequisicion = oc.IdRequisicion,
+                    NumeroRequisicion = oc.Requisicion.NumeroRequisicion,
+                    IdProveedor = oc.IdProveedor,
+                    Proveedor = oc.Proveedor.NombreComercial,
+                    IdCentroCosto = oc.IdCentroCosto,
+                    IdCuentaContable = oc.IdCuentaContable,
+                    IdUsuarioGenerador = oc.IdUsuarioGenerador,
+                    Solicitante = string.Concat(oc.UsuarioGenerador.Nombre, " ", oc.UsuarioGenerador.Apellido1),
+                    IdUsuarioAutorizador = oc.IdUsuarioAutorizador,
+                    EsActivoVenta = oc.EsActivoVenta,
+                    EsGas = oc.EsGas,
+                    Activo = oc.Activo,
+                    FechaRegistro = oc.FechaRegistro,
+                    FechaAutorizacion = oc.FechaAutorizacion != null ? oc.FechaAutorizacion.Value : DateTime.MinValue,
+                    FechaRequerida = oc.Requisicion.FechaRequerida,
+                    SubtotalSinIva = oc.SubtotalSinIva != null ? oc.SubtotalSinIva.Value : 0,
+                    SubtotalSinIeps = oc.SubtotalSinIeps != null ? oc.SubtotalSinIeps.Value : 0,
+                    Iva = oc.Iva != null ? oc.Iva.Value : 0,
+                    Ieps = oc.Ieps != null ? oc.Ieps.Value : 0,
+                    Total = oc.Total != null ? oc.Total.Value : 0,
+                    EsTransporteGas = oc.EsTransporteGas,
+                    Productos = ProductosOCAdapter.ToDTOx(oc.Productos.ToList()),
+                    FolioFiscalUUID = oc.FolioFiscalUUID,
+                    FolioFactura = oc.FolioFactura,
+                    //Expedidor
+                    MontBelvieuDlls = oc.MontBelvieuDlls,
+                    TarifaServicioPorGalonDlls = oc.TarifaServicioPorGalonDlls,
+                    TipoDeCambioDOF = oc.TipoDeCambioDOF,
+                    PrecioPorGalon = oc.PrecioPorGalon,
+                    FactorGalonALitros = oc.FactorGalonALitros,
+                    ImporteEnLitros = oc.ImporteEnLitros,
+                    FactorCompraLitrosAKilos = oc.FactorCompraLitrosAKilos,
+                    PVPM = oc.PVPM,
+                    //Porteador
+                    FactorConvTransporte = oc.FactorConvTransporte,
+                    PrecioTransporte = oc.PrecioTransporte,
+                    Casetas = oc.Casetas,
 
-            };
-            return ocDTO;
+                };
+                return ocDTO;
+            }
+            catch (Exception ex)
+            {
+                return new OrdenCompraDTO();
+            }
+           
         }
         public static OrdenCompra FromDTO(OrdenCompraDTO ocDTO)
         {

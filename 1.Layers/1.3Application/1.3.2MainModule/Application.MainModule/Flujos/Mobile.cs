@@ -46,7 +46,7 @@ namespace Application.MainModule.Flujos
         }
         public List<MenuDto> ObtenerMenu()
         {
-            var usuario = UsuarioServicio.Obtener( TokenServicio.ObtenerIdUsuario());
+            var usuario = UsuarioServicio.Obtener(TokenServicio.ObtenerIdUsuario());
             bool esChofer = false, esEstacion = false, hayLectura = false;
             List<MenuDto> menu = new List<MenuDto>();
             if (usuario != null)
@@ -55,7 +55,7 @@ namespace Application.MainModule.Flujos
                 {
                     esChofer = true;
                     var operadorDTO = PuntoVentaServicio.ObtenerOperador(usuario.IdUsuario);
-                    var operador = usuario.OperadoresChoferes.FirstOrDefault(x => x.Activo);                 
+                    var operador = usuario.OperadoresChoferes.FirstOrDefault(x => x.Activo);
                     var puntoVenta = PuntoVentaServicio.Obtener(operador);
 
                     if (puntoVenta != null)
@@ -69,7 +69,7 @@ namespace Application.MainModule.Flujos
                         var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(unidadAlmacen.IdCAlmacenGas, DateTime.Now);
                         if (ultimaLectura != null)
                             hayLectura = true;
-                        
+
                         if (unidadAlmacen.EsGeneral)
                         {
                             hayLectura = true;
@@ -121,7 +121,7 @@ namespace Application.MainModule.Flujos
                     Exito = false,
                     Mensaje = CatchInnerException.ObtenerString(ex),
                 };
-            }           
+            }
         }
         public RespuestaDto InicializarDescarga(DescargaDto desDto)
         {
@@ -235,106 +235,85 @@ namespace Application.MainModule.Flujos
         {
             var resp = VentaServicio.BuscarFolioVenta(venta);
             if (resp.Exito) return resp;
-            
-
-            var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-            var almacen = punto_venta.UnidadesAlmacen;
-            var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());            
-            var cliente = ClienteServicio.Obtener(venta.IdCliente);
-            var ventas = CajaGeneralServicio.ObtenerVentas();
-            int orden = Orden(ventas, venta.Fecha);
-            var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta, orden, TokenServicio.ObtenerIdEmpresa());
-            adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
-           
-            adapter.Descuento = adapter.VentaPuntoDeVentaDetalle.Sum(x => x.DescuentoTotal);
-            if (venta.SinNumero || venta.IdCliente == 0)
-            {
-                Cliente clienteGenerico = ClienteServicio.BuscarClientePorRFC("XAXX010101000");
-                adapter.IdCliente = clienteGenerico.IdCliente;
-                adapter.RFC = clienteGenerico.Rfc;
-                adapter.RazonSocial = clienteGenerico.RazonSocial;
-            }
-            else
-            {
-                adapter.IdCliente = venta.IdCliente;
-                adapter.RFC = cliente.Rfc;
-                adapter.RazonSocial = cliente.RazonSocial;
-            }
             RespuestaDto respuesta = new RespuestaDto();
-            #region Verifica si la venta que se realiza es extraordinaria
-            if (venta.Credito)
+            respuesta.MensajesError = new List<string>();
+            try
             {
-                if (cliente.CreditoDisponibleMonto == 0)
+                var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+                respuesta.MensajesError.Add("1.- " + punto_venta.UnidadesAlmacen.Numero);
+                var almacen = punto_venta.UnidadesAlmacen;
+                var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
+                respuesta.MensajesError.Add("2.- " + operador.NombreCompleto);
+                var cliente = ClienteServicio.Obtener(venta.IdCliente);
+                if (cliente != null)
+                    respuesta.MensajesError.Add("3.- Cliente " + cliente.IdCliente.ToString());
+                else
+                    respuesta.MensajesError.Add("3.- Cliente no encontrado: " + venta.IdCliente.ToString());
+                var ventas = CajaGeneralServicio.ObtenerVentas();
+                respuesta.MensajesError.Add(ventas.Count.ToString());
+                int orden = Orden(ventas, venta.Fecha);
+                respuesta.MensajesError.Add(orden.ToString());
+                var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta, orden, TokenServicio.ObtenerIdEmpresa());
+                adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
+                respuesta.MensajesError.Add(adapter.OperadorChofer);
+                adapter.Descuento = adapter.VentaPuntoDeVentaDetalle.Sum(x => x.DescuentoTotal);
+                respuesta.MensajesError.Add(adapter.Descuento.ToString());
+                if (venta.SinNumero || venta.IdCliente == 0)
                 {
-                    RespuestaDto _res = new RespuestaDto();
-                    if (!cliente.VentaExtraordinaria.Value)
-                    {
-                        resp.Exito = false;
-                        resp.EsInsercion = false;
-                        resp.EsActulizacion = false;
-                        resp.Mensaje = "El cliente no tiene disponibilidad de credito, favor de comunicarse con el área de crédito y cobranza";
-                        resp.Id = 0;
-                        resp.Codigo = null;
-                        resp.ModeloValido = false;
-                        return resp;
-                    }
-                }
-            }
-            #endregion
-            if (venta.Credito)
-            {
-                if (venta.VentaExtraordinaria)
-                {
-                    int dias = Convert.ToInt32(cliente.limiteCreditoDias);
-                    var cargo = CargoAdapter.FromDTO(venta, DateTime.Now.AddDays(dias), TokenServicio.ObtenerIdEmpresa());
-
-                    var insertCargo = PuntoVentaServicio.insertCargoMobile(cargo);
-                    if (insertCargo.Exito)
-                    {
-                        if (cliente.CreditoDisponibleMonto == 0)
-                        {
-                            decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Total;
-                            cliente.CreditoDisponibleMonto = creditoDisponible;
-                        }
-                        else
-                        {
-                            if (cliente.CreditoDisponibleMonto > 0)
-                            {
-                                decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Total;
-                                cliente.CreditoDisponibleMonto = creditoDisponibleMonto;
-                            }
-                        }
-                        var actualizaCredito = ClienteServicio.ModificarCredito(cliente);
-                        if (actualizaCredito.Exito)
-                            respuesta = PuntoVentaServicio.InsertMobile(adapter);
-                        else
-                            respuesta = actualizaCredito;
-                    }
-                    else
-                        respuesta = insertCargo;
+                    Cliente clienteGenerico = ClienteServicio.BuscarClientePorRFC("XAXX010101000");
+                    adapter.IdCliente = clienteGenerico.IdCliente;
+                    adapter.RFC = clienteGenerico.Rfc;
+                    adapter.RazonSocial = clienteGenerico.RazonSocial;
                 }
                 else
                 {
-                    #region Verifica si tiene credito disponible
-                    if (cliente.CreditoDisponibleMonto > 0 && cliente.CreditoDisponibleMonto >= venta.Concepto.Sum(x => x.LitrosDespachados))
+                    adapter.IdCliente = venta.IdCliente;
+                    adapter.RFC = cliente.Rfc;
+                    adapter.RazonSocial = cliente.RazonSocial;
+                }
+                #region Verifica si la venta que se realiza es extraordinaria
+                if (venta.Credito)
+                {
+                    if (cliente.CreditoDisponibleMonto == 0)
                     {
-
+                        RespuestaDto _res = new RespuestaDto();
+                        if (!cliente.VentaExtraordinaria.Value)
+                        {
+                            resp.Exito = false;
+                            resp.EsInsercion = false;
+                            resp.EsActulizacion = false;
+                            resp.Mensaje = "El cliente no tiene disponibilidad de credito, favor de comunicarse con el área de crédito y cobranza";
+                            resp.Id = 0;
+                            resp.Codigo = null;
+                            resp.ModeloValido = false;
+                            return resp;
+                        }
+                    }
+                }
+                #endregion
+                if (venta.Credito)
+                {
+                    if (venta.VentaExtraordinaria)
+                    {
                         int dias = Convert.ToInt32(cliente.limiteCreditoDias);
                         var cargo = CargoAdapter.FromDTO(venta, DateTime.Now.AddDays(dias), TokenServicio.ObtenerIdEmpresa());
+
                         var insertCargo = PuntoVentaServicio.insertCargoMobile(cargo);
                         if (insertCargo.Exito)
                         {
                             if (cliente.CreditoDisponibleMonto == 0)
                             {
-                                decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Concepto.Sum(x => x.LitrosDespachados);
+                                decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Total;
                                 cliente.CreditoDisponibleMonto = creditoDisponible;
                             }
-                            if (cliente.CreditoDisponibleMonto > 0)
+                            else
                             {
-                                decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Concepto.Sum(x => x.LitrosDespachados);
-                                cliente.CreditoDisponibleMonto = creditoDisponibleMonto;
+                                if (cliente.CreditoDisponibleMonto > 0)
+                                {
+                                    decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Total;
+                                    cliente.CreditoDisponibleMonto = creditoDisponibleMonto;
+                                }
                             }
-
                             var actualizaCredito = ClienteServicio.ModificarCredito(cliente);
                             if (actualizaCredito.Exito)
                                 respuesta = PuntoVentaServicio.InsertMobile(adapter);
@@ -346,27 +325,64 @@ namespace Application.MainModule.Flujos
                     }
                     else
                     {
-                        RespuestaDto _res = new RespuestaDto();
-                        resp.Exito = false;
-                        resp.EsInsercion = false;
-                        resp.EsActulizacion = false;
-                        resp.Mensaje = "No se puede realizar la venta, favor de comunicarse con el área de crédito y cobranza";
-                        resp.Id = 0;
-                        resp.Codigo = null;
-                        resp.ModeloValido = false;
-                        return resp;
+                        #region Verifica si tiene credito disponible
+                        if (cliente.CreditoDisponibleMonto > 0 && cliente.CreditoDisponibleMonto >= venta.Concepto.Sum(x => x.LitrosDespachados))
+                        {
+                            int dias = Convert.ToInt32(cliente.limiteCreditoDias);
+                            var cargo = CargoAdapter.FromDTO(venta, DateTime.Now.AddDays(dias), TokenServicio.ObtenerIdEmpresa());
+                            var insertCargo = PuntoVentaServicio.insertCargoMobile(cargo);
+                            if (insertCargo.Exito)
+                            {
+                                if (cliente.CreditoDisponibleMonto == 0)
+                                {
+                                    decimal creditoDisponible = cliente.limiteCreditoMonto - venta.Concepto.Sum(x => x.LitrosDespachados);
+                                    cliente.CreditoDisponibleMonto = creditoDisponible;
+                                }
+                                if (cliente.CreditoDisponibleMonto > 0)
+                                {
+                                    decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - venta.Concepto.Sum(x => x.LitrosDespachados);
+                                    cliente.CreditoDisponibleMonto = creditoDisponibleMonto;
+                                }
+                                var actualizaCredito = ClienteServicio.ModificarCredito(cliente);
+                                if (actualizaCredito.Exito)
+                                    respuesta = PuntoVentaServicio.InsertMobile(adapter);
+                                else
+                                    respuesta = actualizaCredito;
+                            }
+                            else
+                                respuesta = insertCargo;
+                        }
+                        else
+                        {
+                            RespuestaDto _res = new RespuestaDto();
+                            resp.Exito = false;
+                            resp.EsInsercion = false;
+                            resp.EsActulizacion = false;
+                            resp.Mensaje = "No se puede realizar la venta, favor de comunicarse con el área de crédito y cobranza";
+                            resp.Id = 0;
+                            resp.Codigo = null;
+                            resp.ModeloValido = false;
+                            return resp;
+                        }
+                        #endregion
                     }
-                    #endregion
                 }
+                else
+                    respuesta = PuntoVentaServicio.InsertMobile(adapter);
+                if (respuesta.Exito)
+                    if (almacen.IdCamioneta > 0)
+                        verificaInventarioCilindros(venta);
+
+
+                return respuesta;
             }
-            else
-                respuesta = PuntoVentaServicio.InsertMobile(adapter);          
-            if (respuesta.Exito)            
-                if (almacen.IdCamioneta > 0)                
-                    verificaInventarioCilindros(venta);
-                
-            
-            return respuesta;
+            catch (Exception ex)
+            {
+                respuesta.Exito = false;
+                respuesta.Mensaje = ex.Message;
+                //respuesta.MensajesError = Exceptions.MainModule.CatchInnerException.Obtener(ex);
+                return respuesta;
+            }
         }
         public void verificaInventarioCilindros(VentaDTO venta)
         {
@@ -391,11 +407,10 @@ namespace Application.MainModule.Flujos
         }
         public int Orden(List<VentaPuntoDeVenta> ventas, DateTime fechaVenta)
         {
-            var busqueda = ventas.FindAll(x => x.FechaRegistro.Day.Equals(
-                fechaVenta.Day) &&
-                x.FechaRegistro.Month.Equals(fechaVenta.Month)
-                && x.FechaRegistro.Year.Equals(fechaVenta.Year)
-            );
+            var busqueda = ventas.Where(x => x.Dia.Equals((byte)fechaVenta.Day) &&
+                x.Mes.Equals((byte)fechaVenta.Month)
+                && x.Year.Equals((short)fechaVenta.Year)
+            ).ToList();
             if (busqueda != null)
                 if (busqueda.Count == 0)
                     return 0;
@@ -439,7 +454,7 @@ namespace Application.MainModule.Flujos
                 var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
                 var almacenesAlternos = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa(), true);
                 return AlmacenRecargaAdapter.ToDTO(pipas, estaciones, almacenesAlternos, tipoMedidores);
-                
+
             }
             return null;
         }
@@ -1269,9 +1284,7 @@ namespace Application.MainModule.Flujos
 
             if (esPipa)
             {
-
                 var pipa = puntoVenta.UnidadesAlmacen.Pipa;
-
                 var filtradas = lpipas.FindAll(x => !x.IdPipa.Equals(pipa.IdPipa));
                 var traspaso = AlmacenGasServicio.Traspasos(puntoVenta.UnidadesAlmacen.IdCAlmacenGas).OrderByDescending(x => x.Orden).FirstOrDefault();
                 List<AlmacenGasTraspaso> traspasosEntrada = new List<AlmacenGasTraspaso>();
@@ -1284,7 +1297,6 @@ namespace Application.MainModule.Flujos
                 }
                 return TraspasoAdapter.ToDTOPipa(lpipas, filtradas, pipa, medidores, unidadAlmacen, traspaso, traspasosEntrada);
             }
-
             else
             {
                 var estacion = puntoVenta.UnidadesAlmacen.EstacionCarburacion;
@@ -1304,7 +1316,6 @@ namespace Application.MainModule.Flujos
                 }
                 return TraspasoAdapter.ToDTOEstacion(lestaciones, lpipas, estacion, medidores, unidadAlmacen, traspaso, traspasosEntrada);
             }
-
         }
         public RespuestaDto Traspaso(TraspasoDto dto, bool esFinal)
         {
@@ -1515,8 +1526,9 @@ namespace Application.MainModule.Flujos
             {
                 var lectInicial = AlmacenGasServicio.ObtenerUltimaLectura(unidad, false);
                 var puntoVenta = PuntoVentaServicio.Obtener(unidad);
-                var ventas = puntoVenta.VentaPuntoDeVenta.Where(x => x.FechaRegistro.Equals(DateTime.Now));// cambiar a busqueda de fechamas especificas 
-                var precios = PuntoVentaServicio.ObtenerPreciosVenta(TokenServicio.ObtenerIdEmpresa());
+                var ventas = puntoVenta.VentaPuntoDeVenta.Where(x => x.FechaRegistro.Equals(DateTime.Now));// cambiar a busqueda de fecha mas especificas 
+                var precios = PuntoVentaServicio.ObtenerPreciosVenta(TokenServicio.ObtenerIdEmpresa()).Where(x => x.IdPrecioVentaEstatus.Equals(2)).ToList();
+                //var precios = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
                 var productosGas = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa(), true);
                 var kilosCamioneta = LecturaGasServicio.ObtenerKilosGasCamioneta(unidad.IdCAlmacenGas, DateTime.Now, pv.IdPuntoVenta);
 
@@ -1538,6 +1550,7 @@ namespace Application.MainModule.Flujos
                     }
                     if (totalKilos > 0)
                         calculo = calculo - totalKilos;
+
                     return VentasEstacionesAdapter.ToDTO(productosGas.Where(x => x.EsGas).ToList(), precios, calculo, descuento, precio);
                     //return VentasEstacionesAdapter.ToDTO(productosGas.Where(x => x.EsGas).ToList(), precios, calculo);
                     //return VentasEstacionesAdapter.ToDTO(productosGas, precios, kilosCamioneta);

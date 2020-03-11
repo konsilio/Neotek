@@ -11,6 +11,7 @@ using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.DTOs.Mobile.Cortes;
 using Utilities.MainModule;
 using Sagas.MainModule.ObjetosValor.Enum;
+using Application.MainModule.Flujos;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
@@ -149,7 +150,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         }
         public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios, decimal CantidadKgGas, decimal descuento = 0, decimal precio = 0)
         {
-            var _precio = precios.Find(x => x.IdPrecioVentaEstatus.Equals() && x.IdProducto.Equals(productoGas.IdProducto));
+            var _precio = new Catalogos().ObtenerPrecioVentaVigente();
             if (productoGas.EsGas)
             {
                 return new DatosGasVentaDto()
@@ -157,7 +158,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     Nombre = productoGas.Descripcion,
                     Id = productoGas.IdProducto,
                     PrecioUnitario = _precio.PrecioSalidaLt.Value,
-                    Descuento = descuento.Equals(0) ? (precio != 0 ? CalculosGenerales.DiferenciaEntreDosNumero(precio, _precio.PrecioSalidaLt.Value) : 0) : descuento,
+                    Descuento = descuento.Equals(0) ? (precio != 0 ? precio < _precio.PrecioSalidaLt.Value ? CalculosGenerales.DiferenciaEntreDosNumero(precio, _precio.PrecioSalidaLt.Value) : 0 : 0) : descuento,
                     Existencia = CantidadKgGas,
                     CapacidadKg = 0,
                     CapacidadLt = 0,
