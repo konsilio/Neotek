@@ -54,8 +54,7 @@ namespace Application.MainModule.Servicios.Notificacion
                     Enviar(js, Autorizacion);
                 }
                 catch (Exception ex){                   
-                }
-               
+                }               
             }
         }
         public static void OrdenDeCompraNueva(OrdenCompra oc, bool incluirMensajePush = false)

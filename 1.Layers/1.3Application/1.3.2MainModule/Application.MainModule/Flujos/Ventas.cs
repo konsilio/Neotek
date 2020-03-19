@@ -75,7 +75,7 @@ namespace Application.MainModule.Flujos
 
             var productoGas = ProductoServicio.ObtenerProductoGasVenta(TokenServicio.ObtenerIdEmpresa());
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
-            var precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+            //var precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             if (!resp.Exito) return null;
             //var reporteDia = CajaGeneralServicio.ObtenerReporteDia(cveReporte);
             //if (reporteDia == null)
@@ -89,8 +89,10 @@ namespace Application.MainModule.Flujos
             corte.IdPuntoVenta = reporteDia.IdPuntoVenta ?? 0;
             corte.OperadorChofer = reporteDia.OperadorChofer;
             corte.TipoUnidad = 1;
+            PrecioVenta precio = null;
             if (reporteDia.CAlmacenGas.IdCamioneta != null)
             {
+                precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
                 corte.TipoUnidad = 2;
                 var li = lecturas.FirstOrDefault(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
                 var lf = lecturas.FirstOrDefault(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final));
@@ -108,7 +110,7 @@ namespace Application.MainModule.Flujos
                 }
             }
             if (reporteDia.CAlmacenGas.IdPipa != null || reporteDia.CAlmacenGas.IdEstacionCarburacion != null)
-            {
+            {             
                 if (reporteDia.CAlmacenGas.IdPipa != null)
                     corte.TipoUnidad = 3;
                 var li = lecturas.FirstOrDefault(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
@@ -119,7 +121,18 @@ namespace Application.MainModule.Flujos
                 lects.P5000Inicial = li.P5000 ?? 0;
                 lects.P5000Final = lf.P5000 ?? 0;
                 lects.CantidadLt = CalculosGenerales.DiferenciaEntreDosNumero(lects.P5000Inicial, lects.P5000Final);
-                lects.Venta = lects.CantidadLt * precio.PrecioSalidaLt ?? 0;
+                if (reporteDia.CAlmacenGas.IdPipa != null)
+                {
+                    precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+                    lects.Venta = lects.CantidadLt * precio.PrecioSalidaLt ?? 0;
+                }
+                else
+                {
+                    precio = PrecioVentaGasServicio.ObtenerPrecioVigenteEstacion(TokenServicio.ObtenerIdEmpresa(), reporteDia.CAlmacenGas.IdEstacionCarburacion.Value);
+                    if (precio == null)
+                        precio = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(TokenServicio.ObtenerIdEmpresa());
+                    lects.Venta = lects.CantidadLt * precio.PrecioSalidaLt ?? 0;
+                }
                 corte.Lecturas.Add(lects);
                 corte.TotalCantidad = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt ?? 0));
             }
@@ -129,8 +142,10 @@ namespace Application.MainModule.Flujos
             corte.TotalCredito = ventas.Where(x => x.VentaACredito.Equals(true)).Sum(v => v.Total);
             corte.Descuentos = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
             corte.Bonidificaciones = ventas.Where(v => v.EsBonificacion).Sum(x => x.Bonificacion ?? 0);
-            corte.TotalEfectio = (corte.TotalVenta + corte.TotalOtros) - (corte.TotalCredito + corte.Descuentos + corte.Bonidificaciones);
-
+            if (reporteDia.CAlmacenGas.IdCamioneta != null)
+                corte.TotalEfectio = ((corte.TotalCantidad * precio.PrecioSalidaKg ?? 0) + corte.TotalOtros) - (corte.TotalCredito + corte.Descuentos + corte.Bonidificaciones);
+            else
+                corte.TotalEfectio = ((corte.TotalCantidad * precio.PrecioSalidaLt ?? 0) + corte.TotalOtros) - (corte.TotalCredito + corte.Descuentos + corte.Bonidificaciones);
             return corte;
         }
         public RespuestaDto GenerarLiquidacion(string cveReporte)

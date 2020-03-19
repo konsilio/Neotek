@@ -127,11 +127,7 @@
                                 </div>
                             }
                             <div class="row clearfix blockquote blockquote-info btn-round">
-                                <div class="col-lg-4 col-md-8 text-center">
-                                    <a href="@Url.Action("Ordenes", "OrdenCompra" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
-                                        Regresar
-                                    </a>
-                                </div>
+                               
                                 <div class="table-responsive">
                                     @*@Html.Action("ProductoOCPartial", new { id = Model.IdRequisicion })*@
                                     @Html.Partial("_ProductosOCPartial", Model.OrdenCompraProductos)
@@ -141,6 +137,11 @@
                                 <div class="col-sm-4 center">
                                     <a href="@Url.Action("Ordenes", "OrdenCompra")"  class="btn btn-raised btn-primary btn-round">
                                         Cancelar
+                                    </a>
+                                </div>
+                                <div class="col-lg-4 col-md-8 text-center">
+                                    <a href="@Url.Action("Ordenes", "OrdenCompra" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
+                                        Regresar
                                     </a>
                                 </div>
                                 @*<div class="col-sm-4 center">

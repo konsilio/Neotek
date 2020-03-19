@@ -255,7 +255,7 @@ namespace Application.MainModule.Flujos
                 respuesta.MensajesError.Add(orden.ToString());
                 var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta, orden, TokenServicio.ObtenerIdEmpresa());
                 adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
-                respuesta.MensajesError.Add(adapter.OperadorChofer);
+                respuesta.MensajesError.Add(adapter.OperadorChofer);               
                 adapter.Descuento = adapter.VentaPuntoDeVentaDetalle.Sum(x => x.DescuentoTotal);
                 respuesta.MensajesError.Add(adapter.Descuento.ToString());
                 if (venta.SinNumero || venta.IdCliente == 0)

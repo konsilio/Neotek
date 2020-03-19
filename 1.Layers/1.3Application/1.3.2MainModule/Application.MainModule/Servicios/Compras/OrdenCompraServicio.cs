@@ -71,17 +71,17 @@ namespace Application.MainModule.Servicios.Compras
                         nOC.SubtotalSinIeps = 0;
                         nOC.Iva = 0;
                         nOC.Ieps = 0;
-                        nOC.Total =0;          
-                        nOC.Casetas =0;
+                        nOC.Total = 0;
+                        nOC.Casetas = 0;
                         nOC.FactorCompraLitrosAKilos = 0;
                         nOC.FactorConvTransporte = 0;
                         nOC.FactorGalonALitros = 0;
-                        nOC.ImporteEnLitros =0;
+                        nOC.ImporteEnLitros = 0;
                         nOC.MontBelvieuDlls = 0;
-                        nOC.PrecioPorGalon =0;
+                        nOC.PrecioPorGalon = 0;
                         nOC.PrecioTransporte = 0;
                         nOC.PVPM = 0;
-                        nOC.TarifaServicioPorGalonDlls =0;
+                        nOC.TarifaServicioPorGalonDlls = 0;
                         nOC.TipoDeCambioDOF = 0;
                     }
                     nlist.Add(nOC);
@@ -101,8 +101,9 @@ namespace Application.MainModule.Servicios.Compras
             }
             foreach (var _oc in _ocs)
             {
-                if (_oc.Productos.Where(x => x.ProductoServicioTipo.Equals("Servicio")).Count().Equals(_oc.Productos.Count))/*Se determina si todos los productos son Servicios*/
-                    _oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra; /*Se cambia el estatus por que los servicios no entran a Almacen*/
+                if (!_oc.EsTransporteGas)
+                    if (_oc.Productos.Where(x => x.ProductoServicioTipo.Equals("Servicio")).Count().Equals(_oc.Productos.Count))/*Se determina si todos los productos son Servicios*/
+                        _oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra; /*Se cambia el estatus por que los servicios no entran a Almacen*/
             }
             return _ocs;
         }
@@ -447,17 +448,17 @@ namespace Application.MainModule.Servicios.Compras
             {
                 foreach (var item in entidad.AlmacenGasDescarga)
                 {
-                   var litros = item.CapacidadTanqueLt ?? 0 * (item.PorcenMagnatelOcularTractorINI ?? 0 / 100);
-                   ObtenerKilogramosDesdeLitros  = Math.Truncate( litros);
-                    return  ((double)litros * 0.54).ToString();
+                    var litros = item.CapacidadTanqueLt ?? 0 * (item.PorcenMagnatelOcularTractorINI ?? 0 / 100);
+                    ObtenerKilogramosDesdeLitros = Math.Truncate(litros);
+                    return ((double)litros * 0.54).ToString();
                 }
             }
             if (entidad.EsTransporteGas)
             {
                 foreach (var item in entidad.AlmacenGasDescarga1)
                 {
-                    return Math.Truncate( item.MasaKg ?? 2 ).ToString();
-                   
+                    return Math.Truncate(item.MasaKg ?? 2).ToString();
+
                 }
             }
             else if (!entidad.EsTransporteGas && !entidad.EsGas)
