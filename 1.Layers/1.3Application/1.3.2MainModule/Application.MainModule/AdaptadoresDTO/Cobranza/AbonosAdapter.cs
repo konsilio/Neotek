@@ -282,11 +282,12 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         }
         public static CargosDTO ToDTORep(CarteraVencidaDTO _dto)
         {
+            var usu = ClienteServicio.Obtener(_dto.IdCliente);
             CargosDTO dto = new CargosDTO();
             dto.IdCliente = _dto.IdCliente;
             dto.IdEmpresa = _dto.IdEmpresa;
-            dto.Cliente = ClienteServicio.Obtener(_dto.IdCliente).RazonSocial;
-            dto.Rfc = ClienteServicio.Obtener(_dto.IdCliente).Rfc;
+            dto.Cliente = usu.RazonSocial;
+            dto.Rfc = usu.Rfc;
             dto.Nombre = _dto.Nombre;
             dto.Ticket = _dto.Ticket;
             dto.Serie = _dto.Serie;
@@ -301,22 +302,13 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             dto.Dias17a31 = _dto.Dias17_31;
             dto.Dias32a61 = _dto.Dias32_61;
             dto.Dias62a91 = _dto.Dias62_91;
-            dto.Mas91 = _dto.Mas91;
-            //dto.TotSaldoActual = _dto.SaldoActualTotal;
-            //dto.TotSaldoCorriente = _dto.SaldoCorrienteTotal;
-            //dto.TotSaldoVencido = _dto.SaldoVencidoTotal;
-            //dto.TotDias1a7 = _dto.Dias1_7Total;
-            //dto.TotDias8a16 = _dto.Dias8_16Total;
-            //dto.TotDias17a31 = _dto.Dias17_31Total;
-            //dto.TotDias32a61 = _dto.Dias32_61Total;
-            //dto.TotDias62a91 = _dto.Dias62_91Total;
-            //dto.TotDiasmas91 = _dto.Mas91Total;
+            dto.Mas91 = _dto.Mas91;        
             return dto;
         }
         public static ReporteDTO ToDTORep(List<CarteraVencidaDTO> lCargoV, List<CarteraVencidaDTO> lCargoT)
         {
             ReporteDTO lprodDTO = new ReporteDTO();
-            lprodDTO.reportedet = lCargoV.ToList().Select(x => ToDTORep(x)).ToList();
+            lprodDTO.reportedet = lCargoV.Select(x => ToDTORep(x)).ToList();
             lprodDTO.reportedet.AddRange(Totalizador(lprodDTO.reportedet));
             lprodDTO.global = Global(lCargoT);
             return lprodDTO;
