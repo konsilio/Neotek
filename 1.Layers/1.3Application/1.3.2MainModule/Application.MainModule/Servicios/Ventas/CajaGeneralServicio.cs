@@ -280,6 +280,10 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarTodosPV();
         }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorFecha(DateTime fechaVenta)
+        {
+            return new CajaGeneralDataAccess().BuscarPVPorFecha(fechaVenta);
+        }
         public static RespuestaDto Actualizar(List<VentaCorteAnticipoEC> pv)
         {
             return new CajaGeneralDataAccess().Actualizar(pv);

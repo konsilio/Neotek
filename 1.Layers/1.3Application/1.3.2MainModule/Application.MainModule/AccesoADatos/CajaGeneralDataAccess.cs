@@ -233,6 +233,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.FechaRegistro.Month.Equals(fecha.Month)
                                                             && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
         }
+        public List<VentaPuntoDeVenta> BuscarPVPorFecha(DateTime fechaVenta)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.Dia.Equals((byte)fechaVenta.Day) &&
+                x.Mes.Equals((byte)fechaVenta.Month)
+                && x.Year.Equals((short)fechaVenta.Year)
+            ).ToList();
+        }
         public List<VentaPuntoDeVenta> BuscarTodosPV()
         {
             return uow.Repository<VentaPuntoDeVenta>().Get().ToList();

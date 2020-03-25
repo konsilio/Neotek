@@ -242,11 +242,12 @@ namespace Application.MainModule.Flujos
                 var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();                
                 var almacen = punto_venta.UnidadesAlmacen;              
                 var operador = OperadorChoferAdapter.ToOperador(punto_venta.OperadorChofer);
-                var cliente = ClienteServicio.Obtener(venta.IdCliente);             
-                var ventas = CajaGeneralServicio.ObtenerVentas();               
-                int orden = Orden(ventas, venta.Fecha);
+                var cliente = ClienteServicio.Obtener(venta.IdCliente);
+                var ventas = CajaGeneralServicio.ObtenerVentasPorFecha(venta.Fecha);
+                int orden = Orden(ventas);
                 respuesta.MensajesError.Add(orden.ToString());
                 var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta, orden, TokenServicio.ObtenerIdEmpresa());
+
                 adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
                 respuesta.MensajesError.Add(adapter.OperadorChofer);               
                 adapter.Descuento = adapter.VentaPuntoDeVentaDetalle.Sum(x => x.DescuentoTotal);
@@ -398,9 +399,9 @@ namespace Application.MainModule.Flujos
                 }
             }
         }
-        public int Orden(List<VentaPuntoDeVenta> ventas, DateTime fechaVenta)
+        public int Orden(List<VentaPuntoDeVenta> busqueda)
         {
-            var busqueda = ventas.Where(x => x.Dia.Equals((byte)fechaVenta.Day) && x.Mes.Equals((byte)fechaVenta.Month) && x.Year.Equals((short)fechaVenta.Year)).ToList();
+            //var busqueda = ventas.Where(x => x.Dia.Equals((byte)fechaVenta.Day) && x.Mes.Equals((byte)fechaVenta.Month) && x.Year.Equals((short)fechaVenta.Year)).ToList();
             if (busqueda != null)
                 if (busqueda.Count == 0)
                     return 0;
