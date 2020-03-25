@@ -12,7 +12,7 @@ namespace Application.MainModule.Servicios
     {
         public static void Actualizar()
         {
-            CajaGeneralServicio.ProcesarVentasPuntosDeVenta();
+           CajaGeneralServicio.ProcesarVentasPuntosDeVenta();
             AlmacenGasServicio.ProcesarInventario();
             //ImagenServicio.LimpiarImagenes();
         }

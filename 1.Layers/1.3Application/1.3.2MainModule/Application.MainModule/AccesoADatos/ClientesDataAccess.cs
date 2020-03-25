@@ -30,7 +30,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public Cliente Buscar(int idCliente)
         {
-            return uow.Repository<Cliente>().GetSingle(x => x.IdCliente.Equals(idCliente));
+            return uow.Repository<Cliente>().Get(x => x.IdCliente.Equals(idCliente)).FirstOrDefault();
         }
 
         public List<ClienteLocacion> BuscarLocacion(int idCliente)

@@ -239,18 +239,11 @@ namespace Application.MainModule.Flujos
             respuesta.MensajesError = new List<string>();
             try
             {
-                var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-                respuesta.MensajesError.Add("1.- " + punto_venta.UnidadesAlmacen.Numero);
-                var almacen = punto_venta.UnidadesAlmacen;
-                var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
-                respuesta.MensajesError.Add("2.- " + operador.NombreCompleto);
-                var cliente = ClienteServicio.Obtener(venta.IdCliente);
-                if (cliente != null)
-                    respuesta.MensajesError.Add("3.- Cliente " + cliente.IdCliente.ToString());
-                else
-                    respuesta.MensajesError.Add("3.- Cliente no encontrado: " + venta.IdCliente.ToString());
-                var ventas = CajaGeneralServicio.ObtenerVentas();
-                respuesta.MensajesError.Add(ventas.Count.ToString());
+                var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();                
+                var almacen = punto_venta.UnidadesAlmacen;              
+                var operador = OperadorChoferAdapter.ToOperador(punto_venta.OperadorChofer);
+                var cliente = ClienteServicio.Obtener(venta.IdCliente);             
+                var ventas = CajaGeneralServicio.ObtenerVentas();               
                 int orden = Orden(ventas, venta.Fecha);
                 respuesta.MensajesError.Add(orden.ToString());
                 var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta, orden, TokenServicio.ObtenerIdEmpresa());
@@ -279,14 +272,14 @@ namespace Application.MainModule.Flujos
                         RespuestaDto _res = new RespuestaDto();
                         if (!cliente.VentaExtraordinaria.Value)
                         {
-                            resp.Exito = false;
-                            resp.EsInsercion = false;
-                            resp.EsActulizacion = false;
-                            resp.Mensaje = "El cliente no tiene disponibilidad de credito, favor de comunicarse con el área de crédito y cobranza";
-                            resp.Id = 0;
-                            resp.Codigo = null;
-                            resp.ModeloValido = false;
-                            return resp;
+                            _res.Exito = false;
+                            _res.EsInsercion = false;
+                            _res.EsActulizacion = false;
+                            _res.Mensaje = "El cliente no tiene disponibilidad de credito, favor de comunicarse con el área de crédito y cobranza";
+                            _res.Id = 0;
+                            _res.Codigo = null;
+                            _res.ModeloValido = false;
+                            return _res;
                         }
                     }
                 }
@@ -355,14 +348,14 @@ namespace Application.MainModule.Flujos
                         else
                         {
                             RespuestaDto _res = new RespuestaDto();
-                            resp.Exito = false;
-                            resp.EsInsercion = false;
-                            resp.EsActulizacion = false;
-                            resp.Mensaje = "No se puede realizar la venta, favor de comunicarse con el área de crédito y cobranza";
-                            resp.Id = 0;
-                            resp.Codigo = null;
-                            resp.ModeloValido = false;
-                            return resp;
+                            _res.Exito = false;
+                            _res.EsInsercion = false;
+                            _res.EsActulizacion = false;
+                            _res.Mensaje = "No se puede realizar la venta, favor de comunicarse con el área de crédito y cobranza";
+                            _res.Id = 0;
+                            _res.Codigo = null;
+                            _res.ModeloValido = false;
+                            return _res;
                         }
                         #endregion
                     }
@@ -407,10 +400,7 @@ namespace Application.MainModule.Flujos
         }
         public int Orden(List<VentaPuntoDeVenta> ventas, DateTime fechaVenta)
         {
-            var busqueda = ventas.Where(x => x.Dia.Equals((byte)fechaVenta.Day) &&
-                x.Mes.Equals((byte)fechaVenta.Month)
-                && x.Year.Equals((short)fechaVenta.Year)
-            ).ToList();
+            var busqueda = ventas.Where(x => x.Dia.Equals((byte)fechaVenta.Day) && x.Mes.Equals((byte)fechaVenta.Month) && x.Year.Equals((short)fechaVenta.Year)).ToList();
             if (busqueda != null)
                 if (busqueda.Count == 0)
                     return 0;
