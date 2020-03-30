@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Layers", "1.Layers", "{299035F4-6BB4-429F-B540-A939D8416776}"
 EndProject
@@ -71,6 +71,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC.Presentacion", "1.Layers\1.1Presentation\1.1.1Web\MVC.Presentacion\MVC.Presentacion.csproj", "{1751630E-103C-41AD-A84C-DAE1B576F0A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging.MainModule", "1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.1Logging\Logging.MainModule\Logging.MainModule.csproj", "{9467CC3E-9F06-4A7D-A845-B88939008EDF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{64E0A3D0-DDB7-4662-A231-0D02FACE4111}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GasMundialWS", "Services\GasMundialWS\GasMundialWS.csproj", "{63D9E24D-296D-4C62-B2A5-F1DCEDAF67F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -196,6 +200,14 @@ Global
 		{9467CC3E-9F06-4A7D-A845-B88939008EDF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9467CC3E-9F06-4A7D-A845-B88939008EDF}.Release|x64.ActiveCfg = Release|Any CPU
 		{9467CC3E-9F06-4A7D-A845-B88939008EDF}.Release|x64.Build.0 = Release|Any CPU
+		{63D9E24D-296D-4C62-B2A5-F1DCEDAF67F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63D9E24D-296D-4C62-B2A5-F1DCEDAF67F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63D9E24D-296D-4C62-B2A5-F1DCEDAF67F8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63D9E24D-296D-4C62-B2A5-F1DCEDAF67F8}.Debug|x64.Build.0 = Debug|Any CPU
+		{63D9E24D-296D-4C62-B2A5-F1DCEDAF67F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63D9E24D-296D-4C62-B2A5-F1DCEDAF67F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63D9E24D-296D-4C62-B2A5-F1DCEDAF67F8}.Release|x64.ActiveCfg = Release|Any CPU
+		{63D9E24D-296D-4C62-B2A5-F1DCEDAF67F8}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -232,6 +244,7 @@ Global
 		{4665E949-2392-4A01-8AF5-3EE83A85B903} = {1E961BD1-B23F-4D4E-9711-9D9F9460A712}
 		{1751630E-103C-41AD-A84C-DAE1B576F0A5} = {4204EB7D-0551-41FA-AE91-960A557992A1}
 		{9467CC3E-9F06-4A7D-A845-B88939008EDF} = {7405EF1E-8F0B-4C98-8DE0-DB2DFACB9662}
+		{63D9E24D-296D-4C62-B2A5-F1DCEDAF67F8} = {64E0A3D0-DDB7-4662-A231-0D02FACE4111}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {01D9BB23-85E1-4F58-A52B-801359A2D092}

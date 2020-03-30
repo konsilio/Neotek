@@ -130,6 +130,14 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().BuscarUltimoMovimiento(empresa, puntoventa, Tipo, fecha);
         }
+        public static VentaPuntoDeVenta ObtenerUltimoSaldoEfectivoPorEmpresa(short empresa, DateTime fecha)//VentaPuntoDeVenta-Efectivo
+        {
+            return new CajaGeneralDataAccess().BuscarUltimoMovimientoPorEmpresa(empresa, fecha);
+        }
+        public static VentaPuntoDeVenta ObtenerUltimoSaldoEfectivoPorPv(int puntoVenta, DateTime fecha)//VentaPuntoDeVenta-Efectivo
+        {
+            return new CajaGeneralDataAccess().BuscarUltimoMovimientoEfectivoPorPuntoVenta(puntoVenta, fecha);
+        }
         public static decimal ObtenerSaldoActual(short empresa, int puntoventa, string Tipo, DateTime fecha)//puntos de venta
         {
             decimal value = 0;

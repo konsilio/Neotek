@@ -85,18 +85,18 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public PuntoVenta Buscar(int idPuntoVenta)
         {
-            return uow.Repository<PuntoVenta>().GetSingle(x => x.IdPuntoVenta.Equals(idPuntoVenta)
-                                                         && x.Activo);
+            return uow.Repository<PuntoVenta>().Get(x => x.IdPuntoVenta.Equals(idPuntoVenta)
+                                                         && x.Activo).FirstOrDefault();
         }
         public OperadorChofer BuscarOperador(int idOperador)
         {
-            return uow.Repository<OperadorChofer>().GetSingle(x => x.IdOperadorChofer.Equals(idOperador)
-                                                         && x.Activo);
+            return uow.Repository<OperadorChofer>().Get(x => x.IdOperadorChofer.Equals(idOperador)
+                                                         && x.Activo).FirstOrDefault();
         }
         public OperadorChofer BuscarPorUsuario(int idUsuario)
         {
-            return uow.Repository<OperadorChofer>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
-                                                         && x.Activo);
+            return uow.Repository<OperadorChofer>().Get(x => x.IdUsuario.Equals(idUsuario)
+                                                         && x.Activo).FirstOrDefault();
         }
         public List<VentaCajaGeneral> ObtenerVentasCajaGral()
         {

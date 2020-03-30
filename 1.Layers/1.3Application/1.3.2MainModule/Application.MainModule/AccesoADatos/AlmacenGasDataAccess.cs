@@ -884,28 +884,26 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public UnidadAlmacenGas BuscarAlmacen(short idCAlmacenGas)
         {
-            return uow.Repository<UnidadAlmacenGas>().GetSingle(
+            return uow.Repository<UnidadAlmacenGas>().Get(
                 x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                 && x.Activo
-            );
+            ).FirstOrDefault();
         }
         public UnidadAlmacenGas BuscarAlmacenPorPipa(int id)
         {
-            return uow.Repository<UnidadAlmacenGas>().GetSingle(
-                x => x.IdPipa.Equals(id));
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdPipa.Equals(id)).FirstOrDefault();
         }
         public UnidadAlmacenGas BuscarAlmacenPorCamioneta(int id)
         {
-            return uow.Repository<UnidadAlmacenGas>().GetSingle(
-                x => x.IdCamioneta.Equals(id));
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdCamioneta.Equals(id)).FirstOrDefault();
         }
         public UnidadAlmacenGas BuscarAlmacenPrincipal(short idEmpresa)
         {
-            return uow.Repository<UnidadAlmacenGas>().GetSingle(
+            return uow.Repository<UnidadAlmacenGas>().Get(
                 x => x.IdEmpresa.Equals(idEmpresa)
                 && x.EsGeneral
                 && x.Activo
-            );
+            ).FirstOrDefault();
         }
         public List<UnidadAlmacenGas> BuscarTodosCamionetas(short idEmpresa)
         {
@@ -914,11 +912,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public UnidadAlmacenGasCilindro BuscarCilindro(int idCilindro)
         {
-            return uow.Repository<UnidadAlmacenGasCilindro>().GetSingle(x => x.IdCilindro.Equals(idCilindro));
+            return uow.Repository<UnidadAlmacenGasCilindro>().Get(x => x.IdCilindro.Equals(idCilindro)).FirstOrDefault();
         }
         public CamionetaCilindro BuscarCilindroEnCamioneta(int idCilindro)
         {
-            return uow.Repository<CamionetaCilindro>().GetSingle(x => x.IdCilindro.Equals(idCilindro));
+            return uow.Repository<CamionetaCilindro>().Get(x => x.IdCilindro.Equals(idCilindro)).FirstOrDefault();
         }
         public List<UnidadAlmacenGasCilindro> BuscarTodosCilindros(short idEmpresa)
         {
@@ -940,11 +938,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         internal AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, byte tipoEvento, DateTime fecha)
         {
-            return uow.Repository<AlmacenGasTomaLectura>().GetSingle(
+            return uow.Repository<AlmacenGasTomaLectura>().Get(
                 x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                 && x.IdTipoEvento.Equals(tipoEvento)
-                && x.FechaRegistro.ToShortDateString().Equals(fecha.ToShortDateString())
-            );
+                && (x.FechaRegistro.Year.Equals(fecha.Year) && x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Day.Equals(fecha.Day))
+            ).FirstOrDefault();
         }
         public List<UnidadAlmacenGas> BuscarTodas(short idEmpresa)
         {

@@ -184,14 +184,16 @@ namespace Application.MainModule.Flujos
             int Dias = dto.Fecha.Month.Equals(DateTime.Now.Month) && dto.Fecha.Year.Equals(DateTime.Now.Year) ? DateTime.Now.Day : DateTime.DaysInMonth(dto.Fecha.Year, dto.Fecha.Month);
             dto.Fecha = Convert.ToDateTime(string.Concat(dto.Fecha.Year, "/", dto.Fecha.Month, "/", "1", " ", "00:00:01"));
             decimal remaAcumulado = 0;
+
+            RemanenteGeneralDTO rema = new RemanenteGeneralDTO();
+            if (lectura == null)
+                rema.InventarioInicial = 0;
+            else
+                rema.InventarioInicial = Math.Round(CalcularAlmacenServicio.ObtenerKgLectura(lectura.UnidadAlmacenGas.CapacidadTanqueLt ?? 0, lectura.Porcentaje ?? 0, (decimal)0.54), 4);
+
             for (int i = 1; i <= Dias; i++)
             {
-                RemanenteGeneralDTO rema = new RemanenteGeneralDTO();
-                if (lectura == null)
-                    rema.InventarioInicial = 0;
-                else
-                    rema.InventarioInicial = Math.Round(CalcularAlmacenServicio.ObtenerKgLectura(lectura.UnidadAlmacenGas.CapacidadTanqueLt ?? 0, lectura.Porcentaje ?? 0, (decimal)0.54), 4);
-
+               
                 var descs = descargas.Where(x => x.FechaRegistro.Day.Equals(i)).ToList();
                 if (descs != null)
                 {

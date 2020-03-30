@@ -24,7 +24,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public Empresa Buscar(short idEmpresa)
         {
-            return uow.Repository<Empresa>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa));
+            return uow.Repository<Empresa>().Get(x => x.IdEmpresa.Equals(idEmpresa)).FirstOrDefault();
         }
 
         public List<Empresa> BuscarTodos()

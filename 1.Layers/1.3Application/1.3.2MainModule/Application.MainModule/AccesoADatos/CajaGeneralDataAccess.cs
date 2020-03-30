@@ -22,7 +22,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<VentaPuntoDeVenta> Buscar()
         {
             bool noProcesados = false;
-            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.DatosProcesados.Equals(noProcesados) & x.FolioOperacionDia != null).ToList();
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.DatosProcesados.Equals(noProcesados) && !string.IsNullOrEmpty(x.FolioOperacionDia)).ToList();
         }
         public List<VentaPuntoDeVentaDetalle> BuscarDetalleVenta(short? empresa, short anio, byte mes, byte dia, short? orden)
         {
@@ -92,6 +92,19 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return BuscarUltimosMovimientoEfectivoPorPuntoVenta(empresa, idPv, Tipo, fecha).LastOrDefault();
         }
+
+        public VentaPuntoDeVenta BuscarUltimoMovimientoPorEmpresa(short empresa, DateTime fecha)
+        {         
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdEmpresa.Equals(empresa)
+            && x.FechaAplicacion <= fecha && x.DatosProcesados.Equals(true)).LastOrDefault();
+        }
+
+        public VentaPuntoDeVenta BuscarUltimoMovimientoEfectivoPorPuntoVenta(int idPv, DateTime fecha)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdPuntoVenta.Equals(idPv)
+            && x.FechaAplicacion <= fecha && x.DatosProcesados.Equals(true)).OrderByDescending(x => x.FechaAplicacion).ThenByDescending(x => x.Orden).FirstOrDefault();           
+        }
+
         public List<VentaPuntoDeVenta> BuscarUltimosMovimientoEfectivoPorPuntoVenta(short empresa, int idPv, string Tipo, DateTime fecha)
         {
             if (Tipo == "TotalMes" || Tipo == "IvaMes" || Tipo == "SubtotalMes" || Tipo == "DescuentoMes")

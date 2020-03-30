@@ -348,102 +348,88 @@ namespace Application.MainModule.Servicios.Ventas
         }
         public static void ActualizarTotalesVentas(List<VentaPuntoDeVenta> vm)
         {
-
-            //List<VentaMovimiento> VtasMov = AdaptadoresDTO.Ventas.CajaGeneralAdapter.FromDtoVtaM(_lst);
-            //new CajaGeneralDataAccess().Insertar(VtasMov);
-
-            //var listaMov = VtasMov.GroupBy(x => x.IdPuntoVenta).ToList(); //VentaspuntosDeVentaAgrupados - por punto de venta
-
-            //foreach (var _lMov in listaMov)
-            //{
-            //    var _lMovFecha = _lMov.GroupBy(x => x.FechaAplicacion.ToShortDateString()).ToList();
-            //    foreach (var x in _lMovFecha)
-            //    {
-            //        ActualizarSaldos(x.ToList(), "PuntosVenta", 0);
-            //    }
-            //}
             VentaPuntoDeVenta Updt = new VentaPuntoDeVenta();
-            // List<VentaPuntoDeVenta> lst = vm.GroupBy(x => x.IdPuntoVenta).SelectMany(gr => gr).ToList(); //VentaspuntosDeVentaAgrupados- por punto de venta
-            var lst1 = vm.GroupBy(x => x.IdPuntoVenta).ToList(); //VentaspuntosDeVentaAgrupados- por punto de venta
-            foreach (var y in lst1)
+           
+            var gruposEmpresa = vm.GroupBy(x => x.IdEmpresa).ToList();
+            foreach (var ventasPorEmpresa in gruposEmpresa)
             {
-                var lst = y.GroupBy(x => x.FechaAplicacion.Value.ToShortDateString()).ToList(); //VentaspuntosDeVentaAgrupados- por fecha
-                                                                                                // var _lMovFecha = _lMov.GroupBy(x => x.FechaAplicacion.ToShortDateString()).ToList();
+                var pvEmpresa = CalcularPreciosVentaServicio.ObtenerUltimoSaldoEfectivoPorEmpresa(ventasPorEmpresa.First().IdEmpresa, ventasPorEmpresa.OrderBy(pve => pve.FechaAplicacion).Last().FechaAplicacion.Value);
+                
+                decimal TotalAcumD = pvEmpresa != null ? pvEmpresa.TotalAcumDia : 0;
+                decimal TotalAcumM = pvEmpresa != null ? pvEmpresa.TotalAcumMes : 0; 
+                decimal TotalAcumA = pvEmpresa != null ? pvEmpresa.TotalAcumAnio : 0; 
 
-                //Actualizar Total Dia   
-                int posList = 0;
-                foreach (var _lst in lst)
+
+                var lst1 = ventasPorEmpresa.GroupBy(x => x.IdPuntoVenta).ToList(); //VentaspuntosDeVentaAgrupados- por punto de venta
+                foreach (var y in lst1)
                 {
-                    int position = 0;
-                    posList++;
+                    var pvPuntoDeVenta = CalcularPreciosVentaServicio.ObtenerUltimoSaldoEfectivoPorPv(y.First().IdPuntoVenta, y.OrderByDescending(z => z.FechaAplicacion).First().FechaAplicacion.Value);
+                    var TotalDia = pvPuntoDeVenta != null ? pvPuntoDeVenta.TotalDia : 0;
+                    var TotalMes = pvPuntoDeVenta != null ? pvPuntoDeVenta.TotalMes : 0;
+                    var TotalAnio = pvPuntoDeVenta != null ? pvPuntoDeVenta.TotalAnio : 0;
 
-                    foreach (var item in _lst)
+                    var IvaDia = pvPuntoDeVenta != null ? pvPuntoDeVenta.IvaDia : 0;
+                    var IvaMes = pvPuntoDeVenta != null ? pvPuntoDeVenta.IvaMes : 0;
+                    var IvaAnio = pvPuntoDeVenta != null ? pvPuntoDeVenta.IvaAnio : 0;
+
+                    var SubtotalDia = pvPuntoDeVenta != null ? pvPuntoDeVenta.SubtotalDia : 0;
+                    var SubtotalMes = pvPuntoDeVenta != null ? pvPuntoDeVenta.SubtotalMes : 0;
+                    var SubtotalAnio = pvPuntoDeVenta != null ? pvPuntoDeVenta.SubtotalAnio : 0;
+
+                    var DescuentoDia = pvPuntoDeVenta != null ? pvPuntoDeVenta.DescuentoDia : 0;
+                    var DescuentoMes = pvPuntoDeVenta != null ? pvPuntoDeVenta.DescuentoMes : 0;
+                    var DescuentoAnio = pvPuntoDeVenta != null ? pvPuntoDeVenta.DescuentoAnio : 0;
+
+                    var lst = y.GroupBy(x => x.FechaAplicacion.Value.ToShortDateString()).ToList(); //VentaspuntosDeVentaAgrupados- por fecha
+                                      
+                    //Actualizar Total Dia   
+                    int posList = 0;
+                    foreach (var _lst in lst)
                     {
+                        int position = 0;
+                        posList++;
 
-                        decimal TotalAcumD = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "TotalAcumDia", item.FechaAplicacion.Value);//CalcularPreciosVentaServicio.ObtenerSaldoActual(0, posList, "TotalAcumDia", posList + position, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalDia
-                        decimal TotalAcumM = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "TotalAcumMes", item.FechaAplicacion.Value);//CalcularPreciosVentaServicio.ObtenerSaldoActual(0, posList, "TotalAcumMes", posList + position, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalMes
-                        decimal TotalAcumA = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "TotalAcumAnio", item.FechaAplicacion.Value);//CalcularPreciosVentaServicio.ObtenerSaldoActual(0, posList, "TotalAcumAnio", posList + position, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalAnio
-
-                        position++;
-                        Updt = ObtenerPuntoVenta(item.IdPuntoVenta, item.Dia, item.Mes, item.Year, item.Orden);
-                        if (!Updt.DatosProcesados)
+                        foreach (var item in _lst)
                         {
-                            if (item.Total > 0)
-                            {//ObtenerSaldoActual(item.IdEmpresa,item.IdPuntoVenta, "TotalDia", item.FechaAplicacion.Value);//
-                                item.TotalDia = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, position, "TotalDia", posList, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalDia
-                                //item.TotalMes = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "TotalMes", item.FechaAplicacion.Value); //Obtener Saldo actual por punto de venta - TotalMes
-                                item.TotalMes = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "TotalMes", item.FechaAplicacion.Value);//ObtenerSaldoActual(item.IdPuntoVenta, position, "TotalMes", posList, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalMes
-                                item.TotalAnio = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "TotalAnio", item.FechaAplicacion.Value);//ObtenerSaldoActual(item.IdPuntoVenta, position, "TotalAnio", posList, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalAnio
-                                item.TotalAnio = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "TotalAnio", item.FechaAplicacion.Value); //Obtener Saldo actual por punto de venta - TotalAnio
-
-                                Updt.TotalDia = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, item.TotalDia); //se agrega el Total de venta al TotalDia por punto de venta
-                                Updt.TotalMes = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, item.TotalMes); //se agrega el Total de venta al TotalMes por punto de venta
-                                Updt.TotalAnio = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, item.TotalAnio); //se agrega el Total de venta al TotalAnio por punto de venta
-                                Updt.TotalAcumDia = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, TotalAcumD);
-                                Updt.TotalAcumMes = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, TotalAcumM);
-                                Updt.TotalAcumAnio = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, TotalAcumA);
-                            }
-                            if (item.Iva > 0)
+                            position++;
+                            Updt = ObtenerPuntoVenta(item.IdPuntoVenta, item.Dia, item.Mes, item.Year, item.Orden);
+                            if (!Updt.DatosProcesados)
                             {
-                                //item.IvaDia = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "IvaDia",  item.FechaAplicacion.Value); //Obtener Saldo actual por punto de venta - IvaDia
+                                if (item.Total > 0)
+                                {
+                                    Updt.TotalDia = TotalDia = item.Total + TotalDia;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, item.TotalDia); //se agrega el Total de venta al TotalDia por punto de venta
+                                    Updt.TotalMes = TotalMes = item.Total + TotalMes;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, item.TotalMes); //se agrega el Total de venta al TotalMes por punto de venta
+                                    Updt.TotalAnio = TotalAnio = item.Total + TotalAnio;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, item.TotalAnio); //se agrega el Total de venta al TotalAnio por punto de venta
 
-                                item.IvaDia = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, position, "IvaDia", posList, item.Year, item.Mes, item.Dia);
-                                item.IvaMes = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "IvaMes", item.FechaAplicacion.Value); //Obtener Saldo actual por punto de venta - IvaMes
-                                item.IvaAnio = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "IvaAnio", item.FechaAplicacion.Value); //Obtener Saldo actual por punto de venta - IvaAnio
+                                    Updt.TotalAcumDia = TotalAcumD = item.Total + TotalAcumD;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, TotalAcumD);
+                                    Updt.TotalAcumMes = TotalAcumM = item.Total + TotalAcumM;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, TotalAcumM);
+                                    Updt.TotalAcumAnio = TotalAcumA = item.Total + TotalAcumA;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, TotalAcumA);
+                                }
+                                if (item.Iva > 0)
+                                {
+                                    Updt.IvaDia = IvaDia = item.Iva + IvaDia;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Iva, item.IvaDia); //se agrega el Iva de venta al IvaDia por punto de venta
+                                    Updt.IvaMes = IvaMes = item.Iva + IvaMes;// CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Iva, item.IvaMes); //se agrega el Iva de venta al IvaMes por punto de venta
+                                    Updt.IvaAnio = IvaAnio = item.Iva + IvaAnio;// CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Iva, item.IvaAnio); //se agrega el Iva de venta al IvaAnio por punto de venta
+                                }
+                                if (item.Subtotal > 0)
+                                {
+                                    Updt.SubtotalDia = SubtotalDia = item.Subtotal + SubtotalDia;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Subtotal, item.SubtotalDia); //se agrega el Subtotal de venta al SubtotalDia por punto de venta
+                                    Updt.SubtotalMes = SubtotalMes = item.Subtotal + SubtotalMes;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Subtotal, item.SubtotalMes); //se agrega el Subtotal de venta al SubtotalMes por punto de venta
+                                    Updt.SubtotalAnio = SubtotalAnio = item.Subtotal + SubtotalAnio;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Subtotal, item.SubtotalAnio); //se agrega el Subtotal de venta al SubtotalAnio por punto de venta
+                                }
 
-                                //item.IvaMes = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, position, "IvaMes", posList, item.Year, item.Mes, item.Dia);
-                                //item.IvaAnio = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, position, "IvaAnio", posList, item.Year, item.Mes, item.Dia);
-
-                                Updt.IvaDia = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Iva, item.IvaDia); //se agrega el Iva de venta al IvaDia por punto de venta
-                                Updt.IvaMes = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Iva, item.IvaMes); //se agrega el Iva de venta al IvaMes por punto de venta
-                                Updt.IvaAnio = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Iva, item.IvaAnio); //se agrega el Iva de venta al IvaAnio por punto de venta
+                                if (item.Descuento > 0)
+                                {
+                                    Updt.DescuentoDia = DescuentoDia = item.Descuento + DescuentoDia;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Descuento, item.DescuentoDia); //se agrega el Descuento de venta al DescuentoDia por punto de venta
+                                    Updt.DescuentoMes = DescuentoMes = item.Descuento + DescuentoMes;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Descuento, item.DescuentoMes); //se agrega el Descuento de venta al DescuentoMes por punto de venta
+                                    Updt.DescuentoAnio = DescuentoAnio = item.Descuento + DescuentoAnio;//CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Descuento, item.DescuentoAnio); //se agrega el Descuento de venta al DescuentoAnio por punto de venta
+                                }
+                                Updt.DatosProcesados = true;
+                                if (Updt.EsBonificacion)
+                                    Updt.EsBonificacion = true;
+                                var rep = CajaGeneralAdapter.FromEntity(Updt);
+                                new CajaGeneralDataAccess().Actualizar(rep);
                             }
-                            if (item.Subtotal > 0)
-                            {
-                                item.SubtotalDia = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, position, "SubtotalDia", posList, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - SubtotalDia
-                                item.SubtotalMes = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "SubtotalMes", item.FechaAplicacion.Value); //Obtener Saldo actual por punto de venta - SubtotalMes
-                                item.SubtotalAnio = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "SubtotalAnio", item.FechaAplicacion.Value); //Obtener Saldo actual por punto de venta - SubtotalAnio
-
-                                Updt.SubtotalDia = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Subtotal, item.SubtotalDia); //se agrega el Subtotal de venta al SubtotalDia por punto de venta
-                                Updt.SubtotalMes = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Subtotal, item.SubtotalMes); //se agrega el Subtotal de venta al SubtotalMes por punto de venta
-                                Updt.SubtotalAnio = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Subtotal, item.SubtotalAnio); //se agrega el Subtotal de venta al SubtotalAnio por punto de venta
-                            }
-
-                            if (item.Descuento > 0)
-                            {
-                                item.DescuentoDia = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, position, "DescuentoDia", posList, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - DescuentoDia
-                                item.DescuentoMes = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "DescuentoMes", item.FechaAplicacion.Value); //Obtener Saldo actual por punto de venta - DescuentoMes
-                                item.DescuentoAnio = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdEmpresa, item.IdPuntoVenta, "DescuentoAnio", item.FechaAplicacion.Value); //Obtener Saldo actual por punto de venta - DescuentoAnio
-
-                                Updt.DescuentoDia = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Descuento, item.DescuentoDia); //se agrega el Descuento de venta al DescuentoDia por punto de venta
-                                Updt.DescuentoMes = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Descuento, item.DescuentoMes); //se agrega el Descuento de venta al DescuentoMes por punto de venta
-                                Updt.DescuentoAnio = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Descuento, item.DescuentoAnio); //se agrega el Descuento de venta al DescuentoAnio por punto de venta
-                            }
-                            Updt.DatosProcesados = true;
-                            if (Updt.EsBonificacion)
-                                Updt.EsBonificacion = true;
-                            var rep = CajaGeneralAdapter.FromEntity(Updt);
-                            new CajaGeneralDataAccess().Actualizar(rep);
                         }
                     }
                 }
