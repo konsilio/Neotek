@@ -14,7 +14,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 ClaveOperacion = rdto.ClaveOperacion,
                 IdCAlmacenGasEntrada = rdto.IdCAlmacenGasEntrada,
-                
+
             };
         }
 
@@ -22,7 +22,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             short num = 1;
             List<AlmacenGasRecargaCilindro> list = new List<AlmacenGasRecargaCilindro>();
-            rdto.Cilindros.ForEach(y => list.Add(FromDTOCilindros(y,num++)));
+            rdto.Cilindros.ForEach(y => list.Add(FromDTOCilindros(y, num++)));
             return list;
         }
 
@@ -46,11 +46,13 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdTipoMedidorEntrada = rdto.IdTipoMedidorEntrada,
                 IdTipoMedidorSalida = rdto.IdTipoMedidorSalida,
                 P5000Entrada = rdto.P5000Entrada,
-                P5000Salida = rdto.P5000Salida
+                P5000Salida = rdto.P5000Salida,
+                PorcentajeSalida = rdto.ProcentajeSalida,
+                ProcentajeEntrada = rdto.ProcentajeEntrada,
             };
         }
 
-        public  static List<AlmacenGasRecargaFoto> FromDTO(List<string> imagenes)
+        public static List<AlmacenGasRecargaFoto> FromDTO(List<string> imagenes)
         {
             short num = 1;
             return imagenes.ToList().Select(x => FromDTO(x, num++)).ToList();
@@ -97,13 +99,13 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdCAlmacen = almacenAlterno.IdCAlmacenGas,
                 NombreAlmacen = almacenAlterno.Numero,
                 IdAlmacenGas = almacenAlterno.IdAlmacenGas.Value,
-                P5000Actual = (almacenAlterno.P5000Actual.HasValue)?almacenAlterno.P5000Actual.Value:0,
+                P5000Actual = (almacenAlterno.P5000Actual.HasValue) ? almacenAlterno.P5000Actual.Value : 0,
                 Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x => x.IdTipoMedidor.Equals(almacenAlterno.IdTipoMedidor))),
                 PorcentajeActual = almacenAlterno.PorcentajeActual,
                 CantidadActualKg = almacenAlterno.CantidadActualKg,
                 CantidadActualLt = almacenAlterno.CantidadActualLt,
                 CapacidadTanqueKg = almacenAlterno.CapacidadTanqueKg.Value,
-                CapacidadTanqueLt = almacenAlterno.CapacidadTanqueLt.Value              
+                CapacidadTanqueLt = almacenAlterno.CapacidadTanqueLt.Value
             };
         }
 
@@ -114,12 +116,12 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 //var camionetaCilindros = Servicios.Almacenes.AlmacenGasServicio.ObtenerCilindros(camioneta);
                 var camionetaCilindros = camioneta.Camioneta.Cilindros.ToList();
-                if(camionetaCilindros== null || camionetaCilindros.Count==0)
+                if (camionetaCilindros == null || camionetaCilindros.Count == 0)
                 {
                     var cilindros = Servicios.Almacenes.AlmacenGasServicio.ObtenerCilindros();
                     List<CamionetaCilindro> list = new List<CamionetaCilindro>();
-                    
-                    camionetaCilindros =  cilindros.Select(x=>ToDTO(x,camioneta)).ToList();
+
+                    camionetaCilindros = cilindros.Select(x => ToDTO(x, camioneta)).ToList();
                 }
                 camionetasDTO.Add(new CamionetaDto()
                 {
@@ -139,13 +141,13 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new CamionetaCilindro()
             {
-                 IdCamioneta = camioneta.IdCamioneta.Value,
-                 Cantidad = 0,
-                 IdCilindro = cilindro.IdCilindro,
-                 IdEmpresa = cilindro.IdEmpresa,
-                 Empresa = cilindro.Empresa,
-                 Camioneta = camioneta.Camioneta,
-                 UnidadAlmacenGasCilindro= cilindro
+                IdCamioneta = camioneta.IdCamioneta.Value,
+                Cantidad = 0,
+                IdCilindro = cilindro.IdCilindro,
+                IdEmpresa = cilindro.IdEmpresa,
+                Empresa = cilindro.Empresa,
+                Camioneta = camioneta.Camioneta,
+                UnidadAlmacenGasCilindro = cilindro
             };
         }
 
@@ -162,14 +164,14 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 });
             }
             return cilindroDto;
-            
+
         }
 
         public static DatosRecargaDto ToDTO(List<UnidadAlmacenGas> pipas, List<UnidadAlmacenGas> estaciones, List<TipoMedidorUnidadAlmacenGas> tipoMedidores)
         {
             List<PipaDto> pipasDto = new List<PipaDto>();
             List<EstacionesDto> estacionesDto = new List<EstacionesDto>();
-            pipasDto = pipas.Select(x=>ToDTOPipa(x,tipoMedidores)).ToList();
+            pipasDto = pipas.Select(x => ToDTOPipa(x, tipoMedidores)).ToList();
             estacionesDto = estaciones.Select(x => ToDTOEstaciones(x, tipoMedidores)).ToList();
             return new DatosRecargaDto()
             {
@@ -188,7 +190,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdTipoMedidor = estacion.IdTipoMedidor,
                 NombreAlmacen = estacion.EstacionCarburacion.Nombre,
                 PorcentajeMedidor = estacion.PorcentajeActual,
-                Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x=>x.IdTipoMedidor.Equals(estacion.IdTipoMedidor)))
+                Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x => x.IdTipoMedidor.Equals(estacion.IdTipoMedidor)))
             };
         }
 
@@ -199,7 +201,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdTipoMedidor = pipa.IdTipoMedidor,
                 CantidadP5000 = pipa.P5000Actual,
                 IdAlmacenGas = pipa.IdCAlmacenGas,
-                Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x=>x.IdTipoMedidor.Equals(pipa.IdTipoMedidor))),
+                Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x => x.IdTipoMedidor.Equals(pipa.IdTipoMedidor))),
                 NombreAlmacen = pipa.Pipa.Nombre,
                 PorcentajeMedidor = pipa.PorcentajeActual
             };

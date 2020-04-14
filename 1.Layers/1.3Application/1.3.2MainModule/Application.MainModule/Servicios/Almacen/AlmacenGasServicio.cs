@@ -127,6 +127,10 @@ namespace Application.MainModule.Servicios.Almacenes
             };
             return new AlmacenGasDataAccess().Insertar(unidad);
         }
+        public static RespuestaDto ActualizarAlmacen(UnidadAlmacenGas almacenActualizar)
+        {
+            return new AlmacenDataAccess().ActualizaAlmacen(almacenActualizar);
+        }
         public static RespuestaDto ActualizarCalibracionAlmacen(UnidadAlmacenGas almacenActualizar)
         {
             return new AlmacenDataAccess().ActualizaAlmacen(almacenActualizar);

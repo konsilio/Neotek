@@ -243,15 +243,30 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static decimal ObtenerCapacidadKg(CDetalleEquipoTransporte ec)
         {
-            if (ec.IdCamioneta != null) { return AlmacenGasServicio.ObtenerPorCamioneta(ec.IdCamioneta.Value).CapacidadTanqueKg ?? 0; }
-            if (ec.IdPipa != null) { return AlmacenGasServicio.ObtenerPorPipa(ec.IdPipa.Value).CapacidadTanqueKg ?? 0; }
-            return 0;
+            try
+            {
+                if (ec.IdCamioneta != null) { return AlmacenGasServicio.ObtenerPorCamioneta(ec.IdCamioneta.Value).CapacidadTanqueKg ?? 0; }
+                if (ec.IdPipa != null) { return AlmacenGasServicio.ObtenerPorPipa(ec.IdPipa.Value).CapacidadTanqueKg ?? 0; }
+                return 0;
+
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
         public static decimal ObtenerCapacidadLt(CDetalleEquipoTransporte ec)
         {
-            if (ec.IdCamioneta != null) { return AlmacenGasServicio.ObtenerPorCamioneta(ec.IdCamioneta.Value).CapacidadTanqueLt ?? 0; }
-            if (ec.IdPipa != null) { return AlmacenGasServicio.ObtenerPorPipa(ec.IdPipa.Value).CapacidadTanqueLt ?? 0; }
-            return 0;
+            try
+            {
+                if (ec.IdCamioneta != null) { return AlmacenGasServicio.ObtenerPorCamioneta(ec.IdCamioneta.Value).CapacidadTanqueLt ?? 0; }
+                if (ec.IdPipa != null) { return AlmacenGasServicio.ObtenerPorPipa(ec.IdPipa.Value).CapacidadTanqueLt ?? 0; }
+                return 0;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
         public static string ObtenerAlias(CDetalleEquipoTransporte ec)
         {

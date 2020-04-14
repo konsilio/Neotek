@@ -70,5 +70,7 @@ namespace Application.MainModule.DTOs.Mobile
         /// Fecha de registro de la aplicación
         /// </summary>
         public DateTime FechaAplicacion { get; set; }
+        public decimal ProcentajeEntrada { get; set; }
+        public decimal ProcentajeSalida { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace DS.MainModule
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //ActualizarSistemaServicio.Actualizar();
-            this.Timer();
+            //this.Timer();
         }
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {
@@ -37,8 +37,8 @@ namespace DS.MainModule
             //QUITAR ESTA LINEA EN PRODUCCION/////////////
             //myTimer.Stop();
             //QUITAR ESTA LINEA EN PRODUCCION/////////////
-            ActualizarSistemaServicio.Actualizar();
-            myTimer.Start();
+            //ActualizarSistemaServicio.Actualizar();
+            //myTimer.Start();
 
         }
 

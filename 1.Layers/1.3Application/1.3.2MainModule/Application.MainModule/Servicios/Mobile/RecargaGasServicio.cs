@@ -13,12 +13,13 @@ using Application.MainModule.AdaptadoresDTO.Mobile;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.AdaptadoresDTO.Almacenes;
 
 namespace Application.MainModule.Servicios.Mobile
 {
     public class RecargaGasServicio
     {
-        public  static RespuestaDto  EvaluarClaveOperacion(RecargaDTO rdto)
+        public static RespuestaDto EvaluarClaveOperacion(RecargaDTO rdto)
         {
             return GasServicio.EvaluarClaveOperacion(rdto);
         }
@@ -54,19 +55,28 @@ namespace Application.MainModule.Servicios.Mobile
             return recarga;
         }
 
-        public static RespuestaDto Recarga(RecargaDTO rdto,bool esFinal = false)
+        public static RespuestaDto Recarga(RecargaDTO rdto, bool esFinal = false)
         {
             var adapter = AlmacenRecargaAdapter.FromDTOEvento(rdto);
             var almacen = AlmacenGasServicio.ObtenerAlmacen(rdto.IdCAlmacenGasEntrada);
+            var almacenSalida = AlmacenGasServicio.ObtenerAlmacen(rdto.IdCAlmacenGasSalida);
             if (esFinal)
                 if (almacen.IdPipa > 0)
                     adapter.IdCAlmacenGasSalida = rdto.IdCAlmacenGasEntrada;
 
-            adapter.IdTipoEvento =  esFinal? TipoEventoEnum.Final:TipoEventoEnum.Inicial;
+            adapter.IdTipoEvento = esFinal ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
-            adapter.FechaAplicacion = rdto.FechaAplicacion;
+            adapter.FechaAplicacion = rdto.FechaAplicacion;          
             adapter.Fotografias = AlmacenRecargaAdapter.FromDTO(rdto.Imagenes);
+
+            almacen.P5000Actual = rdto.P5000Entrada;
+            almacen.PorcentajeActual = rdto.ProcentajeEntrada;
+            almacenSalida.P5000Actual = rdto.P5000Salida;
+            almacenSalida.PorcentajeActual = rdto.ProcentajeSalida;
+
+            AlmacenGasServicio.ActualizarAlmacen(AlmacenGasAdapter.FromEntity(almacen));
+            AlmacenGasServicio.ActualizarAlmacen(AlmacenGasAdapter.FromEntity(almacenSalida));
 
             return AlmacenGasServicio.InsertarRecargaGas(adapter);
         }

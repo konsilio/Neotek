@@ -98,8 +98,8 @@
         var Subtotal = ObtenerSubtotalTransporte(PrecioTransporte, Casetas);
         var ImportePagar = ObtenerImporteTransporte(Subtotal, Iva);
         $("#iva").val(Iva);      
-        $("#PrecioTransporte")[0].textContent = Number.isNaN(PrecioTransporte) ? "0" : redondeo(PrecioTransporte, 5);
-        $("#SubTotoalPorteador")[0].textContent = Number.isNaN(Subtotal) ? "0" : redondeo(Subtotal, 5);
+        $("#PrecioTransporte")[0].textContent = Number.isNaN(PrecioTransporte) ? "0" : redondeo(PrecioTransporte, 6);
+        $("#SubTotoalPorteador")[0].textContent = Number.isNaN(Subtotal) ? "0" : redondeo(Subtotal, 6);
         $("#ImportePorteador")[0].textContent = new Intl.NumberFormat("es-MX").format(Number.isNaN(ImportePagar) ? "0" : redondeo(ImportePagar, 2));
     };
 
