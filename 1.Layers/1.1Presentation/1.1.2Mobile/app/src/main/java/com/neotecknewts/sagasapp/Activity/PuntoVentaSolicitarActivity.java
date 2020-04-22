@@ -21,6 +21,7 @@ import com.neotecknewts.sagasapp.Util.Session;
 import com.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,6 +36,9 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
     ProgressDialog progressDialog;
     VentaDTO ventaDTO;
     PuntoVentaSolicitarPresenter presenter;
+    static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static SecureRandom rnd = new SecureRandom();
+
 
     @SuppressLint("SimpleDateFormat")
     @Override
@@ -69,35 +73,35 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         ventaDTO.setBonificacion(false);
         /*SimpleDateFormat s =
                 new SimpleDateFormat("yyyyMMddhhmmss");*/
-        SimpleDateFormat s =
-                new SimpleDateFormat("MMddhhmmss");
+        // SimpleDateFormat s = new SimpleDateFormat("MMddhhmmssSSS");
+        SimpleDateFormat s = new SimpleDateFormat("MMddhhmmss");
         if (EsVentaCamioneta) {
-            //String codigo = s.format(actual)+"VC"+getRandomString(4);
-            String codigo = String.valueOf(actual.getYear()) +
+            String codigo = String.valueOf(actual.getYear()) + randomString(2) +
                     Integer.toHexString(Integer.parseInt(s.format(actual)));
-            Log.w("codigo", codigo);
             ventaDTO.setFolioVenta(codigo.toUpperCase());
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.Camioneta));
         } else if (EsVentaCarburacion) {
-            //String codigo = s.format(new Date())+"VEC"+getRandomString(4);
-            String codigo = String.valueOf(actual.getYear()) +
+            String codigo = String.valueOf(actual.getYear()) + randomString(2) +
                     Integer.toHexString(Integer.parseInt(s.format(actual)));
-            Log.w("codigo", codigo);
             ventaDTO.setFolioVenta(codigo.toUpperCase());
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.Estacion));
         } else if (EsVentaPipa) {
-            //String codigo = s.format(new Date())+"VEC"+getRandomString(4);
-            String codigo = String.valueOf(actual.getYear()) +
+            String codigo = String.valueOf(actual.getYear()) + randomString(2) +
                     Integer.toHexString(Integer.parseInt(s.format(actual)));
-            Log.w("codigo", codigo);
             ventaDTO.setFolioVenta(codigo.toUpperCase());
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.pipa));
         }
-        Log.w("FolioVenta", ventaDTO.getFolioVenta());
 
         //BtnPuntoVentaSolicitarActivitySeguirSinNumero.setOnClickListener(v -> SeguirSinNumero());
         BtnPuntoVentaSolicitarActivityRegistrarCliente.setOnClickListener(v -> RegistrarCliente());
         BtnPuntoVentaSolicitarActivityBuscarCliente.setOnClickListener(v -> Buscar());
+    }
+
+    private String randomString( int len ){
+        StringBuilder sb = new StringBuilder( len );
+        for( int i = 0; i < len; i++ )
+            sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
+        return sb.toString();
     }
 
     @Override

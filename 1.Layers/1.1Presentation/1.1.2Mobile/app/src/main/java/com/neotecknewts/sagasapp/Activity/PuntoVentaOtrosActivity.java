@@ -95,13 +95,12 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
             startActivity(intent);
         });
         BtnPuntoVentaOtrosActivityAgregar.setOnClickListener(v -> {
-
             ConceptoDTO conceptoDTO = new ConceptoDTO();
             ExistenciasDTO existenciasDTO = new ExistenciasDTO();
             int cantidad = Integer.parseInt(ETPuntoVentaOtrosActivityCantidad.getText().toString());
             //int precioLtr= Integer.parseInt(ETPuntoVentaOtrosActivityPrecioporLitro.getText().toString());
             punitario = Double.parseDouble(ETPuntoVentaOtrosActivityPrecio.getText().toString());
-//Aqui agregar descuento
+            //Aqui agregar descuento
             double descuento = existenciasDTO.getDescuento();
             conceptoDTO.setCantidad(cantidad);
             //conceptoDTO.setPUnitario(precioLtr);

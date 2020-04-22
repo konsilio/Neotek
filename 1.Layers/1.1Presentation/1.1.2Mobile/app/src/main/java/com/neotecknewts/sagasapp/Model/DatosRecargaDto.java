@@ -72,6 +72,17 @@ public class DatosRecargaDto extends RespuestaDTO implements Serializable {
         this.medidorDTOS = medidorDTOS;
     }
 
+    @Override
+    public String toString() {
+        return "DatosRecargaDto{" +
+                "almacenesDTO=" + almacenesDTO +
+                ", camionetasDTOS=" + camionetasDTOS +
+                ", pipasDTOS=" + pipasDTOS +
+                ", estacionesDTOS=" + estacionesDTOS +
+                ", medidorDTOS=" + medidorDTOS +
+                '}';
+    }
+
     public class AlmacenesDTO extends RespuestaDTO implements Serializable {
         @SerializedName("Medidor")
         private MedidorDTO Medidor;

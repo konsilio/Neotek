@@ -14,20 +14,6 @@ public class ExistenciasDTO implements Serializable {
     @SerializedName("PrecioUnitario")
     private double PrecioUnitario;
 
-    @Override
-    public String toString() {
-        return "ExistenciasDTO{" +
-                "Id=" + Id +
-                ", Existencias=" + Existencias +
-                ", PrecioUnitario=" + PrecioUnitario +
-                ", Descuento=" + Descuento +
-                ", Nombre='" + Nombre + '\'' +
-                ", cantidad='" + cantidad + '\'' +
-                ", CapacidadLt=" + CapacidadLt +
-                ", CapacidadKg=" + CapacidadKg +
-                '}';
-    }
-
     @SerializedName("Descuento")
     private double Descuento;
 
@@ -105,5 +91,19 @@ public class ExistenciasDTO implements Serializable {
 
     public void setCapacidadKg(double capacidadKg) {
         CapacidadKg = capacidadKg;
+    }
+
+    @Override
+    public String toString() {
+        return "ExistenciasDTO{" +
+                "Id=" + Id +
+                ", Existencias=" + Existencias +
+                ", PrecioUnitario=" + PrecioUnitario +
+                ", Descuento=" + Descuento +
+                ", Nombre='" + Nombre + '\'' +
+                ", cantidad='" + cantidad + '\'' +
+                ", CapacidadLt=" + CapacidadLt +
+                ", CapacidadKg=" + CapacidadKg +
+                '}';
     }
 }

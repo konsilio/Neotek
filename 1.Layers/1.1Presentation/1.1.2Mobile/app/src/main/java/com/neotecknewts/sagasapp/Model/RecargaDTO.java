@@ -38,6 +38,15 @@ public class RecargaDTO implements Serializable {
     @SerializedName("P5000Entrada")
     private int P5000Entrada;
 
+    // Entrada = Estacion
+    // Salida = Pipa
+
+    @SerializedName("P5000SalidaInicial")
+    private int P5000SalidaInicial;
+
+    @SerializedName("P5000EntradaInicial")
+    private int P5000EntradaInicial;
+
     @SerializedName("ClaveOperacion")
     private String  ClaveOperacion;
 
@@ -137,6 +146,22 @@ public class RecargaDTO implements Serializable {
 
     public void setP5000Entrada(int p5000Entrada) {
         P5000Entrada = p5000Entrada;
+    }
+
+    public int getP5000SalidaInicial() {
+        return P5000SalidaInicial;
+    }
+
+    public void setP5000SalidaInicial(int p5000SalidaInicial) {
+        P5000SalidaInicial = p5000SalidaInicial;
+    }
+
+    public int getP5000EntradaInicial() {
+        return P5000EntradaInicial;
+    }
+
+    public void setP5000EntradaInicial(int p5000EntradaInicial) {
+        P5000EntradaInicial = p5000EntradaInicial;
     }
 
     public String getClaveOperacion() {
@@ -241,5 +266,31 @@ public class RecargaDTO implements Serializable {
 
     public void setNombreEstacionEntrada(String nombreEstacionEntrada) {
         NombreEstacionEntrada = nombreEstacionEntrada;
+    }
+
+    @Override
+    public String toString() {
+        return "RecargaDTO{" +
+                "IdCAlmacenGasSalida=" + IdCAlmacenGasSalida +
+                ", IdCAlmacenGasEntrada=" + IdCAlmacenGasEntrada +
+                ", IdTipoMedidorSalida=" + IdTipoMedidorSalida +
+                ", IdTipoMedidorEntrada=" + IdTipoMedidorEntrada +
+                ", IdTipoEvento=" + IdTipoEvento +
+                ", P5000Salida=" + P5000Salida +
+                ", P5000Entrada=" + P5000Entrada +
+                ", ClaveOperacion='" + ClaveOperacion + '\'' +
+                ", Imagenes=" + Imagenes +
+                ", ImagenesUri=" + ImagenesUri +
+                ", Cilindros=" + Cilindros +
+                ", NombreMedidorEntrada='" + NombreMedidorEntrada + '\'' +
+                ", NombreMedidorSalida='" + NombreMedidorSalida + '\'' +
+                ", ProcentajeEntrada=" + ProcentajeEntrada +
+                ", ProcentajeSalida=" + ProcentajeSalida +
+                ", CantidadFotosEntrada=" + CantidadFotosEntrada +
+                ", CantidadFotosSalida=" + CantidadFotosSalida +
+                ", FechaApliacacion='" + FechaApliacacion + '\'' +
+                ", NombreEstacionSalida='" + NombreEstacionSalida + '\'' +
+                ", NombreEstacionEntrada='" + NombreEstacionEntrada + '\'' +
+                '}';
     }
 }

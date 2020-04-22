@@ -53,7 +53,7 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
     private LecturaDTO LecturaFinal;
 
     @SerializedName("LitrosVenta")
-    private int LitrosVenta;
+    private double LitrosVenta;
 
     @SerializedName("Precio")
     private double Precio;
@@ -157,11 +157,11 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
         LecturaInicial = lecturaInicial;
     }
 
-    public int getLitrosVenta() {
+    public double getLitrosVenta() {
         return LitrosVenta;
     }
 
-    public void setLitrosVenta(int litrosVenta) {
+    public void setLitrosVenta(double litrosVenta) {
         LitrosVenta = litrosVenta;
     }
 

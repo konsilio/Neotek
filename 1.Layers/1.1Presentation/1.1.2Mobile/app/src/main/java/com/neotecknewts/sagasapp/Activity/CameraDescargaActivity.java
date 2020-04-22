@@ -422,7 +422,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             }
         });
 
-
+        // Log.d("FerChido",recargaDTO.toString());
     }
 
     public void onResume() {

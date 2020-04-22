@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -48,6 +49,8 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recarga_estacion_carburacion);
+
+        Log.d("FerChido", "RecargaEstacionCarburacionActivity");
 
         Bundle bundle =  getIntent().getExtras();
         if(bundle!=null){
@@ -107,6 +110,7 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
 
 
         presenter.getLista(session.getToken());
+
         SRecargaEstacionCarburacionActivityListaPipa.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
@@ -131,6 +135,8 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
                             recargaDTO.setNombreEstacionSalida(
                                     dto.getPipasDTOS().get(x).getNombreAlmacen()
                             );
+
+                            recargaDTO.setP5000SalidaInicial(dto.getPipasDTOS().get(x).getCantidadP5000());
 
                             for (int y=0;y<dto.getMedidorDTOS().size();y++){
                                 if(dto.getMedidorDTOS().get(y).getIdTipoMedidor()==
@@ -203,6 +209,8 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
                             recargaDTO.setNombreEstacionEntrada(
                                     dto.getEstacionesDTOS().get(x).getNombreAlmacen()
                             );
+                            recargaDTO.setP5000EntradaInicial(dto.getEstacionesDTOS().get(x).getCantidadP5000());
+                            recargaDTO.setProcentajeSalida(dto.getEstacionesDTOS().get(x).getPorcentajeMedidor());
                             for (int y=0;y<dto.getMedidorDTOS().size();y++){
                                 if(dto.getMedidorDTOS().get(y).getNombreTipoMedidor().equals(
                                         dto.getEstacionesDTOS().get(x).getMedidor()
@@ -290,6 +298,7 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
 
     @Override
     public void EnviarDatos() {
+        Log.d("FerChido", recargaDTO.toString());
         Intent intent = new Intent(RecargaEstacionCarburacionActivity.this,
                 LecturaP5000Activity.class);
         intent.putExtra("EsRecargaEstacionInicial",EsRecargaEstacionInicial);
@@ -363,6 +372,9 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
     public void onSuccessLista(DatosRecargaDto datosRecargasDTO) {
         if(datosRecargasDTO!=null) {
             dto = datosRecargasDTO;
+            Log.d("FerChido", datosRecargasDTO.getPipasDTOS().toString());
+            Log.d("FerChido", datosRecargasDTO.getEstacionesDTOS().toString());
+
             if(datosRecargasDTO.getMedidorDTOS().size()>0){
                 lista_meididores = new String[datosRecargasDTO.getMedidorDTOS().size()];
                 for (int x =0; x<datosRecargasDTO.getMedidorDTOS().size();x++) {

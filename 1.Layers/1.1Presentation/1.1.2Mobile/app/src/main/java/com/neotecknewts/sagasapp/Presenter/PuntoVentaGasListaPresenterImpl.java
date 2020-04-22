@@ -12,14 +12,14 @@ import java.util.List;
 public class PuntoVentaGasListaPresenterImpl implements PuntoVentaGasListaPresenter {
     PuntoVentaGasListaView view;
     PuntoVentaGasListaInteractor interactor;
+
     public PuntoVentaGasListaPresenterImpl(PuntoVentaGasListaView view) {
         this.view = view;
         this.interactor = new PuntoVentaGasListaInteractorImpl(this);
     }
 
     @Override
-    public void getListaCamionetaCilindros(boolean esGasLP,
-                                           boolean esCilindroConGas, boolean esCilindro, int idCliente, String token) {
+    public void getListaCamionetaCilindros(boolean esGasLP, boolean esCilindroConGas, boolean esCilindro, int idCliente, String token) {
         //view.onShowProgress(R.string.message_cargando);
         interactor.getListaCamionetaCilindros(token, esGasLP,
          esCilindroConGas, esCilindro, idCliente);

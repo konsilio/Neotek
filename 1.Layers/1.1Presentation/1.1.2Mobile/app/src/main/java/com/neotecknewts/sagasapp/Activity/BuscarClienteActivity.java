@@ -40,7 +40,6 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Jimmy", "onCreate");
         setContentView(R.layout.activity_buscar_cliente);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -133,10 +132,9 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
 
     @Override
     public void onSuccessList(DatosClientesDTO dtos) {
-
         if (dtos != null && dtos.getList().size() > 0) {
+            Log.d("FerChido",dtos.toString());
             list = dtos.getList();
-
             ClientesAdapter adapter = new ClientesAdapter(list,
                     EsVentaCarburacion,
                     EsVentaCamioneta,

@@ -27,8 +27,11 @@ import com.neotecknewts.sagasapp.Util.Tabla;
 
 import org.json.JSONObject;
 
+import java.security.SecureRandom;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoVentaPagarView {
@@ -49,6 +52,9 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
     SAGASSql sagasSql;
     PuntoVentaAsignadoDTO puntoVentaAsignadoDTO;
     ConceptoDTO conceptoDTO;
+
+    static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static SecureRandom rnd = new SecureRandom();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +161,6 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             //Verifica si esta habilitado la venta extraforanea
             presenter.verificarVentaExtraforanea(ventaDTO.getIdCliente(), session.getToken());
             Log.d("VentaDTO", ventaDTO.toString());
-            Log.d("ventadto", ventaDTO.toString());
             if (!SPuntoVentaActivityCredito.isChecked()) {
                 if (ETPuntoVentaPagarActivityEfectivo.getText().toString().trim().length() > 0) {
 
@@ -192,7 +197,8 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                             dialogInterface.dismiss());
                     builder.create().show();
                 }
-            }else if(conceptoDTO.getPrecioUnitarioLt() == 0){
+            }
+/*            else if(conceptoDTO.getPrecioUnitarioLt() == 0){
                 Log.d("Ventadto4", ventaDTO.toString());
                 AlertDialog.Builder builder = new AlertDialog.Builder(this,
                         R.style.AlertDialog);
@@ -201,7 +207,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                 builder.setPositiveButton(R.string.message_acept,
                         ((dialog, which) -> dialog.dismiss()));
                 builder.create().show();
-            }
+            }*/
             else {
                 if (!ventaDTO.isVentaExtraforanea()) {
                     Log.d("Ventadto2", ventaDTO.toString());
@@ -230,8 +236,12 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             /**VENTAEXTRAFORANEA00 **/
 
             if (!error) {
-                presenter.pagar(ventaDTO, session.getToken(), EsVentaCamioneta, EsVentaCarburacion,
-                        EsVentaPipa, sagasSql);
+                Date actual = new Date();
+                SimpleDateFormat s = new SimpleDateFormat("MMddhhmmss");
+                String codigo = String.valueOf(actual.getYear()) + randomString(2) +
+                        Integer.toHexString(Integer.parseInt(s.format(actual)));
+                ventaDTO.setFolioVenta(codigo.toUpperCase());
+               presenter.pagar(ventaDTO, session.getToken(), EsVentaCamioneta, EsVentaCarburacion, EsVentaPipa, sagasSql);
             }
         });
         NumberFormat format = NumberFormat.getCurrencyInstance();
@@ -251,20 +261,33 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         tabla.agregarFila(lista);
         calcula_total(ventaDTO.getConcepto());
         presenter.puntoVentaAsignado(session.getToken());
-        Log.d("Ventadto2", ventaDTO.toString());
+    }
+
+    private String randomString( int len ){
+        StringBuilder sb = new StringBuilder( len );
+        for( int i = 0; i < len; i++ )
+            sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
+        return sb.toString();
     }
 
     @Override
     public void calcula_total(List<ConceptoDTO> conceptoDTOS) {
         double total = 0;
+        double cantidad = 0;
+        double descuento = 0;
         for (ConceptoDTO conceptoDTO : conceptoDTOS) {
             Log.d("concepto1", conceptoDTO.getConcepto());
             if (EsVentaCamioneta){
                 Log.d("substring", conceptoDTO.getConcepto().substring(6, 9));
                 double cap = Double.parseDouble(conceptoDTO.getConcepto().substring(6, 9));
-                total += (conceptoDTO.getPrecioUnitarioLt() - conceptoDTO.getDescuento()) * (conceptoDTO.getCantidad() * cap);
+                total += conceptoDTO.getPrecioUnitarioLt() * conceptoDTO.getCantidad() * cap;
+                //cantidad += conceptoDTO.getCantidad() * cap;
+                //descuento += conceptoDTO.getDescuento();
+                descuento += conceptoDTO.getCantidad() * cap * conceptoDTO.getDescuento();
             } else {
-                total += (conceptoDTO.getPrecioUnitarioLt() - conceptoDTO.getDescuento()) * conceptoDTO.getCantidad();
+                total += conceptoDTO.getPrecioUnitarioLt() * conceptoDTO.getCantidad();
+                cantidad += conceptoDTO.getCantidad();
+                descuento += conceptoDTO.getDescuento();
             }
         }
 
@@ -275,6 +298,12 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         ventaDTO.setSubtotal(total /1.16);
         ventaDTO.setIva(iva );
         ventaDTO.setTotal(total);
+        if (EsVentaCamioneta){
+            ventaDTO.setDescuentoTotal(descuento);
+        } else {
+            ventaDTO.setDescuentoTotal(cantidad * descuento);
+        }
+        Log.d("FerChido", "descuento total: " + ventaDTO.getDescuentoTotal());
         TVPuntoVentaPagarActivitySubtotal.setText(format.format(total /1.16));
         TVPuntoVentaPagarActivityIva.setText(format.format(iva));
         TVPuntoVentaActivityPagarTotal.setText(format.format(total));

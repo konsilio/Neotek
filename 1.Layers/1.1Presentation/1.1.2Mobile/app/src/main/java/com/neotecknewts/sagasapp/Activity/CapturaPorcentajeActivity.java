@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -211,9 +212,6 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 EsLecturaInicialAlmacen = extras.getBoolean("EsLecturaInicialAlmacen");
                 EsLecturaFinalAlmacen = extras.getBoolean("EsLecturaFinalAlmacen");
                 porcentaje_inicial = lecturaAlmacenDTO.getPorcentajeMedidor();
-                //porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
-                // Log.d("CapturaPorcentaje: ", lecturaPipaDTO.getPorcentajeMedidor() + "");
-               // Log.d("CapturaPorcentaje: ", lecturaDTO.getPorcentajeMedidor() + "");
                 if (porcentaje_inicial > 0) {
                     int parte_entera = porcentaje_inicial.intValue();
                     int parte_decimal = (int) (porcentaje_inicial - parte_entera);
@@ -257,6 +255,15 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 textView.setText("Registra el porcentaje de la pipa " +
                         recargaDTO.getNombreMedidorEntrada()
                 );
+//                porcentaje_inicial = recargaDTO.getProcentajeSalida();
+//                if (porcentaje_inicial > 0) {
+//                    int parte_entera = porcentaje_inicial.intValue();
+//                    int parte_decimal = (int) (porcentaje_inicial - parte_entera);
+//
+//                    numberPickerProcentaje.setValue(parte_entera);
+//                    numberPickerDecimal.setValue(parte_decimal);
+//                }
+//                Log.d("FerChido", "EsRecargaPipaFinal");
                 setTitle(R.string.recarga);
             } else if (extras.getBoolean("EsAutoconsumoPipaInicial") || extras.getBoolean("EsAutoconsumoPipaFinal")) {
                 EsAutoconsumoPipaInicial = extras.getBoolean("EsAutoconsumoPipaInicial", false);
@@ -348,6 +355,40 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 onClickAceptar();
             }
         });
+
+        for (int i = 0; i < numberPickerProcentaje.getChildCount(); i++) {
+            View childView = numberPickerProcentaje.getChildAt(i);
+            if (childView instanceof EditText) {
+                childView.setOnKeyListener((view, i1, keyEvent) -> {
+                    if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                        String numberText = ((EditText) view).getText().toString();
+                        if (numberText.equals(""))
+                            numberPickerProcentaje.setValue(0);
+                        else
+                            numberPickerProcentaje.setValue(Integer.parseInt(numberText));
+                        return true;
+                    }
+                    return false;
+                });
+            }
+        }
+
+        for (int i = 0; i < numberPickerDecimal.getChildCount(); i++) {
+            View childView = numberPickerDecimal.getChildAt(i);
+            if (childView instanceof EditText) {
+                childView.setOnKeyListener((view, i1, keyEvent) -> {
+                    if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                        String numberText = ((EditText) view).getText().toString();
+                        if (numberText.equals(""))
+                            numberPickerDecimal.setValue(0);
+                        else
+                            numberPickerDecimal.setValue(Integer.parseInt(numberText));
+                        return true;
+                    }
+                    return false;
+                });
+            }
+        }
     }
 
     //no se le premite al usuario tener decimales si el valor es 100
@@ -390,10 +431,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
 
     //se obtiene el valor y se asinga al objeto correspondiente
     public void onClickAceptar() {
-
-        // porcentaje = (numberPickerProcentaje.getValue()) + (numberPickerDecimal.getValue() * .10) - 1.1;
         porcentaje = (numberPickerProcentaje.getValue()) + (numberPickerDecimal.getValue() * .10);
-
+        Log.d("FerChido","Adentro de medidor: " +  porcentaje);
 
         if (papeleta) {
             papeletaDTO.setPorcentajeMedidor(porcentaje);

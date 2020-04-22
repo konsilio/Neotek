@@ -74,6 +74,9 @@ public class VentaDTO implements Serializable {
     @SerializedName("VentaExtraordinaria")
     private boolean VentaExtraforanea;
 
+    @SerializedName("DescuentoTotal")
+    private double DescuentoTotal;
+
     //region Atributos de tipo reporte
     private boolean EsSinNumero;
 
@@ -292,6 +295,13 @@ public class VentaDTO implements Serializable {
 
     public void setVentaExtraforanea(boolean ventaExtraforanea) {
         VentaExtraforanea = ventaExtraforanea;
+    }
+
+    public double getDescuentoTotal() {
+        return this.DescuentoTotal;
+    }
+    public void setDescuentoTotal(double descuentoTotal) {
+        this.DescuentoTotal = descuentoTotal;
     }
 
     @Override

@@ -44,21 +44,15 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public ExistenciasDTO existencia;
     public boolean Mostrar;
     AlertDialog.Builder builder;
+    private boolean flag = true;
+    public EditText ETPuntoVentaGasListActivityPrecioporLitro;
 
     public PuntoVentaAdapter(List<ExistenciasDTO> items, boolean EsVentaCamioneta, Context context) {
-
-        //ExistenciaDTObien
-        Log.d("fer: ", items + "");
-        Log.d("Existencias: ", new ExistenciasDTO()+"");
         this.items = items;
         this.EsVentaCamioneta = EsVentaCamioneta;
         this.context = context;
         this.builder = new AlertDialog.Builder(context,R.style.AlertDialog );
-
-
     }
-
-    public EditText ETPuntoVentaGasListActivityPrecioporLitro;
 
     @NonNull
     @Override
@@ -72,10 +66,10 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
-    public void MostrarAlert() {
+    public void MostrarAlert(String title, String msg) {
         Log.d("PrecioSalidaDTO", precioSalidaLt + "");
-        builder.setTitle("El precio es mayor al precio establecido");
-        builder.setMessage("Intente con una cantidad menor");
+        builder.setTitle(title);
+        builder.setMessage(msg);
         builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
                 dialog.dismiss());
         builder.create().show();
@@ -106,17 +100,14 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         EditText editTextCantidad = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityCantidad;
         EditText editTextPrecioLitro = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityPrecioporLitro;
-        Log.d("Existenciaholder", editTextPrecioLitro.toString());
 
         if (precioVentaDTO != null) {
             precioSalidaLt = precioVentaDTO.getPrecioActual();
             if (EsVentaCamioneta) {
-                //Existenciadto vacio
-                Log.d("ExistenciaDTO", (new ExistenciasDTO().toString()));
-                Log.d("Existencia adapter", existencia + "");
                 editTextPrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaKg()));
             } else {
-                editTextPrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
+                double descuento = items.get(0).getDescuento();
+                editTextPrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt() - descuento));
 
             }
         }
@@ -127,45 +118,45 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             editTextPrecioLitro.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-                    Log.d("Precio", charSequence.toString());
                 }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 }
-
 
                 @Override
                 public void afterTextChanged(Editable s) {
-
                     if (!editTextCantidad.getText().toString().isEmpty() && editTextCantidad.getText() != null) {
+                        Log.d("FerChido","editTextPrecioLitro");
                         double precioPorLitro;
+                        double desc = 0;
                         if (!editTextPrecioLitro.getText().toString().isEmpty()) {
+                            desc = Double.parseDouble(editTextPrecioLitro.getText().toString());
                             precioPorLitro = Double.parseDouble(editTextPrecioLitro.getText().toString());
                             PrecioLitro.setText(new DecimalFormat("#.##").format(Double.parseDouble(editTextPrecioLitro.getText().toString())));
                             if (precioPorLitro > precioSalidaLt) {
-                                MostrarAlert();
+                                MostrarAlert("El precio es mayor al precio establecido", "Intente con una cantidad menor");
+                                desc = items.get(position).getDescuento();
                                 editTextPrecioLitro.setText(precioSalidaLt+"");
-                                System.out.println("Ingrese una cantidad menor");
+                                precioPorLitro = Double.parseDouble(editTextPrecioLitro.getText().toString());
+                            } else if(precioPorLitro == 0) {
+                                MostrarAlert("El precio debe ser mayor a 0","Intente con una cantidad mayor");
                             }
                         } else {
-
                             precioPorLitro = precioVentaDTO.getPrecioSalidaKg();
-                            //precioPorLitro = precioPorLitro / 1.16;
                             PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                         }
+                        Log.d("FerChido", "ET: " + editTextPrecioLitro.getText().toString());
+                        Log.d("FerChido", "TV: " + PrecioLitro.getText().toString());
+                        double descuento = 0;
+                        if(desc > 0) {
+                            descuento = precioSalidaLt - desc;
+                            Descuento.setText(new DecimalFormat("#.##").format(descuento));
+                        }
+                        Log.d("FerChido","descuento: " + descuento);
 
-                        //Descuento.setText(String.valueOf(existencia.getDescuento()));
-                        Descuento.setText(String.valueOf(items.get(position).getDescuento()));
-                        double descuento = items.get(position).getDescuento();
-                       /* if(descuento == 0){
-                            PrecioLitro - precioPorLitro;
-                        }*/
                         double cantidadSeleccionada = Double.parseDouble(editTextCantidad.getText().toString());
-                        Log.d("Cntidadselec", cantidadSeleccionada + "");
-                        Log.d("descuentopipa", descuento + "");
-                        double sub = (precioPorLitro - descuento )* cantidadSeleccionada;
+                        double sub = (precioSalidaLt - descuento ) * cantidadSeleccionada;
                         Subtotal.setText(new DecimalFormat("#.##").format(sub));
                         double iva = sub * 0.16;
                         Iva.setText(new DecimalFormat("#.##").format(iva));
@@ -175,45 +166,51 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         Litro = editTextPrecioLitro;
                         existencia = items.get(position);
                     }
-
+                    if (editTextPrecioLitro.getText().toString().isEmpty() && flag == true) {
+                        flag = false;
+                        editTextPrecioLitro.setText("");
+                        PrecioLitro.setText(new DecimalFormat("#.##").format(0));
+                        Subtotal.setText(new DecimalFormat("#.##").format(0));
+                        Iva.setText(new DecimalFormat("#.##").format(0));
+                        Total.setText(new DecimalFormat("#.##").format(0));
+                    } else {
+                        flag = true;
+                    }
                 }
             });
             editTextCantidad.addTextChangedListener(new TextWatcher() {
-
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
                 }
-
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 }
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    Log.d("fer", "aftertextchanged");
                     if (esVentaGas) {
                         if (!editTextCantidad.getText().toString().isEmpty() && editTextCantidad.getText() != null) {
+                            Log.d("FerChido","editTextCantidad");
                             double precioPorLitro;
+                            double desc = 0;
                             if (!editTextPrecioLitro.getText().toString().isEmpty()) {
+                                desc = Double.parseDouble(editTextPrecioLitro.getText().toString());
                                 precioPorLitro = Double.parseDouble(editTextPrecioLitro.getText().toString());
                                 PrecioLitro.setText(new DecimalFormat("#.##").format(Double.parseDouble(editTextPrecioLitro.getText().toString())));
-                                Log.d("precioedit", precioPorLitro + "");
-                                Log.d("precioactual", precioVentaDTO.getPrecioActual() + "");
-
                             } else {
-
                                 precioPorLitro = precioVentaDTO.getPrecioSalidaLt();
                                 PrecioLitro.setText(new DecimalFormat("#.##").format(precioVentaDTO.getPrecioSalidaLt()));
                             }
-                            Log.d("precioedit", precioPorLitro + "");
-                            Log.d("existenciadescuento", precioVentaDTO.getPrecioSalidaLt() + "");
-                            System.out.println(items.get(position).getDescuento());
-                            Descuento.setText(String.valueOf( items.get(position).getDescuento()));
-                            double descuento = items.get(position).getDescuento();
+                            Log.d("FerChido", "ET: " + editTextPrecioLitro.getText().toString());
+                            Log.d("FerChido", "TV: " + PrecioLitro.getText().toString());
+                            double descuento = 0;
+                            if(desc > 0) {
+                                descuento = precioSalidaLt - desc;
+                                Descuento.setText(new DecimalFormat("#.##").format(descuento));
+                            }
+
                             double cantidadSeleccionada = Double.parseDouble(editTextCantidad.getText().toString());
-                            Log.d("Cntidadselec", cantidadSeleccionada + "");
-                            double sub = ((precioPorLitro - descuento) * cantidadSeleccionada );
+                            double sub = ((precioSalidaLt - descuento) * cantidadSeleccionada );
                             double subtotal =  sub / 1.16 ;
                             Subtotal.setText(new DecimalFormat("#.##").format(subtotal));
                             double iva = sub - (sub / 1.16 );
@@ -222,17 +219,9 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             Iva.setText(new DecimalFormat("#.##").format(iva));
                             Total.setText(new DecimalFormat("#.##").format(sub));
                             precioVentaDTO.setPrecioSalidaLt(Double.parseDouble(PrecioLitro.getText().toString()));
-                            //Log.d("Precionulo",PrecioLitro+"");
                             cantidad = editTextCantidad;
                             Litro = editTextPrecioLitro;
                             existencia = items.get(position);
-                            Log.d("cantidad", cantidad + "");
-                            Log.d("preciolitro", precioPorLitro + "");
-                            Log.d("preciosalida", precioVentaDTO + "");
-                            Log.d("cantidad", editTextCantidad + "");
-                            Log.d("ventadto",precioVentaDTO.toString());
-                            Log.d("ventadto",existencia.toString());
-                            Log.d("existenciadto", items+"");
                         }
                     }
                 }
@@ -241,21 +230,15 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             editTextCantidad.setInputType(InputType.TYPE_CLASS_NUMBER);
             editTextCantidad.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                    items.get(position).setCantidad(editText.getText().toString());
-                }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                    items.get(position).setCantidad(editText.getText().toString());
-                }
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
                 @Override
                 public void afterTextChanged(Editable s) {
                     items.get(position).setCantidad(editTextCantidad.getText().toString());
                 }
-
-
             });
         }
     }
@@ -289,8 +272,6 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     R.id.PuntoVentaGasListActivityExistencia);
             ETPuntoVentaGasListActivityPrecioporLitro = view.findViewById(
                     R.id.ETPuntoVentaGasListActivityPrecioporLitro);
-
-
         }
 
     }

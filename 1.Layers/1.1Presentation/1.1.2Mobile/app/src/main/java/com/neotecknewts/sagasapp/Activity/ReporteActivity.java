@@ -125,6 +125,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
 
     @Override
     public void VermificarCampos() {
+        Log.d("FerChido", "VermificarCampos");
         boolean error = false;
         ArrayList<String> mensajes = new ArrayList<>();
         if (fecha == null) {

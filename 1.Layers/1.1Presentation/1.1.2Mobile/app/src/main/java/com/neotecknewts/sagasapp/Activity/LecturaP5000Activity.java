@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -271,6 +272,9 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 setTitle(R.string.Calibracion);
             }
         }
+
+        Log.d("FerChido", EsRecargaPipaInicial +"");
+        Log.d("FerChido", EsRecargaPipaFinal +"");
 
         TVLecturaP5000Titulo = findViewById(R.id.TVLecturaP5000Titulo);
         TVLecturaP5000Tipo = findViewById(R.id.TVLecturaP5000Tipo);
