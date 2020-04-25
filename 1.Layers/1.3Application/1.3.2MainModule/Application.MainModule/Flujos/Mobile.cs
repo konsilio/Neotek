@@ -141,7 +141,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = LecturaGasServicio.EvaluarClaveOperacion(liadto);
             if (resp.Exito) return resp;
-
+           
             return LecturaGasServicio.Lectura(liadto);
         }
         public RespuestaDto FinalizarTomaDeLectura(LecturaDTO lfadto)
@@ -149,19 +149,35 @@ namespace Application.MainModule.Flujos
             var resp = LecturaGasServicio.EvaluarClaveOperacion(lfadto);
             if (resp.Exito) return resp;
 
+            var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(lfadto.IdCAlmacenGas, DateTime.Now);
+            if (ultimaLectura == null)
+                return new RespuestaDto()
+                {
+                    Exito = false,
+                    Mensaje = Error.S0007
+                };
+
             return LecturaGasServicio.Lectura(lfadto, true);
         }
         public RespuestaDto IniciarTomaDeLecturaCamioneta(LecturaCamionetaDTO lcdto)
         {
             var resp = LecturaGasServicio.EvaluarClaveOperacion(lcdto);
             if (resp.Exito) return resp;
-
+            
             return LecturaGasServicio.Lectura(lcdto);
         }
         public RespuestaDto FinalizarTomaDeLecturaCamioneta(LecturaCamionetaDTO lcdto)
         {
             var resp = LecturaGasServicio.EvaluarClaveOperacion(lcdto);
             if (resp.Exito) return resp;
+
+            var ultimaLectura = LecturaGasServicio.ObtenerUltimaLecturaInicial(lcdto.IdCAlmacenGas, DateTime.Now);
+            if (ultimaLectura == null)
+                return new RespuestaDto()
+                {
+                    Exito = false,
+                    Mensaje = Error.S0007
+                };
 
             return LecturaGasServicio.Lectura(lcdto, true);
         }
@@ -239,8 +255,8 @@ namespace Application.MainModule.Flujos
             respuesta.MensajesError = new List<string>();
             try
             {
-                var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();                
-                var almacen = punto_venta.UnidadesAlmacen;              
+                var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+                var almacen = punto_venta.UnidadesAlmacen;
                 var operador = OperadorChoferAdapter.ToOperador(punto_venta.OperadorChofer);
                 var cliente = ClienteServicio.Obtener(venta.IdCliente);
                 var ventas = CajaGeneralServicio.ObtenerVentasPorFecha(venta.Fecha);
@@ -249,7 +265,7 @@ namespace Application.MainModule.Flujos
                 var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta, orden, TokenServicio.ObtenerIdEmpresa());
 
                 adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
-                respuesta.MensajesError.Add(adapter.OperadorChofer);               
+                respuesta.MensajesError.Add(adapter.OperadorChofer);
                 adapter.Descuento = adapter.VentaPuntoDeVentaDetalle.Sum(x => x.DescuentoTotal);
                 respuesta.MensajesError.Add(adapter.Descuento.ToString());
                 if (venta.SinNumero || venta.IdCliente == 0)

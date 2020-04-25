@@ -69,7 +69,10 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = "No existe la clave solicitada";
             if (_model.Tickets != null)
             {
-                TempData["FolioVenta"] = _model.Tickets.FirstOrDefault().FolioVenta;
+                if (_model.Tickets.Count != 0)
+                {
+                    TempData["FolioVenta"] = _model.Tickets.FirstOrDefault().FolioVenta;
+                }              
                 TempData.Keep("DatosLiquidacion");
             }
             return RedirectToAction("Liquidar", _model);

@@ -312,20 +312,20 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 CategoriaProducto = producto.Descripcion,//Concepto
                 IdUnidadMedida = producto.IdUnidadMedida,
             };
-            if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != 0)
-            {
-                var id = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion;
-                var PrecioSalidaKg = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.EstacionCarburacion;
-                var PrecioSalidaLt = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.EstacionCarburacion;
-                if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion.Equals(id) && PrecioSalidaKg != null && PrecioSalidaLt != null)
-                {
-                    usDTO.IdEstacion = id ?? 0;
-                    if (PrecioSalidaKg.CPrecioVenta.Count > 0 )               
-                        usDTO.PrecioSalidaKg = Convert.ToDecimal(PrecioSalidaKg.CPrecioVenta.FirstOrDefault().PrecioSalidaKg);
-                    if (PrecioSalidaLt.CPrecioVenta.Count > 0)
-                        usDTO.PrecioSalidaLt = Convert.ToDecimal(PrecioSalidaLt.CPrecioVenta.FirstOrDefault().PrecioSalidaLt);      
-                }
-            }
+            //if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion != 0)
+            //{
+            //    var id = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion;
+            //    var PrecioSalidaKg = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.EstacionCarburacion;
+            //    var PrecioSalidaLt = usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.EstacionCarburacion;
+            //    if (usuario.OperadoresChoferes.FirstOrDefault().PuntosVenta.FirstOrDefault().UnidadesAlmacen.IdEstacionCarburacion.Equals(id) && PrecioSalidaKg != null && PrecioSalidaLt != null)
+            //    {
+            //        usDTO.IdEstacion = id ?? 0;
+            //        if (PrecioSalidaKg.CPrecioVenta.Count > 0 )               
+            //            usDTO.PrecioSalidaKg = Convert.ToDecimal(PrecioSalidaKg.CPrecioVenta.FirstOrDefault().PrecioSalidaKg);
+            //        if (PrecioSalidaLt.CPrecioVenta.Count > 0)
+            //            usDTO.PrecioSalidaLt = Convert.ToDecimal(PrecioSalidaLt.CPrecioVenta.FirstOrDefault().PrecioSalidaLt);      
+            //    }
+            //}
             return usDTO;
         }
         public static List<RepHistorioPrecioDTO> ToRepo(List<PrecioVenta> entidades, HistoricoPrecioDTO dto)

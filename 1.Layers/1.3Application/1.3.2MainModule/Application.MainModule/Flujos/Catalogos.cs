@@ -527,7 +527,7 @@ namespace Application.MainModule.Flujos
             {
                 if (IdEmpresa.Equals(0))
                     IdEmpresa = TokenServicio.ObtenerIdEmpresa();
-                var programados = PrecioVentaGasServicio.ObtenerListaPreciosVentaIdEmp(IdEmpresa).OrderByDescending(x => x.FechaRegistro).Where(x => x.FechaProgramada != null && x.FechaProgramada.Date <= DateTime.Now.Date).ToList();
+                var programados = PrecioVentaGasServicio.ObtenerListaPreciosVentaIdEmp(IdEmpresa).OrderByDescending(x => x.FechaRegistro).Where(x => x.FechaProgramada != null && x.FechaProgramada.Date <= DateTime.Now.Date && !x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vencido)).ToList();
                 List<dynamic> ListaDinamicaProductos = new List<dynamic>();
                 foreach (var item in programados.Where(x => x.IdEstacion == null && !x.EsEstaciones && !x.EsGas))
                 {

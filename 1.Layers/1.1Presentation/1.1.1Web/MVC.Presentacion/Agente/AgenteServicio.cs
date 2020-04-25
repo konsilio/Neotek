@@ -3729,8 +3729,40 @@ namespace MVC.Presentacion.Agente
         public void ActualizarTikets(VentaPuntoVentaDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutActualizarTikets"];
-            LLamada(dto, token, MetodoRestConst.Put).Wait();
+            PutActualizarTikets(dto, token).Wait();
         }
+        private async Task PutActualizarTikets(VentaPuntoVentaDTO dto, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRoute, dto).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        _RespuestaDTO = resp;
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _RespuestaDTO = resp;
+            }
+        }
+
         private async Task GetListaPago(int idoc, string Token)
         {
             using (var client = new HttpClient())
@@ -6339,7 +6371,6 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 if (!EsAnonimo)
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-
                 try
                 {
                     HttpResponseMessage response = new HttpResponseMessage();

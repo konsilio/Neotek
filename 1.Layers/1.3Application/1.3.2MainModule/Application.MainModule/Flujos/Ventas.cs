@@ -77,12 +77,16 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             //var precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             if (!resp.Exito) return null;
-            //var reporteDia = CajaGeneralServicio.ObtenerReporteDia(cveReporte);
-            //if (reporteDia == null)
-            //    return corte;
+
             var ventas = CajaGeneralServicio.ObtenerVPV(reporteDia).ToList();
             corte.Tickets = CajaGeneralAdapter.ToDTOC(ventas);
             var lecturas = AlmacenGasServicio.ObtenerLecturas(reporteDia.IdCAlmacenGas.Value, reporteDia.FechaReporte);
+            //Se toma en cuenta los movimiento que alteran el P5000
+            //var Calibraciones = AlmacenGasServicio.ObtenerCalibraciones(reporteDia.IdCAlmacenGas.Value, reporteDia.FechaReporte);
+            //var Autoconsimos = AlmacenGasServicio.ObtenerAutoconsumo(reporteDia.IdCAlmacenGas.Value, reporteDia.FechaReporte);
+            //var Traspasos = AlmacenGasServicio.ObtenerTraspasos(reporteDia.IdCAlmacenGas.Value, reporteDia.FechaReporte);
+            //var Recargas = AlmacenGasServicio.ObtenerRecargas(reporteDia.IdCAlmacenGas.Value, reporteDia.FechaReporte);
+            //var Descargas = AlmacenGasServicio.ObtenerDescargasTodas(reporteDia.IdCAlmacenGas.Value, reporteDia.FechaReporte); // Solo aplica para compra de gas
             corte.FolioOperacionDia = cveReporte;
             corte.Fecha = reporteDia.FechaReporte;
             corte.NombreUnidad = reporteDia.CAlmacenGas.Numero;
@@ -107,10 +111,11 @@ namespace Application.MainModule.Flujos
                     lects.Venta = (lects.CantidadLt * cil.Cilindro.CapacidadKg) * precio.PrecioSalidaKg.Value;
                     corte.Lecturas.Add(lects);
                     corte.TotalCantidad = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(vd => vd.CantidadKg.Value));
+                    corte.TotalVenta = (corte.TotalCantidad * precio.PrecioSalidaKg ?? 0);
                 }
             }
             if (reporteDia.CAlmacenGas.IdPipa != null || reporteDia.CAlmacenGas.IdEstacionCarburacion != null)
-            {             
+            {
                 if (reporteDia.CAlmacenGas.IdPipa != null)
                     corte.TipoUnidad = 3;
                 var li = lecturas.FirstOrDefault(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
@@ -135,8 +140,9 @@ namespace Application.MainModule.Flujos
                 }
                 corte.Lecturas.Add(lects);
                 corte.TotalCantidad = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt ?? 0));
+                corte.TotalVenta = (lects.CantidadLt * precio.PrecioSalidaLt ?? 0);
             }
-            corte.TotalVenta = ventas.Sum(x => x.Total);
+            //corte.TotalVenta = ventas.Sum(x => x.Total);
             corte.TotalOtros = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt ?? 0));
             corte.TotalContado = ventas.Where(x => x.VentaACredito.Equals(false)).Sum(v => v.Total);
             corte.TotalCredito = ventas.Where(x => x.VentaACredito.Equals(true)).Sum(v => v.Total);
@@ -255,15 +261,22 @@ namespace Application.MainModule.Flujos
         {
             var liquis = CajaGeneralServicio.Obtener(DateTime.Now);
             return CajaGeneralAdapter.ToDTO(liquis);
-        }     
+        }
         public RespuestaDto ActaualizarTickets(VentaPuntoVentaDTO item)
         {
-            var ticket = PuntoVentaServicio.Obtener(item.FolioVenta);
-            var emty = CajaGeneralAdapter.FromEntity(ticket);
-            emty.FormaDePago = item.FormaDePago;
-            emty.Referencia = string.IsNullOrEmpty(item.FormaDePago) ? string.Empty : item.Referencia;
-            PuntoVentaServicio.ActualizarVentasCorte(emty);
-            return new RespuestaDto() { Exito = true, Mensaje = Exito.OK };
+            try
+            {
+                var ticket = PuntoVentaServicio.Obtener(item.FolioVenta);
+                var emty = CajaGeneralAdapter.FromEntity(ticket);
+                emty.FormaDePago = item.FormaDePago;
+                emty.Referencia = string.IsNullOrEmpty(item.FormaDePago) ? string.Empty : item.Referencia;
+                PuntoVentaServicio.ActualizarVentasCorte(emty);
+                return new RespuestaDto() { Exito = true, Mensaje = Exito.OK };
+            }
+            catch (Exception ex)
+            { 
+                return new RespuestaDto() { Exito = false, Mensaje = ex.Message };
+            }
         }
     }
 }

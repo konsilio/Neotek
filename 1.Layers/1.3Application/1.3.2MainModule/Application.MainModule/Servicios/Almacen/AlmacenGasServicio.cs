@@ -304,9 +304,17 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarTodasRecargasNoProcesadas();
         }
+        public static List<AlmacenGasRecarga> ObtenerRecargas(int IdCAlmacenGas, DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().BuscarTodasRecargas(IdCAlmacenGas, fecha);
+        }
         public static List<AlmacenGasTraspaso> ObtenerTraspasosNoProcesadas()
         {
             return new AlmacenGasDataAccess().BuscarTodosTraspasosNoProcesadas();
+        }
+        public static List<AlmacenGasTraspaso> ObtenerTraspasos(int IdCAlmacenGas, DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().BuscarTodosTraspasos(IdCAlmacenGas, fecha);
         }
         public static List<AlmacenGasRecarga> ObtenerRecargasNoProcesadas(byte idTipoEvento)
         {
@@ -323,6 +331,10 @@ namespace Application.MainModule.Servicios.Almacenes
         public static List<AlmacenGasCalibracion> ObtenerCalibracionesNoProcesadas()
         {
             return new AlmacenGasDataAccess().BuscarTodasCalibracionesNoProcesadas();
+        }
+        public static List<AlmacenGasCalibracion> ObtenerCalibraciones(int IdCAlmacenGas, DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().BuscarTodasCalibraciones(IdCAlmacenGas, fecha);
         }
         public static List<AlmacenGasTomaLectura> ObtenerLecturasNoProcesadas()
         {
@@ -540,9 +552,9 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDescargaDataAccess().BuscarClaveOperacion(claveOperacion);
         }
-        public static List<AlmacenGasDescarga> ObtenerDescargasTodas()
+        public static List<AlmacenGasDescarga> ObtenerDescargasTodas(int IdCAlmacenGas, DateTime fecha)
         {
-            return new AlmacenGasDescargaDataAccess().BuscarTodas();
+            return new AlmacenGasDescargaDataAccess().BuscarTodas(IdCAlmacenGas, fecha);
         }
         public static List<AlmacenGasDescarga> ObtenerDescargasTodas(DateTime periodo)
         {
@@ -2644,6 +2656,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarAutoconsumoClaveOperacion(claveOperacion);
         }
+        public static List<AlmacenGasAutoConsumo> ObtenerAutoconsumo(int IdCAlmacenGas, DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().BuscarAutoconsumo(IdCAlmacenGas, fecha);
+        }
         public static AlmacenGasCalibracion ObtenerCalibracion(string claveOperacion)
         {
             return new AlmacenGasDataAccess().BuscarCalibracion(claveOperacion);
@@ -2786,6 +2802,20 @@ namespace Application.MainModule.Servicios.Almacenes
             cantinIcial += CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(3)).Cantidad) * 30;
             cantinIcial += CalculosGenerales.DiferenciaEntreDosNumero(li.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad, lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(4)).Cantidad) * 45;
             return cantinIcial.ToString();
+        }
+        public static int ObtenerTotalMovimientos(int IdCAlmacenGas, DateTime FechaReporte)
+        {
+            int Total = 0;
+            //var Calibraciones = AlmacenGasServicio.ObtenerCalibraciones(IdCAlmacenGas, FechaReporte);
+            //var Autoconsimos = AlmacenGasServicio.ObtenerAutoconsumo(IdCAlmacenGas, FechaReporte);
+            //var Traspasos = AlmacenGasServicio.ObtenerTraspasos(IdCAlmacenGas, FechaReporte);
+            //var Recargas = AlmacenGasServicio.ObtenerRecargas(IdCAlmacenGas, FechaReporte);
+
+            //foreach (var item in Calibraciones)
+            //{
+
+            //}
+            return Total;            
         }
 
     }

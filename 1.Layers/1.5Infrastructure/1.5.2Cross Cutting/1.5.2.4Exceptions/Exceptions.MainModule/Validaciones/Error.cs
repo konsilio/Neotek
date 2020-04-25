@@ -25,6 +25,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string S0008 = "No te encuentras en el area de login";
         public const string S0009 = "La empresa no tiene coordenadas configuradas";
         public const string S0010 = "La estacion no tiene coordenadas configuradas";
+        public const string S0011 = "Es necesario que actualices la aplicacion";
 
         public const string R0001 = "Error al guardar la requisición";
         public const string R0002 = "El campo '{0}' es obligatorio.";

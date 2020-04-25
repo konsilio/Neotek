@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.DTOs;
+using System.Web.Configuration;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -66,6 +67,30 @@ namespace Application.MainModule.Servicios.Seguridad
 
                 };
         }
+        //public static RespuestaAutenticacionMobileDto ValudarVersionMobile(DTOs.Mobile.LoginFbDTO autDto)
+        //{
+        //    if (WebConfigurationManager.AppSettings["version"].Equals(autDto.Version))
+        //    {
+        //        return new RespuestaAutenticacionMobileDto()
+        //        {
+        //            IdUsuario = 0,
+        //            Exito = true,
+        //            token = string.Empty,
+        //            listMenu = new List<DTOs.Mobile.MenuDto>(),
+        //        };
+        //    }
+        //    else
+        //    {
+        //        return new RespuestaAutenticacionMobileDto()
+        //        {
+        //            IdUsuario = 0,
+        //            Exito = false,
+        //            Mensaje = Error.S0011,
+        //            token = string.Empty,
+        //            listMenu = new List<DTOs.Mobile.MenuDto>(),
+        //        };
+        //    }
+        //}
 
         public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(DTOs.Mobile.LoginFbDTO autDto)
         {

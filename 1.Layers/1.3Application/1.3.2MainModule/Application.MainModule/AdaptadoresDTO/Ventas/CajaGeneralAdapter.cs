@@ -403,10 +403,11 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             decimal result = 0;
             if (IdCaminoeta != null)
             {
-                foreach (var det in ventasDetalles)
-                {
-                    result += (det.CantidadKg ?? 0) * (det.CantidadProducto ?? 0);
-                }
+                result = ventasDetalles.Sum(s => s.CantidadKg ?? 0);
+                //foreach (var det in ventasDetalles)
+                //{
+                //    result += (det.CantidadKg ?? 0) * (det.CantidadProducto ?? 0);
+                //}
             }
             else
             {

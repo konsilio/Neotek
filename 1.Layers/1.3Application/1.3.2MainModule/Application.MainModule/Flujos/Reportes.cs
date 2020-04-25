@@ -286,7 +286,7 @@ namespace Application.MainModule.Flujos
                 CuentasConsolidadasDTO dto = new CuentasConsolidadasDTO();
                 dto.Concepto = cc.Descripcion;
                 dto.CantidadAutorizada = cca == null ? 0 : cca.Autorizado;
-                dto.CantidadGastada = ordenes.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(or => or.Productos.Sum(pr => pr.Precio));
+                dto.CantidadGastada = ordenes.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(or => or.Productos.Sum(pr => pr.Importe));
                 dto.CantidadPagada = gastos == null ? 0 : gastos.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(y => y.Monto);
                 dto.Diferencia = dto.CantidadAutorizada - dto.CantidadPagada;
                 respuesta.Add(dto);

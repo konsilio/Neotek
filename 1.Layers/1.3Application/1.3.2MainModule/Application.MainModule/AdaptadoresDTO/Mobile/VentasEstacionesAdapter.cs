@@ -113,7 +113,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     IdProducto = concepto.IdProducto,
                     CantidadLt = punto_venta.UnidadesAlmacen.IdCamioneta == null ? concepto.CantidadLt : CalcularGasServicio.ObtenerLitrosDesdeKilos(concepto.CantidadKg, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),
                     CantidadKg = punto_venta.UnidadesAlmacen.IdCamioneta == null ? CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.CantidadLt, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos) : concepto.CantidadKg,
-                    DescuentoTotal = punto_venta.UnidadesAlmacen.IdCamioneta == null ? concepto.Descuento* concepto.Cantidad : (concepto.Descuento * (concepto.Cantidad * concepto.CantidadKg)),
+                    DescuentoTotal = punto_venta.UnidadesAlmacen.IdCamioneta == null ? concepto.Descuento* concepto.Cantidad : (concepto.Descuento * concepto.CantidadKg),
                     IdUnidadMedida = concepto.IdUnidadMedida,
                     PrecioUnitarioKg = concepto.PrecioUnitarioKg,
                     PrecioUnitarioLt = concepto.PrecioUnitarioLt,
@@ -122,7 +122,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     ProductoLinea = p.LineaProducto.Descripcion,
                     ProductoCategoria = p.Categoria.Descripcion,
                     UnidadMedida = p.UnidadMedida.Acronimo,
-
                 });
                 idOrdenDetalle++;
             }

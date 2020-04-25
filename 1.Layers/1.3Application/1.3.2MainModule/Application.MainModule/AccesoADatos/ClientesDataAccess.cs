@@ -147,6 +147,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Cliente> BuscadorClientes(string criterio, short idEmpresa)
         {
+            criterio = criterio.ToUpper();
             return uow.Repository<Cliente>().Get(
                 x => ((x.Telefono.Contains(criterio)
                 || x.Telefono1.Contains(criterio)
@@ -155,10 +156,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 || x.Celular.Contains(criterio)
                 || x.Celular1.Contains(criterio)
                 || x.Celular2.Contains(criterio)
-                || x.Celular3.Contains(criterio)
-                || x.Rfc.ToLower().Contains(criterio)))
-                || x.RazonSocial.Equals(criterio)
-                || x.Nombre.Equals(criterio)
+                || x.Celular3.ToUpper().Contains(criterio)
+                || x.Rfc.ToUpper().Contains(criterio)))
+                || x.RazonSocial.ToUpper().Contains(criterio)
+                || x.Nombre.ToUpper().Contains(criterio)
                 //|| x.IdCliente.Equals(criterio)
                 && x.IdEmpresa.Equals(idEmpresa)
                 && x.Activo

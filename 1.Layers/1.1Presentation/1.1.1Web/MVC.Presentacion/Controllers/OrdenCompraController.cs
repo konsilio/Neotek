@@ -253,16 +253,16 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = OrdenCompraServicio.ConfirmarDatosExpedidor(model, tkn);
-            if (respuesta.Exito)
-            {
+            //if (respuesta.Exito)
+            //{
                 TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("OrdenCompraComplementoGas", new { id = model.OrdenCompraExpedidor.IdOrdenCompra });
-            }
-            else
-            {
-                TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("OrdenCompraComplementoGas", new { id = model.OrdenCompraExpedidor.IdOrdenCompra });
-            }
+            //}
+            //else
+            //{
+            //    TempData["RespuestaDTO"] = respuesta;
+            //    return RedirectToAction("OrdenCompraComplementoGas", new { id = model.OrdenCompraExpedidor.IdOrdenCompra });
+            //}
         }
         [HttpPost]
         public ActionResult GuardarDatosPorteador(OrdenCompraComplementoGasDTO model = null)

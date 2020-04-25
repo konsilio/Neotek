@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Flujos;
+using DS.MainModule.Results;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -86,7 +87,7 @@ namespace DS.MainModule.Controllers
         [Route("modificar/tiket")]
         public HttpResponseMessage PutActualizarTikets(VentaPuntoVentaDTO dto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _ventas.ActaualizarTickets(dto));
+            return RespuestaHttp.crearRespuesta(_ventas.ActaualizarTickets(dto), Request);
         }
         #endregion
     }

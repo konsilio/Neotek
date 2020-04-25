@@ -8,10 +8,10 @@
     $("#btnGuardarDatosExpedidor").click(function () {
         $("form").attr("action", "/OrdenCompra/GuardarDatosExpedidor");
     });
-    $("#btnGuardarDatosPorteador").click(function () {        
+    $("#btnGuardarDatosPorteador").click(function () {
         $("form").attr("action", "/OrdenCompra/GuardarDatosPorteador");
     });
-//kilos finales
+    //kilos finales
     var ObtenerLitrosDesdeKilos = function (kilogramos, factor) {
         return kilogramos / factor;
     };
@@ -52,7 +52,6 @@
     var ObtenerImporteTransporte = function (Subtotal, Iva) {
         return (Subtotal * (Iva / 100)) + parseFloat(Subtotal);
     };
-
     var CalcularKilosFinales = function () {
         var Factor = $("#FactorLitrosAKilos").val();
         var kilogramosPapeletaTractor = $("#KilosPapeleta").val();
@@ -64,7 +63,6 @@
         $("#KilosDescargados").val(redondeo(kilogramosRealesTractor, 5));
         $("#KilosDiferencia").val(redondeo(kilogramosRemanentes, 5));
     };
-
     var CalcularImporteExpedidor = function () {
         var RPMMNTPG = $("#OrdenCompraExpedidor_MontBelvieuDlls").val();
         var TSG = $("#OrdenCompraExpedidor_TarifaServicioPorGalonDlls").val();
@@ -77,7 +75,7 @@
         var PrecioXGalon = ObtenerPrecioXGalon(RPMMNTPG, TSG, TC);
         var ImporteLitros = ObtenerImporteLitros(PrecioXGalon, FactorCGalLtr);
         var PVPM = ObtenerPVPM(ImporteLitros, FactorCaKg);
-        var PVIva = redondeo(ObtenerPVIva(PVPM, Iva), 6);
+        var PVIva = ObtenerPVIva(PVPM, Iva);
         var ImportePagar = ObtenerImportePagar(kilogramosPapeleta, PVIva);
 
         $("#PrecioPorGalon")[0].textContent = Number.isNaN(PrecioXGalon) ? "0" : redondeo(PrecioXGalon, 6);
@@ -86,7 +84,6 @@
         $("#PrecioConIVA")[0].textContent = Number.isNaN(PVIva) ? "0" : redondeo(PVIva, 6);
         $("#ImporteExpedidor")[0].textContent = new Intl.NumberFormat("es-MX").format(Number.isNaN(ImportePagar) ? "0" : ImportePagar);
     };
-
     var CalcularImportePortador = function () {
         debugger
         var FactorConv = $("#OrdenCompraPorteador_FactorConvTransporte").val();
@@ -97,17 +94,14 @@
         var PrecioTransporte = ObtenerPrecioTransporte(FactorConv, kilogramosPapeleta);
         var Subtotal = ObtenerSubtotalTransporte(PrecioTransporte, Casetas);
         var ImportePagar = ObtenerImporteTransporte(Subtotal, Iva);
-        $("#iva").val(Iva);      
+        $("#iva").val(Iva);
         $("#PrecioTransporte")[0].textContent = Number.isNaN(PrecioTransporte) ? "0" : redondeo(PrecioTransporte, 6);
         $("#SubTotoalPorteador")[0].textContent = Number.isNaN(Subtotal) ? "0" : redondeo(Subtotal, 6);
         $("#ImportePorteador")[0].textContent = new Intl.NumberFormat("es-MX").format(Number.isNaN(ImportePagar) ? "0" : redondeo(ImportePagar, 2));
     };
-
     window.onload = function () {
         CalcularKilosFinales();
     }
-
-
     MVCxClientGlobalEvents.AddControlsInitializedEventHandler(AttachEditorValueChangedEvent);
 
     function AttachEditorValueChangedEvent() {
@@ -144,19 +138,19 @@ var ObtenerDiferenciaKilogramos = function (cantidadMayor, cantidadMenor) {
 
 //Expedidor
 var ObtenerPrecioXGalon = function (RPMMNTPG, TSG, TC) {
-    return (parseFloat(RPMMNTPG) + parseFloat(TSG)) * TC;
+    return (redondeo(parseFloat(RPMMNTPG), 6) + redondeo(parseFloat(TSG), 6)) * redondeo(TC, 6);
 };
 var ObtenerImporteLitros = function (PrecioXGalon, FactorCGalLtr) {
-    return PrecioXGalon / FactorCGalLtr;
+    return redondeo(PrecioXGalon, 6) / redondeo(FactorCGalLtr, 6);
 };
 var ObtenerPVPM = function (ImporteLitros, FactorCaKg) {
-    return ImporteLitros / FactorCaKg;
+    return redondeo(ImporteLitros, 6) / redondeo(FactorCaKg, 6);
 };
 var ObtenerPVIva = function (PVPM, IVA) {
-    return (PVPM * (IVA / 100) + parseFloat(PVPM));
+    return (redondeo(PVPM, 6) * (IVA / 100) + redondeo(parseFloat(PVPM), 6));
 };
 var ObtenerImportePagar = function (kilogramosPapeleta, PVIva) {
-    return kilogramosPapeleta * PVIva;
+    return kilogramosPapeleta * redondeo(PVIva, 6);
 };
 
 //Porteador
@@ -195,7 +189,7 @@ var CalcularImporteExpedidor = function () {
     var PrecioXGalon = ObtenerPrecioXGalon(RPMMNTPG, TSG, TC);
     var ImporteLitros = ObtenerImporteLitros(PrecioXGalon, FactorCGalLtr);
     var PVPM = ObtenerPVPM(ImporteLitros, FactorCaKg);
-    var PVIva = redondeo(ObtenerPVIva(PVPM, Iva), 5);
+    var PVIva = ObtenerPVIva(PVPM, Iva);
     var ImportePagar = ObtenerImportePagar(kilogramosPapeleta, PVIva);
 
     $("#PrecioPorGalon")[0].textContent = Number.isNaN(PrecioXGalon) ? "0" : redondeo(PrecioXGalon, 5);
@@ -234,7 +228,7 @@ function AttachEditorValueChangedEvent() {
         var editor = ASPxClientControl.GetControlCollection().GetByName(name);
     });
 }
-function OnBatchEditEndEditing(s, e) {   
+function OnBatchEditEndEditing(s, e) {
     s.batchEditApi.SetCellValue(e.visibleIndex, null, true);
 }
 function OnBeginGridCallback(s, e) {

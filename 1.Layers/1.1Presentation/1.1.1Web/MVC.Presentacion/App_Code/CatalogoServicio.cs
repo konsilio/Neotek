@@ -2850,6 +2850,7 @@ namespace MVC.Presentacion.App_Code
             List<SelectListItem> Ivas = new List<SelectListItem>();
             Ivas.Add(new SelectListItem { Value = "0", Text = "0%" });
             Ivas.Add(new SelectListItem { Value = "10", Text = "10%" });
+            Ivas.Add(new SelectListItem { Value = "12", Text = "12%" });
             Ivas.Add(new SelectListItem { Value = "16", Text = "16%" });
             return Ivas;
         }

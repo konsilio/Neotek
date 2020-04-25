@@ -22,7 +22,7 @@ namespace Application.MainModule.Flujos
             lp.Add(new System.Data.SqlClient.SqlParameter("IdCliente", 1));
             lp.Add(new System.Data.SqlClient.SqlParameter("Fecha", DBNull.Value));
             lp.Add(new System.Data.SqlClient.SqlParameter("IdEmpresa", 2));
-            return new DataAccess().StoredProcedure_DataSet("SpSel_CarteraVencida", lp );
+            return new DataAccess().StoredProcedure_DataSet("SpSel_CarteraVencida", lp);
         }
         public RespuestaAutenticacionDto Autenticacion(AutenticacionDto autenticacionDto)
         {
@@ -30,6 +30,10 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaAutenticacionMobileDto AutenticacionMobile(LoginFbDTO autenticacionDto)
         {
+            //var valVersion = AutenticarServicio.ValudarVersionMobile(autenticacionDto);
+            //if (!valVersion.Exito)
+            //    return valVersion;
+
             var responce = AutenticarServicio.AutenticarUsuarioMobile(autenticacionDto);
             if (responce.IdUsuario.Equals(0))
                 return responce;
@@ -119,7 +123,7 @@ namespace Application.MainModule.Flujos
 
             if (user.EsSuperAdmin)
                 return UsuarioServicio.BorrarSuperAdmin();
-            
+
 
             user = UsuarioAdapter.FromEntity(user);
             user.Activo = false;
@@ -136,9 +140,9 @@ namespace Application.MainModule.Flujos
             var rol = RolServicio.Obtener(uRDto.IdRol);
             if (rol == null) return RolServicio.NoExiste();
 
-         //   var userrol = RolServicio.Obtener(uRDto.IdRol, uRDto.IdUsuario);            
+            //   var userrol = RolServicio.Obtener(uRDto.IdRol, uRDto.IdUsuario);            
 
-            resp = RolServicio.ExisteRol(user, rol,"alta");
+            resp = RolServicio.ExisteRol(user, rol, "alta");
             if (!resp.Exito) return resp;
 
             var usuarioRol = UsuarioAdapter.FromDtoRol(uRDto);
@@ -156,8 +160,8 @@ namespace Application.MainModule.Flujos
             if (rol == null) return RolServicio.NoExiste();
 
             //var userrol = RolServicio.Obtener(usrol.IdRol, usrol.IdUsuario);
-          
-            resp = RolServicio.ExisteRol(user, rol,"eliminar");
+
+            resp = RolServicio.ExisteRol(user, rol, "eliminar");
             if (!resp.Exito) return resp;
 
             var userol = UsuarioAdapter.FromDtoRol(usrol);
@@ -168,9 +172,9 @@ namespace Application.MainModule.Flujos
         #region Roles
         public List<RolDto> AllRoles(short id)
         {
-            if (TokenServicio.EsSuperUsuario() || TokenServicio.ObtenerEsAdministracionCentral())            
+            if (TokenServicio.EsSuperUsuario() || TokenServicio.ObtenerEsAdministracionCentral())
                 return RolServicio.ListaAllRoles(id).ToList();
-            else            
+            else
                 return RolServicio.ListaAllRoles(TokenServicio.ObtenerIdEmpresa()).ToList();
         }
         public RespuestaDto AltaRoles(RolDto rolDto)
@@ -203,8 +207,8 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarRol();
             if (!resp.Exito) return resp;
 
-                var emp = RolAdapter.FromDtoPer(rolDto);
-                return RolServicio.Actualizar(emp);           
+            var emp = RolAdapter.FromDtoPer(rolDto);
+            return RolServicio.Actualizar(emp);
 
             //insertar Rol in data access
         }

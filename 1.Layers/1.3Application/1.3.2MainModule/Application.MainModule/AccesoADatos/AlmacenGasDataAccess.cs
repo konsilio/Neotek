@@ -1007,6 +1007,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasRecarga>().Get(x => !x.DatosProcesados).ToList();
         }
+        public List<AlmacenGasRecarga> BuscarTodasRecargas(int IdCAlmacenGas, DateTime date)
+        {
+            return uow.Repository<AlmacenGasRecarga>().Get(x => x.IdCAlmacenGasSalida.Equals(IdCAlmacenGas)
+                                                                       && x.FechaAplicacion.Day.Equals(date.Day)
+                                                                       && x.FechaAplicacion.Month.Equals(date.Month)
+                                                                       && x.FechaAplicacion.Year.Equals(date.Year)).ToList(); ;
+        }
         public List<AlmacenGasRecarga> BuscarTodasRecargasNoProcesadas(byte idTipoEvento)
         {
             return uow.Repository<AlmacenGasRecarga>().Get(x => !x.DatosProcesados && x.IdTipoEvento.Equals(idTipoEvento)).ToList();
@@ -1014,6 +1021,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<AlmacenGasTraspaso> BuscarTodosTraspasosNoProcesadas()
         {
             return uow.Repository<AlmacenGasTraspaso>().Get(x => !x.DatosProcesados).ToList();
+        }
+        public List<AlmacenGasTraspaso> BuscarTodosTraspasos(int IdCAlmacenGas, DateTime date)
+        {
+            return uow.Repository<AlmacenGasTraspaso>().Get(x => x.IdCAlmacenGasSalida.Equals(IdCAlmacenGas)
+                                                                       && x.FechaAplicacion.Day.Equals(date.Day)
+                                                                       && x.FechaAplicacion.Month.Equals(date.Month)
+                                                                       && x.FechaAplicacion.Year.Equals(date.Year)).ToList(); ;
         }
         public List<AlmacenGasTraspaso> BuscarTodosTraspasosNoProcesadas(byte idTipoEvento)
         {
@@ -1064,9 +1078,23 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasCalibracion>().Get(x => !x.DatosProcesados).ToList();
         }
+        public List<AlmacenGasCalibracion> BuscarTodasCalibraciones(int IdCAlmacenGas, DateTime fecha)
+        {
+            return uow.Repository<AlmacenGasCalibracion>().Get(x => x.IdCAlmacenGas.Equals(IdCAlmacenGas) 
+                                                                && x.FechaRegistro.Day.Equals(fecha.Day)
+                                                                && x.FechaRegistro.Month.Equals(fecha.Month)
+                                                                && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
+        }
         public AlmacenGasAutoConsumo BuscarAutoconsumoClaveOperacion(string claveOperacion)
         {
             return uow.Repository<AlmacenGasAutoConsumo>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
+        }
+        public List<AlmacenGasAutoConsumo> BuscarAutoconsumo(int IdCAlmcenGas, DateTime date)
+        {
+            return uow.Repository<AlmacenGasAutoConsumo>().Get(x => x.IdCAlmacenGasSalida.Equals(IdCAlmcenGas)
+                                                                       && x.FechaAplicacion.Day.Equals(date.Day)
+                                                                       && x.FechaAplicacion.Month.Equals(date.Month)
+                                                                       && x.FechaAplicacion.Year.Equals(date.Year)).ToList();
         }
         public AlmacenGasCalibracion BuscarCalibracion(string claveOperacion)
         {
