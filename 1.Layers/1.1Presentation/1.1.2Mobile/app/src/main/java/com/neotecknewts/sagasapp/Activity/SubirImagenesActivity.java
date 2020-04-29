@@ -280,6 +280,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }else if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
             sagasSql = new SAGASSql(getApplicationContext());
         }else if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
+            //tra
+            Log.d("chuy",""+traspasoDTO.toString());
             sagasSql = new SAGASSql(getApplicationContext());
         }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
             sagasSql = new SAGASSql(getApplicationContext());
