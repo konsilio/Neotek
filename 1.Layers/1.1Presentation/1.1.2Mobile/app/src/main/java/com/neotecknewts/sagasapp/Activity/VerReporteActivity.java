@@ -233,6 +233,7 @@ public class VerReporteActivity extends AppCompatActivity {
     }
 
     private void GenerarReporte(VentaDTO ventaDTO) {
+        Log.d("FerChido", ventaDTO.toString());
         HtmlReporte = "<body>" +
                 "<h3><u>Nota de venta</u></h3>" +
                 "<table>" +
@@ -296,7 +297,7 @@ public class VerReporteActivity extends AppCompatActivity {
         //endregion
         //region Registro
         if(ventaDTO.isEsRegistro()){
-            if(ventaDTO.getRazonSocial().trim().length()<=0){
+            if(ventaDTO.getRazonSocial().trim().length()>0){
                 HtmlReporte += "<h3>Cliente</h3>" +
                         "<table>" +
                         "<tr>" +
@@ -382,7 +383,7 @@ public class VerReporteActivity extends AppCompatActivity {
         //endregion
         //region Registro
         if(ventaDTO.isEsRegistro()){
-            if(ventaDTO.getRazonSocial().trim().length()<=0){
+            if(ventaDTO.getRazonSocial().trim().length()>0){
                 StringReporte += "\tCliente\n" +
                         "No.Cliente: \t[{No.Cliente}]\n"+
                         "Razon Social \t[{Razon-social}]\n" +
