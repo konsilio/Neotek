@@ -184,7 +184,11 @@ public class TraspasoPipaActivity extends AppCompatActivity implements TraspasoP
         }
         if(STraspasoPipaActivityPipaEntrada.getSelectedItemPosition()<0){
             error = true;
-            mensajes.add("La pipa de entra es un valor requerido");
+            mensajes.add("La pipa de entrada es un valor requerido");
+        }
+        if(STraspasoPipaActivityPipaSalida.getSelectedItemPosition() == STraspasoPipaActivityPipaEntrada.getSelectedItemPosition()){
+            error = true;
+            mensajes.add("La pipa de entrada es igual a la pipa de salida");
         }
         if(error){
             ErrorForm(mensajes);

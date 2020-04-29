@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
     //variable para usuario y contraseña
     public String contraseña;
     public String usuario;
+    //variable version de la app
+    public String version;
 
     UsuarioLoginDTO usuarioLoginDTO;
 
@@ -280,6 +283,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
         //se obtienen los datos de la vista
         usuario = editTextCorreoElectronico.getText().toString();
         contraseña = editTextContraseña.getText().toString();
+        try {
+            PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
+            version = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         if (empresaDTOs.size() == 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
             builder.setTitle(R.string.error_titulo);
@@ -320,6 +329,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 usuarioLoginDTO.setPassword(this.contraseña);
                 usuarioLoginDTO.setUsuario(usuario);
                 usuarioLoginDTO.setFbToken(fb_token);
+                usuarioLoginDTO.setVersion(version);
+                Log.d("VersionName",version);
                 //Log.d("usuariodto", usuarioLoginDTO.toString());
                 //usuarioLoginDTO.setCoordenadas("17.599863,-99.5208956");
                 // usuarioLoginDTO.setCoordenadas(latitudeNetwork + "," + longitudeNetwork);

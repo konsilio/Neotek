@@ -22,6 +22,9 @@ public class UsuarioLoginDTO {
     @SerializedName("Coordenadas")
     private String Coordenadas;
 
+    @SerializedName("Version")
+    private String Version;
+
     public int getIdEmpresa() {
         return IdEmpresa;
     }
@@ -62,6 +65,14 @@ public class UsuarioLoginDTO {
         Coordenadas = coordenadas;
     }
 
+    public String getVersion() {
+        return Version;
+    }
+
+    public void setVersion(String version) {
+        Version = version;
+    }
+
     @Override
     public String toString() {
         return "UsuarioLoginDTO{" +
@@ -70,6 +81,7 @@ public class UsuarioLoginDTO {
                 ", Password='" + Password + '\'' +
                 ", FbToken='" + FbToken + '\'' +
                 ", Coordenadas='" + Coordenadas + '\'' +
+                ", Version='" + Version + '\'' +
                 '}';
     }
 }

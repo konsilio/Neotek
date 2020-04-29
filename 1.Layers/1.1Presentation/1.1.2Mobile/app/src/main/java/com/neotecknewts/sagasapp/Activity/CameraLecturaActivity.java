@@ -33,8 +33,11 @@ import com.neotecknewts.sagasapp.Util.Permisos;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CameraLecturaActivity extends AppCompatActivity {
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
@@ -487,13 +490,34 @@ public class CameraLecturaActivity extends AppCompatActivity {
                     intent.putExtra("traspasoDTO", traspasoDTO);
                     startActivity(intent);
                 }else{
-                    Intent intent = new Intent(CameraLecturaActivity.this,
-                            VerReporteActivity.class);
-                    intent.putExtra("EsTraspasoPipaInicial", EsTraspasoPipaInicial);
-                    intent.putExtra("EsTraspasoPipaFinal", EsTraspasoPipaFinal);
-                    intent.putExtra("EsPasoIniciaLPipa", EsPrimeraParteTraspaso);
-                    intent.putExtra("traspasoDTO", traspasoDTO);
-                    startActivity(intent);
+                    if(EsTraspasoPipaFinal) {
+                        Intent intent = new Intent(CameraLecturaActivity.this,
+                                VerReporteActivity.class);
+                        intent.putExtra("EsTraspasoPipaInicial", EsTraspasoPipaInicial);
+                        intent.putExtra("EsTraspasoPipaFinal", EsTraspasoPipaFinal);
+                        intent.putExtra("traspasoDTO", traspasoDTO);
+                        startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(CameraLecturaActivity.this,
+                                SubirImagenesActivity.class);
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                                new SimpleDateFormat("ddMMyyyyhhmmssS");
+                        String clave_unica = "TP";
+                        clave_unica += (EsTraspasoPipaFinal)? "F":"I";
+                        clave_unica += s.format(new Date());
+                        traspasoDTO.setClaveOperacion(clave_unica);
+                        @SuppressLint("SimpleDateFormat") DateFormat sf =
+                                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+                        Date fecha = new Date();
+
+                        traspasoDTO.setFecha(sf.format(fecha));
+                        traspasoDTO.setFechaAplicacion(sf.format(fecha));
+                        intent.putExtra("EsTraspasoPipaInicial", EsTraspasoPipaInicial);
+                        intent.putExtra("EsTraspasoPipaFinal", EsTraspasoPipaFinal);
+                        Log.d("chuydebug",""+EsTraspasoPipaInicial+" final"+EsTraspasoPipaFinal);
+                        intent.putExtra("traspasoDTO", traspasoDTO);
+                        startActivity(intent);
+                    }
                 }
             }catch (URISyntaxException e){
                 e.printStackTrace();
