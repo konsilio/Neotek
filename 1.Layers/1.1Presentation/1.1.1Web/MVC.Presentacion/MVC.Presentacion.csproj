@@ -505,6 +505,7 @@
     <Compile Include="Models\Ventas\VentaCorteAnticipoModel.cs" />
     <Compile Include="Models\Ventas\VentaDTO.cs" />
     <Compile Include="Models\Ventas\VentasPipaDto.cs" />
+    <Compile Include="Models\Ventas\VPuntoVentaDetalleDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -10891,6 +10892,7 @@
     <Content Include="Scripts\bootstrap-material-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\js\EditarTicket.js" />
     <Content Include="Scripts\js\LiquidarTiket.js" />
     <Content Include="Views\ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -11776,6 +11778,8 @@
     <Content Include="Views\Cobranza\MasterDetailDetailCRPartial.cshtml" />
     <Content Include="Views\Cobranza\MasterDetailMasterPartial.cshtml" />
     <Content Include="Views\Home\Mantenimiento.cshtml" />
+    <Content Include="Views\CajaGeneral\EdicionTickets.cshtml" />
+    <Content Include="Views\CajaGeneral\_Detalles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -11789,10 +11793,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\1.3Application\1.3.2MainModule\Application.MainModule\Application.MainModule.csproj">
-      <Project>{2C5F9775-06CF-466F-9873-3166EDE4744C}</Project>
-      <Name>Application.MainModule</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\Exceptions.MainModule.csproj">
       <Project>{FB4086F4-8177-4175-BEB6-312FD528ABA2}</Project>
       <Name>Exceptions.MainModule</Name>

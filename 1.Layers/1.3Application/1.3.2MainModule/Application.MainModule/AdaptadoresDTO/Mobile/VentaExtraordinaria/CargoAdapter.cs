@@ -45,5 +45,20 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile.VentaExtraordinaria
                 FechaVencimiento = fechaVencimiento
             };
         }
+        public static Cargo FromDTO(VentaPuntoDeVenta venta, DateTime fechaVencimiento, short idEmpresa)
+        {
+            return new Cargo()
+            {
+                IdCliente = venta.IdCliente,
+                IdEmpresa = idEmpresa,
+                Ticket = venta.FolioVenta,
+                FechaRegistro = DateTime.Now,
+                TotalCargo = venta.Total,
+                TotalAbonos = 0,
+                VentaExtraordinaria = true,
+                Activo = true,
+                FechaVencimiento = fechaVencimiento
+            };
+        }
     }
 }

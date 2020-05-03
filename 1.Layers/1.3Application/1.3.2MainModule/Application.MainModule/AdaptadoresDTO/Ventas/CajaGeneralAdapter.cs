@@ -13,8 +13,6 @@ using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Utilities.MainModule;
 
 namespace Application.MainModule.AdaptadoresDTO.Ventas
@@ -221,7 +219,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             return luDTO;
         }
-
         public static VPuntoVentaDetalleDTO ToDTOVC(VentaPuntoDeVentaDetalle pv, decimal cilindrosVendidos)
         {
             VPuntoVentaDetalleDTO usDTO = new VPuntoVentaDetalleDTO()
@@ -389,11 +386,14 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 IdPipa = EsCamioneta.IdPipa,
                 Descripcion = "",
                 Concepto = "Venta",
+                Bonificacion = pv.Bonificacion,
+                EsBonificacion = pv.EsBonificacion,
                 Tipo = pv.VentaACredito == false ? "Contado" : "Credito",
                 PrecioUnitario = (EsCamioneta.IdCamioneta != null) ? pv.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioProducto ?? 0 : pv.VentaPuntoDeVentaDetalle.FirstOrDefault().PrecioUnitarioLt ?? 0,
                 CantidadVendida = GetCantidad(pv.VentaPuntoDeVentaDetalle.ToList(), EsCamioneta.IdCamioneta),
                 FormaDePago = pv.FormaDePago ?? string.Empty,
                 Referencia = pv.Referencia ?? string.Empty,
+                Detalle = ToDTO(pv.VentaPuntoDeVentaDetalle.ToList())
 
             };
             return usDTO;
@@ -421,6 +421,10 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         }
         public static VentaPuntoDeVenta FromEmtity(VentaPuntoDeVenta pv)
         {
+            if (pv.FolioVenta.Equals("")) 
+            {
+                //
+            }
             VentaPuntoDeVenta usDTO = new VentaPuntoDeVenta()
             {
                 IdEmpresa = pv.IdEmpresa,
@@ -1396,6 +1400,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             };
             return usDTO;
-        }       
+        }
     }
 }

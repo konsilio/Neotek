@@ -1,4 +1,6 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.AdaptadoresDTO.Cobranza;
+using Application.MainModule.AdaptadoresDTO.Mobile.VentaExtraordinaria;
 using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Almacen;
@@ -7,6 +9,7 @@ using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Cobranza;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Ventas;
 using Exceptions.MainModule.Validaciones;
@@ -270,13 +273,355 @@ namespace Application.MainModule.Flujos
                 var emty = CajaGeneralAdapter.FromEntity(ticket);
                 emty.FormaDePago = item.FormaDePago;
                 emty.Referencia = string.IsNullOrEmpty(item.FormaDePago) ? string.Empty : item.Referencia;
-                PuntoVentaServicio.ActualizarVentasCorte(emty);
-                return new RespuestaDto() { Exito = true, Mensaje = Exito.OK };
+                return PuntoVentaServicio.ActualizarVentasCorte(emty);
+                //return new RespuestaDto() { Exito = true, Mensaje = Exito.OK };
             }
             catch (Exception ex)
-            { 
+            {
                 return new RespuestaDto() { Exito = false, Mensaje = ex.Message };
             }
+        }
+        public VentaPuntoVentaDTO BuscarTicket(string FolioVenta)
+        {
+            var venta  =PuntoVentaServicio.Obtener(FolioVenta);
+            return CajaGeneralAdapter.ToDTOC(venta);
+        }
+        public RespuestaDto ActaualizarTicket(VentaPuntoVentaDTO item)
+        {
+            try
+            {
+                var ticket = PuntoVentaServicio.Obtener(item.FolioVenta);//Obtiene el ticket completo
+                //if (ticket.FechaRegistro.Date.Equals(DateTime.Now.Date))// la edicion solo se permite el dia que se registro la venta
+                //{ 
+                //    return new RespuestaDto()
+                //    {
+                //        Exito = false,
+                //        EsInsercion = false,
+                //        EsActulizacion = false,
+                //        Mensaje = Error.CC005,
+                //        Id = 0,
+                //        Codigo = null,
+                //        ModeloValido = false,
+                //    };
+                //}
+                if (!ticket.FolioVenta.Equals(ticket.FolioOperacionDia))// la edicion solo se permite el dia que se registro la venta
+                {
+                    return new RespuestaDto()
+                    {
+                        Exito = false,
+                        EsInsercion = false,
+                        EsActulizacion = false,
+                        Mensaje = Error.CC006,
+                        Id = 0,
+                        Codigo = null,
+                        ModeloValido = false,
+                    };
+                }
+                var emty = CajaGeneralAdapter.FromEntity(ticket);//Se prepara para edición
+                var cliente = ClienteServicio.Obtener(ticket.IdCliente); //Obtiene al cliente y su info.
+                var cargo = CobranzaServicio.ObtenerCargo(emty.FolioVenta);
+                if (!item.VentaACredito)//Se requiere de contado
+                {
+                    //Si la venta no es a Credito, se valida si originalmente se registro a credito
+                    //para quitar la cuenta por cobrar a Credito y cobranza
+                    if (emty.VentaACredito)
+                    {
+                        //Se buscar el cargo si la venta ya estaba a credito
+                        if (cargo != null)
+                            if (cargo.Abono.Count.Equals(0))//Se valida que no existan abonos
+                            {
+                                var cargoEmty = AbonosAdapter.FromEmty(cargo);
+                                cargoEmty.Activo = false;//Se desactiva la cuenta por cobrar
+                                var respCobranza = CobranzaServicio.Update(cargoEmty);
+                                if (!respCobranza.Exito)
+                                    return respCobranza;//No se pudo desactivar la cuenta
+                                emty.EfectivoRecibido = item.EfectivoRecibido < ticket.Total ? ticket.Total : emty.EfectivoRecibido;
+                                emty.VentaACredito = item.VentaACredito;
+                            }
+                            else
+                            {
+                                //Al tener abonos registrados, se niega la edicion de la venta
+                                return new RespuestaDto()
+                                {
+                                    Exito = false,
+                                    EsInsercion = false,
+                                    EsActulizacion = false,
+                                    Mensaje = Error.CC001,
+                                    Id = 0,
+                                    Codigo = null,
+                                    ModeloValido = false,
+                                };
+                            }
+                    }
+                    else// No se edito el tipo de venta de contado
+                    {
+                        if (item.EsBonificacion)
+                        {
+                            if (item.EfectivoRecibido < ticket.Total)
+                            {
+                                emty.EsBonificacion = true;
+                                emty.Bonificacion = CalculosGenerales.DiferenciaEntreDosNumero(emty.Total, item.EfectivoRecibido ?? 0);
+                            }
+                            else
+                            {
+                                emty.Bonificacion = 0;
+                                emty.EsBonificacion = false;
+                            }
+                            emty.EfectivoRecibido = item.EfectivoRecibido;
+                        }
+                        else
+                        {
+                            emty.Bonificacion = 0;
+                            emty.EsBonificacion = false;
+                            emty.EfectivoRecibido = item.EfectivoRecibido < ticket.Total ? ticket.Total : emty.EfectivoRecibido;
+                        }
+                    }
+                }
+                else// Se requiere a Credito
+                {
+                    if (emty.VentaACredito)// La venta originalmente es a credito
+                    {
+                        //Recalcular cuenta por cobrar
+                        if (cargo.Abono.Count.Equals(0))
+                        {
+                            var cargoEmty = AbonosAdapter.FromEmty(cargo);
+                            cargoEmty.TotalCargo = emty.Total;//Se actuliza el total del cargo sin abonos
+                            var respCobranza = CobranzaServicio.Update(cargo);
+                            if (!respCobranza.Exito)
+                                return respCobranza;//No se pudo desactivar la cuenta
+                            else
+                            {
+                                emty.VentaACredito = true;
+                                emty.EfectivoRecibido = 0;
+                            }
+                        }
+                        else
+                        {
+                            //Al tener abonos registrados, se niega la edicion de la venta
+                            return new RespuestaDto()
+                            {
+                                Exito = false,
+                                EsInsercion = false,
+                                EsActulizacion = false,
+                                Mensaje = Error.CC002,
+                                Id = 0,
+                                Codigo = null,
+                                ModeloValido = false,
+                            };
+                        }
+
+                    }
+                    if (!emty.VentaACredito)
+                    {
+                        //Crear cuenta por cobrar
+                        if (cliente.CreditoDisponibleMonto > 0 && cliente.CreditoDisponibleMonto >= ticket.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt))
+                        {
+                            int dias = Convert.ToInt32(cliente.limiteCreditoDias);
+                            var cargoNuevo = CargoAdapter.FromDTO(emty, DateTime.Now.AddDays(dias), TokenServicio.ObtenerIdEmpresa());
+                            var insertCargo = PuntoVentaServicio.insertCargoMobile(cargoNuevo);
+                            if (insertCargo.Exito)
+                            {
+
+                                decimal creditoDisponibleMonto = cliente.CreditoDisponibleMonto - ticket.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt ?? 0);
+                                cliente.CreditoDisponibleMonto = creditoDisponibleMonto;
+                                var actualizaCredito = ClienteServicio.ModificarCredito(cliente);
+                                emty.VentaACredito = true;
+                                emty.EfectivoRecibido = 0;
+                            }
+                            else
+                                return insertCargo;
+                        }
+                        else
+                        {
+                            RespuestaDto _res = new RespuestaDto();
+                            _res.Exito = false;
+                            _res.EsInsercion = false;
+                            _res.EsActulizacion = false;
+                            _res.Mensaje = "El cliente no cuenta con crédito disponible, favor de comunicarse con el área de crédito y cobranza";
+                            _res.Id = 0;
+                            _res.Codigo = null;
+                            _res.ModeloValido = false;
+                            return _res;
+                        }
+                    }
+                }
+
+                //emty.FormaDePago = item.FormaDePago;
+                //emty.Referencia = string.IsNullOrEmpty(item.FormaDePago) ? string.Empty : item.Referencia;
+                return PuntoVentaServicio.ActualizarVentasCorte(emty);
+                //return new RespuestaDto() { Exito = true, Mensaje = Exito.OK };
+            }
+            catch (Exception ex)
+            {
+                return new RespuestaDto() { Exito = false, Mensaje = ex.Message };
+            }
+        }
+        public RespuestaDto ActaualizarTicketDetalle(VPuntoVentaDetalleDTO item)
+        {
+            try
+            {
+                var ticket = PuntoVentaServicio.Obtener(item.FolioOperacion);
+                //if (ticket.FechaRegistro.Date.Equals(DateTime.Now.Date))// la edicion solo se permite el dia que se registro la venta
+                //{ 
+                //    return new RespuestaDto()
+                //    {
+                //        Exito = false,
+                //        EsInsercion = false,
+                //        EsActulizacion = false,
+                //        Mensaje = Error.CC005,
+                //        Id = 0,
+                //        Codigo = null,
+                //        ModeloValido = false,
+                //    };
+                //}
+                if (!ticket.FolioVenta.Equals(ticket.FolioOperacionDia))// la edicion solo se permite el dia que se registro la venta
+                {
+                    return new RespuestaDto()
+                    {
+                        Exito = false,
+                        EsInsercion = false,
+                        EsActulizacion = false,
+                        Mensaje = Error.CC006,
+                        Id = 0,
+                        Codigo = null,
+                        ModeloValido = false,
+                    };
+                }
+                var precioVenta = new Catalogos().ObtenerPrecioVentaVigente(ticket.CPuntoVenta.IdCAlmacenGas);
+                var detalle = ticket.VentaPuntoDeVentaDetalle.Where(x=> x.OrdenDetalle.Equals(item.OrdenDetalle)).FirstOrDefault();
+                var cargo = CobranzaServicio.ObtenerCargo(detalle.VentaPuntoDeVenta.FolioVenta);
+                var ventaEmty = CajaGeneralAdapter.FromEntity(detalle.VentaPuntoDeVenta);
+                var emty = CajaGeneralAdapter.FromEmtity(detalle);
+                //emty.PrecioUnitarioProducto = item.PrecioUnitarioProducto;
+                if (detalle.VentaPuntoDeVenta.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null)
+                {// Es venta de camioneta
+                    var listaCilindros = detalle.VentaPuntoDeVenta.VentaPuntoDeVentaDetalle;
+                    if (precioVenta.PrecioSalidaKg < item.PrecioUnitarioProducto)
+                    {
+                        return new RespuestaDto()
+                        {
+                            Exito = false,
+                            EsInsercion = false,
+                            EsActulizacion = false,
+                            Mensaje = string.Format( Error.CC004, precioVenta.PrecioSalidaKg),
+                            Id = 0,
+                            Codigo = null,
+                            ModeloValido = false,
+                        };
+                    }
+                    emty.DescuentoUnitarioKg = CalculosGenerales.DiferenciaEntreDosNumero(precioVenta.PrecioSalidaKg ?? 0, item.PrecioUnitarioProducto ?? 0);
+                    emty.DescuentoUnitarioLt = CalculosGenerales.DiferenciaEntreDosNumero(emty.PrecioUnitarioProducto ?? 0, item.PrecioUnitarioProducto ?? 0);
+                    emty.PrecioUnitarioKg = item.PrecioUnitarioProducto - emty.DescuentoUnitarioKg;
+                    emty.CantidadProducto = item.CantidadProducto;
+                    emty.CantidadKg = item.CantidadProducto;
+                    emty.CantidadLt = (item.CantidadProducto / (decimal)0.54);
+                    emty.Subtotal = ((item.PrecioUnitarioProducto.Value * item.CantidadProducto.Value) / (decimal)1.16);
+                    emty.DescuentoTotal = (emty.DescuentoUnitarioKg ?? 0 * item.CantidadKg ?? 0);
+                    ventaEmty.Descuento = listaCilindros.Where(x => !x.OrdenDetalle.Equals(detalle.OrdenDetalle)).Sum(s => s.DescuentoTotal) + emty.DescuentoTotal;
+                    ventaEmty.Total = listaCilindros.Where(x => !x.OrdenDetalle.Equals(detalle.OrdenDetalle))
+                        .Sum(s => { return (s.PrecioUnitarioKg.Value * s.CantidadKg.Value); }) + (item.PrecioUnitarioProducto.Value * item.CantidadProducto.Value);
+                    ventaEmty.Iva = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, (ventaEmty.Total / (decimal)1.16));
+                    ventaEmty.Subtotal = (ventaEmty.Total / (decimal)1.16);
+                    if (!ventaEmty.EsBonificacion)
+                        ventaEmty.CambioRegresado = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, ventaEmty.EfectivoRecibido ?? 0);
+                }
+                else
+                {// es venta de Pipa o de Estacion (Litros)
+                    if (precioVenta.PrecioSalidaLt < item.PrecioUnitarioProducto)
+                    {
+                        return new RespuestaDto()
+                        {
+                            Exito = false,
+                            EsInsercion = false,
+                            EsActulizacion = false,
+                            Mensaje = string.Format(Error.CC004, precioVenta.PrecioSalidaLt),
+                            Id = 0,
+                            Codigo = null,
+                            ModeloValido = false,
+                        };
+                    }
+                    emty.DescuentoUnitarioKg = CalculosGenerales.DiferenciaEntreDosNumero(emty.PrecioUnitarioProducto ?? 0, item.PrecioUnitarioProducto ?? 0);
+                    emty.DescuentoUnitarioLt = CalculosGenerales.DiferenciaEntreDosNumero(emty.PrecioUnitarioProducto ?? 0, item.PrecioUnitarioProducto ?? 0);
+                    emty.DescuentoUnitarioProducto = CalculosGenerales.DiferenciaEntreDosNumero(emty.PrecioUnitarioProducto ?? 0, item.PrecioUnitarioProducto ?? 0);
+                    emty.PrecioUnitarioKg = precioVenta.PrecioSalidaKg - emty.DescuentoUnitarioKg;
+                    emty.PrecioUnitarioLt = item.PrecioUnitarioProducto;
+                    emty.CantidadProducto = item.CantidadProducto;
+                    emty.CantidadKg = (item.CantidadProducto * (decimal)0.54);
+                    emty.CantidadLt = item.CantidadProducto;
+                    emty.Subtotal = ((item.PrecioUnitarioProducto.Value * item.CantidadProducto.Value) / (decimal)0.16);
+                    emty.DescuentoTotal = ((emty.DescuentoUnitarioProducto ?? 0) * (item.CantidadProducto ?? 0));
+                    ventaEmty.Descuento = emty.DescuentoTotal;
+                    ventaEmty.Total = (item.PrecioUnitarioProducto.Value * item.CantidadProducto.Value);
+                    ventaEmty.Iva = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, (ventaEmty.Total / (decimal)1.16));
+                    ventaEmty.Subtotal = (ventaEmty.Total / (decimal)1.16);
+                    if (!ventaEmty.EsBonificacion)
+                        ventaEmty.CambioRegresado = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, ventaEmty.EfectivoRecibido ?? 0);
+                }
+                if (cargo != null)
+                {
+                    if (cargo.Abono.Count.Equals(0))
+                    {
+                        var cargoEmty = AbonosAdapter.FromEmty(cargo);
+                        cargoEmty.TotalCargo = ventaEmty.Total;//Se actuliza el total del cargo sin abonos
+                        var respCobranza = CobranzaServicio.Update(cargo);
+                        if (!respCobranza.Exito)
+                            return respCobranza;//No se pudo desactivar la cuenta
+                    }
+                    else
+                    {
+                        //Al tener abonos registrados, se niega la edicion de la venta
+                        return new RespuestaDto()
+                        {
+                            Exito = false,
+                            EsInsercion = false,
+                            EsActulizacion = false,
+                            Mensaje = Error.CC002,
+                            Id = 0,
+                            Codigo = null,
+                            ModeloValido = false,
+                        };
+                    }
+                }
+                return PuntoVentaServicio.ActualizarVentaDetalles(emty, ventaEmty);
+                //return new RespuestaDto() { Exito = true, Mensaje = Exito.OK };
+            }
+            catch (Exception ex)
+            {
+                return new RespuestaDto() { Exito = false, Mensaje = ex.Message };
+            }
+        }
+        public RespuestaDto EliminarTicket(string FolioVenta)
+        {
+            var ticket = PuntoVentaServicio.Obtener(FolioVenta);//Obtiene el ticket completo            
+            var cargo = CobranzaServicio.ObtenerCargo(FolioVenta);
+            if (cargo != null)
+            {
+                if (!cargo.Abono.Count.Equals(0))
+                {
+                    //Al tener abonos registrados, se niega la eliminacón de la venta
+                    return new RespuestaDto()
+                    {
+                        Exito = false,
+                        EsInsercion = false,
+                        EsActulizacion = false,
+                        Mensaje = Error.CC003,
+                        Id = 0,
+                        Codigo = null,
+                        ModeloValido = false,
+                    };
+                }
+                else
+                {
+                    var cargoEmty = AbonosAdapter.FromEmty(cargo);
+                    cargoEmty.Activo = false;//Se desactiva la cuenta por cobrar
+                    var respCobranza = CobranzaServicio.Update(cargoEmty);
+                    if (!respCobranza.Exito)
+                        return respCobranza;//No se pudo eliminar la cuenta, se detiene proceso
+                }
+            }
+            var detalles = CajaGeneralAdapter.FromEmtity(ticket.VentaPuntoDeVentaDetalle.ToList());//Se prepara para eliminar
+            var emty = CajaGeneralAdapter.FromEntity(ticket);//Se prepara para eliminar
+            return PuntoVentaServicio.EliminarVentas(detalles, emty);
         }
     }
 }

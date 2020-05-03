@@ -4,6 +4,8 @@ using Application.MainModule.AdaptadoresDTO.Mobile;
 using System;
 using Application.MainModule.DTOs.Respuesta;
 using System.Collections.Generic;
+using Sagas.MainModule.Entidades;
+using System.Linq;
 
 namespace Application.MainModule.Servicios.Mobile
 {
@@ -55,8 +57,13 @@ namespace Application.MainModule.Servicios.Mobile
 
         public static DatosClientesDto BuscadorClientes(string criterio)
         {
-            var clientes =  ClienteServicio.BuscadorClientes(criterio);
-            return ClienteAdapter.FromDTO(clientes); 
+            List<Cliente> Resultados = new List<Cliente>();
+            foreach (var item in criterio.Split(' '))
+            {
+                Resultados.AddRange(ClienteServicio.BuscadorClientes(item));
+            }
+            //var clientes =  ClienteServicio.BuscadorClientes(criterio);
+            return ClienteAdapter.FromDTO(Resultados.Distinct().ToList()); 
         }
     }
 }

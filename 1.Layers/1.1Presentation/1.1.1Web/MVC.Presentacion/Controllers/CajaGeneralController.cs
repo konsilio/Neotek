@@ -7,6 +7,7 @@ using PagedList;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using DevExpress.Web.Mvc;
+//using Application.MainModule.DTOs.Ventas;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -72,7 +73,7 @@ namespace MVC.Presentacion.Controllers
                 if (_model.Tickets.Count != 0)
                 {
                     TempData["FolioVenta"] = _model.Tickets.FirstOrDefault().FolioVenta;
-                }              
+                }
                 TempData.Keep("DatosLiquidacion");
             }
             return RedirectToAction("Liquidar", _model);
@@ -141,6 +142,89 @@ namespace MVC.Presentacion.Controllers
             Pago.Add(new SelectListItem { Value = "Cheques", Text = "Cheques" });
             Pago.Add(new SelectListItem { Value = "Transferencias", Text = "Transferencias" });
             return Pago;
+        }
+
+        public ActionResult EdicionTickets(VentaPuntoVentaDTO _model)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            _tkn = Session["StringToken"].ToString();
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = ((RespuestaDTO)TempData["RespuestaDTO"]);
+                if (Respuesta.Exito)
+                    ViewBag.Mensaje = Respuesta.Mensaje;
+                else
+                    ViewBag.MensajeError = Respuesta.Mensaje;
+            }
+                
+            if (_model == null)
+                _model = new VentaPuntoVentaDTO();
+            if (_model.Detalle == null || _model.Detalle.Count.Equals(0))
+                if (TempData["Ticket"] != null)
+                {
+                    _model = (VentaPuntoVentaDTO)TempData["Ticket"];
+                    TempData.Keep("Ticket");
+                }
+            return View(_model);
+        }
+        public ActionResult DetallePartialUpdate(MVCxGridViewBatchUpdateValues<VPuntoVentaDetalleDTO, string> updateValues)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            _tkn = Session["StringToken"].ToString();
+            List<VPuntoVentaDetalleDTO> update = new List<VPuntoVentaDetalleDTO>();
+            var model = (CorteCajaDTO)TempData["DatosLiquidacion"];
+            foreach (var product in updateValues.Update)
+            {
+                if (updateValues.IsValid(product))
+                {
+                    product.FolioOperacion = ((VentaPuntoVentaDTO)TempData["Ticket"]).FolioVenta;
+                    TempData.Keep("Ticket");
+                    update.Add(product);
+                }
+            }
+            TempData["RespuestaDTO"] = VentasServicio.ActualizarDetalleTicket(update, _tkn);
+           var  dto = VentasServicio.BuscarTicket(((VentaPuntoVentaDTO)TempData["Ticket"]).FolioVenta, _tkn);
+            return RedirectToAction("EdicionTickets", dto);
+        }
+        public ActionResult BuscarTicket(VentaPuntoVentaDTO _model)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            _tkn = Session["StringToken"].ToString();
+
+            if (_model != null && _model.FolioVenta != null)
+                TempData["Model"] = _model;
+            _model = VentasServicio.BuscarTicket(_model.FolioVenta, _tkn);
+            if (_model != null)
+                TempData["Ticket"] = _model;
+            TempData.Keep("Ticket");
+            //var _model = VentasServicio.BuscarTicket(ticket.FolioVenta, _tkn);
+            return RedirectToAction("EdicionTickets", _model);
+        }
+        public ActionResult BorrarTicket(string Folio)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            _tkn = Session["StringToken"].ToString();
+
+            var resp = VentasServicio.BorrarTicket(Folio, _tkn);
+            TempData["RespuestaDTO"] = resp;
+            if (!resp.Exito)
+                return RedirectToAction("EdicionTickets", VentasServicio.BuscarTicket(Folio, _tkn));
+            else
+                return RedirectToAction("EdicionTickets");
+        }
+        public ActionResult BatchEditingDetallePartial()
+        {
+            TempData.Keep("Ticket");
+            return PartialView("_Detalles", ((VentaPuntoVentaDTO)TempData["Ticket"]).Detalle);
+        }
+        public ActionResult GuardarTicket(VentaPuntoVentaDTO dto)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            string _tok = Session["StringToken"].ToString();
+            var respuesta = VentasServicio.ActualizarTicket(dto, _tok);
+            TempData["RespuestaDTO"] = respuesta;
+            dto = VentasServicio.BuscarTicket(dto.FolioVenta, _tok);
+            return RedirectToAction("EdicionTickets", dto);
         }
     }
 }

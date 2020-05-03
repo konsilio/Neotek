@@ -30,9 +30,11 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaAutenticacionMobileDto AutenticacionMobile(LoginFbDTO autenticacionDto)
         {
-            //var valVersion = AutenticarServicio.ValudarVersionMobile(autenticacionDto);
-            //if (!valVersion.Exito)
-            //    return valVersion;
+            
+
+            var valVersion = AutenticarServicio.ValudarVersionMobile(autenticacionDto);
+            if (!valVersion.Exito)
+                return valVersion;
 
             var responce = AutenticarServicio.AutenticarUsuarioMobile(autenticacionDto);
             if (responce.IdUsuario.Equals(0))
@@ -223,6 +225,10 @@ namespace Application.MainModule.Flujos
             rol = RolAdapter.FromEntity(rol);
             rol.Activo = false;
             return RolServicio.Actualizar(rol);
+        }
+        public RespuestaDto DisponibilidadServicio()
+        {//Neoteck 
+            return AutenticarServicio.ValidarDisponibilidad();
         }
         #endregion
 

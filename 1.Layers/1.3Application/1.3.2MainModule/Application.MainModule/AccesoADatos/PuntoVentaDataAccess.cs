@@ -77,6 +77,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FechaRegistro >= fi &&
                                                                 x.FechaRegistro <= ff).ToList();
         }
+        public VentaPuntoDeVentaDetalle BuscarVentasDetalle(short idEmpresa, short anio, byte mes, byte dia, int orden, short ordenDetalle)
+        {
+            return uow.Repository<VentaPuntoDeVentaDetalle>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                    && x.Year.Equals(anio) && x.Mes.Equals(mes)
+                                                                    && x.Dia.Equals(dia) && x.Orden.Equals(orden)
+                                                                    && x.OrdenDetalle.Equals(ordenDetalle)).FirstOrDefault();
+        }
         public List<PuntoVenta> BuscarTodos(short idEmpresa)
         {
             return uow.Repository<PuntoVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -115,10 +122,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public PuntoVenta BuscarPorUnidadAlmacenGas(DetalleRecargaCombustible recarga)
         {
             PuntoVenta resp = new PuntoVenta();
-            if (recarga.EsCamioneta)            
-                resp = uow.Repository<PuntoVenta>().GetSingle(x => x.UnidadesAlmacen.IdCamioneta.Equals(recarga.Id_Vehiculo));            
-            if (recarga.EsPipa)            
-                resp = uow.Repository<PuntoVenta>().GetSingle(x => x.UnidadesAlmacen.IdPipa.Equals(recarga.Id_Vehiculo));            
+            if (recarga.EsCamioneta)
+                resp = uow.Repository<PuntoVenta>().GetSingle(x => x.UnidadesAlmacen.IdCamioneta.Equals(recarga.Id_Vehiculo));
+            if (recarga.EsPipa)
+                resp = uow.Repository<PuntoVenta>().GetSingle(x => x.UnidadesAlmacen.IdPipa.Equals(recarga.Id_Vehiculo));
             return resp;
         }
 
@@ -357,7 +364,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get().ToList();
         }
-        public object ActualizarVentas(VentaPuntoDeVenta item)
+        public RespuestaDto ActualizarVentas(VentaPuntoDeVenta item)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
@@ -368,6 +375,56 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     uow.SaveChanges();
                     _respuesta.EsInsercion = true;
                     _respuesta.Id = item.IdPuntoVenta;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "actualizar la venta.");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto ActualizarVentaDetalle(VentaPuntoDeVentaDetalle entidad, VentaPuntoDeVenta venta)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<VentaPuntoDeVentaDetalle>().Update(entidad);
+                    uow.Repository<VentaPuntoDeVenta>().Update(venta);
+                    uow.SaveChanges();
+                    _respuesta.EsInsercion = true;
+                    //_respuesta.Id = item.IdPuntoVenta;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "actualizar la venta.");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto ActualizarVentaDetalle(VentaPuntoDeVentaDetalle entidad)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<VentaPuntoDeVentaDetalle>().Update(entidad);
+                    //uow.Repository<VentaPuntoDeVenta>().Update(venta);
+                    uow.SaveChanges();
+                    _respuesta.EsInsercion = true;
+                    //_respuesta.Id = item.IdPuntoVenta;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
                     _respuesta.Mensaje = Exito.OK;
@@ -440,6 +497,57 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                         && x.FechaRegistro.Month.Equals(fecha.Month)
                                                         && x.FechaRegistro.Year.Equals(fecha.Year)
                                                         && x.CPuntoVenta.IdCAlmacenGas.Equals(idCAlmacenGas)).ToList();
+        }
+        public RespuestaDto BorrarVenta(VentaPuntoDeVenta tiket, List<VentaPuntoDeVentaDetalle> List)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    foreach (var item in List)
+                        uow.Repository<VentaPuntoDeVentaDetalle>().Delete(item);
+                    uow.Repository<VentaPuntoDeVenta>().Delete(tiket);
+                    uow.SaveChanges();
+                    _respuesta.EsInsercion = false;
+                    //_respuesta.Id = item.IdPuntoVenta;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "eliminar la venta.");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto BorrarVentaDetalles(List<VentaPuntoDeVentaDetalle> List)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    foreach (var item in List)
+                        uow.Repository<VentaPuntoDeVentaDetalle>().Delete(item);
+                    uow.SaveChanges();
+                    _respuesta.EsInsercion = false;
+                    //_respuesta.Id = item.IdPuntoVenta;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "eliminar la venta.");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
         }
     }
 }

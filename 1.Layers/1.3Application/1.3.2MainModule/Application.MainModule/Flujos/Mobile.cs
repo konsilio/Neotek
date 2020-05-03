@@ -141,7 +141,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = LecturaGasServicio.EvaluarClaveOperacion(liadto);
             if (resp.Exito) return resp;
-           
+
             return LecturaGasServicio.Lectura(liadto);
         }
         public RespuestaDto FinalizarTomaDeLectura(LecturaDTO lfadto)
@@ -163,7 +163,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = LecturaGasServicio.EvaluarClaveOperacion(lcdto);
             if (resp.Exito) return resp;
-            
+
             return LecturaGasServicio.Lectura(lcdto);
         }
         public RespuestaDto FinalizarTomaDeLecturaCamioneta(LecturaCamionetaDTO lcdto)
@@ -1537,12 +1537,10 @@ namespace Application.MainModule.Flujos
                 var precios = PuntoVentaServicio.ObtenerPreciosVenta(TokenServicio.ObtenerIdEmpresa()).Where(x => x.IdPrecioVentaEstatus.Equals(2)).ToList();
                 //var precios = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
                 var productosGas = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa(), true);
-                var kilosCamioneta = LecturaGasServicio.ObtenerKilosGasCamioneta(unidad.IdCAlmacenGas, DateTime.Now, pv.IdPuntoVenta);
-
                 decimal totalKilos = 0, calculo = 0;
-
                 if (unidad.IdCamioneta > 0)
                 {
+                    var kilosCamioneta = LecturaGasServicio.ObtenerKilosGasCamioneta(unidad.IdCAlmacenGas, DateTime.Now, pv.IdPuntoVenta);
                     var cilindros = AlmacenGasServicio.ObtenerCilindros(unidad);
                     var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
                     return VentasEstacionesAdapter.ToDTOGas(cilindros, kilosCamioneta, precioVenta);

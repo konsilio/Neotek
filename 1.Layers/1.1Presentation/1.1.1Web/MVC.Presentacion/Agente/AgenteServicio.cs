@@ -58,6 +58,7 @@ namespace MVC.Presentacion.Agente
         public CarteraDTO _CarteraDTO;
         public CuentaContableAutorizadoDTO _CuentaContableAutorizadoDTO;
         public Models.Ventas.CorteCajaDTO _CorteCaja;
+        public VentaPuntoVentaDTO _Ticket;
         public string _Json;
 
         public List<ClienteLocacionMod> _cteLocacion;
@@ -155,12 +156,10 @@ namespace MVC.Presentacion.Agente
         public List<CuentaContableAutorizadoDTO> _ListaCuentaContableAutorizado;
         public List<CuentaConsolidadaDTO> _ListaCuentasConsolidadas;
         public List<VentaCajaGeneralDTO> _ListaVentaCajaGeneralDTO;
-
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
         }
-
         #region Catalogos
         #region roles
         public void BuscarRolesRequisicion(string tkn)
@@ -1698,7 +1697,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPaises"];
             ListaPaises(this.ApiCatalgos, tkn).Wait();
         }
-
         public List<PaisModel> AgregaritemP()
         {
             PaisModel rol = new PaisModel();
@@ -1739,10 +1737,8 @@ namespace MVC.Presentacion.Agente
                 _listaPaises = item;
             }
         }
-
         #endregion
         #region Estados
-
         public List<EstadosRepModel> AgregaritemE()
         {
             EstadosRepModel rol = new EstadosRepModel();
@@ -1758,7 +1754,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEstadosR"];
             ListaEstados(this.ApiCatalgos, tkn).Wait();
         }
-
         private async Task ListaEstados(string api, string token = null)
         {
             using (var client = new HttpClient())
@@ -1792,7 +1787,6 @@ namespace MVC.Presentacion.Agente
 
             }
         }
-
         #endregion
         #region Tipo Proveedor
         public void ListaTipoProveedor(string tkn)
@@ -2351,9 +2345,6 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-
-
-
         public void GuardarCuentaContableAutorizado(CuentaContableAutorizadoDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraCuentaContableAutorizado"];
@@ -3225,9 +3216,7 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminaEgreso"];
             EliminarVehiculoSeleccionado(id, tkn).Wait();
         }
-
         #endregion
-
         #endregion
         #region Login
         public void Acceder(AutenticacionDTO autDto)
@@ -3304,14 +3293,11 @@ namespace MVC.Presentacion.Agente
             this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionesByIdEmpresa"];
             ListaRequisiciones(idEmpresa, tkn).Wait();
         }
-
         public void BuscarRequisicionesAlmacen(short idEmpresa, string tkn)
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionesByAlmacenIdEmpresa"];
             ListaRequisiciones(idEmpresa, tkn).Wait();
         }
-
-
         private async Task ListaRequisiciones(short idEmpresa, string token)
         {
             using (var client = new HttpClient())
@@ -3728,10 +3714,90 @@ namespace MVC.Presentacion.Agente
         }    
         public void ActualizarTikets(VentaPuntoVentaDTO dto, string token)
         {
+            // Cheques y transferencias
             this.ApiRoute = ConfigurationManager.AppSettings["PutActualizarTikets"];
             PutActualizarTikets(dto, token).Wait();
         }
+        public void BorrarTiket(string folio, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminarTikets"];
+            PutEliminarTikets(folio, token).Wait();
+        }
+        private async Task PutEliminarTikets(string folio, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(string.Concat(ApiRoute, folio), "").ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    resp.Exito = false;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _RespuestaDTO = resp;
+            }
+        }
+        public void ActualizarTiket(VentaPuntoVentaDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutActualizarTiket"];
+            PutActualizarTikets(dto, token).Wait();
+        }
         private async Task PutActualizarTikets(VentaPuntoVentaDTO dto, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRoute, dto).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    resp.Exito = false;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _RespuestaDTO = resp;
+            }
+        }
+        public void ActualizarTiketDetalle(VPuntoVentaDetalleDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutActualizarTiketDetalle"];
+            PutActualizarTiketDetalle(dto, token).Wait();
+        }
+        private async Task PutActualizarTiketDetalle(VPuntoVentaDetalleDTO dto, string token)
         {
             using (var client = new HttpClient())
             {
@@ -3756,13 +3822,46 @@ namespace MVC.Presentacion.Agente
                 catch (Exception ex)
                 {
                     resp.Mensaje = ex.Message;
+                    resp.Exito = false;
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
                 _RespuestaDTO = resp;
             }
         }
-
+        public void BuscarTicketEdit(string FolioVenta, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["GetTicketEdit"];
+            GetTicketEdit(FolioVenta, tkn).Wait();
+        }
+        private async Task GetTicketEdit(string cveRep, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                VentaPuntoVentaDTO lus = new VentaPuntoVentaDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute, cveRep)).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<VentaPuntoVentaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new VentaPuntoVentaDTO();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _Ticket = lus;
+            }
+        }
         private async Task GetListaPago(int idoc, string Token)
         {
             using (var client = new HttpClient())
@@ -3968,7 +4067,6 @@ namespace MVC.Presentacion.Agente
                 _ListaRemanenteGenaral = emp;
             }
         }
-
         public void BuscarRemanentePtoVenta(RemanenteModel model, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRemanentePuntoVenta"];
@@ -5459,7 +5557,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["PostInventarioPorPuntoVenta"];
             PostCuentasPorPagar(model, this.ApiCatalgos, tkn).Wait();
         }
-
         private async Task PostCuentasPorPagar(InventarioPorPuntoVentaModel model, string api, string token)
         {
             using (var client = new HttpClient())
@@ -5628,7 +5725,6 @@ namespace MVC.Presentacion.Agente
                 _ListaRequisicion = list;
             }
         }
-
         #endregion
         #region OrdenCompra
         public void BuscarOrdenCompra(Models.OrdenCompraModel model, string tkn)
@@ -5664,7 +5760,6 @@ namespace MVC.Presentacion.Agente
                 _ListaOrdenCompra = list;
             }
         }
-
         #endregion
         #region RendimientoVehicular
         public void BuscarRendimientoVehicular(RendimientoVehicularModel model, string tkn)
@@ -5744,7 +5839,6 @@ namespace MVC.Presentacion.Agente
                 _ListaRendimientoVehicularCamioneta = list;
             }
         }
-
         private async Task PostRendimientoVehicularPipas(PeriodoDTO model, string api, string token)
         {
             using (var client = new HttpClient())
@@ -5914,7 +6008,6 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
-
         #region CreditoXClientes
         public void BuscarCreditoXCliente(PeriodoDTO model, string tkn)
         {
@@ -5950,7 +6043,6 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
-
         #region CreditoXClientesMensual
         public void BuscarCreditoXClienteMensual(PeriodoDTO model, string tkn)
         {
@@ -5986,23 +6078,6 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         #region VentasXPuntoVenta
         public void VentasXPuntoVenta(VentasXPuntoVentaModel model, string tkn)
         {
@@ -6073,10 +6148,6 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
-
-
-
-
         #region Inventario Por Concepto
         public void BuscarInventarioPorConcepto(InventarioXConceptoModel model, string tkn)
         {

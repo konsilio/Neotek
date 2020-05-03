@@ -165,6 +165,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Cargo>().GetSingle(x => x.IdCargo.Equals(idCargo));
         }
+        public Cargo Buscar(string folio)
+        {
+            return uow.Repository<Cargo>().Get(x => x.Ticket.Equals(folio)).FirstOrDefault();
+        }
         //public Abono BuscarNumero(short idEmpresa, string numero)
         //{
         //    return uow.Repository<Abono>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)

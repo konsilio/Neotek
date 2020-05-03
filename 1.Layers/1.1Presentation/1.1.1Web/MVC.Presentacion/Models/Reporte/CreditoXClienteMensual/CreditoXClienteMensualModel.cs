@@ -1,5 +1,4 @@
-﻿using Application.MainModule.DTOs.Cobranza;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,10 +24,6 @@ namespace MVC.Presentacion.Models
         [Display(Name = "Dias 62 a 91")]
         public decimal Dias62a91 { get; set; }
         [Display(Name = "Mas 91")]
-        public decimal Mas91 { get; set; }
-   
-
-
-
+        public decimal Mas91 { get; set; } 
     }
 }

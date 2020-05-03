@@ -160,7 +160,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 || x.Rfc.ToUpper().Contains(criterio)))
                 || x.RazonSocial.ToUpper().Contains(criterio)
                 || x.Nombre.ToUpper().Contains(criterio)
-                //|| x.IdCliente.Equals(criterio)
+                || x.IdCliente.ToString().Equals(criterio)
                 && x.IdEmpresa.Equals(idEmpresa)
                 && x.Activo
             ).ToList();

@@ -59,9 +59,10 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdTipoPersona = cliente.IdTipoPersona ?? 0,
                 RFC = cliente.Rfc ?? string.Empty,
                 Credito = (cliente.limiteCreditoDias > 0 && cliente.limiteCreditoMonto > 0) ? true : false,
-                Factura = (cliente.Rfc.Trim() != string.Empty) ? true : false,
+                Factura = (cliente.Rfc != null && cliente.Rfc.Trim() != string.Empty) ? true : false,
                 LimiteCredito = cliente.limiteCreditoMonto
             };
         }
     }
 }
+

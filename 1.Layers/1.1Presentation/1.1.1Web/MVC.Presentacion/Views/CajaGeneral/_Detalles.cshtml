@@ -1,0 +1,108 @@
+﻿@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "_Detalle";
+        settings.CallbackRouteValues = new
+        {
+            Controller = "CajaGeneral",
+            Action = "BatchEditingDetallePartial"
+        };
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "CajaGeneral", Action = "DetallePartialUpdate" };
+        settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+        settings.KeyFieldName = "OrdenDetalle";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+        settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+        settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.False;
+        settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
+        settings.Styles.Table.CssClass = "table";
+        settings.SettingsCommandButton.UpdateButton.Text = "Confirmar cambios";
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "IdEmpresa";
+        //    c.Visible = true;
+        //});
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "Year";
+        //    c.Visible = true;
+
+        //});
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "Mes";
+        //    c.Visible = true;
+
+        //});
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "Dia";
+        //    c.Visible = true;
+
+        //});
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "Orden";
+        //    c.Visible = true;
+        //});
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "OrdenDetalle";
+            c.Caption = "Id";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "ProductoDescripcion";
+            c.Caption = "Descripcion";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "CantidadProducto";
+            c.Caption = "Cantidad";
+            c.Visible = true;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "PrecioUnitarioProducto";
+            c.Caption = "Precio Unitario";
+            c.Visible = true;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "CantidadKg";
+            c.Caption = "Total Kilos";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "CantidadLt";
+            c.Caption = "Total Litros";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+            editor.ValidationSettings.Display = Display.None;
+        };
+        settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
+    });
+}
+@grid.Bind(Model).GetHtml()

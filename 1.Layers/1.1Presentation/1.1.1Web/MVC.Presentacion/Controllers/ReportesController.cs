@@ -533,9 +533,6 @@ namespace MVC.Presentacion.Controllers
                     return View(TiposReporteConst.CuboInformacionGeneral, (List<CreditoXClienteMensualModel>)TempData["DataSource"]);
                 if (Tipo.Equals(TiposReporteConst.ControlDeAsistencia))
                     return View(TiposReporteConst.CuboInformacionGeneral, (List<ControlAsistenciaModel>)TempData["DataSource"]);
-
-
-
                 return View(TiposReporteConst.CuboInformacionGeneral);
             }
             return View(TiposReporteConst.CuboInformacionGeneral, new List<string>());

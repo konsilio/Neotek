@@ -49,5 +49,9 @@ namespace MVC.Presentacion.Models.Ventas
         public decimal CantidadVendida { get; set; }
         public string FormaDePago { get; set; }
         public string Referencia { get; set; }
+        public List<VPuntoVentaDetalleDTO> Detalle { get; set; }      
+        public int IdFormaDePago { get; set; }
+        public bool EsBonificacion { get; set; }
+        public Nullable<decimal> Bonificacion { get; set; }
     }
 }

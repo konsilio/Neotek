@@ -121,6 +121,24 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
 
             return dto;
         }
+        public static Cargo FromEmty(Cargo entity)
+        {
+            Cargo dto = new Cargo
+            {
+                IdCargo = entity.IdCargo,
+                IdCliente = entity.IdCliente,
+                IdEmpresa = entity.IdEmpresa,
+                Ticket = entity.Ticket,
+                FechaRegistro = entity.FechaRegistro,
+                TotalCargo = entity.TotalCargo,
+                TotalAbonos = entity.TotalAbonos,
+                VentaExtraordinaria = entity.VentaExtraordinaria,
+                Activo = entity.Activo,
+                FechaVencimiento = entity.FechaVencimiento,
+                Saldada = entity.Saldada
+            };
+            return dto;
+        }
         public static CargosDTO ToDTO(Cargo _dto)
         {
             List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);

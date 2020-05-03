@@ -48,8 +48,11 @@ namespace Application.MainModule.DTOs.Ventas
         public decimal PrecioUnitario { get; set; }
         public decimal CantidadVendida { get; set; }
         public int IdFormaDePago { get; set; }
+        public bool EsBonificacion { get; set; }
+        public Nullable<decimal> Bonificacion { get; set; }
         public string FormaDePago { get; set; }
         public string Referencia { get; set; }
+        public List<VPuntoVentaDetalleDTO> Detalle { get; set; }
     }
 
     public class VentaPuntoVentaComparer : IEqualityComparer<VentaPuntoVentaDTO>

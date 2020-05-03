@@ -103,7 +103,34 @@ namespace MVC.Presentacion.App_Code
             foreach (var item in tickets)
             {
                 agente.ActualizarTikets(item, tkn);
-            }           
+            }
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ActualizarTicket(VentaPuntoVentaDTO ticket, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ActualizarTiket(ticket, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO BorrarTicket(string ticket, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BorrarTiket(ticket, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static VentaPuntoVentaDTO BuscarTicket(string ticket, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarTicketEdit(ticket, tkn);
+            return agente._Ticket;
+        }
+        public static RespuestaDTO ActualizarDetalleTicket(List<VPuntoVentaDetalleDTO> detalles, string tkn)
+        {
+            var agente = new AgenteServicio();
+            foreach (var item in detalles)
+            {
+                agente.ActualizarTiketDetalle(item, tkn);
+            }
             return agente._RespuestaDTO;
         }
         #endregion

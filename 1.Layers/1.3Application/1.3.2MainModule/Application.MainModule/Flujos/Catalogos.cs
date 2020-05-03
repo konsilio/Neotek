@@ -264,7 +264,6 @@ namespace Application.MainModule.Flujos
                 return PuntoVentaServicio.Obtener().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
 
         }
-
         public List<PuntoVentaDTO> PuntosVentaIdEmpresa(short IdEmpresa)
         {
             var resp = PermisosServicio.PuedeConsultarPuntoVenta();
@@ -281,12 +280,10 @@ namespace Application.MainModule.Flujos
             puntoV.Activo = false;
             return PuntoVentaServicio.Eliminar(puntoV);
         }
-
         public OperadorChoferDTO GetOperador(int idUsuario)
         {
             return PuntoVentaServicio.ObtenerOperador(idUsuario);
         }
-
         public List<OperadorChoferDTO> GetUsuariosIdEmpesa(short idEmpresa)
         {
             return PuntoVentaServicio.ObtenerUsuariosOperador(idEmpresa);
@@ -469,9 +466,31 @@ namespace Application.MainModule.Flujos
         {
             try
             {
-
                 var us = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
                 var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(us.IdCAlmacenGas);
+                PrecioVenta pv = new PrecioVenta();
+                if (unidad.IdEstacionCarburacion != null)
+                    pv = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(TokenServicio.ObtenerIdEmpresa());
+                else
+                    pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+                var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
+                var pvs = PrecioVentaGasAdapter.ToDTO(pv, producto);
+                if (unidad.IdCamioneta > 0)
+                    pvs.PrecioActual = pvs.PrecioSalidaKg ?? 0;
+                else
+                    pvs.PrecioActual = pvs.PrecioSalidaLt ?? 0;
+                return pvs;
+            }
+            catch (Exception ex)
+            {
+                return new PrecioVentaDTO() { respuesta = new RespuestaDto() { Exito = false, Mensaje = ex.ToString() } };
+            }
+        }
+        public PrecioVentaDTO ObtenerPrecioVentaVigente(short IdCAlmacenGas)
+        {
+            try
+            {
+                var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(IdCAlmacenGas);
                 PrecioVenta pv = new PrecioVenta();
                 if (unidad.IdEstacionCarburacion != null)
                     pv = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(TokenServicio.ObtenerIdEmpresa());
@@ -976,7 +995,7 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarProveedor();
             if (!resp.Exito) return new List<ProveedorDto>();
 
-            return ProveedorAdapter.ToDto(ProveedorServicio.Obtener());
+            return ProveedorAdapter.ToDto(ProveedorServicio.Obtener().OrderByDescending(x => x.FechaRegistro).ToList());
         }
 
         public ProveedorDto ConsultaProveedor(int idProveedor)

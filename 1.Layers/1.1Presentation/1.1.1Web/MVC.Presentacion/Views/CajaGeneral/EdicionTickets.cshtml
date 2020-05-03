@@ -1,0 +1,214 @@
+﻿@model  MVC.Presentacion.Models.Ventas.VentaPuntoVentaDTO
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView, Theme = "Material" }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+<!DOCTYPE html>
+<html>
+<head>
+
+    @{
+        ViewBag.Title = "Edición Tickets";
+    }
+    <link href="~/Resources/css/toggleCl.css" rel="stylesheet" />
+    <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="~/assets/js/pages/ui/notifications.js"></script>
+    @*<script src="~/Resources/js/CajaGeneral.js" type="text/javascript"></script>
+        <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />*@
+    <script src="~/Scripts/js/EditarTicket.js"></script>
+    <script type="text/javascript">
+        var mensaje = '@ViewBag.Mensaje';
+        if (mensaje != '') {
+            $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
+        };
+    </script>
+</head>
+
+<body style="height:100%">
+    @using (Html.BeginForm("GuardarTicket", "CajaGeneral", FormMethod.Post))
+    {
+        @*@Html.HiddenFor(m => m.FolioVenta)*@
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Liquidación</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Caja General</li>
+                                <li class="breadcrumb-item">Edición de tickets</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-3 ">
+                                    <b>Folio de venta:</b>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="FolioVenta" class="form-control" value="@Model.FolioVenta" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("BuscarTicket") formmethod="post" class="btn btn-raised btn-round btn-primary float-left" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        @if (ViewBag.MensajeError != null)
+                        {
+                            <div class="row clearfix">
+                                <div id="divMensajeError" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            <label>@ViewBag.MensajeError</label>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="card">
+                        <div class="body">
+                            <div class="col-lg-12 col-md-12 col-sm-12 blockquote blockquote-info btn-round">
+                                <div class="row clearfix">
+                                    <div class="col-md-3">
+                                        <b>Operador:</b>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.OperadorChofer, Model.OperadorChofer, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <b>Total</b>
+                                            @Html.LabelFor(model => model.Total, Model.Total.ToString(), new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Fecha de venta:</b>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.FechaRegistro, Model.FechaRegistro.ToShortDateString(), new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Total descuento:</b>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Descuento, Model.Descuento.ToString(), new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row clearfix">
+                                    <div class="col-md-3">
+                                        <b>Total bonificación:</b>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Bonificacion, Model.Bonificacion != null ? Model.Bonificacion.ToString() : "0", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Efectivo recibido</b>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(model => model.EfectivoRecibido, Model.EfectivoRecibido.ToString(), new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <div>
+                                                <strong>¿Es bonificacion?</strong>
+                                            </div>
+                                            <label class="switch">
+                                                @Html.CheckBoxFor(m => m.EsBonificacion, new { @class = "form-control" })
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <div>
+                                                <strong>¿Es a crédito?</strong>
+                                            </div>
+                                            <label class="switch">
+                                                @Html.CheckBoxFor(m => m.VentaACredito, new { @class = "form-control" })
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="card">
+                                    <div class="body">
+                                        <div class="row clearfix blockquote blockquote-info btn-round">
+                                            <div class="table-responsive">
+                                                @if (Model.Detalle != null)
+                                                {
+                                                    @Html.Partial("_Detalles", Model.Detalle)
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row clearfix">
+                                        <div class="col-sm-4">
+                                            <input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index", "Home") class="btn btn-raised btn-round btn-primary float-right" />
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
+                                                Guardar cambios
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <a href="#ModalConfirmacionEliminar" data-toggle="modal" id="btnok" data-target="#ModalConfirmacionEliminar" class="btn btn-raised btn-danger btn-round ">
+                                                Eliminar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="modal fade" id="ModalConfirmacionEliminar" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalConfirmacionLabel">¿Seguro que quiere eliminar?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" id="btnLiquidar" value="Si" formaction=@Url.Action("BorrarTicket", new { Folio = Model.FolioVenta }) formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalConfirmacionLabel">Necesita confirmar los cambios</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" id="btnLiquidar" value="Confirmar" formaction=@Url.Action("GuardarTicket") formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>

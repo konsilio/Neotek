@@ -89,6 +89,26 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_ventas.ActaualizarTickets(dto), Request);
         }
+        [Route("buscar/ticket/{folio}")]
+        public HttpResponseMessage GetTicket(string folio)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.BuscarTicket(folio));
+        }
+        [Route("modificar/venta")]
+        public HttpResponseMessage PutActualizarTiket(VentaPuntoVentaDTO dto)
+        {
+            return RespuestaHttp.crearRespuesta(_ventas.ActaualizarTicket(dto), Request);
+        }
+        [Route("modificar/ventadetalle")]
+        public HttpResponseMessage PutActualizarTiketDetalle(VPuntoVentaDetalleDTO dto)
+        {
+            return RespuestaHttp.crearRespuesta(_ventas.ActaualizarTicketDetalle(dto), Request);
+        }
+        [Route("borrar/ticket/{folio}")]
+        public HttpResponseMessage PutEliminarTikets(string folio)
+        {
+            return RespuestaHttp.crearRespuesta(_ventas.EliminarTicket(folio), Request);
+        }
         #endregion
     }
 }

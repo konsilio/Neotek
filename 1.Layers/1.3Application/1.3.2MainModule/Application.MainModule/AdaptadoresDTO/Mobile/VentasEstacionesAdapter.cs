@@ -91,6 +91,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         public static ICollection<VentaPuntoDeVentaDetalle> ToDTO(List<ConceptoDTO> conceptos, VentaDTO venta, PuntoVenta punto_venta, int idOrden, short idEmpresa)
         {
             List<VentaPuntoDeVentaDetalle> list = new List<VentaPuntoDeVentaDetalle>();
+            PrecioVenta pv = new PrecioVenta();
             int idOrdenDetalle = 1;
             foreach (var concepto in conceptos)
             {

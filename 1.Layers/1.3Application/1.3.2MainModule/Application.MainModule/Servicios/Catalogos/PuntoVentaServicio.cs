@@ -45,6 +45,18 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarVentas(fi, ff);
         }
+        public static VentaPuntoDeVentaDetalle ObtenerVentaDetalles(short idEmpresa, short anio, byte mes, byte dia, int orden, short ordenDetall)
+        {
+            return new PuntoVentaDataAccess().BuscarVentasDetalle(idEmpresa, anio, mes, dia, orden, ordenDetall);
+        }
+        public static RespuestaDto ActualizarVentaDetalles(VentaPuntoDeVentaDetalle detalle)
+        {
+            return new PuntoVentaDataAccess().ActualizarVentaDetalle(detalle);
+        }
+        public static RespuestaDto ActualizarVentaDetalles(VentaPuntoDeVentaDetalle detalle, VentaPuntoDeVenta venta)
+        {
+            return new PuntoVentaDataAccess().ActualizarVentaDetalle(detalle, venta);
+        }
         public static PuntoVenta Obtener(int idPuntoVenta)
         {
             return new PuntoVentaDataAccess().Buscar(idPuntoVenta);
@@ -178,7 +190,7 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().ObtenerCortesAnticipos();
         }
-        public static object ActualizarVentasCorte(VentaPuntoDeVenta item)
+        public static RespuestaDto ActualizarVentasCorte(VentaPuntoDeVenta item)
         {
             return new PuntoVentaDataAccess().ActualizarVentas(item);
         }
@@ -353,6 +365,13 @@ namespace Application.MainModule.Servicios.Catalogos
 
             };
         }
-
+        //public static RespuestaDto EliminarVentas(VentaPuntoDeVenta item)
+        //{
+        //    return new PuntoVentaDataAccess().BorrarVenta(item);
+        //}
+        public static RespuestaDto EliminarVentas(List<VentaPuntoDeVentaDetalle> item, VentaPuntoDeVenta ticket)
+        {
+            return new PuntoVentaDataAccess().BorrarVenta(ticket, item);
+        }
     }
 }

@@ -144,27 +144,27 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "EstadoProvincia")]
         public string EstadoProvincia { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
+        //[Required(ErrorMessage = Error.R0002)]
         [StringLength(100, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Municipio")]
         public string Municipio { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
+        //[Required(ErrorMessage = Error.R0002)]
         [StringLength(6, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "CodigoPostal")]
         public string CodigoPostal { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
+        //[Required(ErrorMessage = Error.R0002)]
         [StringLength(100, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Colonia")]
         public string Colonia { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
+        //[Required(ErrorMessage = Error.R0002)]
         [StringLength(250, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Calle")]
         public string Calle { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
+        //[Required(ErrorMessage = Error.R0002)]
         [StringLength(10, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Número exterior")]
         public string NumExt { get; set; }

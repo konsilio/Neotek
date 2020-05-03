@@ -13,6 +13,10 @@ using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.DTOs;
 using System.Web.Configuration;
+using Application.MainModule.DTOs.Respuesta;
+using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -20,6 +24,15 @@ namespace Application.MainModule.Servicios.Seguridad
     {
         public static RespuestaAutenticacionDto AutenticarUsuario(AutenticacionDto autDto)
         {
+            RespuestaDto resDisp = new RespuestaDto();
+            ValidarDisponibilidadAsync(resDisp).Wait();
+            if (!resDisp.Exito)
+                return new RespuestaAutenticacionDto()
+                {//Se valida que se tenga el servicio disponible
+                    Exito = false,
+                    Mensaje = Error.NoDisponibilidad,
+                    token = string.Empty
+                };
             if (autDto.IdEmpresa < 1 || string.IsNullOrEmpty(autDto.Usuario) || string.IsNullOrEmpty(autDto.Password))
                 return new RespuestaAutenticacionDto()
                 {
@@ -27,7 +40,6 @@ namespace Application.MainModule.Servicios.Seguridad
                     Mensaje = Error.S0003,
                     token = string.Empty
                 };
-
             UsuarioAplicacionDto usuario;
             // Validamos si es un usuario de la administración central
             // y buscamos la existencia del usuario, validando su contraseña
@@ -67,31 +79,68 @@ namespace Application.MainModule.Servicios.Seguridad
 
                 };
         }
-        //public static RespuestaAutenticacionMobileDto ValudarVersionMobile(DTOs.Mobile.LoginFbDTO autDto)
-        //{
-        //    if (WebConfigurationManager.AppSettings["version"].Equals(autDto.Version))
-        //    {
-        //        return new RespuestaAutenticacionMobileDto()
-        //        {
-        //            IdUsuario = 0,
-        //            Exito = true,
-        //            token = string.Empty,
-        //            listMenu = new List<DTOs.Mobile.MenuDto>(),
-        //        };
-        //    }
-        //    else
-        //    {
-        //        return new RespuestaAutenticacionMobileDto()
-        //        {
-        //            IdUsuario = 0,
-        //            Exito = false,
-        //            Mensaje = Error.S0011,
-        //            token = string.Empty,
-        //            listMenu = new List<DTOs.Mobile.MenuDto>(),
-        //        };
-        //    }
-        //}
-
+        public static RespuestaAutenticacionMobileDto ValudarVersionMobile(DTOs.Mobile.LoginFbDTO autDto)
+        {
+            if (WebConfigurationManager.AppSettings["version"].Equals(autDto.Version))
+            {
+                return new RespuestaAutenticacionMobileDto()
+                {
+                    IdUsuario = 0,
+                    Exito = true,
+                    token = string.Empty,
+                    listMenu = new List<DTOs.Mobile.MenuDto>(),
+                };
+            }
+            else
+            {
+                return new RespuestaAutenticacionMobileDto()
+                {
+                    IdUsuario = 0,
+                    Exito = false,
+                    Mensaje = Error.S0011,
+                    token = string.Empty,
+                    listMenu = new List<DTOs.Mobile.MenuDto>(),
+                };
+            }
+        }
+        public static RespuestaDto ValidarDisponibilidad()
+        {
+            RespuestaDto resp = new RespuestaDto();
+            if (WebConfigurationManager.AppSettings["Disponible"].Equals("1"))
+                resp.Exito = true;
+            else
+                resp.Exito = false;
+            return resp;
+        }
+        public static async Task<RespuestaDto> ValidarDisponibilidadAsync(RespuestaDto resultado)
+        {//gmg
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["Disponible"]);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                try
+                {
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    response = await client.PutAsJsonAsync(WebConfigurationManager.AppSettings["gmg"], "").ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resultado = await response.Content.ReadAsAsync<RespuestaDto>();
+                    else
+                    {
+                        resultado = await response.Content.ReadAsAsync<RespuestaDto>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resultado.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                return resultado;
+            }
+        }
         public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(DTOs.Mobile.LoginFbDTO autDto)
         {
             var aut = AutenticarUsuario(autDto);

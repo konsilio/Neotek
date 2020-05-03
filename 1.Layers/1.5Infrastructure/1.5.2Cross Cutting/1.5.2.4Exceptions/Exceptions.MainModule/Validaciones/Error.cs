@@ -14,6 +14,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string EstatusIncorrecto = "El estatus de {0} no corresponde al proceso que desea realizar";
         public const string PagoExistente = "Ya no puedes solicitar un pago para {0}, ya se realizdo uno";
         public const string NoEncontrado = "No se encontro info";
+        public const string NoDisponibilidad = "El servicio no se encuentra disponible";
 
         public const string S0001 = "El campo '{0}' es obligatorio.";
         public const string S0002 = "El campo '{0}' requiere un mínimo de {2} caracteres y un máximo de {1}.";
@@ -55,6 +56,13 @@ namespace Exceptions.MainModule.Validaciones
         public const string C0007 = "{0} no exite. Verifique la información.";
         public const string C0008 = "El campo '{0}' acepta un valor mínimo de {2} y un máximo de {1}.";
         public const string C0009 = "No se logró hacer la eliminación {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
+
+        public const string CC001 = "No es posible cambiar a De Contado,ya hay abonos registrados";
+        public const string CC002 = "No es posible cambiar el total de la venta, ya hay abonos registrados";
+        public const string CC003 = "No es posible eliminar la venta, ya hay abonos registrados";
+        public const string CC004 = "El precio unitario debe ser menor al vigente ({0})";
+        public const string CC005 = "Las ventas solo son editables el dia que se capturaron";
+        public const string CC006 = "No es posible cambiar la venta, ya se confirmo la liquidación";
 
         public const string CP0001 = "El almacén mínimo ('{0}') no puede ser mayor al almacén máximo ('{1}').";
         public const string CP0002 = "Si marcas'Activo de venta' o 'Es Gas'; no debe marcarse 'Es Transporte Gas'.";

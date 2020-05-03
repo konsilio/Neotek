@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Application.MainModule.DTOs.Cobranza;
 using MVC.Presentacion.Models.Cobranza;
 
 namespace MVC.Presentacion.Models
@@ -20,8 +19,6 @@ namespace MVC.Presentacion.Models
         public decimal Dias32a61 { get; set; }
         public decimal Dias62a91 { get; set; }
         public decimal Mas91 { get; set; }
-        public List<CargosDTO> CargosDetallados { get; set; }
-
-
+        public List<CreditoOtorgadoCargosDTO> CargosDetallados { get; set; }
     }
 }

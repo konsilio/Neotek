@@ -163,7 +163,7 @@
                                     <select name="IdPais" id="ddlPais" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.Paises)
                                         {
-                                            if (Model != null && cc.IdPais == Model.IdTipoProveedor)
+                                            if (cc.IdPais == 1)
                                             {
                                                 <option value="@cc.IdPais" selected>@cc.Pais</option>
                                             }
@@ -181,7 +181,8 @@
                                     <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.Estados)
                                         {
-                                            if (Model != null && cc.IdEstadoRep == Model.IdEstadoRep)
+                                            //if (Model != null && cc.IdEstadoRep == Model.IdEstadoRep)
+                                            if (cc.IdEstadoRep == 12)
                                             {
                                                 <option value="@cc.IdEstadoRep" selected>@cc.Estado</option>
                                             }

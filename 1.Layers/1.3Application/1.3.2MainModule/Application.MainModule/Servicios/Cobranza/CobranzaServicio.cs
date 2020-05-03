@@ -18,6 +18,11 @@ namespace Application.MainModule.Servicios.Cobranza
             return AdaptadoresDTO.Cobranza.AbonosAdapter.ToDTO(new AbonosDataAcces().Buscar(idempresa));
             //return lPedidos;
         }
+        public static Cargo ObtenerCargo(string Folio)
+        {
+            return new AbonosDataAcces().Buscar(Folio);
+            //return lPedidos;
+        }
         public static List<Abono> Obtener(DateTime f)
         {
             return new AbonosDataAcces().BuscarTodos(f);
