@@ -22,10 +22,11 @@ namespace Application.MainModule.Servicios.Seguridad
 {
     public static class AutenticarServicio
     {
+        private static RespuestaDto resDisp;
         public static RespuestaAutenticacionDto AutenticarUsuario(AutenticacionDto autDto)
         {
-            RespuestaDto resDisp = new RespuestaDto();
-            ValidarDisponibilidadAsync(resDisp).Wait();
+            //RespuestaDto resDisp = new RespuestaDto();
+            ValidarDisponibilidadAsync().Wait();
             if (!resDisp.Exito)
                 return new RespuestaAutenticacionDto()
                 {//Se valida que se tenga el servicio disponible
@@ -76,7 +77,6 @@ namespace Application.MainModule.Servicios.Seguridad
                     Exito = false,
                     Mensaje = Error.S0003,
                     token = string.Empty
-
                 };
         }
         public static RespuestaAutenticacionMobileDto ValudarVersionMobile(DTOs.Mobile.LoginFbDTO autDto)
@@ -103,26 +103,27 @@ namespace Application.MainModule.Servicios.Seguridad
                 };
             }
         }
-        public static RespuestaDto ValidarDisponibilidad()
-        {
-            RespuestaDto resp = new RespuestaDto();
-            if (WebConfigurationManager.AppSettings["Disponible"].Equals("1"))
-                resp.Exito = true;
-            else
-                resp.Exito = false;
-            return resp;
-        }
-        public static async Task<RespuestaDto> ValidarDisponibilidadAsync(RespuestaDto resultado)
+        //public static RespuestaDto ValidarDisponibilidad()
+        //{
+        //    RespuestaDto resp = new RespuestaDto();
+        //    if (WebConfigurationManager.AppSettings["Disponible"].Equals("1"))
+        //        resp.Exito = true;
+        //    else
+        //        resp.Exito = false;
+        //    return resp;
+        //}
+        public static async Task<RespuestaDto> ValidarDisponibilidadAsync()
         {//gmg
             using (var client = new HttpClient())
             {
+                RespuestaDto resultado = new RespuestaDto();
                 client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["Disponible"]);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
                     HttpResponseMessage response = new HttpResponseMessage();
-                    response = await client.PutAsJsonAsync(WebConfigurationManager.AppSettings["gmg"], "").ConfigureAwait(false);
+                    response = await client.PostAsJsonAsync(WebConfigurationManager.AppSettings["gmg"], "").ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         resultado = await response.Content.ReadAsAsync<RespuestaDto>();
                     else
@@ -138,7 +139,8 @@ namespace Application.MainModule.Servicios.Seguridad
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                return resultado;
+                resDisp = resultado;
+                return resDisp;
             }
         }
         public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(DTOs.Mobile.LoginFbDTO autDto)

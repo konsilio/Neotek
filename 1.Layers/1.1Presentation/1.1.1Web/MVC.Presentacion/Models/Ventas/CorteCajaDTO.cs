@@ -23,6 +23,8 @@ namespace MVC.Presentacion.Models.Ventas
         public decimal TotalContado { get; set; }
         public decimal TotalEfectio { get; set; }
         public decimal Descuentos { get; set; }
+        public decimal TotalCheques { get; set; }
+        public decimal TotalTransferencias { get; set; }
         public decimal Bonidificaciones { get; set; }
         public string Mensaje { get; set; }
     }

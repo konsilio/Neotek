@@ -119,22 +119,28 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeConsultarAbonos();
             if (!resp.Exito) return null;
+            dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:01"));
+            dto.FechaFin = DateTime.Parse(string.Concat(dto.FechaFin.ToShortDateString(), " 23:59:59"));
             var CreditosCliente = ClienteServicio.BuscarClientesConAbonos(dto).ToList();
-            var List = ClientesAdapter.ToDTOCR(CreditosCliente);
+            var List = ClientesAdapter.ToDTOCR(CreditosCliente.Distinct().ToList(), dto);
             return List;
         }
         public List<CreditoOtorgadoDTO> RepCreditoOtorgadoClientes(PeriodoDTO dto)
         {
             var resp = PermisosServicio.PuedeConsultarAbonos();
             if (!resp.Exito) return null;
+            dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:00"));
+            dto.FechaFin = DateTime.Parse(string.Concat(dto.FechaFin.ToShortDateString(), " 23:59:59"));
             var CreditosCliente = ClienteServicio.BuscarClientesConCargos(dto).ToList();
-            var List = ClientesAdapter.ToDTOCO(CreditosCliente);
+            var List = ClientesAdapter.ToDTOCO(CreditosCliente.Distinct().ToList());
             return List;
         }
         public List<CreditoXClienteDTO> RepCreditoXCliente(PeriodoDTO dto)
         {
             var resp = PermisosServicio.PuedeConsultarAbonos();
             if (!resp.Exito) return null;
+            dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:00"));
+            dto.FechaFin = DateTime.Parse(string.Concat(dto.FechaFin.ToShortDateString(), " 23:59:59"));
             var CreditosXCliente = ClienteServicio.BuscarClientesConSaldoPendiente(dto).ToList();
             var List = ClientesAdapter.ToDTOCXC(CreditosXCliente);
             return List;
@@ -153,6 +159,8 @@ namespace Application.MainModule.Flujos
 
             var resp = PermisosServicio.PuedeConsultarAbonos();
             if (!resp.Exito) return null;
+            dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:00"));
+            dto.FechaFin = DateTime.Parse(string.Concat(dto.FechaFin.ToShortDateString(), " 23:59:59"));
             var CreditosXClienteMensual = ClienteServicio.BuscarClientesConSaldoPendienteMensual(dto).ToList();
             var List = ClientesAdapter.ToDTOCXCM(CreditosXClienteMensual);
             List.Add(ClientesAdapter.SumaCreditoMensual(List));

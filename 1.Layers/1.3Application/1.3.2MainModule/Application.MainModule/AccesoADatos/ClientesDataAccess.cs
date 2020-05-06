@@ -148,6 +148,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<Cliente> BuscadorClientes(string criterio, short idEmpresa)
         {
             criterio = criterio.ToUpper();
+            //int idCliente = 0;
+            //int.TryParse(criterio, out idCliente);
             return uow.Repository<Cliente>().Get(
                 x => ((x.Telefono.Contains(criterio)
                 || x.Telefono1.Contains(criterio)
@@ -160,7 +162,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 || x.Rfc.ToUpper().Contains(criterio)))
                 || x.RazonSocial.ToUpper().Contains(criterio)
                 || x.Nombre.ToUpper().Contains(criterio)
-                || x.IdCliente.ToString().Equals(criterio)
+                //|| x.IdCliente.ToString().Equals(idCliente)
                 && x.IdEmpresa.Equals(idEmpresa)
                 && x.Activo
             ).ToList();
@@ -189,12 +191,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<Cliente> BuscarClientesAbonos(PeriodoDTO dto, short IdEmpresa)
         {
-
-            var resp = uow.Repository<Cliente>().Get(x => x.Cargo.Where(y => y.Abono.Where(z => z.FechaRegistro >= dto.FechaInicio
-                                                     && z.FechaRegistro <= dto.FechaFin).Count() > 0).Count() > 0).ToList();
-                 
-
-
+            //var resp = uow.Repository<Cliente>().Get(x => x.Cargo.Where(y => y.Abono.Where(z => z.FechaRegistro >= dto.FechaInicio
+            //                                         && z.FechaRegistro <= dto.FechaFin).Count() > 0).Count() > 0).ToList();
+            var resp = uow.Repository<Abono>().Get(z => z.FechaAbono > dto.FechaInicio
+                                                     && z.FechaAbono < dto.FechaFin).Select(a => a.Cargo).Select(c=> c.CCliente).ToList();
             return resp;
         }
         public List<Cliente> BuscarClientesCargos(PeriodoDTO dto, short IdEmpresa)

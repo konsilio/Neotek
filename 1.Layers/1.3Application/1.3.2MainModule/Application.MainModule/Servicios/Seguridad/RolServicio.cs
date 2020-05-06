@@ -141,6 +141,7 @@ namespace Application.MainModule.Servicios.Seguridad
                     if (rol.CobranzaVerAbonos || rol.CobranzaVerCreditoRecuperado || rol.CobranzaVerCartera || rol.CobranzaVerCreditoRecuperado || rol.CobranzaConsultarFactura || rol.CobranzaFacturar)
                     {
                         lista.CreditoCobranza = true;
+                        lista.Reportes = true;
                         if (rol.CobranzaVerAbonos)
                             lista.CreditoCobranza = true;
 

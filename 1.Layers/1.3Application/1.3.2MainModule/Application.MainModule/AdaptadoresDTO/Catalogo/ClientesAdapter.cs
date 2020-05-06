@@ -395,14 +395,14 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             }
             return respuesta;
         }
-        public static List<CreditoRecuperadoDTO> ToDTOCR(List<Cliente> ListaClientes)
+        public static List<CreditoRecuperadoDTO> ToDTOCR(List<Cliente> ListaClientes, PeriodoDTO dto)
         {
-            return ListaClientes.Select(x => ToDTOCR(x)).ToList();
+            return ListaClientes.Select(x => ToDTOCR(x, dto)).ToList();
         }
 
-        public static CreditoRecuperadoDTO ToDTOCR(Cliente Clte)
+        public static CreditoRecuperadoDTO ToDTOCR(Cliente Clte, PeriodoDTO p)
         {
-            List<Abono> abonos = Clte.Cargo.SelectMany(x => x.Abono).ToList();
+            List<Abono> abonos = Clte.Cargo.SelectMany(x => x.Abono.Where(a => a.FechaRegistro >= p.FechaInicio && a.FechaRegistro <= p.FechaFin)).ToList();
             //var tiket = Clte.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(new Abono().Cargo.Ticket));
             return new CreditoRecuperadoDTO()
             {

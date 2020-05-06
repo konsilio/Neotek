@@ -47,27 +47,34 @@ namespace MVC.Presentacion.Controllers
                     Session["StringToken"] = respuesta.token;
                     Session["Perfil"] = respuesta.Mensaje;
                     Session["Roles"] = respuesta.LstRoles;
-                    //ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
-                    //ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
-                    //ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());
-                    //ViewBag.Cartera = DashBoardServicio.DashBoardCartera(Session["StringToken"].ToString());
-                    //ViewBag.Caja = DashBoardServicio.DashBoardCajaGeneral(Session["StringToken"].ToString());
+
+                    if (respuesta.LstRoles.Remanente)
+                        ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
+                    if (respuesta.LstRoles.CallCenter)
+                        ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
+                    if (respuesta.LstRoles.AlmacenExistencia)
+                        ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());
+                    if (respuesta.LstRoles.CreditoCobranza)
+                        ViewBag.Cartera = DashBoardServicio.DashBoardCartera(Session["StringToken"].ToString());
+                    if (respuesta.LstRoles.ReporteCorteCaja)
+                        ViewBag.Caja = DashBoardServicio.DashBoardCajaGeneral(Session["StringToken"].ToString());
                 }
                 else
                     return View("Index", AutenticacionServicio.InitIndex(respuesta));
             }
             else
             {
-                //if (EsAdmin)
-                //ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
-                ////if (EsCallCenter)
-                //ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
-                ////if (EsAnden)
-                //ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());
-                ////if (EsAnden)
-                //ViewBag.Cartera = DashBoardServicio.DashBoardCartera(Session["StringToken"].ToString());
-                ////if (EsCajaGeneral)
-                //ViewBag.Caja = DashBoardServicio.DashBoardCajaGeneral(Session["StringToken"].ToString());
+                var LstRoles = (MenuDto)Session["Roles"];
+                if (LstRoles.Remanente)
+                    ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
+                if (LstRoles.CallCenter)
+                    ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
+                if (LstRoles.AlmacenExistencia)
+                    ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());
+                if (LstRoles.CreditoCobranza)
+                    ViewBag.Cartera = DashBoardServicio.DashBoardCartera(Session["StringToken"].ToString());
+                if (LstRoles.ReporteCorteCaja)
+                    ViewBag.Caja = DashBoardServicio.DashBoardCajaGeneral(Session["StringToken"].ToString());
             }
             return View();
         }

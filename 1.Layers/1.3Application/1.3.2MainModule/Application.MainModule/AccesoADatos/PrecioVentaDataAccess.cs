@@ -27,6 +27,67 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.CProducto.Activo).ToList();
         }
+        public List<PrecioVenta> BuscarProgramadosGeneral(short idEmpresa)
+        {
+            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                && x.CProducto.Activo
+                                                && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Programado)
+                                                && !x.EsEstaciones
+                                                && x.EsGas
+                                                && x.FechaProgramada.Day == DateTime.Now.Day
+                                                && x.FechaProgramada.Month == DateTime.Now.Month
+                                                && x.FechaProgramada.Year == DateTime.Now.Year).ToList();
+        }
+        public List<PrecioVenta> BuscarVigentesGeneral(short idEmpresa)
+        {
+            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                && x.CProducto.Activo
+                                                && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente)
+                                                && !x.EsEstaciones
+                                                && x.EsGas).ToList();
+        }
+        public List<PrecioVenta> BuscarProgramadosGeneralEstaciones(short idEmpresa)
+        {
+            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                && x.CProducto.Activo
+                                                && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Programado)
+                                                && x.EsEstaciones
+                                                && x.IdEstacion == null
+                                                && x.EsGas
+                                                && x.FechaProgramada.Day == DateTime.Now.Day
+                                                && x.FechaProgramada.Month == DateTime.Now.Month
+                                                && x.FechaProgramada.Year == DateTime.Now.Year).ToList();
+        }
+        public List<PrecioVenta> BuscarVigentesGeneralEstaciones(short idEmpresa)
+        {
+            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                && x.CProducto.Activo
+                                                && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente)
+                                                && x.EsEstaciones
+                                                && x.IdEstacion == null
+                                                && x.EsGas).ToList();
+        }
+        public List<PrecioVenta> BuscarProgramadosEstaciones(short idEmpresa)
+        {
+            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                && x.CProducto.Activo
+                                                && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Programado)
+                                                && x.EsEstaciones
+                                                && x.IdEstacion != null
+                                                && x.EsGas
+                                                && x.FechaProgramada.Day == DateTime.Now.Day
+                                                && x.FechaProgramada.Month == DateTime.Now.Month
+                                                && x.FechaProgramada.Year == DateTime.Now.Year).ToList();
+        }
+        public List<PrecioVenta> BuscarVigentesEstacion(short idEmpresa, int idEstacion)
+        {
+            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                && x.CProducto.Activo
+                                                && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente)
+                                                && x.EsEstaciones
+                                                && x.IdEstacion == idEstacion
+                                                && x.EsGas).ToList();
+        }
         public List<PrecioVenta> BuscarTodos(short idEmpresa, DateTime fi, DateTime ff)
         {
             return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -104,7 +165,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                             if (PrecioActual != null && PrecioActual.IdPrecioVenta > 0)
                                 if (cte.FechaProgramada == null)
                                     PrecioActual.IdPrecioVentaEstatus = EstatusPrecioVentaEnum.Vencido;
-                        }                        
+                        }
                         uow.Repository<PrecioVenta>().Insert(cte);
                     }
                     uow.SaveChanges();

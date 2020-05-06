@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccesoADatos\BItacoraDataAccess.cs" />
     <Compile Include="AccesoADatos\ControlAsistenciaDataAccess.cs" />
     <Compile Include="AccesoADatos\CuentaContableAutorizadoDataAcces.cs" />
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenAdapter.cs" />

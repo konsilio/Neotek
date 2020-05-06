@@ -50,6 +50,30 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PrecioVentaDataAccess().BuscarTodos(IdEmpresa);
         }
+        public static List<PrecioVenta> ObtenerProgramadosGeneral(short IdEmpresa)
+        {
+            return new PrecioVentaDataAccess().BuscarProgramadosGeneral(IdEmpresa);
+        }
+        public static List<PrecioVenta> ObtenerVigentesGeneral(short IdEmpresa)
+        {
+            return new PrecioVentaDataAccess().BuscarVigentesGeneral(IdEmpresa);
+        }
+        public static List<PrecioVenta> ObtenerProgramadosGeneralEstaciones(short IdEmpresa)
+        {
+            return new PrecioVentaDataAccess().BuscarProgramadosGeneralEstaciones(IdEmpresa);
+        }
+        public static List<PrecioVenta> ObtenerVigentesGeneralEstaciones(short IdEmpresa)
+        {
+            return new PrecioVentaDataAccess().BuscarVigentesGeneralEstaciones(IdEmpresa);
+        }
+        public static List<PrecioVenta> ObtenerProgramadosEstaciones(short IdEmpresa)
+        {
+            return new PrecioVentaDataAccess().BuscarProgramadosEstaciones(IdEmpresa);
+        }
+        public static List<PrecioVenta> ObtenerVigentesEstaciones(short IdEmpresa, int idEstacion)
+        {
+            return new PrecioVentaDataAccess().BuscarVigentesEstacion(IdEmpresa, idEstacion);
+        }
         public static List<PrecioVenta> ObtenerListaPreciosVentaIdEmp(short IdEmpresa, DateTime fi, DateTime ff)
         {
             return new PrecioVentaDataAccess().BuscarTodos(IdEmpresa, fi, ff);

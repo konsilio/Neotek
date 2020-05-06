@@ -32,12 +32,10 @@ namespace Application.MainModule.Servicios.Seguridad
         {
             return new UsuarioDataAccess().Buscar(idUsuario);
         }
-
         public static string ObtenerNombreCompleto(Usuario usuario)
         {
             return string.Concat(usuario.Nombre, " ", usuario.Apellido1, " ", usuario.Apellido2);
         }
-
         public static string ObtenerNombreCompleto(OperadorChofer operador)
         {
             if (operador.Usuario != null)
@@ -45,29 +43,24 @@ namespace Application.MainModule.Servicios.Seguridad
 
             return ObtenerNombreCompleto(Obtener(operador.IdUsuario));
         }
-
         public static RespuestaDto Actualizar(Usuario usuario)
         {
             return new UsuarioDataAccess().Actualizar(usuario);
         }
-
         //ActualizarUsuarioRol
         public static RespuestaDto Insertar(UsuarioRol usRol)
         {
             return new UsuarioDataAccess().Insertar(usRol);
         }
-
         public static RespuestaDto AltaUsuario(Usuario user)
         {
             return new UsuarioDataAccess().Insertar(user);
         }
-
         //EliminarUsuarioRol
         public static RespuestaDto Eliminar(UsuarioRol usRol)
         {
             return new UsuarioDataAccess().Eliminar(usRol);
         }
-
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El Usuario");
@@ -79,8 +72,6 @@ namespace Application.MainModule.Servicios.Seguridad
                 MensajesError = new List<string>() { mensaje },
             };
         }
-
-
         public static RespuestaDto BorrarSuperAdmin()
         {
             string mensaje = string.Format(Error.P0003, "El SuperAdmin");
@@ -91,6 +82,10 @@ namespace Application.MainModule.Servicios.Seguridad
                 Mensaje = mensaje,
                 MensajesError = new List<string>() { mensaje },
             };
+        }
+        public static RespuestaDto GuardarBitacora(Bitacora entidad)
+        {
+            return new BitacoraDataAcces().Insertar(entidad);
         }
     }
 }
