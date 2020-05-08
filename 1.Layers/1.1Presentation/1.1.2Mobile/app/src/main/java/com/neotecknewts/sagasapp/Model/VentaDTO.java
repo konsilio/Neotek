@@ -77,6 +77,12 @@ public class VentaDTO implements Serializable {
     @SerializedName("DescuentoTotal")
     private double DescuentoTotal;
 
+    @SerializedName("NombreGasera")
+    private String NombreGasera;
+
+    @SerializedName("RFCGasera")
+    private String RFCGasera;
+
     //region Atributos de tipo reporte
     private boolean EsSinNumero;
 
@@ -304,6 +310,22 @@ public class VentaDTO implements Serializable {
         this.DescuentoTotal = descuentoTotal;
     }
 
+    public String getNombreGasera() {
+        return NombreGasera;
+    }
+
+    public String getRFCGasera() {
+        return RFCGasera;
+    }
+
+    public void setNombreGasera(String nombreGasera) {
+        NombreGasera = nombreGasera;
+    }
+
+    public void setRFCGasera(String RFCGasera) {
+        this.RFCGasera = RFCGasera;
+    }
+
     @Override
     public String toString() {
         return "VentaDTO{" +
@@ -327,6 +349,9 @@ public class VentaDTO implements Serializable {
                 ", EsVentaGas=" + EsVentaGas +
                 ", RazonSocial='" + RazonSocial + '\'' +
                 ", VentaExtraforanea=" + VentaExtraforanea +
+                ", DescuentoTotal=" + DescuentoTotal +
+                ", NombreGasera='" + NombreGasera + '\'' +
+                ", RFCGasera='" + RFCGasera + '\'' +
                 ", EsSinNumero=" + EsSinNumero +
                 ", EsBusqueda=" + EsBusqueda +
                 ", EsRegistro=" + EsRegistro +

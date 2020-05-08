@@ -382,6 +382,13 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         if (ExistenciasDTO != null) {
 
             adapter = new PuntoVentaAdapter(ExistenciasDTO, EsVentaCamioneta, this);
+            if (respuesta.get(0).getRazonSocial() != null && respuesta.get(0).getRFC() != null) {
+                ventaDTO.setNombreGasera(respuesta.get(0).getRazonSocial());
+                ventaDTO.setRFCGasera(respuesta.get(0).getRFC());
+            } else {
+                ventaDTO.setNombreGasera("");
+                ventaDTO.setRFCGasera("");
+            }
             if (!EsVentaCamioneta) {
                 adapter.esVentaGas = true;
                 adapter.PrecioLitro = TVFormularioVentaCamionetaYPipaPrecio;

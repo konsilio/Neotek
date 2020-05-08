@@ -29,6 +29,12 @@ public class ExistenciasDTO implements Serializable {
     @SerializedName("CapacidadKg")
     private double CapacidadKg;
 
+    @SerializedName("RFC")
+    private String RFC;
+
+    @SerializedName("RazonSocial")
+    private String RazonSocial;
+
     public int getId() {
         return Id;
     }
@@ -93,6 +99,22 @@ public class ExistenciasDTO implements Serializable {
         CapacidadKg = capacidadKg;
     }
 
+    public String getRFC() {
+        return RFC;
+    }
+
+    public String getRazonSocial() {
+        return RazonSocial;
+    }
+
+    public void setRFC(String RFC) {
+        this.RFC = RFC;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        RazonSocial = razonSocial;
+    }
+
     @Override
     public String toString() {
         return "ExistenciasDTO{" +
@@ -104,6 +126,8 @@ public class ExistenciasDTO implements Serializable {
                 ", cantidad='" + cantidad + '\'' +
                 ", CapacidadLt=" + CapacidadLt +
                 ", CapacidadKg=" + CapacidadKg +
+                ", RFC='" + RFC + '\'' +
+                ", RazonSocial='" + RazonSocial + '\'' +
                 '}';
     }
 }

@@ -232,6 +232,9 @@ public class VerReporteActivity extends AppCompatActivity {
                 "text/HTML", "UTF-8", null);
     }
 
+    // Impresión de ticket de venta
+    // HtmlReporte - Vista de app
+    // StringReporte - ticket
     private void GenerarReporte(VentaDTO ventaDTO) {
         Log.d("FerChido", ventaDTO.toString());
         HtmlReporte = "<body>" +
@@ -357,7 +360,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</body>";
 
         StringReporte = "\tTiket de venta\n" +
-                "Gas Mundial de Guerrero\n\n"+
+                // "Gas Mundial de Guerrero\n\n"+
                 "Tiket\t[{Clave-venta}]\n"+
                 "Fecha\t[{Fecha}]\n"+
                 "Hora\t[{Hora}]\n";
@@ -365,7 +368,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 && !ventaDTO.getEstacion().equals("")) {
             StringReporte+="Surtido: \t [{Estacion}]\n";
         }
-        StringReporte+="_________________________\n";
+        StringReporte+="--------------------------------\n";
         //region Busqueda por cliente
         if(ventaDTO.isEsBusqueda()) {
             if(ventaDTO.getRazonSocial().trim().length()>0){
@@ -433,7 +436,9 @@ public class VerReporteActivity extends AppCompatActivity {
 
         StringReporte += "Le atendio [{Usuario}]"+
                 "\n--------------------------------\n"+
-                "Gas Mundial de Guerrero S.A de C.V.\n"+
+                // "Gas Mundial de Guerrero S.A de C.V.\n"+
+                "[{NombreGasera}]\n" +
+                "RFC: [{RFCGasera}]\n" +
                 "Av. Principal No. 5477 C.P. 56789\n"+
                 "www.gasmundialdeguerrero.com.mx\n\n"+
 
@@ -611,6 +616,10 @@ public class VerReporteActivity extends AppCompatActivity {
 
         StringReporte = StringReporte.replace("[{Usuario}]", nombre);
         HtmlReporte = HtmlReporte.replace("[{Usuario}]", nombre);
+
+        // Nombre y RFC de la gasera
+        StringReporte = StringReporte.replace("[{NombreGasera}]", ventaDTO.getNombreGasera());
+        StringReporte = StringReporte.replace("[{RFCGasera}]", ventaDTO.getRFCGasera());
 
         Log.d("FerChido",StringReporte);
     }
