@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -77,10 +78,7 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
                                         .getNombreAlmacen()
                         )) {
 
-                            autoconsumoDTO.setIdCAlmacenGasSalida(
-                                    datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
-                                    .getIdAlmacenGas()
-                            );
+                            autoconsumoDTO.setIdCAlmacenGasSalida(0);
                             autoconsumoDTO.setIdCAlmacenGasEntrada(
                                     datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
                                             .getIdAlmacenGas()
@@ -119,10 +117,8 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
                 autoconsumoDTO.setIdCAlmacenGasSalida(0);
              }
          });
-         BtnAutoconsumoInventarioActivityGuardar = findViewById(R.id.
-                 BtnAutoconsumoInventarioActivityGuardar);
-        BtnAutoconsumoInventarioActivityGuardar.setOnClickListener(v -> VerificarCampos());
-
+         BtnAutoconsumoInventarioActivityGuardar = findViewById(R.id.BtnAutoconsumoInventarioActivityGuardar);
+         BtnAutoconsumoInventarioActivityGuardar.setOnClickListener(v -> VerificarCampos());
     }
 
     @Override
@@ -139,9 +135,9 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
                 }
             });
             builder.create().show();
-        }else{
-            Intent intent = new Intent(AutoconsumoInventarioActivity.this,
-                    LecturaP5000Activity.class);
+        } else {
+            Log.d("FerChido", autoconsumoDTO.toString());
+            Intent intent = new Intent(AutoconsumoInventarioActivity.this, LecturaP5000Activity.class);
             intent.putExtra("autoconsumoDTO",autoconsumoDTO);
             intent.putExtra("EsAutoconsumoInvetarioInicial",EsAutoconsumoInventarioInicial);
             intent.putExtra("EsAutoconsumoInventarioFinal",EsAutoconsumoInventarioFinal);
@@ -152,18 +148,15 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
     @Override
     public void onSuccessLista(DatosAutoconsumoDTO data) {
         if(data!=null){
+            for (int x=0; x<data.getEstacionSalidaDTOList().size();x++) {
+                Log.d("FerChido", data.getEstacionSalidaDTOList().get(x).toString());
+            }
             list_unidad = new String[data.getEstacionSalidaDTOList().size()];
             datosAutoconsumoDTO = data;
             for (int x=0;x<datosAutoconsumoDTO.getEstacionSalidaDTOList().size();x++){
-                list_unidad[x] = datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
-                        .getNombreAlmacen();
+                list_unidad[x] = datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x).getNombreAlmacen();
             }
-            SAutoconsumoInvetarioActivityInventario.setAdapter(
-                    new ArrayAdapter<>(
-                    this,
-                    R.layout.custom_spinner,
-                    list_unidad)
-            );
+            SAutoconsumoInvetarioActivityInventario.setAdapter(new ArrayAdapter<>( this, R.layout.custom_spinner, list_unidad));
         }
     }
 

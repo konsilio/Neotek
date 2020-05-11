@@ -273,9 +273,6 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             }
         }
 
-        Log.d("FerChido", EsRecargaPipaInicial +"");
-        Log.d("FerChido", EsRecargaPipaFinal +"");
-
         TVLecturaP5000Titulo = findViewById(R.id.TVLecturaP5000Titulo);
         TVLecturaP5000Tipo = findViewById(R.id.TVLecturaP5000Tipo);
         TVLecturaP5000Pregunta = findViewById(R.id.TVLecturaP5000Pregunta);
@@ -510,15 +507,10 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             CantidadP500 = NPLecturaP500CantidadLectura.getValue();
         }
 
-        if (CantidadP500 <0)
-        {
+        if (CantidadP500 <0) {
             mensaje += "La lectura del P5000 es un valor requerido";
             error = true;
-        }else{
-            /*if(CantidadP500<0) {
-                mensaje += "La lectura del P5000 es un valor entero mayor a cero";
-                error = true;
-            }*/
+        } else {
             error = false;
         }
 
@@ -534,8 +526,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             dialogo.create();
             dialogo.show();
         }else{
-            Intent intent = new Intent(LecturaP5000Activity.this,
-                    CameraLecturaActivity.class);
+            Intent intent = new Intent(LecturaP5000Activity.this, CameraLecturaActivity.class);
             if(EsLecturaInicial || EsLecturaFinal) {
                 intent.putExtra("EsLecturaInicial",EsLecturaInicial);
                 intent.putExtra("EsLecturaFinal",EsLecturaFinal);
@@ -587,7 +578,10 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 intent.putExtra("autoconsumoDTO",autoconsumoDTO);
                 startActivity(intent);
             }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
+                //Log.d("FerChido", "P500: " + CantidadP500);
                 autoconsumoDTO.setP5000Salida(CantidadP500);
+                //Log.d("FerChido", autoconsumoDTO.getP5000Salida()+"");
+                Log.d("FerChido", autoconsumoDTO.toString());
                 intent.putExtra("EsAutoconsumoInvetarioInicial",EsAutoconsumoInvetarioInicial);
                 intent.putExtra("EsAutoconsumoInventarioFinal",EsAutoconsumoInventarioFinal);
                 intent.putExtra("autoconsumoDTO",autoconsumoDTO);

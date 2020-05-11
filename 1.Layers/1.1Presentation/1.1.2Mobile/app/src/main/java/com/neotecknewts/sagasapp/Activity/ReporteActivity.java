@@ -130,11 +130,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
         ArrayList<String> mensajes = new ArrayList<>();
         if (fecha == null) {
             error = true;
-            mensajes.add("La fecha a obtener el reporte es requerido");
+            mensajes.add("La fecha es requerida");
         }
         if (SReporteActivityListUnidades.getSelectedItemPosition() < 0) {
             error = true;
-            mensajes.add("La unidad es un valor requerido");
+            mensajes.add("La unidad requerida");
         }
         if (error)
             MensajeError(mensajes);
@@ -390,7 +390,6 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "</div>" +
                         "</body>";
 
-
                 formato_reporte_pipa_html = formato_reporte_pipa_html.replace(
                         "[{Elemento}]",
                         reporteDTO.getEstacion());
@@ -440,21 +439,13 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "[{Bonificacion}]",
                         String.valueOf(reporteDTO.isBonificacion())
                 );
-                Log.d("bonificacionreporte",reporteDTO.isBonificacion()+"");
-                Log.d("Reporte", "pre html: "+formato_reporte_pipa_html.replace("[{Elemento}]",
-                        reporteDTO.getEstacion()));
+
                 reporte_con_formato = new String[2];
                 reporte_con_formato[0] = formato_reporte_pipa_text;
                 reporte_con_formato[1] = formato_reporte_pipa_html;
 
-                Log.d("Ali", "text: "+formato_reporte_pipa_text);
-                Log.d("Ali", "html: "+formato_reporte_pipa_html);
-
                 if (EsReporteDelDia) {
-                    Log.d("Ali", "text: "+datos[0]);
-                    Log.d("Ali", "html: "+datos[1]);
-                    Intent intent = new Intent(ReporteActivity.this,
-                            VerReporteActivity.class);
+                    Intent intent = new Intent(ReporteActivity.this, VerReporteActivity.class);
                     intent.putExtra("EsReporteDelDia", EsReporteDelDia);
                     intent.putExtra("FechaReporte", fecha);
                     intent.putExtra("unidadDTO", unidadesDTO);

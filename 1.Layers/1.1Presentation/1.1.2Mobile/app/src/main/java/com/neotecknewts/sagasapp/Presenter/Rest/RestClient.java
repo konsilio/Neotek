@@ -285,6 +285,17 @@ public interface RestClient {
                                                @Header("Authorization") String token,
                                                @Header("Content-type") String contentType
     );
+
+    @POST(Constantes.POST_AUTOCONSUMO)
+    Call<ReporteDto> postAutorconsumoR(@Body AutoconsumoDTO autoconsumoDTO,
+                                               /*@Path(value = "esEstacion") boolean esEstacion,
+                                               @Path(value = "esIventario") boolean esInventario,
+                                               @Path(value = "esPipa") boolean esPipa,*/
+                                               @Path(value = "esFinal") boolean esFinal,
+                                               @Header("Authorization") String token,
+                                               @Header("Content-type") String contentType
+    );
+
     @GET(Constantes.GET_CATALOGO_TRASPASO)
     Call<DatosTraspasoDTO> getDatosTraspaso(/*@Path(value = "esTraspaso") boolean esTraspaso,*/
             @Path(value = "esPipa") boolean esPipa,

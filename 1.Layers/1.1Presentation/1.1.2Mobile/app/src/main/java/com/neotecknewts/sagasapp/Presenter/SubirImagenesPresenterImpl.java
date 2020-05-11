@@ -3,6 +3,7 @@ package com.neotecknewts.sagasapp.Presenter;
 import android.content.Context;
 import android.util.Log;
 
+import com.neotecknewts.sagasapp.Model.ReporteDto;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Activity.RegistrarPapeletaView;
 import com.neotecknewts.sagasapp.Activity.SubirImagenesView;
@@ -208,6 +209,12 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     public void onSuccessRegistroRecarga() {
         subirImagenesView.hideProgress();
         subirImagenesView.onSuccessRegistroRecarga();
+    }
+
+    @Override
+    public void onSuccessRegistroRecarga(boolean esAutoconsumoInventarioFinal, ReporteDto data) {
+        subirImagenesView.hideProgress();
+        subirImagenesView.onSuccessRegistroRecarga(esAutoconsumoInventarioFinal, data);
     }
     @Override
     public void registrarRecargaPipa(SAGASSql sagasSql, String token, RecargaDTO recargaDTO,

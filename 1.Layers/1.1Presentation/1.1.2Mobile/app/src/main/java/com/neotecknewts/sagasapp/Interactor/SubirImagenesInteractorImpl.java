@@ -13,6 +13,7 @@ import com.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.neotecknewts.sagasapp.Model.ReporteDto;
 import com.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
@@ -1562,18 +1563,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @param esAutoconsumoInventarioFinal Boolean que determina si es un autoconsumo final
      */
     @Override
-    public void registrarAutoconsumoInventario(SAGASSql sagasSql, String token, AutoconsumoDTO
-            autoconsumoDTO, boolean esAutoconsumoInventarioFinal) {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
-                new SimpleDateFormat("ddMMyyyyhhmmssS");
+    public void registrarAutoconsumoInventario(SAGASSql sagasSql, String token, AutoconsumoDTO autoconsumoDTO, boolean esAutoconsumoInventarioFinal) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "AIN";
         clave_unica += (esAutoconsumoInventarioFinal)? "F":"I";
         clave_unica += s.format(new Date());
         autoconsumoDTO.setClaveOperacion(clave_unica);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
-                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
         autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
+        autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getImagenesURI().size());
         //region Verifica si el servcio esta disponible
 
 
@@ -1614,73 +1613,53 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
         //region Realiza el registro del autoconsumo
 
-
-
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
-            Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
-                    autoconsumoDTO,
-                    /*false,
-                    true,
-                    false,*/
-                    esAutoconsumoInventarioFinal,
-                    token,
-                    "application/json"
-            );
-            Log.w("Url camioneta", ApiClient.BASE_URL);
-            call.enqueue(new Callback<RespuestaRecargaDTO>() {
-                @Override
-                public void onResponse(Call<RespuestaRecargaDTO> call,
-                                       Response<RespuestaRecargaDTO> response) {
-                    RespuestaRecargaDTO data = response.body();
-                    if (response.isSuccessful()) {
-                        Log.w("IniciarDescarga", "Success");
-                        subirImagenesPresenter.onSuccessRegistroRecarga();
+        Call<ReporteDto> call = restClient.postAutorconsumoR( autoconsumoDTO, esAutoconsumoInventarioFinal, token, "application/json");
+        call.enqueue(new Callback<ReporteDto>() {
+            @Override
+            public void onResponse(Call<ReporteDto> call, Response<ReporteDto> response) {
+                ReporteDto data = response.body();
+                if (response.isSuccessful()) {
+                    if (data.isExito()) {
+                        subirImagenesPresenter.onSuccessRegistroRecarga(esAutoconsumoInventarioFinal, data);
                     } else {
-                        //registra_reacrga = false;
-                        switch (response.code()) {
-                            case 404:
-                                Log.w("Autoconsumo inventario", "not found");
-                                break;
-                            case 500:
-                                Log.w("Autoconsumo inventario", "server broken");
-                                break;
-                            default:
-                                Log.w("Autoconsumo inventario", "" + response.code());
-                                Log.w(" Error", response.message() + " " +
-                                        response.raw().toString());
-                                break;
-                        }
-                        if(data!=null) {
-                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
-                        }else {
-                            subirImagenesPresenter.errorSolicitud(response.message());
-                        }
-                        //registra_reacrga= false;
+                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
                     }
-                    if(response.code()>=300){
-                        registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
-                                SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL,
-                                esAutoconsumoInventarioFinal);
-                        Lisener lisener = new Lisener(sagasSql, token);
-                        lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
-                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                } else {
+                    Log.d("FerChido", "Error, code: " + response.code());
+                    switch (response.code()) {
+                        case 404:
+                            Log.w("Autoconsumo inventario", "not found");
+                            break;
+                        case 500:
+                            Log.w("Autoconsumo inventario", "server broken");
+                            break;
+                        default:
+                            Log.w("Autoconsumo inventario", "" + response.code());
+                            Log.w(" Error", response.message() + " " + response.raw().toString());
+                            break;
+                    }
+                    if(data!=null) {
+                        subirImagenesPresenter.errorSolicitud(data.getMensajesError());
+                    } else {
+                        subirImagenesPresenter.errorSolicitud(response.message());
                     }
                 }
+            }
 
-                @Override
-                public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
-                    Log.e("error", t.toString());
-                    registra_reacrga = false;
-                    registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
-                            SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL,
-                            esAutoconsumoInventarioFinal);
-                    Lisener lisener = new Lisener(sagasSql, token);
-                    lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
-                    subirImagenesPresenter.onSuccessRegistroAndroid();
-                }
-            });
+            @Override
+            public void onFailure(Call<ReporteDto> call, Throwable t) {
+                Log.e("error", t.toString());
+                registra_reacrga = false;
+                registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
+                        SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL,
+                        esAutoconsumoInventarioFinal);
+                Lisener lisener = new Lisener(sagasSql, token);
+                lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
+                subirImagenesPresenter.onSuccessRegistroAndroid();
+            }
+        });
         //endregion
-
     }
 
     /**

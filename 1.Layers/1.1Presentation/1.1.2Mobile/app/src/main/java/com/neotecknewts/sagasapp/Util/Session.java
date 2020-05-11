@@ -129,6 +129,10 @@ public class Session {
         return pref.getString(KEY_TOKEN,null);
     }
 
+    public int getIdAlmacen() {
+        return pref.getInt(KEY_ID_ALMACEN, 0);
+    }
+
     //regresa el id de la empresa
     public int getIdEmpresa(){
         return pref.getInt(KEY_ID_EMPRESA,0);

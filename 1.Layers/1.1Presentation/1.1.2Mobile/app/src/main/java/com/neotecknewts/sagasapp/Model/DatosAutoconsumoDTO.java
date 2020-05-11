@@ -210,6 +210,19 @@ public class DatosAutoconsumoDTO extends RespuestaDTO implements Serializable {
         public void setCilindros(List<CilindrosDTO> cilindros) {
             Cilindros = cilindros;
         }
+
+        @Override
+        public String toString() {
+            return "EstacionSalidaDTO{" +
+                    "Medidor=" + Medidor +
+                    ", IdAlmacenGas=" + IdAlmacenGas +
+                    ", NombreAlmacen='" + NombreAlmacen + '\'' +
+                    ", PorcentajeMedidor=" + PorcentajeMedidor +
+                    ", CantidadP5000=" + CantidadP5000 +
+                    ", IdTipoMedidor=" + IdTipoMedidor +
+                    ", Cilindros=" + Cilindros +
+                    '}';
+        }
     }
 
     public class PredeterminadaDTO  extends RespuestaDTO implements Serializable{
@@ -291,6 +304,19 @@ public class DatosAutoconsumoDTO extends RespuestaDTO implements Serializable {
 
         public void setCilindros(List<CilindrosDTO> cilindros) {
             Cilindros = cilindros;
+        }
+
+        @Override
+        public String toString() {
+            return "PredeterminadaDTO{" +
+                    "Medidor=" + Medidor +
+                    ", IdAlmacenGas=" + IdAlmacenGas +
+                    ", NombreAlmacen='" + NombreAlmacen + '\'' +
+                    ", PorcentajeMedidor=" + PorcentajeMedidor +
+                    ", CantidadP5000=" + CantidadP5000 +
+                    ", IdTipoMedidor=" + IdTipoMedidor +
+                    ", Cilindros=" + Cilindros +
+                    '}';
         }
     }
 }

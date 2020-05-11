@@ -301,14 +301,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
             setTitle(R.string.Calibracion);
         }
         BtnCameraLecturaTomarFoto.setOnClickListener(v -> {
-            //List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
-
-            //Log.w("Prueba","prueba"+permissions(permissionList));
-
-           // if (permissions(permissionList)) {
-
-                openCameraIntent();
-            //}
+            openCameraIntent();
         });
 
         BtnCameraLecturaFotoNitidaNo.setOnClickListener(v -> openCameraIntent());
@@ -428,6 +421,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
                 //autoconsumoDTO.getImagenes().add(imageurl);
                 autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getCantidadFotos()+1);
                 autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                Log.d("FerChido", autoconsumoDTO.toString());
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         SubirImagenesActivity.class);
                 intent.putExtra("EsAutoconsumoInvetarioInicial",EsAutoconsumoInvetarioInicial);

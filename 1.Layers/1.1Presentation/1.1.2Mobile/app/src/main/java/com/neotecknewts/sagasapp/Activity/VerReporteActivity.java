@@ -48,6 +48,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class VerReporteActivity extends AppCompatActivity {
+    private boolean EsAutoConsumo;
     private boolean EsReporteDelDia;
     private boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
@@ -86,6 +87,7 @@ public class VerReporteActivity extends AppCompatActivity {
         session = new Session(this);
 
         if(bundle!=null){
+            EsAutoConsumo = bundle.getBoolean("EsAutoConsumo",false);
             EsReporteDelDia = bundle.getBoolean("EsReporteDelDia",false);
             EsRecargaEstacionInicial = bundle.getBoolean("EsRecargaEstacionInicial",
                     false);
@@ -109,10 +111,12 @@ public class VerReporteActivity extends AppCompatActivity {
             EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
             //Log.d("CorteDTO", corteDTO.toString());
 
+            if(EsAutoConsumo) {
+                StringReporte = (String) bundle.get("StringReporte");
+                HtmlReporte = (String) bundle.get("HtmlReporte");
+                setTitle("Autoconsumo");
+            }
             if(EsReporteDelDia) {
-
-                Log.d("Ali", "text: "+ (String) bundle.get("StringReporte"));
-                Log.d("Ali", "html: "+ (String) bundle.get("HtmlReporte"));
                 StringReporte = (String) bundle.get("StringReporte");
                 HtmlReporte = (String) bundle.get("HtmlReporte");
             }
@@ -173,7 +177,7 @@ public class VerReporteActivity extends AppCompatActivity {
         Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
         Button btnReporteActivityImprimir = findViewById(R.id.BtnReporteActivityImprimir);
         btnVerReporteActivityTerminar.setOnClickListener(v -> {
-            if(EsReporteDelDia) {
+            if(EsReporteDelDia || EsAutoConsumo) {
                 Intent intent = new Intent(VerReporteActivity.this, MenuActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

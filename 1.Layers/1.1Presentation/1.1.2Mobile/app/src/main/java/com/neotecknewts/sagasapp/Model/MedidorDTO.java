@@ -41,4 +41,13 @@ public class MedidorDTO extends RespuestaDTO implements Serializable {
     public void setCantidadFotografias(int cantidadFotografias) {
         CantidadFotografias = cantidadFotografias;
     }
+
+    @Override
+    public String toString() {
+        return "MedidorDTO{" +
+                "NombreTipoMedidor='" + NombreTipoMedidor + '\'' +
+                ", IdTipoMedidor=" + IdTipoMedidor +
+                ", CantidadFotografias=" + CantidadFotografias +
+                '}';
+    }
 }

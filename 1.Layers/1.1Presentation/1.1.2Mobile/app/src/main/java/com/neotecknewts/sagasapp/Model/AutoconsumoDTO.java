@@ -163,4 +163,23 @@ public class AutoconsumoDTO implements Serializable{
     public void setFechaRegistro(String fechaRegistro) {
         FechaRegistro = fechaRegistro;
     }
+
+    @Override
+    public String toString() {
+        return "AutoconsumoDTO{" +
+                "IdCAlmacenGasSalida=" + IdCAlmacenGasSalida +
+                ", IdCAlmacenGasEntrada=" + IdCAlmacenGasEntrada +
+                ", P5000Salida=" + P5000Salida +
+                ", ClaveOperacion='" + ClaveOperacion + '\'' +
+                // ", Imagenes=" + Imagenes +
+                ", ImagenesURI=" + ImagenesURI +
+                ", CantidadFotos=" + CantidadFotos +
+                ", NombreTipoMedidor='" + NombreTipoMedidor + '\'' +
+                ", PorcentajeMedidor=" + PorcentajeMedidor +
+                ", IdTipoMedidor=" + IdTipoMedidor +
+                ", FechaAplicacion='" + FechaAplicacion + '\'' +
+                ", FechaRegistro='" + FechaRegistro + '\'' +
+                ", NombreEstacion='" + NombreEstacion + '\'' +
+                '}';
+    }
 }

@@ -15,6 +15,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.neotecknewts.sagasapp.Model.ReporteDto;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.neotecknewts.sagasapp.Model.CalibracionDTO;
@@ -85,6 +86,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
         presenter = new SubirImagenesPresenterImpl(this);
         session = new Session(getApplicationContext());
+
+        // Log.d("FerChido", session.getIdAlmacen() + "");
 
         textView.setText(R.string.cargando_imagenes_inicio);
         Bundle extras = getIntent().getExtras();
@@ -290,10 +293,6 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
         new AsyncTaskRunner().execute();
-        //processImage();
-
-        //hideProgress();
-
     }
 
     //este metodo toma todas las imagenes de la lista dependiendo de cual objeto se esta usando, las transofrma a byte array y posteriormente las pasa a base 64
@@ -640,6 +639,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }
 
     }
+
     //se muestra un cuadro de dialogo con un mensaje
     private void showDialogAceptar(String titulo, String mensaje){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this,R.style.AlertDialog);
@@ -723,6 +723,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
      */
     @Override
     public void onSuccessRegistroAndroid(){
+        Log.d("FerChido", "onSuccessRegistroAndroid");
         AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this,
                 R.style.AlertDialog);
         builder.setTitle(R.string.titulo_exito_registro_papeleta_android);
@@ -750,19 +751,22 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
      */
     @Override
     public void showError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this,
-                R.style.AlertDialog);
+        Log.d("FerChido", "error");
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this, R.style.AlertDialog);
         builder.setTitle(R.string.titulo_error_papeleta);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                Intent intent = new Intent(SubirImagenesActivity.this, MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 finish();
             }
         });
         builder.setCancelable(false);
-       // builder.create().show();
+        builder.create().show();
 
     }
 
@@ -806,6 +810,78 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         builder.create().show();
     }
 
+    @Override
+    public void onSuccessRegistroRecarga(boolean esAutoconsumoInventarioFinal, ReporteDto data) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this, R.style.AlertDialog);
+        builder.setTitle(R.string.titulo_exito_registro_papeleta);
+        builder.setMessage(R.string.mensaje_exito_papeleta_registro_en_servicio);
+        builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+                if (esAutoconsumoInventarioFinal) {
+                    imprimirReporteAutoconsumo(data);
+                } else {
+                    Intent intent = new Intent(SubirImagenesActivity.this, MenuActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+        builder.setCancelable(false);
+        builder.create().show();
+    }
+
+    private void imprimirReporteAutoconsumo(ReporteDto data) {
+        Log.d("FerChido", data.toString());
+        String stringReporte, htmlReporte ;
+        htmlReporte = "<body>" +
+                "<h3><u>Autoconsumo</u></h3>" +
+                "<table>" +
+                "<tr>" +
+                "<td>Clave: </td>" +
+                "<td>"+ data.getClaveOperacion() +"</td>"+
+                "</tr>"+
+                "<tr>" +
+                "<td>Hacia: </td>" +
+                "<td>" + data.getNombreCAlmacen() + "</td>"+
+                "</tr>"+
+                "<hr>" +
+                "</table>" +
+                "</body>" +
+                "<h3>Lecturas P5000</h3>" +
+                "<table>" +
+                "<tr>" +
+                "<td>Inicial: </td>" +
+                "<td>" + data.getLecturaInicial().getCantidadP5000() + "</td>"+
+                "</tr>"+
+                "<tr>" +
+                "<td>Final: </td>" +
+                "<td>" + data.getLecturaFinal().getCantidadP5000() + "</td>"+
+                "</tr>"+
+                "<tr>" +
+                "<td>Litros despachados: </td>" +
+                "<td>" + data.getLitrosVenta() + "</td>"+
+                "</tr>"+
+                "</table>" +
+                "</body>";
+        stringReporte = "\tAutoconsumo\n" +
+                "Clave: \t" + data.getClaveOperacion() + "\n" +
+                "Hacia: \t" + data.getNombreCAlmacen() + "\n" +
+                "--------------------------------\n" +
+                "\tLecturas P5000\n" +
+                "Inicial: \t" + data.getLecturaInicial().getCantidadP5000() + "\n"+
+                "Final: \t" + data.getLecturaFinal().getCantidadP5000() + "\n" +
+                "Litros despachados: \t" + data.getLitrosVenta() + "\n";
+        Intent intent = new Intent(SubirImagenesActivity.this, VerReporteActivity.class);
+        intent.putExtra("EsAutoConsumo", true);
+        intent.putExtra("StringReporte", stringReporte);
+        intent.putExtra("HtmlReporte", htmlReporte);
+        startActivity(intent);
+
+    }
+
     //tarea asincrona que ejecuta el procesado de las imagenes
     private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
 
@@ -844,6 +920,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             }else if (EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
                 presenter.registrarAutoconsumoEstacion(sagasSql,session.getToken(),autoconsumoDTO,EsAutoconsumoEstacionFinal);
             }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
+                //autoconsumoDTO.setIdCAlmacenGasSalida(session.getIdAlmacen());
                 presenter.registrarAutoconsumoInventario(sagasSql,session.getToken(),autoconsumoDTO,EsAutoconsumoInventarioFinal);
             }else if(EsAutoconsumoPipaInicial ||EsAutoconsumoPipaFinal){
                 presenter.registrarAutoconsumoPipa(sagasSql,session.getToken(),autoconsumoDTO,EsAutoconsumoPipaFinal);

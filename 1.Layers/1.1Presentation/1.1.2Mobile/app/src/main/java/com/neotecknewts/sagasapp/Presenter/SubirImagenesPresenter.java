@@ -11,6 +11,7 @@ import com.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.neotecknewts.sagasapp.Model.ReporteDto;
 import com.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.neotecknewts.sagasapp.SQLite.SAGASSql;
 
@@ -49,6 +50,8 @@ public interface SubirImagenesPresenter {
     void registrarRecargaEstacion(SAGASSql sagasSql, String token, RecargaDTO recargaDTO, boolean EsRecargaEstacionInicial);
 
     void onSuccessRegistroRecarga();
+
+    void onSuccessRegistroRecarga(boolean esAutoconsumoInventarioFinal, ReporteDto data);
 
     void registrarRecargaPipa(SAGASSql sagasSql, String token, RecargaDTO recargaDTO, boolean esRecargaPipaFinal);
 

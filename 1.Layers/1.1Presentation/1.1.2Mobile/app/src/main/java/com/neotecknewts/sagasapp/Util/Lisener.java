@@ -924,27 +924,6 @@ public class Lisener{
                 "application/json"
         );
         Log.w("Url camioneta", ApiClient.BASE_URL);
-        /*call.enqueue(new Callback<RespuestaRecargaDTO>() {
-            @Override
-            public void onResponse(Call<RespuestaRecargaDTO> call,
-                                   Response<RespuestaRecargaDTO> response) {
-                RespuestaRecargaDTO data = response.body();
-                if (response.isSuccessful()) {
-                    Log.w("IniciarDescarga", "Success");
-                    _registrado = call.isExecuted() && response.isSuccessful();
-                } else {
-                    _registrado = false;
-                }
-                Log.e("Autoconsumo"+dto.getClaveOperacion(),
-                        String.valueOf(response.isSuccessful()));
-            }
-
-            @Override
-            public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
-                Log.e("error", t.toString());
-                _registrado = false;
-            }
-        })*/;
 
         try {
             return call.execute().code() == 200;
