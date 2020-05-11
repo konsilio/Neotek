@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -117,10 +118,11 @@ public class AutoconsumoPipaActivity extends AppCompatActivity implements Autoco
                                 autoconsumoDTO.setIdCAlmacenGasSalida(
                                         dto.getEstacionSalidaDTOList().get(x).getIdAlmacenGas()
                                 );
-                                autoconsumoDTO.setP5000Salida(
-                                        dto.getEstacionSalidaDTOList().get(x)
-                                                .getCantidadP5000()
-                                );
+//                                autoconsumoDTO.setP5000Salida(
+//                                        dto.getEstacionSalidaDTOList().get(x)
+//                                                .getCantidadP5000()
+//                                );
+                                autoconsumoDTO.setP5000Salida(0);
                                 autoconsumoDTO.setNombreEstacion(
                                         dto.getEstacionSalidaDTOList().get(x).getNombreAlmacen()
                                 );
@@ -159,6 +161,7 @@ public class AutoconsumoPipaActivity extends AppCompatActivity implements Autoco
         if(error) {
             mostrarErrores(mensajes);
         }else{
+            Log.d("FerChido", autoconsumoDTO.toString());
             Intent intent = new Intent(AutoconsumoPipaActivity.this,
                     LecturaP5000Activity.class);
             intent.putExtra("EsAutoconsumoPipaInicial",EsAutoconsumoPipaInicial);
@@ -216,22 +219,17 @@ public class AutoconsumoPipaActivity extends AppCompatActivity implements Autoco
             lista_pipa_salida = new String[dto.getEstacionSalidaDTOList().size()];
             lista_unidad_entrada = new String[dto.getEstacionEntradaDTOList().size()];
             for (int x =0 ; x<dto.getEstacionSalidaDTOList().size();x++) {
-                lista_pipa_salida[x]= dto.getEstacionSalidaDTOList().get(x)
-                        .getNombreAlmacen();
+                Log.d("FerChido", dto.getEstacionSalidaDTOList().get(x).toString());
+                lista_pipa_salida[x]= dto.getEstacionSalidaDTOList().get(x).getNombreAlmacen();
             }
             for (int x=0;x<dto.getEstacionEntradaDTOList().size();x++){
+                Log.d("FerChido", dto.getEstacionEntradaDTOList().get(x).toString());
                 lista_unidad_entrada[x]= dto.getEstacionEntradaDTOList().get(x).getNombreAlmacen();
             }
             SAutoconsumoPipaActivityListaPipasSalida.setAdapter( new ArrayAdapter<>(
-                    this,
-                    R.layout.custom_spinner,
-                    lista_pipa_salida
-            ));
+                    this, R.layout.custom_spinner, lista_pipa_salida ));
             SAutoconsumoPipaActivityListaUnidadEntrada.setAdapter(new ArrayAdapter<>(
-                    this,
-                    R.layout.custom_spinner,
-                    lista_unidad_entrada
-            ));
+                    this, R.layout.custom_spinner, lista_unidad_entrada ));
         }
     }
 }

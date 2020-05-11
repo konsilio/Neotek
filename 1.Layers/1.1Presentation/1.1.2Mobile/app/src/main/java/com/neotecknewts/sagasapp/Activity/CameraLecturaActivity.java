@@ -418,7 +418,6 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
             try {
-                //autoconsumoDTO.getImagenes().add(imageurl);
                 autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getCantidadFotos()+1);
                 autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 Log.d("FerChido", autoconsumoDTO.toString());
@@ -433,9 +432,8 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
             try {
-                //autoconsumoDTO.getImagenes().add(imageurl);
-                //autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getCantidadFotos()+1);
                 autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                Log.d("FerChido", autoconsumoDTO.toString());
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         CapturaPorcentajeActivity.class);
                 intent.putExtra("EsAutoconsumoPipaInicial",EsAutoconsumoPipaInicial);

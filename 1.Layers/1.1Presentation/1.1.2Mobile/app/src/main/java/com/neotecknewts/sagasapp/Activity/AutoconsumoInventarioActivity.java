@@ -83,10 +83,11 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
                                     datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
                                             .getIdAlmacenGas()
                             );
-                            autoconsumoDTO.setP5000Salida(
-                                    datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
-                                            .getCantidadP5000()
-                            );
+//                            autoconsumoDTO.setP5000Salida(
+//                                    datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
+//                                            .getCantidadP5000()
+//                            );
+                            autoconsumoDTO.setP5000Salida(0);
                             autoconsumoDTO.setPorcentajeMedidor(
                                     datosAutoconsumoDTO.getEstacionSalidaDTOList().get(x)
                                     .getPorcentajeMedidor()

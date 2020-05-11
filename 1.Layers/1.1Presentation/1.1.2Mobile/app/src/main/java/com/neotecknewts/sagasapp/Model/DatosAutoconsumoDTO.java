@@ -128,6 +128,19 @@ public class DatosAutoconsumoDTO extends RespuestaDTO implements Serializable {
         public void setCilindros(List<CilindrosDTO> cilindros) {
             Cilindros = cilindros;
         }
+
+        @Override
+        public String toString() {
+            return "EstacionEntradaDTO{" +
+                    "Medidor=" + Medidor +
+                    ", IdAlmacenGas=" + IdAlmacenGas +
+                    ", NombreAlmacen='" + NombreAlmacen + '\'' +
+                    ", PorcentajeMedidor=" + PorcentajeMedidor +
+                    ", CantidadP5000=" + CantidadP5000 +
+                    ", IdTipoMedidor=" + IdTipoMedidor +
+                    ", Cilindros=" + Cilindros +
+                    '}';
+        }
     }
 
     public class EstacionSalidaDTO  extends RespuestaDTO implements Serializable{

@@ -835,51 +835,83 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
     private void imprimirReporteAutoconsumo(ReporteDto data) {
         Log.d("FerChido", data.toString());
-        String stringReporte, htmlReporte ;
-        htmlReporte = "<body>" +
-                "<h3><u>Autoconsumo</u></h3>" +
-                "<table>" +
-                "<tr>" +
-                "<td>Clave: </td>" +
-                "<td>"+ data.getClaveOperacion() +"</td>"+
-                "</tr>"+
-                "<tr>" +
-                "<td>Hacia: </td>" +
-                "<td>" + data.getNombreCAlmacen() + "</td>"+
-                "</tr>"+
-                "<hr>" +
-                "</table>" +
-                "</body>" +
-                "<h3>Lecturas P5000</h3>" +
-                "<table>" +
-                "<tr>" +
-                "<td>Inicial: </td>" +
-                "<td>" + data.getLecturaInicial().getCantidadP5000() + "</td>"+
-                "</tr>"+
-                "<tr>" +
-                "<td>Final: </td>" +
-                "<td>" + data.getLecturaFinal().getCantidadP5000() + "</td>"+
-                "</tr>"+
-                "<tr>" +
-                "<td>Litros despachados: </td>" +
-                "<td>" + data.getLitrosVenta() + "</td>"+
-                "</tr>"+
-                "</table>" +
-                "</body>";
-        stringReporte = "\tAutoconsumo\n" +
-                "Clave: \t" + data.getClaveOperacion() + "\n" +
-                "Hacia: \t" + data.getNombreCAlmacen() + "\n" +
-                "--------------------------------\n" +
-                "\tLecturas P5000\n" +
-                "Inicial: \t" + data.getLecturaInicial().getCantidadP5000() + "\n"+
-                "Final: \t" + data.getLecturaFinal().getCantidadP5000() + "\n" +
-                "Litros despachados: \t" + data.getLitrosVenta() + "\n";
-        Intent intent = new Intent(SubirImagenesActivity.this, VerReporteActivity.class);
-        intent.putExtra("EsAutoConsumo", true);
-        intent.putExtra("StringReporte", stringReporte);
-        intent.putExtra("HtmlReporte", htmlReporte);
-        startActivity(intent);
+        if (data.getLecturaInicial() == null || data.getLecturaFinal() == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this, R.style.AlertDialog);
+            builder.setTitle("Error");
+            builder.setMessage("Ocurrió un error al imprimir el ticket");
+            builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    finish();
+                    Intent intent = new Intent(SubirImagenesActivity.this, MenuActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
 
+                }
+            });
+            builder.setCancelable(false);
+            builder.create().show();
+        } else {
+            if (data.getClaveOperacion() == null) {
+                data.setClaveOperacion("");
+            }
+            if (data.getEstacion() == null) {
+                data.setEstacion("");
+            }
+            if (data.getNombreCAlmacen() == null) {
+                data.setNombreCAlmacen("");
+            }
+            String stringReporte, htmlReporte;
+            htmlReporte = "<body>" +
+                    "<h3><u>Autoconsumo</u></h3>" +
+                    "<table>" +
+                    "<tr>" +
+                    "<td>Clave: </td>" +
+                    "<td>"+ data.getClaveOperacion() +"</td>"+
+                    "</tr>"+
+                    "<tr>" +
+                    "<td>Origen: </td>" +
+                    "<td>" + data.getEstacion() + "</td>"+
+                    "</tr>"+
+                    "<tr>" +
+                    "<td>Destino: </td>" +
+                    "<td>" + data.getNombreCAlmacen() + "</td>"+
+                    "</tr>"+
+                    "<hr>" +
+                    "</table>" +
+                    "</body>" +
+                    "<h3>Lecturas P5000</h3>" +
+                    "<table>" +
+                    "<tr>" +
+                    "<td>Inicial: </td>" +
+                    "<td>" + data.getLecturaInicial().getCantidadP5000() + "</td>"+
+                    "</tr>"+
+                    "<tr>" +
+                    "<td>Final: </td>" +
+                    "<td>" + data.getLecturaFinal().getCantidadP5000() + "</td>"+
+                    "</tr>"+
+                    "<tr>" +
+                    "<td>Litros despachados: </td>" +
+                    "<td>" + data.getLitrosVenta() + "</td>"+
+                    "</tr>"+
+                    "</table>" +
+                    "</body>";
+            stringReporte = "\tAutoconsumo\n" +
+                    "Clave: \t" + data.getClaveOperacion() + "\n" +
+                    "Origen: \t" + data.getEstacion() + "\n" +
+                    "Destino: \t" + data.getNombreCAlmacen() + "\n" +
+                    "--------------------------------\n" +
+                    "\tLecturas P5000\n" +
+                    "Inicial: \t" + data.getLecturaInicial().getCantidadP5000() + "\n"+
+                    "Final: \t" + data.getLecturaFinal().getCantidadP5000() + "\n" +
+                    "Litros despachados: \t" + data.getLitrosVenta() + "\n";
+            Intent intent = new Intent(SubirImagenesActivity.this, VerReporteActivity.class);
+            intent.putExtra("EsAutoConsumo", true);
+            intent.putExtra("StringReporte", stringReporte);
+            intent.putExtra("HtmlReporte", htmlReporte);
+            startActivity(intent);
+        }
     }
 
     //tarea asincrona que ejecuta el procesado de las imagenes

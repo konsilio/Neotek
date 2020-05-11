@@ -1673,8 +1673,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @param esAutoconsumoPipaFinal Boolean que determina si el autoconsumo es final
      */
     @Override
-    public void registrarAutoconsumoPipa(SAGASSql sagasSql, String token, AutoconsumoDTO
-            autoconsumoDTO, boolean esAutoconsumoPipaFinal) {
+    public void registrarAutoconsumoPipa(SAGASSql sagasSql, String token, AutoconsumoDTO autoconsumoDTO, boolean esAutoconsumoPipaFinal) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "AP";
@@ -1685,6 +1684,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
         autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
+        Log.d("FerChido", autoconsumoDTO.toString());
         //region Verifica si el servcio esta disponible
 
 
@@ -1726,27 +1726,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //region Realiza el registro del autoconsumo
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
-        /*int intentos_post = 0;
-        registra_reacrga = true;
-        while(intentos_post<3) {*/
-            Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
-                    autoconsumoDTO,
-                    /*false,
-                    false,
-                    true,*/
-                    esAutoconsumoPipaFinal,
-                    token,
-                    "application/json"
-            );
-            Log.w("Url camioneta", ApiClient.BASE_URL);
-            call.enqueue(new Callback<RespuestaRecargaDTO>() {
+            Call<ReporteDto> call = restClient.postAutorconsumoR(autoconsumoDTO, esAutoconsumoPipaFinal, token, "application/json");
+            call.enqueue(new Callback<ReporteDto>() {
                 @Override
-                public void onResponse(Call<RespuestaRecargaDTO> call,
-                                       Response<RespuestaRecargaDTO> response) {
-                    RespuestaRecargaDTO data = response.body();
+                public void onResponse(Call<ReporteDto> call,
+                                       Response<ReporteDto> response) {
+                    ReporteDto data = response.body();
                     if (response.isSuccessful()) {
-                        Log.w("IniciarDescarga", "Success");
-                        subirImagenesPresenter.onSuccessRegistroRecarga();
+                        Log.d("FerChido", data.toString());
+                        subirImagenesPresenter.onSuccessRegistroRecarga(esAutoconsumoPipaFinal, data);
                     } else {
                         registra_reacrga = false;
                         switch (response.code()) {
@@ -1780,7 +1768,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 }
 
                 @Override
-                public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
+                public void onFailure(Call<ReporteDto> call, Throwable t) {
                     Log.e("error", t.toString());
                     registra_reacrga = false;
                     registrar_local_autoconsumo(sagasSql,

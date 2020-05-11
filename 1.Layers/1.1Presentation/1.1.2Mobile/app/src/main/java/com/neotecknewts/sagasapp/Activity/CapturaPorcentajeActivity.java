@@ -469,6 +469,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     //se inicia el siguiente activity y se le envian parametros
     public void startActivity() {
         if (EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal) {
+            Log.d("FerChido", autoconsumoDTO.toString());
             Intent intent = new Intent(CapturaPorcentajeActivity.this,
                     CameraDescargaActivity.class);
             intent.putExtra("EsAutoconsumoPipaInicial", EsAutoconsumoPipaInicial);

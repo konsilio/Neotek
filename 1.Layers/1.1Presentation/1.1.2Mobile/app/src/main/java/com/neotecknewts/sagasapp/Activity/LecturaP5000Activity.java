@@ -588,6 +588,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 startActivity(intent);
             }else if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
                 autoconsumoDTO.setP5000Salida(CantidadP500);
+                Log.d("FerChido", autoconsumoDTO.toString());
                 intent.putExtra("EsAutoconsumoPipaInicial",EsAutoconsumoPipaInicial);
                 intent.putExtra("EsAutoconsumoPipaFinal",EsAutoconsumoPipaFinal);
                 intent.putExtra("autoconsumoDTO",autoconsumoDTO);
