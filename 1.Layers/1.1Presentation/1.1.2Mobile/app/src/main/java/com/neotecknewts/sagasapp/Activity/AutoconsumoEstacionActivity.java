@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -66,23 +67,6 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
                 SAutoconsumoEstacionActivityListaUnidades);
         BtnAutoconsumoActtivityGuardar = findViewById(R.id.BtnAutoconsumoActtivityGuardar);
 
-        /*lista_estaciones = new String[]{"Estacion 1","Estacion 2"};
-        lista_pipa = new String[]{"Pipa 1","Pipa 2"};
-
-
-
-        SAutoconsumoEstacionActivityListaEstaciones.setAdapter(new ArrayAdapter<>(
-                this,
-                R.layout.custom_spinner,
-                lista_estaciones
-        ));
-
-        SAutoconsumoEstacionActivityListaUnidades.setAdapter(new ArrayAdapter<>(
-                this,
-                R.layout.custom_spinner,
-                lista_pipa
-        ));*/
-
         presenter.getList(session.getToken(),EsAutoconsumoEstacionFinal);
 
         SAutoconsumoEstacionActivityListaEstaciones.setOnItemSelectedListener(
@@ -102,9 +86,10 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
                                 autoconsumoDTO.setIdTipoMedidor(
                                         dto_resp.getEstacionSalidaDTOList().get(x).getIdTipoMedidor()
                                 );
-                                autoconsumoDTO.setP5000Salida(
-                                        dto_resp.getEstacionSalidaDTOList().get(x).getCantidadP5000()
-                                );
+//                                autoconsumoDTO.setP5000Salida(
+//                                        dto_resp.getEstacionSalidaDTOList().get(x).getCantidadP5000()
+//                                );
+                                autoconsumoDTO.setP5000Salida(0);
                                 autoconsumoDTO.setNombreTipoMedidor(
                                         dto_resp.getEstacionSalidaDTOList().get(x).getMedidor()
                                                 .getNombreTipoMedidor()
@@ -170,6 +155,7 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
             if(dto.getEstacionEntradaDTOList().size()>0 && dto.getEstacionEntradaDTOList()!=null) {
                 lista_estaciones = new String[dto.getEstacionEntradaDTOList().size()];
                 for (int x = 0; x < dto.getEstacionEntradaDTOList().size(); x++) {
+                    Log.d("FerChido", dto.getEstacionEntradaDTOList().get(x).toString());
                     lista_estaciones[x] = dto.getEstacionEntradaDTOList().get(x).getNombreAlmacen();
                 }
                 SAutoconsumoEstacionActivityListaUnidades.setAdapter(new ArrayAdapter<>(
@@ -181,6 +167,7 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
             if(dto.getEstacionSalidaDTOList().size()>0 && dto.getEstacionSalidaDTOList()!=null){
                 lista_pipa = new String[dto.getEstacionSalidaDTOList().size()];
                 for (int x = 0; x < dto.getEstacionSalidaDTOList().size(); x++) {
+                    Log.d("FerChido", dto.getEstacionSalidaDTOList().get(x).toString());
                     lista_pipa[x] = dto.getEstacionSalidaDTOList().get(x).getNombreAlmacen();
                 }
 
@@ -228,6 +215,7 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
         if(error){
             mostrarError(mensajes);
         }else{
+            Log.d("FerChido", autoconsumoDTO.toString());
             Intent intent = new Intent(AutoconsumoEstacionActivity.this,
                     LecturaP5000Activity.class);
             intent.putExtra("EsAutoconsumoEstacionInicial",EsAutoconsumoEstacionInicial);

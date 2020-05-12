@@ -406,7 +406,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
             try {
                 //autoconsumoDTO.getImagenes().add(imageurl);
                 autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
-                autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getCantidadFotos()+1);
+                Log.d("FerChido", autoconsumoDTO.toString());
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         SubirImagenesActivity.class);
                 intent.putExtra("EsAutoconsumoEstacionInicial",EsAutoconsumoEstacionInicial);
@@ -418,7 +418,6 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
             try {
-                autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getCantidadFotos()+1);
                 autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 Log.d("FerChido", autoconsumoDTO.toString());
                 Intent intent = new Intent(CameraLecturaActivity.this,

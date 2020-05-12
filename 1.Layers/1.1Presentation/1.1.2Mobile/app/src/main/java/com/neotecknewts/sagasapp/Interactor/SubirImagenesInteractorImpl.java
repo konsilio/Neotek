@@ -1482,29 +1482,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         registra_reacrga = true;
         while(intentos_post<3) {*/
 
-            Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
-                        autoconsumoDTO,
-                       /* true,
-                        false,
-                        false,*/
-                        esAutoconsumoEstacionFinal,
-                        token,
-                        "application/json"
-            );
-            Log.w("Url camioneta", ApiClient.BASE_URL);
-
-            call.enqueue(new Callback<RespuestaRecargaDTO>() {
+            Call<ReporteDto> call = restClient.postAutorconsumoR(autoconsumoDTO, esAutoconsumoEstacionFinal, token, "application/json");
+            call.enqueue(new Callback<ReporteDto>() {
 
                 @Override
-                public void onResponse(Call<RespuestaRecargaDTO> call,
-                                       Response<RespuestaRecargaDTO> response) {
-                    RespuestaRecargaDTO data = response.body();
+                public void onResponse(Call<ReporteDto> call, Response<ReporteDto> response) {
+                    ReporteDto data = response.body();
 
                     if (response.isSuccessful()) {
-                        Log.w("IniciarDescarga", "Success");
-                        subirImagenesPresenter.onSuccessRegistroRecarga();
-                        registro_local = false;
-
+                        subirImagenesPresenter.onSuccessRegistroRecarga(esAutoconsumoEstacionFinal, data);
                     } else {
                         switch (response.code()) {
                             case 404:
@@ -1519,24 +1505,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
-                        registro_local = true;
                         if(data!=null)
                             subirImagenesPresenter.errorSolicitud(data.getMensajesError());
                         else
                             subirImagenesPresenter.errorSolicitud(response.message());
                     }
-                    if(response.code()>=300) {
-                        registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
-                                SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION,
-                                esAutoconsumoEstacionFinal);
-                        Lisener lisener = new Lisener(sagasSql, token);
-                        lisener.CrearRunable(Lisener.Proceso.Autoconsumo);
-                        subirImagenesPresenter.onSuccessRegistroAndroid();
-                    }
                 }
 
                 @Override
-                public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
+                public void onFailure(Call<ReporteDto> call, Throwable t) {
                     Log.e("error", t.toString());
                     registro_local = true;
                     registrar_local_autoconsumo(sagasSql, autoconsumoDTO,

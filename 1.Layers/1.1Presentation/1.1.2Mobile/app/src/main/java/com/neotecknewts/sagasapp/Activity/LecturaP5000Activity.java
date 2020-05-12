@@ -573,14 +573,13 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             }
             else if (EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
                 autoconsumoDTO.setP5000Salida(CantidadP500);
+                Log.d("FerChido", autoconsumoDTO.toString());
                 intent.putExtra("EsAutoconsumoEstacionInicial",EsAutoconsumoEstacionInicial);
                 intent.putExtra("EsAutoconsumoEstacionFinal",EsAutoconsumoEstacionFinal);
                 intent.putExtra("autoconsumoDTO",autoconsumoDTO);
                 startActivity(intent);
             }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
-                //Log.d("FerChido", "P500: " + CantidadP500);
                 autoconsumoDTO.setP5000Salida(CantidadP500);
-                //Log.d("FerChido", autoconsumoDTO.getP5000Salida()+"");
                 Log.d("FerChido", autoconsumoDTO.toString());
                 intent.putExtra("EsAutoconsumoInvetarioInicial",EsAutoconsumoInvetarioInicial);
                 intent.putExtra("EsAutoconsumoInventarioFinal",EsAutoconsumoInventarioFinal);
