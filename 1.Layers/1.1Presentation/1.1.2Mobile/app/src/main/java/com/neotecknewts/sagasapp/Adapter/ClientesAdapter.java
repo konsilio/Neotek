@@ -30,66 +30,42 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.EsVentaPipa = EsVentaPipa;
         this.EsVentaCarburacion = EsVentaCarburacion;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.cliente_item,parent,false
-        );
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cliente_item,parent,false);
         return new ClientesHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         String razon = items.get(position).getRazonSocial();
-        String nombre = items.get(position).getNombre()+" "+items.get(position).getApellido_uno()
-                +" "+items.get(position).getApellido_dos();
+        String nombre = items.get(position).getNombre()+" "+items.get(position).getApellido_uno() +" "+items.get(position).getApellido_dos();
         if(razon!=null && !razon.isEmpty()){
-            ((ClientesHolder)holder).TVBuscarClienteActivityNombre.setText(
-                    razon
-            );
+            ((ClientesHolder)holder).TVBuscarClienteActivityNombre.setText(razon);
         }else{
-            ((ClientesHolder) holder).TVBuscarClienteActivityNombre.setText(
-                    nombre
-            );
+            ((ClientesHolder) holder).TVBuscarClienteActivityNombre.setText(nombre);
         }
 
-        ((ClientesHolder)holder).TVBuscarClienteaCTIVITYrFC.setText(
-                items.get(position).getRFC()
-        );
+        ((ClientesHolder)holder).TVBuscarClienteaCTIVITYrFC.setText(items.get(position).getRFC());
         if(!items.get(position).getTelefono_fijo().isEmpty()) {
-            ((ClientesHolder) holder).TVBuscarClienteActivityTelefono.setText(
-                    items.get(position).getTelefono_fijo()
-            );
+            ((ClientesHolder) holder).TVBuscarClienteActivityTelefono.setText(items.get(position).getTelefono_fijo());
         }
         if(!items.get(position).getCelular().isEmpty()){
-            ((ClientesHolder) holder).TVBuscarClienteActivityTelefono.setText(
-                    items.get(position).getCelular()
-            );
+            ((ClientesHolder) holder).TVBuscarClienteActivityTelefono.setText(items.get(position).getCelular());
         }
 
-        ((ClientesHolder) holder).TvBuscarClienteActivityFactura.setText(
-                (items.get(position).isFactura()||items.get(position).getRazonSocial().trim().length()>0)
-                        ?" Si":" No"
-        );
+        ((ClientesHolder) holder).TvBuscarClienteActivityFactura.setText((items.get(position).isFactura()||items.get(position).getRazonSocial().trim().length()>0)?" Si":" No");
 
         ((ClientesHolder) holder).CVEstacionesCarburacionItem.setOnClickListener(view -> {
-            ventaDTO.setIdCliente(
-                    items.get(position).getIdCliente()
-            );
-            Log.d("idCliente", ventaDTO.getIdCliente()+"");
 
-            ventaDTO.setNombre(
-                    items.get(position).getNombre()
-                    +" "+items.get(position).getApellido_uno()
-                    +" "+items.get(position).getApellido_dos()
-            );
-            ventaDTO.setRFC(
-                    items.get(position).getRFC()
-            );
-            ventaDTO.setRazonSocial(
-                    items.get(position).getRazonSocial()
-            );
+            Log.d("idCliente", ventaDTO.getIdCliente()+"");
+            ventaDTO.setIdCliente(items.get(position).getIdCliente());
+            ventaDTO.setNombre(items.get(position).getNombre()+" "+items.get(position).getApellido_uno() +" "+items.get(position).getApellido_dos());
+            ventaDTO.setRFC(items.get(position).getRFC());
+            ventaDTO.setRazonSocial(items.get(position).getRazonSocial());
             ventaDTO.setSinNumero(false);
+
             if(items.get(position).isCredito()) {
                 ventaDTO.setCredito(true);
                 ventaDTO.setTieneCredito(true);
@@ -141,8 +117,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         CardView CVEstacionesCarburacionItem ;
         ClientesHolder(View view) {
             super(view);
-            TVBuscarClienteActivityTelefono = view.findViewById(R.id.
-                    TVBuscarClienteActivityTelefono);
+            TVBuscarClienteActivityTelefono = view.findViewById(R.id.TVBuscarClienteActivityTelefono);
             TVBuscarClienteActivityNombre = view.findViewById(R.id.TVBuscarClienteActivityNombre);
             TVBuscarClienteaCTIVITYrFC = view.findViewById(R.id.TVBuscarClienteaCTIVITYrFC);
             TvBuscarClienteActivityFactura = view.findViewById(R.id.TvBuscarClienteActivityFactura);

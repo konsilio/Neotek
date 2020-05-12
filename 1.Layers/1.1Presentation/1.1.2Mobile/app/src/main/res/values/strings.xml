@@ -209,7 +209,7 @@
     <string name="razon_social">Razón Social *</string>
     <string name="cel">CEL</string>
     <string name="nom">NOM</string>
-    <string name="rfc">RFC *</string>
+    <string name="rfc">RFC</string>
     <string name="factura">FACTURA</string>
     <string name="gas_lp">GAS LP</string>
     <string name="cilindro_con_gas_btn">CILINDRO CON GAS</string>
