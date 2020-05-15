@@ -11,6 +11,7 @@ import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.neotecknewts.sagasapp.Model.VentaDTO;
 import com.neotecknewts.sagasapp.Util.Constantes;
+import com.neotecknewts.sagasapp.Util.Session;
 import com.neotecknewts.sagasapp.Util.Tabla;
 import com.neotecknewts.sagasapp.Util.Utilidades;
 
@@ -24,10 +25,17 @@ public class VentaGasActivity extends AppCompatActivity implements VentaGasActiv
     VentaDTO ventaDTO;
     TableLayout TBVentaGasActivtyTabla;
     boolean EsVentaCarburacion,EsVentaCamioneta,EsVentaPipa;
+    Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venta_gas);
+
+        session = new Session(this);
+        String mail = session.getEmail();
+        mail =  mail.substring(0, mail.indexOf('@')).replace('.', ' ');
+        setTitle("Punto de venta - " + mail);
+
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
             ventaDTO = (VentaDTO) extras.getSerializable("ventaDTO");

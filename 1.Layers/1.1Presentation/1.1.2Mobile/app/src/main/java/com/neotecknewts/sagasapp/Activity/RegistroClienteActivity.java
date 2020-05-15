@@ -56,6 +56,9 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             esGasLP = bundle.getBoolean("esGasLP",false);
         }
         session = new Session(this);
+        String mail = session.getEmail();
+        mail =  mail.substring(0, mail.indexOf('@')).replace('.', ' ');
+        setTitle("Punto de venta - " + mail);
         clienteDTO = new ClienteDTO();
         SRegistroClienteActivityTipoPersona = findViewById(R.id.
                 SRegistroClienteActivityTipoPersona);
@@ -297,17 +300,6 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             error = true;
             mensajes.add("Es necesario ingresar un teléfono");
         }
-        /*if(ETRegistroClienteActivityCelular.getText().toString().isEmpty()||
-                ETRegistroClienteActivityCelular.getText().length()<=0){
-            error = true;
-            mensajes.add("Es necesario un teléfono de celular");
-        }
-
-        if(ETRegistroClienteActivityTelefonoFijo.getText().toString().isEmpty()||
-                ETRegistroClienteActivityTelefonoFijo.getText().length()<=0){
-            error = true;
-            mensajes.add("Es necesario un número de teléfono fijo");
-        }*/
 
         if(error){
             mostrarDialogoErrores(mensajes);

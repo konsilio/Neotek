@@ -87,6 +87,9 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
         RVBuscarClienteActivityClientes.setHasFixedSize(true);
         presenter = new BuscarClientePresenterImpl(this, BuscarClienteActivity.this);
         session = new Session(this);
+        String mail = session.getEmail();
+        mail =  mail.substring(0, mail.indexOf('@')).replace('.', ' ');
+        setTitle("Punto de venta - " + mail);
 
         if (isOnline()) {
             presenter.getClientes(criterio, session.getToken());

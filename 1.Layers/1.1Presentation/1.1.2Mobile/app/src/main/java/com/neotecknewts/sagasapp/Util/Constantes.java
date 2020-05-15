@@ -47,6 +47,7 @@ public class Constantes {
     public static final String GET_CATALOGO_PRODUCTO = "mobile/catalogos/venta-gas/otros";
     public static final String POST_VENTA = "mobile/venta";
     public static final String POST_ANTICIPO = "mobile/anticipos";
+    public static final String GET_TICKETS = "mobile/lista/tickets";
 
     public static final String GET_CATALOGO_VENTAS_ESTACIONES = "mobile/catalogos/anticipo-y-corte/estaciones";
     public static final String GET_REPORTE = "mobile/reportes/reporte-dia/{fecha}/{idCAlmacenGas}";

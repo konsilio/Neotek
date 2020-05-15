@@ -61,16 +61,23 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punto_venta_pagar);
         Bundle extras = getIntent().getExtras();
+
         if (extras != null) {
             ventaDTO = (VentaDTO) extras.getSerializable("ventaDTO");
             EsVentaCamioneta = extras.getBoolean("EsVentaCamioneta", false);
             EsVentaCarburacion = extras.getBoolean("EsVentaCarburacion", false);
             EsVentaPipa = extras.getBoolean("EsVentaPipa", false);
         }
+
         ventaDTO.setVentaExtraforanea(false);
         presenter = new PuntoVentaPagarPresenterImpl(this);
         session = new Session(this);
         sagasSql = new SAGASSql(this);
+
+        String mail = session.getEmail();
+        mail =  mail.substring(0, mail.indexOf('@')).replace('.', ' ');
+        setTitle("Punto de venta - " + mail);
+
         puntoVentaAsignadoDTO = new PuntoVentaAsignadoDTO();
         TLPuntoVentaPagarActivityConcepto = findViewById(R.id.TLPuntoVentaPagarActivityConcepto);
         BtnPuntoVentaPagarActivityCancelar = findViewById(R.id.BtnPuntoVentaPagarActivityCancelar);
@@ -87,9 +94,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         SPuntoVentaActivityCredito.setChecked(
                 ventaDTO.isCredito()
         );
-        /*SPuntoVentaPagarActivityFactura.setChecked(
-                ventaDTO.isFactura()
-        );*/
+
         SPuntoVentaPagarActivityFactura.setVisibility(View.GONE);
         ventaDTO.setFactura(true);
 
@@ -125,6 +130,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         });
         SPuntoVentaActivityCredito.setChecked(ventaDTO.isCredito());
         SPuntoVentaActivityBonificacion.setChecked(ventaDTO.isBonificacion());
+
         if (ventaDTO.isTieneCredito()) {
 
             if (ventaDTO.isCredito()) {
@@ -139,9 +145,6 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                 SPuntoVentaActivityBonificacion.setVisibility(View.VISIBLE);
 
             }
-            //SPuntoVentaActivityCredito.setVisibility(View.VISIBLE);
-            //TVPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
-            //ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
 
         } else {
             SPuntoVentaActivityCredito.setVisibility(View.GONE);
@@ -153,6 +156,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         if (EsVentaPipa || EsVentaCarburacion) {
             BtnPuntoVentaPagarActivityOpciones.setVisibility(View.GONE);
         }
+
         BtnPuntoVentaPagarActivityConfirmar.setOnClickListener(v -> {
             ventaDTO.setFactura(SPuntoVentaPagarActivityFactura.isChecked());
             ventaDTO.setCredito(SPuntoVentaActivityCredito.isChecked());
@@ -164,8 +168,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             if (!SPuntoVentaActivityCredito.isChecked()) {
                 if (ETPuntoVentaPagarActivityEfectivo.getText().toString().trim().length() > 0) {
 
-                    double efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo
-                            .getText().toString());
+                    double efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo.getText().toString());
                     if (efectivio < ventaDTO.getTotal()) {
                         if (SPuntoVentaActivityBonificacion.isChecked()) {
                             Log.d("Ventadto3", ventaDTO.toString());
@@ -197,18 +200,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                             dialogInterface.dismiss());
                     builder.create().show();
                 }
-            }
-/*            else if(conceptoDTO.getPrecioUnitarioLt() == 0){
-                Log.d("Ventadto4", ventaDTO.toString());
-                AlertDialog.Builder builder = new AlertDialog.Builder(this,
-                        R.style.AlertDialog);
-                builder.setTitle(R.string.error_titulo);
-                builder.setMessage("El precio se encuentra en 0");
-                builder.setPositiveButton(R.string.message_acept,
-                        ((dialog, which) -> dialog.dismiss()));
-                builder.create().show();
-            }*/
-            else {
+            } else {
                 if (!ventaDTO.isVentaExtraforanea()) {
                     Log.d("Ventadto2", ventaDTO.toString());
                     double TotalLitros = 0;
@@ -233,7 +225,6 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                     }
                 }
             }
-            /**VENTAEXTRAFORANEA00 **/
 
             if (!error) {
                 Date actual = new Date();
@@ -241,24 +232,27 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                 String codigo = String.valueOf(actual.getYear()) + randomString(2) +
                         Integer.toHexString(Integer.parseInt(s.format(actual)));
                 ventaDTO.setFolioVenta(codigo.toUpperCase());
-               presenter.pagar(ventaDTO, session.getToken(), EsVentaCamioneta, EsVentaCarburacion, EsVentaPipa, sagasSql);
+                Log.d("FerChido", ventaDTO.toString());
+                presenter.pagar(ventaDTO, session.getToken(), EsVentaCamioneta, EsVentaCarburacion, EsVentaPipa, sagasSql);
             }
         });
+
         NumberFormat format = NumberFormat.getCurrencyInstance();
         lista = new ArrayList<>();
-        for (ConceptoDTO conceptoDTO :
-                ventaDTO.getConcepto()) {
+        for (ConceptoDTO conceptoDTO : ventaDTO.getConcepto()) {
             lista.add(new String[]{
-                    conceptoDTO.getConcepto(),
-                    String.valueOf(conceptoDTO.getCantidad()),
-                    format.format(conceptoDTO.getPUnitario()),
-                    format.format(conceptoDTO.getDescuento()),
-                    format.format(conceptoDTO.getSubtotal())
+                conceptoDTO.getConcepto(),
+                String.valueOf(conceptoDTO.getCantidad()),
+                format.format(conceptoDTO.getPUnitario()),
+                format.format(conceptoDTO.getDescuento()),
+                format.format(conceptoDTO.getSubtotal())
             });
         }
+
         tabla = new Tabla(this, TLPuntoVentaPagarActivityConcepto);
         tabla.Cabecera(R.array.condepto_venta);
         tabla.agregarFila(lista);
+
         calcula_total(ventaDTO.getConcepto());
         presenter.puntoVentaAsignado(session.getToken());
     }
@@ -276,14 +270,17 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         double cantidad = 0;
         double descuento = 0;
         for (ConceptoDTO conceptoDTO : conceptoDTOS) {
-            Log.d("concepto1", conceptoDTO.getConcepto());
+            Log.d("FerChido", conceptoDTO.toString());
             if (EsVentaCamioneta){
-                Log.d("substring", conceptoDTO.getConcepto().substring(6, 9));
-                double cap = Double.parseDouble(conceptoDTO.getConcepto().substring(6, 9));
-                total += conceptoDTO.getPrecioUnitarioLt() * conceptoDTO.getCantidad() * cap;
-                //cantidad += conceptoDTO.getCantidad() * cap;
-                //descuento += conceptoDTO.getDescuento();
-                descuento += conceptoDTO.getCantidad() * cap * conceptoDTO.getDescuento();
+                if (conceptoDTO.isEsVentaCilindro()) {
+                    total += conceptoDTO.getPrecioUnitarioProducto() * conceptoDTO.getCantidad();
+                } else {
+                    double cap = Double.parseDouble(conceptoDTO.getConcepto().replaceAll("\\D+",""));
+                    Log.d("FerChido", "capacidad: "+cap);
+                    total += conceptoDTO.getPrecioUnitarioLt() * conceptoDTO.getCantidad() * cap;
+                    descuento += conceptoDTO.getCantidad() * cap * conceptoDTO.getDescuento();
+                }
+
             } else {
                 total += conceptoDTO.getPrecioUnitarioLt() * conceptoDTO.getCantidad();
                 cantidad += conceptoDTO.getCantidad();
@@ -303,7 +300,6 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         } else {
             ventaDTO.setDescuentoTotal(cantidad * descuento);
         }
-        Log.d("FerChido", "descuento total: " + ventaDTO.getDescuentoTotal());
         TVPuntoVentaPagarActivitySubtotal.setText(format.format(total /1.16));
         TVPuntoVentaPagarActivityIva.setText(format.format(iva));
         TVPuntoVentaActivityPagarTotal.setText(format.format(total));
@@ -331,9 +327,8 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
 
     @Override
     public void onError(String mensaje) {
-        Log.d("ali", "errorInternal");
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
-        // builder.setTitle(R.string.error_titulo);
+        builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept, ((dialog, which) -> dialog.dismiss()));
         builder.create();

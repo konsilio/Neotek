@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -50,7 +51,7 @@ public class Tabla {
                     TableRow.LayoutParams.WRAP_CONTENT);
             text.setText(aCabecera);
             text.setGravity(Gravity.LEFT);
-            text.setTextSize(12);
+            text.setTextSize(14);
             //text.setTextAppearance(activity, R.style.estilo_celda);
             //text.setBackgroundResource(R.drawable.tabla_celda_cabecera);
             text.setLayoutParams(layoutCelda);
@@ -142,7 +143,11 @@ public class Tabla {
     private int obtenerAnchoPixelesText(String cabecera) {
         Paint p = new Paint();
         Rect bounds = new Rect();
-        p.setTextSize(30);
+        p.setTextSize(40);
+        if (cabecera.equals("Concepto"))
+            cabecera = "Conceptooo";
+        if (cabecera.equals("Subtotal"))
+            cabecera = "Subtotallllllll";
         p.getTextBounds(cabecera, 0, cabecera.length(), bounds);
         return bounds.width();
     }

@@ -1490,7 +1490,11 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     ReporteDto data = response.body();
 
                     if (response.isSuccessful()) {
-                        subirImagenesPresenter.onSuccessRegistroRecarga(esAutoconsumoEstacionFinal, data);
+                        if (data.isExito()) {
+                            subirImagenesPresenter.onSuccessRegistroRecarga(esAutoconsumoEstacionFinal, data);
+                        } else {
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        }
                     } else {
                         switch (response.code()) {
                             case 404:
@@ -1710,8 +1714,11 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                        Response<ReporteDto> response) {
                     ReporteDto data = response.body();
                     if (response.isSuccessful()) {
-                        Log.d("FerChido", data.toString());
-                        subirImagenesPresenter.onSuccessRegistroRecarga(esAutoconsumoPipaFinal, data);
+                        if (data.isExito()) {
+                            subirImagenesPresenter.onSuccessRegistroRecarga(esAutoconsumoPipaFinal, data);
+                        } else {
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        }
                     } else {
                         registra_reacrga = false;
                         switch (response.code()) {

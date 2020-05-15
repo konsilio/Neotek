@@ -49,6 +49,7 @@ import java.util.UUID;
 
 public class VerReporteActivity extends AppCompatActivity {
     private boolean EsAutoConsumo;
+    private boolean EsReimpresionTicket;
     private boolean EsReporteDelDia;
     private boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
@@ -88,6 +89,7 @@ public class VerReporteActivity extends AppCompatActivity {
 
         if(bundle!=null){
             EsAutoConsumo = bundle.getBoolean("EsAutoConsumo",false);
+            EsReimpresionTicket = bundle.getBoolean("EsReimpresionTicket",false);
             EsReporteDelDia = bundle.getBoolean("EsReporteDelDia",false);
             EsRecargaEstacionInicial = bundle.getBoolean("EsRecargaEstacionInicial",
                     false);
@@ -115,6 +117,12 @@ public class VerReporteActivity extends AppCompatActivity {
                 StringReporte = (String) bundle.get("StringReporte");
                 HtmlReporte = (String) bundle.get("HtmlReporte");
                 setTitle("Autoconsumo");
+            }
+            if(EsReimpresionTicket) {
+                StringReporte = (String) bundle.get("StringReporte");
+                HtmlReporte = (String) bundle.get("HtmlReporte");
+                setTitle("Reimpresión de ticket");
+                Log.d("FerChido", StringReporte);
             }
             if(EsReporteDelDia) {
                 StringReporte = (String) bundle.get("StringReporte");
@@ -177,7 +185,7 @@ public class VerReporteActivity extends AppCompatActivity {
         Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
         Button btnReporteActivityImprimir = findViewById(R.id.BtnReporteActivityImprimir);
         btnVerReporteActivityTerminar.setOnClickListener(v -> {
-            if(EsReporteDelDia || EsAutoConsumo) {
+            if(EsReporteDelDia || EsAutoConsumo || EsReimpresionTicket) {
                 Intent intent = new Intent(VerReporteActivity.this, MenuActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -308,7 +316,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 HtmlReporte += "<h3>Cliente</h3>" +
                         "<table>" +
                         "<tr>" +
-                        "<td>Razon social</td>" +
+                        "<td>Razon social:</td>" +
                         "<td>[{Razon-social}]</td>" +
                         "</tr>" +
                         "<tr>" +
@@ -365,12 +373,12 @@ public class VerReporteActivity extends AppCompatActivity {
 
         StringReporte = "\tTiket de venta\n" +
                 // "Gas Mundial de Guerrero\n\n"+
-                "Tiket\t[{Clave-venta}]\n"+
-                "Fecha\t[{Fecha}]\n"+
-                "Hora\t[{Hora}]\n";
+                "Tiket: \t[{Clave-venta}]\n"+
+                "Fecha: \t[{Fecha}]\n"+
+                "Hora: \t[{Hora}]\n";
         if(ventaDTO.getEstacion().trim().length()>0 || !ventaDTO.getEstacion().isEmpty()
                 && !ventaDTO.getEstacion().equals("")) {
-            StringReporte+="Surtido: \t [{Estacion}]\n";
+            StringReporte+="Surtido: \t[{Estacion}]\n";
         }
         StringReporte+="--------------------------------\n";
         //region Busqueda por cliente
@@ -378,13 +386,13 @@ public class VerReporteActivity extends AppCompatActivity {
             if(ventaDTO.getRazonSocial().trim().length()>0){
                 StringReporte += "\tCliente\n" +
                         "No.Cliente: \t[{No.Cliente}]\n"+
-                        "Razon Social \t[{Razon-social}]\n" +
-                        "RFC \t[{RFC}]\n";
+                        "Razon Social: \t[{Razon-social}]\n" +
+                        "RFC: \t[{RFC}]\n";
             }else {
                 StringReporte += "\tCliente\n" +
                         "No.Cliente: \t[{No.Cliente}]\n"+
-                        "Cliente \t[{Cliente}]\n" +
-                        "RFC \t[{RFC}]\n";
+                        "Cliente: \t[{Cliente}]\n" +
+                        "RFC: \t[{RFC}]\n";
             }
         }
         //endregion
@@ -404,47 +412,41 @@ public class VerReporteActivity extends AppCompatActivity {
         }
         //endregion
         StringReporte +="--------------------------------\n"+
-                "|Concepto|Cant.|P.Uni.|Desc|Subt|\n"+
-                "--------------------------------\n"+
+                "\tDetalles\n" +
+                "Concepto|Cant.|P.Uni.|Desc|Subt\n"+
                 "[{Concepto}]\n"+
                 "________________________________\n"+
-                "\tI.V.A. (16%) [{iva}]\n"+
-                "\tTotal [{Total}]\n" +
-                "\tDescuento total [{descototal}]\n";
+                "\tPago\n" +
+                "I.V.A. (16%): [{iva}]\n"+
+                "Total: [{Total}]\n" +
+                "Descuento: [{descototal}]\n";
         if(ventaDTO.isCredito()) {
-            StringReporte += "\tEfectivo recibido 0 \n" +
-                    "\tCambio [{Cambio}]\n";
+            StringReporte += "\tEfectivo recibido: 0 \n" +
+                    "\tCambio: [{Cambio}]\n";
 
-            StringReporte += "\tA credito\n";
+            StringReporte += "Venta: A credito\n";
         }
 
         if (!ventaDTO.isCredito() && !ventaDTO.isBonificacion()){
-            StringReporte += "\tEfectivo recibido [{Efectivo}]\n" +
-                    "\tCambio [{Cambio}]\n";
-            StringReporte += "\t Es Bonificacion \n";
+            StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
+                    "\tCambio: [{Cambio}]\n";
+            StringReporte += "Venta: Bonificacion \n";
 
         }
 
         if(ventaDTO.isBonificacion() && !ventaDTO.isCredito()) {
-            StringReporte += "\tEfectivo recibido [{Efectivo}]\n" +
-                    "\tCambio [{Cambio}]\n";
-
-            StringReporte += "\t De contado \n";
-        }
-       /* if(ventaDTO.isBonificacion()) {
             StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
-                    "\tCambio [{Cambio}]\n";
-        }*/
+                    "\tCambio: [{Cambio}]\n";
 
+            StringReporte += "Venta: De contado \n";
+        }
 
-
-        StringReporte += "Le atendio [{Usuario}]"+
-                "\n--------------------------------\n"+
-                // "Gas Mundial de Guerrero S.A de C.V.\n"+
+        StringReporte += "\n--------------------------------\n"+
                 "[{NombreGasera}]\n" +
                 "RFC: [{RFCGasera}]\n" +
                 "Av. Principal No. 5477 C.P. 56789\n"+
-                "www.gasmundialdeguerrero.com.mx\n\n"+
+                "www.gasmundialdeguerrero.com.mx\n"+
+                "Le atendio [{Usuario}]\n\n"+
 
                 "Facturacion electronica en :\n"+
                 "www.gasmundialdeguerrero.com.mx/\n"+

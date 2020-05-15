@@ -297,14 +297,14 @@ public class ConceptoDTO implements Serializable {
     @Override
     public String toString() {
         return "ConceptoDTO{" +
-                "IdEmpresa=" + IdEmpresa +
-                ", Year=" + Year +
-                ", Mes=" + Mes +
-                ", Dia=" + Dia +
-                ", IdProducto=" + IdProducto +
-                ", IdLinea=" + IdLinea +
-                ", IdCategoria=" + IdCategoria +
-                ", IdUnidadMedida=" + IdUnidadMedida +
+                 "IdEmpresa=" + IdEmpresa +
+                 ", Year=" + Year +
+                 ", Mes=" + Mes +
+                 ", Dia=" + Dia +
+                 ", IdProducto=" + IdProducto +
+                 ", IdLinea=" + IdLinea +
+                 ", IdCategoria=" + IdCategoria +
+                 ", IdUnidadMedida=" + IdUnidadMedida +
                 ", PrecioUnitarioProducto=" + PrecioUnitarioProducto +
                 ", PrecioUnitarioLt=" + PrecioUnitarioLt +
                 ", PrecioUnitarioKg=" + PrecioUnitarioKg +
@@ -316,13 +316,13 @@ public class ConceptoDTO implements Serializable {
                 ", CantidadKg=" + CantidadKg +
                 ", DescuentoTotal=" + DescuentoTotal +
                 ", Subtotal=" + Subtotal +
-                ", IdTipoGas=" + IdTipoGas +
+                 ", IdTipoGas=" + IdTipoGas +
                 ", Concepto='" + Concepto + '\'' +
                 ", PUnitario=" + PUnitario +
                 ", Descuento=" + Descuento +
                 ", LitrosDespachados=" + LitrosDespachados +
                 ", EsVentaCilindro=" + EsVentaCilindro +
-                ", IdCilindro=" + IdCilindro +
+                 ", IdCilindro=" + IdCilindro +
                 '}';
     }
 }

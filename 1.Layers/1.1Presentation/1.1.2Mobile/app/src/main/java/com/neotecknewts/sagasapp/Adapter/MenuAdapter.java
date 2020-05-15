@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.neotecknewts.sagasapp.Activity.BuscarTicketActivity;
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Activity.AnticipoEstacionCarburacionActivity;
 import com.neotecknewts.sagasapp.Activity.AutoconsumoEstacionActivity;
@@ -138,10 +139,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         /*holder.itemView*/.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(menuItem.getName().equals("Iniciar Descarga")) {
+                if (menuItem.getName().equals("Ventas realizadas")) {
+                    Intent intent = new Intent(view.getContext(), BuscarTicketActivity.class);
+                    view.getContext().startActivity(intent);
+                } else if(menuItem.getName().equals("Iniciar Descarga")) {
                     Intent intent = new Intent(view.getContext(), IniciarDescargaActivity.class);
                     view.getContext().startActivity(intent);
-
                 }else if(menuItem.getName().equals("Finalizar Descarga")){
                     Intent intent = new Intent(view.getContext() , FinalizarDescargaActivity.class);
                     view.getContext().startActivity(intent);

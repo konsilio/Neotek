@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatosClientesDTO extends RespuestaDTO implements Serializable {
+
     @SerializedName("clientes")
     private List<ClienteDTO> list;
 

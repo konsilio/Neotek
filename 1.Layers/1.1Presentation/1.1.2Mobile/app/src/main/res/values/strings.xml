@@ -143,7 +143,7 @@
     <string name="generando_reporte">Generando reporte....</string>
     <string name="Generar_reporte">Generar Reporte</string>
     <string name="terminar">Terminar</string>
-    <string name="imprimir_reporte">Imprimir Reporte</string>
+    <string name="imprimir_reporte">Imprimir</string>
     <string name="Recarga_camioneta">Recarga camioneta</string>
     <string name="Recarga_de_gas">Recarga de gas</string>
     <string name="recarga">Recarga</string>
@@ -258,10 +258,10 @@
     <string name="Recibe">Recibirá </string>
     <string-array name="condepto_venta">
         <item>Concepto</item>
-        <item tools:ignore="Typos">Cant.</item>
-        <item>P.Uni</item>
-        <item>Desc</item>
-        <item>Subt.</item>
+        <item tools:ignore="Typos">Cantidad</item>
+        <item>P. Unitario</item>
+        <item>Descuento</item>
+        <item>Subtotal</item>
     </string-array>
     <string name="info">Información</string>
     <string name="LigaActualizacion">Actualice en la siguiente liga:</string>

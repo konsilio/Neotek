@@ -58,7 +58,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     PuntoVentaGasListaPresenter presenter;
     ProgressDialog progressDialog;
     Session session;
-    List<com.neotecknewts.sagasapp.Model.ExistenciasDTO> data_get;
+    List<ExistenciasDTO> data_get;
 
     VentaDTO ventaDTO;
     PuntoVentaAdapter adapter;
@@ -76,8 +76,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_punto_venta_gas_lista);
         Bundle extras = getIntent().getExtras();
-        //region Extras (Parametros entre acticitys)
-
 
         if (extras != null) {
             ventaDTO = (VentaDTO) extras.getSerializable("ventaDTO");
@@ -90,29 +88,24 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             idCliente = ventaDTO.getIdCliente();
         }
 
-
-        //endregion
-        //region Session
         session = new Session(this);
-        //endregion
-        //region Formulario del layout de veta de cilindros
+        String mail = session.getEmail();
+        mail =  mail.substring(0, mail.indexOf('@')).replace('.', ' ');
+        setTitle("Punto de venta - " + mail);
+
+
+
         BtnPuntoVetaGasListActivityOpciones = findViewById(R.id.BtnPuntoVetaGasListActivityOpciones);
         BtnPuntoVetaGasListActivityOpciones.setVisibility(EsVentaCamioneta ? View.VISIBLE : View.GONE);
-        BtnPuntoVentaGasListaActivityGasListaAgregar = findViewById(R.id.
-                BtnPuntoVentaGasListaActivityGasListaAgregar);
-        BtnPuntoVentaGasListaActivityGasListaAgregar.setVisibility(
-                EsVentaCamioneta ? View.VISIBLE : View.GONE);
+        BtnPuntoVentaGasListaActivityGasListaAgregar = findViewById(R.id.BtnPuntoVentaGasListaActivityGasListaAgregar);
+        BtnPuntoVentaGasListaActivityGasListaAgregar.setVisibility(EsVentaCamioneta ? View.VISIBLE : View.GONE);
         BtnPuntoVentaGasListActivityPagar = findViewById(R.id.BtnPuntoVentaGasListActivityPagar);
-        BtnPuntoVentaGasListActivityPagar.setVisibility(
-                EsVentaCamioneta ? View.VISIBLE : View.GONE);
+        BtnPuntoVentaGasListActivityPagar.setVisibility(EsVentaCamioneta ? View.VISIBLE : View.GONE);
         RVPuntoVentaGasActivityListaGas = findViewById(R.id.RVPuntoVentaGasActivityListaGas);
-        //TVPuntoVentaGasListaActivityNombre = findViewById(R.id.TVPuntoVentaGasListaActivityNombre);
-        TLPuntoVentaGasListaActivityConcepto = findViewById(R.id.
-                TLPuntoVentaGasListaActivityConcepto);
-        SVPuntoVentaGasListActivitiyConcepto = findViewById(R.id.
-                SVPuntoVentaGasListActivitiyConcepto);
-        SVPuntoVentaGasListActivitiyConcepto.setVisibility(EsVentaCamioneta ?
-                View.VISIBLE : View.GONE);
+        TLPuntoVentaGasListaActivityConcepto = findViewById(R.id.TLPuntoVentaGasListaActivityConcepto);
+        SVPuntoVentaGasListActivitiyConcepto = findViewById(R.id.SVPuntoVentaGasListActivitiyConcepto);
+        SVPuntoVentaGasListActivitiyConcepto.setVisibility(EsVentaCamioneta ?View.VISIBLE : View.GONE);
+
         BtnPuntoVetaGasListActivityOpciones.setOnClickListener(V -> {
             Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                     VentaGasActivity.class);
@@ -123,7 +116,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             startActivity(intent);
         });
 
-        Log.d("ventacmaioneta",EsVentaCamioneta+"");
+
         BtnPuntoVentaGasListaActivityGasListaAgregar.setOnClickListener(v -> {
             if (esCilindroGas) VentaCilindroGas();
             else if (esCilindro) VentaCilindro();
@@ -133,22 +126,15 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
         BtnPuntoVentaGasListActivityPagar.setOnClickListener(v -> {
             if (ventaDTO.getConcepto().size() > 0) {
-
                 Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                         PuntoVentaPagarActivity.class);
                 intent.putExtra("ventaDTO", ventaDTO);
-
-                //adapter.ETPuntoVentaGasListActivityPrecioporLitro =  ;
-
                 intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
                 intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
                 intent.putExtra("EsVentaPipa", EsVentaPipa);
-
                 startActivity(intent);
-
             } else {
-                AlertDialog.Builder builder = new
-                        AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
                 builder.setTitle(R.string.error_titulo);
                 builder.setMessage(R.string.No_venta);
                 builder.setPositiveButton(R.string.message_acept,
@@ -156,44 +142,26 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 builder.create().show();
             }
         });
-        //endregion
-        //region Formulario de venta de pipas y estaciones
-        CLFormularioVentaCamionetaYPipaContenedor = findViewById(R.id.
-                CLFormularioVentaCamionetaYPipaContenedor);
-        CLFormularioVentaCamionetaYPipaContenedor.setVisibility(EsVentaCamioneta ? View.GONE :
-                View.VISIBLE);
-        SWFormularioVentaCamionetaYPipaCredito = findViewById(R.id.
-                SWFormularioVentaCamionetaYPipaCredito);
-        SWFormularioVentaCamionetaYPipaCredito.setVisibility(
-                ventaDTO.isTieneCredito() ? View.VISIBLE : View.GONE
-        );
-//        SWFormularioVentaCamionetaYPipaCredito.setVisibility(
-//                ventaDTO.isTieneCredito()? View.VISIBLE:View.GONE
-//        );
 
-        SWFormularioVentaCamionetaYPipaCredito.setChecked(
-                ventaDTO.isCredito()
+        CLFormularioVentaCamionetaYPipaContenedor = findViewById(R.id.CLFormularioVentaCamionetaYPipaContenedor);
+        CLFormularioVentaCamionetaYPipaContenedor.setVisibility(EsVentaCamioneta ? View.GONE : View.VISIBLE);
+        SWFormularioVentaCamionetaYPipaCredito = findViewById(R.id.SWFormularioVentaCamionetaYPipaCredito);
+        SWFormularioVentaCamionetaYPipaCredito.setVisibility(ventaDTO.isTieneCredito() ? View.VISIBLE : View.GONE
         );
-        SWFormularioVentaCamionetaYPipaFactura = findViewById(R.id.
-                SWFormularioVentaCamionetaYPipaFactura);
+
+        SWFormularioVentaCamionetaYPipaCredito.setChecked(ventaDTO.isCredito());
+        SWFormularioVentaCamionetaYPipaFactura = findViewById(R.id.SWFormularioVentaCamionetaYPipaFactura);
         ventaDTO.setFactura(true);
-        SWFormularioVentaCamionetaYPipaFactura.setChecked(
-                ventaDTO.isFactura()
-        );
+        SWFormularioVentaCamionetaYPipaFactura.setChecked(ventaDTO.isFactura());
         SWFormularioVentaCamionetaYPipaFactura.setVisibility(View.GONE);
-        BtnFormularioVentaCamionetaYPipaCancelar = findViewById(R.id.
-                BtnFormularioVentaCamionetaYPipaCancelar);
-        BtnFormularioVentaCamionetaYPipaPagar = findViewById(R.id.
-                BtnFormularioVentaCamionetaYPipaPagar);
-        TVFormularioVentaCamionetaYPipaPrecio = findViewById(R.id.
-                TVFormularioVentaCamionetaYPipaPrecio);
-        TVFormularioVentaCamionetaYPipaDescuento = findViewById(R.id.
-                TVFormularioVentaCamionetaYPipaDescuento);
-        TVFormularioVentaCamionetaYPipaSubtotal = findViewById(R.id.
-                TVFormularioVentaCamionetaYPipaSubtotal);
+        BtnFormularioVentaCamionetaYPipaCancelar = findViewById(R.id.BtnFormularioVentaCamionetaYPipaCancelar);
+        BtnFormularioVentaCamionetaYPipaPagar = findViewById(R.id.BtnFormularioVentaCamionetaYPipaPagar);
+        TVFormularioVentaCamionetaYPipaPrecio = findViewById(R.id.TVFormularioVentaCamionetaYPipaPrecio);
+        TVFormularioVentaCamionetaYPipaDescuento = findViewById(R.id.TVFormularioVentaCamionetaYPipaDescuento);
+        TVFormularioVentaCamionetaYPipaSubtotal = findViewById(R.id.TVFormularioVentaCamionetaYPipaSubtotal);
         TVFormularioVentaCamionetaYPipaIva = findViewById(R.id.TVFormularioVentaCamionetaYPipaIva);
-        TVFormularioVentaCamionetaYPipaTotal = findViewById(R.id.
-                TVFormularioVentaCamionetaYPipaTotal);
+        TVFormularioVentaCamionetaYPipaTotal = findViewById(R.id.TVFormularioVentaCamionetaYPipaTotal);
+
         BtnFormularioVentaCamionetaYPipaCancelar.setOnClickListener(V -> {
             Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                     MenuActivity.class);
@@ -203,49 +171,13 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         BtnFormularioVentaCamionetaYPipaPagar.setOnClickListener(V -> {
             SetearLitrosDespachados();
         });
-        //endregion
-        //region Obtención de catalogos web api
+
         presenter = new PuntoVentaGasListaPresenterImpl(this);
-
         presenter.getPrecioVenta(session.getToken());
-        Log.d("EsVentaCamioneta",EsVentaCamioneta+"");
-        if (EsVentaCamioneta) {
-            Log.d("Jimmy", "EsVentaCamioneta true ");
 
-            presenter.getCamionetaCilindros(
-                    esGasLP,
-                    esCilindroGas,
-                    esCilindro,
-                    idCliente,
-                    session.getToken()
-            );
-        } else {
-            Log.d("fer", ventaDTO.toString());
-            Log.d("Jimmy", "EsVentaCamioneta false");
-            presenter.getCamionetaCilindros(
-                    esGasLP,
-                    esCilindroGas,
-                    esCilindro,
-                    idCliente,
-                    session.getToken()
-            );
-        }
-        //endregion
-    //endregion
-        presenter.getListaCamionetaCilindros(
-                esGasLP, esCilindroGas, esCilindro, idCliente, session.getToken());
-        //Agrego la lista de conceptos que viene actualmente
         mostrarConsepto(ventaDTO.getConcepto());
 
         idCliente = ventaDTO.getIdCliente();
-
-        //Ya lo hace en un inicio
-        /*SWFormularioVentaCamionetaYPipaCredito.setChecked(
-                ventaDTO.isCredito()
-        );
-        SWFormularioVentaCamionetaYPipaFactura.setChecked(
-                ventaDTO.isFactura()
-        );*/
     }
 
     //region Metodos sobreescritos de la interfaz
@@ -304,25 +236,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
     }
 
-    @Override
-    public void onSuccessListExistencia(List<com.neotecknewts.sagasapp.Model.ExistenciasDTO> data) {
-        if (data != null) {
-            data_get = data;
-           /* adapter = new PuntoVentaAdapter(data,EsVentaCamioneta,this);
-            if(!EsVentaCamioneta){
-                adapter.esVentaGas = true;
-                adapter.PrecioLitro = TVFormularioVentaCamionetaYPipaPrecio;
-                adapter.Descuento = TVFormularioVentaCamionetaYPipaDescuento;
-                adapter.Subtotal = TVFormularioVentaCamionetaYPipaSubtotal;
-                adapter.Iva = TVFormularioVentaCamionetaYPipaIva;
-                adapter.Total =TVFormularioVentaCamionetaYPipaTotal;
-            }
-
-            RVPuntoVentaGasActivityListaGas.setAdapter(adapter);*/
-
-        }
-    }
-
     /**
      * onSuccessPrecioVenta
      * Permite obtener el precio actual de venta de gas,
@@ -335,32 +248,16 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     @Override
     public void onSuccessPrecioVenta(PrecioVentaDTO data) {
         if (data != null) {
-            data.setPrecioSalidaKg(data.getPrecioSalidaKg());
-            data.setPrecioSalidaLt(data.getPrecioSalidaLt());
-
             precioVentaDTO = data;
+            presenter.getCamionetaCilindros( esGasLP, esCilindroGas, esCilindro, idCliente, session.getToken());
+            presenter.getListaCamionetaCilindros(esGasLP, esCilindroGas, esCilindro, idCliente, session.getToken());
+        }
+    }
 
-            /*if(esGasLP ||EsVentaPipa||EsVentaCarburacion){
-                List<ExistenciasDTO> existenciasDTOS = new ArrayList<>();
-                ExistenciasDTO existencia_gas = new ExistenciasDTO();
-                existencia_gas.setCantidad(String.valueOf(data.getPrecioSalidaKg()));
-                existencia_gas.setDescuento(0);
-                existencia_gas.setExistencias(0);
-                existencia_gas.setId(data.getId());
-                existencia_gas.setNombre(data.getProducto());
-                existencia_gas.setPrecioUnitario(data.getPrecioSalidaKg());
-                existenciasDTOS.add(existencia_gas);
-                adapter = new PuntoVentaAdapter(existenciasDTOS,EsVentaCamioneta,this);
-                adapter.esVentaGas = true;
-                adapter.PrecioLitro = TVFormularioVentaCamionetaYPipaPrecio;
-                adapter.Descuento = TVFormularioVentaCamionetaYPipaDescuento;
-                adapter.Subtotal = TVFormularioVentaCamionetaYPipaSubtotal;
-                adapter.Iva = TVFormularioVentaCamionetaYPipaIva;
-                adapter.Total =TVFormularioVentaCamionetaYPipaTotal;
-                adapter.precioVentaDTO =precioVentaDTO;
-
-                RVPuntoVentaGasActivityListaGas.setAdapter(adapter);
-            }*/
+    @Override
+    public void onSuccessListExistencia(List<ExistenciasDTO> data) {
+        if (data != null) {
+            data_get = data;
         }
     }
 
@@ -375,13 +272,15 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      *                  segun sea el caso
      */
     @Override
-    public void onSuccessDatosCamioneta(List<com.neotecknewts.sagasapp.Model.ExistenciasDTO> respuesta) {
-        Log.d("FerChido","respuesta: " + respuesta.toString());
+    public void onSuccessDatosCamioneta(List<ExistenciasDTO> respuesta) {
         ExistenciasDTO = respuesta;
-        Log.d("textviewdescuento",esGasLP+"" +EsVentaCamioneta  );
         if (ExistenciasDTO != null) {
-
             adapter = new PuntoVentaAdapter(ExistenciasDTO, EsVentaCamioneta, this);
+            adapter.precioVentaDTO = precioVentaDTO;
+            adapter.esCilindroGas = esCilindroGas;
+            adapter.esCilindro = esCilindro;
+            adapter.esGasLP2 = esGasLP;
+
             if (respuesta.get(0).getRazonSocial() != null && respuesta.get(0).getRFC() != null) {
                 ventaDTO.setNombreGasera(respuesta.get(0).getRazonSocial());
                 ventaDTO.setRFCGasera(respuesta.get(0).getRFC());
@@ -397,10 +296,9 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 adapter.Subtotal = TVFormularioVentaCamionetaYPipaSubtotal;
                 adapter.Iva = TVFormularioVentaCamionetaYPipaIva;
                 adapter.Total = TVFormularioVentaCamionetaYPipaTotal;
-                adapter.precioVentaDTO = precioVentaDTO;
-                Log.d("textviewdescuento",TVFormularioVentaCamionetaYPipaDescuento.getText()+"" );
             }
-            if (esGasLP && EsVentaCamioneta) {
+            //esCilindroGas
+            if (EsVentaCamioneta && !esCilindro) {
                 adapter.esVentaGas = true;
                 adapter.PrecioLitro = TVFormularioVentaCamionetaYPipaPrecio;
                 adapter.Descuento = TVFormularioVentaCamionetaYPipaDescuento;
@@ -408,10 +306,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 adapter.Subtotal = TVFormularioVentaCamionetaYPipaSubtotal;
                 adapter.Iva = TVFormularioVentaCamionetaYPipaIva;
                 adapter.Total = TVFormularioVentaCamionetaYPipaTotal;
-                Log.d("total camioneta", adapter.Total+"");
-                adapter.precioVentaDTO = precioVentaDTO;
-                Log.d("textviewdescuento",adapter +"" );
-
             }
             adapter.Mostrar = !esCilindro;
             //region Seteo de la lista del reciclerview
@@ -540,8 +434,8 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
      * de gas con cilindro
      */
     private void VentaCilindroGas() {
-
         List<ConceptoDTO> conceptos = new ArrayList<>();
+
         for (int x =0; x < RVPuntoVentaGasActivityListaGas.getChildCount(); x++) {
             View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
             LinearLayout linearLayout = view.findViewById(R.id.Layout);
@@ -549,13 +443,13 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
                     findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
             TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
+            TextView TVExistencia = card.findViewById(R.id.PuntoVentaGasListaActivityCantidadExistencia);
             Calendar calendar = Calendar.getInstance();
-            if (editText.getText().toString().trim().length() > 0) {
+
+            if (!editText.getText().toString().isEmpty()) {
                 double cantidadVenta = Double.valueOf(editText.getText().toString());
                 double cantidadActual = adapter.getCilindro(x).getExistencias();
-                Log.d("Existenciapuntoventa", adapter.getCilindro(x).getExistencias()+"");
-
-                if (cantidadActual > 0) {
+                if (editText.getText().toString().trim().length() > 0 && cantidadVenta > 0) {
                     if (cantidadActual >= cantidadVenta) {
                         ConceptoDTO cilindros = new ConceptoDTO();
                         Log.d("existencia", cantidadActual+"");
@@ -570,11 +464,9 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         cilindros.setIdCategoria(0);//Queda pendiete el id de la categoria del cilindro
                         cilindros.setIdUnidadmedida(0);//Queda pendiente el id de unidad de medida
                         // del cilindro
-                        cilindros.setPrecioUnitarioProducto(adapter.getCilindro(x)
-                                .getPrecioUnitario());
+                        cilindros.setPrecioUnitarioProducto(adapter.getCilindro(x).getPrecioUnitario());
                         cilindros.setPrecioUnitarioKg(0);
                         cilindros.setPrecioUnitarioLt(0);
-                        cilindros.getDescuento();
                         cilindros.setDescuento(0);//Queda pendiente que se consulte el descuento del cliente aqui no
                         cilindros.setDescuentoUnitarioKg(0.0);
                         cilindros.setDescuentoUnitarioLt(0.0);
@@ -582,13 +474,10 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         cilindros.setCantidadLt(0);
                         cilindros.setCantidadKg(0);
                         cilindros.setDescuentoTotal(0);//Qeuda pendiente el calculo de descuento total
-                        cilindros.setSubtotal(
-                                cilindros.getCantidad() * cilindros.getPrecioUnitarioProducto()
-                        );
+                        cilindros.setSubtotal(cilindros.getCantidad() * cilindros.getPrecioUnitarioProducto());
 
                         cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
                         cilindros.setConcepto(TVTipo.getText().toString());
-                        cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
                         cilindros.setEsVentaCilindro(true);
                         cilindros.setIdCilindro(adapter.getCilindro(x).getId());
                         conceptos.add(cilindros);
@@ -605,46 +494,34 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         Gas.setPrecioUnitarioProducto(0);
                         Gas.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
                         Gas.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
-                        Gas.setDescuento(0);// aquino
+
                         Gas.setDescuentoUnitarioKg(0);
                         Gas.setDescuentoUnitarioLt(0);
-                        double capacidadLt = 0;
-                        double capacidadKg = 0;
-                        for (com.neotecknewts.sagasapp.Model.ExistenciasDTO item : data_get) {
-                            if (item.getId() == adapter.getCilindro(x).getId()) {
-                                capacidadLt = item.getCapacidadLt();
-                                capacidadKg = item.getCapacidadKg();
-                            }
-                        }
-                        Gas.setCantidad(
-                                /*adapter.getCilindro(x).getCapacidadLt()*/ capacidadKg *
-                                        cilindros.getCantidad()
-                        );
-                        Gas.setCantidadKg(
-                                ( /*adapter.getCilindro(x).getCapacidadKg()*/capacidadKg) *
-                                        cilindros.getCantidad()
-                        );
-                        Gas.setCantidadLt(
-                                (precioVentaDTO.getPrecioSalidaLt() * capacidadLt /*adapter.getCilindro(x).getCapacidadLt()*/) *
-                                        cilindros.getCantidad()
-                        );
-                        Gas.setSubtotal(Gas.getPrecioUnitarioKg() * Gas.getCantidad());
-                        Log.d("preciounitario",Gas.getPrecioUnitarioKg()+"");
-                        Log.d("cantidad",Gas.getCantidad()+"");
-                        Log.d("resultado",Gas.getPrecioUnitarioKg() * Gas.getCantidad() +"" );
-                        Gas.setConcepto("Gas");
+
+                        Gas.setCantidad(cantidadVenta);
+                        Gas.setCantidadKg(0);
+                        Gas.setCantidadLt(0);
+
+                        String concepto = adapter.getCilindro(x).getNombre();
+                        concepto = concepto.replace("Cilindro", "Gas LP").replace(".0000", "Kg");
+                        Gas.setConcepto(concepto);
                         Gas.setLitrosDespachados(Integer.parseInt(editText.getText().toString()));
-                        Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
+                        Gas.setPUnitario(Double.parseDouble(adapter.PrecioLitro.getText().toString()));
+                        Gas.setDescuento(Double.parseDouble(adapter.Descuento.getText().toString()));
+                        double cap = Double.parseDouble(concepto.replaceAll("\\D+",""));
+                        Log.d("FerChido", "capacidad:" +cap);
+                        Gas.setSubtotal(cap * cantidadVenta * Gas.getPUnitario());
+
+                        adapter.getCilindro(x).setExistencias(adapter.getCilindro(x).getExistencias()- cantidadVenta);
+                        TVExistencia.setText("" + (int)adapter.getCilindro(x).getExistencias());
                         conceptos.add(Gas);
 
 
                     } else {
-                        AlertDialog.Builder builder = new
-                                AlertDialog.Builder(this, R.style.AlertDialog);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
                         builder.setTitle(R.string.mensjae_error_campos);
-                        builder.setMessage("No hay existencias suficientes de " + TVTipo.getText() +
-                                " actualmente cuentas con " + cantidadActual
-
+                        builder.setMessage("No hay existencias suficientes del " + TVTipo.getText() +
+                                " .Actualmente cuentas con " + (int)cantidadActual
                         );
                         builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
                                 dialog.dismiss());
@@ -652,18 +529,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         break;
                     }
 
-                } else {
-                    AlertDialog.Builder alert =
-                            new AlertDialog.Builder(this, R.style.AlertDialog);
-                    alert.setTitle(R.string.title_alert_message);
-                    alert.setMessage("No hay existencias suficientes del cilindro de " +
-                            adapter.getCilindro(x).getNombre().replace(",0000", " KG"));
-                    alert.setPositiveButton(R.string.message_acept, (dialog, which) -> {
-                        editText.setText("");
-                        dialog.dismiss();
-                    });
-
-                    alert.create().show();
                 }
             }
         }
@@ -681,16 +546,9 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         List<ConceptoDTO> conceptos = new ArrayList<>();
 
         for (int x = 0; x < adapter.getItemCount(); x++) {
-            //View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
-            //LinearLayout linearLayout = view.findViewById(R.id.Layout);
-            //CardView card = linearLayout.findViewById(R.id.CVEstacionesCarburacionItem);
-            //EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
-            //        findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
-            //TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
             Calendar calendar = Calendar.getInstance();
             if (adapter.getCilindro(x).getCantidad() != null) {
                 if (adapter.getCilindro(x).getCantidad().length() > 0) {
-                    //if (editText.getText().toString().trim().length() > 0) {
                     int cantidad = Integer.parseInt(adapter.getCilindro(x).getCantidad());
                     if (cantidad > 0) {
                         ConceptoDTO cilindros = new ConceptoDTO();
@@ -707,8 +565,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         cilindros.setPrecioUnitarioProducto(data_get.get(x).getPrecioUnitario());
                         cilindros.setPrecioUnitarioKg(0);
                         cilindros.setPrecioUnitarioLt(0);
-                        cilindros.getDescuento();
-                        //cilindros.setDescuento(0);//Queda pendiente que se consulte el descuento del cliente
                         cilindros.setDescuentoUnitarioKg(0.0);
                         cilindros.setDescuentoUnitarioLt(0.0);
                         cilindros.setCantidad(cantidad);
@@ -719,14 +575,16 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                                 cilindros.getCantidad() * cilindros.getPrecioUnitarioProducto()
                         );
                         cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
-                        cilindros.setConcepto(adapter.getCilindro(x).getNombre());
+
+                        String concepto = adapter.getCilindro(x).getNombre();
+                        concepto = concepto.replace(".0000", "Kg");
+                        cilindros.setConcepto(concepto);
+
                         cilindros.setPUnitario(cilindros.getPrecioUnitarioProducto());
                         cilindros.setEsVentaCilindro(true);
                         cilindros.setIdCilindro(adapter.getCilindro(x).getId());
                         conceptos.add(cilindros);
-
                     }
-                    //}
                 }
             }
         }
@@ -749,6 +607,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
                     findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
             TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
+            TextView TVExistencia = card.findViewById(R.id.PuntoVentaGasListaActivityCantidadExistencia);
             Calendar calendar = Calendar.getInstance();
 
             if (!editText.getText().toString().isEmpty()) {
@@ -771,11 +630,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         Gas.setPrecioUnitarioProducto(precioVentaDTO.getPrecioSalidaKg());
                         Gas.setPrecioUnitarioLt(precioVentaDTO.getPrecioSalidaLt());
                         Gas.setPrecioUnitarioKg(precioVentaDTO.getPrecioSalidaKg());
-                        //ventadto.setIdCliente(0);
-                        //existencias.getDescuento();
-                        //Log.d("Descuento1", existencias.getDescuento()+"");
-                        //Log.d("Descuento2", Gas.getDescuento()+"");
-
 
                         Gas.setDescuento(0);// aqui no
                         Gas.setDescuentoUnitarioKg(0);
@@ -788,8 +642,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                             Gas.setDescuento(Double.parseDouble(adapter.Descuento.getText().toString()));
 
                             double cap = Double.parseDouble(Gas.getConcepto().substring(6,9));
-
-                            //double cap = ExistenciasDTO.get(x).getCapacidadKg();
                             Gas.setCantidadKg(cap * cantidadVenta);
                             Gas.setCantidadLt(cap * cantidadVenta);
                             Gas.setSubtotal(cap * cantidadVenta * (precioVentaDTO.getPrecioSalidaKg() - Gas.getDescuento()));
@@ -802,14 +654,14 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                             Gas.setPUnitario(precioVentaDTO.getPrecioSalidaKg());
 
                         }
-
+                        adapter.getCilindro(x).setExistencias(adapter.getCilindro(x).getExistencias()- cantidadVenta);
+                        TVExistencia.setText("" + (int)adapter.getCilindro(x).getExistencias());
                         conceptos.add(Gas);
                     } else {
                         AlertDialog.Builder builder =
                                 new AlertDialog.Builder(this, R.style.AlertDialog);
                         builder.setTitle(R.string.mensjae_error_campos);
-                        builder.setMessage("La cantidad sobrepasa la existencia actual que es " +
-                                cantidadActual + " Lt");
+                        builder.setMessage("La cantidad sobrepasa la existencia actual");
                         builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
                                 dialog.dismiss());
                         builder.create().show();

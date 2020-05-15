@@ -129,6 +129,10 @@ public class Session {
         return pref.getString(KEY_TOKEN,null);
     }
 
+    public String getEmail() {
+        return pref.getString(KEY_EMAIL, null);
+    }
+
     public int getIdAlmacen() {
         return pref.getInt(KEY_ID_ALMACEN, 0);
     }

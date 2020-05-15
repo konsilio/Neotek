@@ -6,7 +6,6 @@ import com.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.neotecknewts.sagasapp.Model.ClienteDTO;
 import com.neotecknewts.sagasapp.Model.CorteDTO;
-import com.neotecknewts.sagasapp.Model.Cortes.CoordenadasDTO;
 import com.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.neotecknewts.sagasapp.Model.DatosBusquedaCortesDTO;
 import com.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
@@ -18,6 +17,7 @@ import com.neotecknewts.sagasapp.Model.DatosTipoPersonaDTO;
 import com.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.neotecknewts.sagasapp.Model.DatosTraspasoDTO;
 import com.neotecknewts.sagasapp.Model.DatosVentaOtrosDTO;
+import com.neotecknewts.sagasapp.Model.DatosVentasDTO;
 import com.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
@@ -341,6 +341,10 @@ public interface RestClient {
                                             @Header("Authorization") String token,
                                             @Header("Content-Type") String contentType
     );
+
+    @GET(Constantes.GET_TICKETS)
+    Call<DatosVentasDTO> getTickets(@Header("Authorization") String token,
+                                    @Header("Content-type") String contentType);
 
     @GET(Constantes.GET_LIST_EXISTENCIAS)
     Call<List<ExistenciasDTO>> getListaExistencias(@Path(value = "esGasLP") boolean esGasLP,

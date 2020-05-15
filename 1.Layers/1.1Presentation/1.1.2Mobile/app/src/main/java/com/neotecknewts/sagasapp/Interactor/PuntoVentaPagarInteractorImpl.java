@@ -36,14 +36,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         ventaDTO.setFecha(ventaDTO.getFecha());
         Log.d("ali", ventaDTO.toString());
-        Call<RespuestaPuntoVenta> call = restClient.pagar(
-                ventaDTO,
-                /*esCamioneta,
-                esEstacion,
-                esPipa,*/
-                token,
-                "application/json"
-        );
+        Call<RespuestaPuntoVenta> call = restClient.pagar(ventaDTO, token, "application/json");
         Log.d("Ventadto", ventaDTO.toString());
         Log.w("Url base", ApiClient.BASE_URL);
         call.enqueue(new Callback<RespuestaPuntoVenta>() {
@@ -58,94 +51,23 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                     registro_local = false;
                     RespuestaPuntoVenta dataresponse = response.body();
                     presenter.onError(dataresponse.getMensaje());
-                    // presenter.onError(dataresponse.getMensaje());
                 }else{
                     RespuestaPuntoVenta dataresponse = response.body();
-                    // presenter.onError(dataresponse.getMensaje());
-                    Log.d("fer:", response.errorBody()+"");
-                    presenter.onError("no cuenta con credito");
+                    presenter.onError(dataresponse.getMensaje());
                 }
-/*
-                else {
-                   // JSONObject respuesta = null;
-*/
-/*
-                    try {
-                       respuesta = new JSONObject(response.errorBody().string());
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-*//*
-
-                 */
-/* String mensaje = "";
-                    switch (response.code()) {
-                        case 404:
-                            Log.w("Error","not found");
-
-                            break;
-                        case 500:
-                            Log.w("Error", "server broken");
-
-                            break;
-                        default:
-                            Log.w("Error", "Error desconocido: "+response.code());
-
-                            break;
-                    }*//*
-
-                 */
-/* Log.d("ErrorVentaPagar", mensaje = "Se ha generado un error: "+response.message());
-                    mensaje = "Se ha generado un error: "+ response.message();*//*
-
-                    registro_local = true;
-*/
-/*
-                    if(response.body()!=null){
-                        presenter.onError(response.errorBody().toString());
-                    }else {
-                        if (data != null) {
-                            presenter.onError(data);
-                        } else {
-                            presenter.onError(mensaje);
-                        }
-                        Log.d("responsecode",response.code()+"");
-                        if(response.code()>=300) {
-                            local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
-                            presenter.onSuccessAndroid();
-                            Lisener lisener = new Lisener(sagasSql,token);
-                            lisener.CrearRunable(Lisener.Proceso.Venta);
-                        }
-                    }
-*//*
-
-                }
-*/
             }
 
             @Override
             public void onFailure(Call<RespuestaPuntoVenta> call, Throwable t) {
+                /*if(registro_local) {
+                    local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
+                    presenter.onSuccessAndroid();
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.Proceso.VENTA);
+                }*/
                 presenter.onError("Error en el servidor");
-              /*  Log.e("error", "Error desconocido: "+t.toString());
-                registro_local = true;
-                presenter.onError("Se ha generado un error: "+t.getMessage());
-                local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
-                presenter.onSuccessAndroid();
-                Lisener lisener = new Lisener(sagasSql,token);
-                lisener.CrearRunable(Lisener.Proceso.Venta);*/
-
             }
-
         });
-        /*if(registro_local) {
-            local(sagasSql, ventaDTO,esCamioneta,esEstacion,esPipa);
-            presenter.onSuccessAndroid();
-            Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.Proceso.VENTA);
-        }*/
     }
 
     @Override

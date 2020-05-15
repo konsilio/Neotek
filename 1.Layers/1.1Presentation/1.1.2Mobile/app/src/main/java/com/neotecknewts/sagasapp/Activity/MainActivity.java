@@ -363,7 +363,16 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     //funcion que inicia el activity del menu y le envia la lista para construirlo
     public void startActivity(ArrayList<MenuDTO> menuDTOs) {
-        //Cursor cursor = sagasSql.GetMenu();
+        boolean hayPuntoDeVenta = false;
+
+        for(int x = 0; x < menuDTOs.size(); x++){
+            if (menuDTOs.get(x).getName().equals("Punto de Venta"))
+                hayPuntoDeVenta = true;
+        }
+
+        if(hayPuntoDeVenta)
+            menuDTOs.add(new MenuDTO("Tickets del día", "Ventas realizadas", "ic_papeleta"));
+
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         intent.putExtra("lista", menuDTOs);
         startActivity(intent);

@@ -55,6 +55,9 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         }
         presenter = new PuntoVentaSolicitarPresenterImpl(this, PuntoVentaSolicitarActivity.this);
         Session session = new Session(this);
+        String mail = session.getEmail();
+        mail =  mail.substring(0, mail.indexOf('@')).replace('.', ' ');
+        setTitle("Punto de venta - " + mail);
         if (isOnline())
             presenter.hayCorte(session.getToken());
         PuntoVentaSolicitarActivityTitulo = findViewById(R.id.PuntoVentaSolicitarActivityTitulo);

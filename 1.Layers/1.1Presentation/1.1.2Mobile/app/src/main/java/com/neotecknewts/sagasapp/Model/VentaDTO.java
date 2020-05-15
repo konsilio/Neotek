@@ -7,6 +7,8 @@
  */
 package com.neotecknewts.sagasapp.Model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -19,6 +21,9 @@ public class VentaDTO implements Serializable {
 
     @SerializedName("IdCliente")
     private int IdCliente;
+
+    @SerializedName("Cliente")
+    private String Cliente;
 
     @SerializedName("Subtotal")
     private double Subtotal;
@@ -35,7 +40,7 @@ public class VentaDTO implements Serializable {
     @SerializedName("Credito")
     private boolean Credito;
 
-    @SerializedName("Bonificación")
+    @SerializedName("Bonificacion")
     private boolean Bonificacion;
 
     @SerializedName("Efectivo")
@@ -90,7 +95,7 @@ public class VentaDTO implements Serializable {
 
     private boolean EsRegistro;
     //endregion
-
+    @SerializedName("Estacion")
     private String Estacion;
 
     private double LimiteCreditoCliente;
@@ -326,37 +331,48 @@ public class VentaDTO implements Serializable {
         this.RFCGasera = RFCGasera;
     }
 
+    public String getCliente() {
+        return Cliente;
+    }
+
+    public void setCliente(String cliente) {
+        Cliente = cliente;
+    }
+
     @Override
     public String toString() {
-        return "VentaDTO{" +
-                "Concepto=" + Concepto +
-                ", IdCliente=" + IdCliente +
-                ", Subtotal=" + Subtotal +
-                ", Iva=" + Iva +
-                ", Total=" + Total +
-                ", Factura=" + Factura +
-                ", Credito=" + Credito +
-                ", Bonificacion=" + Bonificacion +
-                ", Efectivo=" + Efectivo +
-                ", Fecha='" + Fecha + '\'' +
-                ", Hora='" + Hora + '\'' +
-                ", Cambio=" + Cambio +
-                ", SinNumero=" + SinNumero +
-                ", FolioVenta='" + FolioVenta + '\'' +
-                ", Nombre='" + Nombre + '\'' +
-                ", RFC='" + RFC + '\'' +
-                ", TieneCredito=" + TieneCredito +
-                ", EsVentaGas=" + EsVentaGas +
-                ", RazonSocial='" + RazonSocial + '\'' +
-                ", VentaExtraforanea=" + VentaExtraforanea +
-                ", DescuentoTotal=" + DescuentoTotal +
-                ", NombreGasera='" + NombreGasera + '\'' +
-                ", RFCGasera='" + RFCGasera + '\'' +
-                ", EsSinNumero=" + EsSinNumero +
-                ", EsBusqueda=" + EsBusqueda +
-                ", EsRegistro=" + EsRegistro +
-                ", Estacion='" + Estacion + '\'' +
-                ", LimiteCreditoCliente=" + LimiteCreditoCliente +
-                '}';
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(this);
+//        return "VentaDTO{" +
+//                "Concepto=" + Concepto +
+//                ", IdCliente=" + IdCliente +
+//                ", Cliente='" + Cliente + '\'' +
+//                ", Subtotal=" + Subtotal +
+//                ", Iva=" + Iva +
+//                ", Total=" + Total +
+//                ", Factura=" + Factura +
+//                ", Credito=" + Credito +
+//                ", Bonificacion=" + Bonificacion +
+//                ", Efectivo=" + Efectivo +
+//                ", Fecha='" + Fecha + '\'' +
+//                ", Hora='" + Hora + '\'' +
+//                ", Cambio=" + Cambio +
+//                ", SinNumero=" + SinNumero +
+//                ", FolioVenta='" + FolioVenta + '\'' +
+//                ", Nombre='" + Nombre + '\'' +
+//                ", RFC='" + RFC + '\'' +
+//                ", TieneCredito=" + TieneCredito +
+//                ", EsVentaGas=" + EsVentaGas +
+//                ", RazonSocial='" + RazonSocial + '\'' +
+//                ", VentaExtraforanea=" + VentaExtraforanea +
+//                ", DescuentoTotal=" + DescuentoTotal +
+//                ", NombreGasera='" + NombreGasera + '\'' +
+//                ", RFCGasera='" + RFCGasera + '\'' +
+//                ", EsSinNumero=" + EsSinNumero +
+//                ", EsBusqueda=" + EsBusqueda +
+//                ", EsRegistro=" + EsRegistro +
+//                ", Estacion='" + Estacion + '\'' +
+//                ", LimiteCreditoCliente=" + LimiteCreditoCliente +
+//                '}';
     }
 }

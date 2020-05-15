@@ -140,10 +140,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
 
 
         menu = new ArrayList<>();
-/*        menu.add("Iniciar Descarga");
-        menu.add("Finalizar Descarga");
-        menu.add("Inventario General");
-        menu.add("Ordenes de compra");*/
 
         //se obtiene el menu del login, en caso de que se llegue del login se hace un llamado a web service
         Bundle extras = getIntent().getExtras();
@@ -415,6 +411,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
 
     //metodo que muestra algun mensaje
     private void showDialog(String mensaje) {
+        Log.d("FerChido", mensaje);
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this, R.style.AlertDialog);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
@@ -516,6 +513,15 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     @Override
     public void onSuccessGetMenu(List<MenuDTO> menuDTOs) {
         ArrayList<MenuDTO> menus = new ArrayList<>(menuDTOs.size());
+        boolean hayPuntoDeVenta = false;
+
+        for(int x = 0; x < menuDTOs.size(); x++){
+            if (menuDTOs.get(x).getName().equals("Punto de Venta"))
+                hayPuntoDeVenta = true;
+        }
+        if(hayPuntoDeVenta)
+            menuDTOs.add(new MenuDTO("Tickets del día", "Ventas realizadas", "ic_papeleta"));
+
         menus.addAll(menuDTOs);
         menu.clear();
         menu.addAll(menuDTOs);
