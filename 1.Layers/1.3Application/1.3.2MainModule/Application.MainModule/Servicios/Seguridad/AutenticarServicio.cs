@@ -22,10 +22,9 @@ namespace Application.MainModule.Servicios.Seguridad
 {
     public static class AutenticarServicio
     {
-        private static RespuestaDto resDisp;
+        static RespuestaDto resDisp;
         public static RespuestaAutenticacionDto AutenticarUsuario(AutenticacionDto autDto)
         {
-            //RespuestaDto resDisp = new RespuestaDto();
             ValidarDisponibilidadAsync().Wait();
             if (!resDisp.Exito)
                 return new RespuestaAutenticacionDto()
@@ -103,15 +102,15 @@ namespace Application.MainModule.Servicios.Seguridad
                 };
             }
         }
-        //public static RespuestaDto ValidarDisponibilidad()
-        //{
-        //    RespuestaDto resp = new RespuestaDto();
-        //    if (WebConfigurationManager.AppSettings["Disponible"].Equals("1"))
-        //        resp.Exito = true;
-        //    else
-        //        resp.Exito = false;
-        //    return resp;
-        //}
+        public static RespuestaDto ValidarDisponibilidad()
+        {
+            RespuestaDto resp = new RespuestaDto();
+            if (WebConfigurationManager.AppSettings["DisponibleNTK"].Equals("1"))
+                resp.Exito = true;
+            else
+                resp.Exito = false;
+            return resp;
+        }
         public static async Task<RespuestaDto> ValidarDisponibilidadAsync()
         {//gmg
             using (var client = new HttpClient())
@@ -195,10 +194,30 @@ namespace Application.MainModule.Servicios.Seguridad
                             esChofer = false;
                         }
                     }
+                    else
+                    {
+                        return new RespuestaAutenticacionMobileDto()
+                        {
+                            IdUsuario = 0,
+                            Exito = false,
+                            Mensaje = Error.S0005,
+                            token = string.Empty,
+                            listMenu = new List<DTOs.Mobile.MenuDto>(),
+                        };
+                    }
                     menu = MenuServicio.Crear(usuario, hayLectura, esEstacion, esChofer);
                 }
                 else
                 {
+                    if (usuario.Roles.ToList().Exists(x => x.AppPipaPuntoVenta || x.AppCamionetaPuntoVenta || x.AppEstacionCarbPuntoVenta))
+                        return new RespuestaAutenticacionMobileDto()
+                        {
+                            IdUsuario = 0,
+                            Exito = false,
+                            Mensaje = Error.S0012,
+                            token = string.Empty,
+                            listMenu = new List<DTOs.Mobile.MenuDto>(),
+                        };
                     hayLectura = true;
                 }
                 menu = MenuServicio.Crear(usuario, hayLectura, esEstacion, esChofer);
@@ -289,18 +308,14 @@ namespace Application.MainModule.Servicios.Seguridad
                     var unidadAlmacen = puntoVenta.UnidadesAlmacen;
                     if (unidadAlmacen.IdEstacionCarburacion != null && unidadAlmacen.IdEstacionCarburacion != 0)
                         esEstacion = true;
-
                     return ControlAsistenciaServicio.CalcularEntrada(usuario, autDto, puntoVenta, esEstacion);
                 }
-                else
-                {
-                    return ControlAsistenciaServicio.CalcularEntrada(usuario, autDto);
-                }
+                else                
+                    return ControlAsistenciaServicio.CalcularEntrada(usuario, autDto);                
             }
-            else
-            {
+            else            
                 return ControlAsistenciaServicio.CalcularEntrada(usuario, autDto);
-            }
+            
         }
     }
 }

@@ -18,6 +18,7 @@ using System.Linq;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Ventas;
+using Application.MainModule.AdaptadoresDTO.Almacenes;
 
 namespace Application.MainModule.Servicios.Mobile
 {
@@ -33,13 +34,23 @@ namespace Application.MainModule.Servicios.Mobile
             var adapter = AlmacenLecturaAdapter.FromDTO(liadto);
             var al = AlmacenGasServicio.ObtenerLecturas(liadto.IdCAlmacenGas);
             adapter.IdOrden = Orden(al);
-            adapter.Fotografias = AlmacenLecturaAdapter.FromDTO(liadto.Imagenes,adapter.IdCAlmacenGas,adapter.IdOrden);
-            adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final: TipoEventoEnum.Inicial;
+            adapter.Fotografias = AlmacenLecturaAdapter.FromDTO(liadto.Imagenes, adapter.IdCAlmacenGas, adapter.IdOrden);
+            adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;
             adapter.EsEncargadoAnden = false;
             adapter.EsEncargadoPuerta = false;
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
-            var almacen = AlmacenGasServicio.ObtenerAlmacen(liadto.IdCAlmacenGas);            
+            var almacen = AlmacenGasServicio.ObtenerAlmacen(liadto.IdCAlmacenGas);
+            try
+            {
+                if (finalizar && almacen.IdCamioneta == null)
+                {
+                    almacen.CantidadActualLt = CalcularGasServicio.ObtenerLitrosEnElTanque(almacen.CapacidadTanqueLt ?? 0, adapter.Porcentaje ?? 0);
+                    almacen.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(almacen.CantidadActualLt, TokenServicio.ObtenerEmprsaAplicacion().FactorLitrosAKilos);
+                    AlmacenGasServicio.ActualizarAlmacen(AlmacenGasAdapter.FromEntity(almacen));
+                }
+            }
+            catch (Exception) { }
             return AlmacenGasServicio.InsertarLectura(adapter);
         }
 
@@ -59,32 +70,32 @@ namespace Application.MainModule.Servicios.Mobile
             return GasServicio.EvaluarClaveOperacion(lcdto);
         }
 
-        public static RespuestaDto Lectura(LecturaCamionetaDTO lcdto,bool finalizar = false)
-        {            
+        public static RespuestaDto Lectura(LecturaCamionetaDTO lcdto, bool finalizar = false)
+        {
             var al = AlmacenGasServicio.ObtenerLecturas(lcdto.IdCAlmacenGas);
             var almacen = AlmacenGasServicio.ObtenerAlmacen(lcdto.IdCAlmacenGas);
             int idOrden = Orden(al);
-            var adapter = AlmacenLecturaAdapter.FromDTO(lcdto,idOrden);
+            var adapter = AlmacenLecturaAdapter.FromDTO(lcdto, idOrden);
 
             adapter = EvaluarEsEncargadoPuerta(adapter, lcdto);
-            adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;            
+            adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
             var lecturaCamioenta = AlmacenGasServicio.InsertarLectura(adapter);
             #region Actualizo los cilindros
             if (lecturaCamioenta.Exito)
             {
-                var camioneta = AlmacenGasServicio.ObtenerAlmacen(lcdto.IdCAlmacenGas); 
-                foreach(AlmacenGasTomaLecturaCilindro cilindro in adapter.Cilindros)
+                var camioneta = AlmacenGasServicio.ObtenerAlmacen(lcdto.IdCAlmacenGas);
+                foreach (AlmacenGasTomaLecturaCilindro cilindro in adapter.Cilindros)
                 {
-                    var camionetaCilindro = AlmacenGasServicio.BuscarCamionetaCilindro(camioneta.IdCamioneta.Value, cilindro.IdCilindro,almacen.IdEmpresa);
+                    var camionetaCilindro = AlmacenGasServicio.BuscarCamionetaCilindro(camioneta.IdCamioneta.Value, cilindro.IdCilindro, almacen.IdEmpresa);
                     CamionetaCilindro camionetaCilindroActualizar = new CamionetaCilindro();
                     camionetaCilindroActualizar.IdCamioneta = camionetaCilindro.IdCamioneta;
                     camionetaCilindroActualizar.IdEmpresa = camionetaCilindro.IdEmpresa;
                     camionetaCilindroActualizar.IdCilindro = camionetaCilindro.IdCilindro;
                     camionetaCilindroActualizar.Cantidad = cilindro.Cantidad;
                     var actualizar = AlmacenGasServicio.ActualizaCilindro(camionetaCilindroActualizar);
-                }                
+                }
             }
             #endregion
             return lecturaCamioenta;
@@ -129,7 +140,7 @@ namespace Application.MainModule.Servicios.Mobile
                 if (ultimalectura != null)
                 {
                     alms.ElementAt(i).P5000Actual = ultimalectura.P5000;
-                    alms.ElementAt(i).PorcentajeActual = ultimalectura.Porcentaje ?? 0;                 
+                    alms.ElementAt(i).PorcentajeActual = ultimalectura.Porcentaje ?? 0;
                 }
             }
 
@@ -183,7 +194,7 @@ namespace Application.MainModule.Servicios.Mobile
             var alms = ObtenerAlamcenesGeneralConUltimaLectura(esFinalizar);
             return AlmacenLecturaAdapter.ToDto(alms, medidores);
         }
-        
+
         public static DatosTomaLecturaDto ConsultaDatosTomaLecturaEstacionCarburacion(bool esFinalizar)
         {
             var medidores = TipoMedidorGasServicio.Obtener();
@@ -219,7 +230,7 @@ namespace Application.MainModule.Servicios.Mobile
             return AlmacenLecturaAdapter.ToDtoReporte(alms);
         }
 
-        private static List<UnidadAlmacenGas>  ObtenerAlmacenesGas()
+        private static List<UnidadAlmacenGas> ObtenerAlmacenesGas()
         {
             var alm = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
             var acom = AcomodarUnidadAlmacenGasDelUsuario(alm);

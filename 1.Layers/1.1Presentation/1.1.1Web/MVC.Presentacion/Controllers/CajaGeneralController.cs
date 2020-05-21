@@ -155,8 +155,7 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Mensaje = Respuesta.Mensaje;
                 else
                     ViewBag.MensajeError = Respuesta.Mensaje;
-            }
-                
+            }                
             if (_model == null)
                 _model = new VentaPuntoVentaDTO();
             if (_model.Detalle == null || _model.Detalle.Count.Equals(0))
@@ -183,8 +182,8 @@ namespace MVC.Presentacion.Controllers
                 }
             }
             TempData["RespuestaDTO"] = VentasServicio.ActualizarDetalleTicket(update, _tkn);
-           var  dto = VentasServicio.BuscarTicket(((VentaPuntoVentaDTO)TempData["Ticket"]).FolioVenta, _tkn);
-            return RedirectToAction("EdicionTickets", dto);
+            TempData["Ticket"] = VentasServicio.BuscarTicket(((VentaPuntoVentaDTO)TempData["Ticket"]).FolioVenta, _tkn);
+            return RedirectToAction("EdicionTickets");
         }
         public ActionResult BuscarTicket(VentaPuntoVentaDTO _model)
         {
@@ -196,6 +195,22 @@ namespace MVC.Presentacion.Controllers
             _model = VentasServicio.BuscarTicket(_model.FolioVenta, _tkn);
             if (_model != null)
                 TempData["Ticket"] = _model;
+            if (string.IsNullOrEmpty(_model.FolioVenta))
+            {
+                TempData["RespuestaDTO"] = new RespuestaDTO()
+                {
+                    Exito = false,
+                    Mensaje = "Folio no encontrado"
+                };
+            }
+            else
+            {
+                TempData["RespuestaDTO"] = new RespuestaDTO()
+                {
+                    Exito = true,
+                    Mensaje = "Folio encontrado"
+                };
+            }
             TempData.Keep("Ticket");
             //var _model = VentasServicio.BuscarTicket(ticket.FolioVenta, _tkn);
             return RedirectToAction("EdicionTickets", _model);
@@ -204,13 +219,16 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             _tkn = Session["StringToken"].ToString();
-
             var resp = VentasServicio.BorrarTicket(Folio, _tkn);
             TempData["RespuestaDTO"] = resp;
+            TempData.Keep("Ticket");
             if (!resp.Exito)
-                return RedirectToAction("EdicionTickets", VentasServicio.BuscarTicket(Folio, _tkn));
-            else
                 return RedirectToAction("EdicionTickets");
+            else
+            {
+                TempData["Ticket"] = null;
+                return RedirectToAction("EdicionTickets");
+            }
         }
         public ActionResult BatchEditingDetallePartial()
         {
@@ -223,8 +241,8 @@ namespace MVC.Presentacion.Controllers
             string _tok = Session["StringToken"].ToString();
             var respuesta = VentasServicio.ActualizarTicket(dto, _tok);
             TempData["RespuestaDTO"] = respuesta;
-            dto = VentasServicio.BuscarTicket(dto.FolioVenta, _tok);
-            return RedirectToAction("EdicionTickets", dto);
+            TempData["Ticket"]= VentasServicio.BuscarTicket(dto.FolioVenta, _tok);
+            return RedirectToAction("EdicionTickets");
         }
     }
 }

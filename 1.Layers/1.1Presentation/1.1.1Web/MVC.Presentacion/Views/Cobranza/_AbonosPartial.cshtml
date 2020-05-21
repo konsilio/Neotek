@@ -53,6 +53,15 @@
             //c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
+                settings.Columns.Add(c =>
+        {
+            c.FieldName = "FechaRegistro";
+            c.Caption = "Fecha";
+            c.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy";
+            //c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            //c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
         settings.Columns.Add(c =>
         {
             c.FieldName = "TotalCargo";

@@ -76,8 +76,8 @@
                                                 <label for="txtmail">
                                                     Correo elect.:*
                                                 </label>
-                                                <input type="text" name="Email1" id="txtmail" class="form-control">
-                                                @Html.ValidationMessageFor(m => m.Email1, "", new { @class = "alert-danger" })
+                                                <input type="text" name="Email1" value="@ViewBag.IdUser.Email1" id="txtmail" class="form-control">
+                                                @Html.ValidationMessageFor(m => m.Email1, "",new { @class = "alert-danger" })
                                             </div>
                                         </div>
                                     </div>

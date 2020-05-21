@@ -108,31 +108,34 @@ namespace Application.MainModule.Servicios.Catalogos
             string nom = "";
             string apell = "";
             string apell2 = "";
-            if (us.RepresentanteLegal != null && !us.RepresentanteLegal.Equals(string.Empty))
-            {
-                if (us.RepresentanteLegal.Split(' ').Count() == 4)
-                {
-                    nom = us.RepresentanteLegal.Split(' ')[0] + " " + us.RepresentanteLegal.Split(' ')[1];
-                    apell = us.RepresentanteLegal.Split(' ')[2];
-                    apell2 = us.RepresentanteLegal.Split(' ')[3];
-                }
-                else if (us.RepresentanteLegal.Split(' ').Count() == 3)
-                {
-                    nom = us.RepresentanteLegal.Split(' ')[0];
-                    apell = us.RepresentanteLegal.Split(' ')[1];
-                    apell2 = us.RepresentanteLegal.Split(' ')[2];
-                }
-                else if (us.RepresentanteLegal.Split(' ').Count() == 2)
-                {
-                    nom = us.RepresentanteLegal.Split(' ')[0];
-                    apell = us.RepresentanteLegal.Split(' ')[1];
-                }
-            }
-            else
+
+            if (string.IsNullOrEmpty(us.RazonSocial))
             {
                 nom = us.Nombre;
                 apell = us.Apellido1 ?? string.Empty;
                 apell2 = us.Apellido2 ?? string.Empty;
+                
+            }
+            else
+            {
+                return us.RazonSocial;
+                //if (us.RepresentanteLegal.Split(' ').Count() == 4)
+                //{
+                //    nom = us.RepresentanteLegal.Split(' ')[0] + " " + us.RepresentanteLegal.Split(' ')[1];
+                //    apell = us.RepresentanteLegal.Split(' ')[2];
+                //    apell2 = us.RepresentanteLegal.Split(' ')[3];
+                //}
+                //else if (us.RepresentanteLegal.Split(' ').Count() == 3)
+                //{
+                //    nom = us.RepresentanteLegal.Split(' ')[0];
+                //    apell = us.RepresentanteLegal.Split(' ')[1];
+                //    apell2 = us.RepresentanteLegal.Split(' ')[2];
+                //}
+                //else if (us.RepresentanteLegal.Split(' ').Count() == 2)
+                //{
+                //    nom = us.RepresentanteLegal.Split(' ')[0];
+                //    apell = us.RepresentanteLegal.Split(' ')[1];
+                //}
             }
             return string.Concat(nom, " ", apell, " ", apell2);
         }

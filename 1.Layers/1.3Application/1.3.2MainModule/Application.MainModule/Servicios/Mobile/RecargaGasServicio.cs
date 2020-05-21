@@ -36,7 +36,7 @@ namespace Application.MainModule.Servicios.Mobile
             var recarga = AlmacenGasServicio.InsertarRecargaGas(adapter);
             if (recarga.Exito)
             {
-                #region Actualizo el inventario despues de la recarga
+               // Actualizo el inventario despues de la recarga
                 foreach (var reargaCilindro in adapter.Cilindros)
                 {
                     CamionetaCilindro cilindro = new CamionetaCilindro();
@@ -44,14 +44,10 @@ namespace Application.MainModule.Servicios.Mobile
                     cilindro.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
                     cilindro.IdCilindro = reargaCilindro.IdCilindro;
                     cilindro.Cantidad = reargaCilindro.Cantidad;
-                    if (cilindro.Cantidad > 0)
-                    {
-                        var actualizar = AlmacenGasServicio.ActualizaCilindroCamioneta(cilindro);
-                    }
-                }
-                #endregion
+                    if (cilindro.Cantidad > 0)                    
+                        AlmacenGasServicio.ActualizaCilindroCamioneta(cilindro);                    
+                }               
             }
-
             return recarga;
         }
 
@@ -69,15 +65,21 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.FechaRegistro = DateTime.Now;
             adapter.FechaAplicacion = rdto.FechaAplicacion;          
             adapter.Fotografias = AlmacenRecargaAdapter.FromDTO(rdto.Imagenes);
-
-            almacen.P5000Actual = rdto.P5000Entrada;
-            almacen.PorcentajeActual = rdto.ProcentajeEntrada;
-            almacenSalida.P5000Actual = rdto.P5000Salida;
-            almacenSalida.PorcentajeActual = rdto.ProcentajeSalida;
-
-            AlmacenGasServicio.ActualizarAlmacen(AlmacenGasAdapter.FromEntity(almacen));
-            AlmacenGasServicio.ActualizarAlmacen(AlmacenGasAdapter.FromEntity(almacenSalida));
-
+            try
+            {
+                //Se actualiza el estatus actual del almacen
+                almacen.P5000Actual = rdto.P5000Entrada;
+                almacen.PorcentajeActual = rdto.ProcentajeEntrada;
+                almacen.CantidadActualLt = CalcularGasServicio.ObtenerLitrosEnElTanque(almacen.CapacidadTanqueLt ?? 0, rdto.ProcentajeEntrada);
+                almacen.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(almacen.CantidadActualLt, TokenServicio.ObtenerEmprsaAplicacion().FactorLitrosAKilos);
+                almacenSalida.P5000Actual = rdto.P5000Salida;
+                almacenSalida.PorcentajeActual = rdto.ProcentajeSalida;
+                almacenSalida.CantidadActualLt = CalcularGasServicio.ObtenerLitrosEnElTanque(almacenSalida.CapacidadTanqueLt ?? 0, rdto.ProcentajeSalida);
+                almacenSalida.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(almacenSalida.CantidadActualLt, TokenServicio.ObtenerEmprsaAplicacion().FactorLitrosAKilos);
+                AlmacenGasServicio.ActualizarAlmacen(AlmacenGasAdapter.FromEntity(almacen));
+                AlmacenGasServicio.ActualizarAlmacen(AlmacenGasAdapter.FromEntity(almacenSalida));
+            }
+            catch (Exception) { }
             return AlmacenGasServicio.InsertarRecargaGas(adapter);
         }
     }

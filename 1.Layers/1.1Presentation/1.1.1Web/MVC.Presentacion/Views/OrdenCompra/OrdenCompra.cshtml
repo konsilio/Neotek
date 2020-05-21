@@ -26,7 +26,7 @@
         @Html.HiddenFor(m => m.IdEmpresa)
         @Html.HiddenFor(m => m.FechaRequisicion)
         @Html.HiddenFor(m => m.IdRequisicion)
-       
+
         <div class="page-loader-wrapper">
             <div class="loader">
                 <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
@@ -127,28 +127,33 @@
                                 </div>
                             }
                             <div class="row clearfix blockquote blockquote-info btn-round">
-                               
+
                                 <div class="table-responsive">
                                     @*@Html.Action("ProductoOCPartial", new { id = Model.IdRequisicion })*@
                                     @Html.Partial("_ProductosOCPartial", Model.OrdenCompraProductos)
                                 </div>
                             </div>
-                            <div class="row clearfix">                                
-                                <div class="col-sm-4 center">
-                                    <a href="@Url.Action("Ordenes", "OrdenCompra")"  class="btn btn-raised btn-primary btn-round">
+                            <div class="row clearfix">
+                                @*<div class="col-sm-4 center">
+                                        <a href="@Url.Action("Ordenes", "OrdenCompra")"  class="btn btn-raised btn-primary btn-round">
+                                            Cancelar
+                                        </a>
+                                    </div>*@
+                                @*<div class="col-lg-4 col-md-8 text-center">
+                                    <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round">
                                         Cancelar
                                     </a>
-                                </div>
+                                </div>*@
                                 <div class="col-lg-4 col-md-8 text-center">
                                     <a href="@Url.Action("Ordenes", "OrdenCompra" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
                                         Regresar
                                     </a>
                                 </div>
                                 @*<div class="col-sm-4 center">
-                                    <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
-                                        Crear
-                                    </a>
-                                </div>*@
+                                        <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
+                                            Crear
+                                        </a>
+                                    </div>*@
                             </div>
                         </div>
                     </div>
@@ -169,46 +174,50 @@
                 </div>
             </div>
         </div>
-            <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="title" id="ModalCancelarLabel">Motivo de cancelación</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="body">
-                                <div class="col-sm-12">
-                                    <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" Rows="5" placeholder="Cual es el motivo de la cancelación..."></asp:TextBox>
+        <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalCancelarLabel">Motivo de cancelación</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="body">
+                            <div class="col-sm-12 blockquote blockquote-info btn-round">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @Html.TextAreaFor(m => m.MotivoCancela, new { @class = "form-control no-resize", @Rows = 4 })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
-                            <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnCancelar" class="btn btn-raised btn-primary btn-round" onclick="Cancelar()">Cancelar</button>
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="title" id="ModalMensajeLabel">Orden de Compra exitosa</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="body">
-                                <div class="col-sm-12">
-                                    <asp:Label ID="lblMensajeOrdenCompra" TextMode="MultiLine" />
-                                </div>
+        </div>
+        <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalMensajeLabel">Orden de Compra exitosa</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="body">
+                            <div class="col-sm-12">
+                                <asp:Label ID="lblMensajeOrdenCompra" TextMode="MultiLine" />
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <asp:Button ID="btnCrear12" CssClass="btn btn-raised btn-primary btn-round" Text="Crear" OnClick="BtnCrear_Click" />
-                            <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnCrear12" CssClass="btn btn-raised btn-primary btn-round" Text="Crear" OnClick="BtnCrear_Click" />
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
                     </div>
                 </div>
             </div>
+        </div>
     }
 </body>
 @*@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")

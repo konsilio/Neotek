@@ -17,8 +17,22 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
+
+            if (TempData["ListClientes"] != null && ((List<ClientesDto>)TempData["ListClientes"]).Count > 0)
+            {
+                ViewBag.Clientes = (List<ClientesDto>)TempData["ListClientes"];
+                TempData.Keep("ListClientes");
+                ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                TempData["ListClientes"] = ViewBag.Clientes;
+                TempData.Keep("ListClientes");
+            }
+            else
+            {
+                ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                TempData["ListClientes"] = ViewBag.Clientes;
+                TempData.Keep("ListClientes");
+            }
           
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
@@ -274,7 +288,19 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             _tok = Session["StringToken"].ToString();
-            var model = CatalogoServicio.ListaClientes(0, null, null, null, null, _tok);
+            List<ClientesDto> model = new List<ClientesDto>();
+            if (TempData["ListClientes"] != null && ((List<ClientesDto>)TempData["ListClientes"]).Count > 0)
+            {
+                model = (List<ClientesDto>)TempData["ListClientes"];
+                TempData.Keep("ListClientes");
+            }
+            else
+            {
+                model = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tok), _tok);
+                TempData["ListClientes"] = model;
+                TempData.Keep("ListClientes");
+            }
+              //model = CatalogoServicio.ListaClientes(0, null, null, null, null, _tok);
             return PartialView("_Clientes", model);
         }
     }

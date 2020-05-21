@@ -42,10 +42,18 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static string ObtenerNombre(Pedido entidad)
         {
+
             if (entidad.IdCamioneta != null && entidad.IdCamioneta != 0)
-                return new EquipoTransporteDataAccess().BuscarCamioneta(entidad.IdCamioneta.Value).Nombre;
+            {
+
+                var calmacen = AlmacenGasServicio.ObtenerPorCamioneta(entidad.IdCamioneta.Value);
+                return calmacen != null ? calmacen.Numero : "No encontrada";
+            }
             if (entidad.IdPipa != null && entidad.IdPipa != 0)
-                return new EquipoTransporteDataAccess().BuscarPipa(entidad.IdPipa.Value).Nombre;
+            {
+                var calmacen = AlmacenGasServicio.ObtenerPorPipa(entidad.IdPipa.Value);
+                return calmacen != null ? calmacen.Numero : "No encontrada";
+            }
 
             return null;
         }

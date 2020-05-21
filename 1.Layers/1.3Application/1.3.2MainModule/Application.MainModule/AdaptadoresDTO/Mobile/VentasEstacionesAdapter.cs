@@ -83,7 +83,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 EsBonificacion = PuntoVentaServicio.CalcularBonificacion(venta),
                 Bonificacion = PuntoVentaServicio.CalcularBonificacion(venta) ? CalculosGenerales.DiferenciaEntreDosNumero(venta.Efectivo, venta.Total) : 0,
                 RequiereFactura = venta.Factura,
-                VentaACredito = venta.Credito,
+                VentaACredito = punto_venta.UnidadesAlmacen.IdCamioneta == null ? venta.Credito : false,
                 VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, idOrden, idEmpresa),
             };
         }
@@ -114,16 +114,16 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     IdProducto = concepto.IdProducto,
                     CantidadLt = punto_venta.UnidadesAlmacen.IdCamioneta == null ? concepto.CantidadLt : CalcularGasServicio.ObtenerLitrosDesdeKilos(concepto.CantidadKg, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),
                     CantidadKg = punto_venta.UnidadesAlmacen.IdCamioneta == null ? CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.CantidadLt, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos) : concepto.CantidadKg,
-                    DescuentoTotal = punto_venta.UnidadesAlmacen.IdCamioneta == null ? concepto.Descuento* concepto.Cantidad : (concepto.Descuento * concepto.CantidadKg),
+                    DescuentoTotal = punto_venta.UnidadesAlmacen.IdCamioneta == null ? concepto.Descuento * concepto.Cantidad : (concepto.Descuento * concepto.CantidadKg),
                     IdUnidadMedida = concepto.IdUnidadMedida,
                     PrecioUnitarioKg = concepto.PrecioUnitarioKg,
                     PrecioUnitarioLt = concepto.PrecioUnitarioLt,
                     DescuentoUnitarioKg = concepto.Descuento,
                     DescuentoUnitarioLt = concepto.Descuento,
-                    ProductoLinea = p.LineaProducto.Descripcion,
-                    ProductoCategoria = p.Categoria.Descripcion,
-                    UnidadMedida = p.UnidadMedida.Acronimo,
-                });
+                    ProductoLinea = p != null ? p.LineaProducto.Descripcion : string.Empty,
+                    ProductoCategoria = p != null ? p.Categoria.Descripcion  : string.Empty,
+                    UnidadMedida = p != null ? p.UnidadMedida.Acronimo : string.Empty,
+                });;
                 idOrdenDetalle++;
             }
             return list;
@@ -162,6 +162,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     Existencia = CantidadKgGas,
                     CapacidadKg = 0,
                     CapacidadLt = 0,
+                    RFC = productoGas.Empresa.Rfc,
+                    RazonSocial = productoGas.Empresa.RazonSocial,
                 };
             }
             else
@@ -175,7 +177,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     Existencia = existencias != null ? existencias.Cantidad : 0,
                     Descuento = descuento.Equals(0) ? (precio != 0 ? CalculosGenerales.DiferenciaEntreDosNumero(precio, _precio.PrecioSalidaLt.Value) : 0) : descuento,
                     CapacidadKg = 0,
-                    CapacidadLt = 0
+                    CapacidadLt = 0,
+                    RFC = existencias.Empresa.Rfc,
+                    RazonSocial = existencias.Empresa.RazonSocial,
                 };
             }
         }
@@ -195,7 +199,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Nombre = "Cilindro " + cilindro.UnidadAlmacenGasCilindro.CapacidadKg,
                 Descuento = 0,// Falta validar descuentos por clientes
                 CapacidadKg = cilindro.UnidadAlmacenGasCilindro.CapacidadKg,
-                CapacidadLt = cilindro.UnidadAlmacenGasCilindro.CapacidadLt
+                CapacidadLt = cilindro.UnidadAlmacenGasCilindro.CapacidadLt,
+                RFC = cilindro.Empresa.Rfc,
+                RazonSocial = cilindro.Empresa.RazonSocial,
             };
         }
 
@@ -221,7 +227,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                         Id = cilindro.IdCilindro,
                         Existencia = cilindroExistencia,//,
                         CapacidadKg = cilindro.CapacidadKg,
-                        CapacidadLt = cilindro.CapacidadLt
+                        CapacidadLt = cilindro.CapacidadLt,
+                        RFC = cilindro.Empresa.Rfc,
+                        RazonSocial = cilindro.Empresa.RazonSocial,
                     });
                 }
                 else
@@ -233,7 +241,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                         PrecioUnitario = cilindro.Precio,
                         Id = cilindro.IdCilindro,
                         CapacidadKg = cilindro.CapacidadKg,
-                        CapacidadLt = cilindro.CapacidadLt
+                        CapacidadLt = cilindro.CapacidadLt,
+                        RFC = cilindro.Empresa.Rfc,
+                        RazonSocial = cilindro.Empresa.RazonSocial,
                     });
                 }
             }
@@ -311,7 +321,71 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 CapacidadKg = almacenCilindro.CapacidadKg,
                 CapacidadLt = almacenCilindro.CapacidadLt,
                 Descuento = descuento.Equals(0) ? (precio != 0 ? CalculosGenerales.DiferenciaEntreDosNumero(precio, pv.PrecioSalidaKg.Value) : 0) : descuento,
+                RFC = cilindro.Empresa.Rfc,
+                RazonSocial = cilindro.Empresa.RazonSocial,
             };
+        }
+        public static List<VentaDTO> FromDTO(List<VentaPuntoDeVenta> lista)
+        {
+            return lista.Select(x => FromDTO(x)).ToList();
+        }
+        public static VentaDTO FromDTO(VentaPuntoDeVenta venta)
+        {
+            return new VentaDTO()
+            {
+                FolioVenta = venta.FolioVenta,
+                IdCliente = venta.IdCliente,
+                Cliente = ClienteServicio.ObtenerNomreCliente(venta.CCliente),
+                RFC = venta.CCliente.Rfc ?? string.Empty,
+                Subtotal = venta.Subtotal,
+                Iva = venta.Iva,
+                Total = venta.Total,
+                Factura = venta.RequiereFactura,
+                Credito = venta.VentaACredito,
+                Bonificacion = venta.EsBonificacion,
+
+                Efectivo = Math.Abs(venta.EfectivoRecibido ?? 0),
+                Fecha = venta.FechaRegistro,
+                Hora = venta.FechaRegistro.TimeOfDay,
+                Cambio = venta.CambioRegresado ?? 0,
+                SinNumero = venta.IdCliente > 0 ? true : false,
+                TieneCredito = venta.CCliente.CreditoDisponibleMonto > 0 ? true : false,
+                Concepto = FromDTO(venta.VentaPuntoDeVentaDetalle.ToList()),
+                VentaExtraordinaria = venta.CCliente.VentaExtraordinaria ?? false,
+                NombreGasera = venta.CPuntoVenta.Empresa.RazonSocial,
+                RFCGasera = venta.CPuntoVenta.Empresa.Rfc,
+                Estacion = venta.CPuntoVenta.UnidadesAlmacen.Numero
+            };
+        }
+        public static List<ConceptoDTO> FromDTO(List<VentaPuntoDeVentaDetalle> conceptos)
+        {
+            List<ConceptoDTO> list = new List<ConceptoDTO>();
+            foreach (var concepto in conceptos)
+            {
+                list.Add(new ConceptoDTO()
+                {
+                    Cantidad = concepto.CantidadProducto ?? 0,
+                    Concepto = concepto.ProductoDescripcion ,
+                    PUnitario = concepto.PrecioUnitarioProducto ?? 0,
+                    Descuento = concepto.DescuentoTotal ,
+                    Subtotal = concepto.Subtotal ,
+                    IdCategoria = concepto.IdCategoria,
+                    IdLinea = concepto.IdProductoLinea ,
+                    IdProducto = (short)concepto.IdProducto,
+                    LitrosDespachados = concepto.CantidadLt ?? 0 ,
+                    IdUnidadMedida = concepto.IdUnidadMedida ,
+                    PrecioUnitarioProducto = concepto.PrecioUnitarioProducto?? 0 ,
+                    PrecioUnitarioLt = concepto.PrecioUnitarioLt ?? 0,
+                    PrecioUnitarioKg = concepto.PrecioUnitarioKg ?? 0,
+                    DescuentoUnitarioLt = concepto.DescuentoUnitarioLt ?? 0,
+                    DescuentoUnitarioKg = concepto.DescuentoUnitarioKg ?? 0,
+                    CantidadLt = concepto.CantidadLt ?? 0,
+                    CantidadKg = concepto.CantidadKg ?? 0,
+                    DescuentoTotal = concepto.DescuentoTotal ,
+                    EsVentaCilindro = concepto.VentaPuntoDeVenta.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null ? true: false,
+                });
+            }
+            return list;
         }
     }
 }

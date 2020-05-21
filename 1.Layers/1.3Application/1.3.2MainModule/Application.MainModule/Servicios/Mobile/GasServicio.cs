@@ -22,7 +22,11 @@ namespace Application.MainModule.Servicios.Mobile
         public static RespuestaDto EvaluarClaveOperacion(AutoconsumoDTO dto)
         {
             var autoconsumo = AlmacenGasServicio.ObtenerAutoconsumo(dto.ClaveOperacion);
-            return EvaluarClaveOperacion(autoconsumo);
+            var resp = EvaluarClaveOperacion(autoconsumo);
+            if (resp.Exito)
+                resp.Id = autoconsumo.Orden;
+            return resp;
+
         }
         public static RespuestaDto EvaluarClaveOperacion(DescargaDto descarga)
         {

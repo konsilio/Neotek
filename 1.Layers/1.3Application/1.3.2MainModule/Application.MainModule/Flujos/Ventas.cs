@@ -66,7 +66,7 @@ namespace Application.MainModule.Flujos
             return CajaGeneralServicio.ObtenerIdEmp(IdEmpresa).ToList();
         }
         public CorteCajaDTO CajaGeneral(string cveReporte)
-        {
+        {//Liquidación
             CorteCajaDTO corte = new CorteCajaDTO();
             var reporteDia = CajaGeneralServicio.ObtenerReporteDia(cveReporte);
             if (reporteDia == null)
@@ -96,10 +96,10 @@ namespace Application.MainModule.Flujos
             corte.IdPuntoVenta = reporteDia.IdPuntoVenta ?? 0;
             corte.OperadorChofer = reporteDia.OperadorChofer;
             corte.TipoUnidad = 1;
-            PrecioVenta precio = null;
+            //PrecioVenta precio = null;
             if (reporteDia.CAlmacenGas.IdCamioneta != null)
             {
-                precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+                //precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
                 corte.TipoUnidad = 2;
                 var li = lecturas.FirstOrDefault(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
                 var lf = lecturas.FirstOrDefault(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final));
@@ -111,13 +111,13 @@ namespace Application.MainModule.Flujos
                     lects.P5000Inicial = cil.Cantidad;
                     lects.P5000Final = lf.Cilindros.FirstOrDefault(x => x.IdCilindro.Equals(cil.IdCilindro)).Cantidad;
                     lects.CantidadLt = CalculosGenerales.DiferenciaEntreDosNumero(lects.P5000Inicial, lects.P5000Final);
-                    lects.Venta = (lects.CantidadLt * cil.Cilindro.CapacidadKg) * precio.PrecioSalidaKg.Value;
+                    lects.Venta = (lects.CantidadLt * cil.Cilindro.CapacidadKg) * reporteDia.PrecioKg.Value;
                     corte.Lecturas.Add(lects);
                     corte.TotalCantidad = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(vd => vd.CantidadKg.Value));
-                    corte.TotalVenta = (corte.TotalCantidad * precio.PrecioSalidaKg ?? 0);
+                    corte.TotalVenta = (corte.TotalCantidad * reporteDia.PrecioKg ?? 0);
                 }
             }
-            if (reporteDia.CAlmacenGas.IdPipa != null || reporteDia.CAlmacenGas.IdEstacionCarburacion != null)
+            if (reporteDia.CAlmacenGas.IdCamioneta == null)
             {
                 if (reporteDia.CAlmacenGas.IdPipa != null)
                     corte.TipoUnidad = 3;
@@ -131,21 +131,20 @@ namespace Application.MainModule.Flujos
                 lects.CantidadLt = CalculosGenerales.DiferenciaEntreDosNumero(lects.P5000Inicial, lects.P5000Final);
                 if (reporteDia.CAlmacenGas.IdPipa != null)
                 {
-                    precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
-                    lects.Venta = lects.CantidadLt * precio.PrecioSalidaLt ?? 0;
+                    ///precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+                    lects.Venta = lects.CantidadLt * reporteDia.PrecioLt ?? 0;
                 }
                 else
                 {
-                    precio = PrecioVentaGasServicio.ObtenerPrecioVigenteEstacion(TokenServicio.ObtenerIdEmpresa(), reporteDia.CAlmacenGas.IdEstacionCarburacion.Value);
+                    var precio = PrecioVentaGasServicio.ObtenerPrecioVigenteEstacion(TokenServicio.ObtenerIdEmpresa(), reporteDia.CAlmacenGas.IdEstacionCarburacion.Value);
                     if (precio == null)
                         precio = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(TokenServicio.ObtenerIdEmpresa());
                     lects.Venta = lects.CantidadLt * precio.PrecioSalidaLt ?? 0;
                 }
                 corte.Lecturas.Add(lects);
                 corte.TotalCantidad = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt ?? 0));
-                corte.TotalVenta = (lects.CantidadLt * precio.PrecioSalidaLt ?? 0);
+                corte.TotalVenta = (lects.CantidadLt * reporteDia.PrecioLt ?? 0);
             }
-            //corte.TotalVenta = ventas.Sum(x => x.Total);
             corte.TotalOtros = ventas.Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => !y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.CantidadLt ?? 0));
             corte.TotalContado = ventas.Where(x => x.VentaACredito.Equals(false)).Sum(v => v.Total);
             corte.TotalCredito = ventas.Where(x => x.VentaACredito.Equals(true)).Sum(v => v.Total);
@@ -153,10 +152,11 @@ namespace Application.MainModule.Flujos
             corte.TotalCheques = ventas.Where(x => x.FormaDePago == "Cheques").Sum(y => y.Total);
             corte.TotalTransferencias = ventas.Where(x => x.FormaDePago == "Transferencias").Sum(y => y.Total);
             corte.Bonidificaciones = ventas.Where(v => v.EsBonificacion).Sum(x => x.Bonificacion ?? 0);
+
             if (reporteDia.CAlmacenGas.IdCamioneta != null)
-                corte.TotalEfectio = ((corte.TotalCantidad * precio.PrecioSalidaKg ?? 0) + corte.TotalOtros) - (corte.TotalCredito + corte.Descuentos + corte.Bonidificaciones - corte.TotalCheques - corte.TotalTransferencias);
+                corte.TotalEfectio = ((corte.TotalCantidad * reporteDia.PrecioKg ?? 0) + corte.TotalOtros) - (corte.TotalCredito + corte.Descuentos + corte.Bonidificaciones + corte.TotalCheques + corte.TotalTransferencias);
             else
-                corte.TotalEfectio = ((corte.TotalCantidad * precio.PrecioSalidaLt ?? 0) + corte.TotalOtros) - (corte.TotalCredito + corte.Descuentos + corte.Bonidificaciones - corte.TotalCheques - corte.TotalTransferencias);
+                corte.TotalEfectio = ((corte.TotalCantidad * reporteDia.PrecioLt ?? 0) + corte.TotalOtros) - (corte.TotalCredito + corte.Descuentos + corte.Bonidificaciones + corte.TotalCheques + corte.TotalTransferencias);
             return corte;
         }
         public RespuestaDto GenerarLiquidacion(string cveReporte)
@@ -169,7 +169,7 @@ namespace Application.MainModule.Flujos
 
             var productoGas = ProductoServicio.ObtenerProductoGasVenta(TokenServicio.ObtenerIdEmpresa());
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
-            var precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+            //var precio = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
             if (!resp.Exito) return null;
 
             var ventas = CajaGeneralServicio.ObtenerVPV(reporteDia).ToList();
@@ -199,10 +199,8 @@ namespace Application.MainModule.Flujos
             corte.DescuentoCredito = ventas.Where(v => v.VentaACredito.Equals(true)).Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
             corte.DescuentoContado = ventas.Where(v => v.VentaACredito.Equals(false)).Sum(x => x.VentaPuntoDeVentaDetalle.Where(y => y.IdProducto.Equals(productoGas.IdProducto)).Sum(vd => vd.DescuentoTotal));
             corte.DescuentoOtrasVentas = 0;
-
             if (CajaGeneralServicio.ExisteCorteUltimo(corte.IdCAlmacenGas, corte.IdEmpresa, corte.Year, corte.Mes, corte.Dia))
                 return new RespuestaDto() { Exito = false, Mensaje = string.Format(Error.SiExiste, "La liquidacion") };
-
             var respuestaCorte = CajaGeneralServicio.Insertar(corte);
             if (!respuestaCorte.Exito) return respuestaCorte;
 
@@ -292,7 +290,19 @@ namespace Application.MainModule.Flujos
         {
             try
             {
-                List<Bitacora> listaBitacora = new List<Bitacora>();
+                //if (!TokenServicio.EsSuperUsuario())
+                //{
+                //    return new RespuestaDto()
+                //    {
+                //        Exito = false,
+                //        EsInsercion = false,
+                //        EsActulizacion = false,
+                //        Mensaje = string.Concat(Error.P0002, "folios de venta"),
+                //        Id = 0,
+                //        Codigo = null,
+                //        ModeloValido = false,
+                //    };
+                //}
                 var ticket = PuntoVentaServicio.Obtener(item.FolioVenta);//Obtiene el ticket completo
                 //if (ticket.FechaRegistro.Date.Equals(DateTime.Now.Date))// la edicion solo se permite el dia que se registro la venta
                 //{ 
@@ -307,6 +317,7 @@ namespace Application.MainModule.Flujos
                 //        ModeloValido = false,
                 //    };
                 //}
+                List<Bitacora> listaBitacora = new List<Bitacora>();
                 if (!ticket.FolioVenta.Equals(ticket.FolioOperacionDia))// la edicion solo se permite el dia que se registro la venta
                 {
                     return new RespuestaDto()
@@ -340,7 +351,7 @@ namespace Application.MainModule.Flujos
                                     return respCobranza;//No se pudo desactivar la cuenta
                                 emty.EfectivoRecibido = item.EfectivoRecibido < ticket.Total ? ticket.Total : emty.EfectivoRecibido;
                                 emty.VentaACredito = item.VentaACredito;
-                                listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket", FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Se cambia ticket de Crédito a Contado" });
+                                listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket: " + ticket.FolioVenta + " " + DateTime.Now.ToShortTimeString(), FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Folio cambia de Crédito a Contado" });
                             }
                             else
                             {
@@ -365,7 +376,7 @@ namespace Application.MainModule.Flujos
                             {
                                 emty.EsBonificacion = true;
                                 emty.Bonificacion = CalculosGenerales.DiferenciaEntreDosNumero(emty.Total, item.EfectivoRecibido ?? 0);
-                                listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket", FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Se cambia ticket a Bonificación" });
+                                listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket: " + ticket.FolioVenta + " " + DateTime.Now.ToShortTimeString(), FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Folio cambia a Bonificación" });
                             }
                             else
                             {
@@ -378,8 +389,8 @@ namespace Application.MainModule.Flujos
                         {
                             emty.Bonificacion = 0;
                             emty.EsBonificacion = false;
-                            emty.EfectivoRecibido = item.EfectivoRecibido < ticket.Total ? ticket.Total : emty.EfectivoRecibido;
-                            listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket", FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Se cambia ticket a Bonificación" });
+                            emty.EfectivoRecibido = item.EfectivoRecibido < ticket.Total ? ticket.Total : item.EfectivoRecibido;
+                            listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket: " + ticket.FolioVenta + " " + DateTime.Now.ToShortTimeString(), FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Folio cambia a Contado" });
                         }
                     }
                 }
@@ -433,7 +444,7 @@ namespace Application.MainModule.Flujos
                                 var actualizaCredito = ClienteServicio.ModificarCredito(cliente);
                                 emty.VentaACredito = true;
                                 emty.EfectivoRecibido = 0;
-                                listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket", FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Se cambia ticket de Contado a Crédito" });
+                                listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket", FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Folio: " + ticket.FolioVenta + " de Contado a Crédito" });
                             }
                             else
                                 return insertCargo;
@@ -452,15 +463,11 @@ namespace Application.MainModule.Flujos
                         }
                     }
                 }
-
-                //emty.FormaDePago = item.FormaDePago;
-                //emty.Referencia = string.IsNullOrEmpty(item.FormaDePago) ? string.Empty : item.Referencia;
-                foreach (var b in listaBitacora)
-                {
-                    UsuarioServicio.GuardarBitacora(b);
-                }
-                return PuntoVentaServicio.ActualizarVentasCorte(emty);
-                //return new RespuestaDto() { Exito = true, Mensaje = Exito.OK };
+                var resp = PuntoVentaServicio.ActualizarVentasCorte(emty);
+                if (resp.Exito)
+                    foreach (var bitacora in listaBitacora)
+                        UsuarioServicio.GuardarBitacora(bitacora);
+                return resp;
             }
             catch (Exception ex)
             {
@@ -486,7 +493,7 @@ namespace Application.MainModule.Flujos
                 //        ModeloValido = false,
                 //    };
                 //}
-                if (!ticket.FolioVenta.Equals(ticket.FolioOperacionDia))// la edicion solo se permite el dia que se registro la venta
+                if (!ticket.FolioVenta.Equals(ticket.FolioOperacionDia))// la edicion solo se permite antes de liquidar en caja
                 {
                     return new RespuestaDto()
                     {
@@ -502,12 +509,12 @@ namespace Application.MainModule.Flujos
                 var precioVenta = new Catalogos().ObtenerPrecioVentaVigente(ticket.CPuntoVenta.IdCAlmacenGas);
                 var detalle = ticket.VentaPuntoDeVentaDetalle.Where(x => x.OrdenDetalle.Equals(item.OrdenDetalle)).FirstOrDefault();
                 var cargo = CobranzaServicio.ObtenerCargo(detalle.VentaPuntoDeVenta.FolioVenta);
-                var ventaEmty = CajaGeneralAdapter.FromEntity(detalle.VentaPuntoDeVenta);
                 var emty = CajaGeneralAdapter.FromEmtity(detalle);
                 //emty.PrecioUnitarioProducto = item.PrecioUnitarioProducto;
                 if (detalle.VentaPuntoDeVenta.CPuntoVenta.UnidadesAlmacen.IdCamioneta != null)
                 {// Es venta de camioneta
-                    var listaCilindros = detalle.VentaPuntoDeVenta.VentaPuntoDeVentaDetalle;
+                    RespuestaDto RespCamioneta = new RespuestaDto();
+                    //var listaCilindros = detalle.VentaPuntoDeVenta.VentaPuntoDeVentaDetalle;
                     if (precioVenta.PrecioSalidaKg < item.PrecioUnitarioProducto)
                     {
                         return new RespuestaDto()
@@ -522,20 +529,100 @@ namespace Application.MainModule.Flujos
                         };
                     }
                     emty.DescuentoUnitarioKg = CalculosGenerales.DiferenciaEntreDosNumero(precioVenta.PrecioSalidaKg ?? 0, item.PrecioUnitarioProducto ?? 0);
-                    emty.DescuentoUnitarioLt = CalculosGenerales.DiferenciaEntreDosNumero(emty.PrecioUnitarioProducto ?? 0, item.PrecioUnitarioProducto ?? 0);
+                    emty.DescuentoUnitarioLt = CalculosGenerales.DiferenciaEntreDosNumero(precioVenta.PrecioSalidaKg ?? 0, item.PrecioUnitarioProducto ?? 0);
+                    emty.DescuentoUnitarioProducto = CalculosGenerales.DiferenciaEntreDosNumero(precioVenta.PrecioSalidaKg ?? 0, item.PrecioUnitarioProducto ?? 0);
                     emty.PrecioUnitarioKg = item.PrecioUnitarioProducto - emty.DescuentoUnitarioKg;
+                    emty.PrecioUnitarioLt = item.PrecioUnitarioProducto - emty.DescuentoUnitarioKg;
+                    emty.PrecioUnitarioProducto = precioVenta.PrecioSalidaKg;
                     emty.CantidadProducto = item.CantidadProducto;
-                    emty.CantidadKg = item.CantidadProducto;
-                    emty.CantidadLt = (item.CantidadProducto / (decimal)0.54);
-                    emty.Subtotal = ((item.PrecioUnitarioProducto.Value * item.CantidadProducto.Value) / (decimal)1.16);
-                    emty.DescuentoTotal = (emty.DescuentoUnitarioKg ?? 0 * item.CantidadKg ?? 0);
-                    ventaEmty.Descuento = listaCilindros.Where(x => !x.OrdenDetalle.Equals(detalle.OrdenDetalle)).Sum(s => s.DescuentoTotal) + emty.DescuentoTotal;
-                    ventaEmty.Total = listaCilindros.Where(x => !x.OrdenDetalle.Equals(detalle.OrdenDetalle))
-                        .Sum(s => { return (s.PrecioUnitarioKg.Value * s.CantidadKg.Value); }) + (item.PrecioUnitarioProducto.Value * item.CantidadProducto.Value);
-                    ventaEmty.Iva = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, (ventaEmty.Total / (decimal)1.16));
-                    ventaEmty.Subtotal = (ventaEmty.Total / (decimal)1.16);
-                    if (!ventaEmty.EsBonificacion)
-                        ventaEmty.CambioRegresado = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, ventaEmty.EfectivoRecibido ?? 0);
+                    string kilos = string.Concat(emty.ProductoDescripcion.Where(char.IsNumber));
+                    int kilosNum = 0;
+                    int.TryParse(kilos, out kilosNum);
+                    emty.CantidadKg = (kilosNum * item.CantidadProducto);
+                    emty.CantidadLt = (emty.CantidadKg / (decimal)0.54);
+                    emty.Subtotal = ((item.PrecioUnitarioProducto.Value * emty.CantidadKg.Value) / (decimal)1.16);
+                    emty.DescuentoTotal = (emty.DescuentoUnitarioKg.Value * emty.CantidadKg.Value);
+                    if (cargo != null)
+                    {
+                        if (cargo.Abono.Count.Equals(0))
+                        {
+                            var respDetalle = PuntoVentaServicio.ActualizarVentaDetalles(emty); // Se guarda la informacion regustrada
+                            if (!respDetalle.Exito)
+                                return respDetalle;
+                            listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket: " + ticket.FolioVenta + " " + DateTime.Now.ToShortTimeString(), FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Se edito el detalle de la venta: " + emty.OrdenDetalle.ToString() });
+
+                            var venta = PuntoVentaServicio.Obtener(ticket.FolioVenta);
+                            var ventaEmty = CajaGeneralAdapter.FromEntity(venta);
+                            //Se calculan los nuevos totales con la informacion actualizada
+                            ventaEmty.Descuento = venta.VentaPuntoDeVentaDetalle.Sum(s => s.DescuentoTotal);
+                            ventaEmty.Total = venta.VentaPuntoDeVentaDetalle.Sum(s => { return (s.PrecioUnitarioKg.Value * s.CantidadKg.Value); });
+                            ventaEmty.Subtotal = (ventaEmty.Total / (decimal)1.16);
+                            ventaEmty.Iva = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, ventaEmty.Subtotal);
+                            if (!ventaEmty.EsBonificacion)
+                            {
+                                if (ventaEmty.Total > venta.EfectivoRecibido)
+                                {
+                                    ventaEmty.EfectivoRecibido = ventaEmty.Total;
+                                    ventaEmty.CambioRegresado = 0;
+                                }
+                                else
+                                    ventaEmty.CambioRegresado = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, venta.EfectivoRecibido.Value);
+
+                            }
+                            else
+                            {
+                                ventaEmty.Bonificacion = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, ventaEmty.EfectivoRecibido.Value);
+                                ventaEmty.CambioRegresado = 0;
+                            }
+                            var cargoEmty = AbonosAdapter.FromEmty(cargo);
+                            cargoEmty.TotalCargo = ventaEmty.Total;//Se actuliza el total del cargo sin abonos
+                            var respCobranza = CobranzaServicio.Update(cargo);
+                            if (!respCobranza.Exito)
+                                return respCobranza;//No se pudo actualizar la cuenta
+                            listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket: " + ticket.FolioVenta + " " + DateTime.Now.ToShortTimeString(), FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Se actualizo el cargo relacionado a la venta" });
+                            RespCamioneta = PuntoVentaServicio.ActualizarVentasCorte(ventaEmty);
+                        }
+                        else
+                        {
+                            //Al tener abonos registrados, se niega la edicion de la venta
+                            return new RespuestaDto()
+                            {
+                                Exito = false,
+                                EsInsercion = false,
+                                EsActulizacion = false,
+                                Mensaje = Error.CC002,
+                                Id = 0,
+                                Codigo = null,
+                                ModeloValido = false,
+                            };
+                        }
+                    }
+                    else
+                    {
+                        var respDetalle = PuntoVentaServicio.ActualizarVentaDetalles(emty); // Se guarda la informacion regustrada
+                        if (!respDetalle.Exito)
+                            return respDetalle;
+                        listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket: " + ticket.FolioVenta + " " + DateTime.Now.ToShortTimeString(), FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Se actualizo el detalle de venta: " + emty.OrdenDetalle.ToString() });
+                        var venta = PuntoVentaServicio.Obtener(ticket.FolioVenta);
+                        var ventaEmty = CajaGeneralAdapter.FromEntity(venta);
+                        //Se calculan los nuevos totales con la informacion actualizada
+                        ventaEmty.Descuento = venta.VentaPuntoDeVentaDetalle.Sum(s => s.DescuentoTotal);
+                        ventaEmty.Total = venta.VentaPuntoDeVentaDetalle.Sum(s => { return (s.PrecioUnitarioKg.Value * s.CantidadKg.Value); });
+                        ventaEmty.Subtotal = (ventaEmty.Total / (decimal)1.16);
+                        ventaEmty.Iva = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, ventaEmty.Subtotal);
+                        if (!ventaEmty.EsBonificacion)
+                        {
+                            if (ventaEmty.Total > venta.EfectivoRecibido)
+                                ventaEmty.EfectivoRecibido = ventaEmty.Total;
+                            ventaEmty.CambioRegresado = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, ventaEmty.EfectivoRecibido.Value);
+                        }
+                        else
+                            ventaEmty.Bonificacion = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, ventaEmty.EfectivoRecibido.Value);
+                        RespCamioneta = PuntoVentaServicio.ActualizarVentasCorte(ventaEmty);
+                    }
+                    foreach (var bitacora in listaBitacora)
+                        UsuarioServicio.GuardarBitacora(bitacora);
+                    return RespCamioneta;
                 }
                 else
                 {// es venta de Pipa o de Estacion (Litros)
@@ -562,40 +649,44 @@ namespace Application.MainModule.Flujos
                     emty.CantidadLt = item.CantidadProducto;
                     emty.Subtotal = ((item.PrecioUnitarioProducto.Value * item.CantidadProducto.Value) / (decimal)0.16);
                     emty.DescuentoTotal = ((emty.DescuentoUnitarioProducto ?? 0) * (item.CantidadProducto ?? 0));
+                    var ventaEmty = CajaGeneralAdapter.FromEntity(detalle.VentaPuntoDeVenta);
                     ventaEmty.Descuento = emty.DescuentoTotal;
                     ventaEmty.Total = (item.PrecioUnitarioProducto.Value * item.CantidadProducto.Value);
                     ventaEmty.Iva = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, (ventaEmty.Total / (decimal)1.16));
                     ventaEmty.Subtotal = (ventaEmty.Total / (decimal)1.16);
                     if (!ventaEmty.EsBonificacion)
                         ventaEmty.CambioRegresado = CalculosGenerales.DiferenciaEntreDosNumero(ventaEmty.Total, ventaEmty.EfectivoRecibido ?? 0);
-                }
-                if (cargo != null)
-                {
-                    if (cargo.Abono.Count.Equals(0))
+                    if (cargo != null)
                     {
-                        var cargoEmty = AbonosAdapter.FromEmty(cargo);
-                        cargoEmty.TotalCargo = ventaEmty.Total;//Se actuliza el total del cargo sin abonos
-                        var respCobranza = CobranzaServicio.Update(cargo);
-                        if (!respCobranza.Exito)
-                            return respCobranza;//No se pudo desactivar la cuenta
-                    }
-                    else
-                    {
-                        //Al tener abonos registrados, se niega la edicion de la venta
-                        return new RespuestaDto()
+                        if (cargo.Abono.Count.Equals(0))
                         {
-                            Exito = false,
-                            EsInsercion = false,
-                            EsActulizacion = false,
-                            Mensaje = Error.CC002,
-                            Id = 0,
-                            Codigo = null,
-                            ModeloValido = false,
-                        };
+                            var cargoEmty = AbonosAdapter.FromEmty(cargo);
+                            cargoEmty.TotalCargo = ventaEmty.Total;//Se actuliza el total del cargo sin abonos
+                            var respCobranza = CobranzaServicio.Update(cargo);
+                            if (!respCobranza.Exito)
+                                return respCobranza;//No se pudo desactivar la cuenta
+                        }
+                        else
+                        {
+                            //Al tener abonos registrados, se niega la edicion de la venta
+                            return new RespuestaDto()
+                            {
+                                Exito = false,
+                                EsInsercion = false,
+                                EsActulizacion = false,
+                                Mensaje = Error.CC002,
+                                Id = 0,
+                                Codigo = null,
+                                ModeloValido = false,
+                            };
+                        }
                     }
+                    listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket: " + ticket.FolioVenta + " " + DateTime.Now.ToShortTimeString(), FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Se edito el detalle de la venta: " + emty.OrdenDetalle.ToString() });
+                    listaBitacora.Add(new Bitacora { Accion = "Edicion Ticket: " + ticket.FolioVenta + " " + DateTime.Now.ToShortTimeString(), FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Se actualizaron los totales de la venta por cambio al detalle" });
+                    foreach (var bitacora in listaBitacora)
+                        UsuarioServicio.GuardarBitacora(bitacora);
+                    return PuntoVentaServicio.ActualizarVentaDetalles(emty, ventaEmty);
                 }
-                return PuntoVentaServicio.ActualizarVentaDetalles(emty, ventaEmty);
-                //return new RespuestaDto() { Exito = true, Mensaje = Exito.OK };
             }
             catch (Exception ex)
             {
@@ -633,7 +724,10 @@ namespace Application.MainModule.Flujos
             }
             var detalles = CajaGeneralAdapter.FromEmtity(ticket.VentaPuntoDeVentaDetalle.ToList());//Se prepara para eliminar
             var emty = CajaGeneralAdapter.FromEntity(ticket);//Se prepara para eliminar
-            return PuntoVentaServicio.EliminarVentas(detalles, emty);
+            var resp = PuntoVentaServicio.EliminarVentas(detalles, emty);
+            if (resp.Exito)
+                UsuarioServicio.GuardarBitacora(new Bitacora { Accion = "Eliminación de ticket: " + DateTime.Now.ToShortTimeString(), FechaRegistro = DateTime.Now, IdUsuario = TokenServicio.ObtenerIdUsuario(), Descripcion = "Folio eliminado: " + FolioVenta });
+            return resp;
         }
     }
 }

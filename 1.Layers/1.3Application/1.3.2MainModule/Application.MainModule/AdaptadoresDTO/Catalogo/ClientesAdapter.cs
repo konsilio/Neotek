@@ -15,50 +15,60 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
     {
         public static ClientesDto ToDTO(Cliente us)
         {
-            string nom = ClienteServicio.ObtenerNomreCliente(us);
-            ClientesDto usDTO = new ClientesDto()
+            //string nom = ClienteServicio.ObtenerNomreCliente(us);
+            try
             {
-                IdCliente = us.IdCliente,
-                IdEmpresa = us.IdEmpresa,
-                IdTipoPersona = us.IdTipoPersona,
-                IdRegimenFiscal = us.IdRegimenFiscal,
-                //IdCuentaContable = us.IdCuentaContable,
-                Nombre = nom.Split(' ')[0],
-                Apellido1 = nom.Split(' ')[1] ?? string.Empty,
-                Apellido2 = nom.Split(' ')[2] ?? string.Empty,
-                DescuentoXKilo = us.DescuentoXKilo,
-                limiteCreditoMonto = us.limiteCreditoMonto,
-                limiteCreditoDias = us.limiteCreditoDias,
-                CreditoDisponibleMonto = us.CreditoDisponibleMonto,
-                Telefono1 = ClienteServicio.ObtenerTelefono(us),
-                Telefono2 = us.Telefono2 ?? string.Empty,
-                Telefono3 = us.Telefono3 ?? string.Empty,
-                Celular1 = us.Celular1 ?? string.Empty,
-                Celular2 = us.Celular2 ?? string.Empty,
-                Celular3 = us.Celular3 ?? string.Empty,
-                Email1 = us.Email1 ?? string.Empty,
-                Email2 = us.Email2 ?? string.Empty,
-                Email3 = us.Email3 ?? string.Empty,
-                SitioWeb1 = us.SitioWeb1 ?? string.Empty,
-                SitioWeb2 = us.SitioWeb2 ?? string.Empty,
-                SitioWeb3 = us.SitioWeb3 ?? string.Empty,
-                //Usuario = us.Usuario,
-                //Password = us.Password,
-                AccesoPortal = us.AccesoPortal,
-                Rfc = us.Rfc,
-                RazonSocial = us.RazonSocial ?? nom,
-                RepresentanteLegal = us.RepresentanteLegal ?? string.Empty,
-                Telefono = us.Telefono ?? string.Empty,
-                Celular = us.Celular ?? string.Empty,
-                CorreoElectronico = us.CorreoElectronico ?? string.Empty,
-                Domicilio = us.Domicilio ?? string.Empty,
-                Empresa = us.Empresa.NombreComercial,
-                TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
-                RegimenFiscal = us.RegimenFiscal.Descripcion,
-                Cliente = nom + us.Rfc,
-                EsFijo = us.EsFijo,
-            };
-            return usDTO;
+                ClientesDto usDTO = new ClientesDto()
+                {
+                    IdCliente = us.IdCliente,
+                    IdEmpresa = us.IdEmpresa,
+                    IdTipoPersona = us.IdTipoPersona,
+                    IdRegimenFiscal = us.IdRegimenFiscal,
+                    //IdCuentaContable = us.IdCuentaContable,
+                    Nombre = string.IsNullOrEmpty(us.RazonSocial?.Trim()) ? us.Nombre : us.RazonSocial,
+                    Apellido1 = string.IsNullOrEmpty(us.RazonSocial?.Trim()) ? us.Apellido1 ?? string.Empty : string.Empty,
+                    Apellido2 = string.IsNullOrEmpty(us.RazonSocial?.Trim()) ? us.Apellido2 ?? string.Empty : string.Empty,
+                    DescuentoXKilo = us.DescuentoXKilo,
+                    limiteCreditoMonto = us.limiteCreditoMonto,
+                    limiteCreditoDias = us.limiteCreditoDias,
+                    CreditoDisponibleMonto = us.CreditoDisponibleMonto,
+                    Telefono1 = ClienteServicio.ObtenerTelefono(us),
+                    Telefono2 = us.Telefono2 ?? string.Empty,
+                    Telefono3 = us.Telefono3 ?? string.Empty,
+                    Celular1 = us.Celular1 ?? string.Empty,
+                    Celular2 = us.Celular2 ?? string.Empty,
+                    Celular3 = us.Celular3 ?? string.Empty,
+                    Email1 = us.Email1 ?? string.Empty,
+                    Email2 = us.Email2 ?? string.Empty,
+                    Email3 = us.Email3 ?? string.Empty,
+                    SitioWeb1 = us.SitioWeb1 ?? string.Empty,
+                    SitioWeb2 = us.SitioWeb2 ?? string.Empty,
+                    SitioWeb3 = us.SitioWeb3 ?? string.Empty,
+                    //Usuario = us.Usuario,
+                    //Password = us.Password,
+                    AccesoPortal = us.AccesoPortal,
+                    Rfc = us.Rfc,
+                    RazonSocial = string.IsNullOrEmpty(us.RazonSocial?.Trim()) ? us.Nombre + " "+ 
+                                                       us.Apellido1 ?? string.Empty + " " +
+                                                       us.Apellido2 ?? string.Empty : us.RazonSocial,
+                    RepresentanteLegal = us.RepresentanteLegal ?? string.Empty,
+                    Telefono = us.Telefono ?? string.Empty,
+                    Celular = us.Celular ?? string.Empty,
+                    CorreoElectronico = us.CorreoElectronico ?? string.Empty,
+                    Domicilio = us.Domicilio ?? string.Empty,
+                    Empresa = us.Empresa.NombreComercial,
+                    TipoPersonaFiscal = us.TipoPersonaFiscal.Descripcion,
+                    RegimenFiscal = us.RegimenFiscal.Descripcion,
+                    Cliente = us.Rfc,
+                    EsFijo = us.EsFijo,
+                };
+                return usDTO;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         public static List<ClientesDto> ToDTO(List<Cliente> lu)
         {
@@ -199,16 +209,16 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             if (Ctedto.Apellido1 != null) catCliente.Apellido1 = Ctedto.Apellido1; else catCliente.Apellido1 = catCliente.Apellido1;
             if (Ctedto.Apellido2 != null) catCliente.Apellido2 = Ctedto.Apellido2; else catCliente.Apellido2 = catCliente.Apellido2;
             //if (Ctedto.DescuentoXKilo != 0)
-                catCliente.DescuentoXKilo = Ctedto.DescuentoXKilo;
+            catCliente.DescuentoXKilo = Ctedto.DescuentoXKilo;
             //else catCliente.DescuentoXKilo = catCliente.DescuentoXKilo;
             //if (Ctedto.limiteCreditoMonto != 0)
-                catCliente.limiteCreditoMonto = Ctedto.limiteCreditoMonto;
+            catCliente.limiteCreditoMonto = Ctedto.limiteCreditoMonto;
             //else catCliente.limiteCreditoMonto = catCliente.limiteCreditoMonto;
             //if (Ctedto.CreditoDisponibleMonto != 0)
-                catCliente.CreditoDisponibleMonto= Ctedto.CreditoDisponibleMonto; 
+            catCliente.CreditoDisponibleMonto = Ctedto.CreditoDisponibleMonto;
             //else catCliente.CreditoDisponibleMonto= catCliente.CreditoDisponibleMonto;
             //if (Ctedto.limiteCreditoDias != 0)
-                catCliente.limiteCreditoDias = Ctedto.limiteCreditoDias; 
+            catCliente.limiteCreditoDias = Ctedto.limiteCreditoDias;
             //else catCliente.limiteCreditoDias = catCliente.limiteCreditoDias;
             if (Ctedto.Telefono1 != null) catCliente.Telefono1 = Ctedto.Telefono1; else catCliente.Telefono1 = catCliente.Telefono1;
             if (Ctedto.Telefono2 != null) catCliente.Telefono2 = Ctedto.Telefono2; else catCliente.Telefono2 = catCliente.Telefono2;
@@ -402,8 +412,9 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
         public static CreditoRecuperadoDTO ToDTOCR(Cliente Clte, PeriodoDTO p)
         {
-            List<Abono> abonos = Clte.Cargo.SelectMany(x => x.Abono.Where(a => a.FechaRegistro >= p.FechaInicio && a.FechaRegistro <= p.FechaFin)).ToList();
+            List<Abono> abonos = Clte.Cargo.SelectMany(x => x.Abono.Where(a => a.FechaAbono > p.FechaInicio && a.FechaAbono < p.FechaFin)).ToList();
             //var tiket = Clte.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(new Abono().Cargo.Ticket));
+
             return new CreditoRecuperadoDTO()
             {
                 Nombre = ClienteServicio.ObtenerNomreCliente(Clte),
@@ -420,7 +431,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         {
             var tiket = Abono.Cargo.CCliente.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(Abono.Cargo.Ticket));
             return new CreditoRecuperadoAbonoDTO()
-            { 
+            {
                 Nota = Abono.Cargo.Ticket,
                 FechaAbono = Abono.FechaAbono,
                 Importe = Abono.MontoAbono,
@@ -428,14 +439,14 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 FechaCarga = tiket != null ? tiket.FechaRegistro.ToShortDateString() : "Ticket borrado",
             };
         }
-        public static List<CreditoOtorgadoDTO> ToDTOCO(List<Cliente> ListaClientes)
+        public static List<CreditoOtorgadoDTO> ToDTOCO(List<Cliente> ListaClientes, PeriodoDTO dto)
         {
-            return ListaClientes.Select(x => ToDTOCO(x)).ToList();
+            return ListaClientes.Select(x => ToDTOCO(x, dto)).ToList();
         }
-        public static CreditoOtorgadoDTO ToDTOCO(Cliente Clte)
+        public static CreditoOtorgadoDTO ToDTOCO(Cliente Clte, PeriodoDTO dto)
         {
             //List<Abono> Cargos = Clte.Cargo.SelectMany(x=> x.Abono).ToList();
-            List<Cargo> Cargos = Clte.Cargo.ToList();
+            List<Cargo> Cargos = Clte.Cargo.Where(x => x.FechaRegistro > dto.FechaInicio && x.FechaRegistro < dto.FechaFin).ToList();
             var Litros = Clte.VentaPuntoDeVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadLt ?? 0));
             return new CreditoOtorgadoDTO()
             {
@@ -452,7 +463,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         }
         public static CreditoOtorgadoCargosDTO ToDTOCC(Cargo Cargo)
         {
-            var tiket = Cargo.CCliente.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(Cargo.Ticket));
+            var tiket = Cargo.CCliente.VentaPuntoDeVenta.Where(x => x.FolioVenta.Equals(Cargo.Ticket)).FirstOrDefault();
             var Unidad = string.Concat(tiket != null ? tiket.CPuntoVenta.UnidadesAlmacen.Pipa != null ? tiket.CPuntoVenta.UnidadesAlmacen.Pipa.Serie + " " : "P-- " : "0", Cargo.Ticket);
             return new CreditoOtorgadoCargosDTO()
             {
@@ -497,15 +508,15 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         public static ControlDeAsistenciaDTO ToDTOCA(Usuario Us)
         {
             var NombreUsuario = Us.Nombre.FirstOrDefault();
-            
+
             DateTime fechaPasada = Us.FechaRegistro;
             return new ControlDeAsistenciaDTO()
             {
                 //IdUsuario = Us.IdUsuario.ToString(),
-                Nombre = Us.Nombre +" "+ Us.Apellido1,
+                Nombre = Us.Nombre + " " + Us.Apellido1,
                 PtoVenta = Us.Nombre == "Alejandro" ? "ISLA" : "LIBRAMIENTO",
                 FechaRegistro = Us.Nombre == "Alejandro" ? DateTime.Now : fechaPasada,
-                Estatus = Us.Nombre =="Alejandro" ? "Exitoso" : "No exitoso",          
+                Estatus = Us.Nombre == "Alejandro" ? "Exitoso" : "No exitoso",
             };
         }
         public static List<CargosDTO> ToDTOCX(List<Cargo> Cargo)
@@ -514,7 +525,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         }
         public static CargosDTO ToDTOCX(Cargo cargo)
         {
-            var tikett = cargo.CCliente.VentaPuntoDeVenta.SingleOrDefault(x => x.FolioVenta.Equals(cargo.Ticket));
+            var tikett = cargo.CCliente.VentaPuntoDeVenta.Where(x => x.FolioVenta.Equals(cargo.Ticket)).FirstOrDefault();
             return new CargosDTO()
             {
                 FechaRegistro = cargo.FechaRegistro,

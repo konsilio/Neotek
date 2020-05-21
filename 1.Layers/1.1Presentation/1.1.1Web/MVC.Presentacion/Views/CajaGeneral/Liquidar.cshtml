@@ -119,7 +119,7 @@
                                     <div class="col-md-3">
                                         <b>Total de venta real: ($)</b>
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.TotalVenta, Model.TotalVenta.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.TotalVenta, Model.TotalVenta.ToString("C"), new { @class = "form-control" })
                                         </div>
                                     </div>
                                 </div>
@@ -146,8 +146,8 @@
                                                             {
                                                                 <tr>
                                                                     <td>@item.Concepto</td>
-                                                                    <td>@item.P5000Inicial</td>
-                                                                    <td>@item.P5000Final</td>
+                                                                    <td>@item.P5000Inicial.ToString("000000")</td>
+                                                                    <td>@item.P5000Final.ToString("000000")</td>
                                                                     <td>@Math.Truncate(item.CantidadLt)</td>
                                                                     <td>$@Math.Truncate(item.Venta)</td>
                                                                 </tr>
@@ -214,7 +214,7 @@
                                             <b>Total Venta:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            @Html.LabelFor(model => model.TotalVenta, Model.TotalVenta.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.TotalVenta, Model.TotalVenta.ToString("C"), new { @class = "form-control" })
                                         </div>
                                     </div><br />
                                     <div class="row clearfix">
@@ -222,7 +222,7 @@
                                             <b>Otros ingresos:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            @Html.LabelFor(model => model.TotalOtros, Model.TotalOtros.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.TotalOtros, Model.TotalOtros.ToString("C"), new { @class = "form-control" })
                                         </div>
                                     </div>
 
@@ -231,7 +231,7 @@
                                             <b>Creditos:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            @Html.LabelFor(model => model.TotalCredito, Model.TotalCredito.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.TotalCredito, Model.TotalCredito.ToString("C"), new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="row clearfix">
@@ -239,7 +239,7 @@
                                             <b>Descuentos:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            @Html.LabelFor(model => model.Descuentos, Model.Descuentos.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.Descuentos, Model.Descuentos.ToString("C"), new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="row clearfix">
@@ -247,7 +247,7 @@
                                             <b>Bonificaciones:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            @Html.LabelFor(model => model.Bonidificaciones, Model.Bonidificaciones.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.Bonidificaciones, Model.Bonidificaciones.ToString("C"), new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="row clearfix">
@@ -255,7 +255,7 @@
                                             <b>Total en cheques:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            @Html.LabelFor(model => model.TotalCheques, Model.TotalCheques.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.TotalCheques, Model.TotalCheques.ToString("C"), new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="row clearfix">
@@ -263,7 +263,7 @@
                                             <b>Total en Transferencias:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            @Html.LabelFor(model => model.TotalTransferencias, Model.TotalTransferencias.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.TotalTransferencias, Model.TotalTransferencias.ToString("C"), new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="row clearfix">
@@ -271,7 +271,7 @@
                                             <b>Efectivo a recibir:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            @Html.LabelFor(model => model.TotalEfectio, Model.TotalEfectio.ToString(), new { @class = "form-control" })
+                                            @Html.LabelFor(model => model.TotalEfectio, Model.TotalEfectio.ToString("C"), new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="row clearfix">

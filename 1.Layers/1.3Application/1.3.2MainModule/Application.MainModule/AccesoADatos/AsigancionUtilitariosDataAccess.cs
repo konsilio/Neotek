@@ -88,6 +88,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 && x.Activo
                 );
         }
+        public PuntoVenta ObtenerOcupada(int idOperador, short idCAlmacen, short idEmpresa)
+        {
+            return uow.Repository<PuntoVenta>().GetSingle(
+                x => x.IdOperadorChofer.Equals(idOperador) ||
+                x.IdCAlmacenGas.Equals(idCAlmacen)
+                && x.IdEmpresa.Equals(idEmpresa)
+                && x.Activo
+                );
+        }
         public List<AsignacionUtilitarios> Obtener()
         {
             return uow.Repository<AsignacionUtilitarios>().Get(x => x.Activo).ToList();

@@ -22,5 +22,7 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal PrecioVigente { get; set; }
         public Nullable<decimal> CapacidadLt{ get; set; }
         public Nullable<decimal> CapacidadKg { get; set; }
+        public string RFC { get; set; }
+        public string RazonSocial { get; set; }
     }
 }

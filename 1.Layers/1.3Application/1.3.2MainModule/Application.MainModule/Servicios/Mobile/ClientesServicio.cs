@@ -58,7 +58,7 @@ namespace Application.MainModule.Servicios.Mobile
         public static DatosClientesDto BuscadorClientes(string criterio)
         {
             List<Cliente> Resultados = new List<Cliente>();
-            foreach (string item in criterio.Split(' '))
+            foreach (string item in criterio.Trim().Split(' '))
             {
                 Resultados.AddRange(ClienteServicio.BuscadorClientes(item));
             }

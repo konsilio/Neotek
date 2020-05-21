@@ -18,7 +18,7 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         {
             AbonosDTO dto = new AbonosDTO();
             var venta = CFDIServicio.Buscar(_Abono.Id_RelTF ?? 0);
-           
+
             dto.IdCliente = _Abono.Cargo.IdCliente;
             dto.Cliente = ClienteServicio.ObtenerNomreCliente(_Abono.Cargo.CCliente);
             dto.IdAbono = _Abono.IdAbono;
@@ -141,43 +141,51 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         }
         public static CargosDTO ToDTO(Cargo _dto)
         {
-            List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
-            var venta = CFDIServicio.Buscar(_dto.Ticket);
-            CargosDTO dto = new CargosDTO();
-            dto.IdCargo = _dto.IdCargo;
-            dto.IdCliente = _dto.IdCliente;
-            dto.Cliente = string.Concat(_dto.CCliente.Nombre, " ", _dto.CCliente.Apellido1);
-            if (_dto.CCliente.IdTipoPersona.Equals(2))
-                dto.Cliente = _dto.CCliente.RazonSocial;
-            dto.Rfc = ClienteServicio.Obtener(_dto.IdCliente).Rfc;
-            dto.IdEmpresa = _dto.IdEmpresa;
-            dto.Ticket = _dto.Ticket;
-            dto.FechaRegistro = _dto.FechaRegistro;
-            dto.TotalCargo = _dto.TotalCargo;
-            dto.TotalAbonos = _dto.TotalAbonos;
-            dto.SaldoInsoluto = _dto.TotalCargo - _dto.TotalAbonos;
-            dto.VentaExtraordinaria = _dto.VentaExtraordinaria;
-            dto.Activo = _dto.Activo;
-            dto.FechaVencimiento = _dto.FechaVencimiento;
-            dto.Saldada = _dto.Saldada;
-            dto.lstCreditoR = ToDTO(lst);
-            dto.Abono = FromInit(_dto.IdCargo);
-            dto.Dias1a7 = ((TimeSpan)(DateTime.Now - _dto.FechaVencimiento)).Days;
-            //dto.Total = lst.Sum(x => x.MontoAbono);
-            //dto.TotalEfectivo = lst.Where(y => y.IdFormaPago == 1).Sum(x => x.MontoAbono);
-            //dto.TotalCheques = lst.Where(y => y.IdFormaPago == 2).Sum(x => x.MontoAbono);
-            //dto.TotalTransferencia = lst.Where(y => y.IdFormaPago == 3).Sum(x => x.MontoAbono);
-            if (venta != null)
+            try
             {
-                dto.URL_XML = venta.URLXml;
-                dto.URL_CFDI = venta.URLPdf;
+                List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
+                var venta = CFDIServicio.Buscar(_dto.Ticket);
+                CargosDTO dto = new CargosDTO();
+                dto.IdCargo = _dto.IdCargo;
+                dto.IdCliente = _dto.IdCliente;
+                dto.Cliente = ClienteServicio.ObtenerNomreCliente(_dto.CCliente);
+                if (_dto.CCliente.IdTipoPersona.Equals(2))
+                    dto.Cliente = _dto.CCliente.RazonSocial;
+                dto.Rfc = _dto.CCliente.Rfc;
+                dto.IdEmpresa = _dto.IdEmpresa;
+                dto.Ticket = _dto.Ticket;
+                dto.FechaRegistro = _dto.FechaRegistro;
+                dto.TotalCargo = _dto.TotalCargo;
+                dto.TotalAbonos = _dto.TotalAbonos;
+                dto.SaldoInsoluto = _dto.TotalCargo - _dto.TotalAbonos;
+                dto.VentaExtraordinaria = _dto.VentaExtraordinaria;
+                dto.Activo = _dto.Activo;
+                dto.FechaVencimiento = _dto.FechaVencimiento;
+                dto.Saldada = _dto.Saldada;
+                dto.lstCreditoR = ToDTO(lst);
+                dto.Abono = FromInit(_dto.IdCargo);
+                dto.Dias1a7 = ((TimeSpan)(DateTime.Now - _dto.FechaVencimiento)).Days;
+                //dto.Total = lst.Sum(x => x.MontoAbono);
+                //dto.TotalEfectivo = lst.Where(y => y.IdFormaPago == 1).Sum(x => x.MontoAbono);
+                //dto.TotalCheques = lst.Where(y => y.IdFormaPago == 2).Sum(x => x.MontoAbono);
+                //dto.TotalTransferencia = lst.Where(y => y.IdFormaPago == 3).Sum(x => x.MontoAbono);
+                if (venta != null)
+                {
+                    dto.URL_XML = venta.URLXml;
+                    dto.URL_CFDI = venta.URLPdf;
+                }
+
+                return dto;
+            }
+            catch (Exception ex)
+            {                
+                throw ex;
             }
 
-            return dto;
         }
         public static List<CargosDTO> ToDTO(List<Cargo> lCargo)
         {
-            List<CargosDTO> lprodDTO = lCargo.ToList().Select(x => ToDTO(x)).ToList();
+            List<CargosDTO> lprodDTO = lCargo.Select(x => ToDTO(x)).ToList();
             if (lprodDTO.Count > 10)
             {
                 lprodDTO[0].Total = CobranzaServicio.Total(lprodDTO, "T");
@@ -189,46 +197,50 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         }
         public static CargosDTO ToDTOcr(Cargo _dto)
         {
-            List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
-            var venta = CFDIServicio.Buscar(_dto.Ticket);
-            CargosDTO dto = new CargosDTO();
-            dto.IdCargo = _dto.IdCargo;
-            dto.IdCliente = _dto.IdCliente;
-            dto.Cliente = string.Concat(_dto.CCliente.Nombre, " ", _dto.CCliente.Apellido1);
-            if (_dto.CCliente.IdTipoPersona.Equals(2))
-                dto.Cliente = _dto.CCliente.RazonSocial;
-            dto.Rfc = ClienteServicio.Obtener(_dto.IdCliente).Rfc;
-            dto.IdEmpresa = _dto.IdEmpresa;
-            dto.Ticket = _dto.Ticket;
-            dto.FechaRegistro = _dto.FechaRegistro;
-            dto.TotalCargo = _dto.TotalCargo;
-            dto.TotalAbonos = _dto.TotalAbonos;
-            dto.SaldoInsoluto = _dto.TotalCargo - _dto.TotalAbonos;
-            dto.VentaExtraordinaria = _dto.VentaExtraordinaria;
-            dto.Activo = _dto.Activo;
-            dto.FechaVencimiento = _dto.FechaVencimiento;
-            dto.Saldada = _dto.Saldada;
-            dto.lstCreditoR = ToDTO(lst);
-            dto.Abono = FromInit(_dto.IdCargo);
-            dto.Dias1a7 = ((TimeSpan)(DateTime.Now - _dto.FechaVencimiento)).Days;
-            //dto.Total = lst.Sum(x => x.MontoAbono);
-            //dto.TotalEfectivo = lst.Where(y => y.IdFormaPago == 1).Sum(x => x.MontoAbono);
-            //dto.TotalCheques = lst.Where(y => y.IdFormaPago == 2).Sum(x => x.MontoAbono);
-            //dto.TotalTransferencia = lst.Where(y => y.IdFormaPago == 3).Sum(x => x.MontoAbono);
-            if (venta != null)
+            try
             {
-                dto.URL_XML = venta.URLXml;
-                dto.URL_CFDI = venta.URLPdf;
-            }
 
-            return dto;
+                //List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
+                var venta = CFDIServicio.Buscar(_dto.Ticket);
+                CargosDTO dto = new CargosDTO();
+                dto.IdCargo = _dto.IdCargo;
+                dto.IdCliente = _dto.IdCliente;
+                dto.Cliente = string.Concat(_dto.CCliente.Nombre, " ", _dto.CCliente.Apellido1);
+                if (_dto.CCliente.IdTipoPersona.Equals(2))
+                    dto.Cliente = _dto.CCliente.RazonSocial;
+                dto.Rfc = _dto.CCliente.Rfc ?? "Sin info.";
+                dto.IdEmpresa = _dto.IdEmpresa;
+                dto.Ticket = _dto.Ticket;
+                dto.FechaRegistro = _dto.FechaRegistro;
+                dto.TotalCargo = _dto.TotalCargo;
+                dto.TotalAbonos = _dto.TotalAbonos;
+                dto.SaldoInsoluto = _dto.TotalCargo - _dto.TotalAbonos;
+                dto.VentaExtraordinaria = _dto.VentaExtraordinaria;
+                dto.Activo = _dto.Activo;
+                dto.FechaVencimiento = _dto.FechaVencimiento;
+                dto.Saldada = _dto.Saldada;
+                dto.lstCreditoR = ToDTO(_dto.Abono.ToList());
+                dto.Abono = FromInit(_dto.IdCargo);
+                dto.Dias1a7 = ((TimeSpan)(DateTime.Now - _dto.FechaVencimiento)).Days;
+                if (venta != null)
+                {
+                    dto.URL_XML = venta.URLXml;
+                    dto.URL_CFDI = venta.URLPdf;
+                }
+                return dto;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         public static List<AbonosDTO> ToDTOAbono(Cargo _dto)
         {
             List<Abono> lst = new AbonosDataAcces().BuscarTodos(_dto.IdCargo);
             var venta = CFDIServicio.Buscar(_dto.Ticket);
             List<AbonosDTO> dto = new List<AbonosDTO>();
-            dto = ToDTO(lst);        
+            dto = ToDTO(lst);
             return dto;
         }
         public static List<AbonosDTO> ToDTOcr(List<Cargo> lCargo)
@@ -238,13 +250,13 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
             {
                 lprodDTO.AddRange(ToDTOAbono(c));
             }
-          
+
             return lprodDTO;
         }
         public static ReporteCreditoRecDto ToDTOCR(List<Cargo> lCargo)
         {
             ReporteCreditoRecDto lprodDTO = new ReporteCreditoRecDto();
-            lprodDTO.reporteCargos = lCargo.ToList().Select(x => ToDTOcr(x)).ToList();
+            lprodDTO.reporteCargos = lCargo.Select(x => ToDTOcr(x)).ToList();
             lprodDTO.reporteAbonos = ToDTOcr(lCargo);
             if (lprodDTO.reporteCargos.Count > 10)
             {
@@ -300,28 +312,38 @@ namespace Application.MainModule.AdaptadoresDTO.Cobranza
         }
         public static CargosDTO ToDTORep(CarteraVencidaDTO _dto)
         {
-            var usu = ClienteServicio.Obtener(_dto.IdCliente);
-            CargosDTO dto = new CargosDTO();
-            dto.IdCliente = _dto.IdCliente;
-            dto.IdEmpresa = _dto.IdEmpresa;
-            dto.Cliente = usu.RazonSocial;
-            dto.Rfc = usu.Rfc;
-            dto.Nombre = _dto.Nombre;
-            dto.Ticket = _dto.Ticket;
-            dto.Serie = _dto.Serie;
-            dto.TotalCargo = _dto.MontoCargo;
-            dto.FechaRegistro = _dto.FechaReg;
-            dto.FechaVencimiento = _dto.FechaVen;
-            dto.SaldoActual = _dto.SaldoActual;
-            dto.SaldoCorriente = _dto.SaldoCorriente;
-            dto.SaldoVencido = _dto.SaldoVencido;
-            dto.Dias1a7 = _dto.Dias1_7;
-            dto.Dias8a16 = _dto.Dias8_16;
-            dto.Dias17a31 = _dto.Dias17_31;
-            dto.Dias32a61 = _dto.Dias32_61;
-            dto.Dias62a91 = _dto.Dias62_91;
-            dto.Mas91 = _dto.Mas91;        
-            return dto;
+            try
+            {
+                var usu = ClienteServicio.Obtener(_dto.IdCliente);
+                CargosDTO dto = new CargosDTO();
+                dto.IdCliente = _dto.IdCliente;
+                dto.IdEmpresa = _dto.IdEmpresa;
+                dto.Cliente = usu != null ? ClienteServicio.ObtenerNomreCliente(usu): "Cliente no encontrado";
+                dto.Rfc = usu != null ? usu.Rfc ?? string.Empty : "Cliente no encontrado";
+                dto.Nombre = _dto.Nombre;
+                dto.Ticket = _dto.Ticket;
+                dto.Serie = _dto.Serie;
+                dto.TotalCargo = _dto.MontoCargo;
+                dto.FechaRegistro = _dto.FechaReg;
+                dto.FechaVencimiento = _dto.FechaVen;
+                dto.SaldoActual = _dto.SaldoActual;
+                dto.SaldoCorriente = _dto.SaldoCorriente;
+                dto.SaldoVencido = _dto.SaldoVencido;
+                dto.Dias1a7 = _dto.Dias1_7;
+                dto.Dias8a16 = _dto.Dias8_16;
+                dto.Dias17a31 = _dto.Dias17_31;
+                dto.Dias32a61 = _dto.Dias32_61;
+                dto.Dias62a91 = _dto.Dias62_91;
+                dto.Mas91 = _dto.Mas91;
+                return dto;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
+
         }
         public static ReporteDTO ToDTORep(List<CarteraVencidaDTO> lCargoV, List<CarteraVencidaDTO> lCargoT)
         {

@@ -30,7 +30,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public Cliente Buscar(int idCliente)
         {
-            return uow.Repository<Cliente>().Get(x => x.IdCliente.Equals(idCliente)).FirstOrDefault();
+            return uow.Repository<Cliente>().Get(x => x.IdCliente.Equals(idCliente) && x.Activo).FirstOrDefault();
         }
 
         public List<ClienteLocacion> BuscarLocacion(int idCliente)
@@ -63,53 +63,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 foreach (string item in cliente.RazonSocial.Split(' '))
                 {
                     consulta.AddRange(uow.Repository<Cliente>().Get(
-                                                 x => x.Nombre.Contains(item) ||
+                                                 x => (x.Nombre.Contains(item) ||
                                                  x.Apellido1.Contains(item) ||
-                                                 x.Apellido2.Contains(item)
+                                                 x.Apellido2.Contains(item))
+                                                 && x.IdEmpresa.Equals(idEmpresa)
                                                  && x.Activo).ToList());
                 }
-                //if (cliente.Rfc.Split(' ').Count().Equals(1))
-                //{
-                //    consulta = uow.Repository<Cliente>().Get(
-                //                                 x => x.Nombre.Contains(cliente.Rfc) ||
-                //                                 x.Apellido1.Contains(cliente.Rfc) ||
-                //                                 x.Apellido2.Contains(cliente.Rfc)
-                //                                 && x.Activo).ToList();
-                //}
-                //else
-                //{
-                //    if (cliente.Rfc.Split(' ').Count().Equals(2))
-                //    {
-                //        var n = cliente.Rfc.Split(' ')[0];
-                //        var ap = cliente.Rfc.Split(' ')[1];
-                //        consulta = uow.Repository<Cliente>().Get(x =>
-                //                    x.Nombre.Contains(n)
-                //                    || x.Apellido1.Contains(ap)
-                //                    && x.Activo).ToList();
-                //    }
-                //    if (cliente.Rfc.Split(' ').Count().Equals(3))
-                //    {
-                //        var n = cliente.Rfc.Split(' ')[0];
-                //        var ap = cliente.Rfc.Split(' ')[1];
-                //        var am = cliente.Rfc.Split(' ')[2];
-                //        consulta = uow.Repository<Cliente>().Get(x =>
-                //                    x.Nombre.Contains(n)
-                //                    || x.Apellido1.Contains(ap)
-                //                    || x.Apellido2.Contains(am)
-                //                    && x.Activo).ToList();
-                //    }
-                //    if (cliente.Rfc.Split(' ').Count().Equals(4))
-                //    {
-                //        var n = string.Concat(cliente.Rfc.Split(' ')[0], " ", cliente.Rfc.Split(' ')[1]);
-                //        var ap = cliente.Rfc.Split(' ')[2];
-                //        var am = cliente.Rfc.Split(' ')[3];
-                //        consulta = uow.Repository<Cliente>().Get(x =>
-                //                    x.Nombre.Contains(n)
-                //                    || x.Apellido1.Contains(ap)
-                //                    || x.Apellido2.Contains(am)
-                //                    && x.Activo).ToList();
-                //    }
-                //}
             }
             if (cliente.Telefono1 != null)
             {
@@ -124,7 +83,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                       || x.Celular1.Trim().Equals(cliente.Telefono1)
                                       || x.Celular2.Trim().Equals(cliente.Telefono1)
                                       || x.Celular3.Trim().Equals(cliente.Telefono1)
-                                      || x.IdCliente.Equals(tel)) && x.IdEmpresa.Equals(idEmpresa)));
+                                      || x.IdCliente.Equals(tel))
+                                      && x.IdEmpresa.Equals(idEmpresa)
+                                      && x.Activo));
             }
             consulta = consulta.Distinct().ToList();
             return consulta;
@@ -142,7 +103,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 && !x.Celular.Equals(null)
                 && !x.Nombre.Equals(null)
                 && !x.Apellido2.Equals(null)
-                );
+                && x.Activo);
             return respuesta;
         }
         public List<Cliente> BuscadorClientes(string criterio, short idEmpresa)
@@ -162,7 +123,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 || x.Rfc.ToUpper().Contains(criterio)))
                 || x.RazonSocial.ToUpper().Contains(criterio)
                 || x.Nombre.ToUpper().Contains(criterio)
-                //|| x.IdCliente.ToString().Equals(idCliente)
                 && x.IdEmpresa.Equals(idEmpresa)
                 && x.Activo
             ).ToList();
@@ -170,8 +130,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<Cliente> BuscadorClientes(short idEmpresa)
         {
             return uow.Repository<Cliente>().Get(
-                x =>                
-                x.IdEmpresa.Equals(idEmpresa)     
+                x =>
+                x.IdEmpresa.Equals(idEmpresa)
+                && x.Activo
             ).ToList();
         }
 
@@ -181,9 +142,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             var resp = uow.Repository<Cliente>().Get(
                   x => x.VentaPuntoDeVenta.Where(y =>
                  x.IdEmpresa.Equals(IdEmpresa) &&
-                    (y.FechaRegistro >= dto.FechaInicio && 
+                    (y.FechaRegistro >= dto.FechaInicio &&
                     y.FechaRegistro <= dto.FechaFin)
-                    && y.Descuento > 0).Count() != 0 ).ToList();
+                    && y.Descuento > 0).Count() != 0).ToList();
 
 
             return resp;
@@ -194,17 +155,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
             //var resp = uow.Repository<Cliente>().Get(x => x.Cargo.Where(y => y.Abono.Where(z => z.FechaRegistro >= dto.FechaInicio
             //                                         && z.FechaRegistro <= dto.FechaFin).Count() > 0).Count() > 0).ToList();
             var resp = uow.Repository<Abono>().Get(z => z.FechaAbono > dto.FechaInicio
-                                                     && z.FechaAbono < dto.FechaFin).Select(a => a.Cargo).Select(c=> c.CCliente).ToList();
+                                                     && z.FechaAbono < dto.FechaFin).Select(a => a.Cargo).Select(c => c.CCliente).ToList();
             return resp;
         }
         public List<Cliente> BuscarClientesCargos(PeriodoDTO dto, short IdEmpresa)
         {
 
-            var resp = uow.Repository<Cliente>().Get(x => x.Cargo.Where(z => z.FechaRegistro >= dto.FechaInicio
-                                                     && z.FechaRegistro <= dto.FechaFin).Count() > 0).ToList();
-
-
-
+            var resp = uow.Repository<Cargo>().Get(z => z.FechaRegistro > dto.FechaInicio
+                                                     && z.FechaRegistro < dto.FechaFin).Select(x => x.CCliente).ToList();
             return resp;
         }
         public List<Cliente> BuscarClientesSaldoPendiente(PeriodoDTO dto, short IdEmpresa)

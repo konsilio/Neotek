@@ -73,6 +73,8 @@ namespace Application.MainModule.Servicios.Ventas
                 IdEmpresa = cc.IdEmpresa,
                 FechaReporte = cc.FechaCorteAnticipo,
                 COperadorChofer = cc.COperadorChofer,
+                PrecioLt = cc.PrecioSalida ?? 0,
+                PrecioKg = cc.PrecioSalida ?? 0,
             };
         }
         //Camioneta Reporte del dia
@@ -267,6 +269,10 @@ namespace Application.MainModule.Servicios.Ventas
         {
             List<VentaCorteAnticipoDTO> lPventas = CajaGeneralAdapter.ToDTOCE(new CajaGeneralDataAccess().BuscarPorCveEC(cve));
             return lPventas;
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPorPtoVenta(PuntoVenta pv, DateTime fecha)
+        {
+            return new CajaGeneralDataAccess().BuscarPorPuntoVenta(pv.IdPuntoVenta, fecha);
         }
         public static RespuestaDto Actualizar(VentaCajaGeneral pv)
         {
@@ -1012,6 +1018,14 @@ namespace Application.MainModule.Servicios.Ventas
 
             return respuesta;
 
+        }
+        public static string CalcularTipoVenta(VentaPuntoDeVenta venta)
+        {
+            if (venta.VentaACredito)
+                return "Crédito";
+            if (venta.EsBonificacion)
+                return "Bonificación";
+            return "De contado";
         }
     }
 }

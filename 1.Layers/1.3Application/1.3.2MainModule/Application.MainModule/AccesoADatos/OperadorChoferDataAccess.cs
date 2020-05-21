@@ -85,8 +85,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public OperadorChofer BuscarPorUsuario(int idUsuario)
         {
-            return uow.Repository<OperadorChofer>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
-                                                         && x.Activo);
+            return uow.Repository<OperadorChofer>().Get(x => x.IdUsuario.Equals(idUsuario)
+                                                         && x.Activo).FirstOrDefault();
         }
     }
 }

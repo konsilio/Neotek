@@ -27,18 +27,18 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarPedido();
             if (!resp.Exito) return null;
 
-            if (TokenServicio.EsSuperUsuario())
-                return PedidosServicio.Obtener().ToList();
+            //if (TokenServicio.EsSuperUsuario())
+            //    return PedidosServicio.Obtener().ToList();
 
-            else
-            {
+            //else
+            //{
                 PeriodoDTO periodo = new PeriodoDTO();
                 periodo.FechaInicio = DateTime.Parse(string.Concat(DateTime.Now.AddDays(-2).ToShortDateString(), " 00:00:00"));
                 periodo.FechaFin = DateTime.Parse(string.Concat(DateTime.Now.ToShortDateString(), " 23:59:59"));
 
                 var pedidos = PedidosServicio.Obtener(idempresa, periodo);
                 return PedidosAdapter.ToDTO(pedidos);
-            }
+            //}
         }               
         public RegistraPedidoDto PedidoId(int idPedido)
         {

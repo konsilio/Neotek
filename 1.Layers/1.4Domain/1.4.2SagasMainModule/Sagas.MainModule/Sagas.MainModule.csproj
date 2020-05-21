@@ -283,6 +283,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\sysdiagrams.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\TipoCentroCosto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>

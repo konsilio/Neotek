@@ -179,7 +179,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<AlmacenGasTomaLectura> BuscarLecturas(short idCAlmacenGas, DateTime fecha)
         {
-            return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas) 
+            return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                                     && x.FechaRegistro.Day.Equals(fecha.Day)
                                                                     && x.FechaRegistro.Month.Equals(fecha.Month)
                                                                     && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
@@ -225,7 +225,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 {
                     uow.Repository<AlmacenGasAutoConsumo>().Insert(_autoconsumo);
                     uow.SaveChanges();
-                    _respuesta.Id = _autoconsumo.IdCAlmacenGasEntrada;
+                    _respuesta.Id = _autoconsumo.Orden;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
@@ -553,9 +553,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public Camioneta ObtenerCamioneta(int IdC)
         {
-            return uow.Repository<Camioneta>().GetSingle(
-                x => x.IdCamioneta.Equals(IdC) && x.Activo
-                );
+            return uow.Repository<Camioneta>().Get(
+                x => x.IdCamioneta.Equals(IdC)).FirstOrDefault();
         }
         public void Actualizar(AplicaTomaLecturaDto aplicaTomaLectura)
         {
@@ -615,7 +614,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<UnidadAlmacenGas> BuscarTodosPuntosVenta(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                            && (x.IdEstacionCarburacion != null || x.IdPipa != null || x.IdCamioneta != null)                                                            
+                                                            && (x.IdEstacionCarburacion != null || x.IdPipa != null || x.IdCamioneta != null)
                                                             && x.Activo).ToList();
         }
         public List<AlmacenGasMovimiento> BuscarMovimientos(string folio, short year, byte mes, byte dia)
@@ -891,11 +890,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public UnidadAlmacenGas BuscarAlmacenPorPipa(int id)
         {
-            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdPipa.Equals(id)).FirstOrDefault();
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdPipa == id).FirstOrDefault();
         }
         public UnidadAlmacenGas BuscarAlmacenPorCamioneta(int id)
         {
-            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdCamioneta.Equals(id)).FirstOrDefault();
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdCamioneta == id).FirstOrDefault();
         }
         public UnidadAlmacenGas BuscarAlmacenPrincipal(short idEmpresa)
         {
@@ -942,7 +941,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                 && x.IdTipoEvento.Equals(tipoEvento)
                 && (x.FechaRegistro.Year.Equals(fecha.Year) && x.FechaRegistro.Month.Equals(fecha.Month) && x.FechaRegistro.Day.Equals(fecha.Day))
-            ).FirstOrDefault();
+            ).OrderByDescending(x => x.IdOrden).FirstOrDefault();
         }
         public List<UnidadAlmacenGas> BuscarTodas(short idEmpresa)
         {
@@ -1047,7 +1046,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<AlmacenGasAutoConsumo> BuscarTodosAutoConsumos(DateTime fi)
         {
-            return uow.Repository<AlmacenGasAutoConsumo>().GetAll().Where(x => x.FechaRegistro > fi ).ToList();
+            return uow.Repository<AlmacenGasAutoConsumo>().GetAll().Where(x => x.FechaRegistro > fi).ToList();
         }
         public List<AlmacenGasAutoConsumoFoto> BuscarImagenesAutoConsumo(short idEmpresa, short anio, byte mes, byte dia, short orden)
         {
@@ -1080,7 +1079,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<AlmacenGasCalibracion> BuscarTodasCalibraciones(int IdCAlmacenGas, DateTime fecha)
         {
-            return uow.Repository<AlmacenGasCalibracion>().Get(x => x.IdCAlmacenGas.Equals(IdCAlmacenGas) 
+            return uow.Repository<AlmacenGasCalibracion>().Get(x => x.IdCAlmacenGas.Equals(IdCAlmacenGas)
                                                                 && x.FechaRegistro.Day.Equals(fecha.Day)
                                                                 && x.FechaRegistro.Month.Equals(fecha.Month)
                                                                 && x.FechaRegistro.Year.Equals(fecha.Year)).ToList();
@@ -1091,10 +1090,54 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<AlmacenGasAutoConsumo> BuscarAutoconsumo(int IdCAlmcenGas, DateTime date)
         {
-            return uow.Repository<AlmacenGasAutoConsumo>().Get(x => x.IdCAlmacenGasSalida.Equals(IdCAlmcenGas)
-                                                                       && x.FechaAplicacion.Day.Equals(date.Day)
-                                                                       && x.FechaAplicacion.Month.Equals(date.Month)
-                                                                       && x.FechaAplicacion.Year.Equals(date.Year)).ToList();
+            return uow.Repository<AlmacenGasAutoConsumo>().Get(x => x.IdCAlmacenGasSalida == IdCAlmcenGas
+                                                                       && x.FechaAplicacion.Day == date.Day
+                                                                       && x.FechaAplicacion.Month == date.Month
+                                                                       && x.FechaAplicacion.Year == date.Year).ToList();
+        }
+        public List<AlmacenGasAutoConsumo> BuscarAutoconsumo(DateTime date)
+        {
+            return uow.Repository<AlmacenGasAutoConsumo>().Get(x => x.FechaAplicacion.Day == date.Day
+                                                                       && x.FechaAplicacion.Month == date.Month
+                                                                       && x.FechaAplicacion.Year == date.Year).ToList();
+        }
+        public AlmacenGasAutoConsumo BuscarAutoconsumoInicial(AlmacenGasAutoConsumo final)
+        {
+            return uow.Repository<AlmacenGasAutoConsumo>().Get(x =>
+                x.Year.Equals(final.Year) &&
+                x.Mes.Equals(final.Mes) &&
+                x.Dia.Equals(final.Dia) &&
+                x.IdCAlmacenGasEntrada.Equals(final.IdCAlmacenGasEntrada) &&
+                x.IdCAlmacenGasSalida.Equals(final.IdCAlmacenGasSalida) &&
+                x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)).OrderByDescending(o => o.Orden).FirstOrDefault();
+        }
+        public AlmacenGasAutoConsumo BuscarAutoconsumo(AlmacenGasAutoConsumo ac)
+        {
+            return uow.Repository<AlmacenGasAutoConsumo>().Get(x =>
+                x.Year.Equals(ac.Year) &&
+                x.Mes.Equals(ac.Mes) &&
+                x.Dia.Equals(ac.Dia) &&
+                x.IdCAlmacenGasEntrada.Equals(ac.IdCAlmacenGasEntrada) &&
+                x.IdCAlmacenGasSalida.Equals(ac.IdCAlmacenGasSalida) &&
+                x.Orden == ac.Orden).FirstOrDefault();
+        }
+        public AlmacenGasAutoConsumo BuscarAutoconsumo(int orden)
+        {
+            return uow.Repository<AlmacenGasAutoConsumo>().Get(x => x.Orden.Equals((short)orden)).FirstOrDefault();
+        }
+        public bool BuscarSiEstaRelacionado(AlmacenGasAutoConsumo orden)
+        {
+            var autoconusmo = uow.Repository<AlmacenGasAutoConsumo>().Get(x =>
+                                            x.Year.Equals(orden.Year) &&
+                                            x.Mes.Equals(orden.Mes) &&
+                                            x.Dia.Equals(orden.Dia) &&
+                                            x.IdCAlmacenGasEntrada.Equals(orden.IdCAlmacenGasEntrada) &&
+                                            x.IdCAlmacenGasSalida.Equals(orden.IdCAlmacenGasSalida) &&
+                                            x.OrdenRelacion == orden.Orden).FirstOrDefault();
+            if (autoconusmo != null)
+                return true;
+            else
+                return false;
         }
         public AlmacenGasCalibracion BuscarCalibracion(string claveOperacion)
         {
@@ -1178,7 +1221,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<ReporteDelDia> ObtenerReportesDelDia()
         {
             var fecha = DateTime.Now;
-            return uow.Repository<ReporteDelDia>().Get(x => x.Year.Equals(fecha.Year) 
+            return uow.Repository<ReporteDelDia>().Get(x => x.Year.Equals(fecha.Year)
                                                             && x.Mes.Equals(fecha.Month)
                                                             && x.Dia.Equals(fecha.Day)).ToList();
 

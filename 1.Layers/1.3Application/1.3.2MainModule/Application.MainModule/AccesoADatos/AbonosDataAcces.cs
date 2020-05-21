@@ -142,8 +142,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Cargo> BuscarTodos(short idEmpresa)
         {
-            return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa))
-                                                         .ToList();
+            return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                         && x.Activo).ToList();
         }
         public List<Cargo> Buscar(short idEmpresa, int idCliente)
         {
@@ -155,6 +155,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Cargo>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                         && !x.Saldada
+                                                        && x.Activo
                                                         ).OrderBy(x => x.TotalCargo).ToList();
         }
         public List<Cargo> BuscarVencidos(short idEmpresa)

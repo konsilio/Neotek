@@ -61,7 +61,6 @@ namespace Application.MainModule.Flujos
         {
             return EmpresaServicio.BuscarEmpresas(conAC);
         }
-
         public RespuestaDto RegistraEmpresa(EmpresaCrearDTO empDto)
         {
             var resp = PermisosServicio.PuedeRegistrarEmpresa();
@@ -69,7 +68,6 @@ namespace Application.MainModule.Flujos
 
             return EmpresaServicio.RegistrarEmpresa(EmpresaAdapter.FromDto(empDto));
         }
-
         public RespuestaDto ModificaEmpresa(EmpresaDTO empDto)
         {
             var resp = PermisosServicio.PuedeModificarEmpresa();
@@ -82,7 +80,6 @@ namespace Application.MainModule.Flujos
             emp.FechaRegistro = emp.FechaRegistro;
             return EmpresaServicio.ModificarEmpresa(emp);
         }
-
         public RespuestaDto EliminaEmpresa(short id)
         {
             var resp = PermisosServicio.PuedeEliminarEmpresa();
@@ -496,10 +493,17 @@ namespace Application.MainModule.Flujos
         {
             try
             {
+                //var us = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
                 var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(IdCAlmacenGas);
                 PrecioVenta pv = new PrecioVenta();
                 if (unidad.IdEstacionCarburacion != null)
-                    pv = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(TokenServicio.ObtenerIdEmpresa());
+                {
+                    var precioEstacion = PrecioVentaGasServicio.ObtenerPrecioVigenteEstacion(TokenServicio.ObtenerIdEmpresa(), unidad.IdEstacionCarburacion.Value);
+                    if (precioEstacion != null)
+                        pv = precioEstacion;
+                    else
+                        pv = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(TokenServicio.ObtenerIdEmpresa());
+                }
                 else
                     pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
                 var producto = ProductoServicio.ObtenerProducto(pv.IdProducto);
@@ -742,7 +746,6 @@ namespace Application.MainModule.Flujos
 
             return ProductoServicio.RegistrarCategoriaProducto(ProductoAdapter.CategoriaProducto(cpDto));
         }
-
         public RespuestaDto ModificaCategoriaProducto(CategoriaProductoModificarDto cpDto)
         {
             var resp = PermisosServicio.PuedeModificarProducto();
@@ -757,7 +760,6 @@ namespace Application.MainModule.Flujos
             var categoria = ProductoAdapter.FromDto(cpDto, catProd);
             return ProductoServicio.ModificarCategoriaProducto(categoria);
         }
-
         public RespuestaDto EliminaCategoriaProducto(CategoriaProductoEliminarDto cpDto)
         {
             var resp = PermisosServicio.PuedeEliminarProducto();
@@ -797,7 +799,6 @@ namespace Application.MainModule.Flujos
 
             return ProductoServicio.RegistrarLineaProducto(ProductoAdapter.FromDto(cpDto));
         }
-
         public RespuestaDto ModificaLineaProducto(LineaProductoModificarDto lpDto)
         {
             var resp = PermisosServicio.PuedeModificarProducto();
@@ -812,7 +813,6 @@ namespace Application.MainModule.Flujos
             var Linea = ProductoAdapter.FromDto(lpDto, linProd);
             return ProductoServicio.ModificarLineaProducto(Linea);
         }
-
         public RespuestaDto EliminaLineaProducto(LineaProductoEliminarDto cpDto)
         {
             var resp = PermisosServicio.PuedeEliminarProducto();
@@ -852,7 +852,6 @@ namespace Application.MainModule.Flujos
 
             return ProductoServicio.RegistrarUnidadMedida(ProductoAdapter.FromDto(uMDto));
         }
-
         public RespuestaDto ModificaUnidadMedida(UnidadMedidaModificarDto uMDto)
         {
             var resp = PermisosServicio.PuedeModificarProducto();
@@ -867,7 +866,6 @@ namespace Application.MainModule.Flujos
             var uMedida = ProductoAdapter.FromDto(uMDto, uM);
             return ProductoServicio.ModificarUnidadMedida(uMedida);
         }
-
         public RespuestaDto EliminaUnidadMedida(UnidadMedidaEliminarDto uMDto)
         {
             var resp = PermisosServicio.PuedeEliminarProducto();
@@ -980,7 +978,6 @@ namespace Application.MainModule.Flujos
 
             return CentroCostoServicio.RegistrarCentroCosto(CentroCostoAdapter.FromDto(ccDto));
         }
-
         public RespuestaDto ModificaCentroCosto(CentroCostoModificarDto ccDto)
         {
             var resp = PermisosServicio.PuedeModificarCentroCosto();
@@ -997,7 +994,6 @@ namespace Application.MainModule.Flujos
 
             return CentroCostoServicio.ModificarCentroCosto(CentroCosto);
         }
-
         public RespuestaDto EliminaCentroCosto(CentroCostoEliminarDto ccDto)
         {
             var resp = PermisosServicio.PuedeEliminarCentroCosto();
@@ -1010,7 +1006,6 @@ namespace Application.MainModule.Flujos
             centro.Activo = false;
             return CentroCostoServicio.ModificarCentroCosto(centro);
         }
-
         public List<CentroCostoDTO> ListaCentrosCostos()
         {
             return CentroCostoAdapter.ToDTO(CentroCostoServicio.Obtener());
@@ -1129,7 +1124,6 @@ namespace Application.MainModule.Flujos
 
             return CuentaContableAdapter.ToDto(CuentaContableServicio.Obtener(idCuentaContable));
         }
-
         public RespuestaDto RegistraCuentaContableAutorizado(CuentaContableAutorizadoDTO dto)
         {
             var permiso = PermisosServicio.PuedeRegistrarCuentaContable();
@@ -1162,7 +1156,6 @@ namespace Application.MainModule.Flujos
                 return CuentaContableAutorizadoServicio.ModificarCuentaContableAutorizado(entidad);
             }
         }
-
         public List<CuentaContableAutorizadoDTO> ConsultaCuentasContablesAutorizado()
         {
             var permiso = PermisosServicio.PuedeConsultarCuentaContable();
@@ -1177,8 +1170,6 @@ namespace Application.MainModule.Flujos
 
             return CuentaContableAutorizadoAdapter.ToDTO(CuentaContableAutorizadoServicio.Obtener(idCuentaContable));
         }
-
-
         #endregion
 
         #region Estación de carburación
@@ -1451,6 +1442,7 @@ namespace Application.MainModule.Flujos
             var idUtil = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).SingleOrDefault(x => x.IdEquipoTransporte.Equals(vehiculoDto.IdVehiculo)).IdVehiculoUtilitario;
             var asig = AsignacionUtilitarioServicio.Buscar(vehiculoDto);
             if (asig != null) return AsignacionUtilitarioServicio.Existe();
+           
 
             if (vehiculoDto.TipoVehiculo.Equals((short)TipoUnidadEqTransporteEnum.Utilitario))
             {
@@ -1477,7 +1469,7 @@ namespace Application.MainModule.Flujos
                 {
                     var idCam = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).SingleOrDefault(x => x.IdEquipoTransporte.Equals(vehiculoDto.IdVehiculo)).IdCamioneta;
                     var almacen = AlmacenGasServicio.ObtenerPorCamioneta(idCam ?? 0);
-                    var chof = OperadorChoferServicio.ObtenerPorUsuario(vehiculoDto.IdChofer);
+                    var chof = OperadorChoferServicio.ObtenerPorUsuario(vehiculoDto.IdChofer);                   
                     if (chof == null)
                     {
                         var newChof = OperadorChoferServicio.CrearParaCamioneta();
@@ -1489,6 +1481,8 @@ namespace Application.MainModule.Flujos
                     }
                     else
                         vehiculoDto.IdChofer = chof.IdOperadorChofer;
+                    var asignacionExistente = AsignacionUtilitarioServicio.BuscarOcupada(chof.IdOperadorChofer, almacen.IdCAlmacenGas, chof.IdEmpresa);
+                    if (asignacionExistente != null) return AsignacionUtilitarioServicio.Existe();
                     var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
                     _respuesta = PuntoVentaServicio.Insertar(npv);
                 }
@@ -1497,6 +1491,7 @@ namespace Application.MainModule.Flujos
                     var idPip = ListaEquiposdeTransporte(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdEquipoTransporte.Equals(vehiculoDto.IdVehiculo)).IdPipa;
                     var almacen = AlmacenGasServicio.ObtenerPorPipa(idPip ?? 0);
                     var chof = OperadorChoferServicio.ObtenerPorUsuario(vehiculoDto.IdChofer);
+
                     if (chof == null)
                     {
                         var newChof = OperadorChoferServicio.CrearParaPipa();
@@ -1508,6 +1503,8 @@ namespace Application.MainModule.Flujos
                     }
                     else
                         vehiculoDto.IdChofer = chof.IdOperadorChofer;
+                    var asignacionExistente = AsignacionUtilitarioServicio.BuscarOcupada(chof.IdOperadorChofer, almacen.IdCAlmacenGas, chof.IdEmpresa);
+                    if (asignacionExistente != null) return AsignacionUtilitarioServicio.Existe();
                     var npv = EquipoTransporteServicio.GenerarAsignacion(almacen, vehiculoDto);
                     _respuesta = PuntoVentaServicio.Insertar(npv);
                 }

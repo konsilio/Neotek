@@ -27,6 +27,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string S0009 = "La empresa no tiene coordenadas configuradas";
         public const string S0010 = "La estacion no tiene coordenadas configuradas";
         public const string S0011 = "Es necesario que actualices la aplicacion";
+        public const string S0012 = "Tienes rol de vendedor pero no tienes un punto de venta asignado";
 
         public const string R0001 = "Error al guardar la requisición";
         public const string R0002 = "El campo '{0}' es obligatorio.";
@@ -82,5 +83,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string F0001 = "La fecha inicio es mayor que la fecha final";
         public const string F0002 = "Las fecha deben estar dentro del mes en curso";
         public const string F0003 = "Lagunos registros tuvieron algun error, no se puede completar la tarea";
+
+        public const string AC0001 = "No se detecto el registro inicial del autonconsumo de esta unidad";
     }
 }

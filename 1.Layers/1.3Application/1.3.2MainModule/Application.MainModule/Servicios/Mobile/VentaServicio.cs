@@ -153,6 +153,10 @@ namespace Application.MainModule.Servicios.Mobile
         {
             return GasServicio.ObtenerCortes(idEmpresa);
         }
+        //public static List<VentaPuntoDeVenta> ObtenerVentasXPtoVenta(int idPuntoVenta, DateTime Fecha)
+        //{
+        //    return GasServicio.ObtenerVentasXPtoVenta(idEmpresa);
+        //}
         public static RespuestaDto Corte(CorteDto dto, short idEmpresa, int idUsuario,List<VentaCorteAnticipoEC> cortes,PuntoVenta puntoVenta,UnidadAlmacenGas almacen,List<VentaCorteAnticipoEC> cortesYanticiposOrden)
         {
             var idOrden = orden(cortesYanticiposOrden);
@@ -174,6 +178,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.PuntoVenta = almacen.Numero;
             adapter.FechaAplicacion = dto.Fecha;
             adapter.OperadorChofer = puntoVenta.OperadorChofer.Usuario.Nombre + " " + puntoVenta.OperadorChofer.Usuario.Apellido1 +" "+ puntoVenta.OperadorChofer.Usuario.Apellido2;
+            adapter.PrecioSalida = dto.PrecioSalida;
             return GasServicio.Corte(adapter);
         }
         public static int ObtenerIdCamioneta(int idUsuario)
@@ -183,5 +188,9 @@ namespace Application.MainModule.Servicios.Mobile
 
             return puntoVenta.ToList().FirstOrDefault(x => x.IdOperadorChofer.Equals(chofis.IdOperadorChofer)).UnidadesAlmacen.IdCamioneta ?? 0;
         }
+        //public static List<VentaPuntoDeVenta> VentasPorPuntoVenta(PuntoVenta pv, DateTime fecha)
+        //{ 
+            
+        //}
     }
 }

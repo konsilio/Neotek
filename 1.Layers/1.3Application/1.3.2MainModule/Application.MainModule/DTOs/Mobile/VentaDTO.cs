@@ -17,6 +17,10 @@ namespace Application.MainModule.DTOs.Mobile
     {
         public string FolioVenta { get; set; }
         public int IdCliente { get; set; }
+        public string Cliente { get; set; }
+        public string RFC { get; set; }
+        public string NombreGasera { get; set; }
+        public string RFCGasera { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Iva { get; set; }
         public decimal Total { get; set; }
@@ -31,5 +35,10 @@ namespace Application.MainModule.DTOs.Mobile
         public bool TieneCredito { get; set; }
         public List<ConceptoDTO> Concepto { get; set; }
         public bool VentaExtraordinaria { get; set; }
+        public string Estacion { get; set; }
+    }
+    public class RespuestaVenta
+    {
+        public List<VentaDTO> ListaVentaDTO { get; set; }
     }
 }

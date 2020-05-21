@@ -1,5 +1,6 @@
 ﻿@*@model  List<MVC.Presentacion.Models.Cobranza.CargosModel>*@
-@model  MVC.Presentacion.Models.Cobranza.ReporteCreditosRecuperado
+@using MVC.Presentacion.Models.Cobranza;
+@model  ReporteCreditosRecuperado
 @Html.DevExpress().GetStyleSheets(
             new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout, Theme = "Material" },
             new StyleSheet { ExtensionSuite = ExtensionSuite.Editors, Theme = "Material" },
@@ -55,7 +56,8 @@
                             }
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
-                                    @Html.Partial("MasterDetailMasterPartial", Model.reporteAbonos)                                  
+                                    
+                                    @Html.Partial("MasterDetailMasterPartial", Model.reporteAbonos ?? new List<AbonosModel>())                                  
                                 </div>
                             </div>
                             @*@Html.Action("MasterDetailMasterPartial")*@

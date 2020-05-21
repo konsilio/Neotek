@@ -119,7 +119,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeConsultarAbonos();
             if (!resp.Exito) return null;
-            dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:01"));
+            dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:00"));
             dto.FechaFin = DateTime.Parse(string.Concat(dto.FechaFin.ToShortDateString(), " 23:59:59"));
             var CreditosCliente = ClienteServicio.BuscarClientesConAbonos(dto).ToList();
             var List = ClientesAdapter.ToDTOCR(CreditosCliente.Distinct().ToList(), dto);
@@ -132,7 +132,7 @@ namespace Application.MainModule.Flujos
             dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:00"));
             dto.FechaFin = DateTime.Parse(string.Concat(dto.FechaFin.ToShortDateString(), " 23:59:59"));
             var CreditosCliente = ClienteServicio.BuscarClientesConCargos(dto).ToList();
-            var List = ClientesAdapter.ToDTOCO(CreditosCliente.Distinct().ToList());
+            var List = ClientesAdapter.ToDTOCO(CreditosCliente.Distinct().ToList(), dto);
             return List;
         }
         public List<CreditoXClienteDTO> RepCreditoXCliente(PeriodoDTO dto)
@@ -285,6 +285,10 @@ namespace Application.MainModule.Flujos
             var gastos = EgresoServicio.BuscarTodos(periodo).Where(x => x.EsFiscal).ToList();
             var cuentasContables = CuentaContableServicio.Obtener();
             var ordenes = OrdenCompraServicio.BuscarTodo(TokenServicio.ObtenerIdEmpresa(), periodo);
+            decimal CantidadAutorizada = 0;
+            decimal CantidadGastada = 0;
+            decimal CantidadPagada = 0;
+            decimal Diferencia = 0;
             foreach (var cc in cuentasContables)
             {
                 var cca = CuentaContableAutorizadoServicio.Obtener(cc.IdCuentaContable, periodo);
@@ -293,18 +297,22 @@ namespace Application.MainModule.Flujos
 
                 CuentasConsolidadasDTO dto = new CuentasConsolidadasDTO();
                 dto.Concepto = cc.Descripcion;
-                dto.CantidadAutorizada = cca == null ? 0 : cca.Autorizado;
-                dto.CantidadGastada = ordenes.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(or => or.Productos.Sum(pr => pr.Importe));
-                dto.CantidadPagada = gastos == null ? 0 : gastos.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(y => y.Monto);
-                dto.Diferencia = dto.CantidadAutorizada - dto.CantidadPagada;
+                dto.CantidadAutorizada = (cca == null ? 0 : cca.Autorizado).ToString("C");
+                CantidadAutorizada += cca == null ? 0 : cca.Autorizado;
+                dto.CantidadGastada = (ordenes.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(or => or.Productos.Sum(pr => pr.Importe))).ToString("C");
+                CantidadGastada += ordenes.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(or => or.Productos.Sum(pr => pr.Importe));
+                dto.CantidadPagada = (gastos == null ? 0 : gastos.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(y => y.Monto)).ToString("C");
+                CantidadPagada += gastos == null ? 0 : gastos.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(y => y.Monto);
+                dto.Diferencia = ((cca == null ? 0 : cca.Autorizado) - (gastos == null ? 0 : gastos.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(y => y.Monto))).ToString("C");
+                Diferencia += ((cca == null ? 0 : cca.Autorizado) - (gastos == null ? 0 : gastos.Where(x => x.IdCuentaContable.Equals(cc.IdCuentaContable)).Sum(y => y.Monto)));
                 respuesta.Add(dto);
             }
             CuentasConsolidadasDTO totalizador = new CuentasConsolidadasDTO();
             totalizador.Concepto = "Total: ";
-            totalizador.CantidadAutorizada = respuesta.Sum(x => x.CantidadAutorizada);
-            totalizador.CantidadGastada = respuesta.Sum(x => x.CantidadGastada);
-            totalizador.CantidadPagada = respuesta.Sum(x => x.CantidadPagada);
-            totalizador.Diferencia = respuesta.Sum(x => x.Diferencia);
+            totalizador.CantidadAutorizada = CantidadAutorizada.ToString("C");
+            totalizador.CantidadGastada = CantidadGastada.ToString("C");
+            totalizador.CantidadPagada = CantidadPagada.ToString("C");
+            totalizador.Diferencia = Diferencia.ToString("C");
             respuesta.Add(totalizador);
 
             return respuesta;

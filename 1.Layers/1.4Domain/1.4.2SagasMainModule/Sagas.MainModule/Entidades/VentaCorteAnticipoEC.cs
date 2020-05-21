@@ -37,6 +37,7 @@ namespace Sagas.MainModule.Entidades
         public System.DateTime FechaCorteAnticipo { get; set; }
         public System.DateTime FechaAplicacion { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public Nullable<decimal> PrecioSalida { get; set; }
     
         public virtual UnidadAlmacenGas CAlmacenGas { get; set; }
         public virtual OperadorChofer COperadorChofer { get; set; }

@@ -8,9 +8,9 @@ namespace MVC.Presentacion.Models
     public class CuentaConsolidadaDTO
     {
         public string Concepto { get; set; }
-        public decimal CantidadAutorizada { get; set; }
-        public decimal CantidadGastada { get; set; }
-        public decimal CantidadPagada { get; set; }
-        public decimal Diferencia { get; set; }
+        public string CantidadAutorizada { get; set; }
+        public string CantidadGastada { get; set; }
+        public string CantidadPagada { get; set; }
+        public string Diferencia { get; set; }
     }
 }

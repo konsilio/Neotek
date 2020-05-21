@@ -309,6 +309,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.Autoconsumo(dto, esFinal), Request);
         }
+        //[Route("autoconsumo/ticket/{orden}")]
+        //public HttpResponseMessage PostAutoconsumo(int orden)
+        //{
+        //    return RespuestaHttp.crearRespuesta(_mobile.Autoconsumo(orden), Request);
+        //}
         /// <summary>
         /// Permite retornar el listado de estaciónes o almacenes de gas para el autoconsumo. 
         /// dependiendo de que tipo se este trabajando desde la app(Si inicio session con 
@@ -606,6 +611,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetHayCorte(DateTime fecha)
         {
             return RespuestaHttp.crearRespuesta(_mobile.GetHayCorte(fecha), Request);
+        }
+        [Route("lista/tickets")]
+        public HttpResponseMessage GetTicketsDelDia()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _mobile.BuscarVentas());
         }
         #endregion
 

@@ -23,6 +23,9 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             string token = Session["StringToken"].ToString();
             ViewBag.Empresas = CatalogoServicio.Empresas(token);
+            if (model.IdCuentaContable != 0)
+                ViewBag.EsEdicion = true;
+
             if (TempData["RespuestaDTO"] != null)
             {
                 var resp = (RespuestaDTO)TempData["RespuestaDTO"];
@@ -95,11 +98,11 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.GuardarCtaCtbleAutorizado(model, tkn);
-                TempData["RespuestaDTO"] = respuesta;
-                if (respuesta.Exito)
-                    return RedirectToAction("CuentaContable", CatalogoServicio.InitCtaContable(tkn));
-                else     
-                    return View("CuentaContableAutorizado", model);         
+            TempData["RespuestaDTO"] = respuesta;
+            if (respuesta.Exito)
+                return RedirectToAction("CuentaContable", CatalogoServicio.InitCtaContable(tkn));
+            else
+                return View("CuentaContableAutorizado", model);
         }
         public ActionResult Grid()
         {

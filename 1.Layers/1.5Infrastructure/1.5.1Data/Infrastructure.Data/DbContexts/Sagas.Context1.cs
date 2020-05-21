@@ -121,5 +121,6 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<Bitacora> Bitacora { get; set; }
         public virtual DbSet<CuentaContableAutorizado> CuentaContableAutorizado { get; set; }
         public virtual DbSet<ControlAsistencia> ControlAsistencia { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

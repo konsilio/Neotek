@@ -236,7 +236,7 @@ namespace Application.MainModule.Servicios.Almacenes
             var lectFinal = BuscarLecturaPorFecha(almacen.IdCAlmacenGas, TipoEventoEnum.Final, resp.FechaReporte);
             var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
 
-            if (almacen.IdCamioneta > 0 && almacen.IdCamioneta != null)
+            if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
             {
                 var cilindrosInicial = lectInicial.Cilindros;
                 var cilindrosFinal = lectFinal.Cilindros;
@@ -265,8 +265,10 @@ namespace Application.MainModule.Servicios.Almacenes
                 reporte = ReporteAdapter.ToDtoEstacion(resp, almacen, lectInicial, lectFinal);
             if (almacen.IdPipa != null)
                 reporte = ReporteAdapter.ToDtoPipa(resp, almacen, lectInicial, lectFinal);
-            reporte.Precio = precioVenta.PrecioSalidaKg ?? 0;
-
+            if (almacen.IdCamioneta != null)
+                reporte.Precio = precioVenta.PrecioSalidaKg ?? 0;
+            else
+                reporte.Precio = precioVenta.PrecioSalidaLt ?? 0;
             return reporte;
         }
         /// <summary>
@@ -634,6 +636,8 @@ namespace Application.MainModule.Servicios.Almacenes
         }
         public static string ObtenerNombreUnidadAlmacenGas(Pedido p)
         {
+            if (p.IdPipa == 100)
+                return "No Encontrada";
             if (p.IdCamioneta != 0)
                 return ObtenerCamioneta(p.IdCamioneta.Value).Nombre;
             if (p.IdPipa != 0)
@@ -659,8 +663,9 @@ namespace Application.MainModule.Servicios.Almacenes
             var ventasContado = PuntoVentaServicio.ObtenerVentasContado(puntoVenta.IdPuntoVenta, fecha);
             var ventasCredito = PuntoVentaServicio.ObtenerVentasCredito(puntoVenta.IdPuntoVenta, fecha);
             var TotalVentas = new PuntoVentaDataAccess().ObtenerVentas(puntoVenta.IdPuntoVenta, fecha);
-            var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
-            var precioVentaEst = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(TokenServicio.ObtenerIdEmpresa());
+            var precioVenta = new Flujos.Catalogos().ObtenerPrecioVentaVigente(almacen.IdCAlmacenGas);
+            //var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+            //var precioVentaEst = PrecioVentaGasServicio.ObtenerPrecioVigenteEstaciones(TokenServicio.ObtenerIdEmpresa());
             //decimal precioVentaGas = precioVenta.PrecioSalidaKg ?? 0;
             #region Camioneta
             if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
@@ -711,15 +716,18 @@ namespace Application.MainModule.Servicios.Almacenes
                     reporteDTO.Error = false;
                     reporteDTO.Fecha = fecha;
                     reporteDTO.Mensaje = "Exito";
-                    reporteDTO.Precio = precioVenta.PrecioSalidaLt ?? 0;//CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), TotalVentas.Count);
-                    if (almacen.IdEstacionCarburacion != null)
-                    {
-                        var pvestacion = PrecioVentaGasServicio.ObtenerPrecioVigenteEstacion(TokenServicio.ObtenerIdEmpresa(), almacen.IdEstacionCarburacion.Value);
-                        if (pvestacion != null)
-                            reporteDTO.Precio = pvestacion.PrecioSalidaLt ?? 0;
-                        else
-                            reporteDTO.Precio = precioVentaEst.PrecioSalidaLt ?? 0;
-                    }
+                    if (almacen.IdCamioneta != null)
+                        reporteDTO.Precio = precioVenta.PrecioSalidaKg ?? 0;
+                    else
+                        reporteDTO.Precio = precioVenta.PrecioSalidaLt ?? 0;//CalculosGenerales.Promediar(ventasContado.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.PrecioUnitarioProducto) ?? 0), TotalVentas.Count);
+                    //if (almacen.IdEstacionCarburacion != null)
+                    //{
+                    //    var pvestacion = PrecioVentaGasServicio.ObtenerPrecioVigenteEstacion(TokenServicio.ObtenerIdEmpresa(), almacen.IdEstacionCarburacion.Value);
+                    //    if (pvestacion != null)
+                    //        reporteDTO.Precio = pvestacion.PrecioSalidaLt ?? 0;
+                    //    else
+                    //        reporteDTO.Precio = precioVentaEst.PrecioSalidaLt ?? 0;
+                    //}
                     reporteDTO.Importe = TotalVentas.Where(t => !t.VentaACredito).Sum(x => x.Total);
                     reporteDTO.LitrosVenta = TotalVentas.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(v => v.CantidadLt ?? 0));
                     reporteDTO.ClaveReporte = fecha.Year + "R" + FechasFunciones.ObtenerClaveUnica();
@@ -773,7 +781,8 @@ namespace Application.MainModule.Servicios.Almacenes
                 reporteEntity.OperadorChofer = usuarioEncargado.Nombre + " " + usuarioEncargado.Apellido1 + " " + usuarioEncargado.Apellido2;
                 reporteEntity.ImporteAnticipos = totalAnticipos;
                 reporteEntity.ImporteCortes = totalCortes;
-
+                reporteEntity.PrecioKg = precioVenta.PrecioSalidaKg ?? 0;
+                reporteEntity.PrecioLt = precioVenta.PrecioSalidaLt ?? 0;
                 reporteEntity.PuntoVenta = reporteDTO.NombreCAlmacen;
                 var respuesta = PuntoVentaServicio.RegistarReporteDia(reporteEntity);
                 if (!respuesta.Exito)
@@ -2656,9 +2665,25 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarAutoconsumoClaveOperacion(claveOperacion);
         }
+        public static AlmacenGasAutoConsumo ObtenerAutoconsumo(int Orden)
+        {
+            return new AlmacenGasDataAccess().BuscarAutoconsumo(Orden);
+        }
+        public static AlmacenGasAutoConsumo ObtenerAutoconsumoInicial(AlmacenGasAutoConsumo final)
+        {
+            return new AlmacenGasDataAccess().BuscarAutoconsumoInicial(final);
+        }
+        public static AlmacenGasAutoConsumo ObtenerAutoconsumoInicialFinal(AlmacenGasAutoConsumo ac)
+        {
+            return new AlmacenGasDataAccess().BuscarAutoconsumo(ac);
+        }
         public static List<AlmacenGasAutoConsumo> ObtenerAutoconsumo(int IdCAlmacenGas, DateTime fecha)
         {
             return new AlmacenGasDataAccess().BuscarAutoconsumo(IdCAlmacenGas, fecha);
+        }
+        public static List<AlmacenGasAutoConsumo> ObtenerAutoconsumo(DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().BuscarAutoconsumo(fecha);
         }
         public static AlmacenGasCalibracion ObtenerCalibracion(string claveOperacion)
         {
@@ -2815,7 +2840,7 @@ namespace Application.MainModule.Servicios.Almacenes
             //{
 
             //}
-            return Total;            
+            return Total;
         }
 
     }

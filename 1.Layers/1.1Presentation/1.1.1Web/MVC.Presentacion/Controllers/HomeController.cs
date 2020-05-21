@@ -47,17 +47,16 @@ namespace MVC.Presentacion.Controllers
                     Session["StringToken"] = respuesta.token;
                     Session["Perfil"] = respuesta.Mensaje;
                     Session["Roles"] = respuesta.LstRoles;
-
-                    if (respuesta.LstRoles.Remanente)
-                        ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
-                    if (respuesta.LstRoles.CallCenter)
-                        ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
-                    if (respuesta.LstRoles.AlmacenExistencia)
-                        ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());
-                    if (respuesta.LstRoles.CreditoCobranza)
-                        ViewBag.Cartera = DashBoardServicio.DashBoardCartera(Session["StringToken"].ToString());
-                    if (respuesta.LstRoles.ReporteCorteCaja)
-                        ViewBag.Caja = DashBoardServicio.DashBoardCajaGeneral(Session["StringToken"].ToString());
+                    //if (respuesta.LstRoles.Remanente)
+                    //    ViewBag.VentasRema = DashBoardServicio.DashBoardRemanente(Session["StringToken"].ToString());
+                    //if (respuesta.LstRoles.CallCenter)
+                    //    ViewBag.CallCenter = DashBoardServicio.DashBoardCallCenter(Session["StringToken"].ToString());
+                    //if (respuesta.LstRoles.AlmacenExistencia)
+                    //    ViewBag.Anden = DashBoardServicio.DashBoardAnden(Session["StringToken"].ToString());
+                    //if (respuesta.LstRoles.CreditoCobranza)
+                    //    ViewBag.Cartera = DashBoardServicio.DashBoardCartera(Session["StringToken"].ToString());
+                    //if (respuesta.LstRoles.ReporteCorteCaja)
+                    //    ViewBag.Caja = DashBoardServicio.DashBoardCajaGeneral(Session["StringToken"].ToString());
                 }
                 else
                     return View("Index", AutenticacionServicio.InitIndex(respuesta));

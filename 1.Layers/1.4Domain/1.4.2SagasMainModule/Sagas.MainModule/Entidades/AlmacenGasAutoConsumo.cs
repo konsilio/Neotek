@@ -33,6 +33,7 @@ namespace Sagas.MainModule.Entidades
         public bool DatosProcesados { get; set; }
         public System.DateTime FechaAplicacion { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public Nullable<short> OrdenRelacion { get; set; }
     
         public virtual UnidadAlmacenGas UnidadSalida { get; set; }
         public virtual UnidadAlmacenGas UnidadEntrada { get; set; }

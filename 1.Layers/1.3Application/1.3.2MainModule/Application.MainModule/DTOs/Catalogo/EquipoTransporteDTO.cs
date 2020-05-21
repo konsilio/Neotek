@@ -27,6 +27,7 @@ namespace Application.MainModule.DTOs
         [Display(Name = "Numero de Placas")]
         public string Placas { get; set; }
         [Required(ErrorMessage = Error.R0002)]
+        [MaxLength(255)]
         [Display(Name = "Numero de Motor")]
         public string NumMotor { get; set; }
         [Required(ErrorMessage = Error.R0002)]

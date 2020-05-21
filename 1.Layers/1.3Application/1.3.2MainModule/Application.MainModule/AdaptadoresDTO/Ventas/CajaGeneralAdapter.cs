@@ -215,7 +215,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         }
         public static List<VPuntoVentaDetalleDTO> ToDTO(List<VentaPuntoDeVentaDetalle> lu)
         {
-            List<VPuntoVentaDetalleDTO> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
+            List<VPuntoVentaDetalleDTO> luDTO = lu.Select(x => ToDTO(x)).ToList();
 
             return luDTO;
         }
@@ -1400,6 +1400,21 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             };
             return usDTO;
+        }
+        public static VentaReImpresion FromDTOImpre(VentaPuntoDeVenta dto)
+        {
+            return new VentaReImpresion()
+            { 
+                Folio = dto.FolioVenta,
+                FechaHora =dto.FechaRegistro.ToString("dd/MM/yyyy hh:mm"),
+                NombreCliente = ClienteServicio.ObtenerNomreCliente(dto.CCliente),
+                TotalVenta = dto.Total,
+                TipoVenta = CajaGeneralServicio.CalcularTipoVenta(dto)
+            };
+        }
+        public static List<VentaReImpresion> FromDTOImpre(List<VentaPuntoDeVenta> dtos)
+        {
+            return dtos.Select(x => FromDTOImpre(x)).ToList();
         }
     }
 }

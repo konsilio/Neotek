@@ -136,7 +136,8 @@ namespace MVC.Presentacion.Controllers
             catch (Exception ex)
             {
                 ViewBag.MensajeError = ObtenerString(ex);
-                return View(_modelList);
+                _modelList.reporteAbonos = new List<AbonosModel>();
+                return View(_modelList); 
             }
         }
         public ActionResult MasterDetailMasterPartial()

@@ -33,7 +33,7 @@ namespace Security.MainModule.Token_Service
             var audienceToken = ConfigurationManager.AppSettings["JWT_AUDIENCE_TOKEN"];
             var issuerToken = ConfigurationManager.AppSettings["JWT_ISSUER_TOKEN"];
 
-            var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
+            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(secretKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Email, email) });
@@ -48,7 +48,7 @@ namespace Security.MainModule.Token_Service
             var issuerToken = ConfigurationManager.AppSettings["JWT_ISSUER_TOKEN"];
             var expireTime = ConfigurationManager.AppSettings["JWT_EXPIRE_MINUTES"];
 
-            var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
+            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(secretKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
             // create a claimsIdentity
@@ -88,7 +88,7 @@ namespace Security.MainModule.Token_Service
         }
         private static string CreateJwtSecurityToken(string audienceToken, string issuerToken, ClaimsIdentity claimsIdentity, string expireTime, SigningCredentials signingCredentials)
         {
-            var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+            var tokenHandler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = tokenHandler.CreateJwtSecurityToken(
                 audience: audienceToken,
                 issuer: issuerToken,

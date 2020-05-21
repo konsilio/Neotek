@@ -167,7 +167,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 SitioWeb2 = usDTO.SitioWeb2,
                 SitioWeb3 = usDTO.SitioWeb3,
                 IdPais = usDTO.IdPais,
-                IdEstadoRep = usDTO.IdEstadoRep ==0? null: usDTO.IdEstadoRep,
+                IdEstadoRep = usDTO.IdEstadoRep == 0 ? null : usDTO.IdEstadoRep,
                 EstadoProvincia = usDTO.EstadoProvincia,
                 Municipio = usDTO.Municipio,
                 CodigoPostal = usDTO.CodigoPostal,
@@ -220,8 +220,8 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Roles = getRol(us.UsuarioRoles.ToList()),
                 //Roles = RolAdapter.ToDTO(us.Roles.ToList()),
                 //UsuarioRoles = RolAdapter.ToDTO(us.UsuarioRoles.ToList())
-               // catUsuario.Roles.Add(getRol(usDTO, catUsuario.IdEmpresa))
-        };
+                // catUsuario.Roles.Add(getRol(usDTO, catUsuario.IdEmpresa))
+            };
 
             return usDTO;
         }
@@ -229,7 +229,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         public static List<RolDto> getRol(List<UsuarioRol> inf)
         {
             List<RolDto> rl = new List<RolDto>();
-          
+
             foreach (UsuarioRol v in inf)
             {
                 RolDto rol = new RolDto();
@@ -252,10 +252,15 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         public static Usuario FromDtoCredencial(UsuarioDTO usDTO, Usuario usr)
         {
             var catUsuario = FromEntity(usr);
-            if (usDTO.Email1 != null) { catUsuario.Email1 = usDTO.Email1; } else { catUsuario.Email1 = catUsuario.Email1; }
-            if (usDTO.Password != null) { catUsuario.Password = usDTO.Password; } else { catUsuario.Password = catUsuario.Password; }
 
-            return catUsuario;      
+            if (usDTO.Email1 != null)
+            {
+                catUsuario.Email1 = usDTO.Email1;
+                catUsuario.NombreUsuario = usDTO.Email1;
+            }
+            if (usDTO.Password != null)
+                catUsuario.Password = usDTO.Password;
+            return catUsuario;
         }
 
         //public static Usuario FromDtoRol(UsuariosModel usDTO, Usuario usr)

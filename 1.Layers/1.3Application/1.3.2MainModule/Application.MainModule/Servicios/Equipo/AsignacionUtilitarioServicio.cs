@@ -37,6 +37,10 @@ namespace Application.MainModule.Servicios
         {
             return new AsigancionUtilitariosDataAccess().Obtener(dto);
         }
+        public static PuntoVenta BuscarOcupada(int idOperador, short IdCalmacen, short idEmpresa)
+        {
+            return new AsigancionUtilitariosDataAccess().ObtenerOcupada(idOperador, IdCalmacen, idEmpresa);
+        }
         public static RespuestaDto Existe()
         {
             string mensaje = string.Format(Error.SiExiste, "La asignacion");

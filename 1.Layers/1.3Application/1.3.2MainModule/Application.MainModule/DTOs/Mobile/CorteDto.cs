@@ -20,5 +20,6 @@ namespace Application.MainModule.DTOs.Mobile
         public short IdEntrega { get; set; }
         public short IdRecibe { get; set; }
         public string Entrega { get; set; }
+        public decimal PrecioSalida { get; set; }
     }
 }
