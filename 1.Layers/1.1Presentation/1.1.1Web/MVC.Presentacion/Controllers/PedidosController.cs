@@ -62,16 +62,14 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.MensajeError = msj;
             if (id != null && id != 0)
             {
-                var cliente = CatalogoServicio.ObtenerCliente(id.Value, _tkn);
+                var cliente = CatalogoServicio.ObtenerClienteDto(id ?? 0, _tkn);
                 _model.Rfc = cliente.Rfc;
-            }
-            if (id != null)
-            {
                 _model.IdCliente = id ?? 0;
                 List<ClientesDto> lc = new List<ClientesDto>();
                 lc.Add(CatalogoServicio.ObtenerClienteDto(id ?? 0, _tkn));
-                ViewBag.ListaCliente = lc;
-                ViewBag.ListaDomicilios = CatalogoServicio.ObtenerLocaciones(id ?? 0, _tkn);
+                TempData["ListaCliente"] = lc;
+                TempData["Domicilios"] = CatalogoServicio.ObtenerLocaciones(id ?? 0, _tkn);
+                //ViewBag.ListaDomicilios = CatalogoServicio.ObtenerLocaciones(id ?? 0, _tkn);
             }
             return View(_model);
         }
@@ -100,6 +98,26 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index", new { idpedido = _mod.IdPedido, tel1 = _mod.cliente.Telefono1, rfc = _mod.cliente.Rfc });
             else
                 return RedirectToAction("Index");
+        }
+        public ActionResult _DatosClente()
+        {
+            if (TempData["ListaCliente"] != null)
+            {
+                TempData.Keep("ListaCliente");
+                return PartialView((List<ClientesDto>)TempData["ListaCliente"]);
+            }
+            return PartialView(new List<ClientesDto>());
+        }
+        public ActionResult _DatosClenteDomicilioPartial()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            string _tkn = Session["StringToken"].ToString();
+            var idCliente = Request.Params.Get("IdCliente") != null ? int.Parse(Request.Params.Get("IdCliente")) : -1;
+            if (idCliente != -1)
+                TempData["Domicilios"] = CatalogoServicio.ObtenerLocaciones(idCliente, _tkn);
+            else
+                TempData["Domicilios"] = new List<ClientesDto>();
+            return PartialView();
         }
         public JsonResult BuscarClientesPedido(string Tel1, string Rfc)
         {
@@ -309,8 +327,8 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             _tkn = Session["StringToken"].ToString();
 
-            if (_Obj.cliente.Locacion.IdPais != (byte)1 && _Obj.cliente.Locacion.IdEstadoRep == (byte)0)            
-                return RedirectToAction("AltaClienteDireccion", new { IdCliente = _Obj.cliente.IdCliente, msjValid = "Error. debe seleccionar un Estado" });            
+            if (_Obj.cliente.Locacion.IdPais != (byte)1 && _Obj.cliente.Locacion.IdEstadoRep == (byte)0)
+                return RedirectToAction("AltaClienteDireccion", new { IdCliente = _Obj.cliente.IdCliente, msjValid = "Error. debe seleccionar un Estado" });
             else
             {
                 _Obj.cliente.Locacion.IdCliente = _Obj.cliente.IdCliente;

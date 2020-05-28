@@ -148,10 +148,27 @@ namespace Application.MainModule.AdaptadoresDTO.IngresoEgreso
                 CuentaContable = entidad.CCuentaContable.Descripcion,
                 SaldoPagado = Convert.ToDouble(entidad.Monto),
                 SaldoPasivo = Convert.ToDouble(entidad.Monto),
-                SaldoInsoluto = 0,
+                SaldoGastado = 0,
             };
         }
         public static List<RepCuentaPorPagarDTO> ToRepo(List<Egreso> entidad)
+        {
+            return entidad.Select(x => ToRepo(x)).ToList();
+        }
+        public static RepCuentaPorPagarDTO ToRepo(OrdenCompra entidad)
+        {
+            var cc = CuentaContableServicio.ObtenerCuentaContable(entidad.IdCuentaContable);
+            return new RepCuentaPorPagarDTO()
+            {
+                IdCuenta = entidad.IdOrdenCompra,
+                Descripcion = entidad.NumOrdenCompra,
+                CuentaContable = cc != null ? cc.Descripcion : "Aun sin asignar",
+                SaldoPagado = Convert.ToDouble(entidad.OrdenCompraPago.Sum(x => x.MontoPagado)),
+                SaldoGastado = Convert.ToDouble(entidad.Total),
+                SaldoPasivo = Convert.ToDouble((entidad.Total - entidad.OrdenCompraPago.Sum(x => x.MontoPagado))),
+            };
+        }
+        public static List<RepCuentaPorPagarDTO> ToRepo(List<OrdenCompra> entidad)
         {
             return entidad.Select(x => ToRepo(x)).ToList();
         }

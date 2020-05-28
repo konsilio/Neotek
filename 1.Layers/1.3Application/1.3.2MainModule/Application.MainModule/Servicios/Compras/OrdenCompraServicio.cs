@@ -128,7 +128,10 @@ namespace Application.MainModule.Servicios.Compras
         {
             return new OrdenCompraDataAccess().BuscarTodos(idEmpresa, periodo);
         }
-
+        public static List<OrdenCompra> BuscarTodoPorPagar(short idEmpresa, DateTime periodo)
+        {
+            return new OrdenCompraDataAccess().BuscarTodosPendiente(idEmpresa, periodo);
+        }
         public static OrdenCompra Buscar(int idOrdenCompra)
         {
             return new OrdenCompraDataAccess().Buscar(idOrdenCompra);

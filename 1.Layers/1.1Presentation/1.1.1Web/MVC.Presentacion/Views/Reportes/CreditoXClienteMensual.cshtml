@@ -44,7 +44,21 @@
                     </div>
                     <div class="card">
                         <div class="body">
-                            <div class="row clearfix">                                                           
+                            <div class="row clearfix">
+                                <div class="col-md-3">
+                                    <strong>Periodo</strong>
+                                    <div class="form-group">
+                                        @Html.DevExpress().DateEdit(settings =>
+                                      {
+                                          settings.Name = "FechaInicio";
+                                          settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                                          settings.Properties.PickerType = DatePickerType.Months;
+                                          settings.Properties.CalendarProperties.FastNavProperties.InitialView = DatePickerType.Years;
+                                          settings.Properties.CalendarProperties.FastNavProperties.MaxView = DatePickerType.Years;
+                                          settings.Date = DateTime.Today;
+                                      }).GetHtml()
+                                    </div>
+                                </div>
                                 <div class="col-md-3">
                                     <strong>&emsp;</strong>
                                     <div class="form-group">

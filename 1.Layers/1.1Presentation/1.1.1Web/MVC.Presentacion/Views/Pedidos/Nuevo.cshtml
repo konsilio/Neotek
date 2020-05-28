@@ -108,8 +108,8 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Cliente:</b>
-                                                    @*@Html.Partial("_DatosCliente")*@
-                                                    @if (ViewBag.ListaCliente != null)
+                                                    @Html.Partial("_DatosCliente")
+                                                    @*@if (ViewBag.ListaCliente != null)
                                                     {
                                                         Html.DevExpress().ComboBox(settings =>
                                                         {
@@ -160,7 +160,7 @@
                                                             settings.Properties.Columns.Add("Rfc", "RFC", 230);
                                                             settings.Properties.Columns.Add("Telefono", "Telefono", 100);
                                                         }).GetHtml();
-                                                    }
+                                                    }*@
 
                                                 </div>
                                                 <div class="col-sm-2" style="top: 10px;">
@@ -197,54 +197,55 @@
                                             <div class="row clearfix">
                                                 <div class="col-sm-3">
                                                     <b>Domicilio:</b>
-                                                    @if (ViewBag.ListaDomicilios != null)
-                                                    {
-                                                        Html.DevExpress().ComboBox(settings =>
-                                                        {
-                                                            settings.Name = "Orden";
-                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                                            settings.Properties.DropDownWidth = 650;
-                                                            settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
-                                                            settings.Properties.CallbackPageSize = 30;
-                                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                            settings.Properties.TextFormatString = "{0}";
-                                                            settings.Properties.ValueField = "Orden";
-                                                            settings.Properties.ValueType = typeof(int);
-                                                            settings.Properties.Columns.Add("Calle", "Calle", 150);
-                                                            settings.Properties.Columns.Add("NumExt", "NumExt", 100);
-                                                            settings.Properties.Columns.Add("Colonia", "Colonia", 150);
-                                                            settings.Properties.Columns.Add(column =>
-                                                            {
-                                                                column.Caption = "Referencia";
-                                                                column.FieldName = "formatted_address";
-                                                                settings.Properties.ItemStyle.Wrap = DefaultBoolean.True;
-                                                            });
-                                                        }).BindList(ViewBag.ListaDomicilios).GetHtml();
-                                                    }
-                                                    else
-                                                    {
-                                                        Html.DevExpress().ComboBox(settings =>
-                                                        {
-                                                            settings.Name = "Orden";
-                                                            settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
-                                                            settings.SelectedIndex = 0;
-                                                            settings.Properties.DropDownWidth = 700;
-                                                            settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
-                                                            settings.Properties.CallbackPageSize = 30;
-                                                            settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
-                                                            settings.Properties.TextFormatString = "{0}";
-                                                            settings.Properties.ValueType = typeof(int);
-                                                            settings.Properties.Columns.Add("Calle", "Calle", 300);
-                                                            settings.Properties.Columns.Add("NumExt", "NumExt", 100);
-                                                            settings.Properties.Columns.Add("Colonia", "Colonia", 150);                                                         
-                                                            settings.Properties.Columns.Add(column =>
-                                                            {
-                                                                column.Caption = "Referencia";
-                                                                column.FieldName = "formatted_address";
-                                                                settings.Properties.ItemStyle.Wrap = DefaultBoolean.True;
-                                                            });
-                                                        }).GetHtml();
-                                                    }
+                                                    @Html.Partial("_DatosClenteDomicilioPartial")
+                                                    @*@if (ViewBag.ListaDomicilios != null)
+        {
+            Html.DevExpress().ComboBox(settings =>
+            {
+                settings.Name = "Orden";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.Properties.DropDownWidth = 650;
+                settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                settings.Properties.CallbackPageSize = 30;
+                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                settings.Properties.TextFormatString = "{0}";
+                settings.Properties.ValueField = "Orden";
+                settings.Properties.ValueType = typeof(int);
+                settings.Properties.Columns.Add("Calle", "Calle", 150);
+                settings.Properties.Columns.Add("NumExt", "NumExt", 100);
+                settings.Properties.Columns.Add("Colonia", "Colonia", 150);
+                settings.Properties.Columns.Add(column =>
+                {
+                    column.Caption = "Referencia";
+                    column.FieldName = "formatted_address";
+                    settings.Properties.ItemStyle.Wrap = DefaultBoolean.True;
+                });
+            }).BindList(ViewBag.ListaDomicilios).GetHtml();
+        }
+        else
+        {
+            Html.DevExpress().ComboBox(settings =>
+            {
+                settings.Name = "Orden";
+                settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+                settings.SelectedIndex = 0;
+                settings.Properties.DropDownWidth = 700;
+                settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                settings.Properties.CallbackPageSize = 30;
+                settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+                settings.Properties.TextFormatString = "{0}";
+                settings.Properties.ValueType = typeof(int);
+                settings.Properties.Columns.Add("Calle", "Calle", 300);
+                settings.Properties.Columns.Add("NumExt", "NumExt", 100);
+                settings.Properties.Columns.Add("Colonia", "Colonia", 150);
+                settings.Properties.Columns.Add(column =>
+                {
+                    column.Caption = "Referencia";
+                    column.FieldName = "formatted_address";
+                    settings.Properties.ItemStyle.Wrap = DefaultBoolean.True;
+                });
+            }).GetHtml();
+        }*@
                                                 </div>
 
                                                 <div class="col-sm-4">

@@ -452,7 +452,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             {
                 Nombre = ClienteServicio.ObtenerNomreCliente(Clte),
                 Id = Clte.IdCliente.ToString(),
-                Total = Cargos.Sum(x => x.TotalCargo),
+                Total = Cargos.Where(c => c.Activo).Sum(x => x.TotalCargo),
                 Litros = Clte.VentaPuntoDeVenta.Sum(x => x.VentaPuntoDeVentaDetalle.Sum(y => y.CantidadLt ?? 0)),
                 Abonos = ToDTOCC(Cargos),
             };
@@ -474,17 +474,19 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Litros = tiket != null ? Convert.ToString(tiket.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt)) : "0",
             };
         }
-        public static List<CreditoXClienteDTO> ToDTOCXC(List<Cliente> ListaClientes)
+        public static List<CreditoXClienteDTO> ToDTOCXC(List<Cliente> ListaClientes,PeriodoDTO dto)
         {
-            return ListaClientes.Select(x => ToDTOCXC(x)).ToList();
+            return ListaClientes.Select(x => ToDTOCXC(x, dto)).ToList();
         }
-        public static CreditoXClienteDTO ToDTOCXC(Cliente Clte)
+        public static CreditoXClienteDTO ToDTOCXC(Cliente Clte, PeriodoDTO dto)
         {
-            var cargo = Clte.Cargo.ToList();
+            var cargo = Clte.Cargo.Where(z => z.FechaRegistro <= dto.FechaInicio
+                                                                            && !z.Saldada
+                                                                            && z.Activo).ToList();
             return new CreditoXClienteDTO()
             {
                 Id = Clte.IdCliente.ToString(),
-                Nombre = Clte.Nombre,
+                Nombre = ClienteServicio.ObtenerNomreCliente(Clte),
                 SaldoActual = cargo.Sum(x => x.TotalCargo),
                 SaldoCorriente = cargo.Sum(x => DateTime.Now.Date < x.FechaVencimiento ? 0 : x.TotalCargo),
                 Vencido = cargo.Sum(x => DateTime.Now.Date > x.FechaVencimiento ? 0 : x.TotalCargo),
@@ -501,7 +503,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
         public static List<ControlDeAsistenciaDTO> ToDTOCA(List<Usuario> ListaClientes)
         {
-
             return ListaClientes.Select(x => ToDTOCA(x)).ToList();
         }
 
@@ -533,8 +534,8 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Ticket = cargo.Ticket,
                 Serie = string.Concat(tikett != null ? tikett.CPuntoVenta.UnidadesAlmacen.Pipa != null ? tikett.CPuntoVenta.UnidadesAlmacen.Pipa.Serie + " " : "P-" : "0", cargo.Ticket),
                 SaldoActual = cargo.TotalCargo,
-                SaldoCorriente = (DateTime.Now.Date < cargo.FechaVencimiento ? 0 : cargo.TotalCargo),
-                SaldoVencido = (DateTime.Now.Date > cargo.FechaVencimiento ? 0 : cargo.TotalCargo),
+                SaldoCorriente = (DateTime.Now.Date > cargo.FechaVencimiento ? 0 : cargo.TotalCargo),
+                SaldoVencido = (DateTime.Now.Date < cargo.FechaVencimiento ? 0 : cargo.TotalCargo),
                 Dias1a7 = (DateTime.Now.Date - cargo.FechaVencimiento).Days >= 1 && (DateTime.Now.Date - cargo.FechaVencimiento).Days <= 7 ? cargo.TotalCargo : 0,
                 Dias8a16 = (DateTime.Now.Date - cargo.FechaVencimiento).Days >= 8 && (DateTime.Now.Date - cargo.FechaVencimiento).Days <= 16 ? cargo.TotalCargo : 0,
                 Dias17a31 = (DateTime.Now.Date - cargo.FechaVencimiento).Days >= 17 && (DateTime.Now.Date - cargo.FechaVencimiento).Days <= 31 ? cargo.TotalCargo : 0,
@@ -543,19 +544,22 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Mas91 = (DateTime.Now.Date - cargo.FechaVencimiento).Days > 91 ? cargo.TotalCargo : 0,
             };
         }
-        public static List<CreditoXClienteMensualDTO> ToDTOCXCM(List<Cliente> ListaClientes)
+        public static List<CreditoXClienteMensualDTO> ToDTOCXCM(List<Cliente> ListaClientes, PeriodoDTO dto)
         {
-            return ListaClientes.Select(x => ToDTOCXCM(x)).ToList();
+            return ListaClientes.Select(x => ToDTOCXCM(x, dto)).ToList();
         }
-        public static CreditoXClienteMensualDTO ToDTOCXCM(Cliente Clte)
+        public static CreditoXClienteMensualDTO ToDTOCXCM(Cliente Clte, PeriodoDTO dto)
         {
-            var cargo = Clte.Cargo.ToList();
+            var cargo = Clte.Cargo.Where(z => z.FechaRegistro.Month.Equals(dto.FechaInicio.Month)
+                                                   && z.FechaRegistro.Year.Equals(dto.FechaInicio.Year)
+                                                   && z.Activo
+                                                   && !z.Saldada).ToList();
             return new CreditoXClienteMensualDTO()
             {
-                Nombre = Clte.Nombre,
+                Nombre = ClienteServicio.ObtenerNomreCliente(Clte),
                 SaldoActual = cargo.Sum(x => x.TotalCargo),
-                SaldoCorriente = cargo.Sum(x => DateTime.Now.Date < x.FechaVencimiento ? 0 : x.TotalCargo),
-                Vencido = cargo.Sum(x => DateTime.Now.Date > x.FechaVencimiento ? 0 : x.TotalCargo),
+                SaldoCorriente = cargo.Sum(x => DateTime.Now.Date > x.FechaVencimiento ? 0 : x.TotalCargo),
+                Vencido = cargo.Sum(x => DateTime.Now.Date < x.FechaVencimiento ? 0 : x.TotalCargo),
                 Dias1a7 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 1 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 7 ? x.TotalCargo : 0),
                 Dias8a16 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 8 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 16 ? x.TotalCargo : 0),
                 Dias17a31 = cargo.Sum(x => (DateTime.Now.Date - x.FechaVencimiento).Days >= 17 && (DateTime.Now.Date - x.FechaVencimiento).Days <= 31 ? x.TotalCargo : 0),

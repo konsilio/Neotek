@@ -123,7 +123,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     ProductoLinea = p != null ? p.LineaProducto.Descripcion : string.Empty,
                     ProductoCategoria = p != null ? p.Categoria.Descripcion  : string.Empty,
                     UnidadMedida = p != null ? p.UnidadMedida.Acronimo : string.Empty,
-                });;
+                });
                 idOrdenDetalle++;
             }
             return list;

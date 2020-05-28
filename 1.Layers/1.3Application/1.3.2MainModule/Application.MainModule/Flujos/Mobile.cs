@@ -259,8 +259,15 @@ namespace Application.MainModule.Flujos
             respuesta.MensajesError = new List<string>();
             try
             {
+                //Validar 
+
+
                 var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-                var almacen = punto_venta.UnidadesAlmacen;
+                //var almacen = punto_venta.UnidadesAlmacen;
+                var lecturaFinal = LecturaGasServicio.ObtenerUltimaLecturaFinal(punto_venta.UnidadesAlmacen.IdCAlmacenGas, DateTime.Now);
+                if (lecturaFinal != null)
+                    return new RespuestaDto() { Exito = false, Mensaje = Error.S0006, };
+
                 var operador = OperadorChoferAdapter.ToOperador(punto_venta.OperadorChofer);
                 var cliente = ClienteServicio.Obtener(venta.IdCliente);
                 var ventas = CajaGeneralServicio.ObtenerVentasPorFecha(venta.Fecha);
@@ -286,7 +293,7 @@ namespace Application.MainModule.Flujos
                     adapter.RazonSocial = cliente.RazonSocial;
                 }
                 #region Verifica si la venta que se realiza es extraordinaria
-                if (venta.Credito && almacen.IdCamioneta == null)
+                if (venta.Credito && punto_venta.UnidadesAlmacen.IdCamioneta == null)
                 {
                     if (cliente.CreditoDisponibleMonto == 0)
                     {
@@ -305,7 +312,7 @@ namespace Application.MainModule.Flujos
                     }
                 }
                 #endregion
-                if (venta.Credito && almacen.IdCamioneta == null)
+                if (venta.Credito && punto_venta.UnidadesAlmacen.IdCamioneta == null)
                 {
                     if (venta.VentaExtraordinaria)
                     {
@@ -384,13 +391,13 @@ namespace Application.MainModule.Flujos
                 else
                     respuesta = PuntoVentaServicio.InsertMobile(adapter);
                 if (respuesta.Exito)
-                    if (almacen.IdCamioneta > 0)
-                        verificaInventarioCilindros(venta, almacen);
+                    if (punto_venta.UnidadesAlmacen.IdCamioneta > 0)
+                        verificaInventarioCilindros(venta, punto_venta.UnidadesAlmacen);
                     else
                     {
-                        almacen.CantidadActualLt = (almacen.CantidadActualLt - adapter.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt ?? 0));
-                        almacen.CantidadActualKg = (almacen.CantidadActualKg - adapter.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0));
-                        AlmacenGasServicio.ActualizarAlmacen(AlmacenGasAdapter.FromEntity(almacen));
+                        punto_venta.UnidadesAlmacen.CantidadActualLt = (punto_venta.UnidadesAlmacen.CantidadActualLt - adapter.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadLt ?? 0));
+                        punto_venta.UnidadesAlmacen.CantidadActualKg = (punto_venta.UnidadesAlmacen.CantidadActualKg - adapter.VentaPuntoDeVentaDetalle.Sum(x => x.CantidadKg ?? 0));
+                        AlmacenGasServicio.ActualizarAlmacen(AlmacenGasAdapter.FromEntity(punto_venta.UnidadesAlmacen));
                     }
 
                 return respuesta;

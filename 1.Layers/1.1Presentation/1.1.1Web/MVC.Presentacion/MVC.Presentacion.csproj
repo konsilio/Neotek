@@ -11780,6 +11780,7 @@
     <Content Include="Views\Home\Mantenimiento.cshtml" />
     <Content Include="Views\CajaGeneral\EdicionTickets.cshtml" />
     <Content Include="Views\CajaGeneral\_Detalles.cshtml" />
+    <Content Include="Views\Pedidos\_DatosClenteDomicilioPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

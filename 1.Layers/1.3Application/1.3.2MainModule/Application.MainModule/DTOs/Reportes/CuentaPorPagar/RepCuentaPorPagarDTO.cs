@@ -11,9 +11,9 @@ namespace Application.MainModule.DTOs
         public int IdCuenta { get; set; }
         public string Descripcion { get; set; }
         public string CuentaContable { get; set; }
-        public double SaldoPasivo { get; set; }
+        public double SaldoGastado { get; set; }
         public double SaldoPagado { get; set; }
-        public double SaldoInsoluto { get; set; }
+        public double SaldoPasivo { get; set; }
 
     }
 }

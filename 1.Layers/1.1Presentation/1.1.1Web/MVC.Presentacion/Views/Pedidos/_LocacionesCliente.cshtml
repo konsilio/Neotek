@@ -14,4 +14,4 @@
     settings.Properties.Columns.Add("NumExt", "NumExt", 130);
     settings.Properties.Columns.Add("Colonia", "Colonia", 230);
     settings.Properties.Columns.Add("formatted_address", "Referencia", 130);
-}).GetHtml()
+}).BindList(TempData["Domicilios"]).GetHtml()

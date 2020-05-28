@@ -3,6 +3,7 @@ using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.UnitOfWork;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +77,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<OrdenCompra>().Get(x => x.IdEmpresa.Equals(idEmpresa) 
                                                     && x.FechaRegistro.Month.Equals(periodo.Month)
                                                     && x.FechaRegistro.Year.Equals(periodo.Year))
+                                                    .OrderByDescending(x => x.FechaRegistro).ToList();
+        }
+        public List<OrdenCompra> BuscarTodosPendiente(short idEmpresa, DateTime periodo)
+        {
+            return uow.Repository<OrdenCompra>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                    && x.FechaRegistro.Month.Equals(periodo.Month)
+                                                    && x.FechaRegistro.Year.Equals(periodo.Year)
+                                                    && (!x.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.PagoConfirmado) 
+                                                     &&!x.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_cancelada)
+                                                    && !x.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_exitosa)))
                                                     .OrderByDescending(x => x.FechaRegistro).ToList();
         }
         public RespuestaDto InsertarNuevo(OrdenCompra oc)

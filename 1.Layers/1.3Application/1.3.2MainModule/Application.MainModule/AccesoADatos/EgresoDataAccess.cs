@@ -94,9 +94,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Egreso>().Get(x => x.FechaRegistro > fi && x.FechaRegistro < ff).ToList();
         }
-        public List<Egreso> BuscarTodos(DateTime periodo)
+        public List<Egreso> BuscarTodos(DateTime periodo, short idEmpresa)
         {
-            return uow.Repository<Egreso>().Get(x => x.FechaRegistro.Month.Equals(periodo.Month) && x.FechaRegistro.Year.Equals(periodo.Year)).ToList();
+            return uow.Repository<Egreso>().Get(x => x.FechaRegistro.Month.Equals(periodo.Month) && x.FechaRegistro.Year.Equals(periodo.Year) && x.IdEmpresa.Equals(idEmpresa)).ToList();
         }
     }
 }

@@ -38,8 +38,10 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeConsultarCuentaContable();
             if (!resp.Exito) return null;
-            var requi = EgresoServicio.BuscarTodos(periodo);
-            return EgresoAdapter.ToRepo(requi);
+            //var requi = EgresoServicio.BuscarTodos(periodo, TokenServicio.ObtenerIdEmpresa());
+            //return EgresoAdapter.ToRepo(requi);
+            var Compras = OrdenCompraServicio.BuscarTodoPorPagar(TokenServicio.ObtenerIdEmpresa(), periodo);
+            return EgresoAdapter.ToRepo(Compras);
         }
         public List<RepInventarioPorPuntoVentaDTO> RepInventarioPorPuntoVenta(InventarioPorPuntoVentaDTO dto)
         {
@@ -142,7 +144,7 @@ namespace Application.MainModule.Flujos
             dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:00"));
             dto.FechaFin = DateTime.Parse(string.Concat(dto.FechaFin.ToShortDateString(), " 23:59:59"));
             var CreditosXCliente = ClienteServicio.BuscarClientesConSaldoPendiente(dto).ToList();
-            var List = ClientesAdapter.ToDTOCXC(CreditosXCliente);
+            var List = ClientesAdapter.ToDTOCXC(CreditosXCliente, dto);
             return List;
         }
         public List<ControlDeAsistenciaDTO> RepUsuarioAsistencia(PeriodoDTO dto)
@@ -156,13 +158,12 @@ namespace Application.MainModule.Flujos
         }
         public List<CreditoXClienteMensualDTO> RepCreditoXClienteMensual(PeriodoDTO dto)
         {
-
             var resp = PermisosServicio.PuedeConsultarAbonos();
             if (!resp.Exito) return null;
             dto.FechaInicio = DateTime.Parse(string.Concat(dto.FechaInicio.ToShortDateString(), " 00:00:00"));
             dto.FechaFin = DateTime.Parse(string.Concat(dto.FechaFin.ToShortDateString(), " 23:59:59"));
             var CreditosXClienteMensual = ClienteServicio.BuscarClientesConSaldoPendienteMensual(dto).ToList();
-            var List = ClientesAdapter.ToDTOCXCM(CreditosXClienteMensual);
+            var List = ClientesAdapter.ToDTOCXCM(CreditosXClienteMensual, dto);
             List.Add(ClientesAdapter.SumaCreditoMensual(List));
             return List;
         }
@@ -282,7 +283,7 @@ namespace Application.MainModule.Flujos
         public List<CuentasConsolidadasDTO> RepCuentasConsolidadas(DateTime periodo)
         {
             List<CuentasConsolidadasDTO> respuesta = new List<CuentasConsolidadasDTO>();
-            var gastos = EgresoServicio.BuscarTodos(periodo).Where(x => x.EsFiscal).ToList();
+            var gastos = EgresoServicio.BuscarTodos(periodo, TokenServicio.ObtenerIdEmpresa()).Where(x => x.EsFiscal).ToList();
             var cuentasContables = CuentaContableServicio.Obtener();
             var ordenes = OrdenCompraServicio.BuscarTodo(TokenServicio.ObtenerIdEmpresa(), periodo);
             decimal CantidadAutorizada = 0;

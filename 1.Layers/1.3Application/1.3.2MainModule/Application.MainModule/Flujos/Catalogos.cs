@@ -323,7 +323,7 @@ namespace Application.MainModule.Flujos
                         if (item.IdPrecioVentaEstatus == 1)//1-Programado, 2-Vigente, 3-Vencido
                         {
                             entity.IdEmpresa = item.IdEmpresa;
-                            entity.IdPrecioVentaEstatus = 2;//////2-Vigente
+                            entity.IdPrecioVentaEstatus = 2;//2-Vigente
                             entity.IdPrecioVenta = item.IdPrecioVenta;
                             ModificaPrecioVentaGas(entity);
                         }

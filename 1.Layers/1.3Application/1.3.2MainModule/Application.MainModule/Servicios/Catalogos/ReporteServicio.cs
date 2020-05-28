@@ -25,7 +25,7 @@ namespace Application.MainModule.Servicios.Catalogos
                         cpp.CuentaContable = CuentaContableServicio.Obtener(oc.IdCuentaContable).Descripcion;
                         cpp.SaldoPasivo = ObtenerSaldoPasivo(oc);
                         cpp.SaldoPagado = ObtenerSaldoPagado(oc);
-                        cpp.SaldoInsoluto = ObtenerSaldoInsoluto(oc);
+                        //cpp.SaldoInsoluto = ObtenerSaldoInsoluto(oc);
                         idcuenta++;
                     }
                 }

@@ -1,0 +1,26 @@
+﻿@Html.DevExpress().ComboBox(settings =>
+{
+    settings.Name = "Orden";
+    settings.CallbackRouteValues = new { Controller = "Pedidos", Action = "_DatosClenteDomicilioPartial" };
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Properties.DropDownWidth = 650;
+    settings.Properties.DropDownStyle = DropDownStyle.DropDownList;
+    settings.Properties.CallbackPageSize = 30;
+    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+    settings.Properties.TextFormatString = "{0}";
+    settings.Properties.ValueField = "Orden";
+    settings.Properties.ValueType = typeof(int);
+    settings.Properties.Columns.Add("Calle", "Calle", 150);
+    settings.Properties.Columns.Add("NumExt", "NumExt", 100);
+    settings.Properties.Columns.Add("Colonia", "Colonia", 150);
+    settings.Properties.Columns.Add(column =>
+    {
+        column.Caption = "Referencia";
+        column.FieldName = "formatted_address";
+        settings.Properties.ItemStyle.Wrap = DefaultBoolean.True;
+    });
+    settings.Properties.ClientSideEvents.BeginCallback = "function(s, e) { e.customArgs['IdCliente'] = IdCliente.GetValue(); }";
+
+}).BindList(TempData["Domicilios"]).GetHtml()
+
+

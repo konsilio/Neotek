@@ -438,16 +438,12 @@ namespace MVC.Presentacion.Controllers
             return settings;
         }
         public ActionResult CreditoXClienteMensual(PeriodoDTO model = null)
-        {
-            string FechaI = "01/01/219";
-            string FechaF = "27/11/2019";
-            model.FechaInicio = Convert.ToDateTime(FechaI);
-            model.FechaFin = Convert.ToDateTime(FechaF);
+        {         
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             if (TempData["DataSource"] != null)
                 TempData["DataSource"] = null;
-            if (model != null && !model.FechaFin.Equals(DateTime.MinValue) && !model.FechaInicio.Equals(DateTime.MinValue))
+            if (model != null && !model.FechaInicio.Equals(DateTime.MinValue))
             {
                 ViewData["Reporte"] = TiposReporteConst.CreditoXClienteMensual;
                 TempData["DataSource"] = ReporteServicio.BuscarCreditoXClienteMensual(model, tkn);
