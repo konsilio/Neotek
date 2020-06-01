@@ -20,7 +20,7 @@
             <WebView
                 android:id="@+id/WVVerReporteActivityReporte"
                 android:layout_width="match_parent"
-                android:layout_height="650sp"
+                android:layout_height="450sp"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="8dp">
 

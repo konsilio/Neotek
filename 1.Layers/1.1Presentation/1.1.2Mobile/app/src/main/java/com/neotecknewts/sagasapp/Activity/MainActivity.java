@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         if (db != null) {
             // Hacer las operaciones que queramos sobre la base de datos
             //db.execSQL("INSERT INTO comments (headerMenu, name, imageRef) VALUES (MenuDTO)");
+            // db.execSQL("CREATE TABLE IF NOT EXISTS some_table (id INTEGER PRIMARY KEY AUTOINCREMENT)");
         }
         //se inicializa la session
         session = new Session(getApplicationContext());

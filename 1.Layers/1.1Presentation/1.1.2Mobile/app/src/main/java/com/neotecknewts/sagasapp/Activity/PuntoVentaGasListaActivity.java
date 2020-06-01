@@ -172,7 +172,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             SetearLitrosDespachados();
         });
 
-        presenter = new PuntoVentaGasListaPresenterImpl(this);
+        presenter = new PuntoVentaGasListaPresenterImpl(this, PuntoVentaGasListaActivity.this);
         presenter.getPrecioVenta(session.getToken());
 
         mostrarConsepto(ventaDTO.getConcepto());
@@ -281,13 +281,19 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             adapter.esCilindro = esCilindro;
             adapter.esGasLP2 = esGasLP;
 
-            if (respuesta.get(0).getRazonSocial() != null && respuesta.get(0).getRFC() != null) {
+            if (respuesta.get(0).getRazonSocial() != null) {
                 ventaDTO.setNombreGasera(respuesta.get(0).getRazonSocial());
+            } else { ventaDTO.setNombreGasera(""); }
+            if (respuesta.get(0).getRFC() != null) {
                 ventaDTO.setRFCGasera(respuesta.get(0).getRFC());
-            } else {
-                ventaDTO.setNombreGasera("");
-                ventaDTO.setRFCGasera("");
-            }
+            } else { ventaDTO.setRFCGasera(""); }
+            if (respuesta.get(0).getLeyenda() != null) {
+                ventaDTO.setLeyenda(respuesta.get(0).getLeyenda());
+            } else { ventaDTO.setLeyenda("");}
+            if (respuesta.get(0).getEstacion() != null) {
+                ventaDTO.setEstacion(respuesta.get(0).getEstacion());
+            } else { ventaDTO.setEstacion(""); }
+
             if (!EsVentaCamioneta) {
                 adapter.esVentaGas = true;
                 adapter.PrecioLitro = TVFormularioVentaCamionetaYPipaPrecio;
@@ -515,8 +521,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         adapter.getCilindro(x).setExistencias(adapter.getCilindro(x).getExistencias()- cantidadVenta);
                         TVExistencia.setText("" + (int)adapter.getCilindro(x).getExistencias());
                         conceptos.add(Gas);
-
-
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
                         builder.setTitle(R.string.mensjae_error_campos);
@@ -528,7 +532,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                         builder.create().show();
                         break;
                     }
-
                 }
             }
         }

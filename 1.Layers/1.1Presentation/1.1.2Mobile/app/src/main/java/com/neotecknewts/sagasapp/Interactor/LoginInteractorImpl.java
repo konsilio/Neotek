@@ -198,7 +198,7 @@ public class LoginInteractorImpl implements LoginInteractor {
                 if(response.isSuccessful()){
                     UsuarioDTO data = response.body();
                     Log.d("ali111", data.toString());
-                    loginPresenter.onError(data.getMensaje(), "");
+                    loginPresenter.onError(data.getMensaje());
                 }
                 /*try {
                     UsuarioDTO data = response.body();
@@ -260,7 +260,7 @@ public class LoginInteractorImpl implements LoginInteractor {
                 Log.d("entro mensaje:", "Si entró");
                 Log.e("error", t.toString());
                 Log.e("error", t.getLocalizedMessage());
-                loginPresenter.onError("No te encuentras en el area de login", "");
+                loginPresenter.onError("No te encuentras en el area de login");
             }
         });
     }

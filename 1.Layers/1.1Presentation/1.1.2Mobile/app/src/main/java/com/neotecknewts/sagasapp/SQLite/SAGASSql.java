@@ -22,6 +22,7 @@ import com.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.neotecknewts.sagasapp.Model.MenuDTO;
 import com.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.neotecknewts.sagasapp.Model.PrecioVentaDTO;
 import com.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.neotecknewts.sagasapp.Model.VentaDTO;
@@ -102,6 +103,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public static final String TIPO_TRASPASO_PIPA = "TP";
     private static final String TABLE_MENU = "menu";
     private static final String TABLE_CLIENTS = "clients";
+    private static final String TABLE_PRECIO_VENTA = "precio";
 
     //endregion
 
@@ -130,6 +132,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("FerChido", "onCreate");
         //region Tabla Papeleta
         db.execSQL("CREATE TABLE " + TABLE_PAPELETAS + "(" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -699,6 +702,12 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "LimiteCredito REAL" +
                 ")");
         //endregion
+
+        db.execSQL("CREATE TABLE " + TABLE_PRECIO_VENTA + "(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "PrecioSalidaKg REAL," +
+                "PrecioSalidaLt REAL" +
+                ")");
     }
 
     /**
@@ -720,6 +729,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d("FerChido", "onUpgrade");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAPELETAS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAPELETAS_IMAGENES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DESCARGAS);
@@ -3095,6 +3105,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      * @return Array de tipo {@link Long} con los id de los registros
      */
     public boolean InsertClients(List<ClienteDTO> clients) {
+        Log.d("FerChido", "InsertClients");
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from "+ TABLE_CLIENTS);
@@ -3119,11 +3130,22 @@ public class SAGASSql extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean InsertPrecioVenta(PrecioVentaDTO precioVenta) {
+        Log.d("FerChido",  "Guardando precio de venta");
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("drop table "+ TABLE_PRECIO_VENTA);
+        return true;
+    }
+
+    public PrecioVentaDTO getPrecioVenta() {
+        return null;
+    }
+
     public List<ClienteDTO> GetClients(String query) {
 
         Cursor cursor = this.getReadableDatabase().rawQuery(
                 "SELECT * FROM " + TABLE_CLIENTS +
-                        " WHERE Celular like '%" + query + "%' or TelefonoFijo like '%" + query + "%' or RFC like '%" + query + "%'",
+                        " WHERE RazonSocial like '%" + query + "%' or Nombre like'%" + query + "%' or Celular like '%" + query + "%' or TelefonoFijo like '%" + query + "%' or RFC like '%" + query + "%'",
                 null
         );
         List<ClienteDTO> clients = new ArrayList<>();

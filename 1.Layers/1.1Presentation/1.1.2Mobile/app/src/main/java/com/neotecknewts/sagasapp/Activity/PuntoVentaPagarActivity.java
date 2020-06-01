@@ -232,7 +232,6 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                 String codigo = String.valueOf(actual.getYear()) + randomString(2) +
                         Integer.toHexString(Integer.parseInt(s.format(actual)));
                 ventaDTO.setFolioVenta(codigo.toUpperCase());
-                Log.d("FerChido", ventaDTO.toString());
                 presenter.pagar(ventaDTO, session.getToken(), EsVentaCamioneta, EsVentaCarburacion, EsVentaPipa, sagasSql);
             }
         });
@@ -254,7 +253,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         tabla.agregarFila(lista);
 
         calcula_total(ventaDTO.getConcepto());
-        presenter.puntoVentaAsignado(session.getToken());
+        // presenter.puntoVentaAsignado(session.getToken());
     }
 
     private String randomString( int len ){
@@ -270,13 +269,11 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         double cantidad = 0;
         double descuento = 0;
         for (ConceptoDTO conceptoDTO : conceptoDTOS) {
-            Log.d("FerChido", conceptoDTO.toString());
             if (EsVentaCamioneta){
                 if (conceptoDTO.isEsVentaCilindro()) {
                     total += conceptoDTO.getPrecioUnitarioProducto() * conceptoDTO.getCantidad();
                 } else {
                     double cap = Double.parseDouble(conceptoDTO.getConcepto().replaceAll("\\D+",""));
-                    Log.d("FerChido", "capacidad: "+cap);
                     total += conceptoDTO.getPrecioUnitarioLt() * conceptoDTO.getCantidad() * cap;
                     descuento += conceptoDTO.getCantidad() * cap * conceptoDTO.getDescuento();
                 }
@@ -341,8 +338,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         builder.setTitle(R.string.info);
         builder.setMessage(data.getMensaje());
         builder.setPositiveButton(R.string.message_acept, ((dialog, which) -> dialog.dismiss()));
-        builder.create();
-        builder.show();
+        builder.create().show();
     }
 
     @Override

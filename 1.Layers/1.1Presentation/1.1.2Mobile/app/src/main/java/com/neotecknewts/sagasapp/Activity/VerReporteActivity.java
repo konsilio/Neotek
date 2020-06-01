@@ -122,7 +122,6 @@ public class VerReporteActivity extends AppCompatActivity {
                 StringReporte = (String) bundle.get("StringReporte");
                 HtmlReporte = (String) bundle.get("HtmlReporte");
                 setTitle("Reimpresión de ticket");
-                Log.d("FerChido", StringReporte);
             }
             if(EsReporteDelDia) {
                 StringReporte = (String) bundle.get("StringReporte");
@@ -248,7 +247,6 @@ public class VerReporteActivity extends AppCompatActivity {
     // HtmlReporte - Vista de app
     // StringReporte - ticket
     private void GenerarReporte(VentaDTO ventaDTO) {
-        Log.d("FerChido", ventaDTO.toString());
         HtmlReporte = "<body>" +
                 "<h3><u>Nota de venta</u></h3>" +
                 "<table>" +
@@ -414,29 +412,28 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte +="--------------------------------\n"+
                 "\tDetalles\n" +
                 "Concepto|Cant.|P.Uni.|Desc|Subt\n"+
-                "[{Concepto}]\n"+
+                "[{Concepto}]"+
                 "________________________________\n"+
                 "\tPago\n" +
                 "I.V.A. (16%): [{iva}]\n"+
                 "Total: [{Total}]\n" +
                 "Descuento: [{descototal}]\n";
         if(ventaDTO.isCredito()) {
-            StringReporte += "\tEfectivo recibido: 0 \n" +
-                    "\tCambio: [{Cambio}]\n";
+            StringReporte += "Efectivo recibido: 0 \n" +
+                    "Cambio: [{Cambio}]\n";
 
             StringReporte += "Venta: A credito\n";
         }
 
         if (!ventaDTO.isCredito() && !ventaDTO.isBonificacion()){
-            StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
-                    "\tCambio: [{Cambio}]\n";
+            StringReporte += "Efectivo recibido: [{Efectivo}]\n" +
+                    "Cambio: [{Cambio}]\n";
             StringReporte += "Venta: Bonificacion \n";
-
         }
 
         if(ventaDTO.isBonificacion() && !ventaDTO.isCredito()) {
-            StringReporte += "\tEfectivo recibido: [{Efectivo}]\n" +
-                    "\tCambio: [{Cambio}]\n";
+            StringReporte += "Efectivo recibido: [{Efectivo}]\n" +
+                    "Cambio: [{Cambio}]\n";
 
             StringReporte += "Venta: De contado \n";
         }
@@ -448,13 +445,12 @@ public class VerReporteActivity extends AppCompatActivity {
                 "www.gasmundialdeguerrero.com.mx\n"+
                 "Le atendio [{Usuario}]\n\n"+
 
-                "Facturacion electronica en :\n"+
+                "Facturacion electronica en:\n"+
                 "www.gasmundialdeguerrero.com.mx/\n"+
                 "facturacion\n\n"+
                 "Folio Factura: [{Folio-factura}]\n\n"+
-                "Gracias por su confianza,vuelva\n" +
-                "pronto!"
-        ;
+                "[{Leyenda}]\n";
+
         StringReporte = StringReporte.replace("[{Clave-venta}]",ventaDTO.getFolioVenta());
         HtmlReporte = HtmlReporte.replace("[{Clave-venta}]",ventaDTO.getFolioVenta());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate= new SimpleDateFormat("dd/MM/yyyy");
@@ -623,11 +619,10 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte = StringReporte.replace("[{Usuario}]", nombre);
         HtmlReporte = HtmlReporte.replace("[{Usuario}]", nombre);
 
-        // Nombre y RFC de la gasera
+        // Nombre, RFC de la gasera, Leyenda
         StringReporte = StringReporte.replace("[{NombreGasera}]", ventaDTO.getNombreGasera());
         StringReporte = StringReporte.replace("[{RFCGasera}]", ventaDTO.getRFCGasera());
-
-        Log.d("FerChido",StringReporte);
+        StringReporte = StringReporte.replace("[{Leyenda}]", ventaDTO.getLeyenda());
     }
 
     private void GenerarReporteCorteCaja() {
@@ -943,7 +938,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tbody>" +
                 "</table>" +
                 "<hr>" +
-                "<h4>Lectura P5000</h4>" +
+                "<h4>Lecturas P5000</h4>" +
                 "<table>" +
                 "<tbody>" +
                 "<tr>" +
@@ -953,7 +948,6 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tr>" +
                 "<tr>" +
                 "<td>[{PipaNombre}]</td>" +
-                "<td>P500</td>" + "tr" +
                 "<td>[{Inicial}]</td>" +
                 "<td>[{Final}]</td>" +
                 "</tr>" +
@@ -964,6 +958,9 @@ public class VerReporteActivity extends AppCompatActivity {
                 "</tr>" +
                 "</tbody>" +
                 "</table>" +
+                "<hr>" +
+                "<table>" +
+                "<tbody>" +
                 "<tr>" +
                 "<td>Litros traspasados: </td>" +
                 "<td>[{LitrosTraspasados}]</td>" +
@@ -1098,8 +1095,6 @@ public class VerReporteActivity extends AppCompatActivity {
      * @param recargaDTO Objeto co
      */
     private void GenerarReporteRecargaFinal(RecargaDTO recargaDTO) {
-        Log.d("FerChido", "GenerarReporteRecargaFinal");
-        Log.d("FerChido", recargaDTO.toString());
         HtmlReporte = "<body>" +
                 "<h3>Reporte-Recarga</h3>" +
                 "<table>" +

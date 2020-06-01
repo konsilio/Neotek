@@ -187,4 +187,25 @@ public class CalibracionDTO implements Serializable {
     public void setPorcentajeMedidor2(double porcentajeMedidor2) {
         PorcentajeMedidor2 = porcentajeMedidor2;
     }
+
+    @Override
+    public String toString() {
+        return "CalibracionDTO{" +
+                "IdCAlmacenGas=" + IdCAlmacenGas +
+                ", NombreCAlmacenGas='" + NombreCAlmacenGas + '\'' +
+                ", IdTipoMedidor=" + IdTipoMedidor +
+                ", NombreMedidor='" + NombreMedidor + '\'' +
+                ", PorcentajeCalibracion=" + PorcentajeCalibracion +
+                ", IdDestinoCalibracion=" + IdDestinoCalibracion +
+                ", P5000=" + P5000 +
+                ", Porcentaje=" + Porcentaje +
+                ", ClaveOperacion='" + ClaveOperacion + '\'' +
+                ", CantidadFotografias=" + CantidadFotografias +
+                ", Imagenes=" + Imagenes +
+                ", ImagenesUri=" + ImagenesUri +
+                ", FechaAplicacion='" + FechaAplicacion + '\'' +
+                ", FechaRegistro='" + FechaRegistro + '\'' +
+                ", PorcentajeMedidor2=" + PorcentajeMedidor2 +
+                '}';
+    }
 }

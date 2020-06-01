@@ -108,36 +108,28 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         boolean error = false;
         lista_errores = new ArrayList<>();
         boolean flag = false;
-        Log.d("Verificarform",flag+"");
         if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta || EsRecargaCamioneta) {
-            //TextView textView;
             for (int x = 0; x < adapter.getItemCount(); x++) {
                 View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
                 EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
-                //textView = view.findViewById(R.id.TVLecturaAlmacenActivityTitulo);
-                Log.d("if1",flag+"");
                 if (!editText.getText().toString().equals("") && editText.getText()!=null ) {
-                    Log.d("if2",flag+"");
                     if (Integer.parseInt(editText.getText().toString()) <= -1) {
-                        Log.d("if3",flag+"");
                         lista_errores.add("El valor para el cilindo del renglon "+
                                 String.valueOf(x+1)+" es requerido");
                         error = true;
                         break;
-                    }else{
-                        if(flag) {
-                            Log.d("if4",flag+"");
-                        }else{
-                            if(Integer.parseInt(editText.getText().toString())==0){
-                                flag = false;
-                                Log.d("if5",flag+"");
-                            }else {
+                    } else {
+                        if (!flag) {
+                            if (EsLecturaInicialCamioneta || EsRecargaCamioneta) {
+                                if(Integer.parseInt(editText.getText().toString())==0 ){
+                                    flag = false;
+                                }else {
+                                    flag = true;
+                                }
+                            } else {
                                 flag = true;
-                                Log.d("if6",flag+"");
                             }
                         }
-
-
                     }
                 } else {
                     lista_errores.add("El valor para el cilindo del renglon " +
@@ -149,9 +141,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         }
 
         if (error || !flag) {
-
             if(!flag ){
-                Log.d("if7",flag+"");
                 lista_errores.add("Todos los campos están en 0");
             }
             DialogoError(lista_errores);

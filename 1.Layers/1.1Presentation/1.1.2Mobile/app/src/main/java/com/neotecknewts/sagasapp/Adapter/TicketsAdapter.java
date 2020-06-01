@@ -197,8 +197,8 @@ public class TicketsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 "www.gasmundialdeguerrero.com.mx/\n"+
                 "facturacion\n\n"+
                 "Folio Factura: " + venta.getFolioVenta() + "\n\n"+
-                "Gracias por su confianza,vuelva\n" +
-                "pronto!";
+                venta.getLeyenda() + "\n";
+
         htmlReporte+="</table></body>";
         Intent intent = new Intent(view.getContext(), VerReporteActivity.class);
         intent.putExtra("EsReimpresionTicket", true);

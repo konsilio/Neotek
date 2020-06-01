@@ -39,8 +39,8 @@ public class MenuPresenterImpl implements MenuPresenter {
 
     //metodo de error
     @Override
-    public void onError() {
+    public void onError(String error, boolean isTimeOut) {
         menuView.hideProgress();
-        menuView.messageError(R.string.error_conexion);
+        menuView.messageError(error, isTimeOut);
     }
 }

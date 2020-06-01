@@ -105,5 +105,18 @@ public class DatosCalibracionDTO extends RespuestaDTO implements Serializable {
         public void setNombrePipa(String nombrePipa) {
             NombrePipa = nombrePipa;
         }
+
+        @Override
+        public String toString() {
+            return "EstacionDTO{" +
+                    "IdAlmacenGas=" + IdAlmacenGas +
+                    ", NombreAlmacen='" + NombreAlmacen + '\'' +
+                    ", PorcentajeMedidor=" + PorcentajeMedidor +
+                    ", CantidadP5000=" + CantidadP5000 +
+                    ", IdTipoMedidor=" + IdTipoMedidor +
+                    ", medidor=" + medidor +
+                    ", NombrePipa='" + NombrePipa + '\'' +
+                    '}';
+        }
     }
 }

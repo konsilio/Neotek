@@ -1,5 +1,6 @@
 package com.neotecknewts.sagasapp.Interactor;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.neotecknewts.sagasapp.Model.ExistenciasDTO;
@@ -7,6 +8,7 @@ import com.neotecknewts.sagasapp.Model.PrecioVentaDTO;
 import com.neotecknewts.sagasapp.Presenter.PuntoVentaGasListaPresenter;
 import com.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.neotecknewts.sagasapp.Presenter.Rest.RestClient;
+import com.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 import java.util.List;
 
@@ -15,14 +17,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInteractor {
+
     PuntoVentaGasListaPresenter presenter;
-    public PuntoVentaGasListaInteractorImpl(PuntoVentaGasListaPresenter presenter) {
+    private SAGASSql sagasSql;
+    public PuntoVentaGasListaInteractorImpl(PuntoVentaGasListaPresenter presenter, Context context) {
         this.presenter = presenter;
+        this.sagasSql = new SAGASSql(context);
     }
 
     @Override
-    public void getListaCamionetaCilindros(String token, boolean esGasLP,
-                                           boolean esCilindroConGas, boolean esCilindro, int idCliente) {
+    public void getListaCamionetaCilindros(String token, boolean esGasLP, boolean esCilindroConGas, boolean esCilindro, int idCliente) {
 
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
@@ -134,21 +138,15 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
     @Override
     public void getPrecioVenta(String token) {
 
-
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
-        Call<PrecioVentaDTO> call = restClient.getPrecioVenta(
-                token,
-                "application/json"
-        );
-        Log.w("Url base", ApiClient.BASE_URL);
+        Call<PrecioVentaDTO> call = restClient.getPrecioVenta(token, "application/json");
 
         call.enqueue(new Callback<PrecioVentaDTO>() {
             @Override
             public void onResponse(Call<PrecioVentaDTO> call, Response<PrecioVentaDTO> response) {
                 PrecioVentaDTO data = response.body();
                 if (response.isSuccessful()) {
-
-                    Log.w("Estatus","Success");
+                    //sagasSql.InsertPrecioVenta(data);
                     presenter.onSuccessPrecioVenta(data);
                 }
                 else {
@@ -156,15 +154,12 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
                     switch (response.code()) {
                         case 404:
                             Log.w("Error","not found");
-
                             break;
                         case 500:
                             Log.w("Error", "server broken");
-
                             break;
                         default:
                             Log.w("Error", "Error desconocido: "+response.code());
-
                             break;
                     }
                     mensaje = " un error,al solicitar los precio";
@@ -174,12 +169,11 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
                         presenter.onError(response.message());
                     }
                 }
-
             }
 
             @Override
             public void onFailure(Call<PrecioVentaDTO> call, Throwable t) {
-                Log.e("error", "Error desconocido: "+t.toString());
+                Log.d("FerChido", "Error desconocido: "+t.toString());
                 presenter.onError("Se ha generado un error: "+t.getCause());
             }
         });
@@ -206,8 +200,7 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
             public void onResponse(Call<List<ExistenciasDTO>> call, Response<List<ExistenciasDTO>> response) {
                 List<ExistenciasDTO> data = response.body();
                 if (response.isSuccessful()) {
-
-                    Log.w("fer",data.toString());
+                    Log.d("FerChido",data.toString());
                     presenter.onSuccessDatosCamioneta(data);
                 }
                 else {

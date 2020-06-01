@@ -185,31 +185,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             }
 
         }
-        /*MenuDTO mA = new MenuDTO();
-        mA.setHeaderMenu("Disposición de efectivo - Anticipo");
-        mA.setName("Estación Carburación");
-        mA.setImageRef("ic_anticipo");
-        menu.add(mA);
-        MenuDTO mAC = new MenuDTO();
-        mAC.setHeaderMenu("Disposición de efectivo - Corte de caja");
-        mAC.setName("Estación Carburación");
-        mAC.setImageRef("ic_corte_caja");
-        menu.add(mAC);
-        MenuDTO mCPV = new MenuDTO();
-        mCPV.setHeaderMenu("Camioneta de cilindros");
-        mCPV.setName("Punto de Venta");
-        mCPV.setImageRef("ic_punto_venta");
-        menu.add(mCPV);
-        MenuDTO mECV = new MenuDTO();
-        mECV.setHeaderMenu("Estación de Carburación");
-        mECV.setName("Punto de Venta");
-        mECV.setImageRef("ic_punto_venta");
-        menu.add(mECV);
-        MenuDTO mPV = new MenuDTO();
-        mPV.setHeaderMenu("Pipa");
-        mPV.setName("Punto de Venta");
-        mPV.setImageRef("ic_punto_venta");
-        menu.add(mPV);*/
         //se agrega la lista al adapter y se agrega el adapter al recylcer view
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MenuAdapter(menu);
@@ -410,16 +385,22 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     }
 
     //metodo que muestra algun mensaje
-    private void showDialog(String mensaje) {
-        Log.d("FerChido", mensaje);
+    private void showDialog(String mensaje, boolean isTimeOut) {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this, R.style.AlertDialog);
         builder1.setMessage(mensaje);
-        builder1.setCancelable(true);
+        builder1.setCancelable(false);
         builder1.setNegativeButton(
                 R.string.message_acept,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
+                        if(!isTimeOut) {
+                            session.logOut();
+                            Intent intent = new Intent(MenuActivity.this, SplashActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
                 });
 
@@ -498,15 +479,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         }
     }
 
-    //metodo que muestra mensaje de error
     @Override
-    public void messageError(int mensaje) {
-        showDialog(getResources().getString(mensaje));
-    }
-
-    @Override
-    public void messageError(String mensaje) {
-        showDialog(mensaje);
+    public void messageError(String mensaje, boolean isTimeOut) {
+        showDialog(mensaje, isTimeOut);
     }
 
     //metodo que se llama al obtener el menu desde web service

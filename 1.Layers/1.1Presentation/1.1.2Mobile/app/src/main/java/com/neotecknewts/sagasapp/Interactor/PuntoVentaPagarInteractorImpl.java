@@ -43,8 +43,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
             @Override
             public void onResponse(Call<RespuestaPuntoVenta> call, Response<RespuestaPuntoVenta> response) {
                 RespuestaPuntoVenta data = response.body();
-                Log.d("Ventadto2", ventaDTO.toString());
-                Log.d("ali",  "onresponse");
+                Log.d("FerChido", ventaDTO.toString());
                 if (response.isSuccessful()) {
                     Log.d("ali",  "successful");
                     presenter.onSuccess(data);
@@ -52,8 +51,14 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                     RespuestaPuntoVenta dataresponse = response.body();
                     presenter.onError(dataresponse.getMensaje());
                 }else{
+                    Log.d("FerChido",  "code:" + response.code());
                     RespuestaPuntoVenta dataresponse = response.body();
-                    presenter.onError(dataresponse.getMensaje());
+                    if (dataresponse != null && dataresponse.getMensaje() != null) {
+                        Log.d("FerChido",  dataresponse.toString());
+                        presenter.onError(dataresponse.getMensaje());
+                    } else {
+                        presenter.onError("Algo salió mal. Intenta de nuevo");
+                    }
                 }
             }
 

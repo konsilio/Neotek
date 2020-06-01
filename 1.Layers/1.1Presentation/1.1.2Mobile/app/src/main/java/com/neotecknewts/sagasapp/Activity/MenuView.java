@@ -13,7 +13,6 @@ import java.util.List;
 public interface MenuView {
     void showProgress(int mensaje);
     void hideProgress();
-    void messageError(int mensaje);
-    void messageError(String mensaje);
+    void messageError(String mensaje, boolean isTimeOut);
     void onSuccessGetMenu(List<MenuDTO> menuDTOs);
 }

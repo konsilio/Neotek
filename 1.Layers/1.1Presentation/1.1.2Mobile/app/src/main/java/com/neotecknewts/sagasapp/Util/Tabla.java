@@ -51,7 +51,7 @@ public class Tabla {
                     TableRow.LayoutParams.WRAP_CONTENT);
             text.setText(aCabecera);
             text.setGravity(Gravity.LEFT);
-            text.setTextSize(14);
+            text.setTextSize(12);
             //text.setTextAppearance(activity, R.style.estilo_celda);
             //text.setBackgroundResource(R.drawable.tabla_celda_cabecera);
             text.setLayoutParams(layoutCelda);
@@ -143,11 +143,17 @@ public class Tabla {
     private int obtenerAnchoPixelesText(String cabecera) {
         Paint p = new Paint();
         Rect bounds = new Rect();
-        p.setTextSize(40);
+        p.setTextSize(35);
         if (cabecera.equals("Concepto"))
-            cabecera = "Conceptooo";
+            cabecera = "Conceptoooo";
         if (cabecera.equals("Subtotal"))
             cabecera = "Subtotallllllll";
+        if (cabecera.equals("Cantidad"))
+            cabecera = "Cantidadd";
+        if (cabecera.equals("P. Unitario"))
+            cabecera = "P. Unitarioo";
+        if (cabecera.equals("Descuento"))
+            cabecera = "Descuentoo";
         p.getTextBounds(cabecera, 0, cabecera.length(), bounds);
         return bounds.width();
     }

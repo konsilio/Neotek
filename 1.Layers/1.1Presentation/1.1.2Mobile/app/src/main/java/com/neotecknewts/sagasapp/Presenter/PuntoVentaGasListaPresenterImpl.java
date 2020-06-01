@@ -1,5 +1,7 @@
 package com.neotecknewts.sagasapp.Presenter;
 
+import android.content.Context;
+
 import com.neotecknewts.sagasapp.R;
 import com.neotecknewts.sagasapp.Activity.PuntoVentaGasListaView;
 import com.neotecknewts.sagasapp.Interactor.PuntoVentaGasListaInteractor;
@@ -13,9 +15,9 @@ public class PuntoVentaGasListaPresenterImpl implements PuntoVentaGasListaPresen
     PuntoVentaGasListaView view;
     PuntoVentaGasListaInteractor interactor;
 
-    public PuntoVentaGasListaPresenterImpl(PuntoVentaGasListaView view) {
+    public PuntoVentaGasListaPresenterImpl(PuntoVentaGasListaView view, Context context) {
         this.view = view;
-        this.interactor = new PuntoVentaGasListaInteractorImpl(this);
+        this.interactor = new PuntoVentaGasListaInteractorImpl(this, context);
     }
 
     @Override

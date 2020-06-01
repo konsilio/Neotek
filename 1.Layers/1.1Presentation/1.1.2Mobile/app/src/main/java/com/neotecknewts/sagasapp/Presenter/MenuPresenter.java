@@ -17,5 +17,5 @@ import java.util.List;
 public interface MenuPresenter {
     void getMenu(String token);
     void onSuccessGetMenu(List<MenuDTO> menuDTOList);
-    void onError();
+    void onError(String error, boolean isTimeOut);
 }

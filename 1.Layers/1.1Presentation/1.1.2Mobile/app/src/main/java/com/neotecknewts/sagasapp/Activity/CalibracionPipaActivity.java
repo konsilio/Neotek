@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -273,6 +274,7 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                 intent.putExtra("calibracionDTO", calibracionDTO);
                 startActivity(intent);
             }else{
+                Log.d("FerChido", calibracionDTO.toString());
                 Intent intent = new Intent(CalibracionPipaActivity.this,
                         PorcentajeCalibracionActivity.class);
                 intent.putExtra("EsCalibracionPipaInicial", EsCalibracionPipaInicial);
@@ -307,6 +309,9 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
     public void onSuccessList(DatosCalibracionDTO dto) {
         if(dto!=null){
             datosCalibracionDTO = dto;
+            for (int x=0;x<datosCalibracionDTO.getEstaciones().size();x++) {
+                Log.d("FerChido", datosCalibracionDTO.getEstaciones().get(x).toString());
+            }
             if(dto.getEstaciones().size()>0
                     && !dto.getEstaciones().isEmpty() && dto.getEstaciones()!=null){
                 list_pipa_salida = new String[dto.getEstaciones().size()];

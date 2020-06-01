@@ -121,11 +121,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
             Intent intent = new Intent(ReporteActivity.this,
                     VerReporteActivity.class);
         });
+        setFecha();
     }
 
     @Override
     public void VermificarCampos() {
-        Log.d("FerChido", "VermificarCampos");
         boolean error = false;
         ArrayList<String> mensajes = new ArrayList<>();
         if (fecha == null) {
@@ -158,10 +158,6 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
             }));
             builder.create().show();
     }
-
-
-
-
 
     @Override
     public void onSuccessGetUnidades(DatosReporteDTO data) {
@@ -640,6 +636,12 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView {
                         "</table>" +
                         "</div>" +
                         "</body>";
+
+                formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
+                        "[{Elemento}]",
+                        reporteDTO.getEstacion()
+                );
+
                 formato_reporte_camioneta_html = formato_reporte_camioneta_html.replace(
                         "[{Bonificacion}]",
                         reporteDTO.isBonificacion() +""

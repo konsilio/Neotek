@@ -35,6 +35,13 @@ public class ExistenciasDTO implements Serializable {
     @SerializedName("RazonSocial")
     private String RazonSocial;
 
+    @SerializedName("Leyenda")
+    private String Leyenda;
+
+    @SerializedName("NombreUnidad")
+    private String Estacion;
+
+
     public int getId() {
         return Id;
     }
@@ -113,6 +120,22 @@ public class ExistenciasDTO implements Serializable {
 
     public void setRazonSocial(String razonSocial) {
         RazonSocial = razonSocial;
+    }
+
+    public String getLeyenda() {
+        return Leyenda;
+    }
+
+    public void setLeyenda(String leyenda) {
+        Leyenda = leyenda;
+    }
+
+    public String getEstacion() {
+        return Estacion;
+    }
+
+    public void setEstacion(String estacion) {
+        Estacion = estacion;
     }
 
     @Override

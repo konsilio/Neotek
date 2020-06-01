@@ -7,6 +7,7 @@ import com.neotecknewts.sagasapp.Presenter.MenuPresenter;
 import com.neotecknewts.sagasapp.Presenter.Rest.ApiClient;
 import com.neotecknewts.sagasapp.Presenter.Rest.RestClient;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,7 +33,6 @@ public class MenuInteractorImpl implements MenuInteractor {
     @Override
     public void getMenu(String token) {
 
-
         RestClient restClient = ApiClient.getClient().create(RestClient.class);
         Call<List<MenuDTO>> call = restClient.getMenu(token);
         Log.w(TAG, ApiClient.BASE_URL);
@@ -42,22 +42,18 @@ public class MenuInteractorImpl implements MenuInteractor {
             public void onResponse(Call<List<MenuDTO>> call, Response<List<MenuDTO>> response) {
                 if (response.isSuccessful()) {
                     List<MenuDTO> data = response.body();
-                    Log.w(TAG,"Success");
                     menuPresenter.onSuccessGetMenu(data);
                 }
                 else {
                     switch (response.code()) {
-                        case 404:
-                            Log.w(TAG,"not found");
-                            menuPresenter.onError();
+                        case 401:
+                            menuPresenter.onError("Inicia sesión para continuar", false);
                             break;
                         case 500:
-                            Log.w(TAG, "server broken");
-                            menuPresenter.onError();
+                            menuPresenter.onError("Error interno del servidor", false);
                             break;
                         default:
-                            Log.w(TAG, ""+response.code());
-                            menuPresenter.onError();
+                            menuPresenter.onError("Ocurrió un error", true);
                             break;
                     }
                 }
@@ -66,8 +62,7 @@ public class MenuInteractorImpl implements MenuInteractor {
 
             @Override
             public void onFailure(Call<List<MenuDTO>> call, Throwable t) {
-                Log.e("error", t.toString());
-                menuPresenter.onError();
+                menuPresenter.onError("Sin conexión a internet", true);
             }
         });
     }

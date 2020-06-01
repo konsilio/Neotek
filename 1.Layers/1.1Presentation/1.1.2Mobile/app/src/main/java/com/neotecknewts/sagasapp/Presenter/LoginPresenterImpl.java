@@ -73,10 +73,4 @@ public class LoginPresenterImpl implements LoginPresenter {
         mainView.hideProgress();
         mainView.messageError(mensaje);
     }
-
-    @Override
-    public void onError(String mensaje, String msj) {
-        menuView.hideProgress();
-        menuView.messageError(mensaje);
-    }
 }

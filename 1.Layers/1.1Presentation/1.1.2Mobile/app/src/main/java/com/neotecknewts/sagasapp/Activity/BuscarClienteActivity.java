@@ -22,6 +22,7 @@ import com.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.neotecknewts.sagasapp.Util.Session;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuscarClienteActivity extends AppCompatActivity implements BuscarClienteView {
@@ -95,13 +96,28 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
             presenter.getClientes(criterio, session.getToken());
             Log.d("BuscarClienteActivity", "isOnline");
         } else {
-            Log.d("BuscarClienteActivity", "isOffline");
+//            Log.d("BuscarClienteActivity", "isOffline");
+//            SAGASSql sagasSql = new SAGASSql(this);
+//            Log.d("BuscarClienteActivity", "Size:" +sagasSql.GetClients(criterio).size());
 
-            SAGASSql sagasSql = new SAGASSql(this);
             DatosClientesDTO datosClientesDTO = new DatosClientesDTO();
-            Log.d("BuscarClienteActivity", "Size:" +sagasSql.GetClients(criterio).size());
-
-            datosClientesDTO.setList(sagasSql.GetClients(criterio));
+            List<ClienteDTO> list = new ArrayList<ClienteDTO>();
+            ClienteDTO clienteDTO = new ClienteDTO();
+            clienteDTO.setIdCliente(2);
+            clienteDTO.setIdTipoPersona(1);
+            clienteDTO.setIdTipoRegimen(1);
+            clienteDTO.setNombre("General");
+            clienteDTO.setApellido_uno("N/A");
+            clienteDTO.setApellido_dos("N/A");
+            clienteDTO.setCelular("0");
+            clienteDTO.setTelefono_fijo("0");
+            clienteDTO.setRFC("XAXX010101000");
+            clienteDTO.setRazonSocial("Publico en general");
+            clienteDTO.setCredito(false);
+            clienteDTO.setFactura(true);
+            clienteDTO.setLimiteCredito(0);
+            list.add(clienteDTO);
+            datosClientesDTO.setList(list);
             this.onSuccessList(datosClientesDTO);
         }
 
@@ -136,7 +152,6 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
     @Override
     public void onSuccessList(DatosClientesDTO dtos) {
         if (dtos != null && dtos.getList().size() > 0) {
-            Log.d("FerChido",dtos.toString());
             list = dtos.getList();
             ClientesAdapter adapter = new ClientesAdapter(list,
                     EsVentaCarburacion,
