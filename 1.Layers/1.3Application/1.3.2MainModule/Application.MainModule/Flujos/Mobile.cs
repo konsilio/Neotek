@@ -260,8 +260,6 @@ namespace Application.MainModule.Flujos
             try
             {
                 //Validar 
-
-
                 var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
                 //var almacen = punto_venta.UnidadesAlmacen;
                 var lecturaFinal = LecturaGasServicio.ObtenerUltimaLecturaFinal(punto_venta.UnidadesAlmacen.IdCAlmacenGas, DateTime.Now);
@@ -1556,10 +1554,11 @@ namespace Application.MainModule.Flujos
             }
             var pv = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(pv.IdCAlmacenGas);
+            var puntoVenta = PuntoVentaServicio.Obtener(unidad);
             if (esLP)
             {
                 var lectInicial = AlmacenGasServicio.ObtenerUltimaLectura(unidad, false);
-                var puntoVenta = PuntoVentaServicio.Obtener(unidad);
+                
                 var ventas = puntoVenta.VentaPuntoDeVenta.Where(x => x.FechaRegistro.Equals(DateTime.Now));// cambiar a busqueda de fecha mas especificas 
                 var precios = PuntoVentaServicio.ObtenerPreciosVenta(TokenServicio.ObtenerIdEmpresa()).Where(x => x.IdPrecioVentaEstatus.Equals(2)).ToList();
                 //var precios = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
@@ -1570,7 +1569,11 @@ namespace Application.MainModule.Flujos
                     var kilosCamioneta = LecturaGasServicio.ObtenerKilosGasCamioneta(unidad.IdCAlmacenGas, DateTime.Now, pv.IdPuntoVenta);
                     var cilindros = AlmacenGasServicio.ObtenerCilindros(unidad);
                     var precioVenta = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
-                    return VentasEstacionesAdapter.ToDTOGas(cilindros, kilosCamioneta, precioVenta);
+                    var resp = VentasEstacionesAdapter.ToDTOGas(cilindros, kilosCamioneta, precioVenta);
+                    foreach (var item in resp)                    
+                        item.NombreUnidad = puntoVenta.UnidadesAlmacen.Numero;
+                    return resp;
+                    
                 }
                 else
                 {
@@ -1583,9 +1586,10 @@ namespace Application.MainModule.Flujos
                     if (totalKilos > 0)
                         calculo = calculo - totalKilos;
 
-                    return VentasEstacionesAdapter.ToDTO(productosGas.Where(x => x.EsGas).ToList(), precios, calculo, descuento, precio);
-                    //return VentasEstacionesAdapter.ToDTO(productosGas.Where(x => x.EsGas).ToList(), precios, calculo);
-                    //return VentasEstacionesAdapter.ToDTO(productosGas, precios, kilosCamioneta);
+                    var resp = VentasEstacionesAdapter.ToDTO(productosGas.Where(x => x.EsGas).ToList(), precios, calculo, descuento, precio);
+                    foreach (var item in resp)
+                        item.NombreUnidad = puntoVenta.UnidadesAlmacen.Numero;
+                    return resp;
                 }
             }
             else if (esCilindroConGas)
@@ -1596,7 +1600,10 @@ namespace Application.MainModule.Flujos
             else if (esCilindro)
             {
                 var cilindros = AlmacenGasServicio.ObtenerCilindros();
-                return VentasEstacionesAdapter.ToDTOC(cilindros);
+                var resp = VentasEstacionesAdapter.ToDTOC(cilindros);
+                foreach (var item in resp)
+                    item.NombreUnidad = puntoVenta.UnidadesAlmacen.Numero;
+                return resp;
             }
             return VentasEstacionesAdapter.ToDTO(unidad);
         }

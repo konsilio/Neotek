@@ -24,5 +24,7 @@ namespace Application.MainModule.DTOs.Mobile
         public Nullable<decimal> CapacidadKg { get; set; }
         public string RFC { get; set; }
         public string RazonSocial { get; set; }
+        public string Leyenda { get; set; }
+        public string NombreUnidad { get; set; }
     }
 }

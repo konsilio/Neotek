@@ -36,9 +36,10 @@ namespace Application.MainModule.DTOs.Mobile
         public List<ConceptoDTO> Concepto { get; set; }
         public bool VentaExtraordinaria { get; set; }
         public string Estacion { get; set; }
+        public string Leyenda { get; set; }
     }
     public class RespuestaVenta
-    {
+    {        
         public List<VentaDTO> ListaVentaDTO { get; set; }
     }
 }

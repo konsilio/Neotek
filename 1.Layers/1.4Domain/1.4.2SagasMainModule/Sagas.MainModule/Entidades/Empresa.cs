@@ -99,6 +99,7 @@ namespace Sagas.MainModule.Entidades
         public string UrlLogotipo1000px { get; set; }
         public Nullable<decimal> CoordenadaLat { get; set; }
         public Nullable<decimal> CoordenadaLong { get; set; }
+        public string Leyenda { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }

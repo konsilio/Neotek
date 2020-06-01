@@ -43,7 +43,8 @@ namespace Exceptions.MainModule.Validaciones
         public const string R0012 = "Verifique que los datos esten completos";
         public const string R0013 = "Debes revisar todos los productos en el almacen";
         public const string R0014 = "Falta la opinion de almacen";
-        
+        public const string R0015 = "El campo rebasa el máximo de caracteres permitidos";
+
 
         public const string OC0001 = "La orden de compra no se actualizo correctamente";
         public const string OC0002 = "Debes asignar un Proveedor, una Cuenta contable y un precio como minimo a todos los producto";

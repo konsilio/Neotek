@@ -122,12 +122,12 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_seguridad.EliminaRol(id), Request);
         }
-        [AllowAnonymous]
-        [Route("disponible")]
-        public HttpResponseMessage PostDisponible()
-        {//Neoteck
-            return Request.CreateResponse(HttpStatusCode.OK, _seguridad.DisponibilidadServicio());
-        }
+        //[AllowAnonymous]
+        //[Route("disponible")]
+        //public HttpResponseMessage PostDisponible()
+        //{//Neoteck
+        //    return Request.CreateResponse(HttpStatusCode.OK, _seguridad.DisponibilidadServicio());
+        //}
         #endregion
     }
 }

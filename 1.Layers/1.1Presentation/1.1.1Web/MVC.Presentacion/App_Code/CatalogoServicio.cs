@@ -211,7 +211,7 @@ namespace MVC.Presentacion.App_Code
             nmodel.InventarioCrítico = ent[0].InventarioCrítico;
             nmodel.InventarioSano = ent[0].InventarioSano;
             nmodel.MaxRemaGaseraMensual = ent[0].MaxRemaGaseraMensual;
-
+            nmodel.Leyenda = ent[0].Leyenda;
             return nmodel;
         }
         #endregion

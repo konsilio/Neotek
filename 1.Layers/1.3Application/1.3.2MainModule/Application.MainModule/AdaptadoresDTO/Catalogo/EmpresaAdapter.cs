@@ -58,15 +58,15 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 UrlLogotipo500px = empresa.UrlLogotipo500px,
                 UrlLogotipo1000px = empresa.UrlLogotipo1000px,
                 Coordenadas = new DTOs.CoordenadasDTO(empresa),
+                Leyenda = empresa.Leyenda,
             };
             return empresaDto;
         }
         public static List<EmpresaDTO> ToDTO(List<Empresa> empresas)
         {
-            List<EmpresaDTO> empreasDT = empresas.ToList().Select(x => ToDTO(x)).ToList();
+            List<EmpresaDTO> empreasDT = empresas.Select(x => ToDTO(x)).ToList();
             return empreasDT;
         }
-
         public static Empresa FromDTO(EmpresaDTO empresadto)
         {
             Empresa empresa = new Empresa()
@@ -104,7 +104,8 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 //InventarioCrítico = empresadto.InventarioCrítico,
                 //MaxRemaGaseraMensual = empresadto.MaxRemaGaseraMensual,
                 UrlLogotipoMenu = empresadto.UrlLogotipoMenu,
-                UrlLogotipoLogin = empresadto.UrlLogotipoLogin
+                UrlLogotipoLogin = empresadto.UrlLogotipoLogin,
+                Leyenda = empresadto.Leyenda
             };
             return empresa;
         }
@@ -141,14 +142,14 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             if (empresadto.UrlLogotipo180px != null) catEmpresa.UrlLogotipo180px = empresadto.UrlLogotipo180px; else catEmpresa.UrlLogotipo180px = catEmpresa.UrlLogotipo180px;
             if (empresadto.UrlLogotipo500px != null) catEmpresa.UrlLogotipo500px = empresadto.UrlLogotipo500px; else catEmpresa.UrlLogotipo500px = catEmpresa.UrlLogotipo500px;
             if (empresadto.UrlLogotipo1000px != null) catEmpresa.UrlLogotipo1000px = empresadto.UrlLogotipo1000px; else catEmpresa.UrlLogotipo1000px = catEmpresa.UrlLogotipo1000px;
+            if(!string.IsNullOrEmpty(empresadto.Leyenda)) catEmpresa.Leyenda = empresadto.Leyenda;
             return catEmpresa;
         }
         public static List<Empresa> FromDTO(List<EmpresaDTO> empresasDTO)
         {
-            List<Empresa> empreas = empresasDTO.ToList().Select(x => FromDTO(x)).ToList();
+            List<Empresa> empreas = empresasDTO.Select(x => FromDTO(x)).ToList();
             return empreas;
         }
-
         public static Empresa FromDto(EmpresaCrearDTO empresa)
         {
             return new Empresa()
@@ -194,11 +195,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 UrlLogotipo500px = empresa.UrlLogotipo500px,
                 UrlLogotipo1000px = empresa.UrlLogotipo1000px,
                 FechaRegistro = DateTime.Now,
+                Leyenda = empresa.Leyenda,
                 Activo = true,
 
             };
         }
-
         public static Empresa FromDtoConfig(EmpresaModificaConfig empresa, Empresa catEmp)
         {
             var catEmpresa = FromEntity(catEmp);
@@ -261,9 +262,8 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 UrlLogotipo180px = empresa.UrlLogotipo180px,
                 UrlLogotipo500px = empresa.UrlLogotipo500px,
                 UrlLogotipo1000px = empresa.UrlLogotipo1000px,
-
+                Leyenda = empresa.Leyenda,
             };
         }
-
     }
 }

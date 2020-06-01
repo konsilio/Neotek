@@ -224,10 +224,10 @@ namespace Application.MainModule.Flujos
             rol.Activo = false;
             return RolServicio.Actualizar(rol);
         }
-        public RespuestaDto DisponibilidadServicio()
-        {//Neoteck 
-            return AutenticarServicio.ValidarDisponibilidad();
-        }
+        //public RespuestaDto DisponibilidadServicio()
+        //{//Neoteck 
+        //    return AutenticarServicio.ValidarDisponibilidad();
+        //}
         #endregion
 
     }

@@ -1487,6 +1487,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="EsAdministracionCentral" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="Leyenda" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="EmpresaConfiguracion">
           <Key>
@@ -6605,7 +6606,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CalibracionEstacionCarburacion" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="CalibracionPipa" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="CalibracionCamioneta" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-
           <!--"EmpresaImagen">
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />-->
           <Property Name="UrlLogotipoMenu" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
@@ -6613,15 +6613,21 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="UrlLogotipo180px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="UrlLogotipo500px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-
+          <Property Name="CoordenadaLat" Type="Decimal" Precision="18" Scale="14" />
+          <Property Name="CoordenadaLong" Type="Decimal" Precision="18" Scale="14" />
+          <Property Name="Leyenda" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <!--<NavigationProperty Name="EmpresaConfiguracion" Relationship="Self.FK_EmpresaConfiguracion_Empresa" FromRole="Empresa" ToRole="EmpresaConfiguracion" />
           <NavigationProperty Name="EmpresaContacto" Relationship="Self.FK_EmpresaContacto_Empresa" FromRole="Empresa" ToRole="EmpresaContacto" />
           <NavigationProperty Name="EmpresaDireccion" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="Empresa" ToRole="EmpresaDireccion" />
           <NavigationProperty Name="EmpresaFiscal" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="Empresa" ToRole="EmpresaFiscal" />
-          <NavigationProperty Name="EmpresaImagen" Relationship="Self.FK_EmpresaImagen_Empresa" FromRole="Empresa" ToRole="EmpresaImagen" />-->
+          <NavigationProperty Name="EmpresaImagen" Relationship="Self.FK_EmpresaImagen_Empresa" FromRole="Empresa" ToRole="EmpresaImagen" />        
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaConfiguracion_Empresa" FromRole="EmpresaConfiguracion" ToRole="Empresa" />          
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaContacto_Empresa" FromRole="EmpresaContacto" ToRole="Empresa" />
+          <NavigationProperty Name="EquiposTransporte" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_Empresa" FromRole="Empresa" ToRole="EquipoTransporte" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="EmpresaFiscal" ToRole="Empresa" />          
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaImagen_Empresa" FromRole="EmpresaImagen" ToRole="Empresa" />-->
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Empresa" FromRole="Empresa" ToRole="Usuario" />
-          <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaConfiguracion_Empresa" FromRole="EmpresaConfiguracion" ToRole="Empresa" />          
-          <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaContacto_Empresa" FromRole="EmpresaContacto" ToRole="Empresa" />-->
           <NavigationProperty Name="EstadosRepublica" Relationship="Self.FK_Empresa_EstadosRepublica" FromRole="Empresa" ToRole="EstadosRepublica" />
           <NavigationProperty Name="Pais" Relationship="Self.FK_Empresa_Pais" FromRole="Empresa" ToRole="Pais" />
           <NavigationProperty Name="Productos" Relationship="Sagas.MainModuleModel.FK_Producto_Empresa" FromRole="Empresa" ToRole="Producto" />
@@ -6642,8 +6648,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Roles" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Empresa" ToRole="Rol" />
           <NavigationProperty Name="CentrosCosto" Relationship="Sagas.MainModuleModel.FK_CentroCosto_Empresa" FromRole="Empresa" ToRole="CentroCosto" />
           <NavigationProperty Name="CuentasContables" Relationship="Sagas.MainModuleModel.FK_CuentaContable_Empresa" FromRole="Empresa" ToRole="CuentaContable" />
-          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="Empresa" ToRole="Cliente" />
-          <!--<NavigationProperty Name="EquiposTransporte" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_Empresa" FromRole="Empresa" ToRole="EquipoTransporte" />-->
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="Empresa" ToRole="Cliente" />      
           <NavigationProperty Name="PuntosVenta" Relationship="Sagas.MainModuleModel.FK_CPuntoVenta_Empresa" FromRole="Empresa" ToRole="PuntoVenta" />
           <NavigationProperty Name="UnidadesAlmacenGasCilindro" Relationship="Sagas.MainModuleModel.FK_CAlmacenGasCilindro_Empresa" FromRole="Empresa" ToRole="UnidadAlmacenGasCilindro" />
           <NavigationProperty Name="OperadoresChoferes" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_Empresa" FromRole="Empresa" ToRole="OperadorChofer" />
@@ -6653,14 +6658,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CMantenimiento" Relationship="Sagas.MainModuleModel.FK_CMantenimiento_Empresa" FromRole="Empresa" ToRole="CMantenimiento" />
           <NavigationProperty Name="CUtilitario" Relationship="Sagas.MainModuleModel.FK_CUtilitario_Empresa" FromRole="Empresa" ToRole="CUtilitario" />
           <NavigationProperty Name="AsignacionUtilitarios" Relationship="Sagas.MainModuleModel.FK_AsignacionUtilitarios_Empresa" FromRole="Empresa" ToRole="AsignacionUtilitarios" />
-          <NavigationProperty Name="CDetalleEquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_Empresa" FromRole="Empresa" ToRole="CDetalleEquipoTransporte" />
-          <Property Name="CoordenadaLat" Type="Decimal" Precision="18" Scale="14" />
-          <Property Name="CoordenadaLong" Type="Decimal" Precision="18" Scale="14" />
+          <NavigationProperty Name="CDetalleEquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CDetalleEquipoTransporte_Empresa" FromRole="Empresa" ToRole="CDetalleEquipoTransporte" />         
           <NavigationProperty Name="ControlAsistencia" Relationship="Sagas.MainModuleModel.FK_ControlAsistencia_Empresa" FromRole="Empresa" ToRole="ControlAsistencia" />
-
-          <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
-          <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="EmpresaFiscal" ToRole="Empresa" />          
-          <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaImagen_Empresa" FromRole="EmpresaImagen" ToRole="Empresa" />-->
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -12716,6 +12715,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Empresa">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Empresa">
               <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="Leyenda" ColumnName="Leyenda" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="EsAdministracionCentral" ColumnName="EsAdministracionCentral" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />

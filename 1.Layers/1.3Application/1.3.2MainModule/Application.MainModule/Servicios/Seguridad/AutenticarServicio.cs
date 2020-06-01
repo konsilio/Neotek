@@ -25,14 +25,14 @@ namespace Application.MainModule.Servicios.Seguridad
         static RespuestaDto resDisp;
         public static RespuestaAutenticacionDto AutenticarUsuario(AutenticacionDto autDto)
         {
-            ValidarDisponibilidadAsync().Wait();
-            if (!resDisp.Exito)
-                return new RespuestaAutenticacionDto()
-                {//Se valida que se tenga el servicio disponible
-                    Exito = false,
-                    Mensaje = Error.NoDisponibilidad,
-                    token = string.Empty
-                };
+            //ValidarDisponibilidadAsync().Wait();
+            //if (!resDisp.Exito)
+            //    return new RespuestaAutenticacionDto()
+            //    {//Se valida que se tenga el servicio disponible
+            //        Exito = false,
+            //        Mensaje = Error.NoDisponibilidad,
+            //        token = string.Empty
+            //    };
             if (autDto.IdEmpresa < 1 || string.IsNullOrEmpty(autDto.Usuario) || string.IsNullOrEmpty(autDto.Password))
                 return new RespuestaAutenticacionDto()
                 {
@@ -102,46 +102,46 @@ namespace Application.MainModule.Servicios.Seguridad
                 };
             }
         }
-        public static RespuestaDto ValidarDisponibilidad()
-        {
-            RespuestaDto resp = new RespuestaDto();
-            if (WebConfigurationManager.AppSettings["DisponibleNTK"].Equals("1"))
-                resp.Exito = true;
-            else
-                resp.Exito = false;
-            return resp;
-        }
-        public static async Task<RespuestaDto> ValidarDisponibilidadAsync()
-        {//gmg
-            using (var client = new HttpClient())
-            {
-                RespuestaDto resultado = new RespuestaDto();
-                client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["Disponible"]);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                try
-                {
-                    HttpResponseMessage response = new HttpResponseMessage();
-                    response = await client.PostAsJsonAsync(WebConfigurationManager.AppSettings["gmg"], "").ConfigureAwait(false);
-                    if (response.IsSuccessStatusCode)
-                        resultado = await response.Content.ReadAsAsync<RespuestaDto>();
-                    else
-                    {
-                        resultado = await response.Content.ReadAsAsync<RespuestaDto>();
-                        client.CancelPendingRequests();
-                        client.Dispose();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    resultado.Mensaje = ex.Message;
-                    client.CancelPendingRequests();
-                    client.Dispose();
-                }
-                resDisp = resultado;
-                return resDisp;
-            }
-        }
+        //public static RespuestaDto ValidarDisponibilidad()
+        //{
+        //    RespuestaDto resp = new RespuestaDto();
+        //    if (WebConfigurationManager.AppSettings["DisponibleNTK"].Equals("1"))
+        //        resp.Exito = true;
+        //    else
+        //        resp.Exito = false;
+        //    return resp;
+        //}
+        //public static async Task<RespuestaDto> ValidarDisponibilidadAsync()
+        //{//gmg
+        //    using (var client = new HttpClient())
+        //    {
+        //        RespuestaDto resultado = new RespuestaDto();
+        //        client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["Disponible"]);
+        //        client.DefaultRequestHeaders.Accept.Clear();
+        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //        try
+        //        {
+        //            HttpResponseMessage response = new HttpResponseMessage();
+        //            response = await client.PostAsJsonAsync(WebConfigurationManager.AppSettings["gmg"], "").ConfigureAwait(false);
+        //            if (response.IsSuccessStatusCode)
+        //                resultado = await response.Content.ReadAsAsync<RespuestaDto>();
+        //            else
+        //            {
+        //                resultado = await response.Content.ReadAsAsync<RespuestaDto>();
+        //                client.CancelPendingRequests();
+        //                client.Dispose();
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            resultado.Mensaje = ex.Message;
+        //            client.CancelPendingRequests();
+        //            client.Dispose();
+        //        }
+        //        resDisp = resultado;
+        //        return resDisp;
+        //    }
+        //}
         public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(DTOs.Mobile.LoginFbDTO autDto)
         {
             var aut = AutenticarUsuario(autDto);

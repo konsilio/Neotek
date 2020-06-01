@@ -120,11 +120,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 || x.Celular1.Contains(criterio)
                 || x.Celular2.Contains(criterio)
                 || x.Celular3.ToUpper().Contains(criterio)
-                || x.Rfc.ToUpper().Contains(criterio)))
+                || x.Rfc.ToUpper().Contains(criterio)
                 || x.RazonSocial.ToUpper().Contains(criterio)
                 || x.Nombre.ToUpper().Contains(criterio)
-                && x.IdEmpresa.Equals(idEmpresa)
-                && x.Activo
+                && x.IdEmpresa.Equals(idEmpresa))
+                && x.Activo)
             ).ToList();
         }
         public List<Cliente> BuscadorClientes(short idEmpresa)
